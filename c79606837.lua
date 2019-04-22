@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.rmtarget(e,c)
-	return c:IsType(TYPE_MONSTER) and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
+	return c:IsType(TYPE_MONSTER)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

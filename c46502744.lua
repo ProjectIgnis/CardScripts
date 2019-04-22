@@ -19,7 +19,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_TO_GRAVE_REDIRECT)
 	e2:SetTargetRange(0xff,0xff)
-	e2:SetTarget(s.rmtarget)
 	e2:SetCondition(s.remcon)
 	e2:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e2)
@@ -50,12 +49,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		c:RegisterFlagEffect(id+1,RESET_EVENT+0xfe0000,0,1)
+		c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
 		Duel.SpecialSummonComplete()
 	end
-end
-function s.rmtarget(e,c)
-	return Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
 end
 function s.remcon(e)
 	return e:GetHandler():GetFlagEffect(id+1)~=0

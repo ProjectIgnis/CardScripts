@@ -55,5 +55,5 @@ function s.rmcon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.rmtarget(e,c)
-	return not c:IsSetCard(0xe0) and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
+	return not c:IsSetCard(0xe0)
 end

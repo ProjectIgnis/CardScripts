@@ -81,5 +81,5 @@ function s.excon(e)
 	return e:GetHandler():IsLevelAbove(7)
 end
 function s.extg(e,c)
-	return c:GetOwner()~=e:GetHandlerPlayer() and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
+	return c:GetOwner()~=e:GetHandlerPlayer()
 end

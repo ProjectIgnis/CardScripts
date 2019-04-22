@@ -1,4 +1,5 @@
 --マクロコスモス
+--Macro Cosmos
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -31,7 +32,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local cg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil,e,tp)
-	if #cg and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if #cg>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		if Duel.SelectYesNo(tp, aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=cg:Select(tp,1,1,nil)

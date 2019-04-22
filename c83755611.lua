@@ -1,0 +1,86 @@
+--輝竜星－ショウフク
+local s,id=GetID()
+function s.initial_effect(c)
+	--synchro summon
+	aux.AddSynchroProcedure(c,nil,1,1,aux.NonTunerEx(Card.IsRace,RACE_WYRM),1,99)
+	c:EnableReviveLimit()
+	--mat check
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_MATERIAL_CHECK)
+	e1:SetValue(s.matcheck)
+	c:RegisterEffect(e1)
+	--todeck
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_TODECK)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCondition(s.tdcon)
+	e2:SetTarget(s.tdtg)
+	e2:SetOperation(s.tdop)
+	e2:SetLabelObject(e1)
+	c:RegisterEffect(e2)
+	--destroy
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetCountLimit(1)
+	e3:SetTarget(s.destg)
+	e3:SetOperation(s.desop)
+	c:RegisterEffect(e3)
+end
+function s.matcheck(e,c)
+	local ct=c:GetMaterial():Filter(Card.IsRace,nil,RACE_WYRM):GetClassCount(Card.GetOriginalAttribute)
+	e:SetLabel(ct)
+end
+function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+end
+function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsOnField() and chkc:IsAbleToDeck() end
+	local ct=e:GetLabelObject():GetLabel()
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) and ct>0 end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
+end
+function s.tdop(e,tp,eg,ep,ev,re,r,rp)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local g=tg:Filter(Card.IsRelateToEffect,nil,e)
+	if #g>0 then
+		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	end
+end
+function s.desfilter(c,ft)
+	return ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5)
+end
+function s.spfilter(c,e,tp)
+	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return false end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chk==0 then return ft>-1
+		and Duel.IsExistingTarget(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil,ft)
+		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g1=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil,ft)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g2=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g2,1,0,0)
+end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local ex,g1=Duel.GetOperationInfo(0,CATEGORY_DESTROY)
+	local ex,g2=Duel.GetOperationInfo(0,CATEGORY_SPECIAL_SUMMON)
+	local tc1=g1:GetFirst()
+	local tc2=g2:GetFirst()
+	if tc1:IsRelateToEffect(e) and tc2:IsRelateToEffect(e) and Duel.Destroy(tc1,REASON_EFFECT)~=0 then
+		Duel.SpecialSummon(tc2,0,tp,tp,false,false,POS_FACEUP)
+	end
+end

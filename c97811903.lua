@@ -1,0 +1,45 @@
+--クリアー・バイス・ドラゴン
+local s,id=GetID()
+function s.initial_effect(c)
+	--atk
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCondition(s.atkcon)
+	e1:SetValue(s.atkval)
+	c:RegisterEffect(e1)
+	--
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_DESTROY_REPLACE)
+	e2:SetTarget(s.reptg)
+	c:RegisterEffect(e2)
+	--
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetTargetRange(1,0)
+	e3:SetCode(id)
+	c:RegisterEffect(e3)
+end
+function s.atkcon(e)
+	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
+		and e:GetHandler()==Duel.GetAttacker() and Duel.GetAttackTarget()
+end
+function s.atkval(e,c)
+	return Duel.GetAttackTarget():GetAttack()*2
+end
+function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp
+		and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 end
+	if Duel.SelectEffectYesNo(tp,c,96) then
+		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		return true
+	else return false end
+end

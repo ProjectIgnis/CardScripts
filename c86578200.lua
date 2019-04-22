@@ -1,0 +1,84 @@
+--魔界大道具 「ニゲ馬車」
+local s,id=GetID()
+function s.initial_effect(c)
+	--activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e1)
+	--indes
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x10ec))
+	e2:SetValue(s.indct)
+	c:RegisterEffect(e2)
+	--cannot be target
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetCountLimit(1)
+	e3:SetTarget(s.tgtg)
+	e3:SetOperation(s.tgop)
+	c:RegisterEffect(e3)
+	--return
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_TOHAND)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetCode(EVENT_DESTROYED)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetCondition(s.thcon)
+	e4:SetTarget(s.thtg)
+	e4:SetOperation(s.thop)
+	c:RegisterEffect(e4)
+end
+function s.indct(e,re,r,rp)
+	if (r&REASON_BATTLE)~=0 then
+		return 1
+	else return 0 end
+end
+function s.filter(c)
+	return c:IsFaceup() and c:IsSetCard(0x10ec)
+end
+function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
+end
+function s.tgop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetValue(aux.tgoval)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		tc:RegisterEffect(e1)
+	end
+end
+function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp
+		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil)
+end
+function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
+end
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,nil)
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+	end
+end

@@ -1,0 +1,100 @@
+--スクリーン・オブ・レッド
+local s,id=GetID()
+function s.initial_effect(c)
+	--activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,0x28)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.spop)
+	c:RegisterEffect(e1)
+	--cannot attack
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetTargetRange(0,LOCATION_MZONE)
+	c:RegisterEffect(e2)
+	--maintain
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e3:SetCode(EVENT_PHASE+PHASE_END)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetCountLimit(1)
+	e3:SetCondition(s.mtcon)
+	e3:SetOperation(s.mtop)
+	c:RegisterEffect(e3)
+	--spsummon
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,0))
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetHintTiming(0,TIMING_END_PHASE)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetCondition(s.spcon)
+	e4:SetTarget(s.sptg)
+	e4:SetOperation(s.spop)
+	e4:SetLabel(1)
+	c:RegisterEffect(e4)
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
+	if chk==0 then return true end
+	if Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+		and e:GetHandler():IsDestructable() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+		and Duel.SelectYesNo(tp,94) then
+		e:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
+		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+		e:SetLabel(1)
+	else
+		e:SetCategory(0)
+		e:SetProperty(0)
+		e:SetLabel(0)
+	end
+end
+function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp
+end
+function s.mtop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.CheckLPCost(tp,1000) then
+		Duel.PayLPCost(tp,1000)
+	else
+		Duel.Destroy(e:GetHandler(),REASON_COST)
+	end
+end
+function s.cfilter(c)
+	return c:IsFaceup() and c:IsCode(70902743)
+end
+function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return not e:GetHandler():IsStatus(STATUS_CHAINING)
+		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+end
+function s.filter(c,e,tp)
+	return c:GetLevel()==1 and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
+	if chk==0 then return e:GetHandler():IsDestructable() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	if e:GetLabel()~=1 or not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then return end
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if c:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)~=0 and tc:IsRelateToEffect(e) then
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	end
+end

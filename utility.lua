@@ -11,6 +11,9 @@ RACE_PSYCHIC=RACE_PSYCHO
 RACE_DIVINE=RACE_DEVINE
 SUMMON_TYPE_TRIBUTE=SUMMON_TYPE_ADVANCE
 SUMMON_TYPE_GEMINI=SUMMON_TYPE_DUAL
+function GetID()
+    return self_table,self_code
+end
 bit={}
 function bit.band(a,b)
     return a&b
@@ -367,7 +370,7 @@ function Card.UpdateScale(c,amt,reset,rc)
 end
 
 function Auxiliary.Stringid(code,id)
-	return code*16+id
+	return code|id<<4
 end
 function Auxiliary.Next(g)
 	local first=true

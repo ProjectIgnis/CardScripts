@@ -41,11 +41,11 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(s.spfilter,tp,0,LOCATION_MZONE,nil)
+	local mg=Duel.GetMatchingGroup(Card.IsReleasable,tp,0,LOCATION_MZONE,nil)
 	return aux.SelectUnselectGroup(mg,e,tp,2,2,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	local mg=Duel.GetMatchingGroup(s.spfilter,tp,0,LOCATION_MZONE,nil)
+	local mg=Duel.GetMatchingGroup(Card.IsReleasable,tp,0,LOCATION_MZONE,nil)
 	local g=aux.SelectUnselectGroup(mg,e,tp,0,2,s.rescon,1,tp,HINTMSG_RELEASE,s.rescon)
 	if #g > 0 then
 		g:KeepAlive()

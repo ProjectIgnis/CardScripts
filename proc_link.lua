@@ -103,7 +103,7 @@ function Auxiliary.LinkCondition(f,minc,maxc,specialchk)
 				if mustg:IsExists(aux.NOT(Auxiliary.LConditionFilter),1,nil,f,c,tp) then return false end
 				local emt,tg=aux.GetExtraMaterials(tp,mustg+mg,c,SUMMON_TYPE_LINK)
 				local sg=mustg
-				return (mg+tg):Includes(mustg) and (mg+tg):IsExists(Auxiliary.LCheckRecursive,1,nil,tp,sg,(mg+tg),c,minc,maxc,f,specialchk,mg,emt)
+				return (mg+tg):Includes(mustg) and (mg+tg):IsExists(Auxiliary.LCheckRecursive,1,sg,tp,sg,(mg+tg),c,minc,maxc,f,specialchk,mg,emt)
 			end
 end
 function Auxiliary.LinkTarget(f,minc,maxc,specialchk)

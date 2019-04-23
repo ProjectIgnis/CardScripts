@@ -1,5 +1,5 @@
 --悪のデッキ破壊ウイルス
---Grinning Ghost Virus
+--Grinning Grave Virus
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -69,6 +69,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabelObject(e1)
 		c:RegisterFlagEffect(1082946,RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,3)
 		s[c]=e2
+		local e4=Effect.CreateEffect(e:GetHandler())
+		e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+		e4:SetDescription(aux.Stringid(id,2))
+		e4:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
+		e4:SetTargetRange(0,1)
+		Duel.RegisterEffect(e4,tp)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

@@ -36,7 +36,7 @@ end
 s.toss_coin=true
 function s.chcon1(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return rc:IsControler(tp) and rc:IsCode(94212438) and re:GetLabel()==94212438
+	return re:GetHandlerPlayer()==tp and re:IsHasCategory(CATEGORY_TOFIELD) and re:GetLabel()==94212438 and re:GetValue()~=nil
 end
 function s.chop1(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1,ev)
@@ -45,43 +45,7 @@ function s.chcon2(e,tp,eg,ep,ev,re,r,rp)
 	return ev==e:GetHandler():GetFlagEffectLabel(id)
 end
 function s.chop2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.ChangeChainOperation(ev,s.dbop)
-end
-function s.dbop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	local ids={31893528,67287533,94772232,30170981}
-	local id=ids[c:GetFlagEffect(94212438)+1]
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(94212438,1))
-	local g=Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,id)
-	local tc=g:GetFirst()
-	if tc and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x11,0,0,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,tp,181)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		tc:AddMonsterAttribute(TYPE_NORMAL,ATTRIBUTE_DARK,RACE_FIEND,1,0,0)
-		Duel.SpecialSummonStep(tc,181,tp,tp,true,false,POS_FACEUP)
-		tc:AddMonsterAttributeComplete()
-		--immune
-		local e7=Effect.CreateEffect(c)
-		e7:SetType(EFFECT_TYPE_SINGLE)
-		e7:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-		e7:SetRange(LOCATION_MZONE)
-		e7:SetCode(EFFECT_IMMUNE_EFFECT)
-		e7:SetValue(s.efilter)
-		e7:SetReset(RESET_EVENT+0x47c0000)
-		tc:RegisterEffect(e7)
-		--cannot be target
-		local e8=Effect.CreateEffect(c)
-		e8:SetType(EFFECT_TYPE_SINGLE)
-		e8:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
-		e8:SetReset(RESET_EVENT+0x47c0000)
-		tc:RegisterEffect(e8)
-		Duel.SpecialSummonComplete()
-		c:RegisterFlagEffect(94212438,RESET_EVENT+RESETS_STANDARD,0,0)
-	elseif tc and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-		c:RegisterFlagEffect(94212438,RESET_EVENT+RESETS_STANDARD,0,0)
-	end
+	return Duel.ChangeChainOperation(ev,re:GetValue())
 end
 function s.efilter(e,te)
 	local tc=te:GetHandler()

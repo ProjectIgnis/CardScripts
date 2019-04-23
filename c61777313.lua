@@ -1,34 +1,41 @@
 --極星天ヴァナディース
-function c61777313.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
+	--synchro substitute
+    local e1=Effect.CreateEffect(c)
+    e1:SetType(EFFECT_TYPE_SINGLE)
+    e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+    e1:SetCode(id)
+    c:RegisterEffect(e1)
 	--synchro custom
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SYNCHRO_MAT_RESTRICTION)
-	e1:SetValue(aux.TargetBoolFunction(Card.IsSetCard,0x42))
-	c:RegisterEffect(e1)
-	--level change
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(61777313,0))
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetCountLimit(1)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(c61777313.cost)
-	e2:SetOperation(c61777313.operation)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_SYNCHRO_MAT_RESTRICTION)
+	e2:SetValue(aux.TargetBoolFunction(Card.IsSetCard,0x42))
 	c:RegisterEffect(e2)
+	--level change
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetCountLimit(1)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCost(s.cost)
+	e3:SetOperation(s.operation)
+	c:RegisterEffect(e3)
 end
-function c61777313.cfilter(c,lv)
+function s.cfilter(c,lv)
 	local clv=c:GetLevel()
 	return c:IsSetCard(0x42) and clv>0 and clv~=lv and c:IsAbleToGraveAsCost()
 end
-function c61777313.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c61777313.cfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetLevel()) end
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetLevel()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c61777313.cfilter,tp,LOCATION_DECK,0,1,1,nil,e:GetHandler():GetLevel())
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK,0,1,1,nil,e:GetHandler():GetLevel())
 	Duel.SendtoGrave(g,REASON_COST)
 	e:SetLabel(g:GetFirst():GetLevel())
 end
-function c61777313.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)

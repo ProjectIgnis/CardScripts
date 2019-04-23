@@ -110,7 +110,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		g=sg:Select(tp,1,1,nil)
 	end
-	if Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
+	if Duel.SendtoGrave(g,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_GRAVE) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

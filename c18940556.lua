@@ -1,4 +1,5 @@
 --究極伝導恐獣
+--Ultimate Conductor Tyranno
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -47,7 +48,7 @@ function s.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local rg=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #rg>1 and aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),0)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #rg()>1 and aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),0)
 end
 function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
@@ -60,19 +61,27 @@ end
 function s.posfilter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
 end
+function s.filter(c)
+	return not c:IsPublic() or c:IsType(TYPE_MONSTER)
+end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,TYPE_MONSTER)
 		and Duel.IsExistingMatchingCard(s.posfilter,tp,0,LOCATION_MZONE,1,nil) end
+	local dg=Duel.GetMatchingGroup(s.dfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,TYPE_MONSTER)
 	local g=Duel.GetMatchingGroup(s.posfilter,tp,0,LOCATION_MZONE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND+LOCATION_MZONE)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,0,0)
+	if not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,tp,LOCATION_HAND+LOCATION_MZONE)
+	else
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND+LOCATION_MZONE)
+	end
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g1=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,TYPE_MONSTER)
-	if #g1>0 and Duel.Destroy(g1,REASON_EFFECT)~=0 then
+	if g1:GetCount()>0 and Duel.Destroy(g1,REASON_EFFECT)~=0 then
 		local g2=Duel.GetMatchingGroup(s.posfilter,tp,0,LOCATION_MZONE,nil)
-		if #g2>0 then
+		if g2:GetCount()>0 then
 			Duel.ChangePosition(g2,POS_FACEDOWN_DEFENSE)
 		end
 	end

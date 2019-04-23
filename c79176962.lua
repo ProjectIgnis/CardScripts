@@ -1,4 +1,5 @@
 --旋風機ストリボーグ
+--Fantastic Striborg
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -41,6 +42,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local cg=c:GetColumnGroup()
+	cg:AddCard(c)
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local g=Duel.GetMatchingGroup(s.thfilter,tp,0,LOCATION_ONFIELD,nil,cg)
 		if #g>0 then

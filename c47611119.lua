@@ -1,4 +1,5 @@
 --ジェムナイトレディ・ラピスラズリ
+--Gem-Knight Lady Lapis Lazuli
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
@@ -45,8 +46,11 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
-		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-		local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-		Duel.Damage(p,ct*500,REASON_EFFECT)
+			local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
+			if ct>0 then
+				local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+				local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+				Duel.Damage(p,ct*500,REASON_EFFECT)
+			end
 	end
 end

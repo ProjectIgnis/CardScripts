@@ -19,7 +19,8 @@ function s.filter(c,e,tp)
 		and rg:CheckWithSumEqual(Card.GetLevel,lv,2,99)
 end
 function s.cfilter(c)
-	return c:IsRace(RACE_DINOSAUR) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsRace(RACE_DINOSAUR) and c:IsAbleToRemoveAsCost() and c:GetLevel()>0
+		and aux.SpElimFilter(c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)

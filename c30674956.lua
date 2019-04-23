@@ -63,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and rp~=tp and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and rp~=tp and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.thfilter(c)
 	return c:IsDefenseBelow(1500) and c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsAbleToHand()

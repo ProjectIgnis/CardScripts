@@ -1,4 +1,5 @@
 --ヴァンパイア帝国
+--Vampire Kingdom
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -57,9 +58,12 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
-		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) then
-			Duel.Destroy(tc,REASON_EFFECT)
-		end
+			local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
+			if ct>0 then
+				local tc=Duel.GetFirstTarget()
+				if tc:IsRelateToEffect(e) then
+					Duel.Destroy(tc,REASON_EFFECT)
+				end
+			end
 	end
 end

@@ -64,10 +64,11 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.lvfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.lvfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
+	if not (tc:IsFaceup() and tc:IsRelateToEffect(e)) then return end
 	local ch
 	if tc:GetLevel()==1 then
 		ch=Duel.SelectOption(tp,aux.Stringid(id,0))
@@ -82,7 +83,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if #rg>0 then
 		local ct=Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
-		if ct>0 and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		if ct>0 then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_LEVEL)

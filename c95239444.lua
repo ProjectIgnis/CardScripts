@@ -1,4 +1,5 @@
 --森羅の鎮神 オレイア
+--Orea, the Sylvan High Arbiter
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -64,12 +65,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(Card.IsRace,nil,RACE_PLANT)
 	Duel.DisableShuffleCheck()
 	if Duel.SendtoGrave(sg,REASON_EFFECT+REASON_REVEAL)~=0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-		local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,#sg,c)
-		if #tg>0 then
-			Duel.BreakEffect()
-			Duel.DisableShuffleCheck(false)
-			Duel.SendtoHand(tg,nil,REASON_EFFECT)
+		local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
+		if ct>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+			local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,#sg,c)
+			if #tg>0 then
+				Duel.BreakEffect()
+				Duel.DisableShuffleCheck(false)
+				Duel.SendtoHand(tg,nil,REASON_EFFECT)
+			end
 		end
 	end
 	ac=ac-#sg

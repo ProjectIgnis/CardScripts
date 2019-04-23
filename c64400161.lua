@@ -1,5 +1,5 @@
 --飛竜艇－ファンドラ
---Dragon Airship - Fandra
+--Fandora, the Flying Furtress
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -93,5 +93,11 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
+	local e3=Effect.CreateEffect(e:GetHandler())
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetTargetRange(0,1)
+	Duel.RegisterEffect(e3,tp)
 end
 

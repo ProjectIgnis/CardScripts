@@ -1,4 +1,5 @@
 --マッド・リローダー
+--Mad Reloader
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -22,6 +23,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)<2 then return end
-	Duel.DiscardHand(tp,nil,2,2,REASON_EFFECT)
-	Duel.Draw(tp,2,REASON_EFFECT)
+	if Duel.DiscardHand(tp,nil,2,2,REASON_EFFECT)~=0 then
+		local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
+		if ct==2 then
+			Duel.Draw(tp,2,REASON_EFFECT)
+		end
+	end
 end

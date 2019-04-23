@@ -1,5 +1,5 @@
 --闇鋼龍ダークネスメタル
---Darkness Metal, the Dark Steel Dragon
+--Darkness Metal, the Dragon of Dark Steel
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -64,6 +64,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetTarget(s.splimit)
 		e4:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e4,tp)
+		local e5=Effect.CreateEffect(c)
+		e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+		e5:SetDescription(aux.Stringid(id,1))
+		e5:SetReset(RESET_PHASE+PHASE_END)
+		e:SetTargetRange(1,0)
+		Duel.RegisterEffect(e5,tp)
 	end
 	Duel.SpecialSummonComplete()
 end

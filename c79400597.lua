@@ -1,5 +1,5 @@
 -- 静冠の呪眼
---Watchful Rule of the Evil Eye 
+--Evil Eye Repose
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -45,13 +45,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetOperation(nil)
 	end
 end
-function s.filter(c)
+function s.rmvfilter(c)
 	return c:IsSetCard(0x129) and c:IsAbleToRemoveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmvfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.rmvfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

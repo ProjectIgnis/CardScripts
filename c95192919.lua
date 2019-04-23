@@ -85,5 +85,5 @@ function s.thcfilter(c,tp)
     return c:GetPreviousControler()==tp and c:IsRace(RACE_WINDBEAST) and c:IsReason(REASON_BATTLE)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-    return eg:IsExists(s.thcfilter,1,nil,tp)
+    return eg:IsExists(s.thcfilter,1,e:GetHandler(),tp)
 end

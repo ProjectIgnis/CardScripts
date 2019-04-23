@@ -1,5 +1,4 @@
---天威の拳僧
---Warrior Monk of Tenyi
+--Skyforce Monk
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link summon method

@@ -1,5 +1,5 @@
--- ビンゴマシーンＧＯ！ＧＯ！
---Bingo Machine GO! GO!
+--ビンゴマシーンＧＯ！ＧＯ！
+--Bingo Machine, Go!!!
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -15,14 +15,11 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_BLUEEYES_W_DRAGON,23995346}
 function s.filter(c)
-	return ( (c:IsSetCard(0xdd) and c:IsType(TYPE_MONSTER)) ) or ( (aux.IsCodeListed(c,CARD_BLUEEYES_W_DRAGON) or aux.IsCodeListed(c,23995346)) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(id) ) 
+	return ( ( (c:IsSetCard(0xdd) and c:IsType(TYPE_MONSTER)) ) or ( (aux.IsCodeListed(c,CARD_BLUEEYES_W_DRAGON) or aux.IsCodeListed(c,23995346)) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(id) ) ) 
 		and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-		return #g>=3
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,3,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -37,4 +34,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

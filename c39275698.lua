@@ -1,5 +1,5 @@
 --ハーピィの羽根休め
---Harpie’s Feather Roosting
+--Harpie's Feather Rest
 --scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -53,8 +53,9 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetTargetRange(1,0)
 		e1:SetTarget(s.splimit)
 		e1:SetReset(RESET_PHASE+PHASE_END)

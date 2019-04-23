@@ -1,4 +1,5 @@
 --ブレイズ・キャノン
+--Blaze Accelerator
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -45,10 +46,11 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.disfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if #g>0 then
-		Duel.SendtoGrave(g,REASON_EFFECT)
-		local tc=Duel.GetFirstTarget()
-		if tc and tc:IsRelateToEffect(e) then
-			Duel.Destroy(tc,REASON_EFFECT)
+		if Duel.SendtoGrave(g,REASON_EFFECT)~=0 and g:GetFirst():IsLocation(LOCATION_GRAVE) then
+			local tc=Duel.GetFirstTarget()
+			if tc and tc:IsRelateToEffect(e) then
+				Duel.Destroy(tc,REASON_EFFECT)
+			end
 		end
 	end
 end

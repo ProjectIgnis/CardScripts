@@ -1,7 +1,6 @@
 --エンプレス・オブ・エンディミオン
 --Empress of Endymion 
 --scripted by Hatter
-
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1,LOCATION_PZONE+LOCATION_MZONE)
@@ -97,14 +96,14 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():AddCounter(0x1,1)
 	end
 end
-function s.thfilter(c)
-	return c:GetCounter(0x1)>0
+function s.thfilter(c,e)
+	return c:GetCounter(0x1)>0 and e:GetHandler():IsCanAddCounter(COUNTER_SPELL,c:GetCounter(0x1),false,LOCATION_MZONE)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_ONFIELD,0,1,c) and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_ONFIELD,0,1,c,e) and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
-	local g1=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_ONFIELD,0,1,1,c)
+	local g1=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_ONFIELD,0,1,1,c,e)
 	e:SetLabelObject(g1:GetFirst())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
 	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)

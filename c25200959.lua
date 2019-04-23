@@ -2,7 +2,7 @@
 --Cyberse Integrator
 local s,id=GetID()
 function s.initial_effect(c)
-	-- synchro summon
+	--synchro summon
 	aux.AddSynchroProcedure(c,nil,1,1,aux.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--spsummon
@@ -51,10 +51,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(s.splimit)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTarget(s.splimit)
+	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,tp,sumtp,sumpos)

@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--place card
 	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_TOFIELD)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_SZONE)
@@ -20,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.plcon)
 	e2:SetTarget(s.pltg)
 	e2:SetOperation(s.plop)
+	e2:SetValue(s.extraop)
 	c:RegisterEffect(e2)
 	--tograve
 	local e3=Effect.CreateEffect(c)
@@ -65,13 +67,51 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
-	local passcodes={31893528,67287533,94772232,30170981}
-	local passcode=passcodes[c:GetFlagEffect(id)+1]
+	local passcode=CARDS_SPIRIT_MESSAGE[c:GetFlagEffect(id)+1]
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local g=Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,passcode)
 	if #g>0 and Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 	end
+end
+function s.extraop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	local cid=CARDS_SPIRIT_MESSAGE[c:GetFlagEffect(id)+1]
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+	local g=Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,cid)
+	local tc=g:GetFirst()
+	if tc and Duel.IsPlayerCanSpecialSummonMonster(tp,cid,0,0x11,0,0,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,tp,181)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and (Duel.GetLocationCount(tp,LOCATION_SZONE)<1 or Duel.SelectYesNo(tp,aux.Stringid(id,0))) then
+		tc:AddMonsterAttribute(TYPE_NORMAL,ATTRIBUTE_DARK,RACE_FIEND,1,0,0)
+		Duel.SpecialSummonStep(tc,181,tp,tp,true,false,POS_FACEUP)
+		tc:AddMonsterAttributeComplete()
+		--immune
+		local e7=Effect.CreateEffect(c)
+		e7:SetType(EFFECT_TYPE_SINGLE)
+		e7:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e7:SetRange(LOCATION_MZONE)
+		e7:SetCode(EFFECT_IMMUNE_EFFECT)
+		e7:SetValue(s.efilter)
+		e7:SetReset(RESET_EVENT+0x47c0000)
+		tc:RegisterEffect(e7)
+		--cannot be target
+		local e8=Effect.CreateEffect(c)
+		e8:SetType(EFFECT_TYPE_SINGLE)
+		e8:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+		e8:SetReset(RESET_EVENT+0x47c0000)
+		tc:RegisterEffect(e8)
+		Duel.SpecialSummonComplete()
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+	elseif tc and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+	end
+end
+function s.efilter(e,te)
+	local tc=te:GetHandler()
+	return not tc:IsCode(id)
 end
 function s.cfilter1(c,tp)
 	return c:IsControler(tp) and (c:IsCode(id) or c:IsSetCard(0x1c))
@@ -87,7 +127,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end
 function s.cfilter3(c)
-	return c:IsFaceup() and c:IsCode(31893528,67287533,94772232,30170981)
+	return c:IsFaceup() and c:IsCode(table.unpack(CARDS_SPIRIT_MESSAGE))
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	local WIN_REASON_DESTINY_BOARD=0x15

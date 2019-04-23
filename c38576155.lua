@@ -25,7 +25,7 @@ function s.thcfilter(c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
-		and not Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_MZONE,0,1,nil)	
+		and not Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_MZONE,0,1,nil)  
 end
 function s.thfilter(c)
 	return c:IsCode(64961254) and c:IsAbleToHand()
@@ -58,6 +58,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	Duel.RegisterEffect(e2,tp)
+	local e3=Effect.CreateEffect(e:GetHandler())
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetTargetRange(1,0)
+	Duel.RegisterEffect(e3,tp)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return not c:IsRace(RACE_FAIRY)

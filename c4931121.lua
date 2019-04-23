@@ -1,4 +1,5 @@
 --影のデッキ破壊ウイルス
+--Full Force Virus
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -68,6 +69,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetOperation(s.reset)
 	e3:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
 	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(e:GetHandler())
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e4:SetDescription(aux.Stringid(id,3))
+	e4:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
+	e4:SetTargetRange(0,1)
+	Duel.RegisterEffect(e4,tp)
 end
 function s.reset(e,tp,eg,ep,ev,re,r,rp)
 	s.turnop(e:GetLabelObject(),tp,eg,ep,ev,e,r,rp)

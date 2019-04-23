@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(800)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 	c:RegisterEffect(e1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
@@ -79,30 +79,32 @@ function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	ft=math.min(ft,Duel.GetLocationCount(tp,LOCATION_MZONE)+1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,ft,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,g:GetCount(),0,0)
 end
 function s.thfilter(c)
 	return c:IsCode(77387463) and c:IsAbleToHand()
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or Duel.SendtoGrave(c,REASON_EFFECT)==0 then return end
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<=0 then return end
-	local sg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if #sg>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-	if #sg>ft then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		sg=sg:Select(tp,ft,ft,nil)
-	end
-	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
-		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			g=g:Select(tp,1,1,nil)
-			Duel.SendtoHand(g,tp,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
+	if not c:IsRelateToEffect(e) then return end
+	if Duel.SendtoGrave(c,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_GRAVE) then
+		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		if ft<=0 then return end
+		local sg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+		if sg:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
+		if sg:GetCount()>ft then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			sg=sg:Select(tp,ft,ft,nil)
 		end
-	end
+		if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0 then
+			local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
+			if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+				Duel.BreakEffect()
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+				g=g:Select(tp,1,1,nil)
+				Duel.SendtoHand(g,tp,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,g)
+			end
+		end
+	else return end
 end

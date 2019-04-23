@@ -62,7 +62,13 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_HAND) then
-		Duel.RegisterFlagEffect(rp,id,RESET_PHASE+PHASE_END,0,1)
+		local g=eg:Filter(Card.IsPreviousLocation,nil,LOCATION_HAND)
+		for tc in aux.Next(g) do
+			if tc:GetFlagEffect(id)==0 then
+				tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET,0,1)
+				Duel.RegisterFlagEffect(rp,id,RESET_PHASE+PHASE_END,0,1)
+			end
+		end
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

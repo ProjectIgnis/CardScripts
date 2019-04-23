@@ -1,4 +1,5 @@
 --伝説の預言者マーリン
+--Merlin
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -32,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetHintTiming(0,TIMING_END_PHASE+0x1c0)
-	e3:SetCountLimit(1,3580034)
+	e3:SetCountLimit(1,id+2)
 	e3:SetCost(aux.bfgcost)
 	e3:SetTarget(s.xyztg)
 	e3:SetOperation(s.xyzop)
@@ -54,6 +55,12 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetDescription(aux.Stringid(id,2))
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetTargetRange(1,0)
+	Duel.RegisterEffect(e2,tp)
 end 
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsSetCard(0x107a)

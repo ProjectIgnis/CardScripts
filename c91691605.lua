@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not (c:IsFaceup() and c:IsLocation(LOCATION_MZONE)) then return end
 	if not c:IsRelateToEffect(e) then return end
 	local atk=e:GetHandler():GetAttack()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

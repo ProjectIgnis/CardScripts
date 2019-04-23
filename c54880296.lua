@@ -2,7 +2,7 @@
 --Yosenju Wind Ritual
 --scripted by Naim
 local s,id=GetID()
-function c101009057.initial_effect(c)
+function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

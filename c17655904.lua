@@ -1,4 +1,5 @@
 --滅びの爆裂疾風弾
+--Burst Stream of Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_BLUEEYES_W_DRAGON}
 function s.counterfilter(c)
-    return not c:IsCode(CARD_BLUEEYES_W_DRAGON)
+	return not c:IsCode(CARD_BLUEEYES_W_DRAGON)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_BLUEEYES_W_DRAGON)
@@ -33,6 +34,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetTargetRange(1,0)
+	Duel.RegisterEffect(e2,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end

@@ -1,5 +1,5 @@
 --プランキッズ・ウェザー
---Plankids Weather
+--Prank-Kids Weather Washer
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

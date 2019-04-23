@@ -27,29 +27,32 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
-	if ct>0 and Duel.DiscardDeck(tp,ct,REASON_EFFECT)~=0 then
-		Duel.BreakEffect()
+	if ct>0 then
+		Duel.DiscardDeck(tp,ct,REASON_EFFECT)
 		local ct2=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE):GetCount()
-		if Duel.Draw(tp,1,REASON_EFFECT)~=0 then
-			local tc=Duel.GetOperatedGroup():GetFirst()
-			Duel.ConfirmCards(1-tp,tc)
-			if tc:IsCode(id) then
-				if Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
-					local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
-					Duel.Destroy(sg,REASON_EFFECT)
-					local tg=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE)
-					if #tg>0 then
-						Duel.BreakEffect()
-						local dam=#tg*2000
-						Duel.Damage(1-tp,dam,REASON_EFFECT)
+		if ct2>0 then
+			Duel.BreakEffect()
+			if Duel.Draw(tp,1,REASON_EFFECT)~=0 then
+				local tc=Duel.GetOperatedGroup():GetFirst()
+				Duel.ConfirmCards(1-tp,tc)
+				if tc:IsCode(id) then
+					if Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
+						local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+						Duel.Destroy(sg,REASON_EFFECT)
+						local tg=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE)
+						if #tg>0 then
+							Duel.BreakEffect()
+							local dam=#tg*2000
+							Duel.Damage(1-tp,dam,REASON_EFFECT)
+						end
 					end
-				end
-			else
-				Duel.ShuffleHand(tp)
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-				local dg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Card.IsAbleToDeck),tp,LOCATION_GRAVE,0,ct2,ct2,nil)
-				if #dg>0 then
-					Duel.SendtoDeck(dg,nil,2,REASON_EFFECT)
+				else
+					Duel.ShuffleHand(tp)
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+					local dg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Card.IsAbleToDeck),tp,LOCATION_GRAVE,0,ct2,ct2,nil)
+					if #dg>0 then
+						Duel.SendtoDeck(dg,nil,2,REASON_EFFECT)
+					end
 				end
 			end
 		end

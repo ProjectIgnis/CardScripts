@@ -25,20 +25,20 @@ function s.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
+	--
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_SPSUMMON_COST)
+	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e5:SetCost(s.spcost)
+	e5:SetOperation(s.spcop)
+	c:RegisterEffect(e5)
 end
-function s.spfilter(c)
-	return c:IsLevelBelow(3) and c:IsFaceup() and c:IsReleasable()
+function s.spcost(e,c,tp,sumtype)
+	return sumtype ~= SUMMON_TYPE_SPECIAL+1 or Duel.GetActivityCount(tp,ACTIVITY_NORMALSUMMON)==0
 end
-function s.spcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	return Duel.GetActivityCount(tp,ACTIVITY_NORMALSUMMON)==0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,0,LOCATION_MZONE,1,nil)
-end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(c:GetControler(),s.spfilter,c:GetControler(),0,LOCATION_MZONE,1,1,nil)
-	Duel.Release(g,REASON_COST)
+function s.spcop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)

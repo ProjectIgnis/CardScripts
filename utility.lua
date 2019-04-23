@@ -969,17 +969,17 @@ function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)
 	return res
 end
 function Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,rescon,chk,seltp,hintmsg,cancelcon,breakcon)
-	local minc=minc and minc or 1
-	local maxc=maxc and maxc or 99
+	local minc=minc or 1
+	local maxc=maxc or #g
 	if chk==0 then return g:IsExists(Auxiliary.SelectUnselectLoop,1,nil,Group.CreateGroup(),g,e,tp,minc,maxc,rescon) end
 	local hintmsg=hintmsg and hintmsg or 0
 	local sg=Group.CreateGroup()
 	while true do
-		local cancel=sg:GetCount()>=minc and (not cancelcon or cancelcon(sg,e,tp,g))
+		local cancelable = (not cancelcon or cancelcon(sg,e,tp,g))
 		local mg=g:Filter(Auxiliary.SelectUnselectLoop,sg,sg,g,e,tp,minc,maxc,rescon)
-		if (breakcon and breakcon(sg,e,tp,mg)) or mg:GetCount()<=0 or sg:GetCount()>=maxc then break end
+		if (breakcon and breakcon(sg,e,tp,mg)) or #mg<=0 or #sg>=maxc then break end
 		Duel.Hint(HINT_SELECTMSG,seltp,hintmsg)
-		local tc=mg:SelectUnselect(sg,seltp,cancel,cancel)
+		local tc=mg:SelectUnselect(sg,seltp,cancelable and #sg>=minc,cancelable and #sg==0,minc,maxc)
 		if not tc then break end
 		if sg:IsContains(tc) then
 			sg:RemoveCard(tc)

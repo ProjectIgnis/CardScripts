@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.tfilter(c,scard,sumtype,tp)
-	return c:IsSetCard(0x6042,scard,sumtype,tp) or c:IsSummonCode(scard,sumtype,tp,61777313)
+	return c:IsSetCard(0x6042,scard,sumtype,tp)  or c:IsHasEffect(EFFECT_SYNSUB_NORDIC)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end

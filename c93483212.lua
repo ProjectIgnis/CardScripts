@@ -43,8 +43,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
 end
-function s.tfilter(c,lc,stype,tp)
-	return c:IsSetCard(0x3042,lc,stype,tp) or c:IsSummonCode(lc,stype,tp,61777313)
+function s.tfilter(c,scard,sumtype,tp)
+	return c:IsSetCard(0x6042,scard,sumtype,tp) or c:IsHasEffect(EFFECT_SYNSUB_NORDIC)
 end
 function s.imop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

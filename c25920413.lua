@@ -2,16 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
-	e1:SetRange(LOCATION_HAND)
-	e1:SetTargetRange(POS_FACEUP,1)
-	e1:SetCondition(s.spcon)
-	e1:SetOperation(s.spop)
-	e1:SetValue(1)
-	c:RegisterEffect(e1)
+	local e1=aux.AddLavaProcedure(c,1,POS_FACEUP,aux.AND(Card.IsFaceup,aux.FilterBoolFunction(Card.IsLevelBelow,3)),1)
 	--counter
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

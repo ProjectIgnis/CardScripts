@@ -1413,6 +1413,80 @@ function Auxiliary.IsZone(c,zone,tp)
 	local rzone = c:IsControler(tp) and (1 <<c:GetSequence()) or (1 << (16+c:GetSequence()))
 	return (rzone & zone) > 0
 end
+function Auxiliary.AddLavaProcedure(c,required,position,filter,value,description)
+	if not required or required < 1 then
+		required = 1
+	end
+	filter = filter or aux.TRUE
+	value = value or 0
+	local e1=Effect.CreateEffect(c)
+	if description then
+		e1:SetDescription(description)
+	end
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetTargetRange(position,1)
+	e1:SetValue(value)
+	e1:SetCondition(Auxiliary.LavaCondition(required,filter))
+	e1:SetTarget(Auxiliary.LavaTarget(required,filter))
+	e1:SetOperation(Auxiliary.LavaOperation(required,filter))
+	c:RegisterEffect(e1)
+	return e1
+end
+function Auxiliary.LavaCheck(sg,e,tp,mg)
+	return #sg==0 or Duel.GetMZoneCount(1-tp,sg,tp)>0
+end
+function Auxiliary.LavaCondition(required,filter)
+	return function(e,c)
+		if c==nil then return true end
+		local tp=c:GetControler()
+		local mg=Duel.GetMatchingGroup(aux.AND(Card.IsReleasable,filter),tp,0,LOCATION_MZONE,nil)
+		return aux.SelectUnselectGroup(mg,e,tp,required,required,Auxiliary.LavaCheck,0)
+	end
+end
+function Auxiliary.LavaTarget(required,filter)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk,c)
+		local mg=Duel.GetMatchingGroup(aux.AND(Card.IsReleasable,filter),tp,0,LOCATION_MZONE,nil)
+		local g=aux.SelectUnselectGroup(mg,e,tp,required,required,Auxiliary.LavaCheck,1,tp,HINTMSG_RELEASE,Auxiliary.LavaCheck)
+		if #g > 0 then
+			g:KeepAlive()
+			e:SetLabelObject(g)
+			return true
+		else
+			return false
+		end
+	end
+end
+function Auxiliary.LavaOperation(required,filter)
+	return function(e,tp,eg,ep,ev,re,r,rp,c)
+		local g=e:GetLabelObject()
+		Duel.Release(g,REASON_COST)
+		g:DeleteGroup()
+	end
+end
+function Auxiliary.AddKaijuProcedure(c)
+	c:SetUniqueOnField(1,0,aux.FilterBoolFunction(Card.IsSetCard,0xd3),LOCATION_MZONE)
+	local e1 = aux.AddLavaProcedure(c,1,POS_FACEUP_ATTACK)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_SPSUMMON_PROC)
+	e2:SetRange(LOCATION_HAND)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
+	e2:SetTargetRange(POS_FACEUP_ATTACK,0)
+	e2:SetCondition(Auxiliary.KaijuCondition)
+	c:RegisterEffect(e2)
+	return e1,e2
+end
+function Auxiliary.KaijuCondition(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(function(c)
+											return c:IsFaceup() and c:IsSetCard(0xd3)
+										end,tp,0,LOCATION_MZONE,1,nil)
+end
 
 Duel.LoadScript("proc_fusion.lua")
 Duel.LoadScript("proc_ritual.lua")

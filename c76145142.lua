@@ -66,7 +66,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetCards(e)
 	if #tg==0 then return end
 	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
 	local og=Duel.GetOperatedGroup()

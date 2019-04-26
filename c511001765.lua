@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,Card.IsType,tp,LOCATION_GRAVE,0,2,2,nil,TYPE_MONSTER)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetCards(e)
 	if #tg<3 then return end
 	local tc=tg:Filter(Card.IsLocation,nil,LOCATION_MZONE):GetFirst()
 	local mat=tg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)

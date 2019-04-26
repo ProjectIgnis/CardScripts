@@ -149,7 +149,7 @@ function s.bttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	if c:IsRelateToEffect(e) then
 		local tc=g:GetFirst()
 		while tc do
@@ -179,7 +179,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	if c:IsRelateToEffect(e) then
 		local tc=g:GetFirst()
 		while tc do

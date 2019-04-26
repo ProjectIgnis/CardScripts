@@ -63,7 +63,7 @@ function s.rmfilter(c,code)
 	return c:IsCode(code) and (c:IsLocation(0x43) or aux.SpElimFilter(c,true))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
 		Duel.Damage(1-tp,1000,REASON_EFFECT)
 		local og=Duel.GetOperatedGroup()

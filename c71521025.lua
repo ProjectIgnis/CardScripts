@@ -46,7 +46,7 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local sg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local sg=Duel.GetTargetCards(e)
 	if #sg > 0 and Duel.Remove(sg,POS_FACEUP,REASON_EFFECT) > 0 and Duel.GetLocationCount(tp,LOCATION_MZONE) > 0
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)

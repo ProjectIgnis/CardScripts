@@ -68,7 +68,7 @@ function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,#g*300)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	local ct=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 	if ct>0 then
 		Duel.Recover(tp,ct*300,REASON_EFFECT)

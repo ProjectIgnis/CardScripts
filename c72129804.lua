@@ -36,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,Card.IsCanAddCounter,tp,0,LOCATION_MZONE,#g,#g,nil,0x1041,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetCards(e)
 	local tc=tg:GetFirst()
 	while tc do
 		if tc:AddCounter(0x1041,1) and tc:GetLevel()>1 then

@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+		local g=Duel.GetTargetCards(e)
 		if ft<#g then return end
 		Duel.BreakEffect()
 		for tc in aux.Next(g) do

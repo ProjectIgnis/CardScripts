@@ -31,7 +31,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,e:GetLabel(),dam)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	if #g>0 then
 		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 		Duel.Damage(p,g:GetFirst():GetTextDefense(),REASON_EFFECT)

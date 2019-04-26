@@ -64,7 +64,7 @@ end
 	--Performing the effect of returning FIRE links, then negating opponent's cards
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetCards(e)
 	if #tg>0 and Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)>0 then
 		local ct=#(Duel.GetOperatedGroup())
 		local cg=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_ONFIELD,nil)

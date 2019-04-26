@@ -81,7 +81,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabelObject(g2:GetFirst())
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	if #g==2 then
 		local c1=g:GetFirst()
 		local c2=g:GetNext()

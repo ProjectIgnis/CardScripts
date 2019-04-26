@@ -93,7 +93,7 @@ function s.filter(c,e,tp)
 	return c:IsCode(58054262) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local og=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local og=Duel.GetTargetCards(e)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then Duel.SendtoGrave(g,REASON_RULE) return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -155,7 +155,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetCards(e)
 	if #tg>0 then
 		local spg=Group.CreateGroup()
 		local tc=tg:GetFirst()

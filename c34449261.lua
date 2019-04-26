@@ -41,7 +41,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetCards(e)
 	local dam=tg:Filter(Card.IsFaceup,nil):GetSum(Card.GetAttack)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tg)
 	if #g>0 and Duel.Destroy(g,REASON_EFFECT)~=0 and dam>0 then

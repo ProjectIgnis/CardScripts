@@ -19,7 +19,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,Card.IsLevelAbove,tp,LOCATION_MZONE,0,2,2,nil,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e):Filter(Card.IsFaceup,nil)
+	local g=Duel.GetTargetCards(e):Filter(Card.IsFaceup,nil)
 	if #g<=1 then return end
 	local lv=g:GetSum(Card.GetOriginalLevel)
 	local tc=g:GetFirst()

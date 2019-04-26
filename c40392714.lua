@@ -90,7 +90,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoGrave(c,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_GRAVE) then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if ft<=0 then return end
-		local sg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+		local sg=Duel.GetTargetCards(e)
 		if sg:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 		if sg:GetCount()>ft then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

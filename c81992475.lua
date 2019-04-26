@@ -67,7 +67,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,#g*300)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
 		local rg=Duel.GetOperatedGroup()
 		local ct=rg:FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)

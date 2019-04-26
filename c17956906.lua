@@ -55,7 +55,7 @@ function s.filter2(c,e,sp)
 	return c:IsAttackBelow(2000) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g1, ft1 = Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e), Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local g1, ft1 = Duel.GetTargetCards(e), Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft1 <= 0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft1 = 1 end
 	local sg = g1

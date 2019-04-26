@@ -72,7 +72,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	local tc1=g:Filter(Card.IsLocation,nil,LOCATION_MZONE):GetFirst()
 	local g2=g:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 	if tc1 and tc1:IsFaceup() and not tc1:IsImmuneToEffect(e) and #g2>0 then

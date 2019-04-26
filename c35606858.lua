@@ -91,7 +91,7 @@ function s.dctg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.dcop(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.TossDice(tp,1)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	if #g==0 then return end
 	local tc=nil
 	if #g>1 then

@@ -40,7 +40,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_GRAVE,1,ft,nil,e,tp,eg,ep,ev,re,r,rp,tid)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tgg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tgg=Duel.GetTargetCards(e)
 	local tc=tgg:GetFirst()
 	while tc and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 do
 		local tpe=tc:GetType()

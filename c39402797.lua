@@ -34,7 +34,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	local c=e:GetHandler()
 	local ct=Duel.Destroy(g,REASON_EFFECT)
 	if ct>0 and c:IsRelateToEffect(e) and c:IsFaceup() then

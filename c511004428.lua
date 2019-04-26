@@ -32,7 +32,7 @@ function s.targetat(e,tp,eg,ev,ep,re,r,rp,chk)
 end
 function s.operationat(e,tp,eg,ev,ep,re,r,rp)
 	local c=e:GetHandler()
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetCards(e)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	if ft>0 and #tg>ft then tg=tg:Select(tp,1,ft,nil) end

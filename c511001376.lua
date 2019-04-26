@@ -115,7 +115,7 @@ function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(g)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	if #g<=0 or g:IsExists(aux.NOT(s.retcfilter2),1,nil,tp) then return end
 	for tc in aux.Next(g) do 
 		Duel.MoveToField(tc,tp,tp,tc:GetPreviousLocation(),tc:GetPreviousPosition(),true,math.pow(2,tc:IsPreviousLocation(LOCATION_PZONE) and tc:GetPreviousSequence()==4 and 1 or tc:GetPreviousSequence()))

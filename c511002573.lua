@@ -37,7 +37,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetCards(e)
 	if #tg>0 then
 		Duel.Damage(p,tg:GetSum(Card.GetAttack),REASON_EFFECT)
 	end

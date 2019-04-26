@@ -30,6 +30,6 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(5043010,2))
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 end

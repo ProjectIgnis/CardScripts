@@ -45,7 +45,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e):Filter(Card.IsFaceup,nil)
+	local g=Duel.GetTargetCards(e):Filter(Card.IsFaceup,nil)
 	if #g<=1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(30494314,0))
 	local tc1=g:Select(tp,1,1,nil):GetFirst()
@@ -83,7 +83,7 @@ function s.atktg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	if #g<=0 then return end
 	local tc1=g:GetFirst()
 	local tc2=g:GetNext()

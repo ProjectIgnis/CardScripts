@@ -52,7 +52,7 @@ function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,#g,0,0)
 end
 function s.tfop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	if #g<=0 then return end
 	local ct=math.min(2,Duel.GetLocationCount(tp,LOCATION_SZONE))
 	if ct<1 then return end

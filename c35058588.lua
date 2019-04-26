@@ -79,7 +79,7 @@ function s.countertg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetCard(sg)
 end
 function s.counterop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	local tc=g:GetFirst()
 	while tc do
 		tc:AddCounter(0x1038,1)

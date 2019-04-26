@@ -56,7 +56,7 @@ function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g2=Duel.SelectTarget(tp,s.xyzfilter,tp,LOCATION_MZONE,0,1,1,g1:GetFirst())
 end
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	if #g~=2 then return end
 	local tc=g:GetFirst()
 	local xc=g:GetNext()

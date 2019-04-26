@@ -86,7 +86,7 @@ function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	if #g~=2 then return end
 	local sg=g:Filter(Card.IsCanBeSpecialSummoned,nil,e,0,tp,false,false)
 	if #sg==0 then return end

@@ -77,7 +77,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g1,#g1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetCards(e)
 	if #tg>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=#tg then
 		Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
 	end

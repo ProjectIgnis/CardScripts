@@ -46,7 +46,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc1=e:GetLabelObject()
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	if #g<=1 then return end
 	local tc2=g:GetFirst()
 	if tc1==tc2 then tc2=g:GetNext() end

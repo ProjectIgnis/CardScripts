@@ -76,7 +76,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	Duel.Destroy(g,REASON_EFFECT)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

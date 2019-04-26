@@ -62,7 +62,7 @@ end
 function s.olop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+		local g=Duel.GetTargetCards(e)
 		if #g>0 then
 			Duel.Overlay(c,g)
 		end

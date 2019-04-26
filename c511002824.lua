@@ -48,7 +48,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g1,#g1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	local g1=g:Filter(Card.IsControler,nil,tp)
 	local g2=g:Filter(Card.IsControler,nil,1-tp)
 	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)

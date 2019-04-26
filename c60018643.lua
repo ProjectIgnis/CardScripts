@@ -19,23 +19,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 	--register attributes
-	if not s.global_flag then
-		s.global_flag=true
+	aux.GlobalCheck(s,function()
 		s.attr_list={}
 		s.attr_list[0]=0
 		s.attr_list[1]=0
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_PHASE+PHASE_END)
-		ge1:SetCountLimit(1)
-		ge1:SetCondition(s.resetop)
-		Duel.RegisterEffect(ge1,0)
-	end
-end
-function s.resetop(e,tp,eg,ep,ev,re,r,rp)
-	s.attr_list[0]=0
-	s.attr_list[1]=0
-	return false
+		aux.AddValuesReset(function()
+							s.attr_list[0]=0
+							s.attr_list[1]=0
+							end)
+		end)
 end
 function s.thcfilter(c,e,tp)
 	local attr=c:GetAttribute()

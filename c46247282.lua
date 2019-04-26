@@ -34,9 +34,8 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCode(EFFECT_DISABLE_FIELD)
-	--thanks fluo for hardcoding our day
-	e4:SetCondition(function(e)if e:GetValue()~=0 then e:SetValue(s.disop) end return true end)
-	e4:SetValue(s.disop)
+	e4:SetProperty(EFFECT_FLAG_REPEAT)
+	e4:SetOperation(s.disop)
 	c:RegisterEffect(e4)
 end
 function s.cfilter(c)
@@ -63,29 +62,32 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local cg=e:GetHandler():GetColumnGroup()
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,cg)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local cg=c:GetColumnGroup()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,cg)
-		if #g>0 then
+		if g:GetCount()>0 then
 			Duel.Destroy(g,REASON_EFFECT)
 		end
 	end
 end
-function s.disop(e)
-	local c=e:GetHandler()
-	local seq=c:GetSequence()
-	local nseq=4-seq
-	if c:GetControler()==1 then seq,nseq=nseq,seq end
-	local flag=0
-	if Duel.CheckLocation(0,LOCATION_MZONE,seq) then flag=flag+(2^seq) end
-	if Duel.CheckLocation(0,LOCATION_SZONE,seq) then flag=flag+((2^seq)<<8) end
-	if Duel.CheckLocation(1,LOCATION_MZONE,nseq) then flag=flag+((2^nseq)<<16) end
-	if Duel.CheckLocation(1,LOCATION_SZONE,nseq) then flag=flag+((2^nseq)<<24) end
-	if seq==1 and Duel.CheckLocation(0,LOCATION_MZONE,5) then flag=flag+(2^5) end
-	if seq==3 and Duel.CheckLocation(0,LOCATION_MZONE,6) then flag=flag+(2^6) end
-	return flag
+function s.disop(e,tp)
+    local c=e:GetHandler()
+    local seq=c:GetSequence()
+    local nseq=4-seq
+    local flag=0
+    if Duel.CheckLocation(tp,LOCATION_MZONE,seq) then flag=flag|(1<<seq) end
+    if Duel.CheckLocation(tp,LOCATION_SZONE,seq) then flag=flag|(1<<(8+seq)) end
+    if Duel.CheckLocation(1-tp,LOCATION_MZONE,nseq) then flag=flag|(1<<(16+nseq)) end
+    if Duel.CheckLocation(1-tp,LOCATION_SZONE,nseq) then flag=flag|(1<<(24+nseq)) end
+    if seq==1 and Duel.CheckLocation(tp,LOCATION_MZONE,5) and Duel.CheckLocation(1-tp,LOCATION_MZONE,6) then
+		flag=flag|(1<<5)|(1<<21)
+	end
+    if seq==3 and Duel.CheckLocation(tp,LOCATION_MZONE,6) and Duel.CheckLocation(1-tp,LOCATION_MZONE,5) then
+		flag=flag|(1<<6)|(1<<22)
+	end
+    return flag
 end

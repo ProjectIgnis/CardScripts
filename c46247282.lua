@@ -62,14 +62,14 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local cg=e:GetHandler():GetColumnGroup()
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,cg)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local cg=c:GetColumnGroup()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,cg)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.Destroy(g,REASON_EFFECT)
 		end
 	end

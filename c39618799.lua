@@ -55,7 +55,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.thfilter(c)
-	return (c:IsCode(39996157) or (c:GetType()&0x81)==0x81) and c:IsAbleToHand()
+	return (c:IsCode(39996157) or c:IsRitualMonster()) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

@@ -62,7 +62,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
-	return a:IsControler(tp) and ((a:GetType()&0x81)==0x81 and a:IsSetCard(0x106)) and a:GetBattleTarget():IsControler(1-tp)
+	return a:IsControler(tp) and (a:IsRitualMonster() and a:IsSetCard(0x106)) and a:GetBattleTarget():IsControler(1-tp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

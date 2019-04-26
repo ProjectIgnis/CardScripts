@@ -33,7 +33,7 @@ function s.lvfilter(c,tp)
 		and Duel.IsExistingMatchingCard(s.lvcfilter,tp,LOCATION_HAND,0,1,nil,c)
 end
 function s.lvcfilter(c,mc)
-	return (c:GetType()&0x81)==0x81 and not c:IsPublic() and not c:IsLevel(mc:GetLevel())
+	return c:IsRitualMonster() and not c:IsPublic() and not c:IsLevel(mc:GetLevel())
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.lvfilter(chkc,tp) end

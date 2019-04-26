@@ -23,7 +23,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.exccon(e) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.cfilter(c)
-	return (c:GetType()&0x81)==0x81 and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsRitualMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()

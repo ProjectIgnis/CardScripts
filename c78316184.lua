@@ -61,7 +61,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-#tg>0
 end
 function s.costfilter(c)
-	return (c:GetType()&0x81)==0x81 and c:IsAbleToDeckAsCost()
+	return c:IsRitualMonster() and c:IsAbleToDeckAsCost()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE,0,1,nil) end

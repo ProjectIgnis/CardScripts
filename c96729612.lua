@@ -14,10 +14,10 @@ function s.initial_effect(c)
 	table.insert(GhostBelleTable,e1)
 end
 function s.filter(c)
-	return (c:GetType()&0x81)==0x81 and c:IsLevelBelow(7) and c:IsAbleToHand()
+	return c:IsRitualMonster() and c:IsLevelBelow(7) and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return (c:GetType()&0x82)==0x82 and c:IsAbleToHand()
+	return c:IsRitualSpell() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

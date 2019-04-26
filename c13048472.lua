@@ -15,11 +15,11 @@ function s.initial_effect(c)
 	table.insert(GhostBelleTable,e1)
 end
 function s.filter(c,tp)
-	return (c:GetType()&0x82)==0x82 and c:IsAbleToHand()
+	return c:IsRitualSpell() and c:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c)
 end
 function s.filter2(c,mc)
-	return (c:GetType()&0x81)==0x81 and c:IsAbleToHand() and s.isfit(c,mc)
+	return c:IsRitualMonster() and c:IsAbleToHand() and s.isfit(c,mc)
 end
 function s.isfit(c,mc)
 	return mc.fit_monster and c:IsCode(table.unpack(mc.fit_monster))

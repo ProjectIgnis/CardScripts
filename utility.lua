@@ -1487,6 +1487,31 @@ function Auxiliary.KaijuCondition(e,c)
 											return c:IsFaceup() and c:IsSetCard(0xd3)
 										end,tp,0,LOCATION_MZONE,1,nil)
 end
+function Auxiliary.AddValuesReset(resetfunc)
+	if not Auxiliary.ToResetFuncTable then
+		Auxiliary.ToResetFuncTable = {resetfunc}
+		local ge=Effect.GlobalEffect()
+		ge:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge:SetCode(EVENT_TURN_END)
+		ge:SetCountLimit(1)
+		ge:SetCondition(Auxiliary.ValuesReset)
+		Duel.RegisterEffect(ge,0)
+	else
+		table.insert(Auxiliary.ToResetFuncTable,resetfunc)
+	end
+end
+function Auxiliary.ValuesReset()
+	for _,v in pairs(Auxiliary.ToResetFuncTable) do
+		v()
+	end
+	return false
+end
+function Auxiliary.GlobalCheck(s,func)
+	if not s.global_check then
+		s.global_check=true
+		func()		
+	end
+end
 
 Duel.LoadScript("proc_fusion.lua")
 Duel.LoadScript("proc_ritual.lua")

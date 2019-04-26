@@ -27,5 +27,5 @@ function s.mttg(e,c)
 end
 function s.mtval(e,c)
 	if not c then return false end
-	return c:GetOriginalCode()==id
+	return c:IsOriginalCode(id)
 end

@@ -45,7 +45,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.regfilter(c)
-	return c:GetFlagEffect(511001124)>0 and c:GetOriginalCode()==id and c:IsFacedown()
+	return c:GetFlagEffect(511001124)>0 and c:IsOriginalCode(id) and c:IsFacedown()
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()~=e:GetOwner():GetOwner() then return end

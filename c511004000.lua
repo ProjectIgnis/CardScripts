@@ -46,9 +46,6 @@ function s.initial_effect(c)
 		s[1]=nil
 	end
 end
-function s.cfilter(c,code)
-	return c:GetOriginalCode()==code
-end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_REMOVED,0,1,e:GetHandler(),id) then
@@ -61,14 +58,14 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,1,REASON_RULE)
 	end
 	local g=Duel.GetFieldGroup(tp,LOCATION_DECK+LOCATION_HAND,0)
-	g:Remove(s.cfilter,nil,id)
+	g:Remove(Card.IsOriginalCode,nil,id)
 	if s[tp]==nil then
 		s[tp]=Group.CreateGroup()
 		s[tp]:KeepAlive()
 		local i=0
 		while i<5 and #g>0 and Duel.SelectYesNo(tp,529) do
 			local tc=g:Select(tp,1,1,nil):GetFirst()
-			local sg=g:Filter(s.cfilter,nil,tc:GetOriginalCode())
+			local sg=g:Filter(Card.IsOriginalCode,nil,tc:GetOriginalCode())
 			s[tp]:Merge(sg)
 			g:Sub(sg)
 			i=i+1

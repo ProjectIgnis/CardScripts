@@ -123,7 +123,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		for ec in aux.Next(tg) do
 			ec:CancelCardTarget(tc)
 		end
-		if c:GetOriginalCode()==511000987 then
+		if c:IsOriginalCode(511000987) then
 			Duel.BreakEffect()
 			Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
 		end

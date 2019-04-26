@@ -23,7 +23,7 @@ function s.matfilter(c,lc,sumtype,tp)
 end
 function s.spfilter(c,e,tp,zone,code)
 	if zone==0 then zone=0xff end
-	return c:IsSetCard(0x101) and c:GetOriginalCode()~=code
+	return c:IsSetCard(0x101) and not c:IsOriginalCode(code)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.spcfilter(c,g,zone,e,tp)

@@ -51,5 +51,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():GetOriginalCode()==e:GetLabel() and not re:GetHandler():IsImmuneToEffect(e)
+	return re:GetHandler():IsOriginalCode(e:GetLabel()) and not re:GetHandler():IsImmuneToEffect(e)
 end

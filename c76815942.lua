@@ -54,7 +54,7 @@ function s.matval(c,sc)
 	else
 		b=c:IsSetCard(0xf7)
 	end
-	if (b or c:GetOriginalCode()==8491961) and c:IsType(TYPE_XYZ,sc,SUMMON_TYPE_FUSION) then
+	if (b or c:IsOriginalCode(8491961)) and c:IsType(TYPE_XYZ,sc,SUMMON_TYPE_FUSION) then
 		return c:GetOverlayCount()
 	end
 	return 0

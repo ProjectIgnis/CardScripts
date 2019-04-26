@@ -48,7 +48,7 @@ end
 function s.ffilter(code)
 	return function(c,fc,sub,sub2,mg,sg,tp,contact)
 		if contact then
-			return c:GetOriginalCode()==code
+			return c:IsOriginalCode(code)
 		else
 			return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,tp,code) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961))
 		end

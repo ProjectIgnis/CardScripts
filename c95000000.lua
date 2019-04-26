@@ -268,7 +268,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:GetOwner()==tp and c:GetOriginalCode()~=id and c:GetDestination()==LOCATION_REMOVED
+	return c:GetOwner()==tp and not c:IsOriginalCode(id) and c:GetDestination()==LOCATION_REMOVED
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp) end

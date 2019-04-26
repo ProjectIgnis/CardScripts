@@ -63,11 +63,8 @@ function s.fakeop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.filter(c)
-	return c:GetOriginalCode()==id
-end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsOriginalCode,tp,LOCATION_SZONE,LOCATION_SZONE,nil,id)
 	local p=Duel.GetTurnPlayer()
 	--local g2=Group.CreateGroup()
 	local tc=g:GetFirst()

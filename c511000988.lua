@@ -31,10 +31,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) then
-		if tc:GetOriginalCode()~=id then
+		if not tc:IsOriginalCode(id) then
 			c:ReplaceEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD)
 		end
-		if tc:GetOriginalCode()~=id or Duel.IsExistingTarget(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) then
+		if not tc:IsOriginalCode(id) or Duel.IsExistingTarget(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) then
 			Duel.RaiseSingleEvent(c,EVENT_FLIP,e,r,rp,ep,ev)
 		end
 	end

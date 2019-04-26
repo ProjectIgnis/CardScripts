@@ -41,11 +41,8 @@ s.listed_names={CARD_BLUEEYES_W_DRAGON,38517737}
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end
-function s.matfilter(c)
-	return c:GetOriginalCode()==38517737
-end
 function s.valcheck(e,c)
-	if c:GetMaterial():IsExists(s.matfilter,1,nil) then
+	if c:GetMaterial():IsExists(Card.IsOriginalCode,1,nil,38517737) then
 		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_TEMP_REMOVE|RESET_LEAVE),EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 	end
 end

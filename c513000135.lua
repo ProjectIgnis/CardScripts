@@ -66,7 +66,7 @@ function s.avfilter(c)
 			de=defte:GetLabel()
 		end
 	end
-	return c:GetOriginalCode()==21208154 and (ae~=9999999 or de~=9999999)
+	return c:IsOriginalCode(21208154) and (ae~=9999999 or de~=9999999)
 end
 function s.avatarcon(e,tp,eg,ev,ep,re,r,rp)
 	return Duel.GetMatchingGroupCount(s.avfilter,tp,0xff,0xff,nil)>0

@@ -1147,7 +1147,7 @@ end
 end
 function cm.NanahiraFilter(c,og)
 	if not c:IsFaceup() then return false end
-	return c:GetOriginalCode()==210765765 or (c:IsCode(210765765) and not og)
+	return c:IsOriginalCode(210765765) or (c:IsCode(210765765) and not og)
 end
 function cm.NanahiraTrap(c,...)
 	local t={...}

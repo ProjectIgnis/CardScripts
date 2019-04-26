@@ -61,7 +61,7 @@ function c210660005.poop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c210660005.ttfilter(c)
-	return c:GetOriginalCode()==210660005 and c:IsReleasable()
+	return c:IsOriginalCode(210660005) and c:IsReleasable()
 end
 function c210660005.ttcon(e,c)
 	if c==nil then return true end

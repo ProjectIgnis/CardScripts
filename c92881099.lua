@@ -45,7 +45,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp,code)
-	return c:IsSetCard(0x64) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetOriginalCode()~=code
+	return c:IsSetCard(0x64) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsOriginalCode(code)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

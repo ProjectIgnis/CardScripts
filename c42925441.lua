@@ -82,7 +82,7 @@ function s.costfilter3(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetOriginalCode())
 end
 function s.spfilter2(c,e,tp,code)
-	return c:IsSetCard(0x55) and c:GetOriginalCode()~=code and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x55) and not c:IsOriginalCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,c)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)

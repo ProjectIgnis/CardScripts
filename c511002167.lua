@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end		
 end
 function s.spchk(c)
-	return c:IsFaceup() and not c:IsStatus(STATUS_DISABLED) and c:GetOriginalCode()==id
+	return c:IsFaceup() and not c:IsStatus(STATUS_DISABLED) and c:IsOriginalCode(id)
 end
 function s.ntcon(e,c)
 	if c==nil then return true end

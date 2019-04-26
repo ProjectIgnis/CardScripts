@@ -79,5 +79,5 @@ function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,c)
-	return c:GetOriginalCode()~=id
+	return not c:IsOriginalCode(id)
 end

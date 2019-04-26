@@ -74,7 +74,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	for i=1,Duel.GetCurrentChain() do
 		local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
 		local tc=te:GetHandler()
-		if tc~=e:GetHandler() and tc:IsControler(tp) and tc:GetOriginalCode()==id then
+		if tc~=e:GetHandler() and tc:IsControler(tp) and tc:IsOriginalCode(id) then
 			return false
 		end
 	end

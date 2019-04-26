@@ -43,7 +43,7 @@ function s.costfilter(c,e,tp)
 end
 function s.spfilter(c,e,tp,tc)
 	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x116) or c:IsSetCard(0xfe)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and c:GetOriginalCode()~=tc:GetOriginalCode()
+		and not c:IsOriginalCode(tc:GetOriginalCode())
 end
 function s.sptarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

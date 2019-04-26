@@ -18,7 +18,7 @@ function s.desfilter1(c,e,tp)
 	and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,c:GetOriginalCode())
 end
 function s.spfilter(c,e,tp,code)
-	return c:IsSetCard(0x102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetOriginalCode()~=code
+	return c:IsSetCard(0x102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsOriginalCode(code)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

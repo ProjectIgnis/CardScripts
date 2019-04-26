@@ -109,10 +109,10 @@ function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.negfilter1(c)
-	return c:IsFaceup() and c:GetOriginalCode()==513000031 and not c:IsStatus(STATUS_DISABLED) 
+	return c:IsFaceup() and c:IsOriginalCode(513000031) and not c:IsStatus(STATUS_DISABLED) 
 end
 function s.negfilter2(c)
-	return c:IsFaceup() and c:GetOriginalCode()==511001603 and not c:IsStatus(STATUS_DISABLED) 
+	return c:IsFaceup() and c:IsOriginalCode(511001603) and not c:IsStatus(STATUS_DISABLED) 
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

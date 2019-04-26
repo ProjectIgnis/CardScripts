@@ -109,7 +109,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	until #g<=0
 end
 function s.codefilter(c,code)
-	return c:GetOriginalCode()==code and c:IsSetCard(0xb)
+	return c:IsOriginalCode(code) and c:IsSetCard(0xb)
 end
 function s.codefilterchk(c,sc)
 	return sc:GetFlagEffect(c:GetOriginalCode())>0

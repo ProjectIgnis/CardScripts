@@ -34,16 +34,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 
-function s.orcode(c)
-	return c:GetOriginalCode()==id
-end
-
 function s.gtg_cd(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.orcode,1,nil,id)
+	return eg:IsExists(Card.IsOriginalCode,1,nil,id)
 end
 
 function s.gtg_op(e,tp,eg,ep,ev,re,r,rp)
-  local g=eg:Filter(s.orcode,nil,id)
+  local g=eg:Filter(Card.IsOriginalCode,nil,id)
 	local c=g:GetFirst()
 	while c do
 		local p=c:GetControler()
@@ -72,7 +68,7 @@ function s.sum_op(e,tp,eg,ep,ev,re,r,rp)
 				c:ResetFlagEffect(id)
 			end
 		end)
-		local sg=Duel.GetMatchingGroup(s.orcode,0,LOCATION_SZONE,LOCATION_SZONE,nil)
+		local sg=Duel.GetMatchingGroup(Card.IsOriginalCode,0,LOCATION_SZONE,LOCATION_SZONE,nil,id)
 		sg:ForEach(function(c)
 			local fid=c:GetFieldID()
 			if sactg[fid] then

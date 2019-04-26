@@ -32,7 +32,7 @@ function s.desfilter(c,e,tp,g,nc)
 		and Duel.IsExistingMatchingCard(f,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,dc)
-	return c:IsSetCard(0x11f) and c:GetOriginalCode()~=dc:GetOriginalCode() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetMZoneCount(tp,dc)>0
+	return c:IsSetCard(0x11f) and not c:IsOriginalCode(dc:GetOriginalCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetMZoneCount(tp,dc)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(s.thfilter1,tp,LOCATION_DECK,0,1,nil)

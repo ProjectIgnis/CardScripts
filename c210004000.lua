@@ -127,7 +127,7 @@ function c210004000.xyzchk(c,xyz,sumtype,tp,g)
 end
 function c210004000.sumop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
-		if tc:GetOriginalCode()==e:GetHandler():GetOriginalCode() then 
+		if tc:IsOriginalCode(e:GetHandler():GetOriginalCode()) then 
 			if tc:IsSummonType(SUMMON_TYPE_FUSION) then
 				c210004000[tc:GetSummonPlayer()][SUMMON_TYPE_FUSION]=true
 			end

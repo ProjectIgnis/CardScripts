@@ -55,7 +55,7 @@ function s.chkfilter(c,e,tp,cc,code)
 		not c:IsHasEffect(EFFECT_REVIVE_LIMIT) and Duel.IsPlayerCanSpecialSummon(tp,0,POS_FACEUP,cc,c)
 end
 function s.spfilter(c,e,tp,cc,code)
-	return c:IsSetCard(0xd3) and c:GetOriginalCode()~=code and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,cc)
+	return c:IsSetCard(0xd3) and not c:IsOriginalCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,cc)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end

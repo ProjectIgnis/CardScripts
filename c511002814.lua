@@ -41,7 +41,7 @@ function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.regfilter(c,tp)
-	return c:GetOriginalCode()==id and c:IsFacedown()
+	return c:IsOriginalCode(id) and c:IsFacedown()
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.regfilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)

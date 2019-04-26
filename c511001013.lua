@@ -86,7 +86,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,s.filter3,tp,LOCATION_EXTRA,0,1,1,nil,e:GetLabel(),e,tp,tc):GetFirst()
-	local clayGuardianChk=tc:GetPreviousCodeOnField()==84327329 and sc:GetOriginalCode()==id
+	local clayGuardianChk=tc:GetPreviousCodeOnField()==84327329 and sc:IsOriginalCode(id)
 	if sc and Duel.SpecialSummon(sc,0,tp,tp,clayGuardianChk,false,POS_FACEUP)>0 and clayGuardianChk then
 		sc:CompleteProcedure()
 	end

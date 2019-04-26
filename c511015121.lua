@@ -61,7 +61,7 @@ function s.atkcon(e)
 end
 
 function s.codefilter(c,code)
-	return c:GetOriginalCode()==code and c:GetSequence()<5
+	return c:IsOriginalCode(code) and c:GetSequence()<5
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.codefilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil,id)

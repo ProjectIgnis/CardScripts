@@ -28,7 +28,7 @@ function s.thfilter(c,e,tp)
 end
 function s.spfilter(c,e,tp,hc)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec)
-		and c:GetOriginalCode()~=hc:GetOriginalCode() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+		and not c:IsOriginalCode(hc:GetOriginalCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 		and Duel.GetLocationCountFromEx(tp,tp,hc,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

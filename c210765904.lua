@@ -84,10 +84,7 @@ function cm.gfilter(c,g)
 end
 function cm.gfilter1(c,g)
 	if not g then return true end
-	return not g:IsExists(cm.gfilter2,1,nil,c:GetOriginalCode())
-end
-function cm.gfilter2(c,code)
-	return c:GetOriginalCode()==code
+	return not g:IsExists(Card.IsOriginalCode,1,nil,c:GetOriginalCode())
 end
 function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

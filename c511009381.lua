@@ -78,7 +78,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():GetOriginalCode()==id
+	return re:GetHandler():IsOriginalCode(id)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(51570882) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

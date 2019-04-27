@@ -793,7 +793,7 @@ GLOBALFLAG_TUNE_MAGICIAN		=0x400		--
 --count_code
 EFFECT_COUNT_CODE_OATH			=0x10000000 --发动次数限制(誓约次数, 发动被无效不计数)
 EFFECT_COUNT_CODE_DUEL			=0x20000000 --决斗中使用次数
-EFFECT_COUNT_CODE_SINGLE		=0x1		--同一张卡的多个效果公共使用次数
+EFFECT_COUNT_CODE_SINGLE		=0x40000000		--同一张卡的多个效果公共使用次数
 --特殊选项
 DUEL_TEST_MODE			=0x01		--测试模式(目前暫無)
 DUEL_ATTACK_FIRST_TURN	=0x02		--第一回合可以攻击(用于残局)

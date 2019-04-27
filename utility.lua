@@ -14,6 +14,11 @@ SUMMON_TYPE_GEMINI=SUMMON_TYPE_DUAL
 function GetID()
     return self_table,self_code
 end
+function Card.GetMetatable(c)
+	local code=c:GetOriginalCode()
+	local mt=_G["c" .. code]
+	return mt
+end
 bit={}
 function bit.band(a,b)
     return a&b

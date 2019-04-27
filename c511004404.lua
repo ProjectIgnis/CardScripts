@@ -33,7 +33,7 @@ function s.gop(e,tp)
 	end
 end
 function s.prefilter(c,tp)
-	return c:GetPreviousControler()==tp and (c:GetPreviousTypeOnField()&TYPE_MONSTER)==TYPE_MONSTER and c:GetLevel()>0 
+	return c:IsPreviousControler(tp) and (c:GetPreviousTypeOnField()&TYPE_MONSTER)==TYPE_MONSTER and c:GetLevel()>0 
 		and c:GetFlagEffect(id)~=0
 end
 function s.condition(e,tp,eg,ev,ep,re,r,rp)

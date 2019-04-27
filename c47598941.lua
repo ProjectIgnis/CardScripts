@@ -50,7 +50,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_PZONE) and c:GetPreviousControler()==tp
+	return c:IsPreviousLocation(LOCATION_PZONE) and c:IsPreviousControler(tp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

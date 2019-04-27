@@ -32,7 +32,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,2000)
 end
 function s.egfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	local g1=eg:IsExists(s.egfilter,1,nil,tp)

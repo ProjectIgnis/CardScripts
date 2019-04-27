@@ -56,7 +56,7 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp~=tp and c:IsReason(REASON_EFFECT)
-		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_SZONE)
+		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_SZONE)
 end
 function s.thfilter(c)
 	return c:IsCode(18144506) and c:IsAbleToHand()

@@ -67,7 +67,7 @@ function s.tgcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)>=2
 end
 function s.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_DESTROY)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_DESTROY)
 		and (c:GetPreviousTypeOnField()&TYPE_NORMAL)~=0
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)

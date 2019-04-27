@@ -96,7 +96,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_BATTLE)
-		or (rp~=tp and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp)
+		or (rp~=tp and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp))
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xc6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

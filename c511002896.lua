@@ -92,7 +92,7 @@ end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_DESTROY)
-		and c:GetPreviousControler()==tp and c:GetReasonPlayer()==1-tp
+		and c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

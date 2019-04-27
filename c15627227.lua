@@ -87,7 +87,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetPreviousControler()==tp and r&0x21==0x21
+	return c:IsPreviousControler(tp) and r&0x21==0x21
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x102) and c:IsAbleToHand()

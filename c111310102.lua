@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:GetPreviousControler()==tp and (c:GetReason()&0x41)==0x41
+	return c:IsPreviousControler(tp) and (c:GetReason()&0x41)==0x41
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)

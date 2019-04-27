@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c,tp)
-	return c:IsRace(RACE_REPTILE) and c:GetPreviousControler()==tp and c:GetPreviousLocation()==LOCATION_MZONE
+	return c:IsRace(RACE_REPTILE) and c:IsPreviousControler(tp) and c:GetPreviousLocation()==LOCATION_MZONE
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

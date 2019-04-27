@@ -42,7 +42,7 @@ end
 s.toss_coin=true
 function s.filter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and (c:GetPreviousRaceOnField()&RACE_MACHINE)~=0
-		and (c:GetPreviousAttributeOnField()&ATTRIBUTE_DARK)~=0 and c:GetPreviousControler()==tp
+		and (c:GetPreviousAttributeOnField()&ATTRIBUTE_DARK)~=0 and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

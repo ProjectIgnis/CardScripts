@@ -72,7 +72,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 		and c:GetControler()==tp and c:IsReason(REASON_DESTROY) and c:GetOwner()==tp
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)

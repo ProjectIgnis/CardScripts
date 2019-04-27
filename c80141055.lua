@@ -32,7 +32,7 @@ function s.indtg(e,c)
 end
 function s.filter(c,tp)
 	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEDOWN)
-		and c:GetPreviousControler()==tp and c:GetPreviousSequence()<5
+		and c:IsPreviousControler(tp) and c:GetPreviousSequence()<5
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp) and rp~=tp

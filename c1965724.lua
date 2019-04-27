@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
-		and c:GetPreviousControler()==tp and c:IsRace(RACE_FAIRY)
+		and c:IsPreviousControler(tp) and c:IsRace(RACE_FAIRY)
 end
 function s.cfilter2(c)
 	return c:IsFaceup() and c:IsCode(27288416)

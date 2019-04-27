@@ -64,7 +64,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    return c:GetPreviousControler()==tp
+    return c:IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
     return c:IsCode(97836203) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)

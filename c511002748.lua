@@ -12,7 +12,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,tid,e,tp)
 	return c:IsReason(REASON_BATTLE) and c:IsType(TYPE_XYZ) and c:GetTurnID()==tid
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetPreviousControler()==tp
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsPreviousControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,Duel.GetTurnCount(),e,tp)

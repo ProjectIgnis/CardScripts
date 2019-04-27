@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsType(TYPE_MONSTER) and not c:IsReason(REASON_BATTLE) 
-		and c:GetPreviousControler()==tp
+		and c:IsPreviousControler(tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil,tp) then

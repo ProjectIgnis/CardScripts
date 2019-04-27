@@ -38,7 +38,7 @@ end
 function s.filter(c,e,tp,re)
 	local re=c:GetReasonEffect()
 	local rc=re:GetHandler()
-	return c:IsSetCard(0xa3) and c:IsType(TYPE_SYNCHRO) and c:GetPreviousControler()==tp
+	return c:IsSetCard(0xa3) and c:IsType(TYPE_SYNCHRO) and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_COST) and rc==c
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

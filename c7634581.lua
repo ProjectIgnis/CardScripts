@@ -38,7 +38,7 @@ function s.efilter(e,c)
 	return c:IsType(TYPE_NORMAL) and c:GetLevel()==4
 end
 function s.cfilter(c,tp)
-	return (c:GetPreviousTypeOnField()&TYPE_NORMAL)~=0 and c:GetPreviousControler()==tp
+	return (c:GetPreviousTypeOnField()&TYPE_NORMAL)~=0 and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

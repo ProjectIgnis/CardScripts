@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,tp)
 	local rc=c:GetReasonCard()
-	return c:IsReason(REASON_BATTLE) and c:GetPreviousControler()==tp and c:IsType(TYPE_FLIP)
+	return c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp) and c:IsType(TYPE_FLIP)
 		and rc and rc:IsControler(1-tp) and rc:IsRelateToBattle()
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)

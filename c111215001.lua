@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,e,tp)
 	return c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsLocation(LOCATION_GRAVE)
-		and c:GetPreviousControler()==tp and (not e or c:IsRelateToEffect(e))
+		and c:IsPreviousControler(tp) and (not e or c:IsRelateToEffect(e))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,nil,tp)

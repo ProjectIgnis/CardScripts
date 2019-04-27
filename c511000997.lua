@@ -61,7 +61,7 @@ function s.filter(c)
 	return not c:IsReason(REASON_RULE)
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_PENDULUM) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsType(TYPE_PENDULUM) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,tp)

@@ -40,7 +40,7 @@ end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP) and c:IsReason(REASON_EFFECT)
-		and	c:GetReasonPlayer()~=tp and c:GetPreviousControler()==tp
+		and	c:GetReasonPlayer()~=tp and c:IsPreviousControler(tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

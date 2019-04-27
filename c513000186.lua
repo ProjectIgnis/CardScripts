@@ -61,7 +61,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetPreviousControler()==tp
+	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(39823987) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
@@ -80,7 +80,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 		and c:GetControler()==tp and c:IsReason(REASON_DESTROY) and c:IsCode(39823987)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)

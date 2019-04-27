@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and tc:IsControler(tp) and tc:GetPreviousControler()==tp and tc:IsReason(REASON_DESTROY)
+	return #eg==1 and tc:IsControler(tp) and tc:IsPreviousControler(tp) and tc:IsReason(REASON_DESTROY)
 		and tc:GetReasonEffect() and tc:GetReasonEffect():GetOwner()==tc
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

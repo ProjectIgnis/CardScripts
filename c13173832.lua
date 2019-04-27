@@ -55,7 +55,7 @@ end
 	--If this card was added from GY to hand
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (r&REASON_EFFECT)~=0 and c:IsPreviousLocation(LOCATION_GRAVE) and c:GetPreviousControler()==tp
+	return (r&REASON_EFFECT)~=0 and c:IsPreviousLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp)
 end
 	--Reveal this card from hand
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

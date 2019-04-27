@@ -62,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,e,tp)
-	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsCode(511000128) 
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsCode(511000128) 
 		 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.respcon(e,tp,eg,ep,ev,re,r,rp)

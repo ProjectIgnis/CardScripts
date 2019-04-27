@@ -26,7 +26,7 @@ function s.synlimit(e,c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)>0 and re:GetHandler():IsSetCard(0x2)
-		and e:GetHandler():GetPreviousLocation()==LOCATION_DECK and e:GetHandler():GetPreviousControler()==tp
+		and e:GetHandler():GetPreviousLocation()==LOCATION_DECK and e:GetHandler():IsPreviousControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -38,7 +38,7 @@ s.g=Group.CreateGroup()
 function s.gchk(e,tp,eg,ev,ep,re,r,rp)
 	local c=eg:GetFirst()
 	while c do
-		if c:GetPreviousControler()==tp and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1517) then
+		if c:IsPreviousControler(tp) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1517) then
 			s.g:AddCard(c) 
 		end
 		c=eg:GetNext()

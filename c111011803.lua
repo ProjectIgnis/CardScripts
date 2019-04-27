@@ -22,7 +22,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
 	if chk==0 then return Duel.GetLocationCount(tc:GetPreviousControler(),LOCATION_SZONE)>0 
-	and #eg==1 and tc:IsLocation(LOCATION_GRAVE) and tc:IsType(TYPE_SPELL+TYPE_TRAP) and tc:GetPreviousControler()==tp
+	and #eg==1 and tc:IsLocation(LOCATION_GRAVE) and tc:IsType(TYPE_SPELL+TYPE_TRAP) and tc:IsPreviousControler(tp)
 		and tc:IsSSetable() end
 	tc:CreateEffectRelation(e)
 end

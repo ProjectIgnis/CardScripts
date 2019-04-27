@@ -64,7 +64,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=ec:GetBattleTarget()
 	if not bc then return false end
 	e:SetLabel(bc:GetLevel())
-	return e:GetHandler():GetEquipTarget()==ec and bc:GetPreviousControler()==1-tp and bc:IsReason(REASON_BATTLE)
+	return e:GetHandler():GetEquipTarget()==ec and bc:IsPreviousControler(1-tp) and bc:IsReason(REASON_BATTLE)
 end
 function s.desfilter(c,lv)
 	return c:IsFaceup() and c:IsLevelBelow(lv)

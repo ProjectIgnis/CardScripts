@@ -38,7 +38,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp
+	return c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)
 		and (c:GetPreviousPosition()&POS_FACEUP)~=0 and (c:GetPreviousLocation()&LOCATION_ONFIELD)~=0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

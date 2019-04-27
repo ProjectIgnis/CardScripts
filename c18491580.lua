@@ -44,7 +44,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetReasonPlayer()~=tp
-		and c:GetPreviousControler()==tp
+		and c:IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x3b) and c:IsLevelBelow(7) and not c:IsCode(id) 

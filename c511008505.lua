@@ -27,7 +27,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsReason,1,nil,REASON_BATTLE+REASON_EFFECT)
 end
 function s.damfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetPreviousControler()==tp
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousControler(tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local dam1=eg:FilterCount(s.damfilter,nil,tp)*500

@@ -54,7 +54,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.thfilter(c,tp)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0xaf) and c:GetPreviousControler()==tp and c:IsControler(tp) 
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0xaf) and c:IsPreviousControler(tp) and c:IsControler(tp) 
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

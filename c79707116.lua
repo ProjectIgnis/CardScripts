@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_DECK) and c:GetPreviousControler()==tp
+	return c:IsPreviousLocation(LOCATION_DECK) and c:IsPreviousControler(tp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and (r&REASON_EFFECT)~=0 and eg:IsExists(s.cfilter,1,nil,1-tp)

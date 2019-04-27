@@ -17,7 +17,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	return #eg==1 and tc:IsReason(REASON_DESTROY) and tc:IsReason(REASON_BATTLE+REASON_EFFECT)
-		and tc:IsPreviousLocation(LOCATION_MZONE) and tc:GetPreviousControler()==tp
+		and tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsPreviousControler(tp)
 		and (tc:GetPreviousRaceOnField()&RACE_PLANT)~=0
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

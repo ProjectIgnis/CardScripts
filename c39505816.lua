@@ -19,7 +19,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE) 
-		and c:GetPreviousControler()==tp and c:GetPreviousAttributeOnField() & ATTRIBUTE_FIRE ~=0
+		and c:IsPreviousControler(tp) and c:GetPreviousAttributeOnField() & ATTRIBUTE_FIRE ~=0
 		and c:IsReason(REASON_DESTROY) and ((c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp) or c:IsReason(REASON_BATTLE))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

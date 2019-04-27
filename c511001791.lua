@@ -163,7 +163,7 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter2(c,tp)
-	return c:GetPreviousControler()==tp and (c:GetPreviousTypeOnField()&TYPE_MONSTER)==TYPE_MONSTER
+	return c:IsPreviousControler(tp) and (c:GetPreviousTypeOnField()&TYPE_MONSTER)==TYPE_MONSTER
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local ct1=eg:FilterCount(s.desfilter2,nil,1-tp)

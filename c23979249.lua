@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x88) and c:GetPreviousControler()==tp
+	return c:IsSetCard(0x88) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE+LOCATION_GRAVE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -54,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.regfilter(c,tp)
-	return c:IsSetCard(0x88) and c:IsControler(tp) and c:GetPreviousControler()==tp
+	return c:IsSetCard(0x88) and c:IsControler(tp) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_DECK) and not c:IsReason(REASON_DRAW)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)

@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,e,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
-		and c:GetPreviousControler()==tp and c:IsSetCard(0xc008)
+		and c:IsPreviousControler(tp) and c:IsSetCard(0xc008)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter,nil,e,tp)

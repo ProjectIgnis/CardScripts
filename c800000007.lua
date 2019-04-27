@@ -21,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spfilter(c,tp)
 	return c:IsReason(REASON_BATTLE) and c:IsPreviousLocation(LOCATION_MZONE) 
-	and c:GetPreviousControler()==tp and c:IsSetCard(0x83) and c:IsLocation(LOCATION_GRAVE) 
+	and c:IsPreviousControler(tp) and c:IsSetCard(0x83) and c:IsLocation(LOCATION_GRAVE) 
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spfilter,1,nil,tp)

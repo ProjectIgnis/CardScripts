@@ -43,7 +43,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,e,tp)
 	return c:IsPreviousLocation(LOCATION_GRAVE) and (not e or c:IsRelateToEffect(e)) 
-		and c:GetPreviousControler()==tp
+		and c:IsPreviousControler(tp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.filter,1,nil,nil,tp) end

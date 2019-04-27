@@ -14,7 +14,7 @@ end
 function s.filter(c,e,tp)
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
-		and c:GetPreviousControler()==tp and (c:IsSetCard(0x54) or c:IsSetCard(0x82) or c:IsSetCard(0x59))
+		and c:IsPreviousControler(tp) and (c:IsSetCard(0x54) or c:IsSetCard(0x82) or c:IsSetCard(0x59))
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

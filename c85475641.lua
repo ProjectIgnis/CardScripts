@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and c:GetLevel()>0
-		and c:IsControler(tp) and c:GetPreviousControler()==tp and c:GetCode()~=id
+		and c:IsControler(tp) and c:IsPreviousControler(tp) and c:GetCode()~=id
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter,nil,tp)

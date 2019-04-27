@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsCode(100000370) and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_DESTROY) and c:IsControler(tp) 
-		and c:GetPreviousControler()==tp
+		and c:IsPreviousControler(tp)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(111215001)

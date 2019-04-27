@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return #eg==1 and ec:IsPreviousLocation(LOCATION_MZONE) and ec:GetPreviousControler()==1-tp
+	return #eg==1 and ec:IsPreviousLocation(LOCATION_MZONE) and ec:IsPreviousControler(1-tp)
 		and ec:IsReason(REASON_DESTROY) and ec:IsLevelAbove(5)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -117,7 +117,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:GetReasonPlayer()~=tp
-		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp then
+		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(80250185,1))
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

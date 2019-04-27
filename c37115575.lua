@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e9)
 end
 function s.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsPreviousSetCard(0x23) and c:GetPreviousCodeOnField()~=id and not c:IsReason(REASON_RULE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:GetPreviousTypeOnField()&(TYPE_PENDULUM+TYPE_MONSTER)==(TYPE_PENDULUM+TYPE_MONSTER) and c:GetPreviousControler()==tp
+	return c:GetPreviousTypeOnField()&(TYPE_PENDULUM+TYPE_MONSTER)==(TYPE_PENDULUM+TYPE_MONSTER) and c:IsPreviousControler(tp)
 end
 function s.condition(e,tp,eg,ev,ep,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)

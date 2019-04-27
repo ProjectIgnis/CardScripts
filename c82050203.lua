@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&0x41)==0x41 and rp~=tp and e:GetHandler():GetPreviousControler()==tp
+	return (r&0x41)==0x41 and rp~=tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and chkc:IsAbleToHand() end

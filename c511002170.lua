@@ -22,7 +22,7 @@ function s.filter2(c,tid)
 	return c:GetTurnID()==tid and c:IsReason(REASON_DESTROY) and c:IsType(TYPE_MONSTER)
 end
 function s.tpchk(c,tp)
-	return c:GetPreviousControler()==tp
+	return c:IsPreviousControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tid=Duel.GetTurnCount()

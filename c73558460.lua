@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) 
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) 
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_LINK)
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp)
 end

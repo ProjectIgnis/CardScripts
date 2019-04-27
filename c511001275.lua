@@ -118,7 +118,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c,tp)
-	return c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp and c:IsType(TYPE_XYZ)
+	return c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp) and c:IsType(TYPE_XYZ)
 end
 function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.atkfilter,nil,tp)

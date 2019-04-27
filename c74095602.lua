@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
-	return tc:GetPreviousControler()==tp and tc:IsType(TYPE_FUSION) and tc:IsSetCard(0x3008)
+	return tc:IsPreviousControler(tp) and tc:IsType(TYPE_FUSION) and tc:IsSetCard(0x3008)
 		and tc:IsLocation(LOCATION_GRAVE) and tc:IsReason(REASON_BATTLE) 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

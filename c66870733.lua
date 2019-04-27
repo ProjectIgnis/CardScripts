@@ -36,7 +36,7 @@ function s.imcon(e)
 	return e:GetHandler():GetLinkedGroup():IsExists(s.imfilter,1,nil)
 end
 function s.atkfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:GetPreviousTypeOnField()&TYPE_SYNCHRO~=0
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:GetPreviousTypeOnField()&TYPE_SYNCHRO~=0
 	and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

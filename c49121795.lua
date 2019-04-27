@@ -69,7 +69,7 @@ function s.ftarget(e,c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetPreviousControler()==tp and rp==1-tp and c:IsReason(REASON_DESTROY)
+	return c:IsPreviousControler(tp) and rp==1-tp and c:IsReason(REASON_DESTROY)
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:GetLevel()==4 and c:IsAbleToHand()

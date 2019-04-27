@@ -49,7 +49,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function s.cfilter(c,tp)
-    return c:IsReason(REASON_BATTLE) and c:GetPreviousControler()==tp and c:GetPreviousRaceOnField()&RACE_SPELLCASTER==RACE_SPELLCASTER
+    return c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp) and c:GetPreviousRaceOnField()&RACE_SPELLCASTER==RACE_SPELLCASTER
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(s.cfilter,1,nil,tp)

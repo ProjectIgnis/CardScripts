@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp and c:GetReasonPlayer()==1-tp 
+	return c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp 
 		and c:IsType(TYPE_SPELL) and (c:GetPreviousPosition()&POS_FACEUP)~=0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

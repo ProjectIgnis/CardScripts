@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and (c:GetPreviousAttributeOnField()&ATTRIBUTE_WIND)~=0
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsControler(tp)
 end

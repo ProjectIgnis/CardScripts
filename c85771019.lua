@@ -45,7 +45,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_DESTROY)~=0 and e:GetHandler():GetPreviousControler()==tp
+	return (r&REASON_DESTROY)~=0 and e:GetHandler():IsPreviousControler(tp)
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

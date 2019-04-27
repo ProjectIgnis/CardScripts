@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.mark=0
 function s.cfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsControler(tp)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsControler(tp)
 		and c:IsCode(95000022)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

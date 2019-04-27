@@ -67,7 +67,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	e:SetLabel(tc:GetCode())
 	return #eg==1 and rp~=tp and tc:IsReason(REASON_EFFECT)
-		and tc:GetPreviousControler()==tp and tc:IsPreviousLocation(LOCATION_MZONE)
+		and tc:IsPreviousControler(tp) and tc:IsPreviousLocation(LOCATION_MZONE)
 		and tc:IsType(TYPE_PENDULUM) and tc:IsControler(tp)
 end
 function s.filter(c,e,tp,code)

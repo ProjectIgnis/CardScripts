@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 		and (c:GetPreviousTypeOnField()&TYPE_LINK)~=0 and (c:GetPreviousRaceOnField()&RACE_CYBERSE)~=0
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)

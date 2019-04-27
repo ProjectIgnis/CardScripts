@@ -17,7 +17,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (c:IsReason(REASON_BATTLE)
-		or rp~=tp and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp)
+		or rp~=tp and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp))
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c,e,tp)

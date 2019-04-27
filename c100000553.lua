@@ -12,7 +12,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_NEOS}
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE) and c:GetPreviousControler()==tp and c:IsCode(CARD_NEOS)
+	return c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp) and c:IsCode(CARD_NEOS)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

@@ -31,7 +31,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.leave(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if e:GetLabelObject():GetLabel()==0 and c:GetPreviousControler()==tp and c:IsStatus(STATUS_ACTIVATED) then
+	if e:GetLabelObject():GetLabel()==0 and c:IsPreviousControler(tp) and c:IsStatus(STATUS_ACTIVATED) then
 		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,nil)
 		Duel.Destroy(g,REASON_EFFECT,LOCATION_REMOVED)
 	end

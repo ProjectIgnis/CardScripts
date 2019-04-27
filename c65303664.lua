@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_BEAST) and c:IsReason(REASON_BATTLE)
-		and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
+		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 		and (c:GetPreviousRaceOnField()&RACE_BEAST)~=0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

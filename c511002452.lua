@@ -70,7 +70,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e9)
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:GetPreviousControler()==tp
+	return c:IsFaceup() and c:IsControler(tp) and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_DESTROY) and c:IsCode(34022290)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

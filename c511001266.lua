@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 function s.chkfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsLocation(LOCATION_GRAVE) 
-		and c:GetPreviousControler()==tp
+		and c:IsPreviousControler(tp)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local ct1=eg:FilterCount(s.chkfilter,nil,tp)

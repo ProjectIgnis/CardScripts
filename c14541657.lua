@@ -39,7 +39,7 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_BATTLE)
-		or (rp==1-tp and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp)
+		or (rp==1-tp and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp))
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x2b) and c:IsType(TYPE_MONSTER) and not c:IsCode(id) and c:IsAbleToHand()

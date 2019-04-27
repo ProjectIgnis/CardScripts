@@ -40,7 +40,7 @@ function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(sg, REASON_SUMMON+REASON_MATERIAL)
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x2) and c:GetPreviousControler()==tp and c:GetPreviousLocation()==LOCATION_MZONE
+	return c:IsSetCard(0x2) and c:IsPreviousControler(tp) and c:GetPreviousLocation()==LOCATION_MZONE
 		and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

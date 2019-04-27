@@ -74,7 +74,7 @@ function s.attg(e,c)
 	return not c:IsSetCard(0x97)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():GetPreviousControler()==tp
+	return rp~=tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.cffilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetLevel()==5 and not c:IsPublic()

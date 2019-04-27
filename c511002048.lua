@@ -64,7 +64,7 @@ function s.initial_effect(c)
  	end
  end
  function s.filter(c,e,tp)
- 	return c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()==tp and c:IsReason(REASON_BATTLE) and c:GetOriginalRace()~=RACE_ZOMBIE
+ 	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE) and c:GetOriginalRace()~=RACE_ZOMBIE
  		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
  end
  function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -54,7 +54,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 			if rc:IsRelateToBattle() then
 				if rc:IsControler(tp) and rc:IsSetCard(0x107) then return true end
 			else
-				if rc:GetPreviousControler()==tp and rc:IsPreviousSetCard(0x107) then return true end
+				if rc:IsPreviousControler(tp) and rc:IsPreviousSetCard(0x107) then return true end
 			end
 		end
 		rc=eg:GetNext()

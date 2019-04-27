@@ -62,7 +62,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cfilter2(c,tp,re)
 	return c:IsPreviousLocation(LOCATION_MZONE) and (c:GetReason()&0x41)==0x41 
-		and re:IsActiveType(TYPE_EFFECT) and c:GetPreviousControler()==tp
+		and re:IsActiveType(TYPE_EFFECT) and c:IsPreviousControler(tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

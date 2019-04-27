@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c,tp,turn)
-	return c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp and c:GetTurnID()==turn
+	return c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp) and c:GetTurnID()==turn
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

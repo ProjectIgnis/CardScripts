@@ -37,7 +37,7 @@ function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.thfilter(c)
 	return (c:IsSetCard(0x9e) or c:IsSetCard(0xc4)) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()

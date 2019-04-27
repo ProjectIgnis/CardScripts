@@ -40,7 +40,7 @@ function s.extraop(mg,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
+	return rp~=tp and c:IsPreviousControler(tp) and c:IsReason(REASON_EFFECT)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(16313112) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)

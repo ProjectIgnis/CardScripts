@@ -37,7 +37,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spfilter(c,tp)
 	return c:IsType(TYPE_FUSION) and c:GetFlagEffect(id)~=0
-		and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:GetPreviousControler()==tp
+		and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsPreviousControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,0x70,0x70,1,nil,tp) end

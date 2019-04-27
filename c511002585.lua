@@ -52,7 +52,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and ep==tp
 end
 function s.cfilter(c,tp,tid)
-	return c:GetPreviousControler()==tp and c:GetTurnID()==tid and c:GetReason()&REASON_BATTLE==0
+	return c:IsPreviousControler(tp) and c:GetTurnID()==tid and c:GetReason()&REASON_BATTLE==0
 end
 function s.ftchk(ft,tp,ct,e)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,0,e:GetHandler())

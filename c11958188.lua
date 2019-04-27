@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x88) and c:IsControler(tp) and c:GetPreviousControler()==tp
+	return c:IsSetCard(0x88) and c:IsControler(tp) and c:IsPreviousControler(tp)
 		and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

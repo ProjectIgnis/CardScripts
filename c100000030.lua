@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,e,tp)
-	return c:IsRace(RACE_BEAST) and c:IsReason(REASON_BATTLE) and c:GetPreviousControler()==tp
+	return c:IsRace(RACE_BEAST) and c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp)
 		and c:IsLocation(LOCATION_GRAVE) and c~=Duel.GetAttacker() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

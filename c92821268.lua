@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(0x83)
-		and c:GetPreviousControler()==tp and c:IsAbleToRemoveAsCost()
+		and c:IsPreviousControler(tp) and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,69832741) and eg:IsExists(s.cfilter,1,nil,tp) end

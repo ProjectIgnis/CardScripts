@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:GetPreviousControler()==tp
+	return c:IsControler(tp) and c:IsPreviousControler(tp)
 		and (c:IsPreviousLocation(LOCATION_GRAVE) or (c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)))
 		and c:IsSetCard(0x71) and not c:IsLocation(LOCATION_EXTRA)
 end

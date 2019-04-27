@@ -32,7 +32,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if re:IsHasProperty(EFFECT_FLAG_NO_TURN_RESET) then return end
 	local _,ctmax,ctcode=re:GetCountLimit()
-	if ctcode&(EFFECT_COUNT_CODE_OATH,EFFECT_COUNT_CODE_DUEL)>0 or ctmax~=1 then return end
+	if ctcode&(EFFECT_COUNT_CODE_OATH+EFFECT_COUNT_CODE_DUEL)>0 or ctmax~=1 then return end
 	if rc:GetFlagEffect(id)==0 then
 		s[0][rc]={}
 		rc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)

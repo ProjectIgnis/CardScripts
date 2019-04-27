@@ -52,7 +52,7 @@ end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 	end
 end

@@ -96,7 +96,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetTarget(s.damtg)
 		e4:SetOperation(s.damop)
 		e4:SetLabel(e:GetLabel())
-		e4:SetReset(RESET_EVENT+0xfe0000)
+		e4:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 		Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
 	end

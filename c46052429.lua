@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp,m)
-	if bit.band(c:GetType(),0x81)~=0x81
+	if (c:GetType()&0x81)~=0x81
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	if c.mat_filter then
 		m=m:Filter(c.mat_filter,nil)
@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg)
-	if tg:GetCount()>0 then
+	if #tg>0 then
 		local tc=tg:GetFirst()
 		if tc.mat_filter then
 			mg=mg:Filter(tc.mat_filter,nil)

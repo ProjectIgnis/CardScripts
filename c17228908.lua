@@ -100,7 +100,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		g:Clear()
 		local tc=tg:GetFirst()
 		while tc do
-			tc:RegisterFlagEffect(id,RESET_EVENT+0x1fc0000+RESET_CHAIN,0,1)
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
 			tc:SetStatus(STATUS_DESTROY_CONFIRMED,true)
 			g:AddCard(tc)
 			tc=tg:GetNext()

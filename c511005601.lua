@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ev,ep,re,r,rp)
 	local chk=c:IsRelateToEffect(e)
 	local code=te:GetHandler():GetOriginalCode()
 	if chk then
-		c:CopyEffect(code,RESET_EVENT+0x1fc0000,1)
+		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET,1)
 	end
 	if not te then return end
 	local op=te:GetOperation()

@@ -71,10 +71,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetLabel(0)
 		local cg=Duel.GetMatchingGroup(s.cfilter2,tp,LOCATION_GRAVE,0,nil)
 		return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,cg:GetCount())
+			and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,#cg)
 	end
 	local cg=Duel.GetMatchingGroup(s.cfilter2,tp,LOCATION_GRAVE,0,nil)
-	local tg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp,cg:GetCount())
+	local tg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp,#cg)
 	local lvt={}
 	local tc=tg:GetFirst()
 	while tc do

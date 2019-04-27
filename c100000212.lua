@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SET_ATTACK)
 	e2:SetValue(Duel.GetBattleDamage(tp))
-	e2:SetReset(RESET_EVENT+0xfe0000)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 	c:RegisterEffect(e2)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)

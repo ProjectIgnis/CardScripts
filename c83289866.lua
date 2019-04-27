@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.indct(e,re,r,rp)
-	if bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0 then
+	if (r&REASON_BATTLE+REASON_EFFECT)~=0 then
 		return 1
 	else
 		return 0

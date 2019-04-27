@@ -74,14 +74,14 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND+LOCATION_MZONE)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g1=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,TYPE_MONSTER)
-	if g1:GetCount()>0 and Duel.Destroy(g1,REASON_EFFECT)~=0 then
+	if #g1>0 and Duel.Destroy(g1,REASON_EFFECT)~=0 then
 		local g2=Duel.GetMatchingGroup(s.posfilter,tp,0,LOCATION_MZONE,nil)
-		if g2:GetCount()>0 then
+		if #g2>0 then
 			Duel.ChangePosition(g2,POS_FACEDOWN_DEFENSE)
 		end
 	end

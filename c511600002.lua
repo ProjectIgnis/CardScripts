@@ -143,7 +143,7 @@ function s.sptop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_UNCOPYABLE)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetValue(baseAtk)
-			e1:SetReset(RESET_EVENT+0xec0000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TEMP_REMOVE+RESET_TURN_SET))
 			tc:RegisterEffect(e1)
 		end
 		if textDef~=-2 and textDef~=0 then
@@ -162,7 +162,7 @@ function s.sptop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_UNCOPYABLE)
 			e2:SetRange(LOCATION_MZONE)
 			e2:SetValue(baseDef)
-			e2:SetReset(RESET_EVENT+0xec0000)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TEMP_REMOVE+RESET_TURN_SET))
 			tc:RegisterEffect(e2)
 		end
 	end

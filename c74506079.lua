@@ -35,7 +35,7 @@ function s.matcheck(e,c)
 		e1:SetCountLimit(1)
 		e1:SetTarget(s.sptg)
 		e1:SetOperation(s.spop)
-		e1:SetReset(RESET_EVENT+0xfe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e1)
 	end
 	if ct>=4 then
@@ -48,7 +48,7 @@ function s.matcheck(e,c)
 		e1:SetCost(s.tgcost)
 		e1:SetTarget(s.tgtg)
 		e1:SetOperation(s.tgop)
-		e1:SetReset(RESET_EVENT+0xfe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e1)
 	end
 	if ct>=6 then
@@ -61,7 +61,7 @@ function s.matcheck(e,c)
 		e1:SetCountLimit(1)
 		e1:SetTarget(s.drtg)
 		e1:SetOperation(s.drop)
-		e1:SetReset(RESET_EVENT+0xfe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e1)
 	end
 end

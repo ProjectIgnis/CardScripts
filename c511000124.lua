@@ -40,9 +40,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EVENT_CHANGE_POS)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetOperation(s.op)
-			e1:SetReset(RESET_EVENT+0x1fc0000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 			tc:RegisterEffect(e1)
-			tc:RegisterFlagEffect(id,RESET_EVENT+0x1fc0000,0,1) 	
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET,0,1) 	
 		end	
 		tc=g:GetNext()
 	end		
@@ -50,7 +50,7 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsHasEffect(511000123) and c:GetFlagEffect(id+1)==0 then
-		c:RegisterFlagEffect(id+1,RESET_EVENT+0x1fc0000,0,1)
+		c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET,0,1)
 	else
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

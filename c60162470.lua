@@ -83,7 +83,7 @@ function s.matcon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(s.matfilter,1,nil,e:GetHandler())
 end
 function s.matop(e,tp,eg,ep,ev,re,r,rp)
-    eg:Filter(s.matfilter,nil,e:GetHandler()):GetFirst():GetReasonCard():RegisterFlagEffect(id,RESET_EVENT+0xfe0000,0,1)
+    eg:Filter(s.matfilter,nil,e:GetHandler()):GetFirst():GetReasonCard():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsHasCardTarget(Duel.GetAttacker())

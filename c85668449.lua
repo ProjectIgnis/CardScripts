@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function s.esop(e,tp,eg,ep,ev,re,r,rp,c)
-	c:RegisterFlagEffect(id,RESET_EVENT+0xfe0000+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():GetFlagEffect(id)~=0

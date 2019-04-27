@@ -68,7 +68,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		else
 			c:CancelToGrave(true)
 			local code=re:GetHandler():GetOriginalCode()
-			c:CopyEffect(code,RESET_EVENT+0x1fc0000,1)
+			c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET,1)
 		end
 		local op=re:GetOperation()
 		if re:GetCode()==EVENT_CHAINING then

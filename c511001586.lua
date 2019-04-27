@@ -22,7 +22,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if d and d:IsRelateToBattle() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetReset(RESET_EVENT+0xfe0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
 		d:RegisterEffect(e1)

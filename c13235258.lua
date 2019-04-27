@@ -109,7 +109,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+0x1fc0000+RESET_CHAIN,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
 end
 function s.ctcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipTarget() and ep~=tp and e:GetHandler():GetFlagEffect(id)~=0

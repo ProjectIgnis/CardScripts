@@ -79,11 +79,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 				e1:SetCode(EFFECT_EQUIP_LIMIT)
-				e1:SetReset(RESET_EVENT+0xfe0000)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 				e1:SetValue(s.eqlimit)
 				e1:SetLabelObject(tc)
 				eqc:RegisterEffect(e1)
-				eqc:RegisterFlagEffect(id,RESET_EVENT+0xfe0000,0,0)
+				eqc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,0)
 			end
 			eqc=eqg:GetNext()
 		end

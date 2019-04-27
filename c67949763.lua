@@ -69,7 +69,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			token:RegisterEffect(e3,true)
 			if cr then
 				token:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,0,rfid)
-				tc:CreateRelation(token,RESET_EVENT+0x1fc0000)
+				tc:CreateRelation(token,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 			end
 		end
 		Duel.SpecialSummonComplete()

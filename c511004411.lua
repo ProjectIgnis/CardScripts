@@ -40,7 +40,7 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 	local c=e:GetHandler()
 	local te=e:GetLabelObject()
 	local code=te:GetHandler():GetOriginalCode()
-	c:CopyEffect(code,RESET_EVENT+0x1fc0000,1)
+	c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET,1)
 	if not te then return end
 	local op=te:GetOperation()
 	if op then op(e,tp,eg,ep,ev,re,r,rp) end
@@ -48,7 +48,7 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetValue(code)
-	e1:SetReset(RESET_EVENT+0x1fc0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 	c:RegisterEffect(e1)
 	if te:GetHandler():IsType(TYPE_SPELL) then
 		local e2=e1:Clone()

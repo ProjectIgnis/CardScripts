@@ -54,10 +54,10 @@ function s.chain_operation(e,te,tp,tc,mat,sumtype,sg)
 	Duel.BreakEffect()
 	if sg then
 		sg:AddCard(tc)
-		tc:RegisterFlagEffect(id,RESET_EVENT+0xfc0000,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TURN_SET),0,1)
 	else
 		Duel.SpecialSummon(tc,sumtype,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(id,RESET_EVENT+0x1fc0000,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET,0,1)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

@@ -33,7 +33,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetMatchingGroup(s.lvfilter,tp,LOCATION_MZONE,0,nil)
 	local tc=tg:GetFirst()
 	while tc do
-		tc:UpdateLevel(1,RESET_EVENT+0xfe0000,e:GetHandler())
+		tc:UpdateLevel(1,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,e:GetHandler())
 		tc=tg:GetNext()
 	end
 end

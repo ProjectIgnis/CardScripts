@@ -61,7 +61,7 @@ function s.spcon(e,c)
 	return ct>6
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+0xfc0000+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TURN_SET)+RESET_PHASE+PHASE_END,0,1)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetFlagEffect(id)~=0 then return false end

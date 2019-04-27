@@ -39,7 +39,7 @@ function s.xyzop(e,tp,chk,mc)
 	local tc=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,nil):SelectUnselect(Group.CreateGroup(),tp,aux.ProcCancellable,aux.ProcCancellable)
 	if tc then
 		Duel.SendtoGrave(tc,REASON_COST)
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+0xfe0000+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
 		return true
 	else return false end
 end

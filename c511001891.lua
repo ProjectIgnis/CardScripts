@@ -61,7 +61,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,tc:GetAttack(),tc:GetDefense(),
 			tc:GetLevel(),tc:GetRace(),tc:GetAttribute()) then return end
 		local token=Duel.CreateToken(tp,id+1)
-		token:CopyEffect(tc:GetOriginalCode(),RESET_EVENT+0xfe0000,1)
+		token:CopyEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,1)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

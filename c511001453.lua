@@ -64,7 +64,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetRange(LOCATION_ONFIELD)
 			e3:SetCode(EVENT_CHAIN_ACTIVATING)
 			e3:SetOperation(s.disop)
-			e3:SetReset(RESET_EVENT+0x1fc0000+RESET_PHASE+PHASE_END)
+			e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END)
 			tg:RegisterEffect(e3)
 			tg=g:GetNext()
 		end

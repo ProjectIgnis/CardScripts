@@ -33,7 +33,7 @@ function s.rescon(sg,e,tp,mg)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-	if g:GetCount()==0 then return end
+	if #g==0 then return end
 	tg=aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,1,tp,HINTMSG_ATOHAND)
 	Duel.SendtoHand(tg,nil,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,tg)

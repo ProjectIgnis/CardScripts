@@ -27,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_TYPE)
 	e1:SetValue(tpe)
-	e1:SetReset(RESET_EVENT+0x1fc0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 	c:RegisterEffect(e1)
 	local te=tc:GetActivateEffect()
 	local tg=te:GetTarget()
@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if op then op(e,tp,eg,ep,ev,re,r,rp) end 
 	if tc:IsType(TYPE_EQUIP+TYPE_CONTINUOUS) then
 		local code=tc:GetOriginalCode()
-		c:CopyEffect(code,RESET_EVENT+0x1fc0000,1)
+		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET,1)
 		c:CancelToGrave()
 	end
 	if (tpe&TYPE_FIELD)~=0 then

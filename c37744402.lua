@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(tp)
 		e1:SetLabel(0)
-		e1:SetReset(RESET_EVENT+0x1fc0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 		e1:SetCondition(s.ctcon)
 		tc:RegisterEffect(e1)
 	end

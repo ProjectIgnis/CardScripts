@@ -47,7 +47,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(c,REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(r,REASON_EFFECT)~=0
+	return (r&REASON_EFFECT)~=0
 end
 function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)

@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and rp==1-tp and e:GetHandler():GetPreviousControler()==tp
+	return (r&REASON_EFFECT+REASON_BATTLE)~=0 and rp==1-tp and e:GetHandler():GetPreviousControler()==tp
 end
 function s.spfilter(c,e,tp)
 	return c:IsNonEffectMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

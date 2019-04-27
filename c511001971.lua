@@ -29,7 +29,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetValue(100)
-			e1:SetReset(RESET_EVENT+0x1fc0000+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 		tc=g:GetNext()

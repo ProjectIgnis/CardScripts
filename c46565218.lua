@@ -36,7 +36,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
-	e1:SetReset(RESET_EVENT+0xec0000+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TEMP_REMOVE+RESET_TURN_SET)+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

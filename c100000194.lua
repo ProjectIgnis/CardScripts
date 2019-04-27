@@ -76,7 +76,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e3:SetType(EFFECT_TYPE_EQUIP)
 				e3:SetCode(EFFECT_SET_CONTROL)
 				e3:SetValue(tp)
-				e3:SetReset(RESET_EVENT+0x1fc0000)
+				e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 				c:RegisterEffect(e3)
 				--cannot attack
 				local e4=Effect.CreateEffect(c)

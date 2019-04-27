@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c,e,tp)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:GetSummonPlayer()==1-tp and c:IsCanChangePosition()
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSummonPlayer(1-tp) and c:IsCanChangePosition()
 		and (not e or c:IsRelateToEffect(e))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

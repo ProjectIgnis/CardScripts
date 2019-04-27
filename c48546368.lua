@@ -59,20 +59,17 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-function s.filter(c,tp)
-	return c:GetSummonPlayer()==tp
-end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0 and eg:IsExists(s.filter,1,nil,1-tp)
+	return Duel.GetCurrentChain()==0 and eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=eg:Filter(s.filter,nil,1-tp)
+	local g=eg:Filter(Card.IsSummonPlayer,nil,1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(s.filter,nil,1-tp)
+	local g=eg:Filter(Card.IsSummonPlayer,nil,1-tp)
 	Duel.NegateSummon(g)
 	Duel.Destroy(g,REASON_EFFECT)
 end

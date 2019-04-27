@@ -78,7 +78,7 @@ function c210310064.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c210310064.cfilter(c,tp)
-	return c:IsFaceup() and c:IsCode(60800381) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:GetSummonPlayer()==tp
+	return c:IsFaceup() and c:IsCode(60800381) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsSummonPlayer(tp)
 end
 function c210310064.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c210310064.cfilter,1,nil,tp)

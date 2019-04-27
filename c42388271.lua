@@ -75,7 +75,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--If opponent special summons from extra deck
 function s.edfilter(c,tp)
-	return c:GetSummonPlayer()==tp and c:IsPreviousLocation(LOCATION_EXTRA)
+	return c:IsSummonPlayer(tp) and c:IsPreviousLocation(LOCATION_EXTRA)
 end
 	--If this ever happened and monster was normal summoned
 function s.dkcon(e,tp,eg,ep,ev,re,r,rp)

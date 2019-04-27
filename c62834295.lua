@@ -25,11 +25,8 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-function s.cfilter(c,tp)
-	return c:GetSummonPlayer()==tp
-end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,1-tp)
+	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function s.tgfilter(c)
 	return (c:IsSetCard(0xfe) or c:IsSetCard(0x11b)) and c:IsType(TYPE_MONSTER) and (c:IsAbleToGrave() or c:IsAbleToRemove())

@@ -66,7 +66,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(tp,3000,REASON_EFFECT)
 end
 function s.cfilter(c,tp)
-	return c:IsHell() and c:IsFaceup() and c:GetSummonPlayer()==tp
+	return c:IsHell() and c:IsFaceup() and c:IsSummonPlayer(tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil,tp) then

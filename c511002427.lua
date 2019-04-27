@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter2(c,tp)
-	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:GetSummonPlayer()~=tp
+	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and not c:IsSummonPlayer(tp)
 		and c:IsDestructable()
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)

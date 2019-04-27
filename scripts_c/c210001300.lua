@@ -60,7 +60,7 @@ function c210001300.uavalue(e,c)
 	return 100*Duel.GetMatchingGroupCount(c210001300.ufilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
 end
 function c210001300.cfilter(c,tp)
-	return c:GetSummonPlayer()==tp
+	return c:IsSummonPlayer(tp)
 end
 function c210001300.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

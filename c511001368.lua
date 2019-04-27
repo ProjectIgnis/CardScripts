@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
-	if chk==0 then return #eg==1 and tc:GetSummonPlayer()~=tp and tc:GetLevel()>0 
+	if chk==0 then return #eg==1 and not tc:IsSummonPlayer(tp) and tc:IsHasLevel()
 		and ft>0 and sg:CheckWithSumEqual(Card.GetLevel,tc:GetLevel(),1,ft+1) end
 	e:SetLabel(tc:GetLevel())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)

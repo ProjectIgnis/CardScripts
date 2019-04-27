@@ -86,7 +86,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.filter(c,tp)
-	return c:GetSummonPlayer()==1-tp and c:IsControlerCanBeChanged()
+	return c:IsSummonPlayer(1-tp) and c:IsControlerCanBeChanged()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(s.filter,nil,tp)

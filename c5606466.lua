@@ -25,7 +25,7 @@ function s.filter2(c,e)
 	return c:IsAbleToRemove() and c:IsCanBeEffectTarget(e)
 end
 function s.filter3(c,e,tp)
-	return c:IsPosition(POS_FACEDOWN_DEFENSE) and c:GetSummonPlayer()==tp and c:IsCanBeEffectTarget(e) and c:IsAbleToRemove()
+	return c:IsPosition(POS_FACEDOWN_DEFENSE) and c:IsSummonPlayer(tp) and c:IsCanBeEffectTarget(e) and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter1(c,e,tp)
-	return c:GetSummonPlayer()==1-tp and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e)
+	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e)
 		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,0,1,c)
 end
 function s.filter2(c)

@@ -20,11 +20,8 @@ function s.initial_effect(c)
 	e2:SetValue(2)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c,tp)
-	return c:GetSummonPlayer()==1-tp
-end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	aux.CallToken(420)
 end
 function s.cfilter(c,tp)
-	return c:GetSummonPlayer()==1-tp and c:IsFaceup() and c:IsType(TYPE_EFFECT)
+	return c:IsSummonPlayer(1-tp) and c:IsFaceup() and c:IsType(TYPE_EFFECT)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp) and not e:GetHandler():IsStatus(STATUS_CHAINING)

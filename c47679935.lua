@@ -50,7 +50,7 @@ function s.efilter(e,ct)
 	return p==tp and te:IsHasCategory(CATEGORY_FUSION_SUMMON)
 end
 function s.limfilter(c,tp)
-	return c:GetSummonPlayer()==tp and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_FUSION)
 end
 function s.limcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.limfilter,1,nil,tp)

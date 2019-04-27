@@ -42,7 +42,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.filter(c,te,re,tp)
-	return c:IsFaceup() and c:GetSummonPlayer()==1-tp and (not te or c:IsCanBeEffectTarget(te)) and (not re or c:IsRelateToEffect(re))
+	return c:IsFaceup() and c:IsSummonPlayer(1-tp) and (not te or c:IsCanBeEffectTarget(te)) and (not re or c:IsRelateToEffect(re))
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,nil,tp) end

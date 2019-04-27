@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp,sumt)
-	return c:IsFaceup() and c:IsSetCard(0x120) and c:IsSummonType(sumt) and c:GetSummonPlayer()==tp
+	return c:IsFaceup() and c:IsSetCard(0x120) and c:IsSummonType(sumt) and c:IsSummonPlayer(tp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,SUMMON_TYPE_FUSION)

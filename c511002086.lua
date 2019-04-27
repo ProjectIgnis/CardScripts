@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if #eg==1 and tc:GetSummonPlayer()~=tp then
+	if #eg==1 and not tc:IsSummonPlayer(tp) then
 		e:SetLabelObject(tc)
 		return true
 	else

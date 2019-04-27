@@ -112,7 +112,7 @@ function s.aclimit(e,re,tp)
 	return re:GetActivateLocation()==LOCATION_MZONE and rc:IsSetCard(0x4a) and not rc:IsImmuneToEffect(e)
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x4a) and c:IsFaceup() and c:GetSummonPlayer()==tp
+	return c:IsSetCard(0x4a) and c:IsFaceup() and c:IsSummonPlayer(tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=eg:Filter(s.cfilter,nil,tp)

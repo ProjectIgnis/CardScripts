@@ -53,7 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,tp)
-	return c:GetSummonPlayer()==tp and (c:IsFacedown() or not c:IsSlime())
+	return c:IsSummonPlayer(tp) and (c:IsFacedown() or not c:IsSlime())
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)

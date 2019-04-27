@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c,tp,e)
-	return c:GetSummonPlayer()~=tp and c:IsLocation(LOCATION_MZONE)
+	return not c:IsSummonPlayer(tp) and c:IsLocation(LOCATION_MZONE)
 		and c:IsAbleToGrave() and (not e or c:IsRelateToEffect(e))
 		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_MZONE,0,1,c) 
 end

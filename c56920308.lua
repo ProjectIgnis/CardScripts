@@ -75,7 +75,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(tc,REASON_EFFECT)
 end
 function s.cfilter(c,tp)
-	return c:IsCode(CARD_BLUEEYES_W_DRAGON) and c:GetSummonPlayer()==tp
+	return c:IsCode(CARD_BLUEEYES_W_DRAGON) and c:IsSummonPlayer(tp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

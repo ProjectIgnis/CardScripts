@@ -119,7 +119,7 @@ function s.con(e)
 	return Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,1,c,e)
 end
 function s.swfilter(c,tp,atk)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:GetSummonPlayer()==1-tp
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSummonPlayer(1-tp)
 		and c:GetAttack()>atk
 end
 function s.swtg(e,tp,eg,ep,ev,re,r,rp,chk)

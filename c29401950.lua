@@ -53,7 +53,7 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function s.filter3(c,e,tp)
-	return c:IsFaceup() and c:GetAttack()>=1500 and c:GetSummonPlayer()~=tp
+	return c:IsFaceup() and c:GetAttack()>=1500 and not c:IsSummonPlayer(tp)
 		and c:IsRelateToEffect(e) and c:IsLocation(LOCATION_MZONE)
 end
 function s.activate2(e,tp,eg,ep,ev,re,r,rp)

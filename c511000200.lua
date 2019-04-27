@@ -21,7 +21,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
 function s.filter2(c,e,tp)
-	return c:IsRelateToEffect(e) and c:GetSummonPlayer()~=tp and c:IsAbleToHand()
+	return c:IsRelateToEffect(e) and not c:IsSummonPlayer(tp) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter2,nil,e,tp)

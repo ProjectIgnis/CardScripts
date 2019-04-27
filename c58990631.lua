@@ -55,7 +55,7 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.filter3(c,e,tp)
-	return c:IsFaceup() and c:IsAttackAbove(1000) and c:GetSummonPlayer()~=tp
+	return c:IsFaceup() and c:IsAttackAbove(1000) and not c:IsSummonPlayer(tp)
 		and c:IsRelateToEffect(e)
 end
 function s.activate2(e,tp,eg,ep,ev,re,r,rp)

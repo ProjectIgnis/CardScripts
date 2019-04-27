@@ -59,7 +59,7 @@ function c210660012.winop(e,tp,eg,ep,ev,re,r,rp)
 end
 -----------------------------------------------------------------
 function c210660012.cfilter(c,tp)
-	return c:IsFaceup() and c:GetSummonPlayer()==tp and c:IsCode(57793869,62180201,21208154)
+	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsCode(57793869,62180201,21208154)
 end
 function c210660012.cop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c210660012.cfilter,1,nil,tp) then

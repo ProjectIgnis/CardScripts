@@ -29,7 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,#eg,0,0)
 end
 function s.filter2(c,e,tp)
-	return c:IsFaceup() and c:GetSummonPlayer()~=tp and c:IsRelateToEffect(e) 
+	return c:IsFaceup() and not c:IsSummonPlayer(tp) and c:IsRelateToEffect(e) 
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter2,nil,e,tp)

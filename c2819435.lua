@@ -71,7 +71,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and tc:GetSummonPlayer()==tp and tc:IsFaceup() and tc:IsType(TYPE_NORMAL)
+	return #eg==1 and tc:IsSummonPlayer(tp) and tc:IsFaceup() and tc:IsType(TYPE_NORMAL)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0xfa) and c:IsAbleToHand()

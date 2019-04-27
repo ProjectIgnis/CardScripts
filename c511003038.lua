@@ -15,7 +15,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and re and re:GetHandler():IsSetCard(0x95)
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:GetSummonPlayer()==tp and c:IsType(TYPE_XYZ) and c:IsSummonType(SUMMON_TYPE_XYZ)
+	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsType(TYPE_XYZ) and c:IsSummonType(SUMMON_TYPE_XYZ)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=eg:Filter(s.cfilter,nil,tp)

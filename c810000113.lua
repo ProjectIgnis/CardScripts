@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:GetSummonPlayer()==tp and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_WATER)
+	return c:IsSummonPlayer(tp) and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_WATER)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,1-tp)

@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAttackAbove(2000) and c:GetSummonPlayer()==tp and not c:IsDisabled()
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAttackAbove(2000) and c:IsSummonPlayer(tp) and not c:IsDisabled()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -22,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.filter2(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAttackAbove(2000)
-		and c:GetSummonPlayer()==tp and c:IsRelateToEffect(e)
+		and c:IsSummonPlayer(tp) and c:IsRelateToEffect(e)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter2,nil,e,1-tp)

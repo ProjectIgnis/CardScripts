@@ -30,7 +30,7 @@ function s.initial_effect(c)
     c:RegisterEffect(e2)
 end
 function s.spcfilter(c,tp)
-    return c:IsType(TYPE_LINK) and c:GetSummonPlayer()~=tp
+    return c:IsType(TYPE_LINK) and not c:IsSummonPlayer(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(s.spcfilter,1,nil,tp)

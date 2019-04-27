@@ -40,10 +40,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EVENT_SPSUMMON)
 	Duel.RegisterEffect(e2,tp)
 end
-function s.negfilter(c,tp)
-	return c:GetSummonPlayer()~=tp
-end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(s.negfilter,nil,tp)
+	local g=eg:Filter(aux.NOT(Card.IsSummonPlayer),nil,tp)
 	Duel.NegateSummon(g)
 end

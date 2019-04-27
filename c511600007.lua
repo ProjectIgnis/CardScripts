@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and tc:GetSummonPlayer()==1-tp
+	return #eg==1 and tc:IsSummonPlayer(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=eg:GetFirst()

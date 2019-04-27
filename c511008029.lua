@@ -21,7 +21,7 @@ function s.cd(e,tp,eg) return eg:IsExists(s.cf,1,nil,tp) end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return s.exist(tp) end
 	local g=s.desg(tp)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.op(e,tp)
 	if not s.exist(tp) then return end

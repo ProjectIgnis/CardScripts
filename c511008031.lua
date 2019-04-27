@@ -27,7 +27,7 @@ function s.cd(e,tp,eg,ep,ev)
 end
 function s.op(e,tp,eg,ep,ev,re)
 	local tg=e:GetLabelObject():Filter(s.cf,nil,tp)
-	if tg:GetCount()<=0 then return end
+	if #tg<=0 then return end
 	local tc=tg:Select(tp,1,1,nil):GetFirst()
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)

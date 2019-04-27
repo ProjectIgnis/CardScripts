@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,tp)
 	return c:IsFaceup()
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),c:GetSetCard(),0x4011,0,0,0,RACE_AQUA,ATTRIBUTE_WATER)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),c:GetSetCard(),TYPES_TOKEN,0,0,0,RACE_AQUA,ATTRIBUTE_WATER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil,tp) and CheckPillars(tp,1) end
@@ -24,7 +24,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not CheckPillars(tp,1) then return end
 	IcePillarZone[tp+1]=IcePillarZone[tp+1] & ~Duel.SelectFieldZone(tp,1,LOCATION_MZONE,LOCATION_MZONE,~IcePillarZone[tp+1])
 	local g = Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,tp)
-	if g:GetCount()>0 then 
+	if #g>0 then 
 		local tc = g:GetFirst()
 		local token = Duel.CreateToken(tp,511310022)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)

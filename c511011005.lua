@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dfilter(c,r,tp)
-	return bit.band(r,0x21)~=0 and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD)
+	return (r&0x21)~=0 and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	if eg:GetFirst()~=e:GetLabelObject() then return end

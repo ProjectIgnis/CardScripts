@@ -75,19 +75,19 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disop(e,tp)
-    local c=e:GetHandler()
-    local seq=c:GetSequence()
-    local nseq=4-seq
-    local flag=0
-    if Duel.CheckLocation(tp,LOCATION_MZONE,seq) then flag=flag|(1<<seq) end
-    if Duel.CheckLocation(tp,LOCATION_SZONE,seq) then flag=flag|(1<<(8+seq)) end
-    if Duel.CheckLocation(1-tp,LOCATION_MZONE,nseq) then flag=flag|(1<<(16+nseq)) end
-    if Duel.CheckLocation(1-tp,LOCATION_SZONE,nseq) then flag=flag|(1<<(24+nseq)) end
-    if seq==1 and Duel.CheckLocation(tp,LOCATION_MZONE,5) and Duel.CheckLocation(1-tp,LOCATION_MZONE,6) then
-		flag=flag|(1<<5)|(1<<21)
+	local c=e:GetHandler()
+	local zone = c:GetColumnZone(LOCATION_ONFIELD)
+	local cg=c:GetColumnGroup()
+	for tc in aux.Next(cg) do
+		local dz = tc:IsLocation(LOCATION_MZONE) and 1 or (1 << 8)
+		if tc:IsSequence(5,6) then
+			dz1 = tc:IsControler(tp) and (dz << tc:GetSequence()) or (dz << (16 + tc:GetSequence()))
+			dz2 = tc:IsControler(tp) and (dz << (16 + (11 - tc:GetSequence()))) or (dz << (11 - tc:GetSequence()))
+			dz = dz1|dz2
+		else
+			dz = tc:IsControler(tp) and (dz << tc:GetSequence()) or (dz << (16 + tc:GetSequence()))
+		end
+		zone = zone &~dz
 	end
-    if seq==3 and Duel.CheckLocation(tp,LOCATION_MZONE,6) and Duel.CheckLocation(1-tp,LOCATION_MZONE,5) then
-		flag=flag|(1<<6)|(1<<22)
-	end
-    return flag
+	return zone 
 end

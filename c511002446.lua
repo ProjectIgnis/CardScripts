@@ -29,8 +29,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if Duel.Destroy(sg,REASON_EFFECT)>0 then
 		local dg=Duel.GetOperatedGroup()
-		local sg1=dg:Filter(s.filter,nil,tp)
-		local sg2=dg:Filter(s.filter,nil,1-tp)
+		local sg1=dg:Filter(Card.IsPreviousControler,nil,tp)
+		local sg2=dg:Filter(Card.IsPreviousControler,nil,1-tp)
 		local sum1=sg1:GetSum(Card.GetAttack)/2
 		local sum2=sg2:GetSum(Card.GetAttack)/2
 		Duel.Damage(tp,sum1,REASON_EFFECT,true)

@@ -44,15 +44,12 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,PLAYER_ALL,0)
 end
-function s.ctfilter(c,tp)
-	return c:IsPreviousControler(tp)
-end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 	if Duel.Destroy(sg,REASON_EFFECT)>0 then
 		local dg=Duel.GetOperatedGroup()
-		local g1=dg:Filter(s.ctfilter,nil,tp)
-		local g2=dg:Filter(s.ctfilter,nil,1-tp)
+		local g1=dg:Filter(Card.IsPreviousControler,nil,tp)
+		local g2=dg:Filter(Card.IsPreviousControler,nil,1-tp)
 		local sum1=g1:GetSum(Card.GetAttack)
 		local sum2=g2:GetSum(Card.GetAttack)
 		Duel.Damage(tp,sum1,REASON_EFFECT)

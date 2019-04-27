@@ -13,12 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,tp)
-	return c:IsPreviousControler(tp)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=0x08 and ph<=0x20 and eg:IsExists(s.cfilter,1,nil,tp)
+	return ph>=0x08 and ph<=0x20 and eg:IsExists(Card.IsPreviousControler,1,nil,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

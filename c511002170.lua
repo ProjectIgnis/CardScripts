@@ -21,9 +21,6 @@ end
 function s.filter2(c,tid)
 	return c:GetTurnID()==tid and c:IsReason(REASON_DESTROY) and c:IsType(TYPE_MONSTER)
 end
-function s.tpchk(c,tp)
-	return c:IsPreviousControler(tp)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tid=Duel.GetTurnCount()
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tid) 
@@ -39,8 +36,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local g=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,tid)
 	if #g>0 then
-		local g1=g:Filter(s.tpchk,nil,tp)
-		local g2=g:Filter(s.tpchk,nil,1-tp)
+		local g1=g:Filter(Card.IsPreviousControler,nil,tp)
+		local g2=g:Filter(Card.IsPreviousControler,nil,1-tp)
 		local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local ft2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 		if #g1>ft1 then

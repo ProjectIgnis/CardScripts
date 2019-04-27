@@ -39,8 +39,7 @@ function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),10000000,10000010,10000020)
 end
 function s.chk(c,sg,g,code,...)
-	local code1,code2=c:GetOriginalCodeRule()
-	if code~=code1 and code~=code2 then return false end
+	if not c:IsOriginalCodeRule(code) then return false end
 	local res
 	if ... then
 		g:AddCard(c)

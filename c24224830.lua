@@ -47,13 +47,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.distg(e,c)
 	local code=e:GetLabel()
-	local code1,code2=c:GetOriginalCodeRule()
-	return code1==code or code2==code
+	return c:IsOriginalCodeRule(code)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()
-	local code1,code2=re:GetHandler():GetOriginalCodeRule()
-	return re:IsActiveType(TYPE_MONSTER) and (code1==code or code2==code)
+	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsOriginalCodeRule(code)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)

@@ -12,9 +12,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
+s.listed_names={79407975,79856792}
 function s.chainfilter(re,tp,cid)
-	local code1,code2=re:GetHandler():GetOriginalCodeRule()
-	return not (re:IsActiveType(TYPE_MONSTER) and (code1==79407975 or code1==79856792 or code2==79407975 or code2==79856792))
+	local rc=re:GetHandler()
+	return not (re:IsActiveType(TYPE_MONSTER) and (rc:IsOriginalCodeRule(79407975) or rc:IsOriginalCodeRule(79856792))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)~=0

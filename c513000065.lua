@@ -38,8 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		tc:RegisterEffect(e2)
-		local code1,code2=tc:GetOriginalCodeRule()
-		if code1==10000000 or code2==10000000 then
+		if tc:IsOriginalCodeRule(10000000) then
 			--change name
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)

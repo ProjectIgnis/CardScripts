@@ -13,8 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL}
 function s.cfilter(c,code)
-	local code1,code2=c:GetOriginalCodeRule()
-	return c:IsFaceup() and (code1==code or code2==code)
+	return c:IsFaceup() and c:IsOriginalCodeRule(code)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,CARD_DARK_MAGICIAN)

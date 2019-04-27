@@ -17,7 +17,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,fc,e,tp)
 	local fd=c:GetCode()
-	if not c:IsSetCard(0x7) or c:IsPreviousPosition(POS_FACEDOWN) or c:GetPreviousControler()~=tp 
+	if not c:IsSetCard(0x7) or c:IsPreviousPosition(POS_FACEDOWN) or not c:IsPreviousControler(tp) 
 		or not c:IsCanBeEffectTarget(e) then return false end
 	for i=1,fc.material_count do
 		if fd==fc.material[i] then return true end

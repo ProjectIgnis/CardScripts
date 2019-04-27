@@ -69,7 +69,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,tp,zone,rp)
     local seq=c:GetPreviousSequence()
-    if c:GetPreviousControler()~=tp then seq=seq+16 end
+    if not c:IsPreviousControler(tp) then seq=seq+16 end
     return ((c:IsReason(REASON_BATTLE)) or (c:IsReason(REASON_EFFECT) and rp~=tp)) and c:IsType(TYPE_XYZ) 
         and c:IsPreviousLocation(LOCATION_MZONE) and bit.extract(zone,seq)~=0
 end

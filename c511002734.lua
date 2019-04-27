@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_SYNCHRO) and c:GetPreviousControler()~=tp and c:GetReasonCard() and c:GetReasonCard():IsType(TYPE_SYNCHRO) 
+	return c:IsType(TYPE_SYNCHRO) and not c:IsPreviousControler(tp) and c:GetReasonCard() and c:GetReasonCard():IsType(TYPE_SYNCHRO) 
 		and c:GetReasonCard():IsControler(tp)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)

@@ -51,7 +51,7 @@ function s.addc1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter2(c,tp)
-	return c:GetPreviousControler()~=tp and c:GetPreviousLocation()==LOCATION_GRAVE
+	return not c:IsPreviousControler(tp) and c:GetPreviousLocation()==LOCATION_GRAVE
 end
 function s.addc2(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.filter2,1,nil,tp) then

@@ -17,7 +17,7 @@ function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	return bc and not c:IsReason(REASON_BATTLE) and bc:IsReason(REASON_BATTLE) and c:IsRelateToBattle() 
-		and bc:GetPreviousControler()~=tp
+		and not bc:IsPreviousControler(tp)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

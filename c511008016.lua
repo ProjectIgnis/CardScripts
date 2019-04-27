@@ -45,7 +45,7 @@ end
 
 --attach token
 function s.confil(c,p)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetPreviousControler()~=p
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsPreviousControler(p)
 end
 function s.attcon(e,tp,eg,ep,ev,re,r,rp)
 	if re~=nil then if re:GetHandlerPlayer()~=tp then return false else return true end end

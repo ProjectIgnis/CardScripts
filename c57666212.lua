@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=sg:GetFirst()
 	while tc do
 		if tc then
-			if tc:GetPreviousControler()==0 then d1=d1+1
+			if tc:IsPreviousControler(0) then d1=d1+1
 			else d2=d2+1 end
 		end
 		tc=sg:GetNext()

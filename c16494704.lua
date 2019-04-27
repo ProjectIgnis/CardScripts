@@ -1,7 +1,7 @@
 --オッドアイズ・アドベント
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddRitualProcGreater(c,s.ritualfil,nil,s.extrafil,s.extraop,s.forcedgroup,nil,LOCATION_HAND+LOCATION_GRAVE):SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
+	aux.AddRitualProcGreater(c,s.ritualfil,nil,s.extrafil,s.extraop,s.forcedgroup,nil,LOCATION_HAND+LOCATION_GRAVE):SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 end
 function s.ritualfil(c)
 	return c:IsRace(RACE_DRAGON) and c:IsRitualMonster()

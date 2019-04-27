@@ -7,6 +7,6 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_HAND,0)
-	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_DUEL)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_DUEL)
 	c:RegisterEffect(e1)
 end

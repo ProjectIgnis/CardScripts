@@ -1305,12 +1305,12 @@ function Auxiliary.FilterFaceupFunction(f,...)
 end
 --Filter for unique on field Malefic monsters
 function Auxiliary.MaleficUniqueFilter(cc)
+	local mt=cc:GetMetatable()
+	local t= mt.has_malefic_unique or {}
+	t[cc]=true
+	mt.has_malefic_unique=t
 	return 	function(c)
-				if Duel.IsPlayerAffectedByEffect(0,75223115) then
-					return c:GetCode()==cc:GetCode()
-				else
-					return c:IsSetCard(0x23)
-				end
+				return not Duel.IsPlayerAffectedByEffect(c:GetControler(),75223115) and c:IsSetCard(0x23)
 			end
 end
 --Procedure for Malefic monsters' Special Summon (includes handling of Malefic Paradox Gear)

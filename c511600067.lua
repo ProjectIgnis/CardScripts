@@ -1,7 +1,6 @@
 --トリガー・ヴルム (Anime)
 --Triggering Wurm (Anime)
 --scripted by Larry126
---cleaned up by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -12,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCode(EVENT_BE_MATERIAL)
-	e1:SetCountLimit(1,95504778+EFFECT_COUNT_CODE_DUEL)
+	e1:SetCountLimit(1,95504778,EFFECT_COUNT_CODE_DUEL)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)

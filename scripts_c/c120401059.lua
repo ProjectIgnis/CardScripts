@@ -103,7 +103,7 @@ function c120401059.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c120401059.damfilter(c,cd,tp)
-	return c:IsCode(cd) and c:GetSummonPlayer()==tp
+	return c:IsCode(cd) and c:IsSummonPlayer(tp)
 end
 function c120401059.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c120401059.damfilter,1,nil,e:GetLabel(),tp)

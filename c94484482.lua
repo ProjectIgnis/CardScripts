@@ -21,11 +21,8 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
-function s.cfilter(c,tp)
-	return c:GetSummonPlayer()==1-tp
-end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

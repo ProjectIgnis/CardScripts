@@ -82,7 +82,7 @@ end
 function s.ctop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
-		if tc:IsFaceup() and tc:GetSummonPlayer()~=tp then
+		if tc:IsFaceup() and not tc:IsSummonPlayer(tp) then
 			tc:AddCounter(0x100e,1)
 		end
 		tc=eg:GetNext()

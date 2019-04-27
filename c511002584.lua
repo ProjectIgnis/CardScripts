@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.cfilter(c,tp)
-	return c:GetSummonPlayer()~=tp and c:IsFaceup() 
+	return not c:IsSummonPlayer(tp) and c:IsFaceup() 
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil,c:GetAttack())
 end
 function s.filter(c,atk)

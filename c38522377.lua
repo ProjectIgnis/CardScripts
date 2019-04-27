@@ -81,7 +81,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
 	while tc do
 		if tc:IsType(TYPE_SYNCHRO) then
-			if tc:GetSummonPlayer()==tp then t1=true else t2=true end
+			if tc:IsSummonPlayer(tp) then t1=true else t2=true end
 		end
 		tc=eg:GetNext()
 	end

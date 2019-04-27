@@ -93,11 +93,8 @@ end
 function s.atktg(e,c)
 	return c:IsRace(RACE_INSECT) and c~=e:GetHandler():GetEquipTarget()
 end
-function s.cfilter(c,tp)
-	return c:GetSummonPlayer()==tp
-end
 function s.ctcon1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget() and eg:IsExists(s.cfilter,1,nil,1-tp)
+	return e:GetHandler():GetEquipTarget() and eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

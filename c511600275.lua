@@ -61,7 +61,7 @@ function s.atg(e,c)
 	return not lg:IsContains(c)
 end
 function s.sfilter(c,tp,lg)
-	return c:GetSummonPlayer()~=tp and lg:IsContains(c)
+	return not c:IsSummonPlayer(tp) and lg:IsContains(c)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lg=Group.CreateGroup()

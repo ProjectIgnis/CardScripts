@@ -55,7 +55,7 @@ function s.reactivate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,e,tp)
 	local g=e:GetLabelObject()
-	return c:IsFaceup() and c:GetSummonPlayer()==tp and g:IsExists(s.filter2,1,nil,c,e,tp)
+	return c:IsFaceup() and c:IsSummonPlayer(tp) and g:IsExists(s.filter2,1,nil,c,e,tp)
 end
 function s.filter2(c,eqc,e,tp)
 	return c:GetFlagEffect(id)~=0 and c:CheckEquipTarget(eqc) and aux.IsCodeListed(c,eqc:GetCode())

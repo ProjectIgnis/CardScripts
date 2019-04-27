@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	return c:GetSummonPlayer()==tp and c:IsDefensePos() and c:IsAbleToRemove()
+	return c:IsSummonPlayer(tp) and c:IsDefensePos() and c:IsAbleToRemove()
 		and (not e or (c:IsRelateToEffect(e) and c:IsLocation(LOCATION_MZONE)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

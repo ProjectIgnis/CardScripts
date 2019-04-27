@@ -17,11 +17,8 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-function s.filter(c,tp)
-	return c:GetSummonPlayer()==1-tp
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter,1,nil,tp) 
+	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) 
 		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 end

@@ -28,7 +28,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if #eg~=1 then return false end
 	local tc=eg:GetFirst()
-	return tc~=e:GetHandler() and tc:IsFaceup() and tc:GetLevel()>0 and tc:GetSummonPlayer()==1-tp
+	return tc~=e:GetHandler() and tc:IsFaceup() and tc:GetLevel()>0 and tc:IsSummonPlayer(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

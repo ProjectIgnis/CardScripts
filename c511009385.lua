@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	end
 end
 function s.cfilter(c,tp)
-	return c:GetSummonPlayer()==1-tp and c:GetSummonLocation()==LOCATION_EXTRA
+	return c:IsSummonPlayer(1-tp) and c:GetSummonLocation()==LOCATION_EXTRA
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil,tp) then s[tp]=true end

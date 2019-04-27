@@ -52,7 +52,7 @@ function s.con(e)
 	return Duel.GetFlagEffect(Duel.GetTurnPlayer(),id)==0
 end
 function s.cfilter(c,tp)
-	return c:GetSummonPlayer()==tp and (not c:IsType(TYPE_FUSION) or c:IsFacedown())
+	return c:IsSummonPlayer(tp) and (not c:IsType(TYPE_FUSION) or c:IsFacedown())
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil,Duel.GetTurnPlayer()) then

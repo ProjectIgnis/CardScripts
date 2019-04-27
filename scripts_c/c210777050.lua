@@ -79,7 +79,7 @@ function cardID.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cardID.cfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_SYNCHRO) and c:GetSummonPlayer()==tp
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_SYNCHRO) and c:IsSummonPlayer(tp)
 end
 function cardID.rmcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(cardID.cfilter,1,nil,tp)
@@ -99,7 +99,7 @@ function cardID.rmop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cardID.cfilter2(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_SYNCHRO) and c:GetSummonPlayer()==tp
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_SYNCHRO) and c:IsSummonPlayer(tp)
 end
 function cardID.rmcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(cardID.cfilter2,1,nil,tp)

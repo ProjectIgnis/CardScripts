@@ -1296,7 +1296,7 @@ function cm.NegateSummonModule(c,tpcode,ctlm,ctlmid,con,cost)
 	return table.unpack(t)
 end
 function cm.NegateSummonFilter(c,tp,e)
-	return c:GetSummonPlayer()==tp or e:GetLabel()==1
+	return c:IsSummonPlayer(tp) or e:GetLabel()==1
 end
 function cm.NegateSummonCondition(con)
 return function(e,tp,eg,ep,ev,re,r,rp)

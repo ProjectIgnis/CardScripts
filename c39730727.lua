@@ -34,7 +34,7 @@ function s.immfilter(e,te)
 	return te:IsActiveType(TYPE_MONSTER)
 end
 function s.drfilter(c,tp)
-	return c:GetSummonPlayer()~=tp and c:IsType(TYPE_EFFECT) and c:IsFaceup()
+	return not c:IsSummonPlayer(tp) and c:IsType(TYPE_EFFECT) and c:IsFaceup()
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.drfilter,1,nil,tp)

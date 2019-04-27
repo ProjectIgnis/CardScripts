@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.filter(c,tp)
-	return c:GetSummonPlayer()==tp and c:IsFaceup()
+	return c:IsSummonPlayer(tp) and c:IsFaceup()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,2,REASON_COST) end

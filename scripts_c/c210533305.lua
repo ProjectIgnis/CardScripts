@@ -143,7 +143,7 @@ function c210533305.actlimoperation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c210533305.actfilter(c,tp)
-	return c:IsSetCard(0xf72) and c:GetSummonPlayer()==tp
+	return c:IsSetCard(0xf72) and c:IsSummonPlayer(tp)
 end
 function c210533305.actcon(e,tp)
 	return eg and eg:IsExists(c210533305.actfilter,1,nil,tp)

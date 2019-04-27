@@ -13,11 +13,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,tp)
-	return c:GetSummonPlayer()~=tp
-end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(aux.NOT(Card.IsSummonPlayer),1,nil,tp)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x2a) and c:GetLevel()<=3 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

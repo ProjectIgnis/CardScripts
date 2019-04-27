@@ -18,7 +18,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.filter(c,e,tp)
-	return c:GetSummonPlayer()~=tp and c:IsAbleToHand() and (not e or c:IsRelateToEffect(e))
+	return not c:IsSummonPlayer(tp) and c:IsAbleToHand() and (not e or c:IsRelateToEffect(e))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(s.filter,nil,nil,tp)

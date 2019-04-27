@@ -34,7 +34,7 @@ function s.getzone(p,eg)
 	return zone
 end
 function s.cfilter(c,tp)
-	return c:GetSummonPlayer()==tp and c:IsInExtraMZone()
+	return c:IsSummonPlayer(tp) and c:IsInExtraMZone()
 end
 function s.mvcon(i)
 	return function(e,tp,eg,ep,ev,re,r,rp)

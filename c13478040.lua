@@ -21,11 +21,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c,tp)
-	return c:GetSummonPlayer()==tp
-end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	if eg:IsExists(s.cfilter,1,nil,1-tp) then
+	if eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) then
 		e:GetHandler():AddCounter(0x17,1)
 	end
 end

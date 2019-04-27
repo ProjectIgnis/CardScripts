@@ -40,7 +40,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.SendtoHand(g,nil,REASON_COST)
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsAngel() and c:IsLocation(LOCATION_MZONE) and c:GetSummonPlayer()==tp
+	return c:IsFaceup() and c:IsAngel() and c:IsLocation(LOCATION_MZONE) and c:IsSummonPlayer(tp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.filter,1,nil,tp) end

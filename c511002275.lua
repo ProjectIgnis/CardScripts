@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	aux.CallToken(419)
 end
 function s.spfilter(c,tp)
-	return c:GetSummonPlayer()==1-tp and c:IsPreviousLocation(LOCATION_GRAVE)
+	return c:IsSummonPlayer(1-tp) and c:IsPreviousLocation(LOCATION_GRAVE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spfilter,1,nil,tp)

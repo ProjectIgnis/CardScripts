@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.dfilter(c,e,tp)
-	return c:GetSummonPlayer()~=tp and c:IsRelateToEffect(e)
+	return not c:IsSummonPlayer(tp) and c:IsRelateToEffect(e)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.dfilter,nil,e,tp)

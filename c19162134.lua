@@ -68,14 +68,11 @@ function s.initial_effect(c)
 	eb:SetCondition(s.damcon2)
 	c:RegisterEffect(eb)
 end
-function s.spfilter(c,tp)
-	return c:GetSummonPlayer()==tp
-end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return #eg==5 and eg:IsExists(s.spfilter,1,nil,tp) and eg:GetClassCount(Card.GetLevel)==5
+	return #eg==5 and eg:IsExists(Card.IsSummonPlayer,1,nil,tp) and eg:GetClassCount(Card.GetLevel)==5
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return #eg==5 and eg:IsExists(s.spfilter,1,nil,1-tp) and eg:GetClassCount(Card.GetLevel)==5
+	return #eg==5 and eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) and eg:GetClassCount(Card.GetLevel)==5
 end
 function s.drop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

@@ -24,15 +24,12 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) end
 end
-function s.filter(c,tp)
-	return c:GetSummonPlayer()==tp
-end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if eg:IsExists(s.filter,1,nil,tp) and Duel.IsPlayerCanDraw(1-tp,1) and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
+	if eg:IsExists(Card.IsSummonPlayer,1,nil,tp) and Duel.IsPlayerCanDraw(1-tp,1) and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 		Duel.Draw(1-tp,1,REASON_EFFECT)
 	end
-	if eg:IsExists(s.filter,1,nil,1-tp) and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and c:GetSummonPlayer()~=tp and c:IsCanTurnSet()
+	return c:IsFaceup() and not c:IsSummonPlayer(tp) and c:IsCanTurnSet()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.filter,1,nil,tp) end

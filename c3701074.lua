@@ -42,7 +42,7 @@ function s.recop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:GetSummonPlayer()==1-tp
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSummonPlayer(1-tp)
 		and (not e or c:IsRelateToEffect(e))
 end
 function s.rectg2(e,tp,eg,ep,ev,re,r,rp,chk)

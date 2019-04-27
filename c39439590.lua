@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:GetSummonPlayer()==1-tp and c:IsPreviousLocation(LOCATION_HAND)
+	return c:IsSummonPlayer(1-tp) and c:IsPreviousLocation(LOCATION_HAND)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

@@ -33,12 +33,9 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
-function s.spfilter(c,tp)
-	return c:GetSummonPlayer()==1-tp
-end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()
-	if eg:IsExists(s.spfilter,1,nil,tp) and tc then
+	if eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) and tc then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

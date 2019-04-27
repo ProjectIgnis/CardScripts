@@ -45,12 +45,9 @@ s.xyz_number=35
 function s.val(e,c)
 	return math.abs(Duel.GetLP(0)-Duel.GetLP(1))
 end
-function s.cfilter(c,tp)
-	return c:GetSummonPlayer()==tp
-end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetOverlayCount()>0 and eg:IsExists(s.cfilter,1,nil,1-tp)
+	return c:GetOverlayCount()>0 and eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

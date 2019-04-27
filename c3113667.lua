@@ -73,7 +73,7 @@ end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
-	return tc:GetPreviousControler()~=tp
+	return not tc:IsPreviousControler(tp)
 		and bc:IsControler(tp) and bc:GetOriginalAttribute()==ATTRIBUTE_DARK and bc:GetOriginalRace()==RACE_MACHINE
 end
 function s.cfilter(c)

@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	end
 end
 function s.cfilter(c,p)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_DEFENSE) and c:GetPreviousControler()==p
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_DEFENSE) and c:IsPreviousControler(p)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for p=0,1 do

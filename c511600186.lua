@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc:GetPreviousControler()~=tp then
+	if not tc:IsPreviousControler(tp) then
 		tc=Duel.GetAttackTarget()
 	end
 	return tc:IsReason(REASON_DESTROY) and tc:IsReason(REASON_BATTLE) and tc:GetPreviousTypeOnField()&TYPE_LINK==TYPE_LINK

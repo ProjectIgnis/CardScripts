@@ -55,7 +55,7 @@ end
 function s.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
-	return tc:GetPreviousControler()~=tp and tc:IsLocation(LOCATION_GRAVE)
+	return not tc:IsPreviousControler(tp) and tc:IsLocation(LOCATION_GRAVE)
 		and bc:IsControler(tp) and bc:GetOriginalAttribute()==ATTRIBUTE_DARK and bc:GetOriginalRace()==RACE_MACHINE
 end
 function s.damfilter1(c,tp)

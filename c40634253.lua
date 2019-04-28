@@ -55,11 +55,11 @@ end
 function s.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
-	return tc:GetPreviousControler()~=tp and tc:IsLocation(LOCATION_GRAVE)
+	return not tc:IsPreviousControler(tp) and tc:IsLocation(LOCATION_GRAVE)
 		and bc:IsControler(tp) and bc:GetOriginalAttribute()==ATTRIBUTE_DARK and bc:GetOriginalRace()==RACE_MACHINE
 end
 function s.damfilter1(c,tp)
-	return c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()~=tp
+	return c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsLocation(LOCATION_GRAVE) and not c:IsPreviousControler(tp)
 end
 function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
@@ -73,7 +73,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function s.damfilter2(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()~=tp
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsLocation(LOCATION_GRAVE) and not c:IsPreviousControler(tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.damfilter2,nil,tp)

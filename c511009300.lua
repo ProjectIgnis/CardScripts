@@ -130,7 +130,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return #eg==1 and eg:GetFirst():IsSetCard(0x19)
 end
 function s.atkfilter(c,e,tp)
-	return c:GetPreviousControler()==tp and c:IsSetCard(0x19) and c:GetAttack()>0
+	return c:IsPreviousControler(tp) and c:IsSetCard(0x19) and c:GetAttack()>0
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler()

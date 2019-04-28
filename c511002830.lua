@@ -81,7 +81,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	while tc do
 		local atk=tc:GetTextAttack()
 		if atk<0 then atk=0 end
-		if tc:GetPreviousControler()==tp then
+		if tc:IsPreviousControler(tp) then
 			dam1=dam1+atk
 		else
 			dam2=dam2+atk

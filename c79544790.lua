@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,e,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsCanBeEffectTarget(e)
-		and c:GetPreviousControler()==tp and c:IsReason(REASON_BATTLE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+		and c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,tp) end

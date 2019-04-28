@@ -102,7 +102,7 @@ function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.valfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*100
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_PENDULUM) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+	return c:IsType(TYPE_PENDULUM) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

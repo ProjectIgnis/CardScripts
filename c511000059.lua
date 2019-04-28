@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsPreviousPosition(POS_FACEUP)
+	return c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
 		and c==Duel.GetAttackTarget() and c:IsRace(RACE_FIEND) and c:IsLocation(LOCATION_GRAVE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

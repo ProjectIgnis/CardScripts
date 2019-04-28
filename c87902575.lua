@@ -63,7 +63,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retfilter(c,ec,tp)
-	return c:IsRelateToCard(ec) and c:GetPreviousControler()==tp
+	return c:IsRelateToCard(ec) and c:IsPreviousControler(tp)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject():GetLabelObject()
@@ -90,7 +90,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.clfilter(c,ec,tp)
-	return (not c:IsRelateToCard(ec)) or c:GetPreviousControler()==tp
+	return (not c:IsRelateToCard(ec)) or c:IsPreviousControler(tp)
 end
 function s.clearop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():GetLabelObject():Remove(s.clfilter,nil,e:GetHandler(),Duel.GetTurnPlayer())

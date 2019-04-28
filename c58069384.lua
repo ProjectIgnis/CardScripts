@@ -88,7 +88,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and (r&REASON_EFFECT)~=0 and e:GetHandler():GetPreviousControler()==tp
+	return rp~=tp and (r&REASON_EFFECT)~=0 and e:GetHandler():IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_FUSION) and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	end
 end
 function s.cfilter(c,p)
-	return c:GetPreviousControler()==p
+	return c:IsPreviousControler(p)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil,0) then

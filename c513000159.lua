@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,Duel.GetTurnCount(),e,tp)
 	local tc=g:GetFirst()
 	local td=tp
-	if tc:GetPreviousControler()~=tp then td=1-tp end
+	if not tc:IsPreviousControler(tp) then td=1-tp end
 	if Duel.SpecialSummonStep(tc,0,tp,td,false,false,POS_FACEUP_ATTACK) then 
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

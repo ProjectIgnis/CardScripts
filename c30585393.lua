@@ -14,7 +14,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=eg:GetFirst()
 	if chkc then return chkc==tc end
-	if chk==0 then return #eg==1 and tc:GetPreviousControler()==tp and tc:IsPreviousLocation(LOCATION_MZONE)
+	if chk==0 then return #eg==1 and tc:IsPreviousControler(tp) and tc:IsPreviousLocation(LOCATION_MZONE)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and tc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and tc:IsReason(REASON_EFFECT)
 		and tc:IsCanBeEffectTarget(e) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) end

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:GetPreviousControler()==tp and (r&REASON_DESTROY)~=0
+	return rp~=tp and c:IsPreviousControler(tp) and (r&REASON_DESTROY)~=0
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.filter(c)

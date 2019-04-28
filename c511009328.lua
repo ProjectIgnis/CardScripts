@@ -63,7 +63,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.chkfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_GRAVE) 
-		and c:GetPreviousControler()==tp
+		and c:IsPreviousControler(tp)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if eg==nil or #eg<=0 then return end

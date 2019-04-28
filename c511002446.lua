@@ -22,15 +22,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,PLAYER_ALL,0)
 end
 function s.filter(c,tp)
-	return c:GetPreviousControler()==tp
+	return c:IsPreviousControler(tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 	local sg=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if Duel.Destroy(sg,REASON_EFFECT)>0 then
 		local dg=Duel.GetOperatedGroup()
-		local sg1=dg:Filter(s.filter,nil,tp)
-		local sg2=dg:Filter(s.filter,nil,1-tp)
+		local sg1=dg:Filter(Card.IsPreviousControler,nil,tp)
+		local sg2=dg:Filter(Card.IsPreviousControler,nil,1-tp)
 		local sum1=sg1:GetSum(Card.GetAttack)/2
 		local sum2=sg2:GetSum(Card.GetAttack)/2
 		Duel.Damage(tp,sum1,REASON_EFFECT,true)

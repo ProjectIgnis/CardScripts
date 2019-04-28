@@ -44,7 +44,7 @@ function s.efilter(e,re)
 	return re:IsActiveType(TYPE_MONSTER) and re:GetOwner()~=e:GetOwner()
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_TRAP) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_SZONE) and c:GetPreviousSequence()<5
+	return c:IsType(TYPE_TRAP) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_SZONE) and c:GetPreviousSequence()<5
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

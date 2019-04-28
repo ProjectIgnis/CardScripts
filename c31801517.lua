@@ -59,7 +59,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetPreviousControler()==tp and rp~=tp and c:IsReason(REASON_EFFECT)
+	return c:IsPreviousControler(tp) and rp~=tp and c:IsReason(REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_GALAXYEYES_P_DRAGON)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

@@ -98,7 +98,7 @@ function s.initial_effect(c)
 end
 s.xyz_number=93
 function s.chkfilter(c,tp,re)
-	return c:IsSetCard(0x48) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+	return c:IsSetCard(0x48) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=eg:Filter(s.chkfilter,nil,tp)
@@ -183,7 +183,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT) and rp~=tp and c:GetPreviousControler()==tp and re 
+	return c:IsReason(REASON_EFFECT) and rp~=tp and c:IsPreviousControler(tp) and re 
 		and re:GetHandler():IsType(TYPE_MONSTER)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)

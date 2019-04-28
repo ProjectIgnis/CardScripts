@@ -57,7 +57,7 @@ function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil,511009337)
 end
 function s.cfilter(c,tp,r,re,rp)
-	if not c:IsCode(511009337) or c:GetPreviousControler()~=tp then return false end
+	if not c:IsCode(511009337) or not c:IsPreviousControler(tp) then return false end
 	if r&REASON_EFFECT~=0 then
 		return rp~=tp and re and re:IsActiveType(TYPE_MONSTER)
 	else

@@ -42,7 +42,7 @@ function s.archchk(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsTachyon() and c:GetPreviousControler()==tp
+	return c:IsTachyon() and c:IsPreviousControler(tp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

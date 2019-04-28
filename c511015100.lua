@@ -58,7 +58,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousSetCard(0x99) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsPreviousSetCard(0x99) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.spcheck(sg,tp)
 	if not aux.ReleaseCheckMMZ(sg,tp) then return false end

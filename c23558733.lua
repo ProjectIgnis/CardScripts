@@ -45,7 +45,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetPreviousControler()==tp and (r&REASON_DESTROY)~=0
+	return e:GetHandler():IsPreviousControler(tp) and (r&REASON_DESTROY)~=0
 		and (e:GetHandler():GetPreviousLocation()&LOCATION_ONFIELD)>0
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)

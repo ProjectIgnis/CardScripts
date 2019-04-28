@@ -11,7 +11,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and tc:IsControler(tp) and tc:IsFaceup() and tc:GetBattleTarget():GetPreviousControler()==1-tp 
+	return #eg==1 and tc:IsControler(tp) and tc:IsFaceup() and tc:GetBattleTarget():IsPreviousControler(1-tp) 
 		and tc:GetBattleTarget():IsLevelAbove(8) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

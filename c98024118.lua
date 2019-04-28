@@ -29,7 +29,7 @@ function s.indcon(e)
 end
 function s.filter(c,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and c:IsType(TYPE_TUNER)
-		and c:GetPreviousControler()==tp and c:IsPreviousPosition(POS_FACEUP)
+		and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)

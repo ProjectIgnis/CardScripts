@@ -55,7 +55,7 @@ function s.damtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 end
 function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return (r&0x41)==0x41 and rp~=tp and e:GetHandler():GetPreviousControler()==tp
+	return (r&0x41)==0x41 and rp~=tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

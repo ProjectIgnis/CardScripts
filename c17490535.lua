@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return #eg==1 and ec:GetPreviousControler()==tp and ec:IsRace(RACE_REPTILE)
+	return #eg==1 and ec:IsPreviousControler(tp) and ec:IsRace(RACE_REPTILE)
 		and (ec:GetPreviousRaceOnField()&RACE_REPTILE)~=0
 		and ec==Duel.GetAttackTarget() and ec:IsLocation(LOCATION_GRAVE) and ec:IsReason(REASON_BATTLE)
 end

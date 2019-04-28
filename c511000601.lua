@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfil(c,tp)
-	return c:IsReason(REASON_BATTLE) and c:GetPreviousControler()==tp
+	return c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfil,1,nil,1-tp)

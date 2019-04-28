@@ -21,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.filter(c,tp)
-	return c:IsSetCard(0x16) and c:GetPreviousControler()==tp and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsSetCard(0x16) and c:IsPreviousControler(tp) and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(s.filter,nil,tp)

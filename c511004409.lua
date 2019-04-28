@@ -41,7 +41,7 @@ function s.cost(e,tp,eg,ev,ep,re,r,rp,chk)
 	Duel.SendtoGrave(tg,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT) 
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT) 
 		and c:IsCanBeSpecialSummoned(e,tp,SUMMON_TYPE_SPECIAL,false,false) and c:IsCanBeEffectTarget(e)
 end
 function s.atkfilter(c)

@@ -57,7 +57,7 @@ function s.efilter(e,re)
 	return re:GetOwner()~=e:GetOwner()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():GetPreviousControler()==tp
+	return rp~=tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

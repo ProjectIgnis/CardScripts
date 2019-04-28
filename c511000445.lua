@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:GetPreviousControler()==tp and c:IsReason(REASON_BATTLE) and c:IsCode(42035044) and c:GetEquipGroup():IsExists(Card.IsCode,1,nil,511000443)
+	return c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE) and c:IsCode(42035044) and c:GetEquipGroup():IsExists(Card.IsCode,1,nil,511000443)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,tp)

@@ -15,7 +15,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local lv=tc:GetLevel()
-	return #eg==1 and tc:IsSetCard(0x3008) and tc:IsPreviousPosition(POS_FACEUP) and tc:GetPreviousControler()==tp
+	return #eg==1 and tc:IsSetCard(0x3008) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousControler(tp)
 end
 function s.filter(c,lv)
 	return c:IsLevelBelow(lv) and c:IsSetCard(0xc008) and c:IsAbleToHand()

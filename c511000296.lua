@@ -83,7 +83,7 @@ function s.check(e,tp,eg,ep,ev,re,r,rp)
 end
 s.xyz_number=1000
 function s.cfilter(c,e,tp,xyz)
-	return c:IsCode(511000294) and c:GetPreviousControler()==tp and c:IsReason(REASON_DESTROY) and c:IsCanBeXyzMaterial(xyz,tp)
+	return c:IsCode(511000294) and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and c:IsCanBeXyzMaterial(xyz,tp)
 		and (not e or c:IsRelateToEffect(e))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

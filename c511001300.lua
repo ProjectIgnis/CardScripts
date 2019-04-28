@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c,e,tp,r,rp)
-	return c:IsType(TYPE_SYNCHRO) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==1-tp and (r&REASON_EFFECT)~=0 
+	return c:IsType(TYPE_SYNCHRO) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(1-tp) and (r&REASON_EFFECT)~=0 
 		and rp~=tp and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:GetPreviousControler()==tp and (c:GetPreviousLocation()&LOCATION_ONFIELD)~=0
+	return rp~=tp and c:IsPreviousControler(tp) and (c:GetPreviousLocation()&LOCATION_ONFIELD)~=0
 end
 function s.filter(c,e,tp)
 	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)

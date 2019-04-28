@@ -41,7 +41,7 @@ end
 	--Check for link monster that was destroyed due to opponent's card effect
 function s.cfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE) 
-		and c:GetPreviousControler()==tp and c:GetPreviousTypeOnField() & TYPE_LINK ~= 0
+		and c:IsPreviousControler(tp) and c:GetPreviousTypeOnField() & TYPE_LINK ~= 0
 		and c:IsReason(REASON_DESTROY) and ((c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
 end
 	--Check if ever happened

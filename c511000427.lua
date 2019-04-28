@@ -16,11 +16,8 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c,tp)
-	return c:GetPreviousControler()==tp
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(Card.IsPreviousControler,1,nil,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,2,e:GetHandler()) end

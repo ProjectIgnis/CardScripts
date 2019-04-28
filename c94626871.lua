@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()
-	if c:GetPreviousControler()~=tp then seq=seq+16 end
+	if not c:IsPreviousControler(tp) then seq=seq+16 end
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_MZONE) and bit.extract(zone,seq)~=0
 end

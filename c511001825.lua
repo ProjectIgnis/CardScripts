@@ -11,11 +11,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,tp)
-	return c:GetPreviousControler()==tp
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(Card.IsPreviousControler,1,nil,tp)
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToHand()

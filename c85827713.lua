@@ -32,7 +32,7 @@ function s.sumcon(e)
 end
 function s.limcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp
+	return rp~=tp and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp)
 end
 function s.limop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

@@ -75,7 +75,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():GetPreviousControler()==tp
+	return rp~=tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

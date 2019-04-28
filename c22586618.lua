@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return ec:GetPreviousControler()==tp and ec:IsSummonType(SUMMON_TYPE_ADVANCE)
+	return ec:IsPreviousControler(tp) and ec:IsSummonType(SUMMON_TYPE_ADVANCE)
 		and ec:IsAttribute(ATTRIBUTE_WIND+ATTRIBUTE_DARK)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

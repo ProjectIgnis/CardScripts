@@ -66,7 +66,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetPreviousControler()==tp and rp==1-tp and c:IsReason(REASON_DESTROY)
+	return c:IsPreviousControler(tp) and rp==1-tp and c:IsReason(REASON_DESTROY)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(81927732) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

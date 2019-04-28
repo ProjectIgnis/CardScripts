@@ -36,7 +36,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,800)
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0xb3) and c:GetPreviousControler()==tp
+	return c:IsSetCard(0xb3) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

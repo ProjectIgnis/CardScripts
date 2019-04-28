@@ -30,7 +30,7 @@ function s.archchk(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsType(TYPE_TRAP)
+	return c:IsPreviousControler(tp) and c:IsType(TYPE_TRAP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

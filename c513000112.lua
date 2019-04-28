@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp
+	return c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	--spsummon

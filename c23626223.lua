@@ -54,7 +54,7 @@ function s.tgcon(e)
 	return Duel.IsExistingMatchingCard(s.tgfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_SZONE) and c:GetPreviousControler()==tp
+	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousControler(tp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp)

@@ -46,7 +46,7 @@ function s.matfilter(c)
 end
 function s.thcfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()
-	return c:GetSummonLocation()==LOCATION_EXTRA and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and bit.extract(zone,seq)~=0
+	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and bit.extract(zone,seq)~=0
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.thcfilter,1,nil,tp,e:GetHandler():GetLinkedZone())

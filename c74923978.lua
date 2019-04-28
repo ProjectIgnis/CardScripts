@@ -19,15 +19,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c,tp)
-	return c:GetPreviousControler()==tp
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(Card.IsPreviousControler,1,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) end
-	local ct=eg:FilterCount(s.cfilter,nil,tp)
+	local ct=eg:FilterCount(Card.IsPreviousControler,nil,tp)
 	e:SetLabel(ct)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,ct)
 end

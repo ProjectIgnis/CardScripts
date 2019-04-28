@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
+	return c:IsPreviousControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return eg:IsExists(s.filter,1,nil,tp)

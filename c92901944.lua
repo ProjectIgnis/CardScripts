@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x24) and c:GetCode()~=id and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp
+	return c:IsSetCard(0x24) and c:GetCode()~=id and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

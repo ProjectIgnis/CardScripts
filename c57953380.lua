@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.gfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_GRAVE) and c:GetPreviousControler()==tp
+	return c:IsPreviousLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.gfilter,1,nil,tp)

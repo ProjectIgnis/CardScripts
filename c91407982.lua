@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.imdfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp and (c:GetReason()&0x40)==0x40
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp) and (c:GetReason()&0x40)==0x40
 end
 function s.imdcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.imdfilter,1,nil,tp)
@@ -60,7 +60,7 @@ function s.imdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==1-tp and (c:GetReason()&0x40)==0x40
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(1-tp) and (c:GetReason()&0x40)==0x40
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.damfilter,1,nil,tp)

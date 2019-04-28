@@ -36,11 +36,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
-function s.cfilter(c,tp)
-	return c:GetPreviousControler()==1-tp
-end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(IsPreviousControler,1,nil,1-tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(s.cfilter,nil,tp)

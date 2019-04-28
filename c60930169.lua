@@ -30,7 +30,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,e,tp)
-	if c:GetFlagEffect(id)~=0 and c:GetPreviousControler()==tp then
+	if c:GetFlagEffect(id)~=0 and c:IsPreviousControler(tp) then
 		e:SetLabel(c:GetCode())
 		return true
 	else return false end

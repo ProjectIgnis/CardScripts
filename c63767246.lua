@@ -76,7 +76,7 @@ function s.cbop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkfilter1(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsType(TYPE_XYZ) and c:GetBaseAttack()>0
-		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.atkfilter1,1,nil,tp)

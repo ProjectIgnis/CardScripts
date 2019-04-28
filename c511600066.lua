@@ -84,7 +84,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_DESTROY) and c:IsType(TYPE_LINK) and c:IsAbleToRemoveAsCost()
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,e,tp)
-	return c:IsType(TYPE_XYZ) and c:GetPreviousControler()==tp and (not e or c:IsRelateToEffect(e))
+	return c:IsType(TYPE_XYZ) and c:IsPreviousControler(tp) and (not e or c:IsRelateToEffect(e))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,nil,tp) and eg:IsExists(s.cfilter,1,nil,nil,1-tp)
@@ -27,7 +27,7 @@ function s.filter(c,e,tp,eg)
 		and eg:IsExists(s.rkfilter,1,nil,c:GetRank(),tp)
 end
 function s.rkfilter(c,rk,tp)
-	return c:GetRank()==rk and c:GetPreviousControler()==tp
+	return c:GetRank()==rk and c:IsPreviousControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and Duel.GetLocationCountFromEx(1-tp)>0

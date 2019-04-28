@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and tc:GetPreviousControler()~=tp
+	return #eg==1 and not tc:IsPreviousControler(tp)
 end
 function s.filter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsLevelBelow(2) and c:IsDiscardable()

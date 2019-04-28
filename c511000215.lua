@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:GetPreviousControler()==tp and c==Duel.GetAttackTarget()
+	return c:IsPreviousControler(tp) and c==Duel.GetAttackTarget()
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)

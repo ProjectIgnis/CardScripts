@@ -59,7 +59,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_DECK) and c:GetPreviousControler()==tp
+	return c:IsPreviousLocation(LOCATION_DECK) and c:IsPreviousControler(tp)
 end
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0 and eg:IsExists(s.cfilter,1,nil,tp)
@@ -73,7 +73,7 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp))
+	return (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)))
 		and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

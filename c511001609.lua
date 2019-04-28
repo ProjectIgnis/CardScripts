@@ -36,7 +36,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_XYZ) and c:GetPreviousControler()==tp and c:IsControler(tp)
+	return c:IsType(TYPE_XYZ) and c:IsPreviousControler(tp) and c:IsControler(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

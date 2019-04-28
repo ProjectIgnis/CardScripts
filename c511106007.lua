@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c,e,tp)
-	return c:GetPreviousControler()==tp and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP))
+	return c:IsPreviousControler(tp) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP))
 end
 function s.exfilter(c)
 	return c:IsType(TYPE_LINK) and c:IsSetCard(0x577) and c:IsAbleToExtra()

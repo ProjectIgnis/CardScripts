@@ -67,7 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcfilter(c,tp)
-	return c:IsType(TYPE_XYZ) and c:GetPreviousControler()==tp
+	return c:IsType(TYPE_XYZ) and c:IsPreviousControler(tp)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp)

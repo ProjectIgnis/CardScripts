@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
-	return tc:IsType(TYPE_SYNCHRO) and tc:GetPreviousControler()~=tp
+	return tc:IsType(TYPE_SYNCHRO) and not tc:IsPreviousControler(tp)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

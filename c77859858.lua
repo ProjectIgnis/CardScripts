@@ -45,7 +45,7 @@ function s.initial_effect(c)
 end
 function s.leave(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetPreviousControler()==tp and c:IsStatus(STATUS_ACTIVATED) then
+	if c:IsPreviousControler(tp) and c:IsStatus(STATUS_ACTIVATED) then
 		Duel.Damage(tp,3000,REASON_EFFECT)
 	end
 end

@@ -46,7 +46,7 @@ function s.lvcon(e)
 	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE) and c:GetPreviousControler()==tp and c:IsPreviousSetCard(0x107)
+	return c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp) and c:IsPreviousSetCard(0x107)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

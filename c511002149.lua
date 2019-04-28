@@ -31,7 +31,7 @@ function s.archchk(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsShark() and c:IsType(TYPE_MONSTER) 
-		and c:IsControler(tp) and c:GetPreviousControler()==tp
+		and c:IsControler(tp) and c:IsPreviousControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,tp)

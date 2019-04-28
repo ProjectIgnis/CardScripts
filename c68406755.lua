@@ -57,7 +57,7 @@ end
 function s.spfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and c:IsSetCard(0xe2) and not c:IsCode(id)
-		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
+		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spfilter,1,nil,tp)

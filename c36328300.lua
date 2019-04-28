@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.confilter(c,tp)
-	return c:IsPreviousSetCard(0x1034) and c:GetPreviousControler()==tp
+	return c:IsPreviousSetCard(0x1034) and c:IsPreviousControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.confilter,1,nil,tp)
@@ -67,7 +67,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.plcfilter(c,tp)
-	return c:IsPreviousSetCard(0x2034) and c:GetPreviousControler()==tp and c:IsPreviousPosition(POS_FACEUP) and c:GetReasonPlayer()~=tp
+	return c:IsPreviousSetCard(0x2034) and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP) and c:GetReasonPlayer()~=tp
 		and c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function s.plcon(e,tp,eg,ep,ev,re,r,rp)

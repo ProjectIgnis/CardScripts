@@ -32,7 +32,7 @@ function s.spcon(e,c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return not c:IsReason(REASON_BATTLE) and rp==1-tp and c:GetPreviousControler()==tp
+	return not c:IsReason(REASON_BATTLE) and rp==1-tp and c:IsPreviousControler(tp)
 end
 function s.filter(c)
 	return c:IsSetCard(0x3d) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

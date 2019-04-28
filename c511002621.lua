@@ -179,7 +179,7 @@ end
 
 --self
 function s.cfilter(c,tp)
-return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 
 function s.con7(e,tp,eg,ep,ev,re,r,rp)
@@ -200,7 +200,7 @@ end
 
 --opp
 function s.cfilter2(c,tp)
-return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==1-tp
+return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(1-tp)
 end
 
 function s.con8(e,tp,eg,ep,ev,re,r,rp)

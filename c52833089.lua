@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsSetCard(0x33) and c:IsLocation(LOCATION_GRAVE)
-		and c:GetPreviousControler()==tp and (c:GetReason()&REASON_BATTLE)~=0
+		and c:IsPreviousControler(tp) and (c:GetReason()&REASON_BATTLE)~=0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

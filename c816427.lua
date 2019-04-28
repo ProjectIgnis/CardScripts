@@ -51,7 +51,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function s.gycfilter(c,tp)
-    return c:IsPreviousLocation(LOCATION_GRAVE) and c:GetPreviousControler()~=tp
+    return c:IsPreviousLocation(LOCATION_GRAVE) and not c:IsPreviousControler(tp)
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(s.gycfilter,1,nil,tp)

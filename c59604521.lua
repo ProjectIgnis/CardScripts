@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_GRAVE) and c:GetPreviousControler()==1-tp
+	return c:IsPreviousLocation(LOCATION_GRAVE) and c:IsPreviousControler(1-tp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.damfilter,1,nil,tp)

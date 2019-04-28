@@ -48,7 +48,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,tp)
 	return c:IsSetCard(0x71) and c:IsLocation(LOCATION_DECK)
-		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_GRAVE)
+		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_GRAVE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,74641045) and eg:IsExists(s.cfilter,1,nil,tp)

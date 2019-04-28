@@ -68,7 +68,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rtfilter(c,e,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
-	and c:IsPreviousSetCard(0x64) and c:GetPreviousControler()==tp and c:IsControler(tp) and c~=e:GetHandler()
+	and c:IsPreviousSetCard(0x64) and c:IsPreviousControler(tp) and c:IsControler(tp) and c~=e:GetHandler()
 end
 function s.thcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.rtfilter,1,nil,e,tp)

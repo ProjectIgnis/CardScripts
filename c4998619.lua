@@ -75,7 +75,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:RegisterEffect(e1)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():GetPreviousControler()==tp
+	return rp~=tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xe3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

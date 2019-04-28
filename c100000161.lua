@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()==tp
+	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp)
 		and c:GetReasonCard():IsRelateToBattle() and c:IsReason(REASON_BATTLE) 
 		and c:GetBattlePosition()==POS_FACEUP_ATTACK
 end

@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:IsLocation(LOCATION_DECK) and c:GetPreviousControler()==tp and c:IsControler(tp) 
+	return c:IsLocation(LOCATION_DECK) and c:IsPreviousControler(tp) and c:IsControler(tp) 
 		and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1034)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)

@@ -15,7 +15,7 @@ end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_DECK) and r&REASON_EFFECT~=0
-		and c:GetPreviousControler()==tp
+		and c:IsPreviousControler(tp)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

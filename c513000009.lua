@@ -47,7 +47,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetLabelObject()
 	return c:GetPreviousAttributeOnField()&ATTRIBUTE_DARK==ATTRIBUTE_DARK and e:GetLabel()==1
-		and c:GetPreviousAttackOnField()<=1000 and c:GetPreviousControler()==tp
+		and c:GetPreviousAttackOnField()<=1000 and c:IsPreviousControler(tp)
 end
 function s.tgfilter(c)
 	return c:IsFaceup() and c:GetAttack()>=1500 and c:IsDestructable()

@@ -19,7 +19,7 @@ function s.filter(c,e,tp)
 	else
 		ct=#og
 	end
-	return c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()==tp and c:IsReason(REASON_BATTLE)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsType(TYPE_XYZ)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>ct
 end

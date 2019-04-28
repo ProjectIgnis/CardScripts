@@ -72,7 +72,7 @@ function s.splimit(e,c)
 end
 function s.spcfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and aux.IsMaterialListCode(c,CARD_NEOS)
-		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD)
+		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp)

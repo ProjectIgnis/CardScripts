@@ -49,7 +49,7 @@ function s.hspval(e,c)
 	return 0,zone
 end
 function s.spcfilter(c,tp,mc)
-	if c:GetPreviousControler()==tp then return false end
+	if c:IsPreviousControler(tp) then return false end
 	local loc=LOCATION_MZONE
 	if c:IsPreviousLocation(LOCATION_SZONE) then loc=LOCATION_SZONE end
 	local zone=mc:GetColumnZone(loc)

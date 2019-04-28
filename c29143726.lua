@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and (r&REASON_EFFECT)~=0 and e:GetHandler():GetPreviousControler()==tp
+	return rp~=tp and (r&REASON_EFFECT)~=0 and e:GetHandler():IsPreviousControler(tp)
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)

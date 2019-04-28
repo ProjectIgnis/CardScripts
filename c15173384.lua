@@ -30,7 +30,7 @@ function s.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and ((c:IsPreviousSetCard(0x110) and c:GetPreviousTypeOnField()&TYPE_FUSION~=0)
 			or c:GetPreviousCodeOnField()==64631466)
-		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp)

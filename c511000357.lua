@@ -26,7 +26,7 @@ function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.cfilter(c,tp)
-	return c:IsRace(RACE_DRAGON) and c:GetPreviousControler()==tp and c:GetPreviousLocation()==LOCATION_MZONE
+	return c:IsRace(RACE_DRAGON) and c:IsPreviousControler(tp) and c:GetPreviousLocation()==LOCATION_MZONE
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

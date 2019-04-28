@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsType(TYPE_SPELL) and c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEUP)
-		and c:GetPreviousControler()==1-tp and c:GetPreviousSequence()~=5
+		and c:IsPreviousControler(1-tp) and c:GetPreviousSequence()~=5
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

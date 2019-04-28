@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():GetPreviousControler()==tp
+	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():IsPreviousControler(tp)
 		and e:GetHandler():IsReason(REASON_DESTROY) and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

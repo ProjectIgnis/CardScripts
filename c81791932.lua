@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsRace(RACE_REPTILE) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
+	return c:IsRace(RACE_REPTILE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

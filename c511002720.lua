@@ -37,7 +37,7 @@ function s.archchk(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,tp)
-	return c:GetPreviousControler()==1-tp and (c:GetReason()&0x41)==0x41
+	return c:IsPreviousControler(1-tp) and (c:GetReason()&0x41)==0x41
 end
 function s.cfilter(tc)
 	return tc and tc:IsFaceup()

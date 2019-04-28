@@ -54,7 +54,7 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_BATTLE)
-		or (rp~=tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp)
+		or (rp~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp))
 end
 function s.thfilter(c)
 	return c:IsSetCard(0xae) and c:IsAbleToHand()

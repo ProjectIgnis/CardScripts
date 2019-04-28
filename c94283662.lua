@@ -46,7 +46,7 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_DESTROY)>0
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
-		and e:GetHandler():GetPreviousControler()==tp
+		and e:GetHandler():IsPreviousControler(tp)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToHand()

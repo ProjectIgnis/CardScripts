@@ -20,11 +20,8 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge,0)
 	end
 end
-function s.cfilter(c,tp)
-	return c:GetPreviousControler()==tp
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(Card.IsPreviousControler,1,nil,tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

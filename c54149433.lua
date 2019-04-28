@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_EFFECT) and c:IsSetCard(0x81)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -45,7 +45,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetPreviousControler()==tp and rp~=tp and c:IsReason(REASON_DESTROY)
+	return c:IsPreviousControler(tp) and rp~=tp and c:IsReason(REASON_DESTROY)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x1081) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

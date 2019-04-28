@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp
+	return rp~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x108) and not c:IsCode(id) and c:IsAbleToHand()

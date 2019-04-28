@@ -69,7 +69,7 @@ function s.actcon(e)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetReasonPlayer()~=tp and c:GetPreviousControler()==tp
+	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetReasonPlayer()~=tp and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spfilter(c,e,tp)

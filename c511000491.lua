@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp and c:GetPreviousLocation()==LOCATION_MZONE 
+	return c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp) and c:GetPreviousLocation()==LOCATION_MZONE 
 	and (c:GetPreviousPosition()&POS_FACEUP)~=0 and c:GetReasonPlayer()==1-tp and c:IsSetCard(0x3008)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -21,7 +21,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 end
 function s.filter(c,tp)
-	return c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp and c:GetReasonPlayer()==1-tp and c:GetPreviousLocation()==LOCATION_MZONE
+	return c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp and c:GetPreviousLocation()==LOCATION_MZONE
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter,nil,tp)

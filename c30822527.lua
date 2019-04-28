@@ -52,7 +52,7 @@ function s.atkval(e,c)
 end
 function s.cfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()
-	if c:GetPreviousControler()~=tp then seq=seq+16 end
+	if not c:IsPreviousControler(tp) then seq=seq+16 end
 	return c:IsPreviousLocation(LOCATION_MZONE) and bit.extract(zone,seq)~=0
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)

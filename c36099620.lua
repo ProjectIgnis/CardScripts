@@ -37,7 +37,7 @@ function s.atkval(e,c)
 	return e:GetHandler():GetCounter(0x5)*100
 end
 function s.cfilter(c,tp)
-	return c:GetPreviousLocation()==LOCATION_DECK and c:GetPreviousControler()==tp
+	return c:GetPreviousLocation()==LOCATION_DECK and c:IsPreviousControler(tp)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil,tp) then

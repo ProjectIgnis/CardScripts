@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x24) and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp
+	return c:IsSetCard(0x24) and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp)
 		and c:GetPreviousLocation()==LOCATION_MZONE and (c:GetPreviousPosition()&POS_FACEUP)~=0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

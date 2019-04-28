@@ -43,7 +43,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp
+	return c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp)
 	 and (c:GetPreviousLocation()&LOCATION_ONFIELD)~=0
 end
 function s.filter2(c)

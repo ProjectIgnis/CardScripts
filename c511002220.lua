@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp 
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp) 
 		and c:IsLocation(LOCATION_GRAVE) and r==REASON_FUSION
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

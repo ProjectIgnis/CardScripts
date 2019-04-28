@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (r&REASON_DESTROY)~=0 and rp~=tp and c:GetPreviousControler()==tp
+	return (r&REASON_DESTROY)~=0 and rp~=tp and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

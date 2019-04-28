@@ -23,7 +23,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	local bc=ec:GetBattleTarget()
 	return e:GetHandler():GetEquipTarget()==ec and ec:IsControler(tp)
-		and bc:GetPreviousControler()==1-tp and bc:IsReason(REASON_BATTLE)
+		and bc:IsPreviousControler(1-tp) and bc:IsReason(REASON_BATTLE)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

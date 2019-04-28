@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsType(TYPE_SYNCHRO) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
-		and c:IsControler(tp) and c:GetPreviousControler()==tp and c:GetReasonPlayer()~=tp
+		and c:IsControler(tp) and c:IsPreviousControler(tp) and c:GetReasonPlayer()~=tp
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return re:GetOwner():IsRace(RACE_ZOMBIE) and e:GetHandler():GetSummonLocation()==LOCATION_GRAVE
-		and e:GetHandler():GetPreviousControler()==tp
+		and e:GetHandler():IsPreviousControler(tp)
 end
 function s.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

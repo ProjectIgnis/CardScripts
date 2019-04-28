@@ -15,7 +15,7 @@ end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (c:IsReason(REASON_BATTLE)
-		or rp~=tp and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp)
+		or rp~=tp and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp))
 		and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

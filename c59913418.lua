@@ -66,7 +66,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 	Duel.Destroy(g,REASON_EFFECT)
-	local ct=Duel.GetOperatedGroup():FilterCount(function(c,tp) return c:GetPreviousControler()==tp end,nil,1-tp)
+	local ct=Duel.GetOperatedGroup():FilterCount(function(c,tp) return c:IsPreviousControler(tp) end,nil,1-tp)
 	if ct>0 then
 		Duel.Damage(1-tp,ct*200,REASON_EFFECT)
 	end

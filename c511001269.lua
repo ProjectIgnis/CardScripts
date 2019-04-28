@@ -19,11 +19,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE) and c:GetPreviousControler()==tp
+	return c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return #eg==1 and ec:IsReason(REASON_BATTLE) and ec:GetPreviousControler()==tp
+	return #eg==1 and ec:IsReason(REASON_BATTLE) and ec:IsPreviousControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst():GetReasonCard()

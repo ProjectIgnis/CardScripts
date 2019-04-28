@@ -62,7 +62,7 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:GetPreviousControler()==1-tp and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsPreviousControler(1-tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,tp)

@@ -40,7 +40,7 @@ function s.tg(e,c)
 	return c:IsPosition(e:GetLabel())
 end
 function s.filter(c,tp)
-	return c:GetPreviousControler()==1-tp and c:IsPreviousPosition(POS_DEFENSE) and c:IsReason(REASON_BATTLE)
+	return c:IsPreviousControler(1-tp) and c:IsPreviousPosition(POS_DEFENSE) and c:IsReason(REASON_BATTLE)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)

@@ -3,15 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
-	e1:SetRange(LOCATION_HAND)
-	e1:SetTargetRange(POS_FACEUP,1)
-	e1:SetCondition(s.spcon)
-	e1:SetOperation(s.spop)
-	c:RegisterEffect(e1)
+	aux.AddLavaProcedure(c,1,POS_FACEUP)
 	--damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -43,21 +35,6 @@ function s.initial_effect(c)
 	e4:SetCost(s.spcost)
 	e4:SetOperation(s.spcop)
 	c:RegisterEffect(e4)
-end
-function s.spfilter(c,ft)
-	return c:IsReleasable() and (ft>0 or c:GetSequence()<5)
-end
-function s.spcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
-	return ft>-1 and Duel.IsExistingMatchingCard(s.spfilter,tp,0,LOCATION_MZONE,1,nil,ft)
-end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,0,LOCATION_MZONE,1,1,nil,ft)
-	Duel.Release(g,REASON_COST)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end

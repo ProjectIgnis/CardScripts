@@ -3,6 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_ZOMBIE),2,2)
 	--special summon
@@ -30,12 +31,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--extra material
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_EXTRA_RELEASE_SUM)
-	e3:SetRange(LOCATION_MZONE)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e3:SetCode(EFFECT_ADD_EXTRA_TRIBUTE)
 	e3:SetTargetRange(0,LOCATION_MZONE)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_ZOMBIE))
-	c:RegisterEffect(e3)
+	e3:SetValue(POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetTargetRange(LOCATION_HAND,0)
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_MONSTER))
+	e4:SetLabelObject(e3)
+	c:RegisterEffect(e4)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp)
@@ -64,7 +72,7 @@ function s.drfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and c:IsPreviousLocation(LOCATION_GRAVE)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.drfilter,1,e:GetHandler())
+	return eg:IsExists(s.drfilter,1,nil) and not eg:IsContains(e:GetHandler())
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -76,4 +84,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-

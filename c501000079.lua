@@ -21,24 +21,13 @@ function s.initial_effect(c)
 	e3:SetValue(s.splimit)
 	c:RegisterEffect(e3)
 	--summon with 3 tribute
-	local e4=Effect.CreateEffect(c)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-	e4:SetCondition(s.ttcon)
-	e4:SetOperation(s.ttop)
-	e4:SetValue(SUMMON_TYPE_ADVANCE)
-	c:RegisterEffect(e4)
+	local e4=aux.AddNormalSummonProcedure(c,true,false,3,3)
+	local e5=aux.AddNormalSetProcedure(c)
 	--tribute limit
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetCode(EFFECT_TRIBUTE_LIMIT)
-	e5:SetValue(s.tlimit)
-	c:RegisterEffect(e5)
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetCode(EFFECT_LIMIT_SET_PROC)
-	e6:SetCondition(s.setcon)
+	e6:SetCode(EFFECT_TRIBUTE_LIMIT)
+	e6:SetValue(s.tlimit)
 	c:RegisterEffect(e6)
 	--match kill
 	local e7=Effect.CreateEffect(c)
@@ -106,15 +95,6 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
-end
-function s.ttcon(e,c)
-	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-3 and Duel.GetTributeCount(c)>=3
-end
-function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectTribute(tp,c,3,3)
-	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
 end
 function s.tlimit(e,c)
 	return not c:IsRace(RACE_BEAST)

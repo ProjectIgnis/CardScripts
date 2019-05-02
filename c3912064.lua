@@ -11,15 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.posop)
 	c:RegisterEffect(e1)
 	--summon with 3 tribute
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_SUMMON_PROC)
-	e2:SetCondition(s.ttcon)
-	e2:SetOperation(s.ttop)
-	e2:SetValue(SUMMON_TYPE_ADVANCE+1)
-	c:RegisterEffect(e2)
+	local e2=aux.AddNormalSummonProcedure(c,true,true,3,3,SUMMON_TYPE_ADVANCE+1,aux.Stringid(id,0))
 	--atk down
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -49,16 +41,6 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g==0 then return end
 	Duel.ChangePosition(g,POS_FACEUP_ATTACK)
-end
-function s.ttcon(e,c,minc)
-	if c==nil then return true end
-	return minc<=3 and Duel.CheckTribute(c,3)
-end
-function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectTribute(tp,c,3,3)
-	c:SetMaterial(g)
-	Duel.Release(g, REASON_SUMMON+REASON_MATERIAL)
 end
 function s.atkcon(e)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_ADVANCE+1

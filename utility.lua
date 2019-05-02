@@ -1,16 +1,5 @@
 Auxiliary={}
 aux=Auxiliary
-POS_FACEUP_DEFENCE=POS_FACEUP_DEFENSE
-POS_FACEDOWN_DEFENCE=POS_FACEDOWN_DEFENSE
-RACE_CYBERS=RACE_CYBERSE
-TYPE_EXTRA=TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK
-TYPES_TOKEN=TYPE_MONSTER+TYPE_NORMAL+TYPE_TOKEN
-ATTRIBUTE_DIVINE=ATTRIBUTE_DEVINE
-RACE_WINGEDBEAST=RACE_WINDBEAST
-RACE_PSYCHIC=RACE_PSYCHO
-RACE_DIVINE=RACE_DEVINE
-SUMMON_TYPE_TRIBUTE=SUMMON_TYPE_ADVANCE
-SUMMON_TYPE_GEMINI=SUMMON_TYPE_DUAL
 function GetID()
     return self_table,self_code
 end
@@ -1529,4 +1518,5 @@ Duel.LoadScript("proc_equip.lua")
 Duel.LoadScript("proc_persistent.lua")
 Duel.LoadScript("proc_workaround.lua")
 Duel.LoadScript("proc_damage_fix.lua")
+Duel.LoadScript("proc_normal.lua")
 pcall(dofile,"init.lua")

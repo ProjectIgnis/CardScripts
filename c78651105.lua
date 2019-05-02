@@ -13,14 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_SET_PROC)
 	c:RegisterEffect(e2)
 	--summon with 3 tribute
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_SUMMON_PROC)
-	e3:SetCondition(s.ttcon)
-	e3:SetOperation(s.ttop)
-	e3:SetValue(SUMMON_TYPE_ADVANCE+1)
-	c:RegisterEffect(e3)
+	local e3=aux.AddNormalSummonProcedure(c,true,true,3,3,SUMMON_TYPE_ADVANCE+1,aux.Stringid(id,1))
 	--destroy
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
@@ -42,20 +35,10 @@ function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetReset(RESET_EVENT+0xff0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetValue(1900)
 	c:RegisterEffect(e1)
-end
-function s.ttcon(e,c,minc)
-	if c==nil then return true end
-	return minc<=3 and Duel.CheckTribute(c,3)
-end
-function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectTribute(tp,c,3,3)
-	c:SetMaterial(g)
-	Duel.Release(g, REASON_SUMMON+REASON_MATERIAL)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_ADVANCE+1

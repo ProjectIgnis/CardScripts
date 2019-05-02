@@ -11,20 +11,8 @@ function s.initial_effect(c)
 	e1:SetValue(POS_FACEUP)
 	c:RegisterEffect(e1)
 	--summon with 3 tribute
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCondition(s.ttcon)
-	e2:SetOperation(s.ttop)
-	e2:SetValue(SUMMON_TYPE_ADVANCE)
-	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_LIMIT_SET_PROC)
-	e3:SetCondition(s.setcon)
-	c:RegisterEffect(e3)
+	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3,SUMMON_TYPE_ADVANCE,aux.Stringid(id,0))
+	local e2=aux.AddNormalSetProcedure(c)
 	--tribute check
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
@@ -51,19 +39,6 @@ function s.initial_effect(c)
 	e6:SetTarget(s.sptg)
 	e6:SetOperation(s.spop)
 	c:RegisterEffect(e6)
-end
-function s.ttcon(e,c,minc)
-	if c==nil then return true end
-	return minc<=3 and Duel.CheckTribute(c,3)
-end
-function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectTribute(tp,c,3,3)
-	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
-end
-function s.setcon(e,c,minc)
-	if not c then return true end
-	return false
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

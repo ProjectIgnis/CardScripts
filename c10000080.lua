@@ -2,16 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-	e1:SetCondition(s.ttcon1)
-	e1:SetTarget(s.tttg1)
-	e1:SetOperation(s.ttop1)
-	e1:SetValue(SUMMON_TYPE_ADVANCE)
-	c:RegisterEffect(e1)
+	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3,SUMMON_TYPE_ADVANCE,aux.Stringid(id,0))
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
@@ -23,11 +14,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ttop2)
 	e2:SetValue(SUMMON_TYPE_ADVANCE)
 	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_LIMIT_SET_PROC)
-	e3:SetCondition(s.setcon)
-	c:RegisterEffect(e3)
+	local e3=aux.AddNormalSetProcedure(c)
 	--cannot special summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
@@ -69,30 +56,6 @@ function s.initial_effect(c)
 	e9:SetOperation(s.spop)
 	c:RegisterEffect(e9)
 end
-function s.ttcon1(e,c,minc,zone,relzone,exeff)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local mg=Duel.GetTributeGroup(c)
-	mg=mg:Filter(Auxiliary.IsZone,nil,relzone,tp)
-	return minc<=3 and Duel.CheckTribute(c,3,3,mg,tp,zone)
-end
-function s.tttg1(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
-	local mg=Duel.GetTributeGroup(c)
-	mg=mg:Filter(Auxiliary.IsZone,nil,relzone,tp)
-	local g=Duel.SelectTribute(tp,c,3,3,mg,tp,zone,true)
-	if #g>0 then
-		g:KeepAlive()
-		e:SetLabelObject(g)
-		return true
-	end
-	return false
-end
-function s.ttop1(e,tp,eg,ep,ev,re,r,rp,c,minc,zone,relzone,exeff)
-	local g=e:GetLabelObject()
-	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
-	g:DeleteGroup()
-end
 function s.ttcon2(e,c,minc,zone,relzone,exeff)
 	if c==nil then return true end
 	if exeff then
@@ -128,10 +91,6 @@ function s.ttop2(e,tp,eg,ep,ev,re,r,rp,c,minc,zone,relzone,exeff)
 	c:SetMaterial(g)
 	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
 	g:DeleteGroup()
-end
-function s.setcon(e,c,minc)
-	if not c then return true end
-	return false
 end
 function s.retreg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

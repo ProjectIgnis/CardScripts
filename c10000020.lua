@@ -2,19 +2,8 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-	e1:SetCondition(s.ttcon)
-	e1:SetOperation(s.ttop)
-	e1:SetValue(SUMMON_TYPE_ADVANCE)
-	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_LIMIT_SET_PROC)
-	e2:SetCondition(s.setcon)
-	c:RegisterEffect(e2)
+	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3)
+    local e2=aux.AddNormalSetProcedure(c)
 	--summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -64,19 +53,6 @@ function s.initial_effect(c)
 	local e9=e8:Clone()
 	e9:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e9)
-end
-function s.ttcon(e,c,minc)
-	if c==nil then return true end
-	return minc<=3 and Duel.CheckTribute(c,3)
-end
-function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectTribute(tp,c,3,3)
-	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
-end
-function s.setcon(e,c,minc)
-	if not c then return true end
-	return false
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(aux.FALSE)

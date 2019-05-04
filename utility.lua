@@ -162,6 +162,14 @@ function Auxiliary.CheckValidExtra(c,tp,sg,mg,lc,emt,filt)
 	end
 	return res
 end
+function Auxiliary.DeleteExtraMaterialGroups(emt)
+	for _,ex in ipairs(emt) do
+		if ex[3]:GetValue() then
+			ex[3]:GetValue()(2,nil,ex[3],ex[1])
+		end
+		ex[1]:DeleteGroup()
+	end
+end
 function Auxiliary.GetMustBeMaterialGroup(tp,eg,sump,sc,g,r)
 	--- eg all default materials, g - valid materials
 	local eff={Duel.GetPlayerEffect(tp,EFFECT_MUST_BE_MATERIAL)}

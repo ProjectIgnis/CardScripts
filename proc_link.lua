@@ -103,7 +103,9 @@ function Auxiliary.LinkCondition(f,minc,maxc,specialchk)
 				if mustg:IsExists(aux.NOT(Auxiliary.LConditionFilter),1,nil,f,c,tp) then return false end
 				local emt,tg=aux.GetExtraMaterials(tp,mustg+mg,c,SUMMON_TYPE_LINK)
 				local sg=mustg
-				return (mg+tg):Includes(mustg) and (mg+tg):IsExists(Auxiliary.LCheckRecursive,1,sg,tp,sg,(mg+tg),c,minc,maxc,f,specialchk,mg,emt)
+				local res=(mg+tg):Includes(mustg) and (mg+tg):IsExists(Auxiliary.LCheckRecursive,1,sg,tp,sg,(mg+tg),c,minc,maxc,f,specialchk,mg,emt)
+				aux.DeleteExtraMaterialGroups(emt)
+				return res
 			end
 end
 function Auxiliary.LinkTarget(f,minc,maxc,specialchk)
@@ -142,15 +144,19 @@ function Auxiliary.LinkTarget(f,minc,maxc,specialchk)
 					Auxiliary.LCheckRecursive2(sg:GetFirst(),tp,Group.CreateGroup(),sg,mg+tg,mg+tg,c,minc,maxc,f,specialchk,mg,emt,filters)
 					sg:KeepAlive()
 					local reteff=Effect.GlobalEffect()
-					reteff:SetTarget(function()return sg,filters end)
+					reteff:SetTarget(function()return sg,filters,emt end)
 					e:SetLabelObject(reteff)
 					return true
-				else return false end
+				else 
+					aux.DeleteExtraMaterialGroups(emt)
+					return false
+				end
 			end
 end
 function Auxiliary.LinkOperation(f,minc,maxc,specialchk)
 	return	function(e,tp,eg,ep,ev,re,r,rp,c,smat,mg)
-				local g,filt=e:GetLabelObject():GetTarget()()
+				local g,filt,emt=e:GetLabelObject():GetTarget()()
+				e:GetLabelObject():Reset()
 				for _,ex in ipairs(filt) do
 					if ex[3]:GetValue() then
 						ex[3]:GetValue()(1,SUMMON_TYPE_LINK,ex[3],ex[1]&g,c,tp)
@@ -159,5 +165,6 @@ function Auxiliary.LinkOperation(f,minc,maxc,specialchk)
 				c:SetMaterial(g)
 				Duel.SendtoGrave(g,REASON_MATERIAL+REASON_LINK)
 				g:DeleteGroup()
+				aux.DeleteExtraMaterialGroups(emt)
 			end
 end

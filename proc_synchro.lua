@@ -482,7 +482,7 @@ function Auxiliary.SynchroCheckP43(tsg,ntsg,sg,lv,sc,tp)
 	end
 	return (lvchk or sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,sg:GetCount(),sg:GetCount(),sc))
 	and ((sc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0)
-		or (not sc:IsLocation(LOCATION_EXTRA) and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or sg:IsExists(Auxiliary.FConditionCheckF,nil,tp))))
+		or (not sc:IsLocation(LOCATION_EXTRA) and Duel.GetMZoneCount(tp,sg,tp)>0))
 end
 function Auxiliary.SynTarget(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,smat,mg)
@@ -900,7 +900,7 @@ function Auxiliary.MajesticSynchroCheck2(sg,card1,card2,card3,lv,sc,tp,f1,cbt1,f
 	if sc:IsLocation(LOCATION_EXTRA) then
 		return Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0
 	else
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or sg:IsExists(Auxiliary.FConditionCheckF,nil,tp)
+		return Duel.GetMZoneCount(tp,sg,tp)>0
 	end
 end
 function Auxiliary.MajesticSynCondition(f1,cbt1,f2,cbt2,f3,cbt3,...)
@@ -1188,7 +1188,7 @@ function Auxiliary.DarkSynchroCheck2(sg,card1,card2,plv,nlv,sc,tp,f1,f2,...)
 	if sc:IsLocation(LOCATION_EXTRA) then
 		if Duel.GetLocationCountFromEx(tp,tp,sg,sc)<=0 then return false end
 	else
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 and not sg:IsExists(Auxiliary.FConditionCheckF,nil,tp) then return false end
+		if Duel.GetMZoneCount(tp,sg,tp)<=0 then return false end
 	end
 	if lvchk then return true end
 	local ntlv=card1:GetSynchroLevel(sc)

@@ -93,38 +93,46 @@ function Auxiliary.LCheckGoal(tp,sg,lc,minc,f,specialchk,filt)
 		and (not specialchk or specialchk(sg,lc,tp)) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0
 end
 function Auxiliary.LinkCondition(f,minc,maxc,specialchk)
-	return	function(e,c)
+	return	function(e,c,g,min,max)
 				if c==nil then return true end
 				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 				local tp=c:GetControler()
-				local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+				if not g then
+					g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+				end
 				local mg=g:Filter(Auxiliary.LConditionFilter,nil,f,c,tp)
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_LINK)
-				if mustg:IsExists(aux.NOT(Auxiliary.LConditionFilter),1,nil,f,c,tp) then return false end
+				min = min or minc
+				max = max or minc
+				if mustg:IsExists(aux.NOT(Auxiliary.LConditionFilter),1,nil,f,c,tp) or #mustg>max then return false end
 				local emt,tg=aux.GetExtraMaterials(tp,mustg+mg,c,SUMMON_TYPE_LINK)
 				local sg=mustg
-				local res=(mg+tg):Includes(mustg) and (mg+tg):IsExists(Auxiliary.LCheckRecursive,1,sg,tp,sg,(mg+tg),c,minc,maxc,f,specialchk,mg,emt)
+				local res=(mg+tg):Includes(mustg) and (mg+tg):IsExists(Auxiliary.LCheckRecursive,1,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt)
 				aux.DeleteExtraMaterialGroups(emt)
 				return res
 			end
 end
 function Auxiliary.LinkTarget(f,minc,maxc,specialchk)
-	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c)
-				local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,g,min,max)
+				if not g then
+					g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+				end
+				min = min or minc
+				max = max or minc
 				local mg=g:Filter(Auxiliary.LConditionFilter,nil,f,c,tp)
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_LINK)
 				local emt,tg=aux.GetExtraMaterials(tp,mustg+mg,c,SUMMON_TYPE_LINK)
 				local sg=Group.CreateGroup()
 				local cancel=false
 				sg:Merge(mustg)
-				while sg:GetCount()<maxc do
+				while sg:GetCount()<max do
 					local filters={}
 					if #sg>0 then
-						Auxiliary.LCheckRecursive2(sg:GetFirst(),tp,Group.CreateGroup(),sg,mg+tg,mg+tg,c,minc,maxc,f,specialchk,mg,emt,filters)
+						Auxiliary.LCheckRecursive2(sg:GetFirst(),tp,Group.CreateGroup(),sg,mg+tg,mg+tg,c,min,max,f,specialchk,mg,emt,filters)
 					end
-					local cg=(mg+tg):Filter(Auxiliary.LCheckRecursive,sg,tp,sg,(mg+tg),c,minc,maxc,f,specialchk,mg,emt,filters)
+					local cg=(mg+tg):Filter(Auxiliary.LCheckRecursive,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt,filters)
 					if cg:GetCount()==0 then break end
-					if sg:GetCount()>=minc and sg:GetCount()<=maxc and Auxiliary.LCheckGoal(tp,sg,c,minc,f,specialchk,filters) then
+					if sg:GetCount()>=min and sg:GetCount()<=max and Auxiliary.LCheckGoal(tp,sg,c,min,f,specialchk,filters) then
 						cancel=true
 					else
 						cancel=not og and Duel.GetCurrentChain()<=0 and sg:GetCount()==0
@@ -141,7 +149,7 @@ function Auxiliary.LinkTarget(f,minc,maxc,specialchk)
 				end
 				if sg:GetCount()>0 then
 					local filters={}
-					Auxiliary.LCheckRecursive2(sg:GetFirst(),tp,Group.CreateGroup(),sg,mg+tg,mg+tg,c,minc,maxc,f,specialchk,mg,emt,filters)
+					Auxiliary.LCheckRecursive2(sg:GetFirst(),tp,Group.CreateGroup(),sg,mg+tg,mg+tg,c,min,max,f,specialchk,mg,emt,filters)
 					sg:KeepAlive()
 					local reteff=Effect.GlobalEffect()
 					reteff:SetTarget(function()return sg,filters,emt end)
@@ -154,7 +162,7 @@ function Auxiliary.LinkTarget(f,minc,maxc,specialchk)
 			end
 end
 function Auxiliary.LinkOperation(f,minc,maxc,specialchk)
-	return	function(e,tp,eg,ep,ev,re,r,rp,c,smat,mg)
+	return	function(e,tp,eg,ep,ev,re,r,rp,c,g,min,max)
 				local g,filt,emt=e:GetLabelObject():GetTarget()()
 				e:GetLabelObject():Reset()
 				for _,ex in ipairs(filt) do

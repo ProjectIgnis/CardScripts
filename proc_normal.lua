@@ -46,7 +46,7 @@ function Auxiliary.NormalSummonTarget(min,max,f)
 		if f then
 			mg=mg:Filter(f,nil,tp)
 		end
-		local g=Duel.SelectTribute(tp,c,min,max,mg,tp,zone,true)
+		local g=Duel.SelectTribute(tp,c,min,max,mg,tp,zone,Duel.GetCurrentChain()==0)
 		if #g>0 then
 			g:KeepAlive()
 			e:SetLabelObject(g)

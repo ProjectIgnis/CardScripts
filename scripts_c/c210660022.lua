@@ -5,7 +5,7 @@ function c210660022.initial_effect(c)
 	c:SetUniqueOnField(1,0,210660022)
 	--fusion
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,c210660022.matfilter,2)
+	Fusion.AddProcMixN(c,true,true,c210660022.matfilter,2)
 	--synchro summon success
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)

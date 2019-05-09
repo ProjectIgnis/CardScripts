@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if Duel.IsPlayerAffectedByEffect(tp,69832741) then return false end
 		local mg1=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
-		Auxiliary.FCheckAdditional=s.fcheck
+		Fusion.CheckAdditional=s.fcheck
 		local res=Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
@@ -45,7 +45,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 				res=Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf)
 			end
 		end
-		Auxiliary.FCheckAdditional=nil
+		Fusion.CheckAdditional=nil
 		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
@@ -53,7 +53,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,69832741) then return end
 	local mg1=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,e)
-	Auxiliary.FCheckAdditional=s.fcheck
+	Fusion.CheckAdditional=s.fcheck
 	local sg1=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1)
 	local mg2=nil
 	local sg2=nil
@@ -83,5 +83,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		tc:CompleteProcedure()
 	end
-	Auxiliary.FCheckAdditional=nil
+	Fusion.CheckAdditional=nil
 end

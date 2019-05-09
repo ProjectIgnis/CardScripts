@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
 	c:EnableReviveLimit()
-	aux.AddSynchroProcedure(c,nil,2,2,aux.NonTunerEx(Card.IsSetCard,0x30),1,1)
+	Synchro.AddProcedure(c,nil,2,2,Synchro.NonTunerEx(Card.IsSetCard,0x30),1,1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

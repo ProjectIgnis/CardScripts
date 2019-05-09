@@ -2,7 +2,7 @@
 --エレキフェニックス
 function c210749503.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,c210749503.sumfilter,2)
+	Link.AddProcedure(c,c210749503.sumfilter,2)
 	--Attack directly
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

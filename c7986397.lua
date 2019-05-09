@@ -27,7 +27,7 @@ function s.filter(c,e,tp,m1,m2,ft)
 	if ft>0 then
 		return mg:CheckWithSumEqual(Card.GetRitualLevel,lv,1,99999,c) or mg2:IsExists(function(c,spc)Duel.SetSelectedCard(c)return mg:CheckWithSumEqual(Card.GetRitualLevel,lv,0,99999,spc)end,nil,1,c)
 	else
-		return mg:IsExists(Auxiliary.RPEFilterF,1,nil,tp,mg,c,lv) or mg:Filter(function(c)
+		return mg:IsExists(Ritual.EqualFilterF,1,nil,tp,mg,c,lv) or mg:Filter(function(c)
 																				return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5
 																				end,nil):IsExists(function(c,spc)
 																									return mg2:IsExists(function(c,fc)

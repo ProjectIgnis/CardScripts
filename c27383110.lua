@@ -1,7 +1,7 @@
 --宣告者の預言
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=aux.AddRitualProcEqual(c,s.ritualfil,6,nil,nil,nil,nil,s.stage2)
+	local e1=Ritual.AddProcEqual(c,s.ritualfil,6,nil,nil,nil,nil,s.stage2)
 	--salvage
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND)

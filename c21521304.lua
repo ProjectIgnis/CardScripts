@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,6,2)
+	Xyz.AddProcedure(c,nil,6,2)
 	c:EnableReviveLimit()
 	--add setcode
 	local e0=Effect.CreateEffect(c)

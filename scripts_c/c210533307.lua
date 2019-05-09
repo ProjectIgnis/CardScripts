@@ -1,7 +1,7 @@
 --Puella Magi Incubator - Kyubey
 function c210533307.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,c210533307.matfilter,2,2,nil,nil)
+	Link.AddProcedure(c,c210533307.matfilter,2,2,nil,nil)
 	--add a card
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)

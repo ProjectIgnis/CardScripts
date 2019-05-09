@@ -2,7 +2,7 @@
 --designed by Thaumablazer#4134, scripted by Naim
 function c210777095.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x42),1,1,aux.NonTuner(nil),2,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x42),1,1,Synchro.NonTuner(nil),2,99)
 	c:EnableReviveLimit()
 	--Negate
 	local e1=Effect.CreateEffect(c)

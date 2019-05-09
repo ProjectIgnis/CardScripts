@@ -4,8 +4,8 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion procedure
   c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,s.ffilter,3)
-	aux.AddContactFusion(c,s.contactfil,s.contactop,s.splimit)
+	Fusion.AddProcMixN(c,true,true,s.ffilter,3)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--fusion limit
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)

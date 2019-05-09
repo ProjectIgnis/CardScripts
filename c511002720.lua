@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,function(c) return c:IsEarthbound(true) end,2)
+	Fusion.AddProcMixN(c,true,true,function(c) return c:IsEarthbound(true) end,2)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(48009503,0))

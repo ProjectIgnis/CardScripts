@@ -4,7 +4,7 @@ function s.initial_effect(c)
 	c:EnableCounterPermit(0x40)
 	c:SetCounterLimit(0x40,3)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,3,3)
+	Xyz.AddProcedure(c,nil,3,3)
 	c:EnableReviveLimit()
 	--battle indestructable
 	local e1=Effect.CreateEffect(c)

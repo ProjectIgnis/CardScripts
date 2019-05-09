@@ -6,7 +6,7 @@ cm.Senya_name_with_sayuri=true
 function cm.initial_effect(c)
 	Senya.AddSummonMusic(c,m*16,SUMMON_TYPE_LINK)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,cm.mfilter,3,3,cm.lcheck)
+	Link.AddProcedure(c,cm.mfilter,3,3,cm.lcheck)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(210765765,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)

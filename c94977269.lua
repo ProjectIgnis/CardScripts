@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_SPSUMMON_COUNT)
 	c:EnableReviveLimit()
-	aux.AddShaddollFusionProcMix(c,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9d),ATTRIBUTE_DARK)
+	Fusion.AddShaddolProcMix(c,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9d),ATTRIBUTE_DARK)
 	--splimit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)

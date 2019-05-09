@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--dark synchro summon
 	c:EnableReviveLimit()
-	aux.AddDarkSynchroProcedure(c,aux.NonTuner(nil),nil,0)
+	Synchro.AddDarkSynchroProcedure(c,Synchro.NonTuner(nil),nil,0)
 	c:SetStatus(STATUS_NO_LEVEL,true)
 	--add setcode
 	local e1=Effect.CreateEffect(c)

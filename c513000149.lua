@@ -28,7 +28,7 @@ end
 function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_GRAVE,0,nil)
-	Auxiliary.SynchroSend=2   
+	Synchro.Send=2   
 	if Duel.SynchroSummon(tp,tc,nil,mg) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -39,7 +39,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
 		tc:RegisterEffect(e1)
 	end
-	Auxiliary.SynchroSend=0
+	Synchro.Send=0
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)

@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c120401056.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddXyzProcedure(c,nil,2,2)
+	Xyz.AddProcedure(c,nil,2,2)
 	--mill
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(120401056,0))

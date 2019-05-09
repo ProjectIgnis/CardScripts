@@ -3,7 +3,7 @@
 function c210210500.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xc4),3)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xc4),3)
 	--alt link summon, credit to andre
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(4021,0))

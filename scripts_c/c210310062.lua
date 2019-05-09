@@ -2,7 +2,7 @@
 --AlphaKretin
 function c210310062.initial_effect(c)
 	--fusion material
-	aux.AddFusionProcMixN(c,true,true,c210310062.ffilter,2)
+	Fusion.AddProcMixN(c,true,true,c210310062.ffilter,2)
 	c:EnableReviveLimit()
 	--atk gain
 	local e1=Effect.CreateEffect(c)

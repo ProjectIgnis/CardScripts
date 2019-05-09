@@ -3,8 +3,8 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,CARD_NEOS,43237273,17732278)
-	aux.AddContactFusion(c,s.contactfil,s.contactop,s.splimit)
+	Fusion.AddProcMix(c,true,true,CARD_NEOS,43237273,17732278)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	aux.EnableNeosReturn(c,nil,nil,s.retop)
 	--coin
 	local e5=Effect.CreateEffect(c)

@@ -94,11 +94,11 @@ function c210210501.filterchk(c,tp,mg,sg,exg,fc,chkf)
 	if c:IsHasEffect(73941492+TYPE_FUSION) then
 		local eff={c:GetCardEffect(73941492+TYPE_FUSION)}
 		for i,f in ipairs(eff) do
-			if sg:IsExists(Auxiliary.TuneMagFilter,1,c,f,f:GetValue()) then
+			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then
 				mg:Merge(rg)
 				return false
 			end
-			local sg2=mg:Filter(function(c) return not Auxiliary.TuneMagFilterFus(c,f,f:GetValue()) end,nil)
+			local sg2=mg:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
 			rg:Merge(sg2)
 			mg:Sub(sg2)
 		end
@@ -109,7 +109,7 @@ function c210210501.filterchk(c,tp,mg,sg,exg,fc,chkf)
 		while tc do
 			local eff={tc:GetCardEffect(73941492+TYPE_FUSION)}
 			for i,f in ipairs(eff) do
-				if Auxiliary.TuneMagFilter(c,f,f:GetValue()) then
+				if Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) then
 					mg:Merge(rg)
 					return false
 				end
@@ -125,7 +125,7 @@ function c210210501.filterchk(c,tp,mg,sg,exg,fc,chkf)
 		end
 		res=mg:IsExists(c210210501.filterchk,1,sg,tp,mg,sg,exg,fc,chkf)
 	else
-		res=aux.FCheckMixGoal(tp,sg,fc,true,true,chkf,c210210501.ffilter1,c210210501.ffilter2)
+		res=Fusion.CheckMixGoal(tp,sg,fc,true,true,chkf,c210210501.ffilter1,c210210501.ffilter2)
 	end
 	sg:RemoveCard(c)
 	mg:Merge(rg)

@@ -1,7 +1,7 @@
 --Majespecter Dog - Guruko
 function c210002000.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,c210002000.mfilter,2)
+	Link.AddProcedure(c,c210002000.mfilter,2)
 	c:EnableReviveLimit()
 	--atk/def
 	local e1=Effect.CreateEffect(c)

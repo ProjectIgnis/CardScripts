@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,nil,1,1,aux.FilterSummonCode(2403771),1,1)
+	Synchro.AddProcedure(c,nil,1,1,aux.FilterSummonCode(2403771),1,1)
 	c:EnableReviveLimit()
 	--change lp
 	local e1=Effect.CreateEffect(c)

@@ -1,7 +1,7 @@
 --Cyber Dragon Steller
 function c210001401.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddSynchroProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1093),1,1,aux.NonTunerEx(aux.FilterBoolFunctionEx(Card.IsSetCard,0x1093)),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1093),1,1,Synchro.NonTunerEx(aux.FilterBoolFunctionEx(Card.IsSetCard,0x1093)),1,99)
 	--code
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

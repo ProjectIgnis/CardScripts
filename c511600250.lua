@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	c:EnableCounterPermit(0x581)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,s.matfilter,2)
+	Fusion.AddProcMixN(c,true,true,s.matfilter,2)
 	--counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(3070049,0))

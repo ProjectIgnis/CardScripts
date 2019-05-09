@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,nil,1,1,aux.FilterSummonCode(82044279),1,1)
+	Synchro.AddProcedure(c,nil,1,1,aux.FilterSummonCode(82044279),1,1)
 	c:EnableReviveLimit()
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,false)

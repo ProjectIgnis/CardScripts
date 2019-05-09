@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c120401049.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_TRAP),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_TRAP),2,2)
 	--todeck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TODECK)

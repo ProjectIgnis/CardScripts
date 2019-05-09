@@ -2,7 +2,7 @@
 --Rebirth of Nephthys
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddRitualProcGreater(c,s.ritualfil,nil,nil,nil,nil,s.stage2)
+	Ritual.AddProcGreater(c,s.ritualfil,nil,nil,nil,nil,s.stage2)
 end
 s.fit_monster={88176533,24175232}
 function s.ritualfil(c)

@@ -3,7 +3,7 @@
 function c210310051.initial_effect(c)
 	--synchro summon
 	c:EnableReviveLimit()
-	aux.AddMajesticSynchroProcedure(c,aux.FilterBoolFunction(Card.IsCode,21159309),true,aux.FilterBoolFunction(Card.IsCode,25862681),true,aux.NonTuner(nil),false)
+	Synchro.AddMajesticProcedure(c,aux.FilterBoolFunction(Card.IsCode,21159309),true,aux.FilterBoolFunction(Card.IsCode,25862681),true,Synchro.NonTuner(nil),false)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(4033,3))

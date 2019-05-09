@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xaf),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xaf),2)
 	--Must be properly summoned before being revived
 	c:EnableReviveLimit()
 	--Place 2 "D/D" monsters from

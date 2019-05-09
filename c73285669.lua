@@ -3,8 +3,8 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x19),2)
-	aux.AddContactFusion(c,s.contactfil,s.contactop,s.splimit)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x19),2)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 end
 s.material_setcode=0x19
 function s.contactfil(tp)

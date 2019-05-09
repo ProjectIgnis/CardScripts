@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,5,2)
+	Xyz.AddProcedure(c,nil,5,2)
 	c:EnableReviveLimit()
 	--search or to grave
 	local e1=Effect.CreateEffect(c)

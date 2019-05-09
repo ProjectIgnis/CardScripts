@@ -3,8 +3,8 @@
 function c210310204.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,c210310204.matfilter,2)
-	aux.AddContactFusion(c,c210310204.contactfil,c210310204.contactop,c210310204.splimit)
+	Fusion.AddProcMixN(c,true,true,c210310204.matfilter,2)
+	Fusion.AddContactProc(c,c210310204.contactfil,c210310204.contactop,c210310204.splimit)
 	--repeat attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DISABLE)

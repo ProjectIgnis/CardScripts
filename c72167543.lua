@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER),4,2,s.ovfilter,aux.Stringid(id,0))
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER),4,2,s.ovfilter,aux.Stringid(id,0))
 	c:EnableReviveLimit()
 	--pierce
 	local e1=Effect.CreateEffect(c)

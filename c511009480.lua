@@ -3,7 +3,7 @@
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddXyzProcedure(c,nil,8,3)
+	Xyz.AddProcedure(c,nil,8,3)
 	c:EnableReviveLimit()
 	--xyz summon
 	local e1=Effect.CreateEffect(c)

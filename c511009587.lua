@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,16178681,41209827)
+	Fusion.AddProcMix(c,true,true,16178681,41209827)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,false)
 	--no damage

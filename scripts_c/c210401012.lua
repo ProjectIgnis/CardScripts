@@ -1,7 +1,7 @@
 --Perfect Survivor - Dark Beetle
 function c210401012.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,6,3,nil,nil,99)
+	Xyz.AddProcedure(c,nil,6,3,nil,nil,99)
 	c:EnableReviveLimit()
 	--gain effects
 	local e1=Effect.CreateEffect(c)

@@ -3,7 +3,7 @@
 function c210310105.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,c210310105.matfilter,2)
+	Fusion.AddProcMixN(c,true,true,c210310105.matfilter,2)
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddXyzProcedure(c,s.matfilter,4,2,nil,nil,nil,nil,true)
+	Xyz.AddProcedure(c,s.matfilter,4,2,nil,nil,nil,nil,true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

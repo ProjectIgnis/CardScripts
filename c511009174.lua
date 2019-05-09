@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,7543,s.mat_filter,1,true,true)
+	Fusion.AddProcCodeFun(c,7543,s.mat_filter,1,true,true)
 	--copy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(30312361,0))

@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,CARD_BLUEEYES_W_DRAGON,3)
+	Fusion.AddProcMixN(c,true,true,CARD_BLUEEYES_W_DRAGON,3)
 	--chain attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)

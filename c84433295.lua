@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER),5,true)
+	Fusion.AddProcFunRep(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER),5,true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

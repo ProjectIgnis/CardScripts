@@ -1,6 +1,6 @@
 --Cyber Hive Mind
 --Continuous spell
---When this card is activated: Send 1 “Cyber Dragon” monster from your deck to your GY. Once while face-up on the field: you can Normal Summon a “Cyber Dragon” monster in addition to your Normal Summon or Set. (You can only gain this effect once per turn.) If this face-up card in the Spell & Trap Zone is destroyed by a card effect: You can take 1 “Cyber” Spell/Trap from your Deck or GY except “Cyber Hive Mind”, and either add it to your hand or set it to your side of the field. You can only use each effect of “Cyber Hive Mind” once per turn.
+--When this card is activated: Send 1 ï¿½Cyber Dragonï¿½ monster from your deck to your GY. Once while face-up on the field: you can Normal Summon a ï¿½Cyber Dragonï¿½ monster in addition to your Normal Summon or Set. (You can only gain this effect once per turn.) If this face-up card in the Spell & Trap Zone is destroyed by a card effect: You can take 1 ï¿½Cyberï¿½ Spell/Trap from your Deck or GY except ï¿½Cyber Hive Mindï¿½, and either add it to your hand or set it to your side of the field. You can only use each effect of ï¿½Cyber Hive Mindï¿½ once per turn.
  
 function c210555556.initial_effect(c)
   --Send Cydra To Grave

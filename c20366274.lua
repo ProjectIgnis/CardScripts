@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddShaddollFusionProcMix(c,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9d),ATTRIBUTE_LIGHT)
+	Fusion.AddShaddolProcMix(c,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9d),ATTRIBUTE_LIGHT)
 	--cannot spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)

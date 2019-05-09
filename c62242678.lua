@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
 	c:EnableReviveLimit()
-	aux.AddSynchroProcedure(c,nil,2,2,aux.NonTunerEx(s.matfilter),1,1)
+	Synchro.AddProcedure(c,nil,2,2,Synchro.NonTunerEx(s.matfilter),1,1)
 	--act limit
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

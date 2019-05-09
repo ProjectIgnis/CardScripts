@@ -38,10 +38,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local mg2=Duel.GetMatchingGroup(s.filter0,tp,LOCATION_DECK,0,nil)
 		if mg:IsExists(s.filterchk,1,nil) and #mg2>0 then
 			mg:Merge(mg2)
-			aux.FCheckAdditional=s.fcheck
+			Fusion.CheckAdditional=s.fcheck
 		end
 		local res=Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg,nil)
-		aux.FCheckAdditional=nil
+		Fusion.CheckAdditional=nil
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
 			if ce~=nil then
@@ -59,10 +59,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local mg2=Duel.GetMatchingGroup(s.filter0,tp,LOCATION_DECK,0,nil)
 	if mg1:IsExists(s.filterchk,1,nil) and #mg2>0 then
 		mg1:Merge(mg2)
-		aux.FCheckAdditional=s.fcheck
+		Fusion.CheckAdditional=s.fcheck
 	end
 	local sg1=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil)
-	aux.FCheckAdditional=nil
+	Fusion.CheckAdditional=nil
 	local mg2=nil
 	local sg2=nil
 	local ce=Duel.GetChainMaterial(tp)
@@ -79,9 +79,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=tg:GetFirst()
 	if not tc then return end
 	if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
-		aux.FCheckAdditional=s.fcheck
+		Fusion.CheckAdditional=s.fcheck
 		local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,tp)
-		aux.FCheckAdditional=nil
+		Fusion.CheckAdditional=nil
 		tc:SetMaterial(mat1)
 		Duel.SendtoGrave(mat1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 		Duel.BreakEffect()

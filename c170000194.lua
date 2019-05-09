@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
     --fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,25652259,46232525,1,true,true)
+	Fusion.AddProcCodeFun(c,25652259,46232525,1,true,true)
 	aux.AddEquipProcedure(c)
 	--Activates a monster effect they control
 	local e4=Effect.CreateEffect(c)

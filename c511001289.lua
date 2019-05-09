@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--fustion material
-	aux.AddFusionProcMixN(c,true,true,aux.FilterBoolFunction(Card.IsSetCard,0xdf),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunction(Card.IsSetCard,0xdf),2)
 	c:EnableReviveLimit()
 	--attack
 	local e1=Effect.CreateEffect(c)

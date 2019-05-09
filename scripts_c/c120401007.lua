@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c120401007.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,c120401007.matfilter,2)
+	Link.AddProcedure(c,c120401007.matfilter,2)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(120401007,0))

@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,s.matfilter,2,2)
+	Link.AddProcedure(c,s.matfilter,2,2)
 	aux.EnableCheckReincarnation(c)
 	--recover
 	local e1=Effect.CreateEffect(c)

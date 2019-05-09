@@ -6,7 +6,7 @@ local card, code = GetID()
 function card.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c, card.matfilter, 1, 1)
+	Link.AddProcedure(c, card.matfilter, 1, 1)
 	--special summon
 	local e1 = Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(code, 0))

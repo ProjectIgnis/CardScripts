@@ -5,8 +5,8 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,false,false,CARD_NEOS,1,s.ffilter,3)
-	aux.AddContactFusion(c,s.contactfil,s.contactop,s.splimit)
+	Fusion.AddProcMixN(c,false,false,CARD_NEOS,1,s.ffilter,3)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--no activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

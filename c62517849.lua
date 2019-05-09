@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	--Must be properly summoned
 	c:EnableReviveLimit()
 	--Xyz summon method
-	aux.AddXyzProcedure(c,nil,4,2)
+	Xyz.AddProcedure(c,nil,4,2)
 	--Search and Xyz
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

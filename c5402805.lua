@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,nil,2,3,s.lcheck)
+	Link.AddProcedure(c,nil,2,3,s.lcheck)
 	c:EnableReviveLimit()
 end
 function s.lcheck(g,lc,sumtype,tp)

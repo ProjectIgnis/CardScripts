@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c120401022.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x1b),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x1b),2,2)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(120401022,0))

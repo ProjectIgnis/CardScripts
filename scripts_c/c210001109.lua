@@ -1,6 +1,6 @@
 --Subverted Enalpaes
 function c210001109.initial_effect(c)
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfed),2)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfed),2)
 	--cannot be battle target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

@@ -1,7 +1,7 @@
 --玄翼竜 ブラック・フェザー
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSynchroProcedure(c,nil,1,1,aux.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()	
 	--send 
 	local e1=Effect.CreateEffect(c)

@@ -2,7 +2,7 @@
 --designed by Thaumablazer#4134, scripted by Naim
 function c210777078.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,nil,2,2,c210777078.lcheck)
+	Link.AddProcedure(c,nil,2,2,c210777078.lcheck)
 	c:EnableReviveLimit()
 	--Special summon from gy
 	local e1=Effect.CreateEffect(c)

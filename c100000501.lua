@@ -36,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetReset(RESET_CHAIN)
 		Duel.RegisterEffect(e1,tp)
 		local mg1=Duel.GetFusionMaterial(tp):Filter(s.mfilter,nil)
-		Auxiliary.FCheckExact=2
+		Fusion.CheckExact=2
 		local res=Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil)
 		e1:Reset()
 		if not res then
@@ -48,7 +48,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 				res=Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf)
 			end
 		end
-		Auxiliary.FCheckExact=nil
+		Fusion.CheckExact=nil
 		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
@@ -64,7 +64,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_CHAIN)
 	Duel.RegisterEffect(e1,tp)
 	local mg1=Duel.GetFusionMaterial(tp):Filter(s.mfilter,nil,e)
-	Auxiliary.FCheckExact=2
+	Fusion.CheckExact=2
 	local sg1=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil)
 	local mg2=nil
 	local sg2=nil
@@ -94,5 +94,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		tc:CompleteProcedure()
 	end
-	Auxiliary.FCheckExact=nil
+	Fusion.CheckExact=nil
 end

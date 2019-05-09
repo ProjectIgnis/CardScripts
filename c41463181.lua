@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,s.matfilter,2)
+	Link.AddProcedure(c,s.matfilter,2)
 	aux.EnableCheckReincarnation(c)
 	--todeck
 	local e1=Effect.CreateEffect(c)

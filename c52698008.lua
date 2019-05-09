@@ -7,7 +7,7 @@ local s,id=GetID()
 
 function s.initial_effect(c)
 	--Link summon procedure
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_CYBERSE),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_CYBERSE),2,2)
 	--Must be properly summoned in order to revive
 	c:EnableReviveLimit()
 	--Cannot be destroyed by battle

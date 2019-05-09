@@ -55,10 +55,10 @@ function s.rescon1(fc,mft,exft,ft,mg2,se)
 end
 function s.rescon2(fc,mft,exft)
 	return	function(sg,e,tp,mg)
-				Auxiliary.FCheckExact=#sg
+				Fusion.CheckExact=#sg
 				local res=exft>=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA) and mft>=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 					and fc:CheckFusionMaterial(sg,nil,tp)
-				Auxiliary.FCheckExact=nil
+				Fusion.CheckExact=nil
 				return res
 			end
 end
@@ -72,11 +72,11 @@ function s.resconse2(fc,rg,mft)
 	return	function(sg,e,tp,mg)
 				local ect=cCARD_SUMMON_GATE and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (cCARD_SUMMON_GATE[tp]-1)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA) 
-				Auxiliary.FCheckExact=#sg
+				Fusion.CheckExact=#sg
 				local res=Duel.GetLocationCountFromEx(tp,tp,rg)>=exct and (not ect or exct<ect) 
 					and rg:FilterCount(aux.MZFilter,nil,tp)+mft>=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 					and fc:CheckFusionMaterial(sg,nil,tp)
-				Auxiliary.FCheckExact=nil
+				Fusion.CheckExact=nil
 				return res
 			end
 end

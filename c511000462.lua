@@ -3,8 +3,8 @@
 --updated by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddFusionProcMix(c,true,true,99785935,39256679,11549357)
-	aux.AddContactFusion(c,s.contactfilter,s.contactop,s.splimit,nil,SUMMON_TYPE_FUSION)
+	Fusion.AddProcMix(c,true,true,99785935,39256679,11549357)
+	Fusion.AddContactProc(c,s.contactfilter,s.contactop,s.splimit,nil,SUMMON_TYPE_FUSION)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(75347539,0))

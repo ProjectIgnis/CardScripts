@@ -3,7 +3,7 @@
 --Scripted by Steelren
 function c210777039.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xaa),3,3)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xaa),3,3)
 	-- immune
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

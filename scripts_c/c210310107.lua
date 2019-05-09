@@ -3,7 +3,7 @@
 function c210310107.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,c210310107.matfilter,4)
+	Fusion.AddProcMixN(c,true,true,c210310107.matfilter,4)
 	--flood tokens
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(67284107,0))

@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--dark synchro summon
 	c:EnableReviveLimit()
-	aux.AddDarkSynchroProcedure(c,aux.NonTuner(nil),nil,6)
+	Synchro.AddDarkSynchroProcedure(c,Synchro.NonTuner(nil),nil,6)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(100000153,0))

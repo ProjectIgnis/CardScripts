@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	--fusion material
-	aux.AddFusionProcMix(c,true,true,s.mfilter1,s.mfilter2)
+	Fusion.AddProcMix(c,true,true,s.mfilter1,s.mfilter2)
 	c:EnableReviveLimit()
 	--aclimit
 	local e1=Effect.CreateEffect(c)

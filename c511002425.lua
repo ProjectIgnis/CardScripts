@@ -3,8 +3,8 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,511002422,511002423,511002424)
-	aux.AddContactFusion(c,s.contactfilter,s.contactop,s.splimit)
+	Fusion.AddProcMix(c,true,true,511002422,511002423,511002424)
+	Fusion.AddContactProc(c,s.contactfilter,s.contactop,s.splimit)
 	--sp summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(102380,0))

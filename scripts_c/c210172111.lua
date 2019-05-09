@@ -1,7 +1,7 @@
 --Red-Eyes Nightmare Dragon
 function c210172111.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),7,3)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),7,3)
 	c:EnableReviveLimit()
 	--immune
 	local e1=Effect.CreateEffect(c)

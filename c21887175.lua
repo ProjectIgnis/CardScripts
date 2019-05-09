@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--revive limit
 	c:EnableReviveLimit()
 	--link summon
-	aux.AddLinkProcedure(c,s.mfilter,2)
+	Link.AddProcedure(c,s.mfilter,2)
 	--cannot be effect target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--dark synchro summon
 	c:EnableReviveLimit()
-	aux.AddDarkSynchroProcedure(c,aux.NonTuner(nil),nil,4)
+	Synchro.AddDarkSynchroProcedure(c,Synchro.NonTuner(nil),nil,4)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

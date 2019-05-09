@@ -1,5 +1,5 @@
 --Cyber Dragon Funf:
---You can Fusion Summon 1 LIGHT Monster from your Extra Deck, using monsters from your hand or field as Fusion Materials including this card. If Summoning a “Cyber” Fusion Monster this way, you can also banish monsters from your GY as Fusion Material. If this card is banished: You can target 1 Spell/Trap card on the field; destroy it. You can only use each effect of “Cyber Dragon Funf” once per turn. This card’s name becomes “Cyber Dragon” while it is on the field, in the GY, or in your hand.
+--You can Fusion Summon 1 LIGHT Monster from your Extra Deck, using monsters from your hand or field as Fusion Materials including this card. If Summoning a ï¿½Cyberï¿½ Fusion Monster this way, you can also banish monsters from your GY as Fusion Material. If this card is banished: You can target 1 Spell/Trap card on the field; destroy it. You can only use each effect of ï¿½Cyber Dragon Funfï¿½ once per turn. This cardï¿½s name becomes ï¿½Cyber Dragonï¿½ while it is on the field, in the GY, or in your hand.
 function c210555558.initial_effect(c)
 
   local e1=Effect.CreateEffect(c)

@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,5,4)
+	Xyz.AddProcedure(c,nil,5,4)
 	c:EnableReviveLimit()
 	--Rank Up Check
 	local e0=Effect.CreateEffect(c)

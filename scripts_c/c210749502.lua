@@ -1,7 +1,7 @@
 --Wattcerberus
 function c210749502.initial_effect(c)
 	--Synchro summon
-	aux.AddSynchroProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xe),1,1,aux.NonTunerEx(Card.IsRace,RACE_THUNDER),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xe),1,1,Synchro.NonTunerEx(Card.IsRace,RACE_THUNDER),1,99)
 	c:EnableReviveLimit()
 	--Direct attack
 	local e1=Effect.CreateEffect(c)

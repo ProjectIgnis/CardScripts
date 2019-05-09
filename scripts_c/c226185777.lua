@@ -3,7 +3,7 @@ function c226185777.initial_effect(c)
 	--semi-nomi
 	c:EnableReviveLimit()
 	--synchro procedure
-	aux.AddSynchroProcedure(c,nil,1,1,aux.NonTunerEx(Card.IsSetCard,0x10),1,99)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,0x10),1,99)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)

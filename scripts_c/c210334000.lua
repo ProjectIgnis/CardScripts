@@ -3,7 +3,7 @@
 --scripted by Larry126
 function c210334000.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,1,2)
+	Xyz.AddProcedure(c,nil,1,2)
 	c:EnableReviveLimit()
 	--untargetable
 	local e1=Effect.CreateEffect(c)

@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x2b)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,8,3)
+	Xyz.AddProcedure(c,nil,8,3)
 	c:EnableReviveLimit()
 	--counter
 	local e1=Effect.CreateEffect(c)

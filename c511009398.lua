@@ -1,7 +1,7 @@
 --メタルフォーゼ・ヴォルフレイム
 function c69351984.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_FIEND),3,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_FIEND),3,2)
 	c:EnableReviveLimit()
 	--battle
 	local e1=Effect.CreateEffect(c)

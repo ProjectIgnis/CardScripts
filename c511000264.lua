@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro Summon
-	aux.AddSynchroProcedure(c,nil,1,1,aux.NonTuner(nil),2,99)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),2,99)
 	c:EnableReviveLimit()
 	c:SetUniqueOnField(1,0,id)
 	--Influence of Rune

@@ -2,7 +2,7 @@
 --AlphaKretin
 function c210310153.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,5,4)
+	Xyz.AddProcedure(c,nil,5,4)
 	c:EnableReviveLimit()
 	--indes
 	local e1=Effect.CreateEffect(c)

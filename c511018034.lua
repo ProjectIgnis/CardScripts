@@ -2,8 +2,8 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,511018031,511018032,511018033)
-	aux.AddContactFusion(c,s.contactfil,s.contactop,s.splimit,aux.TRUE,1)
+	Fusion.AddProcMix(c,true,true,511018031,511018032,511018033)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit,aux.TRUE,1)
 end
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,nil)

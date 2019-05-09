@@ -56,8 +56,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(tc:GetLevel()*2)
 	tc:RegisterEffect(e1)
 	if not tc:IsSynchroSummonable(nil,mg) then return end
-	Auxiliary.SynchroSend=2
+	Synchro.Send=2
 	Duel.SynchroSummon(tp,tc,nil,mg)
-	Auxiliary.SynchroSend=0
+	Synchro.Send=0
 	e1:Reset()
 end

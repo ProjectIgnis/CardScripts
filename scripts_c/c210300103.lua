@@ -2,7 +2,7 @@
 function c210300103.initial_effect(c)
     --link summon
     c:EnableReviveLimit()
-    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x107a),2,2)
+    Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x107a),2,2)
     --Xyz Summon using Noble Arms
     local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(210300103,0))

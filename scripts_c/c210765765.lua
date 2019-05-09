@@ -1247,7 +1247,7 @@ function cm.PrimSynchroFilter(c)
 	return cm.check_set_prim(c) and c:IsSynchroType(TYPE_SYNCHRO)
 end
 function cm.PrimLv4CommonEffect(c,cd)
-	aux.AddSynchroProcedure(c,nil,cm.check_set_prim,1)
+	Synchro.AddProcedure(c,nil,cm.check_set_prim,1)
 	c:EnableReviveLimit()
 end
 function cm.XMaterialCountCondition(ct,excon)
@@ -1564,11 +1564,11 @@ return function(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 end
---for aux.FCheckAdditional in izayoi
+--for Fusion.CheckAdditional in izayoi
 function cm.CheckFusionMaterialExact(c,g,chkf)
-	aux.FCheckAdditional=cm.HoldGroup(g)
+	Fusion.CheckAdditional=cm.HoldGroup(g)
 	local res=c:CheckFusionMaterial(g,nil,chkf)
-	aux.FCheckAdditional=nil
+	Fusion.CheckAdditional=nil
 	return res
 end
 function cm.HoldGroup(mg)
@@ -1600,7 +1600,7 @@ function cm.FusionCheck_3L(g,min,tp,fc,f,chkf,sub)
 		--check sayuri_3L
 	if g:IsExists(aux.TuneMagicianCheckX,nil,g,EFFECT_TUNE_MAGICIAN_F) then return false end
 	if chkf~=PLAYER_NONE and Duel.GetLocationCountFromEx(chkf,tp,g,fc)<=0 then return false end
-	if aux.FCheckAdditional and not aux.FCheckAdditional(tp,g,fc) then return false end
+	if Fusion.CheckAdditional and not Fusion.CheckAdditional(tp,g,fc) then return false end
 	if #g==1 and fc:GetLevel()==7 and g:GetFirst():IsHasEffect(210765914) then return true end
 	return #g>=min and (not f or f(g,fc,sub))
 end

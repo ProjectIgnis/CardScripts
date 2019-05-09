@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,aux.FilterSummonCode(33420078),1,1,aux.NonTunerEx(Card.IsRace,RACE_ZOMBIE),1,99)
+	Synchro.AddProcedure(c,aux.FilterSummonCode(33420078),1,1,Synchro.NonTunerEx(Card.IsRace,RACE_ZOMBIE),1,99)
 	c:EnableReviveLimit()
 	--Disable
 	local e1=Effect.CreateEffect(c)

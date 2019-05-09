@@ -1,7 +1,7 @@
 --Daigusto Omindaar
 function c226185781.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x10),2)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x10),2)
 	--add to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)

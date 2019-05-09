@@ -1,7 +1,7 @@
 --祝祷の聖歌
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddRitualProcGreaterCode(c,56350972)
+	Ritual.AddProcGreaterCode(c,56350972)
 	--destroy replace
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

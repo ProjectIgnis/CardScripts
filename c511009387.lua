@@ -4,7 +4,7 @@ function s.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,false)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,7,2)
+	Xyz.AddProcedure(c,nil,7,2)
 	c:EnableReviveLimit()
 	--atk
 	local e1=Effect.CreateEffect(c)

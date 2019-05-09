@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,CARD_REDEYES_B_DRAGON,46232525,1,true,true)
+	Fusion.AddProcCodeFun(c,CARD_REDEYES_B_DRAGON,46232525,1,true,true)
 	aux.AddEquipProcedure(c)
 	--Atk up
 	local e2=Effect.CreateEffect(c)

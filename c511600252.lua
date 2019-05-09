@@ -5,7 +5,7 @@ local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()
 	--link summon
-	aux.AddLinkProcedure(c,s.matfilter,1,1)
+	Link.AddProcedure(c,s.matfilter,1,1)
 	c:EnableReviveLimit()
 	--recycle
 	local e1=Effect.CreateEffect(c)

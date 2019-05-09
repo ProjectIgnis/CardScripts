@@ -2,7 +2,7 @@
 --AlphaKretin
 function c210310250.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,nil,1,1,aux.NonTunerEx(c210310250.matfilter),1,99)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(c210310250.matfilter),1,99)
 	c:EnableReviveLimit()
 	--to hand
 	local e1=Effect.CreateEffect(c)

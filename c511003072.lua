@@ -36,9 +36,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)
-			aux.SynchroSend=2
+			Synchro.Send=2
 			Duel.SynchroSummon(tp,sg:GetFirst(),nil,tg)
-			aux.SynchroSend=0
+			Synchro.Send=0
 		end
 	end
 end

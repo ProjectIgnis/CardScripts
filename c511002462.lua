@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFunRep(c,30068120,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9),1,63,true,true)
+	Fusion.AddProcCodeFunRep(c,30068120,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9),1,63,true,true)
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY)

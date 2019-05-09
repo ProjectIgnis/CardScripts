@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLevel,3),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsLevel,3),2,2)
 	--indestructable
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)

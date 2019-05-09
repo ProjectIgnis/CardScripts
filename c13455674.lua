@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddSynchroProcedure(c,nil,2,99,aux.NonTuner(nil),1,1)
+	Synchro.AddProcedure(c,nil,2,99,Synchro.NonTuner(nil),1,1)
 	--remove
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

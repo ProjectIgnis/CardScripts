@@ -6,7 +6,7 @@ local s, id = GetID()
 function s.initial_effect(c)
     --link summon
     c:EnableReviveLimit()
-    aux.AddLinkProcedure(
+    Link.AddProcedure(
         c,
         function(c, ...)
             return c:IsLinkTheMark(...)

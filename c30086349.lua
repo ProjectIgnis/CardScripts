@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
-	aux.AddFusionProcMix(c,true,true,s.mfilter1,s.mfilter2)
+	Fusion.AddProcMix(c,true,true,s.mfilter1,s.mfilter2)
 	c:EnableReviveLimit()
 	--damage
 	local e1=Effect.CreateEffect(c)

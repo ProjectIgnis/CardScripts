@@ -2,7 +2,7 @@
 --Ritual Beast Ulti-Kimunfalcos
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xb5),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xb5),2,2)
 	c:EnableReviveLimit()	
 	--atk up
 	local e1=Effect.CreateEffect(c)

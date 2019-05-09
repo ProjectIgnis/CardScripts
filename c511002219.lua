@@ -40,8 +40,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 		local mat=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_GRAVE,0,1,1,nil,c,tc)
 		mat:AddCard(c)
-		Auxiliary.SynchroSend=2
+		Synchro.Send=2
 		Duel.SynchroSummon(tp,tc,nil,mat)
-		Auxiliary.SynchroSend=0
+		Synchro.Send=0
 	end
 end

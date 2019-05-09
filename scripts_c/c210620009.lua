@@ -2,7 +2,7 @@
 --designed by Gideon
 --scripted by Larry126
 function c210620009.initial_effect(c)
-	aux.AddXyzProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),8,3)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),8,3)
 	c:EnableReviveLimit()
 --control
 	local e1=Effect.CreateEffect(c)

@@ -24,9 +24,9 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
 		local sc=sg:GetFirst()
-		Auxiliary.SynchroSend=2
+		Synchro.Send=2
 		Duel.SynchroSummon(tp,sc,nil,mg)
-		Auxiliary.SynchroSend=0
+		Synchro.Send=0
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)

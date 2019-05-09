@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xf0),aux.NonTunerEx(Card.IsSetCard,0xf0),1)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xf0),Synchro.NonTunerEx(Card.IsSetCard,0xf0),1)
 	c:EnableReviveLimit()
 	--
 	local e2=Effect.CreateEffect(c)

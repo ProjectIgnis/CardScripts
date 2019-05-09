@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--link summon
-	aux.AddLinkProcedure(c,s.filter,2,nil,s.spcheck)
+	Link.AddProcedure(c,s.filter,2,nil,s.spcheck)
 	--splimit
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

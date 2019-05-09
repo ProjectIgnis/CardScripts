@@ -5,9 +5,9 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	local eff=aux.AddFusionProcMixN(c,true,true,s.ffilter,3)
+	local eff=Fusion.AddProcMixN(c,true,true,s.ffilter,3)
 	eff[1]:SetValue(s.matfilter)
-	aux.AddContactFusion(c,s.contactfil,s.contactop,s.splimit)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--remove
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

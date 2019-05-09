@@ -5,8 +5,8 @@ function c210660012.initial_effect(c)
 	c:EnableCounterPermit(0xf66)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,false,false,78371393,c210660012.matfilter)
-	aux.AddContactFusion(c,c210660012.contactfil,c210660012.contactop,c210660012.splimit)
+	Fusion.AddProcMix(c,false,false,78371393,c210660012.matfilter)
+	Fusion.AddContactProc(c,c210660012.contactfil,c210660012.contactop,c210660012.splimit)
 	--immunities
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

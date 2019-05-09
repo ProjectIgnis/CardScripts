@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	aux.CallToken(52653092)
 	--xyz summon
 	c:EnableReviveLimit()
-	aux.AddXyzProcedure(c,s.xyzfilter,nil,3)
+	Xyz.AddProcedure(c,s.xyzfilter,nil,3)
 	--battle indestructable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

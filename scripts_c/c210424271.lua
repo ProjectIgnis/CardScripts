@@ -2,7 +2,7 @@
 local card = c210424271
 function card.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,card.lfilter,3,3)
+	Link.AddProcedure(c,card.lfilter,3,3)
 	c:EnableReviveLimit()
 	--indes
 	local e1=Effect.CreateEffect(c)

@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,8,2,s.ovfilter,aux.Stringid(id,0),2)
+	Xyz.AddProcedure(c,nil,8,2,s.ovfilter,aux.Stringid(id,0),2)
 	c:EnableReviveLimit()
 	--on summon
 	local e1=Effect.CreateEffect(c)

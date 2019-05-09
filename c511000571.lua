@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
-	aux.AddFusionProcCode2(c,92421852,38916461,true,true)
+	Fusion.AddProcCode2(c,92421852,38916461,true,true)
 	--atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(1412158,0))

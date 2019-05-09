@@ -5,7 +5,7 @@ function c210660017.initial_effect(c)
 	c:SetUniqueOnField(1,0,210660017)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa4),aux.FilterBoolFunctionEx(Card.IsRace,RACE_FIEND))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa4),aux.FilterBoolFunctionEx(Card.IsRace,RACE_FIEND))
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

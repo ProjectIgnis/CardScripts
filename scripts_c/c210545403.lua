@@ -1,7 +1,7 @@
 --Exodia the Empowered 210545403
 function c210545403.initial_effect(c)
     --synchro summon
-    aux.AddSynchroProcedure(c,nil,1,1,aux.NonTunerEx(Card.IsSetCard,0x40),1,99)
+    Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,0x40),1,99)
     c:EnableReviveLimit()
     --indes
     local e1=Effect.CreateEffect(c)

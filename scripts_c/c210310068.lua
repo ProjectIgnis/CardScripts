@@ -5,12 +5,12 @@ local card = c210310068
 local id = 210310068
 function card.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(
+	Synchro.AddProcedure(
 		c,
 		aux.FilterBoolFunctionEx(Card.IsAttribute, ATTRIBUTE_LIGHT),
 		1,
 		1,
-		aux.NonTunerEx(Card.IsLevel, 8),
+		Synchro.NonTunerEx(Card.IsLevel, 8),
 		1,
 		1
 	)

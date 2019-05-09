@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,nil,1,1,aux.NonTuner(nil),1,99,nil,nil,nil,s.matfilter)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99,nil,nil,nil,s.matfilter)
 	c:EnableReviveLimit()
 	--negate
 	local e1=Effect.CreateEffect(c)

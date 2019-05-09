@@ -6,7 +6,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion Material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,false,false,s.mfilter1,s.mfilter2)
+	Fusion.AddProcMix(c,false,false,s.mfilter1,s.mfilter2)
 	--SpSummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

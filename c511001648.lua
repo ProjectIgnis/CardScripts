@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,false,true,id+1,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DINOSAUR))
+	Fusion.AddProcMix(c,false,true,id+1,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DINOSAUR))
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

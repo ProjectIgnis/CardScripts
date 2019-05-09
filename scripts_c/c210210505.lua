@@ -5,8 +5,8 @@ function c210210505.initial_effect(c)
 	aux.EnablePendulumAttribute(c,false)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10b5),c210210505.matfilter)
-	aux.AddContactFusion(c,c210210505.contactfil,c210210505.contactop,c210210505.splimit)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10b5),c210210505.matfilter)
+	Fusion.AddContactProc(c,c210210505.contactfil,c210210505.contactop,c210210505.splimit)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(4021,2))

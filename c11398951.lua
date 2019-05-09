@@ -1,7 +1,7 @@
 --機械天使の絶対儀式
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddRitualProcEqual(c,s.ritualfil,nil,nil,s.extrafil,s.extraop)
+	Ritual.AddProcEqual(c,s.ritualfil,nil,nil,s.extrafil,s.extraop)
 end
 function s.ritualfil(c)
 	return c:IsSetCard(0x2093) and c:IsRitualMonster()

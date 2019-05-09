@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,97165977,1,aux.FilterBoolFunction(Card.IsSetCard,0xdf),2)
+	Fusion.AddProcMixN(c,true,true,97165977,1,aux.FilterBoolFunction(Card.IsSetCard,0xdf),2)
 	--immune
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

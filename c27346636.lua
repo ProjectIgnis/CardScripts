@@ -3,8 +3,8 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,78868776,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x19),2)
-	aux.AddContactFusion(c,s.contactfil,s.contactop,s.splimit)
+	Fusion.AddProcMixN(c,true,true,78868776,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x19),2)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--negate
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))

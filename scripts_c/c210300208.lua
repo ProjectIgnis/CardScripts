@@ -59,7 +59,7 @@ function c210300208.RPGFilter(c,filter,e,tp,m,m2,ft)
 	if ft>0 then
 		return mg:CheckWithSumGreater(Card.GetRitualLevel,c:GetOriginalLevel(),c)
 	else
-		return mg:IsExists(Auxiliary.RPGFilterF,1,nil,tp,mg,c)
+		return mg:IsExists(Ritual.GreaterFilterF,1,nil,tp,mg,c)
 	end
 end
 function c210300208.ritop(e,tp,eg,ep,ev,re,r,rp)
@@ -78,7 +78,7 @@ function c210300208.ritop(e,tp,eg,ep,ev,re,r,rp)
 			mat=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,tc:GetOriginalLevel(),tc)
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-			mat=mg:FilterSelect(tp,Auxiliary.RPGFilterF,1,1,nil,tp,mg,tc)
+			mat=mg:FilterSelect(tp,Ritual.GreaterFilterF,1,1,nil,tp,mg,tc)
 			Duel.SetSelectedCard(mat)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 			local mat2=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,tc:GetOriginalLevel(),tc)

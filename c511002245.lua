@@ -1,8 +1,8 @@
 --Solidroid beta
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddFusionProcMix(c,true,true,98049038,511002240,511000660)
-	aux.AddContactFusion(c,s.contactfilter,s.contactop,s.splimit)
+	Fusion.AddProcMix(c,true,true,98049038,511002240,511000660)
+	Fusion.AddContactProc(c,s.contactfilter,s.contactop,s.splimit)
 	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(16304628,0))

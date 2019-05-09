@@ -2,7 +2,7 @@
 --AlphaKretin
 function c210310206.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xf35),3,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xf35),3,2)
 	c:EnableReviveLimit()
 	--repeat attack
 	local e1=Effect.CreateEffect(c)

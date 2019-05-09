@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,aux.FilterSummonCode(74509280),1,1,aux.NonTunerEx(Card.IsSetCard,0x23),1,1)
+	Synchro.AddProcedure(c,aux.FilterSummonCode(74509280),1,1,Synchro.NonTunerEx(Card.IsSetCard,0x23),1,1)
 	c:EnableReviveLimit()
 	c:SetUniqueOnField(1,1,id)
 	--special summon

@@ -2,7 +2,7 @@
 function c210300313.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_DUAL),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_DUAL),2,2)
 	--duel status
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

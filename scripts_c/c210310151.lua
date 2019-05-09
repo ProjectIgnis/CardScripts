@@ -2,7 +2,7 @@
 --AlphaKretin
 function c210310151.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,c210310151.matfilter,2,2)
+	Link.AddProcedure(c,c210310151.matfilter,2,2)
 	c:EnableReviveLimit()
 	--immune
 	local e1=Effect.CreateEffect(c)

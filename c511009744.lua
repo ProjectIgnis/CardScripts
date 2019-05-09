@@ -5,7 +5,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,function(c) return c:IsDrone() end,2)
+	Link.AddProcedure(c,function(c) return c:IsDrone() end,2)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(1118)

@@ -4,8 +4,8 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,7573135,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x19),2)
-	aux.AddContactFusion(c,s.contactfilter,s.contactop,s.splimit)
+	Fusion.AddProcMixN(c,true,true,7573135,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x19),2)
+	Fusion.AddContactProc(c,s.contactfilter,s.contactop,s.splimit)
 	--spsummon when summoned
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(7573135,0))

@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,1784686,CARD_DARK_MAGICIAN_GIRL)
+	Fusion.AddProcMix(c,true,true,1784686,CARD_DARK_MAGICIAN_GIRL)
 	--Destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)

@@ -2,7 +2,7 @@
 --Nekroz Mirror
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=aux.AddRitualProcEqual(c,s.ritualfil,nil,nil,s.extrafil):SetCountLimit(1,id)
+	local e1=Ritual.AddProcEqual(c,s.ritualfil,nil,nil,s.extrafil):SetCountLimit(1,id)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
 	--search

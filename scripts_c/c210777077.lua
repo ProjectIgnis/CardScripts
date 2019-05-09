@@ -2,7 +2,7 @@
 --designed by Thaumablazer#4134, scripted by Naim
 function c210777077.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x42),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x42),2)
 	c:EnableReviveLimit()
 	--protection
 	local e1=Effect.CreateEffect(c)

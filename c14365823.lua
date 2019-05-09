@@ -5,7 +5,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link summon
-	aux.AddLinkProcedure(c,s.matfilter,2,2)
+	Link.AddProcedure(c,s.matfilter,2,2)
 	--Must be properly summoned in order to be revived
 	c:EnableReviveLimit()
 	--Can only control one

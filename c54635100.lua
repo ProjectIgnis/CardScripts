@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--link summon
-	aux.AddLinkProcedure(c,nil,2,2)
+	Link.AddProcedure(c,nil,2,2)
 	--splimit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

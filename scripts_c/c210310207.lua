@@ -3,7 +3,7 @@
 function c210310207.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xf35),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xf35),2,2)
 	--repeat attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DISABLE)

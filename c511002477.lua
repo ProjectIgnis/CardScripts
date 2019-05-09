@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
 	c:EnableReviveLimit()
-	aux.AddSynchroProcedure(c,nil,1,1,aux.NonTuner(nil),4,4)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),4,4)
 	--negate spell
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(68140974,2))

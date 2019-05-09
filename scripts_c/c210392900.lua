@@ -4,7 +4,7 @@
 function c210392900.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,c210392900.matfilter,2,2)
+	Link.AddProcedure(c,c210392900.matfilter,2,2)
 	--destroy replace
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

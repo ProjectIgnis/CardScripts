@@ -1,6 +1,6 @@
 --Cybernetic Innovative Technology
 --Quick-play spell
---Reveal 1 "Cyber Dragon in hand" Special summon 1 “Cyber Laser Dragon” OR “Cyber Barrier Dragon” from your hand, Deck, or GY, ignoring its summoning conditions. You can banish this card from your GY and target 1 level 5 or higher LIGHT Machine “Cyber” monster on your side of the field; it cannot be destroyed by battle or card effects this turn, also you can switch its battle position.
+--Reveal 1 "Cyber Dragon in hand" Special summon 1 ï¿½Cyber Laser Dragonï¿½ OR ï¿½Cyber Barrier Dragonï¿½ from your hand, Deck, or GY, ignoring its summoning conditions. You can banish this card from your GY and target 1 level 5 or higher LIGHT Machine ï¿½Cyberï¿½ monster on your side of the field; it cannot be destroyed by battle or card effects this turn, also you can switch its battle position.
 function c210555557.initial_effect(c)
   local e1=Effect.CreateEffect(c)
   e1:SetDescription(aux.Stringid(210555557,0))

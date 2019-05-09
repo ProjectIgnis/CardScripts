@@ -2,7 +2,7 @@
 --AlphaKretin
 function c210310205.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,nil,1,1,aux.NonTunerEx(Card.IsSetCard,0xf35),1,99)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,0xf35),1,99)
 	c:EnableReviveLimit()
 	--repeat attack
 	local e1=Effect.CreateEffect(c)

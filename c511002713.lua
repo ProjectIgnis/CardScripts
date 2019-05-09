@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,Card.IsEarthbound,1,1,aux.NonTuner(Card.IsEarthbound),1,99)
+	Synchro.AddProcedure(c,Card.IsEarthbound,1,1,Synchro.NonTuner(Card.IsEarthbound),1,99)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)

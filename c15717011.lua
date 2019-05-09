@@ -46,18 +46,18 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetLabel(0)
 		local mg=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_MZONE,0,nil)
 		local mg2=Duel.GetMatchingGroup(s.fil,tp,0,LOCATION_MZONE,nil,tp)
-		Auxiliary.FCheckAdditional=s.fcheck(mg2)
+		Fusion.CheckAdditional=s.fcheck(mg2)
 		local res=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg+mg2,c,chkf)
-		Auxiliary.FCheckAdditional=nil
+		Fusion.CheckAdditional=nil
 		return res
 	end
 	local mg=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_MZONE,0,nil)
 	local mg2=Duel.GetMatchingGroup(s.fil,tp,0,LOCATION_MZONE,nil,tp)
-	Auxiliary.FCheckAdditional=s.fcheck(mg2)
+	Fusion.CheckAdditional=s.fcheck(mg2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,mg+mg2,c,chkf)
 	local mat=Duel.SelectFusionMaterial(tp,g:GetFirst(),mg+mg2,c,chkf)
-	Auxiliary.FCheckAdditional=nil
+	Fusion.CheckAdditional=nil
 	if #(mat-mg2)~=#mat then
 		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 		Duel.Hint(HINT_CARD,0,fc:GetCode())

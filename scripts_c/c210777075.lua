@@ -1,7 +1,7 @@
 ---Nidhogg The Nordic Dragon
 --designed by Thaumablazer#4134, scripted by Naim
 function c210777075.initial_effect(c)
-	aux.AddXyzProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x4b),10,3,nil,nil,12)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x4b),10,3,nil,nil,12)
 	c:EnableReviveLimit()
 	--spsummon limit
 	local e1=Effect.CreateEffect(c)

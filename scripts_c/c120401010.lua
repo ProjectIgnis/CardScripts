@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 function c120401010.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,c120401010.matfilter,1)
+	Link.AddProcedure(c,c120401010.matfilter,1)
 	--fusion linking
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

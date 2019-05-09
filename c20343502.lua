@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
     c:EnableReviveLimit()
-    aux.AddXyzProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x71),4,2)
+    Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x71),4,2)
     --immune
     local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(id,0))

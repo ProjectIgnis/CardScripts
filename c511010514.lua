@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()
 	--synchro summon
 	c:EnableReviveLimit()
-	aux.AddSynchroProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xaf),1,1,aux.NonTunerEx(Card.IsSetCard,0xaf),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xaf),1,1,Synchro.NonTunerEx(Card.IsSetCard,0xaf),1,99)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,false)
 	--synchro indes

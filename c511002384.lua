@@ -1,7 +1,7 @@
 --C/C/C Rock Armor of Defense
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddXyzProcedure(c,nil,6,2)
+	Xyz.AddProcedure(c,nil,6,2)
 	c:EnableReviveLimit()
 	-- ATK
 	local e1=Effect.CreateEffect(c)

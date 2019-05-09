@@ -3,9 +3,9 @@
 function c210004000.initial_effect(c)
 	c:SetSPSummonOnce(210004000)
 	--xyz summon
-	Auxiliary.AddFusionProcMix(c,false,false,c210004000.fil2,aux.NonTuner(c210004000.fil))
-	aux.AddSynchroProcedure(c,c210004000.fil,1,1,aux.NonTunerEx(c210004000.fil),1,1)
-	aux.AddXyzProcedure(c,c210004000.fil,nil,2,nil,nil,nil,nil,true,c210004000.xyzcheck)
+	Fusion.AddProcMix(c,false,false,c210004000.fil2,Synchro.NonTuner(c210004000.fil))
+	Synchro.AddProcedure(c,c210004000.fil,1,1,Synchro.NonTunerEx(c210004000.fil),1,1)
+	Xyz.AddProcedure(c,c210004000.fil,nil,2,nil,nil,nil,nil,true,c210004000.xyzcheck)
 	c:EnableReviveLimit()
 	--splimit
 	local lm=Effect.CreateEffect(c)

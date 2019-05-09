@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--synchro summon
-	aux.AddSynchroProcedure(c,nil,2,2,aux.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,nil,2,2,Synchro.NonTuner(nil),1,99)
 	--cannot special summon
 	local e0=Effect.CreateEffect(c)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)

@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,s.mfilter,2,nil,s.matcheck)
+	Link.AddProcedure(c,s.mfilter,2,nil,s.matcheck)
 	--change level
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

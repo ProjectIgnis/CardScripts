@@ -4,7 +4,7 @@ function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,false,false,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1047),3)
+	Fusion.AddProcMixN(c,false,false,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1047),3)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

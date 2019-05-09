@@ -2,7 +2,7 @@
 --designed and scripted by Naim
 function c210777057.initial_effect(c)
     --xyz summon
-    aux.AddXyzProcedure(c,c210777057.mfilter,3,3,c210777057.ovfilter,aux.Stringid(210777057,0),3,c210777057.xyzop)
+    Xyz.AddProcedure(c,c210777057.mfilter,3,3,c210777057.ovfilter,aux.Stringid(210777057,0),3,c210777057.xyzop)
     c:EnableReviveLimit()
 	--immune
 	local e1=Effect.CreateEffect(c)

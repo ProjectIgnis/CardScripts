@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	if not c:IsStatus(STATUS_COPYING_EFFECT) then
-		aux.AddContactFusion(c,s.contactfil,s.contactop,aux.FALSE)
+		Fusion.AddContactProc(c,s.contactfil,s.contactop,aux.FALSE)
 		if c.material_count==nil then
 			s.material_count=2
 			s.material={1561110,91998119}
@@ -14,8 +14,8 @@ function s.initial_effect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		e1:SetCode(EFFECT_FUSION_MATERIAL)
-		e1:SetCondition(Auxiliary.FConditionMix(true,true,s.ffilter(1561110),s.ffilter(91998119)))
-		e1:SetOperation(Auxiliary.FOperationMix(true,true,s.ffilter(1561110),s.ffilter(91998119)))
+		e1:SetCondition(Fusion.ConditionMix(true,true,s.ffilter(1561110),s.ffilter(91998119)))
+		e1:SetOperation(Fusion.OperationMix(true,true,s.ffilter(1561110),s.ffilter(91998119)))
 		c:RegisterEffect(e1)
 	end
 	--negate

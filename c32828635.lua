@@ -2,7 +2,7 @@
 --Endless of the World
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddRitualProcGreater(c,s.ritualfil,nil,nil,nil,s.forcedgroup)
+	Ritual.AddProcGreater(c,s.ritualfil,nil,nil,nil,s.forcedgroup)
 	--salvage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

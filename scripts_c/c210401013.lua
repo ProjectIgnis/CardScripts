@@ -2,7 +2,7 @@
 function c210401013.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_FIEND),aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_FIEND),aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER))
 	--disable from MZone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(58074177,1))

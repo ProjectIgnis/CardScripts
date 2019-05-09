@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
     --fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,110000110,46232525)
+	Fusion.AddProcMix(c,true,true,110000110,46232525)
 	aux.AddEquipProcedure(c)
 	--Big Bang Attack!
 	local e2=Effect.CreateEffect(c)

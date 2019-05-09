@@ -3,7 +3,7 @@ function c210001000.initial_effect(c)
 	--must be special sumoned properly
 	c:EnableReviveLimit()
 	--link prochedure durp
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x27),2,2,c210001000.mcheck)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x27),2,2,c210001000.mcheck)
 	--treat 1 synchro monster as a damn tuner
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)

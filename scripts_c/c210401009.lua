@@ -2,7 +2,7 @@
 function c210401009.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_INSECT),aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WIND))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_INSECT),aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WIND))
 	--return to Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(2772236,0))

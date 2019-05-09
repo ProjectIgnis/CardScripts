@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,10979723,aux.FilterBoolFunctionEx(Card.IsSetCard,0x4),1,true,true)
+	Fusion.AddProcCodeFun(c,10979723,aux.FilterBoolFunctionEx(Card.IsSetCard,0x4),1,true,true)
 	--atkup
 	local e1=Effect.CreateEffect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)

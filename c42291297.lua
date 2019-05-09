@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddSynchroProcedure(c,nil,1,1,aux.NonTuner(nil),3,3)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),3,3)
 	--indes
 	local e2=Effect.CreateEffect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

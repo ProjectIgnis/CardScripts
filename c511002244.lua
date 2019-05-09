@@ -1,8 +1,8 @@
 --Solidroid α
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddFusionProcMix(c,true,true,511000660,98049038,511002240)
-	aux.AddContactFusion(c,s.contactfilter,s.contactop)
+	Fusion.AddProcMix(c,true,true,511000660,98049038,511002240)
+	Fusion.AddContactProc(c,s.contactfilter,s.contactop)
 	c:EnableReviveLimit()
 	--atk up
 	local e3=Effect.CreateEffect(c)

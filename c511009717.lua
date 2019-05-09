@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,s.mfilter,3)
+	Link.AddProcedure(c,s.mfilter,3)
 	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)

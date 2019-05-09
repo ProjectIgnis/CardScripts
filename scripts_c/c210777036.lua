@@ -3,8 +3,8 @@
 function c210777036.initial_effect(c)
 --fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,28297833,c210777036.matfilter)
-	aux.AddContactFusion(c,c210777036.contactfil,c210777036.contactop,c210777036.splimit,c210777036.contactcon,1)
+	Fusion.AddProcMix(c,true,true,28297833,c210777036.matfilter)
+	Fusion.AddContactProc(c,c210777036.contactfil,c210777036.contactop,c210777036.splimit,c210777036.contactcon,1)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

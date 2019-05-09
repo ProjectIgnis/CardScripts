@@ -2,7 +2,7 @@
 --AlphaKretin
 function c210310164.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_INSECT),7,2,c210310164.ovfilter,aux.Stringid(85004150,0))
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_INSECT),7,2,c210310164.ovfilter,aux.Stringid(85004150,0))
 	c:EnableReviveLimit()
 	--cannot be target
 	local e1=Effect.CreateEffect(c)

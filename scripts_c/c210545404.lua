@@ -1,7 +1,7 @@
 --Protector of Exodia 210545404
 function c210545404.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,1,2,c210545404.ovfilter,aux.Stringid(210545404,0),2,c210545404.xyzop)
+	Xyz.AddProcedure(c,nil,1,2,c210545404.ovfilter,aux.Stringid(210545404,0),2,c210545404.xyzop)
 	c:EnableReviveLimit()
 	--cannot be target
 	local e1=Effect.CreateEffect(c)

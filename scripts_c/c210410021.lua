@@ -2,7 +2,7 @@
 --天剣主女王十
 function c210410021.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfb2),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfb2),2,2)
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_PIERCE)

@@ -1,7 +1,7 @@
 --Dance of Forgotten Masks
 --Created and scripted by ahtelel/Naga
 function c210700001.initial_effect(c)
-	aux.AddRitualProcGreaterCode(c,210700002) 
+	Ritual.AddProcGreaterCode(c,210700002) 
 	--to deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND)

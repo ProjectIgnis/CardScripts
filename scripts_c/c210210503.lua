@@ -2,7 +2,7 @@
 --AlphaKretin
 function c210210503.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,c210210503.matfilter,1,1,c210210503.matfilter,1,99)
+	Synchro.AddProcedure(c,c210210503.matfilter,1,1,c210210503.matfilter,1,99)
 	c:EnableReviveLimit()
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,false)

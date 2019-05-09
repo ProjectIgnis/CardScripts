@@ -1,7 +1,7 @@
 --The Phantom Knights of Cursed Javelin
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddXyzProcedure(c,nil,2,2)
+	Xyz.AddProcedure(c,nil,2,2)
 	c:EnableReviveLimit()
 	--atk down
 	local e1=Effect.CreateEffect(c)

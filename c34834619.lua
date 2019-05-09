@@ -2,7 +2,7 @@
 --Luminous Dragon Ritual
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddRitualProcEqualCode(c,4,nil,85346853)
+	Ritual.AddProcEqualCode(c,4,nil,85346853)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

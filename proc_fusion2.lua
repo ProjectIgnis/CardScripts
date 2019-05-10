@@ -119,7 +119,7 @@ function Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,locat
 						backupmat=mat1:Clone()
 						tc:SetMaterial(mat1)
 						if extraop then
-							extraop(mat1,e,tp)
+							extraop(mat1,tc,e,tp)
 						end
 						if #mat1>0 then
 							Duel.SendtoGrave(mat1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
@@ -131,7 +131,9 @@ function Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,locat
 						sel[1]:GetOperation()(sel[1],e,tp,tc,mat2)
 					end
 					tc:CompleteProcedure()
-					stage2(backupmat,e,tp)
+					if stage2 then
+						stage2(backupmat,tc,e,tp)
+					end
 				end
 			end
 end

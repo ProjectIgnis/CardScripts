@@ -40,7 +40,7 @@ function Fusion.SummonEffTG(fusfilter,matfilter,extrafil,extraop,gc,stage2,exact
 					if matfilter then
 						mg1=mg1:Filter(matfilter,nil,e,tp,eg,ep,ev,re,r,rp,0)
 					end
-					Auxiliary.FCheckExact=exactcount
+					Fusion.CheckExact=exactcount
 					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc,chk)
 					if not res then
 						for _,ce in ipairs({Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)}) do
@@ -53,7 +53,7 @@ function Fusion.SummonEffTG(fusfilter,matfilter,extrafil,extraop,gc,stage2,exact
 							end
 						end		
 					end
-					Auxiliary.FCheckExact=nil
+					Fusion.CheckExact=nil
 					return res
 				end
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,location)
@@ -92,9 +92,9 @@ function Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exact
 					mg1=mg1:Filter(matfilter,nil,e,tp,eg,ep,ev,re,r,rp,1)
 				end
 				mg1=mg1:Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
-				Auxiliary.FCheckExact=exactcount
+				Fusion.CheckExact=exactcount
 				local effswithgroup={}
-				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,ffilter,e,tp,mg1,type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc,chkf)
+				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc,chkf)
 				local extraeffs = {Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)}
 				if #sg1 > 0 then
 					table.insert(effswithgroup,{e,aux.GrouptoFieldid(sg1)})
@@ -136,6 +136,6 @@ function Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exact
 						stage2(e,tc,tp,backupmat)
 					end
 				end
-				Auxiliary.FCheckExact=nil
+				Fusion.CheckExact=nil
 			end
 end

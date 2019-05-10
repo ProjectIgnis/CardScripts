@@ -78,7 +78,7 @@ function Fusion.ChainMaterialPrompt(effswithgroup,fieldID,tp,e)
 			table.insert(desctable,effswithgroup[index][1]:GetDescription())
 		end
 	end
-	return effs[Duel.SelectOption(tp,table.unpack(desctable)) + 1]
+	return effs[Duel.SelectOption(tp,false,table.unpack(desctable)) + 1]
 end
 function Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,location,chkf)
 	return	function(e,tp,eg,ep,ev,re,r,rp)

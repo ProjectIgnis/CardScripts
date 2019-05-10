@@ -92,13 +92,11 @@ function Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exact
 					mg1=mg1:Filter(matfilter,nil,e,tp,eg,ep,ev,re,r,rp,1)
 				end
 				mg1=mg1:Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
-				Debug.Message(#mg1)
 				Auxiliary.FCheckExact=exactcount
 				local effswithgroup={}
 				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,ffilter,e,tp,mg1,type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc,chkf)
 				local extraeffs = {Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)}
 				if #sg1 > 0 then
-					Debug.Message("count "..#sg1)
 					table.insert(effswithgroup,{e,aux.GrouptoFieldid(sg1)})
 				end
 				for _,ce in ipairs(extraeffs) do

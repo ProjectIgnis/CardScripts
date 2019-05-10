@@ -1,7 +1,7 @@
 --超越融合
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Fusion.AddSummonEff(c,nil,Card.IsOnField,aux.Stringid(id,0),nil,nil,nil,s.register,2)
+	local e1=Fusion.AddSummonEff(c,nil,Card.IsOnField,nil,nil,nil,nil,s.register,2)
 	e1:SetCost(s.cost)
 	local tg=e1:GetTarget()
 	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)

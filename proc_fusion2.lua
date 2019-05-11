@@ -3,7 +3,7 @@
 --fusfilter		filter for the monster to be Fusion Summoned
 --matfilter		restriction on the default materials returned by GetFusionMaterial
 --desc			summon effect description
---extrafil		function that returns a group of extra cards that can be used as fusion materials
+--extrafil		function that returns a group of extra cards that can be used as fusion materials, and as second optional parameter the additional filter function
 --extraop		function called right before sending the monsters to the graveyard as material
 --gc			mandatory card or function returning a group to be used (for effects like Soprano)
 --stage2		function called after the monster has been summoned
@@ -33,12 +33,16 @@ function Fusion.SummonEffTG(fusfilter,matfilter,extrafil,extraop,gc,stage2,exact
 				location = location or LOCATION_EXTRA
 				chkf = chkf and chkf|tp or tp
 				if chk==0 then
-					local mg1=Duel.GetFusionMaterial(tp)
+					local mg1=Duel.GetFusionMaterial(tp):Filter(Card.IsCanBeFusionMaterial,nil)
 					if extrafil then
-						mg1:Merge(extrafil(e,tp,eg,ep,ev,re,r,rp,chk):Filter(Card.IsCanBeFusionMaterial,nil))
+						local ret = {extrafil(e,tp,mg1)}
+						if ret[1] then
+							mg1:Merge(ret[1]:Filter(Card.IsCanBeFusionMaterial,nil))
+							Fusion.CheckAdditional=ret[2]
+						end
 					end
 					if matfilter then
-						mg1=mg1:Filter(matfilter,nil,e,tp,eg,ep,ev,re,r,rp,0)
+						mg1=mg1:Filter(matfilter,nil,e,tp,mg1,0)
 					end
 					Fusion.CheckExact=exactcount
 					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc,chk)
@@ -54,6 +58,7 @@ function Fusion.SummonEffTG(fusfilter,matfilter,extrafil,extraop,gc,stage2,exact
 						end		
 					end
 					Fusion.CheckExact=nil
+					Fusion.CheckAdditional=nil
 					return res
 				end
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,location)
@@ -84,12 +89,16 @@ function Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exact
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				location = location or LOCATION_EXTRA
 				chkf = chkf and chkf|tp or tp
-				local mg1=Duel.GetFusionMaterial(tp)
+				local mg1=Duel.GetFusionMaterial(tp):Filter(Card.IsCanBeFusionMaterial,nil)
 				if extrafil then
-					mg1:Merge(extrafil(e,tp,eg,ep,ev,re,r,rp,chk):Filter(Card.IsCanBeFusionMaterial,nil))
-				end
+						local ret = {extrafil(e,tp,mg1)}
+						if ret[1] then
+							mg1:Merge(ret[1]:Filter(Card.IsCanBeFusionMaterial,nil))
+							Fusion.CheckAdditional=ret[2]
+						end
+					end
 				if matfilter then
-					mg1=mg1:Filter(matfilter,nil,e,tp,eg,ep,ev,re,r,rp,1)
+					mg1=mg1:Filter(matfilter,nil,e,tp,mg1,1)
 				end
 				mg1=mg1:Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
 				Fusion.CheckExact=exactcount
@@ -137,5 +146,6 @@ function Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exact
 					end
 				end
 				Fusion.CheckExact=nil
+				Fusion.CheckAdditional=nil
 			end
 end

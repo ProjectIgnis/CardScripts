@@ -1205,7 +1205,7 @@ function Synchro.DarkCheck2(sg,card1,card2,plv,nlv,sc,tp,f1,f2,...)
 	local tlv1=tlv&0xffff
 	local tlv2=tlv>>16
 	if card1:GetFlagEffect(100000147)>0 then
-		if tlv1==nlv-lv1 then return true end
+		if tlv1==nlv-ntlv1 then return true end
 		if (tlv2>0 or card2:IsStatus(STATUS_NO_LEVEL)) and (ntlv2>0 or card1:IsStatus(STATUS_NO_LEVEL)) then
 			return tlv2==nlv-ntlv1 or tlv1==nlv-ntlv2 or tlv2==nlv-ntlv2
 		elseif tlv2>0 or card2:IsStatus(STATUS_NO_LEVEL) then

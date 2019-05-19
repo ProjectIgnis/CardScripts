@@ -1,5 +1,5 @@
 --創聖魔導王 エンディミオン
---Endymion, the Founding Sorcerer Supreme
+--Endymion, the Mighty Master of Magic
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -66,6 +66,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and c:IsCanAddCounter(COUNTER_SPELL,1,false,LOCATION_MZONE) end
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

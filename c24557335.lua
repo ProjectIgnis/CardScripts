@@ -1,5 +1,5 @@
 --天威龍－シュターナ
---Tianwei Dragon - Sh'tanna
+--Tenyi Dragon Sthana
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -44,20 +44,19 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,e,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP) and not c:IsType(TYPE_TOKEN) 
+		and c:GetPreviousControler()==tp and c:IsPreviousPosition(POS_FACEUP) and not c:IsType(TYPE_TOKEN) 
 		and c:IsNonEffectMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsCanBeEffectTarget(e) and not c:IsLocation(LOCATION_EXTRA)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.cfilter(chkc,e,tp) end
-	if chk==0 then return eg:IsExists(s.cfilter,1,nil,e,tp) end
+	if chk==0 then return eg:IsExists(s.cfilter,1,nil,e,tp)
+		and ((not eg:IsContains(e:GetHandler())) 
+		or e:GetHandler():IsLocation(LOCATION_HAND)) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=eg:FilterSelect(tp,s.cfilter,1,1,nil,e,tp)
 	Duel.SetTargetCard(g:GetFirst())
-	if g:GetFirst():IsLocation(LOCATION_GRAVE) then
-		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
-	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,g:GetFirst():GetLocation())
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

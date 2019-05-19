@@ -1,5 +1,5 @@
 --終焉の悪魔デミス
---Demise, Fiend of Armageddon
+--Demise, Agent of Armageddon
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -71,11 +71,20 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_CHAINING)
+		e1:SetCondition(s.actcon)
 		e1:SetOperation(s.actop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetLabelObject(tc)
 		Duel.RegisterEffect(e1,tp)
-		tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CONTROL,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
+end
+function s.actcon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if tc:GetFlagEffect(id)==0 then
+		e:Reset()
+		return false
+	end
+	return tc:GetFlagEffect(id)>0
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsActiveType(TYPE_RITUAL) and re:IsActiveType(TYPE_MONSTER) and ep==tp then
@@ -85,4 +94,3 @@ end
 function s.chainlm(e,rp,tp)
 	return tp==rp
 end
-

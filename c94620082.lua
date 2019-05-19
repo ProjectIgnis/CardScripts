@@ -59,12 +59,8 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_SZONE)
-	if #g>0 then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,LOCATION_GRAVE)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP)
@@ -81,4 +77,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

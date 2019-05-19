@@ -69,40 +69,32 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.actop)
 		e1:SetLabelObject(tc)
 		Duel.RegisterEffect(e1,tp)
-		tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
-		--reset
-		local reset=Effect.CreateEffect(c)
-		reset:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		reset:SetCode(EVENT_ADJUST)
-		reset:SetCondition(s.resco)
-		reset:SetOperation(s.resop)
-		reset:SetLabelObject(e1)
-		Duel.RegisterEffect(reset,tp)
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CONTROL,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 end
-function s.resco(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject():GetLabelObject()
-	return not tc:IsLocation(LOCATION_MZONE) or tc:GetFlagEffect(0)==0
-end
-function s.resop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetLabelObject():Reset()
-	e:Reset()
-end
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if tc:GetFlagEffect(id)==0 then
+		e:Reset()
+		return false
+	end
 	local ac=Duel.GetAttacker()
-	return ac and ac:IsControler(tp) and ac:IsType(TYPE_RITUAL)
+	return ac and ac:IsControler(tp) and ac:IsType(TYPE_RITUAL) and tc:GetFlagEffect(id)>0
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
-	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
+	e1:SetCondition(s.actlimitcon)
 	e1:SetValue(s.actlimit)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
+end
+function s.actlimitcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE)
 end
 function s.actlimit(e,re,tp)
 	return not re:GetHandler():IsImmuneToEffect(e)

@@ -1,4 +1,5 @@
 --機動要塞 メタル・ホールド
+--Metalhold the Moving Blockade
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
+	e2:SetCondition(s.con)
 	e2:SetValue(s.atlimit)
 	c:RegisterEffect(e2)
 	--cannot be target
@@ -25,9 +27,13 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
+	e3:SetCondition(s.con)
 	e3:SetTarget(s.tgtg)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
+end
+function s.con(e,tp,eg,ep,ev,re,r,rp,chk)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL+1)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:GetLevel()==4
@@ -41,7 +47,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,ft,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,g:GetCount(),0,0)
 end
 function s.tgfilter(c,e)
 	return c:IsFaceup() and c:IsRelateToEffect(e)
@@ -52,7 +58,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,0,0,4,RACE_MACHINE,ATTRIBUTE_EARTH) then return end
 	c:AddMonsterAttribute(TYPE_EFFECT+TYPE_TRAP)
-	Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
+	Duel.SpecialSummonStep(c,1,tp,tp,true,false,POS_FACEUP)
 	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -67,15 +73,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.tgfilter,nil,e)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e,nil,RESET_EVENT+RESETS_STANDARD_DISABLE)
-	if #g<=0 or ft<=0 then return end
+	if g:GetCount()<=0 or ft<=0 then return end
 	local tg=nil
-	if ft<#g then
+	if ft<g:GetCount() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		tg=g:FilterSelect(tp,s.filter,ft,ft,nil)
 	else
 		tg=g:Clone()
 	end
-	if #tg>0 then
+	if tg:GetCount()>0 then
 		Duel.BreakEffect()
 		local tc=tg:GetFirst()
 		while tc do

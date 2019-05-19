@@ -1,4 +1,5 @@
 --暴君の威圧
+--Tyrant's Temper
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,13 +18,9 @@ function s.initial_effect(c)
 	e2:SetValue(s.efilter)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c,ft,tp)
-	return ft>0 or (c:IsControler(tp) and c:GetSequence()<5)
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,ft,tp) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,ft,tp)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.TRUE,1,false,nil,nil,tp) end
+	local g=Duel.SelectReleaseGroupCost(tp,aux.TRUE,1,1,false,nil,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function s.etarget(e,c)

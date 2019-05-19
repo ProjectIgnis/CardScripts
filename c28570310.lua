@@ -74,7 +74,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,e,tp)
-	return c:IsControler(1-tp) and c:IsAbleToHand() and (not e or c:IsRelateToEffect(e))
+	return c:IsSummonPlayer(1-tp) and c:IsAbleToHand() and (not e or c:IsRelateToEffect(e))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,3,REASON_COST) end
@@ -99,4 +99,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

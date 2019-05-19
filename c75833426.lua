@@ -1,4 +1,5 @@
 --マドルチェ・ティーブレイク
+--Madolche Tea Break
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -37,6 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
 		Duel.HintSelection(g)
+		Duel.BreakEffect()
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

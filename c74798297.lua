@@ -1,5 +1,5 @@
 --不知火流 才華の陣
---Shiranui Style Skill
+--Shiranui Style Success
 --Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
+	e1:SetHintTiming(TIMING_END_PHASE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -72,4 +73,3 @@ end
 function s.efilter(e,re)
 	return e:GetHandler()~=re:GetOwner()
 end
-

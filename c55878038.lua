@@ -1,5 +1,5 @@
 --混源龍レヴィオニア
---Levionia the Primordial Chaos Dragon
+--Chaos Dragon Levianeer
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -93,7 +93,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		e:SetCategory(CATEGORY_DESTROY)
 		e:SetOperation(s.desop)
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,PLAYER_ALL,LOCATION_ONFIELD)
+		local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,PLAYER_ALL,LOCATION_ONFIELD)
 	end
 	e:SetLabel(0)
 end
@@ -119,4 +120,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-

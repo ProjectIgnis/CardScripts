@@ -1,5 +1,5 @@
 --ヴァンパイア・アウェイク
-
+--Vampire Awakening
 --Script by nekrozar
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,8 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
+	e1:SetHintTiming(TIMING_END_PHASE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -51,4 +52,3 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetLabelObject(),REASON_EFFECT)
 end
-

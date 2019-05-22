@@ -1,7 +1,8 @@
 --ジェムナイト・フュージョン
+--Gem-Knight Fusion
 local s,id=GetID()
 function s.initial_effect(c)
-	Fusion.AddSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047))
+	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047)))
 	--salvage
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND)

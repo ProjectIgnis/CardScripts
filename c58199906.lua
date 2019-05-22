@@ -1,4 +1,5 @@
 --サイバネティック・フュージョン・サポート
+--Cybernetic Fusion Support
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -46,7 +47,7 @@ function s.chain_operation(e,te,tp,tc,mat,sumtype,sg)
 	if sg then
 		sg:AddCard(tc)
 	else
-		Duel.SpecialSummon(tc,sumtype,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummonStep(tc,sumtype,tp,tp,false,false,POS_FACEUP)
 	end
 	e:Reset()
 end

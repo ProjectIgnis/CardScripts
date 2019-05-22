@@ -1,4 +1,5 @@
 --チェーン・マテリアル
+--Chain Material
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -56,7 +57,7 @@ function s.chain_operation(e,te,tp,tc,mat,sumtype,sg)
 		sg:AddCard(tc)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TURN_SET),0,1)
 	else
-		Duel.SpecialSummon(tc,sumtype,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummonStep(tc,sumtype,tp,tp,false,false,POS_FACEUP)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET,0,1)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())

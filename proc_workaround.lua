@@ -8,6 +8,9 @@ end
 function Card.IsNonEffectMonster(c)
 	return c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_EFFECT)
 end
+function Card.IsMonster(c)
+	return c:IsType(TYPE_MONSTER)
+end
 --Lair of Darkness
 function Auxiliary.ReleaseCostFilter(c,f,...)
 	return c:IsFaceup() and c:IsReleasable() and c:IsHasEffect(59160188) 

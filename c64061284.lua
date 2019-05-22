@@ -2,14 +2,12 @@
 --Ancient Gear Fusion
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Fusion.AddSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x7),nil,nil,s.fextra)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x7),nil,s.fextra)
+	c:RegisterEffect(e1)
 	if not AshBlossomTable then AshBlossomTable={} end
 	table.insert(AshBlossomTable,e1)
 end
 s.listed_names={83104731,95735217}
-function s.filter0(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
-end
 function s.filterchk(c)
 	return c:IsFaceup() and c:IsCode(83104731,95735217) and c:IsOnField()
 end
@@ -20,7 +18,10 @@ function s.fcheck(tp,sg,fc,mg)
 end
 function s.fextra(e,tp,mg)
 	if mg:IsExists(s.filterchk,1,nil) then
-		return Duel.GetMatchingGroup(s.filter0,tp,LOCATION_DECK,0,nil),s.fcheck
+		local eg=Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil)
+		if eg and #eg>0 then
+			return eg,s.fcheck
+		end
 	end
 	return nil
 end

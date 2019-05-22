@@ -1,7 +1,8 @@
 --超越融合
+--Ultra Polymerization
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Fusion.AddSummonEff(c,nil,Card.IsOnField,nil,nil,nil,nil,s.register,2)
+	local e1=Fusion.CreateSummonEff(c,nil,Card.IsOnField,nil,nil,nil,s.stage2,2)
 	e1:SetCost(s.cost)
 	local tg=e1:GetTarget()
 	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -13,44 +14,46 @@ function s.initial_effect(c)
 						Duel.SetChainLimit(aux.FALSE)
 					end
 				end)
+	c:RegisterEffect(e1)
 	if not UltraPolyTable then UltraPolyTable={} end
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge2=Effect.CreateEffect(c)
 		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge2:SetCode(EVENT_ADJUST)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,2000) end
 	Duel.PayLPCost(tp,2000)
 end
-function s.register(e,tc,tp,sg)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-	local c=e:GetHandler()
-	local g
-	if UltraPolyTable[c]==nil then
-		g=Group.CreateGroup()
-		g:KeepAlive()
-		local e2=Effect.CreateEffect(c)
-		e2:SetDescription(aux.Stringid(id,1))
-		e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-		e2:SetType(EFFECT_TYPE_IGNITION)
-		e2:SetRange(LOCATION_GRAVE)
-		e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e2:SetCost(s.spcost)
-		e2:SetTarget(s.sptg)
-		e2:SetOperation(s.spop)
-		e2:SetLabelObject(g)
-		e2:SetReset(RESET_EVENT+RESET_TODECK)
-		c:RegisterEffect(e2)
-		UltraPolyTable[c]=e2
-	else
-		g=UltraPolyTable[c]:GetLabelObject()
+function s.stage2(e,tc,tp,sg,chk)
+	if chk==1 then
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		local c=e:GetHandler()
+		local g
+		if UltraPolyTable[c]==nil then
+			g=Group.CreateGroup()
+			g:KeepAlive()
+			local e2=Effect.CreateEffect(c)
+			e2:SetDescription(aux.Stringid(id,1))
+			e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+			e2:SetType(EFFECT_TYPE_IGNITION)
+			e2:SetRange(LOCATION_GRAVE)
+			e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+			e2:SetCost(s.spcost)
+			e2:SetTarget(s.sptg)
+			e2:SetOperation(s.spop)
+			e2:SetLabelObject(g)
+			e2:SetReset(RESET_EVENT+RESET_TODECK)
+			c:RegisterEffect(e2)
+			UltraPolyTable[c]=e2
+		else
+			g=UltraPolyTable[c]:GetLabelObject()
+		end
+		g:AddCard(tc)
 	end
-	g:AddCard(tc)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

@@ -1,4 +1,6 @@
 --融合
-function self_table.initial_effect(c)
-	Fusion.AddSummonEff(c)
+--Polymerization
+local s,id=GetID()
+function s.initial_effect(c)
+	c:RegisterEffect(Fusion.CreateSummonEff(c))
 end

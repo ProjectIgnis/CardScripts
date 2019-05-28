@@ -27,7 +27,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	for i=1,ct do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
 		if #s.codes>0 then
-			code=Duel.AnnounceCardFilter(tp,table.unpack(announce_filter))
+			code=Duel.AnnounceCard(tp,table.unpack(announce_filter))
 		else
 			code=Duel.AnnounceCard(tp)
 		end

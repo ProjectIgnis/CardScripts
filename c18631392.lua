@@ -60,11 +60,11 @@ function s.anctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	s.announce_filter={TYPE_EXTRA,OPCODE_ISTYPE,OPCODE_NOT}
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
-	local ac1=Duel.AnnounceCardFilter(tp,table.unpack(s.announce_filter))
+	local ac1=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
-	local ac2=Duel.AnnounceCardFilter(tp,table.unpack(s.announce_filter))
+	local ac2=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
-	local ac3=Duel.AnnounceCardFilter(tp,table.unpack(s.announce_filter))
+	local ac3=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
 	e:SetOperation(s.retop(ac1,ac2,ac3))
 end
 function s.hfilter(c,code1,code2,code3)

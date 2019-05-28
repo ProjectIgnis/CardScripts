@@ -14,7 +14,7 @@ s.illegal=true
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	s.announce_filter={id+1,OPCODE_ISCODE,nil,OPCODE_ISCODE,OPCODE_NOT,OPCODE_AND}
-	Duel.AnnounceCardFilter(tp,table.unpack(s.announce_filter))
+	Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
 end
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x107f) and c:IsSetCard(0x1048) and c:IsType(TYPE_XYZ) and c:GetFlagEffect(id)==0

@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if (cv&ANNOUNCE_CARD)~=0 then
 		ac=Duel.AnnounceCard(tp,cv)
 	else
-		ac=Duel.AnnounceCardFilter(tp,table.unpack(re:GetHandler().announce_filter))
+		ac=Duel.AnnounceCard(tp,table.unpack(re:GetHandler().announce_filter))
 	end
 	Duel.ChangeTargetParam(ev,ac)
 end

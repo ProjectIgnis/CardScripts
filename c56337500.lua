@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.counterfilter(c)
-	return c:GetSummonLocation()~=LOCATION_EXTRA or c:IsRace(RACE_CYBERSE)
+	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsRace(RACE_CYBERSE)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end

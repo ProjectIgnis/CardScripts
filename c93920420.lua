@@ -37,7 +37,7 @@ function s.indcon(e)
 	return e:GetHandler():GetSummonType() & SUMMON_TYPE_SPECIAL == 0
 end
 function s.indval(e,c)
-	return c:GetSummonLocation()==LOCATION_EXTRA
+	return c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.spfilter1(c,e,tp)
 	return c:IsSetCard(0xfe) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

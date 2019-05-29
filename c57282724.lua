@@ -78,7 +78,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcfilter(c,tp)
-	return c:GetSummonLocation()==LOCATION_EXTRA and not c:IsSummonPlayer(tp)
+	return c:IsSummonLocation(LOCATION_EXTRA) and not c:IsSummonPlayer(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp)

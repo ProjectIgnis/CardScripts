@@ -52,7 +52,7 @@ function s.spval(e,c)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER) and rc:GetSummonLocation()==LOCATION_EXTRA
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER) and rc:IsSummonLocation(LOCATION_EXTRA)
 		and rc:IsOnField() and Duel.IsChainNegatable(ev)
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)

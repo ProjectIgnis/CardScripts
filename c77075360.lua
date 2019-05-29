@@ -43,7 +43,7 @@ function s.tfilter(c,lc,stype,tp)
 	return c:IsSetCard(0x1017,lc,stype,tp) or c:IsHasEffect(20932152)
 end
 function s.counterfilter(c)
-	return c:GetSummonLocation()~=LOCATION_EXTRA or c:IsType(TYPE_SYNCHRO)
+	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsType(TYPE_SYNCHRO)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end

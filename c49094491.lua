@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsRace(RACE_CYBERSE) and c:GetSummonLocation()==LOCATION_EXTRA 
+	return c:IsPreviousControler(tp) and c:IsRace(RACE_CYBERSE) and c:IsSummonLocation(LOCATION_EXTRA) 
 		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

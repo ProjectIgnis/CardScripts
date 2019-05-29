@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsPreviousControler(1-tp)
+	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsPreviousControler(1-tp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

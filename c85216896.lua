@@ -42,11 +42,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.matfilter(c)
-	return c:GetSummonLocation()==LOCATION_EXTRA
+	return c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.thcfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()
-	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and bit.extract(zone,seq)~=0
+	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and bit.extract(zone,seq)~=0
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.thcfilter,1,nil,tp,e:GetHandler():GetLinkedZone())
@@ -77,7 +77,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmfilter(c)
-	return c:IsFaceup() and c:GetSummonLocation()==LOCATION_EXTRA and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsSummonLocation(LOCATION_EXTRA) and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

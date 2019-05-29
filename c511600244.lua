@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsDrone() and c:IsControler(tp)
-		and c:GetSummonLocation()&LOCATION_GRAVE==LOCATION_GRAVE and c:IsPreviousControler(tp)
+		and c:IsSummonLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)

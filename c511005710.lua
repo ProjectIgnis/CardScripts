@@ -22,22 +22,19 @@ function s.initial_effect(c)
 	e2:SetOperation(s.doperation)
 	c:RegisterEffect(e2)
 end
-function s.afilter(c)
-	return c:GetSummonLocation()==LOCATION_EXTRA
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.afilter,1,nil)
+	return eg:IsExists(Card.IsSummonLocation,1,nil,LOCATION_EXTRA)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(s.afilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsSummonLocation,tp,LOCATION_MZONE,LOCATION_MZONE,nil,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g,0,0)
 	Duel.SetTargetCard(g)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(s.afilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsSummonLocation,tp,LOCATION_MZONE,LOCATION_MZONE,nil,LOCATION_EXTRA)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	for tc in aux.Next(sg) do
 		local e1=Effect.CreateEffect(c)

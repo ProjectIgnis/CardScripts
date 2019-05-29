@@ -63,11 +63,8 @@ end
 function s.atktg(e,c)
 	return c:IsFaceup() and c:IsSetCard(0xfe) and c~=e:GetHandler()
 end
-function s.cfilter(c,tp)
-	return c:GetSummonLocation()==LOCATION_EXTRA
-end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(Card.IsSummonLocation,1,nil,tp,LOCATION_EXTRA)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

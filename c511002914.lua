@@ -51,7 +51,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e8)
 end
 function s.filter(c)
-	return c:IsRace(RACE_DRAGON) and c:GetSummonLocation()==LOCATION_EXTRA
+	return c:IsRace(RACE_DRAGON) and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()

@@ -22,5 +22,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.target(e,c)
-	return c:GetSummonLocation()==LOCATION_DECK
+	return c:IsSummonLocation(LOCATION_DECK)
 end

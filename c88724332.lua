@@ -28,7 +28,7 @@ end
 function s.deftg(e,c)
 	return c:IsFaceup() and not c:IsRace(RACE_WYRM)
 		and c:IsSummonType(SUMMON_TYPE_SPECIAL)
-		and (c:GetSummonLocation()&LOCATION_DECK+LOCATION_EXTRA)~=0
+		and not (c:IsSummonLocation(LOCATION_DECK) or c:IsSummonLocation(LOCATION_EXTRA))
 end
 function s.defval(e,c)
 	return -c:GetBaseDefense()

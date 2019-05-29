@@ -17,5 +17,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atktg(e,c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetSummonLocation()==LOCATION_GRAVE
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsSummonLocation(LOCATION_GRAVE)
 end

@@ -70,7 +70,7 @@ function s.initial_effect(c)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetSummonLocation()==LOCATION_EXTRA
+	return c:IsFaceup() and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

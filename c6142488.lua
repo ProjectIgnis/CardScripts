@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 function s.counterfilter(c)
-	return c:IsSetCard(0xad) or c:GetSummonLocation()~=LOCATION_EXTRA
+	return c:IsSetCard(0xad) or not c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end

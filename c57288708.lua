@@ -39,11 +39,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-function s.tgfilter(c)
-	return (c:GetSummonLocation()&LOCATION_EXTRA)==LOCATION_EXTRA
-end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.tgfilter,1,nil)
+	return eg:IsExists(Card.IsSummonLocation,1,nil,LOCATION_EXTRA)
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
@@ -51,11 +48,11 @@ function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=eg:Filter(s.tgfilter,nil)
+	local g=eg:Filter(Card.IsSummonLocation,nil,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(s.tgfilter,nil)
+	local g=eg:(Card.IsSummonLocation,nil,LOCATION_EXTRA)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end

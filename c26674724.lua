@@ -55,7 +55,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsAbleToDeck()
+	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.tdfilter(chkc) end

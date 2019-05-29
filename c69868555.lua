@@ -39,18 +39,15 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-function s.cfilter(c)
-	return c:GetSummonLocation()~=LOCATION_GRAVE
-end
 function s.dfilter(c,eg)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and (c:IsLevel(7) or c:IsLevel(8)) and not eg:IsContains(c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil) and Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_MZONE,0,1,nil,eg)
+	return eg:IsExists(aux.NOT(Card.IsSummonLocation,LOCATION_GRAVE),1,nil) and Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_MZONE,0,1,nil,eg)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=eg:Filter(s.cfilter,nil)
+	local g=eg:Filter(aux.NOT(Card.IsSummonLocation,LOCATION_GRAVE),nil)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g,0,0)
 end

@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.counterfilter(c)
-	return c:GetSummonLocation()~=LOCATION_EXTRA or (c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_DARK))
+	return not c:IsSummonLocation(LOCATION_EXTRA) or (c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_DARK))
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and r&REASON_BATTLE~=0

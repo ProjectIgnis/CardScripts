@@ -43,7 +43,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.filter(c)
-	return c:GetSummonLocation()==LOCATION_HAND and c:IsAbleToHand()
+	return c:IsSummonLocation(LOCATION_HAND) and c:IsAbleToHand()
 		and c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

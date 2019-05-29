@@ -47,7 +47,7 @@ function s.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.posfilter(c)
-	return c:IsFaceup() and c:GetSummonLocation()==LOCATION_EXTRA and c:IsCanTurnSet()
+	return c:IsFaceup() and c:IsSummonLocation(LOCATION_EXTRA) and c:IsCanTurnSet()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.posfilter(chkc) end

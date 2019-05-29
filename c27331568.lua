@@ -71,7 +71,7 @@ end
 function s.discon(e)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return (c==Duel.GetAttacker() or c==Duel.GetAttackTarget()) and bc:GetSummonLocation()==LOCATION_EXTRA
+	return (c==Duel.GetAttacker() or c==Duel.GetAttackTarget()) and bc:IsSummonLocation(LOCATION_EXTRA)
 end
 	--Negate the battling monster's effect during battle phase
 function s.disop(e,tp,eg,ep,ev,re,r,rp)

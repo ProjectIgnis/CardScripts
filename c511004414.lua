@@ -50,7 +50,7 @@ function s.desuop(e,tp,eg,ev,ep,re,r,rp)
 	Duel.Destroy(ec,REASON_EFFECT)
 end
 function s.filter(c)
-	return c:GetSummonLocation()==LOCATION_EXTRA
+	return c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,tc,chk)
 	if chk==0 then return true end

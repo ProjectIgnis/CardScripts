@@ -35,11 +35,11 @@ function s.cfilter(c,ec)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-    if eg:IsContains(e:GetHandler()) then return false end
-    for tc in aux.Next(Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK)) do
-        if eg:IsExists(s.cfilter,1,nil,tc) then return true end
-    end
-    return false
+	if eg:IsContains(e:GetHandler()) then return false end
+	for tc in aux.Next(Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK)) do
+		if eg:IsExists(s.cfilter,1,nil,tc) then return true end
+	end
+	return false
 end
 function s.desfilter(c)
 	return c:GetSequence()<5
@@ -60,6 +60,12 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabel(e:GetHandler():GetFieldID())
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetTargetRange(1,0)
+	Duel.RegisterEffect(e2,tp)
 end
 function s.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()

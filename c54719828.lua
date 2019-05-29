@@ -1,4 +1,5 @@
 --No.16 色の支配者ショック・ルーラー
+--Number 16: Shock Master
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

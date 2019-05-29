@@ -1,4 +1,5 @@
 --青天の霹靂
+--A Wild Monster Appears!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -49,6 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetOperation(s.tdop)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 		tc:RegisterEffect(e2,true)
+		tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	end
 	Duel.SpecialSummonComplete()
 	local e1=Effect.CreateEffect(c)
@@ -76,6 +78,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e5:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 	e5:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e5,tp)
+	local e6=Effect.CreateEffect(e:GetHandler())
+	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e6:SetDescription(aux.Stringid(id,1))
+	e6:SetReset(RESET_PHASE+PHASE_END)
+	e6:SetTargetRange(1,0)
+	Duel.RegisterEffect(e6,tp)
 end
 function s.efilter(e,re)
 	return e:GetOwnerPlayer()==re:GetOwnerPlayer() and e:GetHandler()~=re:GetHandler()

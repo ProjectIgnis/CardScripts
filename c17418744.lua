@@ -1,4 +1,5 @@
 --フォトン・サンクチュアリ
+--Photon Sanctuary
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,6 +36,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e3=e1:Clone()
 	e3:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
 	Duel.RegisterEffect(e3,tp)
+	local e4=Effect.CreateEffect(e:GetHandler())
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetReset(RESET_PHASE+PHASE_END)
+	e4:SetTargetRange(1,0)
+	Duel.RegisterEffect(e4,tp)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsAttribute(0x6f)

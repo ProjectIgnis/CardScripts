@@ -1,4 +1,5 @@
 --BF－極光のアウロラ
+--Blackwing - Aurora the Northern Lights
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

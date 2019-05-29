@@ -1,5 +1,5 @@
 --六武衆の真影
---Legendary Shadow of the Six Samurai
+--Legendary Secret of the Six Samurai
 --Script by nekrozar
 local s,id=GetID()
 function s.initial_effect(c)

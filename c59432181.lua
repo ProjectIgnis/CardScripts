@@ -1,4 +1,5 @@
 --融合識別
+--Fusion Tag
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

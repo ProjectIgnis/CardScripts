@@ -1,4 +1,5 @@
 --WW－クリスタル・ベル
+--Windwitch - Crystal Bell
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.cptg)
 	e1:SetOperation(s.cpop)
 	c:RegisterEffect(e1)
-	--
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -40,7 +41,6 @@ function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsType(TYPE_TOKEN) then
 		local code=tc:GetOriginalCodeRule()
-		local cid=0
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -49,30 +49,9 @@ function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 		if not tc:IsType(TYPE_TRAPMONSTER) then
-			cid=c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
+			c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
 		end
-		local e2=Effect.CreateEffect(c)
-		e2:SetDescription(aux.Stringid(id,2))
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e2:SetCode(EVENT_PHASE+PHASE_END)
-		e2:SetCountLimit(1)
-		e2:SetRange(LOCATION_MZONE)
-		e2:SetLabelObject(e1)
-		e2:SetLabel(cid)
-		e2:SetOperation(s.rstop)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e2)
 	end
-end
-function s.rstop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local cid=e:GetLabel()
-	if cid~=0 then c:ResetEffect(cid,RESET_COPY) end
-	local e1=e:GetLabelObject()
-	e1:Reset()
-	Duel.HintSelection(Group.FromCards(c))
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

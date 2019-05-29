@@ -1,4 +1,5 @@
 --覇王眷竜スターヴ・ヴェノム
+--Supreme King Dragon Starving Venom
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -56,19 +57,7 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 		if not tc:IsType(TYPE_TRAPMONSTER) then
-			local cid=c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
-			local e3=Effect.CreateEffect(c)
-			e3:SetDescription(aux.Stringid(id,1))
-			e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e3:SetCode(EVENT_PHASE+PHASE_END)
-			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-			e3:SetCountLimit(1)
-			e3:SetRange(LOCATION_MZONE)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			e3:SetLabelObject(e1)
-			e3:SetLabel(cid)
-			e3:SetOperation(s.rstop)
-			c:RegisterEffect(e3)
+			c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
 		end
 	end
 	local e2=Effect.CreateEffect(c)
@@ -78,12 +67,4 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
-function s.rstop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local cid=e:GetLabel()
-	if cid~=0 then c:ResetEffect(cid,RESET_COPY) end
-	local e1=e:GetLabelObject()
-	e1:Reset()
-	Duel.HintSelection(Group.FromCards(c))
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-end
+

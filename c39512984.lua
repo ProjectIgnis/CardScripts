@@ -1,4 +1,5 @@
 --ジェムナイトマスター・ダイヤ
+--Gem-Knight Master Diamond
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -60,6 +61,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(code)
 		c:RegisterEffect(e1)
-		c:CopyEffect(code, RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END, 1)
+		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
 	end
 end

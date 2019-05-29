@@ -1,4 +1,5 @@
 --ファントム・オブ・カオス
+--Phantom of Chaos
 local s,id=GetID()
 function s.initial_effect(c)
 	--copy
@@ -55,29 +56,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_SET_BASE_ATTACK)
 		e2:SetValue(ba)
 		c:RegisterEffect(e2)
-		local cid=c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
-		local e3=Effect.CreateEffect(c)
-		e3:SetDescription(aux.Stringid(id,1))
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetCode(EVENT_PHASE+PHASE_END)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e3:SetCountLimit(1)
-		e3:SetRange(LOCATION_MZONE)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e3:SetLabel(cid)
-		e3:SetLabelObject(e2)
-		e3:SetOperation(s.rstop)
-		c:RegisterEffect(e3)
+		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
 	end
-end
-function s.rstop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local cid=e:GetLabel()
-	c:ResetEffect(cid,RESET_COPY)
-	local e2=e:GetLabelObject()
-	local e1=e2:GetLabelObject()
-	e1:Reset()
-	e2:Reset()
-	Duel.HintSelection(Group.FromCards(c))
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end

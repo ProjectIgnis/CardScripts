@@ -43,7 +43,7 @@ function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10b)
 end
 function s.atkcon(e)
-	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,3,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x10b),e:GetHandlerPlayer(),LOCATION_MZONE,0,3,nil)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

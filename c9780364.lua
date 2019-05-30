@@ -12,11 +12,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x19)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x16),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.filter(c,e)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e) and c:IsCanChangePosition()

@@ -1,7 +1,7 @@
 --血の刻印
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,s.filter,nil,nil,TIMING_STANDBY_PHASE)
+	aux.AddPersistentProcedure(c,0,aux.FilterFaceupFunction(Card.IsSetCard,0x45),nil,nil,TIMING_STANDBY_PHASE)
 	--lpcost
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -23,9 +23,6 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_LEAVE_FIELD)
 	e4:SetOperation(s.desop2)
 	c:RegisterEffect(e4)
-end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x45)
 end
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_STANDBY and ep==tp

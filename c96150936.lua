@@ -41,11 +41,8 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.desrepfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT+REASON_REPLACE)
 end
-function s.indesfil(c)
-	return c:IsFaceup() and c:IsSetCard(0x71)
-end
 function s.indescon(e)
-	return e:GetHandler():GetLinkedGroup():IsExists(s.indesfil,1,nil)
+	return e:GetHandler():GetLinkedGroup():IsExists(aux.FilterFaceupFunction(Card.IsSetCard,0x71),1,nil)
 end
 function s.indestg(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsType(TYPE_SPELL+TYPE_TRAP)

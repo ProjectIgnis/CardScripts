@@ -11,11 +11,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1034)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,2,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x1034),tp,LOCATION_SZONE,0,2,nil)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x1034) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
@@ -27,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,2,nil) then return end
+	if not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x1034),tp,LOCATION_SZONE,0,2,nil) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then

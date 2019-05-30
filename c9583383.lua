@@ -28,7 +28,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x54)
 end
 function s.atkcon(e)
-	return not Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x54),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.rfilter(c,tp)
 	local lv=c:GetLevel()

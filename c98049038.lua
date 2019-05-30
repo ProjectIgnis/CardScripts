@@ -15,12 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x16)
-end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetBattledGroupCount()>0
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x16),tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
@@ -34,7 +31,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) then return end
+	if not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x16),tp,LOCATION_MZONE,0,1,e:GetHandler()) then return end
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end

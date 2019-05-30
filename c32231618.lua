@@ -1,4 +1,5 @@
 --占術姫コインノーマ
+--Prediction Princess Coinorma
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -29,7 +30,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.actlimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)

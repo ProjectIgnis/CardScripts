@@ -11,11 +11,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-function s.confilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d)
-end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,3,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3d),tp,LOCATION_MZONE,0,3,nil)
 end
 function s.filter1(c)
 	return c:IsFaceup()

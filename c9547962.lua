@@ -39,9 +39,6 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
-function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10b)
-end
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x10b),e:GetHandlerPlayer(),LOCATION_MZONE,0,3,nil)
 end

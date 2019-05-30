@@ -12,12 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2a)
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,e:GetHandler()) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,e:GetHandler())
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x2a),1,false,nil,e:GetHandler()) end
+	local g=Duel.SelectReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x2a),1,1,false,nil,e:GetHandler())
 	Duel.Release(g,REASON_COST)
 end
 function s.filter(c,e,tp)

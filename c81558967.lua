@@ -25,12 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-function s.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x122)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,LOCATION_MZONE,0,e:GetHandler())
+		local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x122),tp,LOCATION_MZONE,0,e:GetHandler())
 		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ct then return false end
 		local g=Duel.GetDecktopGroup(tp,ct)
 		return g:FilterCount(Card.IsAbleToHand,nil)>0
@@ -41,7 +38,7 @@ function s.thfilter(c)
 	return c:GetType()==TYPE_SPELL or c:GetType()==TYPE_TRAP
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,LOCATION_MZONE,0,e:GetHandler())
+	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x122),tp,LOCATION_MZONE,0,e:GetHandler())
 	Duel.ConfirmDecktop(tp,ct)
 	local g=Duel.GetDecktopGroup(tp,ct)
 	if #g>0 then

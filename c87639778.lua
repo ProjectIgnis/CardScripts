@@ -47,11 +47,8 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x64)
-end
 function s.handcon(e)
-	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x64),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

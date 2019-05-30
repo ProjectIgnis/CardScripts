@@ -38,11 +38,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xab)
-end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*500
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0xab),c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*500
 end
 function s.desfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(0xab)

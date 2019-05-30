@@ -27,11 +27,8 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SWAP_BASE_AD)
 	c:RegisterEffect(e3)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xf)
-end
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xf),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.costfilter(c)
 	return c:IsSetCard(0xf) and c:IsAbleToGraveAsCost()

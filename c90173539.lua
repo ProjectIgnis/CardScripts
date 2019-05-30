@@ -54,7 +54,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x11a)
 end
 function s.atkcon1(e)
-	return e:GetHandler():GetFlagEffect(id)~=0 and Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return e:GetHandler():GetFlagEffect(id)~=0 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x11a),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.atktg1(e,c)
 	return c:GetFieldID()~=e:GetLabel()

@@ -10,11 +10,8 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x76)
-end
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
-		Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,2,nil)
+		Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x76),c:GetControler(),LOCATION_MZONE,0,2,nil)
 end

@@ -28,11 +28,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.effop)
 	c:RegisterEffect(e3)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x59)
-end
 function s.tgcon(e)
-	return Duel.IsExistingMatchingCard(s.cfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x59),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x59)

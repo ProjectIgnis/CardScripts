@@ -1,7 +1,7 @@
 --忍法 空蝉の術
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,s.filter)
+	aux.AddPersistentProcedure(c,0,aux.FilterFaceupFunction(Card.IsSetCard,0x2b))
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -11,7 +11,4 @@ function s.initial_effect(c)
 	e1:SetTarget(aux.PersistentTargetFilter)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2b)
 end

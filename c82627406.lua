@@ -39,17 +39,14 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsDiscardable() end
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
-function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x20a2)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x20a2),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.ctfilter(c)
 	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x20a2)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,0,nil)
+	local tg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x20a2),tp,LOCATION_MZONE,0,nil)
 	local g=Duel.GetMatchingGroup(s.ctfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
 	if #tg>0 and #g>0 then
 		local d=g:GetClassCount(Card.GetCode)*300

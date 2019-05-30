@@ -20,11 +20,8 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	c:RegisterEffect(e3)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x26)
-end
 function s.con(e)
-	return Duel.IsExistingMatchingCard(s.filter,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x26),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.tg(e,c)
 	return c:GetLevel()>=4

@@ -90,11 +90,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.effilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x104)
-end
 function s.effcon(e)
-	return Duel.GetMatchingGroupCount(s.effilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)>=e:GetLabel()
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x104),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)>=e:GetLabel()
 end
 function s.actcon(e)
 	local ph=Duel.GetCurrentPhase()

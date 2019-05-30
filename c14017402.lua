@@ -1,4 +1,5 @@
 --波動竜騎士 ドラゴエクィテス
+--Dragon Knight Draco-Equiste
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

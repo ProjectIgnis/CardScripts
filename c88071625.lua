@@ -1,4 +1,5 @@
---The tyrant NEPTUNE
+--Ｔｈｅ ｔｙｒａｎｔ ＮＥＰＴＵＮＥ
+--The Tyrant Neptune
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -75,7 +76,7 @@ function s.valcheck(e,c)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+0xff0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		--def continuous effect
 		local e2=e1:Clone()

@@ -1,4 +1,5 @@
 --スターヴ・ヴェノム・フュージョン・ドラゴン
+--Starving Venom Fusion Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

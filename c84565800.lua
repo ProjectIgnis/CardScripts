@@ -1,4 +1,5 @@
 --伝説の騎士 ヘルモス
+--Legendary Knight Hermos
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

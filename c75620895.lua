@@ -1,4 +1,5 @@
 --隻眼のスキル・ゲイナー
+--One-Eyed Skill Gainer
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

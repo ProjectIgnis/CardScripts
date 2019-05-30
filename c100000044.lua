@@ -54,11 +54,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g1=Duel.SelectReleaseGroup(tp,s.spfilter,1,1,nil,100000046)
 	Duel.Release(g1,REASON_COST)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3013)
-end
 function s.sdcon2(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end
 function s.cbcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

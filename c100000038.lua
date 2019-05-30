@@ -1,4 +1,5 @@
 --オーロラ・ドロー
+--Aurora Draw
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,15 +14,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3013)
-end
-function s.cfilter2(c)
 	return c:GetCode()==id
 end
 function s.ntcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c==nil then return true end
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) and (Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)==1 and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_HAND,0,1,nil))
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,0,1,nil)
+		and (Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)==1 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_HAND,0,1,nil))
 	or Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

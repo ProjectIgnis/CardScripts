@@ -20,11 +20,8 @@ function s.initial_effect(c)
 	e2:SetValue(s.valcon)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3013)
-end
 function s.sdcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)==0
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,LOCATION_MZONE,nil)==0
 end
 function s.tg(e,c)
 	return c:IsType(TYPE_MONSTER)

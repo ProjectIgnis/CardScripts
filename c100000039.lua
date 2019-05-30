@@ -12,11 +12,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3013)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) and rp~=tp 
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,0,1,nil) and rp~=tp 
 end
 function s.costfilter1(c)
 	return c:IsRace(RACE_MACHINE) and c:IsFaceup() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)

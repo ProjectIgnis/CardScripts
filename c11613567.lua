@@ -20,13 +20,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-function s.ntfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33)
-end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.ntfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x33),c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
 	return c:IsCanChangePosition()

@@ -20,10 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_MZONE,0,nil)*400
-end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x4)
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x4),c:GetControler(),LOCATION_MZONE,0,nil)*400
 end
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x4) and c~=e:GetHandler()

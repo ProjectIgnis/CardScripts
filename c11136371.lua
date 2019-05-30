@@ -54,13 +54,10 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.desop)
 	Duel.RegisterEffect(e1,tp)
 end
-function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1034)
-end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x1034),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x1034),tp,LOCATION_ONFIELD,0,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 end

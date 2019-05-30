@@ -22,7 +22,7 @@ function s.spfilter(c)
 end
 function s.dircon(e)
 	local tp=e:GetHandler():GetControler()
-	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x27),tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return ep~=tp and Duel.GetAttackTarget()==nil

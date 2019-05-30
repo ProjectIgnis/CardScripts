@@ -44,7 +44,7 @@ function s.filter(c)
 end
 function s.con2(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:GetHandler():IsType(TYPE_COUNTER) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
-	 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) 
+	 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x84),tp,LOCATION_MZONE,0,1,nil) 
 end
 function s.tar2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end

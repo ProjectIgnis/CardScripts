@@ -63,11 +63,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xab)
-end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(s.cfilter,c:GetControler(),LOCATION_EXTRA,0,nil)*500
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0xab),c:GetControler(),LOCATION_EXTRA,0,nil)*500
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_PZONE)

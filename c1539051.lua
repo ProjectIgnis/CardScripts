@@ -11,12 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.gfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1f)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local g=Duel.GetMatchingGroup(s.gfilter,tp,LOCATION_MZONE,0,nil)
+		local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x1f),tp,LOCATION_MZONE,0,nil)
 		local ct=s.count_unique_code(g)
 		e:SetLabel(ct)
 		return ct>0 and Duel.IsPlayerCanDraw(tp,ct)
@@ -27,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local g=Duel.GetMatchingGroup(s.gfilter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x1f),tp,LOCATION_MZONE,0,nil)
 	local ct=s.count_unique_code(g)
 	Duel.Draw(p,ct,REASON_EFFECT)
 end

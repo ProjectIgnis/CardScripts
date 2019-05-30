@@ -24,11 +24,8 @@ function s.initial_effect(c)
 	e3:SetTarget(s.atktg)
 	c:RegisterEffect(e3)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x520)
-end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)*1000
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x520),c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)*1000
 end
 function s.atktg(e,c)
 	return c:IsStatus(STATUS_SUMMON_TURN) and c:IsSetCard(0x520) and (c:GetSummonType()&SUMMON_TYPE_SPECIAL)~=0 

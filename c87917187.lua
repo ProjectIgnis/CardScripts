@@ -1,4 +1,5 @@
 --暗黒の召喚神
+--Dark Summoning Beast
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon

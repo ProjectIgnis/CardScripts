@@ -1,4 +1,5 @@
 --捨て身の宝札
+--Card of Sacrifice
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -63,6 +64,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e4:SetReset(RESET_PHASE+PHASE_END)
 	e4:SetTargetRange(LOCATION_MZONE,0)
 	Duel.RegisterEffect(e4,tp)
+	local e5=Effect.CreateEffect(e:GetHandler())
+	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e5:SetDescription(aux.Stringid(id,1))
+	e5:SetReset(RESET_PHASE+PHASE_END)
+	e5:SetTargetRange(1,0)
+	Duel.RegisterEffect(e5,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

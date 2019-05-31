@@ -1,4 +1,5 @@
 --ダイナミスト・ハウリング
+--Dinomists Howling
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -43,8 +44,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetTargetRange(1,0)
 		e1:SetTarget(s.splimit)
 		e1:SetReset(RESET_PHASE+PHASE_END,2)

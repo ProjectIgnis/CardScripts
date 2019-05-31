@@ -1,4 +1,5 @@
 --魔法の歯車
+--Spell Gear
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -45,6 +46,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_MSET)
 	Duel.RegisterEffect(e2,tp)
+	local e4=Effect.CreateEffect(e:GetHandler())
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetReset(RESET_SELF_TURN+RESET_PHASE+PHASE_END,2)
+	e4:SetTargetRange(1,0)
+	Duel.RegisterEffect(e4,tp)
 	local descnum=tp==c:GetOwner() and 0 or 1
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)

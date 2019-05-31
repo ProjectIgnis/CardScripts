@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	aux.CallToken(300)
 end
+s.listed_names={CARD_UMI}
 s.dm=true
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(CARD_UMI)

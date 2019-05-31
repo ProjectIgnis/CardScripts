@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.actop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={58753372,10424147}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10dc)
 end

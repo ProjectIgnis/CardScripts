@@ -21,6 +21,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_names={80604091}
 s.illegal=true
 function s.mttg(e,c)
 	return (c:IsCode(80604091) or c:GetOriginalCode()==80604091 or c:GetOriginalCode()==511003023)

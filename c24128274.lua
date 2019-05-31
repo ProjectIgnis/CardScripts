@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.efilter)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_UMI}
 function s.econ(e)
 	return Duel.IsEnvironment(CARD_UMI)
 end

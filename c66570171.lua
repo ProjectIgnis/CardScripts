@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.acop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={4064256}
 function s.filter(c,tp)
 	return c:IsCode(4064256) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
 end

@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={53839837}
 function s.hspfilter(c,ft)
 	return c:IsFaceup() and c:IsCode(53839837) and c:IsAbleToRemoveAsCost() and (ft>0 or c:GetSequence()<5)
 end

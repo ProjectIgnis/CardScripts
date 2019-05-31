@@ -44,6 +44,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end
 end
+s.listed_names={75923050}
 s.dm=true
 s.dm_revive_limit=true
 function s.chk(e,tp,eg,ep,ev,re,r,rp)

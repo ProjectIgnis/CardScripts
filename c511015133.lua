@@ -56,6 +56,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_names={69058960}
 s.xyz_number=31
 function s.lpcheckcon(e,tp,eg,ev,ep,re,r,rp)
 	if s.LP0 and s.LP1 and s.LP0==Duel.GetLP(tp) and s.LP1==Duel.GetLP(1-tp) then

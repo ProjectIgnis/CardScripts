@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetValue(SUMMON_TYPE_ADVANCE)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511002731}
 function s.otfilter(c,tp)
 	return c:IsCode(511002731) and (c:IsControler(tp) or c:IsFaceup())
 end

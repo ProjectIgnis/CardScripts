@@ -74,6 +74,7 @@ function s.initial_effect(c)
 	e8:SetOperation(s.activ)
 	c:RegisterEffect(e8)
 end
+s.listed_names={94212438}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end

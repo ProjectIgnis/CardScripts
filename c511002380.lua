@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.dmop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={33103459}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x9f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

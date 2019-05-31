@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_names={64961254}
 function s.thcfilter(c)
 	return c:IsFacedown() or not c:IsSetCard(0x122)
 end

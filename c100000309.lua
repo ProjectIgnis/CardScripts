@@ -48,6 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.dop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={100000048}
 function s.spfilter(c,ft,tp)
 	return c:IsCode(100000048) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 end

@@ -50,7 +50,7 @@ function s.initial_effect(c)
 	aux.CallToken(85121942)
 end
 s.xyz_number=105
-s.listed_names={59627393}
+s.listed_names={59627393,100000581,111011002,511000580,511002068,511002164,93238626}
 function s.rumfilter(c)
 	return c:IsCode(59627393) and not c:IsPreviousLocation(LOCATION_OVERLAY)
 end

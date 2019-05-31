@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e4)
 end
+s.listed_names={84243274}
 function s.filter(c,e,tp)
 	return c:IsCode(84243274) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end

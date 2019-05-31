@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_FLIP)
 	c:RegisterEffect(e5)
 end
+s.listed_names={34830502}
 s.lvupcount=2
 s.lvup={49441499,34830502}
 s.lvdncount=1

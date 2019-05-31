@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511002428}
 function s.filter(c)
 	return c:IsCode(511002428) and c:IsPosition(POS_ATTACK)
 end

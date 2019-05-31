@@ -59,6 +59,7 @@ function s.initial_effect(c)
 	e9:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 	c:RegisterEffect(e9)
 end
+s.listed_names={24696097}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local ct=g:FilterCount(Card.IsType,nil,TYPE_SYNCHRO)

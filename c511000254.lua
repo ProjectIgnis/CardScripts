@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511000253}
 function s.tffilter(c)
 	local code=c:GetCode()
 	return c:IsAbleToRemove()

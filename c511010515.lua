@@ -60,6 +60,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.desop)
 	c:RegisterEffect(e7,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_names={47198668}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if g:IsExists(Card.IsCode,1,nil,47198668) then

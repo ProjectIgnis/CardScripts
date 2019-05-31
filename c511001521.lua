@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_names={39996157}
 function s.filter(c)
 	return c:IsCode(39996157) and c:IsAbleToHand()
 end

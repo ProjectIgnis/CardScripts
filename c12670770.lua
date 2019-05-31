@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_CYBER_DRAGON}
 function s.filter1(c)
 	return c:IsFaceup() and c:IsCode(CARD_CYBER_DRAGON)
 end

@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_names={CARD_CYBER_DRAGON}
 function s.counterfilter(c)
 	return c:IsRace(RACE_MACHINE)
 end

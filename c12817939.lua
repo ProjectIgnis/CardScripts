@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={58206034}
 s.lvupcount=2
 s.lvup={85313220,58206034}
 s.lvdncount=1

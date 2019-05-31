@@ -38,6 +38,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end
 end
+s.listed_names={100000330}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if (r&REASON_RULE)~=0 and Duel.GetTurnCount()==1 then
 		--obsolete

@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={9409625}
+s.listed_names={9409625,74530899,8967776}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(9409625) and c:IsAbleToGraveAsCost()
 end

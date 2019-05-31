@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop2)
 	c:RegisterEffect(e4)
 end
+s.listed_names={810000038}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

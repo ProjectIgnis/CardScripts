@@ -56,6 +56,7 @@ function s.initial_effect(c)
 	e9:SetOperation(s.spop)
 	c:RegisterEffect(e9)
 end
+s.listed_names={10000010}
 function s.ttcon2(e,c,minc,zone,relzone,exeff)
 	if c==nil then return true end
 	if exeff then

@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.actcon)
 	c:RegisterEffect(e2)
 end
+s.listed_names={74530899,8967776}
 function s.cfilter2(c,tp)
 	return c:IsType(TYPE_SYNCHRO) and c:IsControler(1-tp)
 end

@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_POLYMERIZATION}
 function s.cfilter(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsDiscardable() and c:IsAbleToGraveAsCost()
 end

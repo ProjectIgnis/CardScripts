@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={81974607}
 function s.spfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xe5)
 end

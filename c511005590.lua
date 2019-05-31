@@ -25,6 +25,7 @@ function s.initial_effect(c)
     e3:SetValue(1)
     c:RegisterEffect(e3)
 end
+s.listed_names={100000630,100000631,100000632,3573512,83602069}
 function s.eqlimit(e,c)
 	return c:IsCode(100000630) and c:IsCode(100000631) and c:IsCode(100000632) and c:IsCode(3573512) and c:IsCode(83602069)
 end

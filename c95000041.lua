@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_CANNOT_DISABLE)
 	c:RegisterEffect(e5)
 end
+s.listed_names={95000037}
 s.mark=2
 function s.cfilter(c)
 	return c:IsCode(95000037) and c:IsAbleToGraveAsCost()

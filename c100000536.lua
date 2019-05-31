@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_DARK_MAGICIAN}
 s.dark_magician_list=true
 function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsCode(CARD_DARK_MAGICIAN) and c:IsControler(tp)

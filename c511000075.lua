@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.sop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={293542}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLevelBelow(2)
 end

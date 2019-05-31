@@ -50,6 +50,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={36894320}
 function s.acfilter(c)
 	return c:IsFaceup() and c:IsCode(36894320) and c:IsAbleToGraveAsCost()
 end

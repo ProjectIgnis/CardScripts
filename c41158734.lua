@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={42280216}
 function s.lvfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_TUNER)
 end

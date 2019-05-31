@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.efilter)
 	c:RegisterEffect(e3)
 end
+s.listed_names={4064256}
 function s.etarget(e,c)
 	return c:GetCode()~=id and c:IsRace(RACE_ZOMBIE) and c:IsLevelBelow(3)
 end

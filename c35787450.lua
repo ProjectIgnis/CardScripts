@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.addc)
 	c:RegisterEffect(e1)
 end
+s.listed_names={75041269}
 function s.check(tp)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	return tc and tc:IsFaceup() and tc:IsCode(75041269)

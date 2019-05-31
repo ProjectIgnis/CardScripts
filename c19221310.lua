@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={53025096}
 function s.cfilter(c,ft,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())

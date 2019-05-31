@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={42035044,511000444}
 function s.cfilter(c)
 	return c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE) and c:IsCode(42035044) and c:GetEquipGroup():IsExists(Card.IsCode,1,nil,511000443)
 end

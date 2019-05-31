@@ -1,4 +1,4 @@
---ネクロバレーの王墓
+\--ネクロバレーの王墓
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

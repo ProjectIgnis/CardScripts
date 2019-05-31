@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
+s.listed_names={CARD_STROMBERG}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=0
 	if Duel.IsEnvironment(CARD_STROMBERG) then

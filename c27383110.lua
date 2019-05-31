@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	e1:SetLabelObject(e3)
 end
+s.listed_names={44665365}
 s.fit_monster={44665365}
 function s.ritualfil(c)
 	return c:IsCode(44665365) and c:IsRitualMonster()

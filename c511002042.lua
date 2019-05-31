@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spsop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={53389254}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if g:IsExists(Card.IsSetCard,1,nil,0x33) then

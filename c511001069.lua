@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetValue(LOCATION_DECKSHF)
 	c:RegisterEffect(e2)
 end
+s.listed_names={93368494}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(93368494)
 end

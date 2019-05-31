@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_names={CARD_ASSAULT_MODE}
+s.listed_names={31924889}
 s.assault_mode=31924889
 function s.addct(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

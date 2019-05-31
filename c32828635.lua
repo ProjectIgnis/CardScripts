@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={8198712}
 s.fit_monster={46427957,72426662}
 function s.ritualfil(c)
 	return c:IsCode(46427957,72426662) and c:IsRitualMonster()

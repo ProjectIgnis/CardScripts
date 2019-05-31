@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.splimit)
 	c:RegisterEffect(e2)
 end
+s.listed_names={100000025}
 function s.splimit(e,se,sp,st)
 	return st&SUMMON_TYPE_FUSION~=SUMMON_TYPE_FUSION or se:GetHandler():IsCode(100000025)
 end

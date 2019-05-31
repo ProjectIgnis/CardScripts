@@ -47,7 +47,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,ft,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,#g,0,0)
 end
 function s.tgfilter(c,e)
 	return c:IsFaceup() and c:IsRelateToEffect(e)
@@ -73,15 +73,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.tgfilter,nil,e)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e,nil,RESET_EVENT+RESETS_STANDARD_DISABLE)
-	if g:GetCount()<=0 or ft<=0 then return end
+	if #g<=0 or ft<=0 then return end
 	local tg=nil
-	if ft<g:GetCount() then
+	if ft<#g then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		tg=g:FilterSelect(tp,s.filter,ft,ft,nil)
 	else
 		tg=g:Clone()
 	end
-	if tg:GetCount()>0 then
+	if #tg>0 then
 		Duel.BreakEffect()
 		local tc=tg:GetFirst()
 		while tc do

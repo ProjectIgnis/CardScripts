@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={26293219}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetActivityCount(tp,ACTIVITY_BATTLE_PHASE)==0
 end

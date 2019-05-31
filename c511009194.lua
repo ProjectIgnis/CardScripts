@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
+s.listed_names={48608796}
 s.material_setcode=0xf7
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.zarcop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={13331639}
 function s.spcfilter(c,e,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsCanBeEffectTarget(e) 
 		and (c:IsLocation(LOCATION_SZONE+LOCATION_EXTRA+LOCATION_GRAVE+LOCATION_HAND) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))

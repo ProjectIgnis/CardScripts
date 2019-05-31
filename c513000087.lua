@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e8:SetCondition(s.descon)
 	c:RegisterEffect(e8)
 end
+s.listed_names={100000001}
 function s.tglimit(e,c)
 	return c~=e:GetHandler()
 end

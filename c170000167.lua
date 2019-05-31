@@ -56,6 +56,7 @@ function s.initial_effect(c)
 	e8:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e8)
 end
+s.listed_names={82103466}
 function s.statcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()

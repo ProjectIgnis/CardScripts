@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.valcon)
 	c:RegisterEffect(e2)
 end
+s.listed_names={44508094}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	return tc:IsControler(tp) and tc:IsCode(44508094) and tc:IsSummonType(SUMMON_TYPE_SYNCHRO)

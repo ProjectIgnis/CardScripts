@@ -21,6 +21,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end
 end
+s.listed_names={100000370,111215001}
 function s.cfilter(c,tp)
 	return c:IsCode(100000370) and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_DESTROY) and c:IsControler(tp) 
 		and c:IsPreviousControler(tp)

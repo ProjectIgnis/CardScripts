@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={72566043}
 function s.costfilter(c)
 	return c:IsCode(72566043) and c:IsAbleToDeck()
 end

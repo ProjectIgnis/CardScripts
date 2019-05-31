@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.efilter2)
 	c:RegisterEffect(e4)
 end
+s.listed_names={CARD_NECROVALLEY}
 function s.filter(c)
 	return c:IsSetCard(0x2e) and c:IsType(TYPE_MONSTER)
 end

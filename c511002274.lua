@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	aux.CallToken(419)
 end
+s.listed_names={68722455}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain()==0 and rp~=tp
 end

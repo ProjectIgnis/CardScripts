@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.value)
 	c:RegisterEffect(e4)
 end
-s.listed_names={CARD_STROMBERG}
+s.listed_names={CARD_STROMBERG,73405179}
 function s.fieldcond(c)
 	return c:IsFaceup() and c:IsCode(CARD_STROMBERG)
 end

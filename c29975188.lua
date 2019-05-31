@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e5)
 end
+s.listed_names={CARD_CYBER_DRAGON}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsCode(CARD_CYBER_DRAGON) and c:IsSummonPlayer(tp)
 end

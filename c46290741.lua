@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={19089195}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsAttribute,2,false,aux.ReleaseCheckMMZ,nil,ATTRIBUTE_WATER) end
 	local g=Duel.SelectReleaseGroupCost(tp,Card.IsAttribute,2,2,false,aux.ReleaseCheckMMZ,nil,ATTRIBUTE_WATER)

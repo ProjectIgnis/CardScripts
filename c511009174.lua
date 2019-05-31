@@ -41,6 +41,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_names={7543}
 s.miracle_synchro_fusion=true
 function s.mat_filter(c,fc,sumtype,tp)
 	return c:IsSetCard(0xf0,fc,sumtype,tp)

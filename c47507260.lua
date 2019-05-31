@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={74591968}
 s.lvupcount=1
 s.lvup={74591968}
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)

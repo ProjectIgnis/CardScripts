@@ -49,6 +49,7 @@ function s.initial_effect(c)
 	e9:SetTarget(s.sumlimit)
 	c:RegisterEffect(e9)
 end
+s.listed_names={100000013,100000014}
 function s.damcon(e)
 	return e:GetHandler():IsAttackPos()
 end

@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.respop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={511000128}
 function s.costfilter(c,code,ft)
 	return c:IsFaceup() and c:IsCode(code) and c:IsAbleToGraveAsCost() and (not ft or ft>0 or c:GetSequence()<5) 
 end

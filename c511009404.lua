@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={73734821}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(73734821) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,c)
 end

@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.cttg)
 	c:RegisterEffect(e3)
 end
+s.listed_names={9012916}
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsLevelBelow(4)
 		and c:IsSetCard(0x33) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

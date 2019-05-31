@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={15744417,511001152}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(511001152)
 end

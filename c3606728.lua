@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.efop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={26082117}
 function s.lvfilter(c,lv)
 	return c:IsFaceup() and c:IsCode(26082117) and c:GetLevel()~=lv
 end

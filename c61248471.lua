@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_SUMMONED_SKULL }
+s.listed_names={CARD_SUMMONED_SKULL}
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsCode(CARD_SUMMONED_SKULL)
 		and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)

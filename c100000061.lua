@@ -61,6 +61,7 @@ function s.initial_effect(c)
 	e9:SetCode(90162951)
 	c:RegisterEffect(e9)
 end
+s.listed_names={100000067}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(1-tp) and ec:IsType(TYPE_SYNCHRO)
 end

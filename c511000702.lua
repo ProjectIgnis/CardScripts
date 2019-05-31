@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_SET_DEFENSE_FINAL)
 	c:RegisterEffect(e4)
 end
+s.listed_names={511000706}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.IsEnvironment(511000706) and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0

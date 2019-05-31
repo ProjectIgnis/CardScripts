@@ -64,6 +64,7 @@ function s.initial_effect(c)
 	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e8)
 end
+s.listed_names={66947414}
 function s.thfilter(c)
 	return c:IsCode(66947414) and c:IsAbleToHand()
 end

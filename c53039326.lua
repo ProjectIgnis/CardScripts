@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
+s.listed_names={36623431}
 function s.cfilter(c)
 	return c:IsCode(36623431) and not c:IsPublic()
 end

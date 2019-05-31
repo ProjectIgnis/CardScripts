@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.adop)
 	c:RegisterEffect(e6)
 end
+s.listed_names={73580471}
 function s.filter(c)
 	return c:IsCode(73580471) or c:IsRace(RACE_PLANT)
 end

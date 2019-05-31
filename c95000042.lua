@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desrepop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={74530899}
 s.mark=3
 function s.atktg(e,c)
 	return c~=e:GetHandler() and (c:IsSetCard(0x4bde) or c:IsSetCard(0x4a) or c:IsCode(74530899))

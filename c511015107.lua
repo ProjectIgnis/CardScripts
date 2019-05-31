@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={47198668}
 function s.filter(c,e,tp)
 	if not c:IsType(TYPE_SYNCHRO) then return false end
 	if not c:IsSetCard(0x10af) then return c:IsSynchroSummonable(nil)

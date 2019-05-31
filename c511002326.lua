@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511002318}
 function s.costfilter(c)
 	return c:IsCode(511002318) and c:IsAbleToGraveAsCost()
 end

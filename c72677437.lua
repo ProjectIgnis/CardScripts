@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.efilter)
 	c:RegisterEffect(e4)
 end
+s.listed_names={54306223}
 function s.splimit(e,se,sp,st)
 	return not se:GetHandler():IsType(TYPE_MONSTER)
 end

@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_CYBER_DRAGON}
 function s.filter(c)
 	return c:IsCode(CARD_CYBER_DRAGON) or aux.IsMaterialListCode(c,CARD_CYBER_DRAGON)
 end

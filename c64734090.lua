@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
+s.listed_names={1264319}
 function s.filter(c)
 	return c:IsCode(1264319) and c:IsAbleToHand()
 end

@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_ATTACK,s.counterfilter)
 end
+s.listed_names={CARD_HARPIE_LADY}
 function s.counterfilter(c)
 	return not c:IsSetCard(0x64)
 end

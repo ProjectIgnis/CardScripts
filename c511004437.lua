@@ -36,6 +36,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_names={78509901}
 function s.archchk(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(0,420)==0 then 
 		Duel.CreateToken(tp,420)

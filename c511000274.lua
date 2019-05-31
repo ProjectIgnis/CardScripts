@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511000273}
 function s.cfilter(c)
 	return c:IsCode(511000273) and c:IsAbleToRemoveAsCost()
 end

@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_CANNOT_DISABLE)
 	c:RegisterEffect(e5)
 end
+s.listed_names={77585513}
 function s.eqlimit(e,c)
 	return c:IsCode(77585513)
 end

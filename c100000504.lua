@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={27780618}
 function s.cfilter(c)
 	return (c:IsSetCard(0x5008) or c:IsCode(27780618)) and c:IsFaceup()
 end

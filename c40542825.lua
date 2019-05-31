@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.condition)
 	c:RegisterEffect(e3)
 end
+s.listed_names={73318863}
 function s.spfilter1(c)
 	return c:IsFaceup() and c:IsCode(73318863) and c:IsAbleToGraveAsCost()
 end

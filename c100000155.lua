@@ -49,6 +49,7 @@ function s.initial_effect(c)
 	e6:SetValue(0x601)
 	c:RegisterEffect(e6)
 end
+s.listed_names={94515289}
 function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end

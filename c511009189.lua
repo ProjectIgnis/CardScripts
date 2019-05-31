@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511009183,511009184,511009185}
 s.list={[511009183]=511009186,[511009184]=511009187,[511009185]=511009188}
 function s.cfilter(c)
 	return c:IsCode(511009183) or c:IsCode(511009184) or c:IsCode(511009185) and

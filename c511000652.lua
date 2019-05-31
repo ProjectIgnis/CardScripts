@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.dircon)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511000017}
 function s.dircon(e)
 	return Duel.IsEnvironment(511000017)
 end

@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={48568432,12079734}
 function s.filter(c)
 	local ec=c:GetEquipTarget()
 	return ec and c:IsCode(48568432) and ec:IsCode(12079734)

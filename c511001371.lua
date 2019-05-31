@@ -38,6 +38,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_names={75433814,100000581,111011002,511000580,511002068,511002164,93238626}
 s.xyz_number=40
 function s.rumfilter(c)
 	return c:IsCode(75433814) and not c:IsPreviousLocation(LOCATION_OVERLAY)

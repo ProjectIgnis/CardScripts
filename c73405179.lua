@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_STROMBERG}
+s.listed_names={41916534,CARD_STROMBERG}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsCode(41916534)
 end

@@ -122,6 +122,7 @@ function s.initial_effect(c)
 	red:SetOperation(s.redatk)
 	c:RegisterEffect(red)
 end
+s.listed_names={10000010}
 function s.indes(e,re,rp)
 	return not re:GetOwner():IsCode(10000010)
 end

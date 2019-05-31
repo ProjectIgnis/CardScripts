@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.negop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={96561011}
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_GRAVE,0,nil,RACE_DRAGON)*400
 end

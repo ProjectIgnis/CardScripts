@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.actop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_POLYMERIZATION}
 function s.costfilter(c,ec)
 	return c:IsSetCard(0xdf) and not c:IsSummonCode(nil,SUMMON_TYPE_FUSION,PLAYER_NONE,ec:GetSummonCode(nil,SUMMON_TYPE_FUSION,PLAYER_NONE)) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end

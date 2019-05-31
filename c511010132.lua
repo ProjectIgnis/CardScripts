@@ -52,6 +52,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_names={65676461}
 s.xyz_number=32
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 	local tc=e:GetLabelObject()

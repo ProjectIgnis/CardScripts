@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.setop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={CARD_NECROVALLEY}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2e)
 end

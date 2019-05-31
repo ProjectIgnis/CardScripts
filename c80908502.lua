@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.descon)
 	c:RegisterEffect(e2)
 end
+s.listed_names={63035430}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() and c:IsDiscardable() end

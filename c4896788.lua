@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={55144522}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsAttackPos() and e:GetHandler():GetFlagEffect(1)>0
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsCode(55144522)

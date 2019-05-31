@@ -72,7 +72,7 @@ Group.__sub = function (o1,o2)
 end
 
 Group.__len = function (g)
-	return g:GetCount()
+	return #g
 end
 
 Group.__eq = function (g1,g2)
@@ -815,14 +815,14 @@ function Auxiliary.EquipByEffectAndLimitRegister(c,e,tp,tc,code,mustbefaceup)
 	if not Duel.Equip(tp,tc,c,up) then return false end
 	--Add Equip limit
 	if code then
-		tc:RegisterFlagEffect(code,RESET_EVENT+0x1fe0000,0,0)
+		tc:RegisterFlagEffect(code,RESET_EVENT+RESETS_STANDARD,0,0)
 	end
 	local te=e:GetLabelObject()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetValue(Auxiliary.EquipByEffectLimit)
 	e1:SetLabelObject(te)
 	tc:RegisterEffect(e1)
@@ -958,11 +958,11 @@ end
 --returns bool if chk==0, returns Group if chk==1
 function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)
 	local res
-	if sg:GetCount()>=maxc then return false end
+	if #sg>=maxc then return false end
 	sg:AddCard(c)
-	if sg:GetCount()<minc then
+	if #sg<minc then
 		res=mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
-	elseif sg:GetCount()<maxc then
+	elseif #sg<maxc then
 		res=(not rescon or rescon(sg,e,tp,mg)) or mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
 	else
 		res=(not rescon or rescon(sg,e,tp,mg))

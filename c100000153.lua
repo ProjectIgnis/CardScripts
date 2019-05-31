@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetValue(0x601)
 	c:RegisterEffect(e4)
 end
+s.listed_names={39823987}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end

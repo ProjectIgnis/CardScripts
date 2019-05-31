@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={44508094,24696097}
 function s.cfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsAbleToExtraAsCost()
 end

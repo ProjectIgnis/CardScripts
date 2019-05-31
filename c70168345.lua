@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL }
+s.listed_names={CARD_DARK_MAGICIAN_GIRL,CARD_DARK_MAGICIAN}
 function s.atkfilter(c)
 	return (c:IsFaceup() or not c:IsOnField()) and c:IsCode(CARD_DARK_MAGICIAN_GIRL)
 end

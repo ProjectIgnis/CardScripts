@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.sumop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={44508094,27564031}
 function s.spfilter(c)
 	return c:IsCode(44508094) and c:IsAbleToGraveAsCost()
 end

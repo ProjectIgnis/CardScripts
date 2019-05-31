@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetValue(500)
 	c:RegisterEffect(e3)
 end
-s.listed_names={ARMATOS_COL}
+s.listed_names={511030025}
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_BATTLE+PHASE_END,0,1)
 end

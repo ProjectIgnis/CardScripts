@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={47297616}
 function s.costfilter(c)
 	return c:IsCode(47297616) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

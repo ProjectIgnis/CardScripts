@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={75923050}
 function s.atkcon(e)
 	local ph=Duel.GetCurrentPhase()
 	if not (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) then return false end

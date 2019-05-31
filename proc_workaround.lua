@@ -89,7 +89,7 @@ function Duel.SelectReleaseGroupCost(tp,f,minc,maxc,use_hand,specialchk,ex,...)
 		--LoD is reset for the rest of the turn
 		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 		Duel.Hint(HINT_CARD,0,fc:GetCode())
-		fc:RegisterFlagEffect(59160188,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,0)
+		fc:RegisterFlagEffect(59160188,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
 	end
 	return sg
 end

@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.upval)
 	c:RegisterEffect(e2)
 end
+s.listed_names={511000882}
 function s.upval(e,c)
 	return Duel.GetMatchingGroupCount(s.upfilter,c:GetControler(),LOCATION_MZONE,0,nil)*500
 end

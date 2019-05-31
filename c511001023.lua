@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={25862681,20210570}
 function s.cfilter(c)
 	return c:IsCode(25862681) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_EXTRA) or aux.SpElimFilter(c,true))
 end

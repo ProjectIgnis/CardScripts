@@ -20,7 +20,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-	if g:GetCount()>=2 then
+	if #g>=2 then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 		local ag=g:Select(tp,2,2,nil)
 		Duel.SendtoHand(ag,1-tp,REASON_EFFECT)

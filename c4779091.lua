@@ -54,6 +54,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e6)
 end
+s.listed_names={31764700}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttackTarget()
 end

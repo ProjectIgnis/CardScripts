@@ -85,6 +85,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e8)
 	aux.CallToken(23998625)
 end
+s.listed_names={97403510}
 s.xyz_number=53
 function s.efilter(e,re)
 	return e:GetHandlerPlayer()~=re:GetHandlerPlayer()

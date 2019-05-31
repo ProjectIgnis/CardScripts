@@ -208,14 +208,14 @@ function Synchro.CheckP31(c,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,re
 	g:Sub(rg)
 	tsg:AddCard(c)
 	sg:AddCard(c)
-	if tsg:GetCount()<min1 then
+	if #tsg<min1 then
 		res=g:IsExists(Synchro.CheckP31,1,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk)
-	elseif tsg:GetCount()<max1 then
+	elseif #tsg<max1 then
 		res=g:IsExists(Synchro.CheckP31,1,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk) 
-			or (tsg:IsExists(Synchro.TunerFilter,tsg:GetCount(),nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp)) 
+			or (tsg:IsExists(Synchro.TunerFilter,#tsg,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp)) 
 				and g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk))
 	else
-		res=tsg:IsExists(Synchro.TunerFilter,tsg:GetCount(),nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp)) 
+		res=tsg:IsExists(Synchro.TunerFilter,#tsg,nil,f1,sub1,sc,tp) and (not req1 or req1(tsg,sc,tp)) 
 			and g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk)
 	end
 	g:Merge(rg)
@@ -288,16 +288,16 @@ function Synchro.CheckP32(c,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,p
 	g:Sub(rg)
 	ntsg:AddCard(c)
 	sg:AddCard(c)
-	if ntsg:GetCount()<min2 then
+	if #ntsg<min2 then
 		res=g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk)
-	elseif ntsg:GetCount()<max2 then
+	elseif #ntsg<max2 then
 		res=g:IsExists(Synchro.CheckP32,1,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk) 
 			or ((not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp)) 
-				and ntsg:IsExists(Synchro.NonTunerFilter,ntsg:GetCount(),nil,f2,sub2,sc,tp) 
+				and ntsg:IsExists(Synchro.NonTunerFilter,#ntsg,nil,f2,sub2,sc,tp) 
 				and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp))
 	else
 		res=(not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp)) 
-			and ntsg:IsExists(Synchro.NonTunerFilter,ntsg:GetCount(),nil,f2,sub2,sc,tp)
+			and ntsg:IsExists(Synchro.NonTunerFilter,#ntsg,nil,f2,sub2,sc,tp)
 			and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp)
 	end
 	g:Merge(rg)
@@ -365,9 +365,9 @@ function Synchro.CheckP41(c,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,req
 	ntg:Sub(ntrg)
 	tsg:AddCard(c)
 	sg:AddCard(c)
-	if tsg:GetCount()<min1 then
+	if #tsg<min1 then
 		res=tg:IsExists(Synchro.CheckP41,1,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk)
-	elseif tsg:GetCount()<max1 then
+	elseif #tsg<max1 then
 		res=tg:IsExists(Synchro.CheckP41,1,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,sc,tp,pg,mgchk) 
 			or ((not req1 or req1(tsg,sc,tp)) and ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk))
 	else
@@ -433,9 +433,9 @@ function Synchro.CheckP42(c,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgch
 	ntg:Sub(ntrg)
 	ntsg:AddCard(c)
 	sg:AddCard(c)
-	if ntsg:GetCount()<min2 then
+	if #ntsg<min2 then
 		res=ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk)
-	elseif ntsg:GetCount()<max2 then
+	elseif #ntsg<max2 then
 		res=ntg:IsExists(Synchro.CheckP42,1,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgchk) 
 			or ((not req2 or req2(ntsg,sc,tp)) and (not reqm or reqm(sg,sc,tp)) 
 				and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp))
@@ -487,7 +487,7 @@ function Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp)
 			end
 		end
 	end
-	return (lvchk or sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,sg:GetCount(),sg:GetCount(),sc))
+	return (lvchk or sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc))
 	and ((sc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0)
 		or (not sc:IsLocation(LOCATION_EXTRA) and Duel.GetMZoneCount(tp,sg,tp)>0))
 end
@@ -543,19 +543,19 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 					local ntsg=Group.CreateGroup()
 					local tune=true
 					local g2=Group.CreateGroup()
-					while ntsg:GetCount()<max2 do
+					while #ntsg<max2 do
 						local cancel=false
 						if tune then
-							cancel=not mgchk and Duel.GetCurrentChain()<=0 and tsg:GetCount()==0
+							cancel=not mgchk and Duel.GetCurrentChain()<=0 and #tsg==0
 							local g3=ntg:Filter(Synchro.CheckP32,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,c,tp,pg,mgchk)
 							g2=g:Filter(Synchro.CheckP31,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk)
-							if g3:GetCount()>0 and tsg:GetCount()>=min1 and tsg:IsExists(Synchro.TunerFilter,tsg:GetCount(),nil,f1,sub1,c,tp) and (not req1 or req1(tsg,c,tp)) then
+							if #g3>0 and #tsg>=min1 and tsg:IsExists(Synchro.TunerFilter,#tsg,nil,f1,sub1,c,tp) and (not req1 or req1(tsg,c,tp)) then
 								g2:Merge(g3)
 							end
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 							local tc=Group.SelectUnselect(g2,sg,tp,cancel,cancel)
 							if not tc then
-								if tsg:GetCount()>=min1 and tsg:IsExists(Synchro.TunerFilter,tsg:GetCount(),nil,f1,sub1,c,tp) and (not req1 or req1(tsg,c,tp))
+								if #tsg>=min1 and tsg:IsExists(Synchro.TunerFilter,#tsg,nil,f1,sub1,c,tp) and (not req1 or req1(tsg,c,tp))
 									and ntg:Filter(Synchro.CheckP32,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,c,tp,pg,mgchk):GetCount()>0 then tune=false
 								else
 									return false
@@ -583,25 +583,25 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 									Duel.AssumeReset()
 								end
 							end
-							if g:FilterCount(Synchro.CheckP31,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk)==0 or tsg:GetCount()>=max2 then
+							if g:FilterCount(Synchro.CheckP31,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk)==0 or #tsg>=max2 then
 								tune=false
 							end
 						else
-							if (ntsg:GetCount()>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp)) 
-								and ntsg:IsExists(Synchro.NonTunerFilter,ntsg:GetCount(),nil,f2,sub2,c,tp)
+							if (#ntsg>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp)) 
+								and ntsg:IsExists(Synchro.NonTunerFilter,#ntsg,nil,f2,sub2,c,tp)
 								and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp)) or (not mgchk and Duel.GetCurrentChain()<=0) then
 									cancel=true
 							end
 							g2=g:Filter(Synchro.CheckP32,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,c,tp,pg,mgchk)
-							if g2:GetCount()==0 then break end
+							if #g2==0 then break end
 							local g3=g:Filter(Synchro.CheckP31,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk)
-							if g3:GetCount()>0 and ntsg:GetCount()==0 and tsg:GetCount()<max1 then
+							if #g3>0 and #ntsg==0 and #tsg<max1 then
 								g2:Merge(g3)
 							end
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 							local tc=Group.SelectUnselect(g2,sg,tp,cancel,cancel)
 							if not tc then
-								if ntsg:GetCount()>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp)) 
+								if #ntsg>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp)) 
 									and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp) then break end
 								return false
 							end
@@ -623,7 +623,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 										Duel.AssumeReset()
 									end
 								end
-							elseif ntsg:GetCount()==0 then
+							elseif #ntsg==0 then
 								tune=true
 								tsg:RemoveCard(tc)
 								sg:RemoveCard(tc)
@@ -635,19 +635,19 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 					local ntsg=Group.CreateGroup()
 					local tune=true
 					local g2=Group.CreateGroup()
-					while ntsg:GetCount()<max2 do
+					while #ntsg<max2 do
 						cancel=false
 						if tune then
-							cancel=not mgchk and Duel.GetCurrentChain()<=0 and tsg:GetCount()==0
+							cancel=not mgchk and Duel.GetCurrentChain()<=0 and #tsg==0
 							local g3=ntg:Filter(Synchro.CheckP42,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,c,tp,pg,mgchk)
 							g2=tg:Filter(Synchro.CheckP41,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk)
-							if g3:GetCount()>0 and tsg:GetCount()>=min1 and (not req1 or req1(tsg,c,tp)) then
+							if #g3>0 and #tsg>=min1 and (not req1 or req1(tsg,c,tp)) then
 								g2:Merge(g3)
 							end
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 							local tc=Group.SelectUnselect(g2,sg,tp,cancel,cancel)
 							if not tc then
-								if tsg:GetCount()>=min1 and (not req1 or req1(tsg,c,tp))
+								if #tsg>=min1 and (not req1 or req1(tsg,c,tp))
 									and ntg:Filter(Synchro.CheckP42,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,c,tp,pg,mgchk):GetCount()>0 then tune=false
 								else
 									return false
@@ -666,24 +666,24 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 									sg:RemoveCard(tc)
 								end
 							end
-							if tg:FilterCount(Synchro.CheckP41,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk)==0 or tsg:GetCount()>=max1 then
+							if tg:FilterCount(Synchro.CheckP41,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk)==0 or #tsg>=max1 then
 								tune=false
 							end
 						else
-							if ntsg:GetCount()>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp))
+							if #ntsg>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp))
 								and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp) then
 								cancel=true
 							end
 							g2=ntg:Filter(Synchro.CheckP42,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,c,tp,pg,mgchk)
-							if g2:GetCount()==0 then break end
+							if #g2==0 then break end
 							local g3=tg:Filter(Synchro.CheckP41,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk)
-							if g3:GetCount()>0 and ntsg:GetCount()==0 and tsg:GetCount()<max1 then
+							if #g3>0 and #ntsg==0 and #tsg<max1 then
 								g2:Merge(g3)
 							end
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 							local tc=Group.SelectUnselect(g2,sg,tp,cancel,cancel)
 							if not tc then
-								if ntsg:GetCount()>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp))
+								if #ntsg>=min2 and (not req2 or req2(ntsg,c,tp)) and (not reqm or reqm(sg,c,tp))
 									and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp) then break end
 								return false
 							end
@@ -695,7 +695,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 									ntsg:RemoveCard(tc)
 									sg:RemoveCard(tc)
 								end
-							elseif ntsg:GetCount()==0 then
+							elseif #ntsg==0 then
 								tune=true
 								tsg:RemoveCard(tc)
 								sg:RemoveCard(tc)
@@ -713,7 +713,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 						e1:SetType(EFFECT_TYPE_SINGLE)
 						e1:SetCode(EFFECT_ADD_TYPE)
 						e1:SetValue(TYPE_TUNER)
-						e1:SetReset(RESET_EVENT+0x1fe0000)
+						e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 						subc:RegisterEffect(e1,true)
 						subc=subtsg:GetNext()
 					end
@@ -840,7 +840,7 @@ function Synchro.MajesticCheck1(c,g,sg,card1,card2,card3,lv,sc,tp,pg,f1,cbt1,f2,
 	else
 		card3=c
 	end
-	if sg:GetCount()<3 then
+	if #sg<3 then
 		res=g:IsExists(Synchro.MajesticCheck1,1,sg,g,sg,card1,card2,card3,lv,sc,tp,pg,f1,cbt1,f2,cbt2,f3,cbt3,...)
 	else
 		res=sg:Includes(pg) and Synchro.MajesticCheck2(sg,card1,card2,card3,lv,sc,tp,f1,cbt1,f2,cbt2,f3,cbt3,...)
@@ -903,7 +903,7 @@ function Synchro.MajesticCheck2(sg,card1,card2,card3,lv,sc,tp,f1,cbt1,f2,cbt2,f3
 			end
 		end
 	end
-	if not lvchk and not sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,sg:GetCount(),sg:GetCount(),sc) then return false end
+	if not lvchk and not sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc) then return false end
 	if sc:IsLocation(LOCATION_EXTRA) then
 		return Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0
 	else
@@ -1000,7 +1000,7 @@ function Synchro.MajesticTarget(f1,cbt1,f2,cbt2,f3,cbt3,...)
 				local card2=nil
 				local card3=nil
 				local cancel=not mgchk and Duel.GetCurrentChain()<=0
-				while sg:GetCount()<3 do
+				while #sg<3 do
 					local g2=g:Filter(Synchro.MajesticCheck1,sg,g,sg,card1,card2,card3,lv,c,tp,pg,f1,cbt1,f2,cbt2,f3,cbt3,table.unpack(t))
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 					local tc=Group.SelectUnselect(g2,sg,tp,cancel,cancel)
@@ -1136,7 +1136,7 @@ function Synchro.DarkCheck1(c,g,sg,card1,card2,plv,nlv,sc,tp,pg,f1,f2,...)
 	else
 		card2=c
 	end
-	if sg:GetCount()<2 then
+	if #sg<2 then
 		res=g:IsExists(Synchro.DarkCheck1,1,sg,g,sg,card1,card2,plv,nlv,sc,tp,pg,f1,f2,...)
 	else
 		res=sg:Includes(pg) and Synchro.DarkCheck2(sg,card1,card2,plv,nlv,sc,tp,f1,f2,...)
@@ -1329,7 +1329,7 @@ function Synchro.DarkTarget(f1,f2,plv,nlv,...)
 				local card1=nil
 				local card2=nil
 				local cancel=not mgchk and Duel.GetCurrentChain()<=0
-				while sg:GetCount()<2 do
+				while #sg<2 do
 					local g2=g:Filter(Synchro.DarkCheck1,sg,g,sg,card1,card2,plv,nlv,c,tp,pg,f1,f2,table.unpack(t))
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 					local tc=Group.SelectUnselect(g2,sg,tp,cancel,cancel)

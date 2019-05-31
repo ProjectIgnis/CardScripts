@@ -25,6 +25,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_names={72892473}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local h1=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)

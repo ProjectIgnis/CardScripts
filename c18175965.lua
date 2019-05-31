@@ -61,6 +61,7 @@ function s.initial_effect(c)
 	e8:SetOperation(s.spop2)
 	c:RegisterEffect(e8)
 end
+s.listed_names={34022290,81954378}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp)
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsCode(34022290)

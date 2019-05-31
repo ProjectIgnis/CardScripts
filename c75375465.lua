@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.indval)
 	c:RegisterEffect(e1)
 end
+s.listed_names={94585852}
 function s.indtg(e,c)
 	return c:IsFaceup() and c:IsCode(94585852)
 end

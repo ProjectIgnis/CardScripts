@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	c:RegisterEffect(e2)
 end
+s.listed_names={22056710}
 function s.thfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and c:IsAbleToHand()
 end

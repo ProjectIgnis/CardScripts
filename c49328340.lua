@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_names={66889139}
 function s.pietg(e,c)
 	return c:IsCode(6368038,16589042,66889139)
 end

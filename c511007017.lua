@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.indval)
 	c:RegisterEffect(e2)
 end
+s.listed_names={77631175,13030280}
 function s.dfilter(c)
 	return c:IsFaceup() and c:IsOnField() and c:IsReason(REASON_BATTLE) and (c:IsCode(77631175) or c:IsCode(13030280))
 end

@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.acop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={100000080}
 function s.ctfilter(c)
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE)
 end

@@ -48,6 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={94220427}
 function s.lvtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)

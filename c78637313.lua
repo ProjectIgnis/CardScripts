@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.aclimit)
 	c:RegisterEffect(e4)
 end
+s.listed_names={83764718}
 function s.filter(c)
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetReasonEffect()
 		and c:GetReasonEffect():GetHandler():IsCode(83764718)

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	aux.CallToken(77205367)
 end
+s.listed_names={55727845,513000031,511001603}
 s.xyz_number=96
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

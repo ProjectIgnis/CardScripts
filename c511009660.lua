@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e5:SetValue(1)
 	c:RegisterEffect(e5)
 end
+s.listed_names={511009659}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,511009659,0x3e,TYPES_TOKEN,0,0,1,RACE_INSECT,ATTRIBUTE_LIGHT) end

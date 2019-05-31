@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.eqop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={6205579,511009344}
 function s.filter2(c,tp,mc)
 	local g=Group.FromCards(c,mc)
 	return c:IsFaceup() and c:IsCode(6205579) and c:IsAbleToGrave() and Duel.GetLocationCountFromEx(tp,tp,g)>0

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
+s.listed_names={16898077}
 function s.spfilter1(c,e,tp)
 	return (c:IsSetCard(0x63) or c:IsCode(16898077)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end

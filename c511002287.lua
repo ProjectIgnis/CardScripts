@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
 end
+s.listed_names={CARD_CYBER_DRAGON}
 function s.tg(e,tp,eg,ep,ev,re,r,rp,tc)
 	e:SetCategory(CATEGORY_EQUIP+CATEGORY_DRAW)
 	if tc:IsCode(CARD_CYBER_DRAGON) then

@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e5)
 end
+s.listed_names={3643300,CARD_UMI}
 function s.spfilter(c,ft,tp)
 	return c:IsCode(3643300) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 end

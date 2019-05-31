@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
 end
+s.listed_names={4779091}
 function s.condition(e)
 	return e:GetHandler():IsAttackPos()
 end

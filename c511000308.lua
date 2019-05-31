@@ -23,6 +23,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end
 end
+s.listed_names={17132130,83965310,99357565}
 function s.filter(c)
 	return c:IsCode(17132130) or c:IsCode(83965310)
 end

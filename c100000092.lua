@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={8310162,37115575}
 function s.cfilter(c,tp)
 	return c:IsCode(8310162) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD)

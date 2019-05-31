@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={63977008}
 s.material_setcode=0x1017
 function s.tfilter(c)
 	return c:IsCode(63977008) or c:IsHasEffect(20932152)

@@ -6,7 +6,7 @@ local COUNTER_FW=0x14c
 function s.initial_effect(c)
     c:EnableReviveLimit()
     c:EnableCounterPermit(COUNTER_FW)
-    aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),3)
+    Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),3)
     --counter
     local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(id,0))

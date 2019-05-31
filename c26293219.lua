@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rtgop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={99899504}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end

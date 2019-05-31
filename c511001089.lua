@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511001086}
 function s.cfilter2(c)
 	return c:IsFaceup() and c:IsCode(511001086) and c:GetOverlayCount()>0
 end

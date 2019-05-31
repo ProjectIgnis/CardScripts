@@ -38,6 +38,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge3,0)
 	end
 end
+s.listed_names={31437713}
 s.xyz_number=82
 function s.filter(c)
 	return c:IsFaceup() and (c:IsSetCard(0x528) or c:IsCode(31437713))

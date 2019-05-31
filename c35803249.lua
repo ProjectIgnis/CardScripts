@@ -68,6 +68,7 @@ function s.initial_effect(c)
 	e8:SetCode(3682106)
 	c:RegisterEffect(e8)
 end
+s.listed_names={77585513}
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	if tl==LOCATION_SZONE and re:IsActiveType(TYPE_TRAP) then

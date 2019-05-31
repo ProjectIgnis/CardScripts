@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
+s.listed_names={511000068}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,511000068) end
 	local dam=Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,511000068)*1000

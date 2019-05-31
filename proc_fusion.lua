@@ -56,7 +56,7 @@ function Fusion.ConditionMix(insf,sub,...)
 				local mustg=nil
 				if g==nil then
 					mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,nil,REASON_FUSION)
-				return insf and mustg:GetCount()==0 end
+				return insf and #mustg==0 end
 				local chkf=chkfnf&0xff
 				local c=e:GetHandler()
 				local tp=c:GetControler()
@@ -113,11 +113,11 @@ function Fusion.OperationMix(insf,sub,...)
 					p=1-tp Duel.ConfirmCards(1-tp,mg)
 					if mg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then sfhchk=true end
 				end
-				while sg:GetCount()<#funs do
+				while #sg<#funs do
 					Duel.Hint(HINT_SELECTMSG,p,HINTMSG_FMATERIAL)
-					local tc=Group.SelectUnselect(mg:Filter(Fusion.SelectMix,sg,tp,mg,sg,mustg:Filter(aux.TRUE,sg),c,sub,sub,contact,chkf,table.unpack(funs)),sg,p,false,contact and sg:GetCount()==0,#funs,#funs)
+					local tc=Group.SelectUnselect(mg:Filter(Fusion.SelectMix,sg,tp,mg,sg,mustg:Filter(aux.TRUE,sg),c,sub,sub,contact,chkf,table.unpack(funs)),sg,p,false,contact and #sg==0,#funs,#funs)
 					if not tc then break end
-					if mustg:GetCount()==0 or not mustg:IsContains(tc) then
+					if #mustg==0 or not mustg:IsContains(tc) then
 						if not sg:IsContains(tc) then
 							sg:AddCard(tc)
 						else
@@ -166,7 +166,7 @@ function Fusion.CheckMixGoal(tp,sg,fc,sub,sub2,contact,chkf,...)
 end
 function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,chkf,...)
 	local res
-	if (Fusion.CheckExact and (Fusion.CheckExact~=#{...} or mustg:GetCount()>Fusion.CheckExact)) or mustg:GetCount()>#{...} then return false end
+	if (Fusion.CheckExact and (Fusion.CheckExact~=#{...} or #mustg>Fusion.CheckExact)) or #mustg>#{...} then return false end
 	-- local rg=Group.CreateGroup()
 	local mg2=mg:Clone()
 	--c has the fusion limit
@@ -179,7 +179,7 @@ function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,chkf,...)
 			local sg2=mg2:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
 			-- rg:Merge(sg2)
 			mg2:Sub(sg2)
-			if mustg:GetCount()>0 and not mg2:Includes(mustg) then
+			if #mustg>0 and not mg2:Includes(mustg) then
 				return false
 			end
 		end
@@ -198,7 +198,7 @@ function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,chkf,...)
 	end
 	-- mg2:Sub(rg)
 	sg:AddCard(c)
-	if sg:GetCount()<#{...} then
+	if #sg<#{...} then
 		res=mg2:IsExists(Fusion.SelectMix,1,sg,tp,mg2,sg,mustg-sg,fc,sub,sub2,contact,chkf,...)
 	else
 		res=Fusion.CheckMixGoal(tp,sg,fc,sub,sub2,contact,chkf,...)
@@ -253,7 +253,7 @@ function Fusion.ConditionMixRep(insf,sub,fun1,minc,maxc,...)
 				local mustg=nil
 				if g==nil then
 					mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,nil,REASON_FUSION)
-				return insf and mustg:GetCount()==0 end
+				return insf and #mustg==0 end
 				local chkf=chkfnf&0xff
 				local c=e:GetHandler()
 				local tp=c:GetControler()
@@ -302,14 +302,14 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 					p=1-tp Duel.ConfirmCards(1-tp,mg)
 					if mg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then sfhchk=true end
 				end
-				while sg:GetCount()<maxc+#funs do
+				while #sg<maxc+#funs do
 					local cg=mg:Filter(Fusion.SelectMixRep,sg,tp,mg,sg,mustg,c,sub,sub,contact,chkf,fun1,minc,maxc,table.unpack(funs))
-					if cg:GetCount()==0 then break end
-					local cancel=(Fusion.CheckMixRepGoal(tp,sg,mustg,c,sub,sub,contact,chkf,fun1,minc,maxc,table.unpack(funs)) or (contact and sg:GetCount()==0)) and not Fusion.CheckExact
+					if #cg==0 then break end
+					local cancel=(Fusion.CheckMixRepGoal(tp,sg,mustg,c,sub,sub,contact,chkf,fun1,minc,maxc,table.unpack(funs)) or (contact and #sg==0)) and not Fusion.CheckExact
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 					local tc=Group.SelectUnselect(cg,sg,p,cancel,cancel)
 					if not tc then break end
-					if mustg:GetCount()==0 or not mustg:IsContains(tc) then
+					if #mustg==0 or not mustg:IsContains(tc) then
 						if not sg:IsContains(tc) then
 							sg:AddCard(tc)
 						else
@@ -327,7 +327,7 @@ function Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,chkf,tp,fun1,minc,maxc,fun2
 	else
 		local ct1=sg:FilterCount(fun1,g,fc,sub,sub2,mg,sg,tp,contact)
 		local ct2=sg:FilterCount(fun1,g,fc,false,sub2,mg,sg,tp,contact)
-		return ct1==sg:GetCount()-g:GetCount() and ct1-ct2<=1
+		return ct1==#sg-#g and ct1-ct2<=1
 	end
 end
 function Fusion.CheckMixRepFilter(c,sg,g,fc,sub,sub2,contact,chkf,tp,fun1,minc,maxc,fun2,...)
@@ -341,7 +341,7 @@ function Fusion.CheckMixRepFilter(c,sg,g,fc,sub,sub2,contact,chkf,tp,fun1,minc,m
 	return false
 end
 function Fusion.CheckMixRepGoal(tp,sg,mustg,fc,sub,sub2,contact,chkf,fun1,minc,maxc,...)
-	if sg:GetCount()<minc+#{...} or sg:GetCount()>maxc+#{...} then return false end
+	if #sg<minc+#{...} or #sg>maxc+#{...} then return false end
 	local g=Group.CreateGroup()
 	return Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,chkf,tp,fun1,minc,maxc,...) and (chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(tp,tp,sg,fc)>0)
 		and (not Fusion.CheckAdditional or Fusion.CheckAdditional(tp,sg,fc))
@@ -370,7 +370,7 @@ function Fusion.CheckMixRepTemplate(c,cond,tp,mg,sg,mustg,g,fc,sub,sub2,contact,
 	return false
 end
 function Fusion.CheckMixRepSelectedCond(tp,mg,sg,mustg,g,...)
-	if g:GetCount()<sg:GetCount() then
+	if #g<#sg then
 		return sg:IsExists(Fusion.CheckMixRepSelected,1,g,tp,mg,sg,mustg,g,...)
 	else
 		return Fusion.CheckSelectMixRep(tp,mg,sg,mustg,g,...)
@@ -414,7 +414,7 @@ function Fusion.SelectMixRep(c,tp,mg,sg,mustg,fc,sub,sub2,contact,chkf,fun1,minc
 	local mg2=mg:Clone()
 	-- local rg=Group.CreateGroup()
 	if Fusion.CheckExact then
-		if Fusion.CheckExact<minc + #{...} or mustg:GetCount()>Fusion.CheckExact then return false end
+		if Fusion.CheckExact<minc + #{...} or #mustg>Fusion.CheckExact then return false end
 		maxc=Fusion.CheckExact-#{...}
 		minc=Fusion.CheckExact-#{...}
 	end
@@ -429,7 +429,7 @@ function Fusion.SelectMixRep(c,tp,mg,sg,mustg,fc,sub,sub2,contact,chkf,fun1,minc
 			local sg2=mg2:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
 			-- rg:Merge(sg2)
 			mg2:Sub(sg2)
-			if mustg:GetCount()>0 and not mg2:Includes(mustg) then
+			if #mustg>0 and not mg2:Includes(mustg) then
 				return false
 			end
 		end
@@ -517,7 +517,7 @@ function Fusion.ConditionMixRepUnfix(insf,sub,minc,maxc,...)
 				local mustg=nil
 				if g==nil then
 					mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,nil,REASON_FUSION)
-				return insf and mustg:GetCount()==0 end
+				return insf and #mustg==0 end
 				local chkf=chkfnf&0xff
 				local c=e:GetHandler()
 				local tp=c:GetControler()
@@ -573,14 +573,14 @@ function Fusion.OperationMixRepUnfix(insf,sub,minc,maxc,...)
 					p=1-tp Duel.ConfirmCards(1-tp,mg)
 					if mg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then sfhchk=true end
 				end
-				while sg:GetCount()<maxc do
+				while #sg<maxc do
 					Duel.Hint(HINT_SELECTMSG,p,HINTMSG_FMATERIAL)
 					local cg=mg:Filter(Fusion.SelectMixRepUnfix,sg,tp,mg,sg,mustg:Filter(aux.TRUE,sg),c,sub,sub,minc,maxc,chkf,table.unpack(funs))
-					if cg:GetCount()==0 then break end
-					local cancel=((sg:IsExists(Fusion.CheckMixRepUnfixSelected,1,nil,tp,sg,sg,mustg,Group.CreateGroup(),c,sub,sub2,chkf,minc,maxc,table.unpack(funs))) or (contact and sg:GetCount()==0)) and not Fusion.CheckExact
+					if #cg==0 then break end
+					local cancel=((sg:IsExists(Fusion.CheckMixRepUnfixSelected,1,nil,tp,sg,sg,mustg,Group.CreateGroup(),c,sub,sub2,chkf,minc,maxc,table.unpack(funs))) or (contact and #sg==0)) and not Fusion.CheckExact
 					local tc=Group.SelectUnselect(cg,sg,p,cancel,cancel,minc,maxc)
 					if not tc then break end
-					if mustg:GetCount()==0 or not mustg:IsContains(tc) then
+					if #mustg==0 or not mustg:IsContains(tc) then
 						if not sg:IsContains(tc) then
 							sg:AddCard(tc)
 						else
@@ -635,7 +635,7 @@ function Fusion.CheckMixRepUnfixTemplate(c,cond,tp,mg,sg,mustg,g,fc,sub,sub2,chk
 	return false
 end
 function Fusion.CheckMixRepUnfixSelectedCond(tp,mg,sg,mustg,g,...)
-	if g:GetCount()<sg:GetCount() then
+	if #g<#sg then
 		return sg:IsExists(Fusion.CheckMixRepUnfixSelected,1,g,tp,mg,sg,mustg,g,...)
 	else
 		return Fusion.CheckSelectMixRepUnfix(tp,mg,sg,mustg,g,...)
@@ -714,7 +714,7 @@ end
 function Fusion.SelectMixRepUnfix(c,tp,mg,sg,mustg,fc,sub,sub2,minc,maxc,chkf,...)
 	local rg=Group.CreateGroup()
 	if Fusion.CheckExact then
-		if Fusion.CheckExact<minc or mustg:GetCount()>Fusion.CheckExact then return false end
+		if Fusion.CheckExact<minc or #mustg>Fusion.CheckExact then return false end
 		maxc=Fusion.CheckExact
 		minc=Fusion.CheckExact
 	end
@@ -808,7 +808,7 @@ function Fusion.ContactTg(f)
 		local m=f(tp)
 		local chkf=tp|FUSPROC_CONTACTFUS
 		local sg=Duel.SelectFusionMaterial(tp,e:GetHandler(),m,nil,chkf)
-		if sg:GetCount()>0 then
+		if #sg>0 then
 			sg:KeepAlive()
 			e:SetLabelObject(sg)
 			return true
@@ -954,7 +954,7 @@ function Fusion.ShaddollRecursion(c,tp,mg,sg,exg,mustg,fc,chkf,f1,f2)
 	end
 	if not contact then
 		local g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_FUSION_MAT_RESTRICTION)
-		if g2:GetCount()>0 then
+		if #g2>0 then
 			local tc=g2:GetFirst()
 			while tc do
 				local eff={tc:GetCardEffect(EFFECT_FUSION_MAT_RESTRICTION)}
@@ -968,7 +968,7 @@ function Fusion.ShaddollRecursion(c,tp,mg,sg,exg,mustg,fc,chkf,f1,f2)
 		end
 	end
 	sg:AddCard(c)
-	if sg:GetCount()<2 then
+	if #sg<2 then
 		if exg:IsContains(c) then
 			mg2:Sub(exg)
 		end
@@ -985,7 +985,7 @@ function Fusion.ShaddolCondition(insf,f1,f2)
 				if g==nil then
 					if not insf then return false end
 					mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,nil,REASON_FUSION)
-					return mustg:GetCount()==0 end
+					return #mustg==0 end
 				local chkf=chkf&0xff
 				local c=e:GetHandler()
 				local mg=g:Filter(Fusion.ConditionFilterMix,nil,c,true,true,false,0,tp,f1,f2)
@@ -998,7 +998,7 @@ function Fusion.ShaddolCondition(insf,f1,f2)
 					exg=Duel.GetMatchingGroup(Fusion.ShaddollExFilter,tp,0,LOCATION_MZONE,nil,g,c,tp,f1,f2,fc:GetCardEffect(81788994))
 					mg:Merge(exg)
 				end
-				if mustg:GetCount()>2 or (Fusion.CheckExact and Fusion.CheckExact~=2) or not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c) then return false end
+				if #mustg>2 or (Fusion.CheckExact and Fusion.CheckExact~=2) or not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c) then return false end
 				mg:Merge(mustg)
 				return mg:IsExists(Fusion.ShaddollRecursion,1,nil,tp,mg,Group.CreateGroup(),exg,mustg,c,chkf,f1,f2)
 			end
@@ -1027,7 +1027,7 @@ function Fusion.ShaddolOperation(insf,f1,f2)
 					exg:Merge(sg)
 					mg:Merge(sg)
 				end
-				if mustg:GetCount()>2 or (Fusion.CheckExact and Fusion.CheckExact~=2) or not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c) then return false end
+				if #mustg>2 or (Fusion.CheckExact and Fusion.CheckExact~=2) or not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c) then return false end
 				if not contact and Duel.IsPlayerAffectedByEffect(tp,511004008) and Duel.SelectYesNo(1-tp,65) then
 					p=1-tp
 					Duel.ConfirmCards(p,sg)
@@ -1041,10 +1041,10 @@ function Fusion.ShaddolOperation(insf,f1,f2)
 						fc:RemoveCounter(tp,0x16,3,REASON_EFFECT)
 					end
 				end
-				while sg:GetCount()<2 do
+				while #sg<2 do
 					local tg=mg:Filter(Fusion.ShaddollFilter2,sg,tp,mg,sg,exg,mustg,c,chkf,f1,f2)
 					local tg2=mg:Filter(Fusion.ShaddollFilter3,sg,tp,mg,sg,exg,mustg,c,chkf,f1,f2)
-					if tg2:GetCount()>0 then
+					if #tg2>0 then
 						tg:AddCard(fc)
 					end
 					Duel.Hint(HINT_SELECTMSG,p,HINTMSG_FMATERIAL)

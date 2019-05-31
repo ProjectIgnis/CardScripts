@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_names={CARD_POLYMERIZATION}
 function s.cfilter(c)
 	return (c:IsCode(CARD_POLYMERIZATION) or c:IsSetCard(0x46)) and c:IsAbleToRemoveAsCost()
 end

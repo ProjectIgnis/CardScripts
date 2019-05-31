@@ -51,6 +51,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_names={84013237}
 s.xyz_number=39
 function s.ovfilter(c)
 	return c:IsFaceup() and c:IsCode(84013237)

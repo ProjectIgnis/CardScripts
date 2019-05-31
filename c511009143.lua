@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511002634,511002731,511009178,511009179}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsCode,1,false,nil,nil,511002633) end
 	local g=Duel.SelectReleaseGroupCost(tp,Card.IsCode,1,1,false,nil,nil,511002633)

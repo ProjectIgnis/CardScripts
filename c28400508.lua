@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,8,2)
+	Xyz.AddProcedure(c,nil,8,2)
 	c:EnableReviveLimit()
 	--cannot be target
 	local e1=Effect.CreateEffect(c)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.spcost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
-	c:RegisterEffect(e2,false,1)
+	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.xyz_number=97
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

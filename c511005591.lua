@@ -17,6 +17,7 @@ e2:SetTargetRange(1,0)
 e2:SetValue(s.costchange)
 c:RegisterEffect(e2)
 end
+s.listed_names={82432018}
 function s.costchange(e,re,rp,val)
 if re:GetHandler():IsCode(82432018) then
 return 0

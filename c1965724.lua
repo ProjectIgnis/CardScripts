@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetValue(3000)
 	c:RegisterEffect(e3)
 end
+s.listed_names={27288416}
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsPreviousControler(tp) and c:IsRace(RACE_FAIRY)

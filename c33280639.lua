@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.immop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={11790356}
 function s.cfilter1(c,tp)
 	return c:IsSetCard(0xd6) and not c:IsCode(id) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_DECK,0,1,c)

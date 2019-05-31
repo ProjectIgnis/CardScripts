@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_SUMMONED_SKULL,61370518}
 function s.filter(c)
 	return c:IsFaceup() and (c:IsCode(CARD_SUMMONED_SKULL) or c:IsCode(61370518) or c:IsRace(RACE_THUNDER))
 end

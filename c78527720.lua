@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.eqop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_STROMBERG}
+s.listed_names={14512825,CARD_STROMBERG,9677699}
 function s.spfilter(c,e,tp)
 	return c:IsCode(14512825) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

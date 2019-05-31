@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={22610082}
 function s.spfilter(c,g,ft,tp)
 	if c:IsControler(tp) and c:GetSequence()<5 then ft=ft+1 end
 	return c:IsCode(13676474,86569121) and (c:IsControler(tp) or c:IsFaceup())

@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={511000157}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if s.spcon(e,tp,eg,ep,ev,re,r,rp) and s.sptg(e,tp,eg,ep,ev,re,r,rp,0) 

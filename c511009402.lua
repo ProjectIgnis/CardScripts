@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={73734821}
 function s.spfilter(c,ft,tp)
 	return c:IsFaceup() and c:IsCode(73734821) and c:IsAbleToHandAsCost() and (ft>0 or c:GetSequence()<5)
 end

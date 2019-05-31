@@ -14,6 +14,7 @@ function scard.initial_effect(c)
   e1:SetOperation(scard.op)
   c:RegisterEffect(e1)
 end
+s.listed_names={511005032}
 
 function scard.lw_fil(c)
   return c:IsCode(511005032) and c:IsFaceup()

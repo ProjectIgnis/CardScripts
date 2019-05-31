@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_names={511000936}
 function s.filter(c,e,tp)
 	return c:IsCode(511000936) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

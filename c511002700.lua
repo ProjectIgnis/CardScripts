@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e3)
 end
+s.listed_names={23424603}
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(23424603) and Duel.GetAttacker():IsControler(1-tp)
 end

@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={46411259}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if re and re:GetHandler():IsCode(46411259) then
 		e:GetHandler():CompleteProcedure()

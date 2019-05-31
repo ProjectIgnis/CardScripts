@@ -3,6 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--1st parameter = card, 2nd parameter = IsFusion
 end
+s.listed_names={81983656,82382815,CARD_VIJAM,43061293,60410769,82556058,16366944,CARD_BLUEEYES_SPIRIT}
 
 -- Alligator 
 -- アリゲーター 

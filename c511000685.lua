@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={84013237}
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()
 	return c:IsFaceup() and c:IsCode(84013237) and c:GetOverlayGroup():GetCount()>=2 and (rk>0 or c:IsStatus(STATUS_NO_LEVEL)) 

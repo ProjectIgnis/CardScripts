@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511000607,511000609}
 function s.cfilter(c)
 	return c:GetLevel()>=5 and c:IsAbleToGraveAsCost()
 end

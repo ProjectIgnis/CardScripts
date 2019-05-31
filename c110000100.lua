@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.sdop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={48179391}
 function s.sdcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)==0
 end

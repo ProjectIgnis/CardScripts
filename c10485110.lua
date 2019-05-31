@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_names={37721209,CARD_UMI}
 function s.cfilter1(c,ft,tp)
 	return c:IsCode(37721209) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
 end

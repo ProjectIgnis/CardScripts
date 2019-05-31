@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={90140980}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(90140980)
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xf),0,LOCATION_MZONE,LOCATION_MZONE,1,c)

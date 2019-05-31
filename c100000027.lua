@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={100000025}
 function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsCode(100000025)
 end

@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.sdcon)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_NECROVALLEY}
 function s.cfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x2e)
 end

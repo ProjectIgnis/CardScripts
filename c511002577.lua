@@ -20,6 +20,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end
 end
+s.listed_names={74711057,95486586,46759931}
 function s.filter0(c,tp)
 	return (c:IsControler(tp) or c:IsFaceup()) and c:IsCode(74711057) and c:IsCanBeFusionMaterial()
 end

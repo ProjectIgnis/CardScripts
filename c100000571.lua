@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={100000570}
 function s.chkfilter(c,g,sg,code,...)
 	if not c:IsSummonCode(nil,SUMMON_TYPE_FUSION,PLAYER_NONE,code) then return false end
 	if ... then

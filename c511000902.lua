@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={97489701,70902743}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(97489701)
 end

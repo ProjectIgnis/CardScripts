@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	aux.CallToken(420)
 end
+s.listed_names={96470883}
 function s.spfilter(c,ft)
 	return c:IsFaceup() and c:IsCode(96470883) and c:IsAbleToHandAsCost() and (ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end

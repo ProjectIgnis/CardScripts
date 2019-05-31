@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={CARD_DARK_MAGICIAN}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

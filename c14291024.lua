@@ -50,6 +50,7 @@ function s.initial_effect(c)
 	e6:SetCondition(s.sdcon)
 	c:RegisterEffect(e6)
 end
+s.listed_names={10992251}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(10992251)
 end

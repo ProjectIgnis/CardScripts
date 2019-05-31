@@ -29,6 +29,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(e3,0)
 	end
 end
+s.listed_names={511000127}
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()

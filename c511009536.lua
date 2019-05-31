@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetValue(TYPE_NORMAL)
 	c:RegisterEffect(e3)
 end
+s.listed_names={511009533}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(511009533) and c:GetSequence()<5
 end

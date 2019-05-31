@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
 end
+s.listed_names={69243953}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(69243953)
 end

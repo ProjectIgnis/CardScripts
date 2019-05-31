@@ -39,6 +39,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,tp)
 	end
 end
+s.listed_names={84243274,73879377}
 function s.reg(c)
 	if c:IsCode(84243274) then
 		Duel.RegisterFlagEffect(c:GetControler(),id,0,0,0)

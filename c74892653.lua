@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.scop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={84012625}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and Duel.GetCurrentChain()==0
 end

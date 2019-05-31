@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={21420702,32543380}
 function s.costfilter(c)
 	return c:IsFaceup() and c:IsCode(21420702) and c:IsAbleToGraveAsCost()
 end

@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_names={27780618}
 function s.tgfilter(c)
 	return (c:IsSetCard(0x5008) or c:IsCode(27780618)) and c:IsLevelBelow(4) and c:IsAbleToGrave()
 end

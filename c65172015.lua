@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
+s.listed_names={1561110,91998119}
 function s.ffilter(code)
 	return function(c,fc,sub,sub2,mg,sg,tp,contact)
 		if contact then

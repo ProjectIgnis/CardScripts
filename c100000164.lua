@@ -46,6 +46,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.damop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={33900648}
 function s.sdcon(e)
 	return not Duel.IsEnvironment(33900648)
 end

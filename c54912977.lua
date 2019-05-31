@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={97590747}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return r~=REASON_REPLACE and Duel.GetAttackTarget()==e:GetHandler() and Duel.GetAttacker():IsControler(1-tp)
 		and e:GetHandler():GetBattlePosition()==POS_FACEDOWN_DEFENSE

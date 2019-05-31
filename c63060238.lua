@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_POLYMERIZATION}
 function s.filter(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()
 end

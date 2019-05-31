@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_ASSAULT_MODE }
+s.listed_names={CARD_ASSAULT_MODE}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true

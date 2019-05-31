@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={63176202}
 function s.costfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3d)
 end

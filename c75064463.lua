@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetValue(CARD_HARPIE_LADY)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_HARPIE_LADY}
+s.listed_names={75782277}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() and c:IsDiscardable() end

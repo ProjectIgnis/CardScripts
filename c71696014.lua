@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation2)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_DARK_MAGICIAN}
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end

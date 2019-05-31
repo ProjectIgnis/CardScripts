@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.lvval)
 	c:RegisterEffect(e2)
 end
+s.listed_names={2322421}
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==e:GetHandler()
 end

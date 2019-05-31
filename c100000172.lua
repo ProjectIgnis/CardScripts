@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_names={100000171}
 function s.counterfilter(c)
 	return c:IsAttackBelow(2000)
 end

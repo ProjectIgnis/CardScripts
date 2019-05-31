@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e3)
 end
+s.listed_names={100000025}
 function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsCode(100000025)
 end

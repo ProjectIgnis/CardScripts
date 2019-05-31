@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_NECROVALLEY}
 s.material_setcode=0x2e
 function s.matcheck(e,c)
 	local lv=c:GetMaterial():GetSum(Card.GetOriginalLevel)

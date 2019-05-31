@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
+s.listed_names={95000012}
 s.mark=0
 function s.dirfilter(c)
 	return c:IsFaceup() and c:IsCode(95000012)

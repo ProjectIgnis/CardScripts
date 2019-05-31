@@ -48,7 +48,7 @@ function s.cfilter(c,ec)
 	if c:IsLocation(LOCATION_MZONE) then
 		return ec:GetLinkedGroup():IsContains(c)
 	else
-		return bit.band(ec:GetLinkedZone(c:GetPreviousControler()),bit.lshift(0x1,c:GetPreviousSequence()))~=0
+		return (ec:GetLinkedZone(c:GetPreviousControler())&(0x1<<c:GetPreviousSequence()))~=0
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -56,7 +56,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetLinkedGroup()
-	if chk==0 then return g:GetCount()>0 end
+	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 end
@@ -64,7 +64,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetLinkedGroup()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local tg=g:Select(tp,1,1,nil)
-	if tg:GetCount()>0 then
+	if #tg>0 then
 		Duel.HintSelection(tg)
 		if Duel.Destroy(tg,REASON_EFFECT)>0 then
 			Duel.Damage(1-tp,500,REASON_EFFECT)

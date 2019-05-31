@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_CYBER_DRAGON}
 s.material_setcode={0x93,0x1093}
 function s.imunecond(e)
 	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)

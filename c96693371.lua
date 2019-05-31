@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.recon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0
+	return ep==tp and (r&REASON_BATTLE+REASON_EFFECT)~=0
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
@@ -57,7 +57,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CHANGE_TYPE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+0x1fc0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 	e1:SetValue(TYPE_TRAP+TYPE_CONTINUOUS)
 	c:RegisterEffect(e1)
 end

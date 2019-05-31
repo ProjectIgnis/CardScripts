@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,nil,2,2,aux.dncheck)
+	Link.AddProcedure(c,nil,2,2,aux.dncheck)
 	--cannot be attacked
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_POLYMERIZATION}
 s.material_setcode={0x99,0x9f}
 function s.immcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsCode(CARD_POLYMERIZATION) and e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)

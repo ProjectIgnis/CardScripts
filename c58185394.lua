@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.dmop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={99171160}
 function s.sdfilter(c)
 	return c:IsFaceup() and c:IsCode(99171160)
 end

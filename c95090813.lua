@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e2)
 end
+s.listed_names={36623431}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and ec:IsLevelBelow(3) and ec:IsRace(RACE_WARRIOR)
 end

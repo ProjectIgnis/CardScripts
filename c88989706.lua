@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetCode(3682106)
 	c:RegisterEffect(e4)
 end
+s.listed_names={39711336}
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id+1)>0
 end

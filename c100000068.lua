@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	aux.CallToken(420)
 end
+s.listed_names={63468625}
 function s.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsCode(63468625)
 end

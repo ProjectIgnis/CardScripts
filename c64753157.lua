@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_TO_GRAVE)
 	c:RegisterEffect(e4)
 end
+s.listed_names={41091257}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()

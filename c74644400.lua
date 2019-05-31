@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_ASSAULT_MODE }
+s.listed_names={CARD_ASSAULT_MODE}
 function s.thfilter(c)
 	return (c:IsCode(CARD_ASSAULT_MODE) or aux.IsCodeListed(c,CARD_ASSAULT_MODE)) 
 		and not c:IsCode(id) and c:IsAbleToHand()

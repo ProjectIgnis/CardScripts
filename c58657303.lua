@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_NECROVALLEY}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(CARD_NECROVALLEY)
 end

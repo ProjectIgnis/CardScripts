@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
 end
+s.listed_names={40418351}
 function s.ffilter(c,tp,e)
 	return c:IsSummonCode(nil,SUMMON_TYPE_FUSION,tp,41230939,77625948,3019642) and c:IsCanBeFusionMaterial() and c:IsAbleToDeck()
 		and (not e or not c:IsImmuneToEffect(e))

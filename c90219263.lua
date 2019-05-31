@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS}
+s.listed_names={CARD_HARPIE_LADY}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_HARPIE_LADY)
 end

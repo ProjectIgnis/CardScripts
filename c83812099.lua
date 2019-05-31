@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
+s.listed_names={75560629}
 function s.eqcon1(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():GetEquipGroup():IsExists(Card.IsCode,1,nil,75560629)
 end

@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={100000270}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetDecktopGroup(tp,1):GetFirst()
 	return tc and tc:IsCode(100000270) and tc:IsFaceup()

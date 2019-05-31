@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={29762407}
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsCode(29762407)
 end

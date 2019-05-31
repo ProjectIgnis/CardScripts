@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={27780618}
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and (c:IsSetCard(0x5008) or c:IsCode(27780618)) and c:IsType(TYPE_MONSTER)
 end

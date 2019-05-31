@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL}
 s.dark_magician_list=true
 function s.filter1(c)
 	return c:IsFaceup() and c:IsCode(CARD_DARK_MAGICIAN)

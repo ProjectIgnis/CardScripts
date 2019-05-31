@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={40591390}
 function s.dcon(e)
 	return e:GetHandler():GetCounter(0x1b)>=4
 end

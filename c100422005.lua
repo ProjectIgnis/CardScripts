@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.extraop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_DESTINY_BOARD}
+s.listed_names={CARD_DESTINY_BOARD,94212438}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)

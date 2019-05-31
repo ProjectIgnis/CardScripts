@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.sumcon)
 	c:RegisterEffect(e4) 
 end
+s.listed_names={60482781}
 s.lvupcount=1
 s.lvup={60482781}
 s.lvdncount=1

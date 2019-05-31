@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.splimit)
 	c:RegisterEffect(e2)
 end
+s.listed_names={100000025}
 function s.ffilter1(c,fc,sumtype,tp)
 	return c:IsRace(RACE_ROCK,fc,sumtype,tp) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)
 end

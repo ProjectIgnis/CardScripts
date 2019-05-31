@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.subcon)
 	c:RegisterEffect(e2)
 end
+s.listed_names={CARD_POLYMERIZATION}
 function s.subcon(e)
 	return e:GetHandler():IsLocation(LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)
 end

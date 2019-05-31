@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_ATTACK,s.counterfilter)
 end
+s.listed_names={CARD_DARK_MAGICIAN}
 s.dark_magician_list=true
 function s.counterfilter(c)
     return not c:IsCode(CARD_DARK_MAGICIAN)

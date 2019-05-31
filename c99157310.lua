@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={75119040}
 function s.cfilter1(c)
 	return c:IsSetCard(0x10b) and c:IsType(TYPE_MONSTER)
 end

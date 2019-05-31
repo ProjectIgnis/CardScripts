@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={CARD_CYBER_DRAGON}
 function s.rmfilter(c)
 	return (not c:IsLocation(LOCATION_MZONE) or c:IsFaceup()) and c:IsCode(CARD_CYBER_DRAGON) and c:IsLevelAbove(1) and c:IsAbleToRemove()
 end

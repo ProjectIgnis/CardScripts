@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
+s.listed_names={27780618}
 function s.spfilter(c)
 	return (c:IsSetCard(0x5008) or c:IsCode(27780618)) and c:IsLevelBelow(4) and c:IsAbleToGraveAsCost()
 end

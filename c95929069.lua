@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={68535320}
 function s.dfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end

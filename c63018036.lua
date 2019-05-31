@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={36623431}
 function s.tgfilter(c)
 	return c:IsCode(36623431) and c:IsAbleToGrave()
 end

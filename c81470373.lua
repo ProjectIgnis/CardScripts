@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tfop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={91351370}
 function s.tfcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end

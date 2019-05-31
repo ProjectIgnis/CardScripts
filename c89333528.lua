@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desrepop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={68505803}
 function s.repfilter(c,e)
 	return c:IsFaceup() and c:IsCode(68505803)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)

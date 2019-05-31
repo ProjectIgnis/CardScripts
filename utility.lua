@@ -72,7 +72,7 @@ Group.__sub = function (o1,o2)
 end
 
 Group.__len = function (g)
-	return #g
+	return g:GetCount()
 end
 
 Group.__eq = function (g1,g2)

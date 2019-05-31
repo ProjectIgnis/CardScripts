@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
 end
+s.listed_names={4929256}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(4929256)
 end

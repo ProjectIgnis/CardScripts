@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e6:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e6)
 end
+s.listed_names={31437713}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and (c:IsSetCard(0x528) or c:IsCode(31437713)) and c:IsControler(tp)
 end

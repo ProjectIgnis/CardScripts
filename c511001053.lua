@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={77462146}
 function s.filter(c)
 	return c:IsFaceup() and (c:IsSetCard(0x10d9) or c:IsCode(77462146))
 end

@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511001086}
 function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK) and not c:IsReason(REASON_RULE)
 end

@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
 end
+s.listed_names={85346853}
 function s.mtfilter(c,e)
 	return c:GetLevel()>0 and c:IsAbleToRemove() and not c:IsImmuneToEffect(e) and aux.SpElimFilter(c,true)
 end

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop2)
 	c:RegisterEffect(e4)
 end
+s.listed_names={511002422,511002423}
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end

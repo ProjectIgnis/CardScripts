@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={45045866}
 function s.rfilter(c,ft,tp)
 	return c:IsCode(45045866)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())

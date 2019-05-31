@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511000110,511000111}
 function s.cfilter(c,e,tp)
 	local code=c:GetCode()
 	if c:IsCode(511000110) and c:IsCode(511000111) then

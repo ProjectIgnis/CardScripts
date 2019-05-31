@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e3)
 end
+s.listed_names={1546123,27564031}
 function s.spfilter(c)
 	return c:IsCode(1546123) and c:IsAbleToGraveAsCost()
 end

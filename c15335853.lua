@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e6:SetCondition(s.atcon)
 	c:RegisterEffect(e6)
 end
+s.listed_names={31533705}
 function s.lvval(e,c)
 	local tp=c:GetControler()
 	local lv=0

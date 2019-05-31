@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={6205579}
 s.material_setcode=0x53d
 function s.val(e,c)
 	local val1=Duel.GetMatchingGroupCount(s.filter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)

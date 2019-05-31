@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	aux.CallToken(39972129)
 end
+s.listed_names={39972130}
 s.xyz_number=64
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_UMI}
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner()
 end

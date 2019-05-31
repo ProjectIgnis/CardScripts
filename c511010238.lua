@@ -27,6 +27,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_names={92365601}
 s.xyz_number=39
 function s.rankupregcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsCode(92365601) 

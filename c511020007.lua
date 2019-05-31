@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e2)
 end
+s.listed_names={77585513}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsReason(REASON_RETURN)
 end

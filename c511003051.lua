@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511003050}
 function s.ccfilter(c,mc,oc,lv,tp)
 	if c:IsFacedown() or not c:IsCode(511003050) then return false end
 	local nolevel=false

@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={49375719,2158562}
 function s.costfilter(c,ft)
 	return c:IsFaceup() and c:IsCode(49375719) and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)
 end

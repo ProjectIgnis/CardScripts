@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_TO_DECK)
 	c:RegisterEffect(e3)
 end
+s.listed_names={27288416}
 function s.spfilter(c,e,tp)
 	return c:IsCode(27288416) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

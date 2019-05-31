@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.limop2)
 	c:RegisterEffect(e5)
 end
+s.listed_names={86120751}
 function s.thfilter(c)
 	return c:IsCode(86120751) and c:IsAbleToHand()
 end

@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_UMI}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_UMI) and c:IsAbleToGraveAsCost()
 end

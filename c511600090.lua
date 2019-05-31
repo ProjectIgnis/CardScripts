@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.tdop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={41209827,82044279,16195942}
 function s.hspfilter1(c,g,ft)
 	local rg=Group.FromCards(c)
 	local ct=ft

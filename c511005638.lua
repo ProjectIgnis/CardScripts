@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.activate2)
 	c:RegisterEffect(e6)
 end
+s.listed_names={33900648}
 
 function s.con2(e,tp,eg,ep,ev,re,r,rp)
     return Duel.GetBattleDamage(tp)>1000 and ( (Duel.GetAttacker():IsControler(tp) and Duel.GetAttacker():IsSetCard(0x306)) or (Duel.GetAttackTarget() and Duel.GetAttackTarget():IsControler(tp) and Duel.GetAttackTarget():IsSetCard(0x306)) )

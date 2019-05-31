@@ -58,7 +58,7 @@ function s.initial_effect(c)
 	aux.CallToken(12744567)
 end
 s.xyz_number=101
-s.listed_names={48739166}
+s.listed_names={48739166,100000581,111011002,511000580,511002068,511002164,93238626}
 function s.filter(c)
 	return not c:IsType(TYPE_TOKEN) and c:IsAbleToChangeControler()
 end

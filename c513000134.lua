@@ -73,6 +73,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(df,0)
 	end
 end
+s.listed_names={95286165,10000010,511000987}
 --De-Fusion
 function s.dffilter(c)
 	if not c:IsCode(95286165) then return false end

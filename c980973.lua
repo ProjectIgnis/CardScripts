@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={46384672}
 s.lvupcount=1
 s.lvup={46384672}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511000005,511000006}
 function s.cfilter(c,ft,tp)
 	return c:IsFaceup() and c:IsCode(511000005) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5))
 end

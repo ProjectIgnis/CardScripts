@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
+s.listed_names={50140163}
 s.lvupcount=2
 s.lvup={50140163,87257460}
 s.lvdncount=1

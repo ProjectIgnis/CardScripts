@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={16898077}
 function s.spcfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToGraveAsCost()
 end

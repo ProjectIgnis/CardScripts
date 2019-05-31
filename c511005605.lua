@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.eqop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={511005604}
 function s.filter(c,e,p)
 	return c:IsCode(511005604) and c:IsCanBeSpecialSummoned(e,0,p,false,false)
 end

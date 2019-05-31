@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e5:SetCondition(s.atcon)
 	c:RegisterEffect(e5)
 end
+s.listed_names={80887952}
 function s.hspfilter(c,ft,tp)
 	return c:IsCode(80887952)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())

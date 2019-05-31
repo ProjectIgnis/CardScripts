@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.ntcon)
 	c:RegisterEffect(e1)
 end
+s.listed_names={450000110}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(450000110)
 end

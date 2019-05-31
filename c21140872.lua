@@ -49,7 +49,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e4)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_REDEYES_B_DRAGON}
+s.listed_names={CARD_NECROVALLEY}
 s.material_setcode=0x3b
 function s.eqcon(e)
 	return Duel.GetAttacker():IsSetCard(0x3b)

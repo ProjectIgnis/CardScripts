@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_names={25247218,58843503}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(25247218)
 end

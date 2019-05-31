@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	e1:SetLabelObject(e2)
 end
+s.listed_names={74711057}
 s.material_setcode={0x8,0x3008}
 function s.cfilter(c,tp)
 	return c:IsSetCard(0x3008) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)

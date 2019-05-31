@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.sop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={64910482}
 function s.synlimit(e,c)
 	if not c then return false end
 	return not c:IsSetCard(0x27)

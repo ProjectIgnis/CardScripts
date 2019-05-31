@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.value)
 	c:RegisterEffect(e2)
 end
+s.listed_names={9327502}
 function s.value(e,c)
 	local ec=e:GetHandler():GetEquipTarget()
 	if ec:IsCode(9327502) then

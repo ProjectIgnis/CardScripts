@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511005623,511005624}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(511005623)
 end

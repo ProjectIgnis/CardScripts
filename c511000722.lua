@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.op)
 	c:RegisterEffect(e3)
 end
+s.listed_names={511000720}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:GetFirst():GetLevel()<=7
 end

@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
 end
+s.listed_names={53569894}
 function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

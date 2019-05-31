@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e4:SetLabel(1)
 	c:RegisterEffect(e4)
 end
+s.listed_names={70902743}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
 	if chk==0 then return true end

@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={57116033,98585345}
 function s.tgfilter(c)
 	return c:IsCode(57116033) and c:IsAbleToGraveAsCost()
 end

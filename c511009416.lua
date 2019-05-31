@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.value)
 	c:RegisterEffect(e1)
 end
+s.listed_names={63977008}
 s.material_setcode=0x17
 function s.tfilter(c)
 	return c:IsCode(63977008) or c:IsHasEffect(20932152)

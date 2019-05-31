@@ -47,6 +47,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.negop)
 	c:RegisterEffect(e6)
 end
+s.listed_names={51447164}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local ct=#g

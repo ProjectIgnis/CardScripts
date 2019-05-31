@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.negcon)
 	c:RegisterEffect(e3)
 end
+s.listed_names={511000153}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst()==e:GetHandler()
 end

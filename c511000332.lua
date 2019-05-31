@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.polyop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={CARD_POLYMERIZATION}
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsAbleToExtra()
 end

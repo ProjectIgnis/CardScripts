@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	aux.CallToken(420)
 end
+s.listed_names={511000275}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(511000275)
 end

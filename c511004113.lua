@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511004125}
 function s.filter(c)
 	return c:IsReleasableByEffect() and c:IsCode(511004125)
 end

@@ -52,6 +52,7 @@ function s.initial_effect(c)
 	e9:SetTarget(s.sumlimit)
 	c:RegisterEffect(e9)
 end
+s.listed_names={100000013,100000014}
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp and e:GetHandler():IsPosition(POS_FACEUP_ATTACK) and Duel.SelectYesNo(tp,aux.Stringid(93816465,1)) then
 		Duel.ChangeBattleDamage(tp,0)

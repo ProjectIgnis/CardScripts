@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={16313112}
 s.fit_monster={16313112}
 function s.ritualfil(c)
 	return c:IsSetCard(0x119) and c:IsRitualMonster()

@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e4:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e4)
 end
+s.listed_names={511000275}
 s.xyz_number=1
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,511000230) and Duel.IsEnvironment(511000275)

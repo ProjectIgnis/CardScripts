@@ -98,6 +98,7 @@ function s.initial_effect(c)
 	e17:SetValue(1)
 	c:RegisterEffect(e17)
 end
+s.listed_names={10000011,21208154}
 function s.ttcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-3 and Duel.GetTributeCount(c)>=3

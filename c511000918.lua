@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.sumop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511000917}
 function s.filter(c,e,tp)
 	return c:IsCode(511000917) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

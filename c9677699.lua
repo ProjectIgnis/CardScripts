@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.eqop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={78527720}
 function s.value(e,c)
 	local ec=e:GetHandler():GetEquipTarget()
 	if ec:IsRace(RACE_FAIRY) then

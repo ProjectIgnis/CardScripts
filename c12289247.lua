@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.hnop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={20409757,13331639}
 function s.rpfilter(c,e,tp)
 	return c:IsCode(20409757) and (not c:IsForbidden()
 		or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))

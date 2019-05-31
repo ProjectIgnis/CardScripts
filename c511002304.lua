@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
+s.listed_names={511002301}
 function s.target(e,c)
 	return c:IsCode(511002301) and (c:GetSummonType()&SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
 end

@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={62188962}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldCard(tp,LOCATION_SZONE,5)~=nil then return false end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)

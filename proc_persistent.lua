@@ -76,7 +76,7 @@ function Auxiliary.PersistentTgOp(anypos)
 			local tc=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):GetFirst()
 			if c:IsRelateToEffect(re) and tc and (anypos or tc:IsFaceup()) and tc:IsRelateToEffect(re) then
 				c:SetCardTarget(tc)
-				c:CreateRelation(tc,RESET_EVENT+0x1fe0000)
+				c:CreateRelation(tc,RESET_EVENT+RESETS_STANDARD)
 			end
 		end
 end

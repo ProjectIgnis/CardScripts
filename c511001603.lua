@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	aux.CallToken(419)
 end
+s.listed_names={39765958}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()

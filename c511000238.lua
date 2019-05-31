@@ -137,6 +137,7 @@ function s.initial_effect(c)
 	red:SetOperation(s.redatk)
 	c:RegisterEffect(red)
 end
+s.listed_names={10000010}
 function s.adval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)*1000
 end

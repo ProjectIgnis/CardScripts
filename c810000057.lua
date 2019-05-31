@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={44508094}
 function s.filter(c,e,tp)
 	return c:IsCode(44508094) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and c:GetFlagEffect(44508094)>0

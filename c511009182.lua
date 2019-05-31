@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={511009184,511009185}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if (c:GetPreviousLocation()&LOCATION_ONFIELD)~=0 and c:IsReason(REASON_DESTROY) then

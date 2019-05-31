@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={36472900}
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end

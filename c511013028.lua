@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={62476815}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local e2=Effect.CreateEffect(e:GetHandler())

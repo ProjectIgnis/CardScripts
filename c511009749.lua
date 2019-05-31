@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	aux.CallToken(420)
 end
+s.listed_names={511009741}
 function s.spfilter(c,e,tp)
 	return c:IsDrone() and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

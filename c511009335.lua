@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.effop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={511009337}
 s.material_setcode=0x52
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsSetCard(0x52) and c:IsAttribute(ATTRIBUTE_DARK,fc,sumtype,tp)

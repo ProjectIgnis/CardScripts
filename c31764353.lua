@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={37744402}
 function s.spfilter1(c)
 	return c:IsFaceup() and c:IsCode(37744402) and c:IsAbleToGraveAsCost()
 end

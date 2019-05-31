@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.descon)
 	c:RegisterEffect(e2)
 end
+s.listed_names={CARD_BLUEEYES_W_DRAGON,27564031}
 function s.spfilter(c)
 	return c:IsCode(CARD_BLUEEYES_W_DRAGON) and c:IsAbleToGraveAsCost()
 end

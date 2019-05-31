@@ -13,6 +13,7 @@ function scard.initial_effect(c)
 	e1:SetOperation(scard.op)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511005044}
 
 function scard.fil(c,e,tp)
 	return c:IsCode(511005044) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

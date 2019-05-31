@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.caop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={44508094}
 function s.cfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_DRAGON)
 end

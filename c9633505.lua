@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	c:RegisterEffect(e5)
 end
+s.listed_names={95515060}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(95515060)
 end

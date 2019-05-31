@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.dmgop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={CARD_DARK_MAGICIAN}
 function s.rfilter(c,ft,tp)
 	return c:IsCode(CARD_DARK_MAGICIAN)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_names={89194033}
 function s.cfilter(c,ft,e,tp)
 	if c:IsFacedown() or not c:IsCode(89194033) or not c:IsAbleToGraveAsCost() then return false end
 	if ft>0 or (ft>-1 and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5) then

@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.crystalop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={12644061}
 function s.descon(e)
 	local c=e:GetHandler()
 	return not Duel.IsEnvironment(12644061) and (c:IsLocation(LOCATION_MZONE) or c:GetType()&TYPE_CONTINUOUS+TYPE_SPELL==TYPE_CONTINUOUS+TYPE_SPELL)

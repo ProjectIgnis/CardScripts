@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={85066822}
 function s.splimit(e,se,sp,st)
 	local sc=se:GetHandler()
 	return sc and sc:IsType(TYPE_SPELL+TYPE_TRAP) and sc:IsSetCard(0x100)

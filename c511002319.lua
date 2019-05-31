@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511002318}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsCode,1,nil,511002317)
 end

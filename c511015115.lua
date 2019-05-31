@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={58054262}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return #g>1 and Duel.GetLocationCountFromEx(tp,tp,g)>0 end

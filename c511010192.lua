@@ -49,6 +49,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge3,0)
 	end
 end
+s.listed_names={97403510,100000581,111011002,511000580,511002068,511002164,93238626}
 s.xyz_number=92
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp then

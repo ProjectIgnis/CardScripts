@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_names={511001466}
 function s.cfilter(c,tp)
 	return c:IsCode(511001466) and c:IsControler(1-tp) and c:IsPreviousControler(tp)
 end

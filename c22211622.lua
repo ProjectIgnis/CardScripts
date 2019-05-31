@@ -47,6 +47,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.penop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={13331639}
 function s.splimcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)>0
 end

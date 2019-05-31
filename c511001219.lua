@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetTarget(aux.NOT(aux.TargetBoolFunction(Card.IsPublic)))
 	c:RegisterEffect(e4)
 end
+s.listed_names={511001218}
 function s.rmtarget(e,c)
 	if not c:IsLocation(0x80) and not c:IsType(TYPE_SPELL+TYPE_TRAP) then
 		if c:GetOwner()==e:GetHandler():GetOwner() then

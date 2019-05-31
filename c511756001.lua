@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
 end
+s.listed_names={50045299}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(50045299) and c:GetOverlayGroup():IsExists(Card.IsRace,1,nil,RACE_DRAGON)
 end

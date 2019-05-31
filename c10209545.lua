@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.hdop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={47693640}
 function s.filter(c,e,tp)
 	return c:IsCode(47693640) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

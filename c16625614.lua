@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
+s.listed_names={94212438}
 s.toss_coin=true
 function s.chcon1(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()

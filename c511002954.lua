@@ -41,6 +41,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_names={14577226}
 s.material_setcode=0xf0
 s.miracle_synchro_fusion=true
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

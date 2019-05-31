@@ -53,6 +53,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.damop)
 	c:RegisterEffect(e7)
 end
+s.listed_names={3643300}
 function s.cfilter(c,ft,tp)
 	return c:IsCode(3643300) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
 end

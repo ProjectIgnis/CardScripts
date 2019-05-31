@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e6)
 end
+s.listed_names={31764700}
 function s.condition(e)
 	return e:GetHandler():IsAttackPos()
 end

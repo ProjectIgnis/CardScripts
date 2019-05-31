@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.xyzlimit)
 	c:RegisterEffect(e3)
 end
+s.listed_names={71071546}
 function s.filter(c,e,tp)
 	return (c:IsSetCard(0x85) or c:IsCode(71071546)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

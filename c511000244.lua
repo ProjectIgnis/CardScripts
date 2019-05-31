@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetValue(LOCATION_SZONE)
 	c:RegisterEffect(e1)
 end
+s.listed_names={13893596}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,0x40)
 	return g:GetClassCount(Card.GetCode)>=5

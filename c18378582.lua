@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_SANCTUARY_SKY,66073051}
+s.listed_names={66073051,CARD_SANCTUARY_SKY}
 function s.rfilter(c,ft)
 	return c:IsFaceup() and c:IsCode(66073051) and (ft>0 or c:GetSequence()<5)
 end

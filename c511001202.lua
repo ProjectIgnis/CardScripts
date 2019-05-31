@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={99899504}
 function s.spfilter(c,tp)
 	return c:IsCode(99899504) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
 		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))

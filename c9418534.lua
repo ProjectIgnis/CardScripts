@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e2)
 end
+s.listed_names={77585513}
 function s.filter(c,e,tp)
 	return c:IsCode(77585513) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

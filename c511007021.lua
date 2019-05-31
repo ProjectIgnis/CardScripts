@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={30069398}
 function s.spfilter(c,e,tp)
 	return c:IsCode(30069398) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

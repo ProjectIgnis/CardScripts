@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={39910367}
 function s.spfilter(c,tp)
 	return c:IsCode(39910367) and c:IsCanRemoveCounter(tp,0x1,6,REASON_COST)
 end
@@ -64,7 +65,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

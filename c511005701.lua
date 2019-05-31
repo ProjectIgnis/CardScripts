@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_names={35050257}
 function s.con(e,c)
 	return e:GetHandler():IsReason(REASON_BATTLE+REASON_EFFECT)
 end

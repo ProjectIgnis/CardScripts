@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511000266}
 function s.cfilter(c,ft)
 	return c:IsFaceup() and c:IsCode(511000266) and c:IsReleasable() and (ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end

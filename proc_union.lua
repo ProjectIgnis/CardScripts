@@ -114,9 +114,9 @@ end
 function Auxiliary.UnionReplace(oldrule)
 	return function (e,re,r,rp)
 		if oldrule then
-			return bit.band(r,REASON_BATTLE)~=0
+			return (r&REASON_BATTLE)~=0
 		else
-			return bit.band(r,REASON_BATTLE)~=0 or bit.band(r,REASON_EFFECT)~=0
+			return (r&REASON_BATTLE)~=0 or (r&REASON_EFFECT)~=0
 		end
 	end
 end
@@ -134,7 +134,7 @@ function Auxiliary.SetUnionState(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UNION_STATUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	if c.old_union then
 		local e2=e1:Clone()

@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
+s.listed_names={64631466}
 function s.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and ((c:IsPreviousSetCard(0x110) and c:GetPreviousTypeOnField()&TYPE_FUSION~=0)

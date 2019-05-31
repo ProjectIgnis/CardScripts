@@ -95,6 +95,7 @@ function s.initial_effect(c)
 	e9:SetOperation(s.desop)
 	c:RegisterEffect(e9)
 end
+s.listed_names={76794549}
 function s.fscon(e,g,gc,chkfnf)
 	if g==nil then return true end
 	return false

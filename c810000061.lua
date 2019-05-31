@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={810000058}
 function s.tgfilter(c)
 	return c:IsCode(810000058) and c:IsAbleToHand()
 end

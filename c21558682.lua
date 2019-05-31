@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={31709826}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer() and Duel.GetAttackTarget()~=nil
 end

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
-s.listed_names={CARD_NEOS,CARD_POLYMERIZATION}
+s.listed_names={CARD_NEOS}
 s.material_setcode={0x8,0x3008,0x9}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

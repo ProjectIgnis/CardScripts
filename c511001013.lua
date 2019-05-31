@@ -42,6 +42,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end
 end
+s.listed_names={84327329}
 function s.filter(c)
 	return c:GetOriginalCode()==46411259
 end

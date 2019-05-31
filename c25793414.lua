@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={14577226,id}
+s.listed_names={14577226}
 s.miracle_synchro_fusion=true
 s.material_setcode=0xf0
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

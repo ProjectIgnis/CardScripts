@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={32231618}
 function s.filter(c,tp)
 	if not c:IsLevelBelow(4) or not c:IsType(TYPE_FLIP) or (c:IsCode(32231618) and c:IsLocation(LOCATION_GRAVE)) 
 		or not c:IsSummonableCard() or c:IsStatus(STATUS_FORBIDDEN) then return false end

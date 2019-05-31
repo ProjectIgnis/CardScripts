@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.winop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={48995978}
 s.xyz_number=88
 s.rum_limit=function(c,e)
 	return c:IsCode(48995978)

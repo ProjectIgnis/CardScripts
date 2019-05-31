@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={28563545}
 function s.cfilter(c)
 	return (c:GetPreviousPosition()&POS_DEFENSE)~=0 and c:IsFaceup() and c:IsAttackPos() 
 		and c:IsCode(28563545)

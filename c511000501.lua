@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={34230233}
 function s.splimit(e,se,sp,st)
 	return (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end

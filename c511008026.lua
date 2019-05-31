@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={100000050,100000056,100000061}
 --self destruction
 function s.cfil(c)
 	return c:IsFaceup() and (c:IsCode(100000050) or c:IsCode(100000056) or c:IsCode(100000061))

@@ -50,6 +50,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.disop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={100000270}
 function s.mzfilter(c,tp)
 	return c:IsControler(tp) and c:GetSequence()<5
 end

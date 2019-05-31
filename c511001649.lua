@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={511001648}
 function s.cfilter(c)
 	return c:IsRace(RACE_DINOSAUR) and c:IsReleasable()
 end

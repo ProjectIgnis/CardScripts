@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_ASSAULT_MODE}
+s.listed_names={6021033}
 s.assault_mode=6021033
 function s.filter1(c,e,tp)
 	return c:IsRace(RACE_ZOMBIE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

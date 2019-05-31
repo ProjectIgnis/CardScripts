@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 	aux.CallToken(6387204)
 end
+s.listed_names={9161357}
 s.xyz_number=6
 function s.rumfilter(c)
 	return c:IsCode(9161357) and not c:IsPreviousLocation(LOCATION_OVERLAY)

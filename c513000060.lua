@@ -49,6 +49,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_names={84013237,100000581,111011002,511000580,511002068,511002164,93238626}
 s.xyz_number=39
 function s.efilter(e,re)
 	return re:GetOwnerPlayer()~=e:GetHandlerPlayer()

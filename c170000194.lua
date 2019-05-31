@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e6:SetCode(511000694)
 	c:RegisterEffect(e6)
 end
+s.listed_names={25652259}
 function s.hermos_filter(c)
 	return c:IsCode(25652259)
 end

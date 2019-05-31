@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={6022371}
 function s.cfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToDeckAsCost()
 end

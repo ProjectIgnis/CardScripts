@@ -39,6 +39,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end
 end
+s.listed_names={38834303}
 s.dm=true
 s.dm_spsummon_op=function(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

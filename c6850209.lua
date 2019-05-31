@@ -25,6 +25,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_names={85605684}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do

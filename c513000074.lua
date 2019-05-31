@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 end
+s.listed_names={27564031}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
 end

@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.eqlimit)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_DARK_MAGICIAN}
 s.dark_magician_list=true
 function s.eqlimit(e,c)
 	return c:IsCode(CARD_DARK_MAGICIAN)

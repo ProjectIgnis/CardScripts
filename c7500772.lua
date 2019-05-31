@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon)
 	c:RegisterEffect(e2)
 end
+s.listed_names={70101178}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0

@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon)
 	c:RegisterEffect(e2)
 end
+s.listed_names={98881931}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(98881931)
 end

@@ -132,21 +132,21 @@ function Link.Target(f,minc,maxc,specialchk)
 				local sg=Group.CreateGroup()
 				local cancel=false
 				sg:Merge(mustg)
-				while sg:GetCount()<max do
+				while #sg<max do
 					local filters={}
 					if #sg>0 then
 						Link.CheckRecursive2(sg:GetFirst(),tp,Group.CreateGroup(),sg,mg+tg,mg+tg,c,min,max,f,specialchk,mg,emt,filters)
 					end
 					local cg=(mg+tg):Filter(Link.CheckRecursive,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt,filters)
-					if cg:GetCount()==0 then break end
-					if sg:GetCount()>=min and sg:GetCount()<=max and Link.CheckGoal(tp,sg,c,min,f,specialchk,filters) then
+					if #cg==0 then break end
+					if #sg>=min and #sg<=max and Link.CheckGoal(tp,sg,c,min,f,specialchk,filters) then
 						cancel=true
 					else
-						cancel=not og and Duel.GetCurrentChain()<=0 and sg:GetCount()==0
+						cancel=not og and Duel.GetCurrentChain()<=0 and #sg==0
 					end
 					local tc=Group.SelectUnselect(cg,sg,tp,cancel,cancel,1,1)
 					if not tc then break end
-					if mustg:GetCount()==0 or not mustg:IsContains(tc) then
+					if #mustg==0 or not mustg:IsContains(tc) then
 						if not sg:IsContains(tc) then
 							sg:AddCard(tc)
 						else
@@ -154,7 +154,7 @@ function Link.Target(f,minc,maxc,specialchk)
 						end
 					end
 				end
-				if sg:GetCount()>0 then
+				if #sg>0 then
 					local filters={}
 					Link.CheckRecursive2(sg:GetFirst(),tp,Group.CreateGroup(),sg,mg+tg,mg+tg,c,min,max,f,specialchk,mg,emt,filters)
 					sg:KeepAlive()

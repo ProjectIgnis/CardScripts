@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.sop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={100000540}
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_BEAST)
 end

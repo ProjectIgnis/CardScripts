@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={53503015,99092624,73580471}
+s.listed_names={73580471}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO

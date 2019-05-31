@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={69937550}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return d and d:IsCode(69937550) and d:IsFaceup() and d:IsControler(tp)

@@ -69,6 +69,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_names={511009337}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSummonLocation(LOCATION_EXTRA)
 end

@@ -82,6 +82,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e10)
 	aux.CallToken(69757518)
 end
+s.listed_names={90126061}
 s.xyz_number=5
 function s.atkval(e,c)
 	return c:GetOverlayCount()*1000

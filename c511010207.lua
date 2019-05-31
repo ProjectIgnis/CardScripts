@@ -69,7 +69,7 @@ function s.initial_effect(c)
 	end
 end
 s.xyz_number=107
-s.listed_names={88177324}
+s.listed_names={88177324,100000581,111011002,511000580,511002068,511002164,93238626}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if rc then

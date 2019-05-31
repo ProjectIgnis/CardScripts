@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_POLYMERIZATION,500000141}
 function s.filter(c)
 	return c:IsCode(CARD_POLYMERIZATION) or c:IsCode(500000141)
 end

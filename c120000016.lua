@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={99267150}
 s.fit_monster={99267150}
 function s.spfilter(c,e,tp)
 	return c:IsCode(99267150) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)

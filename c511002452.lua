@@ -69,6 +69,7 @@ function s.initial_effect(c)
 	e9:SetTarget(s.desreptg)
 	c:RegisterEffect(e9)
 end
+s.listed_names={34022290,81954378}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_DESTROY) and c:IsCode(34022290)

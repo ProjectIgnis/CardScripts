@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={31801517}
 function s.filter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x55) or c:IsCode(31801517)) and aux.SpElimFilter(c,true)
 end

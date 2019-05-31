@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	c:RegisterEffect(e2)
 end
+s.listed_names={511002145}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return d and d==e:GetHandler():GetEquipTarget()

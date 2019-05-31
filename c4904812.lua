@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={68505803}
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToGraveAsCost()
 end

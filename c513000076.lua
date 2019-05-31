@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.desreptg)
 	c:RegisterEffect(e4)
 end
+s.listed_names={27564031}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()

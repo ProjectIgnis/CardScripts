@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={40240595,58192742}
 function s.eqfilter(c)
 	return c:IsCode(40240595) and c:GetTurnCounter()>=4
 end

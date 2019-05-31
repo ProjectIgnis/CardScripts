@@ -13,25 +13,22 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.costfilter(c)
-	return c:IsFaceup() and c:IsAbleToHandAsCost()
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if chk==0 then
 		if ft<0 then return false end
 		if ft==0 then
-			return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil)
+			return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAbleToHandAsCost),tp,LOCATION_MZONE,0,1,nil)
 		else
-			return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_ONFIELD,0,1,nil)
+			return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAbleToHandAsCost),tp,LOCATION_ONFIELD,0,1,nil)
 		end
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	if ft==0 then
-		local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsAbleToHandAsCost),tp,LOCATION_MZONE,0,1,1,nil)
 		Duel.SendtoHand(g,nil,REASON_COST)
 	else
-		local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsAbleToHandAsCost),tp,LOCATION_ONFIELD,0,1,1,nil)
 		Duel.SendtoHand(g,nil,REASON_COST)
 	end
 end

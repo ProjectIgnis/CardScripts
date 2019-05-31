@@ -9,19 +9,19 @@ function Card.GetMetatable(c)
 	return mt
 end
 bit={}
-function (a&b)
+function bit.band(a,b)
     return a&b
 end
-function (a|b)
+function bit.bor(a,b)
     return a|b
 end
-function (a~b)
+function bit.bxor(a,b)
     return a~b
 end
-function (a<<b)
+function bit.lshift(a,b)
     return a<<b
 end
-function (a>>b)
+function bit.rshift(a,b)
     return a>>b
 end
 function bit.bnot(a)
@@ -579,7 +579,7 @@ function Auxiliary.IsMaterialListSetCard(c,...)
 	return false
 end
 function Auxiliary.IsCodeListed(c,...)
-s.listed_names={14088859}
+	if not c.listed_names then return false end
 	local codes={...}
 	for _,code in ipairs(codes) do
 		for _,ccode in ipairs(c.listed_names) do

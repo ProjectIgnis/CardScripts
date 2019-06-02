@@ -1,4 +1,5 @@
 --魔界劇団－ワイルド・ホープ
+--Abyss Actor - Wild Hope
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -58,7 +59,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetDescription(aux.Stringid(id,3))
 	e3:SetTargetRange(1,0)
 	e3:SetTarget(s.splimit)
 	e3:SetReset(RESET_PHASE+PHASE_END)

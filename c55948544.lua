@@ -1,4 +1,5 @@
 --ファラオの審判
+--Judgment of the Pharaoh
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -57,6 +58,12 @@ function s.operation1(e,tp,eg,ep,ev,re,r,rp)
 	e6:SetValue(s.aclimit1)
 	e6:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e6,tp)
+	local e7=Effect.CreateEffect(e:GetHandler())
+	e7:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e7:SetDescription(aux.Stringid(id,2))
+	e7:SetReset(RESET_PHASE+PHASE_END)
+	e7:SetTargetRange(0,1)
+	Duel.RegisterEffect(e7,tp)
 end
 function s.aclimit1(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER)
@@ -94,6 +101,12 @@ function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetTarget(s.distg)
 	e4:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e4,tp)
+	local e5=Effect.CreateEffect(e:GetHandler())
+	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e5:SetDescription(aux.Stringid(id,2))
+	e5:SetReset(RESET_PHASE+PHASE_END)
+	e5:SetTargetRange(0,1)
+	Duel.RegisterEffect(e5,tp)
 end
 function s.aclimit2(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)

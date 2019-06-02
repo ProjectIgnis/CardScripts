@@ -1,4 +1,5 @@
 --驚天動地
+--Earthshattering Event
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -45,7 +46,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCode(EFFECT_CANNOT_DISCARD_DECK)
 	e2:SetTargetRange(1,1)
 	e2:SetReset(RESET_PHASE+PHASE_END)

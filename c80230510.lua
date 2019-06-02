@@ -1,4 +1,5 @@
 --埋葬されし生け贄
+--Tribute Burial
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,7 +33,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	e3:SetTargetRange(1,0)

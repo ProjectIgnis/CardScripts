@@ -1,4 +1,5 @@
 --爆走特急ロケット・アロー
+--Rocket Arrow Express
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -88,7 +89,8 @@ end
 function s.spcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BP)
 	e1:SetTargetRange(1,0)

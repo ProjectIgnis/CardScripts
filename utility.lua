@@ -201,6 +201,8 @@ function Card.RegisterEffect(c,e,forced,...)
 	if c:IsStatus(STATUS_INITIALIZING) and not e then Debug.Message("missing (Effect e) in c"..c:GetOriginalCode()..".lua") return end
 	--1 == 511002571 - access to effects that activate that detach an Xyz Material as cost
 	--2 == 511001692 - access to Cardian Summoning conditions/effects
+	--4 ==  12081875 - access to Thunder Dragon effects that activate by discarding
+	--8 == 511310036 - access to Allure Queen effects that activate by sending themselves to GY
 	local reg_e = regeff(c,e,forced)
 	if not reg_e then
 		return nil
@@ -219,6 +221,8 @@ function Card.RegisterEffect(c,e,forced,...)
 			e2:SetCode(511001692)
 		elseif val==4 then
 			e2:SetCode(12081875)
+		elseif val==8 then
+			e2:SetCode(511310036)
 		end
 		e2:SetLabelObject(e)
 		e2:SetLabel(c:GetOriginalCode())

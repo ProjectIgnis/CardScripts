@@ -1,4 +1,5 @@
 --エルシャドール・シェキナーガ
+--El Shaddoll Shekhinaga
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_EXTRA)
 	e2:SetValue(aux.fuslimit)
 	c:RegisterEffect(e2)
-	--
+	--negate
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -51,8 +52,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateActivation(ev)
-	if re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 then
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_HAND,0,1,1,nil,0x9d)
 		if #g>0 then

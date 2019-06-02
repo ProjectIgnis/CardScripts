@@ -1,4 +1,5 @@
---TGX3－DX2
+--ＴＧＸ３－ＤＸ２
+--TGX3-DX2
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsSetCard(0x27) and c:IsAbleToDeck()
+	return c:IsSetCard(0x27) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

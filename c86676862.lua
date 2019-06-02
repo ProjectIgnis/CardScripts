@@ -1,4 +1,5 @@
 --E－HERO マリシャス・デビル
+--Evil HERO Malicious Fiend
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -40,6 +41,7 @@ function s.initial_effect(c)
 end
 s.material_setcode={0x8,0x6008}
 s.dark_calling=true
+s.listed_names={CARD_DARK_FUSION,58554959}
 function s.splimit(e,se,sp,st)
 	return st==SUMMON_TYPE_FUSION+0x10
 end

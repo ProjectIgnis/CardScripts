@@ -1,9 +1,7 @@
+--転生炎獣フォウル
 --Salamangreat Fowl
 --Logical Nonsense
-
---Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
 	--"Salamangreat" monster is normal summoned, optional trigger effect
 	local e1=Effect.CreateEffect(c)
@@ -35,7 +33,7 @@ function s.initial_effect(c)
 end
 	--If a "Salamangreat" monster is summoned to your field, besides "Salamangreat Fowl"
 function s.spfilter(c,tp)
-	return c:IsSetCard(0x119) and c:IsControler(tp) and not c:IsCode(id)
+	return c:IsSetCard(0x119) and c:IsControler(tp) and c:IsFaceup() and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spfilter,1,nil,tp)
@@ -81,4 +79,3 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-

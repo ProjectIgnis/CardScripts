@@ -1,4 +1,4 @@
--- 覇勝星イダテン
+--覇勝星イダテン
 --Idaten the Conquer Star
 local s,id=GetID()
 function s.initial_effect(c)
@@ -42,7 +42,7 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return bc and bc:IsLevelBelow(c:GetLevel()) and bc:IsControler(1-tp)
+	return bc and bc:IsLevelBelow(c:GetLevel()) and bc:GetAttack()>0 and bc:IsControler(1-tp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetHandler():GetBattleTarget()
@@ -89,4 +89,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

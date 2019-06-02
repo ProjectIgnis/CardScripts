@@ -1,4 +1,5 @@
 --魅惑の女王 LV3
+--Allure Queen LV3
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	e2:SetLabelObject(e1)
-	c:RegisterEffect(e2)
+	c:RegisterEffect(e2,false,REGISTER_FLAG_ALLURE_LVUP)
 end
 s.listed_names={23756165}
 s.lvupcount=1

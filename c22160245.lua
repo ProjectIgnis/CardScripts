@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_DARK_FUSION,58932615,21844576}
 s.material_setcode={0x8,0x3008}
 s.dark_calling=true
 function s.splimit(e,se,sp,st)

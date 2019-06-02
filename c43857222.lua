@@ -42,6 +42,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 			local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 			g:RemoveCard(tc)
 			local tc2=g:GetFirst()
+			if tc2==tc then tc2=g:GetNext() end
 			if tc2 and tc2:IsFaceup() and tc2:IsRelateToEffect(e) then
 				 tc2:UpdateLevel(lv,nil,c)
 			end

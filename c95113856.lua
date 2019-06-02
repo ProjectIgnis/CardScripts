@@ -1,4 +1,5 @@
 --幻子力空母エンタープラズニル
+--Phantom Fortress Enterblathnir
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false,1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -58,6 +59,19 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	if off==1 then return end
 	local op=Duel.SelectOption(tp,table.unpack(ops))
+	if op==0 then
+		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,LOCATION_ONFIELD)
+	elseif op==1 then
+		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_HAND,nil)
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,LOCATION_HAND)
+	elseif op==2 then
+		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_GRAVE,nil)
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,LOCATION_GRAVE)
+	elseif op==3 then
+		local g=Duel.GetDecktopGroup(1-tp,1)
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,LOCATION_DECK)
+	end
 	e:SetLabel(opval[op])
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -65,13 +79,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if op==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,1,nil)
-		if #g>0 then
+		if g:GetCount()>0 then
 			Duel.HintSelection(g)
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end
 	elseif op==2 then
 		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)
-		if #g>0 then
+		if g:GetCount()>0 then
 			local sg=g:RandomSelect(tp,1)
 			Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 		end
@@ -83,12 +97,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		else
 			g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,1,nil)
 		end
-		if #g>0 then
+		if g:GetCount()>0 then
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end
 	elseif op==4 then
 		local g=Duel.GetDecktopGroup(1-tp,1)
-		if #g>0 then
+		if g:GetCount()>0 then
 			Duel.DisableShuffleCheck()
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end

@@ -1,4 +1,5 @@
 --剣闘獣ダリウス
+--Gladiator Beast Darius
 local s,id=GetID()
 function s.initial_effect(c)
 	--grave special summon
@@ -49,6 +50,7 @@ function s.spgop(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsFaceup() and c:IsRelateToEffect(e) then
 		c:SetCardTarget(tc)
 		tc:RegisterFlagEffect(id+1,RESET_EVENT+0x53e0000,0,1)
+		--negate
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
@@ -61,6 +63,7 @@ function s.spgop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EVENT_CHAIN_SOLVING)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetLabelObject(tc)
 		e2:SetOperation(s.disop)
 		c:RegisterEffect(e2)
 	end
@@ -69,7 +72,7 @@ function s.discon(e)
 	return e:GetOwner():IsHasCardTarget(e:GetHandler())
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():GetFlagEffect(id+1)~=0 then
+	if re:GetHandler()==e:GetLabelObject() and re:GetHandler():GetFlagEffect(id+1)~=0 then
 		Duel.NegateEffect(ev)
 	end
 end

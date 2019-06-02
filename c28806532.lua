@@ -1,5 +1,5 @@
 --曇天気スレット
---Cloudy Weathery Sleet
+--The Weather Painter Cloud
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.tfcfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(0x109) and c:IsPreviousLocation(LOCATION_ONFIELD)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsPreviousSetCard(0x109) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.tfcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tfcfilter,1,e:GetHandler(),tp)

@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.indesval)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_DARK_FUSION,58932615,84327329}
 s.material_setcode={0x8,0x3008}
 s.dark_calling=true
 function s.splimit(e,se,sp,st)

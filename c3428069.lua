@@ -1,4 +1,5 @@
 --破壊剣の使い手－バスター・ブレイダー
+--Buster Blader, the Destruction Swordmaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--Code
@@ -45,7 +46,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=nil
 	if #g>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		tc=g:Select(tp,1,1,nil):GetFirst()
+		tc=g:Select(tp,1,1,nil)
 	else
 		tc=g:GetFirst()
 	end

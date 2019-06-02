@@ -1,4 +1,5 @@
 --巨神竜の遺跡
+--Ruins of the Divine Dragon Lords
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

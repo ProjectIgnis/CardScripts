@@ -1,4 +1,5 @@
 --波動竜フォノン・ドラゴン
+--Phonon Pulse Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
@@ -40,7 +41,8 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetTargetRange(1,0)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	e2:SetTarget(s.splimit)

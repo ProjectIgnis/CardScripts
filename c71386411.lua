@@ -1,4 +1,5 @@
 --超重武者コブ－C
+--Superheavy Samurai Fist
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro Summon
@@ -95,6 +96,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	local e3=Effect.CreateEffect(e:GetHandler())
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetTargetRange(1,0)
+	Duel.RegisterEffect(e3,tp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) or tc:GetLevel()<2 then return end
 	local e2=Effect.CreateEffect(c)

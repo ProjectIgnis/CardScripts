@@ -1,4 +1,5 @@
 --死神の巡遊
+--Tour of Doom
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,7 +35,8 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local res=Duel.TossCoin(tp,1)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
 	if res==0 then
 		e1:SetReset(RESET_PHASE+PHASE_END,2)

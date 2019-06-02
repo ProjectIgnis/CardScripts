@@ -1,4 +1,5 @@
 --アンブラル・ゴースト
+--Umbral Horror Ghost
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -27,6 +28,8 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_MSET)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetDescription(aux.Stringid(id,1))
 	Duel.RegisterEffect(e2,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

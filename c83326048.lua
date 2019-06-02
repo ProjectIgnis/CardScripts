@@ -1,4 +1,5 @@
 --次元障壁
+--Dimensional Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,7 +30,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetDescription(aux.Stringid(id,5))
 	e1:SetLabel(ct)
 	e1:SetTargetRange(1,1)
 	e1:SetTarget(s.sumlimit)

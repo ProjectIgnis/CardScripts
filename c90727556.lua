@@ -1,4 +1,5 @@
 --インヴェルズの斥候
+--Steelswarm Scout
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -48,6 +49,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetLabelObject(e)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
+	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetTargetRange(1,0)
+	Duel.RegisterEffect(e2,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return e:GetLabelObject()~=se

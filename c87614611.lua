@@ -1,4 +1,5 @@
 --紅蓮魔竜の壺
+--Red Dragon Vase
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -37,6 +38,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e2:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
 	e2:SetTargetRange(1,0)
 	Duel.RegisterEffect(e2,tp)
+	local e3=Effect.CreateEffect(e:GetHandler())
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+	e3:SetTargetRange(1,0)
+	Duel.RegisterEffect(e3,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

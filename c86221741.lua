@@ -1,4 +1,5 @@
 --RR－アルティメット・ファルコン
+--Raidraptor - Ultimate Falcon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -48,7 +49,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetDescription(aux.Stringid(id,3))
 	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e2:SetTargetRange(0,1)
 	e2:SetValue(s.aclimit)

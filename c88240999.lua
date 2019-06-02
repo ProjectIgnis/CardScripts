@@ -1,4 +1,5 @@
 --ディサイシブの影霊衣
+--Nekroz of Decisive Armor
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

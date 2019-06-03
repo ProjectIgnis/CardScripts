@@ -1,4 +1,5 @@
 --Emスティルツ・シューター
+--Performage Stilts Launcher
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon rule
@@ -41,6 +42,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_MSET)
 	Duel.RegisterEffect(e2,tp)
+	local e3=Effect.CreateEffect(e:GetHandler())
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetTargetRange(1,0)
+	Duel.RegisterEffect(e3,tp)
 end
 function s.cfilter(c)
 	return c:IsSetCard(0xc6) and c:IsType(TYPE_MONSTER)

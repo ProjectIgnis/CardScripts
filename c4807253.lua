@@ -1,4 +1,5 @@
 --Emフレイム・イーター
+--Performage Flame Eater
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -53,7 +54,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetTargetRange(1,0)
 	e3:SetTarget(s.splimit)
 	e3:SetReset(RESET_PHASE+PHASE_END)

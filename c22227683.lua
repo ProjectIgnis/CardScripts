@@ -1,4 +1,5 @@
 --ブンボーグ004
+--Deskbot 004
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk/def up
@@ -54,7 +55,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetTargetRange(0,1)
 	e3:SetValue(1)
 	e3:SetReset(RESET_PHASE+PHASE_END)

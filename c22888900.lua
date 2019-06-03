@@ -1,4 +1,5 @@
 --グリザイユの牢獄
+--Grisaille Prison
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -36,7 +37,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetTargetRange(1,1)
 	e3:SetTarget(s.splimit)
 	if Duel.GetTurnPlayer()~=tp then

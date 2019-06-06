@@ -7,10 +7,10 @@ function s.ritualfil(c)
 	return c:IsSetCard(0x2093) and c:IsRitualMonster()
 end
 function s.mfilter(c)
-	return c:GetLevel()>0 and c:IsRace(RACE_WARRIOR+RACE_FAIRY) and c:IsAbleToDeck()
+	return c:GetLevel()>0 and c:IsRace(RACE_WARRIOR+RACE_FAIRY) and c:IsAbleToDeck() and aux.nvfilter(c)
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.GetMatchingGroup(aux.NecroValleyFilter(s.mfilter),tp,LOCATION_GRAVE,0,nil)
+	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_GRAVE,0,nil)
 end
 function s.extraop(mg,e,tp,eg,ep,ev,re,r,rp)
 	local mat2=mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE):Filter(Card.IsRace,nil,RACE_WARRIOR+RACE_FAIRY)

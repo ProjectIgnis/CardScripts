@@ -10,7 +10,7 @@ function s.mfilter(c)
 	return c:GetLevel()>0 and c:IsRace(RACE_WARRIOR+RACE_FAIRY) and c:IsAbleToDeck()
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_GRAVE,0,nil)
+	return Duel.GetMatchingGroup(aux.NecroValleyFilter(s.mfilter),tp,LOCATION_GRAVE,0,nil)
 end
 function s.extraop(mg,e,tp,eg,ep,ev,re,r,rp)
 	local mat2=mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE):Filter(Card.IsRace,nil,RACE_WARRIOR+RACE_FAIRY)

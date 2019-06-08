@@ -1,4 +1,5 @@
 --フレシアの蟲惑魔
+--Traptrix Rafflesia
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -116,15 +117,27 @@ function s.filter2(c,e,tp,eg,ep,ev,re,r,rp)
 		return true
 	else return false end
 end
+function s.filter3(c)
+	return c:GetFlagEffect(id) > 0
+end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()==0 then return false end
 		e:SetLabel(0)
+		local g=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_DECK,0,nil,e,tp,eg,ep,ev,re,r,rp)
+		if #g>0 then
+			for tc in aux.Next(g) do
+				tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
+			end
+			return true
+		else
+			return false
+		end
 		return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST)
 			and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.SelectMatchingCard(tp,s.filter3,tp,LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
 	local te,ceg,cep,cev,cre,cr,crp
 	local fchain=s.filter1(tc)

@@ -1,4 +1,5 @@
 --No.81 超弩級砲塔列車スペリオル・ドーラ
+--Number 81: Superdreadnought Rail Cannon Super Dora
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -40,5 +41,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,re)
-	return e:GetHandler()~=re:GetOwner()
+	return e:GetHandler()~=re:GetOwner() and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end

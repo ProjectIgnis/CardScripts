@@ -1,4 +1,5 @@
 --真閃珖竜 スターダスト・クロニクル
+--Stardust Chronicle Spark Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -54,7 +55,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,re)
-	return re:GetOwner()~=e:GetOwner()
+	return re:GetOwner()~=e:GetOwner() and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and e:GetHandler():IsPreviousControler(tp)

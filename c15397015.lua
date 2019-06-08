@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
 	e1:SetCondition(s.sumcon)
+	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SPSUMMON_CONDITION)
@@ -45,8 +46,11 @@ function s.initial_effect(c)
 	e7:SetTargetRange(0,1)
 	c:RegisterEffect(e7)
 end
-function s.sumcon(e)
-	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)>0
+function s.sumcon(e,se,sp,st)
+	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)>0 and sp==e:GetHandlerPlayer()
+end
+function s.splimit(e,se,sp,st)
+	return sp==e:GetHandlerPlayer()
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION+TYPE_RITUAL+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM+TYPE_LINK)

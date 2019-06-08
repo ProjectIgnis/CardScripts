@@ -1,4 +1,5 @@
 --神竜騎士フェルグラント
+--Divine Dragon Knight Felgrand
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -59,5 +60,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,te)
-	return te:GetOwner()~=e:GetOwner()
+	return te:GetOwner()~=e:GetOwner() and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end

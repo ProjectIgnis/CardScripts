@@ -1,6 +1,5 @@
 --マイクロ・コーダー
 --Micro Coder
---extra material only by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
 	--Extra Material
@@ -13,6 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.extracon)
 	e1:SetValue(s.extraval)
 	c:RegisterEffect(e1)
+	if s.flagmap==nil then
+		s.flagmap={}
+	end
+	if s.flagmap[c]==nil then
+		s.flagmap[c] = {}
+	end
 	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -28,7 +33,7 @@ function s.initial_effect(c)
 end
 function s.extracon(c,e,tp,sg,mg,lc,og,chk)
 	return (sg+mg):Filter(Card.IsLocation,nil,LOCATION_MZONE):IsExists(Card.IsRace,og,1,RACE_CYBERSE) and
-	#(sg&sg:Filter(s.flagcheck,nil))<2
+	sg:FilterCount(s.flagcheck,nil)<2
 end
 function s.flagcheck(c)
 	return c:GetFlagEffect(id)>0
@@ -40,20 +45,20 @@ function s.extraval(chk,summon_type,e,...)
 		if not summon_type==SUMMON_TYPE_LINK or not sc:IsSetCard(0x101) or Duel.GetFlagEffect(tp,id)>0 then
 			return Group.CreateGroup()
 		else
-			local feff=c:RegisterFlagEffect(id,0,0,1)
-			local eff=Effect.CreateEffect(c)
-			eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			eff:SetCode(EVENT_ADJUST)
-			eff:SetOperation(function(e)feff:Reset() e:Reset() end)
-			Duel.RegisterEffect(eff,0)
+			table.insert(s.flagmap[c],c:RegisterFlagEffect(id,0,0,1))
 			return Group.FromCards(c)
 		end
-	else
+	elseif chk==1 then
 		local sg,sc,tp=...
 		if summon_type&SUMMON_TYPE_LINK == SUMMON_TYPE_LINK and #sg>0 then
 			Duel.Hint(HINT_CARD,tp,id)
 			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 		end
+	elseif chk==2 then
+		for _,eff in ipairs(s.flagmap[c]) do
+			eff:Reset()
+		end
+		s.flagmap[c]={}
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

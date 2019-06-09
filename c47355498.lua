@@ -68,9 +68,9 @@ end
 function s.conntp(e)
 	return not Duel.IsPlayerAffectedByEffect(1-e:GetHandler():GetControler(),EFFECT_NECRO_VALLEY_IM)
 end
-function s.disfilter(c,im0,im1)
-	if c:IsControler(0) then return im0 and c:IsHasEffect(EFFECT_NECRO_VALLEY)
-	else return im1 and c:IsHasEffect(EFFECT_NECRO_VALLEY) end
+function s.disfilter(c,im0,im1,re)
+	if c:IsControler(0) then return im0 and c:IsHasEffect(EFFECT_NECRO_VALLEY) and c:IsRelateToEffect(re)
+	else return im1 and c:IsHasEffect(EFFECT_NECRO_VALLEY) and c:IsRelateToEffect(re) end
 end
 function s.discheck(ev,category,re,im0,im1)
 	local ex,tg,ct,p,v=Duel.GetOperationInfo(ev,category)
@@ -82,7 +82,7 @@ function s.discheck(ev,category,re,im0,im1)
 		end
 	end
 	if tg and #tg>0 then
-		return tg:IsExists(s.disfilter,1,nil,im0,im1)
+		return tg:IsExists(s.disfilter,1,nil,im0,im1,re)
 	end
 	return false
 end

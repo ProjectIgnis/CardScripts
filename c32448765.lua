@@ -1,5 +1,5 @@
 --トリックスター・ホーリーエンジェル
---Trickster Holy Angel
+--Trickstar Holly Angel
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCondition(s.damcon)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
@@ -28,9 +29,9 @@ function s.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e4)
-	--atk
+	--ATK change
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_DAMAGE)
 	e5:SetRange(LOCATION_MZONE)

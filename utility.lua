@@ -1414,6 +1414,15 @@ function Group.CheckSameProperty(g,f,...)
 	end
 	return prop ~= 0, prop
 end
+--Special Summon limit for the Evil HEROes
+function Auxiliary.EvilHeroLimit(e,se,sp,st)
+	local chk=SUMMON_TYPE_FUSION+0x10
+	if Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE) then
+		chk=SUMMON_TYPE_FUSION
+	end
+	return st&chk==chk
+end
+
 --for zone checking (zone is the zone, tp is referencial player)
 function Auxiliary.IsZone(c,zone,tp)
 	local rzone = c:IsControler(tp) and (1 <<c:GetSequence()) or (1 << (16+c:GetSequence()))

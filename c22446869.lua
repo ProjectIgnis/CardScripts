@@ -1,4 +1,5 @@
 --水精鱗－ディニクアビス
+--Mermail Abyssteus
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -47,7 +48,7 @@ function s.thfilter(c)
 	return c:IsSetCard(0x74) and c:IsLevelBelow(4) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

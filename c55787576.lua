@@ -39,7 +39,7 @@ end
 function s.immval(e,te)
 	local tc=te:GetHandler()
 	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) 
-		and te:IsActivated() and tc:IsSummonLocation(LOCATION_EXTRA)
+		and te:IsActivated() and tc:GetSummonLocation()==LOCATION_EXTRA and tc:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.tgtg(e,c)
 	return c:IsFaceup() and c:IsSetCard(0xfe) and (e:GetHandler():GetColumnGroup():IsContains(c) or e:GetHandler()==c)

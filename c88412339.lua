@@ -87,5 +87,5 @@ function s.splimit(e,c)
 end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return rc:IsCode(id) and re:GetActiveType()==TYPE_PENDULUM+TYPE_SPELL
+	return rc:IsCode(id) and re:GetActiveType()==TYPE_PENDULUM+TYPE_SPELL and not re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsLocation(LOCATION_PZONE)
 end

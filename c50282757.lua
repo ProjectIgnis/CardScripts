@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(s.splimit)
+	e1:SetValue(aux.EvilHeroLimit)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
@@ -33,9 +33,9 @@ function s.initial_effect(c)
 	e3:SetValue(s.indesval)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_DARK_FUSION,58932615,84327329}
 s.material_setcode={0x8,0x3008}
 s.dark_calling=true
+s.listed_names={CARD_DARK_FUSION,58932615,84327329}
 function s.splimit(e,se,sp,st)
 	return st==SUMMON_TYPE_FUSION+0x10
 end

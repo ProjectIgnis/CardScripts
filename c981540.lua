@@ -32,13 +32,18 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 		e2:SetCondition(s.rdcon)
 		e2:SetOperation(s.rdop)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==e:GetOwnerPlayer()
+	local at=Duel.GetAttacker()
+	local bt=Duel.GetAttackTarget()
+	return ep==e:GetOwnerPlayer() and 
+		((at and at:GetFlagEffect(id)>0) or 
+		(bt and bt:GetFlagEffect(id)>0))
 end
 function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(ep,ev/2)
+	Duel.HalfBattleDamage(ep)
 end

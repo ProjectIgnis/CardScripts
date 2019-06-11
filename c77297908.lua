@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	--change effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_CHAINING)
+	e3:SetCode(EVENT_CHAIN_SOLVING)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.chcon1)

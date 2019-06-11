@@ -54,9 +54,12 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
 	Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_ONFIELD,1,1,nil)
 end
+function s.relfilter(c,e)
+	return aux.disfilter1(c) and c:IsRelateToEffect(e)
+end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetTargetCards(e)
+	local g=Duel.GetTargetCards(e):Filter(s.relfilter,nil,e)
 	if #g~=2 then return end
 	for tc in aux.Next(g) do
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)

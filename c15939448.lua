@@ -21,19 +21,16 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_INSECT)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_INSECT),tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,ct)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsPosition(POS_FACEUP_ATTACK) then
 		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
-		local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,0,nil)
+		local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_INSECT),tp,LOCATION_MZONE,0,nil)
 		Duel.DiscardDeck(1-tp,ct,REASON_EFFECT)
 	end
 end

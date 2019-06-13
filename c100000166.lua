@@ -17,12 +17,9 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectReleaseGroupCost(tp,Card.IsAttribute,1,1,false,nil,nil,ATTRIBUTE_WATER)
 	Duel.Release(g,REASON_COST)
 end
-function s.tgfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(s.tgfilter,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_MACHINE),tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

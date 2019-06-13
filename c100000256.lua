@@ -17,9 +17,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	aux.CallToken(419)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_YOKAI)
-end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())*200
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_YOKAI),c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())*200
 end

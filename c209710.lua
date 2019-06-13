@@ -16,11 +16,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_CYBERSE)
-end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,2,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_CYBERSE),tp,LOCATION_MZONE,0,2,e:GetHandler())
 		and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -22,11 +22,8 @@ end
 function s.con(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON+RACE_WARRIOR)
-end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,nil)*300
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_DRAGON+RACE_WARRIOR),0,LOCATION_MZONE,LOCATION_MZONE,nil)*300
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -17,9 +17,6 @@ end
 function s.filter2(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
-function s.filter3(c)
-	return c:IsFaceup() and c:IsRace(RACE_WARRIOR)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return true end
@@ -27,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if #g1==0 then return end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,1,0,0)
-	if Duel.IsExistingMatchingCard(s.filter3,tp,LOCATION_MZONE,0,1,nil)
+	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,g1:GetFirst())
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)

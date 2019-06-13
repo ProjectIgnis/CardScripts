@@ -23,12 +23,9 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SET_DEFENSE)
 	c:RegisterEffect(e3)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_FIEND)
-end
 function s.ccon(e)
-	return Duel.IsExistingMatchingCard(s.filter,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_FIEND),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,c)*1000
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_FIEND),c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,c)*1000
 end

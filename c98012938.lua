@@ -20,18 +20,15 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsAbleToHand()
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return true end
-	if Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_ONFIELD,1,nil) then
+	if Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsAbleToHand),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsAbleToHand),tp,0,LOCATION_ONFIELD,1,nil) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-		local g1=Duel.SelectTarget(tp,s.filter,tp,LOCATION_ONFIELD,0,1,1,nil)
+		local g1=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsAbleToHand),tp,LOCATION_ONFIELD,0,1,1,nil)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-		local g2=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_ONFIELD,1,1,nil)
+		local g2=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsAbleToHand),tp,0,LOCATION_ONFIELD,1,1,nil)
 		g1:Merge(g2)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g1,2,0,0)
 	end

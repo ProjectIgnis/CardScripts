@@ -1,4 +1,5 @@
 --真帝王領域
+--Domain of the True Monarchs
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,27 +17,35 @@ function s.initial_effect(c)
 	e2:SetCondition(s.discon)
 	e2:SetTarget(s.splimit)
 	c:RegisterEffect(e2)
-	--atk
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_UPDATE_ATTACK)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_LEAVE_FIELD_P)
 	e3:SetRange(LOCATION_FZONE)
-	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetCondition(s.atkcon)
-	e3:SetTarget(s.atktg)
-	e3:SetValue(800)
+	e3:SetCondition(s.effcon)
+	e3:SetOperation(s.effop2)
 	c:RegisterEffect(e3)
-	--lv
+	--atk up
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetCode(EFFECT_UPDATE_ATTACK)
 	e4:SetRange(LOCATION_FZONE)
-	e4:SetCountLimit(1)
-	e4:SetTarget(s.lvtg)
-	e4:SetOperation(s.lvop)
+	e4:SetTargetRange(LOCATION_MZONE,0)
+	e4:SetCondition(s.atkcon)
+	e4:SetTarget(s.atktg)
+	e4:SetValue(800)
 	c:RegisterEffect(e4)
+	--lv change
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetType(EFFECT_TYPE_IGNITION)
+	e5:SetRange(LOCATION_FZONE)
+	e5:SetCountLimit(1)
+	e5:SetTarget(s.lvtg)
+	e5:SetOperation(s.lvop)
+	c:RegisterEffect(e5)
 end
 function s.splimit(e,c)
+	if e:GetHandler():GetFlagEffect(id)>0 then e:GetHandler():ResetFlagEffect(id) return false end
 	return c:IsLocation(LOCATION_EXTRA)
 end
 function s.cfilter(c)
@@ -77,4 +86,11 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
 		g:GetFirst():RegisterEffect(e1)
 	end
+end
+function s.effcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg and eg:IsExists(function(c) return c:IsSummonType(SUMMON_TYPE_ADVANCE)
+		and c:IsReason(REASON_FUSION) end,1,nil)
+end
+function s.effop2(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(id,0,0,0)
 end

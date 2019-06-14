@@ -24,6 +24,13 @@ function s.initial_effect(c)
 	e2:SetCondition(s.damcon)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_CHAIN_SOLVED)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetOperation(s.chainsolvedop)
+	c:RegisterEffect(e3)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -58,7 +65,21 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsControler,1,nil,1-tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
 	local ct=eg:FilterCount(Card.IsControler,nil,1-tp)
-	Duel.Damage(1-tp,ct*200,REASON_EFFECT)
+	if Duel.GetCurrentChain() == 0 then
+		Duel.Hint(HINT_CARD,1-tp,id)
+		Duel.Damage(1-tp,ct*200,REASON_EFFECT)
+	else
+		for i = 1,ct do
+			e:GetHandler():RegisterFlagEffect(id+1,RESET_CHAIN,0,1)
+		end
+	end
+end
+function s.chainsolvedop(e,tp,eg,ep,ev,re,r,rp)
+	local ct=e:GetHandler():GetFlagEffect(id+1)
+	if ct > 0 then
+		Duel.Hint(HINT_CARD,1-tp,id)
+		Duel.Damage(1-tp,ct*200,REASON_EFFECT)
+		e:GetHandler():ResetFlagEffect(id + 1)
+	end
 end

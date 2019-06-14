@@ -14,10 +14,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_SET_DEFENSE)
 	c:RegisterEffect(e2)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_INSECT)
-end
 function s.con(e)
 	local c=e:GetHandler()
-	return not Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,1,c)
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_INSECT),c:GetControler(),LOCATION_MZONE,0,1,c)
 end

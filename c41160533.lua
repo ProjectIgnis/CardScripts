@@ -24,12 +24,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-function s.mfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT)
-end
 function s.maop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()~=tp then return end
-	local ct=Duel.GetMatchingGroupCount(s.mfilter,tp,0,LOCATION_MZONE,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),tp,0,LOCATION_MZONE,nil)
 	if ct~=0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

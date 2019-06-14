@@ -54,9 +54,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 	end
 end
-function s.ifilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_BEAST)
-end
 function s.indcon(e)
-	return Duel.IsExistingMatchingCard(s.ifilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_BEAST),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end

@@ -17,9 +17,6 @@ function s.initial_effect(c)
 	e2:SetCondition(s.dscon)
 	c:RegisterEffect(e2)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT)
-end
 function s.dscon(e)
-	return Duel.IsExistingMatchingCard(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end

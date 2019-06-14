@@ -55,11 +55,8 @@ end
 function s.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS)
 end
-function s.indfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_INSECT)
-end
 function s.indcon(e)
-	return Duel.IsExistingMatchingCard(s.indfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_INSECT),e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end
 function s.indval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()

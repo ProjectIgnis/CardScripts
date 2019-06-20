@@ -28,11 +28,8 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER)
-end
 function s.descon(e)
-	return not Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_SPELLCASTER),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter1(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL)

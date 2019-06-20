@@ -45,11 +45,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_PSYCHO)
-end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_PSYCHO),tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.sdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

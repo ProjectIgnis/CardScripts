@@ -12,12 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter1(c)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil) 
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_DRAGON),tp,LOCATION_MZONE,0,1,nil) 
 		 and tc and tc:GetCounter(0x91)>2
 end
 function s.filter2(c)

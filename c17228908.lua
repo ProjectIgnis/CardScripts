@@ -59,11 +59,8 @@ function s.initial_effect(c)
 	g:KeepAlive()
 	e7:SetLabelObject(g)
 end
-function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR)
-end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_DINOSAUR),1,nil,tp)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0

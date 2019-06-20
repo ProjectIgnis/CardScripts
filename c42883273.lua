@@ -13,5 +13,5 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT)
 end
 function s.value(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,nil)*100
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),0,LOCATION_MZONE,LOCATION_MZONE,nil)*100
 end

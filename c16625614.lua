@@ -33,11 +33,11 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.listed_names={94212438}
 s.toss_coin=true
+s.listed_names={CARD_DESTINY_BOARD}
 function s.chcon1(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return re:GetHandlerPlayer()==tp and re:IsHasCategory(CATEGORY_TOFIELD) and re:GetLabel()==94212438 and re:GetValue()~=nil
+	return re:GetHandlerPlayer()==tp and re:IsHasCategory(CATEGORY_TOFIELD) and re:GetLabel()==CARD_DESTINY_BOARD and re:GetValue()~=nil
 end
 function s.chop1(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1,ev)
@@ -50,7 +50,7 @@ function s.chop2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.efilter(e,te)
 	local tc=te:GetHandler()
-	return not tc:IsCode(94212438)
+	return not tc:IsCode(CARD_DESTINY_BOARD)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()

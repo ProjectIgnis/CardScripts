@@ -63,11 +63,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	aux.FCheckAdditional=s.fcheck
 	local sg1=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil)
 	aux.FCheckAdditional=nil
-	local mg2=nil
-	local mg1=Duel.GetFusionMaterial(tp):Filter(s.filter3,nil,e)
-	local mg2=Duel.GetFusionMaterial(1-tp):Filter(s.filter3,nil,e,true)
-	mg1:Merge(mg2)
-	local sg1=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil)
 	local mg3=nil
 	local sg2=nil
 	local ce=Duel.GetChainMaterial(tp)

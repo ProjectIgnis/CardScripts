@@ -38,7 +38,7 @@ function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsAbleToChangeControler() end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsAbleToChangeControler() and chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return ft>0 and Duel.IsExistingTarget(Card.IsAbleToChangeControler,tp,0,LOCATION_MZONE,1,nil) end
 	local ct=math.min(ft,2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)

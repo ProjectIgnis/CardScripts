@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -29,15 +30,8 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.IsChainDisablable(0) then
-		local sel=1
 		local g=Duel.GetMatchingGroup(s.cfilter,p,0,LOCATION_HAND,nil)
-		Duel.Hint(HINT_SELECTMSG,1-p,aux.Stringid(id,0))
-		if #g>0 then
-			sel=Duel.SelectOption(1-p,1213,1214)
-		else
-			sel=Duel.SelectOption(1-p,1214)+1
-		end
-		if sel==0 then
+		if #g>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,1-p,HINTMSG_CONFIRM)
 			local sg=g:Select(1-p,1,1,nil)
 			Duel.ConfirmCards(p,sg)

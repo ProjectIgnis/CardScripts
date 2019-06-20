@@ -1,5 +1,5 @@
 --ヤジロベーダー
---Yajirovader
+--Yajiro Invader
 --Script by nekrozar
 --Some parts remade by Edo9300
 local s,id=GetID()
@@ -58,10 +58,13 @@ function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or c:IsControler(1-tp)
 	 	or not tc:IsRelateToEffect(e) or tc:IsControler(tp) then return end
 	local seq1=c:GetSequence()
-	local seq2=4-tc:GetSequence()
-	if seq1>4 or seq1==seq2 then return end
+	local seq2=tc:GetSequence()
+	if seq1>4 then return end
+	if seq2<5 then seq2=4-seq2
+	elseif seq2==5 then seq2=3
+	elseif seq2==6 then seq2=1 end
 	local nseq=seq1+(seq2>seq1 and 1 or -1)
-	if(Duel.CheckLocation(tp,LOCATION_MZONE,nseq)) then
+	if seq1~=seq2 and (Duel.CheckLocation(tp,LOCATION_MZONE,nseq)) then
 		Duel.MoveSequence(c,nseq)
 		local cg=c:GetColumnGroup()
 		if #cg>0 then

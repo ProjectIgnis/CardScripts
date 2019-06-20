@@ -132,3 +132,112 @@ function Card.IsSequence(c,...)
 	end
 	return false
 end
+
+--Workaround for the Link Summon using opponent's monsters effect of the Hakai monsters
+function Auxiliary.HakaiLinkFilter(c,e,tp,f,of)
+	if not of(c) then return false end
+	return Duel.IsExistingMatchingCard(Auxiliary.HakaiLinkSummonFilter(f),tp,LOCATION_EXTRA,0,1,nil,e:GetHandler(),c,tp)
+end
+function Auxiliary.HakaiLinkSummonFilter(f)
+	return	function(c,mc,tc,tp)
+				if not (c:IsType(TYPE_LINK) and c:IsLinkAbove(2)) then return false end
+				if Duel.GetLocationCountFromEx(tp,tp,mc,c)<1 then return false end
+				if f and not f(c) then return false end
+				return mc:IsCanBeLinkMaterial(c,tp) and tc:IsCanBeLinkMaterial(c,tp) and c:IsSpecialSummonable(SUMMON_TYPE_LINK)
+			end
+end
+function Auxiliary.HakaiLinkExtra(chk,summon_type,e,...)
+	local c=e:GetHandler()
+	if chk==0 then
+		local tp,sc=...
+		if not summon_type==SUMMON_TYPE_LINK then
+			return Group.CreateGroup()
+		else
+			return Group.FromCards(c)
+		end
+	end
+end
+function Auxiliary.HakaiLinkTarget(f,of)
+	if not of then of=Card.IsFaceup else of=aux.FilterFaceupFunction(of) end
+	return	function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+				local c=e:GetHandler()
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_FIELD)
+				e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+				e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+				e1:SetTargetRange(LOCATION_MZONE,0)
+				e1:SetTarget(function(e,c) return c~=e:GetHandler() end)
+				e1:SetValue(1)
+				Duel.RegisterEffect(e1,tp)
+				local og=Duel.GetMatchingGroup(of,tp,0,LOCATION_MZONE,nil)
+				local oeff={}
+				for oc in aux.Next(og) do
+					local e2=Effect.CreateEffect(c)
+					e2:SetType(EFFECT_TYPE_FIELD)
+					e2:SetRange(LOCATION_MZONE)
+					e2:SetCode(EFFECT_EXTRA_MATERIAL)
+					e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+					e2:SetTargetRange(1,0)
+					e2:SetValue(Auxiliary.HakaiLinkExtra)
+					oc:RegisterEffect(e2)
+					table.insert(oeff,e2)
+				end
+				if chkc then
+					local b=chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and Auxiliary.HakaiLinkFilter(chkc,e,tp,f,of)
+					e1:Reset()
+					for _,oe in ipairs(oeff) do
+						oe:Reset()
+					end
+					return b
+				end
+				if chk==0 then
+					local b=Duel.IsExistingTarget(Auxiliary.HakaiLinkFilter,tp,0,LOCATION_MZONE,1,nil,e,tp,f,of)
+					e1:Reset()
+					for _,oe in ipairs(oeff) do
+						oe:Reset()
+					end
+					return b
+				end
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+				Duel.SelectTarget(tp,Auxiliary.HakaiLinkFilter,tp,0,LOCATION_MZONE,1,1,nil,e,tp,f,of)
+				e1:Reset()
+				for _,oe in ipairs(oeff) do
+					oe:Reset()
+				end
+			end
+end
+function Auxiliary.HakaiLinkOperation(f)
+	return	function(e,tp,eg,ep,ev,re,r,rp)
+				local c=e:GetHandler()
+				local tc=Duel.GetFirstTarget()
+				if not (c:IsRelateToEffect(e) and tc:IsRelateToEffect(e)) then return end
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_FIELD)
+				e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+				e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+				e1:SetTargetRange(LOCATION_MZONE,0)
+				e1:SetTarget(function(e,c) return c~=e:GetHandler() end)
+				e1:SetValue(1)
+				Duel.RegisterEffect(e1,tp)
+				local e2=Effect.CreateEffect(c)
+				e2:SetType(EFFECT_TYPE_FIELD)
+				e2:SetRange(LOCATION_MZONE)
+				e2:SetCode(EFFECT_EXTRA_MATERIAL)
+				e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+				e2:SetTargetRange(1,0)
+				e2:SetValue(Auxiliary.HakaiLinkExtra)
+				tc:RegisterEffect(e2)
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+				local g=Duel.SelectMatchingCard(tp,Auxiliary.HakaiLinkSummonFilter(f),tp,LOCATION_EXTRA,0,1,1,nil,c,tc,tp)
+				if #g>0 then
+					Duel.SpecialSummonRule(tp,g:GetFirst(),SUMMON_TYPE_LINK)
+				end
+				e1:Reset()
+				e2:Reset()
+			end
+end
+function Effect.AddHakaiLinkEffect(e,f,of)
+	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e:SetTarget(Auxiliary.HakaiLinkTarget(f,of))
+	e:SetOperation(Auxiliary.HakaiLinkOperation(f))
+end

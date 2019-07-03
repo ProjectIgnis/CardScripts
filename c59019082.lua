@@ -1,4 +1,5 @@
 --ライトロード・ウォリアー ガロス
+--Garoth, Lightsworn Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--discard deck
@@ -35,5 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,2,REASON_EFFECT)
 	local dg=Duel.GetOperatedGroup()
 	local d=dg:FilterCount(s.filter,nil)
-	if d>0 then Duel.Draw(tp,d,REASON_EFFECT) end
+	if d>0 then
+		Duel.BreakEffect()
+		Duel.Draw(tp,d,REASON_EFFECT) end
 end

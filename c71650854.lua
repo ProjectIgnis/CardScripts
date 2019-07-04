@@ -1,4 +1,5 @@
 --半魔導帯域
+--Magical Mid-Breaker Field
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -51,8 +52,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
-		and not Duel.CheckPhaseActivity()
+    return Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+        and (not Duel.CheckPhaseActivity() or (Duel.GetFlagEffect(tp,CARD_MAGICAL_MIDBREAKER)>0 and Duel.GetCurrentChain()==1))
 end
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1

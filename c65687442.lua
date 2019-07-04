@@ -48,7 +48,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_CHANGE_DAMAGE)
 			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 			e1:SetTargetRange(1,0)
-			e1:SetValue(0)
+			e1:SetValue(function(e,re,dam,r,rp,rc)
+				if r&REASON_BATTLE>0 then return 0 else return dam end
+			end)
 			e1:SetReset(RESET_PHASE+PHASE_END,2)
 			Duel.RegisterEffect(e1,tp)
 		end

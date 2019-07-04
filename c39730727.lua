@@ -1,5 +1,5 @@
 --天威無崩の地
---Skyforce Unbreakable Ground
+--Tenyi Wubeng Stance
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,6 +30,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
+function s.filter(c)
+	return (not c:IsType(TYPE_EFFECT) and c:IsFaceup()) or c:IsFacedown()
+end
 function s.immfilter(e,te)
 	return te:IsActiveType(TYPE_MONSTER)
 end
@@ -38,7 +41,7 @@ function s.drfilter(c,tp)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.drfilter,1,nil,tp)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsNonEffectMonster),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

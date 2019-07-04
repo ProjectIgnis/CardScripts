@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCondition(s.sccon)
+	e2:SetCost(s.sccost)
 	e2:SetTarget(s.sctg)
 	e2:SetOperation(s.scop)
 	c:RegisterEffect(e2)
@@ -35,6 +36,11 @@ function s.scfilter(c,tp)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.scfilter,1,nil,tp)
+end
+function s.sccost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(id)==0 end
+	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xc1)

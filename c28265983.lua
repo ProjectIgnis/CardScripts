@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xc9}
 function s.descon1(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
 end
@@ -85,19 +86,16 @@ function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.desfilter2,tp,0,LOCATION_MZONE,nil,e:GetLabel())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
+function s.rescon(lp)
+	return function(sg,e,tp,mg)
+		return sg:GetSum(Card.GetAttack)<=lp
+	end
+end
 function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local num=e:GetLabel()
 	local g=Duel.GetMatchingGroup(s.desfilter2,tp,0,LOCATION_MZONE,nil,num)
 	if #g==0 then return end
-	local dg=Group.CreateGroup()
-	repeat
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local tg=g:FilterSelect(tp,s.desfilter2,1,1,nil,num)
-		local tc=tg:GetFirst()
-		num=num-tc:GetAttack()
-		g:RemoveCard(tc)
-		dg:AddCard(tc)
-	until not g:IsExists(s.desfilter2,1,nil,num) or not Duel.SelectYesNo(tp,aux.Stringid(id,5))
+	local dg=aux.SelectUnselectGroup(g,e,tp,1,99,s.rescon(num),1,tp,HINTMSG_DESTROY)
 	Duel.Destroy(dg,REASON_EFFECT)
 end

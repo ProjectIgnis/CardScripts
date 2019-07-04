@@ -1,15 +1,15 @@
 --ウィッチクラフトマスター・ヴェール
---Witchcraft Master Verre
+--Witchcrafter Madame Verre
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Increase ATK
+	--Increase ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetRange(LOCATION_MZONE)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
 	e1:SetTarget(s.atktg)

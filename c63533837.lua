@@ -46,7 +46,7 @@ end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
-	if chk==0 then return tc and tc:IsAbleToHand() end
+	if chk==0 then return tc and tc:IsControler(1-tp) and tc:IsAbleToHand() end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,tc,1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -56,8 +56,19 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToBattle() then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
-	if c:IsRelateToEffect(e) and c:IsChainAttackable() then
+	if c:IsRelateToEffect(e) and c:IsChainAttackable() and c==Duel.GetAttacker() then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_DAMAGE_STEP_END)
+		e1:SetOperation(s.caop)
+		e1:SetCountLimit(1)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		c:RegisterEffect(e1)
+	end
+end
+function s.caop(e,tp)
+	local c=e:GetHandler()
+	if c:IsChainAttackable() then
 		Duel.ChainAttack()
 	end
 end
-

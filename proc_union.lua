@@ -90,7 +90,7 @@ end
 function Auxiliary.UnionSumTarget(oldrule)
 	return function (e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
-		local code=c:GetCode()
+		local code=c:GetOriginalCode()
 		local pos=POS_FACEUP
 		if oldrule then pos=POS_FACEUP_ATTACK end
 		if chk==0 then return c:GetFlagEffect(code)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0

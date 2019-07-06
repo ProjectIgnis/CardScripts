@@ -1,4 +1,5 @@
 --魔海城アイガイオン
+--Aegaion the Sea Castrum
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

@@ -56,11 +56,8 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-function s.tkcfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_THUNDER)
-end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.tkcfilter,1,nil) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_THUNDER),1,nil) and not eg:IsContains(e:GetHandler())
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -52,18 +52,15 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=ec:GetBattleTarget()
 	return e:GetHandler():GetEquipTarget()==eg:GetFirst() and bc:IsReason(REASON_BATTLE)
 end
-function s.atkfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_INSECT)
-end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ec=eg:GetFirst()
 	local bc=ec:GetBattleTarget()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.atkfilter,tp,0,LOCATION_MZONE,1,bc) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsRace,RACE_INSECT),tp,0,LOCATION_MZONE,1,bc) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	local bc=ec:GetBattleTarget()
-	local g=Duel.SelectMatchingCard(tp,s.atkfilter,tp,0,LOCATION_MZONE,1,1,bc)
+	local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_INSECT),tp,0,LOCATION_MZONE,1,1,bc)
 	Duel.CalculateDamage(g:GetFirst(),ec)
 end

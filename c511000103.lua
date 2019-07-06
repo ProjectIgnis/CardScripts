@@ -31,11 +31,8 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-function s.ctfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT)
-end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.ctfilter,c:GetControler(),LOCATION_MZONE,0,nil)*200
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),c:GetControler(),LOCATION_MZONE,0,nil)*200
 end
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsPreviousLocation(LOCATION_HAND) and c:IsSummonPlayer(tp) and c:IsControler(tp)

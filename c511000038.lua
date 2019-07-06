@@ -20,11 +20,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={100000540}
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_BEAST)
-end
 function s.value(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)*500
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_BEAST),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)*500
 end
 function s.sfilter(c)
 	return c:IsCode(100000540) and c:IsAbleToHand()

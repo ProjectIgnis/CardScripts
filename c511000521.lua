@@ -8,9 +8,6 @@ function s.initial_effect(c)
 	e4:SetCondition(s.dircon)
 	c:RegisterEffect(e4)
 end
-function s.atkfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_INSECT)
-end
 function s.dircon(e)
-	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_INSECT),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end

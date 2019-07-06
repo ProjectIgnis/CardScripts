@@ -10,9 +10,6 @@ function s.initial_effect(c)
 	e1:SetValue(s.defval)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_ROCK)
-end
 function s.defval(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_REMOVED,0,nil)*700
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(RACE_ROCK),c:GetControler(),LOCATION_REMOVED,0,nil)*700
 end

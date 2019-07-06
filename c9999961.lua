@@ -10,16 +10,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.rfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_BEAST+RACE_WINDBEAST)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_REMOVED,0,1,nil) end
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_BEAST+RACE_WINDBEAST),tp,LOCATION_REMOVED,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-	local atk=Duel.GetMatchingGroupCount(s.rfilter,tp,LOCATION_REMOVED,0,nil)*200
+	local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_BEAST+RACE_WINDBEAST),tp,LOCATION_REMOVED,0,nil)*200
 	if #g==0 or atk==0 then return end
 	local tc=g:GetFirst()
 	while tc do

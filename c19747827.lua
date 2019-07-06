@@ -62,9 +62,6 @@ end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON)
-end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(s.cfilter,0,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)*500
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_DRAGON),0,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)*500
 end

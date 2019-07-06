@@ -1,4 +1,5 @@
 --TG ワーウルフ
+--T.G. Warwolf
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

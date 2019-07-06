@@ -1,4 +1,5 @@
 --水精鱗－アビスノーズ
+--Mermail Abyssnose
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

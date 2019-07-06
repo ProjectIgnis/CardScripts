@@ -1,4 +1,5 @@
 --EMスカイ・ピューピル
+--Performapal Sky Pupil
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

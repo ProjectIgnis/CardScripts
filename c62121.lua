@@ -1,4 +1,5 @@
 --闇晦ましの城
+--Castle of Dark Illusions
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

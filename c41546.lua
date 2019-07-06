@@ -1,4 +1,5 @@
 --DD魔導賢者トーマス
+--D/D Savant Thomas
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon

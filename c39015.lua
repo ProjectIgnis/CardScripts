@@ -1,5 +1,5 @@
 --バスター・スナイパー
---Assault Sniper
+--Assault Sentinel
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

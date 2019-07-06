@@ -1,4 +1,5 @@
 --光波分光
+--Cipher Spectrum
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --甲虫装機の手甲
+--Inzektor Gauntlet
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

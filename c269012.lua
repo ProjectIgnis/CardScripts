@@ -1,4 +1,5 @@
 --神縛りの塚
+--Mound of the Bound Creator
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

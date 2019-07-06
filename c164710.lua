@@ -1,4 +1,5 @@
 --小人のいたずら
+--Mischief of the Gnomes
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

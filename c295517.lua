@@ -1,4 +1,5 @@
 --伝説の都 アトランティス
+--A Legendary Ocean
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --霊魂の円環
+--Shinobird Salvation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -14,17 +14,28 @@ function s.initial_effect(c)
 	--equip
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_SUMMON_SUCCESS)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_CUSTOM+id)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	local g=Group.CreateGroup()
+	g:KeepAlive()
+	e2:SetLabelObject(g)
+	--equip register
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_SUMMON_SUCCESS)
+	e3:SetRange(LOCATION_FZONE)
+	e3:SetLabelObject(e2)
+	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
+	local e4=e3:Clone()
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e4)
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)
@@ -49,10 +60,27 @@ function s.cfilter(c,ec)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)
 		and c:IsType(TYPE_UNION) and c:CheckEquipTarget(ec) and aux.CheckUnionEquip(c,ec) and not c:IsCode(ec:GetCode())
 end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local tg=eg:Filter(s.tgfilter,nil,e,tp,false)
+	if #tg>0 then
+		local g=e:GetLabelObject():GetLabelObject()
+		if not g then g=Group.CreateGroup() end
+		g:Merge(tg)
+		e:GetLabelObject():SetLabelObject(g)
+		if Duel.GetFlagEffect(tp,id)==0 then
+			Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
+			Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
+		end
+	end
+end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return eg:IsContains(chkc) and s.tgfilter(chkc,e,tp,true) end
-	local g=eg:Filter(s.tgfilter,nil,e,tp,false)
-	if chk==0 then return #g>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+	local g=e:GetLabelObject()
+	if chkc then return g and g:IsContains(chkc) and s.tgfilter(chkc,e,tp,true) end
+	if chk==0 then 
+		Debug.Message("Group count: "..#g)
+		return g and g:FilterCount(s.tgfilter,nil,e,tp,false)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
+	end
+	g=g:Filter(s.tgfilter,nil,e,tp,false)
 	if #g==1 then
 		Duel.SetTargetCard(g:GetFirst())
 	else

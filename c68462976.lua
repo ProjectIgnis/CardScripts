@@ -30,12 +30,9 @@ function s.actlimit(e,te,tp)
 	if tp==e:GetHandlerPlayer() then return e:GetLabel()==1
 	else return e:GetLabel()==2 end
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER)
-end
 function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
-	local b1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
-	local b2=Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)
+	local b1=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,1,nil)
+	local b2=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_SPELLCASTER),tp,0,LOCATION_MZONE,1,nil)
 	local te=e:GetLabelObject()
 	if not b1 then te:SetLabel(1)
 	elseif b1 and not b2 then te:SetLabel(2)

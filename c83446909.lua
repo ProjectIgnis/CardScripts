@@ -38,9 +38,6 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_THUNDER)
-end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_MZONE,0,nil)*300
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_THUNDER),c:GetControler(),LOCATION_MZONE,0,nil)*300
 end

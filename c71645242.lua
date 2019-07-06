@@ -100,15 +100,12 @@ end
 function s.mzfilter(c,tp)
 	return c:IsControler(tp) and c:GetSequence()<5
 end
-function s.desfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT)
-end
 function s.filter2(c,atk,e,tp)
 	return c:GetAttack()==atk and c:IsCanBeSpecialSummoned(e,0x20,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter2(chkc,e:GetLabel(),e,tp) end
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local atk=g:GetSum(Card.GetAttack)
 	if chk==0 then return #g>0
 		and g:FilterCount(s.mzfilter,nil,tp)+Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -123,7 +120,7 @@ end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local dg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	dg:AddCard(c)
 	Duel.Destroy(dg,REASON_EFFECT)
 	Duel.BreakEffect()

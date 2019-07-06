@@ -19,11 +19,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE)
-end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter,1,nil)
+	return eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_MACHINE),1,nil)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

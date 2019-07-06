@@ -23,13 +23,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR)
-end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
-		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil)
+		local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_DINOSAUR),tp,LOCATION_REMOVED,0,nil)
 		if #g>0 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

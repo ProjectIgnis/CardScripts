@@ -36,9 +36,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-function s.atkfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE)
-end
 function s.atkcon(e)
-	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_ZOMBIE),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end

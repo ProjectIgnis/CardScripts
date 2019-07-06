@@ -15,13 +15,10 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()<=PHASE_BATTLE
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_PSYCHO)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,0,nil)==1 end
-	local tc=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil):GetFirst()
+	if chk==0 then return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_PSYCHO),tp,LOCATION_MZONE,0,nil)==1 end
+	local tc=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_PSYCHO),tp,LOCATION_MZONE,0,nil):GetFirst()
 	Duel.SetTargetCard(tc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

@@ -22,9 +22,6 @@ function s.initial_effect(c)
 end
 s.listed_names={23995346}
 s.material_setcode={0x10cf,0xcf,0xdd}
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON)
-end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_MZONE,0,c)*500
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_DRAGON),c:GetControler(),LOCATION_MZONE,0,c)*500
 end

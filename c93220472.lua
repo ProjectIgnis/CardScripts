@@ -17,9 +17,6 @@ end
 function s.sumcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)>0
 end
-function s.afilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON)
-end
 function s.atkcon(e)
-	return not Duel.IsExistingMatchingCard(s.afilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_DRAGON),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end

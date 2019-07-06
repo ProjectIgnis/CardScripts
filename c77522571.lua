@@ -109,9 +109,6 @@ end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_EXTRA)
 end
-function s.excfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_FIEND)
-end
 function s.exfilter(c,e,tp)
 	return c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
 end
@@ -126,10 +123,10 @@ function s.extg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return Duel.CheckReleaseGroupCost(tp,s.excfilter,2,false,s.excheck,nil,mg)
+		return Duel.CheckReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_FIEND),2,false,s.excheck,nil,mg)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroupCost(tp,s.excfilter,2,99,false,s.excheck,nil,mg)
+	local g=Duel.SelectReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_FIEND),2,99,false,s.excheck,nil,mg)
 	e:SetLabel(g:GetSum(Card.GetOriginalLevel))
 	Duel.Release(g,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)

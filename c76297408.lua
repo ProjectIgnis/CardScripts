@@ -34,11 +34,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetOperation(nil)
 	end
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_FIEND)
-end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_FIEND),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end

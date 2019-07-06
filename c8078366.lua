@@ -11,9 +11,6 @@ function s.initial_effect(c)
 	e1:SetValue(800)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_FISH+RACE_SEASERPENT+RACE_AQUA)
-end
 function s.atkcon(e)
-	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_FISH+RACE_SEASERPENT+RACE_AQUA),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end

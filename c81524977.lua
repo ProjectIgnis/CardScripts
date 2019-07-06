@@ -35,11 +35,8 @@ function s.initial_effect(c)
 	e5:SetOperation(s.damop)
 	c:RegisterEffect(e5)
 end
-function s.ctfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT)
-end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.ctfilter,1,nil)
+	return eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),1,nil)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x20,1)

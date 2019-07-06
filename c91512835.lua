@@ -50,11 +50,8 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_INSECT)
-end
 function s.value(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,nil)*200
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_INSECT),0,LOCATION_MZONE,LOCATION_MZONE,nil)*200
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)

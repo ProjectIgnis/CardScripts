@@ -17,17 +17,14 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetCurrentPhase()==PHASE_DAMAGE and Duel.IsDamageCalculated() then return false end
 	return true
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_PSYCHO)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_PSYCHO),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
+	local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_PSYCHO),tp,LOCATION_MZONE,0,nil)
 	local c=e:GetHandler()
 	local tc=sg:GetFirst()
-	local atk=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_REMOVED,0,nil)*300
+	local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_PSYCHO),tp,LOCATION_REMOVED,0,nil)*300
 	while tc do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

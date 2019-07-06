@@ -12,11 +12,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsRace(RACE_DEVINE)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_DEVINE),1,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

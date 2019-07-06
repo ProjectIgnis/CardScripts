@@ -22,15 +22,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE)
-end
 function s.atklm(e)
 	local c=e:GetHandler()
-	return Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,1,c)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_ZOMBIE),c:GetControler(),LOCATION_MZONE,0,1,c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.filter,1,nil)
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_ZOMBIE),1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

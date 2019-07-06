@@ -10,9 +10,6 @@ function s.initial_effect(c)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR)
-end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_REMOVED,0,nil)*1000
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_DINOSAUR),c:GetControler(),LOCATION_REMOVED,0,nil)*1000
 end

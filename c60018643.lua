@@ -12,12 +12,24 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCode(EVENT_CUSTOM+id)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_CHAIN_UNIQUE+EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
+	local g=Group.CreateGroup()
+	g:KeepAlive()
+	e2:SetLabelObject(g)
+	--mass register
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetLabelObject(e2)
+	e3:SetOperation(s.regop)
+	c:RegisterEffect(e3)
 	--register attributes
 	aux.GlobalCheck(s,function()
 		s.attr_list={}
@@ -40,12 +52,30 @@ end
 function s.thfilter(c,attr)
 	return c:IsRace(RACE_CYBERSE) and c:IsAttribute(attr) and c:IsAbleToHand()
 end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local tg=eg:Filter(s.thcfilter,nil,e,tp)
+	if #tg>0 then
+		local g=e:GetLabelObject():GetLabelObject()
+		if Duel.GetCurrentChain()==0 then g:Clear() end
+		g:Merge(tg)
+		e:GetLabelObject():SetLabelObject(g)
+		if Duel.GetFlagEffect(tp,id)==0 then
+			Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
+			Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
+		end
+	end
+end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return eg:IsContains(chkc) and s.thcfilter(chkc,e,tp) end
-	if chk==0 then return eg:IsExists(s.thcfilter,1,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local sg=eg:FilterSelect(tp,s.thcfilter,1,1,nil,e,tp)
-	Duel.SetTargetCard(sg)
+	local g=e:GetLabelObject():Filter(s.thcfilter,nil,e,tp)
+	if chkc then return g:IsContains(chkc) and s.thcfilter(chkc,e,tp) end
+	if chk==0 then return #g>0 end
+	if #g==1 then
+		Duel.SetTargetCard(g:GetFirst())
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		local tc=g:Select(tp,1,1,nil)
+		Duel.SetTargetCard(tc)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

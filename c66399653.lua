@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetLabelObject(e2)
 	e3:SetOperation(s.regop)
@@ -64,7 +65,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.tgfilter,nil,e,tp,false)
 	if #tg>0 then
 		local g=e:GetLabelObject():GetLabelObject()
-		if not g then g=Group.CreateGroup() end
+		if Duel.GetCurrentChain()==0 then g:Clear() end
 		g:Merge(tg)
 		e:GetLabelObject():SetLabelObject(g)
 		if Duel.GetFlagEffect(tp,id)==0 then
@@ -74,13 +75,11 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=e:GetLabelObject()
-	if chkc then return g and g:IsContains(chkc) and s.tgfilter(chkc,e,tp,true) end
+	local g=e:GetLabelObject():Filter(s.tgfilter,nil,e,tp,false)
+	if chkc then return g:IsContains(chkc) and s.tgfilter(chkc,e,tp,true) end
 	if chk==0 then 
-		Debug.Message("Group count: "..#g)
-		return g and g:FilterCount(s.tgfilter,nil,e,tp,false)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
+		return #g>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
 	end
-	g=g:Filter(s.tgfilter,nil,e,tp,false)
 	if #g==1 then
 		Duel.SetTargetCard(g:GetFirst())
 	else

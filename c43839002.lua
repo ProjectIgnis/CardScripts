@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.rmfilter(c,tp)
-	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and c:IsAbleToRemove() and c:GetBaseAttack()>0
+	return c:IsFaceup() and c:IsRace(RACE_CYBERSEE) and c:IsAbleToRemove() and c:GetBaseAttack()>0
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function s.thfilter(c,rc)
-	return c:IsRace(RACE_CYBERSE) and c:GetAttack()<rc:GetBaseAttack() and c:IsAbleToHand()
+	return c:IsRace(RACE_CYBERSEE) and c:GetAttack()<rc:GetBaseAttack() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.rmfilter(chkc,tp) end

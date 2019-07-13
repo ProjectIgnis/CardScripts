@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.indtg(e,c)
-	return c:IsSummonType(SUMMON_TYPE_ADVANCE) and c:IsSetCard(0xf9)
+	return c:IsSummonType(SUMMON_TYPE_TRIBUTE) and c:IsSetCard(0xf9)
 end
 function s.indct(e,re,r,rp)
 	if (r&REASON_BATTLE)~=0 then

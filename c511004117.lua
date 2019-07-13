@@ -83,7 +83,7 @@ end
 
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 local tc=eg:GetFirst()
-return (tc:GetSummonType()&SUMMON_TYPE_ADVANCE)==SUMMON_TYPE_ADVANCE or (tc:GetSummonType()&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
+return (tc:GetSummonType()&SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE or (tc:GetSummonType()&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 and tc:GetMaterialCount()>0
 end
 

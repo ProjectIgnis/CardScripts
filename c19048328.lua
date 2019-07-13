@@ -88,7 +88,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if (att&ATTRIBUTE_DARK)~=0 then
 		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,7))
 	end
-	if (att&ATTRIBUTE_DEVINE)~=0 then
+	if (att&ATTRIBUTE_DIVINE)~=0 then
 		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,8))
 	end
 end

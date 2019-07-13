@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SUMMON_PROC)
 	e1:SetCondition(s.ttcon)
 	e1:SetOperation(s.ttop)
-	e1:SetValue(SUMMON_TYPE_ADVANCE+1)
+	e1:SetValue(SUMMON_TYPE_TRIBUTE+1)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
@@ -33,7 +33,7 @@ function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g, REASON_SUMMON+REASON_MATERIAL)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_ADVANCE+1
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_TRIBUTE+1
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

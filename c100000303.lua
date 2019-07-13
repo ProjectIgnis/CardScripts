@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_SUMMON_PROC)
 	e2:SetCondition(s.ttcon)
 	e2:SetOperation(s.ttop)
-	e2:SetValue(SUMMON_TYPE_ADVANCE)
+	e2:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e2)
 	--atk down
 	local e3=Effect.CreateEffect(c)

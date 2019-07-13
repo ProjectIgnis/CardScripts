@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SUMMON_PROC)
 	e1:SetCondition(s.otcon)
 	e1:SetOperation(s.otop)
-	e1:SetValue(SUMMON_TYPE_ADVANCE)
+	e1:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_PROC)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.otfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_ADVANCE)
+	return c:IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.otcon(e,c,minc)
 	if c==nil then return true end
@@ -47,7 +47,7 @@ function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.sprfilter(c)
-	return c:IsRace(RACE_CYBERSE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsRace(RACE_CYBERSEE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.sprcon(e,c)
 	if c==nil then return true end

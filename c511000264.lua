@@ -69,7 +69,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsRace(RACE_DEVINE)
+	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsRace(RACE_DIVINE)
 end
 function s.imcon(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsActiveType(TYPE_MONSTER) or not Duel.IsChainDisablable(ev) then return false end
@@ -158,7 +158,7 @@ function s.disfilter(c)
 	local eqg=c:GetEquipGroup():Filter(s.dischk,nil)
 	local tgg=Duel.GetMatchingGroup(s.tgg,0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,c)
 	eqg:Merge(tgg)
-	return c:IsRace(RACE_DEVINE) and #eqg>0
+	return c:IsRace(RACE_DIVINE) and #eqg>0
 end
 function s.dischk(c)
 	return not c:IsDisabled()

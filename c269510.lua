@@ -68,7 +68,7 @@ function s.initial_effect(c)
 	e8:SetRange(LOCATION_FZONE)
 	e8:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e8:SetCondition(s.limcon)
-	e8:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_CYBERSE))
+	e8:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_CYBERSEE))
 	e8:SetValue(1)
 	c:RegisterEffect(e8)
 end
@@ -85,11 +85,11 @@ function s.atktg(e,c)
 	return not c:IsType(TYPE_LINK)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsRace(RACE_CYBERSEE) and c:IsType(TYPE_LINK)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)>1
-		and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRace(RACE_CYBERSE)
+		and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRace(RACE_CYBERSEE)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
@@ -98,7 +98,7 @@ function s.limcon(e)
 	return Duel.GetMatchingGroupCount(s.cfilter,e:GetHandler():GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)>1
 end
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsRace(RACE_CYBERSE)
+	return c:IsFaceup() and c:IsRace(RACE_CYBERSEE)
 end
 
 

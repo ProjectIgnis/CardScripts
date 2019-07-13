@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,s.ffilter,aux.FilterBoolFunctionEx(Card.IsRace,RACE_PSYCHO))
+	Fusion.AddProcMix(c,true,true,s.ffilter,aux.FilterBoolFunctionEx(Card.IsRace,RACE_PSYCHIC))
 	--pierce
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -43,7 +43,7 @@ function s.splimit(e,se,sp,st)
 	return true
 end
 function s.ffilter(c,fc,sumtype,tp)
-	return c:IsType(TYPE_SYNCHRO,fc,sumtype,tp) and c:IsRace(RACE_PSYCHO,fc,sumtype,tp)
+	return c:IsType(TYPE_SYNCHRO,fc,sumtype,tp) and c:IsRace(RACE_PSYCHIC,fc,sumtype,tp)
 end
 function s.recon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

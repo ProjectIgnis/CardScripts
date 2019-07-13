@@ -22,14 +22,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	return c:IsFaceup() and (c:IsAttribute(ATTRIBUTE_DEVINE) or c:IsRace(RACE_DEVINE) or c:IsRace(RACE_CREATORGOD) 
-		or (c:GetOriginalRace()&RACE_DEVINE)==RACE_DEVINE or (c:GetOriginalRace()&RACE_CREATORGOD)==RACE_CREATORGOD 
-		or (c:GetOriginalAttribute()&ATTRIBUTE_DEVINE)==ATTRIBUTE_DEVINE) and c:IsAbleToRemove()
+	return c:IsFaceup() and (c:IsAttribute(ATTRIBUTE_DIVINE) or c:IsRace(RACE_DIVINE) or c:IsRace(RACE_CREATORGOD) 
+		or (c:GetOriginalRace()&RACE_DIVINE)==RACE_DIVINE or (c:GetOriginalRace()&RACE_CREATORGOD)==RACE_CREATORGOD 
+		or (c:GetOriginalAttribute()&ATTRIBUTE_DIVINE)==ATTRIBUTE_DIVINE) and c:IsAbleToRemove()
 end
 function s.filter2(c)
-	return c:IsFacedown() and (c:IsAttribute(ATTRIBUTE_DEVINE) or c:IsRace(RACE_DEVINE) or c:IsRace(RACE_CREATORGOD) 
-		or (c:GetOriginalRace()&RACE_DEVINE)==RACE_DEVINE or (c:GetOriginalRace()&RACE_CREATORGOD)==RACE_CREATORGOD 
-		or (c:GetOriginalAttribute()&ATTRIBUTE_DEVINE)==ATTRIBUTE_DEVINE) and c:IsAbleToRemove()
+	return c:IsFacedown() and (c:IsAttribute(ATTRIBUTE_DIVINE) or c:IsRace(RACE_DIVINE) or c:IsRace(RACE_CREATORGOD) 
+		or (c:GetOriginalRace()&RACE_DIVINE)==RACE_DIVINE or (c:GetOriginalRace()&RACE_CREATORGOD)==RACE_CREATORGOD 
+		or (c:GetOriginalAttribute()&ATTRIBUTE_DIVINE)==ATTRIBUTE_DIVINE) and c:IsAbleToRemove()
 end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)

@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=eg:GetFirst()
-	return c:IsOnField() and c:IsRace(RACE_PSYCHO)
+	return c:IsOnField() and c:IsRace(RACE_PSYCHIC)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end

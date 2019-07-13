@@ -13,16 +13,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter1(c,e,tp)
-	return c:IsFaceup() and c:IsRace(RACE_PSYCHO) and c:IsType(TYPE_TUNER)
+	return c:IsFaceup() and c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_TUNER)
 		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_REMOVED,0,1,nil,e,tp,c:GetLevel())
 end
 function s.filter2(c,e,tp,lv)
 	local clv=c:GetLevel()
-	return clv>0 and c:IsFaceup() and c:IsRace(RACE_PSYCHO) and not c:IsType(TYPE_TUNER)
+	return clv>0 and c:IsFaceup() and c:IsRace(RACE_PSYCHIC) and not c:IsType(TYPE_TUNER)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lv+clv)
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsRace(RACE_PSYCHO) and c:IsType(TYPE_SYNCHRO) and c:GetLevel()==lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_SYNCHRO) and c:GetLevel()==lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

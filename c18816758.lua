@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x100a)
-		and c:IsSummonType(SUMMON_TYPE_ADVANCE) and c:IsAbleToHandAsCost()
+		and c:IsSummonType(SUMMON_TYPE_TRIBUTE) and c:IsAbleToHandAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end

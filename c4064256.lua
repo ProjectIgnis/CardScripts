@@ -59,5 +59,5 @@ function s.val(e,c,re,chk)
 	return RACE_ZOMBIE
 end
 function s.sumlimit(e,c,tp,sumtp)
-	return sumtp&SUMMON_TYPE_ADVANCE==SUMMON_TYPE_ADVANCE and not c:IsRace(RACE_ZOMBIE)
+	return sumtp&SUMMON_TYPE_TRIBUTE==SUMMON_TYPE_TRIBUTE and not c:IsRace(RACE_ZOMBIE)
 end

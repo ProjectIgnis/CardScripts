@@ -53,7 +53,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsLocation(LOCATION_MZONE)
-		and tc:IsControler(tp) and tc:IsFaceup() and tc:IsRace(RACE_CYBERSE) and tc:IsLocation(LOCATION_MZONE)
+		and tc:IsControler(tp) and tc:IsFaceup() and tc:IsRace(RACE_CYBERSEE) and tc:IsLocation(LOCATION_MZONE)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()

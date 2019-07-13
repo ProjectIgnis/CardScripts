@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SUMMON_PROC)
 	e3:SetCondition(s.sumcon)
 	e3:SetOperation(s.sumop)
-	e3:SetValue(SUMMON_TYPE_ADVANCE)
+	e3:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e3)
 	--tribute check
 	local e4=Effect.CreateEffect(c)
@@ -77,7 +77,7 @@ function s.valcheck(e,c)
 	e:SetLabel(g:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WATER))
 end
 function s.addcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then

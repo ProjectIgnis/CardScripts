@@ -10,10 +10,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetLevel()>0 and not c:IsRace(RACE_WINDBEAST)
+	return c:IsFaceup() and c:GetLevel()>0 and not c:IsRace(RACE_WINGEDBEAST)
 end
 function s.filter2(c,lv)
-	return c:IsFaceup() and c:GetLevel()==lv and not c:IsRace(RACE_WINDBEAST)
+	return c:IsFaceup() and c:GetLevel()==lv and not c:IsRace(RACE_WINGEDBEAST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_RACE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetValue(RACE_WINDBEAST)
+		e1:SetValue(RACE_WINGEDBEAST)
 		tc:RegisterEffect(e1)
 		tc=g:GetNext()
 	end

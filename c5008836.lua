@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SUMMON_PROC)
 	e3:SetCondition(s.ttcon)
 	e3:SetOperation(s.ttop)
-	e3:SetValue(SUMMON_TYPE_ADVANCE+1)
+	e3:SetValue(SUMMON_TYPE_TRIBUTE+1)
 	c:RegisterEffect(e3)
 	--tribute check
 	local e4=Effect.CreateEffect(c)
@@ -46,7 +46,7 @@ function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	local des=eg:GetFirst()
 	local rc=des:GetReasonCard()
 	if (des:GetPreviousRaceOnField()&RACE_FIEND==RACE_FIEND and des:GetPreviousAttributeOnField()&ATTRIBUTE_DARK==ATTRIBUTE_DARK 
-		and des:GetOwner()==(1-tp) and rc:IsRelateToBattle() and rc==e:GetHandler() and rc:GetSummonType()==SUMMON_TYPE_ADVANCE+1)
+		and des:GetOwner()==(1-tp) and rc:IsRelateToBattle() and rc==e:GetHandler() and rc:GetSummonType()==SUMMON_TYPE_TRIBUTE+1)
 		then
 		Duel.Win(tp,WIN_REASON_EXODIA_GUARD) end
 end

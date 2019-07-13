@@ -34,7 +34,7 @@ function s.tgtg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c)
 end
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsControler(tp) and c:IsRace(RACE_CYBERSEE) and c:IsType(TYPE_LINK) and c:IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp) and aux.exccon(e)

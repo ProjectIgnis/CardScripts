@@ -15,7 +15,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)==0
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_ADVANCE)
+	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

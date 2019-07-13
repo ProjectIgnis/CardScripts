@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSE,lc,sumtype,tp)
+	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSEE,lc,sumtype,tp)
 end
 function s.cfilter(c,g)
 	return g:IsContains(c)

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_DINOSAUR+RACE_WINDBEAST))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_DINOSAUR+RACE_WINGEDBEAST))
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
 	--Def
@@ -39,7 +39,7 @@ function s.efilter(e,te)
 end
 function s.cbcon(e,tp,eg,ep,ev,re,r,rp)
 	local bt=eg:GetFirst()
-	return r~=REASON_REPLACE and bt:IsFaceup() and bt:IsControler(tp) and bt:IsRace(RACE_DINOSAUR+RACE_WINDBEAST) 
+	return r~=REASON_REPLACE and bt:IsFaceup() and bt:IsControler(tp) and bt:IsRace(RACE_DINOSAUR+RACE_WINGEDBEAST) 
 		and bt:IsAttackPos()
 end
 function s.cbop(e,tp,eg,ep,ev,re,r,rp)

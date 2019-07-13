@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetCondition(s.sumcon)
 	e2:SetOperation(s.sumop)
-	e2:SetValue(SUMMON_TYPE_ADVANCE)
+	e2:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e2)
 end
 function s.sumcon(e,c,minc)

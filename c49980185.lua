@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	s[0]=s[0]+eg:FilterCount(Card.IsRace,nil,RACE_PSYCHO)
+	s[0]=s[0]+eg:FilterCount(Card.IsRace,nil,RACE_PSYCHIC)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.GetCurrentPhase()==PHASE_END

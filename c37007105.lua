@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.rmfilter),tp,LOCATION_GRAVE,0,1,1,nil,tc:GetLink())
 	if Duel.Remove(g,0,REASON_EFFECT)~=0 then
 		Duel.Destroy(tc,REASON_EFFECT)
-		if (g:GetFirst():GetOriginalRace()&RACE_CYBERSE)>0 then
+		if (g:GetFirst():GetOriginalRace()&RACE_CYBERSEE)>0 then
 			local sg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_SZONE,nil)
 			if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				Duel.BreakEffect()

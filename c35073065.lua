@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return ep==tp and ec:IsSummonType(SUMMON_TYPE_ADVANCE)
+	return ep==tp and ec:IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

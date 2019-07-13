@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
-	local e1=aux.AddNormalSummonProcedure(c,true,true,3,3,SUMMON_TYPE_ADVANCE,aux.Stringid(id,0))
+	local e1=aux.AddNormalSummonProcedure(c,true,true,3,3,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0))
 	--summon with 1 tribute
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.otcon)
 	e2:SetTarget(s.ottg)
 	e2:SetOperation(s.otop)
-	e2:SetValue(SUMMON_TYPE_ADVANCE)
+	e2:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e2)
 	--summon success
 	local e3=Effect.CreateEffect(c)
@@ -72,7 +72,7 @@ function s.valcheck(e,c)
 	e:GetLabelObject():SetLabel(ct)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.filter(c)
 	return c:IsFacedown()

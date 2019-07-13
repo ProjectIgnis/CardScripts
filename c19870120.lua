@@ -39,5 +39,5 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA)
 end
 function s.target(e,c)
-	return c:IsSummonType(SUMMON_TYPE_ADVANCE)
+	return c:IsSummonType(SUMMON_TYPE_TRIBUTE)
 end

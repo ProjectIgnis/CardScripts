@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetAttacker():IsRace(RACE_CYBERSE)
+	return Duel.GetTurnPlayer()~=tp and Duel.GetAttacker():IsRace(RACE_CYBERSEE)
 end
 function s.desfilter(c)
 	return c:GetSequence()<5
@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK) and c:IsLocation(LOCATION_GRAVE)
+	return c:IsRace(RACE_CYBERSEE) and c:IsType(TYPE_LINK) and c:IsLocation(LOCATION_GRAVE)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,c:GetControler())
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -81,7 +81,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.etarget(e,c)
-	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK)
+	return c:IsRace(RACE_CYBERSEE) and c:IsType(TYPE_LINK)
 end
 function s.efilter(e,te,c)
 	return te:GetOwner()~=c

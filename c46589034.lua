@@ -57,5 +57,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.xyzlimit(e,c)
 	if not c then return false end
-	return not c:IsRace(RACE_WINDBEAST)
+	return not c:IsRace(RACE_WINGEDBEAST)
 end

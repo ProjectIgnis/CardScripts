@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.atktg(e,c)
-	return c:IsRace(RACE_CYBERSE) and c~=e:GetHandler()
+	return c:IsRace(RACE_CYBERSEE) and c~=e:GetHandler()
 end
 function s.descfilter(c)
-	return c:IsRace(RACE_CYBERSE)
+	return c:IsRace(RACE_CYBERSEE)
 end
 function s.desfilter(c,e)
 	return c:IsFaceup() and (not e or c:IsCanBeEffectTarget(e))

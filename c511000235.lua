@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
 	e1:SetCondition(s.sumoncon)
 	e1:SetOperation(s.sumonop)
-	e1:SetValue(SUMMON_TYPE_ADVANCE)
+	e1:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -149,10 +149,10 @@ function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(s.chainlm)
 end
 function s.chainlm(e,rp,tp)
-	return e:GetHandler():IsAttribute(ATTRIBUTE_DEVINE)
+	return e:GetHandler():IsAttribute(ATTRIBUTE_DIVINE)
 end
 function s.efilter(e,te)
-	return te:GetOwner()~=e:GetOwner() and te:IsActiveType(TYPE_EFFECT) and not te:GetOwner():IsAttribute(ATTRIBUTE_DEVINE)
+	return te:GetOwner()~=e:GetOwner() and te:IsActiveType(TYPE_EFFECT) and not te:GetOwner():IsAttribute(ATTRIBUTE_DIVINE)
 end
 function s.tgfilter(e,re)
 	if not re or not re:IsActiveType(TYPE_SPELL+TYPE_TRAP) then return false end

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,ft)
-	return c:IsSummonType(SUMMON_TYPE_ADVANCE) and c:IsAbleToHandAsCost() and (ft>0 or c:GetSequence()<5)
+	return c:IsSummonType(SUMMON_TYPE_TRIBUTE) and c:IsAbleToHandAsCost() and (ft>0 or c:GetSequence()<5)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

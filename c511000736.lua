@@ -17,7 +17,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,600)
 end
 function s.drfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_WINDBEAST)
+	return c:IsFaceup() and c:IsRace(RACE_WINGEDBEAST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.drfilter,tp,LOCATION_MZONE,0,nil)

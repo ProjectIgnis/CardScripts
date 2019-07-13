@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 function s.counterfilter(c)
-	return c:IsRace(RACE_CYBERSE)
+	return c:IsRace(RACE_CYBERSEE)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
@@ -55,7 +55,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsRace(RACE_CYBERSE)
+	return not c:IsRace(RACE_CYBERSEE)
 end
 function s.atkcon(e)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
@@ -65,7 +65,7 @@ function s.atktg(e,c)
 	return c==e:GetHandler() or g:IsContains(c)
 end
 function s.filter(c,e,tp,zone)
-	return c:IsRace(RACE_CYBERSE) and c:IsLinkBelow(3) and not c:IsCode(id) 
+	return c:IsRace(RACE_CYBERSEE) and c:IsLinkBelow(3) and not c:IsCode(id) 
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

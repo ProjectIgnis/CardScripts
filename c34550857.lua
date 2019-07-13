@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.thfilter(c)
-	return c:IsRace(RACE_WINDBEAST) and c:GetLevel()==1 and c:IsAbleToHand()
+	return c:IsRace(RACE_WINGEDBEAST) and c:GetLevel()==1 and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

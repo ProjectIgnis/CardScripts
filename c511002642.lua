@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c)
-	return c:IsRace(RACE_DEVINE) and not c:IsPublic()
+	return c:IsRace(RACE_DIVINE) and not c:IsPublic()
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

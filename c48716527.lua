@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_ADVANCE)
+	return c:IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)==0
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.distg(e,c)
-	return not c:IsSummonType(SUMMON_TYPE_ADVANCE)
+	return not c:IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.tgcon(e)
 	local tp=e:GetHandlerPlayer()

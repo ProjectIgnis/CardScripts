@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return (tc:GetSummonType()&SUMMON_TYPE_ADVANCE)==SUMMON_TYPE_ADVANCE
+	return (tc:GetSummonType()&SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE
 		and tc:GetMaterialCount()>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -57,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:RandomSelect(tp,1):GetFirst()
 	if tc then
 		Duel.ConfirmCards(PLAYER_ALL,tc)
-		if tc:IsType(TYPE_LINK) and tc:IsRace(RACE_CYBERSE) and Duel.GetLocationCountFromEx(tp,tp,tc)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+		if tc:IsType(TYPE_LINK) and tc:IsRace(RACE_CYBERSEE) and Duel.GetLocationCountFromEx(tp,tp,tc)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end

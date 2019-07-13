@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsRace(RACE_CYBERSE) and c:IsSummonLocation(LOCATION_EXTRA) 
+	return c:IsPreviousControler(tp) and c:IsRace(RACE_CYBERSEE) and c:IsSummonLocation(LOCATION_EXTRA) 
 		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -56,7 +56,7 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
     local rc=c:GetReasonCard()
-    return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and rc:IsRace(RACE_CYBERSE) and rc:IsLinkAbove(2)
+    return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and rc:IsRace(RACE_CYBERSEE) and rc:IsLinkAbove(2)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x119) and c:GetType()==TYPE_SPELL and c:IsAbleToHand()

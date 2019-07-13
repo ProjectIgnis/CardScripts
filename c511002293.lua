@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SUMMON_PROC)
 	e3:SetCondition(s.ttcon)
 	e3:SetOperation(s.ttop)
-	e3:SetValue(SUMMON_TYPE_ADVANCE+1)
+	e3:SetValue(SUMMON_TYPE_TRIBUTE+1)
 	c:RegisterEffect(e3)
 	--equip
 	local e2=Effect.CreateEffect(c)
@@ -37,7 +37,7 @@ function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g, REASON_SUMMON+REASON_MATERIAL)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE+1)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE+1)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToChangeControler() end

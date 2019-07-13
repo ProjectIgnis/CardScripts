@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	return c:IsRace(RACE_CYBERSE) and c:IsSummonable(true,nil)
+	return c:IsRace(RACE_CYBERSEE) and c:IsSummonable(true,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not c:IsRace(RACE_CYBERSE) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsRace(RACE_CYBERSEE) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.aclimit(e,re,tp)
 	return not re:GetHandler():IsImmuneToEffect(e)

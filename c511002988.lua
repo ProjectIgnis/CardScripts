@@ -15,7 +15,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DEVINE) and not c:IsHasEffect(EFFECT_EXTRA_ATTACK)
+	return c:IsFaceup() and c:IsRace(RACE_DIVINE) and not c:IsHasEffect(EFFECT_EXTRA_ATTACK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

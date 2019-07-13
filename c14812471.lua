@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_SALAMANGREAT_SANCTUARY}
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSE,scard,sumtype,tp)
+	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSEE,scard,sumtype,tp)
 end
 function s.thfilter(c)
 	return c:IsCode(CARD_SALAMANGREAT_SANCTUARY) and c:IsAbleToHand()

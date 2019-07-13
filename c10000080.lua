@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
-	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3,SUMMON_TYPE_ADVANCE,aux.Stringid(id,0))
+	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0))
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.ttcon2)
 	e2:SetTarget(s.tttg2)
 	e2:SetOperation(s.ttop2)
-	e2:SetValue(SUMMON_TYPE_ADVANCE)
+	e2:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e2)
 	local e3=aux.AddNormalSetProcedure(c)
 	--cannot special summon

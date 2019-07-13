@@ -37,7 +37,7 @@ function s.rthcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
 	if not bc then return false end
 	if tc:IsControler(1-tp) then tc,bc=bc,tc end
-	if tc:IsFaceup() and tc:IsRace(RACE_CYBERSE) and tc:IsType(TYPE_LINK) and bc:IsAbleToHand() then
+	if tc:IsFaceup() and tc:IsRace(RACE_CYBERSEE) and tc:IsType(TYPE_LINK) and bc:IsAbleToHand() then
 		e:SetLabelObject(bc)
 		return true
 	else return false end
@@ -62,14 +62,14 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=tc:GetBattleTarget()
 	return #eg==1
 		and tc:IsLocation(LOCATION_GRAVE) and tc:IsReason(REASON_BATTLE)
-		and bc:IsRelateToBattle() and bc:IsControler(tp) and bc:IsRace(RACE_CYBERSE)
+		and bc:IsRelateToBattle() and bc:IsControler(tp) and bc:IsRace(RACE_CYBERSEE)
 end
 function s.thcfilter(c,tp)
 	return c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,c)
 end
 function s.thfilter(c)
-	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSE) and c:IsAbleToHand()
+	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSEE) and c:IsAbleToHand()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end

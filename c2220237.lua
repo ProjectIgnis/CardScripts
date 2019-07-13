@@ -55,7 +55,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsRace(RACE_CYBERSE,lc,sumtype,tp) and c:IsType(TYPE_LINK,lc,sumtype,tp)
+	return c:IsRace(RACE_CYBERSEE,lc,sumtype,tp) and c:IsType(TYPE_LINK,lc,sumtype,tp)
 end
 function s.damval1(e,re,val,r,rp,rc)
 	if r&REASON_EFFECT~=0 then return 0

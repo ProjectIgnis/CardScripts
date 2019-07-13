@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.filter(c)
-	return c:IsRace(RACE_WINDBEAST) and c:IsType(TYPE_SYNCHRO)
+	return c:IsRace(RACE_WINGEDBEAST) and c:IsType(TYPE_SYNCHRO)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=e:GetHandler():GetEquipTarget():GetMaterialCount()

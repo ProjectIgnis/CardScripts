@@ -19,7 +19,7 @@ function s.initial_effect(c)
 end
 function s.tdcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst()~=e:GetHandler() and ep==tp
-		and eg:GetFirst():IsSummonType(SUMMON_TYPE_ADVANCE)
+		and eg:GetFirst():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.tdcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():GetMaterialCount()~=0 and ep==tp

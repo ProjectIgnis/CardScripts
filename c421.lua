@@ -179,3 +179,4 @@ if not DivineHierarchy then
 		end
 	end
 end
+s.listed_names={0}

@@ -52,7 +52,7 @@ function s.valcheck(e,c)
 	e:SetLabel(typ)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -80,7 +80,7 @@ function s.efilter(e,te)
 	return te:IsActiveType(e:GetLabel()) and te:GetOwner()~=e:GetOwner()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.costfilter(c)
 	return c:IsType(TYPE_CONTINUOUS) and c:IsAbleToRemoveAsCost()

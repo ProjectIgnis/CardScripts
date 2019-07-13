@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SUMMON_PROC)
 	e3:SetCondition(s.ttcon)
 	e3:SetOperation(s.ttop)
-	e3:SetValue(SUMMON_TYPE_ADVANCE+1)
+	e3:SetValue(SUMMON_TYPE_TRIBUTE+1)
 	c:RegisterEffect(e3)
 	--sp summon
 	local e4=Effect.CreateEffect(c)
@@ -33,7 +33,7 @@ function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_ADVANCE+1
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_TRIBUTE+1
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

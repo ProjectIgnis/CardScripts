@@ -1,5 +1,5 @@
 --Deck Masters Mode
---Scripted by edo9300
+--Scripted by edo9id
 
 --Overwritten functions
 
@@ -21,7 +21,7 @@ if not DeckMasters then
 	local isloc=Card.IsLocation
 		Card.IsLocation=function(c,loc)
 			if (Duel.GetMasterRule()<4 and isloc(c,LOCATION_MZONE) and c:GetSequence()==5) or (Duel.GetMasterRule()>=4 and isloc(c,LOCATION_SZONE) and c:GetSequence()==6) then
-				return (loc&0x400)==0x400
+				return (loc&0xid+100)==0xid+100
 			else
 				return isloc(c,loc)
 			end
@@ -128,9 +128,9 @@ if not DeckMasters then
 
 	function Card.IsDeckMaster(c,both)
 		if both then
-			return c:IsLocation(0x400) and c:GetFlagEffect(300)>0
+			return c:IsLocation(0xid+100) and c:GetFlagEffect(id)>0
 		else
-			return c:IsLocation(0x400) or c:GetFlagEffect(300)>0
+			return c:IsLocation(0xid+100) or c:GetFlagEffect(id)>0
 		end
 	end
 
@@ -165,7 +165,7 @@ if not DeckMasters then
 	e2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetTargetRange(0xff,0xff)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsLocation,0x400))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsLocation,0xid+100))
 	Duel.RegisterEffect(e2,0)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
@@ -246,7 +246,7 @@ if not DeckMasters then
 				end
 				dm[i]:RegisterEffect(e1)
 			end
-			dm[i]:RegisterFlagEffect(300,0,EFFECT_FLAG_CLIENT_HINT,1,0,63)
+			dm[i]:RegisterFlagEffect(id,0,EFFECT_FLAG_CLIENT_HINT,1,0,63)
 			if dm[i]:GetPreviousLocation()==LOCATION_HAND then
 					Duel.Draw(i,1,REASON_RULE)
 			end
@@ -304,8 +304,8 @@ if not DeckMasters then
 		local WIN_REASON_DM=0x56
 		local c1=getmatchgc(Card.IsDeckMaster,tp,0xff,0,nil)
 		local c2=getmatchgc(Card.IsDeckMaster,tp,0,0xff,nil)
-		local f1=Duel.GetFlagEffect(tp,300+1)+Duel.GetFlagEffect(tp,302)
-		local f2=Duel.GetFlagEffect(1-tp,300+1)+Duel.GetFlagEffect(1-tp,302)
+		local f1=Duel.GetFlagEffect(tp,id+1)+Duel.GetFlagEffect(tp,302)
+		local f2=Duel.GetFlagEffect(1-tp,id+1)+Duel.GetFlagEffect(1-tp,302)
 		if c1==0 and c2>0 and f1==0 then
 			Duel.Win(1-tp,WIN_REASON_DM)
 		elseif c1==0 and c2==0 and f2==0 and f1==0  then
@@ -329,8 +329,8 @@ if not DeckMasters then
 					DeckMasters.pass2(e,tp,Group.FromCards(tc),ep,ev,re,r,rp)
 				else
 					local rc=tc:GetReasonCard()
-					rc:RegisterFlagEffect(300,0,EFFECT_FLAG_CLIENT_HINT,1,0,63)
-					tc:ResetFlagEffect(300)
+					rc:RegisterFlagEffect(id,0,EFFECT_FLAG_CLIENT_HINT,1,0,63)
+					tc:ResetFlagEffect(id)
 				end
 				tc=g:GetNext()
 			end
@@ -351,9 +351,9 @@ if not DeckMasters then
 		if #g>0 then
 			local tc=g:GetFirst()
 			while tc do
-				tc:ResetFlagEffect(300)
-				if Duel.GetFlagEffect(tc:GetControler(),300+1)==0 then
-					Duel.RegisterFlagEffect(tc:GetControler(),300+1,RESET_PHASE+PHASE_DRAW+PHASE_STANDBY+PHASE_MAIN1+PHASE_BATTLE+PHASE_MAIN2+PHASE_END,0,1)
+				tc:ResetFlagEffect(id)
+				if Duel.GetFlagEffect(tc:GetControler(),id+1)==0 then
+					Duel.RegisterFlagEffect(tc:GetControler(),id+1,RESET_PHASE+PHASE_DRAW+PHASE_STANDBY+PHASE_MAIN1+PHASE_BATTLE+PHASE_MAIN2+PHASE_END,0,1)
 				end
 				if not tc:IsReason(REASON_DESTROY) then
 					Duel.RegisterFlagEffect(tc:GetControler(),302,0,0,1)
@@ -371,12 +371,12 @@ if not DeckMasters then
 
 	function DeckMasters.checkop(e,tp,eg,ep,ev,re,r,rp)
 		for i=0,1 do
-			if getmatchgc(Card.IsDeckMaster,i,0xff,0,nil)==0 and Duel.GetFlagEffect(i,300+1)>0 then
+			if getmatchgc(Card.IsDeckMaster,i,0xff,0,nil)==0 and Duel.GetFlagEffect(i,id+1)>0 then
 				local g=eg:Filter(DeckMasters.filterdm,nil,i)
 				if #g>0 then
 				local tc=g:GetFirst()
 					while tc do
-						tc:RegisterFlagEffect(300,0,EFFECT_FLAG_CLIENT_HINT,1,0,63)
+						tc:RegisterFlagEffect(id,0,EFFECT_FLAG_CLIENT_HINT,1,0,63)
 						tc=g:GetNext()
 					end
 				end
@@ -403,7 +403,7 @@ if not DeckMasters then
 	function DeckMasters.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
 		if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),0,c:GetType(),c:GetAttack(),c:GetDefense(),c:GetLevel(),c:GetRace(),c:GetAttribute()) and e:GetHandler():IsLocation(0x400) end
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),0,c:GetType(),c:GetAttack(),c:GetDefense(),c:GetLevel(),c:GetRace(),c:GetAttribute()) and e:GetHandler():IsLocation(0xid+100) end
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	end
 	function DeckMasters.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -411,8 +411,8 @@ if not DeckMasters then
 		if c:IsRelateToEffect(e) then
 			Duel.SendtoDeck(c,2,-2,REASON_RULE)
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-			c:RegisterFlagEffect(300,0,EFFECT_FLAG_CLIENT_HINT,1,0,63)
-			Duel.ResetFlagEffect(tp,300+1)
+			c:RegisterFlagEffect(id,0,EFFECT_FLAG_CLIENT_HINT,1,0,63)
+			Duel.ResetFlagEffect(tp,id+1)
 		end
 	end
 

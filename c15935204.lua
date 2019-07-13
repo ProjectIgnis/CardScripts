@@ -23,8 +23,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	local b1=not a:IsType(TYPE_TOKEN) and a:IsStatus(STATUS_BATTLE_DESTROYED) and a:IsControler(1-tp) and d and d~=c and d:IsRace(RACE_PSYCHO)
-	local b2=d and not d:IsType(TYPE_TOKEN) and d:IsStatus(STATUS_BATTLE_DESTROYED) and d:IsControler(1-tp) and a~=c and a:IsRace(RACE_PSYCHO)
+	local b1=not a:IsType(TYPE_TOKEN) and a:IsStatus(STATUS_BATTLE_DESTROYED) and a:IsControler(1-tp) and d and d~=c and d:IsRace(RACE_PSYCHIC)
+	local b2=d and not d:IsType(TYPE_TOKEN) and d:IsStatus(STATUS_BATTLE_DESTROYED) and d:IsControler(1-tp) and a~=c and a:IsRace(RACE_PSYCHIC)
 	if (not b1 and not b2) or not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end
 	if b1 then
 		local e1=Effect.CreateEffect(c)

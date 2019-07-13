@@ -28,12 +28,12 @@ s.collection={
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if re:IsActiveType(TYPE_MONSTER) and re:GetCode()==EVENT_SUMMON_SUCCESS 
-		and (rc:GetSummonType()&SUMMON_TYPE_ADVANCE)==SUMMON_TYPE_ADVANCE then
+		and (rc:GetSummonType()&SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE then
 		rc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetFlagEffect(id)>0 and (c:GetSummonType()&SUMMON_TYPE_ADVANCE)==SUMMON_TYPE_ADVANCE 
+	return c:IsFaceup() and c:GetFlagEffect(id)>0 and (c:GetSummonType()&SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE 
 		and c:IsLevelAbove(5) and s.collection[c:GetCode()]
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -26,7 +26,7 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
-		if (tc:GetSummonType()&SUMMON_TYPE_ADVANCE)==SUMMON_TYPE_ADVANCE then
+		if (tc:GetSummonType()&SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE then
 			s[tc:GetControler()]=true
 		end
 		tc=eg:GetNext()

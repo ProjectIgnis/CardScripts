@@ -14,8 +14,8 @@ function s.initial_effect(c)
 	e2:SetValue(s.tlimit)
 	c:RegisterEffect(e2)
 	--summon with 3 tribute
-	local e3=aux.AddNormalSummonProcedure(c,true,false,3,3,SUMMON_TYPE_ADVANCE,aux.Stringid(id,0))
-	local e4=aux.AddNormalSetProcedure(c,true,false,3,3,SUMMON_TYPE_ADVANCE,aux.Stringid(id,0))
+	local e3=aux.AddNormalSummonProcedure(c,true,false,3,3,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0))
+	local e4=aux.AddNormalSetProcedure(c,true,false,3,3,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0))
 	--immune
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)

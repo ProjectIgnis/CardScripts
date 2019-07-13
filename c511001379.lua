@@ -1,4 +1,5 @@
 --Power Bombard
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -12,7 +13,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	aux.CallToken(419)
 end
 function s.cfilter(c,tp)
 	local val=0

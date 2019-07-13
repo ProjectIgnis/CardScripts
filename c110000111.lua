@@ -1,4 +1,5 @@
 --Burning Knuckle
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--gains 200 ATK for each armor monster
@@ -18,7 +19,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.latktg)
 	e2:SetOperation(s.latkop)
 	c:RegisterEffect(e2)
-	aux.CallToken(419)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_ARMOR)

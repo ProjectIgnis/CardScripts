@@ -1,4 +1,5 @@
 --Conduction Warrior Linear Magnum Plus Minus
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -42,7 +43,6 @@ function s.initial_effect(c)
 	e5:SetValue(s.atkval)
 	e5:SetTarget(s.atktg)
 	c:RegisterEffect(e5)
-	aux.CallToken(419)
 end
 function s.spfilter(c,tpe)
 	return c:IsType(tpe) and c:IsAbleToGraveAsCost()

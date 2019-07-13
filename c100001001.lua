@@ -1,4 +1,5 @@
 --牛頭鬼(未)
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--send to grave
@@ -11,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	aux.CallToken(419)
 end
 function s.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_YOKAI) and c:IsAbleToGrave()

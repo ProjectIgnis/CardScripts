@@ -1,5 +1,6 @@
 --Kaiky the sky star
 --fixed by MLD
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion Summon
@@ -21,7 +22,6 @@ function s.initial_effect(c)
 	e3:SetCondition(s.spcon)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	aux.CallToken(419)
 end
 function s.fuscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end

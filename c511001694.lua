@@ -1,4 +1,5 @@
 --Cardian - Kiri ni Houou
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -12,7 +13,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_CARDIAN)
-	aux.CallToken(419)
 end
 function s.filter(c,ft,tp)
 	local re=c:GetReasonEffect()

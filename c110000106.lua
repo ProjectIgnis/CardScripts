@@ -1,4 +1,5 @@
 --Over Boost
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--direct attack
@@ -16,7 +17,6 @@ function s.initial_effect(c)
 	e2:SetCondition(s.regcon)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
-	aux.CallToken(419)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

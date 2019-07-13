@@ -1,6 +1,7 @@
 --Performpal LaughMaker (Anime)
 --scripted by GameMaster(GM)
 --fixed amd cleaned up by MLD
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
@@ -24,7 +25,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	aux.CallToken(419)
 end
 function s.cfilter(c,sc,tp)
 	local val=0

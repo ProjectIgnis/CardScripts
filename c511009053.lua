@@ -1,5 +1,6 @@
 --Destiny HERO - Dystopiaguy
 --fixed by MLD
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -33,27 +34,8 @@ function s.initial_effect(c)
 	e3:SetCode(id)
 	e3:SetCondition(s.descon2)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
-		--register
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_ADJUST)
-		ge1:SetCountLimit(1)
-		ge1:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge1:SetOperation(s.atkchk)
-		Duel.RegisterEffect(ge1,0)
-	end
 end
 s.material_setcode={0x8,0xc008}
-function s.atkchk(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,419)==0 and Duel.GetFlagEffect(1-tp,419)==0 then
-		Duel.CreateToken(tp,419)
-		Duel.CreateToken(1-tp,419)
-		Duel.RegisterFlagEffect(tp,419,nil,0,1)
-		Duel.RegisterFlagEffect(1-tp,419,nil,0,1)
-	end
-end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end

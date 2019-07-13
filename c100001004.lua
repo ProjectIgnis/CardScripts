@@ -1,4 +1,5 @@
 --百鬼夜行
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -9,7 +10,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
-	aux.CallToken(419)
 end
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_YOKAI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

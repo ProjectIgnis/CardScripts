@@ -1,4 +1,5 @@
 --Black Hole Shield
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Black Hole deflection
@@ -10,7 +11,6 @@ function s.initial_effect(c)
 	e1:SetCost(s.ndcost)
 	e1:SetOperation(s.ndop)
 	c:RegisterEffect(e1)
-	aux.CallToken(419)
 end
 function s.ndcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()

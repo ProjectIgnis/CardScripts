@@ -1,4 +1,5 @@
 --Trap Buster
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable
@@ -23,7 +24,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(3682106)
 	c:RegisterEffect(e2)
-	aux.CallToken(419)
 end
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_ARMOR) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)

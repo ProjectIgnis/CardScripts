@@ -1,4 +1,5 @@
 --Zero Gate of the Void
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Return
@@ -24,7 +25,6 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetLabel(1)
 	Duel.RegisterEffect(e3,1)
-	aux.CallToken(419)
 end
 function s.econ(e)
 	return e:GetLabelObject():IsActivatable(e:GetLabel())

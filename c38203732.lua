@@ -32,5 +32,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local tc2=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,tc1,tc1:GetLeftScale(),tc1:GetCode()):GetFirst()
 	Duel.SendtoHand(Group.FromCards(tc1,tc2),nil,REASON_EFFECT)
+	Duel.ConfirmCards(1-tp,Group.FromCards(tc1,tc2))
 end
 

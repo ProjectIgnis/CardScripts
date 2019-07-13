@@ -1,5 +1,5 @@
 --オルフェゴール・クリマクス
---Orcustrated Climax
+--Orcust Crescendo
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -66,7 +66,7 @@ function s.splimit(e,c)
 	return not (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_DARK))
 end
 function s.thfilter(c)
-	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToHand()
+	return (c:IsLocation(LOCATION_DECK) or c:IsFaceup()) and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_REMOVED,0,1,nil) end

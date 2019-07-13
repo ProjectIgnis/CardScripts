@@ -44,6 +44,7 @@ function s.initial_effect(c)
 end
 function s.rmcond(e)
 	return e:GetHandler():GetSummonLocation()&LOCATION_EXTRA==LOCATION_EXTRA
+		and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,nil) end

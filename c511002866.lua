@@ -1,4 +1,5 @@
 --CNo.69 紋章死神カオス・オブ・アームズ
+Duel.LoadCardScript("c11522979.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -17,16 +18,6 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e3:SetValue(s.indes)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
-	end
 end
 s.listed_names={2407234,100000581,111011002,511000580,511002068,511002164,93238626}
 s.xyz_number=69
@@ -103,10 +94,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e2)
 		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,1)
 	end
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,11522979)
-	Duel.CreateToken(1-tp,11522979)
 end
 function s.indes(e,c)
 	return not c:IsSetCard(0x48)

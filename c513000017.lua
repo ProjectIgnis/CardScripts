@@ -1,6 +1,7 @@
 --Number 101: Silent Honor ARK (Anime)
 --No.101 S・H・Ark Knight
 --fixed by Larry126
+Duel.LoadCardScript("c48739166.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -30,7 +31,6 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e3:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e3)
-	aux.CallToken(48739166)
 end
 s.xyz_number=101
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

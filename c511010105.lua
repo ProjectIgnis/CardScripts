@@ -1,6 +1,7 @@
 --Number 105: Battlin' Boxer Star Cestus (Anime)
 --No.105 BK 流星のセスタス (Anime)
 --cleaned up and fixed by MLD
+Duel.LoadCardScript("c59627393.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -23,16 +24,6 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e3:SetValue(s.indes)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
-		local ge3=Effect.CreateEffect(c)
-		ge3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge3:SetCode(EVENT_ADJUST)
-		ge3:SetCountLimit(1)
-		ge3:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge3:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge3,0)
-	end
 end
 s.xyz_number=105
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -68,10 +59,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EFFECT_UNSTOPPABLE_ATTACK)
 	e3:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	c:RegisterEffect(e3)
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,59627393)
-	Duel.CreateToken(1-tp,59627393)
 end
 function s.indes(e,c)
 	return not c:IsSetCard(0x48)

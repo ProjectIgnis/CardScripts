@@ -1,6 +1,7 @@
 --CNo.105 BK 彗星のカエストス (Anime)
 --Number C105: Battlin' Boxer Comet Cestus (Anime)
 --fixed by Larry126
+Duel.LoadCardScript("c85121942.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -47,7 +48,6 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	e4:SetLabelObject(e1)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
-	aux.CallToken(85121942)
 end
 s.xyz_number=105
 s.listed_names={59627393,100000581,111011002,511000580,511002068,511002164,93238626}

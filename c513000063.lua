@@ -1,4 +1,5 @@
 --CNo.80 葬装覇王レクイエム・イン・バーサーク
+Duel.LoadCardScript("c20563387.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -39,16 +40,6 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e4:SetValue(s.indes)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
-	end
 end
 s.listed_names={93568288,100000581,111011002,511000580,511002068,511002164,93238626}
 s.xyz_number=80
@@ -246,10 +237,6 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		bg=sg:Filter(Card.IsLocation,nil,LOCATION_SZONE)
 	end
 	Duel.Remove(bg,POS_FACEUP,REASON_EFFECT)
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,20563387)
-	Duel.CreateToken(1-tp,20563387)
 end
 function s.indes(e,c)
 	return not c:IsSetCard(0x48)

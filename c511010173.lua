@@ -1,4 +1,5 @@
 --CNo.73 激瀧瀑神アビス・スープラ
+Duel.LoadCardScript("c96864105.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -21,7 +22,6 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e6:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e6)
-	aux.CallToken(96864105)
 end
 s.xyz_number=73
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

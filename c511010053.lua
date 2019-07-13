@@ -1,5 +1,6 @@
 --No.53 偽骸神 Heart－eartH
 --fixed by MLD
+Duel.LoadCardScript("c23998625.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -83,7 +84,6 @@ function s.initial_effect(c)
 	e8:SetTarget(s.xyztg)
 	e8:SetOperation(s.xyzop)
 	c:RegisterEffect(e8)
-	aux.CallToken(23998625)
 end
 s.listed_names={97403510}
 s.xyz_number=53

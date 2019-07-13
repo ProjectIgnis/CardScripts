@@ -1,4 +1,5 @@
 --No.30 破滅のアシッド・ゴーレム
+Duel.LoadCardScript("c81330115.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -38,16 +39,6 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e4:SetValue(s.indes)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
-	end
 end
 s.xyz_number=30
 function s.atcon(e)
@@ -88,10 +79,6 @@ function s.olop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,81330115)
-	Duel.CreateToken(1-tp,81330115)
-end
 function s.indes(e,c)
-return not c:IsSetCard(0x48)
+	return not c:IsSetCard(0x48)
 end

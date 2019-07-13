@@ -1,4 +1,5 @@
 --Number 77: The Seven Sins
+Duel.LoadCardScript("c62541668.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -28,7 +29,6 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e5:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e5)
-	aux.CallToken(62541668)
 end
 s.xyz_number=77
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

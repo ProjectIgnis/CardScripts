@@ -1,4 +1,5 @@
 --No.64 古狸三太夫
+Duel.LoadCardScript("c39972129.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -30,7 +31,6 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e3:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e3)
-	aux.CallToken(39972129)
 end
 s.listed_names={39972130}
 s.xyz_number=64

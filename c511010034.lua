@@ -1,4 +1,5 @@
 --No.34 電算機獣テラ・バイト (Anime)
+Duel.LoadCardScript("c32003338.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -22,16 +23,6 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetValue(s.indes)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_ADJUST)
-		ge1:SetCountLimit(1)
-		ge1:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge1:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge1,0)
-	end
 end
 s.xyz_number=34
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -53,10 +44,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.GetControl(tc,tp,PHASE_END,1)
 	end
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,32003338)
-	Duel.CreateToken(1-tp,32003338)
 end
 function s.indes(e,c)
 	return not c:IsSetCard(0x48)

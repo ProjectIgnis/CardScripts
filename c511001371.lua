@@ -1,4 +1,5 @@
 --CNo.40 ギミック・パペット－デビルズ・ストリングス
+Duel.LoadCardScript("c69170557.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -117,10 +118,6 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,69170557)
-	Duel.CreateToken(1-tp,69170557)
 end
 function s.indes(e,c)
 	return not c:IsSetCard(0x48)

@@ -1,4 +1,5 @@
 --Number 19: Freezerdon (anime)
+Duel.LoadCardScript("c55067058.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -19,7 +20,6 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e2)
-	aux.CallToken(55067058)
 end
 s.xyz_number=19
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,4 +1,5 @@
 --Ｎｏ.３９ 希望皇ホープ
+Duel.LoadCardScript("c84013237.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -20,7 +21,6 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e2)
-	aux.CallToken(84013237)
 end
 s.xyz_number=39
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)

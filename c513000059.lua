@@ -1,6 +1,7 @@
 --CNo.101 S・H・Dark Knight (Anime)
 --Number C101: Silent Honor DARK (Anime)
 --fixed by Larry126
+Duel.LoadCardScript("c12744567.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -55,7 +56,6 @@ function s.initial_effect(c)
 	e5:SetTarget(s.sptg2)
 	e5:SetOperation(s.spop2)
 	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
-	aux.CallToken(12744567)
 end
 s.xyz_number=101
 s.listed_names={48739166,100000581,111011002,511000580,511002068,511002164,93238626}

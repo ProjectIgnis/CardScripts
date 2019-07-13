@@ -1,4 +1,5 @@
 --No.82 蟻岩土ブリリアント
+Duel.LoadCardScript("c51735257.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -29,13 +30,6 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-		local ge3=Effect.CreateEffect(c)
-		ge3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge3:SetCode(EVENT_ADJUST)
-		ge3:SetCountLimit(1)
-		ge3:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge3:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge3,0)
 	end
 end
 s.listed_names={31437713}
@@ -96,10 +90,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		s[0]=true
 	end
 end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,31437713)
-	Duel.CreateToken(1-tp,31437713)
-end
+Duel.LoadCardScript("c51735257.lua")
 function s.clear(e,tp,eg,ep,ev,re,r,rp)
 	s[0]=false
 end

@@ -2,6 +2,7 @@
 --Number 107: Galaxy-Eyes Tachyon Dragon (Anime)
 --fixed and cleaned up by MLD
 --fixed by Larry126
+Duel.LoadCardScript("c88177324.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -56,7 +57,6 @@ function s.initial_effect(c)
 		e2:SetOperation(s.reset)
 		Duel.RegisterEffect(e2,0)
 	end
-	aux.CallToken(88177324)
 end
 s.xyz_number=107
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)

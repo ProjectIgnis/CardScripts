@@ -1,4 +1,5 @@
 --No.66 覇鍵甲虫マスター・キー・ビートル
+Duel.LoadCardScript("c76067258.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -29,7 +30,6 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e4:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e4)
-	aux.CallToken(76067258)
 end
 s.xyz_number=66
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

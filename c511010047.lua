@@ -1,4 +1,5 @@
 --No.47 ナイトメア・シャーク
+Duel.LoadCardScript("c31320433.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -30,16 +31,6 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetValue(s.indes)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
-	end
 end
 s.xyz_number=47
 function s.matfilter(c)
@@ -94,10 +85,6 @@ end
 function s.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,31320433)
-	Duel.CreateToken(1-tp,31320433)
-end
 function s.indes(e,c)
-return not c:IsSetCard(0x48)
+	return not c:IsSetCard(0x48)
 end

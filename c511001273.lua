@@ -1,4 +1,5 @@
 --Number 37: Hope Woven Dragon Spider Shark
+Duel.LoadCardScript("c37279508.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -50,7 +51,6 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e5:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e5)
-	aux.CallToken(37279508)
 end
 s.xyz_number=37
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

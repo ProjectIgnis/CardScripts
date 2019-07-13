@@ -1,4 +1,5 @@
 --Number C6: Chronomaly Chaos Atlandis (Anime)
+Duel.LoadCardScript("c6387204.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -17,7 +18,6 @@ function s.initial_effect(c)
 	e7:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e7:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e7)
-	aux.CallToken(6387204)
 end
 s.listed_names={9161357}
 s.xyz_number=6

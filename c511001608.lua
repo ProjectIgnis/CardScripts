@@ -1,4 +1,5 @@
 --No.93 希望皇ホープ・カイザー
+Duel.LoadCardScript("c23187256.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -87,13 +88,6 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-		local ge3=Effect.CreateEffect(c)
-		ge3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge3:SetCode(EVENT_ADJUST)
-		ge3:SetCountLimit(1)
-		ge3:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge3:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge3,0)
 	end
 end
 s.xyz_number=93
@@ -199,10 +193,6 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.GetControl(tc,tp)
 	end
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,23187256)
-	Duel.CreateToken(1-tp,23187256)
 end
 function s.indes(e,c)
 	return not c:IsSetCard(0x48)

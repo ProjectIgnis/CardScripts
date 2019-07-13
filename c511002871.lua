@@ -1,6 +1,7 @@
 --CNo.104 仮面魔踏士アンブラル (Anime)
 --Number C104: Umbral Horror Masquerade (Anime)
 --fixed by Larry126
+Duel.LoadCardScript("c49456901.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -48,7 +49,6 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	e4:SetLabelObject(e1)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
-	aux.CallToken(49456901)
 end
 s.xyz_number=104
 s.listed_names={2061963,100000581,111011002,511000580,511002068,511002164,93238626}

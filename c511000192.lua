@@ -1,4 +1,5 @@
 --Number F0: Future Hope
+Duel.LoadCardScript("c65305468.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -72,16 +73,6 @@ function s.initial_effect(c)
 	e8:SetCost(s.cost)
 	e8:SetOperation(s.op3)
 	c:RegisterEffect(e8,false,REGISTER_FLAG_DETACH_XMAT)
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
-	end
 end
 s.xyz_number=0
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
@@ -146,8 +137,4 @@ end
 function s.damval(e,re,val,r,rp,rc)
 	if (r&REASON_EFFECT)~=0 then return 0
 	else return val end
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,65305468)
-	Duel.CreateToken(1-tp,65305468)
 end

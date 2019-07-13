@@ -1,5 +1,6 @@
 --No.104 仮面魔踏士シャイニング
 --fixed by MLD
+Duel.LoadCardScript("c2061963.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -36,16 +37,6 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e3:SetValue(s.indes)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
-	end
 end
 s.xyz_number=104
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -88,10 +79,6 @@ function s.deckop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(p,d,REASON_EFFECT)
 	Duel.BreakEffect()
 	Duel.ShuffleDeck(p)
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,2061963)
-	Duel.CreateToken(1-tp,2061963)
 end
 function s.indes(e,c)
 	return not c:IsSetCard(0x48)

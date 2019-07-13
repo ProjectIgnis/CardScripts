@@ -1,9 +1,9 @@
 --Twin Pillars of Ice
 --AlphaKretin
 --Credit to edo9300 for implementing the Ice Pillar mechanic
+Duel.LoadScript("c422.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.CallToken(422)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

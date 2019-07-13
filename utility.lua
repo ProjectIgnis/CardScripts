@@ -3,6 +3,18 @@ aux=Auxiliary
 function GetID()
     return self_table,self_code
 end
+function Auxiliary.LoadCardScript(code)
+	local card=string.sub(code,0,string.len(code)-4)
+    if not _G[card] then
+		local oldtable,oldcode=GetID()
+        _G[card] = {}
+		self_table=_G[card]
+		self_code=tonumber(string.sub(card,2))
+        Duel.LoadScript(code)
+		self_table=oldtable
+		self_code=oldcode
+    end
+end
 function Card.GetMetatable(c)
 	local code=c:GetOriginalCode()
 	local mt=_G["c" .. code]

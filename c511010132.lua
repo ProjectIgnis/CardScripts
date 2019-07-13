@@ -1,7 +1,7 @@
 --CNo.32 海咬龍シャーク・ドレイク・バイス (Anime)
 --fixed by MLD
-Duel.LoadScript("c49221191.lua")
 Duel.LoadScript("c420.lua")
+Duel.LoadCardScript("c49221191.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

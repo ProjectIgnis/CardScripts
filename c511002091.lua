@@ -1,6 +1,6 @@
 --No.33 先史遺産－超兵器マシュ＝マック
 Duel.LoadScript("c419.lua")
-Duel.LoadScript("c39139935.lua")
+Duel.LoadCardScript("c39139935.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

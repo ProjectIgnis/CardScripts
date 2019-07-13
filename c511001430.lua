@@ -1,8 +1,8 @@
 --CNo.103 神葬零嬢ラグナ・インフィニティ (Anime)
 --Number C103: Ragnafinity (Anime)
 --fixed by Larry126
-Duel.LoadScript("c20785975.lua")
 Duel.LoadScript("c419.lua")
+Duel.LoadCardScript("c20785975.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

@@ -1,4 +1,5 @@
 --Statue Zone
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,5 +15,4 @@ function s.initial_effect(c)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x550))
 	e2:SetCode(EFFECT_DISABLE)
 	c:RegisterEffect(e2)
-	aux.CallToken(420)
 end

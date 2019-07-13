@@ -1,4 +1,5 @@
 --Number 92: Heart-eartH Dragon (Anime)
+Duel.LoadCardScript("c97403510.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -77,16 +78,6 @@ function s.initial_effect(c)
 	e8:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e8:SetValue(s.indes)
 	c:RegisterEffect(e8)
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
-	end
 end
 s.xyz_number=92
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
@@ -177,10 +168,6 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Recover(tp,e:GetLabelObject():GetLabel(),REASON_EFFECT)
 	end
 	e:GetLabelObject():SetLabel(0)
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,97403510)
-	Duel.CreateToken(1-tp,97403510)
 end
 function s.indes(e,c)
 	return not c:IsSetCard(0x48)

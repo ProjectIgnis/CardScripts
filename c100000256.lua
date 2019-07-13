@@ -1,4 +1,5 @@
 --ダイダラボッチ
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -15,7 +16,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(s.val)
 	c:RegisterEffect(e2)
-	aux.CallToken(419)
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_YOKAI),c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())*200

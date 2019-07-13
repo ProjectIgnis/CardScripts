@@ -1,4 +1,5 @@
 --Psychic Armor Head
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Search
@@ -26,7 +27,6 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_CANNOT_ATTACK)
 	c:RegisterEffect(e3)
-	aux.CallToken(419)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0

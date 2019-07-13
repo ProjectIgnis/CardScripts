@@ -1,6 +1,8 @@
 --CNo.103 神葬零嬢ラグナ・インフィニティ (Anime)
 --Number C103: Ragnafinity (Anime)
 --fixed by Larry126
+Duel.LoadScript("c419.lua")
+Duel.LoadCardScript("c20785975.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -49,8 +51,6 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e4:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e4)
-	aux.CallToken(20785975)
-	aux.CallToken(419)
 end
 s.xyz_number=103
 s.listed_names={94380860,100000581,111011002,511000580,511002068,511002164,93238626}

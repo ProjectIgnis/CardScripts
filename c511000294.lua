@@ -1,4 +1,5 @@
 --Number C1000: Numerronius
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -57,7 +58,6 @@ function s.initial_effect(c)
 	e7:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e7:SetValue(s.indes)
 	c:RegisterEffect(e7)
-	aux.CallToken(420)
 end
 s.xyz_number=1000
 function s.filter(e,c)

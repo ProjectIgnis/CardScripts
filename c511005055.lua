@@ -1,6 +1,7 @@
 --Flattery
 --  By Shad3
 --fixed and cleaned up by MLD
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,25 +14,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.atkchk)
-		Duel.RegisterEffect(ge2,0)
-	end
-end
-function s.atkchk(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,419)==0 and Duel.GetFlagEffect(1-tp,419)==0 then
-		Duel.CreateToken(tp,419)
-		Duel.CreateToken(1-tp,419)
-		Duel.RegisterFlagEffect(tp,419,nil,0,1)
-		Duel.RegisterFlagEffect(1-tp,419,nil,0,1)
-	end
-end
 function s.cfilter(c,tp)
 	local val=0
 	if c:GetFlagEffect(284)>0 then val=c:GetFlagEffectLabel(284) end

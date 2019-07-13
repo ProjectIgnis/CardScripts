@@ -1,4 +1,5 @@
 --Buster Knuckle
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Piercing
@@ -27,7 +28,6 @@ function s.initial_effect(c)
 	local e5=e3:Clone()
 	e5:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e5)
-	aux.CallToken(419)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_ARMOR)

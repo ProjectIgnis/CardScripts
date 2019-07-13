@@ -1,4 +1,5 @@
 --Battleguard Mad Shaman
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -57,7 +58,6 @@ function s.initial_effect(c)
 	e8:SetRange(LOCATION_MZONE)
 	e8:SetOperation(s.conop)
 	c:RegisterEffect(e8)
-	aux.CallToken(420)
 end
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(Card.IsBattleguard,1,nil)

@@ -1,5 +1,6 @@
 --Shinato, King of a Higher Plane (DM)
 --Scripted by edo9300
+Duel.LoadScript("c300.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -49,25 +50,11 @@ function s.initial_effect(c)
 	e8:SetRange(LOCATION_PZONE)
 	e8:SetValue(1)
 	c:RegisterEffect(e8)
-	if not s.global_check then
-		s.global_check=true
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_ADJUST)
-		ge1:SetCountLimit(1)
-		ge1:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge1:SetOperation(s.chk)
-		Duel.RegisterEffect(ge1,0)
-	end
 end
 s.dm=true
 s.dm_no_spsummon=true
 s.dm_no_activable=true
 s.dm_replace_original=true
-function s.chk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,300)
-	Duel.CreateToken(1-tp,300)
-end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and e:GetHandler():GetFlagEffect(300)>0
 end

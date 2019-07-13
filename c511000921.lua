@@ -1,8 +1,8 @@
 --冥府につづく階段
 --Stairway to the Underworld
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.CallToken(420)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

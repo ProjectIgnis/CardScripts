@@ -1,4 +1,6 @@
 --No.33 先史遺産－超兵器マシュ＝マック
+Duel.LoadScript("c419.lua")
+Duel.LoadCardScript("c39139935.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -23,8 +25,6 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e3:SetValue(s.indes)
 	c:RegisterEffect(e3)
-	aux.CallToken(419)
-	aux.CallToken(39139935)
 end
 s.xyz_number=33
 function s.cfilter(c)

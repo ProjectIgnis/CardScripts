@@ -1,5 +1,6 @@
 --閻魔の裁き (Manga)
 --Enma's Judgment (Manga)
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	aux.CallToken(419)
 end
 s.listed_names={68722455}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

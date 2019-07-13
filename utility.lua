@@ -3,6 +3,18 @@ aux=Auxiliary
 function GetID()
     return self_table,self_code
 end
+function Duel.LoadCardScript(code)
+	local card=string.sub(code,0,string.len(code)-4)
+    if not _G[card] then
+		local oldtable,oldcode=GetID()
+        _G[card] = {}
+		self_table=_G[card]
+		self_code=tonumber(string.sub(card,2))
+        Duel.LoadScript(code)
+		self_table=oldtable
+		self_code=oldcode
+    end
+end
 function Card.GetMetatable(c)
 	local code=c:GetOriginalCode()
 	local mt=_G["c" .. code]
@@ -942,21 +954,8 @@ function Auxiliary.ResetEffects(g,eff)
 		end
 	end
 end
-Auxiliary.CalledTokens={}
 function Auxiliary.CallToken(code)
-	if not Auxiliary.CalledTokens[code] then
-		Auxiliary.CalledTokens[code]=true
-		local ge=Effect.GlobalEffect()
-		ge:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge:SetCode(EVENT_ADJUST)
-		ge:SetCountLimit(1)
-		ge:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge:SetOperation(function()
-			Duel.CreateToken(0,code)
-			Duel.CreateToken(1,code)
-		end)
-		Duel.RegisterEffect(ge,0)
-	end
+	Debug.Message(code.." called Auxiliary.CallToken, use Duel.LoadCardScript or Duel.LoadScript instead!!!")
 end
 --utility entry for SelectUnselect loops
 --returns bool if chk==0, returns Group if chk==1

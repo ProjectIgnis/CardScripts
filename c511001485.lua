@@ -1,4 +1,5 @@
 --Tachyon Cannon
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(function(c) return c:IsTachyon() end))
@@ -17,7 +18,6 @@ function s.initial_effect(c)
 	e4:SetCost(s.atcost)
 	e4:SetOperation(s.atop)
 	c:RegisterEffect(e4)
-	aux.CallToken(420)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local eq=e:GetHandler():GetEquipTarget()

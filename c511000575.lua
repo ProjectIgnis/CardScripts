@@ -1,5 +1,6 @@
 --Kaiser Sea Horse (DM)
 --Scripted by edo9300
+Duel.LoadScript("c300.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--double tribute
@@ -21,7 +22,6 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_DECREASE_TRIBUTE_SET)
 	c:RegisterEffect(e3)
-	aux.CallToken(300)
 end
 s.dm=true
 function s.condition(e,c)

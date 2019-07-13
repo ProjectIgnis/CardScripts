@@ -1,4 +1,5 @@
 --マタタビ・タービン
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,s.filter)
@@ -14,7 +15,6 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e4:SetValue(s.vala)
 	c:RegisterEffect(e4)
-	aux.CallToken(420)
 end
 function s.filter(c)
 	return c:IsCat() or c:IsNeko()

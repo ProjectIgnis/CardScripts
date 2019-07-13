@@ -1,5 +1,6 @@
 --Performage Reversal Dancer
 --fixed by MLD
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -31,7 +32,6 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	c:RegisterEffect(e4)
-	aux.CallToken(419)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()

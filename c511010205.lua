@@ -1,5 +1,6 @@
 --CNo.5 亡朧龍カオス・キマイラ・ドラゴン (Anime)
 --fixed by MLD
+Duel.LoadCardScript("c69757518.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -80,7 +81,6 @@ function s.initial_effect(c)
 	e10:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e10:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e10)
-	aux.CallToken(69757518)
 end
 s.listed_names={90126061}
 s.xyz_number=5

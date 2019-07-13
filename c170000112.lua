@@ -1,4 +1,5 @@
 --Magnet Warrior Omega Minus
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
     local e1=Effect.CreateEffect(c)
@@ -28,7 +29,6 @@ function s.initial_effect(c)
 	e4:SetValue(s.atkval)
 	e4:SetTarget(s.atktg)
 	c:RegisterEffect(e4)
-	aux.CallToken(419)
 end
 function s.vala(e,c)
 	return c:IsFaceup() and c:IsType(TYPE_MINUS) and not c:IsType(TYPE_PLUS)

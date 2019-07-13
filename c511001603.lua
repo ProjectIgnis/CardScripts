@@ -1,4 +1,5 @@
 --Hot Red Dragon Archfiend King Calamity
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -38,7 +39,6 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e4:SetCode(21142671)
 	c:RegisterEffect(e4)
-	aux.CallToken(419)
 end
 s.listed_names={39765958}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

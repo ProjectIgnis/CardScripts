@@ -1,5 +1,6 @@
 --Deepsea Warrior (DM)
 --Scripted by edo9300
+Duel.LoadScript("c300.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--immune spell
@@ -22,7 +23,6 @@ function s.initial_effect(c)
 	e2:SetCondition(s.cbcon)
 	e2:SetOperation(s.cbop)
 	c:RegisterEffect(e2)
-	aux.CallToken(300)
 end
 s.listed_names={CARD_UMI}
 s.dm=true

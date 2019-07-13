@@ -1,4 +1,5 @@
 --九尾の狐
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -25,7 +26,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	aux.CallToken(419)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

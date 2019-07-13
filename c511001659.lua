@@ -1,4 +1,5 @@
 --Number C9: Chaos Dyson Sphere (anime)
+Duel.LoadCardScript("c32559361.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -39,16 +40,6 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e5:SetValue(s.indes)
 	c:RegisterEffect(e5)
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
-	end
 end
 s.listed_names={1992816,100000581,111011002,511000580,511002068,511002164,93238626}
 s.xyz_number=9
@@ -132,10 +123,6 @@ function s.atcon(e)
 end
 function s.atlimit(e,c)
 	return c~=e:GetHandler()
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,32559361)
-	Duel.CreateToken(1-tp,32559361)
 end
 function s.indes(e,c)
 	return not c:IsSetCard(0x48)

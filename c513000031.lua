@@ -1,4 +1,5 @@
 --シューティング・クェーサー・ドラゴン
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -44,7 +45,6 @@ function s.initial_effect(c)
 	e5:SetTarget(s.battg)
 	e5:SetValue(s.batval)
 	c:RegisterEffect(e5)
-	aux.CallToken(419)
 	--reduce
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_FIELD)

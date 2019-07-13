@@ -1,6 +1,7 @@
 --No. 31: Abel's Doom
 --No.31 アベルズ・デビル (Anime)
 --Fixed By TheOnePharaoh
+Duel.LoadCardScript("c95442074.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -47,13 +48,6 @@ function s.initial_effect(c)
 		ge1:SetCondition(s.lpcheckcon)
 		ge1:SetOperation(s.lpcheckop)
 		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
 	end
 end
 s.listed_names={69058960}
@@ -106,10 +100,6 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,e:GetHandler():GetAttack(),REASON_EFFECT)
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,95442074)
-	Duel.CreateToken(1-tp,95442074)
 end
 function s.indes(e,c)
 	return not c:IsSetCard(0x48)

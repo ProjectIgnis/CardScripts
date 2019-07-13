@@ -1,4 +1,5 @@
 --Buster Pyle
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes
@@ -21,7 +22,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.bbtar)
 	e3:SetOperation(s.bbop)
 	c:RegisterEffect(e3)
-	aux.CallToken(419)
 end
 function s.bbcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()

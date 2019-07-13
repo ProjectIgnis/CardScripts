@@ -1,4 +1,5 @@
 --集結！ランドスター戦隊
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -9,7 +10,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	aux.CallToken(420)
 end
 function s.filter(c,e,tp)
 	return c:IsLandstar() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

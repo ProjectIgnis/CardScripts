@@ -1,4 +1,5 @@
 --Earthbound Prisoner Ground Keeper
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--
@@ -10,7 +11,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.indtg)
 	e1:SetValue(s.indval)
 	c:RegisterEffect(e1)
-	aux.CallToken(420)
 end
 function s.filter(c,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsEarthbound()

@@ -1,5 +1,6 @@
 --CNo.39 希望皇ホープレイ (Anime)
 --fixed by MLD
+Duel.LoadCardScript("c56840427.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -40,16 +41,6 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e6:SetValue(s.indes)
 	c:RegisterEffect(e6)
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
-	end
 end
 s.listed_names={84013237}
 s.xyz_number=39
@@ -101,10 +92,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e)
 	return Duel.GetLP(e:GetHandlerPlayer())>=1000
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,56840427)
-	Duel.CreateToken(1-tp,56840427)
 end
 function s.indes(e,c)
 	return not c:IsSetCard(0x48)

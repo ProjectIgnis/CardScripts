@@ -1,6 +1,7 @@
 --CNo.106 溶岩掌ジャイアント・ハンド・レッド (Anime)
 --Number C106: Giant Red Hand (Anime)
 --fixed by Larry126
+Duel.LoadCardScript("c55888045.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -53,7 +54,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 	e1:SetLabelObject(e6)
 	e4:SetLabelObject(e6)
-	aux.CallToken(55888045)
 end
 s.xyz_number=106
 s.listed_names={63746411,100000581,111011002,511000580,511002068,511002164,93238626}

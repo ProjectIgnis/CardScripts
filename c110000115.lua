@@ -1,4 +1,5 @@
 --Magnet Armor
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -9,7 +10,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	aux.CallToken(419)
 end
 function s.filter(c,e,tp)
 	return c:IsType(TYPE_ARMOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 

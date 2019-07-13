@@ -1,4 +1,5 @@
 --Don Thousand's Throne (Anime)
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -28,7 +29,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	aux.CallToken(420)
 	if not s.global_check then
 		s.global_check=true
 		s[0]=0

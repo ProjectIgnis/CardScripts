@@ -29,7 +29,7 @@ end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if s[0]:GetCount()>0 then return end
 	for i=1,5 do
-		local tc=Duel.CreateToken(0,419)
+		local tc=Duel.CreateToken(0,946)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(511002961)
@@ -37,7 +37,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		s[0]:AddCard(tc)
 	end
 	for i=1,5 do
-		local tc=Duel.CreateToken(1,419)
+		local tc=Duel.CreateToken(1,946)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(511002961)

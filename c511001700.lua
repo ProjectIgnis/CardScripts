@@ -1,4 +1,5 @@
 --Cardian - Yanagi ni Ono no Michikaze
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -18,7 +19,6 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SYNCHRO_MATERIAL_CUSTOM)
 	e3:SetOperation(s.synop)
 	c:RegisterEffect(e3)
-	aux.CallToken(419)
 end
 function s.filter(c,ft,tp)
 	local re=c:GetReasonEffect()

@@ -1,4 +1,5 @@
 --天輪の葬送士
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -9,7 +10,6 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	aux.CallToken(420)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCelestial()

@@ -1,6 +1,7 @@
 --Brave-Eyes Pendulum Dragon (Anime)
 --Scripted By TheOnePharaoh
 --fixed by MLD
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -21,7 +22,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tg)
 	e2:SetValue(s.val)
 	c:RegisterEffect(e2)
-	aux.CallToken(419)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

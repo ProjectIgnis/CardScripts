@@ -1,5 +1,6 @@
 --CNo.92 偽骸虚龍 Heart－eartH Chaos Dragon
 --fixed by MLD
+Duel.LoadCardScript("c47017574.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -31,7 +32,6 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e6:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e6)
-	aux.CallToken(47017574)
 	if not s.global_check then
 		s.global_check=true
 		s[0]=0

@@ -1,4 +1,5 @@
 --Active Guard
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--no damage
@@ -20,7 +21,6 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
-	aux.CallToken(419)
 end
 function s.damval(e,re,val,r,rp,rc)
 	if val~=0 then

@@ -1,4 +1,5 @@
 --Number 6: Chronomaly Atlandis (Anime)
+Duel.LoadCardScript("c9161357.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -61,13 +62,6 @@ function s.initial_effect(c)
 		s.global_check=true
 		s[0]=0
 		s[1]=0
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
 		--lpcheck
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -136,10 +130,6 @@ function s.hlpop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.indcon(e)
 	return Duel.GetFlagEffect(e:GetHandlerPlayer(),51102090)>0
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,9161357)
-	Duel.CreateToken(1-tp,9161357)
 end
 function s.lpchk(e,tp,eg,ep,ev,re,r,rp)
 	local prevlp1=s[tp]

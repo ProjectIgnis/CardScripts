@@ -1,4 +1,6 @@
 --Number 103: Ragnazero (Anime)
+Duel.LoadScript("c419.lua")
+Duel.LoadCardScript("c94380860.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -23,8 +25,6 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e2)
-	aux.CallToken(94380860)
-	aux.CallToken(419)
 end
 s.xyz_number=103
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

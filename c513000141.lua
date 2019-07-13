@@ -1,4 +1,5 @@
 --No.69 紋章神コート・オブ・アームズ (Anime)
+Duel.LoadCardScript("c2407234.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -61,16 +62,6 @@ function s.initial_effect(c)
 	e8:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e8:SetOperation(s.reset)
 	c:RegisterEffect(e8) 
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
-	end
 end
 s.xyz_number=69
 function s.copfilter(c)
@@ -115,8 +106,4 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,2407234)
-	Duel.CreateToken(1-tp,2407234)
 end

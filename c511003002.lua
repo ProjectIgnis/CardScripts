@@ -23,12 +23,13 @@ function s.initial_effect(c)
 	end
 end
 function s.setup(e,tp,eg,ep,ev,re,r,rp)
-	s[0]=Duel.CreateToken(0,419)
+	if s[0] then return end
+	s[0]=Duel.CreateToken(0,946)
 	local e0=Effect.CreateEffect(e:GetHandler())
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(511002961)
 	s[0]:RegisterEffect(e0)
-	s[1]=Duel.CreateToken(1,419)
+	s[1]=Duel.CreateToken(1,946)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(511002961)

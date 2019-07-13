@@ -1,4 +1,5 @@
 --尾長黒馬
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -10,7 +11,6 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	aux.CallToken(419)
 end
 function s.cfilter(c)
 	return c:IsRace(RACE_YOKAI) and c:IsAbleToGraveAsCost()

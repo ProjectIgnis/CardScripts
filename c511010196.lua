@@ -1,5 +1,6 @@
 --CNo.96 ブラック・ストーム (Anime)
 --fixed by MLD
+Duel.LoadCardScript("c77205367.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -25,7 +26,6 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
-	aux.CallToken(77205367)
 end
 s.listed_names={55727845,513000031,511001603}
 s.xyz_number=96

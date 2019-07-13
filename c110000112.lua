@@ -1,4 +1,5 @@
 --Advanced Shield
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--
@@ -19,7 +20,6 @@ function s.initial_effect(c)
 	local e5=e3:Clone()
 	e5:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e5)
-	aux.CallToken(419)
 end
 function s.sumlimit(e)
 	return not Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

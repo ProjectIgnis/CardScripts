@@ -1,4 +1,5 @@
 --Phantasmagoria
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,5 +15,4 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CHANGE_RACE)
 	e2:SetValue(function() return RACE_YOKAI end)
 	c:RegisterEffect(e2)
-	aux.CallToken(419)
 end

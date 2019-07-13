@@ -1,4 +1,5 @@
 --Monopole Chain
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +15,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	c:RegisterEffect(e2)
-	aux.CallToken(420)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsDyson()

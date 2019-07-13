@@ -1,6 +1,7 @@
 --Otonari Thunder
 --  By Shad3
 --cleaned up and fixed by MLD
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -10,7 +11,6 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	aux.CallToken(420)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsHunder()

@@ -1,4 +1,5 @@
 --Number 43: Manipulator of Souls (anime)
+Duel.LoadCardScript("c56051086.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -76,7 +77,6 @@ function s.initial_effect(c)
 	e8:SetRange(LOCATION_MZONE)
 	e8:SetCode(3682106)
 	c:RegisterEffect(e8)
-	aux.CallToken(56051086)
 end
 s.xyz_number=43
 function s.eqval(ec,c,tp)

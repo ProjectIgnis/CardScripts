@@ -1,6 +1,7 @@
 --バトルドローン・サージェント
 --Battledrone Sergeant
 --fixed by Larry126
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
@@ -15,7 +16,6 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atkcon)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	aux.CallToken(420)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:GetFirst():IsControler(tp) and eg:GetFirst():IsDrone() and Duel.GetAttackTarget()==nil 

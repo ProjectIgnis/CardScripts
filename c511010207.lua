@@ -2,6 +2,7 @@
 --Number C107: Neo Galaxy-Eyes Tachyon Dragon (Anime)
 --Scripted By TheOnePharaoh
 --fixed by MLD & Larry126
+Duel.LoadCardScript("c68396121.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -52,7 +53,6 @@ function s.initial_effect(c)
 	e6:SetOperation(s.atkop)
 	e6:SetLabelObject(e1)
 	c:RegisterEffect(e6)
-	aux.CallToken(68396121)
 	if not s.global_check then
 		s.global_check=true
 		local ge1=Effect.CreateEffect(c)

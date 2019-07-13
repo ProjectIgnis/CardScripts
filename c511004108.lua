@@ -1,6 +1,7 @@
 --Wonderbeat Elf
 --scripted by:urielkama
 --fixed by MLD
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--must attack
@@ -14,7 +15,6 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_EXTRA_ATTACK)
 	e2:SetValue(s.val)
 	c:RegisterEffect(e2)
-	aux.CallToken(420)
 end
 function s.facon(e)
 	return e:GetHandler()GetAttackableTarget():GetCount()>0

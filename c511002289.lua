@@ -1,4 +1,5 @@
 --Air Sphere
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot attack
@@ -9,7 +10,6 @@ function s.initial_effect(c)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetCondition(s.con)
 	c:RegisterEffect(e2)
-	aux.CallToken(420)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSphere()

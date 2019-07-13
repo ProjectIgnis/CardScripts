@@ -1,5 +1,6 @@
 --ドローン・コードン
 --Drone Cordon
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,7 +27,6 @@ function s.initial_effect(c)
 	e3:SetTargetRange(0,LOCATION_MZONE)
 	e3:SetTarget(s.atktg)
 	c:RegisterEffect(e3)
-	aux.CallToken(420)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsDrone() and c:IsType(TYPE_LINK)

@@ -1,4 +1,5 @@
 --燃える闘志
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,7 +18,6 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	aux.CallToken(419)
 end
 function s.cfilter(c,tp)
 	local val=0

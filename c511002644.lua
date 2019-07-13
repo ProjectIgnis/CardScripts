@@ -1,4 +1,5 @@
 --地獄蛆
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -31,20 +32,6 @@ function s.initial_effect(c)
 		local ge3=ge1:Clone()
 		ge3:SetCode(EVENT_SPSUMMON_SUCCESS)
 		Duel.RegisterEffect(ge3,0)
-		local ge4=Effect.CreateEffect(c)
-		ge4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge4:SetCode(EVENT_ADJUST)
-		ge4:SetCountLimit(1)
-		ge4:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge4:SetOperation(s.archchk)
-		Duel.RegisterEffect(ge4,0)
-	end
-end
-function s.archchk(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(0,420)==0 then 
-		Duel.CreateToken(tp,420)
-		Duel.CreateToken(1-tp,420)
-		Duel.RegisterFlagEffect(0,420,0,0,0)
 	end
 end
 function s.costfilter(c,e,tp)

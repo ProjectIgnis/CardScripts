@@ -1,4 +1,5 @@
 --No.58 Burner visor
+Duel.LoadCardScript("c93108839.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -38,16 +39,6 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e4:SetValue(s.indes)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
-	end
 end
 s.xyz_number=58
 function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -102,10 +93,6 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,93108839)
-	Duel.CreateToken(1-tp,93108839)
 end
 function s.indes(e,c)
 	return not c:IsSetCard(0x48)

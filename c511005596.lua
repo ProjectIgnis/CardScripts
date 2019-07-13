@@ -1,5 +1,6 @@
 --Masquerade
 --fixed by MLD
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,7 +11,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	aux.CallToken(420)
 end
 function s.filter(c)
 	return c:IsControlerCanBeChanged() and c:GetEquipGroup():IsExists(c420.IsMask,1,nil)

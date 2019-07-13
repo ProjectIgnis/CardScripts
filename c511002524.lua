@@ -1,4 +1,5 @@
 --HSRマッハゴー・イータ
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -24,7 +25,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.efftg)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
-	aux.CallToken(419)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetLevel()>0

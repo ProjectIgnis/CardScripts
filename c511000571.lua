@@ -1,5 +1,6 @@
 --Super Roboyarou (DM)
 --Scripted by edo9300
+Duel.LoadScript("c300.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -33,24 +34,10 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg2)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_ADJUST)
-		ge1:SetCountLimit(1)
-		ge1:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge1:SetOperation(s.chk)
-		Duel.RegisterEffect(ge1,0)
-	end
 end
 s.listed_names={75923050}
 s.dm=true
 s.dm_revive_limit=true
-function s.chk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,300)
-	Duel.CreateToken(1-tp,300)
-end
 function s.atkcon(e)
 	local ph=Duel.GetCurrentPhase()
 	if not (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) then return false end

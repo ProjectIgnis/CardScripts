@@ -1,4 +1,5 @@
 --Number 23: Lancelot, Ghost Knight of the Underworld
+Duel.LoadCardScript("c66547759.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -46,7 +47,6 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCode(3682106)
 	c:RegisterEffect(e5)
-	aux.CallToken(66547759)
 end
 s.xyz_number=23
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

@@ -3,10 +3,9 @@
 --scripted by MLD
 --credit to TPD & Cybercatman
 --updated and currently maintained by Larry126
+Duel.LoadScript("c421.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--Divine Hierarchy
-	aux.CallToken(421)
 	--Summon With 3 Tributes
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)

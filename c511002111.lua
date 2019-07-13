@@ -1,4 +1,5 @@
 --No.106 巨岩掌ジャイアント・ハンド
+Duel.LoadCardScript("c63746411.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -28,32 +29,12 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
-	end
 	--battle indestructable
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e3:SetValue(s.indes)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
-		local ge3=Effect.CreateEffect(c)
-		ge3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge3:SetCode(EVENT_ADJUST)
-		ge3:SetCountLimit(1)
-		ge3:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge3:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge3,0)
-	end
 end
 s.xyz_number=106
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -91,10 +72,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rcon(e)
 	return e:GetOwner():IsHasCardTarget(e:GetHandler())
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,63746411)
-	Duel.CreateToken(1-tp,63746411)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsHasCardTarget(Duel.GetAttacker())

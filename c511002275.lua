@@ -1,4 +1,5 @@
 --Vindictive Spirits
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,7 +11,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	aux.CallToken(419)
 end
 function s.spfilter(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsPreviousLocation(LOCATION_GRAVE)

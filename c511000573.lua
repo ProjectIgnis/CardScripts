@@ -1,5 +1,6 @@
 --Lord of D. (DM)
 --Scripted by edo9300
+Duel.LoadScript("c300.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be target
@@ -21,7 +22,6 @@ function s.initial_effect(c)
 	e2:SetCost(s.cost)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
-	aux.CallToken(300)
 end
 s.dm=true
 function s.etarget(e,c)

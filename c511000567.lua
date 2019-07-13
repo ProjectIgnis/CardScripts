@@ -1,5 +1,6 @@
 --Judge Man (DM)
 --Scripted by edo9300
+Duel.LoadScript("c300.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -14,7 +15,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	aux.CallToken(300)
 end
 s.dm=true
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

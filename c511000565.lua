@@ -1,5 +1,6 @@
 --Dark Magician Girl (DM)
 --Scripted by edo9300
+Duel.LoadScript("c300.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -22,24 +23,10 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_ADJUST)
-		ge1:SetCountLimit(1)
-		ge1:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge1:SetOperation(s.chk)
-		Duel.RegisterEffect(ge1,0)
-	end
 end
 s.dm=true
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsLocation(0x400)
-end
-function s.chk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,300)
-	Duel.CreateToken(1-tp,300)
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_GRAVE,LOCATION_GRAVE,nil)*300

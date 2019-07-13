@@ -1,5 +1,6 @@
 --Blue-Eyes White Dragon (DM)
 --Scripted by edo9300
+Duel.LoadScript("c300.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--attack first
@@ -19,7 +20,6 @@ function s.initial_effect(c)
 	e2:SetCondition(s.con2)
 	e2:SetTarget(s.ftarget)
 	c:RegisterEffect(e2)
-	aux.CallToken(300)
 end
 s.dm=true
 function s.con(e,tp,eg,ep,ev,re,r,rp)

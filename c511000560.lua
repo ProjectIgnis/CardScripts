@@ -1,5 +1,6 @@
 --Total Defense Shogun (DM)
 --Scripted by edo9300
+Duel.LoadScript("c300.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--to defense
@@ -31,22 +32,8 @@ function s.initial_effect(c)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_ADJUST)
-		ge1:SetCountLimit(1)
-		ge1:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge1:SetOperation(s.chk)
-		Duel.RegisterEffect(ge1,0)
-	end
 end
 s.dm=true
-function s.chk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,300)
-	Duel.CreateToken(1-tp,300)
-end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return e:GetHandler():IsAttackPos() end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)

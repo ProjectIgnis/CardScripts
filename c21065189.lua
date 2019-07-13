@@ -42,7 +42,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spfilter(c,e,tp,ec)
 	local zone=ec:GetToBeLinkedZone(c,tp)
-	return zone~=0 and c:IsType(TYPE_LINK) and c:IsRace(RACE_CYBERSEE) and c:GetLink()==4 
+	return zone~=0 and c:IsType(TYPE_LINK) and c:IsRace(RACE_CYBERSE) and c:GetLink()==4 
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

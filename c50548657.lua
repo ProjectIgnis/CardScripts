@@ -17,11 +17,11 @@ function s.initial_effect(c)
 end
 function s.costfilter(c,e,tp,g,ft)
 	local lv=c:GetLevel()
-	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSEE) and Duel.GetMZoneCount(tp,c)>0 and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSE) and Duel.GetMZoneCount(tp,c)>0 and (c:IsControler(tp) or c:IsFaceup())
 		and g:CheckWithSumEqual(Card.GetLevel,lv,1,ft+1)
 end
 function s.spfilter(c,e,tp)
-	return c:IsRace(RACE_CYBERSEE) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp)

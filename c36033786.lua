@@ -47,7 +47,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_FIELD)
 		e3:SetCode(EFFECT_PIERCE)
 		e3:SetTargetRange(LOCATION_MZONE,0)
-		e3:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_CYBERSEE))
+		e3:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_CYBERSE))
 		e3:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e3,tp)
 	end

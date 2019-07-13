@@ -29,7 +29,7 @@ function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 		and #(e:GetHandler():GetBattledGroup()-e:GetHandler())>0
 end
 function s.sumfilter(c)
-	return c:IsRace(RACE_CYBERSEE) and c:IsSummonable(true,nil)
+	return c:IsRace(RACE_CYBERSE) and c:IsSummonable(true,nil)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND,0,1,nil) end

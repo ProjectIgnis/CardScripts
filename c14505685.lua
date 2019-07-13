@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-	return c:IsFacedown() or not c:IsRace(RACE_CYBERSEE)
+	return c:IsFacedown() or not c:IsRace(RACE_CYBERSE)
 end
 function s.sprcon(e,c)
 	if c==nil then return true end
@@ -31,7 +31,7 @@ function s.sprcon(e,c)
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.rcfilter(c)
-	return c:IsFaceup() and not c:IsRace(RACE_CYBERSEE)
+	return c:IsFaceup() and not c:IsRace(RACE_CYBERSE)
 end
 function s.rctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.rcfilter(chkc) end
@@ -45,7 +45,7 @@ function s.rcop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_RACE)
-		e1:SetValue(RACE_CYBERSEE)
+		e1:SetValue(RACE_CYBERSE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end

@@ -90,7 +90,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return bc and bc:IsType(TYPE_LINK)
 end
 function s.thfilter(c)
-	return c:IsRace(RACE_CYBERSEE) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

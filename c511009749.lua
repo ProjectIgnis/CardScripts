@@ -1,5 +1,6 @@
 --アセンブル・ドローン
 --Assemble Drone
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -36,7 +37,6 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_CANNOT_ATTACK)
 	e5:SetCondition(s.fcon)
 	c:RegisterEffect(e5)
-	aux.CallToken(420)
 end
 s.listed_names={511009741}
 function s.spfilter(c,e,tp)

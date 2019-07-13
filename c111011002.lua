@@ -1,4 +1,5 @@
 --カオス・フィールド
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,7 +27,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.xyztg)
 	e3:SetOperation(s.xyzop)
 	c:RegisterEffect(e3)
-	aux.CallToken(420)
 end
 function s.ofilter(c,tp)
 	return c:CheckRemoveOverlayCard(tp,1,REASON_COST) and c:IsSetCard(0x1048) and c:IsFaceup()

@@ -1,4 +1,5 @@
 --Goyo Arrow
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,function(c) return c:IsGoyo() end)
@@ -12,7 +13,6 @@ function s.initial_effect(c)
 	e4:SetTarget(s.damtg)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
-	aux.CallToken(420)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=e:GetHandler():GetEquipTarget()

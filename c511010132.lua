@@ -1,5 +1,7 @@
 --CNo.32 海咬龍シャーク・ドレイク・バイス (Anime)
 --fixed by MLD
+Duel.LoadScript("c49221191.lua")
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -41,16 +43,6 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e6:SetValue(s.indes)
 	c:RegisterEffect(e6)
-	if not s.global_check then
-		s.global_check=true
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.numchk)
-		Duel.RegisterEffect(ge2,0)
-	end
 end
 s.listed_names={65676461}
 s.xyz_number=32
@@ -103,15 +95,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e)
 	return Duel.GetLP(e:GetHandlerPlayer())>=1000
-end
-function s.numchk(e,tp,eg,ep,ev,re,r,rp)
-	Duel.CreateToken(tp,49221191)
-	Duel.CreateToken(1-tp,49221191)
-	if Duel.GetFlagEffect(0,420)==0 then 
-		Duel.CreateToken(tp,420)
-		Duel.CreateToken(1-tp,420)
-		Duel.RegisterFlagEffect(0,420,0,0,0)
-	end
 end
 function s.indes(e,c)
 	return not c:IsSetCard(0x48)

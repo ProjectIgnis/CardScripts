@@ -1,6 +1,7 @@
 --バトルドローン・ウォラント
 --Battledrone Warrant
 --scripted by Larry126
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -17,7 +18,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	aux.CallToken(420)
 end
 function s.mfilter(c,lc,sumtype,tp)
 	return c:IsDrone() and not c:IsType(TYPE_TOKEN)

@@ -1,6 +1,7 @@
 --Mermaid Shark (Anime)
 --scripted by GameMaster(GM)
 --fixed by MLD
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon eff
@@ -11,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	aux.CallToken(420)
 end
 function s.filter(c)
 	return c:IsShark() and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

@@ -1,6 +1,7 @@
 --メディックドローン・ドック
 --Medicdrone Dock
 --cleaned up by MLD
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -31,7 +32,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rectg2)
 	e2:SetOperation(s.recop)
 	c:RegisterEffect(e2)
-	aux.CallToken(420)
 end
 function s.mfilter(c,lc,sumtype,tp)
 	return c:IsDrone()

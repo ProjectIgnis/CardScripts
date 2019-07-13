@@ -1,4 +1,5 @@
 --Earthbound Servant Geo Gremlin
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	Synchro.AddProcedure(c,Card.IsEarthbound,1,1,Synchro.NonTuner(Card.IsEarthbound),1,99)
@@ -15,7 +16,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	aux.CallToken(420)
 	if not s.global_check then
 		s.global_check=true
 		local ge1=Effect.CreateEffect(c)

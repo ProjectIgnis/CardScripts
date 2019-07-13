@@ -1,4 +1,5 @@
 --Goyo King
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -61,7 +62,6 @@ function s.initial_effect(c)
 		ge3:SetOperation(s.clear)
 		Duel.RegisterEffect(ge3,0)
 	end
-	aux.CallToken(420)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(Card.IsControler,1,nil,1-tp) then

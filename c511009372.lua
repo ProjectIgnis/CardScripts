@@ -1,5 +1,6 @@
 --Master Spirit Tech Force - Pendulum Ruler
 --fixed by Larry126
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.EnablePendulumAttribute(c,false)
@@ -61,13 +62,6 @@ function s.initial_effect(c)
 		ge:SetCode(EVENT_CHAINING)
 		ge:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		ge2:SetOperation(s.archchk)
-		Duel.RegisterEffect(ge2,0)
 	end
 end
 s.material_setcode=0x54e
@@ -78,13 +72,6 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		end
 		tc=eg:GetNext()
-	end
-end
-function s.archchk(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(0,420)==0 then 
-		Duel.CreateToken(tp,420)
-		Duel.CreateToken(1-tp,420)
-		Duel.RegisterFlagEffect(0,420,0,0,0)
 	end
 end
 function s.atlimit2(e,c)

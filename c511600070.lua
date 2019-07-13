@@ -1,6 +1,8 @@
 --ＳＮｏ．０ ホープ・ゼアル
 --Number S0: Utopic ZEXAL (Anime)
 --scripted by Larry126
+Duel.LoadScript("c420.lua")
+Duel.LoadScript("c52653092.lua")
 local s,id,alias=GetID()
 local zexal=nil
 function target()
@@ -8,8 +10,6 @@ end
 function s.initial_effect(c)
 	zexal=c
 	alias=c:GetOriginalCodeRule()
-	aux.CallToken(420)
-	aux.CallToken(52653092)
 	--xyz summon
 	c:EnableReviveLimit()
 	Xyz.AddProcedure(c,s.xyzfilter,nil,3)

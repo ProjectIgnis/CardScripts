@@ -2,6 +2,7 @@
 --Battledrone General
 --fixed by Larry126
 --cleaned up by MLD
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -40,7 +41,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	aux.CallToken(420)
 end
 function s.spfilter(c,e,tp,zone)
 	return c:IsDrone() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)

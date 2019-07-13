@@ -1,4 +1,5 @@
 --胡蝶の舞
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,7 +18,6 @@ function s.initial_effect(c)
 	e2:SetCost(s.cost2)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
-	aux.CallToken(420)
 end
 function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsButterfly() and not c:IsPublic()

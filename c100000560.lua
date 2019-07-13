@@ -1,4 +1,5 @@
 --オレンジ・シャーマン
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -15,7 +16,6 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	aux.CallToken(420)
 end
 function s.cfilter(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsFaceup() and c:IsType(TYPE_EFFECT)

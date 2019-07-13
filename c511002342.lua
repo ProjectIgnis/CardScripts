@@ -1,4 +1,5 @@
 --Butterfly Fairy
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -10,7 +11,6 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	aux.CallToken(420)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

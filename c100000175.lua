@@ -1,4 +1,5 @@
 --キャット・ワールド
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,7 +16,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tg)
 	e2:SetValue(s.val)
 	c:RegisterEffect(e2)
-	aux.CallToken(420)
 end
 function s.tg(e,c)
 	return c:IsFaceup() and (c:IsSetCard(0x150e) or c:IsSetCard(0x1538))

@@ -1,4 +1,5 @@
 --機皇創世
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,7 +23,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetValue(s.desval)
 	c:RegisterEffect(e2)
-	aux.CallToken(420)
 end
 s.listed_names={63468625}
 function s.filter(c,e,tp)

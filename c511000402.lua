@@ -1,9 +1,9 @@
 --Elimigate
 --アサシン・ゲート
 --updated by Larry126
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.CallToken(420)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

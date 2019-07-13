@@ -1,5 +1,6 @@
 --Mantis Egg
 --fixed by MLD
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -17,7 +18,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	aux.CallToken(420)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsMantis()

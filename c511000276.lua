@@ -1,4 +1,5 @@
 --Numeron Direct
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -10,7 +11,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
-	aux.CallToken(420)
 end
 s.listed_names={511000275}
 function s.con(e,tp,eg,ep,ev,re,r,rp)

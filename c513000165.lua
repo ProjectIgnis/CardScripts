@@ -2,12 +2,12 @@
 --clear Wall (Anime)
 --scripted by GameMaster + Shad3
 --fixed by Larry126
+Duel.LoadScript("c420.lua")
 
 local s,id=GetID()
 
 function s.initial_effect(c)
 	--archetype token
-	aux.CallToken(420)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

@@ -1,5 +1,6 @@
 --ネオス・ワイズマン (Anime)
 --Neos Wiseman (Anime)
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -40,7 +41,6 @@ function s.initial_effect(c)
 	e5:SetTarget(s.target)
 	e5:SetOperation(s.operation)
 	c:RegisterEffect(e5)
-	aux.CallToken(420)
 end
 s.listed_names={CARD_NEOS,78371393}
 s.material_setcode={0x8,0x3008,0x9,0x561}

@@ -1,4 +1,5 @@
 --ナチュル・バンブーシュート
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--mat check
@@ -15,7 +16,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 	e2:SetLabelObject(e1)
-	aux.CallToken(420)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

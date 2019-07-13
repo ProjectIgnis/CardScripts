@@ -1,6 +1,7 @@
 --Scripted by Eerie Code
 --Bloom Prima the Melodious Choir
 --fixed by MLD
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -17,7 +18,6 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_EXTRA_ATTACK)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	aux.CallToken(420)
 end
 s.material_setcode={0x9b,0x209b}
 function s.matcheck(e,c)

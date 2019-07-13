@@ -1,6 +1,7 @@
 --coded by Lyris
 --Charging Construction
 --cleaned up by MLD
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--
@@ -12,7 +13,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	aux.CallToken(420)
 	if not s.global_check then
 		s.global_check=true
 		s[0]=false

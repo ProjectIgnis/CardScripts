@@ -132,7 +132,11 @@ function Card.IsSequence(c,...)
 	end
 	return false
 end
-
+--for zone checking (zone is the zone, tp is referencial player)
+function Auxiliary.IsZone(c,zone,tp)
+	local rzone = c:IsControler(tp) and (1 <<c:GetSequence()) or (1 << (16+c:GetSequence()))
+	return (rzone & zone) > 0
+end
 --Workaround for the Link Summon using opponent's monsters effect of the Hakai monsters
 function Auxiliary.HakaiLinkFilter(c,e,tp,f,of)
 	if not of(c) then return false end

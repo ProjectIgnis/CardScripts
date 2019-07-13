@@ -3,7 +3,7 @@ aux=Auxiliary
 function GetID()
     return self_table,self_code
 end
-function Auxiliary.LoadCardScript(code)
+function Duel.LoadCardScript(code)
 	local card=string.sub(code,0,string.len(code)-4)
     if not _G[card] then
 		local oldtable,oldcode=GetID()

@@ -3,9 +3,9 @@
 --scripted by MLD
 --credit to TPD & Cybercatman
 --updated by Larry126
+Duel.LoadScript("c421.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.CallToken(421)
 	--X000
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)

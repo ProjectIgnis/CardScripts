@@ -10,8 +10,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetValue(TYPE_NORMAL)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge2=Effect.CreateEffect(c)
 		ge2:SetType(EFFECT_TYPE_FIELD)
 		ge2:SetCode(EFFECT_EXTRA_FUSION_MATERIAL)
@@ -19,7 +18,7 @@ function s.initial_effect(c)
 		ge2:SetTarget(s.mttg)
 		ge2:SetValue(s.mtval)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 s.listed_names={80604091}
 s.illegal=true

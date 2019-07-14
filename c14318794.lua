@@ -19,8 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rectg)
 	e2:SetOperation(s.recop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]={}
 		s[1]={}
 		local ge1=Effect.CreateEffect(c)
@@ -28,23 +27,18 @@ function s.initial_effect(c)
 		ge1:SetCode(EVENT_PAY_LPCOST)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_TURN_END)
-		ge2:SetOperation(s.clear)
-		Duel.RegisterEffect(ge2,0)
-	end
+		aux.AddValuesReset(function()
+			local p=Duel.GetTurnPlayer()
+			s[p+2]={table.unpack(s[p])}
+			s[p]={}
+		end)
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==Duel.GetTurnPlayer() then
 		local val=math.ceil(ev/2)
 		table.insert(s[ep],val)
 	end
-end
-function s.clear(e,tp,eg,ep,ev,re,r,rp)
-	local p=Duel.GetTurnPlayer()
-	s[p+2]={table.unpack(s[p])}
-	s[p]={}
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()

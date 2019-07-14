@@ -33,8 +33,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
 		local ge1=Effect.CreateEffect(c)
@@ -42,12 +41,11 @@ function s.initial_effect(c)
 		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
-		ge2:SetOperation(s.clearop)
-		Duel.RegisterEffect(ge2,0)
-	end
+		aux.AddValuesReset(function()
+			s[0]=0
+			s[1]=0
+		end)
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

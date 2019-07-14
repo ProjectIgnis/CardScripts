@@ -40,8 +40,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.negtg)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--Cards that resolved effects check
 		BPResolvedEffects={}
 		local e1=Effect.CreateEffect(c)
@@ -50,13 +49,10 @@ function s.initial_effect(c)
 		e1:SetCondition(s.regcon)
 		e1:SetOperation(s.regop)
 		Duel.RegisterEffect(e1,0)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PHASE+PHASE_END)
-		e2:SetCountLimit(1)
-		e2:SetOperation(s.reset)
-		Duel.RegisterEffect(e2,0)
-	end
+		aux.AddValuesReset(function()
+			BPResolvedEffects={}
+		end)
+	end)
 end
 s.xyz_number=107
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
@@ -69,9 +65,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		if fid==re:GetHandler():GetFieldID() then return end
 	end
 	table.insert(BPResolvedEffects[cid],re:GetHandler():GetFieldID())
-end
-function s.reset(e,tp,eg,ep,ev,re,r,rp)
-	BPResolvedEffects={}
 end
 function s.negcono(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp

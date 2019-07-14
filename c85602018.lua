@@ -7,8 +7,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=true
 		s[1]=true
 		local ge1=Effect.CreateEffect(c)
@@ -22,7 +21,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)

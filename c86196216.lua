@@ -11,14 +11,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.globle_check then
-		s.globle_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		ge1:SetCode(EVENT_TO_GRAVE)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

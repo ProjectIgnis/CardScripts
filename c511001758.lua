@@ -10,8 +10,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -33,7 +32,7 @@ function s.initial_effect(c)
 		ge3:SetCode(EVENT_CHAINING)
 		ge3:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge3,0)
-	end
+	end)
 end
 function s.filter(c)
 	local code=c:GetCode()

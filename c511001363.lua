@@ -30,15 +30,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(id)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--Copy
 		local ge1=Effect.GlobalEffect()
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_ADJUST)
 		ge1:SetOperation(s.op)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.cfilter(c)
 	return c:IsHasEffect(511002571) and #{c:GetCardEffect(id0)}==0

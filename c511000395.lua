@@ -10,8 +10,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD)
 		ge1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
@@ -19,7 +18,7 @@ function s.initial_effect(c)
 		ge1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 		ge1:SetValue(1)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION)

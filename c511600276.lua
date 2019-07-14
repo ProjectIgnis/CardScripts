@@ -12,8 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_MATERIAL_CHECK)
@@ -23,7 +22,7 @@ function s.initial_effect(c)
 		ge1:SetLabelObject(e1)
 		ge1:SetTargetRange(0xff,0xff)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.matchk(e,c)
 	if not c:GetMaterial():IsExists(aux.NOT(Card.IsType),1,nil,TYPE_LINK,nil,SUMMON_TYPE_LINK,c:GetSummonPlayer()) then

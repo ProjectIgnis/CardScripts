@@ -21,8 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate)
 	e2:SetLabel(1)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -33,7 +32,7 @@ function s.initial_effect(c)
 		ge2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 		ge2:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	eg:GetFirst():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)

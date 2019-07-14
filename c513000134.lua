@@ -62,15 +62,14 @@ function s.initial_effect(c)
 	sum:SetCode(id)
 	sum:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	c:RegisterEffect(sum)
-	if not s.global_check then
-		s.global_check=true
-	--De-Fusion
+	aux.GlobalCheck(s,function()
+		--De-Fusion
 		local df=Effect.CreateEffect(c)
 		df:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		df:SetCode(EVENT_ADJUST)
 		df:SetOperation(s.dfop)
 		Duel.RegisterEffect(df,0)
-	end
+	end)
 end
 s.listed_names={95286165,10000010,511000987}
 --De-Fusion

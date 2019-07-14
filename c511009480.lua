@@ -1,6 +1,7 @@
 --ギャラクシーアイズ ＦＡ・フォトン・ドラゴン (Manga)
 --Galaxy Eyes Full Armor Photon Dragon (Manga)
 --fixed by MLD
+Duel.EnableGlobalFlag(GLOBALFLAG_DETACH_EVENT)
 local s,id=GetID()
 function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,8,3)
@@ -53,15 +54,13 @@ function s.initial_effect(c)
 	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
-	Duel.EnableGlobalFlag(GLOBALFLAG_DETACH_EVENT)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge=Effect.CreateEffect(c)
 		ge:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge:SetCode(EVENT_DETACH_MATERIAL)
 		ge:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge,0)
-	end
+	end)
 end
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.ovfilter(c,tp,xyz)

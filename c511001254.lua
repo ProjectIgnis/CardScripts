@@ -12,8 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -27,7 +26,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x9f) and c:IsPreviousLocation(LOCATION_MZONE)

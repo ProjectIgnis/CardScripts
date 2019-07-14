@@ -44,8 +44,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.sephtg)
 	e4:SetOperation(s.sephop)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
 		s[2]={}
@@ -61,7 +60,7 @@ function s.initial_effect(c)
 		local ge3=ge1:Clone()
 		ge3:SetCode(EVENT_SPSUMMON_SUCCESS)
 		Duel.RegisterEffect(ge3,0)
-	end
+	end)
 end
 s.listed_names={36894320,8967776}
 function s.costfilter(c)

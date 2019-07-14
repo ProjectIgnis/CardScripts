@@ -11,15 +11,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_RANGE)
 		ge1:SetCode(EFFECT_MATERIAL_CHECK)
 		ge1:SetValue(s.valcheck)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.valcheck(e,c)
 	if c:GetMaterialCount()==1 and c:GetMaterial():GetFirst():IsType(TYPE_MONSTER) then

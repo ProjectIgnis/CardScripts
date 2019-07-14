@@ -30,8 +30,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--Metamorphosis
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -40,7 +39,7 @@ function s.initial_effect(c)
 		ge1:SetCondition(s.con)
 		ge1:SetOperation(s.op)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 s.listed_names={84327329}
 function s.filter(c)

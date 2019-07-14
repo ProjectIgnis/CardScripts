@@ -14,15 +14,14 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_TO_HAND)
 		ge1:SetCondition(s.regcon)
 		ge1:SetOperation(s.regop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK)

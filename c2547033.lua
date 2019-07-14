@@ -26,15 +26,14 @@ function s.initial_effect(c)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--activatable if set by Altergeist
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_SSET)
 		e3:SetOperation(s.operation)
 		--Duel.RegisterEffect(e3,0)
-	end
+	end)
 end
 s.act_turn=true
 function s.tgfilter(c)

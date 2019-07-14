@@ -33,8 +33,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.econ)
 	e4:SetValue(s.elimit)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
 		--activate limit
@@ -56,7 +55,7 @@ function s.initial_effect(c)
 		ge3:SetCountLimit(1)
 		ge3:SetOperation(s.clear)
 		Duel.RegisterEffect(ge3,0)
-	end
+	end)
 end
 function s.cfilter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_MONSTER)

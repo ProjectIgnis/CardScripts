@@ -72,8 +72,7 @@ function s.initial_effect(c)
 	e8:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e8:SetValue(s.indes)
 	c:RegisterEffect(e8)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
 		local ge1=Effect.CreateEffect(c)
@@ -88,7 +87,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 s.xyz_number=93
 function s.chkfilter(c,tp,re)

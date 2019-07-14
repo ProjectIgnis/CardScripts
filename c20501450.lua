@@ -14,8 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
 		local ge1=Effect.CreateEffect(c)
@@ -29,7 +28,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

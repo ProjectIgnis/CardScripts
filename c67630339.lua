@@ -8,8 +8,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
 		local ge1=Effect.CreateEffect(c)
@@ -22,12 +21,11 @@ function s.initial_effect(c)
 		ge2:SetCode(EVENT_ATTACK_DISABLED)
 		ge2:SetOperation(s.check2)
 		Duel.RegisterEffect(ge2,0)
-		local ge3=Effect.CreateEffect(c)
-		ge3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge3:SetCode(EVENT_PHASE_START+PHASE_DRAW)
-		ge3:SetOperation(s.clear)
-		Duel.RegisterEffect(ge3,0)
-	end
+		aux.AddValuesReset(function()
+			s[0]=0
+			s[1]=0
+		end)
+	end)
 end
 function s.check(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
@@ -44,10 +42,6 @@ function s.check2(e,tp,eg,ep,ev,re,r,rp)
 	if tc:GetFlagEffect(id)~=0 and Duel.GetAttackTarget()~=nil then
 		s[1-tc:GetControler()]=s[1-tc:GetControler()]-1
 	end
-end
-function s.clear(e,tp,eg,ep,ev,re,r,rp)
-	s[0]=0
-	s[1]=0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()==nil and s[tp]==2

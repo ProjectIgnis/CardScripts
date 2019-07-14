@@ -2,6 +2,7 @@
 --Delayed Summon
 --Scripted by Snrk
 --fixed by Larry126
+--refixed by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -12,15 +13,15 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
-		s[0]=0
-		s[1]=0
-		sv=0
+	aux.GlobalCheck(s,function()
+		s[0]=true
+		s[1]=true
+		s[0+2]=true
+		s[1+2]=true
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON)
-		ge1:SetOperation(s.checkop)
+		ge1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) s[ep]=true end)
 		Duel.RegisterEffect(ge1,0)
 		local ge2=ge1:Clone()
 		ge2:SetCode(EVENT_SPSUMMON)
@@ -28,27 +29,23 @@ function s.initial_effect(c)
 		local ge3=ge1:Clone()
 		ge3:SetCode(EVENT_FLIP_SUMMON)
 		Duel.RegisterEffect(ge3,0)
-		local ge4=Effect.CreateEffect(c)
-		ge4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge4:SetCode(EVENT_PHASE_START+PHASE_DRAW)
-		ge4:SetOperation(s.clear)
-		Duel.RegisterEffect(ge4,0)
-	end
+		aux.AddValuesReset(function()
+			s[0+2]=s[0]
+			s[1+2]=s[1]
+			s[0]=true
+			s[1]=true
+		end)
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	s[ep]=1
-end
-function s.clear(e,tp,eg,ep,ev,re,r,rp)
-	self=e:GetHandler():GetOwner()
-	if s[self]==1 then sv=1 else sv=0 end
-	s[0]=0 s[1]=0
+	s[ep]=false
 end
 function s.hfilter(c,e)
 	local mi,ma=c:GetTributeRequirement()
 	return c:IsSummonable(true,nil,1+mi) or c:IsMSetable(true,nil,1+mi)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return sv==0 and Duel.GetAttacker():IsControler(1-tp)
+	return Duel.GetAttacker():IsControler(1-tp) and s[tp+2]
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local hg=Duel.GetMatchingGroup(Card.IsSummonableCard,tp,LOCATION_HAND,0,nil)

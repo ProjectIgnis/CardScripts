@@ -28,14 +28,13 @@ function s.initial_effect(c)
 	e8:SetTarget(s.sctg)
 	e8:SetOperation(s.scop)
 	c:RegisterEffect(e8)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge2=Effect.CreateEffect(c)
 		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge2:SetCode(EVENT_ADJUST)
 		ge2:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

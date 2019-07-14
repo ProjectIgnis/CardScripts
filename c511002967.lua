@@ -15,8 +15,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=true
 		s[1]=true
 		local ge1=Effect.CreateEffect(c)
@@ -30,7 +29,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	s[ep]=true

@@ -18,19 +18,17 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_BATTLED)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
-		ge2:SetOperation(s.clear)
-		Duel.RegisterEffect(ge2,0)
-	end
+		aux.AddValuesReset(function()
+			s[0]=0
+			s[1]=0
+		end)
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
@@ -41,10 +39,6 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if d and d:IsStatus(STATUS_BATTLE_DESTROYED) and d:IsType(TYPE_NORMAL) and d:IsLevelBelow(2) then
 		s[d:GetControler()]=s[d:GetControler()]+1
 	end
-end
-function s.clear(e,tp,eg,ep,ev,re,r,rp)
-	s[0]=0
-	s[1]=0
 end
 function s.filter(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and c:IsLevelBelow(2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

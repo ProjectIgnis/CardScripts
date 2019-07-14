@@ -40,14 +40,13 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(id)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge2=Effect.CreateEffect(c)
 		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge2:SetCode(EVENT_ADJUST)
 		ge2:SetOperation(s.synchk)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

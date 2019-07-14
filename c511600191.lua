@@ -31,8 +31,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetOperation(s.bdop)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		OPTEffs={}
 		AffectedEffs={}
 		local ge1=Effect.CreateEffect(c)
@@ -46,7 +45,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()

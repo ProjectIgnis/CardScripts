@@ -55,8 +55,7 @@ function s.initial_effect(c)
 	e6:SetCondition(s.ttcon2)
 	e6:SetOperation(s.ttop2)
 	c:RegisterEffect(e6)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -65,55 +64,55 @@ function s.initial_effect(c)
 		local ge2=ge1:Clone()
 		ge2:SetCode(EVENT_SPSUMMON_SUCCESS)
 		Duel.RegisterEffect(ge2,0)
-	end
-	local f=Card.IsCanBeSpecialSummoned
-	Card.IsCanBeSpecialSummoned=function(c,e,tpe,tp,con,conr,sump,smp,zone)
-		if not sump then sump=POS_FACEUP end
-		if not smp then smp=tp end
-		if not zone then zone=0xff end
-		if Duel.IsPlayerAffectedByEffect(tp,id) then
-			return c:IsType(TYPE_MONSTER) and f(c,e,tpe,tp,true,conr,sump,smp,zone)
+		local f=Card.IsCanBeSpecialSummoned
+		Card.IsCanBeSpecialSummoned=function(c,e,tpe,tp,con,conr,sump,smp,zone)
+			if not sump then sump=POS_FACEUP end
+			if not smp then smp=tp end
+			if not zone then zone=0xff end
+			if Duel.IsPlayerAffectedByEffect(tp,id) then
+				return c:IsType(TYPE_MONSTER) and f(c,e,tpe,tp,true,conr,sump,smp,zone)
+			end
+			return f(c,e,tpe,tp,con,conr,sump,smp,zone)
 		end
-		return f(c,e,tpe,tp,con,conr,sump,smp,zone)
-	end
-	local proc=Duel.SpecialSummonStep
-	Duel.SpecialSummonStep=function(tc,tpe,sump,tp,check,limit,pos,zone)
-		if not pos then pos=POS_FACEUP end
-		if not zone then zone=0xff end
-		if Duel.IsPlayerAffectedByEffect(sump,id) then
-			return proc(tc,tpe,sump,tp,true,limit,pos,zone)
-		else
-			return proc(tc,tpe,sump,tp,check,limit,pos,zone)
+		local proc=Duel.SpecialSummonStep
+		Duel.SpecialSummonStep=function(tc,tpe,sump,tp,check,limit,pos,zone)
+			if not pos then pos=POS_FACEUP end
+			if not zone then zone=0xff end
+			if Duel.IsPlayerAffectedByEffect(sump,id) then
+				return proc(tc,tpe,sump,tp,true,limit,pos,zone)
+			else
+				return proc(tc,tpe,sump,tp,check,limit,pos,zone)
+			end
 		end
-	end
-	local proc2=Duel.SpecialSummon
-	Duel.SpecialSummon=function(g,tpe,sump,tp,check,limit,pos,zone)
-		if not pos then pos=POS_FACEUP end
-		if not zone then zone=0xff end
-		if Duel.IsPlayerAffectedByEffect(sump,id) then
-			return proc2(g,tpe,sump,tp,true,limit,pos,zone)
-		else
-			return proc2(g,tpe,sump,tp,check,limit,pos,zone)
+		local proc2=Duel.SpecialSummon
+		Duel.SpecialSummon=function(g,tpe,sump,tp,check,limit,pos,zone)
+			if not pos then pos=POS_FACEUP end
+			if not zone then zone=0xff end
+			if Duel.IsPlayerAffectedByEffect(sump,id) then
+				return proc2(g,tpe,sump,tp,true,limit,pos,zone)
+			else
+				return proc2(g,tpe,sump,tp,check,limit,pos,zone)
+			end
 		end
-	end
-	local uc=c
-	local revive=Card.EnableReviveLimit
-	Card.EnableReviveLimit=function(c)
-		revive(uc)
-		local e8=Effect.CreateEffect(c)
-		e8:SetType(EFFECT_TYPE_SINGLE)
-		e8:SetCode(EFFECT_REVIVE_LIMIT)
-		e8:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-		c:RegisterEffect(e8)
-		local e9=e8:Clone()
-		e9:SetCode(EFFECT_LIMIT_SET_PROC)
-		e9:SetCondition(s.setcon)
-		c:RegisterEffect(e9)
-		local e10=e8:Clone()
-		e10:SetCode(EFFECT_UNSUMMONABLE_CARD)
-		e10:SetCondition(s.con)
-		c:RegisterEffect(e10)
-	end
+		local uc=c
+		local revive=Card.EnableReviveLimit
+		Card.EnableReviveLimit=function(c)
+			revive(uc)
+			local e8=Effect.CreateEffect(c)
+			e8:SetType(EFFECT_TYPE_SINGLE)
+			e8:SetCode(EFFECT_REVIVE_LIMIT)
+			e8:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+			c:RegisterEffect(e8)
+			local e9=e8:Clone()
+			e9:SetCode(EFFECT_LIMIT_SET_PROC)
+			e9:SetCondition(s.setcon)
+			c:RegisterEffect(e9)
+			local e10=e8:Clone()
+			e10:SetCode(EFFECT_UNSUMMONABLE_CARD)
+			e10:SetCondition(s.con)
+			c:RegisterEffect(e10)
+		end
+	end)
 end
 function s.con(e)
 	return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),id)

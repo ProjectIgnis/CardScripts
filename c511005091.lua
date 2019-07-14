@@ -4,8 +4,7 @@ local s,id=GetID()
 
 function s.initial_effect(c)
 	--Globals
-	if not s.gl_reg then
-		s.gl_reg=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SSET)
@@ -24,7 +23,7 @@ function s.initial_effect(c)
 		ge3:SetCode(EVENT_LEAVE_FIELD_P)
 		ge3:SetOperation(s.reflag_op)
 		Duel.RegisterEffect(ge3,0)
-	end
+	end)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

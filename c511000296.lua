@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_EXTRA)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_CHAIN_UNIQUE+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_LEAVE_FIELD)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
@@ -66,8 +66,7 @@ function s.initial_effect(c)
 	e8:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e8:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e8)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -75,7 +74,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 		local ge2=ge1:Clone()
 		Duel.RegisterEffect(ge2,1)
-	end
+	end)
 end
 s.listed_names={511000294}
 function s.check(e,tp,eg,ep,ev,re,r,rp)

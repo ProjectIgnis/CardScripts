@@ -11,23 +11,16 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]={}
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_TURN_END)
-		ge1:SetCountLimit(1)
-		ge1:SetOperation(s.endop)
-		Duel.RegisterEffect(ge1,0)
-	end
-end
-function s.endop(e,tp,eg,ep,ev,re,r,rp)
-	for _,te in ipairs(s[0]) do
-		if Duel.GetTurnPlayer()~=te:GetOwnerPlayer() then
-			s.reset(te,te:GetOwnerPlayer(),nil,0,0,nil,0,0)
-		end
-	end
+		aux.AddValuesReset(function()
+			for _,te in ipairs(s[0]) do
+				if Duel.GetTurnPlayer()~=te:GetOwnerPlayer() then
+					s.reset(te,te:GetOwnerPlayer(),nil,0,0,nil,0,0)
+				end
+			end
+		end)
+	end)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0xc) end

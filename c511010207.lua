@@ -53,8 +53,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.atkop)
 	e6:SetLabelObject(e1)
 	c:RegisterEffect(e6)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_CHAIN_SOLVED)
@@ -66,7 +65,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.startop)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 s.xyz_number=107
 s.listed_names={88177324,100000581,111011002,511000580,511002068,511002164,93238626}

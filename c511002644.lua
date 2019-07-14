@@ -18,8 +18,7 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -32,7 +31,7 @@ function s.initial_effect(c)
 		local ge3=ge1:Clone()
 		ge3:SetCode(EVENT_SPSUMMON_SUCCESS)
 		Duel.RegisterEffect(ge3,0)
-	end
+	end)
 end
 function s.costfilter(c,e,tp)
 	return c:IsHell() and c:IsAbleToGraveAsCost()

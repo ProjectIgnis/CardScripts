@@ -12,8 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--Dogma/Plasma
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -21,7 +20,7 @@ function s.initial_effect(c)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		ge1:SetOperation(s.op)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 s.listed_names={17132130,83965310,99357565}
 function s.filter(c)

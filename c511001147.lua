@@ -22,15 +22,14 @@ function s.initial_effect(c)
 	e4:SetCountLimit(1)
 	e4:SetOperation(s.op)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge2=Effect.CreateEffect(c)
 		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge2:SetCode(EVENT_ADJUST)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.regop)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseEvent(Group.CreateGroup(),id,e,REASON_EFFECT,Duel.GetTurnPlayer(),Duel.GetTurnPlayer(),0)

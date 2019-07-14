@@ -12,8 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=Group.CreateGroup()
 		s[1]=Group.CreateGroup()
 		s[0]:KeepAlive()
@@ -29,7 +28,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clearop)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.chkop(e,tp)
 	local a=Duel.GetAttacker()

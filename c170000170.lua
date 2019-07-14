@@ -54,8 +54,7 @@ function s.initial_effect(c)
 	e11:SetRange(LOCATION_MZONE)
 	e11:SetValue(s.adval)
 	c:RegisterEffect(e11)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--avatar
 		local av=Effect.CreateEffect(c)
 		av:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -64,7 +63,7 @@ function s.initial_effect(c)
 		av:SetCondition(s.avatarcon)
 		av:SetOperation(s.avatarop)
 		Duel.RegisterEffect(av,0)
-	end
+	end)
 end
 s.listed_names={21208154}
 function s.avfilter(c)

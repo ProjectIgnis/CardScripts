@@ -30,14 +30,13 @@ function s.initial_effect(c)
 	e3:SetTarget(s.lvtg2)
 	e3:SetOperation(s.lvop2)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge2=Effect.CreateEffect(c)
 		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge2:SetCode(EVENT_ADJUST)
 		ge2:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.cfilter(c)
 	local seq=c:GetSequence()

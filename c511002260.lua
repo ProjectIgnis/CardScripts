@@ -11,8 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD)
 		ge1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
@@ -20,7 +19,7 @@ function s.initial_effect(c)
 		ge1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 		ge1:SetValue(1)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 s.listed_names={511000396}
 function s.cfilter(c)

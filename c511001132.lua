@@ -20,8 +20,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rettg)
 	e2:SetOperation(s.retop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
 		local ge1=Effect.GlobalEffect()
@@ -35,7 +34,7 @@ function s.initial_effect(c)
 		ge4:SetCode(EVENT_DESTROYED)
 		ge4:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge4,0)
-	end
+	end)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)

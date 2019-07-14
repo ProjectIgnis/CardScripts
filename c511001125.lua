@@ -17,8 +17,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetOperation(s.resetop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--register
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -33,7 +32,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.ctop)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(Card.IsCode,nil,id)

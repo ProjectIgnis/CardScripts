@@ -17,8 +17,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
 		local ge1=Effect.CreateEffect(c)
@@ -31,12 +30,11 @@ function s.initial_effect(c)
 		ge2:SetCode(EVENT_MSET)
 		ge2:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge2,0)
-		local ge3=Effect.CreateEffect(c)
-		ge3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge3:SetCode(EVENT_PHASE_START+PHASE_DRAW)
-		ge3:SetOperation(s.clear)
-		Duel.RegisterEffect(ge3,0)
-	end
+		aux.AddValuesReset(function()
+			s[0]=0
+			s[1]=0
+		end)
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
@@ -46,10 +44,6 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 			s[ep]=s[ep]+mg:FilterCount(Card.IsType,nil,TYPE_MONSTER)
 		end
 	end
-end
-function s.clear(e,tp,eg,ep,ev,re,r,rp)
-	s[0]=0
-	s[1]=0
 end
 function s.filter2(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

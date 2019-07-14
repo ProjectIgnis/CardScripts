@@ -39,8 +39,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e4:SetValue(s.indes)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -48,7 +47,7 @@ function s.initial_effect(c)
 		ge1:SetCondition(s.lpcheckcon)
 		ge1:SetOperation(s.lpcheckop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 s.listed_names={69058960}
 s.xyz_number=31

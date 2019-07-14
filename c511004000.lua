@@ -40,11 +40,10 @@ function s.initial_effect(c)
 	local e7=e3:Clone()
 	e7:SetCode(EFFECT_IMMUNE_EFFECT)
 	c:RegisterEffect(e7)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=nil
 		s[1]=nil
-	end
+	end)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

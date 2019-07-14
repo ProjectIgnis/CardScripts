@@ -23,8 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=Group.CreateGroup()
 		s[0]:KeepAlive()
 		s[1]=0
@@ -38,7 +37,7 @@ function s.initial_effect(c)
 		ge2:SetCode(EVENT_BATTLE_DESTROYED)
 		ge2:SetOperation(s.checkop2)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.checkop1(e,tp,eg,ep,ev,re,r,rp)
 	s[0]:Clear()

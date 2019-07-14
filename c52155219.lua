@@ -11,8 +11,7 @@ function s.initial_effect(c)
     e1:SetTarget(s.target)
     c:RegisterEffect(e1)
     --recarnation check
-    if not s.g_chk then
-        s.g_chk=true
+	aux.GlobalCheck(s,function()
         local e1=Effect.GlobalEffect()
         e1:SetType(EFFECT_TYPE_SINGLE)
         e1:SetCode(EFFECT_MATERIAL_CHECK)
@@ -23,7 +22,7 @@ function s.initial_effect(c)
         ge1:SetTargetRange(0xff,0xff)
         ge1:SetTarget(s.gtg)
         Duel.RegisterEffect(ge1,0)
-    end
+    end)
 end
 function s.gtg(e,c)
     return c:IsType(TYPE_LINK) and c:IsSetCard(0x119)

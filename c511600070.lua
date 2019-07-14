@@ -44,15 +44,14 @@ function s.initial_effect(c)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_SET_DEFENSE)
 	c:RegisterEffect(e5)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_ADJUST)
 		ge1:SetCondition(s.con)
 		ge1:SetOperation(s.op)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 s.xyz_number=0
 function s.con(e,tp,eg,ep,ev,re,r,rp)

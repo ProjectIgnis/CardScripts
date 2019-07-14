@@ -20,15 +20,14 @@ function s.initial_effect(c)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--battle destroy
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_BATTLE_DESTROYING)
 		ge1:SetOperation(s.bdop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)

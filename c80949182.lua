@@ -42,9 +42,8 @@ function s.initial_effect(c)
 	e4:SetCondition(s.damcon)
 	e4:SetTarget(s.damtg)
 	e4:SetOperation(s.damop)
-	c:RegisterEffect(e4)	
-	if not s.global_check then
-		s.global_check=true
+	c:RegisterEffect(e4)
+	aux.GlobalCheck(s,function()
 		s[0]=true
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -58,7 +57,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end	
+	end)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

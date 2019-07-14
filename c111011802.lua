@@ -25,14 +25,13 @@ function s.initial_effect(c)
 	e3:SetCondition(s.discon1)
 	e3:SetOperation(s.disop1)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local e4=Effect.CreateEffect(c)	
 		e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 		e4:SetOperation(s.spop)
 		Duel.RegisterEffect(e4,0)
-	end
+	end)
 end
 function s.drfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)

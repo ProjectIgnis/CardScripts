@@ -60,14 +60,13 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 	
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge2=Effect.CreateEffect(c)
 		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge2:SetCode(EVENT_BATTLED)
 		ge2:SetOperation(s.battleop)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 s.listed_names={511009337}
 function s.filter(c)

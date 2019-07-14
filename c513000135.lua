@@ -39,8 +39,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.atkcon)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--avatar
 		local av=Effect.CreateEffect(c)
 		av:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -49,7 +48,7 @@ function s.initial_effect(c)
 		av:SetCondition(s.avatarcon)
 		av:SetOperation(s.avatarop)
 		Duel.RegisterEffect(av,0)
-	end
+	end)
 end
 s.listed_names={21208154}
 function s.avfilter(c)

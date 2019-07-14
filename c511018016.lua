@@ -50,8 +50,7 @@ function s.initial_effect(c)
 	e5:SetLabelObject(e2)
 	c:RegisterEffect(e5)
 	--global thing
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.GlobalEffect()
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -63,7 +62,7 @@ function s.initial_effect(c)
 		local ge3=ge1:Clone()
 		ge3:SetCode(EVENT_SPSUMMON_SUCCESS)
 		Duel.RegisterEffect(ge3,0)
-	end
+	end)
 end
 function s.chk(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do

@@ -9,8 +9,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD)
 		ge1:SetCode(EFFECT_CANNOT_LOSE_LP)
@@ -27,7 +26,7 @@ function s.initial_effect(c)
 		ge3:SetCode(EVENT_ADJUST)
 		ge3:SetOperation(s.op)
 		Duel.RegisterEffect(ge3,0)
-	end
+	end)
 end
 function s.con2(e)
 	return Duel.GetFlagEffect(e:GetLabel(),511002521)>0

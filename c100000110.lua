@@ -33,8 +33,7 @@ function s.initial_effect(c)
 	e7:SetCode(EFFECT_IMMUNE_EFFECT)
 	e7:SetValue(s.efilter)
 	c:RegisterEffect(e7)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--spsummon proc
 		local e2=Effect.CreateEffect(c)	
 		e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
@@ -43,7 +42,7 @@ function s.initial_effect(c)
 		e2:SetCountLimit(1)
 		e2:SetOperation(s.endop)
 		Duel.RegisterEffect(e2,0)
-	end
+	end)
 end
 function s.spfilter1(c)
 	return c:IsFaceup() and c:IsLevel(1) and c:IsType(TYPE_NORMAL)

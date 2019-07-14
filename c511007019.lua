@@ -13,8 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	e1:SetLabelObject(g)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=false
 		s[1]=false
 		s[2]=false
@@ -51,7 +50,7 @@ function s.initial_effect(c)
 		ge7:SetCode(EVENT_CHANGE_POS)
 		ge7:SetOperation(s.resetop3)
 		Duel.RegisterEffect(ge7,0)
-	end
+	end)
 end
 function s.cfilter(c,tp)
 	return c:GetSummonType()==SUMMON_TYPE_XYZ and c:IsSummonPlayer(tp)

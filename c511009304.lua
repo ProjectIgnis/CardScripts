@@ -46,8 +46,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg2)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=false
 		s[1]=false
 		local ge1=Effect.CreateEffect(c)
@@ -61,7 +60,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 s.material_setcode=0x19
 function s.ffilter(c,fc,sumtype,tp)

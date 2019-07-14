@@ -27,8 +27,7 @@ function s.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetCode(id)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -43,7 +42,7 @@ function s.initial_effect(c)
 		ge3:SetCode(EVENT_ATTACK_ANNOUNCE)
 		ge3:SetOperation(s.checkop2)
 		Duel.RegisterEffect(ge3,0)
-	end
+	end)
 end
 function s.atktg(e,c)
 	return not c:IsType(TYPE_FUSION)

@@ -30,14 +30,13 @@ function s.initial_effect(c)
 	e4:SetOperation(s.rmop)
 	c:RegisterEffect(e4)
 	--register summon
-	if not s.global_flag then
-		s.global_flag=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge1:SetOperation(s.regop)
 		Duel.RegisterEffect(ge1,tp)
-	end
+	end)
 end
 s.listed_names={84243274,73879377}
 function s.reg(c)

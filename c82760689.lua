@@ -8,8 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=false
 		s[1]=Group.CreateGroup()
 		s[1]:KeepAlive()
@@ -28,12 +27,11 @@ function s.initial_effect(c)
 		ge3:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge3:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge3,0)
-		local ge4=Effect.CreateEffect(c)
-		ge4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge4:SetCode(EVENT_PHASE_START+PHASE_DRAW)
-		ge4:SetOperation(s.clear)
-		Duel.RegisterEffect(ge4,0)
-	end
+		aux.AddValuesReset(function()
+			s[0]=false
+			s[1]:Clear()
+		end)
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
@@ -44,10 +42,6 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		tc=eg:GetNext()
 	end
-end
-function s.clear(e,tp,eg,ep,ev,re,r,rp)
-	s[0]=false
-	s[1]:Clear()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

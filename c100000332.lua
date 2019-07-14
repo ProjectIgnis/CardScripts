@@ -29,15 +29,14 @@ function s.initial_effect(c)
 	e4:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--check obsolete ruling
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DRAW)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if (r&REASON_RULE)~=0 and Duel.GetTurnCount()==1 then

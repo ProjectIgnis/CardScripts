@@ -18,8 +18,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.handcon)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--register
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -27,7 +26,7 @@ function s.initial_effect(c)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetOperation(s.operation)
 		Duel.RegisterEffect(e2,0)
-	end
+	end)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)

@@ -11,8 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_PHASE+PHASE_END)
@@ -27,7 +26,7 @@ function s.initial_effect(c)
 		ge2:SetOperation(s.spop2)
 		ge2:SetCountLimit(1)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.filter(c,e,tp,tid)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:GetReason()&0x42)==0x42 and c:GetTurnID()==tid 

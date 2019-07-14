@@ -73,8 +73,7 @@ function s.initial_effect(c)
 	e8:SetTarget(s.rettg)
 	e8:SetOperation(s.retop)
 	c:RegisterEffect(e8)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -82,7 +81,7 @@ function s.initial_effect(c)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		ge1:SetOperation(aux.sumreg)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and chkc:IsSetCard(0xb3) end

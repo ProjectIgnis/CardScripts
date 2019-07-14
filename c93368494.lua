@@ -51,8 +51,7 @@ function s.initial_effect(c)
 	e7:SetTarget(s.rettg)
 	e7:SetOperation(s.retop)
 	c:RegisterEffect(e7)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -60,7 +59,7 @@ function s.initial_effect(c)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		ge1:SetOperation(aux.sumreg)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()

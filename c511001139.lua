@@ -54,8 +54,7 @@ function s.initial_effect(c)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetOperation(s.banop)
 	c:RegisterEffect(e7)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -67,7 +66,7 @@ function s.initial_effect(c)
 		ge2:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge2:SetLabel(id)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.rainbowfilter(c)
 	return c:IsSetCard(0x5034) and (not c:IsOnField() or c:IsFaceup())

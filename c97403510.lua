@@ -48,14 +48,13 @@ function s.initial_effect(c)
 	e5:SetCondition(s.atkcon)
 	e5:SetOperation(s.atkop)
 	c:RegisterEffect(e5)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SSET)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 s.xyz_number=92
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)

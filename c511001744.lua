@@ -43,8 +43,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.cttg2)
 	e3:SetOperation(s.ctop2)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=false
 		s[1]=false
 		local ge1=Effect.CreateEffect(c)
@@ -61,7 +60,7 @@ function s.initial_effect(c)
 		ge3:SetCountLimit(1)
 		ge3:SetOperation(s.clear)
 		Duel.RegisterEffect(ge3,0)
-	end
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(Card.IsControler,1,nil,1-tp) then

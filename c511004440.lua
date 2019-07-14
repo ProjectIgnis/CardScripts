@@ -18,24 +18,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	e1:SetLabelObject(g)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DESTROY)
 		ge1:SetOperation(s.gchk)
 		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
-		ge2:SetCountLimit(1)
-		ge2:SetOperation(s.gclear)
-		Duel.RegisterEffect(ge2,0)
-		ge1:SetLabelObject(g)
-		ge2:SetLabelObject(g)
-	end
+		aus.AddValuesReset(function()
+			g:Clear()
+		end)
+	end)
 end
 s.g=nil
 function s.gchk(e,tp,eg,ev,ep,re,r,rp)
@@ -44,16 +37,6 @@ function s.gchk(e,tp,eg,ev,ep,re,r,rp)
 	while c do
 		if c:GetCounter(0x1038)~=0 then g:AddCard(c) end
 		c=eg:GetNext()
-	end
-end
-function s.gclear(e,tp,eg,ev,ep,re,r,rp)
-	local g=e:GetLabelObject()
-	if #g>0 then
-		local c=g:GetFirst()
-		while c do
-			g:RemoveCard(c)
-			c=g:GetNext()
-		end
 	end
 end
 function s.sfilter(c,e,tp,g)

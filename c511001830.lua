@@ -19,8 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -31,7 +30,7 @@ function s.initial_effect(c)
 		ge2:SetCode(EVENT_ATTACK_DISABLED)
 		ge2:SetOperation(s.check2)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.filter(c)
 	local ct=c:GetFlagEffectLabel(51101830)

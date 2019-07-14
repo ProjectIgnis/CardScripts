@@ -12,8 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_BATTLE_DAMAGE)
@@ -24,7 +23,7 @@ function s.initial_effect(c)
 		ge2:SetCode(EVENT_BATTLED)
 		ge2:SetOperation(s.desop2)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()

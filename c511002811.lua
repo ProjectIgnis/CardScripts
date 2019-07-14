@@ -8,8 +8,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=true
 		s[1]=true
 		--check
@@ -25,7 +24,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return s[tp]

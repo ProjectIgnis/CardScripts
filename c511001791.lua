@@ -56,8 +56,7 @@ function s.initial_effect(c)
 	local e7=e5:Clone()
 	e7:SetCode(EVENT_TO_DECK)
 	c:RegisterEffect(e7)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
 		local ge1=Effect.CreateEffect(c)
@@ -72,7 +71,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.pcfilter(c)
 	return c:IsType(TYPE_PENDULUM) and not c:IsForbidden()

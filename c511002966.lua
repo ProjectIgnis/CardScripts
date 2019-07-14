@@ -25,8 +25,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_SELF_DESTROY)
 	e4:SetCondition(s.descon)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]={}
 		s[1]={}
 		s[2]=0
@@ -42,7 +41,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp then

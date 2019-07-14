@@ -11,15 +11,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--register
 		local ge2=Effect.CreateEffect(c)
 		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge2:SetCode(EVENT_TO_GRAVE)
 		ge2:SetOperation(s.regop)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.filter1(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:GetFlagEffect(id)~=0

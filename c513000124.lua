@@ -50,8 +50,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_SELF_DESTROY)
 	e6:SetCondition(s.sdcon)
 	c:RegisterEffect(e6)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD)
 		ge1:SetCode(EFFECT_CANNOT_LOSE_LP)
@@ -68,7 +67,7 @@ function s.initial_effect(c)
 		ge3:SetCode(EVENT_ADJUST)
 		ge3:SetOperation(s.op)
 		Duel.RegisterEffect(ge3,0)
-	end
+	end)
 end
 function s.con2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(e:GetLabel(),511002521)>0

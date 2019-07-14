@@ -19,8 +19,7 @@ function s.initial_effect(c)
 	e4:SetCode(73941492+TYPE_SYNCHRO)
 	e4:SetValue(s.synlimit)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -32,7 +31,7 @@ function s.initial_effect(c)
 		ge2:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge2:SetLabel(id)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.synlimit(e,c)
 	return c:IsControler(1-e:GetHandlerPlayer())

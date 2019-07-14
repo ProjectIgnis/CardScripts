@@ -10,8 +10,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -23,7 +22,7 @@ function s.initial_effect(c)
 		ge2:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge2:SetLabel(id)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 s.listed_names={53251824}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

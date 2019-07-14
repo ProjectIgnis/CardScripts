@@ -36,9 +36,9 @@ function s.initial_effect(c)
 		s.attr_list[0]=0
 		s.attr_list[1]=0
 		aux.AddValuesReset(function()
-							s.attr_list[0]=0
-							s.attr_list[1]=0
-							end)
+				s.attr_list[0]=0
+				s.attr_list[1]=0
+			end)
 		end)
 end
 function s.thcfilter(c,e,tp)
@@ -103,4 +103,3 @@ end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsRace(RACE_CYBERSE) and c:IsLocation(LOCATION_EXTRA)
 end
-

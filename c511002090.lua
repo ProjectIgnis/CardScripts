@@ -58,8 +58,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e6:SetValue(s.indes)
 	c:RegisterEffect(e6)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
 		--lpcheck
@@ -68,7 +67,7 @@ function s.initial_effect(c)
 		ge1:SetCode(EVENT_ADJUST)
 		ge1:SetOperation(s.lpchk)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 s.xyz_number=6
 function s.eqval(ec,c,tp)

@@ -41,8 +41,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.despop)
 	c:RegisterEffect(e5)
 	--Global check
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=true
 		s[1]=true
 		local ge1=Effect.GlobalEffect()
@@ -57,7 +56,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.cfilter(c,tp)
 	return (c:GetPreviousRaceOnField()&RACE_FIEND)==RACE_FIEND and (c:GetPreviousTypeOnField()&TYPE_XYZ)==TYPE_XYZ 

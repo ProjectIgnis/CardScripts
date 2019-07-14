@@ -14,14 +14,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_DESTROYED)
 		e1:SetOperation(s.regop)
 		Duel.RegisterEffect(e1,0)
-	end
+	end)
 end
 function s.regfilter(c)
 	return c:IsLocation(LOCATION_GRAVE) and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-c:GetControler())

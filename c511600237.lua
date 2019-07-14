@@ -12,15 +12,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sctg)
 	e1:SetOperation(s.scop)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--damage check
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_BATTLE_DAMAGE)
 		ge1:SetOperation(s.damchk)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.damchk(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

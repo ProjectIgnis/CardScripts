@@ -32,8 +32,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e6:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e6)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
 		local ge2=Effect.CreateEffect(c)
@@ -47,7 +46,7 @@ function s.initial_effect(c)
 		ge3:SetCountLimit(1)
 		ge3:SetOperation(s.clear)
 		Duel.RegisterEffect(ge3,0)
-	end
+	end)
 end
 s.listed_names={97403510,100000581,111011002,511000580,511002068,511002164,93238626}
 s.xyz_number=92

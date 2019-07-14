@@ -39,8 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.eqop)
 	c:RegisterEffect(e4)	
 	--material check
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_MATERIAL_CHECK)
@@ -50,7 +49,7 @@ function s.initial_effect(c)
 		ge1:SetLabelObject(e1)
 		ge1:SetTargetRange(0xff,0xff)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 s.listed_names={67712104}
 s.listed_series={0x12b}

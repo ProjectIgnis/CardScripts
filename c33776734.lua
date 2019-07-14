@@ -34,8 +34,7 @@ function s.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_SET_DEFENSE)
 	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -46,7 +45,7 @@ function s.initial_effect(c)
 		ge2:SetCode(EVENT_CHAIN_NEGATED)
 		ge2:SetOperation(s.checkop2)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 s.lvupcount=1
 s.lvup={id}

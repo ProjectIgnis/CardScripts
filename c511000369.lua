@@ -53,8 +53,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e5:SetValue(s.indes)
 	c:RegisterEffect(e5)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DESTROYED)
@@ -62,7 +61,7 @@ function s.initial_effect(c)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		ge1:SetTarget(s.stcheck)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 s.xyz_number=100
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

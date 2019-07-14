@@ -12,8 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=false
 		s[1]=false
 		local ge1=Effect.CreateEffect(c)
@@ -26,7 +25,7 @@ function s.initial_effect(c)
 		ge4:SetCode(EVENT_PHASE_START+PHASE_BATTLE)
 		ge4:SetOperation(s.clear)
 		Duel.RegisterEffect(ge4,0)
-	end
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

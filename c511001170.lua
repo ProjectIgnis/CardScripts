@@ -8,8 +8,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]={}
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -17,7 +16,7 @@ function s.initial_effect(c)
 		ge1:SetCountLimit(1)
 		ge1:SetOperation(s.endop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE) end

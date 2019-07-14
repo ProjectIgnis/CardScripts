@@ -11,8 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--move to fzone
 		local e2=Effect.CreateEffect(c)
 		e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
@@ -20,7 +19,7 @@ function s.initial_effect(c)
 		e2:SetCode(EVENT_SSET)
 		e2:SetOperation(s.operation)
 		Duel.RegisterEffect(e2,0)
-	end
+	end)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()==nil

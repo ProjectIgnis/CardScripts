@@ -12,8 +12,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.GlobalEffect()
 		ge1:SetType(EFFECT_TYPE_FIELD)
 		ge1:SetCode(EFFECT_TO_GRAVE_REDIRECT)
@@ -21,7 +20,7 @@ function s.initial_effect(c)
 		ge1:SetTarget(aux.TargetBoolFunction(Card.IsCode,34620088))
 		ge1:SetValue(LOCATION_REMOVED)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil

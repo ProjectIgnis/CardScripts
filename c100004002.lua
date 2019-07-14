@@ -25,8 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -42,7 +41,7 @@ function s.initial_effect(c)
 		ge3:SetCode(EVENT_FLIP)
 		ge3:SetLabel(id)
 		Duel.RegisterEffect(ge3,0)
-	end
+	end)
 end
 s.lvupcount=1
 s.lvup={id+1}

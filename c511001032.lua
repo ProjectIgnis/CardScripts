@@ -11,14 +11,13 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local sp=Effect.CreateEffect(c)
 		sp:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		sp:SetCode(EVENT_SPSUMMON_SUCCESS)
 		sp:SetOperation(s.op)
 		Duel.RegisterEffect(sp,0)
-	end
+	end)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()

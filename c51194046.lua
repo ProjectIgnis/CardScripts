@@ -25,8 +25,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.drtg)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
 		local ge1=Effect.CreateEffect(c)
@@ -45,12 +44,11 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge3,0)
 		ge1:SetLabelObject(ge3)
 		ge2:SetLabelObject(ge3)
-		local ge4=Effect.CreateEffect(c)
-		ge4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge4:SetCode(EVENT_PHASE_START+PHASE_DRAW)
-		ge4:SetOperation(s.clearop)
-		Duel.RegisterEffect(ge4,0)
-	end
+		aux.AddValuesReset(function()
+			s[0]=0
+			s[1]=0
+		end)
+	end)
 end
 function s.splimit(e,c)
 	return not c:IsSetCard(0xaa)

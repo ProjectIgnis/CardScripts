@@ -32,8 +32,7 @@ function s.initial_effect(c)
 	e5:SetCode(id)
 	e5:SetRange(LOCATION_MZONE)
 	c:RegisterEffect(e5)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD)
 		ge1:SetCode(EFFECT_CANNOT_ATTACK)
@@ -42,7 +41,7 @@ function s.initial_effect(c)
 		ge1:SetCondition(s.atkcon)
 		ge1:SetTarget(s.atktg)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

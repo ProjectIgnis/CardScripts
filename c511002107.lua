@@ -10,8 +10,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		--register
 		local ge1=Effect.CreateEffect(c)
@@ -32,7 +31,7 @@ function s.initial_effect(c)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetOperation(s.operation)
 		Duel.RegisterEffect(e2,0)
-	end
+	end)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()	

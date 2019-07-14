@@ -10,11 +10,10 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_PHASE+PHASE_END)
+		ge1:SetCode(EVENT_TURN_END)
 		ge1:SetCountLimit(1)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		ge1:SetOperation(function(e,tp)
@@ -28,7 +27,7 @@ function s.initial_effect(c)
 			e:Reset()
 		end)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 s.infos={}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

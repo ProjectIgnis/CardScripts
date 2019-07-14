@@ -21,8 +21,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rettg)
 	e2:SetOperation(s.retop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -30,7 +29,7 @@ function s.initial_effect(c)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		ge1:SetOperation(aux.sumreg)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0xb3) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

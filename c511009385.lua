@@ -20,8 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=true
 		s[1]=true
 		local ge1=Effect.CreateEffect(c)
@@ -35,7 +34,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.cfilter(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsSummonLocation(LOCATION_EXTRA)

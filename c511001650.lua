@@ -7,15 +7,14 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_DISABLE)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--register
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DRAW)
 		ge1:SetOperation(s.op)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.cfilter(c)
 	return c:GetFlagEffect(id)>0 and c:IsDiscardable()

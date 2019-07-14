@@ -32,15 +32,14 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 	--activate
-	if not s.globalcheck then
-		s.globalcheck=true
+	aux.GlobalCheck(s,function()
 		local e1=Effect.CreateEffect(c)
 		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		e1:SetOperation(s.rumcheck)
 		Duel.RegisterEffect(e1,0)
-	end
+	end)
 end
 function s.rumcheck(e,tp,eg,ev,ep,re,r,rp)
 	if not re then return end

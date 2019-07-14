@@ -30,8 +30,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -43,7 +42,7 @@ function s.initial_effect(c)
 		ge2:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge2:SetLabel(id)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0

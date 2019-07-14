@@ -12,8 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--register
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
@@ -22,7 +21,7 @@ function s.initial_effect(c)
 		ge1:SetCountLimit(1)
 		ge1:SetOperation(s.gop)
 		Duel.RegisterEffect(ge1,0)
-	end 
+	end)
 end
 function s.gop(e,tp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_EXTRA,LOCATION_EXTRA,nil)

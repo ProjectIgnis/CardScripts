@@ -26,8 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=Group.CreateGroup()
 		s[0]:KeepAlive()
 		local ge1=Effect.CreateEffect(c)
@@ -48,7 +47,7 @@ function s.initial_effect(c)
 		ge3:SetLabelObject(ge2)
 		Duel.RegisterEffect(ge3,0)
 		s[1]=ge2
-	end
+	end)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)

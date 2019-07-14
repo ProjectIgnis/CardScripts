@@ -14,8 +14,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=Group.CreateGroup()
 		s[0]:KeepAlive()
 		local ge2=Effect.CreateEffect(c)
@@ -24,7 +23,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.setop)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if s[0]:GetCount()>0 then return end

@@ -55,14 +55,13 @@ function s.initial_effect(c)
 	e6:SetTarget(s.tetg)
 	e6:SetOperation(s.teop)
 	c:RegisterEffect(e6)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge=Effect.CreateEffect(c)
 		ge:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge:SetCode(EVENT_CHAINING)
 		ge:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge,0)
-	end
+	end)
 end
 s.material_setcode=0x54e
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)

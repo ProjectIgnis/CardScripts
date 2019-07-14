@@ -18,8 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--register
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -27,7 +26,7 @@ function s.initial_effect(c)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetOperation(s.operation)
 		Duel.RegisterEffect(e3,0)
-	end
+	end)
 end
 s.listed_names={511000127}
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

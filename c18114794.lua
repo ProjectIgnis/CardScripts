@@ -14,8 +14,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.condition)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
 		local ge1=Effect.CreateEffect(c)
@@ -33,7 +32,7 @@ function s.initial_effect(c)
 		ge3:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge3:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge3,0)
-	end
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local turnp=Duel.GetTurnPlayer()

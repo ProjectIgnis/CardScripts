@@ -1,4 +1,5 @@
 --一族の掟
+--The Regulation of Tribe
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

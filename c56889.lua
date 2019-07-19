@@ -1,6 +1,5 @@
 --競闘－クロス・ディメンション
 --Cross-Dimensional Duel
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

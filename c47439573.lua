@@ -1,6 +1,6 @@
 --無情なはたき落とし
 --Heartless Drop Off
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

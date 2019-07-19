@@ -1,6 +1,6 @@
 --沼地のドロゴン
 --Mudragon of the Swamp
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

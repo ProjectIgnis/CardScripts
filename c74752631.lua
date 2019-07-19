@@ -1,6 +1,6 @@
 --六武衆の軍大将
 --Great General of the Six Samurai
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x3)

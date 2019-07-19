@@ -1,6 +1,6 @@
 --水精鱗－サラキアビス
 --Mermail Abyssaraki
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

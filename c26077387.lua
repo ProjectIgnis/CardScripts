@@ -1,6 +1,6 @@
 --閃刀姫－レイ
 --Brandish Maiden Rei
---Script by nekrozar, completed by Eerie Code
+--, completed by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

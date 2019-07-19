@@ -1,6 +1,6 @@
 --魔界劇団－メロー・マドンナ
 --Abyss Actor - Mellow Madonna
---Script by dest
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon

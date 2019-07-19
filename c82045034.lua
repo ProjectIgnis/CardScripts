@@ -1,6 +1,6 @@
 --百雷のサンダー・ドラゴン
 --The Hundred Thunder Dragons
---script by Naim
+--scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

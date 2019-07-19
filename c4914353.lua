@@ -1,6 +1,6 @@
 --スペース・インシュレイター
 --Space Insulator
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

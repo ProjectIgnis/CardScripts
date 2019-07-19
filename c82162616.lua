@@ -1,6 +1,6 @@
 --永遠なる銀河
 --Eternal Galaxy
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

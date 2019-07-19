@@ -1,6 +1,6 @@
 --栄光の聖騎士団
 --Glory of the Noble Knights
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,6 +1,6 @@
 --ダイナレスラー・カポエラプトル
 --Dinowrestler Capoeiraptor
---script by Naim
+--scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes battle

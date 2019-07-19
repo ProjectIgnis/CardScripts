@@ -1,6 +1,6 @@
 --ヴァンパイアの支配
 
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

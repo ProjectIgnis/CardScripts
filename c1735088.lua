@@ -1,6 +1,6 @@
 --発条補修ゼンマイコン
 --Wind-Up Maintenance Zenmaicon
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

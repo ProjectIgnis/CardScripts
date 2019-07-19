@@ -1,6 +1,6 @@
 --墓守の神職
 --Gravekeeper's Priest
---Script by dest
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

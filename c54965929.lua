@@ -1,6 +1,6 @@
 --魔導獣 メデューサ
 --Mythical Beast Medusa
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.EnablePendulumAttribute(c)

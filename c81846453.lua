@@ -1,6 +1,6 @@
 --武力の軍奏
 --Tin Musical Battlemech
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

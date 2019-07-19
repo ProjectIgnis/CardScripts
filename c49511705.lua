@@ -1,6 +1,6 @@
 --銃砲撃
 --Gun Cannon Shot
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

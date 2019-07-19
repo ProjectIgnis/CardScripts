@@ -1,6 +1,6 @@
 --焔凰神－ネフティス
 --Nephthys the Blazing Sacred Phoenix
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

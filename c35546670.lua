@@ -1,6 +1,6 @@
 --星遺物が刻む傷痕
 --Wounds Carved on the World Legacy
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

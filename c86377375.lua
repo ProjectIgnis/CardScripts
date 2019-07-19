@@ -1,6 +1,6 @@
 --悪王アフリマ
 --Ahrima, King of Wickedness
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

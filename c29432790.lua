@@ -1,6 +1,6 @@
 --青き眼の激臨
 --Rage with Eyes of Blue
---Script by dest
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,6 +1,6 @@
 --超重蒸鬼テツドウ－O
 --Superheavy Samurai Steam Fiend Tetsudo'o
---Script by dest
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

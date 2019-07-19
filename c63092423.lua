@@ -1,6 +1,6 @@
 --弾帯城壁龍
 --Beltlink Wall Dragon
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x44)

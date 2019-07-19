@@ -1,6 +1,6 @@
 --蝕みの鱗粉
 --Corrosive Scales
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

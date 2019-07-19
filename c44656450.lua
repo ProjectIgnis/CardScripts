@@ -1,6 +1,6 @@
 --失楽の魔女
 --Condemned Witch
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

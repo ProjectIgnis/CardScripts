@@ -1,6 +1,6 @@
 --転生炎獣の聖域
 --Salamangreat Sanctuary
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
     --Activate

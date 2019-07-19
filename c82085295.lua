@@ -1,6 +1,6 @@
 --魔神儀－ペンシルベル
 --Deviritual Pensilver
---Script by dest
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

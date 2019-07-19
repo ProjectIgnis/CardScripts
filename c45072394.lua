@@ -1,6 +1,6 @@
 --鉄の檻
 --Iron Cage
---Script by dest
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

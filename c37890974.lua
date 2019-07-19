@@ -1,6 +1,6 @@
 --空牙団の修練
 --Skyfang Brigade Training
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

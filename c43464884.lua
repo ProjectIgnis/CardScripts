@@ -1,6 +1,6 @@
 --妖海のアウトロール
 --Three Trolling Trolls
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--change

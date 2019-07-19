@@ -1,6 +1,6 @@
 --屈強の釣り師
 --Angrappler
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

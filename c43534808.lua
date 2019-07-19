@@ -1,6 +1,5 @@
 --トークンコレクター
 --Token Collector
---Script by mercury233
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

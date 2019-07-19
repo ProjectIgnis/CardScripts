@@ -1,6 +1,6 @@
 --六武衆の真影
 --Legendary Secret of the Six Samurai
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

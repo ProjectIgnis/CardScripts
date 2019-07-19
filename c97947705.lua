@@ -1,6 +1,6 @@
 --バックアップ・オペレーター
 --Backup Operator
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

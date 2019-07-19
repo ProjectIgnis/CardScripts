@@ -1,6 +1,6 @@
 --鎖龍蛇－スカルデット
 --Saryuja Skull Dread
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

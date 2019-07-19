@@ -1,6 +1,6 @@
 --魔神儀－ブックストーン
 --Deviritual Bookstone
---Script by dest
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

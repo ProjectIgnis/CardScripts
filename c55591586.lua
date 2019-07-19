@@ -1,6 +1,6 @@
 --雷劫龍－サンダー・ドラゴン
 --Aeon Thunder Dragon
---script by Naim
+--scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 c:EnableReviveLimit()

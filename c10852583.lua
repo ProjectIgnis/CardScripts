@@ -1,6 +1,6 @@
 --ヤジロベーダー
 --Yajiro Invader
---Script by nekrozar
+--
 --Some parts remade by Edo9300
 local s,id=GetID()
 function s.initial_effect(c)

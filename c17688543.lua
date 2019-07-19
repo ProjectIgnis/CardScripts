@@ -1,6 +1,6 @@
 --深すぎた墓穴
 --The Deep Grave
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

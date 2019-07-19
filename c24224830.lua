@@ -1,6 +1,6 @@
 --墓穴の指名者
 --Designator From the Grave
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

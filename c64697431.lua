@@ -1,6 +1,6 @@
 --局所的ハリケーン
 --Localized Trunade
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

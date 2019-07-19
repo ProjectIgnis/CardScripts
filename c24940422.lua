@@ -1,6 +1,6 @@
 --雪花の光
 --Light of Sekka
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

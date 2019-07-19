@@ -1,6 +1,6 @@
 --強靭！無敵！最強！
 --The Toughest! The Invincible! The Unbeatable!
---Script by dest
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--effect gain

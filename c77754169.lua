@@ -1,6 +1,6 @@
 --超装甲兵器ロボ ブラックアイアンG
 --Super Armored Robot Weapon - Black Iron "C"
---Script by dest
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

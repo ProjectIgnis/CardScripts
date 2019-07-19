@@ -1,6 +1,6 @@
 --熾天龍 ジャッジメント
 --Judgment, the Dragon of Heaven
---Script by dest
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

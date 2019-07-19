@@ -1,6 +1,6 @@
 --キキナガシ風鳥
 --Disdainful Bird of Paradise
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

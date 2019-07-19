@@ -1,6 +1,6 @@
 --インヴィンシブル・ヘイロー
 --Invincible Halo
---Script by dest
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

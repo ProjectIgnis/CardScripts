@@ -1,6 +1,6 @@
 --一撃必殺！居合いドロー
 --Slash Draw
---Script by dest
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,6 +1,6 @@
 --星遺物への抵抗
 --World Legacy Struggle
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

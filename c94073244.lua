@@ -1,6 +1,6 @@
 --空牙団の撃手 ドンパ
 --Donpa, Marksman of the Skyfang Brigade
---Script by nekrozar
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

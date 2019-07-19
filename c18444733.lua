@@ -1,6 +1,6 @@
 --雷龍放電
 --Thunder Dragon Streamer
---script by Naim
+--scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

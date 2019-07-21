@@ -12,7 +12,7 @@ function Link.AddProcedure(c,f,min,max,specialchk,desc)
 	if desc then
 		e1:SetDescription(desc)
 	else
-		e1:SetDescription(1076)
+		e1:SetDescription(1174)
 	end
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)

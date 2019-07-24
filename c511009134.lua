@@ -21,14 +21,14 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_SUMMON_PROC)
 	e2:SetCondition(s.otcon)
 	e2:SetOperation(s.otop)
-	e2:SetValue(SUMMON_TYPE_ADVANCE)
+	e2:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_SET_PROC)
 	c:RegisterEffect(e3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_ADVANCE
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_TRIBUTE
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end

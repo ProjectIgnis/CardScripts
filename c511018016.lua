@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SUMMON_PROC)
 	e1:SetCondition(s.sumcon)
 	e1:SetOperation(s.sumop)
-	e1:SetValue(SUMMON_TYPE_ADVANCE)
+	e1:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e1)
 	--tribute check
 	local e2=Effect.CreateEffect(c)
@@ -95,11 +95,11 @@ function s.valcheck(e,c)
 end
 function s.cbacondition(e,tp,eg,ep,ev,re,r,rp)
 	local lo=e:GetLabelObject():GetLabel()
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE) and lo>=1
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and lo>=1
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local lo=e:GetLabelObject():GetLabel()
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE) and lo>=2
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and lo>=2
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -112,7 +112,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local lo=e:GetLabelObject():GetLabel()
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE) and lo>=3
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and lo>=3
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

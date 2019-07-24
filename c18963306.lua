@@ -1,8 +1,9 @@
 --銀河眼の光波竜
+--Galaxy-Eyes Cipher Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,nil,8,2)
+	aux.AddXyzProcedure(c,nil,8,2)
 	c:EnableReviveLimit()
 	--control
 	local e1=Effect.CreateEffect(c)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false,1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -41,6 +42,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabel(e:GetHandler():GetFieldID())
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	local e0=Effect.CreateEffect(c)
+	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e0:SetDescription(aux.Stringid(id,1))
+	e0:SetReset(RESET_PHASE+PHASE_END)
+	e0:SetTargetRange(1,0)
+	Duel.RegisterEffect(e0,tp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.GetControl(tc,tp,PHASE_END,1) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)

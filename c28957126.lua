@@ -47,7 +47,7 @@ end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk) and Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_HAND,0,1,nil) end
 	aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	Duel.DiscardHand(tp,s.thcfilter,1,1,REASON_COST,nil)
+	Duel.DiscardHand(tp,s.thcfilter,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x129) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(id) and c:IsAbleToHand()

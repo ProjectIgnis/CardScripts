@@ -1,5 +1,5 @@
 --D-HERO ドミネイトガイ
---Destiny HERO Dominator
+--Destiny HERO - Dominance
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
     e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e2:SetCode(EVENT_BATTLE_DESTROYING)
     e2:SetCountLimit(1,id+1)
-    e2:SetCondition(s.drcon)
+    e2:SetCondition(aux.bdocon)
     e2:SetTarget(s.drtg)
     e2:SetOperation(s.drop)
     c:RegisterEffect(e2)
@@ -55,12 +55,6 @@ function s.stop(e,tp,eg,ep,ev,re,r,rp)
     end
     if tp==1 then p=1-p end
     Duel.SortDecktop(tp,p,5)
-end
-function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    local bc=c:GetBattleTarget()
-    if not c:IsRelateToBattle() or c:IsFacedown() then return false end
-    return bc:IsReason(REASON_BATTLE) and bc:IsType(TYPE_MONSTER)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

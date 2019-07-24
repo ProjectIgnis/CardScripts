@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12b}
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetBattleTarget() and not e:GetHandler():GetBattleTarget():IsControler(tp)
+	return e:GetHandler():GetBattleTarget()
 end
 function s.spfilter1(c,e,tp)
 	return c:IsSetCard(0x12b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -90,7 +90,7 @@ function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 		return false
 	else return true end
 end
-function s.eqop(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,PLAYER_ALL,id)
 	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
@@ -121,7 +121,7 @@ end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

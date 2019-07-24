@@ -1,4 +1,5 @@
 --星遺物－『星杯』
+--World Legacy - "World Chalice"
 local s,id=GetID()
 function s.initial_effect(c)
 	--send to grave
@@ -29,18 +30,21 @@ function s.initial_effect(c)
 	--tohand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(CATEGORY_SEARCH)
+	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCountLimit(1,id+1)
+	e3:SetCountLimit(1,id+100)
 	e3:SetCondition(aux.exccon)
 	e3:SetCost(aux.bfgcost)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+function s.tgfilter(c)
+	return bit.band(c:GetSummonLocation(),LOCATION_EXTRA)==LOCATION_EXTRA and c:IsLocation(LOCATION_MZONE)
+end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsSummonLocation,1,nil,LOCATION_EXTRA)
+	return eg:IsExists(s.tgfilter,1,nil)
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
@@ -48,12 +52,12 @@ function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=eg:Filter(Card.IsSummonLocation,nil,LOCATION_EXTRA)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
+	local g=eg:Filter(s.tgfilter,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,g:GetCount(),0,0)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:(Card.IsSummonLocation,nil,LOCATION_EXTRA)
-	if #g>0 then
+	local g=eg:Filter(s.tgfilter,nil)
+	if g:GetCount()>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
@@ -74,7 +78,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,2,2,nil,e,tp)
-	if #g==2 then
+	if g:GetCount()==2 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
@@ -88,7 +92,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 then
+	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end

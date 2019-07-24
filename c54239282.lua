@@ -26,6 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NOT(Card.IsPublic),tp,0,LOCATION_HAND,nil)
 	if #g==0 then return end
 	local oc=g:RandomSelect(tp,1):GetFirst()
+	Duel.ConfirmCards(tp,oc)
 	local b=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,oc:GetType())
 		and Duel.IsPlayerCanDraw(tp,1) and c:IsRelateToEffect(e)
 	local op=1

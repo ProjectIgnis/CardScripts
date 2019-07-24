@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
-		and (c:IsSetCard(0x54) or c:IsSetCard(0x59) or c:IsSetCard(0x82) or  c:IsSetCard(0x8f))
+		and (c:IsSetCard(0x54) or c:IsSetCard(0x59) or c:IsSetCard(0x82) or  c:IsSetCard(0x8f)) and not c:IsCode(id)
 end
 --used for counting "too many" of each set, so exclude
 --this card which you can summon multiples of

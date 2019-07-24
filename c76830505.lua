@@ -59,7 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Filter for "Infintrack" monster, besides itself
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x127) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x127) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 	--If special summoned from hand
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)

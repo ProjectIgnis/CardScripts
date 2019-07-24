@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,nil,2,4,s.lcheck)
+	aux.AddLinkProcedure(c,nil,2,4,s.lcheck)
 	c:EnableReviveLimit()
 	--Token
 	local e1=Effect.CreateEffect(c)
@@ -73,12 +73,11 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPE_TOKEN+TYPE_MONSTER+TYPE_NORMAL,tc:GetAttack(),tc:GetDefense(),tc:GetLevel(),tc:GetRace(),tc:GetAttribute()) and Duel.GetMZoneCount(tp,nil,tp,LOCATION_REASON_TOFIELD,zone)>0 then
 		local token=Duel.CreateToken(tp,id+1)
-		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP,zone)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetValue(tc:GetAttack())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		token:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_BASE_DEFENSE)
@@ -96,7 +95,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e5:SetValue(tc:GetAttribute())
 		token:RegisterEffect(e5)
-		Duel.SpecialSummonComplete()
+		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP,zone)
 	end 
 end
 function s.tgfilter(c)

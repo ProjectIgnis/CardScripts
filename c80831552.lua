@@ -30,7 +30,7 @@ function s.spcon(e,c)
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.ecfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11a) and c:IsLinkBelow(3)
+	return c:IsFaceup() and c:IsSetCard(0x11a) and c:IsLinkAbove(3)
 end
 function s.econ(e)
 	return Duel.IsExistingMatchingCard(s.ecfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

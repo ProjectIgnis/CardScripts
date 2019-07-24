@@ -56,10 +56,10 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.eqlimit(e,c)
-	return c:IsRace(RACE_CYBERS)
+	return c:IsRace(RACE_CYBERSE)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_CYBERS)
+	return c:IsFaceup() and c:IsRace(RACE_CYBERSE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

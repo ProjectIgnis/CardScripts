@@ -22,5 +22,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.target(e,c)
-	return c:IsRace(RACE_CYBERS)
+	return c:IsRace(RACE_CYBERSE)
 end

@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x7))
 	e4:SetCondition(s.sumcon)
 	e4:SetOperation(s.sumop)
-	e4:SetValue(SUMMON_TYPE_ADVANCE)
+	e4:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e4)
 end
 function s.addc(e,tp,eg,ep,ev,re,r,rp)

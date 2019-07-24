@@ -38,7 +38,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousPosition(POS_FACEUP) and
-		c:IsSummonType(SUMMON_TYPE_ADVANCE)
+		c:IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xf9) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

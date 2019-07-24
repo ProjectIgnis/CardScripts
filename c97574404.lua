@@ -66,5 +66,5 @@ function s.sumcon(e)
 	return e:GetHandler():GetFlagEffectLabel(36690018)==0
 end
 function s.sumtg(e,c,tp,sumtp)
-	return (sumtp&SUMMON_TYPE_ADVANCE)==SUMMON_TYPE_ADVANCE and c:IsSetCard(0x5)
+	return (sumtp&SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE and c:IsSetCard(0x5)
 end

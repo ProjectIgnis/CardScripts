@@ -30,7 +30,7 @@ function s.valcheck(e,c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_ADVANCE) and e:GetLabel()==1
+	return c:IsSummonType(SUMMON_TYPE_TRIBUTE) and e:GetLabel()==1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end

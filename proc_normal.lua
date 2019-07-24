@@ -1,6 +1,6 @@
 --tribute
 function Auxiliary.AddNormalSummonProcedure(c,ns,opt,min,max,val,desc,f)
-	val = val or SUMMON_TYPE_ADVANCE
+	val = val or SUMMON_TYPE_TRIBUTE
 	local e1=Effect.CreateEffect(c)
 	if desc then e1:SetDescription(desc) end
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -65,7 +65,7 @@ function Auxiliary.NormalSummonOperation(min,max)
 end
 --add normal set
 function Auxiliary.AddNormalSetProcedure(c,ns,opt,min,max,val,desc,f)
-	val = val or SUMMON_TYPE_ADVANCE
+	val = val or SUMMON_TYPE_TRIBUTE
 	local e1=Effect.CreateEffect(c)
 	if desc then e1:SetDescription(desc) end
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)

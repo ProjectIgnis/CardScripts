@@ -42,7 +42,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_HARPIE_LADY}
 function s.filter1(c)
-	return c:IsFaceup() and c:IsRace(RACE_WINDBEAST) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsRace(RACE_WINGEDBEAST) and c:IsAbleToHand()
 end
 function s.filter2(c)
 	return c:IsFaceup() and c:IsAbleToHand()
@@ -72,7 +72,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.thfilter(c)
-	return c:IsAttackBelow(1500) and c:IsRace(RACE_WINDBEAST) and c:GetLevel()==4 and c:IsAbleToHand()
+	return c:IsAttackBelow(1500) and c:IsRace(RACE_WINGEDBEAST) and c:GetLevel()==4 and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

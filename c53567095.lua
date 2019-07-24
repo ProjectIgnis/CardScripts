@@ -28,7 +28,7 @@ function s.spcheck(sg,tp,exg,dg)
 	return #dg-a>=2
 end
 function s.cfilter(c)
-	return c:IsRace(RACE_WINDBEAST)
+	return c:IsRace(RACE_WINGEDBEAST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc~=e:GetHandler() end

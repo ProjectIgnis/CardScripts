@@ -33,7 +33,7 @@ function s.atkval(e,c)
     return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0x130)*300
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-    return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+    return (r&REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c,e,tp)
     return c:IsSetCard(0x130) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

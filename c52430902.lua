@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.filter1(c)
-	return c:IsFaceup() and c:IsRace(RACE_PSYCHO) and c:GetCode()~=id and c:IsAbleToChangeControler()
+	return c:IsFaceup() and c:IsRace(RACE_PSYCHIC) and c:GetCode()~=id and c:IsAbleToChangeControler()
 end
 function s.filter2(c)
 	return c:IsFaceup() and c:IsAbleToChangeControler()

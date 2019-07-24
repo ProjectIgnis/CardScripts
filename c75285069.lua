@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
-	local e1=aux.AddNormalSummonProcedure(c,true,true,3,3,SUMMON_TYPE_ADVANCE+1,aux.Stringid(id,0))
+	local e1=aux.AddNormalSummonProcedure(c,true,true,3,3,SUMMON_TYPE_TRIBUTE+1,aux.Stringid(id,0))
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_ADVANCE+1
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_TRIBUTE+1
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

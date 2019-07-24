@@ -32,7 +32,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and eg:GetFirst():IsSummonType(SUMMON_TYPE_ADVANCE)
+	return ep==tp and eg:GetFirst():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.filter(c,code)
 	return (c:GetAttack()==2400 or c:GetAttack()==2800) and c:GetDefense()==1000 and c:GetCode()~=code and c:IsAbleToHand()

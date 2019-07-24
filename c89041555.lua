@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and eg:GetFirst():IsSummonType(SUMMON_TYPE_ADVANCE)
+	return tp~=Duel.GetTurnPlayer() and eg:GetFirst():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.filter(c)
 	return c:IsAttackPos()

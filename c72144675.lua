@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.tlimit(e,c)
-	return not c:IsRace(RACE_WINDBEAST)
+	return not c:IsRace(RACE_WINGEDBEAST)
 end
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_TRAP)

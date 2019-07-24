@@ -28,7 +28,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,800)
 end
 function s.filter(c,e,sp)
-	return c:IsRace(RACE_PSYCHO) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+	return c:IsRace(RACE_PSYCHIC) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

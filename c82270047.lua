@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e8)
 end
 function s.filter(c)
-	return c:IsSetCard(0xd2) and c:IsRace(RACE_PSYCHO)
+	return c:IsSetCard(0xd2) and c:IsRace(RACE_PSYCHIC)
 end
 function s.dircon(e)
 	return e:GetHandler():GetEquipTarget():GetAttackAnnouncedCount()>0

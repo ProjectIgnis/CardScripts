@@ -27,7 +27,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local mg=tc:GetMaterial()
-	return tc:IsSummonType(SUMMON_TYPE_ADVANCE) and tc:IsSummonPlayer(tp) and mg 
+	return tc:IsSummonType(SUMMON_TYPE_TRIBUTE) and tc:IsSummonPlayer(tp) and mg 
 		and mg:FilterCount(s.cfilter,nil)>=2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x29) and c:IsRace(RACE_WINDBEAST)
+	return c:IsFaceup() and c:IsSetCard(0x29) and c:IsRace(RACE_WINGEDBEAST)
 end
 function s.repcon(e)
 	local c=e:GetHandler()

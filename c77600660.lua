@@ -17,13 +17,13 @@ function s.initial_effect(c)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local val=Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_GRAVE,0,nil,RACE_PSYCHO)*500
+	local val=Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_GRAVE,0,nil,RACE_PSYCHIC)*500
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(val)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,val)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
-	local val=Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_GRAVE,0,nil,RACE_PSYCHO)*500
+	local val=Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_GRAVE,0,nil,RACE_PSYCHIC)*500
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	Duel.Recover(p,val,REASON_EFFECT)
 end

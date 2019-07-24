@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
-		and (c:GetPreviousRaceOnField()&RACE_WINDBEAST)~=0
+		and (c:GetPreviousRaceOnField()&RACE_WINGEDBEAST)~=0
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

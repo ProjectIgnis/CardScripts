@@ -32,10 +32,10 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 function s.counterfilter(c)
-	return c:IsRace(RACE_PSYCHO) and c:IsType(TYPE_XYZ) or c:IsSetCard(0x76)
+	return c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_XYZ) or c:IsSetCard(0x76)
 end
 function s.etarget(e,c)
-	return c:IsRace(RACE_PSYCHO) and c:IsType(TYPE_XYZ)
+	return c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_XYZ)
 end
 function s.evalue(e,re,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
@@ -67,7 +67,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.splimit(e,c)
-	return not (c:IsRace(RACE_PSYCHO) and c:IsType(TYPE_XYZ)) and not c:IsSetCard(0x76)
+	return not (c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_XYZ)) and not c:IsSetCard(0x76)
 end
 function s.filter(c)
 	return c:IsSetCard(0x92) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(id) and c:IsAbleToHand()

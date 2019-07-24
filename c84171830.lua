@@ -49,7 +49,7 @@ function s.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA)
 end
 function s.cfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_ADVANCE)
+	return c:IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.discon(e)
 	local tp=e:GetHandlerPlayer()
@@ -63,7 +63,7 @@ function s.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and d and d:IsControler(1-tp)
 end
 function s.atktg(e,c)
-	return c==Duel.GetAttacker() and c:IsSummonType(SUMMON_TYPE_ADVANCE)
+	return c==Duel.GetAttacker() and c:IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.filter(c)
 	return c:GetAttack()==2800 and c:GetDefense()==1000
@@ -88,7 +88,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg and eg:IsExists(function(c) return c:IsSummonType(SUMMON_TYPE_ADVANCE)
+	return eg and eg:IsExists(function(c) return c:IsSummonType(SUMMON_TYPE_TRIBUTE)
 		and c:IsReason(REASON_FUSION) end,1,nil)
 end
 function s.effop2(e,tp,eg,ep,ev,re,r,rp)

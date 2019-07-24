@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.regcfilter(c,tp)
-	return c:IsRace(RACE_PSYCHO) and c:IsFaceup() and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
+	return c:IsRace(RACE_PSYCHIC) and c:IsFaceup() and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.regcfilter,1,e:GetHandler(),tp)

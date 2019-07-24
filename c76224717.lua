@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if tc:IsSummonType(SUMMON_TYPE_ADVANCE) then
+	if tc:IsSummonType(SUMMON_TYPE_TRIBUTE) then
 		local mg=tc:GetMaterial()
 		if mg then
 			s[ep]=s[ep]+mg:FilterCount(Card.IsType,nil,TYPE_MONSTER)

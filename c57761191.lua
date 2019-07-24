@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetValue(POS_FACEUP)
 	c:RegisterEffect(e1)
 	--summon with 3 tribute
-	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3,SUMMON_TYPE_ADVANCE,aux.Stringid(id,0))
+	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0))
 	local e2=aux.AddNormalSetProcedure(c)
 	--tribute check
 	local e4=Effect.CreateEffect(c)
@@ -51,7 +51,7 @@ function s.valcheck(e,c)
 	e:SetLabel(typ)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -85,7 +85,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return ((rp==1-tp) or (r&REASON_BATTLE)>0) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsSummonType(SUMMON_TYPE_ADVANCE)
+		and c:IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_EARTH | ATTRIBUTE_WATER | ATTRIBUTE_FIRE | ATTRIBUTE_WIND) 

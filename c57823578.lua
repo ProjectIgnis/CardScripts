@@ -51,12 +51,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.atkval(tp)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_WINDBEAST),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_WINGEDBEAST),tp,LOCATION_MZONE,0,nil)
 	local _,val=g:GetMaxGroup(Card.GetAttack)
 	return val
 end
 function s.atlimit(e,c)
-    return c:IsFaceup() and c:IsRace(RACE_WINDBEAST) and c:GetAttack()<s.atkval(e:GetHandlerPlayer())
+    return c:IsFaceup() and c:IsRace(RACE_WINGEDBEAST) and c:GetAttack()<s.atkval(e:GetHandlerPlayer())
 end
 function s.evalue(e,re,rp)
 	return rp~=e:GetHandlerPlayer()

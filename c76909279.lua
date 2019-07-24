@@ -11,5 +11,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,c)
-	return c:IsRace(RACE_BEASTWARRIOR+RACE_WINDBEAST+RACE_BEAST)
+	return c:IsRace(RACE_BEASTWARRIOR+RACE_WINGEDBEAST+RACE_BEAST)
 end

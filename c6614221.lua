@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e0:SetCode(EFFECT_SUMMON_PROC)
 	e0:SetCondition(s.ttcon)
 	e0:SetOperation(s.ttop)
-	e0:SetValue(SUMMON_TYPE_ADVANCE)
+	e0:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e0)
 	--summon with no tribute
 	local e1=Effect.CreateEffect(c)

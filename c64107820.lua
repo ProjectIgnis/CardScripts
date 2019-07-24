@@ -14,13 +14,13 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_PSYCHO))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_PSYCHIC))
 	e2:SetValue(s.val)
 	c:RegisterEffect(e2)
 	e1:SetLabelObject(e2)
 end
 function s.cfilter(c)
-	return c:IsRace(RACE_PSYCHO) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsRace(RACE_PSYCHIC) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end

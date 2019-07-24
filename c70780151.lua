@@ -51,7 +51,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not tg or #tg~=1 or not tg:GetFirst():IsRace(RACE_PSYCHO) then return false end
+	if not tg or #tg~=1 or not tg:GetFirst():IsRace(RACE_PSYCHIC) then return false end
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)

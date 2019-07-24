@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.atktarget(e,c)
-	return not c:IsRace(RACE_PSYCHO) and c:IsAttackBelow(2000)
+	return not c:IsRace(RACE_PSYCHIC) and c:IsAttackBelow(2000)
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

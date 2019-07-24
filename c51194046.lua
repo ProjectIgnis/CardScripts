@@ -55,7 +55,7 @@ function s.splimit(e,c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if tc:IsSummonType(SUMMON_TYPE_ADVANCE) then
+	if tc:IsSummonType(SUMMON_TYPE_TRIBUTE) then
 		local p=tc:GetSummonPlayer()
 		s[p]=s[p]+e:GetLabelObject():GetLabel()
 	end

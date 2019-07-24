@@ -1,0 +1,53 @@
+--Training Field
+local s,id=GetID()
+function s.initial_effect(c)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e1)
+	--attack cost
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetOperation(s.atop)
+	c:RegisterEffect(e2)
+	--
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetCode(EFFECT_SELF_ATTACK)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetTargetRange(1,1)
+	c:RegisterEffect(e3)
+	--
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetCode(id)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e4:SetTargetRange(1,1)
+	c:RegisterEffect(e4)
+end
+function s.atop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local a=Duel.GetAttacker()
+	local d=Duel.GetAttackTarget()
+	if a and d and a:GetControler()==d:GetControler() and Duel.IsPlayerAffectedByEffect(tp,id) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetValue(300)
+		a:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+		e2:SetValue(1)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+		a:RegisterEffect(e2)
+		local e3=e2:Clone()
+		d:RegisterEffect(e3)
+	end
+end

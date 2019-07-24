@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
-	return eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_DEVINE),1,nil,tp)
+	return eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_DIVINE),1,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_DEVINE))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_DIVINE))
 	Duel.RegisterEffect(e3,tp)
 end
 function s.resetop(e,tp,eg,ep,ev,re,r,rp)

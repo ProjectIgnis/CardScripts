@@ -16,7 +16,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
 function s.filter(c)
-	return c:IsType(TYPE_DUAL) and c:IsAbleToGrave()
+	return c:IsType(TYPE_GEMINI) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

@@ -27,7 +27,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_DUAL)
+	return c:IsFaceup() and c:IsType(TYPE_GEMINI)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -62,7 +62,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqlimit(e,c)
-	return c:GetControler()==e:GetOwnerPlayer() and c:IsType(TYPE_DUAL)
+	return c:GetControler()==e:GetOwnerPlayer() and c:IsType(TYPE_GEMINI)
 end
 function s.dacon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -73,7 +73,7 @@ function s.dacon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_DESTROY) and ec~=nil
 end
 function s.dafilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_DUAL) and not c:IsDualState()
+	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and not c:IsDualState()
 end
 function s.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.dafilter(chkc) end

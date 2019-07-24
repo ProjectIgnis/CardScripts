@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_DUAL))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_GEMINI))
 	c:RegisterEffect(e3)
 	--destroy
 	local e4=Effect.CreateEffect(c)
@@ -42,7 +42,7 @@ function s.ntcon(e,c,minc)
 	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.nttg(e,c)
-	return c:IsLevelAbove(5) and c:IsType(TYPE_DUAL)
+	return c:IsLevelAbove(5) and c:IsType(TYPE_GEMINI)
 end
 function s.rmfilter(c)
 	return c:IsDualState() and c:IsAbleToRemove()

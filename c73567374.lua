@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_DUAL) and not c:IsDualState()
+	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and not c:IsDualState()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
@@ -19,7 +19,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(g)
 end
 function s.filter2(c,e)
-	return c:IsFaceup() and c:IsType(TYPE_DUAL) and not c:IsDualState() and c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e)
+	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and not c:IsDualState() and c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

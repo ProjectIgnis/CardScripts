@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
-	if chk==0 then return tc:IsType(TYPE_DUAL) and tc~=e:GetHandler() end
+	if chk==0 then return tc:IsType(TYPE_GEMINI) and tc~=e:GetHandler() end
 	Duel.SetTargetCard(tc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_DUAL) 
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_GEMINI) 
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT) and c:GetFlagEffect(id)==0
 end
 function s.desfilter(c,e,tp)

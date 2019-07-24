@@ -28,7 +28,7 @@ function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0
 end
 function s.filter(c)
-	return c:IsType(TYPE_DUAL) and (c:IsSummonable(true,nil) or c:IsMSetable(true,nil))
+	return c:IsType(TYPE_GEMINI) and (c:IsSummonable(true,nil) or c:IsMSetable(true,nil))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()

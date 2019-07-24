@@ -28,7 +28,7 @@ function s.spcheck(sg,tp,exg,dg)
 	return #dg-a>=1
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsLevel(4) and c:IsType(TYPE_DUAL)
+	return c:IsFaceup() and c:IsLevel(4) and c:IsType(TYPE_GEMINI)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc~=e:GetHandler() end

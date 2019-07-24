@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetCondition(aux.IsDualState)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_DUAL))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_GEMINI))
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.costfilter(c)
-	return c:IsType(TYPE_DUAL) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsType(TYPE_GEMINI) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end

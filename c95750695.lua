@@ -1,7 +1,7 @@
 --スーペルヴィス
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsType,TYPE_DUAL))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsType,TYPE_GEMINI))
 	--duel status
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)

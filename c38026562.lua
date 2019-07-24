@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_DUAL),8,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_GEMINI),8,2)
 	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetCondition(s.con)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_DUAL))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_GEMINI))
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
 	--to grave
@@ -52,7 +52,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_DUAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_GEMINI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end
@@ -72,10 +72,10 @@ function s.con(e)
 	return e:GetHandler():GetOverlayCount()>0
 end
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsType(TYPE_DUAL)
+	return c:IsFaceup() and c:IsType(TYPE_GEMINI)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsType,1,nil,TYPE_DUAL)
+	return eg:IsExists(Card.IsType,1,nil,TYPE_GEMINI)
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

@@ -15,14 +15,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:IsType(TYPE_DUAL) and c:IsAbleToGrave()
+	return c:IsType(TYPE_GEMINI) and c:IsAbleToGrave()
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,c)
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_DUAL) and c:IsAbleToGrave()
+	return c:IsType(TYPE_GEMINI) and c:IsAbleToGrave()
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_DUAL) and c:IsAbleToHand()
+	return c:IsType(TYPE_GEMINI) and c:IsAbleToHand()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp) end

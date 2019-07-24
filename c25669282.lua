@@ -67,7 +67,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and aux.exccon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter3(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_DUAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.spfilter3(chkc,e,tp) end

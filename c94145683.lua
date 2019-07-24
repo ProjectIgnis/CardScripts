@@ -18,12 +18,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.filter1(c,e,tp,ft)
 	local lv=c:GetLevel()
-	return lv>0 and c:IsFaceup() and c:IsRace(RACE_WINDBEAST)
+	return lv>0 and c:IsFaceup() and c:IsRace(RACE_WINGEDBEAST)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,lv,e,tp)
 end
 function s.filter2(c,lv,e,tp)
-	return c:IsRace(RACE_WINDBEAST) and c:GetLevel()==lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_WINGEDBEAST) and c:GetLevel()==lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

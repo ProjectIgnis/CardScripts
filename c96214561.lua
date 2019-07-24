@@ -73,5 +73,5 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.sslimit(e,c)
-	return not c:IsRace(RACE_WINDBEAST)
+	return not c:IsRace(RACE_WINGEDBEAST)
 end

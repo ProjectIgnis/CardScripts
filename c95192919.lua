@@ -82,7 +82,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function s.thcfilter(c,tp)
-    return c:IsPreviousControler(tp) and c:IsRace(RACE_WINDBEAST) and c:IsReason(REASON_BATTLE)
+    return c:IsPreviousControler(tp) and c:IsRace(RACE_WINGEDBEAST) and c:IsReason(REASON_BATTLE)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(s.thcfilter,1,e:GetHandler(),tp)

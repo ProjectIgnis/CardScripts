@@ -22,7 +22,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_BEAST+RACE_WINDBEAST+RACE_BEASTWARRIOR)
+	return c:IsFaceup() and c:IsRace(RACE_BEAST+RACE_WINGEDBEAST+RACE_BEASTWARRIOR)
 		and Duel.IsExistingTarget(aux.TRUE,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

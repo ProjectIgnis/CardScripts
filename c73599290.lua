@@ -1,4 +1,5 @@
 --ソウルドレイン
+--Soul Drain
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,5 +24,5 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.aclimit(e,re,tp)
 	local loc=re:GetActivateLocation()
-	return (loc==LOCATION_GRAVE or loc==LOCATION_REMOVED) and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return (loc==LOCATION_GRAVE or loc==LOCATION_REMOVED) and re:IsActiveType(TYPE_MONSTER)
 end

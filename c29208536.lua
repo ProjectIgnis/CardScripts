@@ -1,4 +1,5 @@
 --No.45 滅亡の予言者 クランブル・ロゴス
+--Number 45: Crumble Logos the Prophet of Demolition
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -69,5 +70,5 @@ function s.aclimit(e,re,tp)
 		table.insert(cg,tc:GetCode())
 		tc=g:GetNext()
 	end
-	return re:GetHandler():IsCode(table.unpack(cg)) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:GetHandler():IsCode(table.unpack(cg))
 end

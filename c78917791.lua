@@ -1,5 +1,5 @@
 --天威の龍仙女
---Tianwei Dragon Sage
+--Dragon Immortal of Tenyi
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -61,7 +61,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
-	return (re:GetHandler():IsPreviousLocation(LOCATION_EXTRA) and not re:GetHandler():IsSetCard(0x12c)) and not re:GetHandler():IsImmuneToEffect(e)
+	local rc=re:GetHandler()
+	return re:IsActiveType(TYPE_MONSTER) and rc:IsOnField()
+		and rc:IsSummonLocation(LOCATION_EXTRA) and not rc:IsSetCard(0x12c)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()

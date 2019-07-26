@@ -1,4 +1,5 @@
 --電子光虫－コクーンデンサ
+--Digital Bug Cocoondenser
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyzlimit
@@ -69,7 +70,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(0,1)
-	e1:SetValue(s.aclimit)
+	e1:SetValue(1)
 	e1:SetCondition(s.actcon)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
@@ -81,9 +82,6 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
-end
-function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
 end
 function s.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget() and Duel.GetAttackTarget():IsPosition(POS_DEFENSE)

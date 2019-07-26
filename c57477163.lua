@@ -1,9 +1,10 @@
 --デストーイ・チェーン・シープ
+--Frightfur Sheep
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,61173621,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9))
+	Fusion.AddProcMix(c,true,true,61173621,aux.FilterBoolFunction(Card.IsFusionSetCard,0xa9))
 	--actlimit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(0,1)
-	e1:SetValue(s.aclimit)
+	e1:SetValue(1)
 	e1:SetCondition(s.actcon)
 	c:RegisterEffect(e1)
 	--spsummon
@@ -27,16 +28,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.material_setcode={0xa9,0xc3}
-function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
-end
 function s.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_BATTLE)
-		or rp~=tp and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp)
+		or rp~=tp and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

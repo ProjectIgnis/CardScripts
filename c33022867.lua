@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetTargetRange(0,1)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.actcon)
-	e3:SetValue(s.actlimit)
+	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
 function s.mzfilter(c,tp)
@@ -74,13 +74,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK)
 	e1:SetValue(atk)
-	e1:SetReset(RESET_EVENT+0xff0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 	c:RegisterEffect(e1)
 end
 function s.actcon(e)
 	local ph=Duel.GetCurrentPhase()
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
-end
-function s.actlimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
 end

@@ -1,4 +1,5 @@
 --竜破壊の剣士－バスター・ブレイダー
+--Buster Blader, the Dragon Destroyer Swordsman
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -62,5 +63,5 @@ function s.target(e,c)
 	return c:IsRace(RACE_DRAGON)
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsRace(RACE_DRAGON) and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:GetHandler():IsRace(RACE_DRAGON) and re:IsActiveType(TYPE_MONSTER)
 end

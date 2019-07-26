@@ -1,6 +1,6 @@
 --魅幽鳥
---Mikuratori
---
+--Ghost Bird of Bewitchment
+--Script by nekrozar
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -71,6 +71,5 @@ function s.actcon(e)
 end
 function s.aclimit(e,re,tp)
 	local tc=re:GetHandler()
-	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and e:GetHandler():GetColumnGroup():IsContains(tc) and not tc:IsImmuneToEffect(e)
+	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and e:GetHandler():GetColumnGroup():IsContains(tc)
 end
-

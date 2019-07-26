@@ -1,3 +1,4 @@
+--F.A.ターボチャージャー
 --F.A. Turbo Charger
 --Scripted by Eerie Code
 local s,id=GetID()
@@ -99,7 +100,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_MONSTER)
 end
 function s.actcon(e)
 	if not e:GetHandler():IsLevelAbove(7) then return false end

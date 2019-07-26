@@ -1,9 +1,10 @@
 --古代の機械混沌巨人
+--Chaos Ancient Gear Giant
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x7),4)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunction(Card.IsFusionSetCard,0x7),4)
 	--special summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -50,5 +51,5 @@ function s.actcon(e)
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function s.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_MONSTER)
 end

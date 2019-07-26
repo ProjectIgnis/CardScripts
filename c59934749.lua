@@ -1,5 +1,5 @@
 --聖騎士の追想　イゾルデ
---Isolde, Fleeting Memory of the Noble Knights
+--Isolde, Two Tales of the Noble Knights
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetCountLimit(1,100223052)
+	e2:SetCountLimit(1,id+1)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCost(s.spcost)
 	e2:SetTarget(s.sptg)
@@ -46,7 +46,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	if Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,tc)
-		--if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_CANNOT_SUMMON)
@@ -72,7 +71,7 @@ function s.sumlimit(e,c)
 	return c:IsCode(e:GetLabel())
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsCode(e:GetLabel()) and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:GetHandler():IsCode(e:GetLabel()) and re:IsActiveType(TYPE_MONSTER)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
@@ -132,4 +131,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc then Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end
 end
-

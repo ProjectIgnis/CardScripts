@@ -1,4 +1,5 @@
 --アルティメット・バースト
+--Neutron Blast
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -41,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 		e2:SetTargetRange(0,1)
 		e2:SetLabelObject(tc)
-		e2:SetValue(s.aclimit)
+		e2:SetValue(1)
 		e2:SetCondition(s.actcon)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
@@ -49,7 +50,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.actcon(e)
 	return Duel.GetAttacker()==e:GetLabelObject()
-end
-function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
 end

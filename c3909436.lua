@@ -1,3 +1,4 @@
+--ヴェンデット・バスタード
 --Vendread Battlelord
 --Scripted by Eerie Code
 local s,id=GetID()
@@ -61,13 +62,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit1(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_MONSTER)
 end
 function s.aclimit2(e,re,tp)
-	return re:IsActiveType(TYPE_SPELL) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_SPELL)
 end
 function s.aclimit3(e,re,tp)
-	return re:IsActiveType(TYPE_TRAP) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_TRAP)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

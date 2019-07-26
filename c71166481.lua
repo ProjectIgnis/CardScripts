@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.chcon)
 	e1:SetCost(s.chcost)
+	e1:SetTarget(s.chtg)
 	e1:SetOperation(s.chop)
 	c:RegisterEffect(e1)
 	--attach
@@ -34,6 +35,10 @@ end
 function s.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
+end
+function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
+		and Duel.IsPlayerCanDraw(1-tp,1) end
 end
 function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()

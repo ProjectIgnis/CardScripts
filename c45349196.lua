@@ -1,4 +1,5 @@
 --悪魔竜ブラック・デーモンズ・ドラゴン
+--Archfiend Black Skull Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
 	e1:SetCondition(s.accon)
-	e1:SetValue(s.aclimit)
+	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
@@ -30,16 +31,13 @@ function s.initial_effect(c)
 end
 s.material_setcode={0x3b,0x45}
 function s.mfilter1(c,fc,sumtype,tp)
-	return c:IsSetCard(0x45,fc,sumtype,tp) and c:IsType(TYPE_NORMAL,fc,sumtype,tp) and c:GetLevel()==6
+	return c:IsFusionSetCard(0x45) and c:IsType(TYPE_NORMAL,fc,sumtype,tp) and c:GetLevel()==6
 end
 function s.mfilter2(c,fc,sumtype,tp)
-	return c:IsSetCard(0x3b,fc,sumtype,tp) and c:IsType(TYPE_NORMAL,fc,sumtype,tp)
+	return c:IsFusionSetCard(0x3b) and c:IsType(TYPE_NORMAL,fc,sumtype,tp)
 end
 function s.accon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
-end
-function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

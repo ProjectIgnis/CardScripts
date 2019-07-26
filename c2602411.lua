@@ -1,4 +1,5 @@
 --破壊剣－ウィザードバスターブレード
+--Wizard Buster Destruction Sword
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -64,7 +65,7 @@ function s.eqlimit(e,c)
 end
 function s.aclimit(e,re,tp)
 	local loc=re:GetActivateLocation()
-	return loc==LOCATION_GRAVE and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return loc==LOCATION_GRAVE and re:IsActiveType(TYPE_MONSTER)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

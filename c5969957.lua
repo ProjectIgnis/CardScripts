@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsAttribute(ATTRIBUTE_DARK) 
+	return c:IsPreviousControler(tp) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsSummonLocation(LOCATION_EXTRA) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

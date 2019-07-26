@@ -1,4 +1,5 @@
 --古代の機械熱核竜
+--Ancient Gear Reactor Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--mat check
@@ -71,7 +72,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit(e,re,tp)
-	return (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsActiveType(TYPE_MONSTER)) and not re:GetHandler():IsImmuneToEffect(e)
+	return (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsActiveType(TYPE_MONSTER))
 end
 function s.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler()

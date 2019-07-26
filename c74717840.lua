@@ -1,4 +1,5 @@
 --ランドオルスのヒカリゴケ
+--Landoise's Luminous Moss
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,5 +27,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_MONSTER)
 end

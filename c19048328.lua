@@ -1,4 +1,5 @@
 --幻竜星－チョウホウ
+--Chaofeng, Phantom of the Yang Zing
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -95,7 +96,6 @@ end
 function s.aclimit(e,re,tp)
 	local att=e:GetLabelObject():GetLabel()
 	return re:IsActiveType(TYPE_MONSTER) and (att&re:GetHandler():GetOriginalAttribute())~=0
-		and not re:GetHandler():IsImmuneToEffect(e)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -119,7 +119,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,p)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetOriginalAttribute()~=0
-		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(p)
+		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==p
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,1-tp)

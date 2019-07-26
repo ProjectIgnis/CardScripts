@@ -1,4 +1,5 @@
 --EM五虹の魔術師
+--Performapal Five-Rainbow Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
@@ -78,7 +79,7 @@ end
 function s.limval(e,re,rp)
 	local rc=re:GetHandler()
 	local tp=rc:GetControler()
-	return rc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and not rc:IsImmuneToEffect(e)
+	return rc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER)
 		and Duel.GetMatchingGroupCount(s.countfilter,tp,LOCATION_SZONE,0,nil)==0
 end
 function s.atkcon0(e)

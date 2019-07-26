@@ -1,4 +1,5 @@
 --威光魔人
+--Majesty's Fiend
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -18,5 +19,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_MONSTER)
 end

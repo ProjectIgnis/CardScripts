@@ -1,4 +1,5 @@
 --禁止令
+--Prohibition
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.bantg(e,c)
-	return c:IsCode(e:GetLabelObject():GetLabel()) and (not c:IsOnField() or c:GetRealFieldID()>e:GetFieldID())
+	return c:IsOriginalCodeRule(e:GetLabelObject():GetLabel()) and (not c:IsOnField() or c:GetRealFieldID()>e:GetFieldID())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

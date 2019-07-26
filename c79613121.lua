@@ -46,7 +46,7 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_MONSTER)
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToHand()

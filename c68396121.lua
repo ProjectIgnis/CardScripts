@@ -67,7 +67,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsOnField() and not re:GetHandler():IsImmuneToEffect(e)
+	return re:GetHandler():IsOnField()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
@@ -92,4 +92,3 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-

@@ -1,4 +1,5 @@
 --ダイナミックP
+--Dinomic Powerload
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,12 +26,9 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetTargetRange(0,1)
-	e4:SetValue(s.aclimit)
+	e4:SetValue(1)
 	e4:SetCondition(s.actcon)
 	c:RegisterEffect(e4)
-end
-function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
 end
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xd8) and c:IsControler(tp)

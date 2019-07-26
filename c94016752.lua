@@ -1,5 +1,5 @@
 --深淵の宣告者
---Abyssal Adjudicator
+--Herald of the Abyss
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -53,5 +53,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re,tp)
 	local tc=e:GetLabelObject()
-	return re:GetHandler():IsCode(tc:GetCode()) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:GetHandler():IsCode(tc:GetCode()) and re:IsActiveType(TYPE_MONSTER)
 end

@@ -1,4 +1,5 @@
 --古代の歯車機械
+--Ancient Gear Gadget
 local s,id=GetID()
 function s.initial_effect(c)
 	--declare card
@@ -53,7 +54,6 @@ end
 function s.actlimit(e,re,tp)
 	local ct=e:GetLabel()
 	return re:IsActiveType(ct) and (ct==TYPE_MONSTER or re:IsHasType(EFFECT_TYPE_ACTIVATE))
-		and not re:GetHandler():IsImmuneToEffect(e)
 end
 function s.actcon(e)
 	local tc=Duel.GetAttacker()
@@ -65,7 +65,7 @@ function s.nametg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local code=e:GetHandler():GetCode()
 	--c:IsSetCard(0x51) and not c:IsCode(code)
 	s.announce_filter={0x51,OPCODE_ISSETCARD,code,OPCODE_ISCODE,OPCODE_NOT,OPCODE_AND}
-	local ac=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
+	local ac=Duel.AnnounceCardFilter(tp,table.unpack(s.announce_filter))
 	Duel.SetTargetParam(ac)
 	Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,ANNOUNCE_CARD_FILTER)
 end

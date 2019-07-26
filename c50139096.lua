@@ -89,13 +89,10 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
 	e1:SetCondition(s.actlimitcon)
-	e1:SetValue(s.actlimit)
+	e1:SetValue(1)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.actlimitcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE)
-end
-function s.actlimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
 end

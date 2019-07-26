@@ -1,4 +1,5 @@
 --トラミッド・キングゴレム
+--Triamid Kingolem
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(0,1)
-	e3:SetValue(s.aclimit)
+	e3:SetValue(1)
 	e3:SetCondition(s.actcon)
 	c:RegisterEffect(e3)
 	--spsummon
@@ -39,9 +40,6 @@ function s.initial_effect(c)
 end
 function s.actfilter(c,tp)
 	return c and c:IsFaceup() and c:IsSetCard(0xe2) and c:IsType(TYPE_MONSTER) and c:IsControler(tp)
-end
-function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
 end
 function s.actcon(e)
 	local tp=e:GetHandlerPlayer()

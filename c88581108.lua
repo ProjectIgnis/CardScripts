@@ -1,4 +1,5 @@
 --真竜皇V.F.D
+--True King of All Calamities
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -64,7 +65,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re,tp)
 	local c=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and c:IsAttribute(e:GetLabel()) and not c:IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_MONSTER) and c:IsAttribute(e:GetLabel())
 end
 function s.atktarget(e,c)
 	return c:IsAttribute(e:GetLabel())

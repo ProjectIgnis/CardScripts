@@ -152,9 +152,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit1(e,re,tp)
 	local rc=re:GetHandler()
-	return rc and rc:IsLocation(LOCATION_SZONE) and not rc:IsImmuneToEffect(e)
+	return rc and rc:IsLocation(LOCATION_SZONE)
 end
 function s.aclimit2(e,re,tp)
 	local rc=re:GetHandler()
-	return rc and rc:IsLocation(LOCATION_HAND+LOCATION_GRAVE) and not rc:IsImmuneToEffect(e)
+	return rc and rc:IsLocation(LOCATION_HAND+LOCATION_GRAVE)
 end

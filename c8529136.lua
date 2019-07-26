@@ -1,4 +1,5 @@
 --スクラップ・フィスト
+--Scrap Fist
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -37,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetTargetRange(0,1)
 			e1:SetCondition(s.actcon)
-			e1:SetValue(s.aclimit)
+			e1:SetValue(1)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
@@ -74,9 +75,6 @@ function s.actcon(e)
 	local c=e:GetHandler()
 	return (Duel.GetAttacker()==c or Duel.GetAttackTarget()==c) and c:GetBattleTarget()~=nil
 		and e:GetOwnerPlayer()==e:GetHandlerPlayer()
-end
-function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
 end
 function s.effcon(e)
 	return e:GetOwnerPlayer()==e:GetHandlerPlayer()

@@ -1,4 +1,5 @@
 --修禅僧 ゲンドウ
+--Gendo the Ascetic Monk
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot activate
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 end
 function s.aclimit(e,re,tp)
 	local tc=re:GetHandler()
-	return tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() and tc:IsAttackPos() and re:IsActiveType(TYPE_MONSTER) and not tc:IsImmuneToEffect(e)
+	return tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() and tc:IsAttackPos() and re:IsActiveType(TYPE_MONSTER)
 end
 function s.tgcon(e)
 	return e:GetHandler():IsDefensePos()

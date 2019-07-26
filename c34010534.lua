@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetTargetRange(0,1)
-	e3:SetValue(s.aclimit)
+	e3:SetValue(1)
 	e3:SetCondition(s.actcon)
 	c:RegisterEffect(e3)
 end
@@ -57,9 +57,6 @@ end
 function s.splimit(e,c)
 	return not c:IsRace(RACE_CYBERSE) and c:IsLocation(LOCATION_EXTRA)
 end
-function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
-end
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x101) and c:IsControler(tp)
 end
@@ -69,4 +66,3 @@ function s.actcon(e)
 	local d=Duel.GetAttackTarget()
 	return (a and s.cfilter(a,tp)) or (d and s.cfilter(d,tp))
 end
-

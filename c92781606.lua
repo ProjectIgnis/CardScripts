@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x104),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x104),2,2)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetLabel(4)
 	e4:SetCondition(s.actcon)
-	e4:SetValue(s.actlimit)
+	e4:SetValue(1)
 	c:RegisterEffect(e4)
 	--direct attack
 	local e5=Effect.CreateEffect(c)
@@ -54,7 +54,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT)))
-		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
+		and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
 end
 function s.spfilter1(c,e,tp)
 	return c:IsSetCard(0x104) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
@@ -90,13 +90,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+function s.effilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x104)
+end
 function s.effcon(e)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x104),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)>=e:GetLabel()
+	return Duel.GetMatchingGroupCount(s.effilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)>=e:GetLabel()
 end
 function s.actcon(e)
 	local ph=Duel.GetCurrentPhase()
 	return s.effcon(e) and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
-end
-function s.actlimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
 end

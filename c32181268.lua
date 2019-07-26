@@ -1,4 +1,5 @@
 --天岩戸
+--Amano-Iwato
 local s,id=GetID()
 function s.initial_effect(c)
 	--spirit return
@@ -21,5 +22,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsType(TYPE_SPIRIT) and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return not re:GetHandler():IsType(TYPE_SPIRIT) and re:IsActiveType(TYPE_MONSTER)
 end

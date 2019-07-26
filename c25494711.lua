@@ -1,4 +1,5 @@
 --ブンボーグ009
+--Deskbot 009
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(0,1)
-	e2:SetValue(s.aclimit)
+	e2:SetValue(1)
 	e2:SetCondition(s.actcon)
 	c:RegisterEffect(e2)
 	--destroy replace
@@ -62,9 +63,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
-end
-function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
 end
 function s.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()

@@ -1,4 +1,5 @@
 --アロマージ－ローズマリー
+--Aromage Rosemary
 local s,id=GetID()
 function s.initial_effect(c)
 	--active limit
@@ -44,7 +45,7 @@ function s.accon(e)
 	return Duel.GetLP(tp)>Duel.GetLP(1-tp)
 end
 function s.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:IsActiveType(TYPE_MONSTER)
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp

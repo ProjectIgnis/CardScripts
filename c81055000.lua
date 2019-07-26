@@ -1,4 +1,5 @@
 --EMリターンタンタン
+--Performapal Handstandaccoon
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -52,7 +53,7 @@ function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re,tp)
 	local tc=e:GetLabelObject()
-	return re:GetHandler():IsCode(tc:GetCode()) and not re:GetHandler():IsImmuneToEffect(e)
+	return re:GetHandler():IsCode(tc:GetCode())
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsAbleToHand() end

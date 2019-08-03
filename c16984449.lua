@@ -1,4 +1,5 @@
 --炎妖蝶ウィルプス
+--Blazewing Butterfly
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.EnableDualAttribute(c)
@@ -33,7 +34,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)==1 then
+	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		tc:EnableDualState()
+		tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,64)
+		Duel.SpecialSummonComplete()
 	end
 end

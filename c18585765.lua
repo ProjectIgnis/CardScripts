@@ -49,13 +49,13 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local lg=s.GetPointedGroup(g)
 		if Duel.Destroy(g,REASON_EFFECT)~=0 then
 			local og=Duel.GetOperatedGroup()
-			g=lg:Filter(s.idfilter,nil,og)
+			g=lg:Filter(s.idfilter,c,og)
 			while #g>0 do
 				Duel.BreakEffect()
 				lg=s.GetPointedGroup(g)
 				Duel.Destroy(g,REASON_EFFECT)
 				local og=Duel.GetOperatedGroup()
-				g=lg:Filter(s.idfilter,nil,og)
+				g=lg:Filter(s.idfilter,c,og)
 			end
 		end
 	end

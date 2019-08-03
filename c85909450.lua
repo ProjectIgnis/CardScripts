@@ -1,4 +1,5 @@
 --ハーピィズペット幻竜
+--Harpie's Pet Phantasmal Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -22,11 +23,10 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e3:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x64))
 	e3:SetCondition(s.effcon)
+	e3:SetTarget(s.efftg)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
 	--remove material
@@ -45,6 +45,9 @@ function s.effcon(e)
 end
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x64)
+end
+function s.efftg(e,c)
+	return c:IsSetCard(0x64) and c:IsType(TYPE_MONSTER)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

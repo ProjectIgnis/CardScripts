@@ -1,4 +1,5 @@
 --ガガガザムライ
+--Gagaga Samurai
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -56,7 +57,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cbcon(e,tp,eg,ep,ev,re,r,rp)
 	local bt=eg:GetFirst()
-	return r~=REASON_REPLACE and bt~=e:GetHandler() and bt:IsControler(tp)
+	return r~=REASON_REPLACE and bt~=e:GetHandler() and bt:IsControler(tp) and e:GetHandler():IsPosition(POS_ATTACK)
 end
 function s.cbop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

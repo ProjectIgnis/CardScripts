@@ -42,7 +42,7 @@ function s.cfilter(c)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil) and not re:GetHandler():IsCode(id)
+	return eg:IsExists(s.cfilter,1,nil) and not (re and re:GetHandler():IsCode(id))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

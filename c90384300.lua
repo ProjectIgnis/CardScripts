@@ -1,5 +1,5 @@
 --極超辰醒
---Ultra Awakening
+--Hypernova Burst
 --scripted by andré
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.filter(c)
 	return c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToRemoveAsCost()
-		and not c:IsSummonableCard()
+		and not c:IsSummonableCard() and not c:IsType(TYPE_TOKEN)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_MZONE,0,2,nil) end

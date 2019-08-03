@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={38267552,1050355}
+s.listed_names={1050355,38267552}
 s.listed_series={0x131}
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end

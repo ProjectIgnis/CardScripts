@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.material_setcode=0x1017
-function s.tfilter(c,scard,sumtype,tp)
+function s.matfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,63977008) or c:IsHasEffect(20932152)
 end
 function s.postg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

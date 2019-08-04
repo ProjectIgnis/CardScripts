@@ -1,7 +1,5 @@
 --Sealed Duel
---rescripted by MLD
---credits to andre and AlphaKretin
---tag functionality by senpaizuri
+--credits to andre and AlphaKretin, tag functionality by senpaizuri, rescripted by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Pre-draw
@@ -11,7 +9,6 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetOperation(s.op)
 	Duel.RegisterEffect(e1,0)
-	--
 	local eb=Effect.CreateEffect(c)
 	eb:SetType(EFFECT_TYPE_SINGLE)
 	eb:SetCode(EFFECT_CANNOT_TO_DECK)

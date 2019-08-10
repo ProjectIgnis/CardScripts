@@ -250,3 +250,75 @@ function Effect.AddHakaiLinkEffect(e,f,of)
 	e:SetTarget(Auxiliary.HakaiLinkTarget(f,of))
 	e:SetOperation(Auxiliary.HakaiLinkOperation(f))
 end
+
+--Helpers to print hints for attribute-related cards such as Cynet Codec
+function Auxiliary.BitSplit(v)
+	local res={}
+	local i=0
+	while math.pow(2,i)<=v do
+		local p=math.pow(2,i)
+		if v & p~=0 then 
+			table.insert(res,p)
+		end
+		i=i+1
+	end
+	return pairs(res)
+end
+function Auxiliary.GetAttributeStrings(v)
+	local t = {
+		[ATTRIBUTE_EARTH] = 1010,
+		[ATTRIBUTE_WATER] = 1011,
+		[ATTRIBUTE_FIRE] = 1012,
+		[ATTRIBUTE_WIND] = 1013,
+		[ATTRIBUTE_LIGHT] = 1014,
+		[ATTRIBUTE_DARK] = 1015,
+		[ATTRIBUTE_DEVINE] = 1016
+	}
+	local res={}
+	local ct=0
+	for _,att in Auxiliary.BitSplit(v) do
+		if t[att] then
+			table.insert(res,t[att])
+			ct=ct+1
+		end
+	end
+	return pairs(res)
+end
+function Auxiliary.GetRaceStrings(v)
+	local t = {
+		[RACE_WARRIOR] = 1020,
+		[RACE_SPELLCASTER] = 1021,
+		[RACE_FAIRY] = 1022,
+		[RACE_FIEND] = 1023,
+		[RACE_ZOMBIE] = 1024,
+		[RACE_MACHINE] = 1025,
+		[RACE_AQUA] = 1026,
+		[RACE_PYRO] = 1027,
+		[RACE_ROCK] = 1028,
+		[RACE_WINDBEAST] = 1029,
+		[RACE_PLANT] = 1030,
+		[RACE_INSECT] = 1031,
+		[RACE_THUNDER] = 1032,
+		[RACE_DRAGON] = 1033,
+		[RACE_BEAST] = 1034,
+		[RACE_BEASTWARRIOR] = 1035,
+		[RACE_DINOSAUR] = 1036,
+		[RACE_FISH] = 1037,
+		[RACE_SEASERPENT] = 1038,
+		[RACE_REPTILE] = 1039,
+		[RACE_PSYCHO] = 1040,
+		[RACE_DEVINE] = 1041,
+		[RACE_CREATORGOD] = 1042,
+		[RACE_WYRM] = 1043,
+		[RACE_CYBERSE] = 1044
+	}
+	local res={}
+	local ct=0
+	for _,att in Auxiliary.BitSplit(v) do
+		if t[att] then
+			table.insert(res,t[att])
+			ct=ct+1
+		end
+	end
+	return pairs(res)
+end

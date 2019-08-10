@@ -71,26 +71,8 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabelObject(e:GetLabelObject())
 	c:RegisterEffect(e1)
 	local att=e:GetLabelObject():GetLabel()
-	if (att&ATTRIBUTE_EARTH)~=0 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
-	end
-	if (att&ATTRIBUTE_WATER)~=0 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
-	end
-	if (att&ATTRIBUTE_FIRE)~=0 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,4))
-	end
-	if (att&ATTRIBUTE_WIND)~=0 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,5))
-	end
-	if (att&ATTRIBUTE_LIGHT)~=0 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,6))
-	end
-	if (att&ATTRIBUTE_DARK)~=0 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,7))
-	end
-	if (att&ATTRIBUTE_DIVINE)~=0 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,8))
+	for _,str in aux.GetAttributeStrings(att) do
+		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,str)
 	end
 end
 function s.aclimit(e,re,tp)

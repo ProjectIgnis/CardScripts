@@ -183,7 +183,6 @@ function Auxiliary.HakaiLinkTarget(f,of)
 					e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 					e2:SetTargetRange(1,0)
 					e2:SetValue(Auxiliary.HakaiLinkExtra)
-					oc:RegisterEffect(e2)
 					local reg = oc:RegisterEffect(e2,true)
 					table.insert(oeff,e2)
 				end
@@ -250,7 +249,14 @@ function Effect.AddHakaiLinkEffect(e,f,of)
 	e:SetTarget(Auxiliary.HakaiLinkTarget(f,of))
 	e:SetOperation(Auxiliary.HakaiLinkOperation(f))
 end
-
+--Necessary for lighter handling of Dvergs, Generaid of Iron
+function Group.GetClass(g,f,...)
+    local t={}
+    for tc in aux.Next(g) do
+        table.insert(t,f(tc,table.unpack({...})))
+    end
+    return t
+end
 --Helpers to print hints for attribute-related cards such as Cynet Codec
 function Auxiliary.BitSplit(v)
 	local res={}

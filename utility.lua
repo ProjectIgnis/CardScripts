@@ -1269,22 +1269,26 @@ function Auxiliary.EnableCheckReincarnation(c)
 	end
 end
 function Auxiliary.ReincarnationCheckTarget(e,c)
-	return c:IsType(TYPE_FUSION+TYPE_RITUAL+TYPE_LINK)
+	return c:IsType(TYPE_FUSION+TYPE_RITUAL+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK)
 end
-function Auxiliary.ReincarnationRitualFilter(c,id,tp)
-	return c:IsCode(id) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+function Auxiliary.ReincarnationRitualFilter(c,rc,id,tp)
+	return c:IsSummonCode(rc,SUMMON_TYPE_RITUAL,tp,id) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 end
 function Auxiliary.ReincarnationCheckValue(e,c)
 	local g=c:GetMaterial()
 	local id=c:GetCode()
-	local tp=c:GetControler()
+	local tp=c:GetSummonPlayer()
 	local rc=false
 	if c:IsType(TYPE_LINK) then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_LINK,tp,id)
 	elseif c:IsType(TYPE_FUSION) then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_FUSION,tp,id)
 	elseif c:IsType(TYPE_RITUAL) then
-		rc=g:IsExists(aux.ReincarnationRitualFilter,1,nil,id,tp)
+		rc=g:IsExists(aux.ReincarnationRitualFilter,1,nil,c,id,tp)
+	elseif c:IsType(TYPE_SYNCHRO) then
+		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_SYNCHRO,tp,id)
+	elseif c:IsType(TYPE_XYZ) then
+		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_XYZ,tp,id)
 	end
 	if rc then
 		c:RegisterFlagEffect(CARD_SALAMANGREAT_SANCTUARY,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE-RESET_TEMP_REMOVE,0,1)

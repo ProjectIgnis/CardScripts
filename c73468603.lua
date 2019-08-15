@@ -1,4 +1,5 @@
 --盆回し
+--Set Rotation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,7 +26,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local tg2=g:Select(tp,1,1,nil)
 	Duel.SSet(tp,tg1)
-	Duel.SSet(1-tp,tg2)
+	Duel.SSet(tp,tg2,1-tp)
 	tg1:GetFirst():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	tg2:GetFirst():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	tg1:Merge(tg2)

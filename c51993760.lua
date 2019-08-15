@@ -1,5 +1,5 @@
 --抹殺の邪悪霊
---Dark Spirit of Denial
+--Dark Spirit of the Denial
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -65,6 +65,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 		local a=Duel.GetAttacker()
 		if a:IsAttackable() and not a:IsImmuneToEffect(e) then
+			local atk_trgt_chk=0
+			if Duel.GetAttackTarget() then atk_trgt_chk=1 end
 			Duel.CalculateDamage(a,tc)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)
@@ -74,11 +76,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(1)
 			Duel.RegisterEffect(e1,tp)
 			local e2=Effect.CreateEffect(e:GetHandler())
-			e2:SetDescription(aux.Stringid(70074904,0))
-			e2:SetCategory(CATEGORY_REMOVE)
 			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e2:SetCode(EVENT_BATTLED)
 			e2:SetLabelObject(e1)
+			e2:SetValue(atk_trgt_chk)
 			e2:SetOperation(s.resop)
 			Duel.RegisterEffect(e2,tp)
 		end
@@ -86,10 +87,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.resop(e,tp)
 	local c=e:GetHandler()
-	if not Duel.IsExistingMatchingCard(Card.IsStatus,tp,0,LOCATION_MZONE,1,nil,STATUS_BATTLE_DESTROYED) then
-		if c:GetFlagEffect(id)==0 then
-			c:RegisterFlagEffect(id,0,0,0)
-			return
+	if e:GetValue()==0 then
+		if not Duel.IsExistingMatchingCard(Card.IsStatus,tp,0,LOCATION_MZONE,1,nil,STATUS_BATTLE_DESTROYED) then
+			if c:GetFlagEffect(id)==0 then
+				c:RegisterFlagEffect(id,0,0,0)
+				return
+			end
 		end
 	end
 	c:ResetFlagEffect(id)

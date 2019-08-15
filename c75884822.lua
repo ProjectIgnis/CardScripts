@@ -47,7 +47,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
 		and Duel.SelectYesNo(tp,94) then
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,0)
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_HANDES)
 		e:SetOperation(s.thop)
 		s.thtg(e,tp,eg,ep,ev,re,r,rp,1)
@@ -63,10 +62,10 @@ end
 function s.thfilter(c)
 	return c:IsSetCard(0xf) and c:IsAbleToHand()
 end
-function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
+function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

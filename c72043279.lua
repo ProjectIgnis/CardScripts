@@ -1,5 +1,5 @@
--- 覇王城 
--- Supreme King Castle
+--覇王城 
+--Supreme King Castle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e3:SetRange(LOCATION_FZONE)
+	e3:SetCountLimit(1)
 	e3:SetCondition(s.atkcon)
 	e3:SetCost(s.atkcost)
 	e3:SetOperation(s.atkop)
@@ -38,7 +39,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return bc:IsFaceup() and bc:IsRace(RACE_FIEND)
 end
 function s.atkcfilter(c)
-	return c:IsSetCard(0x6008) and c:IsAbleToGraveAsCost()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x6008) and c:IsHasLevel() and c:IsAbleToGraveAsCost()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end

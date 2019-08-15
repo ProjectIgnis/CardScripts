@@ -1,8 +1,9 @@
 --リンクリボー
+--Linkuriboh
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,s.matfilter,1)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsLevel,1),1)
 	--atk to 0
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -19,14 +20,12 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetHintTiming(0,TIMING_BATTLE_START)
 	e2:SetCountLimit(1,id)
 	e2:SetCost(s.spcost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-end
-function s.matfilter(c)
-	return c:GetLevel()==1
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer() and aux.nzatk(Duel.GetAttacker())
@@ -47,8 +46,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,ft,tp)
-	return c:GetLevel()==1 and c:IsControler(tp)
-		and (ft>0 or c:GetSequence()<5)
+	return c:IsLevel(1) and (ft>0 or c:GetSequence()<5)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

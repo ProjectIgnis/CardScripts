@@ -1,4 +1,5 @@
 --リ・バウンド
+--Rebound
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate
@@ -27,24 +28,42 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasCategory(CATEGORY_NEGATE)
 		and Duel.GetChainInfo(ev-1,CHAININFO_TRIGGERING_EFFECT):IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TOHAND)
-	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-#tg>0
+	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-tg:GetCount()>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD+LOCATION_HAND)>0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_ONFIELD+LOCATION_HAND)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.NegateEffect(ev) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,1,nil)
-	if #g~=0 then
-		Duel.SendtoGrave(g,REASON_EFFECT)
+	local g1=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_HAND,nil)
+	local g2=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_ONFIELD,nil)
+	local opt=0
+		if #g1>0 and #g2>0 then
+			opt=Duel.SelectOption(tp,aux.Stringid(63251695,3),aux.Stringid(63251695,4))
+		elseif #g1>0 then
+			opt=0
+		elseif #g2>0 then
+			opt=1
+		else
+			return
+		end
+	local sg=nil
+	if opt==0 then
+		sg=g1:RandomSelect(tp,1)
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+		sg=g2:Select(tp,1,1,nil)
+	end
+	if sg:GetCount()~=0 then
+		Duel.SendtoGrave(sg,REASON_EFFECT)
 	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (r&REASON_DESTROY)~=0 and rp~=tp and c:IsPreviousControler(tp)
+	return bit.band(r,REASON_DESTROY)~=0 and rp==1-tp and c:GetPreviousControler()==tp
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

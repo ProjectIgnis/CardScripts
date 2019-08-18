@@ -67,6 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		if a:IsAttackable() and not a:IsImmuneToEffect(e) then
 			local atk_trgt_chk=0
 			if Duel.GetAttackTarget() then atk_trgt_chk=1 end
+			Duel.ChangeAttackTarget(tc)
 			Duel.CalculateDamage(a,tc)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)

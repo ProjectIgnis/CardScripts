@@ -439,14 +439,14 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 						local sg=Group.CreateGroup()
 						local mg=og:Clone()
 						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
-						local cancel=false
+						local finish=false
 						while ct<max and matct<maxc do
 							local selg=mg:Filter(Xyz.RecursionChk1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv)
 							if #selg<=0 then break end
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-							local sc=Group.SelectUnselect(selg,sg,tp,cancel,cancel)
+							local sc=Group.SelectUnselect(selg,sg,tp,finish)
 							if not sc then break end
-							if ct>=min and matct>=maxc then cancel=true end
+							if ct>=min and matct>=maxc then finish=true end
 							if not sg:IsContains(sc) then
 								sg:AddCard(sc)
 								if sc:IsHasEffect(511002116) then
@@ -540,6 +540,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 					if not mustbemat then
 						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
 					end
+					local finish=false
 					if not og or max==99 then
 						local ct=0
 						local matg=Group.CreateGroup()
@@ -549,7 +550,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 							local tg=mg:Filter(Xyz.RecursionChk2,sg,mg,c,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mustg,lv)
 							if #tg==0 then break end
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-							local sc=Group.SelectUnselect(tg,sg,tp,cancel,cancel)
+							local sc=Group.SelectUnselect(tg,sg,tp,finish,cancel)
 							if not sc then
 								if #matg<minc or (matg:IsExists(Card.IsHasEffect,1,nil,91110378) and not Xyz.MatNumChkF(matg)) 
 									or (lv and matg:IsExists(Card.IsHasEffect,1,nil,86466163) and not Xyz.MatNumChkF2(matg,lv,c)) then return false end
@@ -613,10 +614,9 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 							end
 							if ct>=minc and (not matg:IsExists(Card.IsHasEffect,1,nil,91110378) or Xyz.MatNumChkF(matg)) 
 								and (not lv or not matg:IsExists(Card.IsHasEffect,1,nil,86466163) or Xyz.MatNumChkF2(matg,lv,c)) and matg:Includes(mustg) then
-								cancel=true
-							else
-								cancel=not og and Duel.GetCurrentChain()<=0 and #sg==0
+								finish=true
 							end
+							cancel=not og and Duel.GetCurrentChain()<=0 and #sg==0
 						end
 						sg:KeepAlive()
 						e:SetLabelObject(sg)
@@ -690,7 +690,7 @@ function Xyz.Target2(alterf,op)
 						oc=mustg:GetFirst()
 					else
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-						oc=mg:Filter(Xyz.AlterFilter,nil,alterf,c,e,tp,op):SelectUnselect(Group.CreateGroup(),tp,cancel,cancel)
+						oc=mg:Filter(Xyz.AlterFilter,nil,alterf,c,e,tp,op):SelectUnselect(Group.CreateGroup(),tp,false,cancel)
 					end
 					if not oc then return false end
 					local ok=true

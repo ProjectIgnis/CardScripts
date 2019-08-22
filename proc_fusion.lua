@@ -305,9 +305,10 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 				while #sg<maxc+#funs do
 					local cg=mg:Filter(Fusion.SelectMixRep,sg,tp,mg,sg,mustg,c,sub,sub,contact,chkf,fun1,minc,maxc,table.unpack(funs))
 					if #cg==0 then break end
-					local cancel=(Fusion.CheckMixRepGoal(tp,sg,mustg,c,sub,sub,contact,chkf,fun1,minc,maxc,table.unpack(funs)) or (contact and #sg==0)) and not Fusion.CheckExact
+					local finish=(Fusion.CheckMixRepGoal(tp,sg,mustg,c,sub,sub,contact,chkf,fun1,minc,maxc,table.unpack(funs)) and not Fusion.CheckExact
+					local cancel=(contact and #sg==0) and not Fusion.CheckExact
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-					local tc=Group.SelectUnselect(cg,sg,p,cancel,cancel)
+					local tc=Group.SelectUnselect(cg,sg,p,finish,cancel)
 					if not tc then break end
 					if #mustg==0 or not mustg:IsContains(tc) then
 						if not sg:IsContains(tc) then
@@ -577,8 +578,9 @@ function Fusion.OperationMixRepUnfix(insf,sub,minc,maxc,...)
 					Duel.Hint(HINT_SELECTMSG,p,HINTMSG_FMATERIAL)
 					local cg=mg:Filter(Fusion.SelectMixRepUnfix,sg,tp,mg,sg,mustg:Filter(aux.TRUE,sg),c,sub,sub,minc,maxc,chkf,table.unpack(funs))
 					if #cg==0 then break end
-					local cancel=((sg:IsExists(Fusion.CheckMixRepUnfixSelected,1,nil,tp,sg,sg,mustg,Group.CreateGroup(),c,sub,sub2,chkf,minc,maxc,table.unpack(funs))) or (contact and #sg==0)) and not Fusion.CheckExact
-					local tc=Group.SelectUnselect(cg,sg,p,cancel,cancel,minc,maxc)
+					local finish=(sg:IsExists(Fusion.CheckMixRepUnfixSelected,1,nil,tp,sg,sg,mustg,Group.CreateGroup(),c,sub,sub2,chkf,minc,maxc,table.unpack(funs))) and not Fusion.CheckExact
+					local cancel=(contact and #sg==0) and not Fusion.CheckExact
+					local tc=Group.SelectUnselect(cg,sg,p,finish,cancel,minc,maxc)
 					if not tc then break end
 					if #mustg==0 or not mustg:IsContains(tc) then
 						if not sg:IsContains(tc) then

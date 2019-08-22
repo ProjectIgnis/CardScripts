@@ -130,6 +130,7 @@ function Link.Target(f,minc,maxc,specialchk)
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_LINK)
 				local emt,tg=aux.GetExtraMaterials(tp,mustg+mg,c,SUMMON_TYPE_LINK)
 				local sg=Group.CreateGroup()
+				local finish=false
 				local cancel=false
 				sg:Merge(mustg)
 				while #sg<max do
@@ -140,11 +141,10 @@ function Link.Target(f,minc,maxc,specialchk)
 					local cg=(mg+tg):Filter(Link.CheckRecursive,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt,filters)
 					if #cg==0 then break end
 					if #sg>=min and #sg<=max and Link.CheckGoal(tp,sg,c,min,f,specialchk,filters) then
-						cancel=true
-					else
-						cancel=not og and Duel.GetCurrentChain()<=0 and #sg==0
+						finish=true
 					end
-					local tc=Group.SelectUnselect(cg,sg,tp,cancel,cancel,1,1)
+					cancel=not og and Duel.GetCurrentChain()<=0 and #sg==0
+					local tc=Group.SelectUnselect(cg,sg,tp,finish,cancel,1,1)
 					if not tc then break end
 					if #mustg==0 or not mustg:IsContains(tc) then
 						if not sg:IsContains(tc) then

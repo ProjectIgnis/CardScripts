@@ -154,9 +154,8 @@ if not DeckMasters then
 		--register
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PREDRAW)
+		e1:SetCode(EVENT_STARTUP)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCondition(DeckMasters.con)
 		e1:SetOperation(DeckMasters.op)
 		Duel.RegisterEffect(e1,0)
 		--Deck Masters Zone implementation
@@ -188,9 +187,6 @@ if not DeckMasters then
 	end
 	function DeckMasters.efilter(e,te)
 		return te:GetHandler()~=e:GetOwner()
-	end
-	function DeckMasters.con(e,tp,eg,ep,ev,re,r,rp)
-		return Duel.GetTurnCount()==1
 	end
 	function DeckMasters.op(e,tp,eg,ep,ev,re,r,rp)
 		local g1=getmatchg(function(c) return c.dm and not c.dm_no_activable end,0,0xff,0,nil)
@@ -248,9 +244,6 @@ if not DeckMasters then
 				dm[i]:RegisterEffect(e1)
 			end
 			dm[i]:RegisterFlagEffect(300,0,EFFECT_FLAG_CLIENT_HINT,1,0,63)
-			if dm[i]:GetPreviousLocation()==LOCATION_HAND then
-					Duel.Draw(i,1,REASON_RULE)
-			end
 		end
 		DeckMasters.VictoryEffects(dm[0])
 	end
@@ -312,7 +305,7 @@ if not DeckMasters then
 		elseif c1==0 and c2==0 and f2==0 and f1==0  then
 			Duel.Win(PLAYER_NONE,WIN_REASON_DM)
 		elseif c1>0 and c2==0 and f2==0 then
-			Duel.Win(tp,WIN_REASON_DM)  
+			Duel.Win(tp,WIN_REASON_DM)
 		end
 	end
 

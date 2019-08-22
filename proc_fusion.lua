@@ -305,7 +305,7 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 				while #sg<maxc+#funs do
 					local cg=mg:Filter(Fusion.SelectMixRep,sg,tp,mg,sg,mustg,c,sub,sub,contact,chkf,fun1,minc,maxc,table.unpack(funs))
 					if #cg==0 then break end
-					local finish=(Fusion.CheckMixRepGoal(tp,sg,mustg,c,sub,sub,contact,chkf,fun1,minc,maxc,table.unpack(funs)) and not Fusion.CheckExact
+					local finish=Fusion.CheckMixRepGoal(tp,sg,mustg,c,sub,sub,contact,chkf,fun1,minc,maxc,table.unpack(funs)) and not Fusion.CheckExact
 					local cancel=(contact and #sg==0) and not Fusion.CheckExact
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 					local tc=Group.SelectUnselect(cg,sg,p,finish,cancel)

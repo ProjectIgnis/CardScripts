@@ -150,37 +150,38 @@ if not DeckMasters then
 			Duel.MoveSequence(c,6)
 		end
 	end
-
-	--register
-	local e1=Effect.GlobalEffect()
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PREDRAW)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetCondition(DeckMasters.con)
-	e1:SetOperation(DeckMasters.op)
-	Duel.RegisterEffect(e1,0)
-	--Deck Masters Zone implementation
-	local e2=Effect.GlobalEffect()
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetTargetRange(0xff,0xff)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsLocation,0x400))
-	Duel.RegisterEffect(e2,0)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
-	Duel.RegisterEffect(e3,0)
-	local e4=e2:Clone()
-	e4:SetCode(EFFECT_UNRELEASABLE_SUM)
-	e4:SetValue(DeckMasters.sumval)
-	Duel.RegisterEffect(e4,0)
-	local e5=e4:Clone()
-	e5:SetCode(EFFECT_UNRELEASABLE_NONSUM)
-	Duel.RegisterEffect(e5,0)
-	local e6=e2:Clone()
-	e6:SetCode(EFFECT_IMMUNE_EFFECT)
-	e6:SetValue(DeckMasters.efilter)
-	Duel.RegisterEffect(e6,0)
+	local function finish_setup() 
+		--register
+		local e1=Effect.GlobalEffect()
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_PREDRAW)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCondition(DeckMasters.con)
+		e1:SetOperation(DeckMasters.op)
+		Duel.RegisterEffect(e1,0)
+		--Deck Masters Zone implementation
+		local e2=Effect.GlobalEffect()
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
+		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e2:SetTargetRange(0xff,0xff)
+		e2:SetTarget(aux.TargetBoolFunction(Card.IsLocation,0x400))
+		Duel.RegisterEffect(e2,0)
+		local e3=e2:Clone()
+		e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+		Duel.RegisterEffect(e3,0)
+		local e4=e2:Clone()
+		e4:SetCode(EFFECT_UNRELEASABLE_SUM)
+		e4:SetValue(DeckMasters.sumval)
+		Duel.RegisterEffect(e4,0)
+		local e5=e4:Clone()
+		e5:SetCode(EFFECT_UNRELEASABLE_NONSUM)
+		Duel.RegisterEffect(e5,0)
+		local e6=e2:Clone()
+		e6:SetCode(EFFECT_IMMUNE_EFFECT)
+		e6:SetValue(DeckMasters.efilter)
+		Duel.RegisterEffect(e6,0)
+	end
 	
 	function DeckMasters.sumval(e,c)
 		return e:GetHandler():IsDeckMaster(true)
@@ -415,6 +416,8 @@ if not DeckMasters then
 			Duel.ResetFlagEffect(tp,300+1)
 		end
 	end
+	
+	finish_setup()
 
 
 	tableDm = {

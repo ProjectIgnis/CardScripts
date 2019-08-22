@@ -12,5 +12,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.indtg(e,c)
-	return c:IsDualState()
+	return c:IsGeminiState()
 end

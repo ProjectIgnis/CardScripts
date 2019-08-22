@@ -1,7 +1,7 @@
 --古代の機械騎士
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableDualAttribute(c)
+	aux.EnableGeminiAttribute(c)
 	--actlimit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -17,5 +17,5 @@ function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.actcon(e)
-	return aux.IsDualState(e) and Duel.GetAttacker()==e:GetHandler()
+	return aux.IsGeminiState(e) and Duel.GetAttacker()==e:GetHandler()
 end

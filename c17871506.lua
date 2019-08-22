@@ -1,7 +1,7 @@
 --真紅眼の凶星竜－メテオ・ドラゴン
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableDualAttribute(c)
+	aux.EnableGeminiAttribute(c)
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.indtg)
 	e1:SetValue(1)
-	e1:SetCondition(aux.IsDualState)
+	e1:SetCondition(aux.IsGeminiState)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

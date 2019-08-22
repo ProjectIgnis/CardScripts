@@ -1,7 +1,7 @@
 --幸運の笛吹き
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableDualAttribute(c)
+	aux.EnableGeminiAttribute(c)
 	--draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	if not aux.IsDualState(e) then return false end
+	if not aux.IsGeminiState(e) then return false end
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	if not c:IsRelateToBattle() or c:IsFacedown() then return false end

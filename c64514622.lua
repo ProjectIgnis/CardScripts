@@ -1,14 +1,14 @@
 --龍王の聖刻印
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableDualAttribute(c)
+	aux.EnableGeminiAttribute(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(aux.IsDualState)
+	e1:SetCondition(aux.IsGeminiState)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)

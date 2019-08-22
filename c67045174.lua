@@ -21,10 +21,10 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local t=Duel.GetAttackTarget()
-	if a and a:IsDualState() and a:IsStatus(STATUS_BATTLE_DESTROYED) then
+	if a and a:IsGeminiState() and a:IsStatus(STATUS_BATTLE_DESTROYED) then
 		a:RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE,0,1)
 	end
-	if t and t:IsDualState() and t:IsStatus(STATUS_BATTLE_DESTROYED) then
+	if t and t:IsGeminiState() and t:IsStatus(STATUS_BATTLE_DESTROYED) then
 		t:RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE,0,1)
 	end
 end

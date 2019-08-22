@@ -1,7 +1,7 @@
 --化合獣カーボン・クラブ
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableDualAttribute(c)
+	aux.EnableGeminiAttribute(c)
 	--to grave/search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1,id)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(aux.IsDualState)
+	e1:SetCondition(aux.IsGeminiState)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)

@@ -10,6 +10,6 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_GEMINI))
-	e1:SetCode(EFFECT_DUAL_STATUS)
+	e1:SetCode(EFFECT_GEMINI_STATUS)
 	c:RegisterEffect(e1)
 end

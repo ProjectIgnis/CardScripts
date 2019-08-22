@@ -1,7 +1,7 @@
 --騎士デイ・グレファー
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableDualAttribute(c)
+	aux.EnableGeminiAttribute(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsDualState() and Duel.GetTurnPlayer()==tp
+	return e:GetHandler():IsGeminiState() and Duel.GetTurnPlayer()==tp
 end
 function s.filter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsAbleToHand()

@@ -1,7 +1,7 @@
 --ジェムナイト・サニクス
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableDualAttribute(c)
+	aux.EnableGeminiAttribute(c)
 	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	if not aux.IsDualState(e) then return false end
+	if not aux.IsGeminiState(e) then return false end
 	local tc=eg:GetFirst()
 	return #eg==1 and tc:GetReasonCard()==e:GetHandler()
 		and tc:IsLocation(LOCATION_GRAVE) and tc:IsReason(REASON_BATTLE) 

@@ -1,7 +1,7 @@
 --業火の重騎士
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableDualAttribute(c)
+	aux.EnableGeminiAttribute(c)
 	--remove
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
@@ -16,7 +16,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsDualState() and Duel.GetAttacker()==c
+	return c:IsGeminiState() and Duel.GetAttacker()==c
 		and bc and bc:IsSummonType(SUMMON_TYPE_SPECIAL) and bc:IsAbleToRemove()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

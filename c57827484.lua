@@ -1,7 +1,7 @@
 --シャドウ・ダイバー
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableDualAttribute(c)
+	aux.EnableGeminiAttribute(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return aux.IsDualState(e) and Duel.GetCurrentPhase()==PHASE_MAIN1
+	return aux.IsGeminiState(e) and Duel.GetCurrentPhase()==PHASE_MAIN1
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsAttribute(ATTRIBUTE_DARK) and not c:IsHasEffect(EFFECT_DIRECT_ATTACK)

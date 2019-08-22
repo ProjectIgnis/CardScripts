@@ -1,13 +1,13 @@
 --竜影魚レイ・ブロント
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableDualAttribute(c)
+	aux.EnableGeminiAttribute(c)
 	--change base attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(aux.IsDualState)
+	e1:SetCondition(aux.IsGeminiState)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetValue(2300)
 	c:RegisterEffect(e1)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsDualState() and e:GetHandler():GetAttackedCount()>0
+	return e:GetHandler():IsGeminiState() and e:GetHandler():GetAttackedCount()>0
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

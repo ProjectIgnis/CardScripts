@@ -1,14 +1,14 @@
 --ナチュラル・ボーン・サウルス
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableDualAttribute(c)
+	aux.EnableGeminiAttribute(c)
 	--prop change
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(aux.IsDualState)
+	e1:SetCondition(aux.IsGeminiState)
 	e1:SetValue(ATTRIBUTE_EARTH)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_CHANGE_RACE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(aux.IsDualState)
+	e2:SetCondition(aux.IsGeminiState)
 	e2:SetValue(RACE_DINOSAUR)
 	c:RegisterEffect(e2)
 	--special summon
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsDualState() then return false end
+	if not c:IsGeminiState() then return false end
 	local bc=c:GetBattleTarget()
 	if not c:IsRelateToBattle() or c:IsFacedown() then return false end
 	return bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER)

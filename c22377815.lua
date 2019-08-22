@@ -1,7 +1,7 @@
 --水面のアレサ
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnableDualAttribute(c)
+	aux.EnableGeminiAttribute(c)
 	--handes
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return aux.IsDualState(e) and aux.bdogcon(e,tp,eg,ep,ev,re,r,rp)
+	return aux.IsGeminiState(e) and aux.bdogcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

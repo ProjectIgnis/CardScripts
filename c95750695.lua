@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--duel status
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetCode(EFFECT_DUAL_STATUS)
+	e2:SetCode(EFFECT_GEMINI_STATUS)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e4=Effect.CreateEffect(c)

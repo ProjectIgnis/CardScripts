@@ -54,15 +54,9 @@ end
 function s.sdesop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
-function s.dirfilter1(c)
-	return c:IsFaceup() and c:IsCode(15259703)
-end
-function s.dirfilter2(c)
-	return c:IsFaceup() and c:IsType(TYPE_TOON)
-end
 function s.dircon(e)
-	return Duel.IsExistingMatchingCard(s.dirfilter1,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
-		and not Duel.IsExistingMatchingCard(s.dirfilter2,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,15259703),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_TOON),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetAttackedCount()>0

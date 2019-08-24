@@ -22,9 +22,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH)
-end
 function s.rmfilter(c,e)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c) and (not e or c:IsCanBeEffectTarget(e))
 end
@@ -43,8 +40,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil,e)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,aux.ReleaseCheckTarget,nil,dg) end
-	local cg=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,aux.ReleaseCheckTarget,nil,dg)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_EARTH),1,false,aux.ReleaseCheckTarget,nil,dg) end
+	local cg=Duel.SelectReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsAttribute,ATTRIBUTE_EARTH),1,1,false,aux.ReleaseCheckTarget,nil,dg)
 	Duel.Release(cg,REASON_COST)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

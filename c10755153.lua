@@ -27,11 +27,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={95638658}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(95638658)
-end
 function s.sumlimit(e)
-	return not Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,95638658),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.costfilter(c,ec)
 	return c:IsFaceup() and c:GetEquipTarget()==ec and c:IsAbleToGraveAsCost()

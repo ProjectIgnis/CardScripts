@@ -33,11 +33,9 @@ s.listed_names={66073051,CARD_SANCTUARY_SKY}
 function s.rfilter(c,ft)
 	return c:IsFaceup() and c:IsCode(66073051) and (ft>0 or c:GetSequence()<5)
 end
-function s.envfilter(c)
-	return c:IsFaceup() and c:IsCode(CARD_SANCTUARY_SKY)
-end
 function s.spcon(e,c)
-	if c==nil then return Duel.IsExistingMatchingCard(s.envfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) or Duel.IsEnvironment(CARD_SANCTUARY_SKY) end
+	if c==nil then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	or Duel.IsEnvironment(CARD_SANCTUARY_SKY) end
 	local tp=c:GetControler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	return ft>-1 and Duel.CheckReleaseGroup(tp,s.rfilter,1,nil,ft)
@@ -59,7 +57,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsExistingMatchingCard(s.envfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) or Duel.IsEnvironment(CARD_SANCTUARY_SKY) then
+	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+		or Duel.IsEnvironment(CARD_SANCTUARY_SKY) then
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 		Duel.Destroy(g,REASON_EFFECT)
 	end

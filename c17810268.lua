@@ -38,12 +38,9 @@ end
 function s.sdcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x18)
-end
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x18),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+0x1019,ct)
 	end
 end

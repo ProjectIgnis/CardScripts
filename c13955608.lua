@@ -35,12 +35,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1,true)
 	Duel.SpecialSummonComplete()
 end
-function s.cfilter(c,code)
-	return c:IsFaceup() and c:IsCode(code)
-end
 function s.atkcon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil,41172955)
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil,86445415)
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil,13839120)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,41172955),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,86445415),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,13839120),tp,LOCATION_ONFIELD,0,1,nil)
 end

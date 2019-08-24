@@ -60,10 +60,7 @@ end
 function s.filter(c,tp)
 	local ctype=(c:GetType()&TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
 	return c:IsFaceup() and ctype~=0 and c:IsAbleToExtra()
-		and Duel.IsExistingMatchingCard(s.filter2,tp,0,LOCATION_MZONE,1,nil,ctype)
-end
-function s.filter2(c,ctype)
-	return c:IsFaceup() and c:IsType(ctype)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,ctype),tp,0,LOCATION_MZONE,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(1-tp) and s.filter(chkc,tp) end
@@ -72,7 +69,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_REMOVED,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 	local ctype=(g:GetFirst():GetType()&TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
-	local dg=Duel.GetMatchingGroup(s.filter2,tp,0,LOCATION_MZONE,nil,ctype)
+	local dg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,ctype),tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -80,7 +77,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)~=0 then
 		local ctype=(tc:GetType()&TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local g=Duel.SelectMatchingCard(tp,s.filter2,tp,0,LOCATION_MZONE,1,1,nil,ctype)
+		local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsType,ctype),tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

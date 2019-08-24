@@ -57,11 +57,8 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectReleaseGroup(tp,s.hspfilter,1,1,nil,ft,tp)
 	Duel.Release(g,REASON_COST)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
-end
 function s.value(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,0,LOCATION_REMOVED,LOCATION_REMOVED,nil)*300
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),0,LOCATION_REMOVED,LOCATION_REMOVED,nil)*300
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_BATTLE) and e:GetHandler():GetTurnID()==Duel.GetTurnCount()

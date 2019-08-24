@@ -19,9 +19,6 @@ function s.initial_effect(c)
 	e2:SetValue(s.xyzlimit)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:GetLevel()==4
-end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -29,8 +26,8 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
-		and g:IsExists(s.cfilter,1,nil)
-		and not g:IsExists(aux.NOT(s.cfilter),1,nil)
+		and g:IsExists(aux.FilterFaceupFunction(Card.IsLevel,4),1,nil)
+		and not g:IsExists(aux.NOT(aux.FilterFaceupFunction(Card.IsLevel,4)),1,nil)
 end
 function s.xyzlimit(e,c)
 	if not c then return false end

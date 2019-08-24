@@ -40,9 +40,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={CARD_SANCTUARY_SKY,18036057}
-function s.envfilter(c)
-	return c:IsFaceup() and c:IsCode(CARD_SANCTUARY_SKY)
-end
 function s.cfilter(c,ft,tp)
 	return c:IsCode(18036057) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
 end
@@ -70,7 +67,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.val(e,c)
-	if not (Duel.IsExistingMatchingCard(s.envfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) or Duel.IsEnvironment(CARD_SANCTUARY_SKY)) then return 0 end
+	if not (Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+		or Duel.IsEnvironment(CARD_SANCTUARY_SKY)) then return 0 end
 	local v=Duel.GetLP(c:GetControler())-Duel.GetLP(1-c:GetControler())
 	if v>0 then return v else return 0 end
 end

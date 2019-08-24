@@ -47,14 +47,11 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.setcfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xed)
-end
 function s.setcon1(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(s.setcfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xed),tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end
 function s.setcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.setcfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xed),tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end
 function s.setfilter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()

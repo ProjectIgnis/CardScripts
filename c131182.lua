@@ -54,15 +54,12 @@ function s.initial_effect(c)
 	e7:SetOperation(s.desop)
 	c:RegisterEffect(e7)
 end
-function s.exfilter(c)
-	return c:IsFaceup() and c:IsCode(id)
-end
 function s.excon(e)
 	local c=e:GetHandler()
-	return Duel.IsExistingMatchingCard(s.exfilter,c:GetControler(),LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,id),c:GetControler(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.splimit(e,se,sp,st,spos,tgp)
-	return not Duel.IsExistingMatchingCard(s.exfilter,tgp,LOCATION_ONFIELD,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,id),tgp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.atlimit(e,c)
 	return c:IsFaceup() and c~=e:GetHandler()

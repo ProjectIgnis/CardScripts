@@ -1,7 +1,7 @@
 --神の威光
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,s.filter,nil,nil,0x1c0,0x1c1,nil,nil,nil,s.operation)
+	aux.AddPersistentProcedure(c,0,aux.FilterFaceupFunction(Card.IsSetCard,0x4b),nil,nil,0x1c0,0x1c1,nil,nil,nil,s.operation)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -10,9 +10,6 @@ function s.initial_effect(c)
 	e1:SetTarget(aux.PersistentTargetFilter)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x4b)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

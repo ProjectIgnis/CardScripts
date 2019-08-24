@@ -90,9 +90,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.tgfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO)
-end
 function s.tgcon(e)
-	return Duel.IsExistingMatchingCard(s.tgfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_SYNCHRO),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end

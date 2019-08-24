@@ -19,11 +19,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.refop)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2a)
-end
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(s.cfilter,e:GetOwnerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2a),e:GetOwnerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.reftg(e,c)
 	return c~=e:GetHandler() and c:IsFaceup() and c:IsSetCard(0x2a)

@@ -10,9 +10,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
-	return c:IsFaceup()
-end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsAttackPos() and c:IsSetCard(0x100d)
 end
@@ -21,15 +18,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)
 		e:SetLabel(ct)
-		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,ct,c)
+		return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,ct,c)
 	end
 	local ct=e:GetLabel()
-	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
+	local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,ct,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 	if #g>=ct then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=g:Select(tp,ct,ct,nil)

@@ -19,11 +19,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.aclimset)
 	c:RegisterEffect(e3)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2f)
-end
 function s.con(e)
-	return Duel.IsExistingMatchingCard(s.filter,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2f),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.aclimit(e,re,tp)
 	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsActiveType(TYPE_SPELL) then return false end

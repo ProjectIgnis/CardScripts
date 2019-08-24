@@ -27,14 +27,11 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
 end
-function s.geffilter(c)
-	return c:IsFaceup() and c:IsCode(CARD_GALAXYEYES_P_DRAGON)
-end
 function s.filter(c,tp,ged)
 	return (ged or (c:IsFaceup() and c:IsType(TYPE_XYZ))) and c:IsControlerCanBeChanged()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ged=Duel.IsExistingMatchingCard(s.geffilter,tp,LOCATION_MZONE,0,1,nil)
+	local ged=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_GALAXYEYES_P_DRAGON),tp,LOCATION_MZONE,0,1,nil)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc,tp,ged) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,tp,ged) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)

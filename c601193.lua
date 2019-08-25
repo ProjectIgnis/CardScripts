@@ -1,4 +1,5 @@
 --彼岸の詩人 ウェルギリウス
+--Virgil, Rock Star of the Burning Abyss
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)

@@ -1,4 +1,5 @@
 --法の聖典
+--The Book of the Law
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

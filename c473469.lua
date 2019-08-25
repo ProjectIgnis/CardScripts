@@ -1,4 +1,5 @@
 --猛吹雪
+--Driving Snow
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

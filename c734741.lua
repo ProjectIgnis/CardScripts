@@ -1,4 +1,5 @@
 --彼岸の悪鬼 ラビキャント
+--Rubic, Malebranche of the Burning Abyss
 local s,id=GetID()
 function s.initial_effect(c)
 	--self destroy

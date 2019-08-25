@@ -1,4 +1,5 @@
 --剣闘獣レティアリィ
+--Gladiator Beast Retiari
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove

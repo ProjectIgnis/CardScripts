@@ -1,4 +1,5 @@
 --超重荒神スサノ－O
+--Superheavy Samurai Warlord Susanowo
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

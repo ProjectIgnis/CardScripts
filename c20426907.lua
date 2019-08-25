@@ -78,12 +78,9 @@ function s.distg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
-function s.filter3(c)
-	return c:IsFaceup() and c:IsLevelAbove(5)
-end
 function s.distg3(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(s.filter3,1,nil) end
-	local g=eg:Filter(s.filter3,nil)
+	if chk==0 then return eg:IsExists(aux.FilterFaceupFunction(Card.IsLevelAbove,5),1,nil) end
+	local g=eg:Filter(aux.FilterFaceupFunction(Card.IsLevelAbove,5),nil)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g,0,0)
 end

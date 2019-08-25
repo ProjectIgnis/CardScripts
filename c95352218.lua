@@ -28,16 +28,13 @@ function s.checklv(g)
 	end
 	return true
 end
-function s.filter1(c)
-	return c:IsFaceup() and c:IsLevelAbove(1)
-end
 function s.filter2(c,lv)
 	return c:IsFaceup() and c:GetLevel()~=lv
 end
 function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local turnp=Duel.GetTurnPlayer()
-	local g=Duel.GetMatchingGroup(s.filter1,turnp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,1),turnp,LOCATION_MZONE,0,nil)
 	if #g<2 then return end
 	if s.checklv(g) then return end
 	Duel.Hint(HINT_SELECTMSG,turnp,aux.Stringid(id,1))

@@ -74,16 +74,13 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(e:GetLabelObject(),POS_FACEUP,REASON_EFFECT)
 end
-function s.dcfilter(c)
-	return c:IsFaceup() and c:IsLevelAbove(1)
-end
 function s.dctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.dcfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,1),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 function s.dcop(e,tp,eg,ep,ev,re,r,rp)
 	local dc=Duel.TossDice(tp,1)
-	local g=Duel.GetMatchingGroup(s.dcfilter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,1),tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
 	while tc do
 		local e1=Effect.CreateEffect(e:GetHandler())

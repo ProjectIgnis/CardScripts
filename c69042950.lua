@@ -13,9 +13,6 @@ end
 function s.mfilter(c,clv)
 	return c:IsFaceup() and c:GetLevel()==clv
 end
-function s.mfilter2(c)
-	return c:IsFaceup() and c:IsLevelBelow(4)
-end
 function s.spfilter(c,e,tp)
 	local lv=c:GetLevel()
 	return lv>0 and lv<=4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -24,7 +21,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
-		and Duel.IsExistingMatchingCard(s.mfilter2,tp,0,LOCATION_MZONE,1,nil) end
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelBelow,4),tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

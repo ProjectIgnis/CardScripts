@@ -18,12 +18,9 @@ end
 function s.filter1(c)
 	return c:IsFaceup() and c:IsCode(74711057)
 end
-function s.filter2(c)
-	return c:IsFaceup() and c:IsLevelBelow(4)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.filter2,tp,0,LOCATION_MZONE,1,nil) end
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelBelow,4),tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

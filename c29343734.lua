@@ -51,9 +51,6 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 end
-function s.atkfilter(c,att)
-	return c:IsFaceup() and c:IsAttribute(att)
-end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),0,LOCATION_MZONE,nil,c:GetAttribute())*300
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsAttribute,c:GetAttribute()),c:GetControler(),0,LOCATION_MZONE,nil)*300
 end

@@ -72,17 +72,14 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter1(c,tp)
-	return c:IsFaceup() and c:IsLevelAbove(1) and Duel.IsExistingTarget(s.desfilter2,tp,0,LOCATION_MZONE,1,nil,c)
-end
-function s.desfilter2(c,oc)
-	return c:IsFaceup() and c:IsLevel(oc:GetLevel())
+	return c:IsFaceup() and c:IsLevelAbove(1) and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsLevel,c:GetLevel()),tp,0,LOCATION_MZONE,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.desfilter1(chkc,chkc:GetControler()) end
 	if chk==0 then return Duel.IsExistingTarget(s.desfilter1,tp,LOCATION_MZONE,0,1,nil,tp) end
 	local g=Duel.SelectTarget(tp,s.desfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	local oc=g:GetFirst()
-	local sg=Duel.SelectTarget(tp,s.desfilter2,tp,0,LOCATION_MZONE,1,1,nil,oc)
+	local sg=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsLevel,c:GetLevel()),tp,0,LOCATION_MZONE,1,1,nil)
 	g:Merge(sg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end

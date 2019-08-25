@@ -10,9 +10,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={40453765}
-function s.filter(c)
-	return c:IsFaceup() and c:IsCode(40453765)
-end
 function s.value(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_MZONE,0,nil)*500
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsCode,40453765),c:GetControler(),LOCATION_MZONE,0,nil)*500
 end

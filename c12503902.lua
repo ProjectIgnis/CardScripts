@@ -38,7 +38,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and s.filter(tc) and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and tc:aux.FilterFaceupFunction(Card.IsRace,RACE_MACHINE) and tc:IsRelateToEffect(e) then
 		local g=Duel.GetMatchingGroup(s.tfilter1,tp,LOCATION_SZONE,LOCATION_SZONE,nil,tc)
 		if #g>0 then
 			local sg,fid=g:GetMaxGroup(Card.GetFieldID)

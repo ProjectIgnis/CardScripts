@@ -19,9 +19,6 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end
 end
-function s.filter(c,atk)
-	return c:IsFaceup() and c:IsAttackAbove(atk)
-end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 	if #g>0 then
@@ -31,7 +28,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tc=tg:GetFirst()
 		if tc then
 			local atk=tc:GetAttack()
-			if atk>=0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil,atk) then
+			if atk>=0 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,atk),tp,LOCATION_MZONE,0,1,nil) then
 				Duel.Destroy(tc,REASON_EFFECT)
 				Duel.Damage(1-tp,500,REASON_EFFECT)
 			else

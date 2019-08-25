@@ -17,9 +17,6 @@ end
 function s.filter(c,e,tp)
 	return c:IsType(TYPE_GEMINI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.lvfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_GEMINI)
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
@@ -30,7 +27,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) then
 		local lv=g:GetFirst():GetOriginalLevel()
-		local tg=Duel.GetMatchingGroup(s.lvfilter,tp,LOCATION_MZONE,0,nil)
+		local tg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_GEMINI),tp,LOCATION_MZONE,0,nil)
 		local tc=tg:GetFirst()
 		while tc do
 			if tc:GetLevel()~=lv then

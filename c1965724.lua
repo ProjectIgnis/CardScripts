@@ -30,12 +30,9 @@ function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsPreviousControler(tp) and c:IsRace(RACE_FAIRY)
 end
-function s.cfilter2(c)
-	return c:IsFaceup() and c:IsCode(27288416)
-end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)==0 and eg:IsExists(s.cfilter,1,nil,tp)
-		and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,27288416),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)

@@ -65,41 +65,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 		local a=Duel.GetAttacker()
 		if a:IsAttackable() and not a:IsImmuneToEffect(e) then
-			local atk_trgt_chk=0
-			if Duel.GetAttackTarget() then atk_trgt_chk=1 end
 			Duel.ChangeAttackTarget(tc)
 			Duel.CalculateDamage(a,tc)
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_FIELD)
-			e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
-			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-			e1:SetTargetRange(1,0)
-			e1:SetValue(1)
-			Duel.RegisterEffect(e1,tp)
-			local e2=Effect.CreateEffect(e:GetHandler())
-			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e2:SetCode(EVENT_BATTLED)
-			e2:SetLabelObject(e1)
-			e2:SetValue(atk_trgt_chk)
-			e2:SetOperation(s.resop)
-			Duel.RegisterEffect(e2,tp)
 		end
 	end
-end
-function s.resop(e,tp)
-	local c=e:GetHandler()
-	if e:GetValue()==0 then
-		if not Duel.IsExistingMatchingCard(Card.IsStatus,tp,0,LOCATION_MZONE,1,nil,STATUS_BATTLE_DESTROYED) then
-			if c:GetFlagEffect(id)==0 then
-				c:RegisterFlagEffect(id,0,0,0)
-				return
-			end
-		end
-	end
-	c:ResetFlagEffect(id)
-	local e1=e:GetLabelObject()
-	e1:Reset()
-	e:Reset()
 end
 function s.cfilter(c,tp)
 	return c:IsLevel(8) and c:IsRace(RACE_FIEND) and c:IsControler(tp)

@@ -1,5 +1,5 @@
 --雷神龍－サンダー・ドラゴン
---Thunder Dragon Lord
+--Thunder Dragon Titan
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -47,7 +47,7 @@ function s.spfilter1(c)
 	return c:IsRace(RACE_THUNDER) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.spfilter2(c)
-	return c:IsFaceup() and c:IsRace(RACE_THUNDER) and c:IsType(TYPE_FUSION) and not c:IsCode(id) and c:IsAbleToRemoveAsCost()
+	return c:IsRace(RACE_THUNDER) and c:IsType(TYPE_FUSION) and not c:IsCode(id) and c:IsAbleToRemoveAsCost()
 end
 function s.rescon(sg,e,tp,mg)
 	return Duel.GetLocationCountFromEx(tp,tp,sg)>0 and sg:IsExists(s.spfilter1,1,nil) and sg:IsExists(s.spfilter2,1,nil)
@@ -97,6 +97,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if #g>0 then
+		Duel.HintSelection(g)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

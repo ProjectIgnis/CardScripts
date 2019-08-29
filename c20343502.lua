@@ -57,7 +57,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function s.efilter(e,te)
-    return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner()
+    return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetHandler()
 end
 function s.tdcfilter(c,tp)
     return c:IsSetCard(0x71) and c:IsControler(tp)
@@ -76,4 +76,3 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
         Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
     end
 end
-

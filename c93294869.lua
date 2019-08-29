@@ -1,4 +1,5 @@
 --傷炎星－ウルブショウ
+--Brotherhood of the Fire Fist - Wolf
 local s,id=GetID()
 function s.initial_effect(c)
 	--set
@@ -24,8 +25,7 @@ function s.filter2(c)
 	return c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil) end
 	if e:GetHandler():GetFlagEffect(id)~=0 then
 		e:SetLabel(1)
 		e:GetHandler():ResetFlagEffect(id)
@@ -34,18 +34,19 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	if ft<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_DECK,0,1,1,nil)
-	local sg=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_DECK,0,nil)
-	if e:GetLabel()==1 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-		g:AddCard(sg:Select(tp,1,1,nil):GetFirst())
-	end
 	if #g>0 then
 		Duel.SSet(tp,g)
 		Duel.ConfirmCards(1-tp,g)
+		local sg=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_DECK,0,nil)
+		if e:GetLabel()==1 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+			local tg=sg:Select(tp,1,1,nil)
+			Duel.SSet(tp,tg)
+			Duel.ConfirmCards(1-tp,tg)
+		end
 	end
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)

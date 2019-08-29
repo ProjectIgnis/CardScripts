@@ -1,4 +1,5 @@
 --微炎星－リュウシシン
+--Brotherhood of the Fire Fist - Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--set
@@ -42,7 +43,7 @@ function s.filter(c)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and e:GetHandler():IsFaceup()
-		and not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and not e:GetHandler():IsStatus(STATUS_CHAINING)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)

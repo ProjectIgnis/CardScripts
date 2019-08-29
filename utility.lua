@@ -1425,7 +1425,40 @@ function Auxiliary.EvilHeroLimit(e,se,sp,st)
 	end
 	return st&chk==chk
 end
-
+--Functions to automate consistent start-of-duel activations for Duel Modes like Speed Duel, Sealed Duel
+--According to AlphaKretin, these two functions can be improved in Edopro
+function Auxiliary.EnableExtraRules(c,card,init,...)
+    local e1=Effect.CreateEffect(c)
+    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    e1:SetCode(EVENT_ADJUST)
+    e1:SetCountLimit(1)
+    e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
+    e1:SetRange(0xff)
+    e1:SetOperation(Auxiliary.EnableExtraRulesOperation(card,init,...))
+    c:RegisterEffect(e1)
+end
+function Auxiliary.EnableExtraRulesOperation(card,init,...)
+    local arg = {...}
+    return function(e,tp,eg,ep,ev,re,r,rp)
+        local c = e:GetHandler()
+        local p = c:GetControler()
+        Duel.DisableShuffleCheck()
+        Duel.SendtoDeck(c, nil, -2, REASON_RULE)
+        local ct = Duel.GetMatchingGroupCount(nil, p, LOCATION_HAND + LOCATION_DECK, 0, c)
+        if (Duel.IsDuelType(SPEED_DUEL) and ct < 20 or ct < 40)
+            and Duel.SelectYesNo(1 - p, aux.Stringid(4014, 5)) then
+            Duel.Win(1 - p, 0x55)
+        end
+        if c:IsPreviousLocation(LOCATION_HAND) then Duel.Draw(p, 1, REASON_RULE) end
+        if not card.global_active_check then
+            Duel.ConfirmCards(1-p, c)
+            if Duel.SelectYesNo(p,aux.Stringid(4014,6)) and Duel.SelectYesNo(1-p,aux.Stringid(4014,6)) then
+            	init(c,table.unpack(arg))
+            end
+            card.global_active_check = true
+        end
+    end
+end
 --for zone checking (zone is the zone, tp is referencial player)
 function Auxiliary.IsZone(c,zone,tp)
 	local rzone = c:IsControler(tp) and (1 <<c:GetSequence()) or (1 << (16+c:GetSequence()))

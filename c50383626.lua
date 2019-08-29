@@ -58,7 +58,7 @@ function s.relval(e,c)
 	return c==e:GetHandler()
 end
 function s.spcfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:GetPreviousAttributeOnField()==ATTRIBUTE_DARK
+	return c:IsPreviousControler(tp) and c:GetPreviousAttributeOnField()&ATTRIBUTE_DARK==ATTRIBUTE_DARK
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp)

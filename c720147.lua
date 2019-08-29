@@ -47,6 +47,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and rg and #rg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 		local g=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,#rg,#rg,rg,tc)
-		if #g>0 then Duel.Overlay(tc,g) end
+		if #g>0 then
+		    local og=g:GetFirst():GetOverlayGroup()
+			if #og>0 then
+			    Duel.SendtoGrave(og,REASON_RULE)
+			end
+			g:GetFirst():CancelToGrave()
+		    Duel.Overlay(tc,g)
+		end
 	end
 end

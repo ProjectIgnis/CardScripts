@@ -135,6 +135,9 @@ end
 --for zone checking (zone is the zone, tp is referencial player)
 function Auxiliary.IsZone(c,zone,tp)
 	local rzone = c:IsControler(tp) and (1 <<c:GetSequence()) or (1 << (16+c:GetSequence()))
+	if c:IsSequence(5,6) then
+		rzone = rzone | (c:IsControler(tp) and (1 << (16 + 11 - c:GetSequence())) or (1 << (11 - c:GetSequence())))
+	end
 	return (rzone & zone) > 0
 end
 --Workaround for the Link Summon using opponent's monsters effect of the Hakai monsters
@@ -278,7 +281,7 @@ function Auxiliary.GetAttributeStrings(v)
 		[ATTRIBUTE_WIND] = 1013,
 		[ATTRIBUTE_LIGHT] = 1014,
 		[ATTRIBUTE_DARK] = 1015,
-		[ATTRIBUTE_DEVINE] = 1016
+		[ATTRIBUTE_DIVINE] = 1016
 	}
 	local res={}
 	local ct=0
@@ -301,7 +304,7 @@ function Auxiliary.GetRaceStrings(v)
 		[RACE_AQUA] = 1026,
 		[RACE_PYRO] = 1027,
 		[RACE_ROCK] = 1028,
-		[RACE_WINDBEAST] = 1029,
+		[RACE_WINGEDBEAST] = 1029,
 		[RACE_PLANT] = 1030,
 		[RACE_INSECT] = 1031,
 		[RACE_THUNDER] = 1032,
@@ -312,8 +315,8 @@ function Auxiliary.GetRaceStrings(v)
 		[RACE_FISH] = 1037,
 		[RACE_SEASERPENT] = 1038,
 		[RACE_REPTILE] = 1039,
-		[RACE_PSYCHO] = 1040,
-		[RACE_DEVINE] = 1041,
+		[RACE_PSYCHIC] = 1040,
+		[RACE_DIVINE] = 1041,
 		[RACE_CREATORGOD] = 1042,
 		[RACE_WYRM] = 1043,
 		[RACE_CYBERSE] = 1044

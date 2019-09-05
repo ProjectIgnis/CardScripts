@@ -32,7 +32,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_FUSION+REASON_SYNCHRO+REASON_LINK)
+	return (r&REASON_FUSION+REASON_SYNCHRO+REASON_LINK)~=0
 end
 function s.dtchcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

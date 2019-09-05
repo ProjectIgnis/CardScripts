@@ -1,14 +1,18 @@
 --デザート・ツイスター
+--Desert Twister
+
+--Substitute ID
 local s,id=GetID()
+
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--cannot special summon
+	--Special summon status
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -17,9 +21,9 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--destroy
+	--Discard to destroy S/T
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetDescription(aux.Stringid(81977953,0))
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -30,10 +34,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-function c25460258.rescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(c25460258.atchk1,1,nil,sg)
+function s.rescon(sg,e,tp,mg)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.atchk1,1,nil,sg)
 end
-function c25460258.atchk1(c,sg)
+function s.atchk1(c,sg)
 	return c:IsAttribute(ATTRIBUTE_EARTH) and sg:FilterCount(Card.IsAttribute,c,ATTRIBUTE_WIND)==2
 end
 function s.spfilter(c,att)
@@ -42,16 +46,16 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg1=Duel.GetMatchingGroup(c25460258.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ATTRIBUTE_EARTH)
-	local rg2=Duel.GetMatchingGroup(c25460258.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ATTRIBUTE_WIND)
+	local rg1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ATTRIBUTE_EARTH)
+	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ATTRIBUTE_WIND)
 	local rg=rg1:Clone()
 	rg:Merge(rg2)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #rg1>0 and #rg2>1 
-		and aux.SelectUnselectGroup(rg,e,tp,3,3,c25460258.rescon,0)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and rg1:GetCount()>0 and rg2:GetCount()>1 
+		and aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(c25460258.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ATTRIBUTE_EARTH+ATTRIBUTE_WIND)
-	local g=aux.SelectUnselectGroup(rg,e,tp,3,3,c25460258.rescon,1,tp,HINTMSG_REMOVE)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ATTRIBUTE_EARTH+ATTRIBUTE_WIND)
+	local g=aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,1,tp,HINTMSG_REMOVE)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)

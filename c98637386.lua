@@ -1,4 +1,5 @@
 --ゴヨウ・プレデター
+--Goyo Predator
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -31,12 +32,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 			e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+			e1:SetCondition(s.damcon)
 			e1:SetOperation(s.rdop)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
 			Duel.SpecialSummonComplete()
 		end
 	end
+end
+function s.damcon(e,tp,eg,ep,ev,re,r,rp)
+	return ep~=tp
 end
 function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HalfBattleDamage(ep)

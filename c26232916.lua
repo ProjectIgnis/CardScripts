@@ -1,3 +1,4 @@
+--隠れ里－忍法修練の地
 --Hidden Village of Ninjitsu Arts
 --Scripted by Eerie Code
 local s,id=GetID()

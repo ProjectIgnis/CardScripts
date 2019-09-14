@@ -1,4 +1,4 @@
---
+--クロノダイバー・ベゼルシップ
 --Time Thief Bezel Ship
 --Scripted by AlphaKretin
 local s,id=GetID()

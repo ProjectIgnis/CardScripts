@@ -1,3 +1,4 @@
+--忍者マスター SAIZO
 --Ninja Grandmaster Saizo
 --Scripted by Eerie Code
 local s,id=GetID()

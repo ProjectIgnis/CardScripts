@@ -1,3 +1,4 @@
+--黄色い忍者
 --Yellow Ninja
 --Scripted by Eerie Code
 local s,id=GetID()

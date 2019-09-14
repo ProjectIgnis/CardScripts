@@ -1,3 +1,4 @@
+--未界域－ユーマリア大陸
 --Realm of Danger!
 --Scripted by AlphaKretin
 local s,id=GetID()

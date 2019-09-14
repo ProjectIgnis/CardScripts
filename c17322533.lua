@@ -1,3 +1,4 @@
+--一点着地
 --Pinpoint Landing
 local s,id=GetID()
 function s.initial_effect(c)

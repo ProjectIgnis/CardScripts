@@ -1,3 +1,4 @@
+--黄竜の忍者
 --Yellow Dragon Ninja
 --Scripted by Eerie Code
 local s,id=GetID()

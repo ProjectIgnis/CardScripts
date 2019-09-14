@@ -1,4 +1,4 @@
---
+--ワルキューレ・フィアット
 --Valkyrie Vierte
 --Scripted by Naim
 local s,id=GetID()

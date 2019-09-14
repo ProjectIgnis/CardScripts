@@ -1,3 +1,4 @@
+--聖剣の導く未来
 --Until Noble Arms are Needed Once Again
 --Scripted by Eerie Code
 local s,id=GetID()

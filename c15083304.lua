@@ -1,3 +1,4 @@
+--未界域の危険地帯
 --Danger! Zone
 --Scripted by AlphaKretin
 local s,id=GetID()

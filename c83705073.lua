@@ -1,3 +1,4 @@
+--ワルキューレ・エルダ
 --Valkyrie Erda
 --Scripted by Eerie Code
 local s,id=GetID()

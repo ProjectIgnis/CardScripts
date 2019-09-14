@@ -1,3 +1,4 @@
+--忍法 妖変化の術
 --Ninjitsu Art of Mirage-Transformation
 --Scripted by Eerie Code
 local s,id=GetID()

@@ -1,3 +1,4 @@
+--極星霊アルヴィース
 --Alviss of the Nordic Alfar
 --Scripted by ahtelel and Eerie Code
 local s,id=GetID()

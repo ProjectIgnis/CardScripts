@@ -61,8 +61,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-function s.tgfilter(c,lv,att)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xdc) and c:GetLevel()~=lv and c:GetAttribute()~=att and c:IsAbleToGrave()
+function s.tgfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xdc) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetLevel(),e:GetHandler():GetAttribute()) end

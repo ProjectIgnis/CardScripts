@@ -1,3 +1,4 @@
+--アヴァロンの魔女モルガン
 --Morgan, the Enchantress of Avalon
 --Scripted by Eerie Code
 local s,id=GetID()

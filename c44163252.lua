@@ -1,3 +1,4 @@
+--ワルキューレ・セクスト
 --Valkyrie Sechste
 --Scripted by Eerie Code
 local s,id=GetID()

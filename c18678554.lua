@@ -1,4 +1,4 @@
---
+--クロノダイバー・フライバック
 --Time Thief FlyTrap
 --Scripted by Naim
 local s,id=GetID()

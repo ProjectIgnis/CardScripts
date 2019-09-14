@@ -1,3 +1,4 @@
+--原始生命態ニビル
 --Nibiru, the Primal Being
 --Scripted by Eerie Code
 local s,id=GetID()

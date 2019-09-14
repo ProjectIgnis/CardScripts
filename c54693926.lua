@@ -1,3 +1,4 @@
+--冥王結界波
 --Dark Ruler No More
 --Scripted by Eerie Code
 local s,id=GetID()

@@ -1,3 +1,4 @@
+--F.A.カーナビゲーター
 --F.A. Auto Navigator
 --Scripted by Eerie Code
 local s,id=GetID()
@@ -58,9 +59,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_CHANGE_LEVEL)
+			e2:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
 			e2:SetValue(lv)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e2)
 		end
 	end

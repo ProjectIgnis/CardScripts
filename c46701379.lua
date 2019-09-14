@@ -1,3 +1,4 @@
+--ワルキューレ・フュンフト
 --Valkyrie Funfte
 --Scripted by Eerie Code
 local s,id=GetID()

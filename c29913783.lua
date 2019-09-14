@@ -1,4 +1,4 @@
--- 
+--対壊獣用決戦兵器メカサンダー・キング 
 -- Super Anti-Kaiju War Machine Mecha-Thunder-King
 local s,id=GetID()
 function s.initial_effect(c)

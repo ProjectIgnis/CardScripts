@@ -1,3 +1,4 @@
+--クロノダイバー・リダン
 --Time Thief Redoer
 --Scripted by Eerie Code
 local s,id=GetID()

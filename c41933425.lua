@@ -1,3 +1,4 @@
+--コンタクト・ゲート
 --Contact Gate
 --Scripted by Eerie Code
 local s,id=GetID()

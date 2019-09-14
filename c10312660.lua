@@ -1,4 +1,4 @@
---
+--未界域の歓待
 --You are in Danger!
 --scripted by Naim
 local s,id=GetID()

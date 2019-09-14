@@ -1,4 +1,4 @@
---
+--クロノダイバー・レギュレーター
 --Time Thief Regulator
 --Scripted by Naim
 local s,id=GetID()

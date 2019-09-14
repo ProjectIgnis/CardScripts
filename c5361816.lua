@@ -1,3 +1,4 @@
+--聖騎士ペリノア
 --Noble Knight Pellinore
 local s,id=GetID()
 function s.initial_effect(c)

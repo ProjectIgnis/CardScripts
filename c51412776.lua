@@ -1,3 +1,4 @@
+--聖杯の継承
 --Heritage of the Chalice
 --Scripted by ahtelel
 local s,id=GetID()

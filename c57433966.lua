@@ -1,4 +1,4 @@
---
+--魅惑の未界域
 --Danger! Suspense! Secrets!
 --scripted by Naim
 local s,id=GetID()

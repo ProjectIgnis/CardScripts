@@ -1,4 +1,4 @@
---
+--蛇龍の枷鎖
 --Saryuja’s Shackles
 --local s,id=GetID()
 local s,id=GetID()

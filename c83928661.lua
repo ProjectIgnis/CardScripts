@@ -1,4 +1,4 @@
---
+--未界域捕縛作戦
 --Danger! Feets of Strength!
 --Scripted by Naim
 local s,id=GetID()

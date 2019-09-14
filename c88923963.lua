@@ -1,3 +1,4 @@
+--聖騎士イヴァン
 --Noble Knight Iyvanne
 --Scripted by AlphaKretin
 local s,id=GetID()

@@ -1,3 +1,4 @@
+--戦乙女の戦車
 --Valkyrie Chariot
 --Scripted by Eerie Code
 local s,id=GetID()

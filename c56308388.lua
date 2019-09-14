@@ -1,3 +1,4 @@
+--クロノダイバー・リューズ
 --Time Thief Winder
 local s,id=GetID()
 function s.initial_effect(c)

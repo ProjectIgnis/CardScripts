@@ -1,3 +1,4 @@
+--未み界かい域いきのオゴポゴ
 --Danger! Ogopogo!
 --Scripted by AlphaKretin
 local s,id=GetID()
@@ -38,8 +39,7 @@ function s.spfilter(c,e,tp)
 	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -50,6 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:Select(1-tp,1,1,nil)
 	Duel.BreakEffect()
 	Duel.SendtoGrave(tc,REASON_EFFECT+REASON_DISCARD)
+	if not Duel.IsPlayerCanSpecialSummon(tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
 	if not tc:GetFirst():IsCode(id) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

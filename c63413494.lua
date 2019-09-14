@@ -1,3 +1,4 @@
+--廃車復活
 --Consolation Prize
 --scripted by Naim
 local s,id=GetID()

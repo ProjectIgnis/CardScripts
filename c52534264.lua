@@ -1,3 +1,4 @@
+--第弐次未界域探険隊
 --Second Expedition into Danger!
 --scripted by Naim
 local s,id=GetID()

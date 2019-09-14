@@ -1,3 +1,4 @@
+--神聖騎士王コルネウス
 --Sacred Noble Knight of King Custennin
 --Scripted by Eerie Code
 local s,id=GetID()

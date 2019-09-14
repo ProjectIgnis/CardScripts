@@ -1,3 +1,4 @@
+--聖剣クラレント
 --Noble Arms - Clarent
 --Scripted by ahtelel
 local s,id=GetID()

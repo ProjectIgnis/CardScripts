@@ -264,8 +264,8 @@ end
 function Auxiliary.BitSplit(v)
 	local res={}
 	local i=0
-	while math.pow(2,i)<=v do
-		local p=math.pow(2,i)
+	while 2^i<=v do
+		local p=2^i
 		if v & p~=0 then 
 			table.insert(res,p)
 		end

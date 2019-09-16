@@ -1,9 +1,8 @@
 --死霊王 ドーハスーラ
---Doomking Balerdroch
---
+--Doomking Balerdorch
 local s,id=GetID()
 function s.initial_effect(c)
-	--negate / banish
+	--negate and/or banish
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_REMOVE)
@@ -11,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.disrmcon)
+	e1:SetCost(s.disrmcost)
 	e1:SetTarget(s.disrmtg)
 	e1:SetOperation(s.disrmop)
 	c:RegisterEffect(e1)
@@ -27,14 +27,17 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+function s.disrmcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(id)==0 end
+	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
+end
 function s.disrmcon(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	local c=re:GetHandler()
-	local race=c:GetRace()
-	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if loc==LOCATION_HAND then race=c:GetOriginalRace() end
-	if loc==LOCATION_MZONE and not c:IsLocation(LOCATION_MZONE) then race=c:GetPreviousRaceOnField() end
-	return race==RACE_ZOMBIE and not c:IsCode(id) and re:IsActiveType(TYPE_MONSTER) and not e:GetHandler():IsStatus(STATUS_CHAINING) 
+	local race,code1,code2=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_RACE,CHAININFO_TRIGGERING_CODE,CHAININFO_TRIGGERING_CODE2)
+	return race&RACE_ZOMBIE>0 and code1~=id and code2~=id
+end
+function s.filter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 function s.disrmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsChainDisablable(ev) and Duel.GetFlagEffect(tp,id)==0
@@ -77,7 +80,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
-function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
-end
-

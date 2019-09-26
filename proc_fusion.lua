@@ -501,7 +501,11 @@ function Fusion.AddProcMixRepUnfix(c,sub,insf,...)
 			minc=minc+f[2]
 			maxc=maxc+f[3]
 		elseif type(f[1])=='table' then
-			fun[i]=function(c,fc,sub,sub2) return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,fc:GetControler(),table.unpack(f[1])) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end,f[2], f[3]}
+			fun[i]=function(c,fc,sub,sub2)
+				return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,fc:GetControler(),table.unpack(f[1]))
+					or (sub and c:CheckFusionSubstitute(fc))
+					or (sub2 and c:IsHasEffect(511002961))
+					end,f[2],f[3]
 			for _, fmat in ipairs(f[1]) do
 				local addmat=true
 				for index, value in ipairs(mat) do

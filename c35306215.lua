@@ -1,5 +1,5 @@
 --失楽の堕天使
---The Condemned Darklord
+--Condemned Darklord
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -74,13 +74,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	local tc=g:GetFirst()
-	if tc and tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
-	else
-		Duel.SendtoGrave(tc,REASON_EFFECT)
-	end
+	aux.ToHandOrElse(g:GetFirst(),tp)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

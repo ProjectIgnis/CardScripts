@@ -1,5 +1,5 @@
 --無限起動リヴァーストーム
---Infinite Ignition Leverstorm
+--Infinitrack River Stormer
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -50,13 +50,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	local tc=g:GetFirst()
-	if tc and tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,0))) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
-	else
-		Duel.SendtoGrave(tc,REASON_EFFECT)
-	end
+	aux.ToHandOrElse(g:GetFirst(),tp)
 end
 function s.atchtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local bc=e:GetHandler():GetBattleTarget()

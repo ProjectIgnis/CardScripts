@@ -1,4 +1,5 @@
 --アマゾネスの叫声
+--Amazoness Call
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -30,14 +31,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
-	local tc=g:GetFirst()
-	if tc and tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,0))) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
-	else
-		Duel.SendtoGrave(tc,REASON_EFFECT)
-	end
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+	aux.ToHandOrElse(tc,tp)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

@@ -25,10 +25,10 @@ function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.scfilter1(c,tp,mc)
 	return c:IsFaceup()
-		and Duel.IsExistingMatchingCard(s.scfilter2,tp,LOCATION_EXTRA,0,1,nil,tp,mc,Group.FromCards(c))
+		and Duel.IsExistingMatchingCard(s.scfilter2,tp,LOCATION_EXTRA,0,1,nil,tp,Group.FromCards(c,mc))
 end
-function s.scfilter2(c,tp,tc,mg)
-	return Duel.GetLocationCountFromEx(tp,tp,mg,c)>0 and c:IsSynchroSummonable(tc,mg)
+function s.scfilter2(c,tp,mg)
+	return Duel.GetLocationCountFromEx(tp,tp,mg,c)>0 and c:IsSynchroSummonable(nil,mg)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -48,8 +48,8 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not c:IsRelateToEffect(e) or Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
-	local mg=Group.FromCards(tc)
-	local g=Duel.GetMatchingGroup(s.scfilter2,tp,LOCATION_EXTRA,0,nil,tp,c,mg)
+	local mg=Group.FromCards(c,tc)
+	local g=Duel.GetMatchingGroup(s.scfilter2,tp,LOCATION_EXTRA,0,nil,tp,mg)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)

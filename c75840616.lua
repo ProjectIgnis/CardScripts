@@ -1,9 +1,10 @@
 --武神帝－スサノヲ
+--Bujintei Susanowo
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x88),4,2)
+	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x88),4,2)
 	c:EnableReviveLimit()
 	--search
 	local e1=Effect.CreateEffect(c)
@@ -36,11 +37,5 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
-	local tc=g:GetFirst()
-	if tc and tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
-	else
-		Duel.SendtoGrave(tc,REASON_EFFECT)
-	end
+	aux.ToHandOrElse(g:GetFirst(),tp)
 end

@@ -1,5 +1,5 @@
 --星遺物の守護竜
---Guardragon of the World Legacy
+--World Legacy Guardragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -45,20 +45,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if not (tc and tc:IsRelateToEffect(e)) then return end
-	local b1=tc:IsAbleToHand()
-	local b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	if b1 and b2 then
-			op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-	elseif b1 then
-			op=Duel.SelectOption(tp,aux.Stringid(id,1))
-		else
-			op=Duel.SelectOption(tp,aux.Stringid(id,2))+1
-		end
-	if op==0 then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-	elseif op==1 then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-	end
+	aux.ToHandOrElse(tc,tp,function(c)
+						return tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end,
+						function(c)
+						Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end,
+						aux.Stringid(id,2))
 end
 function s.mvfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON)

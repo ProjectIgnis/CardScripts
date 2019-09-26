@@ -1,4 +1,5 @@
 --バージェストマ・ハルキゲニア
+--Paleozoic Hallucigenia
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -64,6 +65,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0xd4,0x11,1200,0,2,RACE_AQUA,ATTRIBUTE_WATER) then
 		c:AddMonsterAttribute(TYPE_NORMAL)
+		c:AssumeProperty(ASSUME_RACE,RACE_AQUA)
 		Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 		c:AddMonsterAttributeComplete()
 		local e2=Effect.CreateEffect(c)

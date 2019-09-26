@@ -1,5 +1,5 @@
 --白の救済
---White Salvation
+--Whitefish Salvage
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -64,16 +64,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
-		local sc=g:GetFirst()
-		if sc then
-			if sc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-				and (not sc:IsAbleToHand() or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
-				Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
-			else
-				Duel.SendtoHand(sc,nil,REASON_EFFECT)
-				Duel.ConfirmCards(1-tp,sc)
-			end
+		tc=g:GetFirst()
+		aux.ToHandOrElse(tc,tp,function(c)
+						return tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end,
+						function(c)
+						Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end,
+						aux.Stringid(id,2))
 		end
-	end
+	
 end
-

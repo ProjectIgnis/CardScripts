@@ -1,4 +1,5 @@
 --バージェストマ・カナディア
+--Paleozoic Canadia
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetHintTiming(TIMING_BATTLE_PHASE,0x1c0+TIMING_BATTLE_PHASE)
+	e1:SetHintTiming(TIMING_BATTLE_PHASE,TIMINGS_CHECK_MONSTER+TIMING_BATTLE_PHASE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -53,6 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0xd4,0x11,1200,0,2,RACE_AQUA,ATTRIBUTE_WATER) then
 		c:AddMonsterAttribute(TYPE_NORMAL)
+		c:AssumeProperty(ASSUME_RACE,RACE_AQUA)
 		Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 		c:AddMonsterAttributeComplete()
 		local e2=Effect.CreateEffect(c)

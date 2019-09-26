@@ -35,12 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc then
-		if tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
-			Duel.SendtoHand(tc,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,tc)
-		else
-			Duel.SendtoGrave(tc,REASON_EFFECT)
-		end
+		aux.ToHandOrElse(tc,tp)
 		local fg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 		local hg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
 		if #fg>0 and fg:FilterCount(aux.FilterFaceupFunction(Card.IsSetCard,0x83),1,nil)==#fg 

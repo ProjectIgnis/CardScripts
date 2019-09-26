@@ -1459,6 +1459,38 @@ function Auxiliary.EnableExtraRulesOperation(card,init,...)
         end
     end
 end
+--[[Function to perform "Either add it to the hand or do X"
+Required:
+card: affected card to be moved; -player: player performing the operation
+Optional:
+check: condition for the secondary action, if not provided the default action is "Send it to the GY"; oper: secondary action; str: stirng to be used in the secondary option
+]]
+function Auxiliary.ToHandOrElse(card,player,check,oper,str,...)
+	if card then
+		if not check then check=Card.IsAbleToGrave end
+		if not oper then oper=aux.thoeSend end
+		if not str then str=574 end
+		local b1=card:IsAbleToHand()
+		local b2=check(card,...)
+		local opt
+		if b1 and b2 then
+			opt=Duel.SelectOption(player,573,str)
+		elseif b1 then
+			opt=Duel.SelectOption(player,573)
+		else
+			opt=Duel.SelectOption(player,str)+1
+		end
+		if opt==0 then
+			Duel.SendtoHand(card,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-player,card)
+		else
+			oper(card,...)
+		end
+	end
+end
+function Auxiliary.thoeSend(card)
+    Duel.SendtoGrave(card,REASON_EFFECT)
+end
 --for zone checking (zone is the zone, tp is referencial player)
 function Auxiliary.IsZone(c,zone,tp)
 	local rzone = c:IsControler(tp) and (1 <<c:GetSequence()) or (1 << (16+c:GetSequence()))

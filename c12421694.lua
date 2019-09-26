@@ -16,12 +16,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--recover LP
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e2:SetCode(EVENT_CHAIN_SOLVING)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetOperation(s.lpop)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetOperation(aux.chainreg)
 	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e3:SetCode(EVENT_CHAIN_SOLVED)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(s.lpcon)
+	e3:SetOperation(s.lpop)
+	c:RegisterEffect(e3)
 end
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsSetCard(0x1115,scard,sumtype,tp) and not c:IsAttribute(ATTRIBUTE_EARTH,scard,sumtype,tp)
@@ -42,6 +50,10 @@ function s.naop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
+function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:GetFlagEffect(1)>0
+end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	local c=re:GetHandler()
 	if re:IsActiveType(TYPE_SPELL) and rp==tp and c:IsSetCard(0x115) then
@@ -49,4 +61,3 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Recover(tp,100,REASON_EFFECT)
 	end
 end
-

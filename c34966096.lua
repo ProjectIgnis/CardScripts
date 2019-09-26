@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	--banish
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_REMOVE)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,id+1)

@@ -1,4 +1,5 @@
 --真源の帝王
+--The Prime Monarch
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -96,6 +97,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x11,1000,2400,5,RACE_FAIRY,ATTRIBUTE_LIGHT) then
 		c:AddMonsterAttribute(TYPE_NORMAL)
+		c:AssumeProperty(ASSUME_RACE,RACE_FAIRY)
 		Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP_DEFENSE)
 		c:AddMonsterAttributeComplete()
 		Duel.SpecialSummonComplete()

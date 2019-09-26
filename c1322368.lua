@@ -1,5 +1,5 @@
 --SPYRAL－ザ・ダブルヘリックス
---SPYRAL - The Double Helix
+--SPYRAL Double Helix
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -47,9 +47,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp,zone)
 		local sc=sg:GetFirst()
 		if sc then
-			if zone~=0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
-				and (not sc:IsAbleToHand() or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
-				Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP,zone)
+			if zone~=0 then
+				aux.ToHandOrElse(sc,tp,function(c)
+						return sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end,
+						function(c)
+						Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP,zone) end,
+						aux.Stringid(id,1)
+						)
 			else
 				Duel.SendtoHand(sc,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,sc)

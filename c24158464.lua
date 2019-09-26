@@ -61,13 +61,6 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
-	if tc then
-		if tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,3))) then
-			Duel.SendtoHand(tc,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,tc)
-		else
-			Duel.SendtoGrave(tc,REASON_EFFECT)
-		end
-	end
+	aux.ToHandOrElse(tc,tp)
 end
 

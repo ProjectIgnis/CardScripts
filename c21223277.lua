@@ -1,4 +1,5 @@
 --聖騎士王アルトリウス
+--Artorigus, King of the Noble Knights
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -27,39 +28,29 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x207a}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function s.filter(c,e,tp,ec)
 	return c:IsSetCard(0x207a) and c:IsCanBeEffectTarget(e) and c:CheckUniqueOnField(tp) and c:CheckEquipTarget(ec)
 end
+function s.rescon(sg,e,tp,mg)
+	return Duel.GetLocationCount(tp,LOCATION_SZONE)>=#sg and sg:GetClassCount(Card.GetCode)==#sg
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp,e:GetHandler()) end
-	if chk==0 then
-		if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return false end
-		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,e:GetHandler())
-	end
-	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,e,tp,e:GetHandler())
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g1=g:Select(tp,1,1,nil)
-	g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
-	if ft>1 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g2=g:Select(tp,1,1,nil)
-		g:Remove(Card.IsCode,nil,g2:GetFirst():GetCode())
-		g1:Merge(g2)
-		if ft>2 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-			g2=g:Select(tp,1,1,nil)
-			g1:Merge(g2)
-		end
-	end
-	Duel.SetTargetCard(g1)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g1,#g1,0,0)
+	local c=e:GetHandler()
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,e,tp,c)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp,c) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,e:GetHandler()) end
+	local eg=aux.SelectUnselectGroup(g,e,tp,1,3,s.rescon,1,tp,HINTMSG_EQUIP)
+	Duel.SetTargetCard(eg)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,eg,#eg,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	local g=Duel.GetTargetCards(e)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if ft<#g then return end
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end

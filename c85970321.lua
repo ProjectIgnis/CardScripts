@@ -1,5 +1,5 @@
 --妖仙獣 飯綱鞭
---Yosenju Izun
+--Yosenju Izna
 --scripted by AlphaKreitn
 local s,id=GetID()
 function s.initial_effect(c)
@@ -57,23 +57,23 @@ function s.crop(e,tp,eg,ep,ev,re,r,rp)
 end
 s.cfilter=aux.FilterFaceupFunction(Card.IsSetCard,0xb3)
 function s.cedop(e,tp,eg,ep,ev,re,r,rp)
-	if eg:IsExists(s.cfilter,1,nil) then
+	if eg and eg:IsExists(s.cfilter,1,nil) then
 	    Duel.SetChainLimitTillChainEnd(s.chlimit)
 	end
 end
 function s.cedop2(e,tp,eg,ep,ev,re,r,rp)
-    if eg:IsExists(s.cfilter,1,nil) and Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS) then
-        Duel.SetChainLimitTillChainEnd(s.chlimit)
-    end
+	if eg and eg:IsExists(s.cfilter,1,nil) and Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS) then
+		Duel.SetChainLimitTillChainEnd(s.chlimit)
+	end
 end
 function s.chlimit(re,rp,tp)
-    return rp==tp
+	return rp==tp
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)

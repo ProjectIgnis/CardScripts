@@ -21,26 +21,22 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp)
-	local tc=g:GetFirst()
-	if tc then
-		local te=tc:GetActivateEffect()
-		local b1=tc:IsAbleToHand()
-		local b2=te:IsActivatable(tp,true,true)
-		if b1 and (not b2 or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
-			Duel.SendtoHand(tc,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,tc)
-		else
-			local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-			if fc then
-				Duel.SendtoGrave(fc,REASON_RULE)
-				Duel.BreakEffect()
-			end
-			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-			local tep=tc:GetControler()
-			local cost=te:GetCost()
-			if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-			Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
-		end
-	end
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	aux.ToHandOrElse(tc,tp,function(c)
+                            local te=tc:GetActivateEffect()
+                            return te:IsActivatable(tp)
+                        end, function(c)
+                            local te=tc:GetActivateEffect()
+                            local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+                            if fc then
+                                Duel.SendtoGrave(fc,REASON_RULE)
+                                Duel.BreakEffect()
+                            end
+                            Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+                            local tep=tc:GetControler()
+                            local cost=te:GetCost()
+                            if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
+                            Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
+                        end,
+						aux.Stringid(id,2))
 end

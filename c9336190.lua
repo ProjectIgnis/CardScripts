@@ -1,4 +1,5 @@
 --幻影騎士団ミストクロウズ
+--The Phantom Knights of Mist Claw
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -65,6 +66,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x11,0,0,tc:GetLevel(),RACE_WARRIOR,ATTRIBUTE_DARK) then
 		c:AddMonsterAttribute(TYPE_NORMAL,0,0,tc:GetLevel(),0,0)
+		c:AssumeProperty(ASSUME_RACE,RACE_WARRIOR)
 		Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 		c:AddMonsterAttributeComplete()
 		local e1=Effect.CreateEffect(c)

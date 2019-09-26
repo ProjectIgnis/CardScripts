@@ -1,4 +1,5 @@
 --EMセカンドンキー
+--Performapal Secondonkey
 local s,id=GetID()
 function s.initial_effect(c)
 	--tograve
@@ -32,9 +33,8 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tohand)
 	local tc=g:GetFirst()
 	if not tc then return end
-	if tohand and tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
+	if tohand then
+		aux.ToHandOrElse(tc,tp)
 	else
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end

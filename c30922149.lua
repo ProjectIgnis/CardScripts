@@ -1,4 +1,5 @@
 --副作用？
+--Side Effects?
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -20,8 +21,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	if not Duel.IsPlayerCanDraw(p) then return end
 	local ct=Duel.GetFieldGroupCount(p,LOCATION_DECK,0)
-	local ac=0
-	if ct==0 then ac=1 end
+	local ac=1
 	if ct>1 then
 		Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(id,0))
 		if ct==2 then ac=Duel.AnnounceNumber(p,1,2)

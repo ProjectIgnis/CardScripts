@@ -1,4 +1,5 @@
 --幻影騎士団シャドーベイル
+--The Phantom Knights of Shadow Veil
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -60,6 +61,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x11,0,300,4,RACE_WARRIOR,ATTRIBUTE_DARK) then
 		c:AddMonsterAttribute(TYPE_NORMAL)
+		c:AssumeProperty(ASSUME_RACE,RACE_WARRIOR)
 		Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP_DEFENSE)
 		c:AddMonsterAttributeComplete()
 		--redirect

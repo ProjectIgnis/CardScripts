@@ -1,4 +1,5 @@
 --花積み
+--Flower Stacking
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,26 +24,23 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xe6}
 function s.filter(c)
 	return c:IsSetCard(0xe6) and c:IsType(TYPE_MONSTER)
+end
+function s.rescon(sg,e,tp,mg)
+	return sg:GetClassCount(Card.GetCode)==#sg
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-		return g:GetClassCount(Card.GetCode)>=3
+		return aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,chk)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-	if g:GetClassCount(Card.GetCode)>=3 then
-		local rg=Group.CreateGroup()
-		for i=1,3 do
-			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-			local sg=g:Select(tp,1,1,nil)
-			local tc=sg:GetFirst()
-			rg:AddCard(tc)
-			g:Remove(Card.IsCode,nil,tc:GetCode())
-		end
+	local rg=aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,1,tp,aux.Stringid(id,1))
+	if #rg>0 then
 		Duel.ConfirmCards(1-tp,rg)
 		Duel.ShuffleDeck(tp)
 		local tg=rg:GetFirst()

@@ -1,5 +1,5 @@
 --妖醒龍ラルバウール
---Fairy Dragon Larvalaur
+--Omni Dragon Brotaur
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp,rp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and
-		(c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and rp~=tp))
+		(c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,rp) and not eg:IsContains(e:GetHandler())

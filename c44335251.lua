@@ -1,4 +1,5 @@
 --魂喰いオヴィラプター
+--Souleating Oviraptor
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand or grave
@@ -36,11 +37,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 then
-		local tc=g:GetFirst()
-		aux.ToHandOrGY(tc)
-	end
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
+	local tc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+	aux.ToHandOrElse(tc,tp)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsRace(RACE_DINOSAUR)

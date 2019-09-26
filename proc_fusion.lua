@@ -16,6 +16,17 @@ function Fusion.AddProcMix(c,sub,insf,...)
 	for i=1,#val do
 		if type(val[i])=='function' then
 			fun[i]=function(c,fc,sub,sub2,mg,sg,tp,contact) return (val[i](c,fc,SUMMON_TYPE_FUSION,tp,sub,mg,sg,contact) or (sub2 and c:IsHasEffect(511002961))) and not c:IsHasEffect(6205579) end
+		elseif type(val[i])=='table' then
+			fun[i]=function(c,fc,sub,sub2) return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,fc:GetControler(),table.unpack(val[i])) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end
+			for _, fmat in ipairs(val[i]) do
+				local addmat=true
+				for index, value in ipairs(mat) do
+					if value==fmat then
+						addmat=false
+					end
+				end
+				if addmat then table.insert(mat,fmat) end
+			end
 		else
 			local addmat=true
 			fun[i]=function(c,fc,sub,sub2) return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,fc:GetControler(),val[i]) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end
@@ -217,6 +228,17 @@ function Fusion.AddProcMixRep(c,sub,insf,fun1,minc,maxc,...)
 	for i=1,#val do
 		if type(val[i])=='function' then
 			fun[i]=function(c,fc,sub,sub2,mg,sg,tp,contact) return (val[i](c,fc,SUMMON_TYPE_FUSION,tp,sub,mg,sg,contact) or (sub2 and c:IsHasEffect(511002961))) and not c:IsHasEffect(6205579) end
+		elseif type(val[i])=='table' then
+			fun[i]=function(c,fc,sub,sub2) return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,fc:GetControler(),table.unpack(val[i])) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end
+			for _, fmat in ipairs(val[i]) do
+				local addmat=true
+				for index, value in ipairs(mat) do
+					if value==fmat then
+						addmat=false
+					end
+				end
+				if addmat then table.insert(mat,fmat) end
+			end
 		else
 			local addmat=true
 			fun[i]=function(c,fc,sub,sub2) return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,fc:GetControler(),val[i]) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end
@@ -478,6 +500,17 @@ function Fusion.AddProcMixRepUnfix(c,sub,insf,...)
 			return (f[1](c,fc,SUMMON_TYPE_FUSION,tp,sub,mg,sg) or (sub2 and c:IsHasEffect(511002961))) and not c:IsHasEffect(6205579) end,f[2], f[3]}
 			minc=minc+f[2]
 			maxc=maxc+f[3]
+		elseif type(f[1])=='table' then
+			fun[i]=function(c,fc,sub,sub2) return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,fc:GetControler(),table.unpack(f[1])) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end,f[2], f[3]}
+			for _, fmat in ipairs(f[1]) do
+				local addmat=true
+				for index, value in ipairs(mat) do
+					if value==fmat then
+						addmat=false
+					end
+				end
+				if addmat then table.insert(mat,fmat) end
+			end
 		else
 			local addmat=true
 			fun[i]={function(c,fc,sub,sub2) return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,fc:GetControler(),f[1]) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end,f[2], f[3]}

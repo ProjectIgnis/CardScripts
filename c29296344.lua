@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x102}
 function s.lcheck(g,lc)
-	return g:IsExists(Card.IsLinkSetCard,1,nil,0x102)
+	return g:IsExists(Card.IsSetCard,1,nil,0x102)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

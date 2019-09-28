@@ -27,7 +27,7 @@ c:EnableReviveLimit()
 end
 s.listed_series={0x12b}
 function s.mfilter(c,lc,sumtype,tp)
-	return c:IsLinkSetCard(0x12b) and c:IsLevelBelow(4)
+	return c:IsSetCard(0x12b) and c:IsLevelBelow(4)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

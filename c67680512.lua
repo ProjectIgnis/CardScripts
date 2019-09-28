@@ -32,7 +32,7 @@ function s.lkfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:GetCode()~=id
 end
 function s.lcheck(g,lc,sumtype,tp)
-    return g:IsExists(Card.IsLinkSetCard,1,nil,0x1130)
+    return g:IsExists(Card.IsSetCard,1,nil,0x1130)
 end
 function s.linkcond(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()

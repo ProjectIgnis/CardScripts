@@ -41,7 +41,7 @@ end
 s.listed_names={CARD_EVIL_EYE_SELENE}
 s.listed_series={0x129}
 function s.matcheck(g,lc,tp)
-	return g:IsExists(Card.IsLinkSetCard,1,nil,0x129)
+	return g:IsExists(Card.IsSetCard,1,nil,0x129)
 end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0x129)

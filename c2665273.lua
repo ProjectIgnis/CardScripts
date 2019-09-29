@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	c:SetUniqueOnField(1,0,id)
-	aux.AddXyzProcedure(c,nil,9,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,9,2,nil,nil,99)
 	--atk/def up
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetCost(s.cost)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
-	c:RegisterEffect(e3,false,1)
+	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*1000

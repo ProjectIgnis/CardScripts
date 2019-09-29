@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.material_setcode=0xdd
-s.listed_names={CARD_BLUEEYES_W_DRAGON,38517737}
+s.listed_names={38517737}
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end

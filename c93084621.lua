@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
     c:EnableReviveLimit()
-    aux.AddLinkProcedure(c,nil,2,3,s.lcheck)
+    Link.AddProcedure(c,nil,2,3,s.lcheck)
     --link summon
     local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(id,0))
@@ -33,7 +33,7 @@ function s.lkfilter(c)
     return c:IsAttribute(ATTRIBUTE_DARK) and not c:IsCode(id)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-    return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+    return (r&REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
     return c:IsRace(RACE_FIEND) and not c:IsCode(id) and c:IsAbleToHand()

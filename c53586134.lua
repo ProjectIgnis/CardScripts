@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e5:SetValue(1)
 	c:RegisterEffect(e5)
 end
+s.listed_names={79979666}
 function s.repval(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0
 end

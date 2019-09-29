@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation2)
 	c:RegisterEffect(e2)
 end
+s.listed_names={81332143,14731897}
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,81332143)
 end

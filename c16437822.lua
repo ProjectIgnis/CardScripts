@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.retop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={75560629}
 function s.filter(c)
 	return c:GetEquipCount()~=0 and c:GetEquipGroup():IsExists(Card.IsCode,1,nil,75560629)
 end

@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e5)
 end
-s.listed_names={CARD_SANCTUARY_SKY,18036057}
+s.listed_names={18036057,CARD_SANCTUARY_SKY}
 function s.cfilter(c,ft,tp)
 	return c:IsCode(18036057) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
 end

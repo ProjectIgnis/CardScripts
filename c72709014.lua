@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_names={75917088,2316186}
+s.listed_names={75917088,2316186,46128076}
 function s.regfilter(c,ec)
 	return c==ec and c:GetBattleTarget():GetPreviousLevelOnField()>=5
 end

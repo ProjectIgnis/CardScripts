@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={14731897}
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local opt=0
 	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND,0,1,nil,14731897) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

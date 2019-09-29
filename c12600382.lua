@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e5:SetCondition(s.descon)
 	c:RegisterEffect(e5)
 end
+s.listed_names={8124921,44519536,70903634,7902349,33396948}
 function s.efdes(e,re)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end

@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddFusionProcMix(c,true,true,aux.FilterBoolFunction(Card.IsFusionSetCard,0x133),aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunction(Card.IsFusionSetCard,0x133),aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON))
 	--spsumon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

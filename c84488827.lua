@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
+s.listed_names={62729173}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if g:IsExists(Card.IsSetCard,2,nil,0x100a) or g:IsExists(Card.IsCode,1,nil,62729173) then

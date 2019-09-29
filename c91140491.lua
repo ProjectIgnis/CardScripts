@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	c:EnableCounterPermit(COUNTER_PAPILLON)
-	aux.AddLinkProcedure(c,nil,2,3,s.lcheck)
+	Link.AddProcedure(c,nil,2,3,s.lcheck)
 	--counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

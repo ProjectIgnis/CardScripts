@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	local e0=aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x129))
-	e0:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
+	e0:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	--change name
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

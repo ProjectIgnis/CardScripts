@@ -52,7 +52,7 @@ function s.initial_effect(c)
 	e6:SetValue(s.valcheck)
 	c:RegisterEffect(e6)
 end
-s.listed_names={70902743}
+s.listed_names={70902743,21159309}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker()
 end

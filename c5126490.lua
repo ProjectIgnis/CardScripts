@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
-s.listed_names={CARD_NEOS}
+s.listed_names={CARD_NEOS,78371393}
 function s.spfilter(c,...)
 	return c:IsFaceup() and c:IsCode(...) and c:IsAbleToGraveAsCost()
 end

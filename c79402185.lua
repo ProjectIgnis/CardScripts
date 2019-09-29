@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={58071123,85066822,6022371}
+s.listed_names={58071123,85066822,6022371,43017476}
 function s.spcheck(sg,tp)
 	return aux.ReleaseCheckMMZ(sg,tp) and sg:IsExists(s.chk,1,nil,sg)
 end

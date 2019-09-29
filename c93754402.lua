@@ -28,7 +28,7 @@ function s.filter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local se=aux.AddRitualProcGreater(e:GetHandler(),s.filter)
+	local se=Ritual.AddProcGreater(e:GetHandler(),s.filter)
 	local t=se:GetTarget()
 	local o=se:GetOperation()
 	se:Reset()

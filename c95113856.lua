@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1,false,1)
+	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -79,13 +79,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if op==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,1,nil)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.HintSelection(g)
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end
 	elseif op==2 then
 		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)
-		if g:GetCount()>0 then
+		if #g>0 then
 			local sg=g:RandomSelect(tp,1)
 			Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 		end
@@ -97,12 +97,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		else
 			g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,1,nil)
 		end
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end
 	elseif op==4 then
 		local g=Duel.GetDecktopGroup(1-tp,1)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.DisableShuffleCheck()
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end

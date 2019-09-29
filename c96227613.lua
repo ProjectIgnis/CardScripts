@@ -55,7 +55,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.trig)
 	c:RegisterEffect(e7)
 end
-s.listed_names={13331639}
+s.listed_names={13331639,22211622}
 function s.ndcfilter(c)
 	return c:IsFaceup() and c:IsCode(13331639)
 end

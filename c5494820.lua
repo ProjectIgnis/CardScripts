@@ -14,3 +14,4 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e3)
 end
+s.listed_names={10992251}

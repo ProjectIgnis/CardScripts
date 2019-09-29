@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.announcecost)
 	e1:SetTarget(s.target(s.synfilter,s.srescon))
-	e1:SetOperation(s.operation(s.synfilter,function(sc,g,tp) Auxiliary.SynchroSend=5 Duel.SynchroSummon(tp,sc,nil,g,#g,#g) end))
+	e1:SetOperation(s.operation(s.synfilter,function(sc,g,tp) Synchro.Send=5 Duel.SynchroSummon(tp,sc,nil,g,#g,#g) end))
 	c:RegisterEffect(e1)
 	--xyz summon
 	local e2=e1:Clone()

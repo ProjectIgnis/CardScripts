@@ -3,7 +3,7 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddXyzProcedure(c,nil,4,2)
+	Xyz.AddProcedure(c,nil,4,2)
 	c:EnableReviveLimit()
 	aux.EnableCheckReincarnation(c)
 	--destroy replace

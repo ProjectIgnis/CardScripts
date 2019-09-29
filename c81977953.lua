@@ -50,7 +50,7 @@ function s.spcon(e,c)
 	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ATTRIBUTE_WIND)
 	local rg=rg1:Clone()
 	rg:Merge(rg2)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and rg1:GetCount()>0 and rg2:GetCount()>1 
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #rg1>0 and #rg2>1 
 		and aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)

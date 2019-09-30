@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_POLYMERIZATION}
 function s.costfilter(c,ec)
-	return c:IsSetCard(0xdf) and not c:IsFusionCode(ec:GetFusionCode()) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+    return c:IsSetCard(0xdf) and not c:IsSummonCode(nil,SUMMON_TYPE_FUSION,PLAYER_NONE,ec:GetCode(nil,SUMMON_TYPE_FUSION)) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -18,7 +18,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--tribute substitute
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(id)
 	e3:SetRange(LOCATION_FZONE)

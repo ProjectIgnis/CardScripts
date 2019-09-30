@@ -555,7 +555,8 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 								if #matg<minc or (matg:IsExists(Card.IsHasEffect,1,nil,91110378) and not Xyz.MatNumChkF(matg)) 
 									or (lv and matg:IsExists(Card.IsHasEffect,1,nil,86466163) and not Xyz.MatNumChkF2(matg,lv,c)) then return false end
 								if not matg:Includes(mustg) then return false end
-								if xyz:IsLocation(LOCATION_EXTRA) then
+								--if xyz:IsLocation(LOCATION_EXTRA) then
+								if c:IsLocation(LOCATION_EXTRA) then
 									if Duel.GetLocationCountFromEx(tp,tp,matg,c)>0 then return false end
 								else
 									if Duel.GetMZoneCount(tp,matg,tp)>0 then return false end

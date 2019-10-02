@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x9d),Fusion.InHandMat,s.fextra,nil,nil,s.stage2,2)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x9b),Fusion.InHandMat,s.fextra,nil,nil,s.stage2,2)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
 	if not AshBlossomTable then AshBlossomTable={} end

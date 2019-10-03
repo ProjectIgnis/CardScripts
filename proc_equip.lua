@@ -29,6 +29,7 @@ function Auxiliary.AddEquipProcedure(c,p,f,eqlimit,cost,tg,op,con)
 		e2:SetValue(Auxiliary.EquipLimit(f))
 	end
 	c:RegisterEffect(e2)
+	return e1
 end
 function Auxiliary.EquipLimit(f)
 	return function(e,c)

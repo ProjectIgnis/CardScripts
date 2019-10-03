@@ -56,7 +56,7 @@ function s.fcheck(tp,sg,fc)
 end
 function s.dmcon(tp)
 	return not Duel.IsExistingMatchingCard(Card.IsSummonLocation,tp,LOCATION_MZONE,0,1,nil,LOCATION_EXTRA)
-		and Duel.IsExistingMatchingCard(Card.IsSummonLocation,tp,0,LOCATION_MZONE,1,nil.LOCATION_EXTRA)
+		and Duel.IsExistingMatchingCard(Card.IsSummonLocation,tp,0,LOCATION_MZONE,1,nil,LOCATION_EXTRA)
 end
 function s.fextra(e,tp,mg)
 	if s.dmcon(tp) then

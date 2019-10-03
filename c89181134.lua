@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	s.atteff=e1
 	--fusion summon
-	local params = {aux.FilterBoolFunction(Card.IsAttribute(ATTRIBUTE_DARK)),nil,s.fextra,nil,Fusion.ForcedHandler}
+	local params = {aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),nil,s.fextra,nil,Fusion.ForcedHandler}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)

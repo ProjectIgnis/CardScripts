@@ -43,6 +43,7 @@ function s.initial_effect(c)
 			s[0]=0
 			s[1]=0
 		end)
+		)
 	end
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)

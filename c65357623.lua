@@ -1,6 +1,6 @@
 --アンデット・ストラグル
 --Zombie Struggle
---Logical Nonsense
+--scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--modify ATK

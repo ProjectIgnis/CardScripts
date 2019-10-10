@@ -1,10 +1,8 @@
 --転生炎獣ガゼル
 --Salamangreat Gazelle
---Logical Nonsense
-
+--scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
 	--Special summon from hand, optional trigger effect
 	local e1=Effect.CreateEffect(c)

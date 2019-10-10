@@ -1,6 +1,6 @@
 --バックアップ・スーパーバイザー
 --Backup Supervisor
---Logical Nonsense, partly rewritten by dest
+--scripted by Logical Nonsense, partly rewritten by dest
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

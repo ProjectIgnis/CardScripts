@@ -1,6 +1,6 @@
 --守護竜プロミネシス
 --Prominesis the Guardragon
---Logical Nonsense
+--scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--ATK/DEF up

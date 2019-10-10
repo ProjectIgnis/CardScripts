@@ -1,6 +1,6 @@
 --不知火流 才華の陣
 --Shiranui Style Success
---Logical Nonsense
+--scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

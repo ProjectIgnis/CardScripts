@@ -1,10 +1,8 @@
 --ソウル・レヴィ
 --Soul Levy
---Logical Nonsense
-
+--scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
 	--Only control 1
 	c:SetUniqueOnField(1,0,id)

@@ -1,6 +1,6 @@
 --荘厳なる機械天使
 --Majestic Machine Angel
---Logical Nonsense
+--scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

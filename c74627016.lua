@@ -1,5 +1,5 @@
 --T.G. Tank Larva
---Logical Nonsense
+--scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Non-tuner

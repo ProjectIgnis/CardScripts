@@ -1,6 +1,6 @@
 --逢華妖麗譚－不知火語
 --Shiranui Story Saga
---Logical Nonsense
+--scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,6 +1,6 @@
 --守護竜アンドレイク
 --Andrake the Guardragon
---Logical Nonsense
+--scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableUnsummonable()

@@ -1,6 +1,6 @@
 --慈悲深き機械天使
 --The Merciful Machine Angel
---Logical Nonsense
+--scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

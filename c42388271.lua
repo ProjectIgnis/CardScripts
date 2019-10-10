@@ -1,6 +1,6 @@
 --星遺物－『星櫃』
 --World Legacy - "World Ark"
---Logical Nonsense
+--scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

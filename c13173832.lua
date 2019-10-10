@@ -1,6 +1,6 @@
 --転生炎獣ウルヴィー
 --Salamangreat Wolvie
---Logical Nonsense
+--scripted by Logical Nonsense
 
 --Substitute ID
 local s,id=GetID()

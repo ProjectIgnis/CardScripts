@@ -1,10 +1,8 @@
 --転生炎獣スピニー
 --Salamangreat Spinny
---Logical Nonsense
-
+--scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
 	--ATK gain
 	local e1=Effect.CreateEffect(c)

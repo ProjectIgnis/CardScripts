@@ -1,6 +1,6 @@
 --サブテラーの継承
 --Subterror Succession
---Logical Nonsense
+--scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate (Send monster to GY to add flip monster)

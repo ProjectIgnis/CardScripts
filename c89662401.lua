@@ -1,6 +1,6 @@
 --転生炎獣フォウル
 --Salamangreat Fowl
---Logical Nonsense
+--scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--"Salamangreat" monster is normal summoned, optional trigger effect

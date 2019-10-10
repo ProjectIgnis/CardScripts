@@ -1,10 +1,8 @@
 --エーリアン・ソルジャー M/フレーム
 --Alien Shocktrooper Mighty/Frame
---Logical Nonsense
-
+--scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_REPTILE),2,2)

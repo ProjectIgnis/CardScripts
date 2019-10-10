@@ -1,6 +1,6 @@
 --月光小夜曲舞踊
 --Lunalight Serenade Dance
---Logical Nonsense
+--scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

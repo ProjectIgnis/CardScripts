@@ -1,5 +1,5 @@
 --Brotherhood of the Fire Fist - Peacock
---Logical Nonsense
+--scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

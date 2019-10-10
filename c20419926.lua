@@ -45,8 +45,8 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function s.atkcfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_LINK)
-		 and c:GetBaseAttack()>0 and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
+	return c:IsLinkMonster() and c:IsAttribute(ATTRIBUTE_DARK) and c:GetBaseAttack()>0
+	and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
 		and Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.atkfilter(c)

@@ -1,6 +1,6 @@
 --サラマングレイト・レイジ
 --Salamangreat Rage
---Logical Nonsense
+--scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -57,7 +57,7 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if "Salamangreat" link monster was summoned using its own name
 function s.lkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x119) and c:IsType(TYPE_LINK) and c:IsReincarnationSummoned()
+	return c:IsFaceup() and c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsReincarnationSummoned()
 end
 	--Activation legality
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

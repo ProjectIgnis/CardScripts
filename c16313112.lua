@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,fc,sumtype,tp)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x119) 
+	return c:IsLinkMonster() and c:IsSetCard(0x119) 
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil)

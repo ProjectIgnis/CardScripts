@@ -54,11 +54,11 @@ function s.seqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chfilter1(c)
-	return c:IsType(TYPE_LINK) and c:GetSequence()<5
+	return c:IsLinkMonster() and c:GetSequence()<5
 		and Duel.IsExistingMatchingCard(s.chfilter2,c:GetControler(),LOCATION_MZONE,0,1,c)
 end
 function s.chfilter2(c)
-	return c:IsType(TYPE_LINK) and c:GetSequence()<5
+	return c:IsLinkMonster() and c:GetSequence()<5
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.chfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

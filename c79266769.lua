@@ -74,5 +74,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsType(TYPE_LINK)
+	returnreturn c:IsLinkMonster()
 end

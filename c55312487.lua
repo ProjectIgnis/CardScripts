@@ -69,12 +69,12 @@ function s.spoperation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.catfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x116) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(0x116) and c:IsLinkMonster()
 end
 function s.catcondition(e)
 	return Duel.IsExistingMatchingCard(s.catfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.catlimit(e,c)
-	return not c:IsType(TYPE_LINK)
+	return not c:IsLinkMonster()
 end
 

@@ -155,7 +155,7 @@ function Auxiliary.HakaiLinkFilter(c,e,tp,f,of)
 end
 function Auxiliary.HakaiLinkSummonFilter(f)
 	return	function(c,mc,tc,tp)
-				if not (c:IsType(TYPE_LINK) and c:IsLinkAbove(2)) then return false end
+				if not (c:IsLinkMonster() and c:IsLinkAbove(2)) then return false end
 				if Duel.GetLocationCountFromEx(tp,tp,mc,c)<1 then return false end
 				if f and not f(c) then return false end
 				return mc:IsCanBeLinkMaterial(c,tp) and tc:IsCanBeLinkMaterial(c,tp) and c:IsSpecialSummonable(SUMMON_TYPE_LINK)

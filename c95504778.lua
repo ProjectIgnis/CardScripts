@@ -55,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return r&REASON_EFFECT==REASON_EFFECT and re:GetHandler():IsType(TYPE_LINK) and re:IsActivated()
+	return r&REASON_EFFECT==REASON_EFFECT and re:GetHandler():IsLinkMonster() and re:IsActivated()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

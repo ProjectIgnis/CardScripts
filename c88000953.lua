@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atkfilter(c)
-	return c:IsType(TYPE_LINK) and c:GetAttack()>0
+	returnreturn c:IsLinkMonster() and c:GetAttack()>0
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.atkfilter(chkc) end

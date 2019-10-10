@@ -16,7 +16,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return at and a:IsType(TYPE_LINK) and at:IsType(TYPE_LINK)
+	return at and a:IsLinkMonster() and at:IsLinkMonster()
 end
 function s.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()

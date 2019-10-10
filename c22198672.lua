@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	if not c:IsType(TYPE_LINK) then return false end
+	if not c:IsLinkMonster() then return false end
 	local p=c:GetControler()
 	local zone=c:GetLinkedZone()&0x1f
 	return Duel.GetLocationCount(p,LOCATION_MZONE,p,LOCATION_REASON_CONTROL,zone)>0

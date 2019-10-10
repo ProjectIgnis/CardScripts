@@ -25,7 +25,7 @@ function s.mfilter(c)
 	return c:GetLevel()>0 and c:IsSetCard(0x119) and c:IsAbleToDeck()
 end
 function s.ckfilter(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsType(TYPE_LINK)
+	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsLinkMonster()
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.IsExistingMatchingCard(s.ckfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) then

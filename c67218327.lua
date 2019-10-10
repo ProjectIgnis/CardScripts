@@ -23,7 +23,7 @@ function s.filter(c)
 	return c:IsRace(RACE_CYBERSE) and c:GetLevel()==4
 end
 function s.filter2(c)
-	return c:IsType(TYPE_LINK) and c:IsLinkState() and c:IsFaceup()
+	returnreturn c:IsLinkMonster() and c:IsLinkState() and c:IsFaceup()
 end
 function s.getzone(tp)
 	local zone = 0

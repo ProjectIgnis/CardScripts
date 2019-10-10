@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-    return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and c:IsControler(tp)
+    return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkMonster() and c:IsControler(tp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
     return s.cfilter(eg:GetFirst(),tp)
@@ -37,13 +37,13 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
     local ac=eg:GetFirst()
     Duel.Damage(p,ac:GetLink()*400,REASON_EFFECT)
     if Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil,tp):IsExists(Card.IsLinkAbove,1,nil,2)
-        and ac:GetBattleTarget():IsType(TYPE_LINK) and ac:GetLink()>0 then
+        and ac:GetBattleTarget():IsLinkMonster() and ac:GetLink()>0 then
         Duel.BreakEffect()
 		Duel.Damage(p,ac:GetBattleTarget():GetLink()*500,REASON_EFFECT)
     end
 end
 function s.actfilter(c)
-    return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and c:IsLinkAbove(3)
+    return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkMonster() and c:IsLinkAbove(3)
 end
 function s.actcon(e)
     return Duel.IsExistingMatchingCard(s.actfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

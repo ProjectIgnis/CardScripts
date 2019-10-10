@@ -82,7 +82,7 @@ function s.splimit(e,c,tp,sumtp,sumpos)
 	return c:GetLink()>e:GetHandler():GetCounter(0x44) and (sumtp&SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
 end
 function s.atktg(e,c)
-	return not c:IsType(TYPE_LINK)
+	return not c:IsLinkMonster()
 end
 function s.ctcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSummonType,1,nil,SUMMON_TYPE_LINK)

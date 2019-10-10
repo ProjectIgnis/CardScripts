@@ -70,7 +70,7 @@ function s.acfilter(c)
 end
 	--Check for non-link reptile monsters that can be special summoned
 function s.spfilter(c,e,tp)
-	return c:IsRace(RACE_REPTILE) and not c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_REPTILE) and notreturn c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcheck(sg,e,tp)
 	return sg:GetClassCount(Card.GetCode)==#sg

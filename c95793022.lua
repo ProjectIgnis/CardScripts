@@ -39,14 +39,14 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local d=a:GetBattleTarget()
 	local tc=nil
 	if a==c then tc=d elseif d and d==c then tc=a end
-	return tc and tc:IsType(TYPE_LINK) and tc:IsControler(1-tp)
+	return tc and tc:IsLinkMonster() and tc:IsControler(1-tp)
 end
 function s.descfilter(c,lk)
-	return c:IsType(TYPE_LINK) and c:GetLink()==lk and c:IsAbleToRemoveAsCost()
+	returnreturn c:IsLinkMonster() and c:GetLink()==lk and c:IsAbleToRemoveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetBattleTarget()
-	if chk==0 then return tc and tc:IsType(TYPE_LINK) and Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tc:GetLink()) end
+	if chk==0 then return tc and tc:IsLinkMonster() and Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tc:GetLink()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.descfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tc:GetLink())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)

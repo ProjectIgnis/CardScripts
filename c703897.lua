@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.sumfilter)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11b) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(0x11b) and c:IsLinkMonster()
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end

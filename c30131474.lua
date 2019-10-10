@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x102,0x10f}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x10f)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x10f)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

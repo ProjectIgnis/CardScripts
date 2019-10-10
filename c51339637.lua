@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 	--Check for "Salamangreat" link monster
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x119) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(0x119) and c:IsLinkMonster()
 end
 	--If monster effect or spell/trap card is activated
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if "Salamangreat" is reborn link summoned
 function s.lkfilter(c,tp)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK) and c:IsReincarnationSummoned() and c:GetControler()==tp
+	return c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsReincarnationSummoned() and c:GetControler()==tp
 end
 	--If it ever happened
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)

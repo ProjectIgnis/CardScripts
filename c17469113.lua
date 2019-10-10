@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.spcfilter(c)
-	return c:IsType(TYPE_LINK) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+	return c:IsLinkMonster() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
 function s.spcon(e,c)
 	if c==nil then return true end

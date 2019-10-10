@@ -52,7 +52,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if not d or a:GetControler()==d:GetControler() 
 		or not d:IsFaceup() or not a:IsFaceup()
-		or not a:IsType(TYPE_LINK) or not d:IsType(TYPE_LINK) then return false end
+		or not a:IsType(TYPE_LINK) or not d:IsLinkMonster() then return false end
 	if a:IsControler(tp) then e:SetLabelObject(d) else e:SetLabelObject(a) end
 	return true
 end

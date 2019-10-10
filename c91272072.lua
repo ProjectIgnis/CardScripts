@@ -45,7 +45,7 @@ end
 function s.damval(e,re,val,r,rp)
 	if r&REASON_EFFECT==REASON_EFFECT and re and re:IsActiveType(TYPE_MONSTER) then
 		local rc=re:GetHandler()
-		if rc:IsFaceup() and rc:IsSetCard(0xfb) and rc:IsType(TYPE_LINK)
+		if rc:IsFaceup() and rc:IsSetCard(0xfb) and rc:IsLinkMonster()
 			and rc:GetLinkedGroup():IsContains(e:GetHandler()) then
 			return val*2
 		end

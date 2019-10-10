@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.tg(e,c)
-	returnreturn c:IsLinkMonster() and c:IsSetCard(0x116)
+	return c:IsLinkMonster() and c:IsSetCard(0x116)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()

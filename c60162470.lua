@@ -60,7 +60,7 @@ function s.atkval(e,c)
     return val
 end
 function s.atkfilter(c,tc)
-    returnreturn c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetFlagEffect(id)>0
+    return c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetFlagEffect(id)>0
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(s.atkfilter,1,nil)

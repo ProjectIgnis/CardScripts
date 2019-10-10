@@ -70,7 +70,7 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function s.cfilter(c)
-	returnreturn c:IsLinkMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsLinkMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()

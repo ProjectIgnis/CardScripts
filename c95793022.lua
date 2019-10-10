@@ -42,7 +42,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return tc and tc:IsLinkMonster() and tc:IsControler(1-tp)
 end
 function s.descfilter(c,lk)
-	returnreturn c:IsLinkMonster() and c:GetLink()==lk and c:IsAbleToRemoveAsCost()
+	return c:IsLinkMonster() and c:GetLink()==lk and c:IsAbleToRemoveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetBattleTarget()

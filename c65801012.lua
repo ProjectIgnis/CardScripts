@@ -20,7 +20,7 @@ function s.fextra(e,tp,mg)
 	return nil
 end
 function s.exfilter0(c)
-	returnreturn c:IsLinkMonster() and c:IsMonster() and c:IsRace(RACE_CYBERSE) and c:IsAbleToRemove()
+	return c:IsLinkMonster() and c:IsRace(RACE_CYBERSE) and c:IsAbleToRemove()
 end
 function s.extraop(e,tc,tp,sg)
 	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)

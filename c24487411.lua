@@ -32,7 +32,7 @@ end
 function s.dtarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
-	if chk==0 then return tc and tc:IsFaceup() and not (tc:IsType(TYPE_LINK) and tc:IsLinkAbove(3)) end
+	if chk==0 then return tc and tc:IsFaceup() and not (tc:IsLinkMonster() and tc:IsLinkAbove(3)) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,tc:GetControler(),LOCATION_MZONE)
 end
 function s.doperation(e,tp,eg,ep,ev,re,r,rp)

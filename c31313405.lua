@@ -46,7 +46,7 @@ function s.matfilter(c,scard,sumtype,tp)
 	return c:IsType(TYPE_EFFECT,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_FIRE,scard,sumtype,tp)
 end
 function s.filter(c,e,tp)
-	return c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
+	return c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.filter(chkc,e,tp) end
@@ -63,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damfilter(c,e,p)
-	return c:IsType(TYPE_LINK) and c:IsControler(p) and c:IsCanBeEffectTarget(e)
+	return c:IsLinkMonster() and c:IsControler(p) and c:IsCanBeEffectTarget(e)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.damfilter(chkc,e,1-tp) end

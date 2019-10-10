@@ -32,7 +32,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xfc) and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xfc) and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0xfc)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0xfc)
 end
 function s.indcon(e)
 	return Duel.IsExistingMatchingCard(s.indfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

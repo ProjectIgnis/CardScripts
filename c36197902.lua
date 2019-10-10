@@ -57,7 +57,7 @@ function s.atkcfilter(c,tp)
 		and Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp) and Duel.GetFlagEffect(tp,id)==0 end
@@ -87,14 +87,14 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcfilter(c,tp)
 	return (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)) 
-		and c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_LINK)
+		and c:IsPreviousPosition(POS_FACEUP) and c:IsLinkMonster()
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_CYBERSE) and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end

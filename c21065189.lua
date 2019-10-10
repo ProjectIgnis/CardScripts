@@ -30,7 +30,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function s.atkfilter(c,xc)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(xc)
+	return c:IsFaceup() and c:IsLinkMonster() and c:GetLinkedGroup():IsContains(xc)
 end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,nil,c)
@@ -42,7 +42,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spfilter(c,e,tp,ec)
 	local zone=ec:GetToBeLinkedZone(c,tp)
-	return zone~=0 and c:IsType(TYPE_LINK) and c:IsRace(RACE_CYBERSE) and c:GetLink()==4 
+	return zone~=0 and c:IsLinkMonster() and c:IsRace(RACE_CYBERSE) and c:GetLink()==4 
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

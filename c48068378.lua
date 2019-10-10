@@ -51,7 +51,7 @@ function s.ls(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,tp,sumtp,sumpos)
-	return c:IsType(TYPE_LINK) and c:GetLink()>=3 and (sumtp&SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
+	return c:IsLinkMonster() and c:GetLink()>=3 and (sumtp&SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabel()>0

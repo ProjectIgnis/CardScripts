@@ -54,7 +54,7 @@ end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return bc and c:IsRelateToBattle() and bc:IsRelateToBattle() and bc:IsType(TYPE_LINK)
+	return bc and c:IsRelateToBattle() and bc:IsRelateToBattle() and bc:IsLinkMonster()
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

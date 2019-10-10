@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

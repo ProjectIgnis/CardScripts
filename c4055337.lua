@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.indes(e,c)
-	return c:IsType(TYPE_LINK)
+	return c:IsLinkMonster()
 end
 function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORPHEGEL_BABEL)

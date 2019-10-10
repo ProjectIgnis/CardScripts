@@ -37,7 +37,7 @@ function s.rthcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
 	if not bc then return false end
 	if tc:IsControler(1-tp) then tc,bc=bc,tc end
-	if tc:IsFaceup() and tc:IsRace(RACE_CYBERSE) and tc:IsType(TYPE_LINK) and bc:IsAbleToHand() then
+	if tc:IsFaceup() and tc:IsRace(RACE_CYBERSE) and tc:IsLinkMonster() and bc:IsAbleToHand() then
 		e:SetLabelObject(bc)
 		return true
 	else return false end

@@ -35,10 +35,10 @@ function s.rfilter(c,tp,g)
 	local lk=c:GetLink()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if c:GetControler()==tp then
-		return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsLinkBelow(3) and c:IsReleasableByEffect() and g:IsContains(c)
+		return c:IsFaceup() and c:IsLinkMonster() and c:IsLinkBelow(3) and c:IsReleasableByEffect() and g:IsContains(c)
 			and ((c:GetSequence()>4 and ft>=lk) or (c:GetSequence()<=4 and (ft+1)>=lk)) and (ft==1 or not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT))
 	elseif c:GetControler()==1-tp then
-		return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsLinkBelow(3) and c:IsReleasableByEffect() and g:IsContains(c)
+		return c:IsFaceup() and c:IsLinkMonster() and c:IsLinkBelow(3) and c:IsReleasableByEffect() and g:IsContains(c)
 			and ft>=lk and (ft==1 or not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT))
 	else return false
 	end

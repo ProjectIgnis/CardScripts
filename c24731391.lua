@@ -71,12 +71,8 @@ end
 function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HalfBattleDamage(ep)
 end
-
-function s.filter(c)
-	return c:IsType(TYPE_LINK)
-end
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(Card.IsLinkMonster,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.atlimit(e,c)
 	return c~=e:GetHandler()
@@ -87,7 +83,7 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return bc and bc:IsType(TYPE_LINK)
+	return bc and bc:IsLinkMonster()
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

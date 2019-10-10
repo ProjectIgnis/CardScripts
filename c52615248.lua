@@ -28,7 +28,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(bg,POS_FACEUP,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end

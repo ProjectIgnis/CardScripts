@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,e,tp,sc)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x119) and c:IsLinkMonster()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

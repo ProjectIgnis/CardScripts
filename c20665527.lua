@@ -44,7 +44,7 @@ function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,LOCATION_GRAVE,nil,TYPE_LINK)*200
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_LINK) and c:IsLinkBelow(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLinkMonster() and c:IsLinkBelow(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return  chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end

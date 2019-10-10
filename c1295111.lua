@@ -42,7 +42,7 @@ function s.initial_effect(c)
     c:RegisterEffect(e4)
 end
 function s.lmfilter(c,lc,tp)
-    return c:IsFaceup() and c:IsType(TYPE_LINK)
+    return c:IsFaceup() and c:IsLinkMonster()
         and c:IsSummonCode(lc,SUMMON_TYPE_LINK,tp,lc:GetCode()) and c:IsCanBeLinkMaterial(lc,tp)
         and Duel.GetLocationCountFromEx(tp,tp,c,lc)>0
 end
@@ -77,7 +77,7 @@ function s.linkop(e,tp,eg,ep,ev,re,r,rp,c)
     Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.mattg(e,c)
-    return c:IsSetCard(0x119) and c:IsType(TYPE_LINK)
+    return c:IsSetCard(0x119) and c:IsLinkMonster()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
     local a=Duel.GetAttacker()
@@ -89,7 +89,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.PayLPCost(tp,1000)
 end
 function s.atkfilter(c)
-    return c:IsFaceup() and c:IsType(TYPE_LINK) and c:GetAttack()~=0
+    return c:IsFaceup() and c:IsLinkMonster() and c:GetAttack()~=0
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter(chkc) end

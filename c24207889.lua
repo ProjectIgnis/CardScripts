@@ -32,14 +32,11 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
 	c:RegisterEffect(e6)
 end
-function s.rmfilter(c,rc)
-	return c:IsFaceup() and c:IsRace(rc)
-end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	if sumpos and (sumpos&POS_FACEDOWN)>0 then return false end
 	local tp=sump
 	if targetp then tp=targetp end
-	return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE,0,1,c,c:GetRace())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,c:GetRace()),tp,LOCATION_MZONE,0,1,c)
 end
 function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	local phase=Duel.GetCurrentPhase()

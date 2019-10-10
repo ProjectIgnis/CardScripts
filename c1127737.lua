@@ -43,11 +43,8 @@ function s.damop1(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)
-end
 function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,Duel.GetTurnPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),Duel.GetTurnPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.damop2(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetTurnPlayer()

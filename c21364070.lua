@@ -148,11 +148,8 @@ end
 function s.atkcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.rtfilter,1,nil,e,tp)
 end
-function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xb3)
-end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0xb3),tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
 	while tc do
 		local e1=Effect.CreateEffect(e:GetHandler())

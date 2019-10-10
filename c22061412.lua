@@ -32,11 +32,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.material_setcode={0x8,0x3008}
-function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3008)
-end
 function s.atkup(e,c)
-	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_REMOVED,0,nil)*300
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x3008),c:GetControler(),LOCATION_REMOVED,0,nil)*300
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (e:GetHandler():GetPreviousLocation()&LOCATION_ONFIELD)>0

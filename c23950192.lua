@@ -11,11 +11,8 @@ function s.initial_effect(c)
 	e2:SetCondition(s.con)
 	c:RegisterEffect(e2)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2f)
-end
 function s.con(e)
-	return Duel.IsExistingMatchingCard(s.filter,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2f),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.tg(e,c)
 	return c:GetLevel()>=4

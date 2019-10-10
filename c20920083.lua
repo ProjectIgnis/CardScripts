@@ -38,11 +38,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desrepop)
 	c:RegisterEffect(e4)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsPosition(POS_FACEUP_DEFENSE)
-end
 function s.con(e)
-	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,2,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsPosition,POS_FACEUP_DEFENSE),e:GetHandlerPlayer(),LOCATION_MZONE,0,2,nil)
 end
 function s.tg(e,c)
 	return c:IsDefensePos()

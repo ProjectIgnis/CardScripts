@@ -29,12 +29,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.seqop)
 	c:RegisterEffect(e3)
 end
-function s.indesfil(c)
-	return c:IsFaceup() and c:IsSetCard(0xfc)
-end
 function s.incon(e)
 	return e:GetHandler():GetLinkedGroupCount()>0 
-	and e:GetHandler():GetLinkedGroup():IsExists(s.indesfil,1,nil)
+	and e:GetHandler():GetLinkedGroup():IsExists(aux.FilterFaceupFunction(Card.IsSetCard,0xfc),1,nil)
 end
 function s.seqfilter(c,zone)
 	return c:IsFaceup() and c:IsSetCard(0xfc) and not c:IsCode(id)

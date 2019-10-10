@@ -18,11 +18,8 @@ function s.initial_effect(c)
 	e2:SetValue(s.atlimit)
 	c:RegisterEffect(e2)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x42)
-end
 function s.descon(e)
-	return not Duel.IsExistingMatchingCard(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x42),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:GetCode()~=id and c:IsSetCard(0x42)

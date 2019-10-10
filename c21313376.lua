@@ -32,17 +32,14 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function s.filter(c,atk)
-	return c:IsFaceup() and c:IsAttackBelow(atk)
-end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local atk=e:GetHandler():GetBattleTarget():GetBaseAttack()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,atk) end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,atk)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackBelow,atk),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,atk) end
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsAttackBelow,atk),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local atk=e:GetHandler():GetBattleTarget():GetBaseAttack()
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,atk)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsAttackBelow,atk),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 end

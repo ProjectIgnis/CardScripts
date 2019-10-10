@@ -23,11 +23,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xc),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
 	return c:GetCounter(0x100e)>0 and c:IsControlerCanBeChanged()

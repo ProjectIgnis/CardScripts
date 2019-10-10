@@ -27,14 +27,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={96163807}
-function s.spfilter(c)
-	return c:IsFaceup() and c:IsCode(96163807)
-end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,96163807),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetLevel()>0 and c:IsRace(RACE_ZOMBIE)

@@ -20,11 +20,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13)
-end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.atkfilter,0,LOCATION_MZONE,LOCATION_MZONE,c)*100
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x13),0,LOCATION_MZONE,LOCATION_MZONE,c)*100
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) end

@@ -46,16 +46,10 @@ function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
-function s.cfilter1(c)
-	return c:IsFaceup() and c:IsCode(15259703)
-end
-function s.cfilter2(c)
-	return c:IsFaceup() and c:IsType(TYPE_TOON)
-end
 function s.dircon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_ONFIELD,0,1,nil)
-		and not Duel.IsExistingMatchingCard(s.cfilter2,tp,0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,15259703),tp,LOCATION_ONFIELD,0,1,nil)
+		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_TOON),tp,0,LOCATION_MZONE,1,nil)
 end
 function s.costfilter(c)
 	return c:IsSetCard(0x62) and c:IsDiscardable()

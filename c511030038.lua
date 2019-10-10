@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.monfilter(c)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x577) and c:IsFaceup()
+	return c:IsLinkMonster() and c:IsSetCard(0x577) and c:IsFaceup()
 end
 function s.stfilter(c)
 	return c:GetSequence()<5 and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsFaceup()

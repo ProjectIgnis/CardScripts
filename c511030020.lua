@@ -47,6 +47,6 @@ end
 function s.actcon(e)
 	local tp=e:GetHandlerPlayer()
 	local a=Duel.GetAttacker()
-	return a and a:IsType(TYPE_LINK) and a:IsSetCard(0x578) and a:IsFaceup() and a:IsControler(tp)
+	return a and a:IsLinkMonster() and a:IsSetCard(0x578) and a:IsFaceup() and a:IsControler(tp)
 		and (e:GetHandler():GetLinkedGroup():IsContains(a) or a:GetLinkedGroup():IsContains(e:GetHandler()))
 end

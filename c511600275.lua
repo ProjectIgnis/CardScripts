@@ -43,7 +43,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x583)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x583) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(0x583) and c:IsLinkMonster()
 end
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)

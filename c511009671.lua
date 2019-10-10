@@ -24,13 +24,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.desfilter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0x574) and c:IsType(TYPE_LINK)  and c:GetLinkedGroup():IsContains(e:GetHandler())
+	return c:IsFaceup() and c:IsSetCard(0x574) and c:IsLinkMonster()  and c:GetLinkedGroup():IsContains(e:GetHandler())
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.desfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil,e)
 end
 function s.filter(c,card)
-	return c:IsFaceup() and c:IsSetCard(0x574) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(card)
+	return c:IsFaceup() and c:IsSetCard(0x574) and c:IsLinkMonster() and c:GetLinkedGroup():IsContains(card)
 end
 function s.lptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e:GetHandler()) end

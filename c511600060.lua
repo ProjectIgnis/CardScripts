@@ -36,7 +36,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
-	return Duel.GetAttacker():IsControler(1-tp) and #g==1 and tc:IsFaceup() and tc:IsType(TYPE_LINK)
+	return Duel.GetAttacker():IsControler(1-tp) and #g==1 and tc:IsFaceup() and tc:IsLinkMonster()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -109,7 +109,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsControler(e:GetOwnerPlayer()) and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end

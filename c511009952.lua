@@ -58,7 +58,7 @@ function s.extraval(chk,summon_type,e,...)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x103) and c:IsType(TYPE_LINK) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsSetCard(0x103) and c:IsLinkMonster() and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

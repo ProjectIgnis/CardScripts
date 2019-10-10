@@ -36,7 +36,7 @@ function cid.initial_effect(c)
 end
 function cid.spfilter(c,e,tp,ec)
 	local zone=ec:GetToBeLinkedZone(c,tp,true)
-	return c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsLinkMonster() and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function cid.sptarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and cid.spfilter(chkc,e,tp,e:GetHandler()) end

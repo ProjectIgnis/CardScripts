@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return r&0x41==0x41 and re:GetHandler():IsType(TYPE_LINK)
+	return r&0x41==0x41 and re:GetHandler():IsLinkMonster()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

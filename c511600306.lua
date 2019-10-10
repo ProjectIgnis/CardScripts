@@ -16,7 +16,7 @@ function s.filter(c,e)
 	return c:IsAbleToGrave() and not c:IsImmuneToEffect(e)
 end
 function s.exfilter(c,e)
-	return c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_EARTH)
+	return c:IsLinkMonster() and c:IsAttribute(ATTRIBUTE_EARTH)
 		and c:IsCanBeFusionMaterial() and c:IsAbleToGrave() and (not e or not c:IsImmuneToEffect(e))
 end
 function s.spfilter(c,e,tp,m,f,chkf)

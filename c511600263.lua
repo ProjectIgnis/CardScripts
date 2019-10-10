@@ -74,7 +74,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0x22b) and c:IsType(TYPE_LINK) and c:IsType(TYPE_MONSTER) and c:GetLink()>0
+	return c:IsSetCard(0x22b) and c:IsLinkMonster() and c:IsType(TYPE_MONSTER) and c:GetLink()>0
 end
 function s.damval(e,re,val,r,rp,rc)
 	if r&REASON_BATTLE~=REASON_BATTLE then return val end

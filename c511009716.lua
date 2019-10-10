@@ -33,7 +33,7 @@ function s.attcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.cfilter(c,e,tp)
-	return c:IsSetCard(0x577) and c:IsType(TYPE_LINK) and c:IsLocation(LOCATION_GRAVE)
+	return c:IsSetCard(0x577) and c:IsLinkMonster() and c:IsLocation(LOCATION_GRAVE)
 		and c:IsControler(tp) and c:IsCanBeEffectTarget(e)
 end
 function s.mgfilter(sg,e,tp,mg)

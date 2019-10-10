@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_LINK) and c:IsLinkAbove(1) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=c:GetLink()
+	return c:IsLinkMonster() and c:IsLinkAbove(1) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=c:GetLink()
 		and Duel.GetDecktopGroup(tp,c:GetLink()):IsExists(Card.IsAbleToHand,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

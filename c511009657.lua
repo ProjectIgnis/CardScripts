@@ -40,7 +40,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and (c:GetAttack()>0 or not c:IsDisabled())
+	return c:IsFaceup() and c:IsLinkMonster() and (c:GetAttack()>0 or not c:IsDisabled())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.tgfilter(c)
-	return c:IsType(TYPE_LINK) and c:IsFaceup()
+	return c:IsLinkMonster() and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc) end
@@ -63,7 +63,7 @@ function s.rcon(e)
 	return e:GetHandler():IsHasCardTarget(e:GetLabelObject())
 end
 function s.atktg(e,c)
-	return not c:IsType(TYPE_LINK) or c:GetLink()<=e:GetLabelObject():GetLink()
+	return not c:IsLinkMonster() or c:GetLink()<=e:GetLabelObject():GetLink()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()

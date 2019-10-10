@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.desfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsReason(REASON_EFFECT) and c:IsType(TYPE_LINK)
+	return c:IsPreviousControler(tp) and c:IsReason(REASON_EFFECT) and c:IsLinkMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return eg:IsExists(s.desfilter,1,nil,tp)

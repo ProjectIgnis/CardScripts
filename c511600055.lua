@@ -40,7 +40,7 @@ function s.dircon(e)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:IsControler(tp) and at:IsType(TYPE_LINK) and at:IsRace(RACE_CYBERSE) and at~=e:GetHandler()
+	return at:IsControler(tp) and at:IsLinkMonster() and at:IsRace(RACE_CYBERSE) and at~=e:GetHandler()
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

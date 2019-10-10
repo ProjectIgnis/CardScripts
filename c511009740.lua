@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsDrone() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsDrone() and c:IsLinkMonster()
 end
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -38,5 +38,5 @@ function s.tg(e,c)
 	return c:IsDrone() and c:IsFaceup() 
 end
 function s.atktg(e,c)
-	return c:IsType(TYPE_LINK)
+	return c:IsLinkMonster()
 end

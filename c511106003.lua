@@ -17,13 +17,13 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	local rc=c:GetReasonCard()
-	return c:IsReason(REASON_BATTLE) and rc:IsSetCard(0x577) and rc:IsType(TYPE_LINK) and rc:IsControler(tp) and rc:IsRelateToBattle()
+	return c:IsReason(REASON_BATTLE) and rc:IsSetCard(0x577) and rc:IsLinkMonster() and rc:IsControler(tp) and rc:IsRelateToBattle()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x577) and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x577) and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

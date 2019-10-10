@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x22b) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(0x22b) and c:IsLinkMonster()
 end
 function s.spzone(tp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)

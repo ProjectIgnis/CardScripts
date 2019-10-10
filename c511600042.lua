@@ -38,7 +38,7 @@ end
 function s.spfilter(c,e,tp)
 	return e:GetLabelObject() and e:GetLabelObject():IsContains(c) 
 		and c:IsReason(REASON_DESTROY) and c:IsRace(RACE_CYBERSE)
-		and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and c:IsCanBeEffectTarget(e)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

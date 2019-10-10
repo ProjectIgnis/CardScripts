@@ -16,7 +16,7 @@ function card.initial_effect(c)
 end
 function card.linkcheck(c)
 	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsStatus(STATUS_SPSUMMON_TURN) and
-		c:IsType(TYPE_LINK)
+		c:IsLinkMonster()
 end
 function card.descon(e, tp, eg, ep, ev, re, r, rp)
 	local a = Duel.GetAttacker()

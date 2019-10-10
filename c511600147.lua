@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e1:SetLabelObject(e2)
 end
 function s.filter(c)
-	return c:IsType(TYPE_LINK) and c:IsFaceup() and c:IsAbleToRemove()
+	return c:IsLinkMonster() and c:IsFaceup() and c:IsAbleToRemove()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcfilter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsControler(tp)
 end
 function s.spfilter(c,e,tp,fid,zone)
 	return c:GetFlagEffectLabel(id)==fid and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)

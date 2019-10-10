@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.filter(c,ec)
-	return c:IsType(TYPE_LINK) and c:IsFaceup() and c:IsSetCard(0xfb)
+	return c:IsLinkMonster() and c:IsFaceup() and c:IsSetCard(0xfb)
 		and (c:GetLinkedGroup():IsExists(Card.IsAbleToGraveAsCost,1,nil) or ec:IsAbleToGraveAsCost())
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

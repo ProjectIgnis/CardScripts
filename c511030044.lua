@@ -69,7 +69,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local mg=a:GetMutualLinkedGroup()
 	local octg=e:GetHandler():GetMutualLinkedGroup()
-	return a and a:IsControler(tp) and a:IsType(TYPE_LINK) and a~=e:GetHandler() and b and b:IsControler(1-tp)
+	return a and a:IsControler(tp) and a:IsLinkMonster() and a~=e:GetHandler() and b and b:IsControler(1-tp)
 		and mg:IsContains(e:GetHandler()) and octg:IsContains(a)
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end

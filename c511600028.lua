@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_ONFIELD,0)
-	e2:SetTarget(function(e,c) return c:IsType(TYPE_LINK) and c:IsRace(RACE_CYBERSE) end)
+	e2:SetTarget(function(e,c) return c:IsLinkMonster() and c:IsRace(RACE_CYBERSE) end)
 	e2:SetValue(function(e,c) return c:GetBaseAttack()+e:GetHandler():GetCounter(0x96)*700 end)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
@@ -36,9 +36,9 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if d and d:IsControler(tp) then
-		return d:IsType(TYPE_LINK) and d:IsRace(RACE_CYBERSE)
+		return d:IsLinkMonster() and d:IsRace(RACE_CYBERSE)
 	elseif a:IsControler(tp) then
-		return a:IsType(TYPE_LINK) and a:IsRace(RACE_CYBERSE)
+		return a:IsLinkMonster() and a:IsRace(RACE_CYBERSE)
 	end
 	return false
 end

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:GetSequence()>4
+	return c:IsFaceup() and c:IsLinkMonster() and c:GetSequence()>4
 		and c:GetLink()>0 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>c:GetLink()
 		and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,c:GetLinkedZone(tp)&0x1f)>0
 end

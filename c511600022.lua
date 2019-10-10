@@ -53,7 +53,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsRace(RACE_CYBERSE)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsRace(RACE_CYBERSE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,2,nil)
@@ -126,7 +126,7 @@ function s.cyberse(c)
 end
 ------------------------------------
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.sumlimit(e,c,tp,sumtp,sumpos)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -135,7 +135,7 @@ function s.sumlimit(e,c,tp,sumtp,sumpos)
 end
 ------------------------------------
 function s.attg(e,c)
-	return not c:IsType(TYPE_LINK)
+	return not c:IsLinkMonster()
 end
 ------------------------------------
 function s.efilter(e,te)

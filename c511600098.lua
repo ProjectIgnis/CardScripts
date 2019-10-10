@@ -23,12 +23,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.indtg(e,c)
-	return c:IsType(TYPE_LINK) and c:IsFaceup()
+	return c:IsLinkMonster() and c:IsFaceup()
 		and (e:GetHandler():GetLinkedGroup():IsContains(c) or c:GetLinkedGroup():IsContains(e:GetHandler()))
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) 
-		and c:IsType(TYPE_LINK) and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_BATTLE)
+		and c:IsLinkMonster() and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_BATTLE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end

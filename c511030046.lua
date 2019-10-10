@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsType(TYPE_LINK) and c:IsLink(1) and c:IsSetCard(0x57a)
+	return c:IsLinkMonster() and c:IsLink(1) and c:IsSetCard(0x57a)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil):Filter(Card.IsAbleToRemove,nil):Filter(Card.IsSequence,nil,0,1,2,3,4)

@@ -15,12 +15,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	return c:GetSequence()>4 and c:IsSetCard(0x57a) and c:IsType(TYPE_LINK)
+	return c:GetSequence()>4 and c:IsSetCard(0x57a) and c:IsLinkMonster()
 		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,fc)
 	local zone=fc:GetToBeLinkedZone(c,tp,true)
-	return c:IsSetCard(0x57a) and c:IsType(TYPE_LINK) and c:IsLink(1)
+	return c:IsSetCard(0x57a) and c:IsLinkMonster() and c:IsLink(1)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

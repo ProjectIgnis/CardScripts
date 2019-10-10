@@ -43,7 +43,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0x582) and c:IsType(TYPE_LINK) and c:IsAbleToExtra()
+	return c:IsSetCard(0x582) and c:IsLinkMonster() and c:IsAbleToExtra()
 end
 function s.thfilter(c)
 	return c:IsCode(511600306) and c:IsAbleToHand()

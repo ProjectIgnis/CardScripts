@@ -92,7 +92,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetFlagEffect(tp,id)>0
 end
 function s.spfilter(c,e,tp,rate)
-	return c:IsSetCard(0x580) and c:IsType(TYPE_LINK) and c:GetLink()<=rate and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x580) and c:IsLinkMonster() and c:GetLink()<=rate and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rate=s[tp]

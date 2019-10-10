@@ -50,7 +50,7 @@ function s.spfilter2(c,e,tp,sump,zone)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,sump,zone)
 end
 function s.filter(c,e,tp)
-	if not c:IsType(TYPE_LINK) then return false end
+	if not c:IsLinkMonster() then return false end
 	local zones={}
 	zones[0]=c:GetLinkedZone(0)&0x1f
 	zones[1]=c:GetLinkedZone(1)&0x1f

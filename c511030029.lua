@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,e,ft,tp)
-	return c:IsSetCard(0x578) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x578) and c:IsLinkMonster()
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetLink())
 end
@@ -27,7 +27,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabelObject(g:GetFirst())
 end
 function s.filter(c,e,tp,link)
-	return c:IsSetCard(0x578) and c:IsType(TYPE_LINK) and c:GetLink()<=link and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x578) and c:IsLinkMonster() and c:GetLink()<=link and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

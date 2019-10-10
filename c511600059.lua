@@ -22,7 +22,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not d or a:IsFacedown() or d:IsFacedown() then return false end
 	if a:IsControler(1-tp) then a,d=d,a end
 	e:SetLabelObject(a)
-	return a:IsType(TYPE_LINK) and d:IsType(TYPE_LINK) and d:GetLink()>a:GetLink()
+	return a:IsLinkMonster() and d:IsLinkMonster() and d:GetLink()>a:GetLink()
 end
 function s.cfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToRemoveAsCost()

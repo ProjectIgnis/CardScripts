@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x22b) and c:IsType(TYPE_LINK) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x22b) and c:IsLinkMonster() and c:IsType(TYPE_MONSTER)
 end
 function s.spzone(tp,g)
 	local zone=0

@@ -15,7 +15,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if chk==0 then return d and a:GetControler()~=d:GetControler()
-		and a:IsType(TYPE_LINK) and d:IsType(TYPE_LINK)
+		and a:IsLinkMonster() and d:IsLinkMonster()
 		and (a:GetLink()+d:GetLink())>=5 end
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,1000)
 end

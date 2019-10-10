@@ -11,7 +11,7 @@ function cid.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function cid.spfilter(c,e,tp,zone)
-	return c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsLinkMonster() and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function cid.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local zone = 0

@@ -80,7 +80,7 @@ function s.cfilter(c,tp,zone,e)
 	return bit.extract(zone,seq)~=0 and (not e or c:IsRelateToEffect(e))
 end
 function s.lkfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=0

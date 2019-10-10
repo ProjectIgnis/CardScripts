@@ -139,10 +139,10 @@ function s.speqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqval(ec,c,tp)
-	return ec:IsSetCard(0x22b) and ec:IsType(TYPE_LINK) 
+	return ec:IsSetCard(0x22b) and ec:IsLinkMonster() 
 end
 function s.eqfilter(c,fid)
-	return c:GetFlagEffectLabel(id)==fid and c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x22b) and not c:IsForbidden()
+	return c:GetFlagEffectLabel(id)==fid and c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x22b) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.eqfilter(chkc,e:GetHandler():GetFieldID()) end

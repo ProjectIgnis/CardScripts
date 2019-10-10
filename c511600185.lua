@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c,rate)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and (not rate or c:IsLinkAbove(rate))
+	return c:IsFaceup() and c:IsLinkMonster() and (not rate or c:IsLinkAbove(rate))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)

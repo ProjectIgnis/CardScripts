@@ -44,7 +44,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return d:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:GetLink()>0
+	return c:IsFaceup() and c:IsLinkMonster() and c:GetLink()>0
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -75,5 +75,5 @@ function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.desfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.tgtg(e,c)
-	return c:IsSetCard(0x574) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x574) and c:IsLinkMonster()
 end

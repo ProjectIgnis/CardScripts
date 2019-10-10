@@ -16,10 +16,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_LINK) and Duel.IsExistingTarget(s.tfilter,tp,LOCATION_MZONE,0,1,c)
+	return c:IsLinkMonster() and Duel.IsExistingTarget(s.tfilter,tp,LOCATION_MZONE,0,1,c)
 end
 function s.tfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(1)
@@ -68,7 +68,7 @@ function s.atkcon(e)
 	return e:GetLabelObject() and e:GetLabelObject():GetLabelObject()
 end
 function s.atktg(e,c)
-	return Duel.GetAttacker()==e:GetLabelObject():GetLabelObject() and Duel.GetAttackTarget()==c and c:IsType(TYPE_LINK)
+	return Duel.GetAttacker()==e:GetLabelObject():GetLabelObject() and Duel.GetAttackTarget()==c and c:IsLinkMonster()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsType,0,LOCATION_GRAVE,LOCATION_GRAVE,nil,TYPE_LINK)*-400

@@ -17,8 +17,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if d and a:GetControler()~=d:GetControler() then
-		if a:IsControler(tp) and a:IsFaceup() and a:IsType(TYPE_LINK) and a:IsLinkBelow(2) and a:IsRelateToBattle() then e:SetLabelObject(a)
-		elseif d:IsFaceup() and d:IsType(TYPE_LINK) and d:IsLinkBelow(2) and d:IsRelateToBattle() then e:SetLabelObject(d)
+		if a:IsControler(tp) and a:IsFaceup() and a:IsLinkMonster() and a:IsLinkBelow(2) and a:IsRelateToBattle() then e:SetLabelObject(a)
+		elseif d:IsFaceup() and d:IsLinkMonster() and d:IsLinkBelow(2) and d:IsRelateToBattle() then e:SetLabelObject(d)
 		else return false end
 		return true
 	else return false end

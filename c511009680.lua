@@ -47,7 +47,7 @@ function s.atkfilter(e,c)
 	return c:GetSequence()<5
 end
 function s.costfilter(c,dg,lg)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsType(TYPE_LINK) and lg:IsContains(c)
+	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsLinkMonster() and lg:IsContains(c)
 end
 function s.desfilter(c,e)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and (not e or c:IsCanBeEffectTarget(e))

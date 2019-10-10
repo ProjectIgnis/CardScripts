@@ -39,7 +39,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(tp,ev/2)
 end
 function s.spfilter(c)
-	return c:IsSpecialSummonable(SUMMON_TYPE_LINK) and c:IsType(TYPE_LINK) and c:IsRace(RACE_CYBERSE)
+	return c:IsSpecialSummonable(SUMMON_TYPE_LINK) and c:IsLinkMonster() and c:IsRace(RACE_CYBERSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil) end

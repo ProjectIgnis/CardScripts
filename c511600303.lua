@@ -62,7 +62,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function s.filter(c)
-	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsType(TYPE_LINK) and c:IsFaceup()
+	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsLinkMonster() and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

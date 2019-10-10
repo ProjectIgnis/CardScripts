@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0xfb)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0xfb)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,c:GetLinkedZone()&0x1f)>0
 end
 function s.tktg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

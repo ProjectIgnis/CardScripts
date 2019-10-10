@@ -67,7 +67,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lkfilter(c)
-	return c:IsType(TYPE_LINK) and c:IsFaceup()
+	return c:IsLinkMonster() and c:IsFaceup()
 end
 function s.cfilter2(c,sc,seq,tp)
 	return seq and (c:GetLinkedZone(tp)&(1<<seq))~=0 or c:GetLinkedGroup():IsContains(sc)
@@ -88,7 +88,7 @@ function s.spfilter(c,e,tp,zone)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x582) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.ltgfilter(c,e,tp)
-	return c:IsType(TYPE_LINK) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetLinkedZone(tp))
+	return c:IsLinkMonster() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetLinkedZone(tp))
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.ltgfilter(chkc,e,tp) end

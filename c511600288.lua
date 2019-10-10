@@ -16,10 +16,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.lfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.cfilter(c,lg)
-	return (c:IsFacedown() or not c:IsType(TYPE_LINK)) and lg:IsContains(c)
+	return (c:IsFacedown() or not c:IsLinkMonster()) and lg:IsContains(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local lg=Group.CreateGroup()

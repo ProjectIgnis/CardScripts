@@ -80,7 +80,7 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(ep,0x577,1,REASON_EFFECT)
 end
 function s.damfilter(c)
-	return c:IsSetCard(0x577) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x577) and c:IsLinkMonster()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

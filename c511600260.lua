@@ -47,7 +47,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	e:SetLabelObject(tc)
 	return tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE)
-		and (tc==e:GetHandler() or tc:IsSetCard(0x22b) and tc:IsType(TYPE_LINK) and e:GetHandler():GetLinkedGroup():IsContains(tc))
+		and (tc==e:GetHandler() or tc:IsSetCard(0x22b) and tc:IsLinkMonster() and e:GetHandler():GetLinkedGroup():IsContains(tc))
 end
 function s.cfilter(c)
 	return c:IsSetCard(0x22b) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()

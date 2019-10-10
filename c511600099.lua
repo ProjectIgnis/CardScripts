@@ -64,7 +64,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.tkcon1(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
@@ -85,7 +85,7 @@ function s.tkop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tkcon2(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
-	return at and at:IsFaceup() and at:IsType(TYPE_LINK)
+	return at and at:IsFaceup() and at:IsLinkMonster()
 end
 function s.tkcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0) and Duel.GetAttackTarget():IsAbleToRemoveAsCost() end

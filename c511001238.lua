@@ -15,7 +15,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>=2
 end
 function s.filter(c)
-	return c:IsControlerCanBeChanged() and c:IsFaceup() and not c:IsType(TYPE_LINK)
+	return c:IsControlerCanBeChanged() and c:IsFaceup() and not c:IsLinkMonster()
 end
 function s.ctltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end

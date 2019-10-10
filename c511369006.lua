@@ -69,7 +69,7 @@ function s.atkval(e)
 	return 400+300*g
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x580)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x580)
 end
 function s.tgcon(e,c)
 	local tp=e:GetHandlerPlayer()
@@ -83,7 +83,7 @@ function s.distg(e,c)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	if #g>0 then 
 		local link=g:GetFirst():GetLink()
-		return c:IsType(TYPE_LINK) and not c:IsControler(tp) and c:GetLink()<=link
+		return c:IsLinkMonster() and not c:IsControler(tp) and c:GetLink()<=link
 	else
 		return false
 	end

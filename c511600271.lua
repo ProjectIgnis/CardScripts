@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	if not zeroDayReff then zeroDayReff={} end
 end
 function s.filter(c,ec)
-	return c:IsType(TYPE_LINK) and not c:IsSetCard(0x583) and c:GetLinkedGroup():IsContains(ec)
+	return c:IsLinkMonster() and not c:IsSetCard(0x583) and c:GetLinkedGroup():IsContains(ec)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e:GetHandler())

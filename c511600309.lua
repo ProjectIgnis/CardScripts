@@ -30,7 +30,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x582)
+	return c:IsLinkMonster() and c:IsSetCard(0x582)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

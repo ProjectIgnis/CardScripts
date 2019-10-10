@@ -63,7 +63,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(0x582) and tc~=e:GetHandler()
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x582) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLinkMonster() and c:IsSetCard(0x582) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end

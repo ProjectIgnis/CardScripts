@@ -46,7 +46,7 @@ end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
-	return tc and tc:IsControler(tp) and tc:IsSetCard(0xfb) and tc:IsType(TYPE_LINK) and Duel.GetBattleDamage(tp)>0
+	return tc and tc:IsControler(tp) and tc:IsSetCard(0xfb) and tc:IsLinkMonster() and Duel.GetBattleDamage(tp)>0
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

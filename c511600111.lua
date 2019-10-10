@@ -17,7 +17,7 @@ function s.spfilter(c,e,tp,atk)
 	return c:IsAttackBelow(atk) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp,c:GetAttack())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

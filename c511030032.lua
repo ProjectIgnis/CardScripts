@@ -30,14 +30,14 @@ function s.cfilter(c,e,tp)
 			return false
 		end
 	end
-	return c:GetSequence()>=5 and c:IsType(TYPE_LINK) and c:IsAbleToRemove()
+	return c:GetSequence()>=5 and c:IsLinkMonster() and c:IsAbleToRemove()
 		and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
 		and (not c:IsHasEffect(EFFECT_REVIVE_LIMIT) or c:IsStatus(STATUS_PROC_COMPLETE))
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),c:GetSetCard(),c:GetType(),c:GetAttack(),c:GetDefense(),c:GetLevel(),c:GetRace(),c:GetAttribute(),POS_FACEUP,1-tp,SUMMON_TYPE_SPECIAL)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetLink())
 end
 function s.spfilter(c,e,tp,rating)
-	return c:IsSetCard(0x578) and c:IsType(TYPE_LINK) and c:GetLink()==rating
+	return c:IsSetCard(0x578) and c:IsLinkMonster() and c:GetLink()==rating
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,att)
-	return c:IsSetCard(0x577) and c:IsType(TYPE_LINK) and c:IsAttribute(att)
+	return c:IsSetCard(0x577) and c:IsLinkMonster() and c:IsAttribute(att)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil

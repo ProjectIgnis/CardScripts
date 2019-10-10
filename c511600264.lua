@@ -20,7 +20,7 @@ function s.filter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetLink()) 
 end
 function s.spfilter(c,e,tp,lk)
-	return c:IsSetCard(0x22b) and c:IsType(TYPE_LINK) and c:IsLinkBelow(lk)
+	return c:IsSetCard(0x22b) and c:IsLinkMonster() and c:IsLinkBelow(lk)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

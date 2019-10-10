@@ -29,7 +29,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x119) and c:IsLinkMonster()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil) end
@@ -40,10 +40,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
 end
 function s.filter1(c)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK) and c:IsAbleToDeck()
+	return c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsAbleToDeck()
 end
 function s.filter2(c,e,tp)
-	return c:IsSetCard(0x119) and (not c:IsType(TYPE_LINK)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(0x119) and (not c:IsLinkMonster()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

@@ -76,7 +76,7 @@ function s.linkop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.mattg(e,c)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x119) and c:IsLinkMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
@@ -87,7 +87,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.filter(c)
-	return aux.nzatk(c) and c:IsType(TYPE_LINK) and c:IsSetCard(0x119)
+	return aux.nzatk(c) and c:IsLinkMonster() and c:IsSetCard(0x119)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

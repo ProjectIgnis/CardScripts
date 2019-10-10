@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	return c:IsType(TYPE_LINK) and c:IsLinkAbove(4) and c:IsRace(RACE_PLANT) and c:GetSequence()>4
+	return c:IsLinkMonster() and c:IsLinkAbove(4) and c:IsRace(RACE_PLANT) and c:GetSequence()>4
 end
 function s.cfilter(c)
 	return c:IsType(TYPE_EFFECT) and not c:IsDisabled()

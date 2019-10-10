@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsType(TYPE_LINK) and c:IsFaceup()
+	return c:IsLinkMonster() and c:IsFaceup()
 end
 function s.mfilter(c)
 	return c:GetSequence()<5

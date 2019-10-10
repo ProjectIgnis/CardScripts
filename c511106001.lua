@@ -35,10 +35,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.eqlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x577) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(0x577) and c:IsLinkMonster()
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x577) and c:IsType(TYPE_LINK) 
+	return c:IsFaceup() and c:IsSetCard(0x577) and c:IsLinkMonster() 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,tp) end

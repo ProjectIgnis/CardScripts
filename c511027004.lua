@@ -35,7 +35,7 @@ function s.spcon(e,c)
 		Duel.IsExistingMatchingCard(s.spfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.filter1(c,e,tp)
-	return c:IsRace(RACE_PLANT) and c:IsType(TYPE_LINK) and c:IsLinkBelow(2) and c:IsExtraLinked()
+	return c:IsRace(RACE_PLANT) and c:IsLinkMonster() and c:IsLinkBelow(2) and c:IsExtraLinked()
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,c:GetCode())
 end
 function s.filter2(c,e,tp,tc,code)

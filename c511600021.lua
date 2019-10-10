@@ -73,7 +73,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function s.sumlimit(e,c)
-	return c:IsType(TYPE_LINK) and c:GetLink()>e:GetHandler():GetCounter(0x48)
+	return c:IsLinkMonster() and c:GetLink()>e:GetHandler():GetCounter(0x48)
 end
 function s.dfilter(c,tp,ct)
 	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsRace(RACE_DRAGON) and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetLink()<ct
@@ -100,7 +100,7 @@ function s.addcop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsRace(RACE_DRAGON) and c:IsLinkMonster()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

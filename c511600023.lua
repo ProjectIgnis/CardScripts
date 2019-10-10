@@ -50,7 +50,7 @@ function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x101) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.cfilter(c)
-	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK)
+	return c:IsRace(RACE_CYBERSE) and c:IsLinkMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanAddCounter(tp,0x47,1,e:GetHandler())

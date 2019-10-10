@@ -50,7 +50,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_SALAMANGREAT_SANCTUARY}
 function s.lmfilter(c,lc,tp)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 		and c:IsLinkCode(lc:GetCode()) and c:IsCanBeLinkMaterial(lc,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,c,lc)>0
 end
@@ -85,7 +85,7 @@ function s.linkop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.mattg(e,c)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x119) and c:IsLinkMonster()
 end
 function s.efilter(e,re)
 	return e:GetHandlerPlayer()~=re:GetOwnerPlayer() and re:IsActiveType(TYPE_MONSTER)

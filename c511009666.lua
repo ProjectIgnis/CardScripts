@@ -47,7 +47,7 @@ function s.filter(c,e,tp,zone)
 	return c:IsSetCard(0x575) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.lkfilter(c)
-	return c:IsSetCard(0x574) and c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsSetCard(0x574) and c:IsFaceup() and c:IsLinkMonster()
 end
 function s.zonefilter(tp)
 	local lg=Duel.GetMatchingGroup(s.lkfilter,tp,LOCATION_MZONE,0,nil)

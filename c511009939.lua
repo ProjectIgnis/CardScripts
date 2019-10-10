@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsType(TYPE_LINK) and c:IsRace(RACE_CYBERSE)
+	return c:IsLinkMonster() and c:IsRace(RACE_CYBERSE)
 end
 function s.atkcon(e)
 	local eq=e:GetHandler():GetEquipTarget()

@@ -31,13 +31,13 @@ function s.filter(c,e,tp)
 	return c:IsPreviousControler(tp) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP))
 end
 function s.exfilter(c)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x577) and c:IsAbleToExtra()
+	return c:IsLinkMonster() and c:IsSetCard(0x577) and c:IsAbleToExtra()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return eg:IsExists(s.filter,1,nil,e,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x577) and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x577) and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.exfilter,tp,LOCATION_GRAVE,0,1,nil) end

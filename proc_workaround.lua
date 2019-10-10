@@ -101,6 +101,14 @@ function Card.IsRitualSpell(c)
 	local tp=TYPE_RITUAL+TYPE_SPELL
 	return c:GetType() & tp == tp
 end
+function Card.IsLinkMonster(c)
+	local tp=TYPE_LINK+TYPE_MONSTER
+	return c:GetType() & tp == tp
+end
+function Card.IsLinkSpell(c)
+	local tp=TYPE_LINK+TYPE_SPELL
+	return c:GetType() & tp == tp
+end
 function Card.IsOriginalCode(c,cd)
 	return c:GetOriginalCode()==cd
 end

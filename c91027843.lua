@@ -68,10 +68,10 @@ function s.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
 function s.eqcfilter(c,tp)
-	return c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetSequence()>=5 and c:IsSummonPlayer(tp) 
+	return c:IsSetCard(0x12b) and c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetSequence()>=5 and c:IsSummonPlayer(tp) 
 end
 function s.eqfilter(c)
-	return c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and not c:IsForbidden()
+	return c:IsSetCard(0x12b) and c:IsLinkMonster() and not c:IsForbidden()
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.eqcfilter,1,nil,tp)

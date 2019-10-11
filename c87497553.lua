@@ -50,7 +50,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if not d then return false end
 	if a:IsStatus(STATUS_OPPO_BATTLE) and d:IsControler(tp) then a,d=d,a end
-	if a:IsType(TYPE_LINK) and a:IsSetCard(0x116) and d:IsStatus(STATUS_BATTLE_DESTROYED) then
+	if a:IsLinkMonster() and a:IsSetCard(0x116) and d:IsStatus(STATUS_BATTLE_DESTROYED) then
 		e:SetLabelObject(a)
 		return true
 	else return false end

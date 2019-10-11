@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 function s.spfilter(c,e,tp,ec)
 	local zone=ec:GetToBeLinkedZone(c,tp)
-	return zone~=0 and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return zone~=0 and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp,e:GetHandler()) end
@@ -74,7 +74,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.splimit(e,c,tp,sumtp,sumpos)
-	return not c:IsType(TYPE_LINK)
+	return not c:IsLinkMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():IsPreviousControler(tp)

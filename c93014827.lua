@@ -30,7 +30,7 @@ function s.spcheck(sg,tp,exg,dg)
 	return #dg-a>=sg:GetFirst():GetLink()
 end
 function s.cfilter(c)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_LINK)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsLinkMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

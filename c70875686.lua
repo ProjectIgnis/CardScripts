@@ -58,7 +58,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and c:IsPreviousControler(tp)
 end
 function s.thfilter(c)
-	return not c:IsType(TYPE_LINK) and c:IsAbleToHand()
+	return not c:IsLinkMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

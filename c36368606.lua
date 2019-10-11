@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK) and c:IsLocation(LOCATION_GRAVE)
+	return c:IsRace(RACE_CYBERSE) and c:IsLinkMonster() and c:IsLocation(LOCATION_GRAVE)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,c:GetControler())
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -81,7 +81,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.etarget(e,c)
-	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK)
+	return c:IsRace(RACE_CYBERSE) and c:IsLinkMonster()
 end
 function s.efilter(e,te,c)
 	return te:GetOwner()~=c

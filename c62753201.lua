@@ -24,7 +24,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	aux.RemainFieldCost(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and (c:IsCode(31833038) or c:IsSetCard(0x10f))
+	return c:IsFaceup() and c:IsLinkMonster() and (c:IsCode(31833038) or c:IsSetCard(0x10f))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

@@ -43,7 +43,7 @@ function s.cfilter(c,tp,zone)
 	return bit.extract(zone,seq)~=0
 end
 function s.lkfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local zone=0

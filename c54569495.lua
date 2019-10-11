@@ -83,7 +83,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damfilter(c)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x12b)
+	return c:IsLinkMonster() and c:IsSetCard(0x12b)
 end
 function s.damval(e,re,val,r,rp,rc)
 	local ct=Duel.GetMatchingGroup(s.damfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil):GetSum(Card.GetLink)*1000

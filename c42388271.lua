@@ -55,7 +55,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for link monsters that can be special summoned
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsCanBeEffectTarget(e)
+	return c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsCanBeEffectTarget(e)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) 

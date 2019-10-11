@@ -34,7 +34,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
     return c:IsReason(REASON_BATTLE+REASON_EFFECT) and rp~=tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.spfilter(c,e,tp)
-    return c:IsRace(RACE_WARRIOR) and not c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return c:IsRace(RACE_WARRIOR) and not c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end

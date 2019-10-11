@@ -46,13 +46,13 @@ function s.initial_effect(c)
     c:RegisterEffect(e4)
 end
 function s.exfilter(c)
-    return c:IsFaceup() and c:IsType(TYPE_LINK) and (c:GetSequence()==5 or c:GetSequence()==6)
+    return c:IsFaceup() and c:IsLinkMonster() and (c:GetSequence()==5 or c:GetSequence()==6)
 end
 function s.filter(c)
-    return c:IsFaceup() and c:IsType(TYPE_LINK) and c:GetMutualLinkedGroup():IsExists(s.exfilter,1,nil)
+    return c:IsFaceup() and c:IsLinkMonster() and c:GetMutualLinkedGroup():IsExists(s.exfilter,1,nil)
 end
 function s.cfilter(c)
-    return c:IsFaceup() and c:IsType(TYPE_LINK)
+    return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.atkval(e,c)
     local val=Duel.GetMatchingGroupCount(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,nil)*800
@@ -60,7 +60,7 @@ function s.atkval(e,c)
     return val
 end
 function s.atkfilter(c,tc)
-    return c:IsType(TYPE_LINK) and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetFlagEffect(id)>0
+    return c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetFlagEffect(id)>0
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(s.atkfilter,1,nil)

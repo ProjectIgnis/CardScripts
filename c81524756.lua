@@ -40,7 +40,7 @@ function s.dbcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function s.dbfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x116) and c:GetFlagEffect(id)==0
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x116) and c:GetFlagEffect(id)==0
 end
 function s.dbtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.dbfilter(chkc) end

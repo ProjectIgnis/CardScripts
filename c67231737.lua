@@ -63,7 +63,7 @@ function s.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,0,e:GetHandler())>0 end
@@ -97,5 +97,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.attg(e,c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 end

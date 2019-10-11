@@ -28,7 +28,7 @@ function Link.ConditionFilter(c,f,lc,tp)
 	return c:IsCanBeLinkMaterial(lc,tp) and (not f or f(c,lc,SUMMON_TYPE_LINK,tp))
 end
 function Link.GetLinkCount(c)
-	if c:IsType(TYPE_LINK) and c:GetLink()>1 then
+	if c:IsLinkMonster() and c:GetLink()>1 then
 		return 1+0x10000*c:GetLink()
 	else return 1 end
 end

@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spfilter1(c,e,tp)
-	if c:IsFaceup() and c:IsType(TYPE_LINK) then
+	if c:IsFaceup() and c:IsLinkMonster() then
 		local zone=c:GetLinkedZone(tp)
 		return zone~=0 and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND,0,1,nil,e,tp,zone)
 	else return false end

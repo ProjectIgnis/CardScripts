@@ -19,7 +19,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 		and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.filter(c,e,tp)
-	return c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -44,7 +44,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and ev>=2000
 end
 function s.spfilter(c,e,tp)
-	return c:IsFacedown() and c:IsType(TYPE_LINK) and Duel.GetLocationCountFromEx(tp,tp,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFacedown() and c:IsLinkMonster() and Duel.GetLocationCountFromEx(tp,tp,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
@@ -57,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:RandomSelect(tp,1):GetFirst()
 	if tc then
 		Duel.ConfirmCards(PLAYER_ALL,tc)
-		if tc:IsType(TYPE_LINK) and tc:IsRace(RACE_CYBERSE) and Duel.GetLocationCountFromEx(tp,tp,tc)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+		if tc:IsLinkMonster() and tc:IsRace(RACE_CYBERSE) and Duel.GetLocationCountFromEx(tp,tp,tc)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end

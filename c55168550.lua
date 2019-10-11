@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7b) and c:IsType(TYPE_MONSTER) and (c:GetAttack()>0 or c:GetDefense()>0) and not c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(0x7b) and c:IsType(TYPE_MONSTER) and (c:GetAttack()>0 or c:GetDefense()>0) and not c:IsLinkMonster()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.atkfilter(chkc) end

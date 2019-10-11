@@ -44,7 +44,7 @@ function s.filter(c)
 	return c:GetSequence()<5
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x119) and c:IsType(TYPE_LINK) and c:IsAbleToExtra()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsAbleToExtra()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

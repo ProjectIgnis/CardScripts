@@ -72,7 +72,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e8)
 end
 function s.limfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.splimit(e,c,tp,sumtp,sumpos)
 	local g=Duel.GetMatchingGroup(s.limfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -81,10 +81,10 @@ function s.splimit(e,c,tp,sumtp,sumpos)
 	return (sumtp&SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK and lk and lk>c:GetLink()
 end
 function s.atktg(e,c)
-	return not c:IsType(TYPE_LINK)
+	return not c:IsLinkMonster()
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and c:IsLinkMonster()
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)>1

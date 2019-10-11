@@ -23,7 +23,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_MZONE,0,2,nil)
 end
 function s.spfilter(c,e,tp,sc)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsLinkMonster()
 		and c:GetLinkedZone()~=0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,c:GetLinkedZone())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

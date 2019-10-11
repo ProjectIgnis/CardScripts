@@ -1279,7 +1279,7 @@ function Auxiliary.ReincarnationCheckValue(e,c)
 	local id=c:GetCode()
 	local tp=c:GetSummonPlayer()
 	local rc=false
-	ifreturn c:IsLinkMonster() then
+	if c:IsLinkMonster() then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_LINK,tp,id)
 	elseif c:IsType(TYPE_FUSION) then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_FUSION,tp,id)

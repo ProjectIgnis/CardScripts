@@ -50,7 +50,7 @@ function s.ceop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter1(c,e,tp)
 	local zone = c:GetLinkedZone(tp)&0x1f
-	return c:IsFaceup() and c:IsLinkMonster() and zone>0 and Duel.IsExistingMatchingCard(s.spfilter2,tp,0x13,0,1,c,e,tp,zone)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and zone>0 and Duel.IsExistingMatchingCard(s.spfilter2,tp,0x13,0,1,c,e,tp,zone)
 end
 function s.spfilter2(c,e,tp,zone)
 	return c:IsSetCard(0x104) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE,tp,zone)

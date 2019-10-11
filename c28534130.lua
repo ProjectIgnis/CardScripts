@@ -32,7 +32,7 @@ function s.spfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.lkfilter,tp,LOCATION_EXTRA,0,1,nil,c,tp)
 end
 function s.lkfilter(c,mc,tp)
-	return c:IsSetCard(0x119) and c:IsLinkMonster()
+	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK)
 		and (not mc or mc:IsCanBeLinkMaterial(c,tp)) and c:IsSpecialSummonable(SUMMON_TYPE_LINK)
 end
 function s.extramat(chk,summon_type,e,...)
@@ -135,7 +135,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsAbleToExtra()
+	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK) and c:IsAbleToExtra()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end

@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.indval(e,c)
-	return c:IsLevelBelow(e:GetHandler():GetLevel()) orreturn c:IsLinkMonster() or c:IsType(TYPE_XYZ)
+	return c:IsLevelBelow(e:GetHandler():GetLevel()) or c:IsType(TYPE_LINK) or c:IsType(TYPE_XYZ)
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

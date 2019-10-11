@@ -15,11 +15,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter1(c,e,tp)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x119) and Duel.GetLocationCountFromEx(tp,tp,c)>0 
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x119) and Duel.GetLocationCountFromEx(tp,tp,c)>0 
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.filter2(c,e,tp,mc)
-	return c:IsSetCard(0x119) and mc:IsCanBeLinkMaterial(c,tp) and c:IsLinkMonster()
+	return c:IsSetCard(0x119) and mc:IsCanBeLinkMaterial(c,tp) and c:IsType(TYPE_LINK) 
 		and c:IsCode(mc:GetCode()) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

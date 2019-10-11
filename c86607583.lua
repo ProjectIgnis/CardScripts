@@ -57,7 +57,7 @@ function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x101) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.cfilter(c)
-	return c:IsRace(RACE_CYBERSE) and c:IsLinkMonster()
+	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanAddCounter(tp,0x47,1,e:GetHandler())

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsType(TYPE_LINK)
 end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,nil)

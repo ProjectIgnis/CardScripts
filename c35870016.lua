@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfc}
 function s.filter(c)
-	return c:IsFaceup() and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsType(TYPE_LINK) 
 		and c:IsSetCard(0xfc) and c:IsLinkAbove(1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -54,7 +54,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:GetReasonCard():IsSetCard(0xfb)
 end
 function s.lkfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsType(TYPE_LINK)
 end
 function s.desfilter(c,g)
 	return g:IsContains(c)

@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for FIRE link monsters
 function s.filter1(c,tp)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsLinkMonster() and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToExtra()
+	return c:IsLocation(LOCATION_GRAVE) and c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToExtra()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -16,11 +16,11 @@ function s.initial_effect(c)
 end
 function s.filter1(c)
 	local tp=c:GetControler()
-	return c:IsAbleToChangeControler() and c:IsFaceup() and not c:IsLinkMonster() and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_CONTROL)>0
+	return c:IsAbleToChangeControler() and c:IsFaceup() and not c:IsType(TYPE_LINK) and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_CONTROL)>0
 end
 function s.filter2(c)
 	local tp=c:GetControler()
-	return c:IsLinkMonster() and c:IsAbleToChangeControler() and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_CONTROL)>0
+	return c:IsType(TYPE_LINK) and c:IsAbleToChangeControler() and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_CONTROL)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

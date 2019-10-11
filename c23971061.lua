@@ -53,6 +53,6 @@ function s.efilter(e,te)
 	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner() and not te:IsActiveType(TYPE_LINK)
 end
 function s.indval(e,c)
-	return not c:IsLinkMonster()
+	return not c:IsType(TYPE_LINK)
 end
 

@@ -43,7 +43,7 @@ function s.filter1(c)
 	return c:IsSetCard(0x116) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.filter2(c,ec)
-	return c:IsFaceup() and c:IsLinkMonster() and c:GetLinkedGroup():IsContains(ec)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(ec)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local lg1=Duel.GetLinkedGroup(tp,1,1)

@@ -57,6 +57,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not c:IsLinkMonster() and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsType(TYPE_LINK) and c:IsLocation(LOCATION_EXTRA)
 end
 

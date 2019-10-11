@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) 
-		and c:IsPreviousPosition(POS_FACEUP) and c:IsLinkMonster()
+		and c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_LINK)
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

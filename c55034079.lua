@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.counterfilter(c)
-	return not c:IsSummonLocation(LOCATION_EXTRA) or (c:IsLinkMonster() and c:IsAttribute(ATTRIBUTE_DARK))
+	return not c:IsSummonLocation(LOCATION_EXTRA) or (c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_DARK))
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and r&REASON_BATTLE~=0
@@ -86,7 +86,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not (c:IsLinkMonster() and c:IsAttribute(ATTRIBUTE_DARK)) and c:IsLocation(LOCATION_EXTRA)
+	return not (c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_DARK)) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if a:IsControler(1-tp) then a=Duel.GetAttackTarget() d=Duel.GetAttacker() end
-	return a and d and a:IsLinkMonster() and a:GetLinkedGroup():IsExists(s.filter,1,nil)
+	return a and d and a:IsType(TYPE_LINK) and a:GetLinkedGroup():IsExists(s.filter,1,nil)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

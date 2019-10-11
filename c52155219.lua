@@ -25,7 +25,7 @@ function s.initial_effect(c)
     end)
 end
 function s.gtg(e,c)
-    return c:IsLinkMonster() and c:IsSetCard(0x119)
+    return c:IsType(TYPE_LINK) and c:IsSetCard(0x119)
 end
 function s.val(e,c)
     local g=c:GetMaterial()
@@ -69,7 +69,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function s.immfilter(c)
-    return c:IsLinkMonster() and c:IsSetCard(0x119) and c:GetFlagEffect(41463181)~=0
+    return c:IsType(TYPE_LINK) and c:IsSetCard(0x119) and c:GetFlagEffect(41463181)~=0
 end
 function s.immop(e,tp,eg,ep,ev,re,r,rp)
     local tc=Duel.GetFirstTarget()

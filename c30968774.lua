@@ -21,7 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sc=e:GetHandler():GetReasonCard()
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and sc:IsAttackAbove(500) and sc:IsLinkMonster() end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and sc:IsAttackAbove(500) and sc:IsType(TYPE_LINK) end
 	Duel.SetTargetCard(sc)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
@@ -31,7 +31,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sc=Duel.GetFirstTarget()
-	if not sc:IsFaceup() or sc:GetAttack()<500 or not sc:IsRelateToEffect(e) or not sc:IsLinkMonster() then return end
+	if not sc:IsFaceup() or sc:GetAttack()<500 or not sc:IsRelateToEffect(e) or not sc:IsType(TYPE_LINK) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)

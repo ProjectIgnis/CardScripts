@@ -40,7 +40,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.thfilter(c,e)
-	return c:IsSetCard(0x120) and not c:IsLinkMonster()
+	return c:IsSetCard(0x120) and not c:IsType(TYPE_LINK) 
 		and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function s.thcheck(sg,e,tp)

@@ -147,7 +147,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.matcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE)
-		and r & REASON_LINK == REASON_LINK and e:GetHandler():GetReasonCard():IsLinkMonster()
+		and r & REASON_LINK == REASON_LINK and e:GetHandler():GetReasonCard():IsType(TYPE_LINK)
 end
 function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

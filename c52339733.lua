@@ -19,7 +19,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if a:IsFaceup() and a:IsRelateToBattle() and d:IsFaceup() and d:IsRelateToBattle() then
-		if not a:IsLinkMonster() then
+		if not a:IsType(TYPE_LINK) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -27,7 +27,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
 			a:RegisterEffect(e1)
 		end
-		if not d:IsLinkMonster() then
+		if not d:IsType(TYPE_LINK) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)

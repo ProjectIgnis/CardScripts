@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.lkfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsType(TYPE_LINK)
 end
 function s.thfilter(c,g)
 	return c:IsFaceup() and g:IsContains(c) and c:IsAbleToHand()

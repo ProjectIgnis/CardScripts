@@ -30,13 +30,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.tg(e,c)
-	return c:IsLinkMonster() and c:IsSetCard(0x116)
+	return c:IsType(TYPE_LINK) and c:IsSetCard(0x116)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x116) and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsSetCard(0x116) and c:IsType(TYPE_LINK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

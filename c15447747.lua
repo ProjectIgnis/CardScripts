@@ -56,7 +56,7 @@ function s.lkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.lkfilter(c)
-	return c:IsSetCard(0x120) and c:IsLinkMonster() and c:IsSpecialSummonable(SUMMON_TYPE_LINK)
+	return c:IsSetCard(0x120) and c:IsType(TYPE_LINK) and c:IsSpecialSummonable(SUMMON_TYPE_LINK)
 end
 function s.lktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spfilter(c,e,tp,tid)
-	return c:GetTurnID()==tid and (c:GetReason()&REASON_DESTROY)~=0 and c:IsRace(RACE_CYBERSE) and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetTurnID()==tid and (c:GetReason()&REASON_DESTROY)~=0 and c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tid=Duel.GetTurnCount()

@@ -50,7 +50,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetOwner():CancelToGrave(false)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x10b)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x10b)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -61,7 +61,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
 function s.eqlimit(e,c)
-	return c:GetControler()==e:GetHandlerPlayer() and c:IsLinkMonster() and c:IsSetCard(0x10b)
+	return c:GetControler()==e:GetHandlerPlayer() and c:IsType(TYPE_LINK) and c:IsSetCard(0x10b)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -38,7 +38,7 @@ function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and (ec:GetOriginalType()&TYPE_LINK==TYPE_LINK)
 end
 function s.filter(c)
-	return c:IsLinkMonster() and not c:IsForbidden()
+	return c:IsType(TYPE_LINK) and not c:IsForbidden()
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)

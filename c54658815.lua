@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.lkfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsType(TYPE_LINK)
 end
 function s.filter(c,e,tp,zone)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp,zone)

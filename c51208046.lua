@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Trickstar" link monster
 function s.cfilter1(c)
-	return c:IsSetCard(0xfb) and c:IsLinkMonster()
+	return c:IsSetCard(0xfb) and c:IsType(TYPE_LINK)
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_MZONE,0,1,nil)

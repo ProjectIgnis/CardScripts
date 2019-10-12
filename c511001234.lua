@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id+1}
 function s.cfilter(c,tpe)
 	return c:IsFaceup() and c:GetType()&tpe==tpe and c:IsAbleToRemoveAsCost()
 end

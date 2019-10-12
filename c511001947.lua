@@ -16,11 +16,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x12f}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x22c)
+	return c:IsFaceup() and c:IsSetCard(0x12f)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	if rp~=tp or not re:GetHandler():IsSetCard(0x22c) then return end
+	if rp~=tp or not re:GetHandler():IsSetCard(0x12f) then return end
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
 	return ex and Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end

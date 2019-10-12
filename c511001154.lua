@@ -1,4 +1,6 @@
+--シンクロ・プロミネンス
 --Synchro Prominence
+--fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,13 +18,11 @@ function s.filter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	local dam=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)*1000
-	Duel.SetTargetPlayer(1-tp)
-	Duel.SetTargetParam(dam)
-	if dam>0 then Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local dam=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)*1000
-	Duel.Damage(p,dam,REASON_EFFECT)
+	for p=0,1 do
+		if Duel.IsExistingMatchingCard(s.filter,p,LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(p,aux.Stringid(114932,0)) then
+			Duel.Damage(1-p,1000,REASON_EFFECT)
+		end
+	end
 end

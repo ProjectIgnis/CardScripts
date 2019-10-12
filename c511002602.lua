@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.FALSE)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x33}
 function s.spfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x33) and c:IsType(TYPE_TUNER) and c:IsAbleToRemove()
 end

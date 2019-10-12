@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x48}
 s.xyz_number=4
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER)

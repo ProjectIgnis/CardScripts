@@ -23,8 +23,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x12f}
 function s.filter(c)
-	return c:IsSetCard(0x22c) and c:IsLevelBelow(2) and c:IsFaceup()
+	return c:IsSetCard(0x12f) and c:IsLevelBelow(2) and c:IsFaceup()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

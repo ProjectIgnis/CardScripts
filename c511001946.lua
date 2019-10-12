@@ -15,8 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x12f}
 function s.cfilter(c)
-	return c:IsSetCard(0x22c)
+	return c:IsSetCard(0x12f)
 end
 function s.filter(c,e)
 	return c:IsFaceup() and (not e or c:IsCanBeEffectTarget(e))

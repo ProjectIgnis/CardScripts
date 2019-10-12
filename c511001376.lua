@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xaf),8,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xaf),8,2)
 	c:EnableReviveLimit()
 	--cannot disable
 	local e0=Effect.CreateEffect(c)
@@ -55,6 +55,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.regop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xaf}
 function s.cnvalue(e,ct)
 	return Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT):GetHandler()==e:GetHandler()
 end

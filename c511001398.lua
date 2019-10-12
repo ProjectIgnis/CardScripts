@@ -1,4 +1,6 @@
+--強行軍
 --Forced March
+--fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,8 +16,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-	sg:ForEach(function(tc)
+	local tg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+	tg:ForEach(function(tc)
 		local atk=tc:GetAttack()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -23,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(atk/2)
 		tc:RegisterEffect(e1)
-		if atk>1 and not tc:IsImmuneToEffect(e1) then
+		if not tc:IsImmuneToEffect(e1) then
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetType(EFFECT_TYPE_SINGLE)

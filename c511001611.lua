@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x48}
 function s.filter(c,mg)
 	if not c:IsSetCard(0x48) or not c:IsType(TYPE_XYZ) or type(c.xyz_number)~="number" then return false end
 	if c.xyz_number==0 then 

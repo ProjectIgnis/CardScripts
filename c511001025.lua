@@ -1,4 +1,5 @@
---バトル・スタン・ソニック
+--バトル・スタン・ソニック (Anime)
+--Sonic Stun (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--active
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.GetAttacker():GetControler()~=tp
 end
 function s.filter(c,e,tp)
 	return c:IsType(TYPE_TUNER) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

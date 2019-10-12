@@ -1,3 +1,4 @@
+--鉄壁の仮面
 --Mask of Impregnability
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,6 +21,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damval(e,re,val,r,rp,rc)
-	if rp~=e:GetOwnerPlayer() and Duel.GetAttacker() and Duel.GetAttacker():IsControler(1-tp) then return 0
+	if rp~=e:GetOwnerPlayer() and Duel.GetAttacker() and Duel.GetAttacker():IsControler(1-e:GetHandlerPlayer()) then return 0
 	else return val end
 end

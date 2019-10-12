@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.copyop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x1f}
 s.listed_names={CARD_NEOS}
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)

@@ -23,10 +23,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(s.refcon)
 	e1:SetReset(RESET_CHAIN)
 	Duel.RegisterEffect(e1,tp)
+	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetDescription(aux.Stringid(4016,11))
 	e2:SetCode(EFFECT_CHANGE_DAMAGE)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e2:SetTargetRange(1,0)
 	e2:SetValue(s.damval)
 	e2:SetLabel(cid)
@@ -46,6 +48,6 @@ end
 function s.damval(e,re,val,r,rp,rc)
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
 	if cid==e:GetLabel() then return val end
-	if (r&REASON_EFFECT)~=0 then return 0
+	if r&REASON_EFFECT~=0 then return 0
 	else return val end
 end

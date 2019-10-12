@@ -98,6 +98,7 @@ function s.initial_effect(c)
 	e15:SetOperation(s.batop)
 	c:RegisterEffect(e15)
 end
+s.listed_series={0xc2}
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and (c:IsRace(RACE_DRAGON) or c:IsSetCard(0xc2)) 

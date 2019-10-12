@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xb}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()==nil and Duel.GetAttacker():GetControler()~=tp
 end

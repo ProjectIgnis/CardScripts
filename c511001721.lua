@@ -1,4 +1,6 @@
---Chokoikoi
+--超こいこい  (Anime)
+--Super Koi Koi (Anime)
+--fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xe6}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,3) and Duel.IsPlayerCanSpecialSummon(tp) end
 	Duel.SetTargetPlayer(tp)
@@ -21,11 +24,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)==3 then
 		local g=Duel.GetOperatedGroup()
-		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			if Duel.GetLocationCount(p,LOCATION_MZONE)>0 and tc:IsSetCard(0xe6) 
-				and tc:IsCanBeSpecialSummoned(e,0,p,false,false) then
-				Duel.SpecialSummonStep(tc,0,p,p,false,false,POS_FACEUP)
+				and tc:IsCanBeSpecialSummoned(e,0,p,false,false)
+				and Duel.SpecialSummonStep(tc,0,p,p,false,false,POS_FACEUP) then
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_CHANGE_LEVEL)
@@ -41,11 +43,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				local e3=e2:Clone()
 				e3:SetCode(EFFECT_SET_DEFENSE_FINAL)
 				tc:RegisterEffect(e3)
-			elseif tc:IsType(TYPE_MONSTER) and not tc:IsSetCard(0xe6) then
+			elseif not tc:IsType(TYPE_MONSTER) or not tc:IsSetCard(0xe6) then
 				Duel.SendtoGrave(tc,REASON_EFFECT)
 				Duel.Damage(p,1000,REASON_EFFECT)
 			end
-			tc=g:GetNext()
 		end
 		Duel.SpecialSummonComplete()
 	end

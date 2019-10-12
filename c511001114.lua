@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.spop)
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x1034}
 s.listed_names={12644061}
 function s.descon(e)
 	local c=e:GetHandler()

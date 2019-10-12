@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e7:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e7)
 end
-s.listed_names={27911549}
+s.listed_names={27911549,511004345}
 function s.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

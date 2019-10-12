@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.dirop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={511001322}
 function s.distg(e,c)
 	local ec=e:GetHandler()
 	if c==ec or c:GetCardTargetCount()==0 then return false end

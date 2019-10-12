@@ -1,5 +1,6 @@
 --E・HERO ネオス・ナイト (Anime)
 --Elemental HERO Neos Knight (Anime)
+--fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -29,7 +30,7 @@ s.listed_names={CARD_NEOS}
 s.material_setcode={0x8,0x3008,0x9}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	local atk=-1
+	local atk=0
 	local tc=g:GetFirst()
 	if tc:IsCode(CARD_NEOS) or tc:IsHasEffect(EFFECT_FUSION_SUBSTITUTE) then tc=g:GetNext() end
 	if not tc:IsCode(CARD_NEOS) then

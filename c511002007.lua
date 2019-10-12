@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x9b}
 function s.filter(c,e,tp,ft)
 	return c:IsFaceup() and c:IsSetCard(0x9b) and c:IsAbleToHand() and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) 
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)

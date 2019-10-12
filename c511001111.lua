@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.descon)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x1034}
 s.listed_names={12644061}
 function s.descon(e)
 	local c=e:GetHandler()

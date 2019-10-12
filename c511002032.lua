@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x33}
 function s.filter(c)
 	return c:IsSetCard(0x33) and c:IsLevelBelow(3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end

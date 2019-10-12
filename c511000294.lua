@@ -60,6 +60,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 s.xyz_number=1000
+s.listed_series={0x48}
 function s.filter(e,c)
 	return c:IsC()
 end

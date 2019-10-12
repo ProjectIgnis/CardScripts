@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_DARK_MAGICIAN_GIRL}
+s.listed_names={CARD_DARK_MAGICIAN_GIRL,id+1}
 function s.cfilter(c,ft)
 	return c:IsFaceup() and c:IsCode(CARD_DARK_MAGICIAN_GIRL) and c:IsAbleToHandAsCost() and (ft>1 or c:GetSequence()<5)
 end

@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.desreptg)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x557,0x507,0x525,0x50d}
 function s.eqval(ec,c,tp)
 	return ec:IsType(TYPE_SYNCHRO) and ec:IsControler(1-tp)
 end

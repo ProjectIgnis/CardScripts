@@ -1,4 +1,5 @@
 --ドン・サウザンドの契約
+--Contract with Don Thousand
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -36,9 +37,13 @@ function s.filter(c)
 end
 function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 	local cg=eg:Filter(s.filter,nil)
-	Duel.ConfirmCards(tp,cg)
-	Duel.ConfirmCards(1-tp,cg)
-	Duel.ShuffleHand(1-tp)
+	if ep == tp then
+		Duel.ConfirmCards(1-tp,cg)
+		Duel.ShuffleHand(tp)
+	elseif ep == (1-tp) then
+ 		Duel.ConfirmCards(tp,cg)
+		Duel.ShuffleHand(1-tp)
+	end
 	local tc=cg:GetFirst()
 	while tc do
 		if tc:IsType(TYPE_SPELL) then
@@ -49,8 +54,13 @@ function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_PHASE+PHASE_END)
 			e1:SetTargetRange(1,0)
 			Duel.RegisterEffect(e1,tc:GetControler())
+			local e2=Effect.CreateEffect(e:GetHandler())
+			e2:SetDescription(aux.Stringid(4016,5))
+			e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+			e2:SetReset(RESET_PHASE+PHASE_END)
+			e2:SetTargetRange(1,0)
+			Duel.RegisterEffect(e2,tc:GetControler())			
 		end
 		tc=cg:GetNext()
 	end
 end
-

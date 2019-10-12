@@ -1,4 +1,5 @@
 --時読みの魔術師
+--Timegazer Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -61,7 +62,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negfilter(c)
-	return c:IsOnField() and (c:GetSequence()==6 or c:GetSequence()==7)
+	return c:IsOnField() and c:IsLocation(LOCATION_PZONE)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end

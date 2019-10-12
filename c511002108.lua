@@ -37,7 +37,7 @@ function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e2)
 	local e3=e1:Clone()
 	e3:SetCode(EFFECT_EXTRA_ATTACK)
-	e3:SetValue(c:GetMaterialCount())
+	e3:SetValue(c:GetMaterialCount()-1)
 	c:RegisterEffect(e3)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)

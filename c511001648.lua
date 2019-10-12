@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id+1}
 function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsCode(id+1)
 end

@@ -1,4 +1,6 @@
+--ミラーバリア
 --Mirror Barrier
+--fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--negate and damage
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetDescription(aux.Stringid(511001513,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
 	e3:SetRange(LOCATION_SZONE)
@@ -67,17 +69,17 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.RegisterEffect(e3,tp)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,Duel.GetAttacker():GetAttack())
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,1)
+	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	Duel.NegateAttack()
+	Duel.Damage(1-tp,Duel.GetAttacker():GetAttack(),REASON_EFFECT)
 end
 function s.reset(e,tp,eg,ep,ev,re,r,rp)
 	s.tgop(e:GetLabelObject(),tp,eg,ep,ev,e,r,rp)
-end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		Duel.NegateAttack()
-		Duel.Damage(1-tp,Duel.GetAttacker():GetAttack(),REASON_EFFECT)
-	end
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp

@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x33}
 function s.spfilter(c,e,tp,tid)
 	return c:IsSetCard(0x33) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetTurnID()==tid and c:IsReason(REASON_DESTROY)
 end

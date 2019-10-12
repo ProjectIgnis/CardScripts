@@ -1,3 +1,4 @@
+--囚われ鏡
 --Mirror Prison
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,21 +22,26 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atcost(e,c,tp)
+	if c:IsRace(RACE_MACHINE+RACE_ZOMBIE) or c:IsImmuneToEffect(e) then return true end
 	local ct=Duel.GetFlagEffect(tp,51100970)
 	return Duel.CheckReleaseGroup(tp,Card.IsRace,ct,c,c:GetRace())
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if Duel.IsAttackCostPaid()~=2 and tc:IsLocation(LOCATION_MZONE) then
-		local minc=Duel.GetFlagEffect(tp,id)==0 and 0 or 1
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local g=Duel.SelectReleaseGroup(tp,Card.IsRace,minc,1,tc,tc:GetRace())
-		if g and #g>0 then
-			Duel.Release(g,REASON_COST)
+		if tc:IsRace(RACE_MACHINE+RACE_ZOMBIE) or tc:IsImmuneToEffect(e) then
 			Duel.AttackCostPaid()
-			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_DAMAGE,0,1)
 		else
-			Duel.AttackCostPaid(2)
+			local minc=Duel.GetFlagEffect(tp,id)==0 and 0 or 1
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+			local g=Duel.SelectReleaseGroup(tp,Card.IsRace,minc,1,tc,tc:GetRace())
+			if g and #g>0 then
+				Duel.Release(g,REASON_COST)
+				Duel.AttackCostPaid()
+				Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_DAMAGE,0,1)
+			else
+				Duel.AttackCostPaid(2)
+			end
 		end
 	end
 end

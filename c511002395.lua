@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3008}
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsAbleToExtra() and c:IsSetCard(0x3008)
 end

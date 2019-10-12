@@ -11,3 +11,4 @@ function s.initial_effect(c)
 	e1:SetValue(300)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_HARPIE_LADY}

@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.dircon)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id+1}
 s.mark=0
 function s.dirfilter(c)
 	return c:IsFaceup() and c:IsCode(id+1)

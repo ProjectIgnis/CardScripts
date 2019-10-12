@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={110000101}
 function s.costfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToRemoveAsCost()
 end

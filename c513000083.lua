@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x107f,0x1048}
 function s.filter(c)
 	local code=c:GetCode()
 	local class=_G["c"..code]

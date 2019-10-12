@@ -1,4 +1,6 @@
---Ｄ－ＨＥＲＯ ディバインガイ
+--Ｄ－ＨＥＲＯ ディバインガイ (Anime)
+--Destiny HERO - Celestial (Anime)
+--updated by ClaireStanfield
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -18,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--damage
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(511001776,0))
+	e3:SetDescription(aux.Stringid(1918087,0))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCategory(CATEGORY_DAMAGE)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -28,13 +30,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EQUIP)
+	return (c:IsType(TYPE_EQUIP) and (c:IsFaceup() or c:GetEquipTarget()~=nil))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.desfilter(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.desfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

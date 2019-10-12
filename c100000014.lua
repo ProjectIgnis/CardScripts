@@ -56,6 +56,7 @@ function s.initial_effect(c)
 	e5:SetTargetRange(LOCATION_MZONE,0)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x4a}
 s.listed_names={36894320,8967776}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(36894320) and c:IsAbleToGraveAsCost()

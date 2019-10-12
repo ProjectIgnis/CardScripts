@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e2:SetValue(LOCATION_SZONE)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x4B}
 function s.rfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x4B)
 end

@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.atkop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x122}
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local e2=Effect.CreateEffect(e:GetHandler())

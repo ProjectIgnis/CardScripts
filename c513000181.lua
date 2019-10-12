@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.sop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x27}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLevelBelow(2)
 end

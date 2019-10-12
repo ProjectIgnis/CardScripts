@@ -1,4 +1,5 @@
 --幻惑
+--Illusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCondition(s.condition)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--half atk
 	local e2=Effect.CreateEffect(c)
@@ -22,26 +22,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={27780618}
+s.listed_series={0x5008}
 function s.cfilter(c)
-	return (c:IsSetCard(0x5008) or c:IsCode(27780618)) and c:IsFaceup()
+	return c:IsSetCard(0x5008) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
-	if chk==0 then return true end
-	if s.atktg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(65872270,0)) then
-		e:SetCategory(CATEGORY_ATKCHANGE)
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-		e:SetOperation(s.atkop)
-		s.atktg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetCategory(0)
-		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-		e:SetOperation(nil)
-	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) 

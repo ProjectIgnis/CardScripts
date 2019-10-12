@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x48}
 function s.filter(c,e)
 	return c:IsType(TYPE_MONSTER) and (not e or not c:IsImmuneToEffect(e))
 end

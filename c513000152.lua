@@ -1,14 +1,12 @@
+--Ｓｐ－シルバー・コントレイル (Anime)
 --Speed Spell - Silver Contrails (Anime)
---Ｓｐ－シルバー・コントレイル
---scripted by Larry126
+--scripted by Larry126, fixed by ClaireStanfield
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(s.con)
 	e1:SetTarget(s.target)
@@ -20,7 +18,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return tc and tc:GetCounter(0x91)>4
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsAttackable(ATTRIBUTE_WIND)
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
@@ -43,5 +41,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e)
-	return (Duel.GetCurrentPhase()&0x38)~=0
+	return Duel.GetCurrentPhase() >= PHASE_BATTLE_START and Duel.GetCurrentPhase() <= PHASE_BATTLE
 end

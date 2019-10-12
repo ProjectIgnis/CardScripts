@@ -1,4 +1,4 @@
---Darkness
+--Darkness/Spell A
 local s,id=GetID()
 function s.initial_effect(c)
     --activate
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
-s.listed_names={1,95000005,95000006,95000007,95000008}
+s.listed_names={95000004,95000005,95000006,95000007,95000008}
 s.mark=0
 function s.filter(c)
     return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetSequence()<5
@@ -50,16 +50,16 @@ function s.setfilter(c,code)
     return c:IsSSetable() and c:IsCode(code)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>4 
-    	and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,id+1) 
+    if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_SZONE)-Duel.GetLocationCount(tp,LOCATION_FZONE)-Duel.GetLocationCount(tp,LOCATION_PZONE))>4 
+    	and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000004) 
     	and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000005) 
     	and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000006) 
     	and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000007) 
     	and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000008) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=4 then return end
-	local g1=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,id+1)
+	if (Duel.GetLocationCount(tp,LOCATION_SZONE)-Duel.GetLocationCount(tp,LOCATION_FZONE)-Duel.GetLocationCount(tp,LOCATION_PZONE))<=4 then return end
+	local g1=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,95000004)
 	local g2=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,95000005)
 	local g3=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,95000006)
 	local g4=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,95000007)

@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.sop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x27}
 function s.synval(e,c,sc)
 	if c:IsNotTuner(sc,e:GetHandlerPlayer()) and c:IsLocation(LOCATION_HAND) then
 		local e1=Effect.CreateEffect(e:GetHandler())

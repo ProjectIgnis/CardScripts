@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e2:SetCode(511001283)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id+1}
 function s.cfilter(c)
 	return not c:IsHasEffect(511001283) and s.filter(c)
 end

@@ -55,6 +55,8 @@ function s.initial_effect(c)
 	e7:SetOperation(s.winop)
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x40}
+s.listed_names={id+1}
 function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsCode(id+1)
 end

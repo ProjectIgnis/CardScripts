@@ -57,6 +57,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.nofieldop)
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x21}
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsSetCard(0x21)
 end

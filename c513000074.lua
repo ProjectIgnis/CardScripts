@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x23),1,1,Synchro.NonTunerEx(Card.IsSetCard,0x23),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x23),1,1,Synchro.NonTuner(Card.IsSetCard,0x23),1,99)
 	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x23}
 s.listed_names={27564031}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO

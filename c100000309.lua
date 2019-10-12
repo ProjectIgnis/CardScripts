@@ -48,10 +48,13 @@ function s.initial_effect(c)
 	e5:SetOperation(s.dop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x3013}
 s.listed_names={100000048}
 function s.spfilter(c,ft,tp)
 	return c:IsCode(100000048) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 end
+function s.tg(e,c)
+	return c:IsFaceup() and c:IsSetCard(0x3013)
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

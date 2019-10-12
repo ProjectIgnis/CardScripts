@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.spcost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -30,31 +29,28 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	return at:IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local seq=e:GetHandler():GetSequence()
-	local sc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-seq)
-	if chk==0 then return sc and sc:IsDestructable(e) end
-	Duel.Destroy(sc,REASON_COST)
-end
+
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
+	local tc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,c)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.Destroy(tc,REASON_EFFECT)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-	end
+	if not c:IsRelateToEffect(e) then return end
+	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.repfil(c)
-	return (c:GetSequence()==6 or c:GetSequence()==7) and c:IsDestructable()
+	return c:IsDestructable()
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReason(REASON_BATTLE) and Duel.IsExistingMatchingCard(s.repfil,tp,LOCATION_SZONE,0,1,nil) end
+	if chk==0 then return e:GetHandler():IsReason(REASON_BATTLE) and Duel.IsExistingMatchingCard(s.repfil,tp,LOCATION_PZONE,0,1,nil) end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		local g=Duel.SelectMatchingCard(tp,s.repfil,tp,LOCATION_SZONE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,s.repfil,tp,LOCATION_PZONE,0,1,1,nil)
 		Duel.Destroy(g,REASON_EFFECT+REASON_REPLACE)
 		return true
 	else return false end

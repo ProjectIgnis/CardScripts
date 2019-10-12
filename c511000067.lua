@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={id+1}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(aux.FilterEqualFunction(Card.GetSummonPlayer,1-tp),nil)
 	for i=1,ct do

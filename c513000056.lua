@@ -1,4 +1,6 @@
---集いし願い
+--集いし願い (Anime)
+--Converging Wishes (Anime)
+--original script by MLD, fixed by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -12,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--return
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(13513663,0))
+	e2:SetDescription(1157)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
@@ -23,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--banish
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(123709,1))
+	e3:SetDescription(1102)
 	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_SZONE)
@@ -33,44 +35,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x301}
 s.listed_names={44508094,24696097}
-function s.cfilter(c)
-	return c:IsType(TYPE_SYNCHRO) and c:IsAbleToExtraAsCost()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SendtoDeck(g,nil,2,REASON_COST)
-end
-function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) end
-	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil) 
-		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
-end
-function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local g=Duel.SelectMatchingCard(1-tp,nil,1-tp,0,LOCATION_MZONE,1,1,nil)
-		if #g>0 then
-			Duel.HintSelection(g)
-			Duel.CalculateDamage(tc,g:GetFirst())
-		end
-	end
-end
-
 function s.filter(c,e,tp)
 	if not c:IsCode(44508094) then return false end
 	local code=c:GetOriginalCode()
-	local mt=_G["c" .. code]
 	local tuner=Duel.GetMatchingGroup(s.matfilter1,tp,LOCATION_GRAVE,0,nil,c)
 	local nontuner=Duel.GetMatchingGroup(s.matfilter2,tp,LOCATION_GRAVE,0,nil,c)
-	if not c:IsType(TYPE_SYNCHRO) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,true,false) 
-		or not mt.sync then return false end
+	if not c:IsType(TYPE_SYNCHRO) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,true,false) then return false end
 	if c:IsSetCard(0x301) then
 		return nontuner:IsExists(s.lvfilter2,1,nil,c,tuner)
 	else
@@ -79,31 +51,25 @@ function s.filter(c,e,tp)
 end
 function s.lvfilter(c,syncard,nontuner)
 	local code=syncard:GetOriginalCode()
-	local mt=_G["c" .. code]
 	local lv=c:GetSynchroLevel(syncard)
 	local slv=syncard:GetLevel()
 	local nt=nontuner:Filter(Card.IsCanBeSynchroMaterial,nil,syncard,c)
-	return mt.minntct and mt.maxntct and nt:CheckWithSumEqual(Card.GetSynchroLevel,slv-lv,mt.minntct,mt.maxntct,syncard)
+	return nt:CheckWithSumEqual(Card.GetSynchroLevel,slv-lv,1,99,syncard)
 end
 function s.lvfilter2(c,syncard,tuner)
 	local code=syncard:GetOriginalCode()
-	local mt=_G["c" .. code]
 	local lv=c:GetSynchroLevel(syncard)
 	local slv=syncard:GetLevel()
 	local nt=tuner:Filter(Card.IsCanBeSynchroMaterial,nil,syncard,c)
-	return mt.minntct and mt.maxntct and nt:CheckWithSumEqual(Card.GetSynchroLevel,lv+slv,mt.minntct,mt.maxntct,syncard)
+	return nt:CheckWithSumEqual(Card.GetSynchroLevel,lv+slv,1,99,syncard)
 end
 function s.matfilter1(c,syncard)
 	local code=syncard:GetOriginalCode()
-	local mt=_G["c" .. code]
-	return c:IsType(TYPE_TUNER) and c:IsCanBeSynchroMaterial(syncard) and c:IsAbleToRemove() 
-		and mt.tuner_filter and mt.tuner_filter(c)
+	return c:IsType(TYPE_TUNER) and c:IsCanBeSynchroMaterial(syncard) and c:IsAbleToRemove()
 end
 function s.matfilter2(c,syncard)
 	local code=syncard:GetOriginalCode()
-	local mt=_G["c" .. code]
-	return c:IsType(TYPE_MONSTER) and c:IsNotTuner() and c:IsCanBeSynchroMaterial(syncard) and c:IsAbleToRemove()
-		and mt.nontuner_filter and mt.nontuner_filter(c)
+	return c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TUNER) and c:IsCanBeSynchroMaterial(syncard) and c:IsAbleToRemove()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
@@ -142,7 +108,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
 		local code=tc:GetOriginalCode()
-		local mt=_G["c" .. code]
 		local tuner=Duel.GetMatchingGroup(s.matfilter1,tp,LOCATION_GRAVE,0,nil,tc)
 		local nontuner=Duel.GetMatchingGroup(s.matfilter2,tp,LOCATION_GRAVE,0,nil,tc)
 		local mat1
@@ -153,7 +118,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local tlv=mat1:GetFirst():GetSynchroLevel(tc)
 			tuner=tuner:Filter(Card.IsCanBeSynchroMaterial,nil,tc,mat1:GetFirst())
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
-			local mat2=tuner:SelectWithSumEqual(tp,Card.GetSynchroLevel,tc:GetLevel()+tlv,mt.minntct,mt.maxntct,tc)
+			local mat2=tuner:SelectWithSumEqual(tp,Card.GetSynchroLevel,tc:GetLevel()+tlv,1,99,tc)
 			mat1:Merge(mat2)
 		else
 			tuner=tuner:Filter(s.lvfilter,nil,tc,nontuner)
@@ -162,7 +127,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local tlv=mat1:GetFirst():GetSynchroLevel(tc)
 			nontuner=nontuner:Filter(Card.IsCanBeSynchroMaterial,nil,tc,mat1:GetFirst())
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
-			local mat2=nontuner:SelectWithSumEqual(tp,Card.GetSynchroLevel,tc:GetLevel()-tlv,mt.minntct,mt.maxntct,tc)
+			local mat2=nontuner:SelectWithSumEqual(tp,Card.GetSynchroLevel,tc:GetLevel()-tlv,1,99,tc)
 			mat1:Merge(mat2)
 		end
 		tc:SetMaterial(mat1)
@@ -192,6 +157,34 @@ end
 function s.val(e,c)
 	local g=Duel.GetMatchingGroup(s.vfilter,c:GetControler(),LOCATION_GRAVE,0,nil)
 	return g:GetSum(Card.GetAttack)
+end
+function s.cfilter(c)
+	return c:IsType(TYPE_SYNCHRO) and c:IsAbleToExtraAsCost()
+end
+function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.SendtoDeck(g,nil,2,REASON_COST)
+end
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) end
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil) 
+		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
+end
+function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		local g=Duel.SelectMatchingCard(1-tp,nil,1-tp,0,LOCATION_MZONE,1,1,nil)
+		if #g>0 then
+			Duel.HintSelection(g)
+			Duel.CalculateDamage(tc,g:GetFirst())
+		end
+	end
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

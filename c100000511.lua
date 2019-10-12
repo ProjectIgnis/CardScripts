@@ -1,8 +1,10 @@
---Ｖ・ＨＥＲＯ ポイズナー
---Vision HERO Poisoner
+--Ｖ・ＨＥＲＯ ポイズナー (Manga)
+--Vision HERO Poisoner (Manga)
 --updated by Larry126
 local s,id=GetID()
+local s,id=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--send 
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -21,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetHintTiming(0,TIMING_MAIN_END)
 	e2:SetCondition(s.spcon)
 	e2:SetCost(s.spcost)
 	e2:SetTarget(s.sptg)
@@ -38,8 +41,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x5008}
 function s.recon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and (r&REASON_BATTLE+REASON_EFFECT)~=0
+	return ep==tp and r&(REASON_BATTLE+REASON_EFFECT)~=0
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
@@ -48,17 +52,19 @@ end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
-	Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-	local e1=Effect.CreateEffect(c)
-	e1:SetCode(EFFECT_CHANGE_TYPE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
-	e1:SetValue(TYPE_TRAP+TYPE_CONTINUOUS)
-	c:RegisterEffect(e1)
+	if Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetCode(EFFECT_CHANGE_TYPE)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+		e1:SetValue(TYPE_TRAP+TYPE_CONTINUOUS)
+		c:RegisterEffect(e1)
+	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+	return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+		and e:GetHandler():GetType()&(TYPE_TRAP+TYPE_CONTINUOUS)==(TYPE_TRAP+TYPE_CONTINUOUS)
 end
 function s.costfilter(c,ft,tp)
 	return c:IsSetCard(0x5008) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())

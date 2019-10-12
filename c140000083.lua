@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsCode,140000085)))
 	c:RegisterEffect(e4)
 end
+s.listed_names={140000085}
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end

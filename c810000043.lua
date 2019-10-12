@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={77585513}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if not eg:IsContains(e:GetHandler()) then return end
 	local pe=e:GetLabelObject()

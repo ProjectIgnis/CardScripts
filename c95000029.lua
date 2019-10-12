@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_CANNOT_DISABLE)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x156e,0x4a}
 s.mark=0
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

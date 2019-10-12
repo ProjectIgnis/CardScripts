@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_CANNOT_DISABLE)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x156e,0x4a}
 s.listed_names={95000029}
 s.mark=0
 function s.cfilter(c)

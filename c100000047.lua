@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.valcon)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x3013}
 s.listed_names={100000053}
 function s.spfilter(c,ft,tp)
 	return c:IsCode(100000053) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())

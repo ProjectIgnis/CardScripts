@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ddop)
 	c:RegisterEffect(e2)	
 end
+s.listed_series={0x5}
 s.toss_coin=true
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x5) and c:IsAttackAbove(300)

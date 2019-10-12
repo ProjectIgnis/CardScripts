@@ -1,5 +1,6 @@
--- Sneak Giant
--- scripted by: UnknownGuest
+--スニーク・ジャイアント
+--Sneak Giant
+--scripted by: UnknownGuest, updated by ClaireStanfield
 local s,id=GetID()
 function s.initial_effect(c)
 	-- summon with no tribute
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevel(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.ntcon(e,c)
 	if c==nil then return true end

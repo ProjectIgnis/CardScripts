@@ -46,6 +46,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 	c:RegisterEffect(e6)
 end
+s.listed_names={31829185}
 function s.handcon(e)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end

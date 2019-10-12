@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x95}
 function s.filter1(c,e,tp,eg,ep,ev,re,r,rp)
 	local te=c:CheckActivateEffect(false,false,false)
 	if c:IsType(TYPE_SPELL) and te then

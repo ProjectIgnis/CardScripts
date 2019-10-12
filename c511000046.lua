@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.imval2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x12}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

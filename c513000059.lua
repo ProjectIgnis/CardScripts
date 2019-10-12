@@ -57,6 +57,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop2)
 	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x95,0x48}
 s.xyz_number=101
 s.listed_names={48739166,100000581,111011002,511000580,511002068,511002164,93238626}
 function s.filter(c)

@@ -50,6 +50,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.damop)
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x48}
 s.mark=0
 function s.ttcon(e,c)
 	if c==nil then return true end

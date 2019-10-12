@@ -129,6 +129,7 @@ function s.initial_effect(c)
 		f(tp,r)
 	end
 end
+s.listed_series={0x602}
 function s.stcon(e,tp,eg,ep,ev,re,r,rp)
     return Duel.GetTurnCount()==1
 end

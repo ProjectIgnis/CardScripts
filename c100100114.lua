@@ -1,4 +1,6 @@
 --Ｓｐ－オーバー・チューン
+--Speed Spell - Overtune
+--fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,7 +24,7 @@ function s.cfilter(c,e,tp,ft)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,lv,e,tp)
 end
 function s.filter(c,lv,e,tp)
-	return c:IsLevelBelow(lv) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetLevel()==lv and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

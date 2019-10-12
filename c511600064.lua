@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.exop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xad,0xa9,0xc3}
 function s.spcheck(sg,tp,exg,e)
 	return Duel.IsExistingMatchingCard(s.exfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg)
 end

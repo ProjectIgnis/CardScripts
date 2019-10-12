@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xad,0xa9,0xc3}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if e==re or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)

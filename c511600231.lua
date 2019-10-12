@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x580}
 function s.cfilter(c,g)
 	return g:IsContains(c)
 end
@@ -74,7 +75,7 @@ function s.actlimit(e,te,tp)
 	return te:IsHasType(EFFECT_TYPE_ACTIVATE) and te:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsLinkMonster() and c:GetLink()>2
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:GetLink()>2
 		and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsControler(1-tp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)

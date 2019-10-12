@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_GRAVE)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x101}
 function s.aclimit(e,re,tp)
 	return re:GetHandler():IsCode(alias) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and not re:GetHandler():IsImmuneToEffect(e)

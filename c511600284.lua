@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x95}
 s.listed_names={15914410,100000581,111011002,511000580,511002068,511002164,93238626}
 function s.rumfilter(c)
 	return c:IsCode(15914410) and not c:IsPreviousLocation(LOCATION_OVERLAY)

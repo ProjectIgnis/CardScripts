@@ -2,7 +2,7 @@
 --Mark of the Rose (Pre-Errata)
 local s,id,alias=GetID()
 function s.initial_effect(c)
-	alisas=c:GetOriginalCodeRule()
+	alias=c:GetOriginalCodeRule()
 	aux.AddEquipProcedure(c,1,Card.IsControlerCanBeChanged,s.eqlimit,s.cost,s.target)
 	--control
 	local e2=Effect.CreateEffect(c)

@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.penop)
 	c:RegisterEffect(e2) 
 end
+s.listed_series={0x9f}
 function s.emfilter(c)
 	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x9f) and c:IsType(TYPE_MONSTER)
 end

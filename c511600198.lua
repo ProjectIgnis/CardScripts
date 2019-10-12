@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.valcheck)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x119}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_FIRE,lc,sumtype,tp) and c:IsType(TYPE_EFFECT,lc,sumtype,tp)
 end

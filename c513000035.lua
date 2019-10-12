@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.disop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x27}
 function s.filter(c,e,tp)
 	return c:IsLevelBelow(3) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

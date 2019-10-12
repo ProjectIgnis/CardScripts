@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xfb}
 function s.filter1(c,e)
 	return not c:IsImmuneToEffect(e)
 end

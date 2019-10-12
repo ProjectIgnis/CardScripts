@@ -1,6 +1,6 @@
 --聖花葬
 --Sunbloom Doom
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

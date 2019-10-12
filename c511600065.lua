@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.penop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xad}
 function s.spfilter(c,e,tp,sc)
 	return c:IsSetCard(0xad) and c:IsLevelBelow(sc)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

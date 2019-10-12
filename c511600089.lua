@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xfb}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.tg(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
 	if chk==0 then return true end

@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,alias)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
@@ -24,16 +25,17 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,alias+100)
+	e2:SetCountLimit(1,alias+1)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x12b}
 function s.spfilter(c,e,tp,zone)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local zone=e:GetHandler():GetLinkedZone(tp)
+	local zone=e:GetHandler():GetLinkedZone(tp)&0x1f
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp,zone) end
 	if chk==0 then return zone~=0 and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,zone) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -43,12 +45,12 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and c:GetLinkedZone(tp)~=0 then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,c:GetLinkedZone(tp))
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and c:GetLinkedZone(tp)&0x1f~=0 then
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,c:GetLinkedZone(tp)&0x1f)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x22b) and c:IsAbleToHand()
+	return c:IsSetCard(0x12b) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.mvchk)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x579}
 function s.indct(e,re,r,rp)
 	if (r&REASON_BATTLE+REASON_EFFECT)~=0 then
 		local c=e:GetHandler()

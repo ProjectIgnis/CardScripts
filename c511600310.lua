@@ -1,11 +1,12 @@
---ブルル＠イグニスター
---Bururu @Ignister
+--ブルル＠イグニスター (Anime)
+--Bururu @Ignister (Anime)
 --Scripted by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--Special Summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(9523599,0))
+	e1:SetDescription(aux.Stringid(alias,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BE_MATERIAL)

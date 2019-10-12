@@ -1,4 +1,5 @@
 --強欲な壺
+--Pot
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -264,7 +265,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	
 	--
 	local c=e:GetHandler()
-	local res=Duel.GetRandomNumber(1,5)
+	local maxran=Duel.GetLocationCount(1-tp,LOCATION_SZONE)>0 and 5 or 4
+	local res=Duel.GetRandomNumber(1,maxran)
 	c:CancelToGrave(true)
 	if res==1 then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
@@ -292,7 +294,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.CheckLPCost(tp,1000) and Duel.SelectYesNo(tp,aux.Stringid(24874630,0)) then
+	if Duel.CheckLPCost(tp,1000) and Duel.SelectYesNo(tp,aux.Stringid(1040,7)) then
 		Duel.PayLPCost(tp,1000)
 	else
 		Duel.Destroy(e:GetHandler(),REASON_COST)

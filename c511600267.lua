@@ -1,14 +1,15 @@
 --海晶乙女 ワンダーハート
 --Marincess Wonder Heart
 --scripted by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER),2,nil,s.spcheck)
 	--special summon equip
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(27240101,0))
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
@@ -50,9 +51,9 @@ function s.initial_effect(c)
 	e4:SetTarget(s.cbtg)
 	e4:SetOperation(s.cbop)
 	c:RegisterEffect(e4)
-	--spsummon
+	--special summon (gy)
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(75380687,1))
+	e5:SetDescription(aux.Stringid(alias,1))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
@@ -61,9 +62,10 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_names={511600260}
+s.listed_series={0x12b}
+s.listed_names={101010040}
 function s.matfilter(c)
-	return c:IsCode(511600260)
+	return c:IsCode(101010040)
 end
 function s.spcheck(g,lc,tp)
 	return g:IsExists(s.matfilter,1,nil)
@@ -73,7 +75,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,e,tp)
 	return c:GetOriginalType()&(TYPE_LINK+TYPE_MONSTER)==(TYPE_LINK+TYPE_MONSTER)
-		and c:IsSetCard(0x22b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsSetCard(0x12b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetEquipTarget()==e:GetHandler() and s.filter(chkc) end
@@ -139,10 +141,10 @@ function s.speqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqval(ec,c,tp)
-	return ec:IsSetCard(0x22b) and ec:IsLinkMonster() 
+	return ec:IsSetCard(0x12b) and ec:IsType(TYPE_LINK) 
 end
 function s.eqfilter(c,fid)
-	return c:GetFlagEffectLabel(id)==fid and c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x22b) and not c:IsForbidden()
+	return c:GetFlagEffectLabel(id)==fid and c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x12b) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.eqfilter(chkc,e:GetHandler():GetFieldID()) end
@@ -182,7 +184,7 @@ end
 function s.cbcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bt=eg:GetFirst()
-	return r~=REASON_REPLACE and c~=bt and bt:IsFaceup() and bt:GetControler()==c:GetControler() and bt:IsSetCard(0x22b)
+	return r~=REASON_REPLACE and c~=bt and bt:IsFaceup() and bt:GetControler()==c:GetControler() and bt:IsSetCard(0x12b)
 end
 function s.cbtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttacker():GetAttackableTarget():IsContains(e:GetHandler()) end
@@ -194,7 +196,7 @@ function s.cbop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(511600260) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(101010040) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -203,6 +205,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
 	if tc then Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end
 end

@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,aux.FilterSummonCode(44508094),1,1)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,aux.FilterBoolFunction(Card.IsCode,44508094),1,1)
 	c:EnableReviveLimit()
 	--opponent's turn synchro
 	local e1=Effect.CreateEffect(c)
@@ -61,6 +61,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.retop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={44508094}
 function s.syncon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end

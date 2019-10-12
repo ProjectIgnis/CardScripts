@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function s.filter(c,tid)
-	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsLinkMonster()
+	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsType(TYPE_LINK)
 		and c:GetLink()>0 and c:GetTurnID()==tid and c:IsReason(REASON_BATTLE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -48,6 +48,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.damop)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x4a}
 s.listed_names={100000014,74530899,8967776}
 function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsCode(100000014)

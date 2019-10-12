@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x579}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=e:GetHandler():GetLinkedZone()&0x1f
 	if chk==0 then return Duel.GetLocationCount(p,LOCATION_MZONE,p,LOCATION_REASON_CONTROL,zone)>0 end

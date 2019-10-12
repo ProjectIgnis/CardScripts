@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x101}
 function s.atkcon(e)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end

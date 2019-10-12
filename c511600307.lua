@@ -1,5 +1,5 @@
 --Ａｉ打ち
---TAi Strike
+--TA.I. Strike
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,18 +8,19 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,id)--+EFFECT_COUNT_CODE_OATH
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x135}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
 	if not bc then return false end
 	local tc=Duel.GetAttacker()
 	if not tc:IsControler(tp) then tc,bc=bc,tc end
 	e:SetLabelObject(tc)
-	return tc:IsControler(tp) and tc:IsSetCard(0x582) and not bc:IsControler(tp)
+	return tc:IsControler(tp) and tc:IsSetCard(0x135) and not bc:IsControler(tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

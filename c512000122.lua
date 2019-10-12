@@ -1,4 +1,5 @@
 --手札抹殺
+--Card Destruction (DN)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -50,6 +50,7 @@ function s.initial_effect(c)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xfb}
 function s.damp(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(e:GetHandler():GetCounter(0xfb))
 end

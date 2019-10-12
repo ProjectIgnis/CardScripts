@@ -53,6 +53,7 @@ function s.initial_effect(c)
 	e9:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	c:RegisterEffect(e9)
 end
+s.listed_series={0x583}
 function s.etarget(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x583)
 end

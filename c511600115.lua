@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9f}
 function s.thfilter(c)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x9f) and c:IsAbleToHand()
 end

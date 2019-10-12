@@ -1,5 +1,5 @@
---アチチ＠イグニスター
---Achichi @Ignister
+--アチチ＠イグニスター (Anime)
+--Achichi @Ignister (Anime)
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

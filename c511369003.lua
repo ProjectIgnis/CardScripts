@@ -42,6 +42,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ec2,0)
    	end
 end
+s.listed_series={0x580}
 function s.resetcount(e,tp,eg,ep,ev,re,r,rp)
 	s[0]=0
 	s[1]=0

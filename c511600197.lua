@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x119}
 function s.filter(c,atk)
 	return c:IsSetCard(0x119) and c:GetAttack()~=atk
 end

@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2093,0x93}
 function s.filter(c,e,tp,m1,m2,ft)
 	if not c:IsSetCard(0x2093) or (c:GetType()&0x81)~=0x81
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end

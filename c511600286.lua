@@ -25,10 +25,11 @@ end
 s.material_setcode={0x8,0x3008}
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsReason(REASON_BATTLE) and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_MZONE,0,1,c) end
+	if chk==0 then return c:IsReason(REASON_BATTLE) and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,0,1,c) end
 	if Duel.SelectEffectYesNo(tp,c,96) then
-		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_MZONE,0,1,1,c)
-		Duel.SendtoGrave(g,REASON_EFFECT)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_ONFIELD,0,1,1,c)
+		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REPLACE)
 		return true
 	else return false end
 end

@@ -1,15 +1,16 @@
---Ａｉドリング・ボーン
---Aidle Reborn
+--Ａｉドリング・ボーン (Anime)
+--A.I.dle Reborn (Anime)
 --Scripted by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,alias)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -20,15 +21,16 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_BATTLE_START)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,alias+100)
 	e2:SetCondition(s.thcon)
 	e2:SetCost(s.thcost)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x135,0x235}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x582) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x135) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -48,10 +50,10 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x584) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x235) and c:IsAbleToRemoveAsCost()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x584) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(0x235) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

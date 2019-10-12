@@ -1,11 +1,12 @@
 --海晶乙女 マンダリン
 --Marincess Mandarin
 --scripted by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(65100616,0))
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -15,15 +16,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x12b}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x22b) and c:IsLinkMonster() and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and c:IsType(TYPE_MONSTER)
 end
 function s.spzone(tp,g)
 	local zone=0
 	for c in aux.Next(g) do
 		zone=zone|c:GetLinkedZone(tp)
 	end
-	return zone
+	return zone&0x1f
 end
 function s.condition(e,c)
 	if c==nil then return true end

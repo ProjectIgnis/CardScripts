@@ -1,5 +1,5 @@
---Ａｉラブ融合
---Ai Love Yousion
+--Ａｉラブ融合 (Anime)
+--A.I. Love Yousion (Anime)
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x135}
 function s.filter(c,e)
 	return c:IsAbleToGrave() and not c:IsImmuneToEffect(e)
 end
@@ -20,7 +21,7 @@ function s.exfilter(c,e)
 		and c:IsCanBeFusionMaterial() and c:IsAbleToGrave() and (not e or not c:IsImmuneToEffect(e))
 end
 function s.spfilter(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x582) and (not f or f(c))
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x135) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function s.fcheck(tp,sg,fc)

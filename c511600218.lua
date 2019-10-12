@@ -1,6 +1,6 @@
 --プロパティ・フラッシュ
 --Property Flash
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Permit counter
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_BATTLE_DAMAGE)
-	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,id)--+EFFECT_COUNT_CODE_OATH
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return ep==tp and Duel.GetBattleDamage(ep)>=1000 end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x577}
 function s.filter(c,e,tp,dam)
 	return c:IsAttackBelow(dam) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

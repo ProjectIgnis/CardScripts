@@ -45,33 +45,34 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_MUST_BE_ATTACKED)
 	e6:SetTargetRange(LOCATION_MZONE,0)
 	e6:SetRange(LOCATION_FZONE)
-	e6:SetCondition(s.atcon)
 	e6:SetTarget(aux.TargetBoolFunction(s.atfilter))
+	e6:SetCondition(s.atcon)
 	e6:SetValue(1)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x580}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x580)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x580)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)==1
 end
-function s.disfilter(c,tp,link)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsControler(1-tp) and c:GetLink()>=link
+function s.disfilter(c,p,link)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and not c:IsControler(p) and c:GetLink()>=link
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tc=Duel.GetMatchingGroup(s.cfilter,p,LOCATION_MZONE,0,nil):GetFirst()
-	if chk==0 then return tc and eg:IsExists(s.disfilter,1,nil,tp,tc:GetLink()) end
-	local tg=eg:Filter(s.disfilter,nil,tp)
+	local link=Duel.GetMatchingGroup(s.cfilter,p,LOCATION_MZONE,0,nil):GetFirst():GetLink()
+	if chk==0 then return eg:IsExists(s.disfilter,1,nil,tp,link) end
+	local tg=eg:Filter(s.disfilter,nil,tp,link)
 	Duel.SetTargetCard(tg)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,tg,#tg,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,tg,#tg,0,LOCATION_MZONE)
 	Duel.SetChainLimit(s.chlimit)
 end
 function s.chlimit(e,ep,tp)
 	return tp==ep
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetTargetCards(e)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	tg:ForEach(function(tc)
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(e:GetHandler())

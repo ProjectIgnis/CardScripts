@@ -32,6 +32,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_series={0x577}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for ec in aux.Next(eg) do
 		if ec:IsPreviousSetCard(0x577) and ec:IsPreviousPosition(POS_FACEUP)

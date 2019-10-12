@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.mtop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x102}
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
   if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,6) end
 end

@@ -1,6 +1,6 @@
---Kuriphoton
 --クリフォトン
---fixed by MLD
+--Kuriphoton (Anime)
+--Fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x55}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
@@ -41,6 +42,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
+	local e3=Effect.CreateEffect(e:GetHandler())
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e3:SetDescription(aux.Stringid(4016,4))
+	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetTargetRange(1,0)
+	Duel.RegisterEffect(e3,tp)
 end
 function s.cfilter(c)
 	return c:IsSetCard(0x55) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()

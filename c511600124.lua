@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x119}
 function s.spfilter(c,e,tp,sc)
 	return c:IsSetCard(0x119) and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsLinkMonster()
 		and sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,c:GetFreeLinkedZone()&0x1f)

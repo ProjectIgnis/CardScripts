@@ -1,11 +1,12 @@
 --海晶乙女 クラウンテイル
 --Marincess Crown Tail
 --scripted by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(65100616,0))
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
@@ -17,21 +18,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--prevent damage
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(23857661,1))
+	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCost(aux.bfgcost)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x12b}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=Duel.GetAttackTarget()
 	if not c then return false end
 	if not Duel.GetAttackTarget():IsControler(tp) then c=Duel.GetAttacker() end
-	return c:IsSetCard(0x22b) and c:IsRelateToBattle() and not c:GetBattleTarget():IsControler(tp)
+	return c:IsSetCard(0x12b) and c:IsRelateToBattle() and not c:GetBattleTarget():IsControler(tp)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x22b) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x12b) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -72,9 +74,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetValue(s.damval)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetDescription(aux.Stringid(4016,7))
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetTargetRange(1,0)
+	Duel.RegisterEffect(e2,tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0x22b) and c:IsLinkMonster() and c:IsType(TYPE_MONSTER) and c:GetLink()>0
+	return c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and c:IsType(TYPE_MONSTER) and c:GetLink()>0
 end
 function s.damval(e,re,val,r,rp,rc)
 	if r&REASON_BATTLE~=REASON_BATTLE then return val end

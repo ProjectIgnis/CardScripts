@@ -1,5 +1,5 @@
 --ＡｉＡｉウォール
---Ai Ai Wall
+--A.I. A.I. Wall
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

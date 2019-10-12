@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x583}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
@@ -79,7 +80,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		sump=tp
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp,sump,zones[sump])
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp,sump,zones[sump])
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,sump,false,false,POS_FACEUP_DEFENSE,zones[sump])
 	end

@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x95}
 function s.filter(c,e,tp,eg,ep,ev,re,r,rp,b)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local te=c:CheckActivateEffect(false,false,false)

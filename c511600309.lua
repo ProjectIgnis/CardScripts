@@ -1,5 +1,5 @@
 --Ａｉの賛歌
---Ai's Hymn
+--A.I.'s Hymn
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -50,12 +50,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(p,d,REASON_EFFECT)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,nil,0x582) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,nil,0x135) end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_GRAVE,0,nil,0x582)*200)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_GRAVE,0,nil,0x135)*200)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_GRAVE,0,nil,0x582)
+	local ct=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_GRAVE,0,nil,0x135)
 	if ct>0 then
 		Duel.Recover(Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER),ct*200,REASON_EFFECT)
 	end

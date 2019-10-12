@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.retop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x581}
 function s.refcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetEquipTarget()
 	local bc=tc:GetBattleTarget()

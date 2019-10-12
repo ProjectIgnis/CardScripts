@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id+1}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_EXTRA)
 end

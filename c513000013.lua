@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.retop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={70902743}
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,nil,TYPE_TUNER)*500
 end

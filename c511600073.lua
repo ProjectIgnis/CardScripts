@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.recop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xfb}
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end

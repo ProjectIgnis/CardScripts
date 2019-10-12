@@ -22,6 +22,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_series={0x579}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetEquipTarget():GetFlagEffect(id0)>0 end
 	Duel.SetTargetPlayer(1-tp)

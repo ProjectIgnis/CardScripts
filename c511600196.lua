@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
+s.listed_names={}
 function s.tg(e,c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c~=e:GetHandler()
 end

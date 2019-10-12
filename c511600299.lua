@@ -1,8 +1,9 @@
---ダークナイト＠イグニスター
---Dark Templar @Ignister
+--ダークナイト＠イグニスター (Anime)
+--Dark Templar @Ignister (Anime)
 --Scripted by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
    --link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_CYBERSE),3,3,s.lcheck)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(1945387,0))
+	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(1945387,0))
+	e3:SetDescription(aux.Stringid(alias,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
@@ -37,6 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x135}
 function s.lfilter(c,att,lc,tp)
 	return c:IsAttribute(att,lc,SUMMON_TYPE_LINK,tp)
 end
@@ -47,7 +49,7 @@ function s.indes(e,c)
 	return c:GetAttack()==e:GetHandler():GetAttack()
 end
 function s.filter(c,e,tp,zone)
-	return c:IsSetCard(0x582) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsSetCard(0x135) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local zone=e:GetHandler():GetLinkedZone(tp)
@@ -85,7 +87,7 @@ function s.spcheck(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetCode)==#sg
 end
 function s.spfilter(c,e,tp,zone)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x582) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsLevelBelow(4) and c:IsSetCard(0x135) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.ltgfilter(c,e,tp)
 	return c:IsLinkMonster() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetLinkedZone(tp))

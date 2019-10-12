@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={511600232}
 function s.cfilter(c)
 	return c:GetSequence()<5
 end

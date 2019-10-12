@@ -1,34 +1,36 @@
---ドシン＠イグニスター
---Doshin @Ignister
+--ドシン＠イグニスター (Anime)
+--Doshin @Ignister (Anime)
 --Scripted by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--Special Summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(293542,0))
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,alias)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--Search
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(293542,1))
+	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,alias+100)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_names={511600306}
+s.listed_series={0x135}
+s.listed_names={101011053}
 function s.filter(c)
-	return c:IsSetCard(0x582) and c:IsFaceup() and c:GetSequence()<5
+	return c:IsSetCard(0x135) and c:IsFaceup() and c:GetSequence()<5
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
@@ -43,10 +45,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0x582) and c:IsLinkMonster() and c:IsAbleToExtra()
+	return c:IsSetCard(0x135) and c:IsLinkMonster() and c:IsAbleToExtra()
 end
 function s.thfilter(c)
-	return c:IsCode(511600306) and c:IsAbleToHand()
+	return c:IsCode(101011053) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end

@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e8:SetCode(EFFECT_SET_DEFENSE)
 	c:RegisterEffect(e8)
 end
+s.listed_series={0xc008}
 function s.desfilter(c)
 	return c:IsFacedown() or not c:IsSetCard(0xc008)
 end

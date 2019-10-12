@@ -1,34 +1,36 @@
 --ドンヨリボー＠イグニスター
 --Donyoribo @Ignister
 --Scripted by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--Battle Damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,alias)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--Effect Damage
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetType(EFFECT_TYPE_QUICK_F)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e2:SetCountLimit(1,id)
+	e2:SetCountLimit(1,alias+100)
 	e2:SetCondition(s.damcon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x135}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
-	return tc and tc:IsControler(tp) and tc:IsSetCard(0x582) and Duel.GetBattleDamage(tp)>0
+	return tc and tc:IsControler(tp) and tc:IsSetCard(0x135) and Duel.GetBattleDamage(tp)>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
@@ -46,7 +48,7 @@ function s.bdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(tp,0)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x582)
+	return c:IsFaceup() and c:IsSetCard(0x135)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end

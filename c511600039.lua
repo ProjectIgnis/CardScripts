@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x99}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not (Duel.GetBattleDamage(tp)>0 or Duel.GetBattleDamage(1-tp)>0) then return false end
 	local tc=Duel.GetAttacker()

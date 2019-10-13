@@ -28,6 +28,7 @@ function s.initial_effect(c)
     e2:SetOperation(s.gyop)
     c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.rmcfilter(c)
     return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToGraveAsCost()
 end

@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x7}
 s.listed_names={83104731,95735217}
 function s.rmfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x7) and c:IsAbleToRemove()

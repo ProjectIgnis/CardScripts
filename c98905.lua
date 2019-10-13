@@ -19,6 +19,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_series={0xe5}
 function s.cfilter(c)
 	return c:IsSetCard(0xe5) and c:IsType(TYPE_XYZ) and c:IsControler(c:GetOwner()) and c:GetOverlayCount()>0
 end

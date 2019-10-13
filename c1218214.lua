@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xe3}
 function s.efilter(e,c)
 	return c:IsSetCard(0xe3)
 end

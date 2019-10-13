@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.ptop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x122}
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end

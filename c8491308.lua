@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.gyop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x115}
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsSetCard(0x1115,scard,sumtype,tp) and not c:IsAttribute(ATTRIBUTE_WIND,scard,sumtype,tp)
 end

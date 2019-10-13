@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.lvlop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x107}
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
 	if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) then

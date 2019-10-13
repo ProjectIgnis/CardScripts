@@ -37,6 +37,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x123}
+s.listed_names={id}
 --Check for plant/dragon tuner monster
 function s.filter1(c)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT+RACE_DRAGON) and c:IsType(TYPE_TUNER)

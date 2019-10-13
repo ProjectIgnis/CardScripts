@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,id+1)
 	e3:SetRange(LOCATION_EXTRA+LOCATION_HAND)
 	e3:SetCondition(s.spcon)
+	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 	--gy and damage
@@ -53,11 +54,11 @@ function s.initial_effect(c)
 	e5:SetValue(LOCATION_DECKBOT)
 	c:RegisterEffect(e5)
 	local e6=Effect.CreateEffect(c)
-		e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e6:SetCode(EVENT_SPSUMMON_SUCCESS)
-		e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e6:SetOperation(s.op)
-		c:RegisterEffect(e6)
+	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e6:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e6:SetOperation(s.op)
+	c:RegisterEffect(e6)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
@@ -82,8 +83,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.atchk1,1,nil,sg)
-		and (not e:GetHandler():IsLocation(LOCATION_EXTRA) or Duel.GetLocationCountFromEx(tp,tp,sg,e:GetHandler())>0)
+	return #sg == 0 or (#sg > 0 and (sg:IsExists(s.atchk1,1,nil,sg)
+		and ((not e:GetHandler():IsLocation(LOCATION_EXTRA) and aux.ChkfMMZ(1)(sg,e,tp,mg))
+		or (e:GetHandler():IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,e:GetHandler())>0))))
 end
 function s.atchk1(c,sg)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and sg:FilterCount(Card.IsAttribute,c,ATTRIBUTE_DARK)==1
@@ -101,10 +103,21 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #rg1>0 and #rg2>0 
 		and aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
-	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE)
+	local g=aux.SelectUnselectGroup(rg,e,tp,0,2,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	else
+		return false
+	end
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
 end
 function s.gycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

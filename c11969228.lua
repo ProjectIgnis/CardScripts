@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x29}
 s.listed_names={62265044}
 function s.matfilter(c,sc,st,tp)
 	return c:IsRace(RACE_DRAGON+RACE_WINGEDBEAST,sc,st,tp) and not c:IsType(TYPE_TOKEN,sc,st,tp)

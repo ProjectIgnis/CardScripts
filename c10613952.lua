@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x107a),5,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x107a),5,2)
 	c:EnableReviveLimit()
 	--equip
 	local e1=Effect.CreateEffect(c)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x207a}
+s.listed_series={0x207a,0x107a}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end

@@ -1,6 +1,6 @@
 --ティンダングル・トリニティ
 --Tindangle Trinity
---
+--Script by nekrozar
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x10b}
 s.listed_names={94365540,59490397}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

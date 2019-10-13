@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xaf,0xae}
 function s.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0xaf) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end

@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetValue(aux.tgoval)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3}
 function s.tglimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x3)
 end

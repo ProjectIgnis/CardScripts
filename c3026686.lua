@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.atkvalue)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x122}
 function s.thfilter(c)
 	return c:IsSetCard(0x122) and c:IsAbleToHand() and not c:IsCode(id)
 end

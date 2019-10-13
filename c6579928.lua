@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3d}
 function s.filter(c,att)
 	return c:IsFaceup() and c:IsAttribute(att)
 end

@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ssop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x11a}
 function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local b=a:GetBattleTarget()

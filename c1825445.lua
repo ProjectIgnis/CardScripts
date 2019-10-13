@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.matop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xdc}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if s.matcost(e,tp,eg,ep,ev,re,r,rp,0) and s.mattg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,94) then

@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x29),1,1,Synchro.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x29),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--equip
 	local e1=Effect.CreateEffect(c)
@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x29}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and ec:IsSetCard(0x29) 
 end

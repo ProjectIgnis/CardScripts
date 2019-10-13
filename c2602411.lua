@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xd6}
 s.listed_names={78193831}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(78193831)

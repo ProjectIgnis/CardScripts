@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xfb}
 function s.lkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xfb)
 end

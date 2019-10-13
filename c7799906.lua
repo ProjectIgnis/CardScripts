@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x125,0x9f,0x98,0x99}
 	--Check for ATK higher than original ATK
 function s.filter(c)
 	return c:IsFaceup() and c:GetAttack()>c:GetBaseAttack()

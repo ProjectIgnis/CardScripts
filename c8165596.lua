@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x7b,0x55}
 s.xyz_number=90
 function s.indcon(e)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0x55)

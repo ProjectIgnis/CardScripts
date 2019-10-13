@@ -48,6 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.rdop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x107}
 function s.spfilter(c)
 	return c:IsSetCard(0x107) and c:IsLevelAbove(7) 
 end

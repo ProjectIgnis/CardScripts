@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lpop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x48}
 s.xyz_number=6
 s.listed_names={9161357}
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

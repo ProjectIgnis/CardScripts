@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xf}
 function s.ffilter(c,e,tp,rg,ft)
 	if not c.material then return false end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp,table.unpack(c.material))

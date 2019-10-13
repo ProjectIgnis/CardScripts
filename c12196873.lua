@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x105}
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget() and Duel.GetAttackTarget():IsControler(tp)
 end

@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xc1}
 function s.regcfilter(c,tp)
 	return c:IsRace(RACE_PSYCHIC) and c:IsFaceup() and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
 end

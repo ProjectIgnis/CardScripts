@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.condition2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10db}
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0x10db)
 end

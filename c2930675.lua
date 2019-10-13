@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetCode(3682106)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10c,0xfe}
 function s.thfilter(c)
 	return ((c:IsSetCard(0x10c) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xfe)) and c:IsFaceup() and c:IsAbleToHand()
 end

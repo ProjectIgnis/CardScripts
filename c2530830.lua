@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x107b}
 s.listed_names={18963306}
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSetCard(0x107b,lc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,lc,SUMMON_TYPE_XYZ,tp) and c:GetRank()==8

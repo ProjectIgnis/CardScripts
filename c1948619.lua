@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x8,0x46,0xa5}
 function s.setcfilter(c,tp,lg)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(0x8) and lg:IsContains(c)
 end

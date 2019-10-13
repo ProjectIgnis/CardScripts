@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.disop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x59}
 function s.spfilter(c,ft,tp)
 	return c:IsSetCard(0x59)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())

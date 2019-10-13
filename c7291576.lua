@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3d}
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3d) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end

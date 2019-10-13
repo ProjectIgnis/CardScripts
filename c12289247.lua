@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.hnop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10f2,0x2073,0x2017,0x1046}
 s.listed_names={20409757,13331639}
 function s.rpfilter(c,e,tp)
 	return c:IsCode(20409757) and (not c:IsForbidden()

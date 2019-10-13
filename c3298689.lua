@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.matop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10db}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()&PHASE_MAIN1+PHASE_MAIN2>0
 end

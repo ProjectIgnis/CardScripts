@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x103}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x103) and c:GetBaseAttack()>=0
 end

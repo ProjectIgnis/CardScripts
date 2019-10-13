@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x106}
 function s.cfilter(c,e,tp,m,ft)
 	if c:GetType()&0x81~=0x81 or not c:IsSetCard(0x106) or c:IsPublic()
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end

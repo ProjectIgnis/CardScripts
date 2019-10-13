@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e4:SetValue(aux.TargetBoolFunction(Card.IsSetCard,0x33))
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x33}
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetLocation()~=LOCATION_DECK

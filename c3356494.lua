@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x55,0x7b}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.lcheck(g,lc)
 	return g:IsExists(Card.IsAttackAbove,1,nil,2000)

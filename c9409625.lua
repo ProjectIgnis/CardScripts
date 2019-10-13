@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tdop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x4a}
 s.listed_names={36894320}
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

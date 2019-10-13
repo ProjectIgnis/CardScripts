@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	--activity check
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
+s.listed_series={0x20ec,0x10ec}
 function s.chainfilter(re,tp,cid)
 	return not (re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsSetCard(0x20ec))
 end

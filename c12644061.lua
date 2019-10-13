@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.val)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x1034,0x2034}
 function s.tg(e,c)
 	if not c:IsSetCard(0x1034) then return false end
 	if c:GetFlagEffect(1)==0 then

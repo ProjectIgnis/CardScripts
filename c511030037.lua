@@ -37,7 +37,8 @@ function s.linkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
+	if chk==0 then return Duel.CheckLPCost(tp,1000) and Duel.GetFlagEffect(tp,id)==0 end
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	Duel.PayLPCost(tp,1000)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)

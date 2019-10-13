@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x579}
 function s.cfilter(c,lk)
 	return c:IsFaceup() and c:IsSetCard(0x579) and c:IsLink(lk)
 end

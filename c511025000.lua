@@ -33,6 +33,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10b}
+s.listed_names={68860936}
 function s.atkval1(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsCode,c:GetControler(),LOCATION_GRAVE,0,nil,31759689,68860936)*1500
 end

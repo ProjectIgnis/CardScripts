@@ -24,7 +24,7 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local bc=Duel.GetAttackTarget()
-	return bc:IsControler(1-tp) or tc:IsControler(1-tp)
+	return tc:IsControler(1-tp) or (bc and bc:IsControler(1-tp))
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.FromCards(Duel.GetAttackTarget(),Duel.GetAttacker())

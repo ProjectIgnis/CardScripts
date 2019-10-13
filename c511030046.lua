@@ -25,13 +25,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x57a}
 function s.filter(c)
-	return c:IsLinkMonster() and c:IsLink(1) and c:IsSetCard(0x57a)
+	return c:IsType(TYPE_LINK) and c:IsLink(1) and c:IsSetCard(0x57a)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil):Filter(Card.IsAbleToRemove,nil):Filter(Card.IsSequence,nil,0,1,2,3,4)
 	local g2=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil):Filter(Card.IsCanBeSpecialSummoned,nil,e,0,tp,false,false,POS_FACEUP)
-	if chk==0 then return #g1>0 and #g2>0 end
+	if chk==0 then return #g1>0 and #g2>0 and Duel.GetFlagEffect(tp,id)==0 end
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g1,1,0,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_REMOVED)
 end
@@ -56,10 +58,12 @@ function s.cfilter(c,tp)
 	return c:IsSetCard(0x57a) and c:IsAbleToRemoveAsCost() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),tp)
+		and Duel.GetFlagEffect(tp,id+1)==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler(),tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end

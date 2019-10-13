@@ -51,6 +51,7 @@ function s.initial_effect(c)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x57a}
 function s.matfilter(c)
 	return c:IsLevel(1) and c:IsLinkSetCard(0x57a)
 end
@@ -107,7 +108,8 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():GetLabel()==1
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.GetFlagEffect(tp,id)==0 end
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	e:GetLabelObject():SetLabel(0)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)

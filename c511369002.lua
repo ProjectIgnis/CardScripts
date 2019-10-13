@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.actop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x580}
 s.listed_names={511600232}
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:IsActiveType(TYPE_FIELD)

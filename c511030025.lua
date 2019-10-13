@@ -1,6 +1,7 @@
 --天装の闘技場
 --Armatos Colosseum
 --scripted by pyrQ
+--name handling adapted from サイバネット・コーデック Cynet Codec by EerieCode
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.costfilter(c,e,tp)
 	local code=c:GetCode()
-	return Duel.GetFlagEffect(tp,code)==0 and c:IsSetCard(0x578) and c:IsLevelBelow(4) and c:IsAbleToGraveAsCost() 
+	return not table.includes(s.name_list[tp],code) and c:IsSetCard(0x578) and c:IsLevelBelow(4) and c:IsAbleToGraveAsCost() 
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE,0,1,nil,e,tp,code)
 end
 function s.tgfilter(c,e,tp,code)
@@ -66,7 +67,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local code=e:GetLabel()
-	Duel.RegisterFlagEffect(tp,code,RESET_PHASE+PHASE_END,0,1)
+	table.insert(s.name_list[tp],code)
 	local tc=Duel.GetFirstTarget()
 	local zone=tc:GetFreeLinkedZone()&0x1f
 	if zone==0 then return end
@@ -93,4 +94,21 @@ function s.zone_count(z)
 		z=z&(z-1)
 	end
 	return c
+end
+if not table.includes then
+	--binary search
+	function table.includes(t,val)
+    	if #t<1 then return false end
+    	if #t==1 then return t[1]==val end --saves sorting for efficiency
+    	table.sort(t)
+    	local left=1
+    	local right=#t
+    	while left<=right do
+        	local middle=(left+right)//2
+        	if t[middle]==val1 then return true
+        	elseif t[middle]<val then left=middle+1
+        	else right=middle-1 end
+    	end
+    	return false
+	end
 end

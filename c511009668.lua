@@ -1,6 +1,7 @@
+--聖天樹の大精霊
 --Sunavalon Dryanome
 local s,id=GetID()
-function s.initial_effect(c)	
+function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_PLANT),2)
@@ -30,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_RECOVER)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DAMAGE)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetLabelObject(e0)
 	e3:SetCountLimit(3)
@@ -49,6 +50,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.mvop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x575,0x574}
 function s.matcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_LINK) and c:GetTurnID()==Duel.GetTurnCount()

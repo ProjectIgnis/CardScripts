@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x577),3,3,s.spcheck)
+	Link.AddProcedure(c,s.matfilter,3,3,s.spcheck)
 	--attribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -44,8 +44,11 @@ function s.initial_effect(c)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
 end
+function s.matfilter(c,scard,sumtype,tp)
+	return c:IsType(TYPE_LINK,scard,sumtype,tp) and c:IsLinkSetCard(0x577,scard,sumtype,tp)
+end
 function s.spcheck(g,lc,tp)
-	return g:CheckSameProperty(Card.GetRace,lc,SUMMON_TYPE_LINK,tp)
+	return g:CheckSameProperty(Card.GetAttribute,lc,SUMMON_TYPE_LINK,tp)
 end
 function s.attcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

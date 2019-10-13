@@ -1,29 +1,30 @@
---ウィンドペガサス＠イグニスター
---Wind Pegasus @Ignister
-local s,id=GetID()
+--ウィンドペガサス＠イグニスター (Anime)
+--Wind Pegasus @Ignister (Anime)
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--synchro summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WIND),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,alias)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 	--to deck
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,alias+100)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCondition(s.tdcon)
@@ -47,6 +48,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.listed_series={0x135}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if not e:GetHandler():IsLocation(LOCATION_GRAVE) then return end
@@ -62,7 +64,7 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp)
 	s[1]=0
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x582)
+	return c:IsFaceup() and c:IsSetCard(0x135)
 end
 function s.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

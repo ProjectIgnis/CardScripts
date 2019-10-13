@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x577}
 function s.efilter(e,re)
 	local c=e:GetHandler()
 	local eqc=c:GetEquipTarget()

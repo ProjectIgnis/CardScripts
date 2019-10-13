@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.indval)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x11a}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.rthtg(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
 	if chk==0 then return true end

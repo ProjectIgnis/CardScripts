@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xfc}
 function s.spfilter(c,e,tp,tid)
 	return c:GetTurnID()==tid and c:IsReason(REASON_DESTROY) and c:IsSetCard(0xfc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

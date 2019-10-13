@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xfc}
 function s.atkcon(e)
 	local ph=Duel.GetCurrentPhase()
 	return ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL

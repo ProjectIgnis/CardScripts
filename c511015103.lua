@@ -11,6 +11,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x10af}
+s.listed_names={47198668}
 function s.filter(c,e,tp)
 	return c:IsCanBeEffectTarget(e) and c:IsSetCard(0x10af) and c:IsType(TYPE_PENDULUM) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

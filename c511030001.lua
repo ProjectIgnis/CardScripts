@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x570}
 function s.op(e,tp,eg,ep,ev,re,r,rp,rc)
 	local ba=Duel.GetAttacker()
 	local bt=Duel.GetAttackTarget()

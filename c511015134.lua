@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x1048}
 function s.filter(c,e)
 	return c:IsSetCard(0x1048) and c:IsType(TYPE_XYZ) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL)) 
 end

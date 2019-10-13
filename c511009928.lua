@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x580}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsType(TYPE_LINK,lc,sumtype,tp) and c:IsSetCard(0x580)
 end

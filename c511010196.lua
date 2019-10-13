@@ -27,7 +27,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={55727845,513000031,511001603}
+s.listed_series={0x95,0x48}
+s.listed_names={55727845}
 s.xyz_number=96
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.immop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x578}
 function s.sendfilter(c,ft)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x578) and c:IsAbleToGrave() 
 		and (ft>0 or c:GetSequence()<5)

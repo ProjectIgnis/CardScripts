@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.indct)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x11a}
 function s.indct(e,re,r,rp)
 	if r&REASON_BATTLE+REASON_EFFECT~=0 then
 		return 1

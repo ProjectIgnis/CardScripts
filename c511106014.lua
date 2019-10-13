@@ -1,13 +1,12 @@
 --テッセラクト・ハイドライブ・モナーク
 --Tesseract Hydradrive Monarch
---scripted by Hatter
---fixed by Larry126
+--scripted by Hatter, fixed by Larry126
 local s,id=GetID()
 local cannotAttackEffect=nil
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x577),4,4,s.spcheck)
+	Link.AddProcedure(c,s.matfilter,4,4,s.spcheck)
 	--attribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -56,6 +55,12 @@ function s.initial_effect(c)
 	e6:SetOperation(s.operation)
 	c:RegisterEffect(e6)
 end
+function s.matfilter(c,scard,sumtype,tp)
+	return c:IsType(TYPE_LINK,scard,sumtype,tp) and c:IsLinkSetCard(0x577,scard,sumtype,tp)
+end
+function s.spcheck(g,lc,tp)
+	return g:CheckSameProperty(Card.GetAttribute,lc,SUMMON_TYPE_LINK,tp)
+end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetAttacker()==c and c:IsRelateToBattle() and c:IsChainAttackable(99,true) then
@@ -69,9 +74,6 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 		cannotAttackEffect=e1
 	end
-end
-function s.spcheck(g,lc,tp)
-	return g:CheckSameProperty(Card.GetAttribute,lc,SUMMON_TYPE_LINK,tp)
 end
 function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

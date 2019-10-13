@@ -27,6 +27,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xfc}
+s.listed_names={}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	if ph~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
@@ -42,7 +44,8 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
 	if tc:IsRelateToBattle() and tc:IsFaceup() and tc:IsControler(tp) then
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local c=e:GetHandler()
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
@@ -57,7 +60,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 		e2:SetValue(s.efilter)
 		e2:SetOwnerPlayer(tp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		sc:RegisterEffect(e2,true)
+		tc:RegisterEffect(e2,true)
 	end
 end
 function s.efilter(e,re)

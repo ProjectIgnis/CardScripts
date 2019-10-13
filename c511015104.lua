@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)	
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_names={16178681}
+s.listed_names={16178681,id+1}
 function s.counterfilter(c)
 	return not c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end

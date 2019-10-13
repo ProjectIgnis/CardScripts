@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9f,0xc6}
 function s.eftg(e,c)
 	return (c:IsSetCard(0x9f) or c:IsSetCard(0xc6)) and c:IsAttackBelow(1500)
 end

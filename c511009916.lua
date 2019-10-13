@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x119}
 function s.filter(c,ft)
 	return c:IsFaceup() and (ft>0 or c:GetSequence()<5) and c:IsSetCard(0x119) and c:IsAbleToHand()
 end

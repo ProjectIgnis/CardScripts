@@ -2,9 +2,10 @@
 --Number C107: Neo Galaxy-Eyes Tachyon Dragon (Anime)
 --Scripted By TheOnePharaoh
 --fixed by MLD & Larry126
-Duel.LoadCardScript("c68396121.lua")
+local s,id,alias=GetID()
 local s,id=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--xyz summon
 	Xyz.AddProcedure(c,nil,9,3)
 	c:EnableReviveLimit()
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--negate
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(68396121,0))
+	e2:SetDescription(aux.Stringid(alias,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
@@ -44,7 +45,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	--triple attacks
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(68396121,1))
+	e6:SetDescription(aux.Stringid(alias,1))
 	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCondition(s.atkcon)
@@ -67,18 +68,19 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
+s.listed_series={0x95,0x48}
 s.xyz_number=107
 s.listed_names={88177324,100000581,111011002,511000580,511002068,511002164,93238626}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if rc then
-		rc:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+		rc:RegisterFlagEffect(511010207,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function s.startop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x7f,0x7f,nil)
 	for tc in aux.Next(g) do
-		tc:RegisterFlagEffect(id+1,RESET_PHASE+PHASE_END,0,1,tc:GetLocation())
+		tc:RegisterFlagEffect(511010208,RESET_PHASE+PHASE_END,0,1,tc:GetLocation())
 		tc:RegisterFlagEffect(511010209,RESET_PHASE+PHASE_END,0,1,tc:GetControler())
 		tc:RegisterFlagEffect(511010210,RESET_PHASE+PHASE_END,0,1,tc:GetPosition())
 		tc:RegisterFlagEffect(511010211,RESET_PHASE+PHASE_END,0,1,tc:GetSequence())

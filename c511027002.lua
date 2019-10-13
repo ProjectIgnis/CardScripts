@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x575,0x574}
 function s.matcheck(g,lc,tp)
 	return g:IsExists(Card.IsType,1,nil,TYPE_LINK)
 end

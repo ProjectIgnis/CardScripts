@@ -1,5 +1,7 @@
---Ｄ－ＨＥＲＯ ダイハードガイ
+--Ｄ－ＨＥＲＯ ダイハードガイ (Anime)
+--Destiny HERO - Captain Tenacious (Anime)
 --cleaned up by MLD
+--fixed by ClaireStanfield
 local s,id=GetID()
 function s.initial_effect(c)
 	--
@@ -9,11 +11,13 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xc008}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end

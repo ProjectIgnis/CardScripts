@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xc008}
 function s.filter1(c,e)
 	return c:IsOnField() and (not e or not c:IsImmuneToEffect(e))
 end

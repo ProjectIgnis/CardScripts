@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.xyzop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x54,0x48}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()

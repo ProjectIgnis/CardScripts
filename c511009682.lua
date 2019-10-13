@@ -1,3 +1,4 @@
+--聖天樹の呪精
 --Sunavalon Cursed Reborn
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,15 +31,16 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_DAMAGE)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e4:SetCost(s.damcost)
 	e4:SetCondition(s.damcon)
 	e4:SetTarget(s.damtg)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x574}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x574) and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x574) and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -72,7 +74,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e4=e3:Clone()
 		e4:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 		e4:SetValue(1)
-		c:RegisterEffect(e4,true)
+		e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e4,true)
 		Duel.SpecialSummonComplete()
 	end
 end

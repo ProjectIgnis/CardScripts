@@ -53,6 +53,7 @@ function s.initial_effect(c)
 	e7:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_LINK))
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x581}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x581)
 end
@@ -70,7 +71,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_DESTROY_CONFIRMED) then return false end
 	local tc=c:GetFirstCardTarget()
-	return tc and eg:IsContains(tc) and tc:IsReason(REASON_DESTROY)
+	return tc and eg:IsContains(tc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

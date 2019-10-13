@@ -12,6 +12,7 @@ function s.initial_effect(c)
   e1:SetOperation(s.operation)
   c:RegisterEffect(e1)
 end
+s.listed_series={0xa9,0xc3}
 function s.filter(c)
 	return c:IsSetCard(0xa9) or c:IsSetCard(0xc3) and c:IsAbleToHand()
 end

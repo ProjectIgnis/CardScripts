@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	e1:SetLabelObject(e2)
 end
+s.listed_series={0x3008}
 s.listed_names={74711057}
 s.material_setcode={0x8,0x3008}
 function s.cfilter(c,tp)

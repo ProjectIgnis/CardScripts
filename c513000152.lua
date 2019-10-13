@@ -1,6 +1,7 @@
 --Ｓｐ－シルバー・コントレイル (Anime)
 --Speed Spell - Silver Contrails (Anime)
---scripted by Larry126, fixed by ClaireStanfield
+--scripted by Larry126
+--fixed by ClaireStanfield
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

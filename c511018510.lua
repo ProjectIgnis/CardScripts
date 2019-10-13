@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	re1:SetOperation(s.activate)
 	c:RegisterEffect(re1)
 end
+s.listed_series={0xe5}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLP(tp)>Duel.GetLP(1-tp) then
 		return Duel.GetLP(tp)-Duel.GetLP(1-tp)>=2000

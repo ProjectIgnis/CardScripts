@@ -1,5 +1,7 @@
---Five-Headed Dragon
+--Ｆ・Ｇ・Ｄ (Anime)
+--Five-Headed Dragon (Anime)
 --fixed by MLD
+--updated by ClaireStanfield
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -8,23 +10,34 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(s.descon)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--protection
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e2:SetValue(s.batfilter)
+	local e2=e1:Clone()
+	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--cannot attack
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetOperation(s.atklimit)
+	local e3=e1:Clone()
+	e3:SetCode(EVENT_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
+	--protection
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e4:SetValue(s.batfilter)
+	c:RegisterEffect(e4)
+	--cannot attack
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e5:SetOperation(s.atklimit)
+	c:RegisterEffect(e5)
+	local e6=e5:Clone()
+	e6:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
+	c:RegisterEffect(e6)
+	local e7=e5:Clone()
+	e7:SetCode(EVENT_SUMMON_SUCCESS)
+	c:RegisterEffect(e7)
 end
 function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -36,9 +49,6 @@ function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.batfilter(e,c)
 	return c:IsAttribute(0x2f)
-end
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_RITUAL
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

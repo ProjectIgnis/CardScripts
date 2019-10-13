@@ -49,6 +49,7 @@ function s.initial_effect(c)
 	e6:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0xaf}
 function s.pfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 		and Duel.IsExistingMatchingCard(aux.disfilter1,tp,0,LOCATION_MZONE,1,c)

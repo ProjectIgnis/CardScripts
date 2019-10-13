@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 	--Part of "Noble Knight" archetype
 s.listed_series={0x107a}
 	--Activation legality

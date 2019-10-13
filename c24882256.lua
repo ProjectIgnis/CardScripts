@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_CYBERSE),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_CYBERSE),2)
 	--damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -91,7 +91,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spreg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not (c:IsSummonType(SUMMON_TYPE_LINK) and bit.band(r,REASON_DESTROY)==REASON_DESTROY) then return end
+	if not (c:IsSummonType(SUMMON_TYPE_LINK) and (r&REASON_DESTROY)==REASON_DESTROY) then return end
 	if Duel.GetCurrentPhase()==PHASE_STANDBY then
 		e:SetLabel(Duel.GetTurnCount())
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,2)

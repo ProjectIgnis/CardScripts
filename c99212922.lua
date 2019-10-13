@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x61}
 function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsSetCard(0x61)
 end

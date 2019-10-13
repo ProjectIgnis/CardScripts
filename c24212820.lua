@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.defval)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xdb}
 function s.tgfilter(c)
 	return c:IsSetCard(0xdb) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGrave()
 end

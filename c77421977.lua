@@ -47,6 +47,7 @@ function s.initial_effect(c)
     e6:SetCode(EVENT_REMOVE)
     c:RegisterEffect(e6)
 end
+s.listed_series={0x135}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
     return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end

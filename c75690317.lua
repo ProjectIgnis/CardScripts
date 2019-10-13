@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x11}
 	--Switch battle position
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

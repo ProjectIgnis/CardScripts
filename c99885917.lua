@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 s.listed_series={0x12b}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x12b) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

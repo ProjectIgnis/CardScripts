@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x119}
 function s.filter1(c,e,tp)
 	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x119) and Duel.GetLocationCountFromEx(tp,tp,c)>0 
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)

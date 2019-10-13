@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_series={0x102}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 	local c=e:GetHandler()

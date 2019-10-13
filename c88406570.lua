@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xfc}
 function s.indtg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c)
 end

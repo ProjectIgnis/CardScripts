@@ -1,5 +1,5 @@
 --ドカンポリン
---Bangpoline
+--Boompoline!!
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,7 +24,8 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE,nil,LOCATION_REASON_COUNT)+Duel.GetLocationCount(tp,LOCATION_MZONE,nil,LOCATION_REASON_COUNT)>0 end
 	local zone=Duel.SelectDisableField(tp,1,LOCATION_MZONE,LOCATION_MZONE,0,true)
-	Duel.SelectDisableField(1-tp,1,LOCATION_MZONE,LOCATION_MZONE,(~(zone<<16)>>16),true)
+	local tzone = ((zone & 0x20)<<17)|((zone&0x40)<<15)|((zone&(0x20<<16))>>15)|((zone&(0x40<<16))>>17)|zone
+	Duel.SelectDisableField(1-tp,1,LOCATION_MZONE,LOCATION_MZONE,~(((tzone&0xffff)<<16)|(tzone>>16)),true)
 	e:SetLabel(zone)
 end
 function s.thfilter(c,tp,zone)

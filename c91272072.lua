@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xfb}
 s.material_setcode={0xfb}
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_LINK,fc,sumtype,tp) and c:IsSetCard(0xfb,fc,sumtype,tp)

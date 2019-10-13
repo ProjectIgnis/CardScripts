@@ -33,6 +33,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x115}
+s.listed_names={}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x115) and c:IsControler(tp) and not c:IsCode(id)
 end

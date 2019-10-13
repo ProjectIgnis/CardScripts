@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xd3}
 function s.chkfilter1(c,e,tp)
 	return c:IsSetCard(0xd3) and c:IsType(TYPE_MONSTER) and 
 		not c:IsHasEffect(EFFECT_REVIVE_LIMIT) and Duel.IsPlayerCanSpecialSummon(tp,0,POS_FACEUP,tp,c)

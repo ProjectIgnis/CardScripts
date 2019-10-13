@@ -58,7 +58,7 @@ end
 	--Except turn was sent, and would detach
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.exccon(e)
-		and bit.band(r,REASON_COST)~=0 and re:IsHasType(0x7e0)
+		and (r&REASON_COST)~=0 and re:IsHasType(0x7e0)
 		and re:IsActiveType(TYPE_XYZ)
 		and e:GetHandler():IsAbleToRemoveAsCost()
 		and ep==e:GetOwnerPlayer() and ev>=1

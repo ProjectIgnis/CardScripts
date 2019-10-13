@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.srop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xb}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)

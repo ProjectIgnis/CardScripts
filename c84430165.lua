@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.actcon)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x12b}
 function s.cfilter(c,tp)
     return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkMonster() and c:IsControler(tp)
 end

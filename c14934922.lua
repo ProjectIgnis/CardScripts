@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x119}
 	--Check for "Salamangreat" monster
 function s.costfilter(c)
 	return c:IsSetCard(0x119) and c:IsType(TYPE_MONSTER) and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c:IsAbleToGraveAsCost()

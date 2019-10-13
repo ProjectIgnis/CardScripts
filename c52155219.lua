@@ -24,6 +24,7 @@ function s.initial_effect(c)
         Duel.RegisterEffect(ge1,0)
     end)
 end
+s.listed_series={0x119}
 function s.gtg(e,c)
     return c:IsLinkMonster() and c:IsSetCard(0x119)
 end

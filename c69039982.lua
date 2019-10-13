@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x116}
 function s.tg(e,c)
 	return c:IsLinkMonster() and c:IsSetCard(0x116)
 end

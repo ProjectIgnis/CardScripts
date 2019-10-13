@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.scop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x27}
 function s.thfilter(c)
 	return c:IsSetCard(0x27) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end

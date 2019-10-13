@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.dbop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x116}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()

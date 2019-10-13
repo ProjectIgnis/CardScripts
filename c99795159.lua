@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.dop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x8d}
 function s.dirtg(e,c)
 	return not Duel.IsExistingMatchingCard(Card.IsFaceup,c:GetControler(),0,LOCATION_MZONE,1,nil)
 end

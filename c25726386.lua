@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e3)
 end
+s.listed_series={0x138}
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
 end

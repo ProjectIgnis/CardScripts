@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ddop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x11a}
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 end

@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xfb}
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xfb) and not c:IsType(TYPE_FUSION|TYPE_SYNCHRO|TYPE_TOKEN|TYPE_XYZ|TYPE_LINK)
 		and c:IsAbleToHand() and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)

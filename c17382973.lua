@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x120}
 function s.thcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end

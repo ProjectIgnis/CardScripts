@@ -1,4 +1,5 @@
 --オルターガイスト・プロトコル
+--Altergeist Protocol
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -38,12 +39,13 @@ function s.initial_effect(c)
 	e5:SetValue(s.effectfilter)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x103}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function s.discfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsAbleToGraveAsCost() and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

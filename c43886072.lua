@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x120}
 function s.atktg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0x120)
 end

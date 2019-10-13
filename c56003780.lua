@@ -21,6 +21,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x119}
+s.listed_names={id}
 function s.cfilter(c,e,tp,sc)
 	return c:IsSetCard(0x119) and c:IsLinkMonster()
 end

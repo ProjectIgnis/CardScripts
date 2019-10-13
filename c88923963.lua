@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_EQUIP)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.tkcon)
@@ -25,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x107a,0x207a}
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSetCard,1,nil,0x207a)
 end

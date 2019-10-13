@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 	--Part of "Heraldry" archetype
-s.listed_series={0x92}
+s.listed_series={0x76}
 	--Cost filter
 function s.cfilter(c,ft,tp)
 	return ft>1 or (c:IsControler(tp) and c:GetSequence()<5 and ft>0)
@@ -59,6 +59,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Locked into machine and psychic monsters for extra deck
 function s.splimit(e,c)
-	return not c:IsRace(RACE_MACHINE+RACE_PSYCHO) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsRace(RACE_MACHINE+RACE_PSYCHIC) and c:IsLocation(LOCATION_EXTRA)
 end
 

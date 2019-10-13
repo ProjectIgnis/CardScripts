@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x29}
 function s.equipf(c)
 	return c:IsSetCard(0x29) and (c:GetOriginalType()&TYPE_MONSTER)~=0
 end

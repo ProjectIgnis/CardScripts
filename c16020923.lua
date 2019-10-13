@@ -29,7 +29,7 @@ function s.initial_effect(c)
     e3:SetOperation(s.lvop)
     c:RegisterEffect(e3)
 end
-s.listed_series={0x135,0x136}
+s.listed_series={0x136,0x135}
 function s.thfilter(c)
     return c:IsSetCard(0x136) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end

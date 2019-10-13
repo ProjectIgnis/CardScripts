@@ -32,7 +32,7 @@ function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
     local cg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,3,e:GetHandler())
     Duel.Remove(cg,POS_FACEUP,REASON_COST)
-    e:SetLabel(cg:GetCount())
+    e:SetLabel(#cg)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()

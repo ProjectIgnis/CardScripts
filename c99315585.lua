@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10db,0xdb}
 function s.tgfilter(c,tp)
 	return c:IsControler(tp) and (c:IsSetCard(0x10db) or c:IsSetCard(0xdb) and c:IsType(TYPE_SPELL+TYPE_TRAP))
 end

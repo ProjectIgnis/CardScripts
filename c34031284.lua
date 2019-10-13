@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xf}
 s.listed_names={90011152}
 function s.matcheck(g,lc,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0xf,lc,SUMMON_TYPE_LINK,tp)

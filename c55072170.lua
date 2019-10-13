@@ -1,5 +1,5 @@
 --ウィッチクラフト・マスターピース
---Witchcraft Masterpiece
+--Witchcrafter Masterpiece
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)	
 end
+s.listed_series={0x128}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x128),tp,LOCATION_MZONE,0,1,nil)
 end
@@ -91,7 +92,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local lv=Duel.AnnounceNumber(tp,table.unpack(lvt))
 	local rg1=Group.CreateGroup()
-	if lv>1 then
+	if lv>=1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local rg2=cg:Select(tp,lv,lv,c)
 		rg1:Merge(rg2)

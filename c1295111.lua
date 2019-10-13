@@ -41,6 +41,7 @@ function s.initial_effect(c)
     e4:SetOperation(s.atkop)
     c:RegisterEffect(e4)
 end
+s.listed_series={0x119}
 function s.lmfilter(c,lc,tp)
     return c:IsFaceup() and c:IsLinkMonster()
         and c:IsSummonCode(lc,SUMMON_TYPE_LINK,tp,lc:GetCode()) and c:IsCanBeLinkMaterial(lc,tp)

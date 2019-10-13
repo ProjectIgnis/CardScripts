@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rcop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x101}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local c=e:GetHandler()

@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10b}
 function s.filter(c)
 	return c:IsFacedown()
 end

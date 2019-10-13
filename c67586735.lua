@@ -24,6 +24,7 @@ function s.initial_effect(c)
     e2:SetOperation(s.tdop)
     c:RegisterEffect(e2)
 end
+s.listed_series={0xfc}
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local rc=c:GetReasonCard()

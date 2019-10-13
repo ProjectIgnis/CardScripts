@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xfb}
 function s.cfilter(c)
 	return c:IsSetCard(0xfb) and c:IsDiscardable()
 end

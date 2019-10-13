@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.checkop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.filter(c,fid)
 	if c:IsCode(id) or not c:IsAbleToHand() then return false end
 	local eff={c:GetCardEffect(id)}
@@ -37,7 +38,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e:GetHandler():GetFieldID())
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.HintSelection(g)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

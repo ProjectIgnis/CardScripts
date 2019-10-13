@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.catlimit)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x116,0xfe}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if s.spcost(e,tp,eg,ep,ev,re,r,rp,0) and s.sptarget(e,tp,eg,ep,ev,re,r,rp,0)

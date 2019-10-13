@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10f3}
 function s.hspfilter(c,ft,tp)
 	return c:GetCounter(0x1041)>0 and c:IsReleasable() and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
 end

@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x104,0xfe}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
 		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<5 then return false end

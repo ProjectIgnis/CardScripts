@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x122}
 s.listed_names={91969909}
 function s.thcfilter(c)
 	return c:IsFacedown() or not c:IsSetCard(0x122)

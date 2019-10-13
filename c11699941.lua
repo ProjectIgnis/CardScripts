@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x11}
 function s.eqlimit(e,c)
 	return e:GetLabelObject()==c
 end

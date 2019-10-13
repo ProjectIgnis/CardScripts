@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xfe}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 	if chk==0 then return true end

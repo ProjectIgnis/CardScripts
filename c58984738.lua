@@ -37,7 +37,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	aux.ToHandOrElse(tc,tp,function(c)
 					local te=tc:GetActivateEffect()
@@ -51,5 +51,5 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 							then cost(te,tep,eg,ep,ev,re,r,rp,1)
 						end
 					end,
-					aux.Stringid(id,3))
+					aux.Stringid(id,2))
 end

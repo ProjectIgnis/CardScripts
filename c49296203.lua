@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.posop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x11}
 function s.posfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x11) and c:IsCanChangePosition()
 end

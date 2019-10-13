@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xd4}
 function s.filter(c)
 	return c:IsSetCard(0xd4) and c:IsDiscardable(REASON_EFFECT)
 end
@@ -60,7 +61,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetValue(s.efilter)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		c:RegisterEffect(e2,true)
+		c:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)

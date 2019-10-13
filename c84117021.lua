@@ -54,6 +54,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e6=e4:Clone()
 		e6:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 		Duel.RegisterEffect(e6,tp)
+		local e7=Effect.CreateEffect(e:GetHandler())
+		e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e7:SetCode(EVENT_CHAIN_END)
+		e7:SetOperation(s.cedop)
+		e7:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e7,tp)
 	else
 		local tc=Duel.GetFirstTarget()
 		if tc:IsFaceup() and tc:IsRelateToEffect(e) then
@@ -78,28 +84,27 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-		e3:SetDescription(aux.Stringid(id,1))
-		e3:SetReset(RESET_PHASE+PHASE_END)
-		e3:SetTargetRange(0,1)
-		Duel.RegisterEffect(e3,tp)
 	end
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_SPELLCASTER),1,nil)
+	return eg:IsExists(s.filter,1,nil)
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetChainLimitTillChainEnd(s.efun)
+	Duel.SetChainLimitTillChainEnd(s.chlimit)
 end
-function s.efun(e,ep,tp)
-	return ep==tp
+function s.cedop(e,tp,eg,ep,ev,re,r,rp)
+	local _,g=Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS,true)
+	if g and g:IsExists(s.filter,1,nil) and Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS) then
+		Duel.SetChainLimitTillChainEnd(s.chlimit)
+	end
+end
+function s.chlimit(re,rp,tp)
+	return rp==tp
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(1)

@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xbe}
 function s.mfilter(c)
 	return c:IsFaceup() and c:IsAttackAbove(2400) and c:GetDefense()==1000
 end

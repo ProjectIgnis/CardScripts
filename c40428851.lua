@@ -37,6 +37,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x137}
+s.listed_names={}
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x137),e:GetOwnerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end

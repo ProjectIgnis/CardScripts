@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.lkfilter)
 end
+s.listed_series={0x119}
 function s.lkfilter(c)
 	return not (IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK))
 end

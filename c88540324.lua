@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e4:SetValue(function(e,c) return c:GetLink()-1 end)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x119}
 function s.macon(e)
 	local c=e:GetHandler():GetEquipTarget()
 	return c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsReincarnationSummoned()

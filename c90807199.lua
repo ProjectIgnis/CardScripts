@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsPublic() and c:GetFlagEffect(id)==0 end
@@ -46,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g<1 then return end
 	Duel.ShuffleHand(tp)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
-	local tc=g:Select(1-tp,1,1,nil)
+	local tc=g:RandomSelect(1-tp,1,1,nil)
 	Duel.BreakEffect()
 	Duel.SendtoGrave(tc,REASON_EFFECT+REASON_DISCARD)
 	if not Duel.IsPlayerCanSpecialSummon(tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end

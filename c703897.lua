@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.sumfilter)
 end
+s.listed_series={0x11b}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x11b) and c:IsLinkMonster()
 end

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x102}
 function s.spfilter1(c,e,tp)
 	if c:IsFaceup() and c:IsLinkMonster() then
 		local zone=c:GetLinkedZone(tp)

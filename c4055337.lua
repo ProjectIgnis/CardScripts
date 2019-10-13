@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.atkcon2)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.indes(e,c)
 	return c:IsLinkMonster()
 end

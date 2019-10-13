@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x55,0x7b}
 function s.costfilter(c)
 	return c:IsSetCard(0x55) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
 end

@@ -1,6 +1,5 @@
 --剛鬼ムーンサルト
 --Gouki Moonsault
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -27,6 +26,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xfc}
+s.listed_names={id}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end

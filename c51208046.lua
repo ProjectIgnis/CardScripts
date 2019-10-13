@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_series={0xfb}
 	--Check for anything but "Trickstar" monsters
 function s.counterfilter(c)
 	return c:IsSetCard(0xfb)

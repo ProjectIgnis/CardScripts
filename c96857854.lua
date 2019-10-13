@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x80}
 function s.cfilter(c)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
@@ -101,7 +102,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:AddMonsterAttribute(TYPE_NORMAL)
 		c:AssumeProperty(ASSUME_RACE,RACE_FIEND)
 		Duel.SpecialSummonStep(c,0,tp,1-tp,true,false,POS_FACEUP_DEFENSE)
-		c:AddMonsterAttributeComplete()
+		c:AddMonsterAttributeComplete()	
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)

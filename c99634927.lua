@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop3)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x10ec}
 function s.atkfilter1(c,tp)
 	return c:IsSetCard(0x10ec) and Duel.IsExistingTarget(s.atkfilter2,tp,LOCATION_MZONE,0,1,c)
 end

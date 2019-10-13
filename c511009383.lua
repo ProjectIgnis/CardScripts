@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.scop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xaf}
 function s.cfilter(c,tp)
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsControler(tp)
 end

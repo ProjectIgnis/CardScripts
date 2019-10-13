@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x3013))
+	e3:SetTarget(s.tg)
 	c:RegisterEffect(e3)
 	--negate
 	local e4=Effect.CreateEffect(c)
@@ -53,8 +53,6 @@ s.listed_names={100000048}
 function s.spfilter(c,ft,tp)
 	return c:IsCode(100000048) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 end
-function s.tg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x3013)
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -65,8 +63,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectReleaseGroup(tp,s.spfilter,1,1,nil,Duel.GetLocationCount(tp,LOCATION_MZONE),tp)
 	Duel.Release(g,REASON_COST)
 end
+function s.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x3013)
+end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+end
+function s.tg(e,c)
+	return c:IsFaceup() and c:IsSetCard(0x3013)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.GetAttacker() and Duel.GetAttacker():IsSetCard(0x3013) 

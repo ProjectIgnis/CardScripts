@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xc008}
 function s.filter(c,e,tp)
 	return c:IsControler(1-tp) and c:IsCanBeEffectTarget(e)
 end

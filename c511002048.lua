@@ -1,8 +1,7 @@
 --Call of the Living Dead
-  --Scripted by Edo9300
-  local s,id=GetID()
-function s.initial_effect(c)
-  	--activate
+	--Scripted by Edo9300
+	local s,id=GetID()function s.initial_effect(c)
+	--activate
  	local e1=Effect.CreateEffect(c)
  	e1:SetType(EFFECT_TYPE_ACTIVATE)
  	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -41,9 +40,8 @@ function s.initial_effect(c)
  	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
  	local g=Duel.SelectMatchingCard(tp,s.fil,tp,LOCATION_GRAVE,0,1,ft,nil,e,tp)
  	if #g>0 then
- 		local tc=g:GetFirst()
- 		while tc do
- 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+		g:ForEach(function(tc)
+			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK)
  			local e1=Effect.CreateEffect(e:GetHandler())
  			e1:SetType(EFFECT_TYPE_SINGLE)
  			e1:SetCode(EFFECT_CHANGE_RACE)
@@ -58,13 +56,12 @@ function s.initial_effect(c)
  			e2:SetValue(0)
  			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
  			tc:RegisterEffect(e2)
- 			tc=g:GetNext()
- 		end
+		end)
  		Duel.SpecialSummonComplete()
  	end
  end
  function s.filter(c,e,tp)
- 	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE) and c:GetOriginalRace()~=RACE_ZOMBIE
+ 	return c:IsLocation(LOCATION_GRAVE) and c:GetPreviousControler()==tp and c:IsReason(REASON_BATTLE) and c:GetOriginalRace()~=RACE_ZOMBIE
  		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
  end
  function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -74,7 +71,7 @@ function s.initial_effect(c)
  end
  function s.operation(e,tp,eg,ep,ev,re,r,rp)
  	local tc=eg:Filter(s.filter,nil,e,tp):GetFirst()
- 	if tc:IsRelateToEffect(e) then
+ 	if tc and tc:IsRelateToEffect(e) then
  		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK)
  		local e1=Effect.CreateEffect(e:GetHandler())
  		e1:SetType(EFFECT_TYPE_SINGLE)

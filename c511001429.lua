@@ -1,7 +1,6 @@
 --CNo.102 光堕天使ノーブル・デーモン (Anime)
 --Number C102: Archfiend Seraph (Anime)
 --fixed by Larry126
-Duel.LoadCardScript("c67173574.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -23,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
+	e2:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
 	e2:SetCondition(s.indescon)
 	e2:SetCost(s.indescost)
 	e2:SetTarget(s.indestg)
@@ -55,6 +54,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e6)
 	e3:SetLabelObject(e6)
 end
+s.listed_series={0x95,0x48}
 s.xyz_number=102
 s.listed_names={49678559,100000581,111011002,511000580,511002068,511002164,93238626}
 function s.rumfilter(c)

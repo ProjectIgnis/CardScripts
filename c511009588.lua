@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,aux.FilterSummonCode(82044279),1,1)
+	Synchro.AddProcedure(c,nil,1,1,aux.FilterBoolFunction(Card.IsCode,82044279),1,1)
 	c:EnableReviveLimit()
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,false)
@@ -68,6 +68,8 @@ function s.initial_effect(c)
 	e6:SetValue(s.valcheck)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x99}
+s.listed_names={82044279}
 function s.discon1(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainDisablable(ev) and re:IsActiveType(TYPE_MONSTER)
 end

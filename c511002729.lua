@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.lpop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xc008}
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(Card.IsSetCard,1,nil,0xc008)
 end

@@ -59,8 +59,8 @@ function s.initial_effect(c)
 	e7:SetValue(s.indes)
 	c:RegisterEffect(e7)
 end
-s.xyz_number=1000
 s.listed_series={0x48}
+s.xyz_number=1000
 function s.filter(e,c)
 	return c:IsC()
 end

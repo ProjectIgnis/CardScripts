@@ -39,6 +39,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_series={0x1048}
 function s.cfilter(c)
 	return c:IsHasEffect(511002571) and #{c:GetCardEffect(id0)}==0
 end

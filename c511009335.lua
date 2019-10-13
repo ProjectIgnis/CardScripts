@@ -1,5 +1,6 @@
---Moon Protector
---fixed by MLD
+--月の守護者
+--Penumbral Keeper
+--fixed by MLD & Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -36,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.effop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x52}
 s.listed_names={511009337}
 s.material_setcode=0x52
 function s.ffilter(c,fc,sumtype,tp)
@@ -69,15 +71,16 @@ function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,r,re,rp)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=eg:Filter(s.cfilter,nil,tp,r,re,rp)
 	if chkc then
+		local g=eg:Filter(s.cfilter,nil,tp,r,re,rp)
 		if chkc:IsControler(tp) then return false end
 		if r&REASON_EFFECT~=0 then return re:GetHandler()==chkc
 		else return chkc==g:GetFirst():GetReasonCard() end
 	end
+	local g=eg:Filter(s.cfilter,nil,tp,r,re,rp)
 	if chk==0 then
-		if r&REASON_EFFECT~=0 then return re:GetHandler():IsControler(1-tp) and re:GetHandler():IsOnField() and re:GetHandler():IsCanBeEffectTarget(e)
-		else local tc=g:GetFirst():GetReasonCard() return tc:IsControler(1-tp) and tc:IsOnField() and tc:IsCanBeEffectTarget(e) end
+		if r&REASON_EFFECT~=0 then return re:GetHandler():IsControler(1-tp) and re:GetHandler():IsOnField() and re:GetHandler():IsCanBeEffectTarget(e) and re:GetHandler():GetAttack()>800
+		else local tc=g:GetFirst():GetReasonCard() return tc:IsControler(1-tp) and tc:IsOnField() and tc:IsCanBeEffectTarget(e) and tc:GetAttack()>800 end
 	end
 	local tc
 	if r&REASON_EFFECT~=0 then tc=re:GetHandler() else tc=g:GetFirst():GetReasonCard() end
@@ -86,15 +89,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		local atk=tc:GetAttack()
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(-800)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		if tc:RegisterEffect(e1) and atk>=800 then
-			Duel.Recover(tp,800,REASON_EFFECT)
-		end
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:UpdateAttack(-800,nil,e:GetHandler())==-800 then
+		Duel.Recover(tp,800,REASON_EFFECT)
 	end
 end

@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e3:SetCode(3682106)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xba}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()

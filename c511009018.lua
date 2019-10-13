@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.seqop)
 	c:RegisterEffect(e3)
 end
-function s.matfilter(c,lc,sumtype,tp)
+s.listed_series={0xfc}
 	return c:IsSetCard(0xfc,lc,sumtype,tp)
 end
 function s.indesfil(c)

@@ -16,3 +16,4 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_DISABLE)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x550}

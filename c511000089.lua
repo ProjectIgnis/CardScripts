@@ -1,3 +1,4 @@
+--ロイヤル・ストレート・スラッシャー
 --Royal Straight Slasher
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,8 +21,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={511000088}
 function s.splimit(e,se,sp,st)
-	return st==(SUMMON_TYPE_SPECIAL+511000088)
+	return se:GetHandler():IsCode(511000088)
 end
 function s.desfilter1(c)
 	return c:IsType(TYPE_MONSTER) and c:GetLevel()==1 and c:IsAbleToGrave()
@@ -40,12 +42,11 @@ function s.desfilter5(c)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter1,tp,LOCATION_DECK,0,1,nil)
-	and Duel.IsExistingMatchingCard(s.desfilter2,tp,LOCATION_DECK,0,1,nil)
-	and Duel.IsExistingMatchingCard(s.desfilter3,tp,LOCATION_DECK,0,1,nil)
-	and Duel.IsExistingMatchingCard(s.desfilter4,tp,LOCATION_DECK,0,1,nil)
-	and Duel.IsExistingMatchingCard(s.desfilter5,tp,LOCATION_DECK,0,1,nil) 
-	and Duel.IsExistingMatchingCard(Card.IsDestructable,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+		and Duel.IsExistingMatchingCard(s.desfilter2,tp,LOCATION_DECK,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.desfilter3,tp,LOCATION_DECK,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.desfilter4,tp,LOCATION_DECK,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.desfilter5,tp,LOCATION_DECK,0,1,nil)
+	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g1=Duel.SelectMatchingCard(tp,s.desfilter1,tp,LOCATION_DECK,0,1,1,nil)
 	local g2=Duel.SelectMatchingCard(tp,s.desfilter2,tp,LOCATION_DECK,0,1,1,nil)
@@ -61,11 +62,11 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local sg=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_ONFIELD,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0,nil)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_ONFIELD,nil)
-	Duel.Destroy(sg,REASON_EFFECT)
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+	Duel.Destroy(g,REASON_EFFECT)
 end

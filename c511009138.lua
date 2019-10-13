@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xe5}
 function s.damval(e,re,val,r,rp,rc)
 	if r&REASON_EFFECT~=0 then return 0 end
 	return val

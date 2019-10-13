@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x93}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local a=Duel.GetAttacker()

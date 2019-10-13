@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	e1:SetLabelObject(e2)
 end
+s.listed_series={0x10db}
 s.listed_names={16195942}
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()

@@ -58,9 +58,10 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
+s.listed_names={511005082}
 function s.cfilter(c,tp)
 	return (c:GetPreviousRaceOnField()&RACE_FIEND)==RACE_FIEND and (c:GetPreviousTypeOnField()&TYPE_XYZ)==TYPE_XYZ 
-		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
+		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil,tp) then s[tp]=true end

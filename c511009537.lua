@@ -28,7 +28,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.listed_names={13331639}
+s.listed_names={13331639,43387895,70771599,42160203,96733134}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	s[ep]=s[ep]+ev
 end

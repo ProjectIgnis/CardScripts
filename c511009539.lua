@@ -1,10 +1,10 @@
 --D/D Savant Dirac
---fixed by MLD
+--Fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum summon
 	aux.EnablePendulumAttribute(c)
-	--damage
+	--Damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
-	--avoid effect damage
+	--Avoid effect damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -42,14 +42,20 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.damval)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetDescription(aux.Stringid(4016,6))
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetTargetRange(1,0)
+	Duel.RegisterEffect(e2,tp)
 end
 function s.damval(e,re,val,r,rp,rc)
-	if (r&REASON_EFFECT)~=0 then return 0
+	if r&REASON_EFFECT~=0 then return 0
 	else return val end
 end

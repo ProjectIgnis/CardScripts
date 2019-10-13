@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xc2}
 function s.cfilter(c)
 	return c:IsFaceup() and (c:IsRace(RACE_DRAGON) or c:IsSetCard(0xc2))  and c:IsAbleToGraveAsCost()
 end

@@ -1,7 +1,9 @@
---Motor Worm Spread Queen
+--電動蟲スプレッド女王
+--Motor Worm Spreader Queen
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
+	--link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_INSECT),2)
 	--atkup
@@ -30,9 +32,10 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetValue(aux.TargetBoolFunction(Card.IsCode,id+1))
+	e3:SetValue(aux.TargetBoolFunction(Card.IsCode,511009659))
 	c:RegisterEffect(e3)
 end
+s.listed_names={511009659}
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT)
 end
@@ -45,15 +48,15 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local zone=e:GetHandler():GetLinkedZone(tp)
-		return zone~=0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x3e,TYPES_TOKEN,0,0,1,RACE_INSECT,ATTRIBUTE_LIGHT) 
+		return zone~=0 and Duel.IsPlayerCanSpecialSummonMonster(tp,511009659,(0x3e|0x537),TYPES_TOKEN,0,0,1,RACE_INSECT,ATTRIBUTE_LIGHT) 
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetHandler():GetLinkedZone(tp)
-	if zone~=0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x3e,TYPES_TOKEN,0,0,1,RACE_INSECT,ATTRIBUTE_LIGHT) then
-		local token=Duel.CreateToken(tp,id+1)
+	if zone~=0 and Duel.IsPlayerCanSpecialSummonMonster(tp,511009659,(0x3e|0x537),TYPES_TOKEN,0,0,1,RACE_INSECT,ATTRIBUTE_LIGHT) then
+		local token=Duel.CreateToken(tp,511009659)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 end

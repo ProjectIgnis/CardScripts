@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(2,id)
+	e3:SetCountLimit(2,511009606)
 	e3:SetCode(EVENT_CHAIN_SOLVING)
 	e3:SetCondition(s.damcon)
 	e3:SetTarget(s.damtg)
@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.splimit)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xfc}
 function s.valcon(e,re,r,rp)
 	return r&REASON_BATTLE+REASON_EFFECT~=0
 end

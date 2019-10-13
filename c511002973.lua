@@ -51,7 +51,8 @@ function s.initial_effect(c)
 	e7:SetCode(id+1)
 	c:RegisterEffect(e7)
 end
-s.listed_names={511002975}
+s.listed_series={0x19}
+s.listed_names={id+1,511002975}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()

@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,aux.FilterSummonCode(2403771),1,1)
+	Synchro.AddProcedure(c,nil,1,1,aux.FilterBoolFunction(Card.IsCode,2403771),1,1)
 	c:EnableReviveLimit()
 	--change lp
 	local e1=Effect.CreateEffect(c)
@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.valcheck)
 	c:RegisterEffect(e4)
 end
+s.listed_names={2403771}
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO and (Duel.GetLP(tp)<2000 or Duel.GetLP(1-tp)<2000)
 end

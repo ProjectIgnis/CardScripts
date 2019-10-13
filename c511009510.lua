@@ -22,6 +22,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_series={0x95}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if re and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsSetCard(0x95) then
 		s[0]=s[0]+1

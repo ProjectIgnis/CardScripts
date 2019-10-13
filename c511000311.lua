@@ -1,9 +1,11 @@
+--Ｄ－バースト
 --D - Burst
+--updated by ClaireStanfield
 local s,id=GetID()
 function s.initial_effect(c)
 	--effect
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -12,8 +14,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Double attack
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_DRAW)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
+	e2:SetCategory(CATEGORY_ATKCHANGE)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
@@ -24,7 +26,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.ecfilter(c)
-	return c:IsType(TYPE_EQUIP) and c:GetEquipTarget()~=nil and c:IsDestructable()
+	return c:IsFaceup() and c:IsType(TYPE_EQUIP)
+		and (not c:IsType(TYPE_TRAP) or c:IsPreviousLocation(LOCATION_MZONE)) and c:IsDestructable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and s.ecfilter(chkc) end
@@ -32,27 +35,30 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 	local g=Duel.SelectTarget(tp,s.ecfilter,tp,LOCATION_SZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		if Duel.Destroy(tc,REASON_EFFECT)>0 then
-			Duel.Draw(tp,1,REASON_EFFECT)
-		end
+		Duel.Destroy(tc,REASON_EFFECT)
+		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
 function s.dacon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
+end
+function s.emfilter(c)
+	return c:GetEquipCount()>0
 end
 function s.dacost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.emfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.emfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,s.emfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

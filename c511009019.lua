@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={56907389}
+s.listed_names={56907389,68540058}
 function s.spfilter(c,ft,tp)
 	return c:IsCode(56907389) and c:GetEquipGroup():IsExists(Card.IsCode,1,nil,68540058) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) 
 		and (c:IsControler(tp) or c:IsFaceup())

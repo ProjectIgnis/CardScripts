@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x573}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()

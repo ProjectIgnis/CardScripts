@@ -1,3 +1,4 @@
+--電動蟲門
 --Motor Worm Gate
 --fixed by MLD
 local s,id=GetID()
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--direct attack
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(11493868,0))
+	e2:SetDescription(aux.Stringid(18514525,0))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)

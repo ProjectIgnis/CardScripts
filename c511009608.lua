@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xfc}
 function s.desfilter(c,ft)
 	return c:IsFaceup() and c:IsSetCard(0xfc) and (ft>0 or c:GetSequence()<5)
 end

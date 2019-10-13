@@ -15,10 +15,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.sumop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x572}
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
-function s.filter(c,e,tp)
+function s.filter(c,e,tp,lsc,rsc)
 	local lv=c:GetLevel()
 	return lv>lsc and lv<rsc and c:IsSetCard(0x572) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

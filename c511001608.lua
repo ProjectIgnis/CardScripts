@@ -1,7 +1,8 @@
---No.93 希望皇ホープ・カイザー
-Duel.LoadCardScript("c23187256.lua")
-local s,id=GetID()
+--No.93 希望皇ホープ・カイザー (Manga)
+--Number 93: Utopia Kaiser (Manga)
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--xyz summon
 	Xyz.AddProcedure(c,nil,12,2)
 	c:EnableReviveLimit()
@@ -78,17 +79,18 @@ function s.initial_effect(c)
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-		ge1:SetCode(EVENT_DESTROY)
+		ge1:SetCode(EVENT_DESTROYED)
 		ge1:SetOperation(s.regop)
 		Duel.RegisterEffect(ge1,0)
 		local ge2=Effect.CreateEffect(c)
 		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
+		ge2:SetCode(EVENT_TURN_END)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.clear)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
+s.listed_series={0x48}
 s.xyz_number=93
 function s.chkfilter(c,tp,re)
 	return c:IsSetCard(0x48) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
@@ -120,26 +122,24 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCountFromEx(tp)
 	if ct>ft then return end
 	if ct>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-	local ect=cCARD_SUMMON_GATE and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and cCARD_SUMMON_GATE[tp]
+	local ect=calias and Duel.IsPlayerAffectedByEffect(tp,alias) and calias[tp]
 	if ect~=nil and ct>ect then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if #g<ct then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:Select(tp,ct,ct,nil)
-	local tc=sg:GetFirst()
-	while tc do
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+	for sc in aux.Next(sg) do
+		Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
-		tc:RegisterEffect(e1)
+		sc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
-		tc:RegisterEffect(e2)
-		tc=sg:GetNext()
+		sc:RegisterEffect(e2)
 	end
 	Duel.SpecialSummonComplete()
 	c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
@@ -161,14 +161,14 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local sg=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_MZONE,nil)
+	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=s[tp]
 	if ct==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,Card.IsDestructable,tp,0,LOCATION_MZONE,1,ct,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,ct,nil)
 	if #g>0 then
 		Duel.HintSelection(g)
 		Duel.Destroy(g,REASON_EFFECT)

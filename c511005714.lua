@@ -12,6 +12,7 @@ e1:SetTarget(s.target)
 e1:SetOperation(s.operation)
 c:RegisterEffect(e1)
 end
+s.listed_series={0x9f}
 
 function s.cfilter(c)
 return c:IsOnField() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x9f) 

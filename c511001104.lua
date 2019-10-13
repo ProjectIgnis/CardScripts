@@ -1,3 +1,4 @@
+--コズミック・ブラスト
 --Cosmic Blast
 local s,id=GetID()
 function s.initial_effect(c)
@@ -5,7 +6,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_LEAVE_FIELD)
 	e1:SetCost(s.cost)
 	e1:SetCondition(s.condition)
@@ -25,7 +26,8 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_DRAGON)
+	return c:GetPreviousControler()==tp and c:IsPreviousPosition(POS_FACEUP)
+		and c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_DRAGON)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(s.cfilter,nil,tp)

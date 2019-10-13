@@ -1,10 +1,13 @@
---アーマード・サイバーン
-local s,id=GetID()
+--アーマード・サイバーン (Anime)
+--Armored Cybern (Anime)
+--fixed by Larry126
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	aux.AddUnionProcedure(c,s.filter,true)
 	--destroy
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(67159705,2))
+	e5:SetDescription(aux.Stringid(alias,2))
 	e5:SetCategory(CATEGORY_DESTROY)
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e5:SetType(EFFECT_TYPE_IGNITION)
@@ -14,6 +17,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x93}
 function s.filter(c)
 	return c:IsSetCard(0x93) and c:IsRace(RACE_MACHINE)
 end

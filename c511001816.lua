@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.fit_monster={23995346}
-s.listed_names={CARD_BLUEEYES_W_DRAGON,23995346}
+s.listed_names={CARD_BLUEEYES_W_DRAGON}
 function s.filter(c,e,tp,m)
 	local cd=c:GetCode()
 	if cd~=23995346 or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false) then return false end

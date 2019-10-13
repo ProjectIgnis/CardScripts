@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id+1}
 function s.cfilter(c,tp)
 	return c:IsRace(RACE_DRAGON) and c:IsPreviousLocation(LOCATION_GRAVE)
 end

@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_CARDIAN)
 end
+s.listed_series={0xe6}
 function s.filter(c,ft,tp)
 	local re=c:GetReasonEffect()
 	return (ft>0 or c:GetSequence()<5) and c:GetLevel()==12 and c:IsSetCard(0xe6)

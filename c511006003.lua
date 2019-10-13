@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x8e}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x8e)
 end

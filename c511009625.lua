@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.TargetBoolFunction(Card.IsPosition,POS_FACEDOWN_DEFENSE))
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10b}
 function s.sdcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)==0
 end

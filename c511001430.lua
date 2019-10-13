@@ -52,6 +52,7 @@ function s.initial_effect(c)
 	e4:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x95,0x48}
 s.xyz_number=103
 s.listed_names={94380860,100000581,111011002,511000580,511002068,511002164,93238626}
 function s.rumfilter(c)

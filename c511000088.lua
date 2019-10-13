@@ -1,3 +1,4 @@
+--ロイヤル・ストレート
 --Royal Straight
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,8 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,code)
-	return c:IsCode(code) and c:IsPosition(POS_FACEUP_ATTACK)
+s.listed_names={511000089}
+function s.cfilter(c,...)
+	return c:IsCode(...) and c:IsPosition(POS_FACEUP_ATTACK)
 end
 function s.spcheck(sg,tp)
 	return aux.ReleaseCheckMMZ(sg,tp) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),25652259,64788463,90876561)
@@ -36,7 +38,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(sg,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsCode(id+1) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
+	return c:IsCode(511000089) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -50,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
-	if tc and Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP)>0 then
+	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,true,POS_FACEUP)>0 then
 		tc:CompleteProcedure()
 	end
 end

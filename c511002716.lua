@@ -1,5 +1,5 @@
 --レッド・ウルフ
-Duel.LoadScript("c420.lua")
+--Red Warg (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success

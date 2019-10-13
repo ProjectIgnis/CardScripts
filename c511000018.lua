@@ -1,4 +1,5 @@
---Fleur de Vertige
+--フルール・ド・ヴェルティージュ
+--Fleur de Vertige (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,28 +12,21 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and c:GetControler()~=tp
-		and c:IsAbleToRemove()
-end
-function s.cfilter(tc)
-	return tc and tc:IsFaceup()
+	return c:GetControler()~=tp and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.filter,1,nil,tp) 
-		and (s.cfilter(Duel.GetFieldCard(tp,LOCATION_SZONE,5)) or s.cfilter(Duel.GetFieldCard(1-tp,LOCATION_SZONE,5))) end
-	Duel.SetTargetCard(eg)
+		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil) end
 	local g=eg:Filter(s.filter,nil,tp)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
-end
-function s.filter2(c,e,tp)
-	return c:IsFaceup() and c:GetControler()~=tp
-		and c:IsRelateToEffect(e) and c:IsAbleToRemove()
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(s.filter2,nil,e,tp)
-	local tc=g:GetFirst()
-	if not tc then return end
-	if #g>1 then
+	local g=eg:Filter(s.filter,nil,tp)
+	local tc=nil
+	if #g==0 then return end
+	if #g==1 then
+		tc=g:GetFirst()
+	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		tc=g:Select(tp,1,1,nil):GetFirst()
 	end

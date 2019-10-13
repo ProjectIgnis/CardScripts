@@ -1,3 +1,4 @@
+--ワーム・リヴァイブ
 --Worm Revival
 --fixed by MLD
 local s,id=GetID()
@@ -36,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		tc:RegisterEffect(e2)
 		local zone=tc:GetLinkedZone(tp)&0x1f
-		if Duel.IsPlayerCanSpecialSummonMonster(tp,511009659,0x3e,TYPES_TOKEN,0,0,1,RACE_INSECT,ATTRIBUTE_LIGHT) 
+		if Duel.IsPlayerCanSpecialSummonMonster(tp,511009659,(0x3e|0x537),TYPES_TOKEN,0,0,1,RACE_INSECT,ATTRIBUTE_LIGHT) 
 			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and zone~=0 and Duel.SelectYesNo(tp,aux.Stringid(23571046,0)) then
 			local token=Duel.CreateToken(tp,511009659)
 			Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP,zone)

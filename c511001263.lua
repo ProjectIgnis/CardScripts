@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x512}
 function s.filter(c,tp)
 	return not c:IsPreviousControler(tp) and c:IsType(TYPE_MONSTER)
 end

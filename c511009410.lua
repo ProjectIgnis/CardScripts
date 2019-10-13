@@ -62,6 +62,7 @@ function s.initial_effect(c)
 	e8:SetCode(3682106)
 	c:RegisterEffect(e8)
 end
+s.listed_series={0x10f3}
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	if rp~=tp and (tl==LOCATION_MZONE or tl==LOCATION_SZONE) then

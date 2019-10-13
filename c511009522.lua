@@ -60,6 +60,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.penop)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x20f8}
 s.listed_names={13331639}
 function s.spfilter(c,tp)
 	return c:IsControler(1-tp) and c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM)

@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xe5}
 function s.filter(c,e,tp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
 	return #pg<=1 and c:IsSetCard(0xe5) and c:IsCanBeEffectTarget(e) and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL)) 

@@ -1,4 +1,5 @@
 --ランクアップ・アドバンテージ
+--Rank-Up Advantage
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -58,19 +59,19 @@ end
 function s.disop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetAttackTarget()
-	c:CreateRelation(tc,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	c:CreateRelation(tc,RESET_EVENT+RESETS_STANDARD)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
 	e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetCondition(s.discon2)
 	tc:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAIN_SOLVING)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e2:SetOperation(s.disop2)
 	e2:SetLabelObject(tc)
 	c:RegisterEffect(e2)
@@ -90,7 +91,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if rc:IsSetCard(0x95) then
 		local tc=eg:GetFirst()
 		while tc do
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1) 	
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)  
 			tc=eg:GetNext()
 		end
 	end

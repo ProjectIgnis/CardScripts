@@ -55,6 +55,7 @@ function s.initial_effect(c)
 	e1:SetLabelObject(e6)
 	e4:SetLabelObject(e6)
 end
+s.listed_series={0x95,0x48}
 s.xyz_number=106
 s.listed_names={63746411,100000581,111011002,511000580,511002068,511002164,93238626}
 function s.rumfilter(c)

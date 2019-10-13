@@ -1,3 +1,4 @@
+--守護蟲穴
 --Wormhole Defense
 --fixed by MLD
 local s,id=GetID()
@@ -40,15 +41,15 @@ end
 s.listed_names={511009659}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,511009659,0x3e,TYPES_TOKEN,0,0,1,RACE_INSECT,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,511009659,(0x3e|0x537),TYPES_TOKEN,0,0,1,RACE_INSECT,ATTRIBUTE_LIGHT,POS_FACEUP_DEFENSE) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,511009659,0x3e,TYPES_TOKEN,0,0,1,RACE_INSECT,ATTRIBUTE_LIGHT) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,511009659,(0x3e|0x537),TYPES_TOKEN,0,0,1,RACE_INSECT,ATTRIBUTE_LIGHT,POS_FACEUP_DEFENSE) then
 		local token=Duel.CreateToken(tp,511009659)
-		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
 function s.repfilter(c,tp,ec)
@@ -76,7 +77,7 @@ function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer(),e:GetHandler())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_CARD,0,511009660)
 	local tc=e:GetLabelObject()
 	tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
 	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)

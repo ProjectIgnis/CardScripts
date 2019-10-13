@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x573}
 function s.atcon(e)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end

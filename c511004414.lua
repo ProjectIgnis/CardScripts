@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desuop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={511009337}
 function s.desucon(e,tp,eg,ev,ep,re,r,rp)
 	local c=e:GetHandler()
 	local ec=c:GetFirstCardTarget()

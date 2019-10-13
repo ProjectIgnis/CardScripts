@@ -1,8 +1,9 @@
 --D－HERO Bloo－D (Anime)
 --Destiny HERO - Plasma (Anime)
 --fixed by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	c:EnableReviveLimit()
 	--cannot special summon
 	local e1=Effect.CreateEffect(c)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(83965310,0))
+	e2:SetDescription(aux.Stringid(alias,0))
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--equip
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(83965310,1))
+	e3:SetDescription(aux.Stringid(alias,1))
 	e3:SetCategory(CATEGORY_EQUIP)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -83,7 +84,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_COST)
 end
 function s.eqfilter(c)
-	return c:GetFlagEffect(83965310)~=0 
+	return c:GetFlagEffect(id)~=0 
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetEquipGroup():Filter(s.eqfilter,nil)
@@ -127,7 +128,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
 			s.equipop(c,e,tp,tc)
-		else Duel.SendtoGrave(tc,REASON_EFFECT) end
+		else Duel.SendtoGrave(tc,REASON_RULE) end
 	end
 end
 function s.econ(e)

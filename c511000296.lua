@@ -76,6 +76,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,1)
 	end)
 end
+s.listed_series={0x48}
 s.listed_names={511000294}
 function s.check(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()==tp or Duel.GetFlagEffect(tp,id)~=0 then return end

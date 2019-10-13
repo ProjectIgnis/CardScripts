@@ -48,6 +48,7 @@ function s.initial_effect(c)
 	e5:SetCode(3682106)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x48}
 s.xyz_number=23
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttackTarget()==nil and e:GetHandler():GetOverlayCount()>0

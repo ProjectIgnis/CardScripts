@@ -60,6 +60,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.adval)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x576}
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and ev>0
 end

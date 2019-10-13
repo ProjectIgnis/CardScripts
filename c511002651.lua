@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x99}
 function s.pfilter(c)
 	return c:IsSetCard(0x99) and c:IsType(TYPE_PENDULUM)
 end

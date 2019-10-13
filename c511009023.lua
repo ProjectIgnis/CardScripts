@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.descon)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xfc}
 function s.spcfilter(c)
 	return c:GetSequence()>=5 and c:IsSetCard(0xfc)
 end

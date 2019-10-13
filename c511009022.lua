@@ -1,8 +1,9 @@
 --EMミス・ディレクター
 --Performapal Miss Director
 --updated by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--cannot be battle target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -35,6 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--synchro
 	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(alias,0))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
@@ -42,6 +44,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.scop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x99}
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(aux.TRUE,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end

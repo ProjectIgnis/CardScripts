@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x99}
 function s.spcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_EXTRA,0,1,nil,0x99)
 end

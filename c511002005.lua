@@ -1,4 +1,4 @@
---Performapal Extra Shooter
+--Performapal Sandwich Wingman
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(95100067,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e1:SetCode(id)
+	e1:SetCode(EVENT_CUSTOM+id)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetTarget(s.sctg)
 	e1:SetOperation(s.scop)
@@ -48,7 +48,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	while tc do
 		tc:ResetFlagEffect(id+tot-tc:GetSequence())
-		Duel.RaiseSingleEvent(tc,id,e,0,tp,tp,0)
+		Duel.RaiseSingleEvent(tc,EVENT_CUSTOM+id,e,0,tp,tp,0)
 		tc:RegisterFlagEffect(id+tc:GetSequence(),RESET_EVENT+RESETS_STANDARD,0,1)
 		tc=g:GetNext()
 	end

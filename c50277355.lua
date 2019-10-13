@@ -105,7 +105,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		s.synop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if s.xyztg(e,tp,eg,ep,ev,re,r,rp,0) then 
-		Duel.BreakEfect()
+		Duel.BreakEffect()
 		s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end

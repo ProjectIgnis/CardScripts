@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x101b}
 s.listed_names={31533705}
 function s.lvval(e,c)
 	local tp=c:GetControler()

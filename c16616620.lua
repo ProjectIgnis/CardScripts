@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x1e}
 function s.spfilter(c,g,e,tp)
 	return g:IsExists(aux.IsCodeListed,1,nil,c:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

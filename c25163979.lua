@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.mvop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x112}
 function s.efilter(e,c)
 	return c:GetMutualLinkedGroupCount()>0
 end

@@ -75,6 +75,7 @@ function s.initial_effect(c)
 	e8:SetOperation(s.penop)
 	c:RegisterEffect(e8)
 end
+s.listed_series={0x20f8}
 s.miracle_synchro_fusion=true
 function s.fusfilter1(c,fc,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsType(TYPE_FUSION,fc,sumtype,tp)

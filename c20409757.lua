@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e6:SetValue(s.indval)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x98,0x99}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end

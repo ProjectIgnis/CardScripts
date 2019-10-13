@@ -6,6 +6,7 @@ function s.initial_effect(c)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
 end
+s.listed_series={0xcf,0x1048}
 s.listed_names={CARD_DARK_MAGICIAN,CARD_BLUEEYES_W_DRAGON}
 function s.ritualfil(c)
 	return (c:IsSetCard(0xcf) or c:IsSetCard(0x1048)) and c:IsRitualMonster()

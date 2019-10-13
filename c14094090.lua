@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x10cf}
 function s.ritual_filter(c)
 	return c:IsType(TYPE_RITUAL) and c:IsSetCard(0x10cf)
 end

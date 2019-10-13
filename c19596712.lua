@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetCode(3682106)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x74}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_SZONE
 		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainDisablable(ev) 

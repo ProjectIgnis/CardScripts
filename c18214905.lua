@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.attop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x400d}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end

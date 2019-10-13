@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x74}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x74) and c:GetLevel()>0
 end

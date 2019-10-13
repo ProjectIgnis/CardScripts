@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x5008}
 function s.filter(c,e,sp)
 	return c:IsFaceup() and c:IsSetCard(0x5008) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end

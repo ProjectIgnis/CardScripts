@@ -49,6 +49,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x38}
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x38) and c:IsType(TYPE_MONSTER)
 end

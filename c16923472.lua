@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x58}
 function s.costfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x58) and c:GetCode()~=id
 end

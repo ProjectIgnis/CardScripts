@@ -33,8 +33,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.toss_coin=true
 s.listed_names={CARD_DESTINY_BOARD}
+s.toss_coin=true
 function s.chcon1(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	return re:GetHandlerPlayer()==tp and re:IsHasCategory(CATEGORY_TOFIELD) and re:GetLabel()==CARD_DESTINY_BOARD and re:GetValue()~=nil

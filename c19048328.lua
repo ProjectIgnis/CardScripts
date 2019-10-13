@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x9e}
 function s.matcheck(e,c)
 	local g=c:GetMaterial():Filter(Card.IsSetCard,nil,0x9e)
 	local att=0

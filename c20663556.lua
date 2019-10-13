@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x12}
 function s.indes(e,c)
 	return c:IsSetCard(0x12)
 end

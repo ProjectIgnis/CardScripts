@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.sop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x8,0x5008}
 function s.recon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and r&(REASON_BATTLE+REASON_EFFECT)~=0
 end

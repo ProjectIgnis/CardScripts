@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.regop2)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x115}
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id+1)==0
 end

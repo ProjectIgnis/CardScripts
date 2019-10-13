@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.nameop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x51}
 function s.dectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)

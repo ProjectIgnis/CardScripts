@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.xyzlimit)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x8e}
 function s.filter(c,e,tp)
 	return c:GetCode()~=id and c:IsSetCard(0x8e) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

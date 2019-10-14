@@ -49,11 +49,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_ADD_FUSION_CODE)
+	e1:SetCode(EFFECT_ADD_CODE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e1:SetValue(e:GetLabel())
+	e1:SetOperation(s.chngcon)
 	c:RegisterEffect(e1)
+end
+function s.chngcon(scard,sumtype,tp)
+	return sumtype==SUMMON_TYPE_FUSION
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0

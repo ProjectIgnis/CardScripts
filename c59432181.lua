@@ -34,14 +34,18 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_ADD_FUSION_CODE)
+	e1:SetCode(EFFECT_ADD_CODE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e1:SetValue(code1)
+	e1:SetOperation(s.chngcon)
 	tc:RegisterEffect(e1)
 	if code2 then
 		local e2=e1:Clone()
 		e2:SetValue(code2)
 		tc:RegisterEffect(e2)
 	end
+end
+function s.chngcon(scard,sumtype,tp)
+	return sumtype==SUMMON_TYPE_FUSION
 end

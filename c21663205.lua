@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_NECRO_VALLEY_IM)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x2e}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x2e) and c:IsLevel(4) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))

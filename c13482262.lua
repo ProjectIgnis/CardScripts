@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x117}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x117) and c:IsType(TYPE_MONSTER) 
 		and c:IsAbleToDeck() and not c:IsPublic()

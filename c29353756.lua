@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetCode(3682106)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x107f}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

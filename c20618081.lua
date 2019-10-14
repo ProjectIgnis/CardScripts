@@ -23,6 +23,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x119}
+s.listed_names={}
 function s.setfilter(c)
 	return c:IsType(TYPE_TRAP+TYPE_SPELL) and c:IsSetCard(0x119) and c:IsSSetable()
 end

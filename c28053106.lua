@@ -1,5 +1,6 @@
 --サイバー・エッグ・エンジェル--
 --Cyber Egg Angel
+--scripted by unknow
 local s,id=GetID()
 function s.initial_effect(c)
 	--add a machine ritual from deck to hand when normal/flip/special summoned
@@ -20,6 +21,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x124}
 s.listed_names={95658967}
 function s.thfilter(c)
 	return ((c:IsSetCard(0x124) and c:IsType(TYPE_SPELL)) or c:IsCode(95658967)) and c:IsAbleToHand()

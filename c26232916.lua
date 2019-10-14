@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.repop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x2b,0x61}
 function s.thcfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x2b) and c:IsControler(tp)
 end

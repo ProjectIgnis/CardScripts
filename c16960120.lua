@@ -27,6 +27,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x133}
+s.listed_names={}
 function s.thfilter(c)
 	return not c:IsCode(id) and c:IsSetCard(0x133) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
 end

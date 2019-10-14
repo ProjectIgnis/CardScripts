@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xdf}
 function s.drfilter(c)
 	return c:IsSetCard(0xdf) and c:IsDiscardable(REASON_EFFECT)
 end

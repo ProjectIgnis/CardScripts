@@ -32,6 +32,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.leave)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x19}
+s.listed_names={}
 function s.spgfilter(c,e,tp)
 	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,104,tp,false,false)
 end

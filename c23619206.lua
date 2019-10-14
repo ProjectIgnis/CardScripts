@@ -25,6 +25,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ssop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x12d}
+s.listed_names={}
 function s.tgfilter(c)
 	return c:IsSetCard(0x12d) and not c:IsCode(id) and c:IsAbleToGrave()
 end

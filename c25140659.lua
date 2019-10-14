@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x11e}
 function s.filter1(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x11e) and c:IsAbleToHand()
 	and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)

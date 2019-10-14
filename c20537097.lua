@@ -29,6 +29,8 @@ function s.initial_effect(c)
 	e3:SetCondition(s.thcon)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10c}
+s.listed_names={}
 function s.cfilter(c)
 	return c:GetColumnGroupCount()>0
 end

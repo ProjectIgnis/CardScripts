@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_names={}
 function s.filter(c)
 	return c:IsCode(id) and c:IsAbleToHand()
 end

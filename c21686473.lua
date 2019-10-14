@@ -52,6 +52,8 @@ function s.initial_effect(c)
 	e6:SetValue(s.damlimit)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x10af}
+s.listed_names={}
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10af) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsAbleToHand()
 end

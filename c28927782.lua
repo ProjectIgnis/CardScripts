@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.efop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x29}
 function s.select(e,tp,b1,b2)
 	local op=0
 	if b1 and b2 then

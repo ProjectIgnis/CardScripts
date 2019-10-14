@@ -27,6 +27,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10c}
+s.listed_names={}
 function s.cfilter(c)
 	return c:GetColumnGroupCount()>0
 end

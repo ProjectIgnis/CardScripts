@@ -27,6 +27,8 @@ function s.initial_effect(c)
 	e3:SetCondition(s.actcon)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x7}
+s.listed_names={}
 function s.thfilter(c)
 	return c:IsSetCard(0x7) and not c:IsCode(id) and c:IsAbleToHand()
 end

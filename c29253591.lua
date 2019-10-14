@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x29}
 function s.synlimit(e,c)
 	if not c then return false end
 	return not c:IsSetCard(0x29)

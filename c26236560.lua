@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
+s.listed_names={}
 s.listed_series={0x130}
 function s.desfilter(c,tp)
 	return Duel.GetMZoneCount(tp,c)>0

@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xdf}
 	--If fusion monster(s) were fusion summoned to your field
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_FUSION)

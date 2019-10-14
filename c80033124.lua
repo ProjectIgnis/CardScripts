@@ -21,17 +21,17 @@ end
 function s.spfilter(c,e,tp)
 	return c:IsCode(40418351) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
 end
-function s.fcheck(c,sg,g,code,...)
-	if not c:IsFusionCode(code) then return false end
+function s.fcheck(c,tp,sg,g,code,...)
+	if not c:IsSummonCode(nil,SUMMON_TYPE_FUSION,tp,code) then return false end
 	if ... then
 		g:AddCard(c)
-		local res=sg:IsExists(s.fcheck,1,g,sg,g,...)
+		local res=sg:IsExists(s.fcheck,1,g,tp,sg,g,...)
 		g:RemoveCard(c)
 		return res
 	else return true end
 end
 function s.rescon(sg,e,tp,mg)
-	return Duel.GetLocationCountFromEx(tp,tp,sg)>0 and sg:IsExists(s.fcheck,1,nil,sg,Group.CreateGroup(),41230939,77625948,3019642)
+	return Duel.GetLocationCountFromEx(tp,tp,sg)>0 and sg:IsExists(s.fcheck,1,nil,tp,sg,Group.CreateGroup(),41230939,77625948,3019642)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=Duel.GetMatchingGroup(s.ffilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,tp)

@@ -29,9 +29,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_ADD_FUSION_SETCODE)
+		e1:SetCode(EFFECT_ADD_SETCODE)
 		e1:SetValue(0xad)
+		e1:SetOperation(s.chngcon)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
+end
+function s.chngcon(scard,sumtype,tp)
+	return sumtype==SUMMON_TYPE_FUSION
 end

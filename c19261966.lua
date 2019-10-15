@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x9d}
 s.material_setcode=0x9d
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return se:IsActiveType(TYPE_SPELL+TYPE_TRAP) and se:IsHasType(EFFECT_TYPE_ACTIONS) 

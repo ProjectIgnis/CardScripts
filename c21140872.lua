@@ -49,6 +49,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e4)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x3b}
 s.listed_names={CARD_NECROVALLEY}
 s.material_setcode=0x3b
 function s.eqcon(e)

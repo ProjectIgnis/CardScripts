@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.cttg)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x33}
 s.listed_names={9012916}
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsLevelBelow(4)

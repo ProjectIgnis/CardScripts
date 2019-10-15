@@ -25,7 +25,7 @@ function s.initial_effect(c)
     e2:SetCode(EVENT_SPSUMMON_SUCCESS)
     c:RegisterEffect(e2)
 end
-s.listed_names={id}
+s.listed_names={16146511}
 	--Check for gemini or FIRE warrior, besides "Evocator Eveque"
 function s.filter(c,e,tp)
 	return not c:IsCode(id) and (c:IsType(TYPE_DUAL) or (c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

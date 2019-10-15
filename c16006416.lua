@@ -34,10 +34,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xaf}
 s.material_setcode=0xaf
-function s.matfilter(c)
-	return c:IsFusionSetCard(0xaf) and c:IsLevelAbove(5)
+function s.matfilter(c,fc,sumtype,tp)
+	return c:IsSetCard(0xaf,fc,sumtype,tp) and c:IsLevelAbove(5)
 end
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsControler(tp)

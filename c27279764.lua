@@ -47,6 +47,7 @@ function s.initial_effect(c)
 	e8:SetOperation(s.tgop)
 	c:RegisterEffect(e8)
 end
+s.listed_series={0xaa}
 function s.tlimit(e,c)
 	return not c:IsSetCard(0xaa)
 end

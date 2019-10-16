@@ -33,6 +33,8 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x119}
+s.listed_names={id}
 	--If a "Salamangreat" monster, besides itself, is sent to GY
 function s.cfilter(c,tp)
 	return c:IsSetCard(0x119) and c:IsType(TYPE_MONSTER) and not c:IsCode(id) and c:IsControler(tp)

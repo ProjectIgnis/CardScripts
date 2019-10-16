@@ -30,6 +30,8 @@ function s.initial_effect(c)
 	e3:SetCondition(s.spcon)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x11c}
+s.listed_names={id}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)

@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.atcon)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xfc}
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true

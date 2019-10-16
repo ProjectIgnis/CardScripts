@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.acop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 function s.filter(c,lc,sumtype,tp)
 	return not c:IsType(TYPE_TOKEN,lc,sumtype,tp)
 end

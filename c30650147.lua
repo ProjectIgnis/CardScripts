@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x106}
 function s.filter(c,tp)
 	return c:IsFaceup() and c:GetOriginalLevel()>0 and c:IsReleasableByEffect()
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x106,TYPES_TOKEN,0,0,c:GetLevel(),RACE_ZOMBIE,ATTRIBUTE_DARK)

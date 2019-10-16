@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_names={id}
 function s.lvtg(e,c)
 	return c:IsLevelAbove(1) and c:GetOwner()~=e:GetHandlerPlayer()
 end

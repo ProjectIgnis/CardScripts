@@ -61,6 +61,7 @@ function s.initial_effect(c)
 	e9:SetOperation(s.clearop)
 	c:RegisterEffect(e9)
 end
+s.listed_series={0x108}
 function s.otfilter(c,tp)
 	return c:IsSetCard(0x108) and (c:IsControler(tp) or c:IsFaceup())
 end

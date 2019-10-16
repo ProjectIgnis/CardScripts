@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetValue(0x119)
 	c:RegisterEffect(e2)
 end
-function s.fextra(e,tp,mg)
+s.listed_series={0x119}
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsFaceup),tp,0,LOCATION_ONFIELD,nil)
 end
 

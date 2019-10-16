@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,id+2)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsType,1,nil,TYPE_LINK,lc,sumtype,tp)
 end

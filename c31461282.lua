@@ -36,6 +36,7 @@ function s.initial_effect(c)
     e4:SetOperation(s.drop)
     c:RegisterEffect(e4)
 end
+s.listed_series={0x12e}
 function s.atkval(e,c)
     local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x12e),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
     return g:GetClassCount(Card.GetCode)*500

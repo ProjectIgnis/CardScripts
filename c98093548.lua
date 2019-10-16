@@ -28,7 +28,8 @@ local e1=Effect.CreateEffect(c)
 	e3:SetOperation(s.addop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x79,0x7c}
+s.listed_names={id}
+s.listed_series={0x7c,0x79}
 function s.cfilter(c)
 	return c:IsFaceup() and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsSetCard(0x7c) and c:IsAbleToGraveAsCost()
 end

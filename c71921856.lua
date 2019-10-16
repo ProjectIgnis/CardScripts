@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x84}
 s.xyz_number=79
 function s.filter(c)
 	return c:IsSetCard(0x84) and c:IsType(TYPE_MONSTER)

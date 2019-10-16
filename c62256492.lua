@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xbf,0xc0}
 function s.atkval(e,c)
 	local tp=e:GetHandlerPlayer()
 	local att=0

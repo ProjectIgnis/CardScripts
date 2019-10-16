@@ -1,5 +1,6 @@
 --雷龍融合
 --Thunder Dragon Fusion
+--Scripted by AlphaKretin, fusion procedure update by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

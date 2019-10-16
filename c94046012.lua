@@ -21,6 +21,8 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x11b}
+s.listed_names={id}
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORPHEGEL_BABEL)
 end

@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetValue(7)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x64}
 s.listed_names={CARD_HARPIE_LADY}
 function s.cfilter(c)
 	return c:IsSetCard(0x64) and c:IsDiscardable()

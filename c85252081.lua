@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.mtop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x10dc}
 s.listed_names={12369277}
 function s.atcon(e)
 	return e:GetHandler():GetOverlayCount()==0

@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x48}
 function s.cfilter(c,e,tp)
 	local rk=c:GetRank()
 	return rk>1 and c:IsType(TYPE_XYZ)

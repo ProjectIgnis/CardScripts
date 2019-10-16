@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.retop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x71}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_MONSTER)
 end

@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tfop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x128}
 function s.indct(e,re,r,rp)
 	if (r&REASON_BATTLE+REASON_EFFECT)~=0 then
 		return 1

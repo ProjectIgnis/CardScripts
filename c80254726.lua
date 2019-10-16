@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.handcon)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x33}
 s.listed_names={9012916}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local p,loct=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)

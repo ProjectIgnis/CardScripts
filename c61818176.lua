@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x8d}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	if chkc then return false end

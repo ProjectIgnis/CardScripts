@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.handcon)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1f}
 s.listed_names={CARD_NEOS}
 function s.filter(c,e,tp)
 	return (c:IsSetCard(0x1f) or c:IsCode(CARD_NEOS)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

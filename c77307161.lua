@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xfb}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsLevelBelow(2) and c:IsSetCard(0xfb,lc,sumtype,tp) 
 end

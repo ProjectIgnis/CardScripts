@@ -58,6 +58,7 @@ function s.initial_effect(c)
 	e5:SetCondition(s.actcon)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x107}
 function s.atkval(e,c)
 	return c:GetLevel()*300
 end

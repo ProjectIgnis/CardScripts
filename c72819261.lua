@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.attop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x400d,0x113}
 function s.costfilter(c,tp)
 	return c:IsSetCard(0x400d) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,c)

@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.posop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x105}
 function s.drfilter(c)
 	return c:IsSetCard(0x105) and c:IsAbleToRemove()
 end

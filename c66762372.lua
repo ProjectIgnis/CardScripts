@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.synlimit)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x79,0x7c}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end

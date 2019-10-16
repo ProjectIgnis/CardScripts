@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	e3:SetLabelObject(e4)
 end
+s.listed_series={0x8e}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(1-tp) and ec:GetAttack()>c:GetAttack()
 end

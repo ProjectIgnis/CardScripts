@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x7b,0x55}
 s.listed_names={71071546}
 function s.filter(c,e,tp)
 	return c:IsCode(71071546)

@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xb3}
 s.listed_names={id}
 function s.filter(c)
 	return c:IsSetCard(0xb3) and not c:IsCode(id) and c:IsSummonable(true,nil)

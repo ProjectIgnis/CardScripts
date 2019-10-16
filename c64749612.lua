@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FLIP)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x2b}
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x2b) and c:IsLevelBelow(4) 
 		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))

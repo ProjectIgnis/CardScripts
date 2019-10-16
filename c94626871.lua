@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xfb}
 function s.cfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()
 	if not c:IsPreviousControler(tp) then seq=seq+16 end

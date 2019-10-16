@@ -1,3 +1,4 @@
+--カラテ魂ＫＵＲＯ－ＯＢＩ
 --Kuro-Obi Karate Spirit
 --Scripted by Eerie Code
 local s,id=GetID()

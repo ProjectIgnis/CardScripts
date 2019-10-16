@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1f}
 s.listed_names={CARD_NEOS}
 function s.spfilter(c,e,tp)
 	return (c:IsCode(CARD_NEOS) or c:IsSetCard(0x1f)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

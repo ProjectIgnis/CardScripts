@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e6:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x400d}
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_MONSTER)
 	return g:GetClassCount(Card.GetAttribute)*200

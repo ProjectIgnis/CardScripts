@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.ssop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x64}
 s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS }
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

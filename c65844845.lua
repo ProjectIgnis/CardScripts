@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x56}
 function s.cfilter(c,tp)
 	return c:IsRace(RACE_INSECT) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,c)

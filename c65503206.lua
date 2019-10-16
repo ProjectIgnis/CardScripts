@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.synlimit)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x24}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsDefensePos() and e:GetHandler():IsFaceup() then
 		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)

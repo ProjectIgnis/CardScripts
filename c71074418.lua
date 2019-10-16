@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop3)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x128}
 function s.tgfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsRace(RACE_SPELLCASTER) and c:IsFaceup()
 end

@@ -50,6 +50,7 @@ function s.initial_effect(c)
 	e7:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x23))
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x23}
 s.listed_names={27564031}
 function s.filter(c,tp)
 	return c:IsCode(27564031) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true)

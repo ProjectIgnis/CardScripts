@@ -27,3 +27,4 @@ function s.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x11e}

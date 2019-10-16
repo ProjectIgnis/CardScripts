@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.flipop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x7c}
 function s.filter1(c)
 	return c:IsSetCard(0x7c) and c:IsType(TYPE_TRAP) and c:IsSSetable()
 end

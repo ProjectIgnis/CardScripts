@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.exop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xa9,0xc3,0xad}
 function s.fright_unit(c)
 	return c:IsSetCard(0xa9) or c:IsSetCard(0xc3) or c:IsSetCard(0xad)
 end

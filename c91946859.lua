@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x2093}
 function s.indfilter(e,c)
 	return c:IsRitualMonster() and c:IsSetCard(0x2093)
 end

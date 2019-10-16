@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SUMMON,s.counterfilter)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_series={0x7b,0x55}
 function s.counterfilter(c)
 	return c:IsSetCard(0x7b) or c:IsSetCard(0x55)
 end

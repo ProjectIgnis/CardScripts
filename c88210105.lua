@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x18}
 s.counter_add_list={0x1019}
 function s.ctcfilter(c)
 	return c:IsSetCard(0x18) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()

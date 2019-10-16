@@ -38,6 +38,7 @@ function s.initial_effect(c)
     e3:SetOperation(s.spop)
     c:RegisterEffect(e3)
 end
+s.listed_series={0xc008}
 s.material_setcode={0x8,0xc008}
 function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4 or Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>4 end

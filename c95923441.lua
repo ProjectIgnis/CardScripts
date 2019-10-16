@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xe2}
 function s.sumcon(e)
 	local tc=Duel.GetFieldCard(0,LOCATION_SZONE,5)
 	if tc and tc:IsFaceup() then return true end

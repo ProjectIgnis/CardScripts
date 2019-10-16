@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x12c}
 function s.gyfilter(c)
 	return c:IsRace(RACE_WYRM) and c:IsAbleToGrave()
 end

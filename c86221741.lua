@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xba}
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end

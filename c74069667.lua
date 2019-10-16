@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.rmop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xaf,0x10af}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsSummonPlayer(tp)
 end

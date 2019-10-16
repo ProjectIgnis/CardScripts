@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.synop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x23}
 function s.synfilter(e,c)
 	return c:IsLocation(LOCATION_HAND) and c:IsSetCard(0x23) and c:IsControler(e:GetHandlerPlayer())
 end

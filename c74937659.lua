@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xed}
 function s.matfilter(c)
 	return c:IsSetCard(0xed) and c:GetOriginalLevel()>=0
 end

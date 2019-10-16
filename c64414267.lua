@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.spcon2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9c}
 function s.cfilter(c)
 	return c:IsSetCard(0x9c) and c:IsType(TYPE_MONSTER)
 end

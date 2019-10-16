@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e3:SetLabel(3)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x106e}
 s.check=false
 function s.rfilter(c)
 	return c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()

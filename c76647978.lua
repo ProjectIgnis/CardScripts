@@ -54,6 +54,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		end
 		g:AddCard(tc)
 	end
+	Fusion.CheckExact=nil
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

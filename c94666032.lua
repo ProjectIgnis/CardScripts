@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x106}
 s.fit_monster={4388680} --should be removed in hardcode overhaul
 s.listed_names={4388680}
 function s.ritualfil(c)

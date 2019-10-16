@@ -15,6 +15,7 @@ function s.initial_effect(c)
     e1:SetOperation(s.operation)
     c:RegisterEffect(e1)
 end
+s.listed_series={0x12b}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
     Duel.SendtoGrave(e:GetHandler(),REASON_COST)

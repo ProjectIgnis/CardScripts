@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	e2:SetLabelObject(e1)
 end
+s.listed_series={0x400d,0x113}
 function s.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 		and (c:IsSetCard(0x400d) or c:IsLocation(LOCATION_HAND))

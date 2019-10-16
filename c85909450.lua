@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.rmop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x64}
 function s.effcon(e)
 	return e:GetHandler():GetOverlayCount()>0
 end

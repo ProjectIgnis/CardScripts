@@ -43,6 +43,9 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x27}
+s.synchro_tuner_required=1
+s.synchro_nt_required=2
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain()==0
 end

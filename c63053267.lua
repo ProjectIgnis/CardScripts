@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x10b}
 s.listed_names={id}
 function s.indtg(e,c)
 	return c:IsSetCard(0x10b) and c:GetSequence()<5

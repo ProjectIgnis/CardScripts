@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.tdop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x115}
 function s.cfilter(c)
 	return c:GetSequence()<5
 end

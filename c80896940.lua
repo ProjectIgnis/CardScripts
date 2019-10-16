@@ -59,6 +59,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.penop)
 	c:RegisterEffect(e7)
 end
+s.synchro_nt_required=1
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsType(TYPE_PENDULUM,scard,sumtype,tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end

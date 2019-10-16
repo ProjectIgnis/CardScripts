@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3d}
 function s.confilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3d)
 end

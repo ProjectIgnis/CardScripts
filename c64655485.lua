@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x1f,0x8}
 s.material_setcode={0x8,0x3008,0x9}
 s.listed_names={CARD_NEOS }
 function s.ffilter(c,fc,sumtype,tp)

@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetValue(aux.imval1)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x14}
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x14)
 end

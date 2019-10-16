@@ -1,5 +1,6 @@
 --コード・ラジエーター
 --Code Radiator
+--hand material by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
 	--Extra Material
@@ -31,6 +32,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x101}
 function s.extrafilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end

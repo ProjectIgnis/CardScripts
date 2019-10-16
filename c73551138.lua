@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e7:SetCode(EVENT_FLIP)
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x3a}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3a)
 end

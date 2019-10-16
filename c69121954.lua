@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x11a}
 s.listed_names={90173539}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==e:GetHandlerPlayer() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)

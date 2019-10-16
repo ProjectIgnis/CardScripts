@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.atkval)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x3d}
 s.counter_add_list={0x3}
 function s.lcheck(g,lc,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x3d,lc,SUMMON_TYPE_LINK,tp)

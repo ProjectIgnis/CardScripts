@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x119}
 	--If a "Salamangreat" monster is summoned to your field, besides "Salamangreat Fowl"
 function s.spfilter(c,tp)
 	return c:IsSetCard(0x119) and c:IsControler(tp) and c:IsFaceup() and not c:IsCode(id)

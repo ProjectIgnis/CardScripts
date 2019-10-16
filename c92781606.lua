@@ -51,6 +51,7 @@ function s.initial_effect(c)
 	e5:SetCondition(s.effcon)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x104}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT)))

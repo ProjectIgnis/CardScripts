@@ -54,6 +54,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.spop)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x107}
 function s.atkval(e,c)
 	return c:GetLevel()*300
 end

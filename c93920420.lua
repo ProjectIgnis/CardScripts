@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xfe,0x11b}
 function s.indcon(e)
 	return e:GetHandler():GetSummonType() & SUMMON_TYPE_SPECIAL == 0
 end

@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.penop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x2016}
 function s.cfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x2016) and c:IsType(TYPE_TUNER) and c:IsAbleToGraveAsCost()
 end

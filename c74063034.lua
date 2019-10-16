@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xf4}
 s.listed_names={86120751}
 function s.matfilter(c)
 	return (c:IsLocation(LOCATION_HAND) and c:IsAbleToGrave()) or (c:IsOnField() and c:IsAbleToRemove())

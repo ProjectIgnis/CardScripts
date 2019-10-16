@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3d}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.IsUnionState(e) and e:GetHandler():GetEquipTarget()==eg:GetFirst()
 end

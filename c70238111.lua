@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x101}
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_CYBERSE) and c:GetLink()==3 and c:IsAbleToRemove()	and aux.SpElimFilter(c,true,true)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)

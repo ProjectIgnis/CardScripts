@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10c}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsLevelAbove(5)
 end

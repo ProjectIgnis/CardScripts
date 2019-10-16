@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.operation)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x9a}
 function s.sccon(e)
 	local tp=e:GetHandlerPlayer()
 	return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)

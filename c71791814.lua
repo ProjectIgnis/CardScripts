@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x108}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsLevelBelow(8) and c:IsSetCard(0x108,lc,sumtype,tp)
 end

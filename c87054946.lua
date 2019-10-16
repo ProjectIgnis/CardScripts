@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.atlimit)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x11f}
 function s.lcheck(g,lc)
 	return g:IsExists(Card.IsType,1,nil,TYPE_RITUAL)
 end

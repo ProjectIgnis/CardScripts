@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x86}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x86) and c:IsSummonPlayer(tp)
 end

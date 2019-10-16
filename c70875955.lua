@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.mtop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x101b}
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0

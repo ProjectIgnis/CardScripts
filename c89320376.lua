@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.posop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x104}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)

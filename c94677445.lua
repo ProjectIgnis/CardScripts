@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xfe,0xfd}
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsType(TYPE_NORMAL,scard,sumtype,tp) and c:IsSetCard(0xfd,scard,sumtype,tp)
 end

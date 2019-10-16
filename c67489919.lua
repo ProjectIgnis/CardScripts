@@ -47,6 +47,7 @@ function s.initial_effect(c)
 	e6:SetValue(s.synval)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x101b}
 function s.synfilter(e,c)
 	return (c:IsLocation(LOCATION_HAND) or (c:IsFaceup() and c:IsLocation(LOCATION_MZONE))) and c:IsControler(e:GetHandlerPlayer()) 
 		and c:IsSetCard(0x101b)

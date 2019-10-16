@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.mtval)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xe1}
 s.material_setcode=0xe1
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp

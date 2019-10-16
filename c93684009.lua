@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x19}
 function s.tgcon(e)
 	local ph=Duel.GetCurrentPhase()
 	return ph<=PHASE_MAIN1 or ph>=PHASE_MAIN2

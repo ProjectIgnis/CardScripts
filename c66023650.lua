@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x114}
 function s.lcheck(g,lc,tp)
 	return g:GetClassCount(Card.GetRace,lc,SUMMON_TYPE_LINK,tp)==#g
 end

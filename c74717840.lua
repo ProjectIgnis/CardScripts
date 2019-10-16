@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2a}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2a)
 end

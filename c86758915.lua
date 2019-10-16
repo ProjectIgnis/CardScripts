@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x117}
 function s.matfil(c)
 	return c:IsSetCard(0x117)
 end

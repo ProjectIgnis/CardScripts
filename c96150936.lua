@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x71}
 function s.desrepfilter(c)
 	return c:IsSetCard(0x71) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck() and aux.nvfilter(c)
 end

@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1093}
 function s.filter(c)
 	return (c:IsSetCard(0x1093) or (c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_MACHINE) and not c:IsSummonableCard()))
 		and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

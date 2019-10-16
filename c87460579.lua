@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.scop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xe6}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)

@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xf9}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousPosition(POS_FACEUP) and

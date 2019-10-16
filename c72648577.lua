@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xaf}
 function s.filter(c)
     return c:IsSetCard(0xaf) and (c:IsType(TYPE_MONSTER) or c:IsLocation(LOCATION_PZONE)) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsAbleToDeck()
 end

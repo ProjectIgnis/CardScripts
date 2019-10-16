@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x44}
 s.listed_names={CARD_SANCTUARY_SKY}
 function s.envfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_SANCTUARY_SKY)

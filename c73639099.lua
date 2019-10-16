@@ -55,6 +55,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.setop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x108a,0x4c,0x89}
 	--Link material of a non-link "Traptrix" monster
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsSetCard(0x108a,lc,sumtype,tp) and not c:IsType(TYPE_LINK,lc,sumtype,tp)

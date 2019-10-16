@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x7c}
 function s.tgfilter(c,tp)
 	return c:IsControler(tp) and c:IsSetCard(0x7c) and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end

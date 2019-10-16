@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.synval)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x27}
 function s.synval(e,c,sc)
 	if sc:IsSetCard(0x27) and --c:IsNotTuner() 
 		(not c:IsType(TYPE_TUNER) or c:IsHasEffect(EFFECT_NONTUNER)) and c:IsSetCard(0x27) and c:IsLocation(LOCATION_HAND) then

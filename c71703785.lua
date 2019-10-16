@@ -1,4 +1,5 @@
 --守護神官マハード
+--Palladium Oracle Mahad
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -8,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_DRAW)
+	e1:SetRange(LOCATION_HAND)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)

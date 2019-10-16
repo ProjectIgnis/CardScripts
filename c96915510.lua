@@ -29,6 +29,7 @@ function s.initial_effect(c)
     e3:SetValue(2000)
     c:RegisterEffect(e3)
 end
+s.listed_series={0x117}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
     local ph=Duel.GetCurrentPhase()
     return ph==PHASE_MAIN1 or ph==PHASE_MAIN2

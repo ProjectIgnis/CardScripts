@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.seqop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10c}
 function s.cfilter(c)
 	return c:GetColumnGroupCount()>0
 end

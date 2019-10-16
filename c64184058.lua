@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x8}
 function s.atlimit(e,c)
 	local tp=e:GetHandlerPlayer()
 	return c:IsControler(1-tp) and c:IsLevelAbove(6) and not c:IsImmuneToEffect(e)

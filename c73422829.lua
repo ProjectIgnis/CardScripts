@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tgop2)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xdc}
 s.listed_names={58753372}
 function s.costfilter(c,tp)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup())

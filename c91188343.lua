@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x44}
 s.listed_names={55794644,CARD_SANCTUARY_SKY}
 function s.filter1(c)
 	return c:IsSetCard(0x44) and c:GetCode()~=id and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

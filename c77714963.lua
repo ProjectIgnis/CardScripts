@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sslimit)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x121}
 function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x121) and c:IsDiscardable()
 end

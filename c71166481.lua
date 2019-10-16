@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.xop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x48}
 s.xyz_number=75
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_MONSTER) and rp~=tp

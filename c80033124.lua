@@ -45,7 +45,7 @@ function s.cfilter(c)
 	return c:IsLocation(LOCATION_HAND) or (c:IsOnField() and c:IsFacedown())
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local mg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.ffilter),tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,tp,e)
+	local mg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.ffilter),tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,e)
 	local sg=aux.SelectUnselectGroup(mg,e,tp,3,3,s.rescon,1,tp,HINTMSG_TODECK)
 	if #sg<3 then return end
 	local cg=sg:Filter(s.cfilter,nil)

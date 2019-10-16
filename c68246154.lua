@@ -50,6 +50,7 @@ function s.initial_effect(c)
 	e4:SetLabelObject(e5)
 	if not SameColumnChain then SameColumnChain={} end
 end
+s.listed_series={0x108}
 function s.thfilter(c,g)
 	bool=false
 	for tc in aux.Next(g) do

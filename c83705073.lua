@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rmtg)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x122}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsSetCard(0x122)
 end

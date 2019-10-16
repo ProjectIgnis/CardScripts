@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.penop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10ec}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end

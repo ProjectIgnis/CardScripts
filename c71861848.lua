@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x119}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_LINK
 end

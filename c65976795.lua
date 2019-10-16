@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.posop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10ed}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10ed)
 end

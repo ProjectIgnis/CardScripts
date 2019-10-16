@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xb5}
 function s.cfilter(c)
 	return c:IsSetCard(0xb5) and c:IsAbleToRemoveAsCost()
 end

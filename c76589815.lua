@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.cfop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x84}
 function s.atfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x84)
 end

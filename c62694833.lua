@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x79,0x7c}
+s.listed_series={0x7c,0x79}
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)

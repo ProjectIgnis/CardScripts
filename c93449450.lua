@@ -47,6 +47,7 @@ function s.initial_effect(c)
 	e4:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x107}
 function s.atkval(e,c)
 	return c:GetLevel()*300
 end
@@ -81,5 +82,5 @@ function s.excon(e)
 	return e:GetHandler():IsLevelAbove(7)
 end
 function s.extg(e,c)
-	return c:GetOwner()~=e:GetHandlerPlayer()
+	return c:GetOwner()~=e:GetHandlerPlayer() and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
 end

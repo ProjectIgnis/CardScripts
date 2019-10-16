@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2a}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x2a),1,false,nil,e:GetHandler()) end
 	local g=Duel.SelectReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x2a),1,1,false,nil,e:GetHandler())

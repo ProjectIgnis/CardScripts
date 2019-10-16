@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.rmop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x122}
 function s.indesval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end

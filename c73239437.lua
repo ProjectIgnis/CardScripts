@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x8}
 s.listed_names={CARD_NEOS }
 function s.spcfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_NEOS)

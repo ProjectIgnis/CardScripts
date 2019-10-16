@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.adval)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9a}
 function s.sccon(e)
 	return not Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 end

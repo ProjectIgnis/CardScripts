@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xb4}
 function s.ritualfil(c)
 	return c:IsSetCard(0xb4) and c:IsRitualMonster()
 end

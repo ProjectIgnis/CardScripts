@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.posop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xed}
 function s.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xed) and c:IsDiscardable()
 end

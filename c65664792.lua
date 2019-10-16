@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x64}
 s.listed_names={CARD_HARPIE_LADY_SISTERS}
 function s.tdfilter(c,e,tp,g)
 	return c:IsCode(CARD_HARPIE_LADY_SISTERS) and c:IsFaceup() and c:IsAbleToDeck() 

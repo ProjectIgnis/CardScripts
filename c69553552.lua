@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x107}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x107)
 end

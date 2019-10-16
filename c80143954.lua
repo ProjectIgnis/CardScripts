@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x103}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x103)
 end

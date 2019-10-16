@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x114}
 function s.damfilter(c)
 	return not c:IsCode(id) and c:IsFaceup() and c:IsSetCard(0x114)
 end

@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2093}
 	--Check for "Cyber Angel" ritual monster
 function s.costfilter(c)
 	return c:IsSetCard(0x2093) and c:IsRitualMonster() and c:IsReleasable()

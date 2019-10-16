@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tnop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x12f}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()

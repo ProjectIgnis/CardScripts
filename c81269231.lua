@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.actcon)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x7,0x51}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0

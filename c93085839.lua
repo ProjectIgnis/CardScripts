@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.effop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x107a}
 function s.spfilter(c)
 	return c:IsSetCard(0x107a) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

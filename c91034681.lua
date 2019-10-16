@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xad}
 s.material_setcode={0xc3,0xa9}
 function s.damtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

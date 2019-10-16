@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x2b}
 function s.filter1(c,tp,slv,ft)
 	local lv1=c:GetLevel()
 	return c:IsFaceup() and c:IsSetCard(0x2b) and lv1>0 and (ft>0 or c:GetSequence()<5)

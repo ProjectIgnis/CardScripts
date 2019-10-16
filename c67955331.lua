@@ -14,6 +14,7 @@ function s.initial_effect(c)
     e1:SetOperation(s.activate)
     c:RegisterEffect(e1)
 end
+s.listed_series={0x12e}
 function s.spfilter(c,lv,e,tp)
     return c:IsRace(RACE_SPELLCASTER) and c:IsHasLevel() and c:GetOriginalLevel()==lv-1 
         and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

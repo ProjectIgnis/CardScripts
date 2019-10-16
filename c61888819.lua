@@ -49,6 +49,7 @@ function s.initial_effect(c)
     e6:SetOperation(s.spop)
     c:RegisterEffect(e6)
 end
+s.listed_series={0xa}
 function s.fmval(e,c)
     if aux.ExtraSummon and Duel.GetMasterRule()>=4 then
         return e:GetHandler():GetLinkedZone() | 0x60

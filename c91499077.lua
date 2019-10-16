@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.cbop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x54}
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end

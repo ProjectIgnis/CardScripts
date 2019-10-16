@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,id+1)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x122}
 s.listed_names={92182447}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsType(TYPE_SPELL) and e:GetHandler():IsPreviousLocation(LOCATION_HAND)

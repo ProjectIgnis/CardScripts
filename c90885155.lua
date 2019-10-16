@@ -64,6 +64,7 @@ function s.initial_effect(c)
 	e9:SetLabelObject(e8)
 	c:RegisterEffect(e9)
 end
+s.listed_series={0xaa}
 function s.splimit(e,c)
 	return not c:IsSetCard(0xaa)
 end

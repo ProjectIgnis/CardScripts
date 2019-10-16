@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10b}
 s.listed_names={94365540}
 function s.cfilter(c)
 	return c:IsSetCard(0x10b) and c:IsType(TYPE_MONSTER)

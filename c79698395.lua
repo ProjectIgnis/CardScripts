@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.daop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x11e}
 function s.target(e,c)
 	return c:IsSetCard(0x11e) and c:IsStatus(STATUS_SPSUMMON_TURN)
 end

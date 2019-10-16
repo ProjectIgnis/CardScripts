@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xe2}
 function s.tdfilter(c)
 	return c:IsSetCard(0xe2) and c:IsAbleToDeck()
 end

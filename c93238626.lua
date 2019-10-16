@@ -39,6 +39,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_series={0x48,0x1048}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,1)
 end

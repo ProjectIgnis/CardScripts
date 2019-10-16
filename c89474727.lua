@@ -34,6 +34,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.synchro_tuner_required=1
+s.synchro_nt_required=1
 function s.cfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

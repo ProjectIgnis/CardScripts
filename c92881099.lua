@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x64}
 s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS}
 function s.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE) and (c:GetPreviousCodeOnField()==CARD_HARPIE_LADY or c:GetPreviousCodeOnField()==CARD_HARPIE_LADY_SISTERS)

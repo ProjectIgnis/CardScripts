@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x129}
 s.listed_names={CARD_EVIL_EYE_SELENE}
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x129) and c:IsAbleToHand()

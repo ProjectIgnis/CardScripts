@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.synchro_tuner_required=1
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.GetTurnPlayer()==tp and c:IsSummonType(SUMMON_TYPE_SYNCHRO)

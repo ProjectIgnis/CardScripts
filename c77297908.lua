@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.chop1)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10ec,0x20ec}
 function s.cfilter(c)
 	return c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and not c:IsPublic()
 end

@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetValue(0x119)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x119}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x119) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end

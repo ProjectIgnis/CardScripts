@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x107f}
 s.listed_names={94770493}
 s.xyz_number=39
 	--Detach 1 material

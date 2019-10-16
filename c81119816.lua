@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x120}
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()

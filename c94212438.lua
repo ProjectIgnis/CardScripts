@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.winop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x1c}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if Duel.GetCurrentPhase()==PHASE_END and s.plcon(e,tp,eg,ep,ev,re,r,rp) and Duel.SelectYesNo(tp,94) then

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x2016}
 function s.nsfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsSummonable(true,nil)
 end

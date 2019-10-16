@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x129}
 s.listed_names={CARD_EVIL_EYE_SELENE}
 function s.filter(c)
 	return c:IsSetCard(0x129) and not c:IsCode(id) and c:IsAbleToHand()

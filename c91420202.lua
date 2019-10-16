@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x106}
 s.listed_names={4388680}
 function s.thfilter(c)
 	return c:IsSetCard(0x106) and c:IsAbleToHand()

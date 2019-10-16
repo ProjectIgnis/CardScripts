@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x9d}
 s.material_setcode=0x9d
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()

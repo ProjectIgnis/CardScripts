@@ -19,6 +19,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x27}
+s.listed_names={id}
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x27)
 end

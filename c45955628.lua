@@ -25,6 +25,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ssop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x129}
+s.listed_names={id}
 function s.tgfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x129)
 end

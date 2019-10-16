@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xfe,0x116}
 function s.lcheck(g,lc)
 	return g:IsExists(Card.IsType,1,nil,TYPE_LINK)
 end

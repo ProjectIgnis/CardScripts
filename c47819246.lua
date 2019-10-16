@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.mtop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xdc}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end

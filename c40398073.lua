@@ -26,6 +26,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x133}
+s.listed_names={id}
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x133) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not c:IsCode(id)

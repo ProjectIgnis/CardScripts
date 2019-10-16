@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x71}
 s.listed_names={74641045}
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsRankBelow(4) and c:IsSetCard(0x71,lc,SUMMON_TYPE_XYZ,tp)

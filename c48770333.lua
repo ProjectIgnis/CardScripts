@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xd3}
 function s.spfilter(c,ft)
 	return c:IsReleasable() and (ft>0 or c:GetSequence()<5)
 end

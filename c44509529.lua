@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x120}
 function s.actcon(e)
 	local a=Duel.GetAttacker()
 	return a and a:IsControler(e:GetHandlerPlayer()) and a:IsSetCard(0x120)

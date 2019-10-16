@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x122}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsAbleToRemove() and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) end
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x122),tp,LOCATION_MZONE,0,1,nil)

@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x29}
 function s.cfilter(c)
 	return c:IsSetCard(0x29) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end

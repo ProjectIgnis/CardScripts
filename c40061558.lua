@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.ctop)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0xaa}
 function s.tlimit(e,c)
 	return not c:IsSetCard(0xaa)
 end

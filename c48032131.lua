@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x8,0xc008}
 s.listed_names={76263644}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x8)

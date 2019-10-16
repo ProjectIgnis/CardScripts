@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3a}
 function s.ritual_filter(c)
 	return c:IsSetCard(0x3a) and c:IsRitualMonster()
 end

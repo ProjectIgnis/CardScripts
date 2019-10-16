@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_names={id}
 function s.counterfilter(c)
 	return c:IsRace(RACE_CYBERSE)
 end

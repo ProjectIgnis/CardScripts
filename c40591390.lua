@@ -1,4 +1,5 @@
 --D－HERO ドレッドガイ
+--Destiny HERO - Dreadmaster
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -27,6 +28,8 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_SET_DEFENSE)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xc008}
+s.listed_names={75041269}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end

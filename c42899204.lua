@@ -48,6 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x129}
 s.listed_names={CARD_EVIL_EYE_SELENE}
 function s.cfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x129)

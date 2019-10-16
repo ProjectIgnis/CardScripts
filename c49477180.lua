@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.mtop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x106}
 function s.spcfilter(c)
 	return c:IsSetCard(0x106) and not c:IsPublic()
 end

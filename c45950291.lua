@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.cfilter(c,rk)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:GetRank()>rk
 end

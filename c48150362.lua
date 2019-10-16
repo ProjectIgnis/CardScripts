@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x8}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x8)
 end

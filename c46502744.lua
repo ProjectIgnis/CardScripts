@@ -1,4 +1,5 @@
 --応戦するG
+--Retaliating "C"
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -19,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_TO_GRAVE_REDIRECT)
 	e2:SetTargetRange(0xff,0xff)
+	e2:SetTarget(s.rmtarget)
 	e2:SetCondition(s.remcon)
 	e2:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e2)
@@ -33,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and re:IsHasCategory(CATEGORY_SPECIAL_SUMMON)
 end
@@ -52,6 +55,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
 		Duel.SpecialSummonComplete()
 	end
+end
+function s.rmtarget(e,c)
+	return Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
 end
 function s.remcon(e)
 	return e:GetHandler():GetFlagEffect(id+1)~=0

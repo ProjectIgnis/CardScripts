@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3b}
 s.material_setcode={0x3b,0x45}
 function s.mfilter1(c,fc,sumtype,tp)
 	return c:IsFusionSetCard(0x45) and c:IsType(TYPE_NORMAL,fc,sumtype,tp) and c:GetLevel()==6

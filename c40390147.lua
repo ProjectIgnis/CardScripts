@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x55}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_GALAXYEYES_P_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

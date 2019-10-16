@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.ptg)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xdf}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return not (c:IsSetCard(0xdf) and c:IsType(TYPE_MONSTER)) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end

@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x20dc,0x10dc}
 --Check for "Super Quant"
 function s.confilter(c,tp)
 	return c:IsReason(REASON_BATTLE) and c:IsPreviousSetCard(0xdc) and c:IsPreviousControler(tp)

@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tfop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x128}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=eg:GetFirst()

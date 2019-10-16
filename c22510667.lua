@@ -29,6 +29,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.seqop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xfc}
+s.listed_names={22510667}
 function s.incon(e)
 	return e:GetHandler():GetLinkedGroupCount()>0 
 	and e:GetHandler():GetLinkedGroup():IsExists(aux.FilterFaceupFunction(Card.IsSetCard,0xfc),1,nil)

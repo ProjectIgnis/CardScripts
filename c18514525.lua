@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x120}
 function s.atkcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end

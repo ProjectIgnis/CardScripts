@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10d}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=e:GetLabel()
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,ct,REASON_COST) end

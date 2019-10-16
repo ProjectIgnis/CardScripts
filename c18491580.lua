@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3b}
 s.listed_names={CARD_REDEYES_B_DRAGON}
 function s.hspfilter(c,ft,tp)
 	return c:IsSetCard(0x3b)

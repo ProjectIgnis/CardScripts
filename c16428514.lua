@@ -32,6 +32,8 @@ function s.initial_effect(c)
 	e3:SetCondition(s.setcon2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xed}
+s.listed_names={16428514}
 function s.thfilter(c)
 	return c:IsSetCard(0xed) and not c:IsCode(id) and c:IsAbleToHand()
 end

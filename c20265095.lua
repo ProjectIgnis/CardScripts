@@ -28,7 +28,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Part of "Fire Fist" archetype
-s.listed_series={0x79}
+s.listed_series={0x7c,0x79}
+s.listed_names={20265095}
 	--If this card is pointing to "Fire Fist"
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetLinkedGroup():IsExists(aux.FilterFaceupFunction(Card.IsSetCard,0x79),1,nil)

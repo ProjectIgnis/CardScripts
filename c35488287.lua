@@ -32,7 +32,8 @@ function s.initial_effect(c)
 	e3:SetValue(s.repval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x79,0x7c}
+s.listed_names={id}
+s.listed_series={0x7c,0x79}
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsSetCard(0x7c) and e:GetHandler():GetFlagEffect(1)>0
 end

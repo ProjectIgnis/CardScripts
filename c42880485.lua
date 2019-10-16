@@ -62,6 +62,7 @@ function s.initial_effect(c)
 	e8:SetValue(1)
 	c:RegisterEffect(e8)
 end
+s.listed_series={0x9a}
 function s.splimcon(e)
 	return not e:GetHandler():IsForbidden()
 end

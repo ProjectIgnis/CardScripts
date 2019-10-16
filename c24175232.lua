@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x11f}
 function s.desfilter(c)
 	return c:IsSetCard(0x11f) and (c:IsFaceup() or not c:IsOnField())
 end

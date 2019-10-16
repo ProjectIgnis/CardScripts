@@ -49,6 +49,7 @@ function s.initial_effect(c)
 	e4:SetCode(3682106)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x27}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) or not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not Duel.IsChainDisablable(ev) then return false end

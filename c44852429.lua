@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetCode(3682106)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xae,0xaf}
 function s.negfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and aux.disfilter1(c)
 end

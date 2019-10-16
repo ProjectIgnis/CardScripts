@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x10e}
 function s.sprfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) and c:IsAbleToDeckOrExtraAsCost()
 end

@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xcc}
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_FLIP) and c:IsLevelAbove(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end

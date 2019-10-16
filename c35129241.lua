@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xa3}
 function s.filter(c,e,tp,re)
 	local re=c:GetReasonEffect()
 	local rc=re:GetHandler()

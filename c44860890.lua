@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.indval)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x7c}
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end

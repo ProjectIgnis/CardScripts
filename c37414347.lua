@@ -59,6 +59,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.disop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x107}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x107) and c:GetLevel()>=0
 end

@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.actcon)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xd8}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xd8) and c:IsControler(tp)
 end

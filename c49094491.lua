@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x119}
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsRace(RACE_CYBERSE) and c:IsSummonLocation(LOCATION_EXTRA) 
 		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))

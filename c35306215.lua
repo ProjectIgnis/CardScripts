@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.recop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xef}
 function s.rmfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xa9,0xc3,0xad}
 function s.filter(c,e,tp)
 	return (c:IsSetCard(0xa9) or c:IsSetCard(0xc3)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

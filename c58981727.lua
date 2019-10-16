@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xb3}
 s.listed_names={62681049,79861914}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xb3),tp,LOCATION_ONFIELD,0,1,e:GetHandler())

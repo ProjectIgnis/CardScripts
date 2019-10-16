@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.effop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x55,0x7b}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x107}
 function s.cond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0

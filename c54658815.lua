@@ -12,14 +12,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.lkfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster()
-end
 function s.filter(c,e,tp,zone)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp,zone)
 end
 function s.zonefilter(tp)
-	local lg=Duel.GetMatchingGroup(s.lkfilter,tp,LOCATION_MZONE,0,nil)
+	local lg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,LOCATION_MZONE,0,nil)
 	local zone=0
 	for tc in aux.Next(lg) do
 		zone=zone|tc:GetLinkedZone()>>16

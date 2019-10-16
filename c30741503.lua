@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.tdcon2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x11b}
 function s.matcheck(g,lc,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x11b,lc,SUMMON_TYPE_LINK,tp)
 end

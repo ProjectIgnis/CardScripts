@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.roperation)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.ssfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and not c:IsCode(id) and aux.SpElimFilter(c,true,false)
 end

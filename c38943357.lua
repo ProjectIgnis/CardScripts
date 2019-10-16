@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x12a}
 s.listed_names={75014062}
 function s.thfilter(c)
 	return c:IsSetCard(0x12a) and c:IsAbleToHand()

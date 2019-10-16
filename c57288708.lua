@@ -40,6 +40,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xfd,0xfe}
+s.listed_names={id}
 function s.tgfilter(c)
 	return (c:GetSummonLocation()&LOCATION_EXTRA)==LOCATION_EXTRA and c:IsLocation(LOCATION_MZONE)
 end

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x27}
 function s.lcheck(g,lc)
 	return g:IsExists(s.mzfilter,1,nil)
 end

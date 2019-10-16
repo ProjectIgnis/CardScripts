@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.matop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 s.listed_series={0x126}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

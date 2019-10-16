@@ -25,6 +25,7 @@ c:EnableReviveLimit()
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 s.listed_series={0x12b}
 function s.mfilter(c,lc,sumtype,tp)
 	return c:IsSetCard(0x12b) and c:IsLevelBelow(4)

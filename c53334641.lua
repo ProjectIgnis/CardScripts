@@ -37,6 +37,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.mtop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x8d}
+s.listed_names={id}
 function s.ovfilter(c,tp,xyzc)
 	return c:IsFaceup() and c:IsSetCard(0x8d,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and not c:IsSummonCode(xyzc,SUMMON_TYPE_XYZ,tp,id)
 end

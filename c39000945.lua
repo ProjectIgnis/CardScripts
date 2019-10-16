@@ -57,6 +57,7 @@ function s.initial_effect(c)
 	e6:SetLabelObject(e5)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x12a}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1,3,REASON_COST) end 
 		e:GetHandler():RemoveCounter(tp,0x1,3,REASON_COST)

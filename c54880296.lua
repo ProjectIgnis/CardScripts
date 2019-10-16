@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xb3}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xb3) and (c:IsType(TYPE_MONSTER) or c:IsType(TYPE_PENDULUM))
 end

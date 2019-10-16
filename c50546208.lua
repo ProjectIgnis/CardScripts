@@ -27,6 +27,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xdf}
+s.listed_names={id}
 	--Check for Lunalight card to return to hand
 function s.thfilter1(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xdf) and not c:IsCode(id) and c:IsAbleToHand() and Duel.GetMZoneCount(tp,c)

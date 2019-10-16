@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.con)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x23}
 s.listed_names={74509280}
 function s.spcon(e,tp,eg,ep,ev,re,r,r,rp)
 	local tc=Duel.GetFieldCard(0,LOCATION_SZONE,5)

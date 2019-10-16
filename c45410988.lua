@@ -6,6 +6,7 @@ function s.initial_effect(c)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
 end
+s.listed_series={0x3b}
 s.fit_monster={19025379} --should be removed in hardcode overhaul
 s.listed_names={19025379}
 function s.ritualfil(c)

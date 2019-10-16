@@ -28,6 +28,8 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x126}
+s.listed_names={id}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 end

@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xba}
 function s.imfilter(c)
 	return c:IsSetCard(0xba) and c:IsType(TYPE_XYZ)
 end

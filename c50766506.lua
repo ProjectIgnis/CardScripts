@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x2b}
 function s.cfilter(c,e,tp,ft)
 	local lv=c:GetLevel()
 	return lv>0 and c:IsSetCard(0x2b)

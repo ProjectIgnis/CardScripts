@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e5:SetLabel(c:GetOriginalCode())
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x48,0x107f}
 s.xyz_number=0
 s.listed_names={65305468}
 function s.xyzfilter(c,xyz,sumtype,tp)

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.val)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x3d}
 s.counter_add_list={0x3}
 function s.ctfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3d)

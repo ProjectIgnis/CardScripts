@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.desreptg)
 	c:RegisterEffect(e4)
 end
+s.listed_names={id}
 function s.spfilter1(c)
 	return c:IsRace(RACE_THUNDER) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end

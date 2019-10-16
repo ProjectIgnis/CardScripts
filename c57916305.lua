@@ -24,6 +24,7 @@ function s.initial_effect(c)
     e2:SetOperation(s.thop2)
     c:RegisterEffect(e2)
 end
+s.listed_series={0x128}
 function s.thfilter(c)
     return c:IsSetCard(0x128) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end

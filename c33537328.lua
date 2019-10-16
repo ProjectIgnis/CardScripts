@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e7:SetTarget(s.desreptg)
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x21}
 function s.sdcon(e)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end

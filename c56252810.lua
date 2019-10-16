@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x104f}
 s.listed_names={CARD_ASSAULT_MODE}
 function s.cfilter(c)
 	return c:IsCode(CARD_ASSAULT_MODE) and c:IsAbleToRemoveAsCost()

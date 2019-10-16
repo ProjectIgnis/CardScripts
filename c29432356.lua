@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xc4}
 function s.scfilter(c,pc)
 	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0xc4) and not c:IsForbidden()
 		and c:GetLeftScale()~=pc:GetLeftScale()

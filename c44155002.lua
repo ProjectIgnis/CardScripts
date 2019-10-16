@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetCode(3682106)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x35}
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)~=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND) then return end
 	local rc=re:GetHandler()

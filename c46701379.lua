@@ -24,6 +24,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.gyop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x122}
+s.listed_names={id}
 function s.atkval(e,c)
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),tp,0,LOCATION_REMOVED,nil)*200

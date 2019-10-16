@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
 s.listed_names={79407975,79856792}
+s.listed_series={0x1034}
 function s.chainfilter(re,tp,cid)
 	local rc=re:GetHandler()
 	return not (re:IsActiveType(TYPE_MONSTER) and (rc:IsOriginalCodeRule(79407975) or rc:IsOriginalCodeRule(79856792)))

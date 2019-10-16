@@ -25,6 +25,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x12b}
+s.listed_names={id}
 function s.mfilter(c,lc,sumtype,tp)
 	return c:IsSetCard(0x12b,lc,sumtype,tp) and c:IsLevelBelow(4)
 end

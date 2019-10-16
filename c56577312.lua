@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 s.listed_series={0xe}
 function s.thfilter(c)
 	return c:IsSetCard(0xe) and c:IsAbleToHand() and not c:IsCode(id)

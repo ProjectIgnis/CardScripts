@@ -14,6 +14,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x38}
+s.listed_names={id}
 function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_DECK)
 end
@@ -38,5 +40,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local d=dg:FilterCount(s.filter,nil)
 	if d>0 then
 		Duel.BreakEffect()
-		Duel.Draw(tp,d,REASON_EFFECT) end
+		Duel.Draw(tp,d,REASON_EFFECT)
+	end
 end

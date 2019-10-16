@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x64}
 	--This card lists names in its text
 s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS}
 	--Check for "Harpie Lady" or "Harpie Sisters"

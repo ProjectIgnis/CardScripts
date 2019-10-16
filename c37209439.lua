@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetCode(3682106)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xaf}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local b1=s.negcon(e,tp,eg,ep,ev,re,r,rp)

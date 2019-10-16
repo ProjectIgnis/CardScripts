@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tkop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xd3}
 function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,2,REASON_COST) end
 	Duel.RemoveCounter(tp,1,1,0x37,2,REASON_COST)

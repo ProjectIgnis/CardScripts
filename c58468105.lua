@@ -36,6 +36,7 @@ function s.initial_effect(c)
     e3:SetOperation(s.disop)
     c:RegisterEffect(e3)
 end
+s.listed_series={0xc3,0xa9,0xad}
 function s.atkcon(e)
     return Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end

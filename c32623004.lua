@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x5a}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:GetHandler():IsSetCard(0x5a)
 end

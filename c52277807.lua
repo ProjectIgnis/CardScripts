@@ -28,6 +28,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x119}
+s.listed_names={id}
 	--Check for "Salamangreat" card
 function s.atkfilter2(c)
 	return c:IsFaceup() and c:IsSetCard(0x119)

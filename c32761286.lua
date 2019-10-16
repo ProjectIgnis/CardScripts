@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x24}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
 end

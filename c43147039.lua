@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.efop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x55,0x7b}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.cfilter(c)
 	return c:IsFaceup() and (c:IsSetCard(0x55) or c:IsSetCard(0x7b))  and c:IsType(TYPE_MONSTER)

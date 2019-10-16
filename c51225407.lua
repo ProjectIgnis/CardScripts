@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)	
 end
+s.listed_series={0x121}
 function s.atkfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x121)
 end

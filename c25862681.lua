@@ -89,7 +89,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		if ct>0 then
 			Duel.Recover(tp,1000,REASON_EFFECT)
 			local fg=Duel.GetMatchingGroup(s.ffilter,tp,LOCATION_DECK,0,nil)
-			if #fg()>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+			if #fg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 				local sg=fg:Select(tp,1,1,nil)

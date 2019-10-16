@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.ctop)
 	c:RegisterEffect(e7)
 end
+s.listed_names={id}
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)

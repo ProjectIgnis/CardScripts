@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetValue(0x10f2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x20f2}
 function s.dbcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end

@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_series={0x12f}
 function s.counterfilter(c)
 	return c:IsRace(RACE_INSECT) or c:GetSummonLocation()~=LOCATION_EXTRA
 end

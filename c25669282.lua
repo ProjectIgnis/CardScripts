@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xeb}
 function s.cfilter(c,ft)
 	return c:IsFaceup() and c:IsSetCard(0xeb) and c:IsAbleToRemoveAsCost() and (ft>1 or c:GetSequence()<5)
 end

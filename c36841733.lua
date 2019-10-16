@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x3008}
 s.material_setcode={0x8}
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_NORMAL,fc,sumtype,tp) and c:IsSetCard(0x8,fc,sumtype,tp)

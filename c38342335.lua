@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.drval)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x112}
 function s.lcheck(g,lc)
 	return g:GetClassCount(Card.GetCode)==#g
 end

@@ -33,6 +33,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x120}
+s.listed_names={id}
 function s.cfilter(c)
 	return c:IsSetCard(0x120) and c:IsDiscardable()
 end

@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x11e}
 function s.disthfilter(c)
 	return c:IsSetCard(0x11e) and c:IsType(TYPE_MONSTER) and c:IsLevelAbove(5) and c:IsDiscardable()
 end

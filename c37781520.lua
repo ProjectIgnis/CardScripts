@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.hdop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x75,0x74}
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsDiscardable() and c:IsAbleToGraveAsCost()
 end

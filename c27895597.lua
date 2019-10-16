@@ -14,6 +14,7 @@ function s.initial_effect(c)
     e1:SetOperation(s.spop)
     c:RegisterEffect(e1)
 end
+s.listed_series={0x31}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
     return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x31),tp,LOCATION_MZONE,0,1,nil)
 end

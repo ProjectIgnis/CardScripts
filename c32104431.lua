@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e2)
 end
+s.listed_series={0xd6,0xd7}
 s.listed_names={86240887}
 function s.costfilter(c)
 	return c:IsSetCard(0xd6) and c:IsDiscardable()

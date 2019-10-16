@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rvop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x12d}
 function s.cfilter(c)
 	return c:IsDiscardable() and c:IsRace(RACE_WINGEDBEAST)
 end

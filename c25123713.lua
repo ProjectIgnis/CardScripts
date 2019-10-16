@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.atlimit)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x114}
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x114),tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return #g~=0

@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.sop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x36}
 function s.sfilter(c)
 	return c:IsSetCard(0x36) and c:GetCode()~=id and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end

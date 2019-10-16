@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetValue(0xad)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xad}
 function s.filter(c)
 	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsType(TYPE_FUSION) and c:IsSetCard(0xad)
 end

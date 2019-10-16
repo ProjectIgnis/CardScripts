@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x24}
 function s.lcheck(g,lc,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x24,lc,SUMMON_TYPE_LINK,tp)
 end

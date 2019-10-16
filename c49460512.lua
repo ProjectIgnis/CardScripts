@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.limitop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x33}
 function s.cfilter(c,tp)
 	return c:IsSetCard(0x33) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousPosition(POS_FACEUP) and (c:GetReason()&0x41)==0x41

@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x107f,0x7e}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.GetFlagEffect(tp,id)==0 and Duel.GetCurrentPhase()==PHASE_DRAW and c:IsReason(REASON_RULE)

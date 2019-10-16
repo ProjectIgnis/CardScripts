@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x103}
 function s.setfilter(c)
 	return c:IsSetCard(0x103) and c:IsType(TYPE_TRAP) and c:IsSSetable()
 end

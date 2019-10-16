@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xfb}
 function s.imcon(e)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_LINK) and c:GetLinkedGroupCount()==0

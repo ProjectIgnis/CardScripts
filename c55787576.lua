@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xfe}
 function s.immval(e,te)
 	local tc=te:GetHandler()
 	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) 

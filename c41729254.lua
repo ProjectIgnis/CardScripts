@@ -27,6 +27,8 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sslimit)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x121}
+s.listed_names={id}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x121) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

@@ -52,6 +52,8 @@ function s.initial_effect(c)
 	e6:SetOperation(s.setop)
 	c:RegisterEffect(e6)	
 end
+s.listed_series={0x129}
+s.listed_names={id}
 function s.atkupcond(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
 	return ((re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x129) and re:GetHandler()~=e:GetHandler())

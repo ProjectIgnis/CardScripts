@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x109}
 function s.eftg(e,c)
 	local g=e:GetHandler():GetColumnGroup(1,1)
 	return c:IsType(TYPE_EFFECT) and c:IsSetCard(0x109) and c:GetSequence()<5 and g:IsContains(c)

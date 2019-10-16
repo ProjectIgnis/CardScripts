@@ -29,6 +29,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.lvop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x127}
+s.listed_names={id}
 function s.filter(c)
 	return c:IsSetCard(0x127) and c:IsType(TYPE_MONSTER) and not c:IsCode(id) and c:IsAbleToHand()
 end

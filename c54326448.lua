@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2c}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACE_PYRO)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,c)

@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e4:SetValue(aux.TargetBoolFunction(Card.IsSetCard,0x24))
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x24}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x24) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

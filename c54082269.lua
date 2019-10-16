@@ -50,6 +50,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x33}
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end

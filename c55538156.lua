@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x79,0x7c}
 function s.filter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x79) and c:IsType(TYPE_MONSTER)
 end

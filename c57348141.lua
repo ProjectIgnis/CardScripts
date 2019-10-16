@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x38}
 function s.filter1(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x38)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,0,1,c,c:GetRace(),c:GetCode())

@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xdd}
 s.listed_names={CARD_BLUEEYES_W_DRAGON}
 s.material_setcode=0xdd
 function s.costfilter(c)

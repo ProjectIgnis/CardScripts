@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x107a,0x207a}
 function s.atcon(e)
 	local g=Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_MZONE,0)
 	return #g~=3 or g:IsExists(s.atkfilter,1,nil)

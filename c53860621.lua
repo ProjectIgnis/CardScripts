@@ -54,6 +54,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.retop)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x33}
 function s.eqlimit(e,c)
 	return c:IsSetCard(0x33)
 end

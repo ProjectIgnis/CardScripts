@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x11f}
 function s.condition(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end

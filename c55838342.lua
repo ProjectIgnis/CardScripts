@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xfe}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and 
 		Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x01040116,0x21,300,2100,2,RACE_INSECT,ATTRIBUTE_EARTH) end

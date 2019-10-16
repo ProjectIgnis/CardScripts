@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x11a}
 s.listed_names={90173539}
 function s.thfilter(c)
 	return (c:IsSetCard(0x11a) or c:IsCode(90173539)) and c:IsAbleToHand()

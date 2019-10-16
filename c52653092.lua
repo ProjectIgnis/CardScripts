@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.actop)
 	c:RegisterEffect(e6,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x48,0x95,0x107f}
 s.xyz_number=0
 function s.xyzfilter(c,xyz,sumtype,tp)
 	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsSetCard(0x48,xyz,sumtype,tp)

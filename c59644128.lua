@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xfc}
 function s.desfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xfc)
 		and Duel.IsExistingMatchingCard(s.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)

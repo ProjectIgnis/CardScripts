@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xfb}
 function s.cfilter(c,g)
 	return c:IsSetCard(0xfb) and g:IsContains(c)
 end

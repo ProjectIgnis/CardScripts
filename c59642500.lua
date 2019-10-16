@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xa5}
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttackTarget()==nil
 		and e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)

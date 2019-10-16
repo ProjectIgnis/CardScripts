@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.setop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x10ec,0x20ec}
 function s.atkcfilter(c)
 	return c:IsSetCard(0x10ec)
 end

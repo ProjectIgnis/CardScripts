@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rdop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x29}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x29) and c:IsRace(RACE_WINGEDBEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

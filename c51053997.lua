@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xc1}
 function s.rmfilter(c)
 	return c:IsSetCard(0xc1) and c:IsAbleToRemove()
 end

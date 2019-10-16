@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x123}
 s.listed_names={71645242}
 function s.thfilter(c)
 	return c:IsCode(71645242) and c:IsAbleToHand()

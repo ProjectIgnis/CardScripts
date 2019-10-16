@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x11a}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if not tc then return false end

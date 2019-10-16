@@ -60,11 +60,9 @@ function s.initial_effect(c)
 	e6:SetOperation(s.rdop)
 	c:RegisterEffect(e6)
 end
-function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x1034)
-end
+s.listed_series={0x1034}
 function s.desrepcon(e)
-	return Duel.IsExistingMatchingCard(s.filter1,e:GetHandler():GetControler(),LOCATION_SZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard, 0x1034),e:GetHandler():GetControler(),LOCATION_SZONE,0,1,nil)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
@@ -87,13 +85,13 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_SZONE,0,3,nil) then return end
+	if not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard, 0x1034),tp,LOCATION_SZONE,0,3,nil) then return end
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_SZONE,0,4,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard, 0x1034),tp,LOCATION_SZONE,0,4,nil)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -102,12 +100,12 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_SZONE,0,4,nil) then return end
+	if not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard, 0x1034),tp,LOCATION_SZONE,0,4,nil) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_SZONE,0,5,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard, 0x1034),tp,LOCATION_SZONE,0,5,nil)
 end
 function s.filter3(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -121,7 +119,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_SZONE,0,5,nil) then return end
+	if not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard, 0x1034),tp,LOCATION_SZONE,0,5,nil) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
@@ -129,7 +127,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and e:GetHandler():GetFlagEffect(id)==0
-		and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_SZONE,0,2,nil)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard, 0x1034),tp,LOCATION_SZONE,0,2,nil)
 end
 function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectEffectYesNo(tp,e:GetHandler()) then

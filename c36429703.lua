@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xba,0x95}
 function s.matfilter(c,rc,st,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK,rc,st,tp) and c:IsRace(RACE_WINGEDBEAST,rc,st,tp)
 end

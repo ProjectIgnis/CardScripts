@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x43}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsType(TYPE_EFFECT,lc,sumtype,tp) and c:IsRace(RACE_WARRIOR+RACE_MACHINE,lc,sumtype,tp)
 end

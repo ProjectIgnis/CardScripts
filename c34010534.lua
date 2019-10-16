@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.actcon)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x101}
 function s.filter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsSummonable(true,nil)
 end

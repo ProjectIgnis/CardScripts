@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tdop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x1034}
 function s.hspfilter(c,tp,sc)
 	return c:IsSetCard(0x2034,sc,SUMMON_TYPE_FUSION,tp) and c:GetLevel()==10 and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
 end

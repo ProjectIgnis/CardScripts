@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetValue(CARD_HARPIE_LADY)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x64}
 s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS}
 function s.thfilter(c)
 	return aux.IsCodeListed(c,CARD_HARPIE_LADY_SISTERS) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()

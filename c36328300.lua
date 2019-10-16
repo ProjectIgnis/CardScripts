@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.plop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1034,0x2034}
 function s.confilter(c,tp)
 	return c:IsPreviousSetCard(0x1034) and c:IsPreviousControler(tp)
 end

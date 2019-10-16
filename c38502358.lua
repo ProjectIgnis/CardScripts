@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x10c}
 function s.dircon(e)
 	return e:GetHandler():GetColumnGroupCount()==0
 end

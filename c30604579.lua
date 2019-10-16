@@ -46,6 +46,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x6042}
+function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSetCard(0x6042,scard,sumtype,tp)  or c:IsHasEffect(EFFECT_SYNSUB_NORDIC)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.damcon2)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xfb}
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfb) and c:IsAbleToHand()
 end

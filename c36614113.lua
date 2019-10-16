@@ -29,6 +29,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xaf}
+s.listed_names={id}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsSummonType(SUMMON_TYPE_PENDULUM) end
 	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSummonType,SUMMON_TYPE_PENDULUM),tp,0,LOCATION_MZONE,1,nil) end

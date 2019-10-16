@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_series={0x121}
 function s.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsSetCard(0x121)
 end

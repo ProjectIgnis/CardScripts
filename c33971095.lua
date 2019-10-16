@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x106}
 function s.lvcfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x106)
 end

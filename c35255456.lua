@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3008}
 s.listed_names={CARD_NEOS}
 function s.filter1(c,e)
 	return c:IsAbleToDeck() and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)

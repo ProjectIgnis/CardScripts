@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x13}
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x13)
 end

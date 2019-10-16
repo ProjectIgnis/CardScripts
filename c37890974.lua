@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x114}
 function s.spfilter1(c,e,tp)
 	local lv=c:GetLevel()
 	return (c:IsReason(REASON_BATTLE) or (rp~=tp and c:IsReason(REASON_EFFECT)))

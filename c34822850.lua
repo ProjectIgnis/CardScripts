@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e5:SetValue(aux.tgoval)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xbb}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end

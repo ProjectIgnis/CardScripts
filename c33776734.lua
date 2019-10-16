@@ -74,7 +74,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.rmtarget(e,c)
-	return c:IsFaceup() and c:GetFlagEffect(id)>0
+	return c:IsFaceup() and c:GetFlagEffect(id)>0 and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),0,LOCATION_GRAVE,nil,TYPE_SPELL)*500

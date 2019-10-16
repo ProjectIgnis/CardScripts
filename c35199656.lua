@@ -32,6 +32,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.chainsolvedop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xfb}
+s.listed_names={id}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsPublic() and c:GetFlagEffect(id)==0 end

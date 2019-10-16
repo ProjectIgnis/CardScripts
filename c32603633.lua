@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3d}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLP(tp)>100 end
 	Duel.PayLPCost(tp,Duel.GetLP(tp)-100)

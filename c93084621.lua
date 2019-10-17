@@ -1,6 +1,6 @@
 --破械神アルバ
---Hakaishin Arba
---Scripted by Eerie Code
+--Unchained Soul of Anguish
+--Scripted by Eerie Code, edo9300 and Naim
 local s,id=GetID()
 function s.initial_effect(c)
     c:EnableReviveLimit()
@@ -11,7 +11,8 @@ function s.initial_effect(c)
     e1:SetType(EFFECT_TYPE_IGNITION)
     e1:SetRange(LOCATION_MZONE)
     e1:SetCountLimit(1,id)
-    e1:AddHakaiLinkEffect(s.lkfilter)
+    e1:SetTarget(s.target)
+    e1:SetOperation(s.operation)
     c:RegisterEffect(e1)
     --special summon
     local e2=Effect.CreateEffect(c)
@@ -29,8 +30,39 @@ s.listed_series={0x1130}
 function s.lcheck(g,lc,sumtype,tp)
     return g:IsExists(Card.IsSetCard,1,nil,0x1130)
 end
-function s.lkfilter(c)
-    return c:IsAttribute(ATTRIBUTE_DARK) and not c:IsCode(id)
+function s.lkfilter(c,mg)
+	return c:IsAttribute(ATTRIBUTE_DARK) and not c:IsCode(id) and c:IsLinkSummonable(mg,2,2)
+end
+function s.filter(tc,c,tp)
+	if not tc:IsFaceup() or not tc:IsCanBeLinkMaterial() then return false end
+	local mg=Group.FromCards(c,tc)
+	return Duel.IsExistingMatchingCard(s.lkfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc,e:GetHandler(),tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,e:GetHandler(),tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,e:GetHandler(),tp)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+end
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		c:RegisterFlagEffect(id,0,0,1)
+		local mg=Group.FromCards(c,tc)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectMatchingCard(tp,s.lkfilter,tp,LOCATION_EXTRA,0,1,1,nil,mg)
+		local sc=g:GetFirst()
+		--Duel Link Summon takes: playerid,card,forced mats, min, max
+		if sc then
+			Duel.LinkSummon(tp,sc,mg,2,2)
+		end
+		c:ResetFlagEffect(id)
+		if reg then
+			e1:Reset()
+		end
+	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
     return (r&REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

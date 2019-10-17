@@ -11,9 +11,9 @@ function s.initial_effect(c)
     e1:SetType(EFFECT_TYPE_IGNITION)
     e1:SetRange(LOCATION_MZONE)
     e1:SetCountLimit(1,id)
-	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1)
+    e1:SetTarget(s.target)
+    e1:SetOperation(s.operation)
+    c:RegisterEffect(e1)
     --special summon
     local e2=Effect.CreateEffect(c)
     e2:SetCategory(CATEGORY_TOHAND)
@@ -31,8 +31,7 @@ function s.lcheck(g,lc,sumtype,tp)
     return g:IsExists(Card.IsSetCard,1,nil,0x1130)
 end
 function s.lkfilter(c,mg)
-	return c:IsAttribute(ATTRIBUTE_DARK) and not c:IsCode(id) and c:IsLinkSummonable(mg,2)
-	--c:IsLinkSummonable(mg,2)
+	return c:IsAttribute(ATTRIBUTE_DARK) and not c:IsCode(id) and c:IsLinkSummonable(mg,2,2)
 end
 function s.filter(tc,c,tp)
 	if not tc:IsFaceup() or not tc:IsCanBeLinkMaterial() then return false end

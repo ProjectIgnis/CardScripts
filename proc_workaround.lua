@@ -194,16 +194,21 @@ function Auxiliary.HakaiLinkTarget(f,of)
 					e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 					e2:SetTargetRange(1,0)
 					e2:SetValue(Auxiliary.HakaiLinkExtra)
-					local reg = oc:RegisterEffect(e2,true)
+--Comments here are the previous implementation, that was changed due to interactions with target Changes, like Hawk Joe
+--It should be notice that these changes probably reverted the link monsters to a previous bug, where they would crash the client with unaffected monsters
+					--local reg = oc:RegisterEffect(e2,true)
+					reg = oc:RegisterEffect(e2,true)
 					table.insert(oeff,e2)
 				end
 				if chkc then
 					local b=chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and Auxiliary.HakaiLinkFilter(chkc,e,tp,f,of)
 					e1:Reset()
 					for _,oe in ipairs(oeff) do
-						if reg then
+							oe:Reset()
+--[[					if reg then
 							oe:Reset()
 						end
+]]
 					end
 					return b
 				end

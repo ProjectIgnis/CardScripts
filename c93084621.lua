@@ -48,20 +48,16 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e)then
 		c:RegisterFlagEffect(id,0,0,1)
 		local mg=Group.FromCards(c,tc)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.lkfilter,tp,LOCATION_EXTRA,0,1,1,nil,mg)
 		local sc=g:GetFirst()
-		--Duel Link Summon takes: playerid,card,forced mats, min, max
 		if sc then
 			Duel.LinkSummon(tp,sc,mg,2,2)
 		end
 		c:ResetFlagEffect(id)
-		if reg then
-			e1:Reset()
-		end
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

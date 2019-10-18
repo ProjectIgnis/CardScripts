@@ -1,6 +1,6 @@
 --氷獄龍 トリシューラ
---Trishula, the Ice Prison Dragon
---Scripted by Eerie Code; fixed by senpaizuri
+--Trishula, the Dragon of Icy Imprisonment
+--Scripted by Eerie Code fixed by senpaizuri
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -72,5 +72,6 @@ function s.remop(e,tp,eg,ep,ev,re,r,rp)
 		sg1:Merge(g2)
 		sg1:Merge(sg3)
 		Duel.Remove(sg1,POS_FACEUP,REASON_EFFECT)
+		Duel.ShuffleExtra(1-tp)
 	end
 end

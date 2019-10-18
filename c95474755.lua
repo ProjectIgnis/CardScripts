@@ -1,4 +1,5 @@
 --No.89 電脳獣ディアブロシス
+--Number 89: Diablosis the Mind Hacker
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -63,6 +64,7 @@ function s.exop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local sg=g:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil)
 	Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
+	Duel.ShuffleExtra(1-tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)

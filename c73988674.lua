@@ -1,4 +1,5 @@
 --三位一択
+--Tri-and-Guess
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -31,4 +32,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	elseif ct1<ct2 then
 		Duel.Recover(1-tp,3000,REASON_EFFECT)
 	end
+	Duel.ShuffleExtra(1-tp)
+	Duel.ShuffleExtra(tp)
 end

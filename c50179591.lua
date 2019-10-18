@@ -1,4 +1,5 @@
 --魔界台本「火竜の住処」
+--Abyss Script - Fire Dragon's Lair
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -79,4 +80,5 @@ function s.rmop2(e,tp,eg,ep,ev,re,r,rp)
 	if #mg>0 then
 		Duel.Remove(mg,POS_FACEUP,REASON_EFFECT)
 	end
+	Duel.ShuffleExtra(1-tp)
 end

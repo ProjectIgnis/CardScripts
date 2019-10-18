@@ -1,6 +1,6 @@
 --破械神の禍霊
---Hakaishin no Magatama
---Scripted by Eerie Code
+--Unchained Soul of Disaster
+--Scripted by Eerie Code, edo9300 and Naim
 local s,id=GetID()
 function s.initial_effect(c)
     --atk up
@@ -11,10 +11,12 @@ function s.initial_effect(c)
     c:RegisterEffect(e1)
     --link summon
     local e2=Effect.CreateEffect(c)
+    e2:SetDescription(aux.Stringid(id,0))
     e2:SetType(EFFECT_TYPE_IGNITION)
     e2:SetRange(LOCATION_MZONE)
     e2:SetCountLimit(1,id)
-    e2:AddHakaiLinkEffect(aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK))
+    e2:SetTarget(s.target)
+    e2:SetOperation(s.operation)
     c:RegisterEffect(e2)
     --special summon
     local e3=Effect.CreateEffect(c)
@@ -31,6 +33,35 @@ end
 s.listed_series={0x130}
 function s.atkval(e,c)
     return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0x130)*300
+end
+function s.lkfilter(c,mg)
+	return c:IsAttribute(ATTRIBUTE_DARK) and not c:IsCode(id) and c:IsLinkSummonable(mg,2,2)
+end
+function s.tgfilter(tc,c,tp)
+	local mg=Group.FromCards(c,tc)
+	return  tc:IsFaceup() and tc:IsCanBeLinkMaterial() and Duel.IsExistingMatchingCard(s.lkfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.tgfilter(chkc,e:GetHandler(),tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,0,LOCATION_MZONE,1,nil,e:GetHandler(),tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.SelectTarget(tp,s.tgfilter,tp,0,LOCATION_MZONE,1,1,nil,e:GetHandler(),tp)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+end
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e)then
+		c:RegisterFlagEffect(id,0,0,1)
+		local mg=Group.FromCards(c,tc)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectMatchingCard(tp,s.lkfilter,tp,LOCATION_EXTRA,0,1,1,nil,mg)
+		local sc=g:GetFirst()
+		if sc then
+			Duel.LinkSummon(tp,sc,mg,2,2)
+		end
+		c:ResetFlagEffect(id)
+	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
     return (r&REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

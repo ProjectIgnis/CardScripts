@@ -35,7 +35,7 @@ function s.atkval(e,c)
     return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0x130)*300
 end
 function s.lkfilter(c,mg)
-	return c:IsAttribute(ATTRIBUTE_DARK) and not c:IsCode(id) and c:IsLinkSummonable(mg,2,2)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsLinkSummonable(mg,2,2)
 end
 function s.tgfilter(tc,c,tp)
 	local mg=Group.FromCards(c,tc)

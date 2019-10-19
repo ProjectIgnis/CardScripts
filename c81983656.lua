@@ -1,4 +1,5 @@
 --BF T－漆黒のホーク・ジョー
+--Blackwing Tamer - Obsidian Hawk Joe
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

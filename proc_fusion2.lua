@@ -33,7 +33,7 @@ function Fusion.SummonEffTG(fusfilter,matfilter,extrafil,extraop,gc,stage2,exact
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
 				location = location or LOCATION_EXTRA
 				chkf = chkf and chkf|tp or tp
-				local sumlimit = (chkf|FUSPROC_NOTFUSION ~= 0)
+				local sumlimit = (chkf&FUSPROC_NOTFUSION ~= 0)
 				if sumlimit then
 					value = value or 0
 				else
@@ -97,7 +97,7 @@ function Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exact
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				location = location or LOCATION_EXTRA
 				chkf = chkf and chkf|tp or tp
-				local sumlimit = (chkf|FUSPROC_NOTFUSION ~= 0)
+				local sumlimit = (chkf&FUSPROC_NOTFUSION ~= 0)
 				if sumlimit then
 					value = value or 0
 				else

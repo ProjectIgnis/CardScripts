@@ -1,12 +1,13 @@
 --時空のペンデュラムグラフ
+--Time Pendulumgraph
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1e0)
-	e1:SetTarget(s.target)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
+	--e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--Cannot target
 	local e2=Effect.CreateEffect(c)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetHintTiming(0,0x1e0)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e3:SetCost(s.descost)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
@@ -34,22 +35,6 @@ function s.initial_effect(c)
 end
 function s.evalue(e,re,rp)
 	return re:IsActiveType(TYPE_TRAP) and rp~=e:GetHandlerPlayer()
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
-	if chk==0 then return true end
-	if s.descost(e,tp,eg,ep,ev,re,r,rp,0) and s.destg(e,tp,eg,ep,ev,re,r,rp,0)
-		and Duel.SelectYesNo(tp,94) then
-		e:SetCategory(CATEGORY_DESTROY)
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		s.descost(e,tp,eg,ep,ev,re,r,rp,1)
-		s.destg(e,tp,eg,ep,ev,re,r,rp,1)
-		e:SetOperation(s.desop)
-	else
-		e:SetCategory(0)
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end

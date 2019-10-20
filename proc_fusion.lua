@@ -16,6 +16,13 @@ function Fusion.ParseMaterialTable(tab,mat)
 			func=aux.OR(func,aux.OR(fmat,tmp_extramat_func))
 		else
 			table.insert(named_mats,fmat)
+			local addmat=true
+			for index,value in ipairs(mat) do
+				if value==fmat then
+					addmat=false
+				end
+			end
+			if addmat then table.insert(mat,fmat) end
 		end
 	end
 	func=aux.AND(func,function(c) return not c:IsHasEffect(6205579) end)

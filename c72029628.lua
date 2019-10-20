@@ -1,7 +1,7 @@
 --廃石融合
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047),aux.FALSE,s.fextra,Fusion.BanishMaterial,nil,s.stage2)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047),function(cc) return aux.SpElimFilter(cc,true) end,s.fextra,Fusion.BanishMaterial,nil,s.stage2)
 	c:RegisterEffect(e1)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)

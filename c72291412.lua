@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
-	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x10af),aux.FALSE,s.fextra,Fusion.BanishMaterial,Fusion.ForcedHandler}
+	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x10af),function(cc) return aux.SpElimFilter(cc,true) end,s.fextra,Fusion.BanishMaterial,Fusion.ForcedHandler}
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)

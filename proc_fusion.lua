@@ -29,7 +29,7 @@ function Fusion.ParseMaterialTable(tab,mat)
 	if #named_mats>0 then
 		func=aux.OR(func,name_func(named_mats))
 	end
-	return func,named_mats
+	return func
 end
 
 --material_count: number of different names in material list

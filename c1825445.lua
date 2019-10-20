@@ -1,5 +1,5 @@
 --超量合神－マグナフォーメーション
---Super Quantal Combination - Magnaformation
+--Super Quantal Union - Magnaformation
 --Scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--Cannot target "Super Quant" cards on the field
 	local e2=Effect.CreateEffect(c)
@@ -28,21 +27,12 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetCost(s.matcost)
+	e3:SetCountLimit(1,id)
 	e3:SetTarget(s.mattg)
 	e3:SetOperation(s.matop)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xdc}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if s.matcost(e,tp,eg,ep,ev,re,r,rp,0) and s.mattg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,94) then
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e:SetOperation(s.matop)
-		s.matcost(e,tp,eg,ep,ev,re,r,rp,1)
-		s.mattg(e,tp,eg,ep,ev,re,r,rp,1)
-	end
-end
 --Check if it's your main phase
 function s.tgcon(e)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and Duel.GetCurrentPhase()==PHASE_MAIN1
@@ -54,10 +44,6 @@ end
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xdc) and c:IsType(TYPE_XYZ)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,0,1,c)
-end
-function s.matcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 --Activation legality
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -12,11 +12,17 @@ s.listed_names={40418351,41230939,77625948,3019642}
 function s.matfilter(c,lc,stype,tp)
 	return c:IsSummonCode(lc,stype,tp,41230939,77625948,3019642) and c:IsAbleToDeck()
 end
+function s.frec(c,tp,sg,g,code,...)
+	if not c:IsSummonCode(fc,SUMMON_TYPE_FUSION,tp,code) then return false end
+    if ... then
+        g:AddCard(c)
+        local res=sg:IsExists(s.frec,1,g,tp,sg,g,...)
+        g:RemoveCard(c)
+        return res
+    else return true end
+end
 function s.fcheck(tp,sg,fc,mg)
-	return #sg==3
-		and sg:IsExists(Card.IsSummonCode,1,nil,fc,SUMMON_TYPE_FUSION,tp,41230939)
-		and sg:IsExists(Card.IsSummonCode,1,nil,fc,SUMMON_TYPE_FUSION,tp,77625948)
-		and sg:IsExists(Card.IsSummonCode,1,nil,fc,SUMMON_TYPE_FUSION,tp,3019642)
+	return #sg==3 and sg:IsExists(s.frec,1,nil,tp,sg,Group.CreateGroup(),41230939,77625948,3019642)
 end
 function s.fextra(e,tp,mg)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)

@@ -136,10 +136,10 @@ function Group.ForEach(g,f,...)
 		tc=g:GetNext()
 	end
 end
-function Auxiliary.PramsFromTable(tab,key,...)
+function Auxiliary.ParamsFromTable(tab,key,...)
 	if key then
 		if ... then
-			return tab[key],Auxiliary.PramsFromTable(tab,...)
+			return tab[key],Auxiliary.ParamsFromTable(tab,...)
 		else
 			return tab[key]
 		end
@@ -149,7 +149,7 @@ function aux.FunctionWithNamedArgs(f,...)
 	local args={...}
 	return function(tab,...)
 		if type(tab)=="table" then
-			return f(Auxiliary.PramsFromTable(tab,table.unpack(args)))
+			return f(Auxiliary.ParamsFromTable(tab,table.unpack(args)))
 		else
 			return f(tab,...)
 		end

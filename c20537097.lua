@@ -32,7 +32,7 @@ end
 s.listed_series={0x10c}
 s.listed_names={}
 function s.cfilter(c)
-	return c:GetColumnGroupCount()>0
+	return c:GetColumnGroupCount()>1
 end
 function s.hspcon(e,c)
 	if c==nil then return true end

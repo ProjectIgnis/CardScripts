@@ -1,5 +1,5 @@
 --星遺物に眠る深層
---Deep Depths of the World Legacy's Slumber
+--World Legacy's Secret
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

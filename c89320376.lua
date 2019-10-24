@@ -1,5 +1,5 @@
 --星遺物の傀儡
---orld Legacy Pawns
+--World Legacy Pawns
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

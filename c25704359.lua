@@ -1,4 +1,5 @@
 --憑依解放
+--Unpossessed
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --真竜の黙示録
+--True Draco Apocalypse
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +7,6 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	e0:SetHintTiming(0,TIMING_END_PHASE)
-	e0:SetTarget(s.target)
 	c:RegisterEffect(e0)
 	--Activate(damage phase)
 	local e1=Effect.CreateEffect(c)
@@ -57,44 +57,11 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_TO_GRAVE)
-	e4:SetCountLimit(1,61529475)
+	e4:SetCountLimit(1,id+2)
 	e4:SetCondition(s.descon)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
-	if chk==0 then return true end
-	local b1=s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-		and s.cost(e,tp,eg,ep,ev,re,r,rp,0)
-		and s.atktg(e,tp,eg,ep,ev,re,r,rp,0)
-	local b2=s.sumcon(e,tp,eg,ep,ev,re,r,rp)
-		and s.cost(e,tp,eg,ep,ev,re,r,rp,0)
-		and s.sumtg(e,tp,eg,ep,ev,re,r,rp,0)
-	if (b1 or b2) and Duel.SelectYesNo(tp,94) then
-		local op=0
-		if b1 and b2 then op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-		elseif b1 then op=Duel.SelectOption(tp,aux.Stringid(id,0))
-		else op=Duel.SelectOption(tp,aux.Stringid(id,1))+1 end
-		if op==0 then
-			e:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
-			e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-			e:SetOperation(s.atkop)
-			s.cost(e,tp,eg,ep,ev,re,r,rp,1)
-			s.atktg(e,tp,eg,ep,ev,re,r,rp,1)
-		else
-			e:SetCategory(CATEGORY_SUMMON)
-			e:SetProperty(0)
-			e:SetOperation(s.sumop)
-			s.cost(e,tp,eg,ep,ev,re,r,rp,1)
-			s.sumtg(e,tp,eg,ep,ev,re,r,rp,1)
-		end
-	else
-		e:SetCategory(0)
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
 end
 function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE and not Duel.IsDamageCalculated()
@@ -150,9 +117,7 @@ function s.sumfilter(c)
 	return c:IsSetCard(0xf9) and c:IsSummonable(true,nil,1)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND,0,1,nil)
-		and Duel.GetFlagEffect(tp,61529475)==0 end
-	Duel.RegisterFlagEffect(tp,61529475,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)

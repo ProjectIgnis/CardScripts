@@ -606,7 +606,7 @@ function Auxiliary.IsCodeListed(c,...)
 end
 --card effect disable filter(target)
 function Auxiliary.disfilter1(c)
-	return c:IsFaceup() and not c:IsDisabled() and (not c:IsNonEffectMonster() or c:GetOriginalType()&TYPE_EFFECT~=0)
+	return c:IsFaceup() and not c:IsDisabled() and (not c:IsNonEffectMonster() or c:GetType()&TYPE_EFFECT~=0)
 end
 --condition of EVENT_BATTLE_DESTROYING
 function Auxiliary.bdcon(e,tp,eg,ep,ev,re,r,rp)

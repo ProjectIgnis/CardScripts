@@ -1,4 +1,5 @@
 --幻創のミセラサウルス
+--Miscellaneousaurus
 local s,id=GetID()
 function s.initial_effect(c)
 	--immune
@@ -27,7 +28,7 @@ function s.immcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function s.immcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
+	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and Duel.GetFlagEffect(tp,id)==0 end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.immop(e,tp,eg,ep,ev,re,r,rp)
@@ -42,7 +43,12 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		e1:SetReset(RESET_PHASE+PHASE_MAIN2)
 	end
-	Duel.RegisterEffect(e1,tp)
+	if Duel.GetCurrentPhase()==PHASE_MAIN1 then
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_MAIN1,0,1)
+	else
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_MAIN2,0,1)
+	end
+	Duel.RegisterEffect(e1,tp)	
 end
 function s.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsActivated()

@@ -1,4 +1,5 @@
 --化合電界
+--Catalyst Field
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,6 +21,7 @@ function s.initial_effect(c)
 	--extra summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
@@ -27,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--destroy
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_REMOVE+CATEGORY_DESTROY)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)

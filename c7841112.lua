@@ -54,7 +54,8 @@ function s.initial_effect(c)
 	e6:SetValue(s.valcheck)
 	c:RegisterEffect(e6)
 end
-s.listed_names={44508094,21159309}
+s.listed_names={21159309,44508094}
+s.synchro_nt_required=1
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp and Duel.IsChainNegatable(ev)
 end

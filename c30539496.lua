@@ -1,7 +1,8 @@
 --真竜皇リトスアジムD
+--True King Lithosagym, the Disaster
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--special summon (from hand)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
@@ -91,6 +92,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				i=i-1
 			until i<1 or #rg==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,3))
 			Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
+			Duel.ShuffleExtra(1-tp)
 		end
 	end
 end

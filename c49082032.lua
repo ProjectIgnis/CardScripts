@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x95,0x1048,0x1073}
+s.listed_series={0x1073,0x1048,0x95}
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 	if chk==0 then return true end

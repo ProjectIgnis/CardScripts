@@ -49,6 +49,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
+		Duel.ShuffleExtra(1-tp)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)

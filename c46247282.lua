@@ -1,4 +1,5 @@
 --鉄騎龍ティアマトン
+--Iron Dragon Tiamaton
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -39,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.cfilter(c)
-	return c:GetColumnGroupCount()>1
+	return c:GetColumnGroupCount()>2
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)

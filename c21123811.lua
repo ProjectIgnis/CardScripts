@@ -57,6 +57,8 @@ function s.initial_effect(c)
 	e6:SetOperation(s.negop)
 	c:RegisterEffect(e6)
 end
+s.synchro_tuner_required=1
+s.synchro_nt_required=2
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end

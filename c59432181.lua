@@ -15,7 +15,7 @@ function s.filter(c,tp)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_EXTRA,0,1,nil,c)
 end
 function s.cfilter(c,tc)
-	return c:IsType(TYPE_FUSION) and not c:IsCode(tc:GetSummonCode(nil,SUMMON_TYPE_FUSION))
+	return c:IsType(TYPE_FUSION) and not c:IsCode(tc:GetCode(nil,SUMMON_TYPE_FUSION,tp))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,tp) end

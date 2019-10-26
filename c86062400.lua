@@ -1,4 +1,5 @@
 --エクシーズ・アヴェンジャー
+--Xyz Avenger
 local s,id=GetID()
 function s.initial_effect(c)
 	--immune
@@ -62,6 +63,9 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if #g>0 then
 			Duel.SendtoGrave(g,REASON_EFFECT)
+		end
+		if rk==4 then
+			Duel.ShuffleExtra(1-tp)
 		end
 	end
 end

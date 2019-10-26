@@ -1,5 +1,5 @@
 --団結する剣闘獣
---United Gladiator Beasts
+--Gladiator Beast United
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

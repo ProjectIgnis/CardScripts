@@ -1,4 +1,5 @@
 --フィッシュボーグ－ガンナー
+--Fishborg Blaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -15,11 +16,12 @@ function s.initial_effect(c)
 	--synchro custom
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_TUNER_MATERIAL_LIMIT)
+	e2:SetCode(EFFECT_SYNCHRO_MAT_RESTRICTION)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetTarget(s.synlimit)
+	e2:SetValue(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER))
 	c:RegisterEffect(e2)
 end
+s.tuner_filter=aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER)
 function s.filter(c)
 	return c:IsLevelBelow(3) and c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER)
 end
@@ -40,8 +42,4 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-end
-s.tuner_filter=aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER)
-function s.synlimit(e,c)
-	return c:IsAttribute(ATTRIBUTE_WATER)
 end

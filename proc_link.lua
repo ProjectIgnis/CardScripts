@@ -109,6 +109,8 @@ function Link.Condition(f,minc,maxc,specialchk)
 				end
 				local mg=g:Filter(Link.ConditionFilter,nil,f,c,tp)
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_LINK)
+				if min and min < minc then return false end
+				if max and max > maxc then return false end
 				min = min or minc
 				max = max or maxc
 				if mustg:IsExists(aux.NOT(Link.ConditionFilter),1,nil,f,c,tp) or #mustg>max then return false end
@@ -124,6 +126,8 @@ function Link.Target(f,minc,maxc,specialchk)
 				if not g then
 					g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 				end
+				if min and min < minc then return false end
+				if max and max > maxc then return false end
 				min = min or minc
 				max = max or maxc
 				local mg=g:Filter(Link.ConditionFilter,nil,f,c,tp)
@@ -144,6 +148,7 @@ function Link.Target(f,minc,maxc,specialchk)
 						finish=true
 					end
 					cancel=not og and Duel.GetCurrentChain()<=0 and #sg==0
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
 					local tc=Group.SelectUnselect(cg,sg,tp,finish,cancel,1,1)
 					if not tc then break end
 					if #mustg==0 or not mustg:IsContains(tc) then

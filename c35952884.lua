@@ -55,7 +55,8 @@ function s.initial_effect(c)
 	e6:SetCode(EVENT_TO_DECK)
 	c:RegisterEffect(e6)
 end
-s.listed_names={24696097}
+s.synchro_tuner_required=1
+s.synchro_nt_required=2
 function s.mfilter(c)
 	return not c:IsType(TYPE_TUNER)
 end

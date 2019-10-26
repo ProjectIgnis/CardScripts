@@ -1509,7 +1509,7 @@ function Auxiliary.RegisterClientHint(card,property,player1,player2,str,reset)
 		if str then
 			eff:SetDescription(str)
 		else
-			eff:SetDescription(aux.Stringid(card:GetOriginalCode(),str))
+			eff:SetDescription(aux.Stringid(card:GetOriginalCode(),1))
 		end
 		if reset then
 			eff:SetReset(RESET_PHASE+reset)

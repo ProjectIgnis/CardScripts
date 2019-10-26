@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--indes/untarget
 	local e2=Effect.CreateEffect(c)
@@ -31,6 +30,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetHintTiming(0,TIMING_END_PHASE)
 	e4:SetRange(LOCATION_SZONE)
+	e4:SetCountLimit(1)
 	e4:SetCost(s.spcost)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
@@ -50,38 +50,12 @@ function s.initial_effect(c)
 end
 s.listed_series={0x400d,0x113}
 s.listed_names={61557074}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local b1=s.spcost(e,tp,eg,ep,ev,re,r,rp,0) and s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
-	local b2=s.thcost(e,tp,eg,ep,ev,re,r,rp,0) and s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
-	if (b1 or b2) and Duel.SelectYesNo(tp,94) then
-		local op=0
-		if b1 and b2 then op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-		elseif b1 then op=Duel.SelectOption(tp,aux.Stringid(id,0))
-		else op=Duel.SelectOption(tp,aux.Stringid(id,1))+1 end
-		if op==0 then
-			e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-			e:SetOperation(s.spop)
-			s.spcost(e,tp,eg,ep,ev,re,r,rp,1)
-			s.sptg(e,tp,eg,ep,ev,re,r,rp,1)
-		else
-			e:SetCategory(CATEGORY_HANDES+CATEGORY_TOHAND)
-			e:SetOperation(s.thop)
-			s.thcost(e,tp,eg,ep,ev,re,r,rp,1)
-			s.thtg(e,tp,eg,ep,ev,re,r,rp,1)
-		end
-	else
-		e:SetCategory(0)
-		e:SetOperation(nil)
-	end
-end
 function s.intg(e,c)
 	return c:IsFaceup() and c:IsCode(61557074)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+	if chk==0 then return true end
 end
 function s.filter1(c,e,tp)
 	return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetOriginalAttribute())

@@ -1,5 +1,5 @@
 --Ｄ－タクティクス
---D-Tactics
+--D - Tactics
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	e0:SetHintTiming(0,TIMING_STANDBY_PHASE)
-	e0:SetTarget(s.atktg2)
 	c:RegisterEffect(e0)
 	--atk up
 	local e1=Effect.CreateEffect(c)
@@ -51,21 +50,8 @@ function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x8)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-end
-function s.atktg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return true end
-	if Duel.GetCurrentPhase()==PHASE_STANDBY and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.GetFlagEffect(tp,id)==0 and Duel.SelectYesNo(tp,94) then
-		e:SetCategory(CATEGORY_ATKCHANGE)
-		e:SetOperation(s.atkop)
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-		c:RegisterFlagEffect(0,RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,65)
-	else
-		e:SetCategory(0)
-		e:SetOperation(nil)
+	if chk==0 then
+		return Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil)
 	end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -83,7 +69,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			sc=tg:GetNext()
 		end
 	end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.cfilter(c,tp)
 	return c:IsFaceup() and ((c:IsLevelAbove(8) and c:IsSetCard(0xc008)) or c:IsCode(76263644)) and c:IsControler(tp)

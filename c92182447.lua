@@ -13,12 +13,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x122}
+s.listed_names={92182447}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()~=tp or Duel.GetCurrentPhase()~=PHASE_BATTLE or Duel.GetCurrentChain()>0 then
 		return false
 	end
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return g:GetCount()>0 and g:FilterCount(aux.FilterFaceupFunction(Card.IsSetCard,0x122),nil)==g:GetCount()
+	return #g>0 and g:FilterCount(aux.FilterFaceupFunction(Card.IsSetCard,0x122),nil)==#g
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

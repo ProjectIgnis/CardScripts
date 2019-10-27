@@ -1,4 +1,5 @@
 --妖仙獣 木魅
+--Yosenju Kodam
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,12 +17,15 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCondition(s.sumcon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.sumtg)
 	e2:SetOperation(s.sumop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={27918963}
+s.listed_series={0xb3}
+s.counter_add_list={0x33}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
@@ -42,6 +46,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:AddCounter(0x33,3)
 	end
 end
+function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsPlayerCanAdditionalSummon(tp)
+end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanSummon(tp) end
 end
@@ -54,5 +61,4 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xb3))
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end

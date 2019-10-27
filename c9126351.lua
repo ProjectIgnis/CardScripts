@@ -1,4 +1,5 @@
 --鬼ガエル
+--Swap Frog
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -35,6 +36,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.exop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x12}
 function s.spfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_WATER)
 end

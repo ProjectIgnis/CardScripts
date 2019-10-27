@@ -1,4 +1,5 @@
 --サイバース・ウィザード
+--Cyberse Wizard
 local s,id=GetID()
 function s.initial_effect(c)
 	--change pos
@@ -31,25 +32,18 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_MUST_ATTACK_MONSTER)
 		e1:SetTargetRange(LOCATION_MZONE,0)
+		e1:SetValue(s.attg)
+		e1:SetLabelObject(tc)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
+		--pierce
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(EFFECT_MUST_BE_ATTACKED)
-		e2:SetTargetRange(0,LOCATION_MZONE)
-		e2:SetTarget(s.attg)
-		e2:SetLabelObject(tc)
-		e2:SetValue(1)
+		e2:SetCode(EFFECT_PIERCE)
+		e2:SetTargetRange(LOCATION_MZONE,0)
+		e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_CYBERSE))
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
-		--pierce
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD)
-		e3:SetCode(EFFECT_PIERCE)
-		e3:SetTargetRange(LOCATION_MZONE,0)
-		e3:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_CYBERSE))
-		e3:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e3,tp)
 	end
 end
 function s.attg(e,c)

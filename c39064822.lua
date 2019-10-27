@@ -1,6 +1,5 @@
 --トロイメア・ゴブリン
---Troymare Goblin
---
+--Knightmare Goblin
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -33,7 +32,8 @@ function s.lcheck(g,lc)
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetTurnPlayer()==tp  and e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return Duel.GetTurnPlayer()==tp  and e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) 
+	and Duel.IsPlayerCanAdditionalSummon(tp)
 end
 function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and  Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

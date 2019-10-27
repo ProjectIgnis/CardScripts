@@ -42,6 +42,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCondition(s.effcon)
 	e1:SetOperation(s.effop)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	rc:RegisterEffect(e1,true)
@@ -54,6 +55,9 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 		rc:RegisterEffect(e3,true)
 	end
 	rc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
+end
+function s.effcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsPlayerCanAdditionalSummon(tp)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)~=0 then return end

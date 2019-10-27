@@ -1,4 +1,5 @@
 --トラミッド・スフィンクス
+--Triamid Sphinx
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableUnsummonable()
@@ -40,16 +41,8 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetTargetRange(0,LOCATION_MZONE)
 	e5:SetCondition(s.efcon)
+	e5:SetValue(s.attg)
 	c:RegisterEffect(e5)
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_FIELD)
-	e6:SetCode(EFFECT_MUST_BE_ATTACKED)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetTargetRange(LOCATION_MZONE,0)
-	e6:SetCondition(s.efcon)
-	e6:SetTarget(s.attg)
-	e6:SetValue(1)
-	c:RegisterEffect(e6)
 end
 function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsSetCard(0xe2)

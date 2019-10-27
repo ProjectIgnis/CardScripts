@@ -1,4 +1,5 @@
 --アース・グラビティ
+--Terra Firma Gravity
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,15 +30,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_MUST_ATTACK_MONSTER)
+	e2:SetValue(s.attg2)
 	Duel.RegisterEffect(e2,tp)
-	local e3=Effect.CreateEffect(e:GetHandler())
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_MUST_BE_ATTACKED)
-	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(s.attg2)
-	e3:SetValue(s.attg)
-	e3:SetReset(RESET_PHASE+PHASE_BATTLE)
-	Duel.RegisterEffect(e3,tp)
 end
 function s.attg(e,c)
 	return c:IsLevelBelow(4)

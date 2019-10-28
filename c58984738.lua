@@ -30,7 +30,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thfilter(c,tp)
 	return c:IsSetCard(0xf9) and c:GetType()==0x20004
-		and (c:IsAbleToHand() or (c:GetActivateEffect():IsActivatable(tp) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0))
+		and (c:IsAbleToHand() or (c:GetActivateEffect():IsActivatable(tp,true,true) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,tp) end
@@ -41,7 +41,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	aux.ToHandOrElse(tc,tp,function(c)
 					local te=tc:GetActivateEffect()
-					return te:IsActivatable(tp) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end,
+					return te:IsActivatable(tp,true,true) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end,
 					function(c)
 						Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 						local te=tc:GetActivateEffect()

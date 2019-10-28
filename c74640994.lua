@@ -9,7 +9,6 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -17,12 +16,6 @@ end
 s.listed_series={0xed}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
-		aux.RemainFieldCost(e,tp,eg,ep,ev,re,r,rp,1)
-	end
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xed)
@@ -117,13 +110,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	end
-	if not c:IsRelateToEffect(e) or c:IsStatus(STATUS_LEAVE_CONFIRMED) then return end
-	if c:IsSSetable(true) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if not c:IsRelateToEffect(e) then return end
+	if c:IsSSetable(true) then
 		Duel.BreakEffect()
 		Duel.ChangePosition(c,POS_FACEDOWN)
 		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
-	else
-		c:CancelToGrave(false)
 	end
 end
 function s.effectfilter(e,ct)

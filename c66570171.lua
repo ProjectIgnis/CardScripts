@@ -1,5 +1,5 @@
 --屍界のバンシー
---Otherworldly Banshee
+--Necroworld Banshee
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes

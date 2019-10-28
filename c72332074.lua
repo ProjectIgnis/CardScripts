@@ -1,4 +1,5 @@
 --超量必殺アルファンボール
+--Super Quantal Alphan Spike
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.actop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10dc}
 s.listed_names={58753372,10424147}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10dc)
@@ -65,7 +67,7 @@ function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.actfilter(c,tp)
-	return c:IsCode(10424147) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsCode(10424147) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_DECK,0,1,nil,tp) end

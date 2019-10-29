@@ -56,13 +56,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	local b=c:IsSetCard(0x128) and c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
-	local te=c:CheckActivateEffect(false,true,false)
-	if te~=nil then
-		local op=te:GetOperation()
-		return b and op~=nil
-	end
-	return false
+	return c:IsSetCard(0x128) and c:IsType(TYPE_SPELL) and c:IsAbleToRemoveAsCost()
+		and ~=nil and c:CheckActivateEffect(false,true,false):GetOperation()~=nil
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

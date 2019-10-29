@@ -63,7 +63,7 @@ function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:SetMaterial(g)
 	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
 end
-function c10000010.setcon(e,c,minc)
+function s.setcon(e,c,minc)
 	if not c then return true end
 	return false
 end

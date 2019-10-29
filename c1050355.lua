@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={74665651}
+s.listed_names={CARD_DREAM_MIRROR_JOY}
 s.listed_series={0x131}
 function s.filter(c,tp)
-	return c:IsCode(74665651) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsCode(CARD_DREAM_MIRROR_JOY) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,tp) end

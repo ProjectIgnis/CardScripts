@@ -1510,6 +1510,34 @@ end
 function Auxiliary.thoeSend(card)
     Duel.SendtoGrave(card,REASON_EFFECT)
 end
+--to simply registering EFFECT_FLAG_CLIENT_HINT to players
+function Auxiliary.RegisterClientHint(card,property,player1,player2,str,reset)
+--card: card that creates the hintmsg
+--property: additional properties like EFFECT_FLAG_OATH
+--player1,player2: the players to whom the hint is registered
+--str: the string called
+--reset: additional resets, other than RESET_PHASE+PHASE_END
+	if card then
+		local eff=Effect.CreateEffect(card)
+		if property then
+			eff:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+property)
+		else
+			eff:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+		end
+		eff:SetTargetRange(player1,player2)
+		if str then
+			eff:SetDescription(str)
+		else
+			eff:SetDescription(aux.Stringid(card:GetOriginalCode(),1))
+		end
+		if reset then
+			eff:SetReset(RESET_PHASE+reset)
+		else
+			eff:SetReset(RESET_PHASE+PHASE_END)
+		end
+		Duel.RegisterEffect(eff,tp)
+	end
+end
 --for zone checking (zone is the zone, tp is referencial player)
 function Auxiliary.IsZone(c,zone,tp)
 	local rzone = c:IsControler(tp) and (1 <<c:GetSequence()) or (1 << (16+c:GetSequence()))

@@ -115,7 +115,7 @@ function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,g)
 		end
 	end
-	if c:IsRelateToEffect(e) and c:IsCanTurnSet() and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if c:IsRelateToEffect(e) and c:IsSSetable(true) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		Duel.BreakEffect()
 		c:CancelToGrave()
 		Duel.ChangePosition(c,POS_FACEDOWN)

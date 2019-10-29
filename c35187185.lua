@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
     c:EnableReviveLimit()
-    aux.AddFusionProcMixN(c,true,true,s.ffilter,2)
+    Fusion.AddProcMixN(c,true,true,s.ffilter,2)
     --dual attribute
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_SINGLE)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x131}
 function s.ffilter(c,fc,sumtype,sp,sub,mg,sg)
-    return c:IsFusionSetCard(0x131) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
+    return  c:IsSetCard(0x131,fc,sumtype,tp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
 end
 function s.descfilter(c,tp)
     return c:GetPreviousControler()==tp

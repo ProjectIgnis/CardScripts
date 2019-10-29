@@ -1,0 +1,7 @@
+language: minimal
+os: linux
+dist: bionic
+git:
+  depth: 1
+install: git clone --depth=1 --branch=$BINARY_BRANCH https://$BINARY_TOKEN@github.com/$BINARY_REPO.git bin
+script: ./bin/script_syntax_check

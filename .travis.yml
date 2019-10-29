@@ -3,6 +3,13 @@ os: linux
 dist: bionic
 git:
   depth: 1
+addons:
+  apt:
+    update: true
+    sources:
+    - sourceline: 'ppa:ubuntu-toolchain-r/test'
+    packages:
+    - g++-9
 install:
 - git clone --depth=1 --branch=$BINARY_BRANCH https://$BINARY_TOKEN@github.com/$BINARY_REPO.git bin
 - cp bin/script_syntax_check bin/libocgcore.so .

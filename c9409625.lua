@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--insd via destroy replace (workaround)
 	local e2=Effect.CreateEffect(c)
@@ -19,6 +18,17 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetTarget(s.reptg)
 	c:RegisterEffect(e2)
+	--[[ untested version of Fluo's destruction count
+	--indes
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_NO_TURN_RESET)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
+	e2:SetCountLimit(1)
+	e2:SetValue(s.valcon)
+	c:RegisterEffect(e2)
+	--]]
 	--draw
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
@@ -47,43 +57,14 @@ function s.initial_effect(c)
 end
 s.listed_series={0x4a}
 s.listed_names={36894320}
+function s.valcon(e,re,r,rp)
+	return bit.band(r,REASON_EFFECT)~=0 and rp==1-e:GetHandlerPlayer()
+end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
     if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp and e:GetHandler():GetFlagEffect(id+1)==0 end
     c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)
 	return true
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
-	if chk==0 then return true end
-	local b1=s.drcost(e,tp,eg,ep,ev,re,r,rp,0)
-		and s.drtg(e,tp,eg,ep,ev,re,r,rp,0)
-	local b2=s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-		and s.cost(e,tp,eg,ep,ev,re,r,rp,0)
-		and s.tdtg(e,tp,eg,ep,ev,re,r,rp,0)
-	if (b1 or b2) and Duel.SelectYesNo(tp,94) then
-		local op=0
-		if b1 and b2 then
-			op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-		elseif b1 then
-			op=Duel.SelectOption(tp,aux.Stringid(id,0))
-		else
-			op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-		end
-		if op==0 then
-			e:SetCategory(CATEGORY_DRAW)
-			e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-			e:SetOperation(s.drop)
-			s.drcost(e,tp,eg,ep,ev,re,r,rp,1)
-			s.drtg(e,tp,eg,ep,ev,re,r,rp,1)
-		else
-			e:SetCategory(CATEGORY_TODECK)
-			e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-			e:SetOperation(s.tdop)
-			s.cost(e,tp,eg,ep,ev,re,r,rp,1)
-			s.tdtg(e,tp,eg,ep,ev,re,r,rp,1)
-		end
-	end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

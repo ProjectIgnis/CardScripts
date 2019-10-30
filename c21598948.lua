@@ -6,8 +6,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
-	e1:SetTarget(s.atktg1)
-	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--atk change
 	local e2=Effect.CreateEffect(c)
@@ -35,23 +33,13 @@ s.toss_coin=true
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
 end
-function s.atktg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	e:SetLabel(0)
-	if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) and tp~=Duel.GetTurnPlayer() then
-		e:SetLabel(1)
-		Duel.SetTargetCard(Duel.GetAttacker())
-		Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
-	end
-end
 function s.atktg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	e:SetLabel(1)
 	Duel.SetTargetCard(Duel.GetAttacker())
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabel()==0 or not e:GetHandler():IsRelateToEffect(e) then return end
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local a=Duel.GetAttacker()
 	if not a:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,4))

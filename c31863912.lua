@@ -1,4 +1,5 @@
 --出目出し
+--Dice-nied
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

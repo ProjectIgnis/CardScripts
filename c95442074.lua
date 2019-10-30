@@ -1,4 +1,5 @@
 --No.31 アベルズ・デビル
+--Number 31: Embodiment of Punishment
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -50,8 +51,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
 	if #g>0 then
 		Duel.ChangePosition(g,POS_FACEUP_ATTACK)
-		local tc=g:GetFirst()
-		while tc do
+		local fid=c:GetRealFieldID()
+		for tc in aux.Next(g) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_MUST_ATTACK)
@@ -59,16 +60,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_MUST_ATTACK_MONSTER)
+			e2:SetValue(s.atklimit)
+			e2:SetLabel(fid)
 			tc:RegisterEffect(e2)
-			tc=g:GetNext()
 		end
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetCode(EFFECT_MUST_BE_ATTACKED)
-		e3:SetValue(1)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e3)
 	end
+end
+function s.atklimit(e,c)
+	return c:GetRealFieldID()==e:GetLabel()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(69058960)

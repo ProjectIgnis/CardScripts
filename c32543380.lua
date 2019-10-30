@@ -1,4 +1,5 @@
 --ヴォルカニック・デビル
+--Volcanic Doomfire
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -21,22 +22,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_MUST_ATTACK_MONSTER)
+	e3:SetValue(s.atklimit)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_MUST_BE_ATTACKED)
-	e4:SetValue(1)
-	c:RegisterEffect(e4)
 	--special summon
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,0))
-	e5:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e5:SetCode(EVENT_BATTLE_DESTROYING)
-	e5:SetCondition(s.descon)
-	e5:SetTarget(s.destg)
-	e5:SetOperation(s.desop)
-	c:RegisterEffect(e5)
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,0))
+	e4:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e4:SetCode(EVENT_BATTLE_DESTROYING)
+	e4:SetCondition(s.descon)
+	e4:SetTarget(s.destg)
+	e4:SetOperation(s.desop)
+	c:RegisterEffect(e4)
 end
 s.listed_names={21420702}
 function s.spfilter(c)
@@ -77,4 +74,7 @@ end
 function s.atkcon(e)
 	local ph=Duel.GetCurrentPhase()
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer() and ph>=0x8 and ph<=0x20
+end
+function s.atklimit(e,c)
+	return c==e:GetHandler()
 end

@@ -1,4 +1,5 @@
 --挑発
+--Taunt
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,16 +26,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_MUST_BE_ATTACKED)
-		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(EFFECT_MUST_ATTACK_MONSTER)
-		e2:SetTargetRange(0,LOCATION_MZONE)
-		e2:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e2,tp)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_MUST_ATTACK_MONSTER)
+		e1:SetTargetRange(0,LOCATION_MZONE)
+		e1:SetValue(s.atklimit)
+		e1:SetLabel(tc:GetRealFieldID())
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
 	end
+end
+function s.atklimit(e,c)
+	return c:GetRealFieldID()==e:GetLabel()
 end

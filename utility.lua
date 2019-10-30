@@ -554,6 +554,7 @@ function Auxiliary.FilterEqualFunction(f,value,...)
 end
 --used for Material Types Filter Bool (works for IsRace, IsAttribute, IsType)
 function Auxiliary.FilterSummonCode(...)
+	local params={...}
 	return	function(c,scard,sumtype,tp)
 				return c:IsSummonCode(scard,sumtype,tp,table.unpack(params))
 			end
@@ -561,6 +562,12 @@ end
 function Auxiliary.FilterBoolFunctionEx(f,value)
 	return	function(target,scard,sumtype,tp)
 				return f(target,value,scard,sumtype,tp)
+			end
+end
+function Auxiliary.FilterBoolFunctionEx2(f,...)
+	local params={...}
+	return	function(target,scard,sumtype,tp)
+				return f(target,scard,sumtype,tp,table.unpack(params))
 			end
 end
 function Auxiliary.FilterBoolFunction(f,...)

@@ -45,13 +45,15 @@ function(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locatio
 				stage2 = stage2 or aux.TRUE
 				if chk==0 then
 					local mg1=Duel.GetFusionMaterial(tp):Filter(matfilter,nil,e,tp,0)
+					local checkAddition=nil
 					if extrafil then
 						local ret = {extrafil(e,tp,mg1)}
 						if ret[1] then
 							mg1:Merge(ret[1])
 						end
-						Fusion.CheckAdditional=ret[2]
+						checkAddition=ret[2]
 					end
+					Fusion.CheckAdditional=checkAddition
 					mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil)
 					Fusion.CheckExact=exactcount
 					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value,sumlimit)
@@ -61,10 +63,17 @@ function(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locatio
 							local fgroup=ce:GetTarget()
 							local mg=fgroup(ce,e,tp)
 							local mf=ce:GetValue()
+							local fcheck=nil
+							if ce:GetLabelObject() then fcheck=ce:GetLabelObject():GetOperation() end
+							if fcheck then
+								if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
+							end
 							if Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg,gc,chkf,value,sumlimit) then
 								res=true
+								Fusion.CheckAdditional=nil
 								break
 							end
+							Fusion.CheckAdditional=nil
 						end		
 					end
 					Fusion.CheckExact=nil
@@ -132,11 +141,17 @@ function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locati
 					local fgroup=ce:GetTarget()
 					local mg2=fgroup(ce,e,tp)
 					local mf=ce:GetValue()
+					local fcheck=nil
+					if ce:GetLabelObject() then fcheck=ce:GetLabelObject():GetOperation() end
+					if fcheck then
+						if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
+					end
 					local sg2=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg2,gc,chkf,value,sumlimit)
 					if #sg2 > 0 then
 						table.insert(effswithgroup,{ce,aux.GrouptoFieldid(sg2)})
 						sg1:Merge(sg2)
 					end
+					Fusion.CheckAdditional=nil
 				end
 				if #sg1>0 then
 					local sg=sg1:Clone()
@@ -158,8 +173,15 @@ function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locati
 						Duel.BreakEffect()
 						Duel.SpecialSummonStep(tc,value,tp,tp,sumlimit,false,POS_FACEUP)
 					else
-						local mat2=Duel.SelectFusionMaterial(tp,tc,sel[1]:GetTarget()(ce,e,tp),gc,chkf)
-						sel[1]:GetOperation()(sel[1],e,tp,tc,mat2,value)
+						local ce=sel[1]
+						local fcheck=nil
+						if ce:GetLabelObject() then fcheck=ce:GetLabelObject():GetOperation() end
+						if fcheck then
+							if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
+						end
+						local mat2=Duel.SelectFusionMaterial(tp,tc,ce:GetTarget()(ce,e,tp),gc,chkf)
+						Fusion.CheckAdditional=nil
+						ce:GetOperation()(sel[1],e,tp,tc,mat2,value)
 					end
 					stage2(e,tc,tp,backupmat,0)
 					Duel.SpecialSummonComplete()

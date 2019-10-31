@@ -1,6 +1,5 @@
 --空牙団の修練
---Skyfang Brigade Training
---
+--Training Fur Hire, Fur All Your Training Needs
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

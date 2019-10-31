@@ -1,4 +1,5 @@
 --メタファイズ・ディメンション
+--Metaphys Dimension
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,18 +12,15 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_ACTIVATE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e3:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetRange(LOCATION_SZONE)
-	c:RegisterEffect(e3)
 	--remove
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
@@ -38,11 +36,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x105}
-function s.cfilter(c,tp)
-	return c:GetSummonPlayer() == tp
-end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg and eg:IsExists(s.cfilter,1,nil,1-tp)
+	return eg and eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x105) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -86,7 +81,7 @@ function s.ermop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 end
 function s.rmcfilter(c,tp)
-	return c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x105)
+	return c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x105) and c:IsPreviousControler(tp)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.rmcfilter,1,e:GetHandler(),tp)

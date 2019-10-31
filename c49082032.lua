@@ -7,7 +7,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.tg)
 	c:RegisterEffect(e1)
 	--atk up
 	local e2=Effect.CreateEffect(c)
@@ -25,37 +24,21 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_SZONE)
+	e3:SetCountLimit(1)
 	e3:SetCost(s.cost)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x1073,0x1048,0x95}
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
-	if chk==0 then return true end
-	if s.cost(e,tp,eg,ep,ev,re,r,rp,0) and s.target(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,94) then
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e:SetOperation(s.operation)
-		s.cost(e,tp,eg,ep,ev,re,r,rp,1)
-		s.target(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetCategory(0)
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
-end
 function s.cfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsDiscardable()	
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
-	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
 	if g:GetFirst():IsSetCard(0x95) then e:SetLabel(0) else e:SetLabel(1) end
 end
 function s.filter1(c,e,tp)

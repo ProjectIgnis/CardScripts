@@ -1,4 +1,5 @@
 --死霊の誘い
+--Skull Invitation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

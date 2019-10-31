@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--draw (default)
 	local e2=Effect.CreateEffect(c)
@@ -31,41 +30,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x119}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	e:SetCategory(0)
-	e:SetOperation(nil)
-	if not s.cost(e,tp,eg,ep,ev,re,r,rp,0) then return end
-	local b1=s.drtg1(e,tp,eg,ep,ev,re,r,rp,0)
-	local b2=s.drcon(e,tp,eg,ep,ev,re,r,rp) and s.drtg2(e,tp,eg,ep,ev,re,r,rp,0)
-	if (b1 or b2) and Duel.SelectYesNo(tp,94) then
-		local op=0
-		if b1 and b2 then
-			op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-		elseif b2 then
-			op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-		else
-			op=Duel.SelectOption(tp,aux.Stringid(id,0))
-		end
-		s.cost(e,tp,eg,ep,ev,re,r,rp,1)
-		if op==0 then
-			e:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DRAW)
-			e:SetOperation(s.drop1)
-			s.drtg1(e,tp,eg,ep,ev,re,r,rp,1)
-		else
-			e:SetCategory(CATEGORY_DRAW)
-			e:SetOperation(s.drop2)
-			s.drtg2(e,tp,eg,ep,ev,re,r,rp,1)
-		end
-	end
-end
 function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x119) and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function s.gyfilter(c)

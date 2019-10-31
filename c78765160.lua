@@ -1,11 +1,11 @@
 --不知火流 輪廻の陣
+--Shiranui Style Samsara
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--change code
 	local e2=Effect.CreateEffect(c)
@@ -21,8 +21,8 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_SZONE)
+	e3:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
 	e3:SetCost(s.damcost)
-	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 	--to deck
@@ -38,39 +38,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={40005099}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.tdtg(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
-	if chk==0 then return true end
-	local b1=s.damcost(e,tp,eg,ep,ev,re,r,rp,0)
-		and s.damtg(e,tp,eg,ep,ev,re,r,rp,0)
-	local b2=s.tdtg(e,tp,eg,ep,ev,re,r,rp,0)
-	if (b1 or b2) and Duel.SelectYesNo(tp,94) then
-		local op=0
-		if b1 and b2 then
-			op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-		elseif b1 then
-			op=Duel.SelectOption(tp,aux.Stringid(id,0))
-		else
-			op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-		end
-		if op==0 then
-			s.damcost(e,tp,eg,ep,ev,re,r,rp,1)
-			s.damtg(e,tp,eg,ep,ev,re,r,rp,1)
-			e:SetCategory(0)
-			e:SetProperty(0)
-			e:SetOperation(s.damop)
-		else
-			s.tdtg(e,tp,eg,ep,ev,re,r,rp,1)
-			e:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
-			e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-			e:SetOperation(s.tdop)
-		end
-	else
-		e:SetCategory(0)
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
-end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE) and c:IsAbleToRemoveAsCost()
 end
@@ -79,10 +46,6 @@ function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
-end
-function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -104,14 +67,12 @@ function s.tdfilter(c)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.tdfilter(chkc) end
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0
-		and Duel.IsPlayerCanDraw(tp,1)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
 		and Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_REMOVED,0,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_REMOVED,0,2,2,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)

@@ -16,12 +16,11 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.cost)
-	e2:SetTarget(s.target2)
+	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) end
 	if chk==0 then
 		return Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingTarget(nil,tp,LOCATION_PZONE,0,1,nil)

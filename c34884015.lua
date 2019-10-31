@@ -1,5 +1,5 @@
 --魂のペンデュラム
---Pendulum of Souls
+--Soul Pendulum
 --scripted started by andré
 local s,id=GetID()
 function s.initial_effect(c)
@@ -65,6 +65,7 @@ function s.cpsoperation(e,tp,eg,ep,ev,re,r,rp)
 	tg=tg:Filter(Card.IsRelateToEffect,nil,e)
 	for tc in aux.Next(tg) do
 		Duel.HintSelection(Group.FromCards(tc))
+		Duel.Hint(HINT_CARD,tp,tc:GetOriginalCode())
 		local scale = s.getscale(tc)
 		local opt = (scale <= 1) and 1 or 2
 		if opt == 2 then

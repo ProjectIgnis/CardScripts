@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountiLimit(1,id)
+	e2:SetCountLimit(1,id)
 	e2:SetTarget(s.target)
 	c:RegisterEffect(e2)
 end

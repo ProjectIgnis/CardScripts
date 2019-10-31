@@ -1,11 +1,11 @@
 --トゥーン・ディフェンス
+--Toon Defense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--change battle target
 	local e2=Effect.CreateEffect(c)
@@ -17,17 +17,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.cbtg)
 	e2:SetOperation(s.cbop)
 	c:RegisterEffect(e2)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE)
-	if res and s.cbcon(e,tp,teg,tep,tev,tre,tr,trp)
-		and s.cbtg(e,tp,teg,tep,tev,tre,tr,trp,0)
-		and Duel.SelectYesNo(tp,94) then
-		e:SetOperation(s.cbop)
-	else
-		e:SetOperation(nil)
-	end
 end
 function s.cbcon(e,tp,eg,ep,ev,re,r,rp)
 	local bt=Duel.GetAttackTarget()

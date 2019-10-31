@@ -1,5 +1,5 @@
 --星遺物の齎す崩界
---World Legacy Annihilation
+--World Legacy Collapse
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

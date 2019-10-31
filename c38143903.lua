@@ -6,7 +6,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--coin
 	local e2=Effect.CreateEffect(c)
@@ -24,27 +23,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.toss_coin=true
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local ct=Duel.GetCurrentChain()-1
-	local te,p=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
-	local g=Group.FromCards(te:GetHandler())
-	if s.con(e,tp,g,ep,ct,te,r,p) and s.cost(e,tp,g,ep,ct,te,r,p,0) and s.tg(e,tp,g,ep,ct,te,r,p,0) 
-		and Duel.SelectYesNo(tp,94) then
-		e:SetCategory(CATEGORY_COIN+CATEGORY_TOGRAVE+CATEGORY_NEGATE+CATEGORY_CONTROL)
-		s.cost(e,tp,g,ep,ct,te,r,p,1)
-		s.tg(e,tp,g,ep,ct,te,r,p,1)
-		e:SetOperation(s.activate(ct,te,p,g))
-	else
-		e:SetCategory(0)
-		e:SetOperation(nil)
-	end
-end
-function s.activate(ct,te,p,g)
-	return	function(e,tp,eg,ep,ev,re,r,rp)
-				s.op(e,tp,g,ep,ct,te,r,p)
-			end
-end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end

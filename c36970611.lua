@@ -1,4 +1,5 @@
 --PSYフレーム・オーバーロード
+--PSY-Frame Overload
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +7,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetTarget(s.target1)
 	c:RegisterEffect(e1)
 	--remove
 	local e2=Effect.CreateEffect(c)
@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
+	e2:SetCountLimit(1)
 	e2:SetCost(s.cost2)
 	e2:SetTarget(s.target2)
 	e2:SetOperation(s.operation)
@@ -37,26 +38,11 @@ function s.cfilter(c)
 	return c:IsSetCard(0xc1) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingTarget(Card.IsAbleToRemove,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c,nil,POS_FACEDOWN)
 end
-function s.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
-	if chk==0 then return true end
-	if s.cost2(e,tp,eg,ep,ev,re,r,rp,0) and s.target2(e,tp,eg,ep,ev,re,r,rp,0,chkc)
-		and Duel.SelectYesNo(tp,94) then
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e:SetOperation(s.operation)
-		s.cost2(e,tp,eg,ep,ev,re,r,rp,1)
-		s.target2(e,tp,eg,ep,ev,re,r,rp,1,chkc)
-	else
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
-end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) and e:GetHandler():GetFlagEffect(id)==0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local cg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
 	Duel.Remove(cg,POS_FACEUP,REASON_COST)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsAbleToRemove(nil,POS_FACEDOWN) end

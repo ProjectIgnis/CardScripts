@@ -1,5 +1,5 @@
 --ドラゴンメイド・リラクゼーション
---Dragonmaid Relaxation
+--Dragonmaid Relaxation‎
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,7 +7,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.acttg)
 	c:RegisterEffect(e1)
 	--effect
 	local e2=Effect.CreateEffect(c)
@@ -17,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCost(s.cost)
+	e2:SetCountLimit(1,id)
 	e2:SetTarget(s.target)
 	c:RegisterEffect(e2)
 end
@@ -30,10 +29,6 @@ function s.athfilter(c)
 end
 function s.rthfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s:IsLocation(LOCATION_MZONE) and s:IsControler(tp) and s.thfilter(chkc) end
@@ -80,15 +75,5 @@ function s.rthop(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 		end
-	end
-end
-function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
-	if chk==0 then return true end
-	if s.cost(e,tp,eg,ep,ev,re,r,rp,0) and s.target(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,94) then
-		e:SetCategory(CATEGORY_TOHAND)
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		s.cost(e,tp,eg,ep,ev,re,r,rp,1)
-		s.target(e,tp,eg,ep,ev,re,r,rp,1)
 	end
 end

@@ -1,3 +1,4 @@
+--SPYRAL MISSION－奪還
 --SPYRAL MISSION - Recapture
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,14 +1,13 @@
 --強制終了
+--Scrubbed Raid
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(s.cost)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	--instant(chain)
+	--end BP
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -18,23 +17,6 @@ function s.initial_effect(c)
 	e2:SetCost(s.bpcost)
 	e2:SetOperation(s.bpop)
 	c:RegisterEffect(e2)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	return true
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then
-		e:SetLabel(0)
-		return true
-	end
-	if s.bpcon(e,tp,eg,ep,ev,re,r,rp) and (e:GetLabel()~=1 or s.bpcost(e,tp,eg,ep,ev,re,r,rp,0)) 
-		and Duel.SelectYesNo(tp,94) then
-		if e:GetLabel()==1 then s.bpcost(e,tp,eg,ep,ev,re,r,rp,1) end
-		e:SetOperation(s.bpop)
-	else
-		e:SetOperation(nil)
-	end
 end
 function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<PHASE_BATTLE) 

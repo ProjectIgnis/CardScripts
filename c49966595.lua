@@ -1,4 +1,5 @@
 --グレイドル・パラサイト
+--Graydle Parasite
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +7,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_ATTACK)
-	e1:SetTarget(s.acttg)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
@@ -16,7 +16,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon1)
-	e2:SetCost(s.spcost1)
 	e2:SetTarget(s.sptg1)
 	e2:SetOperation(s.spop1)
 	c:RegisterEffect(e2)
@@ -29,48 +28,12 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.spcon2)
-	e3:SetCost(s.spcost2)
 	e3:SetTarget(s.sptg2)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.sptg2(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
-	if chk==0 then return true end
-	if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) then
-		if s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-			and s.spcost1(e,tp,eg,ep,ev,re,r,rp,0)
-			and s.sptg1(e,tp,eg,ep,ev,re,r,rp,0)
-			and Duel.SelectYesNo(tp,94) then
-			e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-			e:SetProperty(0)
-			e:SetOperation(s.spop1)
-			s.spcost1(e,tp,eg,ep,ev,re,r,rp,1)
-			s.sptg1(e,tp,eg,ep,ev,re,r,rp,1)
-			e:GetHandler():RegisterFlagEffect(0,RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,65)
-			return
-		elseif s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-			and s.spcost2(e,tp,eg,ep,ev,re,r,rp,0)
-			and s.sptg2(e,tp,eg,ep,ev,re,r,rp,0,chkc)
-			and Duel.SelectYesNo(tp,94) then
-			e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-			e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-			e:SetOperation(s.spop2)
-			s.spcost2(e,tp,eg,ep,ev,re,r,rp,1)
-			s.sptg2(e,tp,eg,ep,ev,re,r,rp,1,chkc)
-			return
-		end
-	end
-	e:SetCategory(0)
-	e:SetProperty(0)
-	e:SetOperation(nil)
-end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
-end
-function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.spfilter1(c,e,tp)
 	return c:IsSetCard(0xd1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
@@ -94,10 +57,6 @@ end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=Duel.GetAttacker()
 	return c:IsControler(tp) and c:IsSetCard(0xd1) and Duel.GetAttackTarget()==nil
-end
-function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id+1)==0 end
-	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
 end
 function s.spfilter2(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)

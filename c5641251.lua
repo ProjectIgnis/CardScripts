@@ -1,3 +1,4 @@
+--F.A.デッド・ヒート
 --F.A. Dead Heat
 local s,id=GetID()
 function s.initial_effect(c)
@@ -6,7 +7,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_ATTACK)
-	e1:SetTarget(s.acttg)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
@@ -17,7 +17,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.spcost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -28,50 +27,13 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_CONFIRM)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCost(s.lvlcost)
 	e3:SetCondition(s.lvlcon)
 	e3:SetOperation(s.lvlop)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x107}
-function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return true end
-	if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) then
-		if s.spcon(e,tp,eg,ep,ev,re,r,rp)
-			and s.spcost(e,tp,eg,ep,ev,re,r,rp,0)
-			and s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
-			and Duel.SelectYesNo(tp,94) then
-			e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-			e:SetProperty(0)
-			e:SetOperation(s.spop)
-			s.spcost(e,tp,eg,ep,ev,re,r,rp,1)
-			s.sptg(e,tp,eg,ep,ev,re,r,rp,1)
-			e:GetHandler():RegisterFlagEffect(0,RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,65)
-			return
-		end
-	end
-	if Duel.CheckEvent(EVENT_BATTLE_CONFIRM) then
-		if s.lvlcon(e,tp,eg,ep,ev,re,r,rp)
-			and s.lvlcost(e,tp,eg,ep,ev,re,r,rp,0)
-			and Duel.SelectYesNo(tp,94) then
-			e:SetCategory(CATEGORY_LVCHANGE+CATEGORY_DESTROY)
-			e:SetProperty(0)
-			e:SetOperation(s.lvlop)
-			s.lvlcost(e,tp,eg,ep,ev,re,r,rp,1)
-			e:GetHandler():RegisterFlagEffect(0,RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,65)
-			return
-		end
-	end
-	e:SetCategory(0)
-	e:SetProperty(0)
-	e:SetOperation(nil)
-end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x107) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
@@ -91,14 +53,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
-end
-
-
-
-function s.lvlcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.lvlcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()

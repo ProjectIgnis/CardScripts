@@ -1,5 +1,5 @@
 --星遺物の囁き
---Whisper of the World Legacy
+--World Legacy Whispers
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

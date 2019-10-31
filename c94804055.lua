@@ -1,11 +1,11 @@
 --ファイヤー・ウォール
+--Firewall
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--quick
 	local e2=Effect.CreateEffect(c)
@@ -29,20 +29,6 @@ function s.initial_effect(c)
 	e3:SetCondition(s.mtcon)
 	e3:SetOperation(s.mtop)
 	c:RegisterEffect(e3)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.atktg(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
-	if chk==0 then return true end
-	if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) and s.atkcon(e,tp,eg,ep,ev,re,r,rp) and s.atkcost(e,tp,eg,ep,ev,re,r,rp,0) 
-		and s.atktg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e:SetOperation(s.atkop)
-		s.atkcost(e,tp,eg,ep,ev,re,r,rp,1)
-		s.atktg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil and not e:GetHandler():IsStatus(STATUS_CHAINING)

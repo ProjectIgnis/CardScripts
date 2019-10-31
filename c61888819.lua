@@ -9,17 +9,11 @@ function s.initial_effect(c)
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_FIELD)
     e1:SetCode(EFFECT_FORCE_MZONE)
-    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
     e1:SetRange(LOCATION_MZONE)
-    e1:SetTargetRange(1,0)
-    e1:SetCondition(function(e)return e:GetHandler():GetSequence()>4 end)
+    e1:SetTargetRange(LOCATION_EXTRA,LOCATION_EXTRA)
+    e1:SetCondition(s.fmcon)
     e1:SetValue(s.fmval)
     c:RegisterEffect(e1)
-    --force mzone
-    local e2=e1:Clone()
-    e2:SetTargetRange(0,1)
-    e2:SetValue(s.fmval2)
-    c:RegisterEffect(e2)
     --cannot be target/indestructable
     local e3=Effect.CreateEffect(c)
     e3:SetType(EFFECT_TYPE_SINGLE)
@@ -50,20 +44,11 @@ function s.initial_effect(c)
     c:RegisterEffect(e6)
 end
 s.listed_series={0xa}
-function s.fmval(e,c)
-    if aux.ExtraSummon and Duel.GetMasterRule()>=4 then
-        return e:GetHandler():GetLinkedZone() | 0x60
-    else
-        return 0xffffffff
-    end
+function s.fmcon(e)
+	return e:GetHandler():IsInExtraMZone()
 end
-function s.fmval2(e,c)
-    if aux.ExtraSummon and Duel.GetMasterRule()>=4 then
-        local zone = e:GetHandler():GetLinkedZone()
-        return ((zone<<16)|(zone>>16)) | 0x60
-    else
-        return 0xffffffff
-    end
+function s.fmval(e,c,fp,rp,r)
+	return e:GetHandler():GetLinkedZone()
 end
 function s.indcon(e)
     return e:GetHandler():GetLinkedGroupCount()>0

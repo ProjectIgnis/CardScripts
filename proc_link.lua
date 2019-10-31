@@ -148,6 +148,7 @@ function Link.Target(f,minc,maxc,specialchk)
 						finish=true
 					end
 					cancel=not og and Duel.GetCurrentChain()<=0 and #sg==0
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
 					local tc=Group.SelectUnselect(cg,sg,tp,finish,cancel,1,1)
 					if not tc then break end
 					if #mustg==0 or not mustg:IsContains(tc) then

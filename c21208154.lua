@@ -28,9 +28,14 @@ function s.initial_effect(c)
 	e6:SetCode(EVENT_SUMMON_SUCCESS)
 	e6:SetOperation(s.regop)
 	c:RegisterEffect(e6)
+	--atk check
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_SINGLE)
+	e7:SetCode(id)
+	c:RegisterEffect(e7)
 end
 function s.filter(c)
-	return c:IsFaceup() and not c:IsCode(id)
+	return c:IsFaceup() and not c:IsHasEffect(id)
 end
 function s.adval(e,c)
 	local g=Duel.GetMatchingGroup(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,nil)

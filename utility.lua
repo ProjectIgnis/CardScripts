@@ -554,6 +554,7 @@ function Auxiliary.FilterEqualFunction(f,value,...)
 end
 --used for Material Types Filter Bool (works for IsRace, IsAttribute, IsType)
 function Auxiliary.FilterSummonCode(...)
+	local params={...}
 	return	function(c,scard,sumtype,tp)
 				return c:IsSummonCode(scard,sumtype,tp,table.unpack(params))
 			end
@@ -561,6 +562,12 @@ end
 function Auxiliary.FilterBoolFunctionEx(f,value)
 	return	function(target,scard,sumtype,tp)
 				return f(target,value,scard,sumtype,tp)
+			end
+end
+function Auxiliary.FilterBoolFunctionEx2(f,...)
+	local params={...}
+	return	function(target,scard,sumtype,tp)
+				return f(target,scard,sumtype,tp,table.unpack(params))
 			end
 end
 function Auxiliary.FilterBoolFunction(f,...)
@@ -606,7 +613,7 @@ function Auxiliary.IsCodeListed(c,...)
 end
 --card effect disable filter(target)
 function Auxiliary.disfilter1(c)
-	return c:IsFaceup() and not c:IsDisabled() and (not c:IsNonEffectMonster() or c:GetOriginalType()&TYPE_EFFECT~=0)
+	return c:IsFaceup() and not c:IsDisabled() and (not c:IsNonEffectMonster() or c:GetType()&TYPE_EFFECT~=0)
 end
 --condition of EVENT_BATTLE_DESTROYING
 function Auxiliary.bdcon(e,tp,eg,ep,ev,re,r,rp)
@@ -1490,6 +1497,34 @@ function Auxiliary.ToHandOrElse(card,player,check,oper,str,...)
 end
 function Auxiliary.thoeSend(card)
     Duel.SendtoGrave(card,REASON_EFFECT)
+end
+--to simply registering EFFECT_FLAG_CLIENT_HINT to players
+function Auxiliary.RegisterClientHint(card,property,player1,player2,str,reset)
+--card: card that creates the hintmsg
+--property: additional properties like EFFECT_FLAG_OATH
+--player1,player2: the players to whom the hint is registered
+--str: the string called
+--reset: additional resets, other than RESET_PHASE+PHASE_END
+	if card then
+		local eff=Effect.CreateEffect(card)
+		if property then
+			eff:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+property)
+		else
+			eff:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+		end
+		eff:SetTargetRange(player1,player2)
+		if str then
+			eff:SetDescription(str)
+		else
+			eff:SetDescription(aux.Stringid(card:GetOriginalCode(),1))
+		end
+		if reset then
+			eff:SetReset(RESET_PHASE+reset)
+		else
+			eff:SetReset(RESET_PHASE+PHASE_END)
+		end
+		Duel.RegisterEffect(eff,tp)
+	end
 end
 --for zone checking (zone is the zone, tp is referencial player)
 function Auxiliary.IsZone(c,zone,tp)

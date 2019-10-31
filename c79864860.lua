@@ -1,5 +1,5 @@
 --捕食植物トリフィオヴェルトゥム
---Predaplant Triphyovertum 
+--Predaplant Triphyoverutum
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -47,20 +47,22 @@ function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(s.vfilter,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,c)
 	return g:GetSum(Card.GetBaseAttack)
 end
-function s.disfilter(c,loc)
-	return c:GetSummonLocation()==loc
+function s.disfilter(c)
+	return c:GetSummonLocation()==LOCATION_EXTRA
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=ep and Duel.GetCurrentChain()==0 and eg:IsExists(s.disfilter,1,nil,LOCATION_EXTRA) and e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return tp~=ep and Duel.GetCurrentChain()==0 and eg:IsExists(s.disfilter,1,nil) and e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,eg,#eg,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,#eg,0,0)
+	local g=eg:Filter(Card.IsPreviousLocation,nil,LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateSummon(eg)
-	Duel.Destroy(eg,REASON_EFFECT)
+	local g=eg:Filter(Card.IsPreviousLocation,nil,LOCATION_EXTRA)
+	Duel.NegateSummon(g)
+	Duel.Destroy(g,REASON_EFFECT)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:GetCounter(COUNTER_PREDATOR)>0

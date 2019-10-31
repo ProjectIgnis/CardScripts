@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x138}
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_RITUAL)*300
+	return Duel.GetMatchingGroupCount(Card.IsRitualMonster(),e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)*300
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end

@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10c}
 function s.cfilter(c)
-	return c:GetColumnGroupCount()>0
+	return c:GetColumnGroupCount()>1
 end
 function s.hspcon(e,c)
 	if c==nil then return true end

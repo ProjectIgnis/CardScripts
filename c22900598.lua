@@ -1,4 +1,5 @@
 --ヴァンパイア・シフト
+--Vampire Takeover
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x8e}
 s.listed_names={62188962}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldCard(tp,LOCATION_SZONE,5)~=nil then return false end
@@ -19,7 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return #g>0 and g:FilterCount(Card.IsRace,nil,RACE_ZOMBIE)==#g
 end
 function s.filter(c,tp)
-	return c:IsCode(62188962) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsCode(62188962) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp) end

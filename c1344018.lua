@@ -27,17 +27,13 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
-	e3:SetCost(s.descost)
+	e3:SetCountLimit(1,id)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
 function s.evalue(e,re,rp)
 	return re:IsActiveType(TYPE_TRAP) and rp~=e:GetHandlerPlayer()
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)

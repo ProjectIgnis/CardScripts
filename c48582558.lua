@@ -1,4 +1,5 @@
 --バウンサー・ガード
+--Bounzer Guard
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,17 +35,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(1)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetCode(EFFECT_MUST_BE_ATTACKED)
-		e3:SetValue(1)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e3)
 		local e4=Effect.CreateEffect(e:GetHandler())
 		e4:SetType(EFFECT_TYPE_FIELD)
 		e4:SetCode(EFFECT_MUST_ATTACK_MONSTER)
 		e4:SetTargetRange(0,LOCATION_MZONE)
+		e3:SetValue(s.atklimit)
+		e3:SetLabel(tc:GetRealFieldID())
 		e4:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e4,tp)
 	end
+end
+function s.atklimit(e,c)
+	return c:GetRealFieldID()==e:GetLabel()
 end

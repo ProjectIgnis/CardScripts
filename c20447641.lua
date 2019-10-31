@@ -1,4 +1,5 @@
 --機殻の凍結
+--Qlife's End
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,13 +13,13 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:IsHasType(EFFECT_TYPE_ACTIVATE) 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0xaa,0x21,4,1800,1000,RACE_MACHINE,ATTRIBUTE_EARTH) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0xaa,0x21,1800,1000,4,RACE_MACHINE,ATTRIBUTE_EARTH) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0xaa,0x21,4,1800,1000,RACE_MACHINE,ATTRIBUTE_EARTH) then
+	if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0xaa,0x21,1800,1000,4,RACE_MACHINE,ATTRIBUTE_EARTH) then
 		c:AddMonsterAttribute(TYPE_EFFECT)
 		Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 		c:AddMonsterAttributeComplete()

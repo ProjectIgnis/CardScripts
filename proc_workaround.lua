@@ -116,6 +116,15 @@ function Card.IsOriginalCodeRule(c,cd)
     local c1,c2=c:GetOriginalCodeRule()
     return c1==cd or c2==cd
 end
+function Card.IsOriginalType(c,val)
+	return c:GetOriginalType() & val == val
+end
+function Card.IsOriginalAttribute(c,val)
+	return c:GetOriginalAttribute() & val == val
+end
+function Card.IsOriginalRace(c,val)
+	return c:GetOriginalRace() & val == val
+end
 function Card.IsSummonPlayer(c,tp)
 	return c:GetSummonPlayer()==tp
 end

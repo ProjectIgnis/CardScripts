@@ -1,11 +1,11 @@
 --誤封の契約書
+--Dark Contract with Errors
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--disable
 	local e2=Effect.CreateEffect(c)
@@ -15,7 +15,6 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.negcon)
-	e2:SetCost(s.negcost)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 	--damage
@@ -27,7 +26,6 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.damcon)
-	e3:SetCost(s.damcost)
 	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
@@ -40,42 +38,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0xaf}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local b1=s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	local b2=s.damcon(e,tp,eg,ep,ev,re,r,rp) and Duel.GetCurrentPhase()==PHASE_STANDBY
-	if (b1 or b2) and Duel.SelectYesNo(tp,94) then
-		local c=e:GetHandler()
-		local op=0
-		if b1 and b2 then
-			op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-		elseif b1 then
-			op=Duel.SelectOption(tp,aux.Stringid(id,0))
-		else op=Duel.SelectOption(tp,aux.Stringid(id,1))+1 end
-		if op==0 then
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-			e:SetCategory(0)
-			e:SetOperation(s.negop)
-		else
-			c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-			s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-			e:SetCategory(CATEGORY_DAMAGE)
-			e:SetOperation(s.damop)
-		end
-	else
-		e:SetCategory(0)
-		e:SetOperation(nil)
-	end
-end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xaf)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-end
-function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -119,10 +86,6 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
-end
-function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id+1)==0 end
-	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

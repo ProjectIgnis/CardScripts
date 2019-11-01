@@ -1,4 +1,5 @@
 --立ちはだかる強敵
+--Staunch Defender
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -31,13 +32,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_MUST_ATTACK_MONSTER)
+		e2:SetValue(s.atklimit)
+		e2:SetLabel(tc:GetRealFieldID())
 		Duel.RegisterEffect(e2,tp)
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetCode(EFFECT_MUST_BE_ATTACKED)
-		e3:SetValue(1)
-		e3:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
-		tc:RegisterEffect(e3,true)
-		Duel.ChangeAttackTarget(tc)
 	end
+end
+function s.atklimit(e,c)
+	return c:GetRealFieldID()==e:GetLabel()
 end

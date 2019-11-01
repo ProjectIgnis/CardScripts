@@ -1,4 +1,5 @@
 --死霊騎士デスカリバー・ナイト
+--Doomcaliber Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

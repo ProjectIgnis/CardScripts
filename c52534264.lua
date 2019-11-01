@@ -3,17 +3,14 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate inst
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCost(s.cost)
-	e1:SetCondition(s.atkcon)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	--atkup
+	--Increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -27,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-	--to deck and draw
+	--Draw
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 	e3:SetDescription(aux.Stringid(id,1))
@@ -41,40 +38,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x11e}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	if chk==0 then return true end
-end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x11e)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local label=e:GetLabel()
-	if chkc then return s.atktg(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
-	if chk==0 then
-		if Duel.GetCurrentPhase()==PHASE_DAMAGE then
-			if label==1 then e:SetLabel(0) end
-			return (label~=1 or s.atkcost(e,tp,eg,ep,ev,re,r,rp,0)) and s.atktg(e,tp,eg,ep,ev,re,r,rp,0)
-		end
-		return true
-	end
-	if (label~=1 or s.atkcost(e,tp,eg,ep,ev,re,r,rp,0)) and s.atktg(e,tp,eg,ep,ev,re,r,rp,0) 
-		and (Duel.GetCurrentPhase()==PHASE_DAMAGE or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
-		e:SetCategory(CATEGORY_ATKCHANGE)
-		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
-		e:SetOperation(s.atkop)
-		if label==1 then
-			s.atkcost(e,tp,eg,ep,ev,re,r,rp,1)
-		end
-		s.atktg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetCategory(0)
-		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-		e:SetOperation(nil)
-	end
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end

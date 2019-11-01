@@ -1,4 +1,5 @@
 --DDD怒濤大王エグゼクティブ・シーザー
+--D/D/D Wave High King Caesar
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

@@ -1,4 +1,5 @@
 --聖霊獣騎 ガイアペライオ
+--Ritual Beast Ulti-Gaiapelio
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

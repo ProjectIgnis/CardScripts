@@ -1,4 +1,5 @@
 --アモルファージ・ライシス
+--Amorphage Lysis
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,17 +11,6 @@ function s.initial_effect(c)
 	e0:SetHintTiming(TIMING_DAMAGE_STEP)
 	e0:SetCondition(s.condition)
 	c:RegisterEffect(e0)
-	--Activate(set p)
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_DESTROYED)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
-	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.setcon)
-	e1:SetTarget(s.settg1)
-	e1:SetOperation(s.setop)
-	c:RegisterEffect(e1)
 	--set p
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -57,11 +47,6 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c)
 	return c:IsSetCard(0xe0) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
-end
-function s.settg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function s.settg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e)

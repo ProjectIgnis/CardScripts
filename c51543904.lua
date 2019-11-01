@@ -1,4 +1,5 @@
 --No.99 希望皇龍ホープドラグーン
+--Number 99: Utopic Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

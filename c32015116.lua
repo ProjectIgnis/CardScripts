@@ -1,4 +1,5 @@
 --無差別破壊
+--Blind Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

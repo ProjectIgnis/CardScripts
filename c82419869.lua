@@ -1,4 +1,5 @@
 --U.A.パーフェクトエース
+--U.A. Perfect Ace
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

@@ -1,5 +1,5 @@
 --魔弾-ブラッディ・クラウン
---Magical Musket - Bloody Crown
+--Magical Musket - Crooked Crown
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,6 @@ function s.initial_effect(c)
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
     e1:SetCode(EVENT_FREE_CHAIN)
-    e1:SetTarget(s.target)
     c:RegisterEffect(e1)
     --spsummon
     local e2=Effect.CreateEffect(c)
@@ -18,29 +17,14 @@ function s.initial_effect(c)
     e2:SetCode(EVENT_FREE_CHAIN)
     e2:SetRange(LOCATION_SZONE)
     e2:SetCondition(s.spcon)
-    e2:SetCost(s.spcost)
+    e2:SetCountLimit(1,id)
     e2:SetTarget(s.sptg)
     e2:SetOperation(s.spop)
     c:RegisterEffect(e2)
 end
 s.listed_series={0x108}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return true end
-    if s.spcon(e,tp,eg,ep,ev,re,r,rp) and s.spcost(e,tp,eg,ep,ev,re,r,rp,0)
-        and s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
-        and Duel.SelectYesNo(tp,94) then
-        e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-        e:SetOperation(s.spop)
-        s.spcost(e,tp,eg,ep,ev,re,r,rp,1)
-        s.sptg(e,tp,eg,ep,ev,re,r,rp,1)
-    end
-end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
     return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-    Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.spfilter(c,e,tp)
     return c:IsSetCard(0x108) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

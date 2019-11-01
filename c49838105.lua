@@ -1,12 +1,11 @@
 --森羅の滝滑り
+--Sylvan Waterslide
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target1)
-	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--attack
 	local e2=Effect.CreateEffect(c)
@@ -34,18 +33,6 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
-end
-function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE)
-		and Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
-		and Duel.IsPlayerCanDiscardDeck(tp,1) and Duel.SelectYesNo(tp,94) then
-		e:SetLabel(1)
-		e:SetCategory(CATEGORY_DECKDES)
-	else
-		e:SetLabel(0)
-		e:SetCategory(0)
-	end
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end

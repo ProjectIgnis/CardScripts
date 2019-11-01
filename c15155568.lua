@@ -1,4 +1,5 @@
 --破壊剣一閃
+--Destruction Sword Flash
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,9 +1,9 @@
 --封狼雷坊
---Skyward Sealing Sage
+--Thunderclap Monk
 --scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
-	--Negate activation, unconfirmed effect (believe it is quick-play)
+	--Negate activation
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)

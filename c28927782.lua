@@ -8,8 +8,6 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.eftg1)
-	e1:SetOperation(s.efop)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
@@ -18,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetLabel(2)
+	e2:SetCountLimit(1,id)
 	e2:SetTarget(s.eftg2)
 	e2:SetOperation(s.efop)
 	c:RegisterEffect(e2)
@@ -43,7 +41,6 @@ function s.select(e,tp,b1,b2)
 		local g=Duel.SelectTarget(tp,s.eqfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
 		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,tp,0)
 	end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x29) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
@@ -54,33 +51,21 @@ end
 function s.eqfilter2(c,tc,tp)
 	return c:IsSetCard(0x29) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()
 end
-function s.eftg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then
-		if e:GetLabel()==0 then return false
-		elseif e:GetLabel()==1 then return chkc:IsLocation(LOCATION_SZONE) and s.spfilter(chkc,e,tp)
-		else return chkc:IsLocation(LOCATION_MZONE) and s.eqfilter1(chkc,tp) end
-	end
-	if chk==0 then return true end
-	local b1 = Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_SZONE,0,1,nil,e,tp)
-	local b2 = Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(s.eqfilter1,tp,LOCATION_MZONE,0,1,nil,tp)
-	if (not b1 and not b2) or not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		e:SetProperty(0)
-		e:SetCategory(0)
-		e:SetLabel(0)
-		return
-	end
-	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	s.select(e,tp,b1,b2)
-end
+
 function s.eftg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
-		if e:GetLabel()==0 then return false
-		elseif e:GetLabel()==1 then return chkc:IsLocation(LOCATION_SZONE) and s.spfilter(chkc,e,tp)
-		else return chkc:IsLocation(LOCATION_MZONE) and s.eqfilter1(chkc,tp) end
+		if e:GetLabel()==0 then
+			return false
+		elseif e:GetLabel()==1 then
+			return chkc:IsLocation(LOCATION_SZONE) and s.spfilter(chkc,e,tp)
+		else
+			return chkc:IsLocation(LOCATION_MZONE) and s.eqfilter1(chkc,tp) end
 	end
-	local b1 = Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_SZONE,0,1,nil,e,tp)
-	local b2 = Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(s.eqfilter1,tp,LOCATION_MZONE,0,1,nil,tp)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 and (b1 or b2) end
+	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_SZONE,0,1,nil,e,tp)
+	local b2=Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(s.eqfilter1,tp,LOCATION_MZONE,0,1,nil,tp)
+	if chk==0 then
+		return b1 or b2
+	end
 	s.select(e,tp,b1,b2)
 end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)

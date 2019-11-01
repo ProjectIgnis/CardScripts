@@ -1,4 +1,5 @@
 --エヴォルカイザー・ドルカ
+--Evolzar Dolkka
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

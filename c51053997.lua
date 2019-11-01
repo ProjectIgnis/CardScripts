@@ -1,4 +1,5 @@
 --PSYフレーム・アクセラレーター
+--PSY-Frame Accelerator
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,8 +8,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetTarget(s.target1)
-	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--remove
 	local e3=Effect.CreateEffect(c)
@@ -34,7 +33,6 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.spcon)
-	e4:SetCost(s.spcost)
 	e4:SetTarget(s.sptg2)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
@@ -43,29 +41,9 @@ s.listed_series={0xc1}
 function s.rmfilter(c)
 	return c:IsSetCard(0xc1) and c:IsAbleToRemove()
 end
-function s.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.rmfilter(chkc) end
-	if chk==0 then return true end
-	if e:GetHandler():GetFlagEffect(id)==0 and Duel.CheckLPCost(tp,500)
-		and Duel.IsExistingTarget(s.rmfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.SelectYesNo(tp,94) then
-		e:SetCategory(CATEGORY_REMOVE)
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-		Duel.PayLPCost(tp,500)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectTarget(tp,s.rmfilter,tp,LOCATION_MZONE,0,1,1,nil)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
-	else
-		e:SetCategory(0)
-		e:SetProperty(0)
-	end
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500)
-		and e:GetHandler():GetFlagEffect(id)==0 end
+	if chk==0 then return Duel.CheckLPCost(tp,500) end
 	Duel.PayLPCost(tp,500)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.rmfilter(chkc) end
@@ -76,7 +54,7 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetFlagEffect(id)==0 or not c:IsRelateToEffect(e) then return end
+	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
 		local ct=1
@@ -114,10 +92,6 @@ function s.cfilter(c,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,e:GetHandler(),tp)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(51053999)==0 end
-	e:GetHandler():RegisterFlagEffect(51053999,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xc1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

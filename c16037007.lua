@@ -1,4 +1,5 @@
 --No.74 マジカル・クラウン－ミッシング・ソード
+--Number 74: Master of Blades
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

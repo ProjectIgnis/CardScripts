@@ -1,11 +1,11 @@
 --魂粉砕
+--Soul Demolition
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--remove
 	local e2=Effect.CreateEffect(c)
@@ -19,20 +19,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
-	if chk==0 then return true end
-	if s.rmcon(e,tp,eg,ep,ev,re,r,rp) and s.rmcost(e,tp,eg,ep,ev,re,r,rp,0) 
-		and s.rmtg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e:SetOperation(s.rmop)
-		s.rmcost(e,tp,eg,ep,ev,re,r,rp,1)
-		s.rmtg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_FIEND),tp,LOCATION_MZONE,0,1,nil)

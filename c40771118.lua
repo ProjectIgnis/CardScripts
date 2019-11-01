@@ -1,5 +1,5 @@
 --死の宣告
---Death Sentence
+--Sentence of Doom
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,7 +7,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--To hand
 	local e2=Effect.CreateEffect(c)
@@ -17,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCost(s.cost)
+	e2:SetCountLimit(1,id)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
@@ -37,26 +36,6 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_DESTINY_BOARD}
 s.listed_series={0x1c}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.thfilter(chkc) end
-	if chk==0 then return true end
-	local b=s.cost(e,tp,eg,ep,ev,re,r,rp,0) and s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
-	if b and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
-		e:SetCategory(CATEGORY_TOHAND)
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-		s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-		e:SetOperation(s.thop)
-	else
-		e:SetCategory(0)
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
-end
 function s.filter(c)
 	return c:IsFaceup() and (c:IsCode(CARD_DESTINY_BOARD) or c:IsSetCard(0x1c))
 end
@@ -83,8 +62,7 @@ function s.smfilter(c)
 	return c:IsCode(table.unpack(CARDS_SPIRIT_MESSAGE)) and not c:IsForbidden()
 end
 function s.plcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return s.cost(e,tp,eg,ep,ev,re,r,rp,chk) and e:GetHandler():IsAbleToGraveAsCost() end
-	s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -107,7 +85,7 @@ function s.extraop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	if Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x11,0,0,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,tp,181)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and (Duel.GetLocationCount(tp,LOCATION_SZONE)<1 or Duel.SelectYesNo(tp,aux.Stringid(CARD_DARK_SANCTUARY,0))) then
+		and (Duel.GetLocationCount(tp,LOCATION_SZONE)<1	or Duel.SelectYesNo(tp,aux.Stringid(CARD_DARK_SANCTUARY,0))) then
 		tc:AddMonsterAttribute(TYPE_NORMAL,ATTRIBUTE_DARK,RACE_FIEND,1,0,0)
 		Duel.SpecialSummonStep(tc,181,tp,tp,true,false,POS_FACEUP)
 		tc:AddMonsterAttributeComplete()
@@ -118,13 +96,13 @@ function s.extraop(e,tp,eg,ep,ev,re,r,rp)
 		e7:SetRange(LOCATION_MZONE)
 		e7:SetCode(EFFECT_IMMUNE_EFFECT)
 		e7:SetValue(s.efilter)
-		e7:SetReset(RESET_EVENT+0x47c0000)
+		e7:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		tc:RegisterEffect(e7)
 		--cannot be target
 		local e8=Effect.CreateEffect(c)
 		e8:SetType(EFFECT_TYPE_SINGLE)
 		e8:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
-		e8:SetReset(RESET_EVENT+0x47c0000)
+		e8:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		tc:RegisterEffect(e8)
 		Duel.SpecialSummonComplete()
 	elseif Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then

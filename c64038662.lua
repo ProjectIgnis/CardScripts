@@ -1,4 +1,5 @@
 --ヴァリュアブル・フォーム
+--Variable Form
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,8 +7,6 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.eftg1)
-	e1:SetOperation(s.efop)
 	c:RegisterEffect(e1)
 	--equip or spsummon
 	local e2=Effect.CreateEffect(c)
@@ -47,24 +46,6 @@ function s.select(e,tp,b1,b2)
 		local g=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_SZONE,0,1,1,nil,e,tp)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 	end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-end
-function s.eftg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then
-		if e:GetLabel()==0 or e:GetLabel()==1 then return false
-		else return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and s.filter2(chkc,e,tp) end
-	end
-	if chk==0 then return true end
-	local b1=Duel.IsExistingTarget(s.filter1,tp,LOCATION_MZONE,0,2,nil) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-	local b2=Duel.IsExistingTarget(s.filter2,tp,LOCATION_SZONE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	if (not b1 and not b2) or not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		e:SetProperty(0)
-		e:SetCategory(0)
-		e:SetLabel(0)
-		return
-	end
-	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	s.select(e,tp,b1,b2)
 end
 function s.eftg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
@@ -73,7 +54,7 @@ function s.eftg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	local b1=Duel.IsExistingTarget(s.filter1,tp,LOCATION_MZONE,0,2,nil) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 	local b2=Duel.IsExistingTarget(s.filter2,tp,LOCATION_SZONE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 and (b1 or b2) end
+	if chk==0 then return (b1 or b2) end
 	s.select(e,tp,b1,b2)
 end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
@@ -88,6 +69,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e1:SetValue(s.eqlimit)
 			e1:SetLabelObject(tc2)

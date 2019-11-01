@@ -1,12 +1,11 @@
 --ゴーストリック・ロールシフト
+--Ghostrick-Go-Round
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target1)
-	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--pos
 	local e2=Effect.CreateEffect(c)
@@ -15,6 +14,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetCountLimit(1)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target2)
@@ -36,41 +36,6 @@ end
 function s.filter4(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
 end
-function s.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then
-		if e:GetLabel()==0 then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter1(chkc)
-		else return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter3(chkc) end
-	end
-	if chk==0 then return true end
-	local b1=Duel.IsExistingTarget(s.filter1,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.filter2,tp,0,LOCATION_MZONE,1,nil)
-	local b2=Duel.IsExistingTarget(s.filter3,tp,LOCATION_MZONE,0,1,nil)
-	if (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
-		and (b1 or b2) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
-		local op=0
-		if b1 and b2 then
-			op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-		elseif b1 then
-			op=Duel.SelectOption(tp,aux.Stringid(id,1))
-		else
-			op=Duel.SelectOption(tp,aux.Stringid(id,2))+1
-		end
-		e:SetLabel(op)
-		if op==0 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local g=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_MZONE,0,1,1,nil)
-			Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
-		else
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWNDEFENSE)
-			local g=Duel.SelectTarget(tp,s.filter3,tp,LOCATION_MZONE,0,1,1,nil)
-			Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
-		end
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	else
-		e:SetProperty(0)
-	end
-end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
 		if e:GetLabel()==0 then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter1(chkc)
@@ -79,7 +44,7 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b1=Duel.IsExistingTarget(s.filter1,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,0,LOCATION_MZONE,1,nil)
 	local b2=Duel.IsExistingTarget(s.filter3,tp,LOCATION_MZONE,0,1,nil)
-	if chk==0 then return (b1 or b2) and e:GetHandler():GetFlagEffect(id)==0 end
+	if chk==0 then return b1 or b2 end
 	local op=0
 	if b1 and b2 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
@@ -98,10 +63,9 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local g=Duel.SelectTarget(tp,s.filter3,tp,LOCATION_MZONE,0,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 	end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():GetFlagEffect(id)==0 or not e:GetHandler():IsRelateToEffect(e) then return end
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if e:GetLabel()==0 then
 		if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end

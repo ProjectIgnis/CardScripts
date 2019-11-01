@@ -1,13 +1,11 @@
 --ネクロバレーの神殿
---Sacred Temples of Necrovalley
---
+--Necrovalley Temple
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--atk down
 	local e2=Effect.CreateEffect(c)
@@ -28,7 +26,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCode(EVENT_FREE_CHAIN)
-	e4:SetCost(s.accost)
+	e4:SetCountLimit(1)
 	e4:SetCondition(s.accon)
 	e4:SetOperation(s.acop)
 	c:RegisterEffect(e4)
@@ -49,22 +47,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2e)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-		and Duel.IsEnvironment(CARD_NECROVALLEY)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if s.accost(e,tp,eg,ep,ev,re,r,rp,0) and s.accon(e,tp,eg,ep,ev,re,r,rp)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		s.accost(e,tp,eg,ep,ev,re,r,rp,1)
-		e:SetOperation(s.acop)
-	else
-		e:SetOperation(nil)
-	end
-end
-function s.accost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.IsEnvironment(CARD_NECROVALLEY)
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)

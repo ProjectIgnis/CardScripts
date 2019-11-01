@@ -573,6 +573,7 @@ function Auxiliary.FilterEqualFunction(f,value,...)
 end
 --used for Material Types Filter Bool (works for IsRace, IsAttribute, IsType)
 function Auxiliary.FilterSummonCode(...)
+	local params={...}
 	return	function(c,scard,sumtype,tp)
 				return c:IsSummonCode(scard,sumtype,tp,table.unpack(params))
 			end
@@ -580,6 +581,12 @@ end
 function Auxiliary.FilterBoolFunctionEx(f,value)
 	return	function(target,scard,sumtype,tp)
 				return f(target,value,scard,sumtype,tp)
+			end
+end
+function Auxiliary.FilterBoolFunctionEx2(f,...)
+	local params={...}
+	return	function(target,scard,sumtype,tp)
+				return f(target,scard,sumtype,tp,table.unpack(params))
 			end
 end
 function Auxiliary.FilterBoolFunction(f,...)
@@ -1511,9 +1518,10 @@ function Auxiliary.thoeSend(card)
     Duel.SendtoGrave(card,REASON_EFFECT)
 end
 --to simply registering EFFECT_FLAG_CLIENT_HINT to players
-function Auxiliary.RegisterClientHint(card,property,player1,player2,str,reset)
+function Auxiliary.RegisterClientHint(card,property,tp,player1,player2,str,reset)
 --card: card that creates the hintmsg
 --property: additional properties like EFFECT_FLAG_OATH
+--tp: the player registering the effect
 --player1,player2: the players to whom the hint is registered
 --str: the string called
 --reset: additional resets, other than RESET_PHASE+PHASE_END

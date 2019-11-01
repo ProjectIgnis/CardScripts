@@ -1,4 +1,5 @@
 --炎王獣 ガネーシャ
+--Fire King Avatar Arvata
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate

@@ -1,12 +1,11 @@
 --ラッキー・チャンス！
+--Lucky Chance
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.cointg)
-	e1:SetOperation(s.coinop)
 	c:RegisterEffect(e1)
 	--coin
 	local e2=Effect.CreateEffect(c)
@@ -18,7 +17,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCondition(s.coincon)
 	e2:SetOperation(s.coinop)
-	e2:SetLabel(1)
 	c:RegisterEffect(e2)
 end
 function s.coincon(e,tp,eg,ep,ev,re,r,rp)
@@ -28,21 +26,9 @@ function s.coincon(e,tp,eg,ep,ev,re,r,rp)
 		return true
 	else return false end
 end
-function s.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	e:SetLabel(0)
-	local cc=Duel.GetCurrentChain()
-	if cc==1 then return end
-	local te=Duel.GetChainInfo(cc-1,CHAININFO_TRIGGERING_EFFECT)
-	local ex,eg,et,cp,ct=Duel.GetOperationInfo(cc-1,CATEGORY_COIN)
-	if ex and ct==1 and te:IsActiveType(TYPE_MONSTER) then
-		e:SetLabel(1)
-		e:SetLabelObject(te)
-	end
-end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if e:GetLabel()==0 or not c:IsRelateToEffect(e) then return end
+	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COIN)
 	local res=1-Duel.SelectOption(tp,60,61)
 	local e1=Effect.CreateEffect(c)

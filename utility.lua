@@ -1499,9 +1499,10 @@ function Auxiliary.thoeSend(card)
     Duel.SendtoGrave(card,REASON_EFFECT)
 end
 --to simply registering EFFECT_FLAG_CLIENT_HINT to players
-function Auxiliary.RegisterClientHint(card,property,player1,player2,str,reset)
+function Auxiliary.RegisterClientHint(card,property,tp,player1,player2,str,reset)
 --card: card that creates the hintmsg
 --property: additional properties like EFFECT_FLAG_OATH
+--tp: the player registering the effect
 --player1,player2: the players to whom the hint is registered
 --str: the string called
 --reset: additional resets, other than RESET_PHASE+PHASE_END

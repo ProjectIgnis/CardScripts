@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e2)
 	Duel.SpecialSummonComplete()
 	local tg=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_EXTRA,0,nil,tc)
-	if #tg:>0 then
+	if #tg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=tg:Select(tp,1,1,nil)
 		local sc=sg:GetFirst()

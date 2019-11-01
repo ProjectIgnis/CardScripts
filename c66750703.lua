@@ -1,5 +1,5 @@
 --
---Fire Fortress on Mount Liang
+--Fire Fortress atop Liang Peak
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)

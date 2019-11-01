@@ -1,4 +1,5 @@
 --虹光の宣告者
+--Herald of the Arc Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

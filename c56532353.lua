@@ -1,4 +1,5 @@
 --真青眼の究極竜
+--Neo Blue-Eyes Ultimate Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

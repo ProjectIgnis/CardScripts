@@ -1,5 +1,5 @@
 --剛鬼ジャドウ・オーガ
---Gouki Shadow Ogre
+--Gouki Heel Ogre
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

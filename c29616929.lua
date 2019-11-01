@@ -1,4 +1,5 @@
 --蟲惑の落とし穴
+--Traptrix Trap Hole Nightmare
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

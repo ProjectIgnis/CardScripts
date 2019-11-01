@@ -1,4 +1,5 @@
 --サイバー・エンジェル－美朱濡－
+--Cyber Angel Vrash
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

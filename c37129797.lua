@@ -69,7 +69,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.drfilter(c)
-	return c:IsRace(RACE_ZOMBIE) and c:IsPreviousLocation(LOCATION_GRAVE)
+	return ((c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_ZOMBIE)) 
+		or (not c:IsLocation(LOCATION_MZONE) and c:GetPreviousRaceOnField()==RACE_ZOMBIE)) 
+		and c:GetSummonLocation()==LOCATION_GRAVE
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.drfilter,1,nil) and not eg:IsContains(e:GetHandler())

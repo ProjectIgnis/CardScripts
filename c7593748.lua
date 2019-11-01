@@ -66,12 +66,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	ge2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(ge2,tp)
 	--client hint
-	local ge3=Effect.CreateEffect(c)
-	ge3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	ge3:SetDescription(aux.Stringid(id,2))
-	ge3:SetReset(RESET_PHASE+PHASE_END)
-	ge3:SetTargetRange(1,0)
-	Duel.RegisterEffect(ge3,tp)
+	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 	local tg=Duel.GetTargetCards(e)
 	if #tg>0 then
 		Duel.GetControl(tg,tp,PHASE_END,1)

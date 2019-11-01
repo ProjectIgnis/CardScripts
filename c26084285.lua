@@ -1,4 +1,5 @@
 --墓守の監視者
+--Gravekeeper's Watcher
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate

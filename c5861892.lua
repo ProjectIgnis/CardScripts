@@ -1,4 +1,5 @@
 --アルカナフォースEX－THE LIGHT RULER
+--Arcana Force EX - The Light Ruler
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

@@ -1,4 +1,5 @@
 --超電導戦機インペリオン・マグナム
+--Imperion Magnum the Superconductive Battlebot
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

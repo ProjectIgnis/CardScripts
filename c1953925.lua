@@ -1,4 +1,5 @@
 --古代の機械工兵
+--Ancient Gear Engineer
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable&destroy

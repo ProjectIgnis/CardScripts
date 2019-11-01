@@ -1,4 +1,5 @@
 --Kozmo－ダーク・エルファイバー
+--Kozmoll Dark Lady
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

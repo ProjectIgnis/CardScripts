@@ -1,4 +1,5 @@
 --朱光の宣告者
+--Herald of Orange Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate

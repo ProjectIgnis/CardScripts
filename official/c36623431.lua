@@ -1,4 +1,5 @@
 --コアキメイルの鋼核
+--Iron Core of Koa'ki Meiru
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -8,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PREDRAW)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(s.condition1)
+	e2:SetCost(s.cost1)
 	e1:SetTarget(s.target1)
 	e1:SetOperation(s.operation1)
 	c:RegisterEffect(e1)
@@ -29,27 +31,18 @@ function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
 		and Duel.GetDrawCount(tp)>0
 end
+function s.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsAbleToHand() end
+	Duel.GiveUpDraw(e)
+end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end
-	local dt=Duel.GetDrawCount(tp)
-	if dt~=0 then
-		_replace_count=0
-		_replace_max=dt
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e1:SetCode(EFFECT_DRAW_COUNT)
-		e1:SetTargetRange(1,0)
-		e1:SetReset(RESET_PHASE+PHASE_DRAW)
-		e1:SetValue(0)
-		Duel.RegisterEffect(e1,tp)
-	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function s.operation1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	_replace_count=_replace_count+1
-	if _replace_count<=_replace_max and c:IsRelateToEffect(e) then
+	if Duel.CheckGiveUpDraw(e) and _replace_count<=_replace_max and c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,c)
 	end

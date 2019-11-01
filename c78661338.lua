@@ -1,5 +1,5 @@
 --幻創龍ファンタズメイ
---Illusion Dragon Phantazmei
+--Fantastical Dragon Phantazmay
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

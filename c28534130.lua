@@ -24,118 +24,51 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x119}
-function s.filter(c,e,tp)
-	return c:IsSetCard(0x119) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.spfilter2(c,mc)
+	return c:IsSetCard(0x119) and c:IsLinkSummonable(nil,mc)
 end
 function s.spfilter(c,e,tp)
-	return s.filter(c,e,tp)
-		and Duel.IsExistingMatchingCard(s.lkfilter,tp,LOCATION_EXTRA,0,1,nil,c,tp)
-end
-function s.lkfilter(c,mc,tp)
-	return c:IsSetCard(0x119) and c:IsLinkMonster()
-		and (not mc or mc:IsCanBeLinkMaterial(c,tp)) and c:IsSpecialSummonable(SUMMON_TYPE_LINK)
-end
-function s.extramat(chk,summon_type,e,...)
-	local c=e:GetHandler()
-	if chk==0 then
-		local tp,sc=...
-		if not summon_type==SUMMON_TYPE_LINK then
-			return Group.CreateGroup()
-		else
-			return Group.FromCards(c)
-		end
-	end
+	return c:IsSetCard(0x119) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,1,nil,c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local og=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
-	local oeff={}
-	for oc in aux.Next(og) do
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetRange(LOCATION_HAND)
-		e2:SetCode(EFFECT_EXTRA_MATERIAL)
-		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e2:SetTargetRange(1,0)
-		e2:SetValue(s.extramat)
-		oc:RegisterEffect(e2,true)
-		table.insert(oeff,e2)
-	end
-	if chk==0 then
-		local res=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonCount(tp,2) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
-		for _,oe in ipairs(oeff) do
-			oe:Reset()
-		end
-		return res
-	end
-	for _,oe in ipairs(oeff) do
-		oe:Reset()
-	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
+		and Duel.IsPlayerCanSpecialSummonCount(tp,2) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND+LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
-	local og=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
-	local oeff={}
-	for oc in aux.Next(og) do
-		local e0=Effect.CreateEffect(c)
-		e0:SetType(EFFECT_TYPE_FIELD)
-		e0:SetRange(LOCATION_HAND)
-		e0:SetCode(EFFECT_EXTRA_MATERIAL)
-		e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e0:SetTargetRange(1,0)
-		e0:SetValue(s.extramat)
-		e0:SetReset(RESET_CHAIN)
-		oc:RegisterEffect(e0,true)
-		table.insert(oeff,e0)
-	end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
-	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		tc:RegisterEffect(e2)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD)
-		e3:SetRange(LOCATION_MZONE)
-		e3:SetCode(EFFECT_MUST_BE_MATERIAL)
-		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE)
-		e3:SetTargetRange(1,0)
-		e3:SetValue(REASON_LINK)
-		e3:SetReset(RESET_CHAIN)
-		tc:RegisterEffect(e3)
-		Duel.SpecialSummonComplete()
-		for _,oe in ipairs(oeff) do
-			oe:Reset()
-		end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sc=Duel.SelectMatchingCard(tp,s.lkfilter,tp,LOCATION_EXTRA,0,1,1,nil):GetFirst()
-		if sc then
-			Duel.SpecialSummonRule(tp,sc,SUMMON_TYPE_LINK)
-			local e4=Effect.CreateEffect(c)
-			e4:SetType(EFFECT_TYPE_SINGLE)
-			e4:SetCode(EFFECT_CANNOT_TRIGGER)
-			e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			sc:RegisterEffect(e4)
-			local e5=e4:Clone()
-			e5:SetCode(EFFECT_CANNOT_ATTACK)
-			sc:RegisterEffect(e5)
-		end
-	else
-		for _,oe in ipairs(oeff) do
-			oe:Reset()
-		end
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+	local tc=g:GetFirst()
+	if not tc or not Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+		return false
 	end
-end
-function s.tdfilter(c)
-	return c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsAbleToExtra()
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	tc:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_DISABLE_EFFECT)
+	tc:RegisterEffect(e2)
+	Duel.SpecialSummonComplete()
+	local tg=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_EXTRA,0,nil,tc)
+	if #tg>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local sg=tg:Select(tp,1,1,nil)
+		local sc=sg:GetFirst()
+		Duel.LinkSummon(tp,sc,nil,tc)
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_CANNOT_ATTACK)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		sc:RegisterEffect(e3)
+		local e4=e3:Clone()
+		e4:SetCode(EFFECT_CANNOT_TRIGGER)
+		sc:RegisterEffect(e4)
+	end
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end

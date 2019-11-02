@@ -1,6 +1,6 @@
 --I:Pマスカレーナ
---I:P Maskerena
---Scripted by Eerie Code
+--I:P Masquerena
+--Scripted by Eerie Code, updated by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1c0+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.spcon)
@@ -34,45 +34,18 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return Duel.GetTurnPlayer()~=tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
-function s.spfilter(c)
-	return c:IsLinkMonster() and c:IsSpecialSummonable(SUMMON_TYPE_LINK)
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EFFECT_MUST_BE_MATERIAL)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetValue(REASON_LINK)
-	e1:SetReset(RESET_CHAIN)
-	c:RegisterEffect(e1)
-	if chk==0 then
-		local res=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil) 
-		e1:Reset()
-		return res
-	end
-	e1:Reset()
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsLinkSummonable,tp,LOCATION_EXTRA,0,1,nil,nil,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EFFECT_MUST_BE_MATERIAL)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetValue(REASON_LINK)
-	e1:SetReset(RESET_CHAIN)
-	c:RegisterEffect(e1)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil)
-	local tc=g:GetFirst()
-	if tc then
-		Duel.SpecialSummonRule(tp,tc,SUMMON_TYPE_LINK)
+	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) then return end
+	local g=Duel.GetMatchingGroup(Card.IsLinkSummonable,tp,LOCATION_EXTRA,0,nil,nil,c)
+	if #g>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local sg=g:Select(tp,1,1,nil)
+		Duel.LinkSummon(tp,sg:GetFirst(),nil,c)
 	end
 end
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)

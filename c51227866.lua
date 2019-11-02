@@ -1,5 +1,5 @@
 --閃刀機－シャークキャノン
---Brandish Mecha Shark Cannon
+--Sky Striker Mecha - Shark Cannon
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,18 +31,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(c,e,tp,spchk) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_GRAVE,1,1,nil)
-	local c=g:GetFirst()
-	if spchk and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsAbleToRemove() then
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
-	elseif not (spchk and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) and c:IsAbleToRemove() then
-		e:SetCategory(CATEGORY_REMOVE)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
-	else 
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
-	end
+	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_GRAVE,1,1,nil)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

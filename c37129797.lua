@@ -71,7 +71,7 @@ end
 function s.drfilter(c)
 	return ((c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_ZOMBIE)) 
 		or (not c:IsLocation(LOCATION_MZONE) and c:GetPreviousRaceOnField()==RACE_ZOMBIE)) 
-		and c:GetSummonLocation()==LOCATION_GRAVE
+		and c:IsSummonLocation(LOCATION_GRAVE)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.drfilter,1,nil) and not eg:IsContains(e:GetHandler())

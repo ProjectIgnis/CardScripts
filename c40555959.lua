@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.remop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xb}
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_HAND,0,1,nil)

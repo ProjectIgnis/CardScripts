@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xe1}
 function s.cfilter(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsSummonType(SUMMON_TYPE_FUSION)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,c:GetLevel(),e,tp)

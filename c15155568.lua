@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xd7}
 function s.cfilter(c)
 	return c:IsFaceup() and aux.IsMaterialListCode(c,78193831)
 end

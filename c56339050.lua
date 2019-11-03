@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x21}
 function s.cfilter(c,atk)
 	return c:IsFaceup() and c:IsSetCard(0x21) and c:GetAttack()>atk
 end

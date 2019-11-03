@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9d}
 function s.target(e,tp,eg,ep,ev,re,r,rp,tc,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)

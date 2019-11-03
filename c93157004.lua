@@ -46,6 +46,7 @@ function s.initial_effect(c)
 	e5:SetCode(21142671)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x30}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and ec:IsSetCard(0x30)
 end

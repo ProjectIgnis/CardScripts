@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1073,0x1048,0x95}
+s.listed_series={0x95,0x1048,0x1073}
 function s.cfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsDiscardable()	
 end

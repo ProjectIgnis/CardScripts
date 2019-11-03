@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x40,0xde}
 function s.tgfilter(c)
 	return ((c:IsSetCard(0x40) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0xde)) and c:IsAbleToGrave()
 end

@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xc6}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

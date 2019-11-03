@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb5}
+s.listed_series={0xb5,0x40b5,0x10b5,0x20b5}
 s.material_setcode={0xb5,0x10b5,0x20b5,0x40b5}
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_MZONE,0,nil)

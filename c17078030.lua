@@ -1,4 +1,5 @@
 --光の護封壁
+--Wall of Revealing Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -23,7 +24,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local t={}
 	local f=math.floor((lp)/1000)
 	local l=1
-	while l<=f and l<=20 do
+	while l<=f do
 		t[l]=l*1000
 		l=l+1
 	end

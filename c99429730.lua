@@ -1,4 +1,5 @@
 --森羅の番人 オーク
+--Sylvan Guardioak
 local s,id=GetID()
 function s.initial_effect(c)
 	--deck
@@ -33,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct>3 then ct=3 end
 	local t={}
 	for i=1,ct do t[i]=i end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+	Duel.Hint(HINGMSG_NUMBER,tp,HINT_NUMBER)
 	local ac=Duel.AnnounceNumber(tp,table.unpack(t))
 	Duel.ConfirmDecktop(tp,ac)
 	local g=Duel.GetDecktopGroup(tp,ac)

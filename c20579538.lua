@@ -1,4 +1,5 @@
 --森羅の姫芽君 スプラウト
+--Sylvan Princessprout
 local s,id=GetID()
 function s.initial_effect(c)
 	--deck check

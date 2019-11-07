@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.imval1)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x42,0x4b}
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsSetCard(0x42,scard,sumtype,tp) and c:IsLevelBelow(5)
 end

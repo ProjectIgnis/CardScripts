@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x59}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsSetCard(0x59)
 end

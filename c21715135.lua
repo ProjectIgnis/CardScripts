@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_series={0x54}
 function s.counterfilter(c)
 	return c:IsSummonType(SUMMON_TYPE_XYZ)
 end

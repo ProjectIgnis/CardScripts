@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e4:SetHintTiming(0,TIMING_MAIN_END)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x32}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end

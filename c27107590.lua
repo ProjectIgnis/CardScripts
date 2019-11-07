@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x4a}
 function s.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

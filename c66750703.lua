@@ -59,7 +59,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.counter_add_list={0x201}
-s.listed_series={0x79,0x7c}
+s.listed_series={0x79}
 function s.ctfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x79)
 end

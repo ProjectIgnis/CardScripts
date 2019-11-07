@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x98}
 function s.evalue(e,re,rp)
 	return re:IsActiveType(TYPE_TRAP) and rp~=e:GetHandlerPlayer()
 end

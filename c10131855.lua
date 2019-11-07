@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x6}
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 	if #g>0 then

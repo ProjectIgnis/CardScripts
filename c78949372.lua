@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.effectfilter)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xd0}
 function s.filter(c)
 	return c:IsSetCard(0xd0) and c:IsAbleToDeck()
 end

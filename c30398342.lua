@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sumlimit)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9e}
 function s.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)

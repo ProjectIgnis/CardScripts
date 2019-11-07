@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x120,0x3008}
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==2 then
 		if e:IsHasType(EFFECT_TYPE_ACTIVATE) then

@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SUMMON,s.counterfilter)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_series={0x76,0x92}
 function s.counterfilter(c)
 	return c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_XYZ) or c:IsSetCard(0x76)
 end

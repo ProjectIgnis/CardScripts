@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lpop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x48}
 s.xyz_number=6
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and ec:IsSetCard(0x48)

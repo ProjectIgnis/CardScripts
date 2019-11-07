@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.sdcon)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xe6}
 function s.cfilter(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsPreviousLocation(LOCATION_HAND)
 end

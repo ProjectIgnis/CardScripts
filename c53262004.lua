@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x99}
 s.material_setcode=0x99
 function s.filter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsAbleToHand()

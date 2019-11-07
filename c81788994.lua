@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e4:SetCode(id)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x9d}
 function s.cfilter(c)
 	return c:IsSetCard(0x9d) and c:IsType(TYPE_MONSTER) and c:IsReason(REASON_EFFECT)
 end

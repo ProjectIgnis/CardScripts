@@ -40,6 +40,7 @@ function s.initial_effect(c)
 		end)
 	end)
 end
+s.listed_series={0x9a}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:IsRelateToBattle() and tc:IsStatus(STATUS_OPPO_BATTLE)

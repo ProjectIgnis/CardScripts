@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x26}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x26) and c:IsAttackPos() and c:IsCanChangePosition()
 end

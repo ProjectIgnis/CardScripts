@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.ffilter(c,fc,sumtype,tp,sub,mg,sg)
-	return (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetSummonCode(fc,sumtype,tp),fc,tp))
+	return (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,tp))
 end
 function s.fusfilter(c,code,fc,tp)
 	return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,tp,code) and not c:IsHasEffect(511002961)

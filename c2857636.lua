@@ -1,6 +1,5 @@
 --トロイメア・フェニックス
---Troymare Phoenix
---
+--Knightmare Phoenix
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

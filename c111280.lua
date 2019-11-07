@@ -65,12 +65,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetValue(s.indval)
 		e3:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e3,tp)
-		local e4=Effect.CreateEffect(e:GetHandler())
-		e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-		e4:SetDescription(aux.Stringid(id,1))
-		e4:SetReset(RESET_PHASE+PHASE_END)
-		e4:SetTargetRange(1,1)
-		Duel.RegisterEffect(e4,tp)
+		aux.RegisterClientHint(e:GetHandler(),nil,tp,1,1,aux.Stringid(id,1),nil)
 	end
 	if ct>=3 then
 		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)

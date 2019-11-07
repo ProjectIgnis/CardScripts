@@ -71,12 +71,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e1:SetLabel(g:GetFirst():GetFieldID())
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-		e2:SetDescription(aux.Stringid(id,1))
-		e2:SetReset(RESET_PHASE+PHASE_END)
-		e2:SetTargetRange(0,1)
-		Duel.RegisterEffect(e2,tp)
+		aux.RegisterClientHint(e:GetHandler(),nil,tp,0,1,aux.Stringid(id,1),nil)
 	end
 end
 function s.ftarget(e,c)

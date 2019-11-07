@@ -81,12 +81,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,0)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	local e2=Effect.CreateEffect(c)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetReset(RESET_PHASE+PHASE_END)
-	e2:SetTargetRange(1,0)
-	Duel.RegisterEffect(e2,tp) 
+	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.atktg(e,c)
 	return e:GetLabelObject()~=c

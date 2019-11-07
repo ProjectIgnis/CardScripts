@@ -1,4 +1,5 @@
 --超戦士の盾
+--Super Soldier Shield
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --巨大要塞ゼロス
+--B.E.F. Zelos
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

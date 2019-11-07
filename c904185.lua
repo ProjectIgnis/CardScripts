@@ -1,4 +1,5 @@
 --垂直着陸
+--Vertical Landing
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

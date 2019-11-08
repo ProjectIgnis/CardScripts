@@ -29,7 +29,7 @@ function s.matfilter(c,lc,sumtype,tp)
 	return not c:IsType(TYPE_TOKEN,lc,sumtype,tp)
 end
 function s.atkval(e,c)
-	return c:GetMutualLinkedGroupCount()*300
+	return #(c:GetMutualLinkedGroup():Filter(Card.IsType,nil,TYPE_MONSTER))*300
 end
 function s.rfilter(c,tp,g)
 	local lk=c:GetLink()

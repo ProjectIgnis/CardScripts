@@ -28,8 +28,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)	
 end
-function s.tgcon(e)
-	return e:GetHandler():GetLinkedGroupCount()>0
+function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetLinkedGroup():IsExists(Card.IsType,1,nil,TYPE_MONSTER)
 end
 function s.cfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()

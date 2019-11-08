@@ -32,7 +32,7 @@ end
 s.listed_series={0x3b}
 s.material_setcode={0x3b,0x45}
 function s.mfilter1(c,fc,sumtype,tp)
-	return c:IsFusionSetCard(0x45) and c:IsType(TYPE_NORMAL,fc,sumtype,tp) and c:GetLevel()==6
+	return c:IsSetCard(0x45,fc,sumtype,tp) and c:IsType(TYPE_NORMAL,fc,sumtype,tp) and c:GetLevel()==6
 end
 function s.mfilter2(c,fc,sumtype,tp)
 	return c:IsFusionSetCard(0x3b) and c:IsType(TYPE_NORMAL,fc,sumtype,tp)

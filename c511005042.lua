@@ -1,14 +1,12 @@
 --Hell Centipede
---  By Shad3
-
-local scard=s
-
-function scard.initial_effect(c)
+--scripted by Shad3
+local s,id=GetID()
+function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCondition(scard.sum_cd)
+	e1:SetCondition(s.sum_cd)
 	e1:SetDescription(aux.Stringid(4001,4))
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
@@ -18,8 +16,7 @@ function scard.initial_effect(c)
 	e2:SetValue(0x21b)
 	c:RegisterEffect(e2)
 end
-
-function scard.sum_cd(e,c)
+function s.sum_cd(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return c:GetLevel()>4

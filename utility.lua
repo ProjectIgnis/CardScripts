@@ -188,25 +188,6 @@ end
 function Group.Includes(g1,g2)
 	return #(g1-g2)+#g2==#g1
 end
-function Auxiliary.ExtraLinked(c,emc,eg)
-	eg:AddCard(c)
-	local res=(c==emc) or (c:GetMutualLinkedGroup():IsExists(Auxiliary.ExtraLinked,1,eg,emc,eg))
-	eg:RemoveCard(c)
-	return res
-end
-function Card.IsExtraLinked(c)
-	local card5=Duel.GetFieldCard(0,LOCATION_MZONE,5) and Duel.GetFieldCard(0,LOCATION_MZONE,5) or Duel.GetFieldCard(1,LOCATION_MZONE,6)
-	local card6=Duel.GetFieldCard(0,LOCATION_MZONE,6) and Duel.GetFieldCard(0,LOCATION_MZONE,6) or Duel.GetFieldCard(1,LOCATION_MZONE,5)
-	if card5 and card6 then
-		local mg=c:GetMutualLinkedGroup()
-		local emg=(Group.FromCards(card5,card6)-c)
-		for card in aux.Next(emg) do
-			if not mg:IsExists(Auxiliary.ExtraLinked,1,nil,card,Group.FromCards(c)) then return false end
-		end
-		return true
-	end
-	return false
-end
 --for additional registers
 local regeff=Card.RegisterEffect
 function Card.RegisterEffect(c,e,forced,...)

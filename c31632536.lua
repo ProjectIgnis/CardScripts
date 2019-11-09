@@ -31,7 +31,7 @@ function s.caop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.caop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if e:GetLabelObject():GetLabel()==1 and c:IsRelateToBattle() and c:IsChainAttackable()
+	if e:GetLabelObject():GetLabel()==1 and c:IsRelateToBattle() and c:CanChainAttack()
 		and Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_GRAVE,0,nil,0x39)>=2 then
 		Duel.ChainAttack()
 	end

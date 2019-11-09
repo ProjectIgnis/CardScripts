@@ -24,7 +24,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return aux.bdcon(e,tp,eg,ep,ev,re,r,rp) and c:IsChainAttackable() and c:GetFlagEffect(id)~=0
+	return aux.bdcon(e,tp,eg,ep,ev,re,r,rp) and c:CanChainAttack() and c:GetFlagEffect(id)~=0
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChainAttack()

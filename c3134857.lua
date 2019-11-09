@@ -41,7 +41,7 @@ function s.matcheck(g,lc,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x11b,lc,SUMMON_TYPE_LINK,tp)
 end
 function s.indcon(e)
-	return e:GetHandler():IsLinkState()
+	return e:GetHandler():IsLinked()
 end
 function s.tdcon1(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORPHEGEL_BABEL)
@@ -60,7 +60,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLinkState()
+	return c:IsFaceup() and c:IsLinked()
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

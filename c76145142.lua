@@ -37,7 +37,7 @@ function s.matcheck(g,lc,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x11b,lc,SUMMON_TYPE_LINK,tp)
 end
 function s.indcon(e)
-	return e:GetHandler():IsLinkState()
+	return e:GetHandler():IsLinked()
 end
 function s.tdcon1(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORPHEGEL_BABEL)
@@ -72,7 +72,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local og=Duel.GetOperatedGroup()
 	if #og==0 then return end
 	if og:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local g=Duel.GetMatchingGroup(Card.IsLinkState,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsLinked,tp,0,LOCATION_MZONE,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

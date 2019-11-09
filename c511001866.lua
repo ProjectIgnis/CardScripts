@@ -33,7 +33,7 @@ function s.atktarget(e,c)
 end
 function s.filter(c,rk)
 	local atkct=c:GetEffectCount(EFFECT_EXTRA_ATTACK)+1
-	return c:IsFaceup() and c:GetRank()>0 and c:GetRank()<rk and c:IsAttackable() and c:GetAttackedCount()<atkct
+	return c:IsFaceup() and c:GetRank()>0 and c:GetRank()<rk and c:CanAttack() and c:GetAttackedCount()<atkct
 end
 function s.atktarget2(e,c)
 	local rk=c:GetRank()

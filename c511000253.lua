@@ -50,7 +50,7 @@ s.listed_names={100000365}
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:GetControler()~=tp and chkc:IsLocation(LOCATION_MZONE) end
-	if chk==0 then return c:IsAttackable() 
+	if chk==0 then return c:CanAttack() 
 		and Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)   
 end
@@ -58,7 +58,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsRelateToEffect(e) 
-		and c:IsAttackable() and not c:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e) then
+		and c:CanAttack() and not c:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetReset(RESET_CHAIN)

@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsAttackable() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:CanAttack() then
 		if Duel.NegateAttack(tc) then
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end

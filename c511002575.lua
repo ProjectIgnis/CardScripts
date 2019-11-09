@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc and tc:IsRelateToBattle() and tc:IsAttackable() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
+	if tc and tc:IsRelateToBattle() and tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,Card.IsDestructable,tp,LOCATION_MZONE,0,1,1,nil)
 		g:AddCard(tc)
@@ -59,7 +59,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc and tc:IsRelateToBattle() and tc:IsAttackable() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
+	if tc and tc:IsRelateToBattle() and tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
 		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,0,e:GetHandler())
 		g:AddCard(tc)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)

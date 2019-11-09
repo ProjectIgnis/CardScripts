@@ -85,7 +85,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsAttackable() and not tc:IsStatus(STATUS_ATTACK_CANCELED) 
+	if tc and tc:IsRelateToEffect(e) and tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED) 
 		and Duel.Destroy(tc,REASON_EFFECT)>0 then
 		Duel.Damage(1-tp,tc:GetPreviousAttackOnField(),REASON_EFFECT)
 	end

@@ -19,7 +19,7 @@ function s.filter(c,e,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc:IsFaceup() and tc:IsAttackable() and Duel.NegateAttack() then 
+	if tc:IsFaceup() and tc:CanAttack() and Duel.NegateAttack() then 
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(525110,1)) then

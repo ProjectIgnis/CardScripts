@@ -26,7 +26,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local op=1-tp
-	if tc and tc:IsRelateToEffect(e) and tc:IsAttackable() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
+	if tc and tc:IsRelateToEffect(e) and tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
 		if Duel.Destroy(tc,REASON_EFFECT)>0 then
 			local mg=tc:GetMaterial()
 			if mg:IsExists(s.mgfilter,1,nil,e,op,tc) then

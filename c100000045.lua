@@ -52,7 +52,7 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsAttackable()
+	return c:IsFaceup() and c:CanAttack()
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

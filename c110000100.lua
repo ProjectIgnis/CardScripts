@@ -79,7 +79,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc:IsRelateToEffect(e) and tc:IsAttackable() and Duel.NegateAttack() then
+	if tc:IsRelateToEffect(e) and tc:CanAttack() and Duel.NegateAttack() then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

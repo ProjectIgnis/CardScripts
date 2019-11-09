@@ -26,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc and tc:IsRelateToBattle() and tc:IsAttackable() and not tc:IsStatus(STATUS_ATTACK_CANCELED)
+	if tc and tc:IsRelateToBattle() and tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED)
 		and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
 		Duel.Damage(1-tp,tc:GetAttack(),REASON_EFFECT)

@@ -18,7 +18,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	local bt=Duel.GetAttackTarget()
 	if not (bt:IsRelateToBattle() and bt:IsControler(tp)) then return end
-	if at:IsAttackable() and not at:IsStatus(STATUS_ATTACK_CANCELED) then
+	if at:CanAttack() and not at:IsStatus(STATUS_ATTACK_CANCELED) then
 		Duel.ChangeAttackTarget(nil)
 	end
 end

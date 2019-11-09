@@ -24,7 +24,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,atk)
 	local atkct=c:GetEffectCount(EFFECT_EXTRA_ATTACK)+1
-	return c:IsFaceup() and c:GetAttack()>atk and c:IsAttackable() and c:GetAttackedCount()<atkct
+	return c:IsFaceup() and c:GetAttack()>atk and c:CanAttack() and c:GetAttackedCount()<atkct
 end
 function s.atktarget(e,c)
 	local atk=c:GetAttack()

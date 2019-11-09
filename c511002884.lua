@@ -20,7 +20,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsAttackable() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:CanAttack() then
 		if Duel.NegateAttack() then
 			Duel.BreakEffect()
 			local e1=Effect.CreateEffect(e:GetHandler())

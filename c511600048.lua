@@ -42,7 +42,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local at=Duel.GetAttacker()
-		if at:IsAttackable() and not at:IsImmuneToEffect(e) and Duel.ChangeAttackTarget(tc) then
+		if at:CanAttack() and not at:IsImmuneToEffect(e) and Duel.ChangeAttackTarget(tc) then
 			Duel.BreakEffect()
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
@@ -80,7 +80,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
 		local at=Duel.GetAttacker()
-		if at:IsAttackable() and not at:IsImmuneToEffect(e) and Duel.ChangeAttackTarget(tc) then
+		if at:CanAttack() and not at:IsImmuneToEffect(e) and Duel.ChangeAttackTarget(tc) then
 			Duel.BreakEffect()
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)

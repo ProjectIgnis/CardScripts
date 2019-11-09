@@ -1,5 +1,5 @@
 --Hell Centipede
---scripted by Shad3
+--original script by Shad3
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)

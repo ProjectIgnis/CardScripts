@@ -1,0 +1,11 @@
+language: minimal
+os: linux
+dist: bionic
+git:
+  depth: 1
+install:
+- git clone --depth=1 --branch=$BINARY_BRANCH https://$BINARY_TOKEN@github.com/$BINARY_REPO.git bin
+- git clone --depth=1 https://$BINARY_TOKEN@github.com/$LAPLACE_REPO.git laplace
+- cp bin/script_syntax_check bin/libocgcore.so .
+- cp laplace/constant.lua laplace/utility.lua laplace/proc_*.lua .
+script: ./script_syntax_check

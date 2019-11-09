@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xfc}
+function s.matfilter(c,scard,sumtype,tp)
 	return c:IsSetCard(0xfc,lc,sumtype,tp)
 end
 function s.indesfil(c)

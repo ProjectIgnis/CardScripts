@@ -43,7 +43,7 @@ function s.cfilter(c)
 	return c:GetFlagEffect(id+seq)==0 and (not c:IsPreviousLocation(LOCATION_PZONE) or c:GetPreviousSequence()~=seq)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local tot=Duel.GetMasterRule()>=4 and 4 or 13
+	local tot=Duel.IsDuelType(DUEL_SEPARATE_PZONE) and 13 or 4
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_PZONE,LOCATION_PZONE,nil)
 	local tc=g:GetFirst()
 	while tc do

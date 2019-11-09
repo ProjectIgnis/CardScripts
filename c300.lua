@@ -20,14 +20,14 @@ if not DeckMasters then
 
 	local isloc=Card.IsLocation
 		Card.IsLocation=function(c,loc)
-			if (Duel.GetMasterRule()<4 and isloc(c,LOCATION_MZONE) and c:GetSequence()==5) or (Duel.GetMasterRule()>=4 and isloc(c,LOCATION_SZONE) and c:GetSequence()==6) then
+			if (Duel.IsDuelType(DUEL_SEPARATE_PZONE) and isloc(c,LOCATION_MZONE) and c:GetSequence()==5) or (not Duel.IsDuelType(DUEL_SEPARATE_PZONE) and isloc(c,LOCATION_SZONE) and c:GetSequence()==6) then
 				return (loc&0x400)==0x400
 			else
 				return isloc(c,loc)
 			end
 		end
 	local dmzonechk=function(c) 
-		return (Duel.GetMasterRule()<4 and isloc(c,LOCATION_MZONE) and c:GetSequence()==5) or (Duel.GetMasterRule()>=4 and isloc(c,LOCATION_SZONE) and c:GetSequence()==6)
+		return (Duel.IsDuelType(DUEL_SEPARATE_PZONE) and isloc(c,LOCATION_MZONE) and c:GetSequence()==5) or (not Duel.IsDuelType(DUEL_SEPARATE_PZONE) and isloc(c,LOCATION_SZONE) and c:GetSequence()==6)
 	end
 	local isexist=Duel.IsExistingMatchingCard
 		Duel.IsExistingMatchingCard=function(f,tp,int_s,int_o,count,ex,...)
@@ -135,7 +135,7 @@ if not DeckMasters then
 	end
 
 	function Duel.CheckDMZone(p)
-		if Duel.GetMasterRule()<4 then
+		if Duel.IsDuelType(DUEL_SEPARATE_PZONE) then
 			return not Duel.GetFieldCard(p,LOCATION_MZONE,5)
 		else
 			return not Duel.GetFieldCard(p,LOCATION_SZONE,6)
@@ -143,7 +143,7 @@ if not DeckMasters then
 	end
 
 	function Duel.MoveToDMZone(c,p)
-		if Duel.GetMasterRule()<4 then
+		if Duel.IsDuelType(DUEL_SEPARATE_PZONE) then
 			Duel.MoveToField(c,p,p,LOCATION_MZONE,POS_FACEUP_ATTACK,true,(1<<5))
 		else
 			Duel.MoveToField(c,p,p,LOCATION_SZONE,POS_FACEUP_ATTACK,true)

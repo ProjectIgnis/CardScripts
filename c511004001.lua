@@ -103,7 +103,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disop(e,tp)
-	if Duel.GetMasterRule()<4 then
+	if Duel.IsDuelType(DUEL_SEPARATE_PZONE) then
 		return 0x11111111
 	else
 		return 0xA110A11

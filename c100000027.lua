@@ -31,7 +31,7 @@ function s.ffilter2(c,fc,sumtype,tp)
 	return (c:IsLevel(5) or c:IsLevel(6)) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(1-tp)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler()==Duel.GetAttacker() and e:GetHandler():IsChainAttackable()
+	return e:GetHandler()==Duel.GetAttacker() and e:GetHandler():CanChainAttack()
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)~=0
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)	

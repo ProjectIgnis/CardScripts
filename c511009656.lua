@@ -56,5 +56,5 @@ function s.atkcon(e)
 	return e:GetOwner():IsHasCardTarget(e:GetHandler())
 end
 function s.incon(e)
-	return e:GetHandler():IsLinkState()
+	return e:GetHandler():IsLinked()
 end

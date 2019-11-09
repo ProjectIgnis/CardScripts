@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
-	if chk==0 then return a:IsChainAttackable() end
+	if chk==0 then return a:CanChainAttack() end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

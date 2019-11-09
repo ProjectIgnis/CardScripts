@@ -104,7 +104,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 		Duel.BreakEffect()
 		local at=Duel.GetAttacker()
-		if at:IsAttackable() and not at:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e) then
+		if at:CanAttack() and not at:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e) then
 			local atk=c:GetOverlayCount()*1000
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

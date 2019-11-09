@@ -27,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(600)
 		tc:RegisterEffect(e1)
-		if a:IsAttackable() and not a:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e) then 
+		if a:CanAttack() and not a:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e) then 
 			Duel.CalculateDamage(a,tc)
 			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
 		end

@@ -36,7 +36,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg,d=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS,CHAININFO_TARGET_PARAM)
 	local tc=tg:GetFirst()
-	if tc:IsRelateToEffect(e) and tc:IsAttackable() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
+	if tc:IsRelateToEffect(e) and tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
 		if Duel.Destroy(tc,REASON_EFFECT) then
 			Duel.Damage(1-tp,d,REASON_EFFECT)
 		end

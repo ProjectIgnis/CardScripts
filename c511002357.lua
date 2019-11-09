@@ -25,7 +25,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dam=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_GRAVE,0,nil,0x3008)*500
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsAttackable() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:CanAttack() then
 		if Duel.NegateAttack() then
 			Duel.Damage(1-tp,dam,REASON_EFFECT)
 		end

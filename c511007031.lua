@@ -42,7 +42,7 @@ function s.atkval(e,c)
 			end
 			ex={tc:GetCardEffect(EFFECT_EXTRA_ATTACK_MONSTER)}
 		end
-		if not tc:IsAttackable() then atkctad=-1 end
+		if not tc:CanAttack() then atkctad=-1 end
 		atkct=atkct+atkctad
 	end)
 	return 400*atkct

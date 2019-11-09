@@ -128,7 +128,7 @@ local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp)
 		end	
 	end
 function s.becon(e)
-	return e:GetHandler():IsAttackable()
+	return e:GetHandler():CanAttack()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
@@ -144,7 +144,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsAttackable() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
+	if tc:IsRelateToEffect(e) and tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
 		Duel.Destroy(tc,REASON_EFFECT)
 		Duel.Damage(1-tp,tc:GetAttack()/2,REASON_EFFECT)
 	end
@@ -153,7 +153,7 @@ function s.indval(e,re)
 	return re:GetOwner():IsType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP)
 end
 function s.batfilter(c)
-	return c:IsAttackable()
+	return c:CanAttack()
 end
 function s.batcon(e)
 	return Duel.IsExistingMatchingCard(s.batfilter,tp,0,LOCATION_MZONE,1,nil)

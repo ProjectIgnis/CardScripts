@@ -72,7 +72,7 @@ function s.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
 function s.becon(e)
-	return e:GetHandler():IsAttackable()
+	return e:GetHandler():CanAttack()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

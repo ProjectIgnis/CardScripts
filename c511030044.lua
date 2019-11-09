@@ -56,7 +56,7 @@ function s.matfilter(c)
 	return c:IsLevel(1) and c:IsLinkSetCard(0x57a)
 end
 function s.imcon(e)
-	return e:GetHandler():IsLinkState()
+	return e:GetHandler():IsLinked()
 end
 function s.cfilter(c)
 	return c:IsFacedown() or not c:IsSetCard(0x57a)

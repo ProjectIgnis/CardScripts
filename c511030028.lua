@@ -49,7 +49,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsType(TYPE_LINK) and Duel.IsChainNegatable(ev)
-		and e:GetHandler():IsLinkState()
+		and e:GetHandler():IsLinked()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end

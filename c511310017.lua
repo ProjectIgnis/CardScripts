@@ -32,7 +32,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	if a:IsRelateToEffect(e) and a:IsAttackable() and at:IsRelateToEffect(e) then
+	if a:IsRelateToEffect(e) and a:CanAttack() and at:IsRelateToEffect(e) then
 		if Duel.SwapControl(a,at,RESET_PHASE+PHASE_END,1) then
 			Duel.CalculateDamage(a,at)
 		end

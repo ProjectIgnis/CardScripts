@@ -53,7 +53,7 @@ function s.lkcon(e)
 	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.dacon(e)
-	return not e:GetHandler():IsLinkState()
+	return not e:GetHandler():IsLinked()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0

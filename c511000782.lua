@@ -39,7 +39,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE and Duel.GetTurnPlayer()==tp
 end
 function s.filter(c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsAttackable()
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:CanAttack()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.GetDecktopGroup(tp,1):GetFirst()

@@ -20,7 +20,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc:IsAttackable() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
+	if tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

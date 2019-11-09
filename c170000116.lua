@@ -100,7 +100,7 @@ function s.atkfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PLUS+TYPE_MINUS)
 end
 function s.becon(e)
-	return e:GetHandler():IsAttackable() 
+	return e:GetHandler():CanAttack() 
 		and Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 function s.atktg(e,c)

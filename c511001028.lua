@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.becon(e)
-	return Duel.IsExistingMatchingCard(Card.IsAttackable,Duel.GetTurnPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(Card.CanAttack,Duel.GetTurnPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:GetAttackAnnouncedCount()==0 and c:IsDestructable()

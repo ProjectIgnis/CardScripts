@@ -26,7 +26,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsAttackable() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:CanAttack() then
 		if Duel.NegateAttack(tc) then
 			Duel.Draw(p,1,REASON_EFFECT)
 			local dam=Duel.GetFieldGroupCount(p,LOCATION_HAND,0)*400

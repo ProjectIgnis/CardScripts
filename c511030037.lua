@@ -30,7 +30,7 @@ function s.linkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(e:GetHandler())
 end
 function s.linkop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsLinkState() then
+	if e:GetHandler():IsLinked() then
 		e:SetLabel(1)
 	else
 		e:SetLabel(0)

@@ -44,7 +44,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	if at:IsAttackable() then
+	if at:CanAttack() then
 		if Duel.NegateAttack() then
 			Duel.Destroy(at,REASON_EFFECT)
 		end

@@ -52,5 +52,5 @@ function s.tg(e,c)
 	return c:IsPosition(POS_FACEUP_ATTACK)
 end
 function s.becon(e)
-	return Duel.IsExistingMatchingCard(Card.IsAttackable,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(Card.CanAttack,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end

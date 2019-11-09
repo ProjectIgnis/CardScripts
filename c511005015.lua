@@ -14,13 +14,13 @@ function scard.initial_effect(c)
 end
 
 function scard.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-  if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAttackable,tp,LOCATION_MZONE,0,1,nil) end
+  if chk==0 then return Duel.IsExistingMatchingCard(Card.CanAttack,tp,LOCATION_MZONE,0,1,nil) end
 end
 
 function scard.op(e,tp,eg,ep,ev,re,r,rp)
-  if not Duel.IsExistingMatchingCard(Card.IsAttackable,tp,LOCATION_MZONE,0,1,nil) then return end
+  if not Duel.IsExistingMatchingCard(Card.CanAttack,tp,LOCATION_MZONE,0,1,nil) then return end
   Duel.Hint(HINT_SELECTMSG,tp,524)
-  local ac=Duel.SelectMatchingCard(tp,Card.IsAttackable,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+  local ac=Duel.SelectMatchingCard(tp,Card.CanAttack,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
   local tc=nil
   local tg_ok=Duel.IsExistingMatchingCard(Card.IsCanBeBattleTarget,tp,0,LOCATION_MZONE,1,nil,ac)
   local direct_ok=false

@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsDefensePos() then
 			Duel.ChangePosition(tc,POS_FACEUP_ATTACK)
 		end
-		if tc:IsAttackable() and not tc:IsImmuneToEffect(e) then
+		if tc:CanAttack() and not tc:IsImmuneToEffect(e) then
 			Duel.ChangeAttacker(tc)
 			--Duel.CalculateDamage(tc,Duel.GetAttackTarget())
 		end

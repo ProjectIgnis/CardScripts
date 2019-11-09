@@ -41,7 +41,7 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsAttackable() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:CanAttack() then
 		local atk=tc:GetAttack()/2
 		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
 			Duel.Damage(1-tp,atk,REASON_EFFECT)

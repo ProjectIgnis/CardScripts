@@ -57,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local a=Duel.GetAttacker()
 		local ag=a:GetAttackableTarget()
-		if a:IsAttackable() and not a:IsImmuneToEffect(e) and ag:IsContains(tc) then
+		if a:CanAttack() and not a:IsImmuneToEffect(e) and ag:IsContains(tc) then
 			Duel.BreakEffect()
 			Duel.ChangeAttackTarget(tc)
 			local e1=Effect.CreateEffect(e:GetHandler())

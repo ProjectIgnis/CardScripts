@@ -22,7 +22,7 @@ function s.cbop(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	local bt=Duel.GetAttackTarget()
 	if not (bt:IsRelateToBattle() and bt:IsControler(tp)) then return end
-	if at:IsAttackable() and not at:IsStatus(STATUS_ATTACK_CANCELED) and Duel.Damage(1-tp,bt:GetAttack(),REASON_EFFECT)>0 then
+	if at:CanAttack() and not at:IsStatus(STATUS_ATTACK_CANCELED) and Duel.Damage(1-tp,bt:GetAttack(),REASON_EFFECT)>0 then
 		Duel.ChangeAttackTarget(nil)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())

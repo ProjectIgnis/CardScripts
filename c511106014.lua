@@ -63,7 +63,7 @@ function s.spcheck(g,lc,tp)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetAttacker()==c and c:IsRelateToBattle() and c:IsChainAttackable(99,true) then
+	if Duel.GetAttacker()==c and c:IsRelateToBattle() and c:CanChainAttack(99,true) then
 		Duel.ChainAttack()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

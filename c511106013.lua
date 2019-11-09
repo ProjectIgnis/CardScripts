@@ -77,7 +77,7 @@ function s.distarget(e,c)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return aux.bdogcon(e,tp,eg,ep,ev,re,r,rp) and c:IsChainAttackable()
+	return aux.bdogcon(e,tp,eg,ep,ev,re,r,rp) and c:CanChainAttack()
 		and c:GetBattleTarget():IsAttribute(c:GetAttribute())
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)

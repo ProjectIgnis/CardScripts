@@ -87,7 +87,7 @@ function s.eqlimit(e,c)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	return ep==tp and (ec==Duel.GetAttacker() or ec==Duel.GetAttackTarget()) and ec:IsChainAttackable()
+	return ep==tp and (ec==Duel.GetAttacker() or ec==Duel.GetAttackTarget()) and ec:CanChainAttack()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

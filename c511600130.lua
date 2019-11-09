@@ -25,11 +25,11 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ac=Duel.GetAttacker()
 	if chk==0 then return Duel.IsPlayerCanDraw(tp) and ac:IsControler(tp)
-		and ac:IsAttackBelow(1500) and ac:IsRelateToBattle() and ac:IsChainAttackable(60) end
+		and ac:IsAttackBelow(1500) and ac:IsRelateToBattle() and ac:CanChainAttack(60) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if not tc:IsControler(tp) or not tc:IsAttackBelow(1500) or not tc:IsRelateToBattle() or not tc:IsChainAttackable(60) then return end
+	if not tc:IsControler(tp) or not tc:IsAttackBelow(1500) or not tc:IsRelateToBattle() or not tc:CanChainAttack(60) then return end
 	if Duel.Draw(tp,1,REASON_EFFECT)>0 then
 		local dc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,dc)
@@ -52,7 +52,7 @@ end
 function s.caop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc~=e:GetLabelObject() or not tc:IsControler(tp) or not tc:IsAttackBelow(1500)
-		or not tc:IsRelateToBattle() or not tc:IsRelateToEffect(e) or not tc:IsChainAttackable(60) then return end
+		or not tc:IsRelateToBattle() or not tc:IsRelateToEffect(e) or not tc:CanChainAttack(60) then return end
 	if Duel.Draw(tp,1,REASON_EFFECT)>0 then
 		local dc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,dc)

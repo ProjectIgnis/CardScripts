@@ -12,7 +12,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
---[[function s.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetLabel(1)
 	e1:SetReset(RESET_PHASE+PHASE_END)
@@ -120,4 +120,4 @@ end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.Damage(tp,1000,REASON_EFFECT)
-end]]
+end

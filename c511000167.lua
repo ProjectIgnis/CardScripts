@@ -1,6 +1,7 @@
 --Dark wall of wind
 --scripted by GameMaster (GM)
-function s.initial_effect (c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -16,7 +17,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
    	Duel.RegisterEffect(e1,tp)
 end
-
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetAttacker():IsControler(1-tp) and not Duel.GetAttackTarget() then Duel.ChangeBattleDamage(tp,0) end
 end

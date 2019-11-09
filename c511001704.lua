@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetTarget(s.target)
+	e1:SetTarget(s.target1)
 	c:RegisterEffect(e1)
 	--tohand
 	local e2=Effect.CreateEffect(c)

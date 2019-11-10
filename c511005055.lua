@@ -1,6 +1,5 @@
 --Flattery
---  By Shad3
---fixed and cleaned up by MLD
+--scripted by Shad3, fixed and cleaned up by MLD
 Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+end
 function s.cfilter(c,tp)
 	local val=0
 	if c:GetFlagEffect(284)>0 then val=c:GetFlagEffectLabel(284) end

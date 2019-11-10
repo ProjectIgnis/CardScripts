@@ -1,10 +1,9 @@
 --CX 機装魔人エンジェネラル (Anime)
 --CXyz Mechquipped Djinn Angeneral (Anime)
 --Scripted by Larry126
-local s,id,alias=GetID()
-function s.initial_effect(c)
-	alias=c:GetOriginalCodeRule()
-	aux.CallToken(alias)
+Duel.LoadScript("c41309158.lua")
+local s,id=GetID()
+function s.initial_effect(c)	
 	--xyz summon
 	Xyz.AddProcedure(c,nil,4,3)
 	c:EnableReviveLimit()

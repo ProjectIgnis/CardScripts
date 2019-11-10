@@ -50,5 +50,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		tc:RegisterEffect(e3)
 		tc=tg:GetNext()
-	end
+	end)
 end

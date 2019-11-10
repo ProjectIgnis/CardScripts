@@ -1,6 +1,5 @@
 --Wonderbeat Elf
 --scripted by:urielkama
---fixed by MLD
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.facon(e)
-	return e:GetHandler()GetAttackableTarget():GetCount()>0
+	return e:GetHandler():GetAttackableTarget():GetCount()>0
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsElf()

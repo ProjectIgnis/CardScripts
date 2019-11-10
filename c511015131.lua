@@ -16,7 +16,6 @@ function s.initial_effect(c)
 	e2:SetCondition(s.con)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
-	
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -33,35 +32,34 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.g=Group.CreateGroup()
+s_g=Group.CreateGroup()
 function s.gchk(e,tp,eg,ev,ep,re,r,rp)
 	local c=eg:GetFirst()
 	while c do
 		if c:IsPreviousControler(tp) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1517) then
-			s.g:AddCard(c) 
+			s_g:AddCard(c) 
 		end
 		c=eg:GetNext()
 	end
 end
 function s.gclear(e,tp,eg,ev,ep,re,r,rp)
-	if s.g then
-		s.g:Clear()
+	if s_g then
+		s_g:Clear()
 	end
 end
-
 function s.sfilter(c,e,tp,g)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1517) and 
 		g:IsExists(function (c,lv) return c:GetLevel()==lv end,1,nil,c:GetLevel()-2) and
 		c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,tp,false,false)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	local n=s.#g
+	local n=#s_g
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and ft>0 then ft=2 end
 	return n>1 and n<=ft and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,n-1,nil,e,tp,s.g)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local n=s.#g
+	local n=#s_g
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and ft>0 then ft=2 end
 	if n>ft then n=ft end

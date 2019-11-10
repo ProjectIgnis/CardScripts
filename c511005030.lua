@@ -1,14 +1,12 @@
 --Ojamachine Yellow
---  By Shad3
-
-local scard=s
-
-function scard.initial_effect(c)
+--original script by Shad3
+local s,id=GetID()
+function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
-	e1:SetOperation(scard.op)
+	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -19,7 +17,7 @@ function scard.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_DESTROYED)
-	e4:SetOperation(scard.des_op)
+	e4:SetOperation(s.des_op)
 	c:RegisterEffect(e4)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
@@ -27,16 +25,14 @@ function scard.initial_effect(c)
 	e5:SetValue(1)
 	c:RegisterEffect(e5)
 end
-
-function scard.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local n=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if chk==0 then return n>0 end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then n=1 end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,n,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,n,0,0)
 end
-
-function scard.op(e,tp,eg,ep,ev,re,r,rp)
+function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local n=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if n<1 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then n=1 end
@@ -59,19 +55,17 @@ function scard.op(e,tp,eg,ep,ev,re,r,rp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_DESTROYED)
-	e2:SetCondition(scard.tdes_cd)
-	e2:SetOperation(scard.tdes_op)
+	e2:SetCondition(s.tdes_cd)
+	e2:SetOperation(s.tdes_op)
 	e2:SetLabelObject(g)
 	Duel.RegisterEffect(e2,tp)
 end
-
-function scard.tdes_fil(c,g)
+function s.tdes_fil(c,g)
 	return g:IsContains(c)
 end
-
-function scard.tdes_cd(e,tp,eg,ep,ev,re,r,rp)
+function s.tdes_cd(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
-	if eg:IsExists(scard.tdes_fil,1,nil,g) then
+	if eg:IsExists(s.tdes_fil,1,nil,g) then
 		return true
 	elseif not g:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) then
 		g:DeleteGroup()
@@ -79,8 +73,7 @@ function scard.tdes_cd(e,tp,eg,ep,ev,re,r,rp)
 	end
 	return false
 end
-
-function scard.tdes_op(e,tp,eg,ep,ev,re,r,rp)
+function s.tdes_op(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local tc=eg:GetFirst()
 	while tc do
@@ -91,7 +84,6 @@ function scard.tdes_op(e,tp,eg,ep,ev,re,r,rp)
 		tc=eg:GetNext()
 	end
 end
-
-function scard.des_op(e,tp,eg,ep,ev,re,r,rp)
+function s.des_op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-e:GetHandler():GetPreviousControler(),300,REASON_EFFECT)
 end

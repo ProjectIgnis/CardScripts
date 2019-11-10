@@ -1,19 +1,19 @@
 --Sneak Attack
 --original script by Shad3
 local s,id=GetID()
-function scard.initial_effect(c)
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(scard.tg)
-	e1:SetOperation(scard.op)
+	e1:SetTarget(s.tg)
+	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-function scard.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.CanAttack,tp,LOCATION_MZONE,0,1,nil) end
 end
-function scard.op(e,tp,eg,ep,ev,re,r,rp)
+function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(Card.CanAttack,tp,LOCATION_MZONE,0,1,nil) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,524)
 	local ac=Duel.SelectMatchingCard(tp,Card.CanAttack,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()

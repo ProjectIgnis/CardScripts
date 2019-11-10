@@ -1,4 +1,5 @@
 --機殻の要塞
+--Laser Qlip
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,6 +9,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--extra summon
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCode(EFFECT_EXTRA_SUMMON_COUNT)

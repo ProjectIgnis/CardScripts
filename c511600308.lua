@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x135,0x235}
+s.listed_series={0x135,0x136}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x135) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -50,10 +50,10 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x235) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x136) and c:IsAbleToRemoveAsCost()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x235) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(0x136) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={101011054}
+s.listed_names={85327820}
 s.listed_series={0x135}
 function s.filter(c)
 	return c:IsType(TYPE_LINK) and c:IsFaceup() and c:GetSequence()>4
@@ -64,7 +64,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabelObject(g:GetFirst())
 end
 function s.thfilter(c)
-	return c:IsCode(101011054) and c:IsAbleToHand()
+	return c:IsCode(85327820) and c:IsAbleToHand()
 end
 function s.thfilter2(c)
 	return c:IsSetCard(0x135) and c:IsRitualMonster() and c:IsAbleToHand()

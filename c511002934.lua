@@ -1,3 +1,4 @@
+--ホロウ・ゴースト
 --Hollow Ghost
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetCode(EFFECT_SET_ATTACK_FINAL)
+	e3:SetCode(EFFECT_SET_ATTACK)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.atkcon)
 	e3:SetValue(0)
@@ -44,5 +45,5 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.atkcon(e)
-	return not Duel.IsExistingMatchingCard(Card.IsCode,p,LOCATION_GRAVE,0,1,nil,511002933)
+	return not Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,511002933)
 end

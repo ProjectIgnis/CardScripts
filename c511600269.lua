@@ -1,10 +1,12 @@
---海晶乙女瀑布
---Marincess Cascade
+--海晶乙女瀑布 (Anime)
+--Marincess Cascade (Anime)
 --scripted by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -21,8 +23,9 @@ function s.initial_effect(c)
 	e2:SetCondition(s.handcon)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x12b}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x22b)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x12b)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)

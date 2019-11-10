@@ -25,12 +25,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.recop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x135}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	if chk==0 then return true end
 end
 function s.cfilter(c,tp)
-	return c:IsLinkMonster() and c:IsSetCard(0x582)
+	return c:IsLinkMonster() and c:IsSetCard(0x135)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

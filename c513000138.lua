@@ -30,6 +30,11 @@ function s.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_SET_DEFENSE_FINAL)
 	c:RegisterEffect(e4)
+	--atk check
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(21208154)
+	c:RegisterEffect(e5)
 end
 -------------------------------------------------------------------
 function s.ttcon(e,c)
@@ -42,7 +47,7 @@ function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetCode()~=21208154
+	return c:IsFaceup() and not c:IsHasEffect(21208154)
 end
 function s.adval(e,c)
 	local g=Duel.GetMatchingGroup(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,nil)

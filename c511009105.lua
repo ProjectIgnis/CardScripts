@@ -1,4 +1,5 @@
---Performage Trapeze Force Witch
+--Ｅｍトラピーズ・フォーズ・ウィッチ
+--Performage Trapeze Witch
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
-	
+	--cannot be effect target
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
@@ -37,6 +38,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.atkop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xc6}
 s.material_setcode=0xc6
 function s.target(e,c)
 	return c:IsSetCard(0xc6)
@@ -48,18 +50,19 @@ function s.atcon(e)
 	return Duel.IsExistingMatchingCard(s.atfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
-	if d and a:GetControler()~=d:GetControler() then
-		if a:IsControler(tp) and a:IsSetCard(0xc6) then e:SetLabelObject(d)
-		elseif (d:IsSetCard(0xc6)) then e:SetLabelObject(a) end
-		return true
-	else return false end
+	local tc=Duel.GetAttacker()
+	local bc=Duel.GetAttackTarget()
+	if not bc then return false end
+	if bc:IsControler(1-tp) then bc=tc end
+	e:SetLabelObject(bc:GetBattleTarget())
+	return bc:IsFaceup() and bc:IsSetCard(0xc6)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=e:GetLabelObject()
 	if chkc then return chkc==tc end
-	if chk==0 then return tc:IsOnField() and tc:IsFaceup() and tc:IsCanBeEffectTarget(e) end
+	if chk==0 then
+		return tc:IsOnField() and tc:IsFaceup() and tc:IsCanBeEffectTarget(e)
+	end
 	Duel.SetTargetCard(tc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

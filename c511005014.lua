@@ -1,16 +1,14 @@
 --Acid Hell Fly
---  By Shad3
-
-local scard=s
-
-function scard.initial_effect(c)
+--original script by Shad3
+local s,id=GetID()
+function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetTarget(scard.tg)
-	e1:SetOperation(scard.op)
+	e1:SetTarget(s.tg)
+	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -19,20 +17,17 @@ function scard.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-
-function scard.fil(c)
+function s.fil(c)
 	return c:IsFaceup() and c:GetType()==TYPE_EQUIP+TYPE_SPELL
 end
-
-function scard.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and scard.fil(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(scard.fil,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
+function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsOnField() and s.fil(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.fil,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,scard.fil,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,nil)
+	Duel.SelectTarget(tp,s.fil,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
 end
-
-function scard.op(e,tp,eg,ep,ev,re,r,rp)
+function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		local tec=tc:GetEquipTarget()

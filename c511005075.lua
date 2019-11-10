@@ -1,32 +1,27 @@
---Shield of Bones
 --シールド・オブ・ボンズ
---  By Shad3
-
-local scard=s
-
-function scard.initial_effect(c)
+--Shield of Bones
+--original script by Shad3
+local s,id=GetID()
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetHintTiming(0,TIMING_ATTACK)
-	e1:SetTarget(scard.tg)
-	e1:SetOperation(scard.op)
+	e1:SetTarget(s.tg)
+	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-
-function scard.fil(c,e)
+function s.fil(c,e)
 	return c:IsFaceup() and not c:IsImmuneToEffect(e)
 end
-
-function scard.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(scard.fil,tp,LOCATION_MZONE,0,1,nil,e) end
-	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,Duel.GetMatchingGroup(scard.fil,tp,LOCATION_MZONE,0,nil,e),0,0,0)
+function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.fil,tp,LOCATION_MZONE,0,1,nil,e) end
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,Duel.GetMatchingGroup(s.fil,tp,LOCATION_MZONE,0,nil,e),0,0,0)
 end
-
-function scard.op(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(scard.fil,tp,LOCATION_MZONE,0,nil,e)
+function s.op(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(s.fil,tp,LOCATION_MZONE,0,nil,e)
 	if #g>0 then
 		local c=e:GetHandler()
 		g:ForEach(function(tc)

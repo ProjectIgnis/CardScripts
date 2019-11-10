@@ -1,7 +1,7 @@
 --Camouflage Drone
 local s,id=GetID()
+Duel.LoadScript("c420.lua")
 function s.initial_effect(c)
-	aux.CallToken(420)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

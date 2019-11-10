@@ -1,4 +1,5 @@
 --Goyo King
+--[[no card detected
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -146,3 +147,4 @@ function s.ctop2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.GetControl(tc,tp)
 	end
 end
+]]

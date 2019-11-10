@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.XyzFilterFunction(c,5),2,nil,nil,5)
+	Xyz.AddProcedure(c,Xyz.FilterFunction(c,5),2,nil,nil,5)
 	c:EnableReviveLimit()
 	--atk
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,5 @@
 --Wind Witch Winter Bell
+--[[no card detected
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -44,3 +45,4 @@ function s.nmop(e,tp,eg,ep,ev,re,r,rp)
 		c:CopyEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
 	end
 end
+]]

@@ -1,4 +1,5 @@
 --Superheavy Samurai Swordsmith
+--[[script commented: No matching card found
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -19,7 +20,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x9a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -39,3 +39,4 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+]]

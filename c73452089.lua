@@ -32,6 +32,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_DARK_MAGICIAN}
+s.material_setcode={0x10a2}
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,0,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)*100
 end

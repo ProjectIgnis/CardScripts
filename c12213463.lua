@@ -1,6 +1,6 @@
 --ホワイトローズ・ドラゴン
 --White Rose Dragon
---scripted by Logical Nonsense
+--Logical Nonsense
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,14 +31,14 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_BE_MATERIAL)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.tgcon)
 	e3:SetTarget(s.tgtg)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x123}
 s.listed_names={id}
+s.listed_series={0x1123}
 --Check for plant/dragon tuner monster
 function s.filter1(c)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT+RACE_DRAGON) and c:IsType(TYPE_TUNER)
@@ -62,7 +62,7 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 end
 --Check for "Rose Dragon" monster
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x123) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and not c:IsCode(id)
+	return c:IsSetCard(0x1123) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and not c:IsCode(id)
 end
 --Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

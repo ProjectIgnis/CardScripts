@@ -1,3 +1,4 @@
+--竜騎士ブラック・マジシャン
 --Dark Magician the Dragon Knight
 --Scripted by Eerie Code
 local s,id=GetID()
@@ -31,6 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.material_setcode=0x10a2
+s.listed_names={CARD_DARK_MAGICIAN}
 function s.indval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end

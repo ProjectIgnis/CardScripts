@@ -43,7 +43,7 @@ function s.ffilter(c,fc,sumtype,sp,sub,mg,sg)
     return  c:IsSetCard(0x131,fc,sumtype,tp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
 end
 function s.descfilter(c,tp)
-    return c:GetPreviousControler()==tp
+    return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(s.descfilter,1,nil,tp)

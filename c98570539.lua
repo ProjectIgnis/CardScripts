@@ -15,7 +15,7 @@ function s.initial_effect(c)
     table.insert(GhostBelleTable,e1)
 end
 s.listed_series={0x131}
-s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR }
+s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
 function s.filter0(c,e)
     return c:IsCanBeFusionMaterial() and c:IsType(TYPE_MONSTER)
 end
@@ -75,7 +75,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
         local mf=ce:GetValue()
         sg2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
     end
-    if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
+    if #sg1>0 or (sg2~=nil and #sg2>0) then
         local sg=sg1:Clone()
         if sg2 then sg:Merge(sg2) end
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

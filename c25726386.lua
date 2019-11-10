@@ -118,6 +118,7 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.gfilter),tp,LOCATION_GRAVE,0,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local sg=g:Select(tp,1,1,nil)
 	if #sg>0 and Duel.SendtoDeck(sg,nil,1,REASON_EFFECT)>0 and sg:GetFirst():IsLocation(LOCATION_DECK) then
 		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then

@@ -55,25 +55,16 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsType(TYPE_SPELL+TYPE_TRAP) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.SSet(tp,tc)
 			Duel.ConfirmCards(1-tp,tc)
-			if tc:IsType(TYPE_QUICKPLAY) then
-				if EFFECT_QP_ACT_IN_SET_TURN then
-					local e1=Effect.CreateEffect(e:GetHandler())
-					e1:SetType(EFFECT_TYPE_SINGLE)
-					e1:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
-					e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-					e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-					tc:RegisterEffect(e1)
-				else --this handles the activation while we don't have EFFECT_QP_ACT_IN_SET_TURN available
-					tc:SetStatus(STATUS_SET_TURN,false)
-				end
-			elseif tc:IsType(TYPE_TRAP) then
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
+				if tc:IsType(TYPE_QUICKPLAY) then
+					e1:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
+				elseif  tc:IsType(TYPE_TRAP) then
+					e1:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
+				end
 				e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				tc:RegisterEffect(e1)
-			end
 		end
 	end
 end

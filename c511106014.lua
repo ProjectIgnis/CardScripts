@@ -56,7 +56,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsType(TYPE_LINK,scard,sumtype,tp) and c:IsLinkSetCard(0x577,scard,sumtype,tp)
+	return c:IsType(TYPE_LINK,scard,sumtype,tp) and c:IsSetCard(0x577,scard,sumtype,tp)
 end
 function s.spcheck(g,lc,tp)
 	return g:CheckSameProperty(Card.GetAttribute,lc,SUMMON_TYPE_LINK,tp)

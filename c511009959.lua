@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0xfc),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfc),2)
 	c:EnableReviveLimit()
 	--immune
 	local e1=Effect.CreateEffect(c)

@@ -26,9 +26,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x577}
-function s.matfilter(c)
-	return c:IsLinkSetCard(0x577) 
-end
 function s.lnklimit(e,c)
 	if not c then return false end
 	return c:IsLink(1)

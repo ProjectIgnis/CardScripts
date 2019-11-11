@@ -35,7 +35,7 @@ function s.mfilter1(c,fc,sumtype,tp)
 	return c:IsSetCard(0x45,fc,sumtype,tp) and c:IsType(TYPE_NORMAL,fc,sumtype,tp) and c:GetLevel()==6
 end
 function s.mfilter2(c,fc,sumtype,tp)
-	return c:IsFusionSetCard(0x3b) and c:IsType(TYPE_NORMAL,fc,sumtype,tp)
+	return c:IsSetCard(0x3b,fc,sumtype,tp) and c:IsType(TYPE_NORMAL,fc,sumtype,tp)
 end
 function s.accon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()

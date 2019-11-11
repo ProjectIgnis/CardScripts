@@ -50,7 +50,7 @@ s.material_setcode={0x8}
 s.listed_series={0x8}
 s.listed_names={45906428}
 function s.ffilter(c,fc,sumtype,tp,sub,mg,sg)
-	return c:IsFusionSetCard(0x8) and c:GetAttribute(fc,sumtype,tp)~=0 and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetAttribute(fc,sumtype,tp),fc,sumtype,tp))
+	return c:IsSetCard(0x8,fc,sumtype,tp) and c:GetAttribute(fc,sumtype,tp)~=0 and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetAttribute(fc,sumtype,tp),fc,sumtype,tp))
 end
 function s.fusfilter(c,attr,fc,sumtype,tp)
 	return c:IsAttribute(attr,fc,sumtype,tp) and not c:IsHasEffect(511002961)

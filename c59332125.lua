@@ -29,7 +29,7 @@ function s.fcheck(tp,sg,fc)
 	return ct<=1 and (ct==0 or sg:IsExists(s.ffilter,1,nil,tp,fc))
 end
 function s.ffilter(c,tp,fc)
-	return c:IsFusionSetCard(0x135) and c:IsControler(tp)
+	return c:IsSetCard(0x135) and c:IsControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

@@ -63,6 +63,7 @@ function s.initial_effect(c)
 	e10:SetOperation(s.disop)
 	c:RegisterEffect(e10)
 end
+s.listed_series={0x2e}
 function s.contp(e)
 	return not Duel.IsPlayerAffectedByEffect(e:GetHandler():GetControler(),EFFECT_NECRO_VALLEY_IM)
 end

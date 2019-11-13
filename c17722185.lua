@@ -20,14 +20,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_EXTRA+TYPE_PENDULUM) and c:IsAbleToRemoveAsCost()
+	return c:IsFaceup() and c:IsType(TYPE_EXTRA+TYPE_RITUAL+TYPE_PENDULUM) and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local tc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp):GetFirst()
 	Duel.Remove(tc,POS_FACEUP,REASON_COST)
-	e:SetLabel(tc:GetType()&(TYPE_EXTRA+TYPE_PENDULUM))
+	e:SetLabel(tc:GetType()&(TYPE_EXTRA+TYPE_RITUAL+TYPE_PENDULUM))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

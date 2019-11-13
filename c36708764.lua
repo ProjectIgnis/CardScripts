@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 			local tc=g:Select(tp,1,1,nil):GetFirst()
 			local at=Duel.GetAttacker()
-			if at:IsAttackable() and not at:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e) then
+			if at:CanAttack() and not at:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e) then
 				Duel.CalculateDamage(at,tc)
 			end
 		end
@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 			local tc=g:Select(tp,1,1,nil):GetFirst()
 			local at=Duel.GetAttacker()
-			if at:IsAttackable() and not at:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e) then
+			if at:CanAttack() and not at:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e) then
 				Duel.CalculateDamage(at,tc)
 			end
 		end

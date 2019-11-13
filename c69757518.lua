@@ -40,7 +40,7 @@ function s.atkval(e,c)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Duel.GetAttacker()==c and c:IsChainAttackable(0,true)
+	return Duel.GetAttacker()==c and c:CanChainAttack(0,true)
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

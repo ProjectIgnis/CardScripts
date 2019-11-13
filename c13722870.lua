@@ -20,8 +20,8 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_names={49217579}
 s.material_setcode=0x10a2
+s.listed_names={49217579}
 function s.spfilter(c,e,tp)
 	return c:IsCode(49217579) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end

@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e2,true)
 	Duel.SpecialSummonComplete()
 	local at=Duel.GetAttacker()
-	if at and at:IsAttackable() and at:IsFaceup() and not at:IsImmuneToEffect(e) and not at:IsStatus(STATUS_ATTACK_CANCELED) then
+	if at and at:CanAttack() and at:IsFaceup() and not at:IsImmuneToEffect(e) and not at:IsStatus(STATUS_ATTACK_CANCELED) then
 		Duel.BreakEffect()
 		Duel.ChangeAttackTarget(c)
 	end

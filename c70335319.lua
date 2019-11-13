@@ -127,7 +127,7 @@ function s.ftarget(e,c)
 end
 function s.catg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local at=Duel.GetAttacker()
-	if chk==0 then return at and at:IsChainAttackable() end
+	if chk==0 then return at and at:CanChainAttack() end
 end
 function s.caop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

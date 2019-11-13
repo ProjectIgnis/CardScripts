@@ -46,7 +46,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	local at=Duel.GetAttacker()
-	if at:IsFaceup() and at:IsRelateToBattle() and at:IsAttackable() and not at:IsStatus(STATUS_ATTACK_CANCELED)
+	if at:IsFaceup() and at:IsRelateToBattle() and at:CanAttack() and not at:IsStatus(STATUS_ATTACK_CANCELED)
 		and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local atk=tc:GetBaseAttack()
 		local e1=Effect.CreateEffect(e:GetHandler())

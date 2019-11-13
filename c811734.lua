@@ -1,4 +1,5 @@
 --DDDの契約変更
+--D/D/D Contract Change
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

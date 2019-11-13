@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.atkval(e,c)
-	return c:GetLinkedGroupCount()*500
+	return #(c:GetLinkedGroup():Filter(Card.IsType,nil,TYPE_MONSTER))*500
 end
 function s.incon(e)
-	return e:GetHandler():GetLinkedGroupCount()>0
+	return #(e:GetHandler():GetLinkedGroup():Filter(Card.IsType,nil,TYPE_MONSTER))>0
 end
 function s.inval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()

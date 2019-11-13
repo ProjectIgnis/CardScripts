@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.imval1)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x42,0x4b}
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsSetCard(0x42,scard,sumtype,tp) and c:IsLevelBelow(5)
 end
@@ -95,7 +96,7 @@ function s.splimit(e,c)
 	return not c:IsSetCard(0x4b)
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x4b)
+	return c:IsFaceup() and c:IsSetCard(0x4b) and c:IsType(TYPE_MONSTER)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetLinkedGroup():IsExists(s.tgfilter,1,nil)

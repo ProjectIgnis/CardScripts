@@ -58,18 +58,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if not tc then return end
 	local opt=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	if (opt==0 and tc:IsType(TYPE_MONSTER)) then
-		if tc:IsCanBeSpecialSummoned(e,0,1-tp,false,false,POS_FACEDOWN_DEFENSE,1-tp) then
+	if (opt==0
+		and tc:IsType(TYPE_MONSTER)
+		and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
+		and tc:IsCanBeSpecialSummoned(e,0,1-tp,false,false,POS_FACEDOWN_DEFENSE,1-tp)) then
 			Duel.SpecialSummon(tc,0,1-tp,1-tp,false,false,POS_FACEDOWN_DEFENSE)
-		end
-	elseif (opt==1 and tc:IsType(TYPE_SPELL)) then
-		Duel.SSet(1-tp,tc)
-		Duel.ConfirmCards(tp,g) 
-	elseif (opt==2 and tc:IsType(TYPE_TRAP))then
-		Duel.SSet(1-tp,tc)
-		Duel.ConfirmCards(tp,g)
+	elseif((opt==1 and tc:IsType(TYPE_SPELL)) or(opt==2 and tc:IsType(TYPE_TRAP)) and tc:IsSSetable()) then
+			Duel.DisableShuffleCheck()
+			Duel.SSet(1-tp,tc)
+			Duel.ConfirmCards(tp,g)
 	else
-		Duel.SendtoHand(g,1-tp,REASON_EFFECT)
+		Duel.SendtoHand(tc,1-tp,REASON_EFFECT)
 		Duel.ShuffleHand(1-tp)
 	end
 end

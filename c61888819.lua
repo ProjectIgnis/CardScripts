@@ -1,4 +1,5 @@
 --インヴェルズ・オリジン
+--Steelswarm Origin
 --force effect scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
@@ -51,7 +52,7 @@ function s.fmval(e,c,fp,rp,r)
 	return e:GetHandler():GetLinkedZone()
 end
 function s.indcon(e)
-    return e:GetHandler():GetLinkedGroupCount()>0
+	return #(e:GetHandler():GetLinkedGroup():Filter(Card.IsType,nil,TYPE_MONSTER))>0
 end
 function s.cfilter(c)
     return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)

@@ -17,7 +17,7 @@ function s.ctlcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()~=nil and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>1
 end
 function s.filter(c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsControlerCanBeChanged() and c:IsAttackable()
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsControlerCanBeChanged() and c:CanAttack()
 end
 function s.ctltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
@@ -37,7 +37,7 @@ function s.ctlop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		Duel.AdjustInstantly(tc)
 		if Duel.GetControl(tc,tp,PHASE_BATTLE,1)~=0 then
-			if tc:IsAttackable() and not tc:IsImmuneToEffect(e) then
+			if tc:CanAttack() and not tc:IsImmuneToEffect(e) then
 				local ats=tc:GetAttackableTarget()
 				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 				if #ats>0 then

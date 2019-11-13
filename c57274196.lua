@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:IsControler(tp) and tc:IsRace(RACE_SPELLCASTER) and tc:IsChainAttackable() and tc:IsStatus(STATUS_OPPO_BATTLE)
+	return tc:IsControler(tp) and tc:IsRace(RACE_SPELLCASTER) and tc:CanChainAttack() and tc:IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SUMMON)==0
@@ -32,12 +32,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e3=e1:Clone()
 	e3:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
 	Duel.RegisterEffect(e3,tp)
-	local e4=Effect.CreateEffect(e:GetHandler())
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetReset(RESET_PHASE+PHASE_END)
-	e4:SetTargetRange(1,0)
-	Duel.RegisterEffect(e4,tp)
+	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChainAttack()

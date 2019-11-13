@@ -1,6 +1,5 @@
 --鎖龍蛇－スカルデット
 --Saryuja Skull Dread
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

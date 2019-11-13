@@ -58,7 +58,7 @@ function s.valcheck(e,c)
 		while tc do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_TO_GRAVE_REDIRECT)
+			e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 			e1:SetValue(LOCATION_HAND)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)

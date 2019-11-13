@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetAttacker()==c and aux.bdocon(e,tp,eg,ep,ev,re,r,rp) and c:IsChainAttackable(0) then
+	if Duel.GetAttacker()==c and aux.bdocon(e,tp,eg,ep,ev,re,r,rp) and c:CanChainAttack(0) then
 		local seq=c:GetBattleTarget():GetPreviousSequence()
 		if seq<5 then
 			e:SetLabel(seq)

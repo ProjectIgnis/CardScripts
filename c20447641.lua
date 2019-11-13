@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xaa,0x10aa}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:IsHasType(EFFECT_TYPE_ACTIVATE) 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0xaa,0x21,1800,1000,4,RACE_MACHINE,ATTRIBUTE_EARTH) end

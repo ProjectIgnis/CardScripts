@@ -11,7 +11,7 @@ function Fusion.ParseMaterialTable(tab,mat)
 	local tmp_extramat_func=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return (sub2 and c:IsHasEffect(511002961)) end
 	local name_func=function(tab) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,contact,fc:GetControler(),table.unpack(tab)) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end end
 	local func=aux.FALSE
-	for _,fmat in ipairs(val[i]) do
+	for _,fmat in ipairs(tab) do
 		if type(fmat)=="function" then
 			func=aux.OR(func,aux.OR(fmat,tmp_extramat_func))
 		else

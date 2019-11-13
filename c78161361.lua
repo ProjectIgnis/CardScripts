@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	if at and at:IsFaceup() and at:IsAttackable() and at:IsRelateToBattle() and not at:IsStatus(STATUS_ATTACK_CANCELED) then
+	if at and at:IsFaceup() and at:CanAttack() and at:IsRelateToBattle() and not at:IsStatus(STATUS_ATTACK_CANCELED) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
 		local a=Duel.GetAttacker()
-		if a:IsAttackable() and not a:IsImmuneToEffect(e) then
+		if a:CanAttack() and not a:IsImmuneToEffect(e) then
 			Duel.ChangeAttackTarget(tc)
 			Duel.CalculateDamage(a,tc)
 		end

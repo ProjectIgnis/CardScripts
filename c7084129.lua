@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_DARK_MAGICIAN}
 function s.thfilter(c)
 	return aux.IsCodeListed(c,CARD_DARK_MAGICIAN) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end

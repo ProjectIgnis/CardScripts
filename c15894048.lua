@@ -20,7 +20,7 @@ function s.catg(e,c)
 	return not c:IsCode(id)
 end
 function s.cfilter(c)
-	if not c:IsFaceup() or not c:IsCode(id) or not c:IsAttackable() then return false end
+	if not c:IsFaceup() or not c:IsCode(id) or not c:CanAttack() then return false end
 	local ag,direct=c:GetAttackableTarget()
 	return #ag>0 or direct
 end

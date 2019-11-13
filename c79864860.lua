@@ -56,8 +56,8 @@ end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=eg:Filter(Card.IsPreviousLocation,nil,LOCATION_EXTRA)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,g,g:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(Card.IsPreviousLocation,nil,LOCATION_EXTRA)

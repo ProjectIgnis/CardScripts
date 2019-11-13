@@ -118,7 +118,7 @@ end
 function s.catg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ec=c:GetEquipTarget()
-	if chk==0 then return ec:IsChainAttackable(0,true) end
+	if chk==0 then return ec:CanChainAttack(0,true) end
 end
 function s.caop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

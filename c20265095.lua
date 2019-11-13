@@ -31,8 +31,11 @@ end
 s.listed_series={0x7c,0x79}
 s.listed_names={20265095}
 	--If this card is pointing to "Fire Fist"
+function s.lkfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsType(TYPE_MONSTER)
+end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetLinkedGroup():IsExists(aux.FilterFaceupFunction(Card.IsSetCard,0x79),1,nil)
+	return e:GetHandler():GetLinkedGroup():IsExists(s.lkfilter,1,nil)
 end
 	--Check for "Fire Formation" S/T for cost
 function s.ctfilter(c)

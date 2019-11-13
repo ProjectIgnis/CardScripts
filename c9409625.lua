@@ -58,7 +58,7 @@ end
 s.listed_series={0x4a}
 s.listed_names={36894320}
 function s.valcon(e,re,r,rp)
-	return bit.band(r,REASON_EFFECT)~=0 and rp==1-e:GetHandlerPlayer()
+	return (r&REASON_EFFECT)~=0 and rp==1-e:GetHandlerPlayer()
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

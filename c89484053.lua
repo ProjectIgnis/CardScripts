@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.lkfilter(c)
-	return not (IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK))
+	return not (c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)>0

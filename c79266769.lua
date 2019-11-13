@@ -64,12 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetTarget(s.splimit)
 		e4:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e4,tp)
-		local e5=Effect.CreateEffect(c)
-		e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-		e5:SetDescription(aux.Stringid(id,1))
-		e5:SetReset(RESET_PHASE+PHASE_END)
-		e:SetTargetRange(1,0)
-		Duel.RegisterEffect(e5,tp)
+		aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),nil)
 	end
 	Duel.SpecialSummonComplete()
 end

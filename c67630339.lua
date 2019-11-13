@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=s[2]
 	if a:GetFlagEffect(id)~=0 and d:GetFlagEffect(id)~=0 
-		and a:IsAttackable() and not a:IsImmuneToEffect(e) and not d:IsImmuneToEffect(e) then
+		and a:CanAttack() and not a:IsImmuneToEffect(e) and not d:IsImmuneToEffect(e) then
 		Duel.CalculateDamage(a,d)
 	end
 end

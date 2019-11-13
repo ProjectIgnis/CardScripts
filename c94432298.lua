@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.sdcon)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xbb}
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end

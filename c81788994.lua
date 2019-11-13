@@ -25,14 +25,22 @@ function s.initial_effect(c)
 	e3:SetCondition(s.atkcon)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
-	--
+	--chain material
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetCode(EFFECT_CHAIN_MATERIAL)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetRange(LOCATION_FZONE)
-	e4:SetCode(id)
+	e4:SetTargetRange(1,0)
+	e4:SetCondition(s.chcon)
+	e4:SetTarget(s.chtg)
+	e4:SetOperation(s.chop)
+	e4:SetValue(aux.FilterBoolFunction(Card.IsSetCard,0x9d))
 	c:RegisterEffect(e4)
+	local e5=Effect.CreateEffect(c)
+	e5:SetOperation(s.chk)
+	e4:SetLabelObject(e5)
 end
 s.listed_series={0x9d}
 function s.cfilter(c)
@@ -50,4 +58,30 @@ function s.atkcon(e)
 end
 function s.atkval(e,c)
 	return e:GetHandler():GetCounter(0x16)*-100
+end
+function s.chcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetCounter(0x16)>=3
+end
+function s.chfilter(c,e,tp)
+	return c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsControler(tp)) and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
+end
+function s.chtg(e,te,tp)
+	return Duel.GetMatchingGroup(s.chfilter,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,nil,te,tp)
+end
+function s.chop(e,te,tp,tc,mat,sumtype,sg)
+	if not sumtype then sumtype=SUMMON_TYPE_FUSION end
+	tc:SetMaterial(mat)
+	Duel.SendtoGrave(mat,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+	if mat:IsExists(Card.IsControler,1,nil,1-tp) then
+		e:GetHandler():RemoveCounter(tp,0x16,3,REASON_EFFECT)
+	end
+	Duel.BreakEffect()
+	if sg then
+		sg:AddCard(tc)
+	else
+		Duel.SpecialSummon(tc,sumtype,tp,tp,false,false,POS_FACEUP)
+	end
+end
+function s.chk(tp,sg,fc)
+	return sg:FilterCount(Card.IsControler,nil,1-tp)<=1
 end

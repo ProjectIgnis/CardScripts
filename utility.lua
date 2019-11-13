@@ -136,6 +136,25 @@ function Group.ForEach(g,f,...)
 		tc=g:GetNext()
 	end
 end
+function Auxiliary.ParamsFromTable(tab,key,...)
+	if key then
+		if ... then
+			return tab[key],Auxiliary.ParamsFromTable(tab,...)
+		else
+			return tab[key]
+		end
+	end
+end
+function aux.FunctionWithNamedArgs(f,...)
+	local args={...}
+	return function(tab,...)
+		if type(tab)=="table" then
+			return f(Auxiliary.ParamsFromTable(tab,table.unpack(args)))
+		else
+			return f(tab,...)
+		end
+	end
+end
 function Auxiliary.GetExtraMaterials(tp,mustg,sc,summon_type)
 	local tg=Group.CreateGroup()
 	mustg = mustg or Group.CreateGroup()

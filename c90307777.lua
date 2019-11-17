@@ -2,11 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--ritual level
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_RITUAL_LEVEL)
-	e1:SetValue(s.rlevel)
-	c:RegisterEffect(e1)
+	Ritual.AddWholeLevelTribute(c,aux.FilterBoolFunction(Card.IsSetCard,0xb4))
 	--tohand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -19,13 +15,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-end
-function s.rlevel(e,c)
-	local lv=e:GetHandler():GetLevel()
-	if c:IsSetCard(0xb4) then
-		local clv=c:GetLevel()
-		return lv*65536+clv
-	else return lv end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0

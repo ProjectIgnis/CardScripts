@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcGreater(c,aux.FilterBoolFunction(Card.IsRitualMonster),nil,nil,nil,s.matfil)
+	Ritual.AddProcGreater({handler=c,matfilter=s.matfil})
 	--
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_LEAVE_GRAVE)

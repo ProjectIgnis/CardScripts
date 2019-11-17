@@ -1,7 +1,7 @@
 --善悪の彼岸
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcGreaterCode(c,35330871)
+	Ritual.AddProcGreaterCode(c,6,nil,35330871)
 	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

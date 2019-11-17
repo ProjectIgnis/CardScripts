@@ -12,18 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--ritual level
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_RITUAL_LEVEL)
-	e2:SetValue(s.rlevel)
-	c:RegisterEffect(e2)
-end
-function s.rlevel(e,c)
-	local lv=e:GetHandler():GetLevel()
-	if c:IsAttribute(ATTRIBUTE_WATER) then
-		local clv=c:GetLevel()
-		return lv*65536+clv
-	else return lv end
+	Ritual.AddWholeLevelTribute(c,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

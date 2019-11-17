@@ -2,7 +2,7 @@
 --Revendread Origin
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Ritual.AddProcGreater(c,s.ritualfil,nil,s.extrafil,nil,nil,nil,LOCATION_HAND|LOCATION_GRAVE)
+	local e1=Ritual.AddProcGreater(c,s.ritualfil,nil,s.extrafil,nil,nil,nil,nil,LOCATION_HAND|LOCATION_GRAVE)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
 	--destroy replace

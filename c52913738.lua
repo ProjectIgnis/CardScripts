@@ -1,7 +1,7 @@
 --破滅の儀式
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcGreaterCode(c,30646525)
+	Ritual.AddProcGreaterCode(c,7,nil,30646525)
 	--To Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

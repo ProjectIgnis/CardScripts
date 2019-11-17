@@ -1,7 +1,7 @@
 --超戦士の儀式
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcEqual(c,s.ritual_filter,8)
+	Ritual.AddProcEqual(c,aux.FilterBoolFunction(Card.IsSetCard,0x10cf),8)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,9 +15,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x10cf}
-function s.ritual_filter(c)
-	return c:IsType(TYPE_RITUAL) and c:IsSetCard(0x10cf)
-end
 function s.cfilter(c,att)
 	return c:IsAttribute(att) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

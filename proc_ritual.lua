@@ -46,7 +46,7 @@ function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,force
 	if desc then
 		e1:SetDescription(desc)
 	else
-		e1:SetDescription(1057)
+		e1:SetDescription(1171)
 	end
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

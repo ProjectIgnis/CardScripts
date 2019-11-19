@@ -112,8 +112,14 @@ function Ritual.Check(c,sg,mg,tp,sc,lv,forcedselection,e,_type)
 		Duel.SetSelectedCard(sg)
 		res=mg:CheckWithSumGreater(Card.GetRitualLevel,lv,sc)
 	end
-	res=(res and Duel.GetMZoneCount(tp,sg,tp)>0 and (not forcedselection or forcedselection(e,tp,sg,sc))) or
-		mg:IsExists(Ritual.Check,1,sg,sg,mg,tp,sc,lv,forcedselection,e,_type)
+	res=res and Duel.GetMZoneCount(tp,sg,tp)>0
+	local stop=false
+	if res and forcedselection then
+		res,stop=forcedselection(e,tp,sg,sc)
+	end
+	if not res and not stop then
+		res=mg:IsExists(Auxiliary.RitualCheck,1,sg,sg,mg,tp,sc,lv,forcedselection,e,_type)
+	end
 	if c then
 		sg:RemoveCard(c)
 	end

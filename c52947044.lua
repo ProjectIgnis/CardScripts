@@ -9,8 +9,11 @@ function s.initial_effect(c)
 	if not AshBlossomTable then AshBlossomTable={} end
 	table.insert(AshBlossomTable,e1)
 end
+function s.fcheck(tp,sg,fc)
+	return sg:IsExists(aux.FilterBoolFunstion(Card.IsSetCard,0xc008,fc,SUMMON_TYPE_FUSION,tp),1,nil)
+end
 function s.fextra(e,tp,mg)
-	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil)
+	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil),s.fcheck
 end
 function s.stage2(e,tc,tp,mg,chk)
 	local c=e:GetHandler()

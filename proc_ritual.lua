@@ -40,7 +40,7 @@ function Ritual.WholeLevelTributeValue(cond)
 end
 --Ritual Summon
 Ritual.CreateProc = aux.FunctionWithNamedArgs(
-function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation)
+function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
 	--lv can be a function (like GetLevel/GetOriginalLevel), fixed level, if nil it defaults to GetLevel
 	local e1=Effect.CreateEffect(c)
 	if desc then
@@ -51,17 +51,17 @@ function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,force
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(Ritual.Target(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection))
-	e1:SetOperation(Ritual.Operation(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation))
+	e1:SetTarget(Ritual.Target(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,specificmatfilter))
+	e1:SetOperation(Ritual.Operation(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter))
 	return e1
-end,"handler","lvtype","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation")
+end,"handler","lvtype","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter")
 
 Ritual.AddProc = aux.FunctionWithNamedArgs(
-function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation)
-	local e1=Ritual.CreateProc(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation)
+function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
+	local e1=Ritual.CreateProc(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
 	c:RegisterEffect(e1)
 	return e1
-end,"handler","lvtype","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation")
+end,"handler","lvtype","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter")
 
 function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,lv)
 	if not c:IsRitualMonster() or (filter and not filter(c)) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
@@ -74,6 +74,9 @@ function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,lv)
 	end
 	if c.mat_filter then
 		mg=mg:Filter(c.mat_filter,c,tp)
+	end
+	if specificmatfilter then
+		mg=mg:Filter(specificmatfilter,nil,c,mg,tp)
 	end
 	if c.ritual_custom_check then
 		forcedselection=aux.AND(c.ritual_custom_check,forcedselection or aux.TRUE)
@@ -135,7 +138,7 @@ function Ritual.SelectMaterials(sc,mg,forcedselection,lv,tp,e,_type)
 end
 
 Ritual.Operation = aux.FunctionWithNamedArgs(
-function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation)
+function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				location = location or LOCATION_HAND
 				local mg=Duel.GetRitualMaterial(tp)
@@ -151,6 +154,9 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 					local mat=nil
 					mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)
 					mg:Merge(mg2-tc)
+					if specificmatfilter then
+						mg=mg:Filter(specificmatfilter,nil,tc,mg,tp)
+					end
 					if tc.ritual_custom_operation then
 						tc:ritual_custom_operation(mg,forcedselection,_type)
 						mat=tc:GetMaterial()
@@ -191,13 +197,13 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 					Ritual.SummoningLevel=nil
 				end
 			end
-end,"filter","lvtype","lv","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation")
+end,"filter","lvtype","lv","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter")
 
 --Ritual Summon, geq fixed lv
 Ritual.AddProcGreater = aux.FunctionWithNamedArgs(
-function(c,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation)
-	return Ritual.AddProc(c,RITPROC_GREATER,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation)
-end,"handler","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation")
+function(c,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
+	return Ritual.AddProc(c,RITPROC_GREATER,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
+end,"handler","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter")
 
 function Ritual.AddProcCode(c,_type,lv,desc,...)
 	if not c:IsStatus(STATUS_COPYING_EFFECT) and c.fit_monster==nil then
@@ -214,9 +220,9 @@ end
 
 --Ritual Summon, equal to
 Ritual.AddProcEqual = aux.FunctionWithNamedArgs(
-function(c,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation)
-	return Ritual.AddProc(c,RITPROC_EQUAL,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation)
-end,"handler","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation")
+function(c,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
+	return Ritual.AddProc(c,RITPROC_EQUAL,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
+end,"handler","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter")
 
 function Ritual.AddProcEqualCode(c,lv,desc,...)
 	return Ritual.AddProcCode(c,RITPROC_EQUAL,lv,desc,...)

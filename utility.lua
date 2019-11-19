@@ -423,6 +423,32 @@ function Auxiliary.OR(...)
 				return false
 			end
 end
+function Auxiliary.tableAND(...)
+	local funs={...}
+	return	function(...)
+				local ret={}
+				for _,f in ipairs(funs) do
+					local res={f(...)}
+					for _,val in pairs(res) do
+						ret[_]=val and (ret[_]==nil or ret[_])
+					end
+				end
+				return ret
+			end
+end
+function Auxiliary.tableOR(...)
+	local funs={...}
+	return	function(...)
+				local ret={}
+				for _,f in ipairs(funs) do
+					local res={f(...)}
+					for _,val in pairs(res) do
+						ret[_]=val or not (ret[_]==nil or not ret[_])
+					end
+				end
+				return ret
+			end
+end
 function Auxiliary.NOT(f)
 	return	function(...)
 				return not f(...)

@@ -79,7 +79,7 @@ function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,lv)
 		mg=mg:Filter(specificmatfilter,nil,c,mg,tp)
 	end
 	if c.ritual_custom_check then
-		forcedselection=aux.AND(c.ritual_custom_check,forcedselection or aux.TRUE)
+		forcedselection=aux.tableAND(c.ritual_custom_check,forcedselection or aux.TRUE)
 	end
 	local sg=Group.CreateGroup()
 	local res=Ritual.Check(nil,sg,mg,tp,c,lv,forcedselection,e,_type)
@@ -168,7 +168,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 						mat=tc:GetMaterial()
 					else
 						if tc.ritual_custom_check then
-							forcedselection=aux.AND(tc.ritual_custom_check,forcedselection or aux.TRUE)
+							forcedselection=aux.tableAND(tc.ritual_custom_check,forcedselection or aux.TRUE)
 						end
 						if tc.mat_filter then
 							mg=mg:Filter(tc.mat_filter,tc,tp)

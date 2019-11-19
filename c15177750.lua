@@ -1,93 +1,58 @@
 --恵みの風
 --Blessed Winds
---Scripted by Eerie Code
+--orignal script by Eerie Code, rescripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.tg)
 	c:RegisterEffect(e1)
-	--effect
+	--send and recover LP
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_RECOVER)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetTarget(s.target)
+	e2:SetCountLimit(1,id)
+	e2:SetCost(s.rccost)
+	e2:SetTarget(s.rctg)
+	e2:SetOperation(s.rcop)
 	c:RegisterEffect(e2)
+	--shuffle and recover LP
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetCategory(CATEGORY_RECOVER+CATEGORY_TODECK)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetCountLimit(1,id)
+	e3:SetTarget(s.tdtg)
+	e3:SetOperation(s.tdop)
+	c:RegisterEffect(e3)
+	--send and recover LP
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,3))
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetCountLimit(1,id)
+	e4:SetCost(s.spcost)
+	e4:SetTarget(s.sptg)
+	e4:SetOperation(s.spop)
+	c:RegisterEffect(e4)
 end
 s.listed_series={0xc9}
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
-	if chk==0 then return true end
-	if s.target(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,94) then
-		s.target(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetCategory(0)
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then 
-		if op==2 then return s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) else return false end
-	end
-	local b1=s.rccost(e,tp,eg,ep,ev,re,r,rp,0)
-	local b2=s.cost(e,tp,eg,ep,ev,re,r,rp,0) and s.tdtg(e,tp,eg,ep,ev,re,r,rp,0)
-	local b3=s.spcost(e,tp,eg,ep,ev,re,r,rp,0) and s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
-	if chk==0 then return b1 or b2 or b3 end
-	local stable={}
-	local dtable={}
-	if b1 then
-		table.insert(stable,1)
-		table.insert(dtable,aux.Stringid(id,1))
-	end
-	if b2 then
-		table.insert(stable,2)
-		table.insert(dtable,aux.Stringid(id,2))
-	end
-	if b3 then
-		table.insert(stable,3)
-		table.insert(dtable,aux.Stringid(id,3))
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	local op=stable[Duel.SelectOption(tp,table.unpack(dtable))+1]
-	e:SetLabel(op)
-	if op==1 then
-		e:SetCategory(CATEGORY_RECOVER)
-		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e:SetOperation(s.rcop)
-		s.rccost(e,tp,eg,ep,ev,re,r,rp,1)
-		s.rctg(e,tp,eg,ep,ev,re,r,rp,1)
-	elseif op==2 then
-		e:SetCategory(CATEGORY_RECOVER+CATEGORY_TODECK)
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e:SetOperation(s.tdop)
-		s.cost(e,tp,eg,ep,ev,re,r,rp,1)
-		s.tdtg(e,tp,eg,ep,ev,re,r,rp,1)
-	elseif op==3 then
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-		e:SetProperty(0)
-		e:SetOperation(s.spop)
-		s.spcost(e,tp,eg,ep,ev,re,r,rp,1)
-		s.sptg(e,tp,eg,ep,ev,re,r,rp,1)
-	end
-end
-function s.rccfilter(c)
-	return c:IsRace(RACE_PLANT) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToGraveAsCost()
-end
 function s.rccost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return s.cost(e,tp,eg,ep,ev,re,r,rp,chk) and Duel.IsExistingMatchingCard(s.rccfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rccfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.rccfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
-	s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.rctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -113,15 +78,14 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if e:GetHandler():IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
-		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+	if e:GetHandler():IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e)
+		and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
 		Duel.BreakEffect()
 		Duel.Recover(tp,500,REASON_EFFECT)
 	end
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return s.cost(e,tp,eg,ep,ev,re,r,rp,chk) and Duel.CheckLPCost(tp,1000) end
-	s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
 end
 function s.spfilter(c,e,tp)

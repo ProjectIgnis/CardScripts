@@ -388,7 +388,7 @@ function Card.UpdateScale(c,amt,reset,rc)
 end
 
 function Auxiliary.Stringid(code,id)
-	return id|code<<4
+	return id|code<<32
 end
 function Auxiliary.Next(g)
 	local first=true

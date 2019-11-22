@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
-	e1:SetTarget(s.target)
+	e1:SetTarget(s.target(Ritual.Target(s.filter,RITPROC_GREATER),Ritual.Target(s.filter,RITPROC_GREATER)))
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
@@ -26,16 +26,14 @@ s.listed_series={0x79}
 function s.filter(c)
 	return c:IsRace(RACE_BEASTWARRIOR) and c:IsRitualMonster()
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local se=Ritual.AddProcGreater(e:GetHandler(),s.filter)
-	local t=se:GetTarget()
-	local o=se:GetOperation()
-	se:Reset()
-	if t(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-		e:SetOperation(s.rop(o))
-		t(e,tp,eg,ep,ev,re,r,rp,1)
+function s.target(tg,op)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return true end
+		if tg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			e:SetCategory(CATEGORY_SPECIAL_SUMMON)
+			e:SetOperation(s.rop(op))
+			tg(e,tp,eg,ep,ev,re,r,rp,1)
+		end
 	end
 end
 function s.rop(op)

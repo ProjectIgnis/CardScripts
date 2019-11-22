@@ -2,7 +2,7 @@
 --Rebirth of Nephthys
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcGreater(c,s.ritualfil,nil,nil,nil,nil,s.stage2)
+	Ritual.AddProcGreater({handler=c,filter=s.ritualfil,stage2=s.stage2})
 end
 s.listed_series={0x11f}
 s.fit_monster={88176533,24175232}
@@ -12,7 +12,7 @@ end
 function s.mfilter(c)
 	if c:IsPreviousLocation(LOCATION_MZONE) then
 		local code=c:GetPreviousCodeOnField()
-		return code == 88176533 or code == 24175232
+		return code==88176533 or code==24175232
 	else
 		return c:IsCode(88176533,24175232)
 	end

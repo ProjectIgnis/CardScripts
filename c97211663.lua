@@ -1,7 +1,7 @@
 --影霊衣の反魂術
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcEqual(c,s.ritualfil,nil,nil,nil,nil,nil,nil,LOCATION_HAND+LOCATION_GRAVE):SetCountLimit(1,id)
+	Ritual.AddProcEqual(c,s.ritualfil,nil,nil,nil,nil,nil,nil,LOCATION_HAND|LOCATION_GRAVE):SetCountLimit(1,id)
 	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)

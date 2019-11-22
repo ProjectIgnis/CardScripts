@@ -2,7 +2,7 @@
 --Endless of the World
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcGreater(c,s.ritualfil,nil,nil,nil,s.forcedgroup)
+	Ritual.AddProcGreater({handler=c,filter=s.ritualfil,matfilter=s.forcedgroup})
 	--salvage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -18,7 +18,7 @@ end
 s.listed_names={8198712}
 s.fit_monster={46427957,72426662}
 function s.ritualfil(c)
-	return c:IsCode(46427957,72426662) and c:IsRitualMonster()
+	return c:IsCode(46427957,72426662)
 end
 function s.forcedgroup(c,e,tp)
 	return c:IsLocation(LOCATION_ONFIELD)

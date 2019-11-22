@@ -1,4 +1,5 @@
 --魔界台本「魔王の降臨」
+--Abyss Script - Rise of the Abyss King
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10ec}
 function s.cfilter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(0x10ec)
 end
@@ -36,7 +38,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local sg=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,nil)
+	local sg=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 	if Duel.IsExistingMatchingCard(s.lmfilter,tp,LOCATION_MZONE,0,1,nil) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		Duel.SetChainLimit(s.chainlm)

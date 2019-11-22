@@ -24,8 +24,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_DARK_MAGICIAN}
-s.listed_series={0x239}
+s.listed_names={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL,id}
+s.listed_series={0x13a}
 function s.filter(c,deckCount)
 	return not c:IsCode(id) and (c:IsCode(CARD_DARK_MAGICIAN) or aux.IsCodeListed(c,CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL))
 		and (c:IsLocation(LOCATION_DECK) and deckCount>1 or not c:IsLocation(LOCATION_DECK) and c:IsAbleToDeck())
@@ -38,15 +38,20 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)):GetFirst()
 	if tc then
-		Duel.ShuffleDeck(tp)
-		if tc:IsLocation(LOCATION_DECK) then Duel.MoveSequence(tc,0)
-		else Duel.SendtoDeck(tc,nil,0,REASON_EFFECT) end
-		Duel.ConfirmDecktop(tp,1)
+		if tc:IsLocation(LOCATION_DECK) then
+			Duel.ShuffleDeck(tp)
+			Duel.MoveSequence(tc,0)
+		else 
+			Duel.SendtoDeck(tc,nil,0,REASON_EFFECT) 
+		end
+		if not tc:IsLocation(LOCATION_EXTRA) then
+			Duel.ConfirmDecktop(tp,1)
+		end
 	end
 end
 function s.drfilter(c)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
-		and ((c:IsSetCard(0x239) and c:IsType(TYPE_MONSTER)) or c:IsCode(CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL))
+		and ((c:IsSetCard(0x13a) and c:IsType(TYPE_MONSTER)) or c:IsCode(CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL))
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroup(s.drfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil):GetClassCount(Card.GetCode)

@@ -1,4 +1,5 @@
 --影霊衣の術士 シュリット
+--Shurit, Strategist of the Nekroz
 local s,id=GetID()
 function s.initial_effect(c)
 	--ritual level

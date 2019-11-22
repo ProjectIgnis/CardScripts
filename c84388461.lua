@@ -1,4 +1,5 @@
 --剣聖の影霊衣－セフィラセイバー
+--Zefrasaber, Swordmaster of the Nekroz
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon

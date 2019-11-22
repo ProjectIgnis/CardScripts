@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x98,0x99,0x9f}
+s.listed_series={0x9f,0x99,0x98}
 function s.costchk(sg,e,tp)
 	return Duel.IsPlayerCanDraw(tp,#sg)
 end

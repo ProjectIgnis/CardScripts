@@ -52,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.cfilter2(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousSequence()>4 and c:GetPreviousControler()~=tp and 
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousSequence()>4 and c:GetPreviousControler()~=tp and 
 		(c:IsReason(REASON_BATTLE) or (rp==tp and c:IsReason(REASON_EFFECT)))
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)

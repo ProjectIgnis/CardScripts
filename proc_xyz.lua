@@ -133,7 +133,7 @@ function Xyz.RecursionChk1(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbe
 			mg:Merge(rg)
 			return false
 		end
-		local sg2=mg:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+		local sg2=mg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 		rg:Merge(sg2)
 		mg:Sub(sg2)
 	end
@@ -234,7 +234,7 @@ function Xyz.RecursionChk2(c,mg,xyz,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mu
 			mg:Merge(rg)
 			return false
 		end
-		local sg2=mg:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+		local sg2=mg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 		rg:Merge(sg2)
 		mg:Sub(sg2)
 	end

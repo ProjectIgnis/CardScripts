@@ -213,7 +213,7 @@ function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,...)
 			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then
 				return false
 			end
-			local sg2=mg2:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+			local sg2=mg2:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			-- rg:Merge(sg2)
 			mg2:Sub(sg2)
 			if #mustg>0 and not mg2:Includes(mustg) then
@@ -474,7 +474,7 @@ function Fusion.SelectMixRep(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,f
 				-- mg:Merge(rg)
 				return false
 			end
-			local sg2=mg2:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+			local sg2=mg2:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			-- rg:Merge(sg2)
 			mg2:Sub(sg2)
 			if #mustg>0 and not mg2:Includes(mustg) then
@@ -619,7 +619,7 @@ function Fusion.OperationMixRepUnfix(insf,sub,minc,maxc,...)
 						local eff={gc:GetCardEffect(EFFECT_FUSION_MAT_RESTRICTION)}
 						for i=1,#eff do
 							local f=eff[i]:GetValue()
-							mg=mg:Filter(Auxiliary.HarmonizingMagFilter,tc,eff[i],f)
+							mg=mg:Filter(aux.NOT(Auxiliary.HarmonizingMagFilter),tc,eff[i],f)
 						end
 					end
 				end
@@ -721,7 +721,7 @@ function Fusion.CheckSelectMixRepUnfixAll(c,tp,mg,sg,mustg,g,fc,sub,sub2,chkf,mi
 				if (sg+g):IsExists(Auxiliary.HarmonizingMagFilter,1,c,fun,fun:GetValue()) then
 					return false
 				end
-				local sg2=mg2:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,fun,fun:GetValue()) end,nil)
+				local sg2=mg2:Filter(Auxiliary.HarmonizingMagFilter,nil,fun,fun:GetValue())
 				mg2:Sub(sg2)
 			end
 		end
@@ -784,7 +784,7 @@ function Fusion.SelectMixRepUnfix(c,tp,mg,sg,mustg,fc,sub,sub2,minc,maxc,chkf,..
 				mg:Merge(rg)
 				return false
 			end
-			local sg2=mg:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+			local sg2=mg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			rg:Merge(sg2)
 			mg:Sub(sg2)
 		end

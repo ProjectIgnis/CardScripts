@@ -1658,7 +1658,7 @@ function Auxiliary.GlobalCheck(s,func)
 	end
 end
 function Auxiliary.HarmonizingMagFilter(c,e,f)
-	return not f or f(e,c)
+	return f and not f(e,c)
 end
 
 Duel.LoadScript("proc_fusion.lua")

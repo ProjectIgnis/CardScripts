@@ -35,7 +35,7 @@ function s.val(e,c)
 	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),c:GetControler(),LOCATION_MZONE,0,nil)*200
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsPreviousLocation(LOCATION_HAND) and c:IsSummonPlayer(tp) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:GetSummonLocation()==LOCATION_HAND and c:IsSummonPlayer(tp) and c:IsControler(tp)
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

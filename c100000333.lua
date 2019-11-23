@@ -28,14 +28,6 @@ function s.initial_effect(c)
 	e4:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	c:RegisterEffect(e4)
-	aux.GlobalCheck(s,function()
-		--check obsolete ruling
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_DRAW)
-		ge1:SetOperation(s.checkop)
-		Duel.RegisterEffect(ge1,0)
-	end)
 end
 s.listed_names={100000330}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
@@ -54,20 +46,7 @@ end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,0x13,0,1,1,nil,tp):GetFirst()
-	if tc then
-		local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-		if Duel.GetFlagEffect(tp,62765383)>0 then
-			if fc then Duel.Destroy(fc,REASON_RULE) end
-			of=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-			if fc and Duel.Destroy(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
-		else
-			Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-			if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
-		end
-		Duel.BreakEffect()
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-		Duel.RaiseEvent(tc,EVENT_CHAIN_SOLVED,tc:GetActivateEffect(),0,tp,tp,Duel.GetCurrentChain())
-	end
+	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.pofilter1(c,e,tp)
 	return c:GetPosition()==POS_FACEUP_ATTACK and c:GetPreviousPosition()>0x3

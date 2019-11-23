@@ -48,19 +48,7 @@ end
 function s.actop(e,tp,eg,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(48934760,0))
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.actfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
-	if tc then
-		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-		if fc then
-			Duel.SendtoGrave(fc,REASON_RULE)
-			Duel.BreakEffect()
-		end
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-		local te=tc:GetActivateEffect()
-		local tep=tc:GetControler()
-		local cost=te:GetCost()
-		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-		Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
-	end
+	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FIELD) and c:IsSetCard(0x580) and c:IsAbleToGrave()
@@ -95,16 +83,7 @@ function s.actop2(e,tp,eg,ep,ev,re,r,rp)
 				Duel.SendtoHand(tc,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,tc)
 			else
-				local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-				if fc then
-					Duel.SendtoGrave(fc,REASON_RULE)
-					Duel.BreakEffect()
-				end
-				Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-				local tep=tc:GetControler()
-				local cost=te:GetCost()
-				if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-				Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
+				aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end

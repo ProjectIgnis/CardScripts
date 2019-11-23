@@ -9,21 +9,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	aux.GlobalCheck(s,function()
-		--check obsolete ruling
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_DRAW)
-		ge1:SetOperation(s.checkop)
-		Duel.RegisterEffect(ge1,0)
-	end)
-end
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if (r&REASON_RULE)~=0 and Duel.GetTurnCount()==1 then
-		--obsolete
-		Duel.RegisterFlagEffect(tp,62765383,0,0,1)
-		Duel.RegisterFlagEffect(1-tp,62765383,0,0,1)
-	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil and Duel.GetLP(tp)<=3000
@@ -57,42 +42,25 @@ end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
 end
+function s.filter2(c)
+	local te=c:GetActivateEffect()
+	return te and not (te:GetProperty()&EFFECT_FLAG_DAMAGE_STEP) and c:IsType(TYPE_FIELD)
+end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-	if Duel.GetFlagEffect(tp,62765383)>0 then
-		if fc then Duel.Destroy(fc,REASON_RULE) end
-		fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-		if fc then Duel.Destroy(fc,REASON_RULE) end
-	else
-		fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-		if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
-	end
-	local sg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_DECK,0,nil,TYPE_FIELD)
-	local chc=sg:GetFirst()
-	while chc do
+	local sg=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_DECK,0,nil)
+	for chc in aux.Next(sg) do
 		local te=chc:GetActivateEffect()
 		if te and not te:IsActivatable(tp) then
-			te:SetProperty(te:GetProperty()+EFFECT_FLAG_DAMAGE_STEP)
+			te:SetProperty(te:GetProperty()|EFFECT_FLAG_DAMAGE_STEP)
 		end
-		chc=sg:GetNext()
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp)
-	if #g>0 and not Duel.GetFieldCard(tp,LOCATION_SZONE,5) then
-		local tc=g:GetFirst()
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-		local te=tc:GetActivateEffect()
-		local tep=tc:GetControler()
-		local cost=te:GetCost()
-		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-		Duel.RaiseEvent(tc,EVENT_CHAIN_SOLVED,te,0,tp,tp,Duel.GetCurrentChain())
-	end
-	chc=sg:GetFirst()
-	while chc do
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	for chc in aux.Next(sg) do
 		local te=chc:GetActivateEffect()
 		if te and te:IsActivatable(tp) then
-			te:SetProperty(te:GetProperty()-EFFECT_FLAG_DAMAGE_STEP)
+			te:SetProperty(te:GetProperty()&~EFFECT_FLAG_DAMAGE_STEP)
 		end
-		chc=sg:GetNext()
 	end
 end

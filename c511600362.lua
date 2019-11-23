@@ -1,11 +1,11 @@
 --転生炎獣 ラクーン (Anime)
 --Salamangreat Raccoon (Anime)
 --Scripted by Larry126
-local s,id,alias=GetID()
+local s,id=GetID()
 function s.initial_effect(c)
 	--Gain LP
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(alias,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetRange(LOCATION_HAND)

@@ -95,7 +95,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 					local mg=Duel.GetRitualMaterial(tp)
 					local mg2=extrafil and extrafil(e,tp,eg,ep,ev,re,r,rp,chk) or Group.CreateGroup()
 					Ritual.CheckMatFilter(matfilter,e,tp,mg,mg2)
-					return Duel.IsExistingMatchingCard(Ritual.Filter,tp,location,0,1,nil,filter,_type,e,tp,mg,mg2,forcedselection,lv)
+					return Duel.IsExistingMatchingCard(Ritual.Filter,tp,location,0,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,forcedselection,lv)
 				end
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,location)
 			end
@@ -152,7 +152,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 				Ritual.CheckMatFilter(matfilter,e,tp,mg,mg2)
 				local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local tg=Duel.SelectMatchingCard(tp,Ritual.Filter,tp,location,0,1,1,nil,filter,_type,e,tp,mg,mg2,forcedselection,lv)
+				local tg=Duel.SelectMatchingCard(tp,Ritual.Filter,tp,location,0,1,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,forcedselection,lv)
 				if #tg>0 then
 					local tc=tg:GetFirst()
 					local lv=(lv and (type(lv)=="function" and lv()) or lv) or tc:GetLevel()

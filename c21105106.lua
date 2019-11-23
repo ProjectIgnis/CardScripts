@@ -99,5 +99,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 end
 function s.ritual_custom_check(e,tp,g,c)
-	return #g==3 and g:GetClassCount(Card.GetRace)==3 and g:IsExists(Card.IsLocation,3,nil,LOCATION_ONFIELD)
+	local count=#g
+	local class_count=g:GetClassCount(Card.GetRace)
+	return count==3 and class_count==3 and g:IsExists(Card.IsLocation,3,nil,LOCATION_ONFIELD),count>3 or class_count!=count or g:IsExists(aux.NOT(Card.IsLocation),1,nil,LOCATION_ONFIELD)
 end

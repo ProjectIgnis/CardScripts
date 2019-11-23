@@ -28,7 +28,6 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,id)
-	e3:SetCondition(s.con)
 	c:RegisterEffect(e3)
 	--to S/T Zone
 	local e4=Effect.CreateEffect(c)

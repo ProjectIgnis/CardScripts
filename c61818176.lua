@@ -44,14 +44,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-			local sg=g:Select(tp,1,1,nil)
-			local sc=sg:GetFirst()
-			Duel.MoveToField(sc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-			local te=sc:GetActivateEffect()
-			local tep=sc:GetControler()
-			local cost=te:GetCost()
-			if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-			Duel.RaiseEvent(sc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
+			local sc=g:Select(tp,1,1,nil):GetFirst()
+			aux.PlayFieldSpell(sc,e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end

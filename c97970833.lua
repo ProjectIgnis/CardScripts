@@ -23,18 +23,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstMatchingCard(s.filter,tp,LOCATION_DECK,0,nil,tp)
-	if tc then
-		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-		if fc then
-			Duel.SendtoGrave(fc,REASON_RULE)
-			Duel.BreakEffect()
-		end
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-		fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-		if fc and fc:IsFaceup() and Duel.IsPlayerCanDraw(1-tp,1) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-			Duel.Draw(1-tp,1,REASON_EFFECT)
-		end
-		Duel.RaiseEvent(tc,4179255,tc:GetActivateEffect(),0,tp,tp,Duel.GetCurrentChain())
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+	local canadd = fc and fc:IsFaceup() and Duel.IsPlayerCanDraw(1-tp,1)
+	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	if canadd and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		Duel.Draw(1-tp,1,REASON_EFFECT)
 	end
 end

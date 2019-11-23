@@ -1654,11 +1654,42 @@ end
 function Auxiliary.GlobalCheck(s,func)
 	if not s.global_check then
 		s.global_check=true
-		func()		
+		func()
 	end
 end
 function Auxiliary.HarmonizingMagFilter(c,e,f)
 	return f and not f(e,c)
+end
+function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp)
+	if c then
+		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+		if Duel.IsDuelType(DUEL_1_FIELD) then
+			if fc then Duel.Destroy(fc,REASON_RULE) end
+			of=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+			if of and Duel.Destroy(of,REASON_RULE)==0 then
+				Duel.SendtoGrave(c,REASON_RULE)
+				return false
+			else 
+				Duel.BreakEffect()
+			end
+		else
+			if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then
+				Duel.SendtoGrave(c,REASON_RULE)
+				return false
+			else 
+				Duel.BreakEffect()
+			end
+		end
+		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		local te=c:GetActivateEffect()
+		te:UseCountLimit(tp,1,true)
+		local tep=c:GetControler()
+		local cost=te:GetCost()
+		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
+		Duel.RaiseEvent(c,4179255,te,0,tp,tp,Duel.GetCurrentChain())
+		return true
+	end
+	return false
 end
 
 Duel.LoadScript("proc_fusion.lua")

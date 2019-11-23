@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_GRAVE+LOCATION_MZONE)
 	e2:SetCode(id)
-	e2:SetCondition(s.con)
+	e2:SetCountLimit(1,id+1)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x23}
@@ -63,7 +63,4 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
-end
-function s.con(e)
-	return Duel.GetFlagEffect(e:GetHandlerPlayer(),id)==0
 end

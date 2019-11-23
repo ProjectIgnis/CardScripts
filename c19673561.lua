@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_WITCHCRAFT_REPLACE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_SZONE)
+	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.con)
 	c:RegisterEffect(e3)
 	--to S/T Zone
@@ -35,8 +36,8 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
+	e4:SetCountLimit(1,id)
 	e4:SetCondition(s.tfcond)
-	e4:SetCost(s.tfcost)
 	e4:SetTarget(s.tftg)
 	e4:SetOperation(s.tfop)
 	c:RegisterEffect(e4)
@@ -71,10 +72,6 @@ end
 function s.tfcond(e,tp,eg,ep,ev,re,r,rp)
     return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x128),tp,LOCATION_MZONE,0,1,nil) and Duel.GetTurnPlayer()==tp
 end
-function s.tfcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,tp,0)
@@ -86,7 +83,4 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
-end
-function s.con(e)
-	return Duel.GetFlagEffect(e:GetHandlerPlayer(),id)==0
 end

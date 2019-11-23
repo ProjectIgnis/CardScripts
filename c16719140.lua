@@ -26,28 +26,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
-	aux.GlobalCheck(s,function()
-		s[0]=Group.CreateGroup()
-		s[0]:KeepAlive()
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-		ge1:SetCode(EVENT_FLIP)
-		ge1:SetOperation(s.regop)
-		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_BATTLED)
-		ge2:SetOperation(s.trigop)
-		Duel.RegisterEffect(ge2,0)
-		local ge3=Effect.CreateEffect(c)
-		ge3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge3:SetCode(EVENT_ATTACK_DISABLED)
-		ge3:SetOperation(s.clearop)
-		ge3:SetLabelObject(ge2)
-		Duel.RegisterEffect(ge3,0)
-		s[1]=ge2
-	end)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
@@ -110,7 +88,7 @@ function s.cfilter(c,tp)
 	return c:IsSetCard(0x10ed) and c:IsControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp) and (Duel.GetCurrentPhase()&PHASE_DAMAGE_CAL+PHASE_DAMAGE==0 or re==s[1])
+	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -122,20 +100,4 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentPhase()&PHASE_DAMAGE_CAL+PHASE_DAMAGE~=0 then
-		s[0]:Merge(eg)
-	end
-end
-function s.trigop(e,tp,eg,ep,ev,re,r,rp)
-	local g=s[0]:Clone()
-	Duel.RaiseEvent(g,EVENT_FLIP,e,0,0,0,0)
-	s[0]:Clear()
-end
-function s.clearop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentPhase()~=PHASE_DAMAGE_CAL then
-		Duel.RaiseEvent(s[0],EVENT_FLIP,e:GetLabelObject(),0,0,0,0)
-	end
-	s[0]:Clear()
 end

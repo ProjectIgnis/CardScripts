@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,nil,2,2)
+	Link.AddProcedure(c,nil,2,2)
 	--splimit
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_SINGLE)
@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xfe}
 function s.spcost(e,c,tp,st)
     if (st&SUMMON_TYPE_LINK)~=SUMMON_TYPE_LINK then return true end
     return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,nil,0xfe)
@@ -56,7 +57,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
         e1:SetType(EFFECT_TYPE_SINGLE)
         e1:SetCode(EFFECT_CANNOT_TRIGGER)
-        e1:SetReset(RESET_EVENT+0x17a0000+RESET_PHASE+PHASE_END)
+        e1:SetReset(RESET_EVENT+RESETS_STANDARD_EXC_GRAVE+RESET_PHASE+PHASE_END)
         e1:SetCondition(s.ctcon)
         tc:RegisterEffect(e1)
 	end

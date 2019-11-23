@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	if not AshBlossomTable then AshBlossomTable={} end
 	table.insert(AshBlossomTable,e1)
 end
+s.listed_series={0x8}
 function s.fcheck(tp,sg,fc)
 	return sg:IsExists(aux.FilterBoolFunstion(Card.IsSetCard,0xc008,fc,SUMMON_TYPE_FUSION,tp),1,nil)
 end

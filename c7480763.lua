@@ -7,7 +7,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,nil,2,2,s.matfilter)
+	Link.AddProcedure(c,nil,2,2,s.matfilter)
 	--Card/effect on the field is activated, set an "Artifact" from hand/deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -46,7 +46,7 @@ end
 	--If the card/effect (other than this card) was activated on the field
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return bit.band(loc,LOCATION_ONFIELD)~=0 and re:GetHandler()~=e:GetHandler() and re:GetHandler()~=e:GetHandler()
+	return (loc&LOCATION_ONFIELD)~=0 and re:GetHandler()~=e:GetHandler() and re:GetHandler()~=e:GetHandler()
 end
 	--Activation legality
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -57,7 +57,7 @@ end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		local c=e:GetHandler()
 		local tc=g:GetFirst()
 		Duel.SSet(tp,tc)

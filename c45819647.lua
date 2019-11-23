@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(COUNTER_SPELL)
 	--link summon
-	aux.AddLinkProcedure(c,nil,2,3,s.lcheck)
+	Link.AddProcedure(c,nil,2,3,s.lcheck)
 	c:EnableReviveLimit()
 	--add counter
 	local e1=Effect.CreateEffect(c)
@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x12a}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsRace,1,nil,RACE_SPELLCASTER,lc,sumtype,tp)
 end

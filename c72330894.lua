@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-    aux.AddLinkProcedure(c,nil,2,3,s.lcheck)
+    Link.AddProcedure(c,nil,2,3,s.lcheck)
     --cannot be link material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -43,12 +43,13 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x12d}
 function s.lcheck(g,lc,sumtype,tp)
-    return g:IsExists(Card.IsRace,1,nil,RACE_WINDBEAST,lc,sumtype,tp)
+    return g:IsExists(Card.IsRace,1,nil,RACE_WINGEDBEAST,lc,sumtype,tp)
 end
 function s.indtg(e,c)
 	local oc=e:GetHandler()
-	return c==oc or (c:IsRace(RACE_WINDBEAST) and oc:GetLinkedGroup():IsContains(c))
+	return c==oc or (c:IsRace(RACE_WINGEDBEAST) and oc:GetLinkedGroup():IsContains(c))
 end
 function s.repfilter(c,e)
 	return c:IsFaceup() and c:IsSetCard(0x12d)
@@ -73,7 +74,7 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp)
 	local ct=Duel.GetLocationCount(0,LOCATION_SZONE)+Duel.GetLocationCount(1,LOCATION_SZONE)
-	return c:IsRace(RACE_WINDBEAST) and ct>0 and c:IsLevelBelow(ct) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_WINGEDBEAST) and ct>0 and c:IsLevelBelow(ct) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and 

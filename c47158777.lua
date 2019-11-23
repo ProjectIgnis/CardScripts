@@ -8,7 +8,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,nil,2,2)
+	Link.AddProcedure(c,nil,2,2)
 	--Upon link summon, send 1 "Destruction Sword" from deck to GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

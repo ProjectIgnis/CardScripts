@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.splimit)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xb4,0xc4}
 s.listed_names={21105106}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end

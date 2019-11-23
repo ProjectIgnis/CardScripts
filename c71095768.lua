@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_DETACH_EVENT)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,s.mfilter,2,nil,s.matcheck)
+	Link.AddProcedure(c,s.mfilter,2,nil,s.matcheck)
 	--cannot be link material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

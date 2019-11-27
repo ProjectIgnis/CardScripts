@@ -1,4 +1,5 @@
 --遺言状
+--Last Will
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsControler(tp) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for p=0,1 do

@@ -17,25 +17,16 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--disable
+	--cannnot activate
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_DISABLE)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetTarget(s.distg)
+	e2:SetTargetRange(1,1)
+	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e2:SetCondition(s.actcon)
+	e2:SetValue(s.aclimit)
 	c:RegisterEffect(e2)
-	--cannnot activate
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(1,1)
-	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
-	e3:SetCondition(s.actcon)
-	e3:SetValue(s.aclimit)
-	c:RegisterEffect(e3)
 end
 s.xyz_number=45
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -54,10 +45,16 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		c:SetCardTarget(tc)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_DISABLE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetCondition(s.disablecon)
+		tc:RegisterEffect(e1)
 	end
 end
-function s.distg(e,c)
-	return e:GetHandler():IsHasCardTarget(c)
+function s.disablecon(e)
+	return e:GetOwner():IsHasCardTarget(e:GetHandler())
 end
 function s.actcon(e)
 	return e:GetHandler():GetCardTargetCount()>0

@@ -55,14 +55,14 @@ function s.excost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.extg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,1,nil,tp,POS_FACEDOWN) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_EXTRA)
 end
 function s.exop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 	Duel.ConfirmCards(tp,g)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local sg=g:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil)
+	local sg=g:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil,tp,POS_FACEDOWN)
 	Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
 	Duel.ShuffleExtra(1-tp)
 end
@@ -72,14 +72,14 @@ end
 function s.grcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
-function s.rmfilter(c)
-	return c:IsAbleToRemove() and aux.SpElimFilter(c)
+function s.rmfilter(c,tp)
+	return c:IsAbleToRemove(tp,POS_FACEDOWN) and aux.SpElimFilter(c)
 end
 function s.grtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c:IsControler(1-tp) and c:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and s.rmfilter(chkc) end
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function s.grop(e,tp,eg,ep,ev,re,r,rp)
@@ -98,7 +98,7 @@ function s.dktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.dkfilter,tp,0,LOCATION_REMOVED,nil,1-tp)
 	local tg=Duel.GetDecktopGroup(1-tp,ct)
 	if chk==0 then return ct>0
-		and tg:FilterCount(Card.IsAbleToRemove,nil)==ct end
+		and tg:FilterCount(Card.IsAbleToRemove,nil,tp,POS_FACEDOWN)==ct end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,ct,1-tp,LOCATION_DECK)
 end
 function s.dkop(e,tp,eg,ep,ev,re,r,rp)

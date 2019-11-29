@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 	local ct=#g-Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(1-tp,30459350)
-		and ct>0 and g:IsExists(s.rmfilter,1,nil,1-tp) end
+		and ct>0 and g:IsExists(Card.IsAbleToRemove,1,nil,1-tp,POS_FACEDOWN,REASON_RULE) end
 	--Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,ct,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=#g-Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
 	if ct>0 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_REMOVE)
-		local sg=g:FilterSelect(1-tp,s.rmfilter,ct,ct,nil,1-tp)
+		local sg=g:FilterSelect(1-tp,Card.IsAbleToRemove,ct,ct,nil,1-tp,POS_FACEDOWN,REASON_RULE)
 		Duel.Remove(sg,POS_FACEDOWN,REASON_RULE)
 	end
 end

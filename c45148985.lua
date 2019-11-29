@@ -25,8 +25,14 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	local e4=e3:Clone()
+	--cannot be banished
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetCode(EFFECT_CANNOT_REMOVE)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetTargetRange(1,1)
+	e4:SetTarget(s.rmlimit)
 	c:RegisterEffect(e4)
 	--spsummon
 	local e5=Effect.CreateEffect(c)
@@ -40,6 +46,9 @@ function s.initial_effect(c)
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
+end
+function s.rmlimit(e,c,tp,r)
+	return c==e:GetHandler() and r==REASON_EFFECT
 end
 function s.sprfilter(c)
 	return c:IsSetCard(0x105) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and (c:IsLocation(LOCATION_SZONE) or aux.SpElimFilter(c,true,true))

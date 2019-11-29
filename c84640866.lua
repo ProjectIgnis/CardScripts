@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,tp)
 	return not c:IsSummonPlayer(tp) and not (c:IsSummonLocation(LOCATION_DECK) or c:IsSummonLocation(LOCATION_GRAVE))
-		and c:IsAbleToRemove() and c:IsLocation(LOCATION_MZONE)
+		and c:IsAbleToRemove(tp,POS_FACEDOWN) and c:IsLocation(LOCATION_MZONE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(s.filter,nil,tp)

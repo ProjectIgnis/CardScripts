@@ -1,4 +1,5 @@
 --超量機艦マグナキャリア
+--Super Quantal Mech Ship Magnacarrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -80,23 +81,17 @@ function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
+function s.rescon(sg,e,tp,mg)
+	return sg:GetClassCount(Card.GetCode)==#sg
+end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local g=Duel.GetMatchingGroup(s.spfilter3,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,e)
 	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
 		and g:GetClassCount(Card.GetCode)>2
 		and Duel.IsExistingMatchingCard(s.spfilter4,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local sg1=g:Select(tp,1,1,nil)
-	g:Remove(Card.IsCode,nil,sg1:GetFirst():GetCode())
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local sg2=g:Select(tp,1,1,nil)
-	g:Remove(Card.IsCode,nil,sg2:GetFirst():GetCode())
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local sg3=g:Select(tp,1,1,nil)
-	sg1:Merge(sg2)
-	sg1:Merge(sg3)
-	Duel.SetTargetCard(sg1)
+	local eg=aux.SelectUnselectGroup(g,e,tp,1,3,s.rescon,1,tp,HINTMSG_XMATERIAL)
+	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.mtfilter(c,e)

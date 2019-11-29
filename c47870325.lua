@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.rmfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToRemove()
+	return c:IsType(TYPE_SPELL) and c:IsAbleToRemove(POS_FACEDOWN)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rg=Group.CreateGroup()

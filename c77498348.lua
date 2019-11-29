@@ -77,7 +77,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if e:GetLabel()==ATTRIBUTE_LIGHT then
 			return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		else
-			return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil)
+			return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil,tp,POS_FACEDOWN)
 		end
 	end
 	if e:GetLabel()==ATTRIBUTE_LIGHT then
@@ -97,7 +97,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 		end
 	else
-		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)
+		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil,tp,POS_FACEDOWN)
 		if #g==0 then return end
 		local rg=g:RandomSelect(tp,1)
 		local tc=rg:GetFirst()

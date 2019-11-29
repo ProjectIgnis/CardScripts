@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	table.insert(GhostBelleTable,e1)
 end
 function s.matfilter(c)
-	return aux.SpElimFilter(c) and c:IsAbleToRemove()
+	return aux.SpElimFilter(c) and c:IsAbleToRemove(tp,POS_FACEDOWN)
 end
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then

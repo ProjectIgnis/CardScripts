@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil,tp,POS_FACEDOWN) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -58,6 +58,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(ct)
 	if ct==4 then
 		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
-		if re then re:Reset() end
+		if re then 
+			re:Reset()
+		end
 	end
 end

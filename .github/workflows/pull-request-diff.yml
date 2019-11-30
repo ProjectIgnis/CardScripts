@@ -9,7 +9,7 @@ jobs:
       id: copy
       run: |
         mkdir -p diff
-        cp $(git diff --name-only ${{ github.base_ref }}) diff
+        cp $(git diff --name-only origin/${{ github.base_ref }}) diff
     - name: Upload difference zip
       uses: actions/upload-artifact@v1
       with:

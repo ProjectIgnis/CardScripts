@@ -5,11 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Create difference zip
+    - name: Copy modified files
       run: |
-        git archive -o diff.zip HEAD $(git diff --name-only origin/master)
+        BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+        mkdir =p $BRANCH_NAME
+        cp $(git diff --name-only origin/master) $BRANCH_NAME
     - name: Upload difference zip
       uses: actions/upload-artifact@v1
       with:
         name: diff.zip
-        path: diff.zip
+        path: $BRANCH_NAME

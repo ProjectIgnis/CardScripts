@@ -996,6 +996,13 @@ function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)
 	local res
 	if #sg>=maxc then return false end
 	sg:AddCard(c)
+	if rescon then
+		local _,stop=rescon(sg,e,tp,mg)
+		if stop then 
+			sg:RemoveCard(c)
+			return false
+		end
+	end
 	if #sg<minc then
 		res=mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
 	elseif #sg<maxc then
@@ -1330,7 +1337,9 @@ end
 
 --Checks for cards with different names (to be used with Aux.SelectUnselectGroup)
 function Auxiliary.dncheck(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg
+	local c1=sg:GetClassCount(Card.GetCode)
+	local c2=#sg
+	return c1==c2,c1~=c2
 end
 --To be used as the "cancelcon" function in Aux.SelectUnselectGroup.
 --Prevents the player from stopping the selection with 0 cards, by hiding the "Cancel" button until a min of cards has been select
@@ -1418,7 +1427,7 @@ end
 function Auxiliary.WitchcraftDiscardGroup(minc)
 	return	function(sg,e,tp,mg)
 				if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_WITCHCRAFT_REPLACE,tp) then
-					return #sg==1
+					return #sg==1,#sg>1
 				else
 					return #sg>=minc
 				end

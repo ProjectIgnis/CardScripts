@@ -70,14 +70,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 	if #g<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local sg1=g:Select(tp,1,1,nil)
-	g:Remove(Card.IsCode,nil,sg1:GetFirst():GetCode())
-	if #g>0 and Duel.SelectYesNo(tp,210) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg2=g:Select(tp,1,1,nil)
-		sg1:Merge(sg2)
-	end
-	Duel.SendtoHand(sg1,nil,REASON_EFFECT)
-	Duel.ConfirmCards(1-tp,sg1)
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,2,aux.dncheck,1,tp,HINTMSG_ATOHAND,aux.mingroup)
+	Duel.SendtoHand(sg,nil,REASON_EFFECT)
+	Duel.ConfirmCards(1-tp,sg)
 end

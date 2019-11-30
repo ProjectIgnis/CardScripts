@@ -8,12 +8,10 @@ jobs:
     - name: Copy modified files
       id: copy
       run: |
-        BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-        echo "##[set-output name=branch;]$BRANCH_NAME"
-        mkdir -p $BRANCH_NAME
-        cp $(git diff --name-only origin/master) $BRANCH_NAME
+        mkdir -p diff
+        cp $(git diff --name-only origin/master) diff
     - name: Upload difference zip
       uses: actions/upload-artifact@v1
       with:
-        name: ${{ format('diff-{0}.zip', steps.copy.outputs.branch) }}
-        path: ${{ steps.copy.outputs.branch }}
+        name: ${{ format('diff-{0}-{1}.zip', $GITHUB_REF, $GITHUB_SHA) }}
+        path: diff

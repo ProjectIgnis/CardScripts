@@ -7,16 +7,13 @@ jobs:
     - uses: actions/checkout@v1
     - name: Copy modified files
       id: copy
-      outputs:
-        DIFF_DIR:
-          description: Modified files are placed here for upload
       run: |
         BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-        echo "::set-output name=DIFF_DIR::$BRANCH_NAME"
+        echo "##[set-output name=branch;]$BRANCH_NAME"
         mkdir -p $BRANCH_NAME
         cp $(git diff --name-only origin/master) $BRANCH_NAME
     - name: Upload difference zip
       uses: actions/upload-artifact@v1
       with:
-        name: diff.zip
-        path: ${{ steps.copy.outputs.DIFF_DIR }}
+        name: ${{ format('diff-{0}.zip', steps.copy.outputs.branch) }}
+        path: ${{ steps.copy.outputs.branch }}

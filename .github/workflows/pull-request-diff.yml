@@ -14,4 +14,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: diff.zip
-        path: $BRANCH_NAME
+        path: ${{ env.BRANCH_NAME }}

@@ -13,5 +13,5 @@ jobs:
     - name: Upload difference zip
       uses: actions/upload-artifact@v1
       with:
-        name: ${{ format('diff-{0}-{1}.zip', github.head_ref, github.sha) }}
+        name: ${{ format('diff__{0}__{1}', github.head_ref, github.sha) }}
         path: diff

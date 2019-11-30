@@ -7,10 +7,9 @@ jobs:
     - uses: actions/checkout@v1
     - name: Create difference zip
       run: |
-        git archive -o $(git rev-parse --abbrev-ref HEAD).zip HEAD $(git diff --name-only origin/master)
-    - name: Upload zip to Discord
-      uses: sinshutu/upload-to-discord@master
-      env:
-        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        git archive -o diff.zip HEAD $(git diff --name-only origin/master)
+    - name: Upload difference zip
+      uses: actions/upload-artifact@v1
       with:
-        args: $(git rev-parse --abbrev-ref HEAD).zip
+        name: diff.zip
+        path: diff.zip

@@ -1332,6 +1332,11 @@ end
 function Auxiliary.dncheck(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetCode)==#sg
 end
+--To be used as the "cancelcon" function in Aux.SelectUnselectGroup.
+--Prevents the player from stopping the selection with 0 cards, by hiding the "Cancel" button until a min of cards has been select
+function Auxiliary.mingroup(sg,e,tp,mg)
+	return #sg>=1
+end
 
 --Shortcut for functions that also check whether a card is face-up
 function Auxiliary.FilterFaceupFunction(f,...)

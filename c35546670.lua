@@ -1,6 +1,5 @@
 --星遺物が刻む傷痕
---Wounds Carved on the World Legacy
---
+--World Legacy Scars
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -67,16 +66,11 @@ function s.costfilter2(c)
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.costfilter2,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
-	if chk==0 then return g:GetClassCount(Card.GetCode)>=8 end
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	local rg=Group.CreateGroup()
-	for i=1,8 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local sg=g:Select(tp,1,1,nil)
-		rg:AddCard(sg:GetFirst())
-		g:Remove(Card.IsCode,nil,sg:GetFirst():GetCode())
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,8,8,aux.dncheck,0) end
+	local rg=aux.SelectUnselectGroup(g,e,tp,8,8,aux.dncheck,1,tp,HINTMSG_REMOVE,aux.mingroup)
+	if rg then
+		Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	end
-	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_HAND+LOCATION_EXTRA,1,nil) end

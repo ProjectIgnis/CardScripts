@@ -996,6 +996,13 @@ function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)
 	local res
 	if #sg>=maxc then return false end
 	sg:AddCard(c)
+	if rescon then
+		local _,stop=rescon(sg,e,tp,mg)
+		if stop then 
+			sg:RemoveCard(c)
+			return false
+		end
+	end
 	if #sg<minc then
 		res=mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
 	elseif #sg<maxc then
@@ -1006,18 +1013,18 @@ function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)
 	sg:RemoveCard(c)
 	return res
 end
-function Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,rescon,chk,seltp,hintmsg,cancelcon,breakcon)
+function Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,rescon,chk,seltp,hintmsg,finishcon,breakcon,cancelable)
 	local minc=minc or 1
 	local maxc=maxc or #g
 	if chk==0 then return g:IsExists(Auxiliary.SelectUnselectLoop,1,nil,Group.CreateGroup(),g,e,tp,minc,maxc,rescon) end
 	local hintmsg=hintmsg and hintmsg or 0
 	local sg=Group.CreateGroup()
 	while true do
-		local cancelable = (not cancelcon or cancelcon(sg,e,tp,g))
+		local finishable = (not finishcon or finishcon(sg,e,tp,g)) and #sg>=minc
 		local mg=g:Filter(Auxiliary.SelectUnselectLoop,sg,sg,g,e,tp,minc,maxc,rescon)
 		if (breakcon and breakcon(sg,e,tp,mg)) or #mg<=0 or #sg>=maxc then break end
 		Duel.Hint(HINT_SELECTMSG,seltp,hintmsg)
-		local tc=mg:SelectUnselect(sg,seltp,cancelable and #sg>=minc,cancelable and #sg==0,minc,maxc)
+		local tc=mg:SelectUnselect(sg,seltp,finishable,finishable or (cancelable and #sg==0),minc,maxc)
 		if not tc then break end
 		if sg:IsContains(tc) then
 			sg:RemoveCard(tc)
@@ -1328,9 +1335,17 @@ function Auxiliary.ReincarnationCheckValue(e,c)
 	end
 end
 
+--Checks for cards with different properties (to be used with Aux.SelectUnselectGroup)
+function Auxiliary.dpcheck(fun)
+	return function(sg,e,tp,mg)
+		local c1=sg:GetClassCount(fun)
+		local c2=#sg
+		return c1==c2,c1~=c2
+	end
+end
 --Checks for cards with different names (to be used with Aux.SelectUnselectGroup)
 function Auxiliary.dncheck(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg
+	return Auxiliary.dpcheck(Card.GetCode)(sg,e,tp,mg)
 end
 
 --Shortcut for functions that also check whether a card is face-up
@@ -1413,7 +1428,7 @@ end
 function Auxiliary.WitchcraftDiscardGroup(minc)
 	return	function(sg,e,tp,mg)
 				if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_WITCHCRAFT_REPLACE,tp) then
-					return #sg==1
+					return #sg==1,#sg>1
 				else
 					return #sg>=minc
 				end
@@ -1581,7 +1596,7 @@ function Auxiliary.AddLavaProcedure(c,required,position,filter,value,description
 	return e1
 end
 function Auxiliary.LavaCheck(sg,e,tp,mg)
-	return #sg==0 or Duel.GetMZoneCount(1-tp,sg,tp)>0
+	return Duel.GetMZoneCount(1-tp,sg,tp)>0
 end
 function Auxiliary.LavaCondition(required,filter)
 	return function(e,c)
@@ -1594,7 +1609,7 @@ end
 function Auxiliary.LavaTarget(required,filter)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,c)
 		local mg=Duel.GetMatchingGroup(aux.AND(Card.IsReleasable,filter),tp,0,LOCATION_MZONE,nil)
-		local g=aux.SelectUnselectGroup(mg,e,tp,required,required,Auxiliary.LavaCheck,1,tp,HINTMSG_RELEASE,Auxiliary.LavaCheck)
+		local g=aux.SelectUnselectGroup(mg,e,tp,required,required,Auxiliary.LavaCheck,1,tp,HINTMSG_RELEASE,nil,nil,true)
 		if #g > 0 then
 			g:KeepAlive()
 			e:SetLabelObject(g)

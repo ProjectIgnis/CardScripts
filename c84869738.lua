@@ -54,7 +54,10 @@ function s.rescon(mft,exft,ft)
 	return	function(sg,e,tp,mg)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				local mct=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
-				return exft>=exct and mft>=mct and ft>=#sg and sg:GetClassCount(Card.GetCode)>=#sg
+				local groupcount=#sg
+				local classcount=sg:GetClassCount(Card.GetCode)
+				local res=exft>=exct and mft>=mct and ft>=groupcount and classcount==groupcount
+				return res, not res
 			end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -76,8 +79,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ect then ft2=math.min(ft2,ect) end
 	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,loc,0,nil,e,tp)
 	if #sg==0 then return end
-	local rg=aux.SelectUnselectGroup(sg,e,tp,nil,ft,s.rescon(ft1,ft2,ft),1,tp,HINTMSG_SPSUMMON,s.rescon(ft1,ft2,ft))
-	Duel.SpecialSummon(rg,0,tp,tp,false,false,POS_FACEUP)
+	local rg=aux.SelectUnselectGroup(sg,e,tp,1,ft,s.rescon(ft1,ft2,ft),1,tp,HINTMSG_SPSUMMON)
+	Duel.SpecialSummon(rg,0,tp,tp,true,false,POS_FACEUP)
 end
 function s.xyzfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x20f8) and c:IsType(TYPE_XYZ)

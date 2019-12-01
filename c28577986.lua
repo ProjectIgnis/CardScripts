@@ -31,6 +31,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
+function s.rescon(lv)
+	return function(sg,e,tp,mg)
+		return sg:GetSum(Card.GetLevel)<=lv
+	end
+end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
@@ -39,16 +44,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local slv=tc:GetLevel()
 	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,slv,e,tp)
 	if #sg==0 then return end
-	repeat
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tc=sg:Select(tp,1,1,nil):GetFirst()
-		sg:RemoveCard(tc)
-		slv=slv-tc:GetLevel()
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-		sg:Remove(Card.IsLevelAbove,nil,slv+1)
-		ft=ft-1
-	until ft<=0 or #sg==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,1))
-	Duel.SpecialSummonComplete()
+	local tg=aux.SelectUnselectGroup(sg,e,tp,1,nil,s.rescon(lv),1,tp,HINTMSG_SPSUMMON)
+	Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
 	Duel.BreakEffect()
 	Duel.SendtoGrave(tc,REASON_EFFECT)
 end

@@ -30,14 +30,11 @@ function s.filter(c,e)
     return c:IsSetCard(0x119) and c:IsType(TYPE_MONSTER) 
         and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
-function s.thcheck(sg,e,tp)
-    return sg:GetClassCount(Card.GetCode)==2
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return false end
     local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,e,tp)
-    if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.thcheck,0) end
-    local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.thcheck,1,tp,HINTMSG_ATOHAND)
+    if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,0) end
+    local tg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,1,tp,HINTMSG_ATOHAND)
     Duel.SetTargetCard(tg)
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,tg,#tg,0,0)
 end

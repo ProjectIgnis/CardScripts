@@ -83,9 +83,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rescon(sg,e,tp,mg)
-	return #sg == 0 or (#sg > 0 and (sg:IsExists(s.atchk1,1,nil,sg)
+	return sg:IsExists(s.atchk1,1,nil,sg)
 		and ((not e:GetHandler():IsLocation(LOCATION_EXTRA) and aux.ChkfMMZ(1)(sg,e,tp,mg))
-		or (e:GetHandler():IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,e:GetHandler())>0))))
+		or (e:GetHandler():IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,e:GetHandler())>0))
 end
 function s.atchk1(c,sg)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and sg:FilterCount(Card.IsAttribute,c,ATTRIBUTE_DARK)==1
@@ -105,7 +105,7 @@ function s.spcon(e,c)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
-	local g=aux.SelectUnselectGroup(rg,e,tp,0,2,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon)
+	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()
 		e:SetLabelObject(g)

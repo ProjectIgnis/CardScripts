@@ -37,9 +37,6 @@ end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ge1=Effect.CreateEffect(e:GetHandler())
 	ge1:SetType(EFFECT_TYPE_FIELD)
@@ -61,7 +58,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		ft=math.min(ft,lk)
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
 		ft=math.min(ft,g:GetClassCount(Card.GetCode))
-		local sg=aux.SelectUnselectGroup(g,e,tp,nil,ft,s.rescon,1,tp,HINTMSG_SPSUMMON)
+		local sg=aux.SelectUnselectGroup(g,e,tp,nil,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

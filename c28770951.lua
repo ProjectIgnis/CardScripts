@@ -48,15 +48,12 @@ end
 function s.tdfilter(c,e)
 	return (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
-function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local tg=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil,e)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2)
-		and aux.SelectUnselectGroup(tg,e,tp,5,5,s.rescon,0) end
-	local g=aux.SelectUnselectGroup(tg,e,tp,5,5,s.rescon,1,tp,HINTMSG_TODECK)
+		and aux.SelectUnselectGroup(tg,e,tp,5,5,aux.dncheck,0) end
+	local g=aux.SelectUnselectGroup(tg,e,tp,5,5,aux.dncheck,1,tp,HINTMSG_TODECK)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)

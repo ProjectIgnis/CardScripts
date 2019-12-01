@@ -1,4 +1,5 @@
 --クローラー・レセプター
+--Krawler Receptor
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -48,18 +49,12 @@ end
 function s.filter1(c,e,tp)
 	return c:IsSetCard(0x104) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.filter2(c,g)
-	return g:IsExists(s.filter3,1,c,c:GetCode())
-end
-function s.filter3(c,code)
-	return not c:IsCode(code)
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return false end
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return false end
 		local g=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_DECK,0,nil,e,tp)
-		return g:IsExists(s.filter2,1,nil,g)
+		return g:GetClassCount(Card.GetCode)>=2
 	end
 	e:GetHandler():CreateEffectRelation(e)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
@@ -68,18 +63,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
 	local g=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_DECK,0,nil,e,tp)
-	local dg=g:Filter(s.filter2,nil,g)
-	if #dg>=1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=dg:Select(tp,1,1,nil)
-		local tc1=sg:GetFirst()
-		dg:Remove(Card.IsCode,nil,tc1:GetCode())
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tc2=dg:Select(tp,1,1,nil):GetFirst()
-		Duel.SpecialSummonStep(tc1,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
-		Duel.SpecialSummonStep(tc2,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
-		Duel.SpecialSummonComplete()
-		local g=Group.FromCards(tc1,tc2)
-		Duel.ConfirmCards(1-tp,g)
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
+	if sg then
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
+		Duel.ConfirmCards(1-tp,sg)
 	end
 end

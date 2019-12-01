@@ -85,8 +85,10 @@ function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x4a) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.spcheck(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)>=#sg
-		and sg:GetClassCount(Card.GetLocation)>=#sg
+	local ct1=sg:GetClassCount(Card.GetCode)
+	local ct2=sg:GetClassCount(Card.GetLocation)
+	local ct3=#sg
+	return ct1==ct3	and ct2==ct3,ct1~=ct3 or ct2~=ct3
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
@@ -96,12 +98,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft==0 then return end
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then
-		ft=1
-	end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp)
 	if #sg==0 then return end
-	local rg=aux.SelectUnselectGroup(sg,e,tp,nil,ft,s.spcheck,1,tp,HINTMSG_SPSUMMON,s.spcheck)
+	local rg=aux.SelectUnselectGroup(sg,e,tp,1,ft,s.spcheck,1,tp,HINTMSG_SPSUMMON)
 	Duel.SpecialSummon(rg,0,tp,tp,true,false,POS_FACEUP)
 end
 

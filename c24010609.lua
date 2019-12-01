@@ -103,41 +103,26 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return ct and ct>0 and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,0)
 end
+function s.rescon(field,ft)
+	return function(sg,e,tp,mg)
+		local c1=sg:GetClassCount(Card.GetCode)
+		local c2=#sg
+		return c1==c2 and (not field or (#sg<ft or sg:IsExists(Card.IsType,1,nil,TYPE_FIELD))),c1~=c2
+	end
+end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE,0,nil)
 	local ct=e:GetHandler():GetFlagEffectLabel(id) or 0
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	local tg=Group.CreateGroup()
-	local tg1=Group.CreateGroup()
 	local field=false
-	local init=1
-	if g:IsExists(Card.IsType,1,nil,TYPE_FIELD) then field=true end
-	while ct>0 and (ft>0 or field) and #g>0 do
-		if ft==0 then g=g:Filter(Card.IsType,nil,TYPE_FIELD) end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-		local sg=g:Select(tp,init,1,nil)
-		if #sg>0 then
-			if sg:GetFirst():IsType(TYPE_FIELD) then
-				tg:Merge(sg)
-				g:Remove(Card.IsType,nil,TYPE_FIELD)
-				field=false
-			else
-				tg1:Merge(sg)
-				g:Remove(Card.IsCode,nil,sg:GetFirst():GetCode())
-				ft=ft-1
-			end
-			init=0
-			ct=ct-1
-		else
-			break
-		end
-	end
-	tg:Merge(tg1)
+	if g:IsExists(Card.IsType,1,nil,TYPE_FIELD) then field=true ft=ft+1 end
+	ft=math.min(ft,g:GetClassCount(Card.GetCode))
+	if ft<1 then return end
+	local tg=aux.SelectUnselectGroup(g,e,tp,1,ft,s.rescon(field,ft),1,tp,HINTMSG_SET)
 	Duel.SSet(tp,tg)
-	local tc=tg:GetFirst()
-	while tc do
+	for tc in aux.Next(tg) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
@@ -145,6 +130,5 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(LOCATION_REMOVED)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		tc:RegisterEffect(e1)
-		tc=tg:GetNext()
 	end
 end

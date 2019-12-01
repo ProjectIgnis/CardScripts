@@ -23,15 +23,8 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_GRAVE,0,e:GetHandler())
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0) and rg:GetClassCount(Card.GetCode)>=3 end
-	local g=Group.CreateGroup()
-	for i=1,3 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local tc=rg:Select(tp,1,1,nil):GetFirst()
-		rg:Remove(Card.IsCode,nil,tc:GetCode())
-		g:AddCard(tc)
-	end
-	g:AddCard(e:GetHandler())
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	local sg=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.dncheck,1,tp,HINTMSG_REMOVE)
+	Duel.Remove(sg+e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.filter(c)
 	return c:GetType()==TYPE_SPELL and c:IsAbleToHand()

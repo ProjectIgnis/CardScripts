@@ -84,15 +84,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SelectTarget(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,nil)
 	end
 end
-function s.eqcon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,tp)
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and #g>0 and ft>0 then
-		local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,s.eqcon,1,tp,HINTMSG_EQUIP)
+		local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_EQUIP)
 		local sc=sg:GetFirst()
 		while sc do
 			Duel.Equip(tp,sc,tc,true)

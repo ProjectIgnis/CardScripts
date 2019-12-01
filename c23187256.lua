@@ -58,14 +58,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ect=_G["c" .. CARD_SUMMON_GATE] and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and _G["c" .. CARD_SUMMON_GATE][tp]
 	if ect then ft=math.min(ft,ect) end
 	local c=e:GetHandler()
-	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	local ct=c:GetOverlayGroup():GetClassCount(Card.GetCode)
 	if ct>ft then ct=ft end
-	if #g1>0 and ct>0 then
-		repeat
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local g2=g1:Select(tp,1,1,nil)
-			local tc=g2:GetFirst()
+	if #g>0 and ct>0 then
+		local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,aux.dpcheck(Card.GetRank),1,tp,HINTMSG_SPSUMMON)
+		for tc in aux.Next(sg) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -77,9 +75,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
-			g1:Remove(s.gfilter,nil,tc:GetRank())
-			ct=ct-1
-		until #g1==0 or ct==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,1))
+		end
 		Duel.SpecialSummonComplete()
 		Duel.BreakEffect()
 		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)

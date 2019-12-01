@@ -1,4 +1,5 @@
 --ブンボーグ・ベース
+--Deskbot Base
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -69,18 +70,10 @@ function s.cfilter(c)
 		and (c:IsLocation(LOCATION_SZONE) or aux.SpElimFilter(c,true,true))
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,nil)
-	if chk==0 then return g:GetClassCount(Card.GetCode)>=9 end
-	local rg=Group.CreateGroup()
-	for i=1,9 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local tc=g:Select(tp,1,1,nil):GetFirst()
-		if tc then
-			rg:AddCard(tc)
-			g:Remove(Card.IsCode,nil,tc:GetCode())
-		end
-	end
-	Duel.Remove(rg,POS_FACEUP,REASON_COST)
+	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,nil)
+	if chk==0 then return aux.SelectUnselectGroup(rg,e,tp,9,9,aux.dncheck,0) end
+	local gp=aux.SelectUnselectGroup(rg,e,tp,9,9,aux.dncheck,1,tp,HINTMSG_REMOVE)
+	Duel.Remove(gp,POS_FACEUP,REASON_COST)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,1,nil) end

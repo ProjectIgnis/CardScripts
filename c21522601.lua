@@ -39,9 +39,6 @@ end
 function s.rvfilt(c)
 	return c:IsType(TYPE_SPELL) and not c:IsPublic()
 end
-function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rvfilt,tp,LOCATION_HAND,0,1,nil) end
 end
@@ -49,7 +46,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if tc:IsRelateToBattle() and tc:IsFaceup() and tc:IsControler(tp) then
 		local sg=Duel.GetMatchingGroup(s.rvfilt,tp,LOCATION_HAND,0,nil)
-		local g=aux.SelectUnselectGroup(sg,e,tp,1,99,s.rescon,1,tp,HINTMSG_SELECT)
+		local g=aux.SelectUnselectGroup(sg,e,tp,1,nil,aux.dncheck,1,tp,HINTMSG_SELECT)
 		if #g>0 then
 			Duel.ConfirmCards(1-tp,g)
 			Duel.ShuffleHand(tp)

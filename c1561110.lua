@@ -1,4 +1,5 @@
 --ABC－ドラゴン・バスター
+--ABC-Dragon Buster
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -83,15 +84,9 @@ function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		return ft>2 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 			and g:GetClassCount(Card.GetCode)>2
 	end
-	local sg=Group.CreateGroup()
-	for i=1,3 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g1=g:Select(tp,1,1,nil)
-		g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
-		sg:Merge(g1)
-	end
+	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	Duel.SetTargetCard(sg)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,3,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,3,tp,LOCATION_REMOVED)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

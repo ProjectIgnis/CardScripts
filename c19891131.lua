@@ -55,17 +55,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 	if #g>=2 and g:GetClassCount(Card.GetCode)>=2 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg1=g:Select(tp,1,1,nil)
-		local tc1=sg1:GetFirst()
-		g:Remove(Card.IsCode,nil,tc1:GetCode())
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg2=g:Select(tp,1,1,nil)
-		local tc2=sg2:GetFirst()
-		sg1:Merge(sg2)
-		Duel.SpecialSummonStep(tc1,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-		Duel.SpecialSummonStep(tc2,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-		Duel.SpecialSummonComplete()
+		local sg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
+		if sg then
+			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+			Duel.ConfirmCards(1-tp,sg)
+		end
 	end
 end
 function s.spcfilter(c,tp)

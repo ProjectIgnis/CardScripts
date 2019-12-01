@@ -73,6 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=e:GetLabelObject()
 	if not rg then return end
 	local ct=Duel.SendtoGrave(rg,REASON_COST)
+	rg:DeleteGroup()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK)

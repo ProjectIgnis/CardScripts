@@ -56,6 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=e:GetLabelObject()
 	if not rg then return end
 	Duel.SendtoDeck(rg,nil,2,REASON_COST)
+	rg:DeleteGroup()
 end
 function s.tdfilter(c)
 	return (c:IsLocation(0x1e) or (c:IsFaceup() and c:IsType(TYPE_PENDULUM))) and c:IsAbleToDeck()

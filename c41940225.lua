@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.fcheck(tp,sg,fc)
-	return sg:IsExists(aux.FilterBoolFunstion(Card.IsSummonCode,fc,SUMMON_TYPE_FUSION,tp,78193831),1,nil)
+	return sg:IsExists(aux.FilterBoolFunction(Card.IsSummonCode,fc,SUMMON_TYPE_FUSION,tp,78193831),1,nil)
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,0,LOCATION_MZONE,nil),s.fcheck

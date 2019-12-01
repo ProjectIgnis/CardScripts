@@ -19,12 +19,13 @@ function s.initial_effect(c)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e0:SetCode(EVENT_CHAINING)
 	e0:SetRange(LOCATION_MZONE)
-	e0:SetOperation(aux.chainreg)
+	e0:SetCondition(s.chaincon)
+	e0:SetOperation(s.chainop)
 	c:RegisterEffect(e0)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TOHAND)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_CUSTOM+id)
 	e3:SetRange(LOCATION_MZONE)
@@ -45,25 +46,36 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x108}
-function s.thfilter(c,rc)
-	return c:IsSetCard(0x108) and not c:IsCode(rc:GetCode()) and c:IsAbleToHand()
+function s.chaincon(e,tp,eg,ep,ev,re,r,rp)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetHandler():GetColumnGroup():IsContains(re:GetHandler())
+end
+function s.chainop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(ev+2,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
+end
+function s.thfilter(c,...)
+	return c:IsSetCard(0x108) and not c:IsCode(...) and c:IsAbleToHand()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():GetFlagEffect(1)<=0 then e:GetLabelObject():GetLabelObject():Clear() return end
-	if e:GetHandler():GetColumnGroup():IsContains(re:GetHandler()) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,re:GetHandler(),re:GetHandler()) then
+	if e:GetHandler():GetFlagEffect(1)==0 then
+		e:GetHandler():RegisterFlagEffect(1,RESET_CHAIN,0,1)
+		e:GetLabelObject():GetLabelObject():Clear()
+	end
+	if e:GetHandler():GetFlagEffect(ev+2)>0 then
 		local g=e:GetLabelObject():GetLabelObject()
-		if Duel.GetCurrentChain()==0 then g:Clear() end
 		g:AddCard(re:GetHandler())
 		e:GetLabelObject():SetLabelObject(g)
-		if Duel.GetFlagEffect(tp,id)==0 then
-			Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
-			Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
+		if e:GetHandler():GetFlagEffect(1)<=1 then
+			e:GetHandler():RegisterFlagEffect(1,RESET_CHAIN,0,1)
+			Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e:GetLabelObject(),0,tp,tp,0)
 		end
 	end
 end
+function s.chk(c,tp,e)
+	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,c,c:GetCode())
+end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
 	local g=e:GetLabelObject()
+	if chk==0 then e:SetLabel(0) return re==e and g and g:IsExists(s.chk,1,nil,tp,e) end
 	if #g>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 		e:SetLabel(g:Select(tp,1,1,nil):GetFirst():GetRealFieldID())
@@ -76,7 +88,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetCardFromFieldID(e:GetLabel())
 	if not tc then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,e:GetLabelObject(),tc)
+	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,e:GetLabelObject(),tc:GetCode())
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

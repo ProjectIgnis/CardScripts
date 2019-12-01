@@ -33,14 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp)
 	if #g>0 then
-		local sg=Group.CreateGroup()
-		repeat
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg2=g:Select(tp,1,1,nil)
-			sg:AddCard(sg2:GetFirst())
-			g:Remove(Card.IsCode,nil,sg2:GetFirst():GetCode())
-			ct=ct-1
-		until ct==0 or #g==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,0))
+		local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,dncheck,1,tp,HINTMSG_SPSUMMON)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 end

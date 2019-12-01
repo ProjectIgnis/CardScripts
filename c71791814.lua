@@ -72,7 +72,7 @@ function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x108) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sprescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(#sg) and sg:GetClassCount(Card.GetCode)==#sg
+	return aux.ChkfMMZ(#sg) and sg:GetClassCount(Card.GetCode)==#sg,sg:GetClassCount(Card.GetCode)~=#sg
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct, ft=Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE) , Duel.GetLocationCount(tp,LOCATION_MZONE)

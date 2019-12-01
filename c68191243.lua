@@ -31,13 +31,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
-	while #g>0 and ft>0 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:Select(tp,1,1,nil)
-		Duel.SpecialSummonStep(sg:GetFirst(),0,tp,tp,false,false,POS_FACEUP)
-		ft=ft-1
-		g:Remove(Card.IsCode,nil,sg:GetFirst():GetCode())
-		if #g>0 and ft>0 and not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then ft=0 end
-	end
-	Duel.SpecialSummonComplete()
+	if #g==0 then return end
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
+	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 end

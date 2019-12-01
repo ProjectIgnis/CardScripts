@@ -25,14 +25,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and g:GetClassCount(Card.GetLevel)>=2 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g1=g:Select(tp,1,1,nil)
-	g:Remove(s.rfilter,nil,g1:GetFirst():GetLevel())
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g2=g:Select(tp,1,1,nil)
-	g1:Merge(g2)
-	Duel.SetTargetCard(g1)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g1,2,0,0)
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dpcheck(Card.GetLevel),1,tp,HINTMSG_SPSUMMON)
+	Duel.SetTargetCard(sg)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,2,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

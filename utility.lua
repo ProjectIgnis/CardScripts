@@ -1335,11 +1335,17 @@ function Auxiliary.ReincarnationCheckValue(e,c)
 	end
 end
 
+--Checks for cards with different properties (to be used with Aux.SelectUnselectGroup)
+function Auxiliary.dpcheck(fun)
+	return function(sg,e,tp,mg)
+		local c1=sg:GetClassCount(fun)
+		local c2=#sg
+		return c1==c2,c1~=c2
+	end
+end
 --Checks for cards with different names (to be used with Aux.SelectUnselectGroup)
 function Auxiliary.dncheck(sg,e,tp,mg)
-	local c1=sg:GetClassCount(Card.GetCode)
-	local c2=#sg
-	return c1==c2,c1~=c2
+	return Auxiliary.dpcheck(Card.GetCode)
 end
 --To be used as the "cancelcon" function in Aux.SelectUnselectGroup.
 --Prevents the player from stopping the selection with 0 cards, by hiding the "Cancel" button until a min of cards has been select

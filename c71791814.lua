@@ -71,20 +71,17 @@ end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x108) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.sprescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(#sg) and sg:GetClassCount(Card.GetCode)==#sg,sg:GetClassCount(Card.GetCode)~=#sg
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct, ft=Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE) , Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-	if chk==0 then return ct>0 and ft>0 and aux.SelectUnselectGroup(g,e,tp,1,math.min(ct,ft),s.sprescon,0) end
+	if chk==0 then return ct>0 and ft>0 and aux.SelectUnselectGroup(g,e,tp,1,math.min(ct,ft),aux.dncheck,0) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ct, ft=Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE) , Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 	if not (ct>0 and #g>0 and ft>0) then return end
-	local sg=aux.SelectUnselectGroup(g,e,tp,1,math.min(ct,ft),s.sprescon,1,tp,HINTMSG_SPSUMMON)
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,math.min(ct,ft),aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	if #sg>0 then
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end

@@ -1345,7 +1345,7 @@ function Auxiliary.dpcheck(fun)
 end
 --Checks for cards with different names (to be used with Aux.SelectUnselectGroup)
 function Auxiliary.dncheck(sg,e,tp,mg)
-	return Auxiliary.dpcheck(Card.GetCode)
+	return Auxiliary.dpcheck(Card.GetCode)(sg,e,tp,mg)
 end
 --To be used as the "cancelcon" function in Aux.SelectUnselectGroup.
 --Prevents the player from stopping the selection with 0 cards, by hiding the "Cancel" button until a min of cards has been select

@@ -20,18 +20,12 @@ end
 function s.filter1(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and (c:GetAttack()==0 or c:IsDefenseBelow(0)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
-function s.filter2(c,g)
-	return g:IsExists(s.filter3,1,c,c:GetCode())
-end
-function s.filter3(c,code)
-	return c:GetCode()~=code
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return false end
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return false end
 		local g=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_DECK,0,nil,e,tp)
-		return g:IsExists(s.filter2,1,nil,g)
+		return g:GetClassCount(Card.GetCode)>=2
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 end
@@ -39,14 +33,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
 	local g=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_DECK,0,nil,e,tp)
-	local dg=g:Filter(s.filter2,nil,g)
-	if #dg>=1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=dg:Select(tp,1,1,nil)
+	if #g:GetClassCount(Card.GetCode)>=2 then
+		local sg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 		local tc1=sg:GetFirst()
-		dg:Remove(Card.IsCode,nil,tc1:GetCode())
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tc2=dg:Select(tp,1,1,nil):GetFirst()
+		local tc2=sg:GetNext()
 		Duel.SpecialSummonStep(tc1,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		Duel.SpecialSummonStep(tc2,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		tc1:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
@@ -60,7 +50,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		tc2:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
-		sg:AddCard(tc2)
 		sg:KeepAlive()
 		local de=Effect.CreateEffect(e:GetHandler())
 		de:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

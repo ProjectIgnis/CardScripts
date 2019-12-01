@@ -50,23 +50,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local spct=spg:GetClassCount(Card.GetCode)
 	local ct=math.min(3,ft,spct,rmct)
 	if ct==0 then return end
-	local g=Group.CreateGroup()
-	repeat
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local tc=rmg:Select(tp,1,1,nil):GetFirst()
-		rmg:Remove(Card.IsCode,nil,tc:GetCode())
-		g:AddCard(tc)
-		ct=ct-1
-	until ct<1 or not Duel.SelectYesNo(tp,aux.Stringid(id,0))
+	local g=aux.SelectUnselectGroup(rmg,e,tp,1,ct,aux.dncheck,1,tp,HINTMSG_REMOVE)
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	ct=g:FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)
-	while ct>0 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tc=spg:Select(tp,1,1,nil):GetFirst()
-		spg:Remove(Card.IsCode,nil,tc:GetCode())
+	local sg=aux.SelectUnselectGroup(spg,e,tp,ct,ct,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
+	for tc in aux.Next(sg) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,true,true,POS_FACEUP)
 		tc:CompleteProcedure()
-		ct=ct-1
 	end
 	Duel.SpecialSummonComplete()
 end

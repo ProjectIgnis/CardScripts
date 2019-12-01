@@ -65,15 +65,12 @@ function s.tdfilter(c,e)
 	return (c:IsCode(CARD_ASSAULT_MODE) or aux.IsCodeListed(c,CARD_ASSAULT_MODE)) and not c:IsCode(id)
 		and c:IsCanBeEffectTarget(e) and c:IsAbleToDeck()
 end
-function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil,e) end
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil,e)
 	local ct=g:GetClassCount(Card.GetCode)
-	local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,s.rescon,1,tp,HINTMSG_TODECK)
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,aux.dncheck,1,tp,HINTMSG_TODECK)
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,#sg,0,0)
 end

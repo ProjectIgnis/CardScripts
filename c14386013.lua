@@ -51,13 +51,10 @@ end
 function s.tdfilter(c)
 	return (c:IsCode(CARD_DESTINY_BOARD) or c:IsSetCard(0x1c)) and c:IsAbleToDeck()
 end
-function s.rescon(sg,e,tp,mg) 
-	return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.tdrtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp)
-		and aux.SelectUnselectGroup(g,e,tp,1,g:GetClassCount(Card.GetCode),s.rescon,0) end
+		and aux.SelectUnselectGroup(g,e,tp,1,g:GetClassCount(Card.GetCode),aux.dncheck,0) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end

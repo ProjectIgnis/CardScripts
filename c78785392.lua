@@ -40,9 +40,6 @@ end
 function s.filter(c,e,tp)
 	return c:GetAttack()==100 and c:IsSetCard(0xe6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
 end
-function s.rescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(#sg)(sg,e,tp,mg) and sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp)
@@ -53,8 +50,8 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp)
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-	local g1=aux.SelectUnselectGroup(g,e,tp,4,4,s.rescon,1,tp,HINTMSG_SPSUMMON)
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCount(tp,LOCATION_MZONE)<4 then return end
+	local g1=aux.SelectUnselectGroup(g,e,tp,4,4,dncheck,1,tp,HINTMSG_SPSUMMON)
 	for tc in aux.Next(g1) do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK) then
 			local e1=Effect.CreateEffect(c)

@@ -30,15 +30,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)>=#sg
-end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp)
 	if #g==0 then return end
-	local sg=aux.SelectUnselectGroup(g,e,tp,nil,ft,s.rescon,1,tp,HINTMSG_SPSUMMON,s.rescon)
+	local sg=aux.SelectUnselectGroup(g,e,tp,nil,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 end

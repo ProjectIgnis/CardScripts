@@ -60,9 +60,6 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and e:GetHandler():GetPreviousControler()==tp
 end
-function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.thfilter(c)
 	return c:IsAbleToHand() and (c:IsRitualMonster() or c:IsRitualSpell()) 
 end
@@ -73,7 +70,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_GRAVE,0,nil)
-	local sg=aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,1,tp,HINTMSG_ATOHAND)
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,2,aux.dncheck,1,tp,HINTMSG_ATOHAND)
 	if #sg>0 then
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)

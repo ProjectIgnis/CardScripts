@@ -47,16 +47,14 @@ end
 function s.filter(c,e,tp,ec)
 	return c:IsSetCard(0x207a) and c:IsCanBeEffectTarget(e) and c:CheckUniqueOnField(tp) and c:CheckEquipTarget(ec)
 end
-function s.rescon(sg,e,tp,mg)
-	return Duel.GetLocationCount(tp,LOCATION_SZONE)>=#sg and sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,e,tp,c)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp,c) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if chk==0 then return ft>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,e:GetHandler()) end
-	local eg=aux.SelectUnselectGroup(g,e,tp,1,3,s.rescon,1,tp,HINTMSG_EQUIP)
+	local eg=aux.SelectUnselectGroup(g,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_EQUIP)
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,eg,#eg,0,0)
 end

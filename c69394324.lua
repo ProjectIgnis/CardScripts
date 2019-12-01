@@ -74,9 +74,6 @@ end
 function s.spfilter(c,e,tp)
     return c:IsSetCard(0xc008) and c:IsLevelBelow(9) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.rescon(sg,e,tp,mg)
-    return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return false end
     local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
@@ -86,7 +83,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
         return ft>2 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
             and g:GetClassCount(Card.GetCode)>2
     end
-    local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,1,tp,HINTMSG_SPSUMMON)
+    local sg=aux.SelectUnselectGroup(g,e,tp,3,3,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
     Duel.SetTargetCard(sg)
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,3,0,0)
 end

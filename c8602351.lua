@@ -58,13 +58,10 @@ end
 function s.thfilter(c)
 	return c:IsRace(RACE_REPTILE) and c:IsAbleToHand()
 end
-function s.threscon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,0,LOCATION_MZONE,nil)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
-	if chk==0 then return ct>0 and aux.SelectUnselectGroup(g,e,tp,1,ct,s.threscon,0) end
+	if chk==0 then return ct>0 and aux.SelectUnselectGroup(g,e,tp,1,ct,aux.dncheck,0) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -80,7 +77,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,0,LOCATION_MZONE,nil)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 	if not (ct>0 and #g>0) then return end
-	local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,s.threscon,1,tp,HINTMSG_ATOHAND)
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,aux.dncheck,1,tp,HINTMSG_ATOHAND)
 	if #sg>0 then
 		Duel.SendtoHand(sg,tp,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)

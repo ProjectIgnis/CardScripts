@@ -27,16 +27,14 @@ s.listed_series={0x51}
 function s.eqfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsSetCard(0x51) and c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
-function s.rescon(sg,e,tp,mg)
-	return Duel.GetLocationCount(tp,LOCATION_SZONE)>=#sg and sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,nil)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,chk)
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and ft>0
+		and aux.SelectUnselectGroup(g,e,tp,1,ft,s.rescon,chk)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	local tg=aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,1,tp,HINTMSG_EQUIP)
+	local tg=aux.SelectUnselectGroup(g,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_EQUIP)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,#g,0,0)

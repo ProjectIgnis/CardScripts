@@ -20,13 +20,10 @@ end
 function s.thfilter(c)
 	return not c:IsCode(id) and c:IsSetCard(0x134) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
-function s.rescon(sg,e,tp,mg)
-    return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) 
-		and aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,0) end
+		and aux.SelectUnselectGroup(g,e,tp,1,2,aux.dncheck,0) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 end
@@ -36,7 +33,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if #rc>0 then
 		Duel.ConfirmCards(1-tp,rc)
-		local sg=aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,1,tp,HINTMSG_ATOHAND)
+		local sg=aux.SelectUnselectGroup(g,e,tp,1,2,aux.dncheck,1,tp,HINTMSG_ATOHAND)
 		if #sg>0 and Duel.SendtoHand(sg,nil,REASON_EFFECT)~=0 then
 			Duel.ConfirmCards(1-tp,sg)
 			Duel.ShuffleDeck(tp)

@@ -23,14 +23,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and rvg:GetClassCount(Card.GetCode)>=3 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_DECK)
 end
-function s.check(sg,e,tp)
-	return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local fid=c:GetFieldID()
 	local rvg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-	local rg=aux.SelectUnselectGroup(rvg,e,tp,3,3,s.check,1,tp,HINTMSG_CONFIRM)
+	local rg=aux.SelectUnselectGroup(rvg,e,tp,3,3,aux.dncheck,1,tp,HINTMSG_CONFIRM)
 	Duel.ConfirmCards(1-tp,rg)
 	local tg=rg:RandomSelect(1-tp,1)
 	local tc=tg:GetFirst()

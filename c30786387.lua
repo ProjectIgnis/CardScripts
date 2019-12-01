@@ -28,18 +28,15 @@ s.listed_series={0xe6}
 function s.filter(c)
 	return c:IsSetCard(0xe6) and c:IsType(TYPE_MONSTER)
 end
-function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-		return aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,chk)
+		return aux.SelectUnselectGroup(g,e,tp,3,3,aux.dncheck,chk)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-	local rg=aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,1,tp,aux.Stringid(id,1))
+	local rg=aux.SelectUnselectGroup(g,e,tp,3,3,aux.dncheck,1,tp,aux.Stringid(id,1))
 	if #rg>0 then
 		Duel.ConfirmCards(1-tp,rg)
 		Duel.ShuffleDeck(tp)

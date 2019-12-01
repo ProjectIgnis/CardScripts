@@ -31,16 +31,13 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
-function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==#sg
-end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	local c=e:GetHandler()
 	if ft>5 then ft=5 end
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
-	local g=aux.SelectUnselectGroup(sg,e,tp,1,ft,s.rescon,1,tp,HINTMSG_SPSUMMON)
+	local g=aux.SelectUnselectGroup(sg,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	if #g>0 then
 		local ct=Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		if ct>2 then

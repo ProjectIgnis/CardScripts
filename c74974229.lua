@@ -70,9 +70,6 @@ end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_REPTILE) and not c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.spcheck(sg,e,tp)
-	return sg:GetClassCount(Card.GetCode)==#sg
-end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -88,7 +85,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if ft<1 or ct<1 or #g==0 then return end
 	ct=math.min(ft,ct)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
-	local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,s.spcheck,1,tp,HINTMSG_SPSUMMON)
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 end
 

@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetValue(1)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--change ATK/DEF
@@ -44,10 +45,21 @@ function s.spcon(e,c)
 	local rg=Duel.GetReleaseGroup(tp)
 	return aux.SelectUnselectGroup(rg,e,tp,1,7,s.rescon,0)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetReleaseGroup(tp)
 	local g=aux.SelectUnselectGroup(rg,e,tp,1,7,s.rescon,1,tp,HINTMSG_RELEASE,s.rescon,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1

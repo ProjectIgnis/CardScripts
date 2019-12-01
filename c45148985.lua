@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.sprcon)
+	e2:SetTarget(s.sprtg)
 	e2:SetOperation(s.sprop)
 	c:RegisterEffect(e2)
 	--indes
@@ -54,17 +55,27 @@ function s.sprfilter(c)
 	return c:IsSetCard(0x105) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and (c:IsLocation(LOCATION_SZONE) or aux.SpElimFilter(c,true,true))
 end
 function s.rescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:GetClassCount(Card.GetCode)>=5
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:GetClassCount(Card.GetCode)==#sg,sg:GetClassCount(Card.GetCode)~=#sg
 end
 function s.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local g=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-5 and g:GetClassCount(Card.GetCode)>=5 and #g>4 and aux.SelectUnselectGroup(g,e,tp,5,5,s.rescon,0)
+	return aux.SelectUnselectGroup(g,e,tp,5,5,s.rescon,0)
+end
+function s.sprtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local g=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,c)
+	local rg=aux.SelectUnselectGroup(g,e,tp,5,5,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
+	if #rg>0 then
+		rg:KeepAlive()
+		e:SetLabelObject(rg)
+		return true
+	end
+	return false
 end
 function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
-	local rg=aux.SelectUnselectGroup(g,e,tp,5,5,s.rescon,1,tp,HINTMSG_REMOVE)
+	local rg=e:GetLabelObject()
+	if not rg then return end
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

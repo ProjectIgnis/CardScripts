@@ -87,6 +87,6 @@ function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	local num=e:GetLabel()
 	local g=Duel.GetMatchingGroup(s.desfilter2,tp,0,LOCATION_MZONE,nil,num)
 	if #g==0 then return end
-	local dg=aux.SelectUnselectGroup(g,e,tp,1,99,s.rescon(num),1,tp,HINTMSG_DESTROY)
+	local dg=aux.SelectUnselectGroup(g,e,tp,1,nil,s.rescon(num),1,tp,HINTMSG_DESTROY)
 	Duel.Destroy(dg,REASON_EFFECT)
 end

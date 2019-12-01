@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
@@ -32,37 +33,28 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tdop)
 	c:RegisterEffect(e4)
 end
+function s.rescon(sg,e,tp,mg)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:GetClassCount(Card.GetCode)==#sg,sg:GetClassCount(Card.GetCode)~=#sg
+end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=-ft+1
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,c:GetControler(),LOCATION_HAND+LOCATION_ONFIELD,0,c)
-	return g:GetClassCount(Card.GetCode)>=10 and (ft>0 or g:IsExists(Card.IsLocation,ct,nil,LOCATION_MZONE))
+	return aux.SelectUnselectGroup(g,e,tp,10,10,s.rescon,0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD,0,c)
+	local rg=aux.SelectUnselectGroup(g,e,tp,10,10,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
+	if #rg>0 then
+		rg:KeepAlive()
+		e:SetLabelObject(rg)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=-ft+1
-	local g=Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD,0,c)
-	local rg=Group.CreateGroup()
-	for i=1,10 do
-		local tc=nil
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-		if ct>0 then
-			tc=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE):GetFirst()
-		else
-			tc=g:Select(tp,1,1,nil):GetFirst()
-		end
-		if tc then
-			rg:AddCard(tc)
-			g:Remove(Card.IsCode,nil,tc:GetCode())
-		end
-		ct=ct-1
-	end
-	local cg=rg:Filter(Card.IsFacedown,nil)
-	if #cg>0 then
-		Duel.ConfirmCards(1-tp,cg)
-	end
+	local rg=e:GetLabelObject()
+	if not rg then return end
 	Duel.SendtoDeck(rg,nil,2,REASON_COST)
 end
 function s.tdfilter(c)

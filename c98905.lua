@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			local sg=Group.FromCards(tc)
 			sg:Merge(g)
-			aux.MainAndExtraSpSummonLoop(nil,0,0,0,false,false)(e,tp,eg,ep,ev,re,r,rp,sg)
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
 end

@@ -77,7 +77,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,loc,0,nil,e,tp)
 	if #sg==0 then return end
 	local rg=aux.SelectUnselectGroup(sg,e,tp,nil,ft,s.rescon(ft1,ft2,ft),1,tp,HINTMSG_SPSUMMON,s.rescon(ft1,ft2,ft))
-	aux.MainAndExtraSpSummonLoop(nil,0,0,0,true,false)(e,tp,eg,ep,ev,re,r,rp,rg)
+	Duel.SpecialSummon(rg,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.xyzfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x20f8) and c:IsType(TYPE_XYZ)

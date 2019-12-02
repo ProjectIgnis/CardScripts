@@ -1,4 +1,5 @@
 --D・クロックン
+--Morphtronic Clocken
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x8)
@@ -34,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.opd2)
 	c:RegisterEffect(e3)
 end
+s.counter_add_list={0x8}
 function s.cona(e)
 	return e:GetHandler():IsAttackPos()
 end

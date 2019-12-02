@@ -1,4 +1,5 @@
 --D・フィールド
+--Morphtronic Map
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x8)
@@ -36,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.counter_add_list={0x8}
 function s.atkval(e,c)
 	return e:GetHandler():GetCounter(0x8)*300
 end

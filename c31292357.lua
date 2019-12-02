@@ -1,4 +1,5 @@
 --Emハットトリッカー
+--Performage Hat Tricker
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x36)
@@ -29,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.counter_add_list={0x36}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

@@ -1,4 +1,5 @@
 --幽獄の時計塔
+--Clock Tower Prison
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1b)
@@ -38,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.counter_add_list={0x1b}
 s.listed_names={40591390}
 function s.dcon(e)
 	return e:GetHandler():GetCounter(0x1b)>=4

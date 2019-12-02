@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.counter_add_list={COUNTER_PREDATOR}
 s.listed_series={0x10f3}
 function s.thcfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x10f3) and c:IsAbleToGraveAsCost()

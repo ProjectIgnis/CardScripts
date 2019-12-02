@@ -33,8 +33,9 @@ function s.initial_effect(c)
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
+s.counter_add_list={COUNTER_PREDATOR}
 function s.cfilter(c)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetCounter(0x1041)>0
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetCounter(COUNTER_PREDATOR)>0
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)

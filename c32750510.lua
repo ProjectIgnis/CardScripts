@@ -1,4 +1,5 @@
 --アイス・ブリザード・マスター
+--Ice Master
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -32,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.counter_add_list={0x1015}
 function s.rfilter(c,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and (c:IsControler(tp) or c:IsFaceup())
 end

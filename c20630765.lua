@@ -1,4 +1,5 @@
 --魔石術師 クルード
+--Spellstone Sorcerer Karood
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x16)
@@ -40,6 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
+s.counter_add_list={0x16}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local c=e:GetHandler()

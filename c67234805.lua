@@ -1,4 +1,5 @@
 --能力吸収石
+--Powersink Stone
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x16)
@@ -48,6 +49,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.rmop)
 	c:RegisterEffect(e5)
 end
+s.counter_add_list={0x16}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsActiveType(TYPE_MONSTER) and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(0x16,1)

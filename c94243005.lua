@@ -1,4 +1,5 @@
 --混沌空間
+--Chaos Zone
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x13)
@@ -37,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.counter_add_list={0x13}
 function s.ctfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and not c:IsPreviousLocation(0x80+LOCATION_SZONE) and not c:IsType(TYPE_TOKEN)
 end

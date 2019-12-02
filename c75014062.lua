@@ -1,4 +1,5 @@
 --魔力掌握
+--Spell Power Grasp
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,22 +13,23 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.counter_add_list={COUNTER_SPELL}
 function s.filter(c)
-	return c:IsFaceup() and c:IsCanAddCounter(0x1,1)
+	return c:IsFaceup() and c:IsCanAddCounter(COUNTER_SPELL,1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x1)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,COUNTER_SPELL)
 end
 function s.tfilter(c)
 	return c:IsCode(id) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:AddCounter(0x1,1) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:AddCounter(COUNTER_SPELL,1) then
 		local th=Duel.GetFirstMatchingCard(s.tfilter,tp,LOCATION_DECK,0,nil)
 		if th and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.SendtoHand(th,nil,REASON_EFFECT)

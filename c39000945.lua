@@ -1,9 +1,9 @@
 --エンプレス・オブ・エンディミオン
---Empress of Endymion 
+--Reflection of Endymion 
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x1,LOCATION_PZONE+LOCATION_MZONE)
+	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE+LOCATION_MZONE)
 	c:SetSPSummonOnce(id)
 	aux.EnablePendulumAttribute(c)
 	--spsummon
@@ -57,13 +57,14 @@ function s.initial_effect(c)
 	e6:SetLabelObject(e5)
 	c:RegisterEffect(e6)
 end
+s.counter_add_list={COUNTER_SPELL}
 s.listed_series={0x12a}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1,3,REASON_COST) end 
-		e:GetHandler():RemoveCounter(tp,0x1,3,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,COUNTER_SPELL,3,REASON_COST) end 
+		e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,3,REASON_COST)
 end
 function s.cfilter(c,e,tp)
-	return c:IsCanAddCounter(0x1,1,false,LOCATION_MZONE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCanAddCounter(COUNTER_SPELL,1,false,LOCATION_MZONE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -87,18 +88,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local ct=g:GetFirst()
 		while ct do
-			ct:AddCounter(0x1,1)
+			ct:AddCounter(COUNTER_SPELL,1)
 			ct=g:GetNext()
 		end
 	end
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
-		e:GetHandler():AddCounter(0x1,1)
+		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.thfilter(c,e)
-	return c:GetCounter(0x1)>0 and e:GetHandler():IsCanAddCounter(COUNTER_SPELL,c:GetCounter(0x1),false,LOCATION_MZONE)
+	return c:GetCounter(COUNTER_SPELL)>0 and e:GetHandler():IsCanAddCounter(COUNTER_SPELL,c:GetCounter(COUNTER_SPELL),false,LOCATION_MZONE)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -115,16 +116,16 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if #tg>0 then
-		local ct=e:GetLabelObject():GetCounter(0x1)
+		local ct=e:GetLabelObject():GetCounter(COUNTER_SPELL)
 		if Duel.SendtoHand(tg,nil,REASON_EFFECT)~=0 then
 			Duel.BreakEffect()
-			e:GetHandler():AddCounter(0x1,ct)
+			e:GetHandler():AddCounter(COUNTER_SPELL,ct)
 		end
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ct=c:GetCounter(0x1)
+	local ct=c:GetCounter(COUNTER_SPELL)
 	e:SetLabel(ct)
 end
 function s.srcon(e,tp,eg,ep,ev,re,r,rp)

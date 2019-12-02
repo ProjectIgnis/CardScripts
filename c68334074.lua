@@ -1,4 +1,5 @@
 --奇跡の復活
+--Miracle Restoring
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,8 +16,8 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_DARK_MAGICIAN}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,2,REASON_COST) end
-	Duel.RemoveCounter(tp,1,0,0x1,2,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,2,REASON_COST) end
+	Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,2,REASON_COST)
 end
 function s.filter(c,e,tp)
 	return c:IsCode(CARD_DARK_MAGICIAN,78193831) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

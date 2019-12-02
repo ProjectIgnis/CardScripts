@@ -1,9 +1,9 @@
---Silent Magician LV4
 --サイレント・マジシャン LV4
+--Silent Magician LV4
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x1)
-	c:SetCounterLimit(0x1,5)
+	c:EnableCounterPermit(COUNTER_SPELL)
+	c:SetCounterLimit(COUNTER_SPELL,5)
 	--draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -32,19 +32,20 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.counter_add_list={COUNTER_SPELL}
 s.listed_names={72443568}
 s.lvupcount=1
 s.lvup={72443568}
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	if ep~=tp then
-		e:GetHandler():AddCounter(0x1,1)
+		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.attackup(e,c)
-	return c:GetCounter(0x1)*500
+	return c:GetCounter(COUNTER_SPELL)*500
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetCounter(0x1)==5 and tp==Duel.GetTurnPlayer()
+	return e:GetHandler():GetCounter(COUNTER_SPELL)==5 and tp==Duel.GetTurnPlayer()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

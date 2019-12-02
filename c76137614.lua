@@ -1,4 +1,5 @@
 --聖なる解呪師
+--Disenchanter
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -14,9 +15,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.counter_add_list={COUNTER_SPELL}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x1,1,REASON_COST) end
-	Duel.RemoveCounter(tp,1,1,0x1,1,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,COUNTER_SPELL,1,REASON_COST) end
+	Duel.RemoveCounter(tp,1,1,COUNTER_SPELL,1,REASON_COST)
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL) and c:IsFaceup() and c:IsAbleToHand()

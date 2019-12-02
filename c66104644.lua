@@ -65,6 +65,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.penop)
 	c:RegisterEffect(e5)
 end
+s.counter_add_list={COUNTER_SPELL}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and re:GetHandler()~=c then

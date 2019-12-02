@@ -1,7 +1,8 @@
 --ブラッド・マジシャン－煉獄の魔術師－
+--Blast Magician
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x1)
+	c:EnableCounterPermit(COUNTER_SPELL)
 	--add counter
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -27,15 +28,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.counter_add_list={COUNTER_SPELL}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
-		e:GetHandler():AddCounter(0x1,1)
+		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.filter(c,cc,tp)
 	local ct=math.ceil(c:GetAttack()/700)
 	if ct==0 then ct=1 end
-	return c:IsFaceup() and cc:IsCanRemoveCounter(tp,0x1,ct,REASON_COST)
+	return c:IsFaceup() and cc:IsCanRemoveCounter(tp,COUNTER_SPELL,ct,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e:GetHandler(),tp) end
@@ -44,7 +46,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,e:GetHandler(),tp)
 	local ct=math.ceil(g:GetFirst():GetAttack()/700)
 	if ct==0 then ct=1 end
-	e:GetHandler():RemoveCounter(tp,0x1,ct,REASON_COST)
+	e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,ct,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

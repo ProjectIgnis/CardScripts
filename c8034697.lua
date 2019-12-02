@@ -1,4 +1,5 @@
 --魔法の操り人形
+--Magical Marionette
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1)
@@ -35,17 +36,18 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.counter_add_list={COUNTER_SPELL}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
-		e:GetHandler():AddCounter(0x1,1)
+		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.attackup(e,c)
-	return c:GetCounter(0x1)*200
+	return c:GetCounter(COUNTER_SPELL)*200
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1,2,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x1,2,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,COUNTER_SPELL,2,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,2,REASON_COST)
 end
 function s.destarg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) end

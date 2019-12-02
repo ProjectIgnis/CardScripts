@@ -1,4 +1,5 @@
 --魔力枯渇
+--Exhausting Spell
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -9,18 +10,19 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.counter_add_list={COUNTER_SPELL}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x1,1,REASON_EFFECT) end
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,COUNTER_SPELL,1,REASON_EFFECT) end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetCounter(0x1)~=0
+	return c:IsFaceup() and c:GetCounter(COUNTER_SPELL)~=0
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local tc=g:GetFirst()
 	while tc do 
-		local cc=tc:GetCounter(0x1)
-		tc:RemoveCounter(tp,0x1,cc,REASON_EFFECT)
+		local cc=tc:GetCounter(COUNTER_SPELL)
+		tc:RemoveCounter(tp,COUNTER_SPELL,cc,REASON_EFFECT)
 		tc=g:GetNext()
 	end
 end

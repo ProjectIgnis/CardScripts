@@ -1,5 +1,5 @@
 --魔力統轄
---Spell Power Control
+--Spell Power Mastery
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.counter_add_list={COUNTER_SPELL}
 s.listed_series={0x12a}
 s.listed_names={75014062}
 function s.thfilter(c)

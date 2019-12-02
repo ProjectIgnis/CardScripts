@@ -57,6 +57,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.thop)
 	c:RegisterEffect(e6)
 end
+s.counter_add_list={COUNTER_SPELL}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,6,REASON_COST) end
 	Duel.RemoveCounter(tp,1,0,0x1,6,REASON_COST)

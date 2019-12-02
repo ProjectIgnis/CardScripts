@@ -31,12 +31,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
+s.counter_add_list={COUNTER_SPELL}
 s.listed_series={0x10d}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=e:GetLabel()
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,ct,REASON_COST) end
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,ct,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	Duel.RemoveCounter(tp,1,0,0x1,ct,REASON_COST)
+	Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,ct,REASON_COST)
 end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10d) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
@@ -65,8 +66,8 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		if tc:IsCanAddCounter(0x1,2) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
-			tc:AddCounter(0x1,2)
+		if tc:IsCanAddCounter(COUNTER_SPELL,2) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+			tc:AddCounter(COUNTER_SPELL,2)
 		end
 	end
 end

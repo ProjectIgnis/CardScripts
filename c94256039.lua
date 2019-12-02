@@ -1,7 +1,8 @@
 --バベル・タワー
+--Tower of Babel
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x1)
+	c:EnableCounterPermit(COUNTER_SPELL)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -30,22 +31,22 @@ function s.initial_effect(c)
 	e4:SetTarget(s.damtg)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
-	--
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_DESTROY)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e5:SetCode(EVENT_ADD_COUNTER+0x1)
+	e5:SetCode(EVENT_ADD_COUNTER+COUNTER_SPELL)
 	e5:SetCondition(s.descon)
 	e5:SetTarget(s.destg)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
+s.counter_add_list={COUNTER_SPELL}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER)
 	local c=e:GetHandler()
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and c:GetFlagEffect(1)>0 then
-		c:AddCounter(0x1,1)
-		if c:GetCounter(0x1)==4 then
+		c:AddCounter(COUNTER_SPELL,1)
+		if c:GetCounter(COUNTER_SPELL)==4 then
 			Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,re,0,0,p,0)
 		end
 	end
@@ -62,7 +63,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler()~=e:GetHandler() and e:GetHandler():GetCounter(0x1)>=4
+	return re:GetHandler()~=e:GetHandler() and e:GetHandler():GetCounter(COUNTER_SPELL)>=4
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

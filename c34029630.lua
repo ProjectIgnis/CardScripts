@@ -1,7 +1,8 @@
 --漆黒のパワーストーン
+--Pitch-Black Power Stone
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x1)
+	c:EnableCounterPermit(COUNTER_SPELL)
 	--Activate
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_COUNTER)
@@ -32,12 +33,13 @@ function s.initial_effect(c)
 	e4:SetCondition(s.descon)
 	c:RegisterEffect(e4)
 end
+s.counter_add_list={COUNTER_SPELL}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) end
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsCanAddCounter(tp,0x1,3,c) end
-	c:AddCounter(0x1,3)
-	if Duel.GetTurnPlayer()==tp and c:IsCanRemoveCounter(tp,0x1,1,REASON_EFFECT)
+	if chk==0 then return Duel.IsCanAddCounter(tp,COUNTER_SPELL,3,c) end
+	c:AddCounter(COUNTER_SPELL,3)
+	if Duel.GetTurnPlayer()==tp and c:IsCanRemoveCounter(tp,COUNTER_SPELL,1,REASON_EFFECT)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -52,24 +54,24 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and c:IsCanRemoveCounter(tp,0x1,1,REASON_EFFECT) and tc:IsCanAddCounter(0x1,1) then
-		c:RemoveCounter(tp,0x1,1,REASON_EFFECT)
-		tc:AddCounter(0x1,1)
+	if tc and tc:IsRelateToEffect(e) and c:IsCanRemoveCounter(tp,COUNTER_SPELL,1,REASON_EFFECT) and tc:IsCanAddCounter(COUNTER_SPELL,1) then
+		c:RemoveCounter(tp,COUNTER_SPELL,1,REASON_EFFECT)
+		tc:AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsCanAddCounter(0x1,1)
+	return c:IsFaceup() and c:IsCanAddCounter(COUNTER_SPELL,1)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) end
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 and e:GetHandler():IsCanRemoveCounter(tp,0x1,1,REASON_EFFECT)
+	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 and e:GetHandler():IsCanRemoveCounter(tp,COUNTER_SPELL,1,REASON_EFFECT)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
 end
 function s.descon(e)
-	return e:GetHandler():GetCounter(0x1)==0
+	return e:GetHandler():GetCounter(COUNTER_SPELL)==0
 end

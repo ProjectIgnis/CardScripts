@@ -1,8 +1,9 @@
 --魔導騎士 ディフェンダー
+--Defender, the Magical Knight
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x1)
-	c:SetCounterLimit(0x1,1)
+	c:EnableCounterPermit(COUNTER_SPELL)
+	c:SetCounterLimit(COUNTER_SPELL,1)
 	--summon success
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -23,13 +24,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.counter_add_list={COUNTER_SPELL}
 function s.addct(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x1)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,COUNTER_SPELL)
 end
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		e:GetHandler():AddCounter(0x1,1)
+		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.dfilter(c)
@@ -39,7 +41,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local count=eg:FilterCount(s.dfilter,nil)
 		e:SetLabel(count)
-		return count>0 and Duel.IsCanRemoveCounter(tp,1,0,0x1,count,REASON_COST)
+		return count>0 and Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,count,REASON_COST)
 	end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
@@ -48,5 +50,5 @@ function s.value(e,c)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local count=e:GetLabel()
-	Duel.RemoveCounter(tp,1,0,0x1,count,REASON_COST)
+	Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,count,REASON_COST)
 end

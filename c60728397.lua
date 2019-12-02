@@ -1,4 +1,5 @@
 --ヴェノム・ショット
+--Venom Shot
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.counter_add_list={0x1009}
 function s.cfilter(c)
 	return c:IsFaceup() and (c:IsCode(72677437,8062132) or c:IsSetCard(0x50))
 end

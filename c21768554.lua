@@ -1,4 +1,5 @@
 --集団催眠
+--Mass Hypnosis
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.counter_add_list={0x100e}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xc),tp,LOCATION_MZONE,0,1,nil)
 end

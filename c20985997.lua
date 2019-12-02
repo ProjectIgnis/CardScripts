@@ -1,4 +1,5 @@
 --デストラクト・サークル－A
+--Detonator Circle "A"
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.counter_add_list={0x100e}
 function s.filter(c)
 	return c:GetCounter(0x100e)>0
 end

@@ -1,4 +1,5 @@
 --「A」細胞増殖装置
+--"A" Cell Breeding Device
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -19,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.counter_add_list={0x100e}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end

@@ -1,4 +1,5 @@
 --エーリアン・リベンジャー
+--Alien Overlord
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -35,6 +36,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
 end
+s.counter_add_list={0x100e}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0

@@ -43,7 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not te then return end
 	local tg=te:GetTarget()
 	local op=te:GetOperation()
-	if tg then tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,1) end
+	if tg then tg(e,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,1) end
 	Duel.BreakEffect()
 	tc:CreateEffectRelation(te)
 	Duel.BreakEffect()
@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	for etc in aux.Next(g) do
 	    etc:CreateEffectRelation(te)
 	end
-	if op then op(te,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,1) end
+	if op then op(e,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,1) end
 	tc:ReleaseEffectRelation(te)
 	for etc in aux.Next(g) do
 	    etc:ReleaseEffectRelation(te)

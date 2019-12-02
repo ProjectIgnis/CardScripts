@@ -28,23 +28,6 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_DESTINY_BOARD}
 s.toss_coin=true
-function s.chcon1(e,tp,eg,ep,ev,re,r,rp)
-	local rc=re:GetHandler()
-	return re:GetHandlerPlayer()==tp and re:IsHasCategory(CATEGORY_TOFIELD) and re:GetLabel()==CARD_DESTINY_BOARD and re:GetValue()~=nil
-end
-function s.chop1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1,ev)
-end
-function s.chcon2(e,tp,eg,ep,ev,re,r,rp)
-	return ev==e:GetHandler():GetFlagEffectLabel(id)
-end
-function s.chop2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.ChangeChainOperation(ev,re:GetValue())
-end
-function s.efilter(e,te)
-	local tc=te:GetHandler()
-	return not tc:IsCode(CARD_DESTINY_BOARD)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
 end

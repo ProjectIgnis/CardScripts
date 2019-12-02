@@ -1,4 +1,5 @@
 --雲魔物－アルトス
+--Cloudian - Altus
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle indestructable
@@ -34,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.hdop)
 	c:RegisterEffect(e4)
 end
+s.counter_add_list={0x1019}
 function s.sdcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end

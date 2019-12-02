@@ -1,4 +1,5 @@
 --フォッグ・コントロール
+--Fog COntrol
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.counter_add_list={0x1019}
 s.listed_series={0x18}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x18)

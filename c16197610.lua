@@ -1,4 +1,5 @@
 --雲魔物－タービュランス
+--Cloudian - Turbulence
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle indestructable
@@ -34,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.counter_add_list={0x1019}
 s.listed_names={80825553}
 function s.sdcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)

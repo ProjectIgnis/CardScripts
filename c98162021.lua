@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.addc2)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={0x3}
+s.counter_generation_list={0x3}
 function s.addct(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x3)

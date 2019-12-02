@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0x3d}
-s.counter_add_list={0x3}
+s.counter_generation_list={0x3}
 function s.ctfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3d)
 end

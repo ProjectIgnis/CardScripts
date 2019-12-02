@@ -1,4 +1,5 @@
 --ワーム・グルス
+--Worm Gulse
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0xf)
@@ -19,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 end
+s.counter_add_list={0xf}
 function s.atkval(e,c)
 	return c:GetCounter(0xf)*300
 end

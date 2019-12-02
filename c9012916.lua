@@ -1,4 +1,5 @@
 --ブラックフェザー・ドラゴン
+--Black-Winged Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x10)
@@ -37,6 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.counter_add_list={0x10}
 function s.damval(e,re,val,r,rp,rc)
 	if (r&REASON_EFFECT)~=0 then
 		e:GetHandler():AddCounter(0x10,1)

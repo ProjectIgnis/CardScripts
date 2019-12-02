@@ -1,4 +1,5 @@
 --宝玉の樹
+--Crystal Tree
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x6)
@@ -37,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.plop)
 	c:RegisterEffect(e4)
 end
+s.counter_add_list={0x6}
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	return tc:IsFaceup() and tc:IsSetCard(0x1034)

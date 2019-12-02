@@ -1,4 +1,5 @@
 --倍返し
+--Double Payback
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1a)
@@ -10,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.actop)
 	c:RegisterEffect(e1)
 end
+s.counter_add_list={0x1a}
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and tp~=rp and ev>=1000 and (r&REASON_EFFECT)~=0
 end

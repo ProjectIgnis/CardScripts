@@ -1,4 +1,5 @@
 --希望郷－オノマトピア－
+--Onomatopia
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x30)
@@ -39,6 +40,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
+s.counter_add_list={0x30}
 function s.ctfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x107f) and c:IsControler(tp)
 end

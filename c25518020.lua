@@ -1,4 +1,5 @@
 --マシン・デベロッパー
+--Machine Assembly Line
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1d)
@@ -37,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.counter_add_list={0x1d}
 function s.ctfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and (c:GetPreviousRaceOnField()&RACE_MACHINE)~=0
 end

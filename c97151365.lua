@@ -1,4 +1,5 @@
 --スターゲート
+--Spacegate
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1e)
@@ -27,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.counter_add_list={0x1e}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()~=tp or Duel.GetAttackTarget()~=nil then
 		e:GetHandler():AddCounter(0x1e,1)

@@ -18,8 +18,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+function s.fcheck(tp,sg,fc)
+	return sg:IsExists(aux.FilterBoolFunstion(Card.IsSummonCode,fc,SUMMON_TYPE_FUSION,tp,78193831),1,nil)
+end
 function s.fextra(e,tp,mg)
-	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,0,LOCATION_MZONE,nil)
+	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,0,LOCATION_MZONE,nil),s.fcheck
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end

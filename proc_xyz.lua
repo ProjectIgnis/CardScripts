@@ -133,7 +133,7 @@ function Xyz.RecursionChk1(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbe
 			mg:Merge(rg)
 			return false
 		end
-		local sg2=mg:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+		local sg2=mg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 		rg:Merge(sg2)
 		mg:Sub(sg2)
 	end
@@ -234,7 +234,7 @@ function Xyz.RecursionChk2(c,mg,xyz,tp,minc,maxc,sg,matg,ct,mustbemat,exchk,f,mu
 			mg:Merge(rg)
 			return false
 		end
-		local sg2=mg:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+		local sg2=mg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 		rg:Merge(sg2)
 		mg:Sub(sg2)
 	end
@@ -555,11 +555,10 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 								if #matg<minc or (matg:IsExists(Card.IsHasEffect,1,nil,91110378) and not Xyz.MatNumChkF(matg)) 
 									or (lv and matg:IsExists(Card.IsHasEffect,1,nil,86466163) and not Xyz.MatNumChkF2(matg,lv,c)) then return false end
 								if not matg:Includes(mustg) then return false end
-								--if xyz:IsLocation(LOCATION_EXTRA) then
 								if c:IsLocation(LOCATION_EXTRA) then
-									if Duel.GetLocationCountFromEx(tp,tp,matg,c)>0 then return false end
+									if Duel.GetLocationCountFromEx(tp,tp,matg,c)<1 then return false end
 								else
-									if Duel.GetMZoneCount(tp,matg,tp)>0 then return false end
+									if Duel.GetMZoneCount(tp,matg,tp)<1 then return false end
 								end
 								break
 							end

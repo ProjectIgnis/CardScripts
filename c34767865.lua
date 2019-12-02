@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.ritual_filter(c)
-	return c:IsType(TYPE_RITUAL) and c:IsRace(RACE_CYBERSE)
+	return c:IsRitualMonster() and c:IsRace(RACE_CYBERSE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.exccon(e) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0

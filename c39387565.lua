@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x3b}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3b)
 end

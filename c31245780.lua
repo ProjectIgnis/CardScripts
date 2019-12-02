@@ -43,5 +43,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.befilter(c)
-	return c:GetFlagEffect(id)~=0 and c:IsAttackable()
+	return c:GetFlagEffect(id)~=0 and c:CanAttack()
 end

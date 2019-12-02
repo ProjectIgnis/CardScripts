@@ -163,7 +163,7 @@ function Synchro.CheckP31(c,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,re
 		local eff={c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
 		for _,f in ipairs(eff) do
 			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
-			local sg1=g:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+			local sg1=g:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			rg:Merge(sg1)
 		end
 	end
@@ -249,7 +249,7 @@ function Synchro.CheckP32(c,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,sc,tp,p
 		local eff={c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
 		for _,f in ipairs(eff) do
 			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
-			local sg2=g:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+			local sg2=g:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			rg:Merge(sg2)
 		end
 	end
@@ -327,8 +327,8 @@ function Synchro.CheckP41(c,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,req
 		local eff={c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
 		for _,f in ipairs(eff) do
 			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
-			local sg1=tg:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
-			local sg2=ntg:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+			local sg1=tg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
+			local sg2=ntg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			trg:Merge(sg1)
 			ntrg:Merge(sg2)
 		end
@@ -404,7 +404,7 @@ function Synchro.CheckP42(c,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,sc,tp,pg,mgch
 		local eff={c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
 		for _,f in ipairs(eff) do
 			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
-			local sg2=ntg:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+			local sg2=ntg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			ntrg:Merge(sg2)
 		end
 	end
@@ -815,7 +815,7 @@ function Synchro.MajesticCheck1(c,g,sg,card1,card2,card3,lv,sc,tp,pg,f1,cbt1,f2,
 		local eff={c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
 		for _,f in ipairs(eff) do
 			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
-			local sg1=g:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+			local sg1=g:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			rg:Merge(sg1)
 		end
 	end
@@ -1115,7 +1115,7 @@ function Synchro.DarkCheck1(c,g,sg,card1,card2,plv,nlv,sc,tp,pg,f1,f2,...)
 		local eff={c:GetCardEffect(EFFECT_SYNCHRO_MAT_RESTRICTION)}
 		for _,f in ipairs(eff) do
 			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then return false end
-			local sg1=g:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+			local sg1=g:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			rg:Merge(sg1)
 		end
 	end

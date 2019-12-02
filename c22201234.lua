@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.qop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x38}
 function s.qcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return d:IsFaceup() and d:IsSetCard(0x38) and d:IsControler(tp)

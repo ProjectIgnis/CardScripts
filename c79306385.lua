@@ -1,7 +1,7 @@
 --宣告者の神託
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Ritual.AddProcGreaterCode(c,48546368)
+	local e1=Ritual.AddProcGreaterCode(c,12,nil,48546368)
 	e1:SetTarget(s.target(e1))
 end
 function s.target(eff)

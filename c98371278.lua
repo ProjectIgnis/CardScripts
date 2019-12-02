@@ -70,12 +70,12 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	if a:IsControler(1-tp) then return false end
-	return a and a:GetEquipCount()>0 and a:IsChainAttackable()
+	return a and a:GetEquipCount()>0 and a:CanChainAttack()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local sg=a:GetEquipGroup()
-	if chk==0 then return a and #sg>0 and a:IsChainAttackable() 
+	if chk==0 then return a and #sg>0 and a:CanChainAttack() 
 		and sg:FilterCount(Card.IsDestructable,nil,e)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 end

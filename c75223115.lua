@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_ADJUST)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetOperation(s.adjustop)
-	e3:SetCondition(function()return s.validitycheck()end)
+	e3:SetCondition(s.validitycheck)
 	c:RegisterEffect(e3)
 	--cannot summon,spsummon,flipsummon
 	local e4=Effect.CreateEffect(c)
@@ -61,18 +61,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
-		if tc then
-			local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-			if fc then
-				Duel.SendtoGrave(fc,REASON_RULE)
-				Duel.BreakEffect()
-			end
-			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-			local te=tc:GetActivateEffect()
-			local tep=tc:GetControler()
-			local cost=te:GetCost()
-			if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-			Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
+		if aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)

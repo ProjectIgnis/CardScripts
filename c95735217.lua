@@ -37,7 +37,7 @@ end
 s.listed_names={CARD_POLYMERIZATION}
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==e:GetHandler() and aux.bdcon(e,tp,eg,ep,ev,re,r,rp)
-		and e:GetHandler():IsChainAttackable(0)
+		and e:GetHandler():CanChainAttack(0)
 end
 function s.costfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsDiscardable()

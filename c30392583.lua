@@ -1,7 +1,7 @@
 --聖占術の儀式
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcGreaterCode(c,94997874)
+	Ritual.AddProcGreaterCode(c,9,nil,94997874)
 	--to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xcc}
 function s.thfilter(c)
 	return c:IsSetCard(0xcc) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end

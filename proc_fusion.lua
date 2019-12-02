@@ -11,7 +11,7 @@ function Fusion.ParseMaterialTable(tab,mat)
 	local tmp_extramat_func=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return (sub2 and c:IsHasEffect(511002961)) end
 	local name_func=function(tab) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,contact,fc:GetControler(),table.unpack(tab)) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end end
 	local func=aux.FALSE
-	for _,fmat in ipairs(val[i]) do
+	for _,fmat in ipairs(tab) do
 		if type(fmat)=="function" then
 			func=aux.OR(func,aux.OR(fmat,tmp_extramat_func))
 		else
@@ -213,7 +213,7 @@ function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,...)
 			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then
 				return false
 			end
-			local sg2=mg2:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+			local sg2=mg2:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			-- rg:Merge(sg2)
 			mg2:Sub(sg2)
 			if #mustg>0 and not mg2:Includes(mustg) then
@@ -474,7 +474,7 @@ function Fusion.SelectMixRep(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,f
 				-- mg:Merge(rg)
 				return false
 			end
-			local sg2=mg2:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+			local sg2=mg2:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			-- rg:Merge(sg2)
 			mg2:Sub(sg2)
 			if #mustg>0 and not mg2:Includes(mustg) then
@@ -619,7 +619,7 @@ function Fusion.OperationMixRepUnfix(insf,sub,minc,maxc,...)
 						local eff={gc:GetCardEffect(EFFECT_FUSION_MAT_RESTRICTION)}
 						for i=1,#eff do
 							local f=eff[i]:GetValue()
-							mg=mg:Filter(Auxiliary.HarmonizingMagFilter,tc,eff[i],f)
+							mg=mg:Filter(aux.NOT(Auxiliary.HarmonizingMagFilter),tc,eff[i],f)
 						end
 					end
 				end
@@ -721,7 +721,7 @@ function Fusion.CheckSelectMixRepUnfixAll(c,tp,mg,sg,mustg,g,fc,sub,sub2,chkf,mi
 				if (sg+g):IsExists(Auxiliary.HarmonizingMagFilter,1,c,fun,fun:GetValue()) then
 					return false
 				end
-				local sg2=mg2:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,fun,fun:GetValue()) end,nil)
+				local sg2=mg2:Filter(Auxiliary.HarmonizingMagFilter,nil,fun,fun:GetValue())
 				mg2:Sub(sg2)
 			end
 		end
@@ -784,7 +784,7 @@ function Fusion.SelectMixRepUnfix(c,tp,mg,sg,mustg,fc,sub,sub2,minc,maxc,chkf,..
 				mg:Merge(rg)
 				return false
 			end
-			local sg2=mg:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
+			local sg2=mg:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			rg:Merge(sg2)
 			mg:Sub(sg2)
 		end
@@ -970,179 +970,5 @@ function Fusion.AddProcMixN(c,sub,insf,...)
 		end
 	end
 	return Fusion.AddProcMix(c,sub,insf,table.unpack(fun))
-end
---Shaddoll Fusion monster, 1 function + 1 attribute
-function Fusion.AddShaddolProcMix(c,insf,f,att)
-	if c:IsStatus(STATUS_COPYING_EFFECT) then return end
-	local f1=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return (f(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) or c:IsHasEffect(511002961)) and not c:IsHasEffect(6205579) end
-	local f2=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return (c:IsHasEffect(511002961) or c:IsAttribute(att,fc,sumtype,tp) or c:IsHasEffect(4904633)) and not c:IsHasEffect(6205579) end
-	if c.material_count==nil then
-		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
-		mt.min_material_count=2
-		mt.max_material_count=2
-	end
-	--fusion material
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_FUSION_MATERIAL)
-	e1:SetCondition(Fusion.ShaddolCondition(insf,f1,f2))
-	e1:SetOperation(Fusion.ShaddolOperation(insf,f1,f2))
-	c:RegisterEffect(e1)
-	return {e1}
-end
-function Fusion.ShaddollExFilter(c,g,fc,tp,f1,f2,eff,sumtype)
-	return c:IsFaceup() and c:IsCanBeFusionMaterial(fc) and not g:IsContains(c) and not c:IsImmuneToEffect(eff)
-		and (f1(c,fc,true,true,nil,nil,tp,false,sumtype) or f2(c,fc,true,true,nil,nil,tp,false,sumtype))
-end
-function Fusion.ShaddollRecursion(c,tp,mg,sg,exg,mustg,fc,chkf,f1,f2,sumtype)
-	local res
-	local mg2=mg:Clone()
-	if not contact and c:IsHasEffect(EFFECT_FUSION_MAT_RESTRICTION) then
-		local eff={c:GetCardEffect(EFFECT_FUSION_MAT_RESTRICTION)}
-		for i,f in ipairs(eff) do
-			if sg:IsExists(Auxiliary.HarmonizingMagFilter,1,c,f,f:GetValue()) then
-				return false
-			end
-			local sg2=mg2:Filter(function(c) return not Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) end,nil)
-			mg2:Sub(sg2)
-		end
-	end
-	if not contact then
-		local g2=sg:Filter(Card.IsHasEffect,nil,EFFECT_FUSION_MAT_RESTRICTION)
-		if #g2>0 then
-			local tc=g2:GetFirst()
-			while tc do
-				local eff={tc:GetCardEffect(EFFECT_FUSION_MAT_RESTRICTION)}
-				for i,f in ipairs(eff) do
-					if Auxiliary.HarmonizingMagFilter(c,f,f:GetValue()) then
-						return false
-					end
-				end
-				tc=g2:GetNext()
-			end
-		end
-	end
-	sg:AddCard(c)
-	if #sg<2 then
-		if exg:IsContains(c) then
-			mg2:Sub(exg)
-		end
-		res=mg2:IsExists(Fusion.ShaddollRecursion,1,sg,tp,mg2,sg,exg,mustg,fc,chkf,f1,f2,sumtype)
-	else
-		res=sg:Includes(mustg) and Fusion.CheckMixGoal(tp,sg,fc,true,true,false,sumtype,chkf,f1,f2)
-	end
-	sg:RemoveCard(c)
-	return res
-end
-function Fusion.ShaddolCondition(insf,f1,f2)
-	return	function(e,g,gc,chkfnf)
-				local mustg=nil
-				if g==nil then
-					if not insf then return false end
-					mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,nil,REASON_FUSION)
-					return #mustg==0 end
-				local chkf=chkfnf&0xff
-				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
-				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
-				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
-					sumtype=0
-				end
-				local c=e:GetHandler()
-				local mg=g:Filter(Fusion.ConditionFilterMix,nil,c,true,true,false,sumtype,0,tp,f1,f2)
-				local tp=e:GetHandlerPlayer()
-				mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_FUSION)
-				if gc then mustg:Merge(gc) end
-				local exg=Group.CreateGroup()
-				local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-				if fc and fc:IsHasEffect(81788994) and fc:IsCanRemoveCounter(tp,0x16,3,REASON_EFFECT) then
-					exg=Duel.GetMatchingGroup(Fusion.ShaddollExFilter,tp,0,LOCATION_MZONE,nil,g,c,tp,f1,f2,fc:GetCardEffect(81788994),sumtype)
-					mg:Merge(exg)
-				end
-				if #mustg>2 or (Fusion.CheckExact and Fusion.CheckExact~=2) or not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c) then return false end
-				mg:Merge(mustg)
-				return mg:IsExists(Fusion.ShaddollRecursion,1,nil,tp,mg,Group.CreateGroup(),exg,mustg,c,chkf,f1,f2,sumtype)
-			end
-end
-function Fusion.ShaddollFilter2(c,tp,mg,sg,exg,mustg,fc,chkf,f1,f2,sumtype)
-	return not exg:IsContains(c) and Fusion.ShaddollRecursion(c,tp,mg,sg,exg,mustg,fc,chkf,f1,f2,sumtype)
-end
-function Fusion.ShaddollFilter3(c,tp,mg,sg,exg,mustg,fc,chkf,f1,f2,sumtype)
-	return exg:IsContains(c) and Fusion.ShaddollRecursion(c,tp,mg,sg,exg,mustg,fc,chkf,f1,f2,sumtype)
-end
-function Fusion.ShaddolOperation(insf,f1,f2)
-	return	function(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
-				local chkf=chkfnf&0xff
-				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
-				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
-				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
-					sumtype=0
-				end
-				local c=e:GetHandler()
-				local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-				local tp=e:GetHandlerPlayer()
-				local exg=Group.CreateGroup()
-				local mg=eg:Filter(Fusion.ConditionFilterMix,nil,c,true,true,false,sumtype,0,tp,f1,f2)
-				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_FUSION)
-				if gc then mustg:Merge(gc) end
-				local p=tp
-				local sfhchk=false
-				local urg=Group.CreateGroup()
-				if fc and fc:IsHasEffect(81788994) and fc:IsCanRemoveCounter(tp,0x16,3,REASON_EFFECT) then
-					local sg=Duel.GetMatchingGroup(Fusion.ShaddollExFilter,tp,0,LOCATION_MZONE,nil,eg,c,tp,f1,f2,fc:GetCardEffect(81788994),sumtype)
-					exg:Merge(sg)
-					mg:Merge(sg)
-				end
-				if #mustg>2 or (Fusion.CheckExact and Fusion.CheckExact~=2) or not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c) then return false end
-				if not contact and Duel.IsPlayerAffectedByEffect(tp,511004008) and Duel.SelectYesNo(1-tp,65) then
-					p=1-tp
-					Duel.ConfirmCards(p,sg)
-					if mg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then sfhchk=true end
-				end
-				local sg=mustg
-				urg:Merge(mustg)
-				for tc in aux.Next(mustg) do
-					if exg:IsContains(tc) then
-						mg:Sub(exg)
-						fc:RemoveCounter(tp,0x16,3,REASON_EFFECT)
-					end
-				end
-				while #sg<2 do
-					local tg=mg:Filter(Fusion.ShaddollFilter2,sg,tp,mg,sg,exg,mustg,c,chkf,f1,f2,sumtype)
-					local tg2=mg:Filter(Fusion.ShaddollFilter3,sg,tp,mg,sg,exg,mustg,c,chkf,f1,f2,sumtype)
-					if #tg2>0 then
-						tg:AddCard(fc)
-					end
-					Duel.Hint(HINT_SELECTMSG,p,HINTMSG_FMATERIAL)
-					local tc=Group.SelectUnselect(tg,sg,p)
-					if fc then
-						tg:RemoveCard(fc)
-					end
-					if not tc then break end
-					if tc==fc then
-						fc:RemoveCounter(tp,0x16,3,REASON_EFFECT)
-						repeat
-							tc=Group.SelectUnselect(tg2,sg,p)
-						until not sg:IsContains(tc)
-						mg:Sub(exg)
-						urg:AddCard(tc)
-						sg:AddCard(tc)
-					end
-					if not urg:IsContains(tc) then
-						if not sg:IsContains(tc) then
-							sg:AddCard(tc)
-						else
-							sg:RemoveCard(tc)
-						end
-					end
-				end
-				if sfhchk then Duel.ShuffleHand(tp) end
-				Duel.SetFusionMaterial(sg)
-			end
 end
 Duel.LoadScript("proc_fusion2.lua")

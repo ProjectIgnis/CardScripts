@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
+s.listed_series={0x106e}
 function s.counterfilter(c)
 	return not c:IsLevelAbove(5)
 end

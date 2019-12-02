@@ -5,6 +5,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--remove
 	local e2=Effect.CreateEffect(c)
@@ -32,6 +33,15 @@ end
 s.listed_names={CARD_UMI}
 function s.filter(c,tp)
 	return c:IsCode(CARD_UMI) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true)
+end
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,tp)
+	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+		local tc=g:Select(tp,1,1,nil):GetFirst()
+		aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	end
 end
 function s.econ(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(CARD_UMI)

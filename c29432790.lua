@@ -34,12 +34,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SUMMON)
 	Duel.RegisterEffect(e2,tp)
-	local e3=Effect.CreateEffect(e:GetHandler())
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetReset(RESET_PHASE+PHASE_END)
-	e3:SetTargetRange(1,0)
-	Duel.RegisterEffect(e3,tp)
+	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.splimit(e,c)
 	return not c:IsCode(CARD_BLUEEYES_W_DRAGON)
@@ -48,7 +43,7 @@ function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_BLUEEYES_W_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,tp,POS_FACEDOWN)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 		and #g>0 and Duel.GetMZoneCount(tp,g)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)
@@ -56,7 +51,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,tp,POS_FACEDOWN)
 	if Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)>0 then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if ft<=0 then return end

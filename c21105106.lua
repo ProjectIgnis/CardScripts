@@ -35,7 +35,7 @@ function s.splimit(e,se,sp,st)
 	return e:GetHandler():IsLocation(LOCATION_HAND) and (st&SUMMON_TYPE_RITUAL)==SUMMON_TYPE_RITUAL
 end
 function s.mat_filter(c)
-	return false
+	return c:IsLocation(LOCATION_ONFIELD)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1
@@ -84,12 +84,7 @@ function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e3=e1:Clone()
 	e3:SetCode(EFFECT_CANNOT_MSET)
 	Duel.RegisterEffect(e3,tp)
-	local e4=Effect.CreateEffect(e:GetHandler())
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetReset(RESET_PHASE+PHASE_END)
-	e4:SetTargetRange(1,0)
-	Duel.RegisterEffect(e4,tp)
+	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.rmfilter(c)
 	return c:IsAbleToRemove() and (c:IsLocation(LOCATION_SZONE) or aux.SpElimFilter(c,false,true))
@@ -103,58 +98,8 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 end
-function s.filter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-end
-function s.ritual_custom_condition(c,mg,ft,rittype)
-	local tp=c:GetControler()
-	local g=mg:Filter(s.filter,c,tp)
-	return ft>-3 and g:IsExists(s.ritfilter1,1,nil,c:GetLevel(),g,c,rittype)
-end
-function s.ritfilter1(c,lv,mg,sc,rittype)
-	local mg2=mg:Clone()
-	mg2:Remove(Card.IsRace,nil,c:GetRace())
-	return mg2:IsExists(s.ritfilter2,1,c,lv,mg2,Group.CreateGroup()+c,sc,rittype)
-end
-function s.ritfilter2(c,lv,mg,sg,sc,rittype)
-	local mg2=mg:Clone()
-	mg2:Remove(Card.IsRace,nil,c:GetRace())
-	return mg2:IsExists(s.ritfilter3,1,sg,lv,sg+c,sc,rittype)
-end
-function s.ritfilter3(c,lv,sg,sc,rittype)
-	if rittype=="equal" then
-		return (sg+c):CheckWithSumEqual(Card.GetRitualLevel,lv,3,3,sc)
-	else
-		Duel.SetSelectedCard(sg+c)
-		return (sg+c):CheckWithSumGreater(Card.GetRitualLevel,lv,sc)
-	end
-end
-function s.ritual_custom_operation(c,mg,rittype)
-	local tp=c:GetControler()
-	local lv=c:GetLevel()
-	local g=mg:Filter(s.filter,c,tp)
-	local sg=Group.CreateGroup()
-	while #sg<3 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		if #sg==0 then
-			sg = sg + g:Filter(s.ritfilter1,nil,lv,g,c,rittype):SelectUnselect(sg,tp,false,false,lv)
-		elseif #sg==1 then
-			local tc = g:Filter(s.ritfilter2,sg,lv,g,sg,c,rittype):Filter(function(c,sg)
-				return not sg:IsExists(Card.IsRace,1,nil,c:GetRace()) end,nil,sg):SelectUnselect(sg,tp,false,false,lv)
-			if sg:IsContains(tc) then
-				sg=sg-tc
-			else
-				sg=sg+tc
-			end
-		elseif #sg==2 then
-			local tc = g:Filter(s.ritfilter3,sg,lv,sg,c,rittype):Filter(function(c,sg)
-				return not sg:IsExists(Card.IsRace,1,nil,c:GetRace()) end,nil,sg):SelectUnselect(sg,tp,false,false,lv)
-			if sg:IsContains(tc) then
-				sg=sg-tc
-			else
-				sg=sg+tc
-			end
-		end
-	end
-	c:SetMaterial(sg)
+function s.ritual_custom_check(e,tp,g,c)
+	local count=#g
+	local class_count=g:GetClassCount(Card.GetRace)
+	return count==3 and class_count==3 and g:IsExists(Card.IsLocation,3,nil,LOCATION_ONFIELD),count>3 or class_count~=count or g:IsExists(aux.NOT(Card.IsLocation),1,nil,LOCATION_ONFIELD)
 end

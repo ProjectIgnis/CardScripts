@@ -29,8 +29,11 @@ end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return se~=e:GetLabelObject()
 end
+function s.fcheck(tp,sg,fc)
+	return sg:IsExists(aux.FilterBoolFunstion(Card.IsSetCard,0x1093,fc,SUMMON_TYPE_FUSION,tp),1,nil)
+end
 function s.fextra(e,tp,mg)
-	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil)
+	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil),s.fcheck
 end
 function s.stage2(e,tc,tp,mg,chk)
 	if chk==1 then

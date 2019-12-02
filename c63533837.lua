@@ -56,7 +56,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToBattle() then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
-	if c:IsRelateToEffect(e) and c:IsChainAttackable() and c==Duel.GetAttacker() then
+	if c:IsRelateToEffect(e) and c:CanChainAttack() and c==Duel.GetAttacker() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_DAMAGE_STEP_END)
@@ -68,7 +68,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.caop(e,tp)
 	local c=e:GetHandler()
-	if c:IsChainAttackable() then
+	if c:CanChainAttack() then
 		Duel.ChainAttack()
 	end
 end

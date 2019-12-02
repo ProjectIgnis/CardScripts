@@ -11,21 +11,21 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.rmfilter(c)
-	return c:IsAbleToRemove() and aux.SpElimFilter(c)
+function s.rmfilter(c,tp)
+	return c:IsAbleToRemove(tp) and aux.SpElimFilter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return true end
 	local g=Group.CreateGroup()
-	if Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil,1-tp) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local rg=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,3,nil)
+		local rg=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,3,nil,1-tp)
 		g:Merge(rg)
 	end
-	if Duel.IsExistingTarget(s.rmfilter,1-tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
+	if Duel.IsExistingTarget(s.rmfilter,1-tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil,1-tp) and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_REMOVE)
-		local rg=Duel.SelectTarget(1-tp,s.rmfilter,1-tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,3,nil)
+		local rg=Duel.SelectTarget(1-tp,s.rmfilter,1-tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,3,nil,1-tp)
 		g:Merge(rg)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)

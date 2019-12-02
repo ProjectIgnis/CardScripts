@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_PIERCE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsLinkState))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsLinked))
 	c:RegisterEffect(e1)
 end
 

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetDecktopGroup(tp,10)
-	if chk==0 then return g:FilterCount(Card.IsAbleToRemoveAsCost,nil)==10
+	if chk==0 then return g:FilterCount(Card.IsAbleToRemoveAsCost,nil,POS_FACEDOWN)==10
 		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=12 end
 	Duel.DisableShuffleCheck()
 	Duel.Remove(g,POS_FACEDOWN,REASON_COST)

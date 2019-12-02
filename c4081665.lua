@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xc6}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -42,12 +43,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_MSET)
 	Duel.RegisterEffect(e2,tp)
-	local e3=Effect.CreateEffect(e:GetHandler())
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetReset(RESET_PHASE+PHASE_END)
-	e3:SetTargetRange(1,0)
-	Duel.RegisterEffect(e3,tp)
+	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.cfilter(c)
 	return c:IsSetCard(0xc6) and c:IsType(TYPE_MONSTER)

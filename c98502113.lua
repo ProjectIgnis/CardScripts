@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.material_setcode={0x10a2,0xd7}
+s.listed_names={CARD_DARK_MAGICIAN,78193831}
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,0,0x14,0x14,nil)*500
 end

@@ -30,14 +30,8 @@ function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x8e) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstMatchingCard(s.filter,tp,LOCATION_DECK,0,nil,tp)
-	if tc then
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-		local te=tc:GetActivateEffect()
-		local tep=tc:GetControler()
-		local cost=te:GetCost()
-		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-		Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
+	local tc=Duel.GetFirstMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	if aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp) then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 		if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

@@ -35,11 +35,11 @@ function s.initial_effect(c)
 end
 s.listed_series={0x115}
 s.listed_names={}
-function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x115) and c:IsControler(tp) and not c:IsCode(id)
+function s.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x115) and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(s.cfilter,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -52,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.cfilter2(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousSequence()>4 and c:GetPreviousControler()~=tp and 
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousSequence()>4 and c:GetPreviousControler()~=tp and 
 		(c:IsReason(REASON_BATTLE) or (rp==tp and c:IsReason(REASON_EFFECT)))
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)

@@ -1,4 +1,5 @@
 --メタファイズ・ファクター
+--Metaphys Factor
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -26,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.chainop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x105}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
@@ -61,7 +63,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 end
 function s.chainop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(0x105) and re:IsActiveType(TYPE_MONSTER) then
+	if re:GetHandler():IsSetCard(0x105) and re:IsActiveType(TYPE_MONSTER) and re:GetOwnerPlayer()==tp then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end

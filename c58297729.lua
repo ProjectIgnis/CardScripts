@@ -12,8 +12,11 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if chk==0 then return d and a:GetControler()~=d:GetControler()
-		and a:IsAbleToRemove(a:GetControler(),POS_FACEDOWN) and d:IsAbleToRemove(d:GetControler(),POS_FACEDOWN) end
+	if chk==0 then
+		return d and a:GetControler()~=d:GetControler()
+			and a:IsAbleToRemove(a:GetControler(),POS_FACEDOWN,REASON_RULE)
+			and d:IsAbleToRemove(d:GetControler(),POS_FACEDOWN,REASON_RULE)
+	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

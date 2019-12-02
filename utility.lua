@@ -136,6 +136,25 @@ function Group.ForEach(g,f,...)
 		tc=g:GetNext()
 	end
 end
+function Auxiliary.ParamsFromTable(tab,key,...)
+	if key then
+		if ... then
+			return tab[key],Auxiliary.ParamsFromTable(tab,...)
+		else
+			return tab[key]
+		end
+	end
+end
+function aux.FunctionWithNamedArgs(f,...)
+	local args={...}
+	return function(tab,...)
+		if type(tab)=="table" then
+			return f(Auxiliary.ParamsFromTable(tab,table.unpack(args)))
+		else
+			return f(tab,...)
+		end
+	end
+end
 function Auxiliary.GetExtraMaterials(tp,mustg,sc,summon_type)
 	local tg=Group.CreateGroup()
 	mustg = mustg or Group.CreateGroup()
@@ -187,25 +206,6 @@ function Auxiliary.GetMustBeMaterialGroup(tp,eg,sump,sc,g,r)
 end
 function Group.Includes(g1,g2)
 	return #(g1-g2)+#g2==#g1
-end
-function Auxiliary.ExtraLinked(c,emc,eg)
-	eg:AddCard(c)
-	local res=(c==emc) or (c:GetMutualLinkedGroup():IsExists(Auxiliary.ExtraLinked,1,eg,emc,eg))
-	eg:RemoveCard(c)
-	return res
-end
-function Card.IsExtraLinked(c)
-	local card5=Duel.GetFieldCard(0,LOCATION_MZONE,5) and Duel.GetFieldCard(0,LOCATION_MZONE,5) or Duel.GetFieldCard(1,LOCATION_MZONE,6)
-	local card6=Duel.GetFieldCard(0,LOCATION_MZONE,6) and Duel.GetFieldCard(0,LOCATION_MZONE,6) or Duel.GetFieldCard(1,LOCATION_MZONE,5)
-	if card5 and card6 then
-		local mg=c:GetMutualLinkedGroup()
-		local emg=(Group.FromCards(card5,card6)-c)
-		for card in aux.Next(emg) do
-			if not mg:IsExists(Auxiliary.ExtraLinked,1,nil,card,Group.FromCards(c)) then return false end
-		end
-		return true
-	end
-	return false
 end
 --for additional registers
 local regeff=Card.RegisterEffect
@@ -388,7 +388,7 @@ function Card.UpdateScale(c,amt,reset,rc)
 end
 
 function Auxiliary.Stringid(code,id)
-	return id|code<<4
+	return id|code<<32
 end
 function Auxiliary.Next(g)
 	local first=true
@@ -421,6 +421,32 @@ function Auxiliary.OR(...)
 					if f(...) then return true end
 				end
 				return false
+			end
+end
+function Auxiliary.tableAND(...)
+	local funs={...}
+	return	function(...)
+				local ret={}
+				for _,f in ipairs(funs) do
+					local res={f(...)}
+					for _,val in pairs(res) do
+						ret[_]=val and (ret[_]==nil or ret[_])
+					end
+				end
+				return ret
+			end
+end
+function Auxiliary.tableOR(...)
+	local funs={...}
+	return	function(...)
+				local ret={}
+				for _,f in ipairs(funs) do
+					local res={f(...)}
+					for _,val in pairs(res) do
+						ret[_]=val or not (ret[_]==nil or not ret[_])
+					end
+				end
+				return ret
 			end
 end
 function Auxiliary.NOT(f)
@@ -1339,24 +1365,24 @@ end
 function Auxiliary.MaleficSummonFilter(c,cd)
 	return c:IsCode(cd) and c:IsAbleToRemoveAsCost()
 end
-function Auxiliary.MaleficSummonSubstitute(c,cd)
-	return c:IsHasEffect(48829461) and c:IsAbleToRemoveAsCost()
+function Auxiliary.MaleficSummonSubstitute(c,cd,tp)
+	return c:IsHasEffect(48829461,tp) and c:IsAbleToRemoveAsCost()
 end
 function Auxiliary.MaleficSummonCondition(cd,loc)
 	return 	function(e,c)
 				if c==nil then return true end
 				return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 					and (Duel.IsExistingMatchingCard(Auxiliary.MaleficSummonFilter,c:GetControler(),loc,0,1,nil,cd)
-					or Duel.IsExistingMatchingCard(Auxiliary.MaleficSummonSubstitute,c:GetControler(),LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil))
+					or Duel.IsExistingMatchingCard(Auxiliary.MaleficSummonSubstitute,c:GetControler(),LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,cd,c:GetControler()))
 			end
 end
 function Auxiliary.MaleficSummonOperation(cd,loc)
 	return	function(e,tp,eg,ep,ev,re,r,rp,c)
 				local g=Duel.GetMatchingGroup(Auxiliary.MaleficSummonFilter,tp,loc,0,nil,cd)
-				g:Merge(Duel.GetMatchingGroup(Auxiliary.MaleficSummonSubstitute,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil))
+				g:Merge(Duel.GetMatchingGroup(Auxiliary.MaleficSummonSubstitute,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,c:GetControler()))
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 				local tc=g:Select(tp,1,1,nil):GetFirst()
-				if tc:IsHasEffect(48829461) then Duel.RegisterFlagEffect(tp,48829461,RESET_PHASE+PHASE_END,0,1) end
+				if tc:IsHasEffect(48829461,tp) then tc:IsHasEffect(48829461,tp):UseCountLimit(tp) end
 				Duel.Remove(tc,POS_FACEUP,REASON_COST)
 			end
 end
@@ -1381,12 +1407,12 @@ function Auxiliary.zptcon(filter)
     end
 end
 --Discard cost for Witchcraft monsters, supports the replacements from the Continuous Spells
-function Auxiliary.WitchcraftDiscardFilter(c)
-	return c:IsHasEffect(EFFECT_WITCHCRAFT_REPLACE) and c:IsAbleToGraveAsCost()
+function Auxiliary.WitchcraftDiscardFilter(c,tp)
+	return c:IsHasEffect(EFFECT_WITCHCRAFT_REPLACE,tp) and c:IsAbleToGraveAsCost()
 end
 function Auxiliary.WitchcraftDiscardGroup(minc)
 	return	function(sg,e,tp,mg)
-				if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_WITCHCRAFT_REPLACE) then
+				if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_WITCHCRAFT_REPLACE,tp) then
 					return #sg==1
 				else
 					return #sg>=minc
@@ -1398,14 +1424,14 @@ function Auxiliary.WitchcraftDiscardCost(f,minc,maxc)
 	if not minc then minc=1 end
 	if not maxc then maxc=1 end
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
-				if chk==0 then return Duel.IsExistingMatchingCard(f,tp,LOCATION_HAND,0,minc,nil) or Duel.IsExistingMatchingCard(Auxiliary.WitchcraftDiscardFilter,tp,LOCATION_ONFIELD,0,1,nil) end
+				if chk==0 then return Duel.IsExistingMatchingCard(f,tp,LOCATION_HAND,0,minc,nil) or Duel.IsExistingMatchingCard(Auxiliary.WitchcraftDiscardFilter,tp,LOCATION_ONFIELD,0,1,nil,tp) end
 				local g=Duel.GetMatchingGroup(f,tp,LOCATION_HAND,0,nil)
-				g:Merge(Duel.GetMatchingGroup(Auxiliary.WitchcraftDiscardFilter,tp,LOCATION_ONFIELD,0,nil))
+				g:Merge(Duel.GetMatchingGroup(Auxiliary.WitchcraftDiscardFilter,tp,LOCATION_ONFIELD,0,nil,tp))
 				local sg=Auxiliary.SelectUnselectGroup(g,e,tp,1,maxc,Auxiliary.WitchcraftDiscardGroup(minc),1,tp,aux.Stringid(EFFECT_WITCHCRAFT_REPLACE,2))
-				if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_WITCHCRAFT_REPLACE) then
-					local id=sg:GetFirst():GetOriginalCode()
+				if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_WITCHCRAFT_REPLACE,tp) then
+					local te=sg:GetFirst():IsHasEffect(EFFECT_WITCHCRAFT_REPLACE,tp)
+					te:UseCountLimit(tp)
 					Duel.SendtoGrave(sg,REASON_COST)
-					Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 				else
 					Duel.SendtoGrave(sg,REASON_COST+REASON_DISCARD)
 				end
@@ -1628,11 +1654,42 @@ end
 function Auxiliary.GlobalCheck(s,func)
 	if not s.global_check then
 		s.global_check=true
-		func()		
+		func()
 	end
 end
 function Auxiliary.HarmonizingMagFilter(c,e,f)
-	return not f or f(e,c)
+	return f and not f(e,c)
+end
+function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp)
+	if c then
+		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+		if Duel.IsDuelType(DUEL_1_FIELD) then
+			if fc then Duel.Destroy(fc,REASON_RULE) end
+			of=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+			if of and Duel.Destroy(of,REASON_RULE)==0 then
+				Duel.SendtoGrave(c,REASON_RULE)
+				return false
+			else 
+				Duel.BreakEffect()
+			end
+		else
+			if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then
+				Duel.SendtoGrave(c,REASON_RULE)
+				return false
+			else 
+				Duel.BreakEffect()
+			end
+		end
+		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		local te=c:GetActivateEffect()
+		te:UseCountLimit(tp,1,true)
+		local tep=c:GetControler()
+		local cost=te:GetCost()
+		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
+		Duel.RaiseEvent(c,4179255,te,0,tp,tp,Duel.GetCurrentChain())
+		return true
+	end
+	return false
 end
 
 Duel.LoadScript("proc_fusion.lua")

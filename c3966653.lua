@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xe6}
 function s.spfilter(c)
 	return c:IsSetCard(0xe6) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
@@ -50,12 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTarget(s.sumlimit)
 	e2:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 	Duel.RegisterEffect(e2,tp)
-	local e3=Effect.CreateEffect(e:GetHandler())
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetReset(RESET_PHASE+PHASE_END)
-	e3:SetTargetRange(1,0)
-	Duel.RegisterEffect(e3,tp)
+	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.aclimit(e,re,tp)
 	return re:GetActivateLocation()==LOCATION_GRAVE

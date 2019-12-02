@@ -48,7 +48,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 			a=tc
 			d=eqc
 		end
-		if a:IsAttackable() and not a:IsImmuneToEffect(e) and not d:IsImmuneToEffect(e) then
+		if a:CanAttack() and not a:IsImmuneToEffect(e) and not d:IsImmuneToEffect(e) then
 			Duel.CalculateDamage(a,d,true)
 		end
 	end

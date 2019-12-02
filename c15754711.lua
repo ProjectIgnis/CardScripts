@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x133}
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x133) and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsSetCard(0x133) and c:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,c:GetCode())
 end
 function s.spfilter(c,e,tp,code)

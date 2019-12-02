@@ -118,7 +118,7 @@ function s.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
 function s.catg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetEquipTarget():IsChainAttackable(0,true) end
+	if chk==0 then return e:GetHandler():GetEquipTarget():CanChainAttack(0,true) end
 end
 function s.caop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

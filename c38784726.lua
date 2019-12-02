@@ -3,7 +3,7 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcGreater(c,s.ritualfil,nil,s.extrafil,s.extraop)
+	Ritual.AddProcGreater(c,s.ritualfil,nil,nil,s.extrafil,s.extraop)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))

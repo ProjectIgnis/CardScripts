@@ -1,7 +1,7 @@
 --原初の叫喚
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcGreaterCode(c,10441498)
+	Ritual.AddProcGreaterCode(c,8,nil,10441498)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

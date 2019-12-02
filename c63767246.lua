@@ -69,7 +69,7 @@ function s.cbop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		local at=Duel.GetAttacker()
-		if at:IsAttackable() and not at:IsImmuneToEffect(e) then
+		if at:CanAttack() and not at:IsImmuneToEffect(e) then
 			Duel.CalculateDamage(at,c)
 		end
 	end

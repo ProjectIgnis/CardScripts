@@ -51,7 +51,7 @@ function s.sccon(e)
 	return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
 end
 function s.afilter(c,tp)
-	return c:IsControler(tp) and c:IsSetCard(0x9a) and c:IsChainAttackable()
+	return c:IsControler(tp) and c:IsSetCard(0x9a) and c:CanChainAttack()
 end
 function s.catg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.afilter,1,nil,tp) end

@@ -2,84 +2,47 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
-	e1:SetOperation(s.activate)
+	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_EQUAL,filter=s.cfilter,extrafil=s.extrafil,matfilter=s.filter,forcedselection=s.ritcheck,customoperation=s.customoperation})
+	e1:SetTarget(s.registerloccount(e1:GetTarget()))
+	e1:SetOperation(s.registerloccount(e1:GetOperation()))
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x106}
-function s.cfilter(c,e,tp,m,ft)
-	if c:GetType()&0x81~=0x81 or not c:IsSetCard(0x106) or c:IsPublic()
-		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
-	if c.mat_filter then
-		m=m:Filter(c.mat_filter,nil)
+function s.registerloccount(func)
+	return function(e,tp,...)
+		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		if not Duel.IsPlayerCanSpecialSummonCount(tp,2) then ft=0 end
+		if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
+		e:SetLabel(ft)
+		local res=func(e,tp,...)
+		e:SetLabel(0)
+		return res
 	end
-	local sg=Group.CreateGroup()
-	return m:IsExists(s.spselect,1,nil,c,0,ft,m,sg)
 end
-function s.spgoal(mc,ct,sg)
-	return sg:CheckWithSumEqual(Card.GetRitualLevel,mc:GetLevel(),ct,ct,mc) and sg:GetClassCount(Card.GetCode)==ct
-end
-function s.spselect(c,mc,ct,ft,m,sg)
-	sg:AddCard(c)
-	ct=ct+1
-	local res=(ft>=ct and s.spgoal(mc,ct,sg)) or m:IsExists(s.spselect,1,sg,mc,ct,ft,m,sg)
-	sg:RemoveCard(c)
-	return res
+function s.cfilter(c,e)
+	return c:IsSetCard(0x106) and not c:IsPublic()
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x106) and Duel.IsPlayerCanRelease(tp,c)
+	return c:IsFaceup() and c:IsSetCard(0x106) and Duel.IsPlayerCanRelease(tp,c) and c:IsLocation(LOCATION_REMOVED)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		if ft<=0 or not Duel.IsPlayerCanSpecialSummonCount(tp,2) then return false end
-		if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-		local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp)
-		return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp,mg,ft)
-	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_REMOVED)
+function s.extrafil(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp)
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<=0 or not Duel.IsPlayerCanSpecialSummonCount(tp,2) then return end
-	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg,ft)
-	if #tg>0 then
-		Duel.ConfirmCards(1-tp,tg)
-		local tc=tg:GetFirst()
-		if tc.mat_filter then
-			mg=mg:Filter(tc.mat_filter,nil)
-		end
-		local sg=Group.CreateGroup()
-		for i=0,98 do
-			local cg=mg:Filter(s.spselect,sg,tc,i,ft,mg,sg)
-			if #cg==0 then break end
-			local min=1
-			if s.spgoal(tc,i,sg) then
-				if not Duel.SelectYesNo(tp,210) then break end
-				min=0
-			end
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local g=cg:Select(tp,min,1,nil)
-			if #g==0 then break end
-			sg:Merge(g)
-		end
-		if #sg==0 then return end
-		if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)==#sg then
-			local og=Duel.GetOperatedGroup()
-			Duel.ConfirmCards(1-tp,og)
-			tc:SetMaterial(og)
-			Duel.Release(og,REASON_EFFECT+REASON_RITUAL+REASON_MATERIAL)
-			Duel.BreakEffect()
-			Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
-			tc:CompleteProcedure()
-		end
+function s.ritcheck(e,tp,g,sc)
+	local count=#g
+	return g:GetClassCount(Card.GetCode)==count and count <=e:GetLabel()
+end
+function s.customoperation(mg,e,tp,eg,ep,ev,re,r,rp,tc)
+	Duel.ConfirmCards(1-tp,tc)
+	if #mg==0 then return end
+	if Duel.SpecialSummon(mg,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)==#mg then
+		local og=Duel.GetOperatedGroup()
+		Duel.ConfirmCards(1-tp,og)
+		tc:SetMaterial(og)
+		Duel.Release(og,REASON_EFFECT+REASON_RITUAL+REASON_MATERIAL)
+		Duel.BreakEffect()
+		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
+		tc:CompleteProcedure()
 	end
 end

@@ -1,4 +1,5 @@
 --アマゾネスペット仔虎
+--Amazoness Baby Tiger
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--code
+	--name change
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -34,6 +35,8 @@ function s.initial_effect(c)
 	e4:SetValue(s.val)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x4}
+s.listed_names={10979723}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(0x4)
 end

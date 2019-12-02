@@ -15,7 +15,7 @@ end
 function s.caop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	if Duel.GetAttacker()==c and bc and (bc:GetBattlePosition()&POS_DEFENSE)~=0 and c:IsRelateToBattle() and c:IsChainAttackable() then
+	if Duel.GetAttacker()==c and bc and (bc:GetBattlePosition()&POS_DEFENSE)~=0 and c:IsRelateToBattle() and c:CanChainAttack() then
 		Duel.ChainAttack()
 	end
 end

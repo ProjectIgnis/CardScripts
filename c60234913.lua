@@ -1,7 +1,7 @@
 --救世の儀式
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcGreaterCode(c,61757117)
+	Ritual.AddProcGreaterCode(c,7,nil,61757117)
 	--untargetable
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

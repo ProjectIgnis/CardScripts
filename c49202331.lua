@@ -48,7 +48,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return aux.bdcon(e,tp,eg,ep,ev,re,r,rp) and c:IsChainAttackable()
+	return aux.bdcon(e,tp,eg,ep,ev,re,r,rp) and c:CanChainAttack()
 		and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,3814632)
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)

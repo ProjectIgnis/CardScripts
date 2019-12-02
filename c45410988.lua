@@ -2,7 +2,7 @@
 --Red-Eyes Transmigration
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Ritual.AddProcGreater(c,s.ritualfil,nil,s.extrafil)
+	local e1=Ritual.AddProcGreater(c,s.ritualfil,8,nil,s.extrafil)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
 end

@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.cpop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xef}
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xef) and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) 
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)

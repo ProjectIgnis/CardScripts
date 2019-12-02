@@ -19,11 +19,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
+function s.fcheck(tp,sg,fc)
+	return sg:IsExists(aux.FilterBoolFunstion(Card.IsType,TYPE_SYNCHRO,fc,SUMMON_TYPE_FUSION,tp),1,nil)
+end
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
+		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil),s.fcheck
 	end
-	return nil
+	return nil,s.fcheck
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

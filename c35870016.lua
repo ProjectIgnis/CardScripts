@@ -37,12 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	--client hint
-	local ge2=Effect.CreateEffect(c)
-	ge2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	ge2:SetDescription(aux.Stringid(id,0))
-	ge2:SetReset(RESET_PHASE+PHASE_END)
-	ge2:SetTargetRange(1,0)
-	Duel.RegisterEffect(ge2,tp)
+	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),nil)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(c)

@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x95,0x48}
 s.xyz_number=99
 function s.cfilter(c)
 	return c:IsSetCard(0x95) and c:IsType(TYPE_SPELL) and c:IsDiscardable()

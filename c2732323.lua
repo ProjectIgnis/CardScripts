@@ -27,7 +27,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local a=Duel.GetAttacker()
-		if a:IsAttackable() and not a:IsImmuneToEffect(e) then
+		if a:CanAttack() and not a:IsImmuneToEffect(e) then
 			Duel.CalculateDamage(a,tc)
 		end
 	end

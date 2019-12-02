@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={62393472,CARD_DREAM_MIRROR_JOY}
+s.listed_names={CARD_DREAM_MIRROR_JOY,62393472}
 s.listed_series={0x131}
 function s.acon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end

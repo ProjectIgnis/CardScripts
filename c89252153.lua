@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.ntcon)
-	e1:SetTarget(Auxiliary.FieldSummonProcTg(s.nttg))
+	e1:SetTarget(aux.FieldSummonProcTg((s.nttg))
 	c:RegisterEffect(e1)
 end
 function s.ntcon(e,c,minc)

@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={COUNTER_PREDATOR}
+s.counter_list={COUNTER_PREDATOR}
 function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetCounter(COUNTER_PREDATOR)>0
 end

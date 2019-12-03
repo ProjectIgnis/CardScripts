@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={0x100e}
+s.counter_place_list={0x100e}
 function s.filter(c)
 	return c:GetLevel()>0 and c:IsSetCard(0xc) and c:IsAbleToGrave()
 end

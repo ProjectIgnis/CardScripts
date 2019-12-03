@@ -51,7 +51,7 @@ function s.initial_effect(c)
 	e6:SetValue(s.atkval)
 	c:RegisterEffect(e6)
 end
-s.counter_add_list={0x1019}
+s.counter_place_list={0x1019}
 function s.sdcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end

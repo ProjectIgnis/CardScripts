@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.counter_add_list={0x35}
+s.counter_place_list={0x35}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsSetCard(0x1066) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end

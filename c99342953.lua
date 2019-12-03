@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xc}
-s.counter_add_list={0x100e}
+s.counter_place_list={0x100e}
 function s.ctfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(0xc)
 end

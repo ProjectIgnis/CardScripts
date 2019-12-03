@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={0x1038}
+s.counter_place_list={0x1038}
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()

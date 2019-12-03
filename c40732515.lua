@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_list={COUNTER_SPELL}
 s.listed_names={39910367}
 function s.spfilter(c,tp)
 	return c:IsCode(39910367) and c:IsCanRemoveCounter(tp,COUNTER_SPELL,6,REASON_COST)

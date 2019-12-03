@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e5)
 end
-s.counter_add_list={0x100e}
+s.counter_place_list={0x100e}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
 	if chk==0 then return true end

@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.counter_add_list={0x37}
+s.counter_place_list={0x37}
 s.listed_series={0xd3}
 s.listed_names={id}
 function s.cfilter(c)

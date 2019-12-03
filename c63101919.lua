@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 function s.addcc1(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end

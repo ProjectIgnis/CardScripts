@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.counter_add_list={0x37}
+s.counter_list={0x37}
 function s.filter(c,tp)
 	return c:IsSummonPlayer(tp) and c:IsFaceup()
 end

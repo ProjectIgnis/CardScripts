@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.counter_add_list={0x1024}
+s.counter_place_list={0x1024}
 s.xyz_number=40
 function s.desfilter(c)
 	return c:GetCounter(0x1024)~=0

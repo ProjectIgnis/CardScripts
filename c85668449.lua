@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e6:SetLabelObject(e5)
 	c:RegisterEffect(e6)
 end
-s.counter_add_list={0x4}
+s.counter_list={0x4}
 function s.esop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
 end

@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.counter_add_list={0x30}
+s.counter_place_list={0x30}
 function s.ctfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x107f) and c:IsControler(tp)
 end

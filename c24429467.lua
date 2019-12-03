@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 function s.ctcon(e)
 	return e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED)
 end

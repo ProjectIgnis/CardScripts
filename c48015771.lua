@@ -44,7 +44,7 @@ function s.initial_effect(c)
     e5:SetOperation(s.gyop)
     c:RegisterEffect(e5)
 end
-s.counter_add_list={0x148}
+s.counter_place_list={0x148}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
     e:GetHandler():AddCounter(0x148,1)
 end

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ctop2)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={COUNTER_PREDATOR}
+s.counter_place_list={COUNTER_PREDATOR}
 function s.ctcon1(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end

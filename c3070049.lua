@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.counter_add_list={0x1015}
+s.counter_list={0x1015}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY)
 end

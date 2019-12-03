@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={0x37}
+s.counter_list={0x37}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

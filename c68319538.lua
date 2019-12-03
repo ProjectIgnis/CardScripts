@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={0x100e}
+s.counter_place_list={0x100e}
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end

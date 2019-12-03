@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e6:SetValue(s.atkval)
 	c:RegisterEffect(e6)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_list={COUNTER_SPELL}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(COUNTER_SPELL,1)

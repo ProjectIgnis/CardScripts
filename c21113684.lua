@@ -54,7 +54,7 @@ function s.initial_effect(c)
 	e6:SetValue(s.splimit)
 	c:RegisterEffect(e6)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 s.miracle_synchro_fusion=true
 function s.splimit(e,se,sp,st)
 	if e:GetHandler():IsLocation(LOCATION_EXTRA) then 

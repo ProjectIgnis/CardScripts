@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation2)
 	c:RegisterEffect(e4)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 function s.atkval(e,c)
 	return c:GetCounter(COUNTER_SPELL)*300
 end

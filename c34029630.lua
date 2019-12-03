@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.descon)
 	c:RegisterEffect(e4)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) end
 	local c=e:GetHandler()

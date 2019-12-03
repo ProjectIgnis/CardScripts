@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={0x1015}
+s.counter_list={0x1015}
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and not c:IsPublic()
 end

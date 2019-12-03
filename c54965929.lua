@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_PZONE,0) == 1
 end

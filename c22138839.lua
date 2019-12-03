@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.cop)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={COUNTER_PREDATOR}
+s.counter_place_list={COUNTER_PREDATOR}
 function s.rfilter(c)
 	return c:GetCounter(COUNTER_PREDATOR)>0 and c:IsReleasable()
 end

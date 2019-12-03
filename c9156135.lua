@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_list={COUNTER_SPELL}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCanAddCounter(COUNTER_SPELL,1)
 end

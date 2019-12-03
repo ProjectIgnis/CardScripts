@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_list={COUNTER_SPELL}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x10cf) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

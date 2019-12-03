@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={0x1b}
+s.counter_place_list={0x1b}
 s.listed_names={75041269}
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)

@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={0x37}
+s.counter_list={0x37}
 s.listed_series={0xd3}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and s.eqfilter(ec)

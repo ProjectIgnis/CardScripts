@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={COUNTER_PREDATOR}
+s.counter_place_list={COUNTER_PREDATOR}
 function s.cfilter(c)
 	return c:IsSetCard(0xf3) and not c:IsPublic()
 end

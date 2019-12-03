@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x3d}
-s.counter_generation_list={0x3}
+s.counter_place_list={0x3}
 function s.lcheck(g,lc,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x3d,lc,SUMMON_TYPE_LINK,tp)
 end
@@ -52,7 +52,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
-	return aux.CanGenerateCounter(c,0x3) and c:IsAbleToHand()
+	return aux.CanPlaceCounter(c,0x3) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

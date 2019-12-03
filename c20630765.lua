@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={0x16}
+s.counter_place_list={0x16}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local c=e:GetHandler()

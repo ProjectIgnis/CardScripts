@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={0x1015}
+s.counter_list={0x1015}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and Duel.IsCanRemoveCounter(c:GetControler(),1,1,0x1015,4,REASON_COST)

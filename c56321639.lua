@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_list={COUNTER_SPELL}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local c=re:GetHandler()

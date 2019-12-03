@@ -57,7 +57,7 @@ function s.initial_effect(c)
 	e6:SetLabelObject(e5)
 	c:RegisterEffect(e6)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 s.listed_series={0x12a}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,COUNTER_SPELL,3,REASON_COST) end 

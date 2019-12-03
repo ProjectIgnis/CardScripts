@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={COUNTER_PREDATOR}
+s.counter_place_list={COUNTER_PREDATOR}
 function s.attrtg(e,c)
 	return c:GetCounter(COUNTER_PREDATOR)>0
 end

@@ -37,7 +37,7 @@ function s.initial_effect(c)
     e4:SetOperation(s.desrepop)
     c:RegisterEffect(e4)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 function s.ctfilter(c,tp)
     return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)
         and (c:GetPreviousTypeOnField()&TYPE_PENDULUM)~=0 and c:IsPreviousSetCard(0x10d) 

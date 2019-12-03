@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={COUNTER_PREDATOR}
+s.counter_list={COUNTER_PREDATOR}
 function s.atkval(e,c)
 	return Duel.GetCounter(0,1,1,COUNTER_PREDATOR)*200
 end

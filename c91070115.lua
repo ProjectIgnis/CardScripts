@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={0x100e}
+s.counter_list={0x100e}
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,0,1,0x100e,1,REASON_COST) end
 	Duel.RemoveCounter(tp,0,1,0x100e,1,REASON_COST)

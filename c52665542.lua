@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.counter_add_list={0x5}
+s.counter_place_list={0x5}
 function s.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x38) and c:IsAbleToGraveAsCost()
 end

@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.ctop2)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={0x100e}
+s.counter_place_list={0x100e}
 function s.ctop1(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+0x100e,1)
 end

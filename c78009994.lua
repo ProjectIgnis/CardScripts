@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={0x1022}
+s.counter_place_list={0x1022}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:GetFirst()~=e:GetHandler() then
 		e:GetHandler():AddCounter(0x22,1)

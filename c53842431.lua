@@ -53,7 +53,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.rmop)
 	c:RegisterEffect(e5)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 s.listed_series={0x10d}
 s.listed_names={55424270}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

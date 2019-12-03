@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.chk)
 	e4:SetLabelObject(e5)
 end
-s.counter_add_list={0x16}
+s.counter_place_list={0x16}
 s.listed_series={0x9d}
 function s.cfilter(c)
 	return c:IsSetCard(0x9d) and c:IsType(TYPE_MONSTER) and c:IsReason(REASON_EFFECT)

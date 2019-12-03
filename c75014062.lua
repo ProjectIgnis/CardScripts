@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCanAddCounter(COUNTER_SPELL,1)
 end

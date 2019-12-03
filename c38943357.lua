@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 s.listed_series={0x12a}
 s.listed_names={75014062}
 function s.thfilter(c)

@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_EXTRA) and c:IsControler(tp)
 end

@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.cttg)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={0x1002,0x10}
+s.counter_place_list={0x1002,0x10}
 s.listed_series={0x33}
 s.listed_names={9012916}
 function s.spfilter(c,e,tp)

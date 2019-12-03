@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
 end
-s.counter_add_list={0xa}
+s.counter_place_list={0xa}
 function s.filter1(c,tp)
 	return c:IsPreviousControler(tp) and c:GetPreviousLocation()==LOCATION_MZONE
 end

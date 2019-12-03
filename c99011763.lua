@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.matcheck)
 	c:RegisterEffect(e1)
 end
-s.counter_add_list={0x1049}
+s.counter_place_list={0x1049}
 function s.matcheck(e,c)
 	local g=c:GetMaterial()
 	if #g==2 and g:GetClassCount(Card.GetCode)==#g and not g:IsExists(aux.NOT(Card.IsAttribute),1,nil,ATTRIBUTE_DARK) then

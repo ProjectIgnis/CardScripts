@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation2)
 	c:RegisterEffect(e4)
 end
-s.counter_add_list={0x1002}
+s.counter_place_list={0x1002}
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	local atg=Duel.GetAttackTarget()
 	return Duel.GetAttacker()==e:GetHandler() and atg and atg:IsRelateToBattle() and atg:GetCounter(0x1002)==0

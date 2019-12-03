@@ -1,3 +1,4 @@
+--マジックアブソーバー
 --Magical Something
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(COUNTER_SPELL,1)

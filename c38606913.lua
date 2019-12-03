@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damact)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={0x1038}
+s.counter_place_list={0x1038}
 s.listed_series={0xe3}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xe3)

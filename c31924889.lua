@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 function s.attackup(e,c)
 	return c:GetCounter(COUNTER_SPELL)*1000
 end

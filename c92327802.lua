@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={0x43}
+s.counter_place_list={0x43}
 function s.damval(e,re,val,r,rp,rc)
 	local c=e:GetHandler()
 	if r&REASON_EFFECT~=0 and c:IsCanAddCounter(0x43,1) and c:GetFlagEffect(id)==0 then

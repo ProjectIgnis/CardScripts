@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={0x1023}
+s.counter_list={0x1023}
 function s.addct(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x23)

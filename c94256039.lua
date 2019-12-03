@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER)
 	local c=e:GetHandler()

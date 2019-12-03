@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={0x17}
+s.counter_place_list={0x17}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) then
 		e:GetHandler():AddCounter(0x17,1)

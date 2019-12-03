@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.counter_add_list={0x1009}
+s.counter_place_list={0x1009}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
 	return tc and tc:IsControler(tp) and tc:IsFaceup() and tc:IsSetCard(0x50)

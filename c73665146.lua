@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 s.listed_names={72443568}
 s.lvupcount=1
 s.lvup={72443568}

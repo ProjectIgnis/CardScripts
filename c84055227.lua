@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.attackup)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_list={COUNTER_SPELL}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsRelateToBattle() and c:GetBattleTarget():IsType(TYPE_MONSTER)

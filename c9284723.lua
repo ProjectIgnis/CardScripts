@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.counter_add_list={0x1009}
+s.counter_place_list={0x1009}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())

@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={0xc}
+s.counter_place_list={0xc}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetAttacker():IsControler(tp) then
 		e:GetHandler():AddCounter(0xc,1)

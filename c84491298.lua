@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.counter_add_list={0x100e}
+s.counter_list={0x100e}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	return a:IsControler(1-tp) and a:GetCounter(0x100e)>0

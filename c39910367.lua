@@ -1,5 +1,5 @@
 --魔法都市エンディミオン
---MAgical Citadel of Endymion
+--Magical Citadel of Endymion
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(COUNTER_SPELL)
@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.addop2)
 	c:RegisterEffect(e6)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=re:GetHandler()
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and c~=e:GetHandler() then

@@ -54,7 +54,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.rcop)
 	c:RegisterEffect(e6)
 end
-s.counter_add_list={0x100e}
+s.counter_list={0x100e}
 function s.filter(c)
 	return c:GetCounter(0x100e)>0 and c:IsControlerCanBeChanged()
 end

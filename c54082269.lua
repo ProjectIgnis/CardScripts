@@ -50,7 +50,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
-s.counter_add_list={0x1002}
+s.counter_place_list={0x1002}
 s.listed_series={0x33}
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()

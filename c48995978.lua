@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.winop)
 	c:RegisterEffect(e2)
 end
-s.counter_add_list={0x2b}
+s.counter_place_list={0x2b}
 s.xyz_number=88
 function s.filter(c)
 	return c:GetSequence()<5

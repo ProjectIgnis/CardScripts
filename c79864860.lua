@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={COUNTER_PREDATOR}
+s.counter_list={COUNTER_PREDATOR}
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK,fc,sumtype,tp) and c:IsOnField()
 end

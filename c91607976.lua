@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.opd2)
 	c:RegisterEffect(e3)
 end
-s.counter_add_list={0x8}
+s.counter_place_list={0x8}
 function s.cona(e)
 	return e:GetHandler():IsAttackPos()
 end

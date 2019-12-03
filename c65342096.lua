@@ -41,7 +41,7 @@ function s.initial_effect(c)
     e4:SetOperation(s.spop)
     c:RegisterEffect(e4)
 end
-s.counter_add_list={COUNTER_SPELL}
+s.counter_place_list={COUNTER_SPELL}
 s.listed_names={39910367}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()

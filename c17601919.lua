@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.repop)
 	c:RegisterEffect(e1)
 end
-s.counter_add_list={0x2f}
+s.counter_place_list={0x2f}
 function s.repcon(e)
 	local c=e:GetHandler()
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsReason(REASON_DESTROY)

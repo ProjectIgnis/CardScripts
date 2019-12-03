@@ -23,7 +23,7 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.counter_add_list={0x100e}
+s.counter_place_list={0x100e}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0xc) end
 	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0xc)

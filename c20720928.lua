@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_HAND,0)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.ntcon)
-	e2:SetTarget(aux.FieldSummonProcTg((s.nttg))
+	e2:SetTarget(aux.FieldSummonProcTg(s.nttg))
 	e2:SetOperation(s.ntop)
 	c:RegisterEffect(e2)
 	--act limit

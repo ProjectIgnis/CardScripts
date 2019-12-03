@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_HAND,0)
 	e2:SetCondition(s.ntcon)
-	e2:SetTarget(aux.FieldSummonProcTg((aux.TargetBoolFunction(Card.IsRace,RACE_DINOSAUR)))
+	e2:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(Card.IsRace,RACE_DINOSAUR)))
 	c:RegisterEffect(e2)
 	--remain field
 	local e3=Effect.CreateEffect(c)

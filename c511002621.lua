@@ -20,35 +20,19 @@ function s.init(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetTargetRange(1,1)
 	Duel.RegisterEffect(e2,0)
+	local limeff=Effect.CreateEffect(c)
+	limeff:SetDescription(aux.Stringid(72497366,0))
+	limeff:SetType(EFFECT_TYPE_FIELD)
+	limeff:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	limeff:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
+	limeff:SetCondition(s.ntcon)
 	--summon any level
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_SUMMON_PROC)
-	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e3:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
-	e3:SetTarget(aux.NOT(s.nttg))
-	e3:SetCondition(s.ntcon)
-	Duel.RegisterEffect(e3,0)
-	local e4=e3:Clone()
-	e4:SetCode(EFFECT_SET_PROC)
-	e4:SetTarget(aux.NOT(s.nttg2))
-	Duel.RegisterEffect(e4,0)
-	local e5=e3:Clone()
-	e5:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-	e5:SetTarget(s.nttg)
-	Duel.RegisterEffect(e5,0)
-	local e6=e3:Clone()
-	e6:SetCode(EFFECT_LIMIT_SET_PROC)
-	e6:SetTarget(s.nttg2)
-	Duel.RegisterEffect(e6,0)
-	--set up flags to prevent loop with above effect
-	local e7=Effect.CreateEffect(c)
-	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e7:SetCode(EVENT_ADJUST)
-	e7:SetCondition(s.limitcon)
-	e7:SetOperation(s.limitop)
-	Duel.RegisterEffect(e7,0)
+	for _,proc in ipairs({EFFECT_SET_PROC,EFFECT_SUMMON_PROC}) do
+		local leff=limeff:Clone()
+		leff:SetCode(proc)
+		Duel.RegisterEffect(leff,0)
+	end
+	limeff:Reset()
 	--burn for destroy
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -56,36 +40,10 @@ function s.init(c)
 	e8:SetOperation(s.damop)
 	Duel.RegisterEffect(e8,0)
 end
-function s.limitfilter(c)
-	return c:IsHasEffect(EFFECT_LIMIT_SUMMON_PROC) and c:GetFlagEffect(id)==0
-end
-function s.limitfilter2(c)
-	return c:IsHasEffect(EFFECT_LIMIT_SET_PROC) and c:GetFlagEffect(id+1)==0
-end
-function s.limitcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.limitfilter,tp,0xff,0xff,1,nil) or Duel.IsExistingMatchingCard(s.limitfilter2,tp,0xff,0xff,1,nil)
-end
-function s.limitop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.limitfilter,tp,0xff,0xff,nil)
-	for tc in aux.Next(g) do
-		tc:RegisterFlagEffect(id,0,0,0)
-	end
-	local g2=Duel.GetMatchingGroup(s.limitfilter2,tp,0xff,0xff,nil)
-	for tc in aux.Next(g2) do
-		tc:RegisterFlagEffect(id+1,0,0,0)
-	end
-end
-function s.nttg(e,c)
-	return c:GetFlagEffect(id)~=0
-end
-function s.nttg2(e,c)
-	return c:GetFlagEffect(id+1)~=0
-end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	local _,max=c:GetTributeRequirement()
-	return minc==0 and max>0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return max>0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.damfilter(c,p)
 	return c:IsPreviousControler(p) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)

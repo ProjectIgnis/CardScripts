@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(LOCATION_HAND,0)
 		e1:SetCode(EFFECT_SUMMON_PROC)
 		e1:SetCondition(s.ntcon)
-		e1:SetTarget(s.nttg)
+		e1:SetTarget(aux.FieldSummonProcTg(s.nttg))
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	else

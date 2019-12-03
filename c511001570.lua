@@ -7,31 +7,30 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(s.retcost)
 	c:RegisterEffect(e1)
-	--summon proc
+	--less tributes
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e3:SetCode(EFFECT_ADD_EXTRA_TRIBUTE)
+	e3:SetTargetRange(LOCATION_SZONE,0)
+	e3:SetTarget(function(e,_c)return c==_c end)
+	e3:SetValue(POS_FACEUP)
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(11370031,0))
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_SUMMON_PROC)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_HAND,0)
-	e4:SetCondition(s.sumcon)
-	e4:SetOperation(s.sumop)
-	e4:SetValue(SUMMON_TYPE_TRIBUTE)
+	e4:SetTarget(aux.TRUE)
+	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
-	local e5=e4:Clone()
-	e5:SetCode(EFFECT_SET_PROC)
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_DOUBLE_TRIBUTE)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetValue(aux.TRUE)
 	c:RegisterEffect(e5)
 end
 function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,nil,1,nil) end
 	local g=Duel.SelectReleaseGroup(tp,nil,1,1,nil)
 	Duel.Release(g,REASON_COST)
-end
-function s.sumcon(e,c)
-	if c==nil then return e:GetHandler():IsReleasable() end
-	local mi,ma=c:GetTributeRequirement()
-	return ma>1 and mi>1 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-end
-function s.sumop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Release(e:GetHandler(),REASON_COST)
 end

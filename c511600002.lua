@@ -54,21 +54,19 @@ function s.op(e,tp,eg,ep,ev,re,r,rp,chk)
 		e3:SetTargetRange(1,1)
 		e3:SetCondition(s.bcon)
 		Duel.RegisterEffect(e3,tp)
-	--Dimension Summon
-		local e4=Effect.CreateEffect(c)
-		e4:SetDescription(aux.Stringid(4010,0))
-		e4:SetType(EFFECT_TYPE_FIELD)
-		e4:SetCode(EFFECT_SUMMON_PROC)
-		e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_IGNORE_RANGE)
-		e4:SetTarget(function(e,c)return c:GetFlagEffect(51160002)==0 end)
-		e4:SetCondition(s.ntcon)
-		e4:SetValue(6)
-		Duel.RegisterEffect(e4,tp)
-		local e5=e4:Clone()
-		e5:SetTarget(function(e,c)return c:GetFlagEffect(51160002)>0 end)
-		e5:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-		e5:SetValue(6)
-		Duel.RegisterEffect(e5,tp)
+	--Dimension Summon any level
+		local limeff=Effect.CreateEffect(c)
+		limeff:SetDescription(aux.Stringid(72497366,0))
+		limeff:SetType(EFFECT_TYPE_FIELD)
+		limeff:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		limeff:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
+		limeff:SetCondition(s.ntcon)
+		for _,proc in ipairs({EFFECT_LIMIT_SUMMON_PROC,EFFECT_SUMMON_PROC}) do
+			local leff=limeff:Clone()
+			leff:SetCode(proc)
+			Duel.RegisterEffect(leff,0)
+		end
+		limeff:Reset()
 	--spirit
 		local e6=Effect.CreateEffect(c)
 		e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -109,7 +107,8 @@ end
 --tribute
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
-	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	local _,max=c:GetTributeRequirement()
+	return max>0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 ------------------------------------------------------------------------
 --spirit charge

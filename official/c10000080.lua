@@ -81,7 +81,7 @@ function s.tttg2(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
 	local mg=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
 	mg=mg:Filter(Auxiliary.IsZone,nil,relzone,tp)
 	local g=Duel.SelectTribute(tp,c,3,3,mg,1-tp,zone,true)
-	if #g>0 then
+	if g and #g>0 then
 		g:KeepAlive()
 		e:SetLabelObject(g)
 		return true

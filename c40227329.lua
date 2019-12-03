@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetTargetRange(LOCATION_HAND,0)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.ntcon)
-	e3:SetTarget(s.nttg)
+	e3:SetTarget(Auxiliary.FieldSummonProcTg(s.nttg))
 	c:RegisterEffect(e3)
 	--apply effect
 	local e4=Effect.CreateEffect(c)

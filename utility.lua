@@ -1647,6 +1647,14 @@ function Auxiliary.KaijuCondition(e,c)
 											return c:IsFaceup() and c:IsSetCard(0xd3)
 										end,tp,0,LOCATION_MZONE,1,nil)
 end
+function Auxiliary.FieldSummonProcTg(fun1,fun2)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk,c,...)
+		if not c then
+			return not fun1 or fun1(e,tp)
+		end
+		return not fun2 or fun2(e,tp,eg,ep,ev,re,r,rp,chk,c,...)
+	end
+end
 function Auxiliary.AddValuesReset(resetfunc)
 	if not Auxiliary.ToResetFuncTable then
 		Auxiliary.ToResetFuncTable = {resetfunc}

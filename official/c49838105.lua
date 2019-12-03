@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	e2:SetLabel(1)
 	c:RegisterEffect(e2)
-	--draw
+	--draw replacement
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_PREDRAW)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCondition(s.cfcon)
+	e3:SetCost(s.cfcost)
 	e3:SetTarget(s.cftg)
 	e3:SetOperation(s.cfop)
 	c:RegisterEffect(e3)
@@ -50,30 +51,20 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveSequence(tc,1)
 	end
 end
+function s.cfcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.GiveUpDraw(e)
+end
 function s.cfcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetDrawCount(tp)>0
 end
 function s.cftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local dt=Duel.GetDrawCount(tp)
-	if dt~=0 then
-		_replace_count=0
-		_replace_max=dt
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e1:SetCode(EFFECT_DRAW_COUNT)
-		e1:SetTargetRange(1,0)
-		e1:SetReset(RESET_PHASE+PHASE_DRAW)
-		e1:SetValue(0)
-		Duel.RegisterEffect(e1,tp)
-	end
 end
 function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
 	_replace_count=_replace_count+1
-	if _replace_count<=_replace_max then
+	if Duel.CheckGiveUpDraw(e) and _replace_count<=_replace_max and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 then
 		Duel.ConfirmDecktop(tp,1)
 		local g=Duel.GetDecktopGroup(tp,1)
 		local tc=g:GetFirst()

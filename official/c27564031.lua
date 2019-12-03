@@ -1,4 +1,5 @@
 --Sin World
+--Malefic World
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PREDRAW)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCondition(s.condition)
+	e2:SetCost(s.cost)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
@@ -26,33 +28,26 @@ end
 function s.filter(c)
 	return c:IsSetCard(0x23) and c:IsAbleToHand()
 end
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.GiveUpDraw(e)
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,3,nil) end
-	local dt=Duel.GetDrawCount(tp)
-	if dt~=0 then
-		_replace_count=0
-		_replace_max=dt
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e1:SetCode(EFFECT_DRAW_COUNT)
-		e1:SetTargetRange(1,0)
-		e1:SetReset(RESET_PHASE+PHASE_DRAW)
-		e1:SetValue(0)
-		Duel.RegisterEffect(e1,tp)
-	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	_replace_count=_replace_count+1
-	if _replace_count>_replace_max or not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-	if #g>=3 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg=g:Select(tp,3,3,nil)
-		Duel.ConfirmCards(1-tp,sg)
-		Duel.ShuffleDeck(tp)
-		local tg=sg:RandomSelect(1-tp,1)
-		Duel.SendtoHand(tg,nil,REASON_EFFECT)
+	if Duel.CheckGiveUpDraw(e) and _replace_count<=_replace_max and c:IsRelateToEffect(e) then
+		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
+		if #g>=3 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local sg=g:Select(tp,3,3,nil)
+			Duel.ConfirmCards(1-tp,sg)
+			Duel.ShuffleDeck(tp)
+			local tg=sg:RandomSelect(1-tp,1)
+			Duel.SendtoHand(tg,nil,REASON_EFFECT)
+		end
 	end
 end

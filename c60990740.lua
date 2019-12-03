@@ -1,4 +1,5 @@
 --絶対王 バック・ジャック
+--Absolute King Back Jack
 local s,id=GetID()
 function s.initial_effect(c)
 	--sset
@@ -30,10 +31,11 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_CANNOT_SSET) end
+		and Duel.CanPlayerSetSpellTrap(tp)
+	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
+	if not Duel.IsPlayerCanDiscardDeck(tp,1) or not Duel.CanPlayerSetSpellTrap(tp) then return end
 	Duel.ConfirmDecktop(tp,1)
 	local tc=Duel.GetDecktopGroup(tp,1):GetFirst()
 	Duel.DisableShuffleCheck()

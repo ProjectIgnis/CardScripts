@@ -16,11 +16,11 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12e}
 function s.spfilter(c,lv,e,tp)
-    return c:IsRace(RACE_SPELLCASTER) and c:IsHasLevel() and c:GetOriginalLevel()==lv-1 
+    return c:IsRace(RACE_SPELLCASTER) and c:HasLevel() and c:GetOriginalLevel()==lv-1 
         and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.filter(c,e,tp)
-    return c:IsFaceup() and c:IsSetCard(0x12e) and c:IsHasLevel()
+    return c:IsFaceup() and c:IsSetCard(0x12e) and c:HasLevel()
         and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,c:GetOriginalLevel(),e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

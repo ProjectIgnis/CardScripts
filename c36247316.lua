@@ -1,4 +1,5 @@
 --幻影騎士団ロスト・ヴァンブレイズ
+--The Phantom Knights of Lost Vambrace
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,7 +23,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.filter(c)
-	return c:GetLevel()>0 and c:IsFaceup()
+	return c:HasLevel() and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

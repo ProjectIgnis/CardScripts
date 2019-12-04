@@ -95,7 +95,7 @@ function s.costtg(e,te,tp)
     local lv=e:GetHandler():GetLevel()
     if tc:GetRank()>0 then
         return tc:GetOriginalRank()<lv
-    elseif tc:GetLevel()>0 then
+    elseif tc:HasLevel() then
         return tc:GetOriginalLevel()<lv
     else return false end
 end

@@ -1,4 +1,5 @@
 --下克上の首飾り
+--Amullet of Ambition
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsType,TYPE_NORMAL))
@@ -23,7 +24,7 @@ function s.atkcon(e)
 	if Duel.GetCurrentPhase()~=PHASE_DAMAGE_CAL then return false end
 	local eqc=e:GetHandler():GetEquipTarget()
 	local bc=eqc:GetBattleTarget()
-	return eqc:GetLevel()>0 and bc and bc:GetLevel()>eqc:GetLevel()
+	return eqc:HasLevel() and bc and bc:GetLevel()>eqc:GetLevel()
 end
 function s.atkval(e,c)
 	local bc=c:GetBattleTarget()

@@ -1,4 +1,5 @@
 --レベル・マイスター
+--Level Shifter
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:GetLevel()>0 and c:IsAbleToGraveAsCost()
+	return c:HasLevel() and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
@@ -30,7 +31,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	g:GetFirst():CreateEffectRelation(e)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetLevel()>0
+	return c:IsFaceup() and c:HasLevel()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

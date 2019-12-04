@@ -1,4 +1,5 @@
 --EMレ・ベルマン
+--Performapal Lebellman
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9f}
 function s.lvfilter(c)
-	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:GetLevel()>0
+	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.lvfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -39,7 +40,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f) and c:GetLevel()>0
+	return c:IsFaceup() and c:IsSetCard(0x9f) and c:HasLevel()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

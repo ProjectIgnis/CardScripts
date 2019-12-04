@@ -1,4 +1,5 @@
 --ユニゾンビ
+--Uni-Zombie
 local s,id=GetID()
 function s.initial_effect(c)
 	--level
@@ -31,7 +32,7 @@ function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetLevel()>0
+	return c:IsFaceup() and c:HasLevel() and c:GetLevel()~=0
 end
 function s.lvtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

@@ -1,4 +1,5 @@
 --レアル・ジェネクス・クロキシアン
+--Locomotion R-Genex
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -18,7 +19,7 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetLevel()>0
+	return c:IsFaceup() and c:HasLevel()
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)

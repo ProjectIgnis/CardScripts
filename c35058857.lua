@@ -43,7 +43,7 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.lvfilter(c,lv)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:GetLevel()>0 and c:GetLevel()~=lv
+	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:HasLevel() and c:GetLevel()~=lv
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lv=e:GetHandler():GetLevel()

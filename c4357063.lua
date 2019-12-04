@@ -1,4 +1,5 @@
 --先史遺産都市バビロン
+--Chronomaly City Babylon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.costfilter(c,e,tp,ft)
-	return c:IsSetCard(0x70) and c:IsAbleToRemoveAsCost() and c:GetLevel()>0 and aux.SpElimFilter(c,true) 
+	return c:IsSetCard(0x70) and c:IsAbleToRemoveAsCost() and c:HasLevel() and aux.SpElimFilter(c,true) 
 		and (ft>0 or (aux.MZFilter(c,c:GetControler()) and ft>-1)) 
 		and	Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp,c:GetLevel())
 end

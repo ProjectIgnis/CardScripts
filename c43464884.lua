@@ -1,6 +1,5 @@
 --妖海のアウトロール
 --Three Trolling Trolls
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--change
@@ -49,7 +48,7 @@ function s.splimit(e,c)
 	return not c:IsRace(RACE_BEASTWARRIOR)
 end
 function s.cgfilter(c,mc)
-	return c:IsRace(RACE_BEASTWARRIOR) and c:GetLevel()>0 and not (c:GetLevel()==mc:GetLevel() and c:IsAttribute(mc:GetAttribute()))
+	return c:IsRace(RACE_BEASTWARRIOR) and c:HasLevel() and not (c:GetLevel()==mc:GetLevel() and c:IsAttribute(mc:GetAttribute()))
 end
 function s.cgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

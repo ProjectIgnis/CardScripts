@@ -1,4 +1,5 @@
 --ガガガシスター
+--Gagaga Sister
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -37,7 +38,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetLevel()>0 and c:IsSetCard(0x54)
+	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(0x54)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

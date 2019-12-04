@@ -1,5 +1,5 @@
---Superheavy Samurai General Jade
 --超重輝将ヒス－E
+--Superheavy Samurai General Jade
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -70,7 +70,7 @@ function s.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0x9a) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9a) and c:GetLevel()>0
+	return c:IsFaceup() and c:IsSetCard(0x9a) and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

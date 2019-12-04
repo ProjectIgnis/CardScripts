@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.mfilter(c)
-	return c:IsLevelAbove(0)
+	return c:HasLevel() and not c:IsLevel(0)
 end
 function s.matcheck(g,lc,tp)
 	return g:GetClassCount(Card.GetLevel,lc,SUMMON_TYPE_LINK,tp)==#g

@@ -1,4 +1,5 @@
 --エターナル・ドレッド
+--Eternal Dread
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.addc)
 	c:RegisterEffect(e1)
 end
+s.counter_place_list={0x1b}
 s.listed_names={75041269}
 function s.check(tp)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)

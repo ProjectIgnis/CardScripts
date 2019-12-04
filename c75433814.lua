@@ -1,4 +1,5 @@
 --No.40 ギミック・パペット－ヘブンズ・ストリングス
+--Number 40: Gimmick Puppet of Strings
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -26,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.counter_place_list={0x1024}
 s.xyz_number=40
 function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

@@ -1,4 +1,5 @@
 --種子弾丸
+--Seed Cannon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x20)
@@ -35,6 +36,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.damop)
 	c:RegisterEffect(e5)
 end
+s.counter_place_list={0x20}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),1,nil)
 end

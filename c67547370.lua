@@ -1,4 +1,5 @@
 --眠れる巨人ズシン
+--Zushin the Sleeping Giant
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -47,6 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.atkop)
 	c:RegisterEffect(e5)
 end
+s.counter_place_list={0x1039}
 function s.cfilter(c,ft,tp)
 	return c:IsFaceup() and c:GetCounter(0x1039)==10
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5))

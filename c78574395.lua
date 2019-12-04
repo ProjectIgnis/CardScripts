@@ -1,4 +1,5 @@
 --ワンダー・バルーン
+--Wonder Ballons
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x32)
@@ -27,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 end
+s.counter_place_list={0x32}
 function s.atkval(e,c)
 	return e:GetHandler():GetCounter(0x32)*-300
 end

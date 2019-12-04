@@ -1,4 +1,5 @@
 --牙鮫帝シャーク・カイゼル
+--Shark Caesar
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x2e)
@@ -25,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 end
+s.counter_place_list={0x2e}
 function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)

@@ -50,6 +50,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
+s.counter_place_list={0x1002}
 s.listed_series={0x33}
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
@@ -59,7 +60,6 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetCounter(0x1002)==0 and p~=tp and loc==LOCATION_MZONE and c:GetFlagEffect(1)>0 then
 		re:GetHandler():AddCounter(0x1002,1)
-
 	end
 end
 function s.filter(c)

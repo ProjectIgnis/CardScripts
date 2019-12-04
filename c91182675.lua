@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
-	c:EnableCounterPermit(0x1)
+	c:EnableCounterPermit(COUNTER_SPELL)
 	--destroy & counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -43,13 +43,14 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.counter_place_list={COUNTER_SPELL}
 s.listed_series={0x10d}
 s.listed_names={55424270}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_PZONE,0) == 1
 end
 function s.ctfilter(c)
-	return c:IsFaceup() and c:IsCanAddCounter(0x1,1)
+	return c:IsFaceup() and c:IsCanAddCounter(COUNTER_SPELL,1)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -59,7 +60,7 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	Duel.SelectTarget(tp,s.ctfilter,tp,LOCATION_ONFIELD,0,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x1)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,COUNTER_SPELL)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -67,18 +68,18 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) 
 		and Duel.Destroy(c,REASON_EFFECT)~=0
 		and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		tc:AddCounter(0x1,1)
+		tc:AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
-		e:GetHandler():AddCounter(0x1,1)
+		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,3,REASON_COST) and c:IsReleasable() end
-	Duel.RemoveCounter(tp,1,0,0x1,3,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,3,REASON_COST) and c:IsReleasable() end
+	Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,3,REASON_COST)
 	Duel.Release(c,REASON_COST)
 end
 function s.spfilter(c,e,tp)

@@ -1,4 +1,5 @@
 --雲魔物－ゴースト・フォッグ
+--Cloudian - Ghost Frog
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -25,6 +26,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.ctop)
 	c:RegisterEffect(e4)
 end
+s.counter_list={0x1019}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=e:GetHandler():GetBattleTarget():GetLevel()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)

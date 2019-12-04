@@ -38,9 +38,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.counter_list={COUNTER_SPELL}
 s.listed_names={39910367}
 function s.spfilter(c,tp)
-	return c:IsCode(39910367) and c:IsCanRemoveCounter(tp,0x1,6,REASON_COST)
+	return c:IsCode(39910367) and c:IsCanRemoveCounter(tp,COUNTER_SPELL,6,REASON_COST)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -52,7 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
 	local tc=g:GetFirst()
- 	tc:RemoveCounter(tp,0x1,6,REASON_COST)
+ 	tc:RemoveCounter(tp,COUNTER_SPELL,6,REASON_COST)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1

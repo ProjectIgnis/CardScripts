@@ -1,4 +1,5 @@
 --ボーン・テンプル・ブロック
+--Thunder King, the Lightningstrike Kaiju
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.counter_list={0x37}
 function s.filter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

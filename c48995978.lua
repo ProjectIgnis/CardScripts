@@ -1,4 +1,5 @@
 --No.88 ギミック・パペット－デステニー・レオ
+--Number 88: Gimmick Puppet of Leo
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x2b)
@@ -26,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.winop)
 	c:RegisterEffect(e2)
 end
+s.counter_place_list={0x2b}
 s.xyz_number=88
 function s.filter(c)
 	return c:GetSequence()<5

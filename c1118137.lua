@@ -1,9 +1,8 @@
 --ガーディアンの力
---Power of the Guardian
---
+--Power of the Guardians
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x1)
+	c:EnableCounterPermit(COUNTER_SPELL)
 	aux.AddEquipProcedure(c)
 	--counter
 	local e2=Effect.CreateEffect(c)
@@ -33,6 +32,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desrepop)
 	c:RegisterEffect(e5)
 end
+s.counter_place_list={COUNTER_SPELL}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -52,25 +52,25 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x1)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,COUNTER_SPELL)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		e:GetHandler():AddCounter(0x1,1)
+		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.atkval(e,c)
-	return e:GetHandler():GetCounter(0x1)*500
+	return e:GetHandler():GetCounter(COUNTER_SPELL)*500
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tg=c:GetEquipTarget()
 	if chk==0 then return tg 
 		and tg:IsReason(REASON_BATTLE+REASON_EFFECT)
-		and Duel.IsCanRemoveCounter(tp,1,0,0x1,1,REASON_EFFECT) end
+		and Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,1,REASON_EFFECT) end
 	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RemoveCounter(tp,1,0,0x1,1,REASON_EFFECT+REASON_REPLACE)
+	Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,1,REASON_EFFECT+REASON_REPLACE)
 end
 

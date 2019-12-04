@@ -1,6 +1,5 @@
 --蝕みの鱗粉
 --Corrosive Scales
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.counter_place_list={0x1045}
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT)
 end

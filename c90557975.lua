@@ -1,4 +1,5 @@
 --上昇気流
+--Updraft
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
+s.counter_place_list={0x1019}
 function s.filter(c)
 	return c:GetCounter(0x1019)>0
 end

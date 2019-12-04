@@ -1,4 +1,5 @@
 --マジック・クロニクル
+--Spell Chronicle
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x25)
@@ -48,6 +49,7 @@ function s.initial_effect(c)
 	e4:SetLabelObject(g)
 	c:RegisterEffect(e4)
 end
+s.counter_place_list={0x25}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	if chk==0 then return #hg>0 and hg:FilterCount(Card.IsAbleToGraveAsCost,nil)==#hg end

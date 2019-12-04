@@ -1,4 +1,5 @@
 --エーリアン・マザー
+--Alien Mother
 local s,id=GetID()
 function s.initial_effect(c)
 	--check
@@ -38,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.counter_list={0x100e}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local t=Duel.GetAttackTarget()

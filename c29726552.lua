@@ -1,4 +1,5 @@
 --粘糸壊獣クモグス
+--Kumongous, the Sticky Kaiju
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1,e2=aux.AddKaijuProcedure(c)
@@ -16,6 +17,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
+s.counter_list={0x37}
 function s.filter(c,tp)
 	return c:IsSummonPlayer(tp) and c:IsFaceup()
 end

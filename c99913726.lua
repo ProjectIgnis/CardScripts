@@ -1,5 +1,5 @@
 --捕食植物ドロソフィルム・ヒドラ
---Predator Plant Drosophyllum Hydra
+--Predaplant Drosophyllum Hydra
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon rule
@@ -26,9 +26,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
+s.counter_list={COUNTER_PREDATOR}
 s.listed_series={0x10f3}
 function s.hspfilter(c,ft,tp)
-	return c:GetCounter(0x1041)>0 and c:IsReleasable() and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
+	return c:GetCounter(COUNTER_PREDATOR)>0 and c:IsReleasable() and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
 end
 function s.hspcon(e,c)
 	if c==nil then return true end

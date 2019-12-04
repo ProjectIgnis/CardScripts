@@ -1,4 +1,5 @@
 --メガトン魔導キャノン
+--Mega Ton Magical Cannon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.counter_list={COUNTER_SPELL}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,10,REASON_COST) end
-	Duel.RemoveCounter(tp,1,0,0x1,10,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,10,REASON_COST) end
+	Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,10,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end

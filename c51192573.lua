@@ -1,4 +1,5 @@
 --宇宙獣ガンギル
+--Cosmic Horror Gangi'el
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 1 tribute
@@ -36,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
 end
+s.counter_place_list={0x100e}
 function s.otfilter(c,tp)
 	return c:GetOwner()==tp
 end

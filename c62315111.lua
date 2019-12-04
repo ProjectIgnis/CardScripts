@@ -1,4 +1,5 @@
 --エーリアン・ハンター
+--Alien Hunter
 local s,id=GetID()
 function s.initial_effect(c)
 	--chain attack
@@ -15,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atop)
 	c:RegisterEffect(e2)
 end
+s.counter_list={0x100e}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()

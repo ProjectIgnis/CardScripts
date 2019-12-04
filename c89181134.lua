@@ -25,8 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e2)
 end
+s.counter_place_list={COUNTER_PREDATOR}
 function s.attrtg(e,c)
-	return c:GetCounter(0x1041)>0
+	return c:GetCounter(COUNTER_PREDATOR)>0
 end
 function s.attrval(e,c,rp)
 	rp=s.atteff:GetLabel()
@@ -40,7 +41,7 @@ function s.attrcon(scard,sumtype,tp)
 	return sumtype==SUMMON_TYPE_FUSION
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetCounter(0x1041)>0
+	return c:IsFaceup() and c:GetCounter(COUNTER_PREDATOR)>0
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(s.filter),tp,0,LOCATION_MZONE,nil)

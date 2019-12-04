@@ -1,4 +1,5 @@
 --エーリアン・ヒュプノ
+--Alien Hypno
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.EnableGeminiAttribute(c)
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.counter_list={0x100e}
 function s.filter(c)
 	return c:GetCounter(0x100e)>0 and c:IsControlerCanBeChanged()
 end

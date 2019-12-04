@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
+s.counter_list={COUNTER_PREDATOR}
 function s.spcfilter(c)
 	return c:IsFaceup() and c:GetCounter(COUNTER_PREDATOR)>0
 end

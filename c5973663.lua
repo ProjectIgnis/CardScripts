@@ -1,4 +1,5 @@
 --世界樹
+--The World Tree
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x18)
@@ -49,6 +50,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.op3)
 	c:RegisterEffect(e5)
 end
+s.counter_place_list={0x18}
 function s.ctfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and (c:GetPreviousRaceOnField()&RACE_PLANT)~=0
 end

@@ -1,4 +1,5 @@
 --D－フォーメーション
+--D - Formation
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1c)
@@ -31,6 +32,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
+s.counter_place_list={0x1c}
 function s.ctfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(0xc008)
 end

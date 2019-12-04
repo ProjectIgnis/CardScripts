@@ -1,4 +1,5 @@
 --毒蛇神ヴェノミナーガ
+--Vennominaga the Deity of Poisonous Snakes
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x11)
@@ -59,6 +60,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.winop)
 	c:RegisterEffect(e7)
 end
+s.counter_place_list={0x11}
 function s.econ(e)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end

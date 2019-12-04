@@ -1,4 +1,5 @@
 --雲魔物－ストーム・ドラゴン
+--Cloudian - Storm Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -36,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.ctop)
 	c:RegisterEffect(e4)
 end
+s.counter_place_list={0x1019}
 function s.sdcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end

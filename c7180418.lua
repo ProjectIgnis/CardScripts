@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.ccost)
 	c:RegisterEffect(e4)
 end
+s.counter_list={COUNTER_SPELL}
 function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -31,8 +32,8 @@ function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.ccost(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsCanRemoveCounter(tp,1,0,0x1,1,REASON_COST) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		Duel.RemoveCounter(tp,1,0,0x1,1,REASON_COST)
+	if Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,1,REASON_COST) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,1,REASON_COST)
 	else
 		Duel.Destroy(e:GetHandler(),REASON_COST)
 	end

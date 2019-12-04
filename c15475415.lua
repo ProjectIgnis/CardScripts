@@ -1,4 +1,5 @@
 --エーリアン・ドッグ
+--Alien Dog
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success
@@ -22,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
 end
+s.counter_list={0x100e}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and eg:GetFirst():IsSetCard(0xc)
 end

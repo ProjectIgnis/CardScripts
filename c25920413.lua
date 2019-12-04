@@ -1,4 +1,5 @@
 --エーリアン・スカル
+--Alien Skull
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -34,6 +35,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spcop)
 	c:RegisterEffect(e5)
 end
+s.counter_place_list={0x100e}
 function s.spcost(e,c,tp,sumtype)
 	return sumtype ~= SUMMON_TYPE_SPECIAL+1 or Duel.GetActivityCount(tp,ACTIVITY_NORMALSUMMON)==0
 end

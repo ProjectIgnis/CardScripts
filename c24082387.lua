@@ -1,4 +1,5 @@
 --ミステリーサークル
+--Crop Circles
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,7 +23,7 @@ function s.filter1(c,e,tp,cg,minc)
 		and cg:CheckWithSumEqual(Card.GetLevel,c:GetLevel(),minc,99)
 end
 function s.cgfilter(c)
-	return c:GetLevel()>0 and c:IsAbleToGraveAsCost() and (c:GetOriginalType()&TYPE_MONSTER)~=0
+	return c:HasLevel() and c:IsAbleToGraveAsCost() and (c:GetOriginalType()&TYPE_MONSTER)~=0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cg=Duel.GetMatchingGroup(s.cgfilter,tp,LOCATION_MZONE,0,nil)

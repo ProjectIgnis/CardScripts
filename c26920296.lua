@@ -1,4 +1,5 @@
 --幻夢境
+--Dreamland
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -68,7 +69,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.lvfilter(c)
-	return c:IsFaceup() and c:GetLevel()>0
+	return c:IsFaceup() and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.lvfilter,1,nil)

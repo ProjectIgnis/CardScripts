@@ -1,5 +1,5 @@
 --ユニゾン・チューン
---Unizong Tune
+--Uni-song Tune
 --scripted Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,10 +15,10 @@ function s.initial_effect(c)
 end
 function s.filter(c)
 	local lv=c:GetLevel()
-	return c:IsType(TYPE_TUNER) and c:IsAbleToRemove() and c:GetLevel()>0 
+	return c:IsType(TYPE_TUNER) and c:IsAbleToRemove() and c:HasLevel() 
 end
 function s.lvfilter(c)
-	return c:IsFaceup() and c:GetLevel()>0
+	return c:IsFaceup() and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.lvfilter(chkc,lv) end

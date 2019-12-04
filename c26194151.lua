@@ -1,4 +1,5 @@
 --ネクロイド・シンクロ
+--Necroid Synchro
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -31,7 +32,7 @@ function s.filter2(c,tp,sc)
 		and aux.SelectUnselectGroup(rg,e,tp,nil,2,s.rescon(c,sc),0)
 end
 function s.filter3(c)
-	return c:GetLevel()>0 and not c:IsType(TYPE_TUNER) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:HasLevel() and not c:IsType(TYPE_TUNER) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

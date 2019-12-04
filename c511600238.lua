@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.disop)
 	c:RegisterEffect(e6)
 end
-s.counter_add_list={0x581}
+s.counter_list={0x581}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x581,1)
 end

@@ -71,7 +71,7 @@ end
 function s.equipop(c,e,tp,tc)
 	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,nil,true) then return false end
 	--atkup
-	local e1=Effect.CreateEffect(c)
+	local e1=Effect.CreateEffect(tc)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(1000)

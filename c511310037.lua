@@ -78,7 +78,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(tg,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_ALLURE_QUEEN) and c:IsHasLevel() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ALLURE_QUEEN) and c:HasLevel() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(#sg)(sg,e,tp,mg) and sg:GetClassCount(Card.GetCode)==#sg

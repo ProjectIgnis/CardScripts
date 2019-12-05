@@ -1,8 +1,8 @@
 --マジカル・コンダクター
---Magical Examplar
+--Magical Exemplar
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x1)
+	c:EnableCounterPermit(COUNTER_SPELL)
 	--add counter
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -28,14 +28,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.counter_place_list={COUNTER_SPELL}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
-		e:GetHandler():AddCounter(0x1,2)
+		e:GetHandler():AddCounter(COUNTER_SPELL,2)
 	end
 end
 function s.filter(c,cc,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and c:HasLevel() and cc:IsCanRemoveCounter(tp,0x1,c:GetLevel(),REASON_COST)
+		and c:HasLevel() and cc:IsCanRemoveCounter(tp,COUNTER_SPELL,c:GetLevel(),REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -55,7 +56,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	lvt[pc]=nil
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local lv=Duel.AnnounceNumber(tp,table.unpack(lvt))
-	e:GetHandler():RemoveCounter(tp,0x1,lv,REASON_COST)
+	e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,lv,REASON_COST)
 	e:SetLabel(lv)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end

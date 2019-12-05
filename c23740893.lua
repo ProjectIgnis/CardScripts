@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.sumop)
 	c:RegisterEffect(e2)
 end
+s.counter_place_list={0x33}
 s.listed_names={27918963}
 s.listed_series={0xb3}
-s.counter_add_list={0x33}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)

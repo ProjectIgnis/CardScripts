@@ -1,4 +1,5 @@
 --魔草 マンドラゴラ
+--magical Plant Mandragola
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -9,14 +10,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.counter_list={COUNTER_SPELL}
 function s.filter(c)
-	return c:IsFaceup() and c:IsCanAddCounter(0x1,1)
+	return c:IsFaceup() and c:IsCanAddCounter(COUNTER_SPELL,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local tc=g:GetFirst()
 	while tc do 
-		tc:AddCounter(0x1,1)
+		tc:AddCounter(COUNTER_SPELL,1)
 		tc=g:GetNext()
 	end
 end

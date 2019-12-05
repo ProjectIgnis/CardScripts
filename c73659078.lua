@@ -1,4 +1,5 @@
 --スノーダスト・ジャイアント
+--Snowdust Giant
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -24,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 end
+s.counter_list={0x1015}
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and not c:IsPublic()
 end

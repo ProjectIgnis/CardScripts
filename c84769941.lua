@@ -1,4 +1,5 @@
 --対壊獣用決戦兵器スーパーメカドゴラン
+--Super Anti-Kaiju War Machine Mecha-Dogoran
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -32,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 end
+s.counter_list={0x37}
 s.listed_series={0xd3}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and s.eqfilter(ec)

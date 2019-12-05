@@ -25,28 +25,29 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.counter_place_list={COUNTER_SPELL}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,2) end
 	Duel.DiscardDeck(tp,2,REASON_COST)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsCanAddCounter(0x1,1)
+	return c:IsFaceup() and c:IsCanAddCounter(COUNTER_SPELL,1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x1)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,COUNTER_SPELL)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		if tc:IsCanAddCounter(0x1,2) then
+		if tc:IsCanAddCounter(COUNTER_SPELL,2) then
 			scn=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-			tc:AddCounter(0x1,scn+1)
-		elseif tc:IsCanAddCounter(0x1,1) then
-			tc:AddCounter(0x1,1)
+			tc:AddCounter(COUNTER_SPELL,scn+1)
+		elseif tc:IsCanAddCounter(COUNTER_SPELL,1) then
+			tc:AddCounter(COUNTER_SPELL,1)
 		end
 	end
 end
@@ -55,7 +56,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCanAddCounter(0x1,1,false,LOCATION_MZONE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCanAddCounter(COUNTER_SPELL,1,false,LOCATION_MZONE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -66,11 +67,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		if tc:IsCanAddCounter(0x1,2) then
+		if tc:IsCanAddCounter(COUNTER_SPELL,2) then
 			scn=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-			tc:AddCounter(0x1,scn+1)
-		elseif tc:IsCanAddCounter(0x1,1) then
-			tc:AddCounter(0x1,1)
+			tc:AddCounter(COUNTER_SPELL,scn+1)
+		elseif tc:IsCanAddCounter(COUNTER_SPELL,1) then
+			tc:AddCounter(COUNTER_SPELL,1)
 		end
 	end
 end

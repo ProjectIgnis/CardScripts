@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
-	c:EnableCounterPermit(0x1,LOCATION_MZONE)
+	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_MZONE)
 	--destroy & counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -48,6 +48,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
 end
+s.counter_list={COUNTER_SPELL}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_PZONE,0) == 1
 end
@@ -70,15 +71,15 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
-		e:GetHandler():AddCounter(0x1,1)
+		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.cfilter(c,e,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsAbleToHand() and (not e or c:IsRelateToEffect(e))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,3,REASON_COST) end
-	Duel.RemoveCounter(tp,1,0,0x1,3,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,3,REASON_COST) end
+	Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,3,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

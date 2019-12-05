@@ -1,7 +1,8 @@
 --マジカル・アブダクター
+--Magical Abductor
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x1,LOCATION_PZONE+LOCATION_MZONE)
+	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE+LOCATION_MZONE)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--add counter
@@ -42,14 +43,15 @@ function s.initial_effect(c)
 	e6:SetValue(s.atkval)
 	c:RegisterEffect(e6)
 end
+s.counter_list={COUNTER_SPELL}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
-		e:GetHandler():AddCounter(0x1,1)
+		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1,3,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x1,3,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,COUNTER_SPELL,3,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,3,REASON_COST)
 end
 function s.thfilter1(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
@@ -83,5 +85,5 @@ function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkval(e,c)
-	return e:GetHandler():GetCounter(0x1)*100
+	return e:GetHandler():GetCounter(COUNTER_SPELL)*100
 end

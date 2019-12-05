@@ -1,4 +1,5 @@
 --「A」細胞組み換え装置
+--"A" Cell Recombination Device
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.counter_place_list={0x100e}
 function s.filter(c)
 	return c:GetLevel()>0 and c:IsSetCard(0xc) and c:IsAbleToGrave()
 end

@@ -46,8 +46,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
+s.counter_place_list={COUNTER_SPELL}
 s.listed_series={0x10d}
-s.listed_names={}
+s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_PZONE,0) == 1
 end

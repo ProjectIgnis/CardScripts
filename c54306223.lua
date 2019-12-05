@@ -1,4 +1,5 @@
 --ヴェノム・スワンプ
+--Venom Swap
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,6 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.counter_place_list={0x1009}
 function s.atkval(e,c)
 	return c:GetCounter(0x1009)*-500
 end

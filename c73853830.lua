@@ -1,4 +1,5 @@
 --クルセイダー・オブ・エンディミオン
+--Crusader of Endymion
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.EnableGeminiAttribute(c)
@@ -15,18 +16,19 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.counter_place_list={COUNTER_SPELL}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsCanAddCounter(0x1,1) end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsCanAddCounter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,0x1,1) end
+	if chkc then return chkc:IsCanAddCounter(COUNTER_SPELL,1) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsCanAddCounter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,COUNTER_SPELL,1) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local g=Duel.SelectTarget(tp,Card.IsCanAddCounter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,0x1,1)
+	local g=Duel.SelectTarget(tp,Card.IsCanAddCounter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,COUNTER_SPELL,1)
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsCanAddCounter(0x1,1) then
-		tc:AddCounter(0x1,1)
+	if tc and tc:IsRelateToEffect(e) and tc:IsCanAddCounter(COUNTER_SPELL,1) then
+		tc:AddCounter(COUNTER_SPELL,1)
 		if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

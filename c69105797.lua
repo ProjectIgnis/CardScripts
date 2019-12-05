@@ -1,4 +1,5 @@
 --捕食植物スキッド・ドロセーラ
+--Predaplant Squid Drosera
 local s,id=GetID()
 function s.initial_effect(c)
 	--attack all
@@ -21,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.cop)
 	c:RegisterEffect(e2)
 end
+s.counter_place_list={COUNTER_PREDATOR}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
@@ -47,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(e,c)
-	return c:GetCounter(0x1041)>0
+	return c:GetCounter(COUNTER_PREDATOR)>0
 end
 function s.ccon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -61,7 +63,7 @@ function s.cop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,0,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	while tc do
-		tc:AddCounter(0x1041,1)
+		tc:AddCounter(COUNTER_PREDATOR,1)
 		if tc:GetLevel()>1 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -75,5 +77,5 @@ function s.cop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lvcon(e)
-	return e:GetHandler():GetCounter(0x1041)>0
+	return e:GetHandler():GetCounter(COUNTER_PREDATOR)>0
 end

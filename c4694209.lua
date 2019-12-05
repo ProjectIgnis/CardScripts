@@ -1,4 +1,5 @@
 --カードガード
+--Card Guard
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success
@@ -33,6 +34,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.addc2)
 	c:RegisterEffect(e4)
 end
+s.counter_place_list={0x1021}
 function s.addct(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x1021)

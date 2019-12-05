@@ -1,4 +1,5 @@
 --ワーム・イリダン
+--Worm Illidan
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0xf)
@@ -33,6 +34,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
+s.counter_place_list={0xf}
 function s.accon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():IsControler(tp)
 end

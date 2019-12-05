@@ -1,8 +1,9 @@
 --混沌の場
+--Gateway to Chaos
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x1)
-	c:SetCounterLimit(0x1,6)
+	c:EnableCounterPermit(COUNTER_SPELL)
+	c:SetCounterLimit(COUNTER_SPELL,6)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -30,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.counter_place_list={COUNTER_SPELL}
 function s.filter(c)
 	return ((c:IsSetCard(0x10cf) and c:IsType(TYPE_RITUAL)) or c:IsSetCard(0xbd)) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
@@ -52,12 +54,12 @@ end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(s.cfilter,nil)
 	if ct>0 then
-		e:GetHandler():AddCounter(0x1,ct,true)
+		e:GetHandler():AddCounter(COUNTER_SPELL,ct,true)
 	end
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1,3,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x1,3,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,COUNTER_SPELL,3,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,3,REASON_COST)
 end
 function s.thfilter(c)
 	return c:GetType()==TYPE_SPELL+TYPE_RITUAL and c:IsAbleToHand()

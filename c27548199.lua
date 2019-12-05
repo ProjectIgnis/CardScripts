@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
+s.counter_place_list={0x147}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and (ec:GetOriginalType()&TYPE_LINK==TYPE_LINK)
 end

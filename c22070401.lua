@@ -49,7 +49,7 @@ function s.initial_effect(c)
     e5:SetOperation(s.penop)
     c:RegisterEffect(e5)
 end
-s.counter_add_list={0x1149}
+s.counter_list={0x1149}
 function s.ffilter(c,fc,sumtype,tp)
     return c:IsAttribute(ATTRIBUTE_DARK,fc,sumtype,tp) and c:IsType(TYPE_PENDULUM,fc,sumtype,tp)
 end

@@ -1,4 +1,5 @@
 --アグレッシブ・クラウディアン
+--Raging Cloudian
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.counter_place_list={0x1019}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	return #eg==1 and tc:IsControler(tp) and tc:IsPreviousControler(tp) and tc:IsReason(REASON_DESTROY)

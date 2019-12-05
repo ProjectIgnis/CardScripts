@@ -1,4 +1,5 @@
 --壊星壊獣ジズキエル
+--Jizukiru, the Star Destroying Kaiju
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1,e2=aux.AddKaijuProcedure(c)
@@ -15,6 +16,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
+s.counter_list={0x37}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

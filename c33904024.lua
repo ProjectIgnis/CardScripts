@@ -1,4 +1,5 @@
 --強欲なカケラ
+--Shard of Greed
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0xd)
@@ -26,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
+s.counter_place_list={0xd}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp and r==REASON_RULE then
 		e:GetHandler():AddCounter(0xd,1)

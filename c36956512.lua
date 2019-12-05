@@ -1,4 +1,5 @@
 --怪粉壊獣ガダーラ
+--Gadarla, the Mystery Dust Kaiju
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1,e2=aux.AddKaijuProcedure(c)
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+0x1c0)
+	e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.atkcon)
 	e3:SetCost(s.atkcost)
@@ -18,6 +19,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.counter_list={0x37}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end

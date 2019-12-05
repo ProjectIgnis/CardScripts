@@ -1,4 +1,5 @@
 --修験の妖社
+--Yosen Training Grounds
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x33)
@@ -29,6 +30,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
+s.counter_place_list={0x33}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xb3)
 end

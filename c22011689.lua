@@ -1,4 +1,5 @@
 --捕食植物モーレイ・ネペンテス
+--Predaplant Moray Nepenthes
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk
@@ -32,8 +33,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.counter_list={COUNTER_PREDATOR}
 function s.atkval(e,c)
-	return Duel.GetCounter(0,1,1,0x1041)*200
+	return Duel.GetCounter(0,1,1,COUNTER_PREDATOR)*200
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end

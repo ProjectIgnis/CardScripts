@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.counter_place_list={0x100e}
 	--Defining cost
 function s.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and c:GetOriginalLevel()>0

@@ -1,11 +1,12 @@
 --ダーク・ヴァルキリア
+--Dark Valkyria
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.EnableGeminiAttribute(c)
 	--counter permit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_COUNTER_PERMIT+0x1)
+	e1:SetCode(EFFECT_COUNTER_PERMIT+COUNTER_SPELL)
 	e1:SetValue(LOCATION_MZONE)
 	e1:SetCondition(aux.IsGeminiState)
 	c:RegisterEffect(e1)
@@ -43,19 +44,20 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation2)
 	c:RegisterEffect(e4)
 end
+s.counter_place_list={COUNTER_SPELL}
 function s.atkval(e,c)
-	return c:GetCounter(0x1)*300
+	return c:GetCounter(COUNTER_SPELL)*300
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanAddCounter(0x1,1) end
+	if chk==0 then return e:GetHandler():IsCanAddCounter(COUNTER_SPELL,1) end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0)
 end
 function s.operation1(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1,1)
+	e:GetHandler():AddCounter(COUNTER_SPELL,1)
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1,1,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x1,1,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,COUNTER_SPELL,1,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,1,REASON_COST)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) end

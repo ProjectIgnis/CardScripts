@@ -1,4 +1,5 @@
 --捕食植物バンクシアオーガ
+--Predaplant Banksiogre
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -19,8 +20,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.cop)
 	c:RegisterEffect(e2)
 end
+s.counter_place_list={COUNTER_PREDATOR}
 function s.rfilter(c)
-	return c:GetCounter(0x1041)>0 and c:IsReleasable()
+	return c:GetCounter(COUNTER_PREDATOR)>0 and c:IsReleasable()
 end
 function s.hspcon(e,c)
 	if c==nil then return true end
@@ -41,7 +43,7 @@ function s.cop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	while tc do
-		tc:AddCounter(0x1041,1)
+		tc:AddCounter(COUNTER_PREDATOR,1)
 		if tc:GetLevel()>1 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -55,5 +57,5 @@ function s.cop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lvcon(e)
-	return e:GetHandler():GetCounter(0x1041)>0
+	return e:GetHandler():GetCounter(COUNTER_PREDATOR)>0
 end

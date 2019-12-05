@@ -1,4 +1,5 @@
 --BK ビッグバンテージ
+--Battlin' Boxer Big Bandage
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle indes
@@ -25,10 +26,10 @@ function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0
 end
 function s.filter(c)
-	return c:GetLevel()>0 and c:IsSetCard(0x84) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+	return c:HasLevel() and c:IsSetCard(0x84) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
 function s.lvfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x84) and c:GetLevel()>0
+	return c:IsFaceup() and c:IsSetCard(0x84) and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc) end

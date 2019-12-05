@@ -1,4 +1,5 @@
 --インフェルニティ・リベンジャー
+--Infernity Avenger
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and c:GetLevel()>0
+	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and c:HasLevel()
 		and c:IsControler(tp) and c:IsPreviousControler(tp) and c:GetCode()~=id
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

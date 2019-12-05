@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.counter_place_list={0x100e}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc) and c:GetLevel()>0
+	return c:IsFaceup() and c:IsSetCard(0xc) and c:HasLevel()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end 

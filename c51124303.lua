@@ -1,4 +1,5 @@
 --影霊衣の万華鏡
+--Nekroz Kaliedoscope
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -41,7 +42,7 @@ function s.filter(c,e,tp)
 	return sg:IsExists(s.rfilter,1,nil,c) or sg:CheckWithSumEqual(Card.GetLevel,c:GetLevel(),1,ft)
 end
 function s.mfilter(c)
-	return c:GetLevel()>0 and c:IsAbleToGrave()
+	return c:HasLevel() and c:IsAbleToGrave()
 end
 function s.mzfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:GetSequence()<5

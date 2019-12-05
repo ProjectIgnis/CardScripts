@@ -1,4 +1,5 @@
 --古代の機械工場
+--Ancient Gear Factory
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.filter(c,g)
 	return c:GetLevel()>4 and c:IsSetCard(0x7) and g:CheckWithSumEqual(Card.GetLevel,c:GetLevel()*2,1,99)
 end
 function s.rfilter(c)
-	return c:GetLevel()>0 and c:IsSetCard(0x7) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:HasLevel() and c:IsSetCard(0x7) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

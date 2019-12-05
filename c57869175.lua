@@ -42,7 +42,7 @@ function s.atkval(e,c)
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Duel.GetTurnPlayer()==tp and c:IsHasLevel() and c:IsLevelBelow(11)
+	return Duel.GetTurnPlayer()==tp and c:HasLevel() and c:IsLevelBelow(11)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -58,7 +58,7 @@ function s.rmfilter(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsAbleToRemove() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.lvfilter(c,tp)
-	return c:IsFaceup() and c:IsHasLevel() and c:IsSetCard(0x31) and Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,1,c)
+	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(0x31) and Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,1,c)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.lvfilter(chkc,tp) end

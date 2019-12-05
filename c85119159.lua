@@ -41,7 +41,7 @@ function s.lvfilter1(c,tp)
 		and Duel.IsExistingMatchingCard(s.lvfilter2,tp,LOCATION_MZONE,0,1,c,c:GetLevel())
 end
 function s.lvfilter2(c,lv)
-	return c:IsFaceup() and c:GetLevel()>0 and not c:IsLevel(lv)
+	return c:IsFaceup() and c:HasLevel() and not c:IsLevel(lv)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.lvfilter1(chkc,tp) end

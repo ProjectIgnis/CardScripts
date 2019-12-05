@@ -1,4 +1,5 @@
 --トラゴエディア
+--Tragoedia
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -95,7 +96,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lvfilter(c)
-	return c:GetLevel()>0
+	return c:HasLevel()
 end
 function s.lvtar(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsType(TYPE_MONSTER) end

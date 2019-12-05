@@ -1,4 +1,5 @@
 --アクセル・シンクロン
+--Accel Synchron
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -52,7 +53,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsCode(id) and (sumtype&SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO
 end
 function s.filter(c)
-	return c:GetLevel()>0 and c:IsSetCard(0x1017) and c:IsAbleToGraveAsCost()
+	return c:HasLevel() and c:GetLevel()~=0 and c:IsSetCard(0x1017) and c:IsAbleToGraveAsCost()
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

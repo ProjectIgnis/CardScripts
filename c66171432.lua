@@ -1,4 +1,5 @@
---超こいこい 
+--超こいこい
+--Super Koi Koi
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -50,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local tc=sg:GetFirst()
 			while tc do
 				if Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
-					if tc:GetLevel()>0 then
+					if tc:HasLevel() then
 						local e1=Effect.CreateEffect(c)
 						e1:SetType(EFFECT_TYPE_SINGLE)
 						e1:SetCode(EFFECT_CHANGE_LEVEL)

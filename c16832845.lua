@@ -1,4 +1,5 @@
 --ファイナル・ギアス
+--FInal Geas
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -53,7 +54,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and c:IsLocation(LOCATION_REMOVED) and c:GetLevel()>0
+		and c:IsLocation(LOCATION_REMOVED) and c:HasLevel()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)

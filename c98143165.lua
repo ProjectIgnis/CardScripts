@@ -1,4 +1,5 @@
 --シンクロ・ヒーロー
+--Synchro Boost
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,s.filter)
@@ -15,5 +16,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	return c:GetLevel()>0
+	return c:HasLevel()
 end

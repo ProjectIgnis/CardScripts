@@ -1,4 +1,5 @@
 --ジャンク・チェンジャー
+--Junk Charger
 local s,id=GetID()
 function s.initial_effect(c)
 	--lv up
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetLevel()>0 and c:IsSetCard(0x43)
+	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(0x43)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

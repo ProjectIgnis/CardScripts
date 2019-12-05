@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 end
 function s.filter(c)
-	return c:IsSetCard(0x27) and c:IsFaceup() and c:GetLevel()>0
+	return c:IsSetCard(0x27) and c:IsFaceup() and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -72,7 +72,9 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		local lvl=1
 		if tc:GetLevel()==1 then
 			Duel.SelectOption(tp,aux.Stringid(id,1))
-		else sel=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2)) end
+		else
+			sel=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
+		end
 		if sel==1 then
 			lvl=-1
 		end

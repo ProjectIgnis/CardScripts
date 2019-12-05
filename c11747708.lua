@@ -1,4 +1,5 @@
 --スポーア
+--Spore
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c,tp)
-	return c:IsRace(RACE_PLANT) and c:GetLevel()>0 and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
+	return c:IsRace(RACE_PLANT) and c:HasLevel() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
 		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

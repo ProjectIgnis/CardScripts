@@ -1,4 +1,5 @@
 --水精鱗－アビスマンダー
+--Mermail Abyssmander
 local s,id=GetID()
 function s.initial_effect(c)
 	--lvup
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x74}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x74) and c:GetLevel()>0
+	return c:IsFaceup() and c:IsSetCard(0x74) and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end

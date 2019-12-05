@@ -1,4 +1,5 @@
 --BF－弔風のデス
+--Blackwing - Decay the Ill Wind
 local s,id=GetID()
 function s.initial_effect(c)
 	--lv up
@@ -21,6 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
+	--damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,3))
 	e4:SetCategory(CATEGORY_DAMAGE)
@@ -34,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetLevel()>0 and c:IsSetCard(0x33)
+	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(0x33)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

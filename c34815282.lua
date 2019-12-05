@@ -1,4 +1,5 @@
 --ミニチュアライズ
+--Miniaturize
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,nil,s.filter,CATEGORY_ATKCHANGE,EFFECT_FLAG_DAMAGE_STEP,TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+0x1c0,s.condition)
@@ -28,7 +29,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetBaseAttack()>1000 and c:GetLevel()>0
+	return c:IsFaceup() and c:GetBaseAttack()>1000 and c:HasLevel() and c:GetLevel()~=1
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

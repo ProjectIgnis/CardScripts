@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp,lv)
-	return c:IsFaceup() and c:GetLevel()>lv and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsHasLevel),tp,LOCATION_MZONE,0,1,c)
+	return c:IsFaceup() and c:GetLevel()>lv and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.HasLevel),tp,LOCATION_MZONE,0,1,c)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -31,7 +31,7 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,tp,dlv)
 	e:SetLabelObject(g1:GetFirst())
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local g2=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsHasLevel),tp,LOCATION_MZONE,0,1,1,g1)
+	local g2=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.HasLevel),tp,LOCATION_MZONE,0,1,1,g1)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

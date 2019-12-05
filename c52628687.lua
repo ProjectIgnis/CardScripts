@@ -1,4 +1,5 @@
 --ネクロの魔導書
+--Spellbook of Life
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

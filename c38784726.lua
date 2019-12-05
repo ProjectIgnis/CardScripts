@@ -23,7 +23,7 @@ function s.ritualfil(c)
 	return c:IsSetCard(0x119) and c:IsRitualMonster()
 end
 function s.mfilter(c)
-	return c:GetLevel()>0 and c:IsSetCard(0x119) and c:IsAbleToDeck()
+	return c:HasLevel() and c:IsSetCard(0x119) and c:IsAbleToDeck()
 end
 function s.ckfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsLinkMonster()

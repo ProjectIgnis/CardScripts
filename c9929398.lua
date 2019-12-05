@@ -70,7 +70,7 @@ function s.tknop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and not c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost() and c:IsLevelAbove(0)
+	return c:IsFaceup() and not c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost() and c:HasLevel() and not c:IsLevel(0)
 end
 function s.spfilter(c,e,tp,ct)
 	local rlv=c:GetLevel()-e:GetHandler():GetLevel()

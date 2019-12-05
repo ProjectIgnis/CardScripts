@@ -1,4 +1,5 @@
 --超量妖精アルファン
+--Super Quantal Fairy Alphan
 local s,id=GetID()
 function s.initial_effect(c)
 	--lv
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter1(c)
-	return c:IsFaceup() and c:GetLevel()>0
+	return c:IsFaceup() and c:HasLevel()
 end
 function s.filter2(c,tp)
 	return s.filter1(c) and c:IsSetCard(0xdc)

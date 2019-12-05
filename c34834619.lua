@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_names={85346853}
 function s.mtfilter(c,e)
-	return c:GetLevel()>0 and c:IsAbleToRemove() and not c:IsImmuneToEffect(e) and aux.SpElimFilter(c,true)
+	return c:HasLevel() and c:IsAbleToRemove() and not c:IsImmuneToEffect(e) and aux.SpElimFilter(c,true)
 end
 function s.spfilter(c,e,tp,m)
 	return c:IsCode(85346853) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false)

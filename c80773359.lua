@@ -1,4 +1,5 @@
 --A BF－神立のオニマル
+--Assault Blacwing - Onimaru the Divine Thunder
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -69,7 +70,7 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.lvfilter(c,lv)
-	return c:IsSetCard(0x33) and c:GetLevel()>0 and c:GetLevel()~=lv
+	return c:IsSetCard(0x33) and c:HasLevel() and c:GetLevel()~=lv
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.lvfilter(chkc,e:GetHandler():GetLevel()) end

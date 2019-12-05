@@ -1,4 +1,5 @@
 --RR－ミミクリー・レイニアス
+--Raidraptor - Mimicry Lanius
 local s,id=GetID()
 function s.initial_effect(c)
 	--level
@@ -39,7 +40,7 @@ function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetLevel()>0 and c:IsSetCard(0xba)
+	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(0xba)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end

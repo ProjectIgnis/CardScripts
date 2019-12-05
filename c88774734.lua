@@ -55,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if has level
 function s.lvfilter(c)
-	return c:IsFaceup() and c:IsHasLevel() and not c:IsLevel(8)
+	return c:IsFaceup() and c:HasLevel() and not c:IsLevel(8)
 end
 	--Activation legality
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)

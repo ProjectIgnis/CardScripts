@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lvfilter(c,lv)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsHasLevel()
+	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.fcheck(tp,sg,fc)
-	return sg:IsExists(aux.FilterBoolFunstion(Card.IsSetCard,0x1093,fc,SUMMON_TYPE_FUSION,tp),1,nil)
+	return sg:IsExists(aux.FilterBoolFunction(Card.IsSetCard,0x1093,fc,SUMMON_TYPE_FUSION,tp),1,nil)
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(aux.AND(Card.IsAbleToDeck,Card.IsFaceup)),tp,LOCATION_REMOVED,0,nil),s.fcheck

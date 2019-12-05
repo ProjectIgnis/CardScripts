@@ -22,7 +22,7 @@ function s.ritualfil(c)
 	return c:IsSetCard(0x106) and c:IsRitualMonster()
 end
 function s.mfilter(c)
-	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) and c:GetLevel()>0 and c:IsRace(RACE_ZOMBIE)
+	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) and c:HasLevel() and c:IsRace(RACE_ZOMBIE)
 		and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)

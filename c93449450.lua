@@ -1,3 +1,4 @@
+--Ｆ．Ａ．ハングオンマッハ
 --F.A. Hang On Mach
 local s,id=GetID()
 function s.initial_effect(c)
@@ -57,7 +58,7 @@ function s.immval(e,te)
 		local tc=te:GetHandler()
 		if tc:GetRank()>0 then
 			return tc:GetOriginalRank()<lv
-		elseif tc:GetLevel()>0 then
+		elseif tc:HasLevel() then
 			return tc:GetOriginalLevel()<lv
 		else return false end
 	else return false end

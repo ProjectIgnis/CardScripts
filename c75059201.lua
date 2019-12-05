@@ -66,7 +66,7 @@ function s.atglimit(e,c)
 	local lv=e:GetHandler():GetLevel()
 	if c:GetRank()>0 then
 		return c:GetOriginalRank()<lv
-	elseif c:GetLevel()>0 then
+	elseif c:HasLevel() then
 		return c:GetOriginalLevel()<lv
 	else return false end
 end
@@ -82,7 +82,7 @@ function s.tgval(e,re,rp)
 	local lv=e:GetHandler():GetLevel()
 	if c:GetRank()>0 then
 		return c:GetOriginalRank()<lv
-	elseif c:GetLevel()>0 then
+	elseif c:HasLevel() then
 		return c:GetOriginalLevel()<lv
 	else return false end
 end

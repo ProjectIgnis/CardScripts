@@ -1,4 +1,5 @@
 --「A」細胞散布爆弾
+--"A" Cell Scatter Burst
 local s,id=GetID()
 function s.initial_effect(c)
 	--counter
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc) and c:GetLevel()>0
+	return c:IsFaceup() and c:IsSetCard(0xc) and c:HasLevel()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end 

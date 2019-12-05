@@ -1,4 +1,5 @@
 --マジカル・コンダクター
+--Magical Examplar
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1)
@@ -34,7 +35,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,cc,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and c:GetLevel()>0 and cc:IsCanRemoveCounter(tp,0x1,c:GetLevel(),REASON_COST)
+		and c:HasLevel() and cc:IsCanRemoveCounter(tp,0x1,c:GetLevel(),REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,4 +1,5 @@
 --コピー・プラント
+--Copy Plant
 local s,id=GetID()
 function s.initial_effect(c)
 	--lvchange
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.lvfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:GetLevel()>0
+	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc~=e:GetHandler() and chkc:IsLocation(LOCATION_MZONE) and s.lvfilter(chkc) end

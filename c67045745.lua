@@ -1,3 +1,4 @@
+--Ｆ．Ａ．ソニックマイスター
 --F.A. Sonic Meister
 local s,id=GetID()
 function s.initial_effect(c)
@@ -51,7 +52,7 @@ function s.indval(e,c)
 	local lv=e:GetHandler():GetLevel()
 	if c:GetRank()>0 then
 		return c:GetOriginalRank()<lv
-	elseif c:GetLevel()>0 then
+	elseif c:HasLevel() then
 		return c:GetOriginalLevel()<lv
 	else return false end
 end

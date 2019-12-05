@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--unsynchroable
+	--cannot be used as synchro material
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
@@ -41,7 +41,7 @@ function s.splimit(e,c)
 	return c:GetAttribute()~=ATTRIBUTE_WATER
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_FISH) and c:GetLevel()>0
+	return c:IsFaceup() and c:IsRace(RACE_FISH) and c:HasLevel()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

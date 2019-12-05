@@ -38,7 +38,7 @@ function s.cfilter(c,e,tp)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,c:GetLevel(),e,tp)
 end
 function s.filter(c,lv,e,tp)
-	return c:GetLevel()>0 and c:GetLevel()<lv and c:IsSetCard(0xe1)
+	return c:HasLevel() and c:GetLevel()<lv and c:IsSetCard(0xe1)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

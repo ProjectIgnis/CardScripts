@@ -1,4 +1,5 @@
 --緊急同調
+--Urgent Tuning
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro effect
@@ -12,18 +13,23 @@ function s.initial_effect(c)
 	e1:SetOperation(s.scop)
 	c:RegisterEffect(e1)
 end
+function s.filter(c)
+	return c:IsCanBeSynchroMaterial() and c:HasLevel() and c:IsFaceup()
+end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,nil) end
+	local tg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,nil,tg) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.scop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,nil,nil)
+	local tg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,nil,nil,tg)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
-		Duel.SynchroSummon(tp,sg:GetFirst(),nil)
+		Duel.SynchroSummon(tp,sg:GetFirst(),nil,tg)
 	end
 end

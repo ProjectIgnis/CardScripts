@@ -11,7 +11,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x8}
 function s.fcheck(tp,sg,fc)
-	return sg:IsExists(aux.FilterBoolFunstion(Card.IsSetCard,0xc008,fc,SUMMON_TYPE_FUSION,tp),1,nil)
+	return sg:IsExists(aux.FilterBoolFunction(Card.IsSetCard,0xc008,fc,SUMMON_TYPE_FUSION,tp),1,nil)
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil),s.fcheck

@@ -130,14 +130,18 @@ function Ritual.Check(c,sg,mg,tp,sc,lv,forcedselection,e,_type)
 		sg:AddCard(c)
 	end
 	local res=false
+	local stop=false
 	if _type==RITPROC_EQUAL then
-		res=sg:CheckWithSumEqual(Card.GetRitualLevel,lv,#sg,#sg,sc)
+		local cont=true
+		res,cont=sg:CheckWithSumEqual(Card.GetRitualLevel,lv,#sg,#sg,sc)
+		stop=not cont
 	else
 		Duel.SetSelectedCard(sg)
-		res=mg:CheckWithSumGreater(Card.GetRitualLevel,lv,sc)
+		local cont=true
+		res,cont=sg:CheckWithSumGreater(Card.GetRitualLevel,lv,sc)
+		stop=not cont
 	end
 	res=res and Duel.GetMZoneCount(tp,sg,tp)>0
-	local stop=false
 	if res and forcedselection then
 		res,stop=forcedselection(e,tp,sg,sc)
 	end
@@ -155,7 +159,7 @@ function Ritual.SelectMaterials(sc,mg,forcedselection,lv,tp,e,_type)
 		local cg=mg:Filter(Ritual.Check,sg,sg,mg,tp,sc,lv,forcedselection,e,_type)
 		if #cg==0 then break end
 		local finish=Ritual.Check(nil,sg,sg,tp,sc,lv,forcedselection,e,_type)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TRIBUTE)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 		local tc=cg:SelectUnselect(sg,tp,finish,finish,lv)
 		if not tc then break end
 		if not sg:IsContains(tc) then

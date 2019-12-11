@@ -1,4 +1,5 @@
 --エヴォルド・ウェストロ
+--Evoltile Westlo
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -23,7 +24,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,151,tp,tp,false,false,POS_FACEUP)
-		local rf=g:GetFirst().evolreg
-		if rf then rf(g:GetFirst()) end
 	end
 end

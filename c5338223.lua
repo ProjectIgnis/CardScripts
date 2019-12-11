@@ -1,4 +1,5 @@
 --強制進化
+--Evo-Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -45,7 +46,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,170,tp,tp,false,false,POS_FACEUP)
-		local rf=g:GetFirst().evolreg
-		if rf then rf(g:GetFirst()) end
 	end
 end

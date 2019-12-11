@@ -87,7 +87,6 @@ function s.dmgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Burn equal to a "Buster Blader" monster's ATK
 function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.Damage(1-tp,tc:GetAttack(),REASON_EFFECT)

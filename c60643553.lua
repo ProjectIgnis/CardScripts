@@ -1,5 +1,5 @@
 --儚無みずき
---Null Nun & Blooming Dogwood
+--Ghost Sister & Spooky Dogwood
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -86,6 +86,7 @@ function s.recop1(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter,nil,1-tp)
 	if #g>0 then
 		local sum=g:GetSum(s.sum)
+		Duel.Hint(HINT_CARD,0,id)
 		if Duel.Recover(tp,sum,REASON_EFFECT)~=0 then 
 			Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
 		end
@@ -109,6 +110,7 @@ function s.recop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ResetFlagEffect(tp,id)
 	local rec=e:GetLabel()
 	e:SetLabel(0)
+	Duel.Hint(HINT_CARD,0,id)
 	if Duel.Recover(tp,rec,REASON_EFFECT)~=0 then
 		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
 	end
@@ -117,6 +119,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id+1)==0
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,id)
 	local lp=Duel.GetLP(tp)
 	Duel.SetLP(tp,lp/2)
 end

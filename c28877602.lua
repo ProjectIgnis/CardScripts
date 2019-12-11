@@ -1,15 +1,16 @@
 --エヴォルド・オドケリス
+--Evoltile Odonto
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetTarget(s.sumtg)
-	e2:SetOperation(s.sumop)
-	c:RegisterEffect(e2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetTarget(s.sumtg)
+	e1:SetOperation(s.sumop)
+	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x604e) and c:IsCanBeSpecialSummoned(e,152,tp,false,false)
@@ -25,7 +26,5 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,152,tp,tp,false,false,POS_FACEUP)
-		local rf=g:GetFirst().evolreg
-		if rf then rf(g:GetFirst()) end
 	end
 end

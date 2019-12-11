@@ -1,8 +1,18 @@
 --エヴォルダー・ペルタ
+--Evolsaur Pelta
 local s,id=GetID()
 function s.initial_effect(c)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_ATKCHANGE)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCondition(aux.evospcon)
+	e1:SetOperation(s.evoop)
+	c:RegisterEffect(e1)
 end
-function s.evolreg(c)
+function s.evoop(c)
+	local c=e:GetHandler()
 	--defup
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -19,7 +29,7 @@ function s.evolreg(c)
 	e2:SetCondition(s.schcon)
 	e2:SetTarget(s.schtg)
 	e2:SetOperation(s.schop)
-	e2:SetReset(RESET_EVENT+0x7b0000)
+	e2:SetReset(RESETS_STANDARD-(RESET_DISABLE+RESET_TURN_SET+RESET_LEAVE+RESET_TOFIELD))
 	c:RegisterEffect(e2)
 end
 function s.schcon(e,tp,eg,ep,ev,re,r,rp)

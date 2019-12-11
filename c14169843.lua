@@ -1,5 +1,5 @@
 --アロマージ－ローリエ
---Aromage Laurier
+--Aromage Laurel
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -62,7 +62,7 @@ end
 function s.tuntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.tunfilter(chkc) end
     if chk==0 then return true end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+    Duel.Hint(HINT_SELECTMSG,tp,529)
     Duel.SelectTarget(tp,s.tunfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
 function s.tunop(e,tp,eg,ep,ev,re,r,rp)

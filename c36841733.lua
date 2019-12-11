@@ -1,5 +1,5 @@
 --E・HERO グランドマン
---Elemental HERO Grandman
+--Elemental HERO Grandmerge
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -64,6 +64,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(atk)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_UPDATE_DEFENSE)
+		c:RegisterEffect(e2)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

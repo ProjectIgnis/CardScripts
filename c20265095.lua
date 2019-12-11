@@ -66,7 +66,7 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
-	if tc then
+	if c:IsRelateToEffect(e) and tc then
 		local zone=c:GetLinkedZone()&0x1f
 		if Duel.GetControl(tc,tp,PHASE_END,1,zone)~=0 then
 			local reset=RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END

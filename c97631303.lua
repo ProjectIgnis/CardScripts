@@ -14,7 +14,7 @@ function s.initial_effect(c)
     c:RegisterEffect(e1)
     --draw
     local e2=Effect.CreateEffect(c)
-    e1:SetDescription(aux.Stringid(id,1))
+    e2:SetDescription(aux.Stringid(id,1))
     e2:SetCategory(CATEGORY_DRAW)
     e2:SetType(EFFECT_TYPE_IGNITION)
     e2:SetRange(LOCATION_MZONE)
@@ -61,7 +61,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
         e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
         e:SetOperation(s.gyop)
         Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,c,1,0,0)
-        Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
     end
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

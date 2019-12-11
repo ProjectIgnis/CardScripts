@@ -1,4 +1,5 @@
 --エヴォルド・ゲフィロス
+--Evoltile Gephyro
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -28,8 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,150,tp,tp,false,false,POS_FACEUP)~=0 then
-		local rf=tc.evolreg
-		if rf then rf(tc) end
+	if tc:IsRelateToEffect(e) then
+		Duel.SpecialSummon(tc,150,tp,tp,false,false,POS_FACEUP)
 	end
 end

@@ -1,4 +1,5 @@
 --TG レシプロ・ドラゴン・フライ
+--T.G. Recipro Dragonfly
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -29,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.mgfilter(c,e,tp,sync)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
-		and (c:GetReason()&0x80008)==0x80008 and c:GetReasonCard()==sync and c:IsType(TYPE_SYNCHRO)
+		and (c:GetReason()&(REASON_MATERIAL+REASON_SYNCHRO))==(REASON_MATERIAL+REASON_SYNCHRO) and c:GetReasonCard()==sync and c:IsType(TYPE_SYNCHRO)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

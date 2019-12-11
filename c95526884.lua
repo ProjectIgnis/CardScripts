@@ -1,4 +1,5 @@
 --ハイパーサイコガンナー
+--Hyper Psychic Blaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -26,9 +27,9 @@ function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if not d then return false end
-	local m=a:GetAttack()-d:GetDefense()
+	local m=a:GetAttack()-d:GetPreviousDefenseOnField()
 	e:SetLabel(m)
-	return c==a and d:GetDefense()>=0 and m>0 and (d:GetBattlePosition()&POS_DEFENSE)~=0
+	return c==a and d:GetPreviousDefenseOnField()>=0 and m>0 and (d:GetBattlePosition()&POS_DEFENSE)~=0
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

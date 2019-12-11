@@ -1,7 +1,7 @@
 --エマージェンシー・サイバー
 --Emergency Cyber
 --Scripted by Eerie Code
---fixed by Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_CHAIN_NEGATED)
-	e2:SetRange(LOCATION_GRAVE+1)
+	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCondition(s.thcon)
 	e2:SetCost(s.thcost)

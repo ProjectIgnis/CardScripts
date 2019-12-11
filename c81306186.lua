@@ -1,5 +1,5 @@
 --リターン・オブ・ザ・ワールド
---Return of the World
+--Renewal of the World
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

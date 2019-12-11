@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.ctop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xbd}
 s.counter_place_list={COUNTER_SPELL}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then

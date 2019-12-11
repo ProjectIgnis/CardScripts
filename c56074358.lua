@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x26}
 s.counter_place_list={0x8}
 function s.atkval(e,c)
 	return e:GetHandler():GetCounter(0x8)*300

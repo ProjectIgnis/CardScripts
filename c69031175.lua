@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation2)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x33}
 s.counter_place_list={0x1002}
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	local atg=Duel.GetAttackTarget()

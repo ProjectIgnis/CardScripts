@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(aux.FieldSummonProcTg(s.nttg))
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3008}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0

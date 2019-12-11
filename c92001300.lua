@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x7}
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0xb,1)
 end

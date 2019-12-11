@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xf1}
 function s.tgfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0xf1)
 end

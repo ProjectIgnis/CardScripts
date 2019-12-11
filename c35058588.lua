@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.counterop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xe3}
 s.counter_place_list={0x1038}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xe3)

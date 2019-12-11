@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.plop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x1034}
 s.counter_place_list={0x6}
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

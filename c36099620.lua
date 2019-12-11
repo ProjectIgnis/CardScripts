@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desrepop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x38}
 s.counter_place_list={0x5}
 function s.atkval(e,c)
 	return e:GetHandler():GetCounter(0x5)*100

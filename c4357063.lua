@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x70}
 function s.costfilter(c,e,tp,ft)
 	return c:IsSetCard(0x70) and c:IsAbleToRemoveAsCost() and c:HasLevel() and aux.SpElimFilter(c,true) 
 		and (ft>0 or (aux.MZFilter(c,c:GetControler()) and ft>-1)) 

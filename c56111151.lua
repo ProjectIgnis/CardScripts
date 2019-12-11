@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desrepop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xd3}
 s.counter_place_list={0x37}
 function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_ONFIELD)

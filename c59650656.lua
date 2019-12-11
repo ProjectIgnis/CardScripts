@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x7b}
 function s.cfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and (c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT) or c:IsReason(REASON_BATTLE) and Duel.GetTurnPlayer()==1-tp)

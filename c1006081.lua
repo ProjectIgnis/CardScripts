@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x43}
 function s.filter(c)
 	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(0x43)
 end

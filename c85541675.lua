@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x11}
 s.counter_place_list={0x12}
 function s.cfilter(c)
 	local np=c:GetPosition()

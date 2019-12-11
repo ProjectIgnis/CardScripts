@@ -48,6 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x105}
 function s.rmlimit(e,c,tp,r)
 	return c==e:GetHandler() and r==REASON_EFFECT
 end

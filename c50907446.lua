@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcMixN(c,true,true,s.ffilter,2)
+	Fusion.AddProcMixN(c,true,true,s.ffilter,2)
 	--must first be fusion summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x9d}
 function s.ffilter(c,fc,sumtype,sp,sub,mg,sg)
 	return c:IsFusionSetCard(0x9d) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
 end

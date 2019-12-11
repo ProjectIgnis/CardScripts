@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.evoop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x304e}
 function s.evoop(c)
 	local c=e:GetHandler()
 	--defup

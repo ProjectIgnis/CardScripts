@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xc}
 s.counter_place_list={0x100e}
 function s.otfilter(c,tp)
 	return c:GetOwner()==tp

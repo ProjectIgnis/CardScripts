@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x84}
 function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0
 end

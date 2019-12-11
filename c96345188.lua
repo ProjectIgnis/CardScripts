@@ -36,6 +36,8 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
+s.listed_series={0xba}
+s.listed_names={id}
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end

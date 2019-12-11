@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.rop)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x107f}
 s.counter_place_list={0x31}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x31,1)

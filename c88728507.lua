@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.sumop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x8e}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and e:GetHandler():IsPreviousControler(tp)
 end

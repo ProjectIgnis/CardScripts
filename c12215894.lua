@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.operation2)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xab}
 function s.filter(c)
 	return c:IsSetCard(0xab) and c:IsAbleToDeck() and not c:IsPublic()
 end

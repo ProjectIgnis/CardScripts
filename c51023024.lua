@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop(POS_FACEDOWN_DEFENSE))
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9d}
 function s.spfilter(c,e,tp,pos)
 	return c:IsSetCard(0x9d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,pos) and not c:IsCode(id)
 end

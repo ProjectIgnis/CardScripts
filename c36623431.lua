@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1d}
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
 		and Duel.GetDrawCount(tp)>0

@@ -46,6 +46,7 @@ function s.initial_effect(c)
 	e6:SetCondition(s.descon)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x80}
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsLocation(LOCATION_SZONE) and rc:IsFacedown()

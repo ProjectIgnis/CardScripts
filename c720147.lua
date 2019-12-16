@@ -1,5 +1,5 @@
 --王の憤激
---Generaid Bite
+--Generaider Boss Bite
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -48,11 +48,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 		local g=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,#rg,#rg,rg,tc)
 		if #g>0 then
-		    local og=g:GetFirst():GetOverlayGroup()
-			if #og>0 then
-			    Duel.SendtoGrave(og,REASON_RULE)
+			for tc in aux.Next(g) do
+				local og=tc:GetOverlayGroup()
+				if #og>0 then
+					Duel.SendtoGrave(og,REASON_RULE)
+				end
+				tc:CancelToGrave()
 			end
-			g:GetFirst():CancelToGrave()
 		    Duel.Overlay(tc,g)
 		end
 	end

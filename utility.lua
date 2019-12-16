@@ -1546,15 +1546,16 @@ function Auxiliary.ToHandOrElse(card,player,check,oper,str,...)
 			opt=Duel.SelectOption(player,str)+1
 		end
 		if opt==0 then
-			Duel.SendtoHand(card,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-player,card)
+			local res=Duel.SendtoHand(card,nil,REASON_EFFECT)
+			if res~=0 then Duel.ConfirmCards(1-player,card) end
+			return res
 		else
-			oper(card,...)
+			return oper(card,...)
 		end
 	end
 end
 function Auxiliary.thoeSend(card)
-    Duel.SendtoGrave(card,REASON_EFFECT)
+    return Duel.SendtoGrave(card,REASON_EFFECT)
 end
 --to simply registering EFFECT_FLAG_CLIENT_HINT to players
 function Auxiliary.RegisterClientHint(card,property,tp,player1,player2,str,reset)

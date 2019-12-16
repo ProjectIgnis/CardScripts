@@ -2,10 +2,10 @@
 --Musto, Oracle of Gusto
 local s,id=GetID()
 function s.initial_effect(c)
-	--negate effect
+	--disable
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DISABLE)
+	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_TODECK)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -29,15 +29,17 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,1,0,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g2,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ex,g1=Duel.GetOperationInfo(0,CATEGORY_TODECK)
 	local ex,g2=Duel.GetOperationInfo(0,CATEGORY_DISABLE)
-	local tc=g2:GetFirst()
 	if g1:GetFirst():IsRelateToEffect(e) then
-		if Duel.SendtoDeck(g1,nil,2,REASON_EFFECT)>0 then
+		Duel.SendtoDeck(g1,nil,2,REASON_EFFECT)
+		local og=Duel.GetOperatedGroup()
+		if og:GetFirst():IsLocation(LOCATION_DECK) or og:GetFirst():IsLocation(LOCATION_EXTRA) then
+			local tc=g2:GetFirst()
 			if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)

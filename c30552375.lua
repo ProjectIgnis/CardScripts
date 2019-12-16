@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_CYBERSE))
+	aux.AddEquipProcedure(c,0,aux.FilterBoolFunction(Card.IsRace,RACE_CYBERSE))
 	--atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)

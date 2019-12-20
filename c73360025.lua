@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--spsummon
-	local params = {nil,nil,s.fextra,s.extraop}
+	local params = {aux.FilterBoolFunction(Card.IsRace,RACE_FIEND),nil,s.fextra,s.extraop}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)

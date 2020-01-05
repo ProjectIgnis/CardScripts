@@ -15,23 +15,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_CYBER_DRAGON}
-function s.cfilter(c,tp)
-	return c:IsCode(CARD_CYBER_DRAGON) and Duel.GetLocationCountFromEx(tp,tp,c)>0
+function s.cfilter(c,e,tp)
+	return c:IsCode(CARD_CYBER_DRAGON) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,s.cfilter,1,nil,tp) end
-	local g=Duel.SelectReleaseGroup(tp,s.cfilter,1,1,nil,tp)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,s.cfilter,1,nil,e,tp) end
+	local g=Duel.SelectReleaseGroup(tp,s.cfilter,1,1,nil,e,tp)
 	Duel.Release(g,REASON_COST)
 end
-function s.filter(c,e,tp)
-	return c:IsType(TYPE_FUSION) and aux.IsMaterialListSetCard(c,0x1093) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.filter(c,e,tp,mc)
+	return c:IsType(TYPE_FUSION) and aux.IsMaterialListSetCard(c,0x1093) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()

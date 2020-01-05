@@ -1,4 +1,5 @@
 --マスク・チェンジ
+--Mask Change
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.tfilter(c,att,e,tp)
-	return c:IsSetCard(0xa008) and c:IsAttribute(att) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+s.listed_series={0xa008,0x8}
+function s.tfilter(c,att,e,tp,mc)
+	return c:IsSetCard(0xa008) and c:IsAttribute(att) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x8)
-		and Duel.IsExistingMatchingCard(s.tfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetAttribute(),e,tp)
-		and Duel.GetLocationCountFromEx(tp,tp,c)>0
+		and Duel.IsExistingMatchingCard(s.tfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetAttribute(),e,tp,c)
 end
 function s.chkfilter(c,att)
 	return c:IsFaceup() and c:IsSetCard(0x8) and c:IsAttribute(att)
@@ -36,9 +37,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) then return end
 	local att=tc:GetAttribute()
 	if Duel.SendtoGrave(tc,REASON_EFFECT)==0 then return end
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
+	local g=Duel.GetMatchingGroup(s.tfilter,tp,LOCATION_EXTRA,0,nil,att,e,tp)
+	if #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=Duel.SelectMatchingCard(tp,s.tfilter,tp,LOCATION_EXTRA,0,1,1,nil,att,e,tp)
+	local sg=g:Select(tp,1,1,nil)
 	if #sg>0 then
 		Duel.BreakEffect()
 		Duel.SpecialSummon(sg,0,tp,tp,true,false,POS_FACEUP)

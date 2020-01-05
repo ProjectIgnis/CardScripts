@@ -19,12 +19,13 @@ function s.initial_effect(c)
 	e2:SetValue(10000050)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10a2}
 function s.tgfilter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x10a2) and c:IsCanBeFusionMaterial()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
-		and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
 function s.spfilter(c,e,tp,mc)
+	if Duel.GetLocationCountFromEx(tp,tp,mc,c)<=0 then return false end
 	local mustg=aux.GetMustBeMaterialGroup(tp,nil,tp,c,nil,REASON_FUSION)
 	return aux.IsMaterialListCode(c,mc:GetCode()) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
 	and (#mustg==0 or (#mustg==1 and mustg:IsContains(mc)))
@@ -38,7 +39,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCountFromEx(tp,tp,tc)<=0 then return end
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsCanBeFusionMaterial() and not tc:IsImmuneToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc)

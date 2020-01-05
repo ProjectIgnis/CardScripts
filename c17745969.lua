@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.mvop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x16}
 s.material_setcode=0x16
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_FUSION,fc,sumtype,tp) and c:IsSetCard(0x16,fc,sumtype,tp)
@@ -35,24 +36,23 @@ function s.spfilter1(c,e,tp,loc)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.spfilter2,tp,loc,0,1,nil,e,tp,c:GetAttack())
 end
 function s.spfilter2(c,e,tp,atk)
+	if c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,c)==0 then return false end
 	return c:IsSetCard(0x16) and c:IsAttackBelow(atk) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local loc=0
+	local loc=LOCATION_EXTRA
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_DECK end
-	if Duel.GetLocationCountFromEx(tp)>0 then loc=loc+LOCATION_EXTRA end
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.spfilter1(chkc,e,tp,loc) end
-	if chk==0 then return loc~=0 and Duel.IsExistingTarget(s.spfilter1,tp,0,LOCATION_MZONE,1,nil,e,tp,loc) end
+	if chk==0 then return Duel.IsExistingTarget(s.spfilter1,tp,0,LOCATION_MZONE,1,nil,e,tp,loc) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.spfilter1,tp,0,LOCATION_MZONE,1,1,nil,e,tp,loc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,loc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local loc=0
+	local loc=LOCATION_EXTRA
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_DECK end
-	if Duel.GetLocationCountFromEx(tp)>0 then loc=loc+LOCATION_EXTRA end
 	local tc=Duel.GetFirstTarget()
-	if loc~=0 and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter2,tp,loc,0,1,1,nil,e,tp,tc:GetAttack())
 		if #g>0 then

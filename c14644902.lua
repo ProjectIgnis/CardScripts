@@ -16,10 +16,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.rfilter(c,e,tp)
 	return c:IsReleasableByEffect() and not c:IsImmuneToEffect(e)
-		and Duel.GetLocationCountFromEx(tp,tp,c)>0
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
-function s.filter(c,e,tp)
-	return c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.filter(c,e,tp,mc)
+	return c:IsType(TYPE_FUSION) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

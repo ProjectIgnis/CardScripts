@@ -1,5 +1,5 @@
 --龍影神ドラッグラビオン
---Number 97: Dragravion
+--Number 97: Draglubion
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,7 +40,7 @@ end
 function s.spchk(c,e,tp)
 	if not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return false end
 	if c:IsLocation(LOCATION_EXTRA) then
-		return Duel.GetLocationCountFromEx(tp)>0
+		return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 	end
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end

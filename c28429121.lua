@@ -23,7 +23,7 @@ function s.mfilter(c,e)
 	return c:IsFaceup() and c:GetLevel()>0 and not c:IsImmuneToEffect(e) and c:IsReleasable()
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp)
-	Duel.GetMatchingGroup(s.mfilter,tp,0,LOCATION_MZONE,nil,e)
+	return Duel.GetMatchingGroup(s.mfilter,tp,0,LOCATION_MZONE,nil,e)
 end
 function s.extraop(mat,e,tp,eg,ep,ev,re,r,rp,sc)
 	Duel.ReleaseRitualMaterial(mat)

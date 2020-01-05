@@ -40,8 +40,7 @@ function s.lcheck(g,lc)
 	return g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_WIND)
 end
 function s.spfilter(c,e,tp,zone)
-	if zone==0 then zone=0xff end
-	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsAttribute(ATTRIBUTE_WIND) and (zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

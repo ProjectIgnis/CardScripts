@@ -15,8 +15,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
 function s.filter1(c,e,tp)
-	return c:IsType(TYPE_SYNCHRO) and c:GetLevel()<9 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,e,tp,c)
+	return c:IsType(TYPE_SYNCHRO) and c:GetLevel()<9 and (Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 or Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741))
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false) and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function s.filter2(c,e,tp,sc)
 	local rg=Duel.GetMatchingGroup(s.filter3,tp,LOCATION_MZONE+LOCATION_GRAVE,0,c)
@@ -36,8 +36,7 @@ function s.filter3(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_SYNCHRO)
-	if Duel.NegateAttack() and Duel.GetLocationCountFromEx(tp)>0 and #pg<=0
-		and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,e,tp)
+	if Duel.NegateAttack() and #pg<=0 and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xaf}
 function s.checkmat(tp,sg,fc)
 	return fc:IsSetCard(0xaf) or not sg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE)
 end

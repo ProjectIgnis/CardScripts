@@ -110,8 +110,11 @@ end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_EXTRA)
 end
-function s.exfilter(c,e,tp)
-	return c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
+function s.excfilter(c)
+	return c:IsFaceup() and c:IsRace(RACE_FIEND)
+end
+function s.exfilter(c,e,tp,chk)
+	return c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and (not chk or Duel.GetLocationCountFromEx(tp,tp,nil,c)>0) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
 end
 function s.exkfilter(c,sg,tp)
 	return Duel.GetLocationCountFromEx(tp,tp,sg,c)>0 and c:IsLevel(sg:GetSum(Card.GetOriginalLevel))
@@ -124,17 +127,17 @@ function s.extg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return Duel.CheckReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_FIEND),2,false,s.excheck,nil,mg)
+		return Duel.CheckReleaseGroupCost(tp,s.excfilter,2,false,s.excheck,nil,mg)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroupCost(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_FIEND),2,99,false,s.excheck,nil,mg)
+	local g=Duel.SelectReleaseGroupCost(tp,s.excfilter,2,99,false,s.excheck,nil,mg)
 	e:SetLabel(g:GetSum(Card.GetOriginalLevel))
 	Duel.Release(g,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.exop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCountFromEx(tp)<1 then return end
-	local g=Duel.GetMatchingGroup(s.exfilter,tp,LOCATION_EXTRA,0,nil,e,tp):Filter(Card.IsLevel,nil,e:GetLabel())
+	local g=Duel.GetMatchingGroup(s.exfilter,tp,LOCATION_EXTRA,0,nil,e,tp,true):Filter(Card.IsLevel,nil,e:GetLabel())
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=g:Select(tp,1,1,nil):GetFirst()

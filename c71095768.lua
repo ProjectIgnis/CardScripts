@@ -66,9 +66,12 @@ end
 function s.spfilter(c,e,tp)
 	return c:IsLevelAbove(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
+function s.xyzchk(c,sg,minc,maxc,tp)
+	return c:IsXyzSummonable(sg,minc,maxc) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
+end
 function s.spcheck(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetLocation)==#sg and sg:GetClassCount(Card.GetLevel)==1
-		and Duel.IsExistingMatchingCard(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,1,nil,sg,2,2)
+		and Duel.IsExistingMatchingCard(s.xyzchk,tp,LOCATION_EXTRA,0,1,nil,sg,2,2,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -76,7 +79,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		return Duel.IsPlayerCanSpecialSummonCount(tp,2)
 			and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 			and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-			and Duel.GetLocationCountFromEx(tp,tp,g)>0
 			and aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,0)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND+LOCATION_GRAVE)
@@ -102,7 +104,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 	Duel.BreakEffect()
-	local xyzg=Duel.GetMatchingGroup(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,nil,sg,2,2)
+	local xyzg=Duel.GetMatchingGroup(s.xyzchk,tp,LOCATION_EXTRA,0,nil,sg,2,2,tp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()

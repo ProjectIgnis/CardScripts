@@ -55,6 +55,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.trig)
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x46}
 s.listed_names={13331639,22211622}
 function s.ndcfilter(c)
 	return c:IsFaceup() and c:IsCode(13331639)
@@ -103,20 +104,21 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.desfilter(c,ec,tp)
-	return c:IsFaceup() and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,ec))>0
+function s.desfilter(c,ec,e,tp)
+	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,Group.FromCards(c,ec))
 end
-function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO) and c:IsRace(RACE_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.spfilter(c,e,tp,mc)
+	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO) and c:IsRace(RACE_DRAGON) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc:IsFaceup() and chkc~=c end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_ONFIELD,0,1,c,c,tp)
+		and Duel.IsExistingTarget(s.desfilter,tp,LOCATION_ONFIELD,0,1,c,c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,c,c,tp)
+	local g=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,c,c,e,tp)
 	g:AddCard(c)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)

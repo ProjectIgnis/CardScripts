@@ -19,15 +19,15 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cfilter(c,e,tp)
 	local rk=c:GetRank()
-	return rk>0 and Duel.GetLocationCountFromEx(tp,tp,c)>0 and Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_EXTRA,0,1,nil,c,e,tp)
+	return rk>0 and Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_EXTRA,0,1,nil,c,e,tp)
 end
 function s.spfilter1(c,tc,e,tp)
 	return c:IsRank(tc:GetRank()) and c:IsRace(tc:GetRace()) and c:IsAttribute(tc:GetAttribute())
-		and not c:IsCode(tc:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+		and not c:IsCode(tc:GetCode()) and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
 end
 function s.spfilter2(c,tc,e,tp)
 	return c:IsRank(tc:GetPreviousRankOnField()) and c:IsRace(tc:GetPreviousRaceOnField()) and c:IsAttribute(tc:GetPreviousAttributeOnField())
-		and not c:IsCode(tc:GetPreviousCodeOnField()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and not c:IsCode(tc:GetPreviousCodeOnField()) and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -42,7 +42,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

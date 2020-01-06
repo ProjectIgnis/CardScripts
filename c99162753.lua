@@ -20,17 +20,17 @@ function s.cfilter(c)
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c:IsAbleToRemove()
 end
 function s.spfilter(c,e,tp,rc)
+	if c:IsLocation(LOCATION_EXTRA and Duel.GetLocationCountFromEx(tp,tp,nil,c)==0 then return false end
 	return c:GetOriginalRace()==rc and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.check(sg,e,tp,mg)
 	if #sg<6 then return false end
-	local loc=0
+	local loc=LOCATION_EXTRA
 	if aux.ChkfMMZ(1)(sg,e,tp,mg) then loc=loc+LOCATION_DECK end
-	if Duel.GetLocationCountFromEx(tp,tp,sg)>0 then loc=loc+LOCATION_EXTRA end
 	for _,ty in ipairs(TYPE_ARRAY) do
 		if not sg:IsExists(Card.IsType,1,nil,ty) then return false end
 	end
-	return sg:GetClassCount(Card.GetOriginalRace)==1 and loc~=0 
+	return sg:GetClassCount(Card.GetOriginalRace)==1
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,loc,0,1,nil,e,tp,sg:GetFirst():GetOriginalRace())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -47,10 +47,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #rg==6 and Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)==6 then
 		Duel.BreakEffect()
 		local rc=rg:GetFirst():GetOriginalRace()
-		local loc=0
+		local loc=LOCATION_EXTRA
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_DECK end
-		if Duel.GetLocationCountFromEx(tp)>0 then loc=loc+LOCATION_EXTRA end
-		if loc==0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,loc,0,1,1,nil,e,tp,rc)
 		if #sg>0 then

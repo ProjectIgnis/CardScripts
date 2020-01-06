@@ -1,4 +1,5 @@
 --琰魔竜 レッド・デーモン・アビス
+--Hot Red Dragon Archfiend Abyss
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -30,6 +31,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.synchro_nt_required=1
 function s.sfilter(c,val,scard,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_DARK,scard,sumtype,tp) and c:IsType(TYPE_SYNCHRO,scard,sumtype,tp)
 end

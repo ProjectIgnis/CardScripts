@@ -34,16 +34,16 @@ end
 function s.matfilter(c,e,tp)
 	return c:IsSetCard(0x132) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.synfilter(c,mg)
-	return c:IsSetCard(0x132) and c:IsType(TYPE_SYNCHRO) and (not mg or c:IsSynchroSummonable(nil,mg,#mg,#mg))
+function s.synfilter(c,mg,tp,chk)
+	return c:IsSetCard(0x132) and c:IsType(TYPE_SYNCHRO) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0) and (not mg or c:IsSynchroSummonable(nil,mg,#mg,#mg))
 end
 function s.srescon(exg)
 	return function(sg,e,tp,mg)
 		return aux.dncheck(sg,e,tp,mg) and exg:IsExists(Card.IsSynchroSummonable,1,nil,nil,sg,#sg,#sg)
 	end
 end
-function s.xyzfilter(c,mg)
-	return c:IsSetCard(0x132) and c:IsType(TYPE_XYZ) and (not mg or c:IsXyzSummonable(mg,#mg,#mg))
+function s.xyzfilter(c,mg,tp,chk)
+	return c:IsSetCard(0x132) and c:IsType(TYPE_XYZ) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0) and (not mg or c:IsXyzSummonable(mg,#mg,#mg))
 end
 function s.xrescon(exg)
 	return function(sg,e,tp,mg)
@@ -52,13 +52,12 @@ function s.xrescon(exg)
 end
 function s.target(fil,con)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-		local exg=Duel.GetMatchingGroup(fil,tp,LOCATION_EXTRA,0,nil)
+		local exg=Duel.GetMatchingGroup(fil,tp,LOCATION_EXTRA,0,nil,nil,tp)
 		local cancelcon=con(exg)
 		if chkc then return chkc:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(0x132) and chkc:IsCanBeSpecialSummoned(e,0,tp,false,false) and cancelcon(Group.FromCards(chkc)) end
 		local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 		local min=math.min(math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and 1 or 99),1)
 		if chk==0 then return min>0 and Duel.IsPlayerCanSpecialSummonCount(tp,2)
-			and Duel.GetLocationCountFromEx(tp)>0
 			and aux.SelectUnselectGroup(mg,e,tp,1,3,cancelcon,0) end
 		local sg=aux.SelectUnselectGroup(mg,e,tp,1,3,cancelcon,chk,tp,HINTMSG_SPSUMMON,cancelcon)
 		Duel.SetTargetCard(sg)
@@ -81,9 +80,8 @@ function s.operation(fil,fun)
 			tc:RegisterEffect(e2)
 		end
 		Duel.SpecialSummonComplete()
-		if Duel.GetLocationCountFromEx(tp,tp,g)<=0 then return end
 		Duel.BreakEffect()
-		local syng=Duel.GetMatchingGroup(fil,tp,LOCATION_EXTRA,0,nil,g)
+		local syng=Duel.GetMatchingGroup(fil,tp,LOCATION_EXTRA,0,nil,g,tp,true)
 		if #syng>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local c=syng:Select(tp,1,1,nil):GetFirst()

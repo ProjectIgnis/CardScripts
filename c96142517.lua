@@ -47,11 +47,11 @@ function s.filter2(c,e,tp,rk,g1)
 end
 function s.spfilter(c,e,tp,rk,g)
 	if c:GetRank()~=rk or (not c:IsSetCard(0x1048) and not c:IsSetCard(0x1073)) or not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return false end
-	return not c.rum_limit or g:IsExists(function(mc) return c.rum_limit(mc,e) end,1,nil)
+	return not c.rum_limit or g:IsExists(function(mc) return c.rum_limit(mc,e) end,1,nil) and Duel.GetLocationCountFromEx(tp,tp,g,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCountFromEx(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.filter1,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -75,7 +75,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rk=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local mg0=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local mg=mg0:Filter(Card.IsRelateToEffect,nil,e)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or #mg==0 or Duel.GetLocationCountFromEx(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or #mg==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,rk+1,mg0)
 	local sc=g:GetFirst()

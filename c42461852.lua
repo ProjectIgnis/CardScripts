@@ -53,11 +53,10 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	--prototype, to be replaced with the appropriate core functions
 	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_EXTRA,0,nil)
-	if #g==0 or Duel.GetLocationCountFromEx(tp)<=0 then return end
 	local tc=g:RandomSelect(tp,1):GetFirst()
 	if tc then
 		Duel.ConfirmCards(PLAYER_ALL,tc)
-		if tc:IsLinkMonster() and tc:IsRace(RACE_CYBERSE) and Duel.GetLocationCountFromEx(tp,tp,tc)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+		if tc:IsLinkMonster() and tc:IsRace(RACE_CYBERSE) and Duel.GetLocationCountFromEx(tp,tp,nil,tc)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end

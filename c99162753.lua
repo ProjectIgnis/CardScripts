@@ -20,7 +20,7 @@ function s.cfilter(c)
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c:IsAbleToRemove()
 end
 function s.spfilter(c,e,tp,rc)
-	if c:IsLocation(LOCATION_EXTRA and Duel.GetLocationCountFromEx(tp,tp,nil,c)==0 then return false end
+	if c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,c)==0 then return false end
 	return c:GetOriginalRace()==rc and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.check(sg,e,tp,mg)

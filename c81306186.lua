@@ -75,8 +75,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.relfilter(c,e,tp,tc,ft)
-	if not c:IsLevelAbove(tc:GetLevel()) then return false end
-	if tc.mat_filter and not tc.mat_filter(c) then return false end
+	local lv=tc:GetLevel()
+	aux.RitualSummoningLevel=lv
+	local mlv=c:GetRitualLevel(tc)
+	aux.RitualSummoningLevel=nil
+	if not ((mlv&0xffff)>=lv or (mlv>>16)>=lv) then return false end
+	if tc.mat_filter and not tc.mat_filter(c) or (tc.ritual_custom_check and not tc.ritual_custom_check(e,tp,Group.FromCards(c),tc)) then return false end
 	if c:IsLocation(LOCATION_GRAVE) then
 		return c:IsType(TYPE_RITUAL) and ft>0 and c:IsAbleToDeck()
 	else

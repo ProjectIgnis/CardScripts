@@ -6,8 +6,12 @@ function s.initial_effect(c)
 	local e1=Ritual.CreateProc(c,RITPROC_GREATER,aux.FilterBoolFunction(Card.IsRace,RACE_CYBERSE),nil,nil,s.extrafil,nil,aux.FilterBoolFunction(Card.IsSetCard,0x135))
 	local tg=e1:GetTarget()
 	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk,...)
-					if chk==0 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x135),tp,LOCATION_MZONE,0,1,nil) then
-						e:SetLabel(1)
+					if chk==0 then
+						if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x135),tp,LOCATION_MZONE,0,1,nil) then
+							e:SetLabel(1)
+						else
+							e:SetLabel(0)
+						end
 					end
 					return tg(e,tp,eg,ep,ev,re,r,rp,chk,...)
 				end)

@@ -23,11 +23,11 @@ function s.filter(c,e,tp)
 end
 function s.spfilter(c,e,tp,lk)
 	return c:IsSetCard(0x12b) and c:IsLinkMonster() and c:GetLink()<lk
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and eg:IsExists(s.filter,1,nil,e,tp) end
+	if chk==0 then return eg:IsExists(s.filter,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=eg:FilterSelect(tp,s.filter,1,1,nil,e,tp)
 	Duel.SetTargetCard(g)

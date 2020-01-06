@@ -20,18 +20,19 @@ function s.initial_effect(c)
 	e2:SetValue(aux.TRUE)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x33}
 function s.filter(c,e,tp)
 	local lv=c:GetLevel()
 	return lv>0 and c:IsSetCard(0x33) and not c:IsType(TYPE_TUNER) and c:IsAbleToRemove()
 		and Duel.IsExistingMatchingCard(s.exfilter,tp,LOCATION_EXTRA,0,1,nil,lv+1,e,tp)
 end
 function s.exfilter(c,lv,e,tp)
-	return c:IsSetCard(0x33) and c:GetLevel()==lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x33) and c:GetLevel()==lv and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741) 
-		and Duel.GetLocationCountFromEx(tp)>0 and e:GetHandler():IsAbleToRemove()
+		and e:GetHandler():IsAbleToRemove()
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler(),e,tp)
@@ -43,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc or not tc:IsRelateToEffect(e) or not c:IsRelateToEffect(e) then return end
 	local rg=Group.FromCards(c,tc)
-	if Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)==2 and Duel.GetLocationCountFromEx(tp)>0 then
+	if Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.exfilter,tp,LOCATION_EXTRA,0,1,1,nil,tc:GetLevel()+1,e,tp)
 		local sc=sg:GetFirst()

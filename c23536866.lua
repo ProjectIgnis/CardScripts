@@ -14,12 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 function s.filter(c,e,tp)
 	return c:GetLevel()==5 and c:IsAttribute(ATTRIBUTE_WATER) and not c:IsCode(id)
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.xyzfilter(c,mg)
-	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsXyzSummonable(mg,2,2)
+	return c:IsAttribute(ATTRIBUTE_WATER) and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0 and c:IsXyzSummonable(mg,2,2)
 end
 function s.mfilter1(c,mg,exg)
 	return mg:IsExists(s.mfilter2,1,c,c,exg)
@@ -34,7 +35,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.GetLocationCountFromEx(tp)>0
 		and #exg>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg1=mg:FilterSelect(tp,s.mfilter1,1,1,nil,mg,exg)
@@ -72,7 +72,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e4=e3:Clone()
 	tc2:RegisterEffect(e4)
 	Duel.SpecialSummonComplete()
-	if Duel.GetLocationCountFromEx(tp,tp,g)<=0 then return end
 	Duel.BreakEffect()
 	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,g)
 	if #xyzg>0 then

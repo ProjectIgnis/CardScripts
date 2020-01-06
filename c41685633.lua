@@ -51,7 +51,10 @@ function s.spfilter2(c)
 	return c:IsRace(RACE_THUNDER) and c:IsType(TYPE_FUSION) and not c:IsCode(id) and c:IsAbleToRemoveAsCost()
 end
 function s.rescon(sg,e,tp,mg)
-	return Duel.GetLocationCountFromEx(tp,tp,sg)>0 and sg:IsExists(s.spfilter1,1,nil) and sg:IsExists(s.spfilter2,1,nil)
+	return Duel.GetLocationCountFromEx(tp,tp,sg,e:GetHandler())>0 and sg:IsExists(s.spfilter1,1,nil) and sg:IsExists(s.spfilter2,1,nil)
+end
+function s.breakcon(sg,e,tp,mg)
+	return #sg == 0 or #sg == 2
 end
 function s.hspcon(e,c)
 	if c==nil then return true end
@@ -68,7 +71,7 @@ function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE,0,nil)
 	local g=g1:Clone()
 	g:Merge(g2)
-	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
+	local sg=aux.SelectUnselectGroup(g,e,tp,0,2,s.rescon,1,tp,HINTMSG_REMOVE,s.breakcon)
 	if #sg > 0 then
 		sg:KeepAlive()
 		e:SetLabelObject(sg)

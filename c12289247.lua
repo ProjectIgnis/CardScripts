@@ -106,40 +106,39 @@ function s.fcheck(c,sg,g,code,...)
 		return res
 	else return true end
 end
-function s.fselect(c,tp,mg,sg,mc,...)
+function s.fselect(c,e,tp,mg,sg,mc,...)
 	sg:AddCard(c)
 	local res=false
 	if #sg<5 then
-		res=mg:IsExists(s.fselect,1,sg,tp,mg,sg,mc,...)
-	elseif Duel.GetLocationCountFromEx(tp,tp,sg)>0 then
+		res=mg:IsExists(s.fselect,1,sg,e,tp,mg,sg,mc,...)
+	elseif Duel.IsExistingMatchingCard(s.hnfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg) then
 		local g=Group.FromCards(mc)
 		res=sg:IsExists(s.fcheck,1,g,sg,g,...)
 	end
 	sg:RemoveCard(c)
 	return res
 end
-function s.hnfilter(c,e,tp)
-	return c:IsCode(13331639) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
+function s.hnfilter(c,e,tp,sg)
+	return c:IsCode(13331639) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial() and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
 end
 function s.hncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	local sg=Group.FromCards(c)
 	if chk==0 then return c:IsAbleToRemoveAsCost()
-		and mg:IsExists(s.fselect,1,sg,tp,mg,sg,c,0x10f2,0x2073,0x2017,0x1046) end
+		and mg:IsExists(s.fselect,1,sg,e,tp,mg,sg,c,0x10f2,0x2073,0x2017,0x1046) end
 	while #sg<5 do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=mg:FilterSelect(tp,s.fselect,1,1,sg,tp,mg,sg,c,0x10f2,0x2073,0x2017,0x1046)
+		local g=mg:FilterSelect(tp,s.fselect,1,1,sg,e,tp,mg,sg,c,0x10f2,0x2073,0x2017,0x1046)
 		sg:Merge(g)
 	end
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)
 end
 function s.hntg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.hnfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.hnop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.hnfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if #g>0 then

@@ -15,11 +15,10 @@ s.listed_series={0x48}
 function s.cfilter(c,e,tp)
 	local rk=c:GetRank()
 	return rk>1 and c:IsType(TYPE_XYZ)
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,rk-1,c:GetRace(),e,tp)
-		and Duel.GetLocationCountFromEx(tp,tp,c)>0
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,rk-1,c:GetRace(),e,tp,c)
 end
-function s.filter(c,rk,rc,e,tp)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x48)
+function s.filter(c,rk,rc,e,tp,mc)
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and Duel.GetLocationCountFromEx(tp,tp.mc,c)>0
 		and c:GetRank()==rk and c:IsRace(rc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -54,7 +53,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	local rk=e:GetLabel()
 	local rc=e:GetLabelObject():GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

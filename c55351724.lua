@@ -1,5 +1,5 @@
 --犬賞金
---Pup Prize
+--Bownty
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,8 +16,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local ac=Duel.GetAttacker()
-	return ac and ac:IsControler(tp) and ac:IsStatus(STATUS_OPPO_BATTLE)
+	local tc=eg:GetFirst()
+	return tc==Duel.GetAttacker() and tc:IsControler(tp) and tc:IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and chkc:IsAbleToHand() end

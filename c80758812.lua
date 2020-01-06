@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1c0+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e1:SetTarget(s.tg)
 	c:RegisterEffect(e1)
 	--2 in 1
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,0x1c0+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target)
@@ -91,7 +91,7 @@ function s.costfilter(c,e,tp)
 end
 	--"Cost"
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return s.cost(e,tp,eg,ep,ev,re,r,rp,chk) end
+	if chk==0 then return s.discost(e,tp,eg,ep,ev,re,r,rp,chk) end
 	s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
@@ -158,4 +158,3 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

@@ -71,7 +71,18 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.val(e,c)
-	return Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_MZONE,0):GetClassCount(Card.GetAttribute)*200
+	local tp=e:GetHandlerPlayer()
+	local att=0
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+	for tc in aux.Next(g) do
+		att=(att|tc:GetAttribute())
+	end
+	local ct=0
+	while att~=0 do
+		if (att&0x1)~=0 then ct=ct+1 end
+		att=(att>>1)
+	end
+	return ct*200
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
@@ -92,4 +103,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-

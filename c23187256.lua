@@ -40,30 +40,35 @@ end
 function s.check(c,rk)
 	return c:GetRank()~=rk and not c:IsHasEffect(511001175)
 end
-function s.filter(c,e,tp)
+function s.filter(c,e,tp,rp)
 	return c:IsRankBelow(9) and c:IsAttackBelow(3000) and c:IsSetCard(0x48)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,rp)
 		and e:GetHandler():GetOverlayCount() > 0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.gfilter(c,rank)
 	return c:GetRank()==rank
 end
+function s.freezoneschk(c,tp,rp)
+	return Duel.GetLocationCountFromEx(tp,rp,nil,c)>0
+end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCountFromEx(tp)
+	local ft=nil
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local ect=_G["c" .. CARD_SUMMON_GATE] and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and _G["c" .. CARD_SUMMON_GATE][tp]
-	if ect then ft=math.min(ft,ect) end
+	if ect then ft=ft and math.min(ft,ect) or ect end
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
+	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp,rp)
 	local ct=c:GetOverlayGroup():GetClassCount(Card.GetCode)
-	if ct>ft then ct=ft end
-	if #g>0 and ct>0 then
-		local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,aux.dpcheck(Card.GetRank),1,tp,HINTMSG_SPSUMMON)
-		for tc in aux.Next(sg) do
+	if ft and ct>ft then ct=ft end
+	if #g1>0 and ct>0 then
+		repeat
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local g2=g1:Select(tp,1,1,nil)
+			local tc=g2:GetFirst()
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -75,7 +80,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
-		end
+			g1:Remove(s.gfilter,nil,tc:GetRank())
+			g1=g1:Filter(s.freezoneschk,nil,tp,rp)
+			ct=ct-1
+		until #g1==0 or ct==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,1))
 		Duel.SpecialSummonComplete()
 		Duel.BreakEffect()
 		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)

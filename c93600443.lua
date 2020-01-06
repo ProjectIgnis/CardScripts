@@ -21,11 +21,10 @@ function s.filter(c,e,tp)
 	local lv=c:GetLevel()
 	local att=c:GetAttribute()
 	return lv>0 and c:IsFaceup()
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lv,att)
-		and Duel.GetLocationCountFromEx(tp,tp,c)>0
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lv,att,c)
 end
-function s.spfilter(c,e,tp,lv,att)
-	return c:IsSetCard(0xa008) and c:GetLevel()>lv and c:IsAttribute(att) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+function s.spfilter(c,e,tp,lv,att,mc)
+	return c:IsSetCard(0xa008) and c:GetLevel()>lv and c:IsAttribute(att) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.chkfilter(c,tc)
 	local lv=tc:GetLevel()
@@ -43,7 +42,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCountFromEx(tp,tp,tc)<=0 then return end
 	if not tc:IsRelateToEffect(e) then return end
 	local att=tc:GetAttribute()
 	local lv=tc:GetLevel()

@@ -30,7 +30,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,nil)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) end
-	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	local ft=math.min(Duel.GetLocationCount(tp,LOCATION_SZONE),2)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and ft>0
 		and aux.SelectUnselectGroup(g,e,tp,1,ft,aux.dncheck,chk)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end

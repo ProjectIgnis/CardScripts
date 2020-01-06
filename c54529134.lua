@@ -16,11 +16,11 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.filter1(c,e,tp)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x119) and Duel.GetLocationCountFromEx(tp,tp,c)>0 
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x119)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.filter2(c,e,tp,mc)
-	return c:IsSetCard(0x119) and mc:IsCanBeLinkMaterial(c,tp) and c:IsLinkMonster()
+	return c:IsSetCard(0x119) and mc:IsCanBeLinkMaterial(c,tp) and c:IsLinkMonster()  and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 
 		and c:IsCode(mc:GetCode()) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -32,7 +32,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCountFromEx(tp,tp,tc)<=0 then return end
 	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc):GetFirst()

@@ -41,8 +41,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-	Duel.Draw(tp,2,REASON_EFFECT)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,1,nil)
+	if #g>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local tc=g:Select(tp,1,1,nil)
+		if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 then
+			Duel.Draw(tp,2,REASON_EFFECT)
+		end
+	end
 end

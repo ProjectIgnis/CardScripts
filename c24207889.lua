@@ -32,11 +32,16 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
 	c:RegisterEffect(e6)
 end
+s[0]={}
+s[1]={}
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	if sumpos and (sumpos&POS_FACEDOWN)>0 then return false end
 	local tp=sump
 	if targetp then tp=targetp end
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,c:GetRace()),tp,LOCATION_MZONE,0,1,c)
+end
+function s.fidfilter(c,fid)
+	return c:GetFieldID()~=fid
 end
 function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	local phase=Duel.GetCurrentPhase()
@@ -49,9 +54,20 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 			local rg=g:Filter(Card.IsRace,nil,race)
 			local rc=#rg
 			if rc>1 then
-				Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TOGRAVE)
-				local dg=rg:Select(p,rc-1,rc-1,nil)
+				local dg
+				if s[p][race] then
+					dg=rg:Filter(s.fidfilter,nil,s[p][race])
+				else
+					Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TOGRAVE)
+					dg=rg:Select(p,rc-1,rc-1,nil)
+				end
 				sg:Merge(dg)
+			end
+			if rc==1 then
+				s[p][race]=rg:GetFirst():GetFieldID()
+			end
+			if rc==0 then
+				s[p][race]=nil
 			end
 			race=race*2
 		end

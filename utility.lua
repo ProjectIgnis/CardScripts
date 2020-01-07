@@ -9,6 +9,8 @@ function Duel.LoadCardScript(code)
 		local oldtable,oldcode=GetID()
         _G[card] = {}
 		self_table=_G[card]
+		setmetatable(self_table, Card)
+		rawset(self_table,"__index",self_table)
 		self_code=tonumber(string.sub(card,2))
         Duel.LoadScript(code)
 		self_table=oldtable

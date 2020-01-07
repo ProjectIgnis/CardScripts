@@ -5,7 +5,7 @@ if not IcePillarZone then
 	IcePillarZone[1]=0
 	IcePillarZone[2]=0
 	--disable field
-	local e1=Effect.CreateEffect(c)
+	local e1=Effect.GlobalEffect()
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DISABLE_FIELD)
 	e1:SetCondition(function()return IcePillarZone[1]|(IcePillarZone[2]<<16)>0 end)
@@ -14,7 +14,7 @@ if not IcePillarZone then
 	end)
 	Duel.RegisterEffect(e1,0)
 	--negate attack
-	local e2=Effect.CreateEffect(c)
+	local e2=Effect.GlobalEffect()
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_ADJUST)
 	e2:SetOperation(function(e,tp)
@@ -30,7 +30,7 @@ if not IcePillarZone then
 	end)
 	Duel.RegisterEffect(e2,0)
 	Duel.RegisterEffect(e2:Clone(),1)
-	local e3=Effect.CreateEffect(c)
+	local e3=Effect.GlobalEffect()
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetOperation(function(e,tp)

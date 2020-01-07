@@ -5,14 +5,14 @@ function GetID()
 end
 function Duel.LoadCardScript(code)
 	local card=string.sub(code,0,string.len(code)-4)
-    if not _G[card] then
+	if not _G[card] then
 		local oldtable,oldcode=GetID()
-        _G[card] = {}
+		_G[card] = {}
 		self_table=_G[card]
 		setmetatable(self_table, Card)
 		rawset(self_table,"__index",self_table)
 		self_code=tonumber(string.sub(card,2))
-        Duel.LoadScript(code)
+	Duel.LoadScript(code)
 		self_table=oldtable
 		self_code=oldcode
     end
@@ -24,7 +24,7 @@ function Card.GetMetatable(c)
 end
 bit={}
 function bit.band(a,b)
-    return a&b
+	return a&b
 end
 function bit.bor(a,b)
     return a|b
@@ -36,25 +36,25 @@ function bit.lshift(a,b)
     return a<<b
 end
 function bit.rshift(a,b)
-    return a>>b
+	return a>>b
 end
 function bit.bnot(a)
-    return ~a
+	return ~a
 end
 local function fieldargs(f,width)
-    w=width or 1
-    assert(f>=0,"field cannot be negative")
-    assert(w>0,"width must be positive")
-    assert(f+w<=32,"trying to access non-existent bits")
-    return f,~(-1<<w)
+	w=width or 1
+	assert(f>=0,"field cannot be negative")
+	assert(w>0,"width must be positive")
+	assert(f+w<=32,"trying to access non-existent bits")
+	return f,~(-1<<w)
 end
 function bit.extract(r,field,width)
-    local f,m=fieldargs(field,width)
-    return (r>>f)&m
+	local f,m=fieldargs(field,width)
+	return (r>>f)&m
 end
 function bit.replace(r,v,field,width)
-    local f,m=fieldargs(field,width)
-    return (r&~(m<<f))|((v&m)<< f)
+	local f,m=fieldargs(field,width)
+	return (r&~(m<<f))|((v&m)<< f)
 end
 
 Group.__band = function (o1,o2)

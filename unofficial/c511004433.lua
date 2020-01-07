@@ -1,0 +1,43 @@
+--Lock Draw
+local s,id=GetID()
+function s.initial_effect(c)
+	--activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetOperation(s.op)
+	c:RegisterEffect(e1)
+end
+function s.op(e,tp,eg,ev,ep,re,r,rp)
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SKIP_DP)
+	e1:SetTargetRange(0,1)
+	Duel.RegisterEffect(e1,tp)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_CANNOT_DRAW)
+	Duel.RegisterEffect(e2,tp)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_TO_GRAVE)
+	e3:SetLabelObject(e1)
+	e3:SetCondition(s.rescon)
+	e3:SetOperation(s.resop)
+	Duel.RegisterEffect(e3,tp)
+	local e4=e3:Clone()
+	e4:SetLabelObject(e2)
+	Duel.RegisterEffect(e4,tp)
+end
+function s.filter(c,tp)
+	return c:IsPreviousLocation(LOCATION_HAND) and c:IsSetCard(0xac1) and c:IsControler(1-tp)
+end
+function s.rescon(e,tp,eg,ev,ep,re,r,rp)
+	return eg:IsExists(s.filter,1,nil,tp)
+end
+function s.resop(e,tp)
+	local er=e:GetLabelObject()
+	er:Reset()
+	e:Reset()
+end

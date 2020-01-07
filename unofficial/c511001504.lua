@@ -1,0 +1,56 @@
+--Dark Tournament
+local s,id=GetID()
+function s.initial_effect(c)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_POSITION)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_MAIN_END)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.activate)
+	c:RegisterEffect(e1)
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	local sg=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,sg,#sg,0,0)
+end
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local sg=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if #sg>0 then
+		Duel.ChangePosition(sg,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_MUST_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+		e1:SetTarget(s.tg)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetValue(1)
+		e2:SetTarget(s.tg)
+		Duel.RegisterEffect(e2,tp)
+		local be=Effect.CreateEffect(c)
+		be:SetType(EFFECT_TYPE_FIELD)
+		be:SetCode(EFFECT_CANNOT_EP)
+		be:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		be:SetTargetRange(1,1)
+		be:SetCondition(s.becon)
+		be:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(be,tp)
+	end
+end
+function s.tg(e,c)
+	return c:IsPosition(POS_FACEUP_ATTACK)
+end
+function s.becon(e)
+	return Duel.IsExistingMatchingCard(Card.CanAttack,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil)
+end

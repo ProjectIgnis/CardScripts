@@ -1,0 +1,31 @@
+--Power Charger
+local s,id=GetID()
+function s.initial_effect(c)
+	aux.AddEquipProcedure(c,0,aux.FilterBoolFunction(Card.IsRace,RACE_WARRIOR))
+	--gain atk
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_DAMAGE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCode(EVENT_BATTLE_DESTROYING)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCondition(s.atkcon)
+	e2:SetOperation(s.atkop)
+	c:RegisterEffect(e2)
+end
+function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	local ec=eg:GetFirst()
+	local bc=ec:GetBattleTarget()
+	return e:GetHandler():GetEquipTarget()==eg:GetFirst() and bc:IsReason(REASON_BATTLE)
+end
+function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local ec=eg:GetFirst()
+	local bc=ec:GetBattleTarget()
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(bc:GetAttack())
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	ec:RegisterEffect(e1)
+end

@@ -1,0 +1,51 @@
+--Fake Friendship Treaty
+local s,id=GetID()
+function s.initial_effect(c)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE)
+	c:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e2:SetTarget(s.limit)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetTargetRange(0,1)
+	c:RegisterEffect(e2)
+	local e3=e2:Clone()
+	e3:SetCode(EFFECT_CANNOT_SUMMON)
+	c:RegisterEffect(e3)
+	local e4=e2:Clone()
+	e4:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
+	c:RegisterEffect(e4)
+	--self destroy
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e5:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetCondition(s.descon1)
+	e5:SetOperation(s.desop)
+	c:RegisterEffect(e5)
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e6:SetCode(EVENT_DAMAGE)
+	e6:SetRange(LOCATION_SZONE)
+	e6:SetCondition(s.descon2)
+	e6:SetOperation(s.desop)
+	c:RegisterEffect(e6)
+end
+function s.limit(e,c,sump,sumtype,sumpos,targetp,se)
+	return c:IsLevelBelow(4)
+end
+function s.descon1(e,tp,eg,ep,ev,re,r,rp)
+	return eg:GetFirst():IsControler(tp)
+end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+end
+function s.descon2(e,tp,eg,ep,ev,re,r,rp)
+	return ep~=tp and rp==tp
+end

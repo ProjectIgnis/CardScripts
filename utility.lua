@@ -12,10 +12,10 @@ function Duel.LoadCardScript(code)
 		setmetatable(self_table, Card)
 		rawset(self_table,"__index",self_table)
 		self_code=tonumber(string.sub(card,2))
-	Duel.LoadScript(code)
+		Duel.LoadScript(code)
 		self_table=oldtable
 		self_code=oldcode
-    end
+	end
 end
 function Card.GetMetatable(c)
 	local code=c:GetOriginalCode()

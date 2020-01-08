@@ -1,4 +1,5 @@
 --EMユニ
+--Performapal Uni
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -74,15 +75,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetCode(EFFECT_CHANGE_DAMAGE)
-	e1:SetValue(s.damval)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
-end
-function s.damval(e,re,val,r,rp,rc)
-	local tp=e:GetHandlerPlayer()
-	if Duel.GetFlagEffect(tp,id+1)==0 or (r&REASON_BATTLE)==0 then return val end
-	Duel.ResetFlagEffect(tp,id+1)
-	return 0
 end

@@ -53,7 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return r==REASON_RITUAL and and eg:IsExists(Card.IsSetCard,1,nil,0x106)
+	return r==REASON_RITUAL and eg:IsExists(Card.IsSetCard,1,nil,0x106)
 		and e:GetHandler():IsPreviousLocation(LOCATION_MZONE)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)

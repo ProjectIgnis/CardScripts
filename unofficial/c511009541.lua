@@ -40,7 +40,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	while tc do
 		Duel.SSet(tp,tc)
-		Duel.ConfirmCards(1-tp,tc)
 		tc=g:GetNext()
 	end
 end

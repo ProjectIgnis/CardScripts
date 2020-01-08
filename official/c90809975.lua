@@ -108,7 +108,6 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 			and rc:IsSSetable() and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()
 			Duel.SSet(tp,rc)
-			Duel.ConfirmCards(1-tp,rc)
 		end
 	end
 end

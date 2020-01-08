@@ -38,9 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	elseif (opt==1 and tc:IsType(TYPE_SPELL)) then
 		Duel.SSet(1-tp,tc)
-		Duel.ConfirmCards(tp,g) 
 	elseif (opt==2 and tc:IsType(TYPE_TRAP))then
 		Duel.SSet(1-tp,tc)
-		Duel.ConfirmCards(tp,g)
 	end
 end

@@ -27,6 +27,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if #g>1 then
 		Duel.SSet(tp,g)
-		Duel.ConfirmCards(1-tp,g)
 	end
 end

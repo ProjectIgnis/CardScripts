@@ -114,7 +114,6 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and s.setcon(e,tp,eg,ep,ev,re,r,rp) and tc and tc:IsSSetable() 
 		and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) then
 		Duel.SSet(tp,tc)
-		Duel.ConfirmCards(1-tp,tc)
 		local fid=c:GetFieldID()
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(c)

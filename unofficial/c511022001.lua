@@ -53,19 +53,21 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc=g:GetNext()
 	end
 	Duel.AdjustInstantly()
-    local count = 0
-    for tc in aux.Next(g) do
-        if tc:IsDisabled() then count = count + 1 end
-    end
-    if count > 0 then
-        Duel.BreakEffect()
-        local g=Duel.GetMatchingGroup(Card.IsSSetable,tp,LOCATION_HAND,0,nil)
-        if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-            Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-            local sg=g:Select(tp,1,1,nil)
-            Duel.SSet(tp,sg:GetFirst())
-        end
-    end
+	local count = 0
+	for tc in aux.Next(g) do
+		if tc:IsDisabled() then
+			count = count + 1
+		end
+	end
+	if count > 0 then
+		Duel.BreakEffect()
+		local g=Duel.GetMatchingGroup(Card.IsSSetable,tp,LOCATION_HAND,0,nil)
+		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+			local sg=g:Select(tp,1,1,nil)
+			Duel.SSet(tp,sg:GetFirst())
+		end
+	end
 	if Duel.GetTurnPlayer()~=tp and Duel.IsAbleToEnterBP() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)

@@ -184,7 +184,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Equip(tp,tc,g:GetFirst())
 			end
 			tc:ReleaseEffectRelation(te)
-			if etc then 
+			if etc then
 				etc=g:GetFirst()
 				while etc do
 					etc:ReleaseEffectRelation(te)
@@ -193,7 +193,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			end
 		else
 			Duel.SSet(tp,tc)
-			Duel.ConfirmCards(1-tp,tc)
 		end
 	end
 end

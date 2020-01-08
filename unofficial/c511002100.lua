@@ -63,7 +63,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.MSet(p,sc,true,nil)
 		else
 			Duel.SSet(p,sc)
-			Duel.ConfirmCards(1-p,sc)
 		end
 	else
 		Duel.ConfirmCards(1-p,g)

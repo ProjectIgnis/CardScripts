@@ -68,6 +68,5 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local sg=g:Select(tp,1,ct,nil)
 	Duel.SSet(tp,sg)
-	Duel.ConfirmCards(1-tp,sg)
 end
 

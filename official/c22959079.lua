@@ -1,4 +1,5 @@
 --ワーム・ホール
+--Dimensionhole
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -38,7 +39,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD)
 		e2:SetCode(EFFECT_DISABLE_FIELD)
-		e2:SetReset(RESET_PHASE+PHASE_DRAW,2)
 		e2:SetLabel(seq)
 		e2:SetLabelObject(tc)
 		e2:SetCondition(s.discon)
@@ -53,8 +53,12 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())
 end
 function s.discon(e,c)
-	if e:GetLabelObject():IsLocation(LOCATION_REMOVED) then return true end
-	return false
+	if e:GetLabelObject():IsLocation(LOCATION_REMOVED) then
+		return true
+	else
+		e:Reset()
+		return false
+	end
 end
 function s.disop(e,tp)
 	local dis1=(0x1<<e:GetLabel())

@@ -50,7 +50,6 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsSSetable() then
 		Duel.SSet(tp,tc)
-		Duel.ConfirmCards(1-tp,tc)
 	end
 end
 function s.filter2(c)

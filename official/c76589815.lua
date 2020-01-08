@@ -63,7 +63,6 @@ function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local setg=sg:Select(tp,1,1,nil)
 			Duel.SSet(tp,setg:GetFirst())
-			Duel.ConfirmCards(1-tp,setg)
 		end
 	end
 	Duel.ShuffleHand(1-tp)

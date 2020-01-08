@@ -33,14 +33,13 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if tc then
 		Duel.SSet(tp,tc)
-		Duel.ConfirmCards(1-tp,tc)
 		if tc.act_turn then
 			local e0=Effect.CreateEffect(tc)
 			e0:SetType(EFFECT_TYPE_SINGLE)
 			e0:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 			e0:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 			e0:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e0)		
+			tc:RegisterEffect(e0)
 		end
 	end
 end

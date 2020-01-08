@@ -51,7 +51,6 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.setfilter2,tp,LOCATION_DECK,0,1,1,nil,tc)
 	if #g>0 then
 		Duel.SSet(tp,g:GetFirst())
-		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function s.setcon2(e,tp,eg,ep,ev,re,r,rp)
@@ -69,6 +68,5 @@ function s.setop2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.setfilter3,tp,LOCATION_DECK,0,1,1,nil,tp)
 	if #g>0 then
 		Duel.SSet(tp,g:GetFirst())
-		Duel.ConfirmCards(1-tp,g)
 	end
 end

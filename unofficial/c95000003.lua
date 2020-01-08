@@ -1,7 +1,7 @@
 --Darkness/Spell A
 local s,id=GetID()
 function s.initial_effect(c)
-    --activate
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -44,18 +44,19 @@ end
 s.listed_names={95000004,95000005,95000006,95000007,95000008}
 s.mark=0
 function s.filter(c)
-    return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetSequence()<5
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetSequence()<5
 end
 function s.setfilter(c,code)
-    return c:IsSSetable() and c:IsCode(code)
+	return c:IsSSetable() and c:IsCode(code)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_SZONE)-Duel.GetLocationCount(tp,LOCATION_FZONE)-Duel.GetLocationCount(tp,LOCATION_PZONE))>4 
-    	and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000004) 
-    	and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000005) 
-    	and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000006) 
-    	and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000007) 
-    	and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000008) end
+	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_SZONE)-Duel.GetLocationCount(tp,LOCATION_FZONE)-Duel.GetLocationCount(tp,LOCATION_PZONE))>4
+		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000004) 
+		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000005) 
+		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000006) 
+		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000007) 
+		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000008)
+	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if (Duel.GetLocationCount(tp,LOCATION_SZONE)-Duel.GetLocationCount(tp,LOCATION_FZONE)-Duel.GetLocationCount(tp,LOCATION_PZONE))<=4 then return end
@@ -84,11 +85,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SSet(tp,tc)
 			tc=sg1:GetNext()
 		end
-		Duel.ConfirmCards(1-tp,sg1)
 	end
 end
 function s.valcon(e,re,r,rp)
-    return (r&REASON_EFFECT)~=0
+	return (r&REASON_EFFECT)~=0
 end
 function s.indtg(e,c)
 	return c:IsFaceup() and c:GetType()==TYPE_TRAP+TYPE_CONTINUOUS
@@ -99,14 +99,14 @@ function s.efilter(e,ct)
 	return tc:GetType()==TYPE_TRAP+TYPE_CONTINUOUS
 end
 function s.thfilter(c)
-    return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end 
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 end

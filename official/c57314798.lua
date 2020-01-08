@@ -95,11 +95,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		if (tc1 and tc1:IsHasEffect(EFFECT_NECRO_VALLEY)) or (tc2 and tc2:IsHasEffect(EFFECT_NECRO_VALLEY)) then return end
 		if tc1 then
 			Duel.SSet(tp,tc1)
-			Duel.ConfirmCards(1-tp,tc1)
 		end
 		if tc2 then
 			Duel.SSet(1-tp,tc2)
-			Duel.ConfirmCards(tp,tc2)
 		end
 	end
 end

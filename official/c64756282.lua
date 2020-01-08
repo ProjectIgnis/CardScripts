@@ -127,10 +127,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	if chk==0 then return true end
 	if not te then return end
-	e:SetCategory(te:GetCategory())
 	e:SetProperty(te:GetProperty())
 	local tg=te:GetTarget()
 	if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
+	Duel.ClearOperationInfo(0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local te=s[Duel.GetCurrentChain()]

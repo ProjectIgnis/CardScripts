@@ -1,10 +1,8 @@
 --先史遺産トゥスパ・ロケット
 --Chronomaly Tuspa Rocket
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
 	--Upon normal summon, ATK loss to a target
 	local e1=Effect.CreateEffect(c)
@@ -27,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetCode(EVENT_BE_MATERIAL)
+	e3:SetProperty(EFFECT_FLAG_EVENT_PLAYER)
 	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.mtcon)
 	e3:SetOperation(s.mtop)
@@ -76,7 +75,6 @@ function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Grant double attack to "Number" Xyz
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
 	if not rc:IsSetCard(0x48) then return end
@@ -97,6 +95,5 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 		rc:RegisterEffect(e2,true)
 	end
 	rc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 

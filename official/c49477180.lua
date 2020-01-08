@@ -16,8 +16,9 @@ function s.initial_effect(c)
 	--gain
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetProperty(EFFECT_FLAG_EVENT_PLAYER+EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_BE_MATERIAL)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.mtcon)
 	e2:SetOperation(s.mtop)
 	c:RegisterEffect(e2)
@@ -52,10 +53,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return r==REASON_RITUAL and e:GetHandler():IsPreviousLocation(LOCATION_MZONE)
+	return r==REASON_RITUAL and and eg:IsExists(Card.IsSetCard,1,nil,0x106)
+		and e:GetHandler():IsPreviousLocation(LOCATION_MZONE)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	local c=e:GetHandler()
 	local g=eg:Filter(Card.IsSetCard,nil,0x106)
 	local rc=g:GetFirst()
@@ -78,7 +79,6 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 		rc:RegisterEffect(e2,true)
 	end
 	rc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

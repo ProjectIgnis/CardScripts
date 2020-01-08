@@ -4,8 +4,9 @@ function s.initial_effect(c)
 	--gain
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetProperty(EFFECT_FLAG_EVENT_PLAYER+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_BE_MATERIAL)
+	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.mtcon)
 	e1:SetOperation(s.mtop)
 	c:RegisterEffect(e1)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,id)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
@@ -23,10 +24,9 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10cf}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return r==REASON_RITUAL
+	return r==REASON_RITUAL and eg:IsExists(Card.IsSetCard,1,nil,0x10cf)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	local c=e:GetHandler()
 	local g=eg:Filter(Card.IsSetCard,nil,0x10cf)
 	local rc=g:GetFirst()
@@ -59,7 +59,6 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 		rc:RegisterEffect(e3,true)
 	end
 	rc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToRemove() end

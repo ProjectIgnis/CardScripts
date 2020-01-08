@@ -1,7 +1,6 @@
 --レフトハンド・シャーク
 --Left Hand Shark
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,6 +29,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_BE_MATERIAL)
+	e3:SetProperty(EFFECT_FLAG_EVENT_PLAYER)
 	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.efcon)
 	e3:SetOperation(s.efop)

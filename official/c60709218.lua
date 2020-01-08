@@ -40,7 +40,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local tc=g:Select(tp,1,1,nil)
 			Duel.SSet(tp,tc)
-			Duel.ConfirmCards(1-tp,tc)
 		end
 	end
 end

@@ -65,7 +65,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	elseif ((opt==1 and tc:IsType(TYPE_SPELL)) or (opt==2 and tc:IsType(TYPE_TRAP))) and tc:IsSSetable() then
 		Duel.DisableShuffleCheck()
 		Duel.SSet(1-tp,tc)
-		Duel.ConfirmCards(tp,g)
 	else
 		Duel.SendtoHand(tc,1-tp,REASON_EFFECT)
 		Duel.ShuffleHand(1-tp)

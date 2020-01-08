@@ -70,15 +70,14 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
 		if Duel.GetCurrentPhase()==PHASE_END and Duel.GetTurnPlayer()~=tp then
-		e1:SetLabel(Duel.GetTurnCount())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+			e1:SetLabel(Duel.GetTurnCount())
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
 		else
-		e1:SetLabel(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+			e1:SetLabel(0)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 		end
 		Duel.RegisterEffect(e1,tp)
 		tc:CreateEffectRelation(e1)
-		Duel.ConfirmCards(1-tp,g)
 	end
 end
 	--Check for flag

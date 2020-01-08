@@ -140,7 +140,6 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			local sc=g:Select(tp,1,1,nil):GetFirst()
 			Duel.SSet(tp,sc)
-			Duel.ConfirmCards(1-tp,sc)
 		end
 	end
 end

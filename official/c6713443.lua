@@ -49,7 +49,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local setg=sg:Select(tp,1,ft2,nil)
 			Duel.SSet(tp,setg)
-			Duel.ConfirmCards(1-tp,setg)
 		end
 	end
 end

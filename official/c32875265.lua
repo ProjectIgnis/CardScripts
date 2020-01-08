@@ -58,7 +58,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local tc=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 		Duel.SSet(tp,tc)
-		Duel.ConfirmCards(1-tp,tc)
 	end
 end
 function s.splimit(e,c,tp,sumtp,sumpos)

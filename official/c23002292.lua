@@ -48,7 +48,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local sg=g:Select(1-tp,1,1,nil)
 			Duel.SSet(1-tp,sg:GetFirst())
-			Duel.ConfirmCards(tp,sg)
 		end
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())

@@ -50,25 +50,24 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=eg:GetFirst()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	if c:IsRelateToEffect(e) and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
-	if ec:IsRelateToEffect(e) and ec:IsFaceup() then
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SET_BASE_ATTACK)
-	e1:SetValue(ec:GetBaseAttack())
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_SET_BASE_DEFENCE)
-	e2:SetValue(ec:GetBaseDefence())
-	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_CHANGE_CODE)
-	e3:SetValue(ec:GetCode())
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e3)	
-	end
+		if ec:IsRelateToEffect(e) and ec:IsFaceup() then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_SET_BASE_ATTACK)
+			e1:SetValue(ec:GetBaseAttack())
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+			c:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_SET_BASE_DEFENCE)
+			e2:SetValue(ec:GetBaseDefence())
+			c:RegisterEffect(e2)
+			local e3=Effect.CreateEffect(c)
+			e3:SetType(EFFECT_TYPE_SINGLE)
+			e3:SetCode(EFFECT_CHANGE_CODE)
+			e3:SetValue(ec:GetCode())
+			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			c:RegisterEffect(e3)
+			end
 		Duel.SpecialSummonComplete()
 	end
-	end
-	
+end

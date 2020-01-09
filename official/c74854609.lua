@@ -1,4 +1,5 @@
 --ゼクト・コンバージョン
+--Zekt Conversion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -31,9 +32,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=Duel.GetAttackTarget()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED)
+	if tc and tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED)
 		and ec:IsLocation(LOCATION_MZONE) and ec:IsFaceup() then
-		Duel.Equip(tp,ec,tc)
+		if not Duel.Equip(tp,ec,tc) then return end
 		--Add Equip limit
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

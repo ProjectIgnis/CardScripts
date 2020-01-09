@@ -66,7 +66,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if and tc and tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		aux.EquipByEffectAndLimitRegister(c,e,tp,tc)
 	end
 end

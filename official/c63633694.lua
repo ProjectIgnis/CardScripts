@@ -88,6 +88,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:GetSequence()>4 then
 		s.equipop(c,e,tp,tc)
+	end
 end
 	--Check if equipped monster can be special summoned
 function s.spfilter2(c,e,tp)

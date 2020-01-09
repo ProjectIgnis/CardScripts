@@ -1,4 +1,5 @@
 --極星邪狼フェンリル
+--Fenrir the Nordic Wolf
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -34,9 +35,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	--damage
 	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e6:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e6:SetOperation(s.damop)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetCode(EFFECT_BOTH_BATTLE_DAMAGE)
 	c:RegisterEffect(e6)
 end
 function s.spcon(e,c)
@@ -61,7 +61,4 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.ChangePosition(g,POS_FACEUP_ATTACK)
 	end
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(1-ep,ev,false)
 end

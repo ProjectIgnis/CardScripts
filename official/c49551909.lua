@@ -1,4 +1,5 @@
 --ヒロイック・リベンジ・ソード
+--Heroic Retribution Sword
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -44,13 +45,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 		--damage
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e2:SetRange(LOCATION_SZONE)
-		e2:SetCondition(s.damcon)
-		e2:SetOperation(s.damop)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		c:RegisterEffect(e2)
+		e2:SetType(EFFECT_TYPE_EQUIP)
+		e2:SetCode(EFFECT_ALSO_BATTLE_DAMAGE)
 		--Equip limit
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
@@ -80,11 +76,4 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if bc and bc:IsRelateToBattle() then
 		Duel.Destroy(bc,REASON_EFFECT)
 	end
-end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local ec=e:GetHandler():GetEquipTarget()
-	return ec and ep==tp and (Duel.GetAttacker()==ec or Duel.GetAttackTarget()==ec)
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(tp),false)
 end

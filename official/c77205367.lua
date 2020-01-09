@@ -1,10 +1,11 @@
 --CNo.96 ブラック・ストーム
+--Number C96: Dark Storm
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),3,4)
 	c:EnableReviveLimit()
-	--addown
+	--indest
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -12,12 +13,10 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
+	--damage
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(s.damcon)
-	e2:SetOperation(s.damop)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_ALSO_BATTLE_DAMAGE)
 	c:RegisterEffect(e2)
 	--atk
 	local e3=Effect.CreateEffect(c)
@@ -33,13 +32,6 @@ function s.initial_effect(c)
 end
 s.xyz_number=96
 s.listed_names={55727845}
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return ep==tp and c:IsRelateToBattle() and eg:GetFirst()==c:GetBattleTarget()
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(tp)+Duel.GetBattleDamage(1-tp),false)
-end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,55727845)
 end

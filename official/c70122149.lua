@@ -1,5 +1,5 @@
 --呪眼領閾－パレイドリア－
---Pareidolia, Domain of the Evil Eye
+--Evil Eye Domain - Pareidolia
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,8 +17,9 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.atkcon)
-	e2:SetOperation(s.atkop)
+	e2:SetCondition(s.dmgcond)
+	e2:SetTarget(s.dmgtg)
+	e2:SetOperation(s.dmgop)
 	c:RegisterEffect(e2)
 	--search
 	local e3=Effect.CreateEffect(c)
@@ -47,34 +48,22 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local fc=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_EVIL_EYE_SELENE),tp,LOCATION_SZONE,0,1,nil)
+function s.dmgcond(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_EVIL_EYE_SELENE),tp,LOCATION_SZONE,0,1,nil)
+end
+function s.dmgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttackTarget()
-	if a and a:IsSetCard(0x129) and a:IsControler(tp) and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and fc then
-		e:SetLabelObject(a)
-		return true
-	else return false end
+	if chk==0 then return a~=nil and a:IsControler(tp) and a:IsSetCard(0x129) end
 end
-function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local tc=e:GetLabelObject()
-	if tc and tc:IsRelateToBattle() then
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e2:SetRange(LOCATION_MZONE)
-		e2:SetCondition(s.damcon)
-		e2:SetOperation(s.damop)
-		e2:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
-		tc:RegisterEffect(e2)
-	end
-end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local ec=e:GetHandler()
-	return ec and ep==tp and (Duel.GetAttacker()==ec or Duel.GetAttackTarget()==ec)
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(tp),false)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_ALSO_BATTLE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
+	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	Duel.RegisterEffect(e1,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)==REASON_EFFECT and e:GetHandler():IsPreviousLocation(LOCATION_FZONE)

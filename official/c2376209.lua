@@ -82,6 +82,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e3,true)
 		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.efilter(e,re)
 	return re:IsActiveType(TYPE_MONSTER)

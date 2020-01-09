@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POS_E)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		Duel.SpecialSummonComplete()
-		tc:AddCounter(0x1019,1)
 	end
+	Duel.SpecialSummonComplete()
+	tc:AddCounter(0x1019,1)
 end

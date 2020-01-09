@@ -66,6 +66,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		sc:RegisterEffect(e2,true)
 		sc:CompleteProcedure()
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end

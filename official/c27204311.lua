@@ -84,5 +84,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		token:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
-	end 
+	end
 end

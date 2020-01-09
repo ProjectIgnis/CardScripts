@@ -1,4 +1,5 @@
 --ブルーアイズ・カオス・MAX・ドラゴン
+--Blue-Eyes Chaos MAX Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -29,22 +30,10 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_PIERCE)
+	e4:SetValue(DOUBLE_DAMAGE)
 	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e5:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e5:SetCondition(s.damcon)
-	e5:SetOperation(s.damop)
-	c:RegisterEffect(e5)
 end
 s.listed_names={21082832}
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
-end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return ep~=tp and c==Duel.GetAttacker() and Duel.GetAttackTarget() and Duel.GetAttackTarget():IsDefensePos()
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DoublePiercingDamage(ep)
 end

@@ -1,4 +1,5 @@
 --メタルフォーゼ・オリハルク
+--Metalfoes Orichalc
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -11,34 +12,21 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xe1))
+	e1:SetValue(DOUBLE_DAMAGE)
 	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(s.damcon)
-	e2:SetOperation(s.damop)
-	c:RegisterEffect(e2)
 	--destroy
-	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_DESTROY)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e3:SetCondition(s.descon)
-	e3:SetTarget(s.destg)
-	e3:SetOperation(s.desop)
-	c:RegisterEffect(e3)
+	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_DESTROY)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e2:SetCondition(s.descon)
+	e2:SetTarget(s.destg)
+	e2:SetOperation(s.desop)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0xe1}
 s.material_setcode=0xe1
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsSetCard(0xe1) and tc:GetBattleTarget()~=nil and tc:GetBattleTarget():IsDefensePos()
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DoublePiercingDamage(ep)
-end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end

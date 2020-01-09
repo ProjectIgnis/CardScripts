@@ -1,4 +1,5 @@
 --サイバー・レイダー
+--Cyber Raider
 local s,id=GetID()
 function s.initial_effect(c)
 	--effect
@@ -62,8 +63,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	else
 		local c=e:GetHandler()
-		if tc and tc:IsRelateToEffect(e) and c:IsRelateToEffect(e) and c:IsFaceup() then
-			Duel.Equip(tp,tc,e:GetHandler())
+		if tc and tc:IsRelateToEffect(e) then
+			Duel.Equip(tp,tc,c)
 		end
 	end
 end

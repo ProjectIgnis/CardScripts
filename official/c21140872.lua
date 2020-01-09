@@ -69,10 +69,8 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.Equip(tp,tc,c,true)
+	if tc:IsRelateToEffect(e) and Duel.Equip(tp,tc,c,true) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)

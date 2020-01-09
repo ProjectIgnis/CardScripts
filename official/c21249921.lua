@@ -1,4 +1,5 @@
 --ドラグニティナイト－ヴァジュランダ
+--Dragunity Knight - Vajrayana
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -49,7 +50,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsFaceup() and c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		aux.EquipByEffectAndLimitRegister(c,e,tp,tc)
 	end
 end

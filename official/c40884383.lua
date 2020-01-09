@@ -1,4 +1,5 @@
 --凶悪犯－チョップマン
+--Chopman the Desperate Outlaw
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -28,7 +29,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and c:IsFaceup() and c:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Equip(tp,tc,c)
 	end
 end

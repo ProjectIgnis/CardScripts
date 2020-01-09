@@ -1,4 +1,5 @@
 --シー・ランサー
+--Sea Lancer
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -63,27 +64,25 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetTargetCards(e)
-	local tg0=g:Filter(Card.IsRelateToEffect,nil,e)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	if #tg0==0 or ft<=0 then return end
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		local tg=nil
-		if ft<#tg0 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-			tg=tg0:FilterSelect(tp,s.filter,ft,ft,nil)
+		local tg=Group.CreateGroup()
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		if ft>=g:GetCount() then
+			tg:Merge(g)
 		else
-			tg=tg0:Clone()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+			tg:Merge(g:Select(tp,ft,ft,nil))
 		end
-		if #tg>0 then
-			local tc=tg:GetFirst()
-			while tc do
-				s.equipop(c,e,tp,tc,true)
-				tc=tg:GetNext()
-			end
-			Duel.EquipComplete()
-		end
-	else
-		Duel.SendtoGrave(tg0,REASON_EFFECT)
+	end
+	g:Sub(tg)
+	local tc=tg:GetFirst()
+	while tc do
+		s.equipop(c,e,tp,tc,true)
+		tc=tg:GetNext()
+	end
+	Duel.EquipComplete()
+	if g:GetCount()>0 then
+		Duel.SendtoGrave(g,REASON_RULE)
 	end
 end
 function s.eqfilter(c,ec)

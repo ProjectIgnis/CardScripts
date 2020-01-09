@@ -1,4 +1,5 @@
 --H・C ウォー・ハンマー
+--Heroic Challenger - War Hammer
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip

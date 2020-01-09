@@ -59,10 +59,6 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not tc or not tc:IsRelateToEffect(e) or not tc:IsType(TYPE_MONSTER) then return end
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then
-		if tc:IsLocation(LOCATION_MZONE) then Duel.SendtoGrave(tc,REASON_EFFECT) end
-		return
-	end
-	s.equipop(c,e,tp,tc)
+	if not tc or not tc:IsType(TYPE_MONSTER) then return end
+	if not s.equipop(c,e,tp,tc) then return end
 end

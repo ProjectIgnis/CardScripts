@@ -97,8 +97,8 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(c:GetAttack()*2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and not e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_GALAXYEYES_P_DRAGON)

@@ -43,8 +43,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabelObject(e1)
 		e2:SetOperation(s.cedop)
 		Duel.RegisterEffect(e2,tp)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsContains(e:GetLabelObject()) then

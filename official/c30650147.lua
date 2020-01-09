@@ -49,6 +49,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetValue(tc:GetOriginalLevel())
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		token:RegisterEffect(e3,true)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end

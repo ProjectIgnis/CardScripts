@@ -58,8 +58,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(RACE_WYRM)
 		e1:SetCondition(s.rcon)
 		tc:RegisterEffect(e1)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.rcon(e)
 	return e:GetOwner():IsHasCardTarget(e:GetHandler())

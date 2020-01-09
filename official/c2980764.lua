@@ -1,4 +1,5 @@
 --聖なるあかり
+--Consecrated Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle
@@ -33,7 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.tglimit(e,c)
-	return c:IsAttribute(ATTRIBUTE_DARK)
+	return c and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function s.sumlimit(e,c)
 	return c:IsAttribute(ATTRIBUTE_DARK)

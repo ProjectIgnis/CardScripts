@@ -67,9 +67,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		if c:IsFaceup() and c:IsRelateToEffect(e) then
-			s.equipop(c,e,tp,tc)
-		else Duel.SendtoGrave(tc,REASON_RULE) end
+		s.equipop(c,e,tp,tc)
 	end
 end
 function s.repval(e,re,r,rp)

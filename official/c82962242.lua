@@ -1,4 +1,5 @@
 --ヴァンプ・オブ・ヴァンパイア
+--Vampire Vamp
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -81,10 +82,9 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not tc or not tc:IsRelateToEffect(e) or not tc:IsType(TYPE_MONSTER) then return end
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) then
 		s.equipop(c,e,tp,tc)
-	else Duel.SendtoGrave(tc,REASON_RULE) end
+	end
 end
 function s.spfilter(c)
 	return c:GetFlagEffect(id)~=0

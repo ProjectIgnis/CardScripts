@@ -47,7 +47,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=g:GetNext()
 	if tc:IsLocation(LOCATION_GRAVE) then tc,ec=ec,tc end
 	if tc:IsFaceup() then
-		Duel.Equip(tp,ec,tc,true)
+		if not Duel.Equip(tp,ec,tc,true) then return end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)

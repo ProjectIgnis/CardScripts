@@ -1,4 +1,5 @@
 --コアキメイル・ウォーアームズ
+--Koa'ki Meiru War Arms
 local s,id=GetID()
 function s.initial_effect(c)
 	--cost
@@ -102,7 +103,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsFaceup() and c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		s.equipop(c,e,tp,tc)
 	end
 end

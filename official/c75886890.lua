@@ -1,4 +1,5 @@
 --ヴァイロン・スフィア
+--Vylon Sphere
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -78,7 +79,7 @@ end
 function s.eqop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local ec=e:GetLabelObject()
-	if tc:IsRelateToEffect(e) and ec:IsFaceup() and ec:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Equip(tp,tc,ec)
 	end
 end

@@ -1,4 +1,5 @@
 --機械竜 パワー・ツール
+--Power Tool Mecha Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -53,7 +54,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:CheckEquipTarget(c) then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:CheckEquipTarget(c) then
 		Duel.Equip(tp,tc,c)
 	end
 end

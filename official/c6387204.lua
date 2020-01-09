@@ -1,4 +1,5 @@
 --CNo.6 先史遺産カオス・アトランタル
+--Number C6: Chronomaly Chaos Atlandis
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -50,9 +51,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		if c:IsFaceup() and c:IsRelateToEffect(e) then
-			s.equipop(c,e,tp,tc)
-		else Duel.SendtoGrave(tc,REASON_RULE) end
+		s.equipop(c,e,tp,tc)
 	end
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)

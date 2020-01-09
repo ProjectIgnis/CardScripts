@@ -1,4 +1,5 @@
 --トランスフォーム・スフィア
+--Transforming Sphere
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -78,9 +79,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		if c:IsFaceup() and c:IsRelateToEffect(e) then
-			s.equipop(c,e,tp,tc)
-		else Duel.SendtoGrave(tc,REASON_RULE) end
+		s.equipop(c,e,tp,tc)
 	end
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)

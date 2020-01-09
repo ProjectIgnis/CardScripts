@@ -1,4 +1,5 @@
 --イクイップ・シュート
+--Equip Shot
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -39,7 +40,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tc=g:GetFirst()
 	if eq==tc then tc=g:GetNext() end
-	if eqc and eq:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if eqc and eq:IsRelateToEffect(e) then
 		if Duel.Equip(tp,eq,tc)==0 then return end
 		Duel.BreakEffect()
 		local a=eqc

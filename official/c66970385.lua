@@ -1,4 +1,5 @@
 --聖騎士伝説の終幕
+--Last Chapter of the Noble Knights
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -36,7 +37,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g2,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local tc=e:GetLabelObject()
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local ec=tg:GetFirst()

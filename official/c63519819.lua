@@ -1,4 +1,5 @@
 --サウザンド・アイズ・サクリファイス
+--Thousand-Eyes Restrict
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -76,10 +77,8 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and tc:IsControler(1-tp) then
-		if c:IsFaceup() and c:IsRelateToEffect(e) and s.eqcon(e,tp,eg,ep,ev,re,r,rp) then
-			s.equipop(c,e,tp,tc)
-		else Duel.SendtoGrave(tc,REASON_RULE) end
+	if tc and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and tc:IsControler(1-tp)  and s.eqcon(e,tp,eg,ep,ev,re,r,rp) then
+		s.equipop(c,e,tp,tc)
 	end
 end
 function s.repval(e,re,r,rp)

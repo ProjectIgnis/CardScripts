@@ -1,4 +1,5 @@
 --巨竜の聖騎士
+--Paladin of Felgrand
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -55,9 +56,9 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,c)
 	local tc=g:GetFirst()
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
+	if tc then
 		s.equipop(c,e,tp,tc)
-	else Duel.SendtoGrave(tc,REASON_EFFECT) end
+	end
 end
 function s.eqcon(e)
 	local eg=e:GetHandler():GetEquipGroup()

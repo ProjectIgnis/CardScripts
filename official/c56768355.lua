@@ -1,4 +1,5 @@
 --ヴァイロン・アルファ
+--Vylon Alpha
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -43,7 +44,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and c:IsFaceup() and c:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Equip(tp,tc,c)
 	end
 end

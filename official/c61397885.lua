@@ -1,4 +1,5 @@
 --幻煌龍の浸渦
+--Phantasm Spiral Power
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -31,10 +31,10 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.damcon)
-	e3:SetCost(s.damcost)
-	e3:SetTarget(s.damtg)
-	e3:SetOperation(s.damop)
+	e3:SetCondition(s.indescond)
+	e3:SetCost(s.indescost)
+	e3:SetTarget(s.indestg)
+	e3:SetOperation(s.indesop)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x12b}
@@ -54,44 +54,41 @@ end
 function s.imval(e,re)
 	return e:GetHandler():GetBattleTarget()~=re:GetOwner()
 end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
+function s.indescond(e,tp,eg,ep,ev,re,r,rp)
+	local at=Duel.GetAttackTarget()
+	if not at then return false end
 	local c=e:GetHandler()
-	local tc=eg:GetFirst()
-	e:SetLabelObject(tc)
-	return tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE)
-		and (tc==c or tc:IsSetCard(0x12b) and c:GetLinkedGroup():IsContains(tc))
+	if at==c then return true end
+	local lg=c:GetLinkedGroup()
+	return at and at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(0x12b) and lg:IsContains(at)
 end
-function s.cfilter(c)
+function s.costfilter(c)
 	return c:IsSetCard(0x12b) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
-function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_COST)
+function s.indescost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST)
 end
-function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	e:GetLabelObject():CreateEffectRelation(e)
+	Duel.GetAttackTarget():CreateEffectRelation(e)
 end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	if tc and tc:IsRelateToEffect(e) and tc:IsRelateToBattle() then
-		tc:ReleaseEffectRelation(e)
-		local e1=Effect.CreateEffect(e:GetHandler())
+function s.indesop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local at=Duel.GetAttackTarget()
+	if at:IsRelateToEffect(e) then
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
-		tc:RegisterEffect(e1)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+		at:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e2:SetTargetRange(1,0)
+		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		Duel.RegisterEffect(e2,tp)
 	end
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e2:SetOperation(s.dameval)
-	e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
-	Duel.RegisterEffect(e2,tp)
-end
-function s.dameval(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,0)
 end

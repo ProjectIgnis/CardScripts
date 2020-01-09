@@ -19,13 +19,14 @@ function s.initial_effect(c)
 	--reduce damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetRange(LOCATION_GRAVE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_START)
+	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id+1)
-	e2:SetCondition(s.damcon)
+	e2:SetCondition(s.damcon1)
 	e2:SetCost(aux.bfgcost)
-	e2:SetOperation(s.damop)
+	e2:SetTarget(s.damtg1)
+	e2:SetOperation(s.damop1)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x12b}
@@ -61,31 +62,29 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
-function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp
+function s.damcon1(e,tp,eg,ep,ev,re,r,rp)
+	local a=Duel.GetAttacker()
+	return a and a:IsControler(1-tp)
 end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
+function s.damfilter(c)
+	return c:IsSetCard(0x12b) and c:IsType(TYPE_LINK)
 end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker()~=tp
+function s.damtg1(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	--avoid damage
+function s.damop1(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CHANGE_DAMAGE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_AVAILABLE_BD+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetDescription(aux.Stringid(id,2))
+	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetValue(s.damval)
+	e1:SetCondition(s.damcon3)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function s.damfilter(c)
-	return c:IsLinkMonster() and c:IsSetCard(0x12b)
-end
-function s.damval(e,re,val,r,rp,rc)
-	local ct=Duel.GetMatchingGroup(s.damfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil):GetSum(Card.GetLink)*1000
-	if val<=ct then return 0 else return val end
+function s.damcon3(e)
+	local tp=e:GetHandlerPlayer()
+	local g=Duel.GetMatchingGroup(s.damfilter,tp,LOCATION_GRAVE,0,nil)
+	local ct=g:GetSum(Card.GetLink)*1000
+	return Duel.GetBattleDamage(tp)<=ct
 end

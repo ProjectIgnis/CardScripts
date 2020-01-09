@@ -1,4 +1,5 @@
 --ぶつかり合う魂
+--Clashing Souls
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -41,10 +42,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		g:KeepAlive()
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e2:SetOperation(s.damop)
-		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e2:SetTargetRange(1,1)
 		Duel.RegisterEffect(e2,tp)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -54,10 +55,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		Duel.RegisterEffect(e3,tp)
 	end
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,0)
-	Duel.ChangeBattleDamage(1-tp,0)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject():Filter(Card.IsStatus,nil,STATUS_BATTLE_DESTROYED)

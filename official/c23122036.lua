@@ -1,4 +1,5 @@
 --陰謀の盾
+--Intrigue Shield
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,11 +35,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e2:SetRange(LOCATION_SZONE)
-		e2:SetCondition(s.damcon)
-		e2:SetOperation(s.damop)
+		e2:SetType(EFFECT_TYPE_EQUIP)
+		e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+		e2:SetValue(1)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		--Equip limit
@@ -56,10 +55,6 @@ end
 function s.valcon(e,re,r,rp)
 	return r&REASON_BATTLE~=0 and e:GetHandler():GetEquipTarget():IsPosition(POS_FACEUP_ATTACK)
 end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local ec=e:GetHandler():GetEquipTarget()
-	return ec and ep==tp and (Duel.GetAttacker()==ec or Duel.GetAttackTarget()==ec)
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,0)
+function s.damcon(e)
+	return e:GetHandler():GetEquipTarget():GetControler()==e:GetHandlerPlayer()
 end

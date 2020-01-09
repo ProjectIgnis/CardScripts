@@ -72,6 +72,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		if c:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 			Duel.Overlay(tc,Group.FromCards(c))
 		end
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end

@@ -53,8 +53,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabel(Duel.GetTurnCount())
 		e2:SetLabelObject(tc)
 		Duel.RegisterEffect(e2,tp)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

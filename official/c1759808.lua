@@ -60,12 +60,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetOperation(s.tdop)
 			e2:SetReset(RESET_PHASE+PHASE_END,2)
 			Duel.RegisterEffect(e2,tp)
-			Duel.SpecialSummonComplete()
 		end
+	Duel.SpecialSummonComplete()
 	end
 end
 function s.splimit(e,c)
-    return c:IsLocation(LOCATION_DECK+LOCATION_EXTRA)
+	return c:IsLocation(LOCATION_DECK+LOCATION_EXTRA)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()==e:GetLabel()+1 and e:GetLabelObject():GetFlagEffect(id)~=0

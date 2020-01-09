@@ -38,8 +38,8 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(s.splimit)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		token:RegisterEffect(e1,true)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 	--Restricted to insect monsters for extra deck
 function s.splimit(e,c)

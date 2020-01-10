@@ -52,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.ConfirmDecktop(1-p,5)
 	tc=g2:GetFirst()
-	for tc in aux.GetNext(g2) do
+	for tc in aux.Next(g2) do
 		local lv=tc:GetLevel()
 		local pos=0
 		if s.spchk(tc,e,tc:GetControler()) and Duel.IsPlayerAffectedByEffect(tc:GetControler(),CARD_BLUEEYES_SPIRIT) then

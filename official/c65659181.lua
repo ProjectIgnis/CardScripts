@@ -34,7 +34,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(s.spfilter,nil,e,tp)
 	if #sg<=ft then
 		local tc=sg:GetFirst()
-		for tc in aux.GetNext(sg) do
+		for tc in aux.Next(sg) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local fg=sg:Select(tp,ft,ft,nil)
 		local tc=fg:GetFirst()
-		for tc in aux.GetNext(fg) do
+		for tc in aux.Next(fg) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

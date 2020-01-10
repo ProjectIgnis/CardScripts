@@ -42,7 +42,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	if #fg>1 and ft==1 then fg=fg:Select(tp,1,1,nil) end
 	local tc=fg:GetFirst()
-	for tc in aux.GetNext(fg) do
+	for tc in aux.Next(fg) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

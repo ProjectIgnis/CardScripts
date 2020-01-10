@@ -109,7 +109,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.BreakEffect()
 		tc=tg:GetFirst()
-		for tc in aux.GetNext(tg) do
+		for tc in aux.Next(tg) do
 			Duel.SpecialSummonStep(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 			tc:CompleteProcedure()
 		end

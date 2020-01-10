@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #sg>0 then
 		local tc=sg:GetFirst()
 		local fid=e:GetHandler():GetFieldID()
-		for tc in aux.GetNext(sg) do
+		for tc in aux.Next(sg) do
 			if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK) then
 				tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
 			end

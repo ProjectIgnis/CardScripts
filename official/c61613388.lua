@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		ct1=ct1-1
 	end
 	local sc=sg:GetFirst()
-	for sc in aux.GetNext(sg) do
+	for sc in aux.Next(sg) do
 		if Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

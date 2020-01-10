@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Pendulum summon feature
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--Special summon this card from pendulum zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

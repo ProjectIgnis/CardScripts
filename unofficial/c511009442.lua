@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--negate attack Pendulum Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(80538728,0))

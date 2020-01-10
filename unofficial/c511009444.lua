@@ -2,7 +2,7 @@
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--selfdes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

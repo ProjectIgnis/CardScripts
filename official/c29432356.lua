@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--change scale
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -130,7 +130,7 @@ function s.checkop(e,tp)
 	end
 end
 function s.penfilter(c,e,tp,lscale,rscale)
-	return c:IsSetCard(0xc4) and aux.PConditionFilter(c,e,tp,lscale,rscale)
+	return c:IsSetCard(0xc4) and Pendulum.Filter(c,e,tp,lscale,rscale)
 end
 function s.pencon1(e,c,og)
 	if c==nil then return true end

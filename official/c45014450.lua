@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.EnablePendulumAttribute(c,false)
+	Pendulum.AddProcedure(c,false)
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1050),aux.FilterBoolFunctionEx(Card.IsSetCard,0x99))
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)

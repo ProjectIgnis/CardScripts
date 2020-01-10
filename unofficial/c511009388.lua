@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--destroy and set
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)

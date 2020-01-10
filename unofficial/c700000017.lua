@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--Reduce ATK (P)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)

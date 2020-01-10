@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--splimit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)

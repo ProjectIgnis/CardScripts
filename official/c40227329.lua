@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--damage reduce
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

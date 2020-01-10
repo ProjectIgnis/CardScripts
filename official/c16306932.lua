@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--revive limit
 	c:EnableUnsummonable()
 	local e0=Effect.CreateEffect(c)

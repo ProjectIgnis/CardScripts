@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Pendulum Summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--Recover
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND)

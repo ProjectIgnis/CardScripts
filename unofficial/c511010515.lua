@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.EnablePendulumAttribute(c,false)
+	Pendulum.AddProcedure(c,false)
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10af),8,2)
 	--xyz indes
 	local e1=Effect.CreateEffect(c)

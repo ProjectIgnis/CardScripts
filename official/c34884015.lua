@@ -157,7 +157,7 @@ function s.pencon(e,c,og)
 	else
 		g=Duel.GetFieldGroup(tp,loc,0)
 	end
-	return g:IsExists(aux.PConditionFilter,1,nil,e,tp,lscale,rscale)
+	return g:IsExists(Pendulum.Filter,1,nil,e,tp,lscale,rscale)
 end
 function s.penop(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 	local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
@@ -177,9 +177,9 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 	if ft2>0 then loc=loc+LOCATION_EXTRA end
 	local tg=nil
 	if og then
-		tg=og:Filter(Card.IsLocation,nil,loc):Filter(aux.PConditionFilter,nil,e,tp,lscale,rscale)
+		tg=og:Filter(Card.IsLocation,nil,loc):Filter(Pendulum.Filter,nil,e,tp,lscale,rscale)
 	else
-		tg=Duel.GetMatchingGroup(aux.PConditionFilter,tp,loc,0,nil,e,tp,lscale,rscale)
+		tg=Duel.GetMatchingGroup(Pendulum.Filter,tp,loc,0,nil,e,tp,lscale,rscale)
 	end
 	ft1=math.min(ft1,tg:FilterCount(Card.IsLocation,nil,LOCATION_HAND))
 	ft2=math.min(ft2,tg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA))

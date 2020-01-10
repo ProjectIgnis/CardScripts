@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
     c:EnableReviveLimit()
-    aux.EnablePendulumAttribute(c,false)
+    Pendulum.AddProcedure(c,false)
     Fusion.AddProcMixN(c,true,true,s.ffilter,3)
     --place counter (pendulum)
     local e1=Effect.CreateEffect(c)

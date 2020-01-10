@@ -6,7 +6,7 @@
 local s,id=GetID()
 
 function s.initial_effect(c)
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--When your opponent Pendulum Summons monsters: You can negate the effects of those monsters, also they cannot attack.
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)

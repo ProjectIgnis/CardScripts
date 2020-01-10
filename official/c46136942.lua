@@ -2,7 +2,7 @@
 --Performapal Odd-Eyes Dissolver
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--fusion (p)
 	local params = {aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON)}
 	local e1=Effect.CreateEffect(c)

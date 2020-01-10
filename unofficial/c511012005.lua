@@ -1,7 +1,7 @@
 --Acrobatic Magician (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--Special Summon (P.Zone)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(33656832,0))

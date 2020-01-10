@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE+LOCATION_MZONE)
 	c:SetSPSummonOnce(id)
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

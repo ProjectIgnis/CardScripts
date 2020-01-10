@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--Fusion reborn
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(12525049,0))

@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--Ritual Summon
 	local e1=Ritual.CreateProc(c,RITPROC_EQUAL,aux.FilterBoolFunction(Card.IsSetCard,0xb4),nil,aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_IGNITION)

@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--sp summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

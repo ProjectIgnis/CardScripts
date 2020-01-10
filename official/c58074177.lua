@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.EnablePendulumAttribute(c,false)
+	Pendulum.AddProcedure(c,false)
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),1,1,Synchro.NonTunerEx(Card.IsSetCard,0xff),1,1)
 	--atk
 	local e1=Effect.CreateEffect(c)

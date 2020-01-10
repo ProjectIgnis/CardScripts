@@ -51,8 +51,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCondition(s.thcon)
 		e3:SetOperation(s.thop)
 		Duel.RegisterEffect(e3,tp)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.splimit(e,c)
 	return not c:IsSetCard(0x10c)

@@ -42,8 +42,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.thcon)
 		e1:SetOperation(s.thop)
 		Duel.RegisterEffect(e1,tp)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

@@ -51,8 +51,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1,true)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return r&REASON_EFFECT==REASON_EFFECT and re:GetHandler():IsLinkMonster() and re:IsActivated()

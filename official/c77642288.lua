@@ -32,10 +32,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,2,2,nil,e,tp)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,106,tp,tp,false,false,POS_FACEUP)
 		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
-		tc=g:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end

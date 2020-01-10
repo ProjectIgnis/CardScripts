@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,0,ft,nil)
 		local tc=sg:GetFirst()
-		while tc do
+		for tc in aux.Next(sg) do
 			if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK) then
 				--cannot trigger
 				local e1=Effect.CreateEffect(e:GetHandler())
@@ -48,7 +48,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				tc:RegisterEffect(e1)
 			end
-			tc=sg:GetNext()
 		end
 		Duel.SpecialSummonComplete()
 	end

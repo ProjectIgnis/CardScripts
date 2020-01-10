@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter2),tp,LOCATION_GRAVE,0,1,1,g1:GetFirst(),e,tp)
 		g1:Merge(g2)
 		local tc=g1:GetFirst()
-		while tc do
+		for tc in aux.Next(g1) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -53,7 +53,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
-			tc=g1:GetNext()
 		end
 		Duel.SpecialSummonComplete()
 	end

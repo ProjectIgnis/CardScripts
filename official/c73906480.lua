@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g~=2 then return end
 	local tc=g:GetFirst()
 	local c=e:GetHandler()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -51,7 +51,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(s.xyzlimit)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end

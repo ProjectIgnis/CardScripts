@@ -38,6 +38,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end

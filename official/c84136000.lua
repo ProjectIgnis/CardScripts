@@ -37,7 +37,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tc:GetControler(),tc:GetControler(),false,false,POS_FACEUP_DEFENSE) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -45,7 +45,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
 		end
-		tc=g:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end

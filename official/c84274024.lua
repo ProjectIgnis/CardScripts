@@ -78,8 +78,8 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.cfilter2(c,e,tp)
 	return c:IsType(TYPE_SYNCHRO) and c:IsControler(tp) and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_PENDULUM)

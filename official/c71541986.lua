@@ -35,7 +35,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:Select(tp,2,2,nil)
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.GetNext(sg) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -63,7 +63,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e5=e4:Clone()
 		e5:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 		tc:RegisterEffect(e5)
-		tc=sg:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end

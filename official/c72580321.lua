@@ -42,7 +42,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<#g or (#g>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) then return end
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -50,7 +50,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)
 		end
-		tc=g:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end

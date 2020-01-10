@@ -28,7 +28,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ft<=#g-1 then return end
 	if #g>0 then
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -38,7 +38,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(ATTRIBUTE_FIRE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
-			tc=g:GetNext()
 		end
 		Duel.SpecialSummonComplete()
 	end

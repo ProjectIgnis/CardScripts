@@ -58,18 +58,17 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,ft,nil)
 	if #g>0 then
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			tc:AddMonsterAttribute(TYPE_NORMAL)
 			Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP)
 			tc:AddMonsterAttributeComplete()
-			local e7=Effect.CreateEffect(e:GetHandler())
-			e7:SetType(EFFECT_TYPE_SINGLE)
-			e7:SetCode(EFFECT_TO_GRAVE_REDIRECT)
-			e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e7:SetReset(RESET_EVENT+RESETS_REDIRECT)
-			e7:SetValue(LOCATION_REMOVED)
-			tc:RegisterEffect(e7,true)
-			tc=g:GetNext()
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_TO_GRAVE_REDIRECT)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+			e1:SetValue(LOCATION_REMOVED)
+			tc:RegisterEffect(e1,true)
 		end
 		Duel.SpecialSummonComplete()
 	end

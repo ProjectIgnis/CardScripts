@@ -1,4 +1,5 @@
 --Ｓｉｎ Ｃｒｏｓｓ
+--Malefic Divide (tag Force 6)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -50,8 +51,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 		e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e4)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

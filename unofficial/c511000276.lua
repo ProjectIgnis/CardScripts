@@ -17,12 +17,12 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(511000275)
 end
 function s.filter(c,e,tp)
-	return c:IsAttackBelow(1000) and c:IsNumeron() and c:IsType(TYPE_XYZ) 
+	return c:IsAttackBelow(1000) and c:IsNumeron() and c:IsType(TYPE_XYZ)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ect=cCARD_SUMMON_GATE and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and cCARD_SUMMON_GATE[tp]
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>3 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
+	if chk==0 then return Duel.GetLocationCountFromEx(tp)>3 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,4,nil,e,tp) and (not ect or ect>=4) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
@@ -37,10 +37,9 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if #sg>0 then
 		local fid=e:GetHandler():GetFieldID()
 		local tc=sg:GetFirst()
-		while tc do
+		for tc in aux.Next(sg) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			tc:RegisterFlagEffect(51100276,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
-			tc=sg:GetNext()
 		end
 		Duel.SpecialSummonComplete()
 		sg:KeepAlive()

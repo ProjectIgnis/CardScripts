@@ -35,7 +35,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,ft1,ft1,nil,e,tp)
 	if #g>0 then
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			Duel.SpecialSummonStep(tc, 0, tp, tp, false, false, POS_FACEUP)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -47,7 +47,6 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2,true)
-			tc=g:GetNext()
 		end
 		Duel.SpecialSummonComplete()
 		g:KeepAlive()

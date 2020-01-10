@@ -27,11 +27,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=e:GetHandler():GetOverlayGroup()
 	local count=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if s.filter(tc,e,tp) then
 			count=count+1
 		end
-		tc=g:GetNext()
 	end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
@@ -57,10 +56,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 	local sg=g:FilterSelect(tp,s.filter,#g,#g,nil,e,tp)
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		c:SetCardTarget(tc)
-		tc=sg:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end

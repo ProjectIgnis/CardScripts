@@ -12,9 +12,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
+	local atk=c:GetBaseAttack()
+	local def=c:GetBaseDefense()
 	return c:IsFaceup() and c:IsLevelBelow(3) and c:IsRace(RACE_INSECT)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,c:GetBaseAttack(),c:GetBaseDefense(),c:GetOriginalLevel(),
-			c:GetOriginalRace(),c:GetOriginalAttribute())
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,atk,def,c:GetOriginalLevel(),c:GetOriginalRace(),c:GetOriginalAttribute())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end
@@ -54,6 +55,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e5:SetValue(tc:GetOriginalAttribute())
 		token:RegisterEffect(e5,true)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end

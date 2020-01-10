@@ -46,8 +46,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetLabel(0)
 			e2:SetCountLimit(1)
 			tc:RegisterEffect(e2,true)
-			Duel.SpecialSummonComplete()
-		end
+			end
+		Duel.SpecialSummonComplete()
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

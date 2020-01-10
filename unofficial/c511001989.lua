@@ -46,6 +46,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e4=e3:Clone()
 		e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		tc:RegisterEffect(e4)
-		Duel.SpecialSummonComplete()
-	end
+		end
+	Duel.SpecialSummonComplete()
 end

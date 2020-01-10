@@ -23,7 +23,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
 		if tc:IsSummonType(SUMMON_TYPE_SYNCHRO) then
-			tc:RegisterFlagEffect(id,0,0,1) 	
+			tc:RegisterFlagEffect(id,0,0,1)
 		end
 		tc=eg:GetNext()
 	end
@@ -51,7 +51,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,ft,ft,nil,e,tp)
 	if #g>0 then
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -70,7 +70,6 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e3)
 			tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-			tc=g:GetNext()
 		end
 		g:KeepAlive()
 		Duel.SpecialSummonComplete()

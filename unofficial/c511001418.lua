@@ -78,9 +78,8 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	if #g>ft then return end
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tc:GetOwner(),tc:GetOwner(),false,false,POS_FACEUP)
-		tc=g:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end

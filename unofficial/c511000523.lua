@@ -32,9 +32,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		local fid=e:GetHandler():GetFieldID()
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			tc=g:GetNext()
 		end
 		Duel.SpecialSummonComplete()
 	end

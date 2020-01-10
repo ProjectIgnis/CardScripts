@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local sg=aux.SelectUnselectGroup(g,e,tp,nil,ft,s.rescon,1,tp,HINTMSG_SPSUMMON,s.rescon)
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -56,7 +56,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e1:Clone()
 		e3:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 		tc:RegisterEffect(e3)
-		tc=sg:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end

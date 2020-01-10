@@ -42,7 +42,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		sg=sg:Select(tp,ft,ft,nil)
 	end
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP)
 		local e0=Effect.CreateEffect(c)
 		e0:SetCode(EFFECT_CHANGE_TYPE)
@@ -75,7 +75,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e3:SetOperation(s.leaveop)
 		token:RegisterEffect(e3,true)
-		tc=sg:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end

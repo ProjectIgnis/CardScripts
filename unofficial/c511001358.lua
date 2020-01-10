@@ -62,9 +62,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local fg=g:Select(tp,fts,fts,nil)
 				local tc=fg:GetFirst()
-				while tc do
+				for tc in aux.Next(fg) do
 					Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-					tc=fg:GetNext()
 				end
 			end
 		end

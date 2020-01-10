@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetCode(EFFECT_CHANGE_CODE)
 			e3:SetValue(ec:GetCode())
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-			c:RegisterEffect(e3)	
+			c:RegisterEffect(e3)
 		end
 		Duel.SpecialSummonComplete()
 	end

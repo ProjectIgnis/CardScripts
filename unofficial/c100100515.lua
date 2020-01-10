@@ -23,7 +23,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	if chk==0 then return tc and tc:IsCanRemoveCounter(tp,0x91,1,REASON_COST) end	 
+	if chk==0 then return tc and tc:IsCanRemoveCounter(tp,0x91,1,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	tc:RemoveCounter(tp,0x91,1,REASON_COST)	
 end
@@ -45,9 +45,8 @@ function s.rmfilter(c)
 end
 function s.sp(g,tp,pos)
 	local sc=g:GetFirst()
-	while sc do
+	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(sc,0,tp,tp,false,false,pos)
-		sc=g:GetNext()
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

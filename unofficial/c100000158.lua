@@ -34,12 +34,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.GetFirstMatchingCard(s.filter2,tp,LOCATION_DECK,0,nil,tc:GetCode(),e,tp)
 		if Duel.SpecialSummonStep(sg,0,tp,tp,false,false,POS_FACEUP) then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		sg:RegisterEffect(e1)
-		Duel.SpecialSummonComplete()
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			sg:RegisterEffect(e1)
 		end
+		Duel.SpecialSummonComplete()
 	end
 end

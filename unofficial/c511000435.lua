@@ -114,7 +114,7 @@ local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp)
 		--Must Attack
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
-	    e2:SetCode(EFFECT_MUST_ATTACK)
+		e2:SetCode(EFFECT_MUST_ATTACK)
 		g2:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD)

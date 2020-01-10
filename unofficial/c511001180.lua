@@ -38,7 +38,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		local sg2=g2:Select(tp,1,1,nil)
 		sg1:Merge(sg2)
 		local tc=sg1:GetFirst()
-		while tc do
+		for tc in aux.Next(sg1) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -50,7 +50,6 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2,true)
-			tc=sg1:GetNext()
 		end
 		Duel.SpecialSummonComplete()
 	end

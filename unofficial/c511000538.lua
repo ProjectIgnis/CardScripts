@@ -50,8 +50,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetValue(s.lv)
 		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e4)
-		Duel.SpecialSummonComplete()
-	end
+		end
+	Duel.SpecialSummonComplete()
 end
 function s.lv(e,c,rc)
 	return c:GetRank()+1

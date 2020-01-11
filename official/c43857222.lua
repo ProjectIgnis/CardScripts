@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--modify levels
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)

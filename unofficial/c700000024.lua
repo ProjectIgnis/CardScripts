@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Pendulum Summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--Xyz to material
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)

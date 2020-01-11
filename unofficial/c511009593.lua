@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10af),aux.FilterBoolFunctionEx(Card.IsSetCard,0xaf))
 	c:EnableReviveLimit()
 	--pendulum summon
-	aux.EnablePendulumAttribute(c,false)
+	Pendulum.AddProcedure(c,false)
 	--fusion indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

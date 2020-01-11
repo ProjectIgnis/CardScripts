@@ -5,7 +5,7 @@ local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()
 	--pendulum summon
-	aux.EnablePendulumAttribute(c,false)
+	Pendulum.AddProcedure(c,false)
 	--synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsAttribute,ATTRIBUTE_WIND),1,99)
 	c:EnableReviveLimit()

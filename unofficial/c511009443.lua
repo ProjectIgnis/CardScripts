@@ -1,7 +1,7 @@
 --覇王門零
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--splimit
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD)

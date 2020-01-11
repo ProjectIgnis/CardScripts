@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--fusion summon
 	local params = {nil,Fusion.OnFieldMat,nil,nil,Fusion.ForcedHandler}
 	local e2=Effect.CreateEffect(c)

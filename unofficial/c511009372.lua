@@ -3,7 +3,7 @@
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnablePendulumAttribute(c,false)
+	Pendulum.AddProcedure(c,false)
 	--fusion material
 	Fusion.AddProcMix(c,true,true,511009366,function(c) return c:IsSpirit(true) end)
 	c:EnableReviveLimit()

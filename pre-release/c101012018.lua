@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.xyzlv)
 	c:RegisterEffect(e3)
 end
+s.listed_names={}
 function s.spfilter(c,e,tp)
 	return (c:IsLevel(3) or c:IsLevel(4) or c:IsLevel(5)) and c:IsAttribute(ATTRIBUTE_WATER)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)

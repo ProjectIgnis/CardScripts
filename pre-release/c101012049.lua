@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,s.matfilter,1,1)
+	Link.AddProcedure(c,s.matfilter,1,1)
 	--Token
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
+s.listed_names={48068379}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsLinkAbove(2) and c:IsType(TYPE_LINK,lc,sumtype,tp)
 end

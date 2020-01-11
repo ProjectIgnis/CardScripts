@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={}
 s.listed_series={0xfc}
 function s.incon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)

@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.op2)
 	c:RegisterEffect(e4)
 end
+s.listed_names={id}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():GetSummonPlayer()==tp and eg:GetFirst():IsSummonType(SUMMON_TYPE_LINK)
 end

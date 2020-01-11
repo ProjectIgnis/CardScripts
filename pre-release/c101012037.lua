@@ -18,6 +18,8 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10e}
+s.listed_names={}
 function s.desfilter(c,tp)
 	return c:IsRace(RACE_DINOSAUR) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsCode(id)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c)
@@ -26,7 +28,7 @@ function s.thfilter(c,oc)
 	if not c:IsAbleToHand() then return false end
 	if (c:IsType(TYPE_SPELL) and c:IsSetCard(0x10e)) then return true end
 	return c:IsType(TYPE_MONSTER) and oc:IsHasLevel() and c:GetOriginalLevel()==oc:GetOriginalLevel()
-		and (c:IsRace(RACE_WINDBEAST) or c:IsRace(RACE_REPTILE) or c:IsRace(RACE_SEASERPENT))
+		and (c:IsRace(RACE_WINGEDBEAST) or c:IsRace(RACE_REPTILE) or c:IsRace(RACE_SEASERPENT))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,tp) end

@@ -55,14 +55,14 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=g:GetFirst()
 	local attr=0
 	while tc do
-		attr=bit.bor(attr,tc:GetAttribute())
+		attr=(attr|tc:GetAttribute())
 		tc=g:GetNext()
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 	local arc=Duel.AnnounceAttribute(tp,1,attr)
 	e:SetLabel(arc)
 	local dg=g:Filter(Card.IsAttribute,nil,arc)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,dg:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,#dg,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -7,7 +7,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	aux.AddXyzProcedure(c,nil,4,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,4,2,nil,nil,99)
 	--Unaffected by trap effects while has material(s) attached
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -104,9 +104,9 @@ end
 	--Activation legality
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(s.ssfilter,nil,e,tp)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetCount()>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #g>0 end
 	local c=nil
-	if g:GetCount()>1 then
+	if #g>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		c=g:Select(tp,1,1,nil):GetFirst()
 	else

@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,nil,2,3,s.lcheck)
+	Link.AddProcedure(c,nil,2,3,s.lcheck)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x23b}
 function s.lcheck(g,lc,tp)
-	return g:IsExists(Card.IsLinkSetCard,1,nil,0x23b)
+	return g:IsExists(Card.IsSetCard,1,nil,0x23b,lc,SUMMON_TYPE_LINK,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
@@ -69,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x23b) and c:IsLinkState()
+	return c:IsFaceup() and c:IsSetCard(0x23b) and c:IsLinked()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,0,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP)

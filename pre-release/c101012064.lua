@@ -33,13 +33,14 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_TO_HAND)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x71}
 function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:GetPreviousControler()==tp
 		and (c:IsPreviousLocation(LOCATION_GRAVE) or (c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)))
 		and c:IsSetCard(0x71) and not c:IsLocation(LOCATION_EXTRA)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(r,REASON_EFFECT)~=0 and eg:IsExists(s.cfilter,1,nil,tp)
+	return (r&REASON_EFFECT)~=0 and eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.filter(c)
 	return c:IsSetCard(0x71) and c:IsType(TYPE_TRAP+TYPE_SPELL) and c:IsSSetable()

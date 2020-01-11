@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 function s.tgfilter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsAbleToGrave() and c:IsHasLevel() --check this exists
 end

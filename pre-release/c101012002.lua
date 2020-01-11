@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 s.listed_series={0x23b}
 function s.atktg(e,c)
     local lg=c:GetLinkedGroup()

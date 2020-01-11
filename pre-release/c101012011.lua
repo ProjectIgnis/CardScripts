@@ -24,6 +24,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x23d}
+s.listed_names={}
 function s.tdfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToDeck() and not c:IsCode(id)
 end

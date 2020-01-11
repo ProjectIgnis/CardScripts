@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.opteffect)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x127}
 
 -- Infinitrack monster
 function s.filter(c,e,tp)

@@ -76,10 +76,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.desfilter2(c)
 	return c:IsFaceup() and c:IsSetCard(0xab)
-		and Duel.IsExistingTarget(s.desfilter3,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
-end
-function s.desfilter3(c)
-	return c:IsFaceup()
+		and Duel.IsExistingTarget(Card.IsFaceup,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -87,7 +84,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g1=Duel.SelectTarget(tp,s.desfilter2,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g2=Duel.SelectTarget(tp,s.desfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,g1:GetFirst())
+	local g2=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,g1:GetFirst())
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
 end

@@ -1,7 +1,7 @@
 --幻影霧剣
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,nil,s.filter,CATEGORY_DISABLE,nil,nil,0x1c0,nil,nil,s.target)
+	aux.AddPersistentProcedure(c,nil,aux.FilterFaceupFunction(Card.IsType,TYPE_EFFECT),CATEGORY_DISABLE,nil,nil,0x1c0,nil,nil,s.target)
 	--cannot attack/disable
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -42,9 +42,6 @@ function s.initial_effect(c)
 	e7:SetTarget(s.sptg)
 	e7:SetOperation(s.spop)
 	c:RegisterEffect(e7)
-end
-function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,tc,chk)
 	if chk==0 then return true end

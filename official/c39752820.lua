@@ -7,12 +7,12 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,nil,2,2)
 	--splimit
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_SINGLE)
-    e1:SetCode(EFFECT_SPSUMMON_COST)
-    e1:SetCost(s.spcost)
-    c:RegisterEffect(e1)
-    --set
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_SPSUMMON_COST)
+	e1:SetCost(s.spcost)
+	c:RegisterEffect(e1)
+	--set
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TODECK)
@@ -37,8 +37,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfe}
 function s.spcost(e,c,tp,st)
-    if (st&SUMMON_TYPE_LINK)~=SUMMON_TYPE_LINK then return true end
-    return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,nil,0xfe)
+	if (st&SUMMON_TYPE_LINK)~=SUMMON_TYPE_LINK then return true end
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,nil,0xfe)
 end
 function s.setfilter(c)
 	return c:IsSetCard(0xfe) and c:IsType(TYPE_TRAP+TYPE_SPELL) and c:IsSSetable()

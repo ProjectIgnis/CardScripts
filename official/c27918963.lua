@@ -32,11 +32,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0xb3}
 s.counter_place_list={0x33}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xb3)
-end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil)
+	return eg:IsExists(aux.FilterFaceupFunction(Card.IsSetCard,0xb3),1,nil)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x33,1)

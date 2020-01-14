@@ -20,12 +20,9 @@ end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0xe5)
 end
-function s.ctfilter(c)
-	return c:IsFaceup() and c:IsAbleToChangeControler()
-end
 function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local rt=math.min(Duel.GetMatchingGroupCount(s.ctfilter,tp,0,LOCATION_MZONE,nil),Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL),c:GetOverlayCount(),3)
+	local rt=math.min(Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsAbleToChangeControler),tp,0,LOCATION_MZONE,nil),Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL),c:GetOverlayCount(),3)
 	if chk==0 then return rt>0 and c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	c:RemoveOverlayCard(tp,1,rt,REASON_COST)
 	local ct=Duel.GetOperatedGroup():GetCount()
@@ -47,7 +44,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 	local ct=math.min(e:GetLabel(),Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL))
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g=Duel.SelectMatchingCard(tp,s.ctfilter,tp,0,LOCATION_MZONE,ct,ct,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsAbleToChangeControler),tp,0,LOCATION_MZONE,ct,ct,nil)
 	Duel.GetControl(g,tp,PHASE_END,1)
 	local og=Duel.GetOperatedGroup()
 	local tc=og:GetFirst()

@@ -12,12 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return #g>0 and g:FilterCount(s.cfilter,nil)==#g
+	return #g>0 and g:FilterCount(aux.FilterFaceupFunction(Card.IsType,TYPE_PENDULUM),nil)==#g
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

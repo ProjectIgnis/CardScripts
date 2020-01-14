@@ -22,11 +22,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={62121}
-function s.filter(c)
-	return c:IsFaceup() and c:IsCode(62121)
-end
 function s.adval(e,c)
-	if Duel.IsExistingMatchingCard(s.filter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then
+	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,62121),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then
 		return 100+c:GetFlagEffect(id)*100
 	else
 		return c:GetFlagEffect(id)*100

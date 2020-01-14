@@ -71,11 +71,8 @@ function s.initial_effect(c)
 	e8:SetValue(1)
 	c:RegisterEffect(e8)
 end
-function s.limfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster()
-end
 function s.splimit(e,c,tp,sumtp,sumpos)
-	local g=Duel.GetMatchingGroup(s.limfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g<=0 then return false end
 	local mg,lk=g:GetMaxGroup(Card.GetLink)
 	return (sumtp&SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK and lk and lk>c:GetLink()
@@ -99,5 +96,3 @@ end
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsRace(RACE_CYBERSE)
 end
-
-

@@ -14,17 +14,14 @@ end
 function s.filter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x56)
 end
-function s.filter2(c)
-	return c:IsFaceup()
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(s.filter1,tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingTarget(s.filter2,tp,0,LOCATION_ONFIELD,2,nil) end
+		and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_ONFIELD,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g2=Duel.SelectTarget(tp,s.filter2,tp,0,LOCATION_ONFIELD,2,2,nil)
+	local g2=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_ONFIELD,2,2,nil)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,#g1,0,0)
 end

@@ -29,10 +29,12 @@ end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return se~=e:GetLabelObject()
 end
+--[[
 function s.fcheck(tp,sg,fc)
 	return sg:IsExists(aux.FilterBoolFunction(Card.IsSetCard,0x3b,fc,SUMMON_TYPE_FUSION,tp),1,nil)
 end
-function s.fextra(e,tp,mg)
+]]
+function s.fextra(e,tp,mg,sumtype)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil),s.fcheck
 end
 function s.stage2(e,tc,tp,mg,chk)
@@ -45,4 +47,22 @@ function s.stage2(e,tc,tp,mg,chk)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
+end
+function s.fcheck(tp,sg,fc,sumtype,tp)
+	return sg:IsExists(s.ffilter,1,nil,fc,sumtype,tp)
+end
+function s.ffilter(c,fc,sumtype,tp)
+	local mat=fc.material
+	local set=fc.material_setcode
+	local res
+	if mat then
+		for _,code in ipairs(mat) do
+			res=res or (c:IsSummonCode(nil,SUMMON_TYPE_FUSION,PLAYER_NONE,code) and c:IsSetCard(0x3b,fc,sumtype,tp))
+		end
+	elseif set then
+		res=res or (c:IsSetCard(0x3b,fc,sumtype,tp) and aux.IsMaterialListSetCard(fc,0x3b))
+	else
+		return false
+	end
+	return res
 end

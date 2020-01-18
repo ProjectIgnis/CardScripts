@@ -54,15 +54,12 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:GetReasonCard():IsSetCard(0xfb)
 end
-function s.lkfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster()
-end
 function s.desfilter(c,g)
 	return g:IsContains(c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Group.CreateGroup()
-	local lg=Duel.GetMatchingGroup(s.lkfilter,tp,0,LOCATION_MZONE,nil)
+	local lg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,0,LOCATION_MZONE,nil)
 	for tc in aux.Next(lg) do
 		tg:Merge(tc:GetLinkedGroup())
 	end

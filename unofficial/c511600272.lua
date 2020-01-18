@@ -1,6 +1,6 @@
 --コードブレイカー・ウイルスソードマン
 --Codebreaker Virus Swordsman
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -37,17 +37,17 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x583}
+s.listed_series={0x23b}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.spfilter(c,e,tp,zones)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x583)
+	return c:IsLevelBelow(4) and c:IsSetCard(0x23b)
 		and (zones[0]>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,0,zones[0])
 		or zones[1]>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1,zones[1]))
 end
 function s.spfilter2(c,e,tp,sump,zone)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x583)
+	return c:IsLevelBelow(4) and c:IsSetCard(0x23b)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,sump,zone)
 end
 function s.filter(c,e,tp)
@@ -89,7 +89,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()~=nil
 end
 function s.damfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x583)
+	return c:IsFaceup() and c:IsSetCard(0x23b)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
@@ -118,7 +118,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsReason(REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:GetReasonPlayer()~=tp
-		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp) then
+		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(80250185,1))
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

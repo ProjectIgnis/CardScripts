@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--Fusion reborn
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(12525049,0))
@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xdf,0x46}
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xdf) and c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end

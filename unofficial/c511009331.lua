@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--lose attack 1
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(511000947,0))
@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9f}
 
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()

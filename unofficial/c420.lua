@@ -2,8 +2,8 @@
 if not AnimeArchetype then
 	AnimeArchetype = {}
 
-	-- Alligator 
-	-- アリゲーター 
+	-- Alligator
+	-- アリゲーター
 	-- Graydle Alligator/Spawn Alligator/Toon Alligator/Lion Alligator
 	AnimeArchetype.OCGAlligator={
 		39984786,4611269,59383041,66451379
@@ -51,7 +51,7 @@ if not AnimeArchetype then
 		end
 	end
 
-	-- Assassin アサシン 
+	-- Assassin アサシン
 	-- Ansatsu/Dark Hunter/Night Assailant
 	-- Night Papilloperative/Gravekeeper's Assailant/Photon Papilloperative
 	-- Raiden, Hand of the Lightsworn
@@ -68,7 +68,7 @@ if not AnimeArchetype then
 		end
 	end
 
-	-- Astral アストラル 
+	-- Astral アストラル
 	-- Astral Barrier/Astral Barrier
 	function Card.IsAstral(c,fbool)
 		if fbool then
@@ -530,11 +530,12 @@ if not AnimeArchetype then
 	-- Kaminote Blow/The Judgement Hand/Number 106: Giant Hand
 	-- Phantom Hand/Fire Hand/Prominence Hand
 	-- Magic Hand/Rocket Hand/Hundred Eyes Dragon
+	-- Left-Hand Shark/Right-Hand Shark
 
 	AnimeArchetype.OCGHand={
 		95929069,40830387,20403123,55888045,19642889,33453260,
 		97570038,28003512,63746411,40555959,68535320,21414674,
-		22530212,13317419,95453143
+		22530212,13317419,95453143,47840168,11845050
 	}
 	function Card.IsHand(c,fbool)
 		if fbool then
@@ -1163,14 +1164,14 @@ if not AnimeArchetype then
 	-- Depth Shark/Number 37: Hope Woven Dragon Spider Shark/Number 32: Shark Drake
 	-- Number 71: Rebarian Shark/Number 47: Nightmare Shark/Hammer Shark
 	-- Bahamut Shark/Panther Shark/Mermaid Shark
-	-- Metabo-Shark
+	-- Metabo-Shark/Left-Hand Shark/Right-Hand Shark
 	AnimeArchetype.OCGShark={
 		7500772,10532969,49221191,14306092,84224627,23536866,
 		32393580,20838380,20358953,50449881,71923655,44223284,
 		69155991,70655556,63193879,5014629,51227866,25484449,
 		64319467,17643265,34290067,37798171,37279508,65676461,
 		59479050,31320433,17201174,440556,70101178,87047161,
-		37792478
+		37792478,47840168,11845050
 	}
 	function Card.IsShark(c,fbool)
 		if fbool then
@@ -1452,7 +1453,7 @@ if not AnimeArchetype then
 	-- White Night Queen/White ninja/White Howling/
 	-- White Hole/White-Horned Dragon / White Potan
 	-- White Moray/Lunalight White Rabbit
-
+	-- White Mirror
 	AnimeArchetype.OCGWhite={
 		13429800,46104361,9433350,
 		32269855,22804410,73398797,
@@ -1463,7 +1464,8 @@ if not AnimeArchetype then
 		49930315,3557275,92409659,
 		20193924,1571945,62487836,
 		43487744,73891874,98024118,
-		84812868,32825095
+		84812868,32825095,84335863,
+		19885332
 	}
 	function Card.IsWhite(c,fbool)
 		if fbool then

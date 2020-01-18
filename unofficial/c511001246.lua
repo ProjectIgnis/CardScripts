@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2b}
 function s.filter1(c,e,tp)
 	local atk=c:GetAttack()
 	return atk>0 and c:IsFaceup() and c:IsSetCard(0x2b) and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND,0,1,nil,atk,e,tp)

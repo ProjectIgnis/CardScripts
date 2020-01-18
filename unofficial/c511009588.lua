@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	Synchro.AddProcedure(c,nil,1,1,aux.FilterBoolFunction(Card.IsCode,82044279),1,1)
 	c:EnableReviveLimit()
 	--pendulum summon
-	aux.EnablePendulumAttribute(c,false)
+	Pendulum.AddProcedure(c,false)
 	--negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(21250202,1))

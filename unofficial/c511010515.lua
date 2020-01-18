@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.EnablePendulumAttribute(c,false)
+	Pendulum.AddProcedure(c,false)
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10af),8,2)
 	--xyz indes
 	local e1=Effect.CreateEffect(c)
@@ -60,6 +60,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.desop)
 	c:RegisterEffect(e7,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x10af}
 s.listed_names={47198668}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(1249315,0))
@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.spop)
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x99}
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x99) and c:IsAbleToHand()
 end

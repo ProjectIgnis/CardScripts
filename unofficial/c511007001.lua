@@ -1,10 +1,14 @@
---coded by Lyris
 --DDイービル
-local s,id=GetID()
+--D/D Evil
+--Scripted by Lyris
+local s,id,alias=GetID()
 function s.initial_effect(c)
-	aux.EnablePendulumAttribute(c)
-	--When your opponent Pendulum Summons monsters: You can negate the effects of those monsters, also they cannot attack.
+	alias=c:GetOriginalCodeRule()
+	--Pendulum Summon
+	Pendulum.AddProcedure(c)
+	--Pendulum Effect
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetRange(LOCATION_PZONE)

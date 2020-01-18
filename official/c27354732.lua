@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	c:EnableCounterPermit(COUNTER_SPELL)
 	--destroy & summon
 	local e1=Effect.CreateEffect(c)

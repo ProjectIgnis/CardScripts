@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--copy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(95453143,0))
@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2b}
 function s.target(e,tp,eg,ep,ev,re,r,rp,ch)
 	local seq=e:GetHandler():GetSequence()
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-seq)

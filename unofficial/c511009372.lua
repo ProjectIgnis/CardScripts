@@ -3,7 +3,7 @@
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnablePendulumAttribute(c,false)
+	Pendulum.AddProcedure(c,false)
 	--fusion material
 	Fusion.AddProcMix(c,true,true,511009366,function(c) return c:IsSpirit(true) end)
 	c:EnableReviveLimit()
@@ -63,6 +63,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge,0)
 	end)
 end
+s.listed_series={0x154e}
 s.material_setcode=0x54e
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

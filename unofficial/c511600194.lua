@@ -1,7 +1,6 @@
 --スモーク・モスキート (Manga)
 --Smoke Mosquito (Manga)
---scripted by Larry126
---cleaned up by MLD
+--Scripted by Larry126
 local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()

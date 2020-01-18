@@ -1,3 +1,4 @@
+--オーバーレイ・コネクト
 --Overlay Connection
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,18 +33,18 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_TO_GRAVE)
 		e1:SetCondition(s.con)
 		e1:SetOperation(s.op)
-		e1:SetReset(RESET_EVENT+0x1fa0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOGRAVE-RESET_LEAVE)
 		e1:SetLabelObject(tc)
 		e1:SetLabel(fid)
 		c:RegisterEffect(e1)
 		Duel.Overlay(tc,Group.FromCards(c))
-		tc:RegisterFlagEffect(51101167,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
-	if not tc or tc:GetFlagEffect(51101167)==0 or tc:GetFlagEffectLabel(51101167)~=e:GetLabel() then
+	if not tc or tc:GetFlagEffect(id)==0 or tc:GetFlagEffectLabel(id)~=e:GetLabel() then
 		e:Reset()
 		return false
 	else return c:IsReason(REASON_COST) and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_MONSTER)
@@ -74,7 +75,7 @@ function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if not tc or tc:GetFlagEffect(51101167)==0 or tc:GetFlagEffectLabel(51101167)~=e:GetLabel() then
+	if not tc or tc:GetFlagEffect(id)==0 or tc:GetFlagEffectLabel(id)~=e:GetLabel() then
 		return false
 	else return tp==Duel.GetTurnPlayer() end
 end
@@ -86,14 +87,14 @@ end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:GetFlagEffect(51101167)>0 and tc:GetFlagEffectLabel(51101167)==e:GetLabel() and c:IsRelateToEffect(e) then
+	if tc and tc:GetFlagEffect(id)>0 and tc:GetFlagEffectLabel(id)==e:GetLabel() and c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 		e1:SetCode(EVENT_TO_GRAVE)
 		e1:SetCondition(s.con)
 		e1:SetOperation(s.op)
-		e1:SetReset(RESET_EVENT+0x1fa0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOGRAVE-RESET_LEAVE)
 		e1:SetLabelObject(tc)
 		e1:SetLabel(e:GetLabel())
 		c:RegisterEffect(e1)

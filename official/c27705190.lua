@@ -32,11 +32,8 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	end
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x104)
-end
 function s.cecon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return ep~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x104),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsAbleToHand()

@@ -1,4 +1,5 @@
 --Ｆａｉｒｙ Ｔａｌｅ第三章 黄昏の夕日
+--Fairy Tale Chapter 3: Evening Sun
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,22 +24,22 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e3:SetCondition(s.accon)
-	e3:SetOperation(s.acop)
+	e3:SetOperation(s.actop)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	c:RegisterEffect(e4)
 end
-function s.filter(c,tp)
-	return c:IsCode(id+1) and c:GetActivateEffect():IsActivatable(tp)
-end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetTurnID()~=Duel.GetTurnCount()
 end
-function s.acop(e,tp,eg,ep,ev,re,r,rp)
+function s.filter(c,tp)
+	return c:IsCode(100000333) and c:GetActivateEffect():IsActivatable(tp)
+end
+function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,0x13,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE+LOCATION_HAND+LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp)

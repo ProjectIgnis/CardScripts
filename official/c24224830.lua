@@ -1,6 +1,6 @@
 --墓穴の指名者
---Designator From the Grave
---
+--Called by the Grave
+--Script by nekrozar
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -47,13 +47,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.distg(e,c)
 	local code=e:GetLabel()
-	return c:IsOriginalCodeRule(code)
+	local code1,code2=c:GetOriginalCodeRule()
+	return code1==code or code2==code
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsOriginalCodeRule(code)
+	local code1,code2=re:GetHandler():GetOriginalCodeRule()
+	return re:IsActiveType(TYPE_MONSTER) and (code1==code or code2==code)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,id)
 	Duel.NegateEffect(ev)
 end
-

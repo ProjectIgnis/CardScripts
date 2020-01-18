@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--Activate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(99284890,0))

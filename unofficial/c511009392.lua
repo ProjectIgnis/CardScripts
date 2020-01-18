@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xae}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.damcon1(e,tp,eg,ep,ev,re,r,rp) and ep==tp and re:GetHandler():IsSetCard(0xae) 
 		and Duel.GetCurrentPhase()==PHASE_STANDBY and Duel.GetTurnPlayer()==tp

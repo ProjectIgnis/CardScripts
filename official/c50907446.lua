@@ -1,5 +1,5 @@
 --エルシャドール・アプカローネ
---El Shaddoll Apkalone
+--El Shaddoll Apkallone
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -46,8 +46,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x9d}
-function s.ffilter(c,fc,sumtype,sp,sub,mg,sg)
-	return c:IsFusionSetCard(0x9d) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
+function s.ffilter(c,fc,sumtype,tp,sp,sub,mg,sg)
+	return c:IsSetCard(0x9d,fc,sumtype,tp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return aux.disfilter1(chkc) and chkc:IsControler(1-tp) end
@@ -63,11 +63,13 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end

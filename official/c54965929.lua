@@ -2,7 +2,7 @@
 --Mythical Beast Medusa
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	c:EnableCounterPermit(COUNTER_SPELL)
 	--special summon
 	local e1=Effect.CreateEffect(c)

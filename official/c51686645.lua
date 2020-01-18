@@ -60,19 +60,15 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		e:GetOwner():CancelToGrave(false)
 	end
 end
-	--Check for face-up monster
-function s.filter(c)
-	return c:IsFaceup()
-end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
 	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
+		and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
 end
 	--Equip to opponent's monster, it gains 500 ATK/DEF
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -115,6 +111,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if e:GetHandler():GetFlagEffect(id)~=0 then
 		e:SetLabel(1)
+		e:GetHandler():ResetFlagEffect(id)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 		Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 	else

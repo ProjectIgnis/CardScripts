@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--Back to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(65518099,0))
@@ -48,6 +48,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge,0)
 	end)
 end
+s.listed_series={0x154e}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do

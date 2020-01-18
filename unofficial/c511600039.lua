@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	Pendulum.AddProcedure(c)
 	--no damage & destruction
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(34149830,0))

@@ -1,5 +1,5 @@
---－Ａｉ－Ｑ
---A.I.Q
+--－Ａｉ－Ｑ (Anime)
+--A.I.Q (Anime)
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

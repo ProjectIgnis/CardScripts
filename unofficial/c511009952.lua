@@ -1,24 +1,27 @@
--- Altergeist Pookuery
-local s,id=GetID()
+--オルターガイスト・プークエリ (Anime)
+--Altergeist Pookuery (Anime)
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--Extra Material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EFFECT_EXTRA_MATERIAL)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCountLimit(1,alias)
 	e1:SetTargetRange(1,0)
 	e1:SetOperation(s.extracon)
 	e1:SetValue(s.extraval)
 	c:RegisterEffect(e1)
 	--salvage
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,alias+1)
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
@@ -33,16 +36,16 @@ function s.extracon(c,e,tp,sg,mg,lc,og,chk)
 	#(sg&sg:Filter(s.flagcheck,nil))<2
 end
 function s.flagcheck(c)
-	return c:GetFlagEffect(id)>0
+	return c:GetFlagEffect(alias)>0
 end
 function s.extraval(chk,summon_type,e,...)
 	local c=e:GetHandler()
 	if chk==0 then
 		local tp,sc=...
-		if not summon_type==SUMMON_TYPE_LINK or not sc:IsSetCard(0x103) or Duel.GetFlagEffect(tp,id)>0 then
+		if not summon_type==SUMMON_TYPE_LINK or not sc:IsSetCard(0x103) or Duel.GetFlagEffect(tp,alias)>0 then
 			return Group.CreateGroup()
 		else
-			local feff=c:RegisterFlagEffect(id,0,0,1)
+			local feff=c:RegisterFlagEffect(alias,0,0,1)
 			local eff=Effect.CreateEffect(c)
 			eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			eff:SetCode(EVENT_ADJUST)
@@ -53,8 +56,8 @@ function s.extraval(chk,summon_type,e,...)
 	else
 		local sg,sc,tp=...
 		if summon_type&SUMMON_TYPE_LINK == SUMMON_TYPE_LINK and #sg>0 then
-			Duel.Hint(HINT_CARD,tp,id)
-			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.Hint(HINT_CARD,tp,alias)
+			Duel.RegisterFlagEffect(tp,alias,RESET_PHASE+PHASE_END,0,1)
 		end
 	end
 end

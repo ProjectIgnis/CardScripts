@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x1048}
 function s.filter(c,tp,tid)
 	local code=c:GetCode()
 	local class=_G["c"..code]

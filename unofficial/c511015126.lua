@@ -24,8 +24,8 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 	if tc1:GetLevel()>tc2:GetLevel() then tc1,tc2=tc2,tc1 end
 	Duel.MoveToField(tc1,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	Duel.MoveToField(tc2,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
-	aux.EnablePendulumAttribute(tc1,false)
-	aux.EnablePendulumAttribute(tc2,false)
+	Pendulum.AddProcedure(tc1,false)
+	Pendulum.AddProcedure(tc2,false)
 	--set scales
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

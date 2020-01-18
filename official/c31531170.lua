@@ -45,9 +45,9 @@ function s.pendcon(e,c,og)
 	local ft=Duel.GetLocationCountFromEx(tp)
 	if ft<=0 then return false end
 	if og then
-		return og:IsExists(aux.PConditionFilter,1,nil,e,tp,lscale,rscale)
+		return og:IsExists(Pendulum.Filter,1,nil,e,tp,lscale,rscale)
 	else
-		return Duel.IsExistingMatchingCard(aux.PConditionFilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lscale,rscale)
+		return Duel.IsExistingMatchingCard(Pendulum.Filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lscale,rscale)
 	end
 end
 function s.pendop(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
@@ -62,13 +62,13 @@ function s.pendop(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 	if ect~=nil then ft=math.min(ft,ect) end
 	if og then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=og:FilterSelect(tp,aux.PConditionFilter,0,ft,nil,e,tp,lscale,rscale)
+		local g=og:FilterSelect(tp,Pendulum.Filter,0,ft,nil,e,tp,lscale,rscale)
 		if g then
 			sg:Merge(g)
 		end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,aux.PConditionFilter,tp,LOCATION_EXTRA,0,0,ft,nil,e,tp,lscale,rscale)
+		local g=Duel.SelectMatchingCard(tp,Pendulum.Filter,tp,LOCATION_EXTRA,0,0,ft,nil,e,tp,lscale,rscale)
 		if g then
 			sg:Merge(g)
 		end

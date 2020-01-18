@@ -1,4 +1,4 @@
---Frightfur Mad Parade
+--Frightfur Parade
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,#g*500)
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 	local ct=Duel.Destroy(g,REASON_EFFECT)
 	if ct>0 then

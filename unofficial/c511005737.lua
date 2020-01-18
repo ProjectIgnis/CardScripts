@@ -1,12 +1,12 @@
---Regenerative Rose (Anime)
---by CyberCatman
---edited/fixed by GameMaster(GM)
---cleaned up and fixed by MLD
-local s,id=GetID()
+--スプリット・Ｄ・ローズ (Anime)
+--Regenerating Rose (Anime)
+--Scripted by Cybercatman
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--rose token
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(31986288,0))
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BATTLE_DESTROYED)
@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.adval)
 	c:RegisterEffect(e2)
 end
+s.listed_names={31986289}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE)
 end

@@ -40,7 +40,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(r,REASON_DESTROY)~=0
+	return (r&REASON_DESTROY)~=0
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

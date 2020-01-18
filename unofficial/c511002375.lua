@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.thcon)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xdf,0x46}
 function s.filter1(c,e)
 	return c:IsAbleToRemove() and not c:IsImmuneToEffect(e)
 end

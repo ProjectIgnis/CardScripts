@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x572}
 function s.cfilter(c,tp)
 	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:GetPreviousLocation()==LOCATION_HAND
 end

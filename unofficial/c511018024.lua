@@ -1,7 +1,5 @@
 --Ｄ－ＨＥＲＯ ダイハードガイ (Anime)
 --Destiny HERO - Captain Tenacious (Anime)
---cleaned up by MLD
---fixed by ClaireStanfield
 local s,id=GetID()
 function s.initial_effect(c)
 	--

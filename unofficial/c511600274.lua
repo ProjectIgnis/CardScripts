@@ -1,29 +1,30 @@
---コードブレイカー・ウイルスバーサーカー
---Codebreaker Virus Berserker
---scripted by Larry126
-local s,id=GetID()
+--コードブレイカー・ウイルスバーサーカー (Anime)
+--Codebreaker Virus Berserker (Anime)
+--Scripted by Larry126
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,nil,2,3,s.lcheck)
 	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(168917,0))
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,alias)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(5128859,0))
+	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+1)
+	e2:SetCountLimit(1,alias+1)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
@@ -35,9 +36,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x583}
+s.listed_series={0x23b}
 function s.lfilter(c)
-	return c:IsType(TYPE_LINK,lc,SUMMON_TYPE_LINK) and c:IsSetCard(0x583,lc,SUMMON_TYPE_LINK)
+	return c:IsType(TYPE_LINK,lc,SUMMON_TYPE_LINK) and c:IsSetCard(0x23b,lc,SUMMON_TYPE_LINK)
 end
 function s.lcheck(g,lc)
 	return g:IsExists(s.lfilter,1,nil,lc)
@@ -46,7 +47,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.spfilter(c,e,tp,zones)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x583) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp,zones)
+	return c:IsLevelBelow(4) and c:IsSetCard(0x23b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp,zones)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zones=Duel.GetLinkedZone(1-tp)&0x1f
@@ -66,7 +67,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()~=nil
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x583)
+	return c:IsFaceup() and c:IsSetCard(0x23b)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP)
@@ -94,7 +95,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetCountLimit(1,id+100)
+		e1:SetCountLimit(1,alias+2)
 		e1:SetRange(LOCATION_GRAVE)
 		e1:SetTarget(s.sptg)
 		e1:SetOperation(s.spop)

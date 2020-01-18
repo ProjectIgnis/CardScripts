@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.spop)
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x99}
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x99) and c:IsAbleToHand()
 end

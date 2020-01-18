@@ -1,5 +1,5 @@
+--黑薔薇の種
 --Black Rose Seed
-Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkdown
@@ -14,16 +14,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x123}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local phase=Duel.GetCurrentPhase()
 	if phase~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if a:IsRose() and (not d or not d:IsRose()) and a:IsRelateToBattle() then
+	if a:IsSetCard(0x123) and (not d or not d:IsSetCard(0x123)) and a:IsRelateToBattle() then
 		e:SetLabelObject(a)
 		return true
 	end
-	if not a:IsRose() and d and d:IsRose() and d:IsRelateToBattle() then
+	if not a:IsSetCard(0x123) and d and d:IsSetCard(0x123) and d:IsRelateToBattle() then
 		e:SetLabelObject(d)
 		return true
 	end

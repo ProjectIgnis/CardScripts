@@ -60,6 +60,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.desop)
 	c:RegisterEffect(e7,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x10af}
 s.listed_names={47198668}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

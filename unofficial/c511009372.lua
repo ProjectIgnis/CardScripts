@@ -63,6 +63,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge,0)
 	end)
 end
+s.listed_series={0x154e}
 s.material_setcode=0x54e
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e4:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xc6}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	if #eg~=1 then return false end

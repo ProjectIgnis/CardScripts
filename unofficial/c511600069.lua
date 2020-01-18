@@ -85,7 +85,6 @@ function s.initial_effect(c)
 	e14:SetRange(LOCATION_SZONE)
 	e14:SetLabelObject(e13)
 	e14:SetOperation(s.op)
-	e14:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e14)
 	local e15=e4:Clone()
 	e15:SetCode(EFFECT_CHANGE_CODE)
@@ -126,7 +125,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsReason(REASON_LOST_TARGET) and c:GetPreviousEquipTarget():IsReason(REASON_DESTROY) then
 		local ct=e:GetLabel()
-		local code=ct>=6 and 48579379 or ct>=4 and 511002501 or ct>=2 and 511002500 or 0
+		local code=ct>=5 and 48579379 or ct>=3 and 511002501 or ct>=1 and 511002500 or 0
 		local atk=code==48579379 and 3500 or code==511002501 and 2600 or 500
 		local def=code==48579379 and 3000 or code==511002501 and 2500 or 400
 		local lv=(code==48579379 or code==511002501) and 8 or 2

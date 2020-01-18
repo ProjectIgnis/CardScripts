@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x2b}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2b) and not c:IsHasEffect(EFFECT_PIERCE)
 end

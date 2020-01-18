@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-function s.tgfilter(c)
+function s.tgfilter(c,tp)
 	if not c:IsStatus(STATUS_OPPO_BATTLE) or c:GetBattleTarget():GetPreviousTypeOnField()&TYPE_LINK~=TYPE_LINK then return false end
 	if c:IsRelateToBattle() then
 		return c:IsControler(tp) and c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_LINK)
@@ -41,7 +41,7 @@ function s.tgfilter(c)
 	end
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.tgfilter,1,nil)
+	return eg:IsExists(s.tgfilter,1,nil,tp)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT+REASON_RETURN)

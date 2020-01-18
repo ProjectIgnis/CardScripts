@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop2)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x10ec}
 
 function s.thfilter1(c)
 	return c:IsSetCard(0x10ec)  and c:IsFaceup() and c:IsAbleToHand()

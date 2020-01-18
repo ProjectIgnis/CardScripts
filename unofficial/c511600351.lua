@@ -1,46 +1,48 @@
---グッサリ＠イグニスター
---Gussari @Ignister
+--グッサリ＠イグニスター (Anime)
+--Gussari @Ignister (Anime)
 --Scripted by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCode()
 	--spsummon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BATTLE_DESTROYED)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,alias)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,alias+100)
 	e2:SetCondition(s.damcon)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 	--atk
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetDescription(aux.Stringid(alias,2))
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCountLimit(1,id+200)
+	e3:SetCountLimit(1,alias+200)
+	e3:SetCost(aux.bfgcost)
 	e3:SetCondition(s.btcon)
 	e3:SetTarget(s.bttg)
 	e3:SetOperation(s.btop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x234}
+s.listed_series={0x135}
 function s.cfilter(c)
 	return c:GetPreviousTypeOnField()&TYPE_LINK==TYPE_LINK
 end
@@ -84,7 +86,7 @@ function s.btcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local at=Duel.GetAttackTarget()
 	if not at then return false end
 	if not a:IsControler(tp) then a,at=at,a end
-	return a:IsType(TYPE_LINK) and a:IsSetCard(0x234) and a:IsControler(tp) and not at:IsControler(tp)
+	return a:IsType(TYPE_LINK) and a:IsSetCard(0x135) and a:IsControler(tp) and not at:IsControler(tp)
 end
 function s.bttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
@@ -92,7 +94,7 @@ function s.bttg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local at=Duel.GetAttackTarget()
 		if not at then return false end
 		if not a:IsControler(tp) then a,at=at,a end
-		return a:IsType(TYPE_LINK) and a:IsSetCard(0x234) and a:IsControler(tp) and not at:IsControler(tp)
+		return a:IsType(TYPE_LINK) and a:IsSetCard(0x135) and a:IsControler(tp) and not at:IsControler(tp)
 	end
 	Duel.SetTargetCard(a)
 end
@@ -122,7 +124,7 @@ function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp,lk)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x234) and c:GetLink()<lk
+	return c:IsType(TYPE_LINK) and c:IsSetCard(0x135) and c:GetLink()<lk
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

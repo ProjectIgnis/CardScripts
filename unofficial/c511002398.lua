@@ -1,3 +1,4 @@
+--ヒーローズ・バックアップ
 --Hero's Backup
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3008}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return Duel.GetTurnPlayer()==tp and ph>=0x08 and ph<=0x20 

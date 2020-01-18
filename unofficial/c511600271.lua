@@ -1,6 +1,6 @@
 --コードブレイカー・ゼロデイ
 --Codebreaker Zero Day
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--reverse atk/def
@@ -24,8 +24,9 @@ function s.initial_effect(c)
 	if not zeroDay then zeroDay={} end
 	if not zeroDayReff then zeroDayReff={} end
 end
+s.listed_series={0x23b}
 function s.filter(c,ec)
-	return c:IsLinkMonster() and not c:IsSetCard(0x583) and c:GetLinkedGroup():IsContains(ec)
+	return c:IsLinkMonster() and not c:IsSetCard(0x23b) and c:GetLinkedGroup():IsContains(ec)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e:GetHandler())
@@ -38,8 +39,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		for _,eff in ipairs(effs) do
 			if eff:GetOwner()==lc and zeroDay[eff]==nil and not zeroDayReff[eff] then
 				local reff=eff:Clone()
-				reff:SetCondition(function(ref) if not lc:GetLinkedGroup():IsContains(c) then ref:Reset() return false end if eff:GetCondition() then return eff:GetCondition()(ref) else return true end end)
-				reff:SetValue(function(ref,rc) if type(eff:GetValue())=='function' then return -eff:GetValue()(ref,rc)*2 else return -eff:GetValue()*2 end end)
+				reff:SetCondition(function(reff) if not lc:GetLinkedGroup():IsContains(c) then reff:Reset() return false end if eff:GetCondition() then return eff:GetCondition()(reff) else return true end end)
+				reff:SetValue(function(reff,rc) if type(eff:GetValue())=='function' then return -eff:GetValue()(reff,rc)*2 else return -eff:GetValue()*2 end end)
 				lc:RegisterEffect(reff)
 				zeroDay[eff]=reff
 				zeroDayReff[reff]=true
@@ -49,8 +50,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		for _,eff in ipairs(effs) do
 			if eff:GetOwner()==lc and zeroDay[eff]==nil and not zeroDayReff[eff] then
 				local reff=eff:Clone()
-				reff:SetCondition(function(ref) if not lc:GetLinkedGroup():IsContains(c) then ref:Reset() return false end if eff:GetCondition() then return eff:GetCondition()(ref) else return true end end)
-				reff:SetValue(function(ref,rc) if type(eff:GetValue())=='function' then return -eff:GetValue()(ref,rc)*2 else return -eff:GetValue()*2 end end)
+				reff:SetCondition(function(reff) if not lc:GetLinkedGroup():IsContains(c) then reff:Reset() return false end if eff:GetCondition() then return eff:GetCondition()(reff) else return true end end)
+				reff:SetValue(function(reff,rc) if type(eff:GetValue())=='function' then return -eff:GetValue()(reff,rc)*2 else return -eff:GetValue()*2 end end)
 				lc:RegisterEffect(reff)
 				zeroDay[eff]=reff
 				zeroDayReff[reff]=true
@@ -59,7 +60,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousSetCard(0x583)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousSetCard(0x23b)
 		and c:GetPreviousTypeOnField()&(TYPE_MONSTER+TYPE_LINK)==(TYPE_MONSTER+TYPE_LINK)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end

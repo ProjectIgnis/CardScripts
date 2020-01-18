@@ -1,6 +1,8 @@
---Elemental Hero Flame Wingman (Anime)
-local s,id=GetID()
+--Ｅ・ＨＥＲＯ フレイム・ウィングマン (Anime)
+--Elemental HERO Flame Wingman (Anime)
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,21844576,58932615)
@@ -13,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(alias,0))
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -24,6 +26,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2) 
 end
 s.material_setcode={0x8,0x3008}
+s.listed_series={0x8,0x3008}
+s.listed_names={21844576,58932615}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()

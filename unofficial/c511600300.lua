@@ -1,8 +1,9 @@
---ジ・アライバル・サイバース＠イグニスター
---The Arrival Cyberse @Ignister
+--ジ・アライバル・サイバース＠イグニスター (Anime)
+--The Arrival Cyberse @Ignister (Anime)
 --Scripted by Larry126
 local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	c:EnableCounterPermit(0x135)
 	c:SetCounterLimit(0x135,1)
 	--link summon
@@ -56,7 +57,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	--destroy
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(32750510,1))
+	e6:SetDescription(aux.Stringid(alias,0))
 	e6:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -66,7 +67,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.desop)
 	c:RegisterEffect(e6)
 end
-s.listed_names={511600350}
+s.listed_names={alias}
 function s.lcheck(g,lc,tp)
 	return g:GetClassCount(Card.GetAttribute)==#g
 end

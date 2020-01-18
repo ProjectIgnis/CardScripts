@@ -1,11 +1,14 @@
---返り咲く薔薇の大輪
-local s,id=GetID()
+--返り咲く薔薇の大輪 (Anime)
+--Revival Rose (Anime)
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--spsummon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(12469386,0))
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCode(EVENT_DESTROYED)
 	e1:SetCondition(s.spcon)

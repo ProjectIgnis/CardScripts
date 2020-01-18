@@ -1,9 +1,11 @@
---コピー・プラント
-local s,id=GetID()
+--コピー・プラント (Anime)
+--Copy Plant (Anime)
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--lvchange
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(66457407,0))
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_LVCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -14,14 +16,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.lvfilter(c,lv)
-	return c:IsFaceup() and c:GetLevel()>0 and c:GetLevel()~=lv
+	return c:IsFaceup() and c:GetLevel()>0
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local lv=e:GetHandler():GetLevel()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.lvfilter(chkc,lv) end
-	if chk==0 then return Duel.IsExistingTarget(s.lvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,lv) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.lvfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.lvfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,s.lvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,lv)
+	Duel.SelectTarget(tp,s.lvfilter,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

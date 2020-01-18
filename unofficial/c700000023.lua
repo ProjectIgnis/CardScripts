@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xc6,0x9f}
 function s.drfil(c)
 	return c:GetSummonType()==SUMMON_TYPE_PENDULUM and (c:IsSetCard(0xc6) or c:IsSetCard(0x9f)) and c:IsPreviousLocation(LOCATION_HAND)
 end

@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9f,0x99}
 function s.atkupcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	return at:IsControler(tp) and (at:IsSetCard(0x9f) or at:IsSetCard(0x99))

@@ -1,5 +1,5 @@
---メールの階段
---Stairs of Mail
+--メールの階段 (Anime)
+--Stairs of Mail (Anime)
 --Scripted by AlphaKretin
 --Name handling adapted from サイバネット・コーデック Cynet Codec by EerieCode
 local s,id=GetID()
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--change position
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_POSITION)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTarget(s.postg)

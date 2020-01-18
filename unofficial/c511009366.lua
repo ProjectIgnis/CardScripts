@@ -48,6 +48,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge,0)
 	end)
 end
+s.listed_series={0x154e}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do

@@ -54,8 +54,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e5:SetValue(tc:GetOriginalAttribute())
 		token:RegisterEffect(e5,true)
-		Duel.SpecialSummonComplete()
-		Duel.BreakEffect()
-		Duel.Damage(1-tp,tc:GetAttack()/2,REASON_EFFECT)
 	end
+	Duel.SpecialSummonComplete()
+	Duel.BreakEffect()
+	Duel.Damage(1-tp,tc:GetAttack()/2,REASON_EFFECT)
 end

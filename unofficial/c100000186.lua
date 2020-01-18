@@ -56,10 +56,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCondition(s.descon)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			xyz:RegisterEffect(e1)
+			end
 			Duel.Overlay(xyz,mg1)
-			Duel.SpecialSummonComplete()	
+			Duel.SpecialSummonComplete()
 			xyz:CompleteProcedure()
-		end
 	end
 end
 function s.descon(e)

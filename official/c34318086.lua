@@ -74,7 +74,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
-		Duel.SpecialSummonComplete()
 		local at=Duel.GetAttacker()
 		if at and not at:IsImmuneToEffect(e) and Duel.ChangeAttackTarget(tc) then
 			Duel.BreakEffect()
@@ -85,5 +84,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetValue(math.ceil(at:GetAttack()/2))
 			at:RegisterEffect(e3)
 		end
+	Duel.SpecialSummonComplete()
 	end
 end

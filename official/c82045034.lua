@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			local g=sg:Select(tp,ft,ft,nil)
 			local dg=g:GetFirst()
-			while dg do
+			for dg in aux.Next(g) do
 				Duel.SpecialSummonStep(dg,0,tp,tp,false,false,POS_FACEUP)
 				local e3=Effect.CreateEffect(e:GetHandler())
 				e3:SetType(EFFECT_TYPE_SINGLE)
@@ -77,7 +77,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e4:SetTarget(s.splimit)
 				e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 				dg:RegisterEffect(e4,true)
-				dg=g:GetNext()
 			end
 			Duel.SpecialSummonComplete()
 		end

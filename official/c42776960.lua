@@ -23,8 +23,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
-	if tc then
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_CHANGE_DAMAGE)
@@ -44,10 +43,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EVENT_LEAVE_FIELD)
 		e3:SetLabel(1-tp)
 		e3:SetOperation(s.leaveop)
-		e3:SetReset(RESET_EVENT+0xc020000)
+		e3:SetReset(RESET_EVENT+RESET_OVERLAY+RESET_MSCHANGE+RESET_TURN_SET)
 		tc:RegisterEffect(e3,true)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.con(e)
 	return e:GetHandlerPlayer()==e:GetOwnerPlayer()

@@ -68,8 +68,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(math.ceil(atk/2))
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1,true)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.rmfilter(c,atk)
 	return c:IsFaceup() and c:IsAttackBelow(atk) and c:IsAbleToRemove()

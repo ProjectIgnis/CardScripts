@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local sg=Group.CreateGroup()
 	sg:KeepAlive()
-	e1:SetLabelObject(sg)	
+	e1:SetLabelObject(sg)
 	--SPSUMMON
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -46,11 +46,10 @@ function s.reactivate(e,tp,eg,ep,ev,re,r,rp)
 			c:RegisterFlagEffect(id,RESET_EVENT+0x1680000,0,1)
 		end
 		local tc=g:GetFirst()
-		while tc do		
+		for tc in aux.Next(g) do
 			sg:AddCard(tc)
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-			tc=g:GetNext()
-		end	
+		end
 	end
 end
 function s.filter(c,e,tp)
@@ -63,22 +62,21 @@ function s.filter2(c,eqc,e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and eg:IsExists(s.filter,1,nil,e,tp) end	
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)	
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local gc=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=e:GetLabelObject()	
-	local gt=eg:Filter(s.filter,nil,e,tp)	
+	local g=e:GetLabelObject()
+	local gt=eg:Filter(s.filter,nil,e,tp)
 	local gtg=gt:GetFirst()
 	local tg=Group.CreateGroup()
-	local tdg=nil	
-	while gtg do
+	local tdg=nil
+	for gtg in aux.Next(gt) do
 		tdg=g:Filter(s.filter2,nil,gtg,e,tp)
 		if #tdg>0 then
 			tg:Merge(tdg)
 		end
-		gtg=gt:GetNext()
-	end	
+	end
 	local sg=tg:Select(tp,1,gc,nil)
-	Duel.SetTargetCard(sg)	
+	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,gc,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -86,7 +84,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<#g then return end
 	local c=e:GetHandler()
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -104,9 +102,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_CANNOT_ATTACK)
 			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			tc:RegisterEffect(e3,true)		
-			Duel.SpecialSummonComplete()		
-		end		
-		tc=g:GetNext()
+			tc:RegisterEffect(e3,true)
+		end
+		Duel.SpecialSummonComplete()
 	end
 end

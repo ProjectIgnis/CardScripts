@@ -50,7 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 			g:Sub(sg)
 			local tc=sg:GetFirst()
-			while tc do
+			for tc in aux.Next(sg) do
 				if Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
 					if tc:HasLevel() then
 						local e1=Effect.CreateEffect(c)
@@ -71,7 +71,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 					e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 					tc:RegisterEffect(e3)
 				end
-				tc=sg:GetNext()
 			end
 			Duel.SpecialSummonComplete()
 		end

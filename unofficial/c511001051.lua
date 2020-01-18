@@ -60,7 +60,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	if ft<=#g-1 then return end
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -68,7 +68,6 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(4)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end
@@ -83,7 +82,7 @@ function s.sumop2(e,tp,eg,ep,ev,re,r,rp)
 	g=g:Filter(s.filter,nil,e,tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=#g-1 then return end
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -91,7 +90,6 @@ function s.sumop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(4)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end

@@ -61,7 +61,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		sg=sg:Select(tp,ft,ft,nil)
 	end
 	local sc=sg:GetFirst()
-	while sc do
+	for sc in aux.Next(sg) do
 		if Duel.SpecialSummonStep(sc,0,tp,1-tp,false,false,POS_FACEUP) then
 			c:SetCardTarget(sc)
 			local e1=Effect.CreateEffect(c)
@@ -71,12 +71,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			sc:RegisterEffect(e1)
 		end
-		sc=sg:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 	local og=Duel.GetOperatedGroup()
 	local oc=og:GetFirst()
-	while oc do
+	for oc in aux.Next(og) do
 		oc:AddCounter(0x1038,1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
@@ -87,7 +86,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_DISABLE)
 		oc:RegisterEffect(e3)
-		oc=og:GetNext()
 	end
 end
 function s.disable(e)

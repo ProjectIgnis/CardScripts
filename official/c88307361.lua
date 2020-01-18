@@ -47,7 +47,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local g=tg:Select(tp,ft,ft,nil)
 	local c=e:GetHandler()
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -64,7 +64,6 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3)
-		tc=g:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end

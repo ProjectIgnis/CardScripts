@@ -67,8 +67,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(tc:GetBaseAttack())
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			token:RegisterEffect(e1)
-			Duel.SpecialSummonComplete()
 		end
+	Duel.SpecialSummonComplete()
 	end
 end
 

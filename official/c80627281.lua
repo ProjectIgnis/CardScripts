@@ -51,8 +51,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			sc:RegisterEffect(e1,true)
 			sc:CompleteProcedure()
-			Duel.SpecialSummonComplete()
 		end
+	Duel.SpecialSummonComplete()
 	end
 end
 function s.efilter(e,re)

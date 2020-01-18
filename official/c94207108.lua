@@ -76,8 +76,8 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetOperation(s.eqop)
 		Duel.RegisterEffect(e3,tp)
 		c:CreateEffectRelation(e3)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.eqval(ec,c,tp)
 	return ec:IsSetCard(0x12b)

@@ -104,7 +104,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #sg>ft then sg=sg:Select(tp,ft,ft,nil) end
 	local tc=sg:GetFirst()
 	local c=e:GetHandler()
-	while tc do
+	for tc in aux.Next(sg) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 		tc:RegisterFlagEffect(51100265,RESET_EVENT+RESETS_STANDARD,0,0)
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -124,7 +124,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3,true)
 		c:CreateRelation(tc,RESET_EVENT+0x1020000)
-		tc=sg:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end

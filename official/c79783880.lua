@@ -52,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if #sg>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -65,10 +65,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2,true)
 		end
-		tc=sg:GetNext()
-	end 
+	end
 	Duel.SpecialSummonComplete()
-end 
+end
 function s.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsRace(RACE_ZOMBIE)
 end

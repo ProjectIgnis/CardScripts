@@ -36,7 +36,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		or (#g>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) then return end
 	local tc=sg:GetFirst()
 	local c=e:GetHandler()
-	while tc do
+	for tc in aux.Next(sg) do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -49,7 +49,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2,true)
 		end
-		tc=sg:GetNext()
-	end
 	Duel.SpecialSummonComplete()
+	end
 end

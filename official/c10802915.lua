@@ -1,4 +1,5 @@
 --魔界発現世行きデスガイド
+--Tour Guide From the Underworld
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -42,6 +43,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetValue(1)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3,true)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end

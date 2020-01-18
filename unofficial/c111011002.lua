@@ -74,9 +74,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e4:SetCode(EFFECT_CANNOT_ATTACK)
 			xyz:RegisterEffect(e4)
 			xyz:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-			Duel.SpecialSummonComplete()
 		end
-	end	
+		Duel.SpecialSummonComplete()
+	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

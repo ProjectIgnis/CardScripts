@@ -64,9 +64,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			sg1:Merge(sg2)
 			Duel.BreakEffect()
 			local sgc=sg1:GetFirst()
-			while sgc do
+			for sgc in aux.Next(sg1) do
 				Duel.SpecialSummonStep(sgc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-				sgc=sg1:GetNext()
 			end
 			Duel.SpecialSummonComplete()
 		end

@@ -59,10 +59,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			g=g:Select(tp,ft,ft,nil)
 		end
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			local pos=tc:GetPreviousPosition()
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,pos)
-			tc=g:GetNext()
 		end
 		Duel.SpecialSummonComplete()
 	end

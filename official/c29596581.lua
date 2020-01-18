@@ -80,8 +80,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCondition(s.thcon2)
 		e3:SetOperation(s.thop2)
 		Duel.RegisterEffect(e3,tp)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

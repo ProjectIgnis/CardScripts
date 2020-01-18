@@ -93,7 +93,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		and mg:FilterCount(s.mgfilter,nil,e,tp,tc,mg)==ct
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then
 		local sc=mg:GetFirst()
-		while sc do
+		for sc in aux.Next(mg) do
 			if Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
@@ -115,7 +115,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				e4:SetCode(EFFECT_SET_DEFENSE_FINAL)
 				sc:RegisterEffect(e4,true)
 			end
-			sc=mg:GetNext()
 		end
 		Duel.SpecialSummonComplete()
 	end

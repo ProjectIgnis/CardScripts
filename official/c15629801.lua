@@ -62,6 +62,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e7=e6:Clone()
 		e7:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 		token:RegisterEffect(e7)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end

@@ -40,18 +40,16 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,ct1,ct1,nil,e,tp)
 	if #g1>0 then
 		local tc=g1:GetFirst()
-		while tc do
+		for tc in aux.Next(g1) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
-			tc=g1:GetNext()
 		end
 	end
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 	local g2=Duel.SelectMatchingCard(1-tp,s.spfilter,1-tp,LOCATION_HAND,0,ct2,ct2,nil,e,1-tp)
 	if #g2>0 then
 		local tc=g2:GetFirst()
-		while tc do
+		for tc in aux.Next(g2) do
 			Duel.SpecialSummonStep(tc,0,1-tp,1-tp,false,false,POS_FACEDOWN_DEFENSE)
-			tc=g2:GetNext()
 		end
 	end
 	Duel.SpecialSummonComplete()

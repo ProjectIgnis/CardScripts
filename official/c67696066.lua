@@ -38,7 +38,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_SET_DEFENSE)
 		tc:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
-		Duel.BreakEffect()
-		Duel.Damage(tp,1000,REASON_EFFECT)
-	end
+		end
+	Duel.BreakEffect()
+	Duel.Damage(tp,1000,REASON_EFFECT)
 end

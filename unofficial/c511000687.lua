@@ -54,8 +54,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tg:RegisterEffect(e2,true)
 		tg:CompleteProcedure()
-		Duel.SpecialSummonComplete()
-	end
+		end
+	Duel.SpecialSummonComplete()
 end
 function s.regfilter(c)
 	return c:IsLocation(LOCATION_GRAVE) and not c:IsReason(REASON_RETURN) and c:IsType(TYPE_XYZ) and c:GetFlagEffect(id)==0

@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		og:AddCard(tc)
 		local tg=og:GetFirst()
-		while tg do
+		for tg in aux.Next(og) do
 			Duel.SpecialSummonStep(tg,0,tp,tp,false,false,POS_FACEUP)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
@@ -61,7 +61,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetCode(EFFECT_DISABLE_EFFECT)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tg:RegisterEffect(e3)
-			tg=og:GetNext()
 		end
 		Duel.SpecialSummonComplete()
 	end

@@ -26,15 +26,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if rec~=ev or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,-2,-2,1,RACE_FIEND,ATTRIBUTE_DARK) then return end
 	local token=Duel.CreateToken(tp,id+1)
-	Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SET_ATTACK)
-	e1:SetValue(ev)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	token:RegisterEffect(e1,true)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_SET_DEFENSE)
-	token:RegisterEffect(e2,true)
+	if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK)
+		e1:SetValue(ev)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		token:RegisterEffect(e1,true)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_SET_DEFENSE)
+		token:RegisterEffect(e2,true)
+	end
 	Duel.SpecialSummonComplete()
 end

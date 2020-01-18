@@ -1,4 +1,5 @@
 --ラーの翼神竜－球体形
+--The Winged Dragon of Ra - Sphere Mode
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
@@ -148,6 +149,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE)
 		tc:RegisterEffect(e2)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end

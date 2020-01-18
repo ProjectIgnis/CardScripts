@@ -48,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(3000)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
-		Duel.SpecialSummonComplete()
-		tc:CompleteProcedure()
-	end
+		end
+	Duel.SpecialSummonComplete()
+	tc:CompleteProcedure()
 end

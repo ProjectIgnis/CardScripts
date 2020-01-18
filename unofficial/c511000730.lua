@@ -34,7 +34,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter2,nil,e,tp)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local code=tc:GetOriginalCode()
 		local token=Duel.CreateToken(tp,code)
 		Duel.SpecialSummonStep(token,0,tp,tp,true,false,tc:GetPosition())
@@ -45,7 +45,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 		e1:SetValue(TYPE_MONSTER)
 		token:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 end

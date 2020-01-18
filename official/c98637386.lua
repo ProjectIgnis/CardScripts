@@ -36,8 +36,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetOperation(s.rdop)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
-			Duel.SpecialSummonComplete()
 		end
+		Duel.SpecialSummonComplete()
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

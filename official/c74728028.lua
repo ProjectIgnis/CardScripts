@@ -34,8 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_HAND,0,1,1,nil,tc:GetLevel(),e,tp)
 	local sc=g:GetFirst()
-	if sc then
-		Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
+	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -58,6 +57,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetValue(0)
 		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 		sc:RegisterEffect(e4,true)
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end

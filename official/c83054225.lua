@@ -46,10 +46,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Select(tp,ct,ct,nil)
 	local fid=e:GetHandler():GetFieldID()
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
-		tc=sg:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 	sg:KeepAlive()

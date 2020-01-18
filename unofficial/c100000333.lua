@@ -1,4 +1,5 @@
 --Ｆａｉｒｙ Ｔａｌｅ最終章 忘却の妖月
+--Fairy Tale Final Chapter: Moon of Oblivion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,8 +13,8 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CHANGE_POS)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetTarget(s.tg)
-	e2:SetOperation(s.op)
+	e2:SetTarget(s.postg)
+	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)	
 	--unnegatable
 	local e3=Effect.CreateEffect(c)
@@ -73,14 +74,14 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFlagEffect(tp,100000330)==0
 end
 function s.posfilter(c,e)
-	return (c:GetPreviousPosition()&POS_DEFENSE)~=0 and c:IsPosition(POS_FACEUP_ATTACK) 
+	return bit.band(c:GetPreviousPosition(),POS_DEFENSE)~=0 and c:IsPosition(POS_FACEUP_ATTACK) 
 		and (not e or c:IsRelateToEffect(e))
 end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(s.posfilter,1,nil) and rp==tp end
+function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return eg:IsExists(s.posfilter,1,nil,e) and rp==tp end
 	Duel.SetTargetCard(eg)
 end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
+function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.posfilter,nil,e)
 	local tc=g:GetFirst()
 	while tc do
@@ -93,3 +94,15 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		tc=g:GetNext()
 	end
 end
+function s.actcond(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetTurnID()~=Duel.GetTurnCount()
+end
+function s.filter(c,tp)
+	return c:IsCode(100000330) and c:GetActivateEffect():IsActivatable(tp)
+end
+function s.actop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE+LOCATION_HAND+LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+end
+

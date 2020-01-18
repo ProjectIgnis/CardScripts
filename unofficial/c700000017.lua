@@ -49,6 +49,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge3,0)
 	end)
 end
+s.listed_series={0x10ec}
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local dc=Duel.GetAttackTarget()
 	if not dc then return end

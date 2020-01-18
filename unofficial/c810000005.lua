@@ -1,6 +1,7 @@
--- Hero's Rule 1: Five Freedoms
--- scripted by: UnknownGuest
---fixed by MLD
+--ヒーローズルール１ ファイブ・フリーダムス
+--Hero's Rule 1: Five Freedoms
+--Scripted by an UnknownGuest
+--Fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Activate

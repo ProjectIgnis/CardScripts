@@ -1,5 +1,5 @@
 --薔薇障壁大旋風
-Duel.LoadScript("c420.lua")
+--Rose Barrier Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,11 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x123}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
 end
 function s.cosfilter(c)
-	return c:IsRose() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(0x123) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cosfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end

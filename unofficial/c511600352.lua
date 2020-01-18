@@ -1,8 +1,9 @@
---ガッチリ＠イグニスター
---Gatchiri @Ignister
+--ガッチリ＠イグニスター (Anime)
+--Gatchiri @Ignister (Anime)
 --Scripted by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCode()
 	--unaffected
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -23,12 +24,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--special summon
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetDescription(aux.Stringid(alias,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
 	e3:SetCode(EVENT_CHAIN_NEGATED)
-	e3:SetCountLimit(1,id)
+	e3:SetCountLimit(1,alias)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
@@ -36,17 +37,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--immune
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetDescription(aux.Stringid(alias,1))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_LEAVE_FIELD)
-	e4:SetCountLimit(1,id+100)
+	e4:SetCountLimit(1,alias+100)
 	e4:SetCondition(s.immcon)
 	e4:SetTarget(s.immtg)
 	e4:SetOperation(s.immop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x234}
+s.listed_series={0x135}
 function s.target(e,c)
 	return c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(e:GetHandler())
 end
@@ -54,7 +55,7 @@ function s.aefilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsActivated()
 end
 function s.indtg(e,c)
-	return c:IsSetCard(0x234)
+	return c:IsSetCard(0x135)
 end
 function s.indct(e,re,r,rp)
 	if r&REASON_EFFECT==REASON_EFFECT then
@@ -89,7 +90,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(aux.Stringid(id,2))
+		e1:SetDescription(aux.Stringid(alias,2))
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)

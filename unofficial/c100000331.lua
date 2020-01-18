@@ -1,4 +1,5 @@
 --Ｆａｉｒｙ Ｔａｌｅ 第二章 暴怒の太陽
+--Fairy Tale Chapter 2: Seething Sun
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,28 +20,31 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	c:RegisterEffect(e2)
-	--
+	--damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetCode(EFFECT_CHANGE_DAMAGE)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetTargetRange(1,1)
-	e4:SetValue(s.val)
+	e4:SetValue(s.value)
 	c:RegisterEffect(e4)
 end
-function s.val(e,re,dam,r,rp,rc)
-	if (r&REASON_BATTLE)~=0 then return dam*2
-	else return dam end
-end
-function s.filter(c,tp)
-	return c:IsCode(id+1) and c:GetActivateEffect():IsActivatable(tp)
+function s.value(e,re,dam,r,rp,rc)
+	if (r&REASON_BATTLE)~=0 then
+		return dam*2
+	else
+		return dam
+	end
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetTurnID()~=Duel.GetTurnCount()
 end
+function s.filter(c,tp)
+	return c:IsCode(100000332) and c:GetActivateEffect():IsActivatable(tp)
+end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,0x13,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE+LOCATION_HAND+LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end

@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3008,0x1f}
 function s.filter1(c,e,tp)
 	return c:IsSetCard(0x3008) and c:IsAbleToDeck()
 	 and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp)

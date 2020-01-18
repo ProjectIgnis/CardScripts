@@ -70,11 +70,11 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
 		if Duel.GetCurrentPhase()==PHASE_END and Duel.GetTurnPlayer()~=tp then
-			e1:SetLabel(Duel.GetTurnCount())
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+		e1:SetLabel(Duel.GetTurnCount())
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
 		else
-			e1:SetLabel(0)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetLabel(0)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 		end
 		Duel.RegisterEffect(e1,tp)
 		tc:CreateEffectRelation(e1)
@@ -92,7 +92,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--If this link summoned card is destroyed during opponent's turn
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and Duel.GetTurnPlayer()~=tp
+	local c=e:GetHandler()
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_LINK) and Duel.GetTurnPlayer()~=tp
 end
 	--Check for "Artifact" monster
 function s.spfilter(c,e,tp)
@@ -113,4 +114,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-

@@ -11,12 +11,19 @@ function s.initial_effect(c)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
 	--immune
+	local e2a=Effect.CreateEffect(c)
+	e2a:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2a:SetCode(EVENT_CHAIN_SOLVING)
+	e2a:SetRange(LOCATION_MZONE)
+	e2a:SetOperation(s.immop)
+	c:RegisterEffect(e2a)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(s.immval)
+	e2:SetLabelObject(e2a)
 	c:RegisterEffect(e2)
 	--lv up
 	local e0=Effect.CreateEffect(c)
@@ -52,9 +59,12 @@ s.listed_series={0x107}
 function s.atkval(e,c)
 	return c:GetLevel()*300
 end
+function s.immop(e,tp,eg,ep,ev,re,r,rp)
+	e:SetLabel(e:GetHandler():GetLevel())
+end
 function s.immval(e,te)
 	if te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() then
-		local lv=e:GetHandler():GetLevel()
+		local lv=e:GetLabelObject():GetLabel()
 		local tc=te:GetHandler()
 		if tc:GetRank()>0 then
 			return tc:GetOriginalRank()<lv

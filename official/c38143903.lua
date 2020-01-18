@@ -25,6 +25,7 @@ end
 s.toss_coin=true
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and re:GetActivateLocation()&LOCATION_ONFIELD>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end

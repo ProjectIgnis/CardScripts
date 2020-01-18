@@ -1,4 +1,5 @@
 --SRビードロ・ドクロ
+--Speedroid Skull Marbles
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -36,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.sdcon)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x2016}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterEqualFunction(Card.GetSummonLocation,LOCATION_EXTRA),tp,0,LOCATION_MZONE,1,nil)
 end
@@ -60,9 +62,10 @@ function s.sdcon(e)
 	return Duel.IsExistingMatchingCard(s.sdfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetBattleDamage(tp)>0
+	return Duel.GetBattleDamage(tp)>0 and Duel.GetFlagEffect(tp,id)==0
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(1-tp)+Duel.GetBattleDamage(tp),false)
 	Duel.ChangeBattleDamage(tp,0)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end

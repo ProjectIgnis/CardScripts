@@ -1,5 +1,5 @@
 --エルシャドール・アプカローネ
---El Shaddoll Apkalone
+--El Shaddoll Apkallone
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -63,11 +63,13 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end

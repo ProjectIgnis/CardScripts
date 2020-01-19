@@ -18,8 +18,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x10ec}
-function s.matfilter(c,lc,stype,tp)
-	return c:IsLinkSetCard(0x10ec) and c:IsType(TYPE_PENDULUM,lc,stype,tp)
+function s.matfilter(c,lc,sumtype,tp)
+	return c:IsSetCard(0x10ec,lc,sumtype,tp) and c:IsType(TYPE_PENDULUM,lc,sumtype,tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)

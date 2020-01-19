@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13c}
 function s.lcheck(g,lc,tp)
-	return g:IsExists(Card.IsLinkSetCard,1,nil,0x13c)
+	return g:IsExists(Card.IsSetCard,1,nil,0x13c,lc,SUMMON_TYPE_LINK,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0

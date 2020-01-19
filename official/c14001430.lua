@@ -60,7 +60,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 			g=g:Select(tp,1,ct,nil)
 		end
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_TO_DECK_REDIRECT)
@@ -69,7 +69,6 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)
 			tc:RegisterFlagEffect(id,RESET_EVENT+0x1de0000+RESET_PHASE+PHASE_END,0,1)
-			tc=g:GetNext()
 		end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)

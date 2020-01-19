@@ -64,8 +64,7 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		tc:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
-		tc=g:GetNext()
 	end
 end

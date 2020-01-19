@@ -45,9 +45,8 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local typ=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		typ=typ|(tc:GetOriginalType()&0x7)
-		tc=g:GetNext()
 	end
 	e:SetLabel(typ)
 end

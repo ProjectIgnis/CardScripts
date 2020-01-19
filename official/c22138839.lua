@@ -42,7 +42,7 @@ function s.cop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		tc:AddCounter(COUNTER_PREDATOR,1)
 		if tc:GetLevel()>1 then
 			local e1=Effect.CreateEffect(c)
@@ -53,7 +53,6 @@ function s.cop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(1)
 			tc:RegisterEffect(e1)
 		end
-		tc=g:GetNext()
 	end
 end
 function s.lvcon(e)

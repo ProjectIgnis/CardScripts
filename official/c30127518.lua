@@ -25,12 +25,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local exg=Group.CreateGroup()
 	local g1=Duel.GetOperatedGroup()
 	local tc=g1:GetFirst()
-	while tc do
+	for tc in aux.Next(g1) do
 		if tc:IsLocation(LOCATION_GRAVE) then
 			local fg=Duel.GetMatchingGroup(Card.IsCode,tp,0,LOCATION_DECK+LOCATION_HAND,nil,tc:GetCode())
 			exg:Merge(fg)
 		end
-		tc=g1:GetNext()
 	end
 	Duel.BreakEffect()
 	Duel.SendtoGrave(exg,REASON_EFFECT)

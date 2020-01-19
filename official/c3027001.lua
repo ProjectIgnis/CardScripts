@@ -28,9 +28,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ConfirmCards(1-tp,fg)
 	local reg=tg:Filter(s.cfilter,e:GetHandler(),tp)
 	local tc=reg:GetFirst()
-	while tc do
+	for tc in aux.Next(reg) do
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
-		tc=reg:GetNext()
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

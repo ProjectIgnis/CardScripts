@@ -59,13 +59,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_UPDATE_ATTACK)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e3:SetValue(500)
 		tc:RegisterEffect(e3)
-		tc=g:GetNext()
 	end
 end

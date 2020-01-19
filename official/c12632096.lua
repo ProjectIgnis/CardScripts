@@ -48,7 +48,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.GetControl(g,tp,PHASE_END,1)
 	local og=Duel.GetOperatedGroup()
 	local tc=og:GetFirst()
-	while tc do
+	for tc in aux.Next(og) do
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
@@ -73,7 +73,6 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetValue(id)
 		e5:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e5)
-		tc=og:GetNext()
 	end
 end
 function s.atktg(e,c)

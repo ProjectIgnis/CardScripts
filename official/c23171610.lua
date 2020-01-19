@@ -27,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local fid=c:GetFieldID()
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -35,7 +35,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(tc:GetAttack()*2)
 		tc:RegisterEffect(e1)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
-		tc=sg:GetNext()
 	end
 	sg:KeepAlive()
 	local e2=Effect.CreateEffect(c)

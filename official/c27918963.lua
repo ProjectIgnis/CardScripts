@@ -74,14 +74,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then
 		local g=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_MZONE,0,nil)
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(300)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)
-			tc=g:GetNext()
 		end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

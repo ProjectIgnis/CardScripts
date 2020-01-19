@@ -23,9 +23,8 @@ function s.mfilter1(c,mg,exg,ct)
 end
 function s.mfilter2(c,g,mg,exg,ct)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if c:IsCode(tc:GetCode()) then return false end
-		tc=g:GetNext()
 	end
 	g:AddCard(c)
 	local result=exg:IsExists(Card.IsXyzSummonable,1,nil,g,#g,#g)

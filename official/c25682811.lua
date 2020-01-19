@@ -64,9 +64,8 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	local tc=sg:GetFirst()
-	while tc do
-	aux.EquipByEffectAndLimitRegister(c,e,tp,tc)
-		tc=sg:GetNext()
+	for tc in aux.Next(g) do
+		aux.EquipByEffectAndLimitRegister(c,e,tp,tc)
 	end
 end
 function s.atkval(e,c)

@@ -96,11 +96,10 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local g=e:GetLabelObject()
 		g:Clear()
 		local tc=tg:GetFirst()
-		while tc do
+		for tc in aux.Next(tg) do
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
 			tc:SetStatus(STATUS_DESTROY_CONFIRMED,true)
 			g:AddCard(tc)
-			tc=tg:GetNext()
 		end
 		return true
 	else return false end
@@ -112,9 +111,8 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,1-tp,id)
 	local tg=e:GetLabelObject()
 	local tc=tg:GetFirst()
-	while tc do
+	for tc in aux.Next(tg) do
 		tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-		tc=tg:GetNext()
 	end
 	Duel.Destroy(tg,REASON_EFFECT+REASON_REPLACE)
 end

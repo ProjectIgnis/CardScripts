@@ -39,12 +39,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_COST)
 	local atk=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local batk=tc:GetTextAttack()
 		if batk>0 then
 			atk=atk+batk
 		end
-		tc=g:GetNext()
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

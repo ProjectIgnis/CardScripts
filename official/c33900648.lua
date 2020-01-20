@@ -114,9 +114,8 @@ function s.raccheck(p)
 	local rac=0
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,p,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		rac=(rac|tc:GetAttribute())
-		tc=g:GetNext()
 	end
 	s[p]=rac
 end

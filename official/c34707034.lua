@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local fid=c:GetFieldID()
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -49,7 +49,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
-		tc=g:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 	g:KeepAlive()

@@ -36,7 +36,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_BATTLE_DESTROYING)
@@ -45,7 +45,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.atkop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

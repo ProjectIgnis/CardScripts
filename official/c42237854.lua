@@ -84,9 +84,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #tg>0 then
 		Duel.BreakEffect()
 		local tc=tg:GetFirst()
-		while tc do
+		for tc in aux.Next(tg) do
 			s.equipop(c,e,tp,tc,true)
-			tc=tg:GetNext()
 		end
 		Duel.EquipComplete()
 	end
@@ -111,11 +110,10 @@ function s.atkval(e,c)
 	local atk=0
 	local g=c:GetEquipGroup()
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:GetFlagEffect(id)~=0 and tc:GetAttack()>=0 then
 			atk=atk+tc:GetAttack()
 		end
-		tc=g:GetNext()
 	end
 	return atk
 end

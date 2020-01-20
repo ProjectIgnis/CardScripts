@@ -108,11 +108,9 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		Duel.ReturnToField(tc)
-		tc=sg:GetNext()
 	end
-	
 end
 function s.thfilter(c)
 	return c:IsSetCard(0xc1) and c:IsAbleToHand()

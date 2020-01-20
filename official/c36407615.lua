@@ -22,7 +22,7 @@ end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local atk=tc:GetAttack()
 		local def=tc:GetDefense()
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -37,6 +37,5 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(atk)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 		tc:RegisterEffect(e2)
-		tc=g:GetNext()
 	end
 end

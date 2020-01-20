@@ -24,14 +24,17 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local p1=false
 	local p2=false
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsType(TYPE_SYNCHRO) and tc:IsPreviousLocation(LOCATION_MZONE)
 			and ((tc:IsReason(REASON_BATTLE) and (tc:GetBattlePosition()&POS_FACEUP)~=0)
 			or (not tc:IsReason(REASON_BATTLE) and tc:IsPreviousPosition(POS_FACEUP)))
 			and tc:GetPreviousControler()~=tc:GetReasonPlayer() then
-			if tc:GetReasonPlayer()==0 then p1=true else p2=true end
+				if tc:GetReasonPlayer()==0 then
+					p1=true
+				else
+					p2=true
+				end
 		end
-		tc=eg:GetNext()
 	end
 	if p1 then Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1) end
 	if p2 then Duel.RegisterFlagEffect(1,id,RESET_PHASE+PHASE_END,0,1) end

@@ -76,11 +76,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp,#cg)
 	local lvt={}
 	local tc=tg:GetFirst()
-	while tc do
+	for tc in aux.Next(tg) do
 		local tlv=0
 		tlv=tlv+tc:GetLevel()
 		lvt[tlv]=tlv
-		tc=tg:GetNext()
 	end
 	local pc=1
 	for i=1,12 do

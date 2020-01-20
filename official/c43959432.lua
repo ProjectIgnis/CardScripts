@@ -80,10 +80,9 @@ function s.atkval(e,c)
 	local g=e:GetHandler():GetEquipGroup():Filter(s.eqfilter,nil)
 	local atk=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local tatk=tc:GetAttack()
 		if tatk>0 then atk=atk+tatk end
-		tc=g:GetNext()
 	end
 	return atk
 end

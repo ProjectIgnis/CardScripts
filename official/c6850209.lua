@@ -26,11 +26,10 @@ end
 s.listed_names={85605684}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsLevelAbove(8) and tc:IsPreviousLocation(LOCATION_MZONE) then
 			s[tc:GetPreviousControler()]=true
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.filter(c,e,tp)

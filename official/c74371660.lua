@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil,c:GetAttack())
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -57,6 +57,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-		tc=g:GetNext()
 	end
 end

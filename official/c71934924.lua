@@ -37,7 +37,7 @@ function s.upop(e,tp,eg,ep,ev,re,r,rp)
 	if c:GetFlagEffect(id)==0 then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		--Activate
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -46,6 +46,5 @@ function s.upop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-		tc=g:GetNext()
 	end
 end

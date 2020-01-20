@@ -27,11 +27,10 @@ function s.valop(e,tp,eg,ep,ev,re,r,rp)
 	local g=c:GetMaterial()
 	local tc=g:GetFirst()
 	local atk=0
-	while tc do
+	for tc in aux.Next(g) do
 		local tatk=tc:GetTextAttack()
 		if tatk<0 then tatk=0 end
 		atk=atk+tatk
-		tc=g:GetNext()
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

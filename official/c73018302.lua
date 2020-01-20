@@ -19,9 +19,8 @@ function s.check(tp)
 	if #g<2 then return false end
 	local rac=g:GetFirst():GetRace()
 	local tc=g:GetNext()
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:GetRace()~=rac then return false end
-		tc=g:GetNext()
 	end
 	return true
 end

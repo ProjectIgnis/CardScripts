@@ -30,10 +30,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local dg=Duel.GetOperatedGroup()
 		local tc=dg:GetFirst()
 		local atk=0
-		while tc do
+		for tc in aux.Next(dg) do
 			local tatk=tc:GetTextAttack()
 			if tatk>0 then atk=atk+tatk end
-			tc=dg:GetNext()
 		end
 		local dam=Duel.Damage(tp,atk/2,REASON_EFFECT)
 		if Duel.GetLP(tp)>0 and dam>0 then

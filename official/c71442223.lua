@@ -58,9 +58,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			tg:Merge(og)
 		end
 		local tc=tg:GetFirst()
-		while tc do
+		for tc in aux.Next(tg) do
 			s.counter(tc,c)
-			tc=tg:GetNext()
 		end
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

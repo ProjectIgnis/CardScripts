@@ -118,13 +118,12 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(s.retfilter,nil,e:GetLabel())
 	g:DeleteGroup()
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		if tc==e:GetHandler() then
 			Duel.ReturnToField(tc)
 		else
 			Duel.SendtoHand(tc,tc:GetPreviousControler(),REASON_EFFECT)
 		end
-		tc=sg:GetNext()
 	end
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

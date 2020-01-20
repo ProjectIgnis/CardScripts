@@ -26,10 +26,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_MZONE,0,nil,e)
 	local tc=g:GetFirst()
 	local fid=c:GetFieldID()
-	while tc do
+	for tc in aux.Next(g) do
 		tc:EnableGeminiState()
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
-		tc=g:GetNext()
 	end
 	g:KeepAlive()
 	local e2=Effect.CreateEffect(c)

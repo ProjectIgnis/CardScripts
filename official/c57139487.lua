@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	local rg=Group.CreateGroup()
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		if tc:IsLocation(LOCATION_REMOVED) then
 			local tpe=tc:GetType()
 			if (tpe&TYPE_TOKEN)==0 then
@@ -42,7 +42,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				rg:Merge(g1)
 			end
 		end
-		tc=sg:GetNext()
 	end
 	if #rg>0 then
 		Duel.BreakEffect()

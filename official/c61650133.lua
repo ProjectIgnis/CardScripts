@@ -45,11 +45,10 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local rm1=false
 	local rm2=false
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsOnField() then
 			if tc:IsControler(tp) then rm1=true else rm2=true end
 		end
-		tc=eg:GetNext()
 	end
 	local g=Group.CreateGroup()
 	if rm1 then

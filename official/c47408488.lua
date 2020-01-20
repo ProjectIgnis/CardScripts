@@ -69,7 +69,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.plfilter,tp,LOCATION_DECK,0,ft,ft,nil)
 	if #g>0 then
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetCode(EFFECT_CHANGE_TYPE)
@@ -78,7 +78,6 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 			e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 			tc:RegisterEffect(e1)
-			tc=g:GetNext()
 		end
 		Duel.RaiseEvent(g,EVENT_CUSTOM+id,e,0,tp,0,0)
 	end

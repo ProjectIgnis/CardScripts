@@ -22,7 +22,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -36,6 +36,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 		e2:SetCode(EFFECT_PIERCE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
 		tc:RegisterEffect(e2)
-		tc=g:GetNext()
 	end
 end

@@ -27,9 +27,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local rg=g:Filter(s.filter1,nil,g)
 	local tc=rg:GetFirst()
 	local att=0
-	while tc do
+	for tc in aux.Next(rg) do
 		att=(att|tc:GetAttribute())
-		tc=rg:GetNext()
 	end
 	local ac=Duel.AnnounceAttribute(tp,1,att)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)

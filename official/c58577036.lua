@@ -23,12 +23,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local seq=-1
 	local tc=g:GetFirst()
 	local spcard=nil
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:GetSequence()>seq then 
 			seq=tc:GetSequence()
 			spcard=tc
 		end
-		tc=g:GetNext()
 	end
 	if seq==-1 then
 		Duel.ConfirmDecktop(tp,dcount)

@@ -76,10 +76,9 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		pg:Clear()
 	end
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		pg:AddCard(tc)
 		tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)
-		tc=eg:GetNext()
 	end
 end
 function s.pubcon(e)

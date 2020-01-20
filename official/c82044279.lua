@@ -69,11 +69,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local atk=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:GetTextAttack()>0 then
 			atk=atk+tc:GetTextAttack()
 		end
-		tc=g:GetNext()
 	end
 	if atk>0 then
 		local e1=Effect.CreateEffect(c)

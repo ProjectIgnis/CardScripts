@@ -31,11 +31,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 		local def=0
 		local sc=g:GetFirst()
-		while sc do
+		for sc in aux.Next(g) do
 			local cdef=sc:GetBaseDefense()
 			if cdef<0 then cdef=0 end
 			def=def+cdef
-			sc=g:GetNext()
 		end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

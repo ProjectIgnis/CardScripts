@@ -87,9 +87,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>1 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)==2 then
 		Duel.BreakEffect()
 		local ct=g:GetFirst()
-		while ct do
+		for ct in aux.Next(g) do
 			ct:AddCounter(COUNTER_SPELL,1)
-			ct=g:GetNext()
 		end
 	end
 end

@@ -12,12 +12,11 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local tc=g:GetFirst()
 	local sp=false
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:IsRace(RACE_REPTILE) then
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_EXC_GRAVE+RESET_PHASE+PHASE_END,0,1)
 			sp=true
 		end
-		tc=g:GetNext()
 	end
 	if sp then
 		--spsummon

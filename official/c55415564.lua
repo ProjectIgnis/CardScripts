@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local g=eg:Filter(s.cfilter,nil,1-tp)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e0=Effect.CreateEffect(c)
 		e0:SetType(EFFECT_TYPE_SINGLE)
 		e0:SetCode(EFFECT_DISABLE)
@@ -68,7 +68,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e0:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		tc:RegisterEffect(e2)
-		tc=g:GetNext()
 	end
 end
 	--Check for "D/D"

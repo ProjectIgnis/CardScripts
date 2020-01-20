@@ -34,7 +34,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,c)
 	local tc=tg:GetFirst()
-	while tc do
+	for tc in aux.Next(tg) do
 		local atk=tc:GetAttack()
 		local def=tc:GetDefense()
 		local e1=Effect.CreateEffect(c)
@@ -49,6 +49,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(def/2)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
-		tc=tg:GetNext()
 	end
 end

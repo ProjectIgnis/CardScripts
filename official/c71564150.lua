@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.GetControl(g,tp,PHASE_END,1)
 	local og=Duel.GetOperatedGroup()
 	local tc=og:GetFirst()
-	while tc do
+	for tc in aux.Next(og) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
@@ -47,6 +47,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e4=e1:Clone()
 		e4:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 		tc:RegisterEffect(e4)
-		tc=og:GetNext()
 	end
 end

@@ -24,9 +24,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	local race=0
-	while tc do
+	for tc in aux.Next(g) do
 		race=(race|tc:GetRace())
-		tc=g:GetNext()
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,0)
 	local arc=Duel.AnnounceRace(tp,1,race)

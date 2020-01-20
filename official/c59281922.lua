@@ -63,7 +63,7 @@ end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
@@ -71,7 +71,6 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(5)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

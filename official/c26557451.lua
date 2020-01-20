@@ -33,10 +33,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			local atk=0
 			local tc=g:GetFirst()
-			while tc do
+			for tc in aux.Next(g) do
 				local tatk=tc:GetAttack()
 				if tatk>0 then atk=atk+tatk end
-				tc=g:GetNext()
 			end
 			if Duel.Damage(1-tp,atk,REASON_EFFECT)~=0 then
 				Duel.Remove(g,POS_FACEUP,REASON_EFFECT)

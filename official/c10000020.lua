@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
 	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3)
-    local e2=aux.AddNormalSetProcedure(c)
+	local e2=aux.AddNormalSetProcedure(c)
 	--summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -88,7 +88,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Group.CreateGroup()
 	local c=e:GetHandler()
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local preatk=tc:GetAttack()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -97,7 +97,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		if preatk~=0 and tc:GetAttack()==0 then dg:AddCard(tc) end
-		tc=g:GetNext()
 	end
 	Duel.Destroy(dg,REASON_EFFECT)
 end

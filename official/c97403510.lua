@@ -59,9 +59,8 @@ end
 s.xyz_number=92
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-		tc=eg:GetNext()
 	end
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)

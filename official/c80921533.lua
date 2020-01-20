@@ -34,11 +34,10 @@ function s.get_targets(se,tp)
 	local minct=5
 	local maxct=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local mi,ma=tc:GetTributeRequirement()
 		if mi>0 and mi<minct then minct=mi end
 		if ma>maxct then maxct=ma end
-		tc=g:GetNext()
 	end
 	return minct,maxct
 end

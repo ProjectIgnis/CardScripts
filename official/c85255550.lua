@@ -75,9 +75,8 @@ end
 function s.endop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject():GetLabelObject():GetLabelObject()
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		s.desop(tc,e:GetLabelObject():GetLabelObject(),e:GetHandler())
-		tc=g:GetNext()
 	end
 end
 function s.desop(tc,e,c)

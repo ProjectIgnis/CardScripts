@@ -81,9 +81,8 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local og=Duel.GetOperatedGroup()
 		if not og:IsContains(tc) then mcount=0 end
 		local oc=og:GetFirst()
-		while oc do
+		for oc in aux.Next(og) do
 			oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-			oc=og:GetNext()
 		end
 		og:KeepAlive()
 		local e1=Effect.CreateEffect(c)
@@ -105,7 +104,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(s.retfilter,nil)
 	g:DeleteGroup()
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		if Duel.ReturnToField(tc) and tc==e:GetOwner() and tc:IsFaceup() and e:GetLabel()~=0 then
 			local e1=Effect.CreateEffect(e:GetOwner())
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -114,6 +113,5 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(e:GetLabel()*500)
 			e:GetOwner():RegisterEffect(e1)
 		end
-		tc=sg:GetNext()
 	end
 end

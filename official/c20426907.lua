@@ -92,7 +92,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 or not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.disfilter,nil,e)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -114,7 +114,6 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetValue(LOCATION_REMOVED)
 			tc:RegisterEffect(e3)
 		end
-		tc=g:GetNext()
 	end
 end
 function s.sdfilter(c)

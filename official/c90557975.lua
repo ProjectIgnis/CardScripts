@@ -22,11 +22,10 @@ function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	local s=0
-	while tc do
+	for tc in aux.Next(g) do
 		local ct=tc:GetCounter(0x1019)
 		s=s+ct
 		tc:RemoveCounter(tp,0x1019,ct,REASON_COST)
-		tc=g:GetNext()
 	end
 	e:SetLabel(s*300)
 end

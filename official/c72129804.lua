@@ -41,7 +41,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	local tc=tg:GetFirst()
-	while tc do
+	for tc in aux.Next(tg) do
 		if tc:AddCounter(COUNTER_PREDATOR,1) and tc:GetLevel()>1 then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -51,7 +51,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(1)
 			tc:RegisterEffect(e1)
 		end
-		tc=tg:GetNext()
 	end
 end
 function s.lvcon(e)

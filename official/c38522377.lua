@@ -80,11 +80,10 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local t1=false
 	local t2=false
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsType(TYPE_SYNCHRO) then
 			if tc:IsSummonPlayer(tp) then t1=true else t2=true end
 		end
-		tc=eg:GetNext()
 	end
 	if t1 and not t2 then Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,1000)
 	elseif not t1 and t2 then Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)

@@ -25,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=sg:GetFirst()
 	local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_PSYCHIC),tp,LOCATION_REMOVED,0,nil)*300
-	while tc do
+	for tc in aux.Next(sg) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -41,7 +41,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCountLimit(1)
 		e2:SetOperation(s.rmop)
 		tc:RegisterEffect(e2)
-		tc=sg:GetNext()
 	end
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)

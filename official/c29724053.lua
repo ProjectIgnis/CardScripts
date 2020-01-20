@@ -48,11 +48,10 @@ function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsPreviousLocation(LOCATION_EXTRA) then
 			local p=tc:GetSummonPlayer()
 			s[p]=s[p]-1
 		end
-		tc=eg:GetNext()
 	end
 end

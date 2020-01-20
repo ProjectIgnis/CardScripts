@@ -57,10 +57,9 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local tc=g:GetFirst()
 	local atk=0
-	while tc do
+	for tc in aux.Next(g) do
 		local catk=tc:GetTextAttack()
 		atk=atk+(catk>=0 and catk or 0)
-		tc=g:GetNext()
 	end
 	if e:GetLabel()==1 then
 		e:SetLabel(0)

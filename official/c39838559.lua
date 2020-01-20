@@ -51,7 +51,7 @@ end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=eg:GetFirst()
-	while rc do
+	for rc in aux.Next(eg) do
 		if rc:IsStatus(STATUS_OPPO_BATTLE) then
 			if rc:IsRelateToBattle() then
 				if rc:IsControler(tp) and rc:IsSetCard(0x107) then return true end
@@ -59,7 +59,6 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 				if rc:IsPreviousControler(tp) and rc:IsPreviousSetCard(0x107) then return true end
 			end
 		end
-		rc=eg:GetNext()
 	end
 	return false
 end

@@ -23,9 +23,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	local last=g:GetFirst()
 	local tc=g:GetNext()
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:GetSequence()<last:GetSequence() then last=tc end
-		tc=g:GetNext()
 	end
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_CODE)
 	local ac=Duel.AnnounceCard(1-tp,TYPE_MONSTER)

@@ -28,13 +28,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(Card.IsRelateToEffect,nil,e)
 	Duel.ChangePosition(g,POS_FACEUP_ATTACK)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_MUST_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 	if Duel.GetFlagEffect(tp,id)==0 then
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)

@@ -38,9 +38,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:IsFaceup() and tc:IsRelateToEffect(e) then c:SetCardTarget(tc) end
-		tc=g:GetNext()
 	end
 end
 function s.indcon(e)

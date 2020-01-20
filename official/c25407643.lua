@@ -52,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		or Duel.IsExistingMatchingCard(s.cfilter1,tp,0,LOCATION_SZONE,1,nil) then return end
 	local tc=eg:GetFirst()
 	local c=e:GetHandler()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsRelateToEffect(e) and s.cfilter2(tc,1-tp) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -65,6 +65,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e2)
 		end
-		tc=eg:GetNext()
 	end
 end

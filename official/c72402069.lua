@@ -94,7 +94,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not pc then return end
 	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_MZONE,pc)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -112,7 +112,6 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e3)
 		end
-		tc=g:GetNext()
 	end
 end
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)

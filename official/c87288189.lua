@@ -69,12 +69,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local og=Duel.GetOperatedGroup()
 		local rg=Group.CreateGroup()
 		local tc=og:GetFirst()
-		while tc do
+		for tc in aux.Next(og) do
 			if tc:IsAttribute(ATTRIBUTE_DARK) then
 				local sg=Duel.GetMatchingGroup(s.rmfilter,tc:GetControler(),0x57,0,nil,tc:GetCode())
 				rg:Merge(sg)
 			end
-			tc=og:GetNext()
 		end
 		if #rg>0 then
 			Duel.BreakEffect()

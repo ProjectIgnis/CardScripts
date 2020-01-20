@@ -25,11 +25,10 @@ function s.initial_effect(c)
 end
 function s.checkop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsPreviousSetCard(0x3008) then
 			s[tc:GetPreviousControler()]=true
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

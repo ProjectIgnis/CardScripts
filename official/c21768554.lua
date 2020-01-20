@@ -47,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if #g>Duel.GetLocationCount(tp,LOCATION_MZONE) then return end
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:IsFaceup() and tc:GetCounter(0x100e)>0 and tc:IsRelateToEffect(e) then
 			c:SetCardTarget(tc)
 			local e1=Effect.CreateEffect(c)
@@ -59,7 +59,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCondition(s.con)
 			tc:RegisterEffect(e1)
 		end
-		tc=g:GetNext()
 	end
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end

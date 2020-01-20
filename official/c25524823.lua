@@ -64,9 +64,8 @@ function s.valcheck(e,c)
 	local ct=g:FilterCount(Card.IsSetCard,nil,0x2e)
 	local lv=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		lv=lv+tc:GetLevel()
-		tc=g:GetNext()
 	end
 	e:SetLabel(lv)
 	e:GetLabelObject():SetLabel(ct)
@@ -142,7 +141,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if (sel&4)~=0 then
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -152,7 +151,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)
 			tc:RegisterEffect(e2)
-			tc=g:GetNext()
 		end
 	end
 end

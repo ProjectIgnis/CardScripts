@@ -26,9 +26,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
 		local ec=g:GetFirst()
-		while ec do
+		for ec in aux.Next(g) do
 			Duel.Equip(tp,ec,tc)
-			ec=g:GetNext()
 		end
 		Duel.EquipComplete()
 	end

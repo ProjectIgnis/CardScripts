@@ -84,7 +84,7 @@ end
 function s.counterop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		tc:AddCounter(0x1038,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -95,7 +95,6 @@ function s.counterop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE)
 		tc:RegisterEffect(e2)
-		tc=g:GetNext()
 	end
 end
 function s.disable(e)

@@ -27,14 +27,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local sc=g:GetFirst()
 		local atk=tc:GetAttack()
-		while sc do
+		for sc in aux.Next(g) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			e1:SetValue(atk)
 			sc:RegisterEffect(e1)
-			sc=g:GetNext()
 		end
 	end
 end

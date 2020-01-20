@@ -27,9 +27,8 @@ end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		e:GetHandler():SetCardTarget(tc)
-		tc=g:GetNext()
 	end
 end
 function s.postg(e,c)

@@ -44,9 +44,8 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(re) then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,re)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		c:SetCardTarget(tc)
-		tc=g:GetNext()
 	end
 end
 function s.descon1(e,tp,eg,ep,ev,re,r,rp)

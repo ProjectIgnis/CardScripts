@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_MZONE,0,tc)
 		local lc=g:GetFirst()
 		local lv=tc:GetLevel()
-		while lc do
+		for lc in aux.Next(g) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -53,7 +53,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(lv)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			lc:RegisterEffect(e1)
-			lc=g:GetNext()
 		end
 	end
 end

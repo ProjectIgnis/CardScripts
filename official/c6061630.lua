@@ -44,10 +44,9 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,e:GetHandler(),e,tp)
 	local lvt={}
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local tlv=tc:GetLevel()
 		lvt[tlv]=tlv
-		tc=g:GetNext()
 	end
 	local pc=1
 	for i=1,12 do

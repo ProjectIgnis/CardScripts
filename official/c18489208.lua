@@ -26,7 +26,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsLocation(LOCATION_GRAVE) then return end
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if c:IsRelateToEffect(e) and tc:IsFacedown() and tc:IsRelateToEffect(e) then
 			c:SetCardTarget(tc)
 			local e1=Effect.CreateEffect(c)
@@ -37,7 +37,6 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(1)
 			tc:RegisterEffect(e1)
 		end
-		tc=g:GetNext()
 	end
 end
 function s.rcon(e)

@@ -100,9 +100,8 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		tc:AddCounter(0x1045,1)
-		tc=g:GetNext()
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)

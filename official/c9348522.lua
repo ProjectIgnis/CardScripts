@@ -36,9 +36,8 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		tc:RegisterFlagEffect(id,RESET_EVENT+0x1ec0000+RESET_PHASE+PHASE_END,0,1)
-		tc=eg:GetNext()
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

@@ -19,13 +19,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_BEAST+RACE_WINGEDBEAST),tp,LOCATION_REMOVED,0,nil)*200
 	if #g==0 or atk==0 then return end
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(atk)
 		tc:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 end

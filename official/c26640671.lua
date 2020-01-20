@@ -70,9 +70,8 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.pfilter,tp,0,LOCATION_MZONE,nil)
 	Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)
-		tc=g:GetNext()
 	end
 end
 function s.postg(e,c)

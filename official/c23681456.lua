@@ -27,11 +27,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		local fid=e:GetHandler():GetFieldID()
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 			tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
-			tc=g:GetNext()
 		end
 		Duel.SpecialSummonComplete()
 		g:KeepAlive()

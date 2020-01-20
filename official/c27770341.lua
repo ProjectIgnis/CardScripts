@@ -36,7 +36,7 @@ function s.resetcount(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.addcount(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		local pl=tc:GetPreviousLocation()
 		if pl==LOCATION_MZONE and tc:GetPreviousRaceOnField()==RACE_DRAGON then
 			local p=tc:GetReasonPlayer()
@@ -45,7 +45,6 @@ function s.addcount(e,tp,eg,ep,ev,re,r,rp)
 			local p=tc:GetPreviousControler()
 			s[p]=s[p]+1
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

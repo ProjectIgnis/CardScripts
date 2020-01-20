@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			sg=rg
 		end
 		local tc=sg:GetFirst()
-		while tc do
+		for tc in aux.Next(sg) do
 			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetCode(EFFECT_CHANGE_TYPE)
@@ -49,7 +49,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 			e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 			tc:RegisterEffect(e1)
-			tc=sg:GetNext()
 		end
 		Duel.RaiseEvent(sg,EVENT_CUSTOM+47408488,e,0,tp,0,0)
 	end

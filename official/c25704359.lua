@@ -69,9 +69,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local g=eg:Filter(s.cfilter,nil,tp)
 		local att=0x7f
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			att=(att&tc:GetOriginalAttribute())
-			tc=g:GetNext()
 		end
 		att=0x7f-att
 		e:SetLabel(att)

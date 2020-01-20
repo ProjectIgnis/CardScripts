@@ -99,14 +99,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local g=Duel.SelectMatchingCard(tp,s.pfilter,tp,LOCATION_EXTRA,0,1,ct,nil)
 		local pc=g:GetFirst()
-		while pc do
+		for pc in aux.Next(g) do
 			Duel.MoveToField(pc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_TRIGGER)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			pc:RegisterEffect(e1)
-			pc=g:GetNext()
 		end
 	end
 end

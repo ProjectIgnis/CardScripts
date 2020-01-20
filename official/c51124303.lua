@@ -98,9 +98,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tg=sg:SelectWithSumEqual(tp,Card.GetLevel,mc:GetLevel(),1,ft)
 		local tc=tg:GetFirst()
-		while tc do
+		for tc in aux.Next(tg) do
 			tc:SetMaterial(mat)
-			tc=tg:GetNext()
 		end
 		if not mc:IsLocation(LOCATION_EXTRA) then
 			Duel.ReleaseRitualMaterial(mat)

@@ -55,9 +55,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				local sg2=Duel.GetOperatedGroup()
 				local fid=e:GetHandler():GetFieldID()
 				local tc=sg2:GetFirst()
-				while tc do
+				for tc in aux.Next(sg2) do
 					tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0,fid)
-					tc=sg2:GetNext()
 				end
 				sg2:KeepAlive()
 				local e1=Effect.CreateEffect(e:GetHandler())

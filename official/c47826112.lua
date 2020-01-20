@@ -58,14 +58,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if ct>=3 then
 		local mg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 		local tc=mg:GetFirst()
-		while tc do
+		for tc in aux.Next(mg) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-ct*300)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
-			tc=mg:GetNext()
 		end
 	end
 end

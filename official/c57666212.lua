@@ -39,12 +39,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local d1=0
 	local d2=0
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		if tc then
 			if tc:IsPreviousControler(0) then d1=d1+1
 			else d2=d2+1 end
 		end
-		tc=sg:GetNext()
 	end
 	if d1>0 and Duel.SelectYesNo(0,aux.Stringid(id,1)) then Duel.Draw(0,d1,REASON_EFFECT) end
 	if d2>0 and Duel.SelectYesNo(1,aux.Stringid(id,1)) then Duel.Draw(1,d2,REASON_EFFECT) end

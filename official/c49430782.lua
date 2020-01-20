@@ -56,7 +56,7 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsPreviousLocation(LOCATION_ONFIELD) and tc:IsSetCard(0xf9) then
 			local typ=(tc:GetOriginalType()&0x7)
 			if (typ==TYPE_MONSTER and Duel.GetFlagEffect(0,id)==0)
@@ -72,7 +72,6 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 				end
 			end
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.clearop(e,tp,eg,ep,ev,re,r,rp)

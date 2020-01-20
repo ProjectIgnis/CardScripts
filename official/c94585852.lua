@@ -43,7 +43,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local lv1=0
 	local lv2=0
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsReason(REASON_DESTROY) and not tc:IsReason(REASON_BATTLE) and tc:IsSetCard(0x45) then
 			local tlv=tc:GetLevel()
 			if tc:IsControler(0) then
@@ -52,7 +52,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 				if tlv>lv2 then lv2=tlv end
 			end
 		end
-		tc=eg:GetNext()
 	end
 	if lv1>0 then Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,0,0,lv1) end
 	if lv2>0 then Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,1,1,lv2) end

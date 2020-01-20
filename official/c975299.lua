@@ -113,8 +113,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=eg:Filter(s.ctfilter,nil,tp)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		tc:AddCounter(0x1f,1)
-		tc=g:GetNext()
 	end
 end

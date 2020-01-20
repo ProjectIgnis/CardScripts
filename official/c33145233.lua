@@ -25,7 +25,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rc=eg:GetFirst()
-	while rc do
+	for rc in aux.Next(eg) do
 		if rc:GetFlagEffect(id)==0 then
 			--untargetable
 			local e1=Effect.CreateEffect(e:GetHandler())
@@ -40,7 +40,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			rc:RegisterEffect(e1,true)
 			rc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		end
-		rc=eg:GetNext()
 	end
 end
 function s.tgval(e,re,rp)

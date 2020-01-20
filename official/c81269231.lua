@@ -33,10 +33,9 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:IsSetCard(0x7) then flag=(flag|0x1) end
 		if tc:IsSetCard(0x51) then flag=(flag|0x2) end
-		tc=g:GetNext()
 	end
 	e:SetLabel(flag)
 end

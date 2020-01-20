@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local tg=sg:GetFirst()
 	local fid=e:GetHandler():GetFieldID()
-	while tg do
+	for tg in aux.Next(sg) do
 		local e1=Effect.CreateEffect(tg)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_TYPE)
@@ -74,7 +74,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tg:RegisterEffect(e5,true)
 		tg:RegisterFlagEffect(id,RESET_EVENT+0x47c0000+RESET_PHASE+PHASE_BATTLE,0,1,fid)
 		tg:SetStatus(STATUS_NO_LEVEL,true)
-		tg=sg:GetNext()
 	end
 	Duel.SpecialSummon(sg,0,tp,tp,true,false,POS_FACEDOWN_DEFENSE)
 	Duel.ConfirmCards(1-tp,sg)

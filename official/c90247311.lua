@@ -47,9 +47,8 @@ function s.costfilter(c,rg,dg)
 	if c:GetEquipCount()==0 then return rg:IsExists(s.costfilter2,1,c,a,dg) end
 	local eg=c:GetEquipGroup()
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if dg:IsContains(tc) then a=a+1 end
-		tc=eg:GetNext()
 	end
 	return rg:IsExists(s.costfilter2,1,c,a,dg)
 end
@@ -81,9 +80,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if sc:GetEquipCount()>0 then
 			local eqg=sc:GetEquipGroup()
 			local tc=eqg:GetFirst()
-			while tc do
+			for tc in aux.Next(eqg) do
 				if dg:IsContains(tc) then a=a+1 end
-				tc=eqg:GetNext()
 			end
 		end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

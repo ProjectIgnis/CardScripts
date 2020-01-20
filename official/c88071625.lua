@@ -60,12 +60,11 @@ function s.valcheck(e,c)
 	local tc=g:GetFirst()
 	local atk=0
 	local def=0
-	while tc do
+	for tc in aux.Next(g) do
 		local catk=tc:GetTextAttack()
 		local cdef=tc:GetTextDefense()
 		atk=atk+(catk>=0 and catk or 0)
 		def=def+(cdef>=0 and cdef or 0)
-		tc=g:GetNext()
 	end
 	if e:GetLabel()==1 then
 		e:SetLabel(0)

@@ -140,9 +140,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			sg1=sg1:Select(tp,ft1,ft1,nil)
 		end
 		local sc=sg1:GetFirst()
-		while sc do
+		for sc in aux.Next(sg1) do
 			Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
-			sc=sg1:GetNext()
 		end
 	end
 	if gc2>0 and ft2>0 then
@@ -151,9 +150,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			sg2=sg2:Select(tp,ft2,ft2,nil)
 		end
 		local sc=sg2:GetFirst()
-		while sc do
+		for sc in aux.Next(dg2) do
 			Duel.SpecialSummonStep(sc,0,tp,1-tp,false,false,POS_FACEUP)
-			sc=sg2:GetNext()
 		end
 	end
 	Duel.SpecialSummonComplete()

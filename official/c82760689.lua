@@ -35,12 +35,11 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if not s[0] and tc:IsFaceup() and tc:IsSetCard(0x18) then
 			if s[1]:IsContains(tc) then s[0]=true
 			else s[1]:AddCard(tc) end
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

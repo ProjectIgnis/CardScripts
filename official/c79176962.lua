@@ -55,14 +55,13 @@ function s.valcheck(e,c)
 	local tc=g:GetFirst()
 	if e:GetLabel()==1 then
 		e:SetLabel(0)
-		while tc do
+		for tc in aux.Next(g) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 			e1:SetValue(LOCATION_HAND)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
-			tc=g:GetNext()
 		end
 	end
 end

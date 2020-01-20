@@ -73,13 +73,12 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Remove(g,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
 		local og=Duel.GetOperatedGroup()
 		local oc=og:GetFirst()
-		while oc do
+		for oc in aux.Next(og) do
 			if oc:IsControler(tp) then
 				oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1)
 			else
 				oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN,0,1)
 			end
-			oc=og:GetNext()
 		end
 		og:KeepAlive()
 		local e1=Effect.CreateEffect(c)
@@ -112,8 +111,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		Duel.ReturnToField(tc)
-		tc=sg:GetNext()
 	end
 end

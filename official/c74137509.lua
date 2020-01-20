@@ -25,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		local d=Duel.TossDice(tp,1)
 		local sc=g:GetFirst()
-		while sc do
+		for sc in aux.Next(g) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -35,7 +35,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)
 			sc:RegisterEffect(e2)
-			sc=g:GetNext()
 		end
 	end
 end

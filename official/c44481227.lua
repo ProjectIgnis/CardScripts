@@ -43,14 +43,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if #g==0 then return end
 	local gc=g:GetFirst()
-	while gc do
+	for gc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_DEFENSE)
 		e1:SetValue(-800)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		gc:RegisterEffect(e1)
-		gc=g:GetNext()
 	end
 	if tc:IsRelateToEffect(e) then
 		local e2=Effect.CreateEffect(e:GetHandler())

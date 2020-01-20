@@ -51,9 +51,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local atk=0
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,tc)
 		local bc=g:GetFirst()
-		while bc do
+		for bc in aux.Next(g) do
 			atk=atk+math.max(bc:GetBaseAttack(),0)
-			bc=g:GetNext()
 		end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

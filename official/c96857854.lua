@@ -64,9 +64,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc=sg1:GetFirst()
 		g:Sub(sg1)
 		ct=ct-#sg1
-		while tc do
+		for tc in aux.Next(sg1) do
 			Duel.SpecialSummonStep(tc,0,tp,1-tp,false,false,POS_FACEUP)
-			tc=sg1:GetNext()
 		end
 	end
 	if ct>0 then

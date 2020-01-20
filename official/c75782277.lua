@@ -44,11 +44,10 @@ function s.check(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=eg:GetFirst()
 	local tp1=false local tp2=false
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsFaceup() and tc:IsCode(CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS) then
 			if tc:IsControler(tp) then tp1=true else tp2=true end
 		end
-		tc=eg:GetNext()
 	end
 	if tp1 then Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,r,rp,tp,0) end
 	if tp2 then Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,r,rp,1-tp,0) end

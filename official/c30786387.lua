@@ -41,9 +41,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,rg)
 		Duel.ShuffleDeck(tp)
 		local tg=rg:GetFirst()
-		while tg do
+		for tg in aux.Next(rg) do
 			Duel.MoveSequence(tg,0)
-			tg=rg:GetNext()
 		end
 		Duel.SortDecktop(tp,tp,3)
 	end

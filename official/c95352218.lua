@@ -22,9 +22,8 @@ function s.checklv(g)
 	local tc=g:GetFirst()
 	local lv=tc:GetLevel()
 	tc=g:GetNext()
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:GetLevel()~=lv then return false end
-		tc=g:GetNext()
 	end
 	return true
 end

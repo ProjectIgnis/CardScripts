@@ -36,9 +36,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local seq=0
 	local og=Duel.GetOperatedGroup()
 	local tc=og:GetFirst()
-	while tc do
+	for tc in aux.Next(og) do
 		seq=bit.replace(seq,0x1,tc:GetPreviousSequence())
-		tc=og:GetNext()
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)

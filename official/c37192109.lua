@@ -54,13 +54,12 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then rct=2 end
 		local og=Duel.GetOperatedGroup()
 		local oc=og:GetFirst()
-		while oc do
+		for oc in aux.Next(og) do
 			if oc:IsControler(tp) then
 				oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,rct,fid)
 			else
 				oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN,0,rct,fid)
 			end
-			oc=og:GetNext()
 		end
 		og:KeepAlive()
 		local e1=Effect.CreateEffect(c)

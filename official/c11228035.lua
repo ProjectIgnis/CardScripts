@@ -32,14 +32,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and tc:IsRelateToEffect(e) then
 		local atk=tc:GetRank()*200
 		local sc=g:GetFirst()
-		while sc do
+		for sc in aux.Next(g) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			e1:SetValue(atk)
 			sc:RegisterEffect(e1)
-			sc=g:GetNext()
 		end
 		if tc:IsAbleToDeck() and not tc:IsHasEffect(EFFECT_NECRO_VALLEY)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

@@ -60,7 +60,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local fid=c:GetFieldID()
 		local og=Duel.GetOperatedGroup()
 		local oc=og:GetFirst()
-		while oc do
+		for oc in aux.Next(og) do
 			if oc~=c or not c:IsStatus(STATUS_COPYING_EFFECT) then
 				if oc:IsControler(tp) then
 					oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1,fid)
@@ -68,7 +68,6 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 					oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN,0,1,fid)
 				end
 			end
-			oc=og:GetNext()
 		end
 		og:KeepAlive()
 		local e1=Effect.CreateEffect(c)

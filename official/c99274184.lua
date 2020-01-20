@@ -41,14 +41,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 		if #g>0 then
 			local sc=g:GetFirst()
-			while sc do
+			for sc in aux.Next(g) do
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
 				e1:SetValue(0)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				sc:RegisterEffect(e1)
-				sc=g:GetNext()
 			end
 		end
 	end

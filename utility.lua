@@ -1,66 +1,58 @@
 Auxiliary={}
 aux=Auxiliary
 function GetID()
-	return self_table,self_code
+    return self_table,self_code
 end
-
 function Duel.LoadCardScript(code)
 	local card=string.sub(code,0,string.len(code)-4)
-	if not _G[card] then
+    if not _G[card] then
 		local oldtable,oldcode=GetID()
-		_G[card] = {}
+        _G[card] = {}
 		self_table=_G[card]
-		setmetatable(self_table, Card)
-		rawset(self_table,"__index",self_table)
 		self_code=tonumber(string.sub(card,2))
-		Duel.LoadScript(code)
+        Duel.LoadScript(code)
 		self_table=oldtable
 		self_code=oldcode
-	end
+    end
 end
-
 function Card.GetMetatable(c)
 	local code=c:GetOriginalCode()
 	local mt=_G["c" .. code]
 	return mt
 end
-
 bit={}
 function bit.band(a,b)
-	return a&b
+    return a&b
 end
 function bit.bor(a,b)
-	return a|b
+    return a|b
 end
 function bit.bxor(a,b)
-	return a~b
+    return a~b
 end
 function bit.lshift(a,b)
-	return a<<b
+    return a<<b
 end
 function bit.rshift(a,b)
-	return a>>b
+    return a>>b
 end
 function bit.bnot(a)
-	return ~a
+    return ~a
 end
-
 local function fieldargs(f,width)
-	w=width or 1
-	assert(f>=0,"field cannot be negative")
-	assert(w>0,"width must be positive")
-	assert(f+w<=32,"trying to access non-existent bits")
-	return f,~(-1<<w)
+    w=width or 1
+    assert(f>=0,"field cannot be negative")
+    assert(w>0,"width must be positive")
+    assert(f+w<=32,"trying to access non-existent bits")
+    return f,~(-1<<w)
 end
-
 function bit.extract(r,field,width)
-	local f,m=fieldargs(field,width)
-	return (r>>f)&m
+    local f,m=fieldargs(field,width)
+    return (r>>f)&m
 end
-
 function bit.replace(r,v,field,width)
-	local f,m=fieldargs(field,width)
-	return (r&~(m<<f))|((v&m)<< f)
+    local f,m=fieldargs(field,width)
+    return (r&~(m<<f))|((v&m)<< f)
 end
 
 Group.__band = function (o1,o2)
@@ -106,7 +98,6 @@ end
 Group.__le = function (g1,g2)
 	return #g1<=#g2
 end
-
 --Returns 2 groups, the 1st group is the one with cards that match the function, the second is the one with cards that don't
 Group.Split = function (g,fun,ex,...)
 	local ng=g:Filter(fun,ex,...)
@@ -120,7 +111,6 @@ function userdatatype(o)
 	elseif o.SetLabelObject then return "Effect"
 	end
 end
-
 function Card.CheckAdjacent(c)
 	local p=c:GetControler()
 	local seq=c:GetSequence()
@@ -139,7 +129,6 @@ function Card.MoveAdjacent(c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 	Duel.MoveSequence(c,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag),2))
 end
-
 function Group.ForEach(g,f,...)
 	local tc=g:GetFirst()
 	while tc do
@@ -147,7 +136,6 @@ function Group.ForEach(g,f,...)
 		tc=g:GetNext()
 	end
 end
-
 function Auxiliary.ParamsFromTable(tab,key,...)
 	if key then
 		if ... then
@@ -216,11 +204,9 @@ function Auxiliary.GetMustBeMaterialGroup(tp,eg,sump,sc,g,r)
 	end
 	return sg
 end
-
 function Group.Includes(g1,g2)
 	return #(g1-g2)+#g2==#g1
 end
-
 --for additional registers
 local regeff=Card.RegisterEffect
 function Card.RegisterEffect(c,e,forced,...)
@@ -261,7 +247,6 @@ function Card.RegisterEffect(c,e,forced,...)
 	end
 	return reg_e
 end
-
 function Card.IsColumn(c,seq,tp,loc)
 	if not c:IsOnField() then return false end
 	local cseq=c:GetSequence()
@@ -291,94 +276,94 @@ function Card.UpdateAttack(c,amt,reset,rc)
 	rc=rc and rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
 	reset=reset and reset or RESET_EVENT+r
-	local atk=c:GetAttack()
-	if atk>=-amt then --If amt is positive, it would become negative and always be lower than or equal to atk, if amt is negative, it would become postive and if it is too much it would be higher than atk
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		if c==rc then
-			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		end
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetAttack()-atk
-	end
-	return 0
+    local atk=c:GetAttack()
+    if atk>=-amt then --If amt is positive, it would become negative and always be lower than or equal to atk, if amt is negative, it would become postive and if it is too much it would be higher than atk
+    	local e1=Effect.CreateEffect(rc)
+    	e1:SetType(EFFECT_TYPE_SINGLE)
+    	e1:SetCode(EFFECT_UPDATE_ATTACK)
+    	if c==rc then
+    		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+    	end
+    	e1:SetValue(amt)
+    	e1:SetReset(reset)
+    	c:RegisterEffect(e1)
+    	return c:GetAttack()-atk
+    end
+    return 0
 end
 
 function Card.UpdateDefense(c,amt,reset,rc)
 	rc=rc and rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
 	reset=reset and reset or RESET_EVENT+r
-	local def=c:GetDefense()
-	if def and def>=-amt then --See Card.UpdateAttack
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_DEFENSE)
-		if c==rc then
-			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		end
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetDefense()-def
-	end
-	return 0
+    local def=c:GetDefense()
+    if def and def>=-amt then --See Card.UpdateAttack
+    	local e1=Effect.CreateEffect(rc)
+    	e1:SetType(EFFECT_TYPE_SINGLE)
+    	e1:SetCode(EFFECT_UPDATE_DEFENSE)
+    	if c==rc then
+    		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+    	end
+    	e1:SetValue(amt)
+    	e1:SetReset(reset)
+    	c:RegisterEffect(e1)
+    	return c:GetDefense()-def
+    end
+    return 0
 end
 
 function Card.UpdateLevel(c,amt,reset,rc)
 	rc=rc and rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
 	reset=reset and reset or RESET_EVENT+r
-	local lv=c:GetLevel()
-	if c:IsLevelBelow(2147483647) then
-		if lv+amt<=0 then amt=-(lv-1) end --Unlike ATK, if amt is too much should reduce as much as possible
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetLevel()-lv
-	end
-	return 0
+    local lv=c:GetLevel()
+    if c:IsLevelBelow(2147483647) then
+    	if lv+amt<=0 then amt=-(lv-1) end --Unlike ATK, if amt is too much should reduce as much as possible
+    	local e1=Effect.CreateEffect(rc)
+    	e1:SetType(EFFECT_TYPE_SINGLE)
+    	e1:SetCode(EFFECT_UPDATE_LEVEL)
+    	e1:SetValue(amt)
+    	e1:SetReset(reset)
+    	c:RegisterEffect(e1)
+    	return c:GetLevel()-lv
+    end
+    return 0
 end
 
 function Card.UpdateRank(c,amt,reset,rc)
 	rc=rc and rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
 	reset=reset and reset or RESET_EVENT+r
-	local rk=c:GetRank()
-	if c:IsRankBelow(2147483647) then
-		if rk+amt<=0 then amt=-(rk-1) end --See Card.UpdateLevel
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_RANK)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetRank()-rk
-	end
-	return 0
+    local rk=c:GetRank()
+    if c:IsRankBelow(2147483647) then
+    	if rk+amt<=0 then amt=-(rk-1) end --See Card.UpdateLevel
+    	local e1=Effect.CreateEffect(rc)
+    	e1:SetType(EFFECT_TYPE_SINGLE)
+    	e1:SetCode(EFFECT_UPDATE_RANK)
+    	e1:SetValue(amt)
+    	e1:SetReset(reset)
+    	c:RegisterEffect(e1)
+    	return c:GetRank()-rk
+    end
+    return 0
 end
 
 function Card.UpdateLink(c,amt,reset,rc)
 	rc=rc and rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
 	reset=reset and reset or RESET_EVENT+r
-	local lk=c:GetLink()
-	if c:IsLinkBelow(2147483647) then
-		if lk+amt<=0 then amt=-(lk-1) end --See Card.UpdateLevel
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LINK)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetLink()-lk
-	end
-	return 0
+    local lk=c:GetLink()
+    if c:IsLinkBelow(2147483647) then
+    	if lk+amt<=0 then amt=-(lk-1) end --See Card.UpdateLevel
+    	local e1=Effect.CreateEffect(rc)
+    	e1:SetType(EFFECT_TYPE_SINGLE)
+    	e1:SetCode(EFFECT_UPDATE_LINK)
+    	e1:SetValue(amt)
+    	e1:SetReset(reset)
+    	c:RegisterEffect(e1)
+    	return c:GetLink()-lk
+    end
+    return 0
 end
 
 function Card.UpdateScale(c,amt,reset,rc)
@@ -707,11 +692,11 @@ function Auxiliary.tgoval(e,re,rp)
 end
 --filter for EFFECT_INDESTRUCTABLE_EFFECT + self
 function Auxiliary.indsval(e,re,rp)
-	return rp==e:GetHandlerPlayer()
+    return rp==e:GetHandlerPlayer()
 end
 --filter for EFFECT_INDESTRUCTABLE_EFFECT + opponent
 function Auxiliary.indoval(e,re,rp)
-	return rp==1-e:GetHandlerPlayer()
+    return rp==1-e:GetHandlerPlayer()
 end
 --filter for non-zero ATK 
 function Auxiliary.nzatk(c)
@@ -1572,23 +1557,32 @@ end
 function Auxiliary.thoeSend(card)
     return Duel.SendtoGrave(card,REASON_EFFECT)
 end
---To simply registering EFFECT_FLAG_CLIENT_HINT to players
---card: card that creates the hintmsg;		--property: additional properties like EFFECT_FLAG_OATH
---tp: the player registering the effect;	--player1,player2: the players to whom the hint is registered
---str: the string called; 					--reset: additional resets, other than RESET_PHASE+PHASE_END
+--to simply registering EFFECT_FLAG_CLIENT_HINT to players
 function Auxiliary.RegisterClientHint(card,property,tp,player1,player2,str,reset)
+--card: card that creates the hintmsg
+--property: additional properties like EFFECT_FLAG_OATH
+--tp: the player registering the effect
+--player1,player2: the players to whom the hint is registered
+--str: the string called
+--reset: additional resets, other than RESET_PHASE+PHASE_END
 	if card then
-	if not property then property=0 end
-	if not reset then reset=0 end
 		local eff=Effect.CreateEffect(card)
-		eff:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT|property)
+		if property then
+			eff:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+property)
+		else
+			eff:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+		end
 		eff:SetTargetRange(player1,player2)
 		if str then
 			eff:SetDescription(str)
 		else
 			eff:SetDescription(aux.Stringid(card:GetOriginalCode(),1))
 		end
-		eff:SetReset(RESET_PHASE+PHASE_END|reset)
+		if reset then
+			eff:SetReset(RESET_PHASE+reset)
+		else
+			eff:SetReset(RESET_PHASE+PHASE_END)
+		end
 		Duel.RegisterEffect(eff,tp)
 	end
 end
@@ -1751,4 +1745,5 @@ Duel.LoadScript("proc_persistent.lua")
 Duel.LoadScript("proc_workaround.lua")
 Duel.LoadScript("proc_damage_fix.lua")
 Duel.LoadScript("proc_normal.lua")
+Duel.LoadScript("proc_Skill.lua")
 pcall(dofile,"init.lua")

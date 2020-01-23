@@ -50,7 +50,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.tfilter(c,scard,sumtype,tp)
-	return c:IsSetCard(0x6042,scard,sumtype,tp) or c:IsHasEffect(EFFECT_SYNSUB_NORDIC)
+	return c:IsSetCard(0xa042,scard,sumtype,tp) or c:IsHasEffect(EFFECT_SYNSUB_NORDIC)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.GetTurnPlayer()==tp

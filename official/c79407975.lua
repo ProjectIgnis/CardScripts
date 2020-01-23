@@ -1,4 +1,5 @@
 --究極宝玉神 レインボー・ダーク・ドラゴン
+--Rainbow Dark Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

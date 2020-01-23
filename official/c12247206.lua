@@ -38,9 +38,8 @@ function s.selfilter(c,e,tp)
 end
 function s.sp(g,tp,pos)
 	local sc=g:GetFirst()
-	while sc do
+	for sc in aux.Next(g) do
 		Duel.SpecialSummonStep(sc,0,tp,tp,false,false,pos)
-		sc=g:GetNext()
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

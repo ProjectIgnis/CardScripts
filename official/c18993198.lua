@@ -29,7 +29,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 		local lv=g:GetFirst():GetOriginalLevel()
 		local tg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_GEMINI),tp,LOCATION_MZONE,0,nil)
 		local tc=tg:GetFirst()
-		while tc do
+		for tc in aux.Next(tg) do
 			if tc:GetLevel()~=lv then
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
@@ -39,7 +39,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 				tc:RegisterEffect(e1)
 			end
-			tc=tg:GetNext()
 		end
 	end
 end

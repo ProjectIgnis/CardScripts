@@ -17,8 +17,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local tc=g:GetFirst()
-	while tc do 
+	for tc in aux.Next(g) do 
 		tc:AddCounter(COUNTER_SPELL,1)
-		tc=g:GetNext()
 	end
 end

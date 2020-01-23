@@ -37,14 +37,13 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(tp)
 	local hg=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND,0,nil,g:GetFirst():GetCode())
 	local tc=hg:GetFirst()
-	while tc do
+	for tc in aux.Next(hg) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(-1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		tc=hg:GetNext()
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

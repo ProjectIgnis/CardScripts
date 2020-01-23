@@ -27,14 +27,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 		local ac=g:GetFirst()
-		while ac do
+		for ac in aux.Next(g) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(1000)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			ac:RegisterEffect(e1)
-			ac=g:GetNext()
 		end
 	end
 end

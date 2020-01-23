@@ -53,9 +53,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		local g=Duel.GetMatchingGroup(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			tc:RegisterFlagEffect(id,RESET_EVENT+0x5fe0000,0,1)
-			tc=g:GetNext()
 		end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
@@ -74,7 +73,7 @@ function s.discon(e)
 	local g=Duel.GetMatchingGroup(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
 	if g:IsExists(s.cfilter2,1,nil) then
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			tc:RegisterFlagEffect(id,RESET_EVENT+0x5fe0000,0,1)
 			tc=g:GetNext()
 		end

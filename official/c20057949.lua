@@ -26,11 +26,10 @@ function s.initial_effect(c)
 end
 function s.checkop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousSetCard(0x31) then
 			s[tc:GetPreviousControler()]=true
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

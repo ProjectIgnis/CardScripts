@@ -26,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local c=e:GetHandler()
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		local atk=tc:GetAttack()
 		local def=tc:GetDefense()
 		local e1=Effect.CreateEffect(c)
@@ -41,6 +41,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e2:SetValue(atk)
 		tc:RegisterEffect(e2)
-		tc=sg:GetNext()
 	end
 end

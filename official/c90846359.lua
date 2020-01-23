@@ -58,9 +58,8 @@ end
 function s.getrace(g)
 	local arc=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		arc=(arc|tc:GetRace())
-		tc=g:GetNext()
 	end
 	return arc
 end

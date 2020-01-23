@@ -23,12 +23,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct2=0
 	rg=Duel.GetOperatedGroup()
 	local tc=rg:GetFirst()
-	while tc do
+	for tc in aux.Next(rg) do
 		if tc:IsLocation(LOCATION_DECK) and tc:IsType(TYPE_MONSTER) then
 			if tc:GetControler()==tp then ct1=ct1+1
 			else ct2=ct2+1 end
 		end
-		tc=rg:GetNext()
 	end
 	if ct1>0 then Duel.ShuffleDeck(tp) end
 	if ct2>0 then Duel.ShuffleDeck(1-tp) end
@@ -51,9 +50,8 @@ function s.sp(e,tp,ct)
 	if dt==0 then return false end
 	local dlist={}
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:IsType(TYPE_MONSTER) then dlist[tc:GetSequence()]=tc end
-		tc=g:GetNext()
 	end
 	local i=dt-1
 	local a=0
@@ -77,10 +75,9 @@ function s.sp(e,tp,ct)
 		g=g:Select(tp,ft,ft,nil)
 	end
 	tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.DisableShuffleCheck()
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
-		tc=g:GetNext()
 	end
 	if conf-#g>0 then
 		Duel.DiscardDeck(tp,conf-#g,REASON_EFFECT+REASON_REVEAL)

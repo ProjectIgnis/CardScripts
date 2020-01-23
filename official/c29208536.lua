@@ -63,9 +63,8 @@ function s.aclimit(e,re,tp)
 	local g=e:GetHandler():GetCardTarget()
 	local cg={}
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		table.insert(cg,tc:GetCode())
-		tc=g:GetNext()
 	end
 	return re:GetHandler():IsCode(table.unpack(cg))
 end

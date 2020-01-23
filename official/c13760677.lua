@@ -41,7 +41,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local g=eg:Filter(s.cfilter,nil,e,tp)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -51,7 +51,6 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		tc:RegisterEffect(e2)
-		tc=g:GetNext()
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

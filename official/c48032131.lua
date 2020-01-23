@@ -59,14 +59,13 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,0,nil)
 	if #tg>0 then
 		local sc=tg:GetFirst()
-		while sc do
+		for sc in aux.Next(tg) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e1:SetValue(400)
 			sc:RegisterEffect(e1)
-			sc=tg:GetNext()
 		end
 	end
 end

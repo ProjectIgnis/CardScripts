@@ -46,7 +46,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()
 	local tg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 	local tc=tg:GetFirst()
-	while tc do
+	for tc in aux.Next(tg) do
 		if tc:IsCanAddCounter(0x1009,1) and not tc:IsSetCard(0x50) then
 			local atk=tc:GetAttack()
 			tc:AddCounter(0x1009,1)
@@ -54,7 +54,6 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 				g:AddCard(tc)
 			end
 		end
-		tc=tg:GetNext()
 	end
 	if #g>0 then
 		Duel.RaiseEvent(g,EVENT_CUSTOM+id,e,0,0,0,0)

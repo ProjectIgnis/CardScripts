@@ -60,7 +60,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local fid=c:GetFieldID()
 		local og=Duel.GetOperatedGroup()
 		local oc=og:GetFirst()
-		while oc do
+		for oc in aux.Next(og) do
 			if oc~=c or not c:IsStatus(STATUS_COPYING_EFFECT) then
 				if oc:IsControler(tp) then
 					oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1,fid)
@@ -68,7 +68,6 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 					oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_OPPO_TURN,0,1,fid)
 				end
 			end
-			oc=og:GetNext()
 		end
 		og:KeepAlive()
 		local e1=Effect.CreateEffect(c)
@@ -118,13 +117,12 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(s.retfilter,nil,e:GetLabel())
 	g:DeleteGroup()
 	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		if tc==e:GetHandler() then
 			Duel.ReturnToField(tc)
 		else
 			Duel.SendtoHand(tc,tc:GetPreviousControler(),REASON_EFFECT)
 		end
-		tc=sg:GetNext()
 	end
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

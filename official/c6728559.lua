@@ -54,9 +54,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	local attr=0
-	while tc do
+	for tc in aux.Next(g) do
 		attr=(attr|tc:GetAttribute())
-		tc=g:GetNext()
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 	local arc=Duel.AnnounceAttribute(tp,1,attr)

@@ -17,15 +17,14 @@ function s.check(g)
 	local a4=false
 	local a5=false
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local code=tc:GetCode()
 		if code==8124921 then a1=true
-		elseif code==44519536 then a2=true
-		elseif code==70903634 then a3=true
-		elseif code==7902349 then a4=true
-		elseif code==id then a5=true
+			elseif code==44519536 then a2=true
+			elseif code==70903634 then a3=true
+			elseif code==7902349 then a4=true
+			elseif code==id then a5=true
 		end
-		tc=g:GetNext()
 	end
 	return a1 and a2 and a3 and a4 and a5
 end

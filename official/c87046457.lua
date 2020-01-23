@@ -75,10 +75,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local g=eg:Filter(s.filter,nil,e,tp)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		atkg:AddCard(tc)
-		tc=g:GetNext()
 	end
 end
 function s.atkcon(e)

@@ -40,12 +40,11 @@ function s.spcon(e,c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		local pos=tc:GetPosition()
 		if tc:IsLocation(LOCATION_MZONE) and tc:IsSetCard(0x33) and (pos&POS_FACEUP)~=0 then
 			s[tc:GetControler()]=s[tc:GetControler()]+1
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)

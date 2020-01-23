@@ -33,14 +33,13 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Destroy(g,REASON_EFFECT)~=0 then
 		local mg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 		local tc=mg:GetFirst()
-		while tc do
+		for tc in aux.Next(mg) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-300)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
-			tc=mg:GetNext()
 		end
 	end
 end

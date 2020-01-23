@@ -76,9 +76,8 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	g:Sub(tg)
 	local tc=tg:GetFirst()
-	while tc do
+	for tc in aux.Next(tg) do
 		s.equipop(c,e,tp,tc,true)
-		tc=tg:GetNext()
 	end
 	Duel.EquipComplete()
 	if g:GetCount()>0 then

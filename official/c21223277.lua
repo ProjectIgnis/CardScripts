@@ -53,9 +53,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.Equip(tp,tc,c,true,true)
-		tc=g:GetNext()
 	end
 	Duel.EquipComplete()
 end

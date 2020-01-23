@@ -57,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		local ng=g1:Filter(s.disfilter,nil)
 		local nc=ng:GetFirst()
-		while nc do
+		for nc in aux.Next(ng) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
@@ -75,7 +75,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 				nc:RegisterEffect(e3)
 			end
-			nc=ng:GetNext()
 		end
 	end
 end

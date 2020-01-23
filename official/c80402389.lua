@@ -27,12 +27,11 @@ end
 function s.check(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsReason(REASON_DESTROY)
 			and tc:IsRace(RACE_INSECT) and tc:GetLevel()~=0 and tc:IsPreviousPosition(POS_FACEUP) then
 			Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,r,rp,tc:GetPreviousControler(),tc:GetLevel())
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.filter(c,lv)

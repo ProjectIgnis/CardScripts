@@ -67,11 +67,10 @@ function s.check(e,tp,eg,ep,ev,re,r,rp)
 	local turnp=Duel.GetTurnPlayer()
 	local b1=false
 	local b2=false
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE) and tc:IsSetCard(0x1d) then
 			if tc:GetOwner()==turnp then b1=true else b2=true end
 		end
-		tc=eg:GetNext()
 	end
 	if b1 then Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,r,rp,turnp,0) end
 	if b2 then Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,r,rp,1-turnp,0) end

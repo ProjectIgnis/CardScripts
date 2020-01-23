@@ -80,11 +80,10 @@ function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.damfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local tc=g:GetFirst()
 	local sum=0
-	while tc do
+	for tc in aux.Next(g) do
 		local sct=tc:GetCounter(COUNTER_SPELL)
 		tc:RemoveCounter(tp,COUNTER_SPELL,sct,0)
 		sum=sum+sct
-		tc=g:GetNext()
 	end
 	e:SetLabel(sum)
 end

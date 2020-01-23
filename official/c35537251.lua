@@ -20,7 +20,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local g=Group.CreateGroup()
 		local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 		local tc=mg:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			g:Merge(tc:GetOverlayGroup())
 			tc=mg:GetNext()
 		end
@@ -34,9 +34,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()
 	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	local tc=mg:GetFirst()
-	while tc do
+	for tc in aux.Next(mg) do
 		g:Merge(tc:GetOverlayGroup())
-		tc=mg:GetNext()
 	end
 	if #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)

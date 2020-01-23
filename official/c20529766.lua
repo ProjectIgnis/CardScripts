@@ -20,13 +20,15 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local code=tc:GetCode()
-		if code==55401221 then flag=flag|0x1
-		elseif code==19733961 then flag=flag|0x2
-		elseif code==63142001 then flag=flag|0x4
+		if code==55401221 then
+			flag=flag|0x1
+		elseif code==19733961 then
+			flag=flag|0x2
+		elseif code==63142001 then
+			flag=flag|0x4
 		end
-		tc=g:GetNext()
 	end
 	e:GetLabelObject():SetLabel(flag)
 end

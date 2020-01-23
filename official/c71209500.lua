@@ -27,7 +27,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -40,7 +40,6 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(1)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		tc=g:GetNext()
 	end
 end
 function s.efilter(e,re,rp)

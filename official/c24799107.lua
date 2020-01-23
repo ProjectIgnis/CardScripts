@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunction(Card.IsFusionSetCard,0x133),s.matfilter)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsFusionCard,0x133),s.matfilter)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -32,8 +32,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x133}
 s.listed_names={41232647}
-function s.matfilter(c)
-	return c:IsRace(RACE_DRAGON) and c:IsLevelAbove(5)
+function s.matfilter(c,fc,sumtype,tp)
+	return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsLevelAbove(5)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x133) and c:IsLevelBelow(9)

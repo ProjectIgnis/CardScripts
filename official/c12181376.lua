@@ -18,14 +18,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCode,CARD_HARPIE_LADY_SISTERS),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(2700)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 	--cannot activate
 	local e1=Effect.CreateEffect(c)

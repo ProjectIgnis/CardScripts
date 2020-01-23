@@ -49,18 +49,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.SendtoGrave(g,REASON_EFFECT)
 			end
 			local sc=sg:GetFirst()
-			while sc do
+			for sc in aux.Next(sg) do
 				Duel.SpecialSummonStep(sc,0,1-tp,1-tp,false,false,POS_FACEUP_ATTACK)
-				sc=sg:GetNext()
 			end
 			Duel.SpecialSummonComplete()
 			local og=Duel.GetOperatedGroup()
 			tg:Merge(og)
 		end
 		local tc=tg:GetFirst()
-		while tc do
+		for tc in aux.Next(tg) do
 			s.counter(tc,c)
-			tc=tg:GetNext()
 		end
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

@@ -47,11 +47,10 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetOperatedGroup()
 	local tc=dg:GetFirst()
 	local dam=0
-	while tc do
+	for tc in aux.Next(dg) do
 		local atk=tc:GetTextAttack()
 		if atk<0 then atk=0 end
 		dam=dam+atk
-		tc=dg:GetNext()
 	end
 	Duel.Damage(1-tp,dam,REASON_EFFECT)
 end

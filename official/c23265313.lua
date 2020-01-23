@@ -17,14 +17,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0):Filter(Card.IsLevelAbove,nil,1)
 	local tc=hg:GetFirst()
-	while tc do
+	for tc in aux.Next(hg) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(-2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		tc=hg:GetNext()
 	end
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -39,13 +38,12 @@ end
 function s.hlvop(e,tp,eg,ep,ev,re,r,rp)
 	local hg=eg:Filter(s.hlvfilter,nil,tp)
 	local tc=hg:GetFirst()
-	while tc do
+	for tc in aux.Next(hg) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(-2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		tc=hg:GetNext()
 	end
 end

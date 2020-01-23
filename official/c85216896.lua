@@ -123,8 +123,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject():Filter(s.retfilter,nil)
 	g:DeleteGroup()
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.ReturnToField(tc)
-		tc=g:GetNext()
 	end
 end

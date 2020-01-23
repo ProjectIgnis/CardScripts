@@ -55,9 +55,8 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local atk=0
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,c)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		atk=atk+tc:GetAttack()
-		tc=g:GetNext()
 	end
 	local e1=Effect.CreateEffect(e:GetOwner())
 	e1:SetType(EFFECT_TYPE_SINGLE)

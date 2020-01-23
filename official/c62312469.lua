@@ -36,9 +36,8 @@ function s.value(e,c)
 	local att=0
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		att=(att|tc:GetAttribute())
-		tc=g:GetNext()
 	end
 	local ct=0
 	while att~=0 do
@@ -72,9 +71,8 @@ function s.stop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g1)
 		Duel.ShuffleDeck(tp)
 		local tc=g1:GetFirst()
-		while tc do
+		for tc in aux.Next(g1) do
 			Duel.MoveSequence(tc,0)
-			tc=g1:GetNext()
 		end
 		Duel.SortDecktop(tp,tp,4)
 	end

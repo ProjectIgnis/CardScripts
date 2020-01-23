@@ -33,12 +33,11 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local lv=0
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsReason(REASON_DESTROY) and tc:IsSetCard(0x4) and not tc:IsPreviousLocation(LOCATION_SZONE) then
 			local tlv=tc:GetLevel()
 			if tlv>lv then lv=tlv end
 		end
-		tc=eg:GetNext()
 	end
 	if lv>0 then e:SetLabel(lv) end
 	return lv>0

@@ -101,13 +101,12 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 		local g=tg:Filter(s.mtfilter,nil,e)
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			local mg=tc:GetOverlayGroup()
 			if #mg~=0 then
 				Duel.Overlay(sc,mg)
 			end
 			Duel.Overlay(sc,Group.FromCards(tc))
-			tc=g:GetNext()
 		end
 	end
 end

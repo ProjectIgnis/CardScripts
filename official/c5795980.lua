@@ -33,9 +33,8 @@ function s.cfilter(c,e,dg)
 	if c:GetEquipCount()==0 then return #dg-a>=1 end
 	local eg=c:GetEquipGroup()
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if dg:IsContains(tc) then a=a+1 end
-		tc=eg:GetNext()
 	end
 	return #dg-a>=1
 end
@@ -107,14 +106,13 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e1:SetValue(rc)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 end
 

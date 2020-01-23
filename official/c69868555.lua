@@ -59,7 +59,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=eg:Filter(s.filter,nil,e)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -77,7 +77,6 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e3)
 		end
-		tc=g:GetNext()
 	end
 end
 function s.tkcostfilter(c,ft)

@@ -50,9 +50,8 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	if #g>ft then return end
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		s.equipop(c,e,tp,tc,true)
-		tc=g:GetNext()
 	end
 	Duel.EquipComplete()
 end

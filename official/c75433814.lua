@@ -39,9 +39,8 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		tc:AddCounter(0x1024,1)
-		tc=g:GetNext()
 	end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,2)
 end

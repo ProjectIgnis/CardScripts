@@ -31,9 +31,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local atk=0
 		local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
 		local bc=g:GetFirst()
-		while bc do
+		for bc in aux.Next(g) do
 			atk=atk+bc:GetAttack()
-			bc=g:GetNext()
 		end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

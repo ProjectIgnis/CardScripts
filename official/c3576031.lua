@@ -47,12 +47,11 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsSetCard(0xea) and tc:IsSummonType(SUMMON_TYPE_SYNCHRO) then
 			local p=tc:GetSummonPlayer()
 			s[p]=s[p]+1
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)

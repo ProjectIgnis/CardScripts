@@ -54,9 +54,8 @@ function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 	local t=g:GetFirst()
-	while t do
+	for t in aux.Next(g) do
 		t:RemoveCounter(tp,0x1002,t:GetCounter(0x1002),REASON_COST)
-		t=g:GetNext()
 	end
 	Duel.SetTargetCard(g)
 end
@@ -64,7 +63,7 @@ function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local t=g:GetFirst()
-	while t do
+	for t in aux.Next(g) do
 		if t:IsRelateToEffect(e) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -79,6 +78,5 @@ function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			t:RegisterEffect(e2)
 		end
-		t=g:GetNext()
 	end
 end

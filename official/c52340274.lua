@@ -30,14 +30,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_MZONE,0,tc)
 		local lc=g:GetFirst()
 		local lv=tc:GetLevel()
-		while lc do
+		for lc in aux.Next(g) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
 			e1:SetValue(lv)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			lc:RegisterEffect(e1)
-			lc=g:GetNext()
 		end
 	end
 end

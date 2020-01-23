@@ -40,9 +40,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Remove(tg,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
 		local g=Duel.GetOperatedGroup()
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-			tc=g:GetNext()
 		end
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_EXC_GRAVE,0,1)
 		g:KeepAlive()
@@ -54,11 +53,10 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	if (r&REASON_DESTROY)~=0 then
 		local g=e:GetLabelObject():GetLabelObject()
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			if tc:GetFlagEffect(id)>0 then
 				Duel.ReturnToField(tc)
 			end
-			tc=g:GetNext()
 		end
 		g:DeleteGroup()
 		e:GetLabelObject():SetLabelObject(nil)

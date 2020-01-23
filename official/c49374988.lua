@@ -61,13 +61,12 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
 			tc:RegisterEffect(e1)
-			tc=g:GetNext()
 		end
 	end
 end

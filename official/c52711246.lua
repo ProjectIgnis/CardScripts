@@ -36,14 +36,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local b3=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		if tc:IsRace(RACE_ZOMBIE) and #b1>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			local t1=b1:GetFirst()
-			while t1 do
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e1:SetValue(300)
-			t1:RegisterEffect(e1)
-			t1=b1:GetNext()
+			for t1 in aux.Next(b1) do
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_UPDATE_ATTACK)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetValue(300)
+				t1:RegisterEffect(e1)
 			end
 		end
 		if tc:IsAttribute(ATTRIBUTE_FIRE) and #b2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

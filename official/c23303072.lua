@@ -33,10 +33,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.SendtoGrave(g,REASON_COST)
 	local sum=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local lv=tc:GetLevel()
 		sum=sum+lv
-		tc=g:GetNext()
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

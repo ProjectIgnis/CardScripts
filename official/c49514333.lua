@@ -52,9 +52,8 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		container:Clear()
 		local g=eg:Filter(s.repfilter,e:GetHandler(),tp)
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-			tc=g:GetNext()
 		end
 		Duel.ChangePosition(g,POS_FACEDOWN)
 		container:Merge(g)

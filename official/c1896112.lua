@@ -51,18 +51,16 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct1=#g1
 	if ft1>=ct1 and (ct1==1 or not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) then
 		local tc=g1:GetFirst()
-		while tc do
+		for tc in aux.Next(g1) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			tc=g1:GetNext()
 		end
 	end
 	local ft2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	local ct2=#g2
 	if ft2>=ct2 and (ct2==1 or not Duel.IsPlayerAffectedByEffect(1-tp,CARD_BLUEEYES_SPIRIT)) then
 		local tc=g2:GetFirst()
-		while tc do
+		for tc in aux.Next(g2) do
 			Duel.SpecialSummonStep(tc,0,1-tp,1-tp,false,false,POS_FACEUP)
-			tc=g2:GetNext()
 		end
 	end
 	Duel.SpecialSummonComplete()

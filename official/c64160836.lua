@@ -27,11 +27,10 @@ s.listed_series={0xc}
 s.counter_place_list={0x100e}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsFaceup() and tc:IsControler(1-tp) then
 			tc:AddCounter(0x100e,1)
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.adcon(e)

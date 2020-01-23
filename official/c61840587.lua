@@ -85,7 +85,7 @@ function s.descon2(e,tp,eg,ep,ev,re,r,rp)
 	if not sg or c:IsStatus(STATUS_DESTROY_CONFIRMED) then return false end
 	local rg=eg:Filter(Card.IsRelateToCard,nil,c)
 	local tc=rg:GetFirst()
-	while tc do sg:RemoveCard(tc) tc=rg:GetNext() end
+	for tc in aux.Next(rg) do sg:RemoveCard(tc) end
 	return #sg==0
 end
 function s.desop2(e,tp,eg,ep,ev,re,r,rp)

@@ -38,11 +38,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=c:GetMaterial()
 	local s=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local a=tc:GetAttack()
 		if a<0 then a=0 end
 		s=s+a
-		tc=g:GetNext()
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

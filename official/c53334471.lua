@@ -57,9 +57,8 @@ end
 function s.getattribute(g)
 	local aat=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		aat=(aat|tc:GetAttribute())
-		tc=g:GetNext()
 	end
 	return aat
 end

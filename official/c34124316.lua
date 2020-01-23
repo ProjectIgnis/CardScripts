@@ -33,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local gg=Group.CreateGroup()
 	Duel.ConfirmDecktop(p,5)
 	local tc=g1:GetFirst()
-	while tc do
+	for tc in aux.Next(g1) do
 		local lv=tc:GetLevel()
 		local pos=0
 		if s.spchk(tc,e,tc:GetControler()) and Duel.IsPlayerAffectedByEffect(tc:GetControler(),CARD_BLUEEYES_SPIRIT) then
@@ -48,7 +48,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				hg:AddCard(tc)
 			else gg:AddCard(tc) end
 		end
-		tc=g1:GetNext()
 	end
 	Duel.ConfirmDecktop(1-p,5)
 	tc=g2:GetFirst()

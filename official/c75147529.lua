@@ -37,8 +37,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-function s.lcheck(g,lc)
-	return g:IsExists(Card.IsLinkSetCard,1,nil,0x115)
+function s.lcheck(g,lc,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,0x115,lc,SUMMON_TYPE_LINK,tp)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

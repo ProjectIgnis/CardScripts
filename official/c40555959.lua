@@ -59,9 +59,8 @@ function s.remop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 		g:KeepAlive()
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-			tc=g:GetNext()
 		end
 	end
 end

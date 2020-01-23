@@ -30,28 +30,26 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	if ct==1 and #g1>0 then
 		local tc1=g1:GetFirst()
-		while tc1 do
+		for tc1 in aux.Next(g1) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(500)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc1:RegisterEffect(e1)
-			tc1=g1:GetNext()
 		end
 	end
 	local g2=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 	if ct==2 and #g2>0 then
 		Duel.BreakEffect()
 		local tc2=g2:GetFirst()
-		while tc2 do
+		for tc2 in aux.Next(g2) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-1000)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc2:RegisterEffect(e1)
-			tc2=g2:GetNext()
 		end
 	end
 	if ct==3 then

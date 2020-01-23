@@ -89,9 +89,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local etc=g:GetFirst()
-	while etc do
+	for etc in aux.Next(g) do
 		etc:CreateEffectRelation(te)
-		etc=g:GetNext()
 	end
 	if op then 
 		if tc:IsSetCard(0x95) then
@@ -102,8 +101,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	tc:ReleaseEffectRelation(te)
 	etc=g:GetFirst()
-	while etc do
+	for etc in aux.Next(g) do
 		etc:ReleaseEffectRelation(te)
-		etc=g:GetNext()
 	end
 end

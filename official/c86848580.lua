@@ -28,7 +28,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if not tc then return end
 	local c=e:GetHandler()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -46,7 +46,6 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,2)
 			tc:RegisterEffect(e3)
 		end
-		tc=g:GetNext()
 	end
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	local atk=Duel.GetMatchingGroupCount(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)*300

@@ -29,12 +29,11 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local d1=false
 	local d2=false
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsType(TYPE_MONSTER) and tc:IsReason(REASON_EFFECT) then
 			if tc:GetControler()==0 then d1=true
 			else d2=true end
 		end
-		tc=eg:GetNext()
 	end
 	local evt_p=PLAYER_NONE
 	if d1 and d2 then evt_p=PLAYER_ALL

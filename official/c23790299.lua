@@ -3,7 +3,7 @@
 --OCG updates from the anime version by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x103),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x103),2)
 	--atk change
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

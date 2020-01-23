@@ -22,11 +22,10 @@ end
 s.listed_series={0xba}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsSetCard(0xba) and tc:IsType(TYPE_XYZ) and tc:IsReason(REASON_DESTROY) and tc:IsReason(REASON_BATTLE) then
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.filter1(c,e,tp)

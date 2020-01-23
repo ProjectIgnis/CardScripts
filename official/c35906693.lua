@@ -90,7 +90,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and #g>0 and ft>0 then
 		local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_EQUIP)
 		local sc=sg:GetFirst()
-		while sc do
+		for sc in aux.Next(sg) do
 			Duel.Equip(tp,sc,tc,true)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -100,7 +100,6 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(s.eqlimit)
 			e1:SetLabelObject(tc)
 			sc:RegisterEffect(e1)
-			sc=sg:GetNext()
 		end
 		Duel.EquipComplete()
 	end

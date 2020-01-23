@@ -29,8 +29,7 @@ function s.aclimit(e,re,tp)
 end
 function s.aclimset(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1)
-		tc=eg:GetNext()
 	end
 end

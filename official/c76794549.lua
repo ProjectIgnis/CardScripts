@@ -49,13 +49,12 @@ s.listed_series={0x10f2,0x2073,0x2017,0x1046}
 s.listed_names={94415058,13331639}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) then
 			tc:RegisterFlagEffect(id,RESET_EVENT+0x1f20000+RESET_PHASE+PHASE_END,0,1)
 		elseif tc:IsLocation(LOCATION_EXTRA) then
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.rpfilter(c,e,tp)

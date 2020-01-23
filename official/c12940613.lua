@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x71),tp,LOCATION_MZONE,0,nil)
 	tc=g:GetFirst()
 	if not tc then return end
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -48,7 +48,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		tc:RegisterEffect(e2)
-		tc=g:GetNext()
 	end
 	local dg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tdfilter2),tp,LOCATION_GRAVE,0,nil)
 	if #dg~=0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

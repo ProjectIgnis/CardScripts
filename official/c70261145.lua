@@ -15,7 +15,7 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -23,6 +23,5 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(500)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 end

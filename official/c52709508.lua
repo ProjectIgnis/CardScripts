@@ -23,11 +23,10 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local att=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if not tc:IsType(TYPE_TUNER) then
 			att=(att|tc:GetAttribute())
 		end
-		tc=g:GetNext()
 	end
 	att=(att&0x15)
 	e:SetLabel(att)

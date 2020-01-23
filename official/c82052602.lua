@@ -27,13 +27,12 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		local pos=tc:GetPosition()
 		if tc:IsSetCard(0x54) and tc:IsLocation(LOCATION_GRAVE) and tc:IsReason(REASON_BATTLE)
 			and tc:GetControler()==tc:GetPreviousControler() then
 			s[tc:GetControler()]=true
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.filter(c,id,e,tp)

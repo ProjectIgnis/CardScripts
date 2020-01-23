@@ -20,9 +20,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		if #g==0 then return false end
 		local tc=g:GetFirst()
 		local att=0
-		while tc do
+		for tc in aux.Next(g) do
 			att=(att|tc:GetAttribute())
-			tc=g:GetNext()
 		end
 		return (att&att-1)~=0
 	end
@@ -33,9 +32,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #sg==0 then return false end
 	local tc=sg:GetFirst()
 	local att=0
-	while tc do
+	for tc in aux.Next(sg) do
 		att=(att|tc:GetAttribute())
-		tc=sg:GetNext()
 	end
 	if (att&att-1)==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)

@@ -63,7 +63,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local val=0
 		if tc:IsType(TYPE_XYZ) then val=tc:GetRank()*-300
 		else val=tc:GetLevel()*-300 end
@@ -76,6 +76,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		tc:RegisterEffect(e2)
-		tc=g:GetNext()
 	end
 end

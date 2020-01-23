@@ -49,11 +49,10 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local tpe=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if not tc:IsType(TYPE_TUNER) then
 			tpe=(tpe|tc:GetType())
 		end
-		tc=g:GetNext()
 	end
 	e:SetLabel(tpe)
 end

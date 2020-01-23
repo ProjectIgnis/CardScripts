@@ -50,9 +50,8 @@ function s.matcheck(e,c)
 	local g=c:GetMaterial():Filter(Card.IsSetCard,nil,0x9e)
 	local att=0
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		att=(att|tc:GetOriginalAttribute())
-		tc=g:GetNext()
 	end
 	e:SetLabel(att)
 end
@@ -109,9 +108,8 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		local att=0
 		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			att=(att|tc:GetOriginalAttribute())
-			tc=g:GetNext()
 		end
 		e:SetLabel(att)
 		return true

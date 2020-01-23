@@ -84,14 +84,13 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	if ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE then
 		local sc=sg:GetFirst()
-		while sc do
+		for sc in aux.Next(sg) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e1:SetValue(sc:GetAttack()*2)
 			sc:RegisterEffect(e1)
-			sc=sg:GetNext()
 		end
 	end
 end

@@ -20,9 +20,8 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local tc=g:GetFirst()
-	while tc do 
+	for tc in aux.Next(g) do 
 		local cc=tc:GetCounter(COUNTER_SPELL)
 		tc:RemoveCounter(tp,COUNTER_SPELL,cc,REASON_EFFECT)
-		tc=g:GetNext()
 	end
 end

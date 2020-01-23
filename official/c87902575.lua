@@ -84,9 +84,8 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(sg,REASON_EFFECT)
 	end
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.ReturnToField(tc,POS_FACEUP_ATTACK)
-		tc=g:GetNext()
 	end
 end
 function s.clfilter(c,ec,tp)

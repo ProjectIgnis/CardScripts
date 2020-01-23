@@ -55,7 +55,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		if #tg<=0 then return end
 		local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,LOCATION_GRAVE,0,nil)
 		local tc=tg:GetFirst()
-		while tc do
+		for tc in aux.Next(tg) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -63,7 +63,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)
-			tc=tg:GetNext()
 		end
 	end
 end

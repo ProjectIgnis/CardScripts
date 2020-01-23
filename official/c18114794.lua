@@ -43,9 +43,8 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local tc=eg:GetFirst()
 	local p1=false
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:GetSummonPlayer()==turnp then p1=true end
-		tc=eg:GetNext()
 	end
 	if p1 then
 		s[turnp]=s[turnp]+1

@@ -98,11 +98,10 @@ function s.atkval(e,c)
 	local atk=0
 	local g=c:GetEquipGroup()
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:GetFlagEffect(id)~=0 and tc:IsFaceup() and tc:GetAttack()>=0 then
 			atk=atk+tc:GetAttack()
 		end
-		tc=g:GetNext()
 	end
 	return atk
 end
@@ -110,11 +109,10 @@ function s.defval(e,c)
 	local atk=0
 	local g=c:GetEquipGroup()
 	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if tc:GetFlagEffect(id)~=0 and tc:IsFaceup() and tc:GetDefense()>=0 then
 			atk=atk+tc:GetDefense()
 		end
-		tc=g:GetNext()
 	end
 	return atk
 end

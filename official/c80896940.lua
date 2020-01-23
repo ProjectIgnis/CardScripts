@@ -90,7 +90,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local tc=tg:GetFirst()
-	while tc do
+	for tc in aux.Next(tg) do
 		local atk=Duel.GetAttacker():GetAttack()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -98,7 +98,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(-atk)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		tc=tg:GetNext()
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

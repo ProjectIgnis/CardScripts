@@ -42,11 +42,11 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.desrepfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT+REASON_REPLACE)
 end
-function s.linkfilter(e,c)
+function s.linkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsType(TYPE_MONSTER)
 end
 function s.indescon(e,c)
-	return e:GetHandler():GetLinkedGroup():IsExists(s.linkfilter,1,nil,c)
+	return e:GetHandler():GetLinkedGroup():IsExists(s.linkfilter,1,nil)
 end
 function s.indestg(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsType(TYPE_SPELL+TYPE_TRAP)

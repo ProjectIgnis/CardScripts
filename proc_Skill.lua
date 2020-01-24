@@ -174,13 +174,17 @@ end
 -- Duel.Hint(HINT_SKILL_COVER,1,coverID|(BackEntryID<<32))
 -- Duel.Hint(HINT_SKILL,1,FrontID)
 function Auxiliary.SetSkillOp(e,tp,eg,ep,ev,re,r,rp)
-		local coverid = e:GetLabel()
-	
+local coverid = e:GetLabel()
+		local c=e:GetHandler()
 		if e:GetLabel()>0 then
-			
-			Duel.Hint(HINT_SKILL_COVER,e:GetHandler():GetControler(),coverid|(coverid<<32))
-			Duel.Hint(HINT_SKILL,e:GetHandler():GetControler(),e:GetHandler():GetCode())			
-			
+			--generate the skill in the "skill zone"
+			Duel.Hint(HINT_SKILL_COVER,c:GetControler(),coverid|(coverid<<32))
+			Duel.Hint(HINT_SKILL,c:GetControler(),c:GetCode())			
+			--send to limbo then draw 1 if the skill was in the hand
+			Duel.SendtoDeck(c,tp,-2,REASON_RULE)
+			if e:GetHandler():IsPreviousLocation(LOCATION_HAND) then 
+				Duel.Draw(p,1,REASON_RULE)
+			end
 		end
-	e:SetLabel(0)
+		e:SetLabel(0)
 end

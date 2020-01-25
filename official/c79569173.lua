@@ -1,4 +1,5 @@
 --大地震
+--Seismic Shockwave
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -42,6 +43,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	local dis=Duel.SelectDisableField(tp,3,0,LOCATION_SZONE,0)
+	Duel.Hint(HINT_ZONE,tp,dis)
 	e:SetLabel(dis)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

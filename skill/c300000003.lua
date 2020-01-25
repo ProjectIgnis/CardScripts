@@ -6,7 +6,7 @@
 -- All "Gravekeeper's" monsters on the field gain 200 ATK/DEF.
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddFieldSkillProcedure(c,300000003,false)
+	aux.AddFieldSkillProcedure(c,2,false)
 	--Activate
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_ACTIVATE)

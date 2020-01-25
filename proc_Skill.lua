@@ -2,6 +2,12 @@ HINT_SKILL = 200
 HINT_SKILL_COVER = 201
 HINT_SKILL_FLIP  = 202
 -- HINT_SKILL_REMOVE = 203 (need to check with edo for name)
+
+SKILL_COVER=300000000
+function Auxiliary.GetCover(c,CoverNum)
+ return SKILL_COVER+(CoverNum*1000000)+(c:GetOriginalRace())
+end
+
 aux.DrawlessToken={}
 aux.DrawlessToken[0]=nil
 aux.DrawlessToken[1]=nil
@@ -50,8 +56,8 @@ function Auxiliary.drawlessreset(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 
-function Auxiliary.AddFieldSkillProcedure(c,coverid,drawless)
-	c:Cover(coverid)
+function Auxiliary.AddFieldSkillProcedure(c,coverNum,drawless)
+	c:Cover(Auxiliary.GetCover(c,CoverNum))
 	--place on field
 	local e1=Effect.CreateEffect(c)	
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
@@ -89,11 +95,11 @@ end
 
 
 -- c: the card (card)
--- coverid: the ID of the cover (in the cover folder of pics folder) (int)
+-- coverNum: the Number of the cover (int)
 -- drawless: if the player draw 1 less card at the start of the duel (bool)
 -- flip: if the continuous card get flipped at the start of the duel (bool)
-function Auxiliary.AddContinuousSkillProcedure(c,coverid,drawless,flip)
-	c:Cover(coverid)
+function Auxiliary.AddContinuousSkillProcedure(c,coverNum,drawless,flip)
+	c:Cover(Auxiliary.GetCover(c,CoverNum))
 	--activate
 	local e1=Effect.CreateEffect(c)	
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
@@ -137,7 +143,7 @@ end
 -- drawless: if the player draw 1 less card at the start of the duel (bool)
 -- flip con: condition to activate the skill
 -- flipOp: operation related to the skill activation
-function Auxiliary.AddSkillProcedure(c,coverid,drawless,skillcon,skillop)
+function Auxiliary.AddSkillProcedure(c,coverNum,drawless,skillcon,skillop)
 	--activate
 	
 	local e1=Effect.CreateEffect(c)	
@@ -146,7 +152,7 @@ function Auxiliary.AddSkillProcedure(c,coverid,drawless,skillcon,skillop)
 	e1:SetCode(EVENT_STARTUP)
 	e1:SetCountLimit(1)
 	e1:SetRange(0x5f)
-	e1:SetLabel(coverid)
+	e1:SetLabel(coverNum)
 	e1:SetOperation(Auxiliary.SetSkillOp)
 	c:RegisterEffect(e1)
 	
@@ -166,8 +172,8 @@ end
 -- Duel.Hint(HINT_SKILL_COVER,1,coverID|(BackEntryID<<32))
 -- Duel.Hint(HINT_SKILL,1,FrontID)
 function Auxiliary.SetSkillOp(e,tp,eg,ep,ev,re,r,rp)
-	local coverid = e:GetLabel()
 	local c=e:GetHandler()
+	local coverid = Auxiliary.GetCover(c,e:GetLabel())
 	if e:GetLabel()>0 then
 		--generate the skill in the "skill zone"
 		Duel.Hint(HINT_SKILL_COVER,c:GetControler(),coverid|(coverid<<32))

@@ -5,7 +5,7 @@
 -- Activate this card by targeting 1 monster in your GY; Special Summon that target in Attack Position. When this card leaves the field, destroy that monster. When that monster is destroyed, destroy this card.
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddContinuousSkillProcedure(c,300000101,true,false)
+	aux.AddContinuousSkillProcedure(c,3,true,false)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

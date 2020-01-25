@@ -5,7 +5,7 @@
 -- The first time each DARK Machine monster you control would be destroyed by battle each turn, it is not destroyed, and if you took battle damage from the battle, it gains that much ATK after damage calculation, and keeps that ATK gain as long as this card is on the field. Once per turn, if a monster you control that was originally a DARK Machine destroys a card(s) on the field by battle or card effect: You can Special Summon 1 DARK Machine monster from your hand.
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddFieldSkillProcedure(c,300000003,true)
+	aux.AddFieldSkillProcedure(c,2,true)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

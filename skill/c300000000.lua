@@ -5,7 +5,7 @@
 -- All Fiend and Spellcaster monsters on the field gain 200 ATK/DEF, also all Fairy monsters on the field lose 200 ATK/DEF.
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddFieldSkillProcedure(c,300000000,false)
+	aux.AddFieldSkillProcedure(c,2,false)
 	--Activate
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_ACTIVATE)

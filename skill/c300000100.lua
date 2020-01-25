@@ -5,7 +5,7 @@
 -- This card is treated as "Toon World".
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddContinuousSkillProcedure(c,300000100,false,true)
+	aux.AddContinuousSkillProcedure(c,2,false,true)
 	--Activate
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_ACTIVATE)

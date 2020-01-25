@@ -1,4 +1,5 @@
 --インフェルノイド・アシュメダイ
+--Infernoid Piaty
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -7,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
@@ -15,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--handes
@@ -76,44 +79,57 @@ function s.spcon(e,c)
 		end
 	end
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=nil
+	local rg1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c)
+	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,c)
+	local rg3=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	if c:IsHasEffect(34822850) then
 		if ft>0 then
-			g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,2,2,c)
+			g=aux.SelectUnselectGroup(rg1,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
 		else
-			local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c)
 			local ct=-ft+1
-			g=sg:FilterSelect(tp,Card.IsLocation,ct,ct,nil,LOCATION_MZONE)
-			if ct<2 then
+			g=rg1:FilterSelect(tp,Card.IsLocation,ct,ct,nil,LOCATION_MZONE)
+			if ct<3 then
 				sg:Sub(g)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-				local g2=sg:Select(tp,1,1,nil)
+				local g2=rg1:Select(tp,2-ct,2-ct,nil)
 				g:Merge(g2)
 			end
 		end
 	else
 		if Duel.IsPlayerAffectedByEffect(tp,69832741) then
 			if ft>0 then
-				g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,2,2,c)
+				g=aux.SelectUnselectGroup(rg2,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
 			else
-				local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,c)
 				local ct=-ft+1
-				g=sg:FilterSelect(tp,Card.IsLocation,ct,ct,nil,LOCATION_MZONE)
-				if ct<2 then
+				g=rg2:FilterSelect(tp,Card.IsLocation,ct,ct,nil,LOCATION_MZONE)
+				if ct<3 then
 					sg:Sub(g)
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-					local g2=sg:Select(tp,2-ct,2-ct,nil)
+					local g2=rg2:Select(tp,2-ct,2-ct,nil)
 					g:Merge(g2)
 				end
 			end
 		else
-			g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,2,2,c)
+			g=aux.SelectUnselectGroup(rg3,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
 		end
 	end
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget()~=nil

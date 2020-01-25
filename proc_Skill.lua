@@ -99,7 +99,7 @@ end
 -- drawless: if the player draw 1 less card at the start of the duel (bool)
 -- flip: if the continuous card get flipped at the start of the duel (bool)
 function Auxiliary.AddContinuousSkillProcedure(c,coverNum,drawless,flip)
-	c:Cover(Auxiliary.GetCover(c,CoverNum))
+	c:Cover(Auxiliary.GetCover(c,coverNum))
 	--activate
 	local e1=Effect.CreateEffect(c)	
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)

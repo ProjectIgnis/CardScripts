@@ -1,4 +1,5 @@
 --極神聖帝オーディン
+--Odin, Father of the Aesir
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

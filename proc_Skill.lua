@@ -150,13 +150,14 @@ function Auxiliary.AddSkillProcedure(c,coverid,drawless,skillcon,skillop)
 	e1:SetOperation(Auxiliary.SetSkillOp)
 	c:RegisterEffect(e1)
 	
-	
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(skillcon)
-	e1:SetOperation(skillop)
-	Duel.RegisterEffect(e1,tp)
+	if skillop~=nil then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_FREE_CHAIN)
+		e1:SetCondition(skillcon)
+		e1:SetOperation(skillop)
+		Duel.RegisterEffect(e1,tp)
+	end
 	if drawless then
 		aux.RegisterDrawless(c)
 	end

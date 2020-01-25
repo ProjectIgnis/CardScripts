@@ -1,4 +1,4 @@
---Evil-Sealing Flash
+--Radiance of the FOrbidden Spell
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,7 +26,6 @@ function s.initial_effect(c)
 	e3:SetCondition(s.dscon2)
 	e3:SetOperation(s.dsop2)
 	c:RegisterEffect(e3)
-	
 	--atk & def
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_ATKCHANGE)
@@ -36,7 +35,6 @@ function s.initial_effect(c)
 	e4:SetCondition(s.atkcon)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
-	
 	--damage
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(46128076,0))
@@ -50,7 +48,6 @@ function s.initial_effect(c)
 	e5:SetOperation(s.damop)
 	c:RegisterEffect(e5)
 end
-
 --disable your zone
 function s.dscon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
@@ -65,7 +62,6 @@ function s.dsop1(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.disop1)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 	e:GetHandler():RegisterEffect(e1)
-	
 	local ct=e:GetHandler():GetFlagEffectLabel(95100886)
 	if ct==nil then
 		e:GetHandler():RegisterFlagEffect(95100886,RESET_EVENT+RESETS_STANDARD,0,0,1)
@@ -78,8 +74,6 @@ function s.disop1(e,tp)
 	local dis1=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
 	return dis1
 end
-
-
 --disable opponent zone
 function s.dscon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
@@ -112,7 +106,6 @@ function s.disop2(e,tp)
 	if dis1==16 then seq=4 end
 	return (0x1<<16+seq)
 end
-
 --atk up
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
@@ -126,9 +119,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if c==0 then return end
-	
 	local tc=e:GetLabelObject()
-	
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_SZONE)
@@ -136,7 +127,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.disop3)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 	e:GetHandler():RegisterEffect(e1)
-	
 	if tc:IsRelateToBattle() and tc:IsFaceup() and tc:IsControler(tp) then
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
@@ -155,7 +145,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e3,true)
 	end
 end
-
 function s.disop3(e,tp)
 	local c=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if c==0 then return end
@@ -219,8 +208,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
 	end
 end
-
-
 --damage
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

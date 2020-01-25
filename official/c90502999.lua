@@ -1,4 +1,5 @@
 --地盤沈下
+--Ground Collapse
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,6 +20,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,0)+Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)>1 end
 	local dis=Duel.SelectDisableField(tp,2,LOCATION_MZONE,LOCATION_MZONE,0)
+	Duel.Hint(HINT_ZONE,tp,dis)
 	e:SetLabel(dis)
 end
 function s.disop(e,tp)

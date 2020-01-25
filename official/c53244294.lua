@@ -1,4 +1,5 @@
 --No.57 奮迅竜トレスラグーン
+--Number 57: Tri-Head Dust Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -54,6 +55,7 @@ function s.ztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,0)+Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)
 		+Duel.GetLocationCount(tp,LOCATION_SZONE,PLAYER_NONE,0)+Duel.GetLocationCount(1-tp,LOCATION_SZONE,PLAYER_NONE,0)>0 end
 	local dis=Duel.SelectDisableField(tp,1,LOCATION_ONFIELD,LOCATION_ONFIELD,0)
+	Duel.Hint(HINT_ZONE,tp,dis)
 	e:SetLabel(dis)
 end
 function s.zop(e,tp,eg,ep,ev,re,r,rp)

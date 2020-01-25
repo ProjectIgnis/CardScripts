@@ -41,6 +41,7 @@ function s.lztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.lzfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if chk==0 then return ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=ct end
 	local dis=Duel.SelectDisableField(tp,ct,LOCATION_MZONE,LOCATION_MZONE,0)
+	Duel.Hint(HINT_ZONE,tp,dis)
 	e:SetLabel(dis)
 end
 function s.lzop(e,tp,eg,ep,ev,re,r,rp)

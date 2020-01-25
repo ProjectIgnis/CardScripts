@@ -42,6 +42,7 @@ function s.seqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 	local seq=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
+	Duel.Hint(HINT_ZONE,tp,seq)
 	e:SetLabel(math.log(seq,2))
 end
 function s.seqop(e,tp,eg,ep,ev,re,r,rp,chk)

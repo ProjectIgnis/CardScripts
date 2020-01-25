@@ -4,8 +4,8 @@ HINT_SKILL_FLIP  = 202
 -- HINT_SKILL_REMOVE = 203 (need to check with edo for name)
 
 SKILL_COVER=300000000
-function Auxiliary.GetCover(c,CoverNum)
- return SKILL_COVER+(CoverNum*1000000)+(c:GetOriginalRace())
+function Auxiliary.GetCover(c,coverNum)
+ return SKILL_COVER+(coverNum*1000000)+(c:GetOriginalRace())
 end
 
 aux.DrawlessToken={}
@@ -57,7 +57,7 @@ function Auxiliary.drawlessreset(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function Auxiliary.AddFieldSkillProcedure(c,coverNum,drawless)
-	c:Cover(Auxiliary.GetCover(c,CoverNum))
+	c:Cover(Auxiliary.GetCover(c,coverNum))
 	--place on field
 	local e1=Effect.CreateEffect(c)	
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)

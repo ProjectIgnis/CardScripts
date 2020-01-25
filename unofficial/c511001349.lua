@@ -14,6 +14,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_AQUA,ATTRIBUTE_WATER) end
 	local dis=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
+	Duel.Hint(HINT_ZONE,tp,dis)
 	e:SetLabel(dis)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)

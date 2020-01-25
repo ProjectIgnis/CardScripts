@@ -1,5 +1,5 @@
 --ＧＵＹダンス
---GUY Dance
+--Dai Dance
 --Scripted by Eerie Code and edo9300
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,8 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0
 		and Duel.GetLocationCount(1-tp,LOCATION_MZONE,nil,LOCATION_REASON_COUNT)>0 end
-	local zone=Duel.SelectDisableField(1-tp,1,LOCATION_MZONE,0,~(Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0)>>16))
+	local zone=Duel.SelectDisableField(1-tp,1,LOCATION_MZONE,0,0)
+	Duel.Hint(HINT_ZONE,tp,zone)
 	e:SetLabel(zone)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

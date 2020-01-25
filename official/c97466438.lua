@@ -1,4 +1,5 @@
 --ヨコシマウマ
+--Zany Zebra
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCost(s.reg)
 	c:RegisterEffect(e1)
-	--
+	--disable zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -45,6 +46,7 @@ function s.ztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,0)+Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)
 		+Duel.GetLocationCount(tp,LOCATION_SZONE,PLAYER_NONE,0)+Duel.GetLocationCount(1-tp,LOCATION_SZONE,PLAYER_NONE,0)>0 end
 	local dis=Duel.SelectDisableField(tp,1,LOCATION_MZONE+LOCATION_SZONE,LOCATION_MZONE+LOCATION_SZONE,0)
+	Duel.Hint(HINT_ZONE,tp,dis)
 	e:SetLabel(dis)
 end
 function s.zop(e,tp,eg,ep,ev,re,r,rp)

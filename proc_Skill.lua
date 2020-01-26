@@ -10,6 +10,12 @@ function Auxiliary.GetCover(c,coverNum)
  return SKILL_COVER+(coverNum*1000000)+(c:GetOriginalRace())
 end
 
+--function that return if the player (tp) can activate the skill
+--condition is no chain, it is your turn and it is the Main Phase
+function Auxiliary.CanActivateSkill(tp)
+	return return Duel.GetCurrentChain()==0 and Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+end
+
 aux.DrawlessToken={}
 aux.DrawlessToken[0]=nil
 aux.DrawlessToken[1]=nil

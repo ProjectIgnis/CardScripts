@@ -147,9 +147,9 @@ function Auxiliary.continuousOp(flip)
 	end
 end
 
-
+-- Proc for basic skill
 -- c: the card (card)
--- coverid: the Number of the cover (int)
+-- coverNum: the Number of the cover (int)
 -- drawless: if the player draw 1 less card at the start of the duel (bool)
 -- flip con: condition to activate the skill (function)
 -- flipOp: operation related to the skill activation (function)
@@ -195,4 +195,31 @@ function Auxiliary.SetSkillOp(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	e:SetLabel(0)
+end
+
+-- Function for the skills that "trigger" at the start of the turn/Before the Draw
+-- c: the card (card)
+-- coverNum: the Number of the cover (int)
+-- drawless: if the player draw 1 less card at the start of the duel (bool)
+-- flip con: condition to activate the skill (function)
+-- flipOp: operation related to the skill activation (function)
+function Auxiliary.AddPreDrawSkillProcedure(c,coverNum,drawless,skillcon,skillop)
+	local e1=Effect.CreateEffect(c)	
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_STARTUP)
+	e1:SetCountLimit(1)
+	e1:SetRange(0x5f)
+	e1:SetLabel(coverid)
+	e1:SetOperation(Auxiliary.SetSkillOp)
+	c:RegisterEffect(e1)
+	if drawless then
+		aux.RegisterDrawless(c)
+	end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PREDRAW)
+	e1:SetCondition(skillcon)
+	e1:SetOperation(skillop)
+	Duel.RegisterEffect(e1,c:GetControler())
 end

@@ -74,10 +74,16 @@ function s.con1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(ep,id)~=0
 end
 function s.op1(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetDecktopGroup(e:GetHandler():GetControler(),1)
-	if g:GetFirst():GetFlagEffect(id)==0 then
-		Duel.ConfirmDecktop(e:GetHandler():GetControler(),1)
-		g:GetFirst():RegisterFlagEffect(id,RESET_EVENT+0x1fe0000,0,1)
+	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_ONFIELD,nil)
+	if #g>0 then
+		local tc=g:GetFirst()
+		while tc do
+		if tc:GetFlagEffect(id)==0 then
+			Duel.ConfirmCards(tp,tc)
+			tc:RegisterFlagEffect(id,RESET_EVENT+0x1fe0000,0,1)
+		end
+		tc=g:GetNext()
+		end	
 	end
 end
 function s.con2(e,tp,eg,ep,ev,re,r,rp)

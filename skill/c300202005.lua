@@ -20,7 +20,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.con)
 		e1:SetOperation(s.op)
 		Duel.RegisterEffect(e1,tp)
-	end
 end
 function s.skillcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition

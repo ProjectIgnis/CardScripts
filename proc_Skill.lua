@@ -4,6 +4,8 @@ HINT_SKILL_FLIP  = 202
 -- HINT_SKILL_REMOVE = 203 (need to check with edo for name)
 
 SKILL_COVER=300000000
+--c: the card you want the cover (card)
+--coverNum: the number of the cover, for ex, for the second cover, you pass 2 as a parameter (int)
 function Auxiliary.GetCover(c,coverNum)
  return SKILL_COVER+(coverNum*1000000)+(c:GetOriginalRace())
 end
@@ -55,10 +57,13 @@ function Auxiliary.drawlessreset(e,tp,eg,ep,ev,re,r,rp)
 	end
 	e:Reset()
 end
-
+--proc for Field skills
+--c: the skill (card)
+--coverNum: the cover corresponding to the back (int)
+--drawless: if the skill make you draw 1 less card at the start of the duel (bool)
 function Auxiliary.AddFieldSkillProcedure(c,coverNum,drawless)
 	c:Cover(Auxiliary.GetCover(c,coverNum))
-	--place on field
+	--place in field zone
 	local e1=Effect.CreateEffect(c)	
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -93,14 +98,14 @@ function Auxiliary.fieldop(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 
-
+-- proc for continuous Spell/Trap Skill
 -- c: the card (card)
 -- coverNum: the Number of the cover (int)
 -- drawless: if the player draw 1 less card at the start of the duel (bool)
 -- flip: if the continuous card get flipped at the start of the duel (bool)
 function Auxiliary.AddContinuousSkillProcedure(c,coverNum,drawless,flip)
 	c:Cover(Auxiliary.GetCover(c,coverNum))
-	--activate
+	--place in correct zone, then if required, flip the skill
 	local e1=Effect.CreateEffect(c)	
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -138,11 +143,10 @@ end
 
 
 -- c: the card (card)
--- coverid: the ID of the cover (in the cover folder of pics folder) (int)
--- dummyEntryID: ID of the entry displayed when hovering and the card is set
+-- coverid: the Number of the cover (int)
 -- drawless: if the player draw 1 less card at the start of the duel (bool)
--- flip con: condition to activate the skill
--- flipOp: operation related to the skill activation
+-- flip con: condition to activate the skill (function)
+-- flipOp: operation related to the skill activation (function)
 function Auxiliary.AddSkillProcedure(c,coverNum,drawless,skillcon,skillop)
 	--activate
 	

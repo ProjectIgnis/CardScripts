@@ -17,7 +17,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--opd register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	local c=e:GetHandler()
-	local sg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	local sg=Duel.SelectMatchingCard(tp,s.ZMfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	local tc=sg:GetFirst()
 	if tc then
 		local e1=Effect.CreateEffect(c)
@@ -34,7 +34,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-function s.filter(c)
+function s.ZMfilter(c)
 	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsRace(RACE_ZOMBIE)
 end
 

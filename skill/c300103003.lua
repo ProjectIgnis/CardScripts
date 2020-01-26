@@ -10,7 +10,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
 	return aux.CanActivateSkill(tp) 
 	and Duel.GetLP(tp)<=1500
-	and Duel.GetMatchingGroupCount(s.filter,c:GetControler(),0,LOCATION_ONFIELD,nil,)>0
+	and Duel.GetMatchingGroupCount(s.filter,c:GetControler(),0,LOCATION_ONFIELD,nil)>0
 end
 function s.filter(c)
 	return c:IsFacedown() and c:IsAbleToChangeControler()

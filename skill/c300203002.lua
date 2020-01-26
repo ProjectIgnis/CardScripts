@@ -23,7 +23,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,4)
 	local g=Duel.GetDecktopGroup(tp,4)
 	local ct=g:FilterCount(Card.IsType,nil,TYPE_MONSTER)
-	if ct=1
+	if ct=1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)
 		Duel.DisableShuffleCheck()
@@ -31,7 +31,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 		Duel.ShuffleHand(tp)
 		Duel.SortDecktop(tp,tp,3)
-	elseif ct=2
+	elseif ct=2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local dg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
 		Duel.HintSelection(dg)

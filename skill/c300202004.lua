@@ -6,9 +6,9 @@ function s.initial_effect(c)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
-	if Duel.GetFlagEffect(ep,id)==0 then return end
+	if Duel.GetFlagEffect(ep,id)>0 then return end
 	--condition
-	return Duel.GetCurrentChain()==0 and Duel.GetTurnPlayer()~=tp
+	return Duel.GetCurrentChain()==0 and Duel.GetTurnPlayer()==tp
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--ask if you want to activate the skill or not
@@ -17,12 +17,14 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
 	--opd register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
+	
 	local n1=Duel.AnnounceLevel(tp,1,6,nil)
-	local n2=Duel.AnnounceLevel(tp,1,6,nil)		
+	local n2=Duel.AnnounceLevel(tp,1,6,n1)		
 	local dc=Duel.TossDice(tp,1)
+	Debug.Message(dc)
 	if n1==dc or n2==dc then
 		--immune
-		local e1=Effect.CreateEffect(c)
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_CANNOT_LOSE_LP)
 		e1:SetTargetRange(1,0)

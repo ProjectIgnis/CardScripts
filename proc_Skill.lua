@@ -155,27 +155,15 @@ end
 -- drawless: if the player draw 1 less card at the start of the duel (bool)
 -- flip con: condition to activate the skill (function)
 -- flipOp: operation related to the skill activation (function)
-function Auxiliary.AddSkillProcedure(c,coverNum,drawless,skillcon,skillop)
+function Auxiliary.AddSkillProcedure(c,coverNum,drawless,skillcon,skillop,countlimit)
 	--activate
-	
 	local e1=Effect.CreateEffect(c)	
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_STARTUP)
-	e1:SetCountLimit(1)
 	e1:SetRange(0x5f)
-	e1:SetLabel(coverNum)
-	e1:SetOperation(Auxiliary.SetSkillOp)
+	e1:SetOperation(Auxiliary.SetSkillOp(coverNum,skillcon,skillop,countlimit))
 	c:RegisterEffect(e1)
-	
-	if skillop~=nil then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_FREE_CHAIN)
-		e1:SetCondition(skillcon)
-		e1:SetOperation(skillop)
-		Duel.RegisterEffect(e1,tp)
-	end
 	if drawless then
 		aux.RegisterDrawless(c)
 	end
@@ -183,21 +171,32 @@ end
 
 -- Duel.Hint(HINT_SKILL_COVER,1,coverID|(BackEntryID<<32))
 -- Duel.Hint(HINT_SKILL,1,FrontID)
-function Auxiliary.SetSkillOp(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local coverid = Auxiliary.GetCover(c,e:GetLabel())
-	if e:GetLabel()>0 then
+function Auxiliary.SetSkillOp(coverNum,skillcon,skillop,countlimit)
+	return function(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		if skillop~=nil then
+			local e1=Effect.CreateEffect(c)	
+			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+			e1:SetCode(EVENT_FREE_CHAIN)
+			if type(countlimit)=="number" then
+				e1:SetCountLimit(countlimit)
+			end
+			e1:SetCondition(skillcon)
+			e1:SetOperation(skillop)
+			Duel.RegisterEffect(e1,e:GetHandlerPlayer())
+		end
+		local coverid = Auxiliary.GetCover(c,coverNum)
+		Duel.DisableShuffleCheck(true)
+		Duel.SendtoDeck(c,tp,-2,REASON_RULE)
 		--generate the skill in the "skill zone"
 		Duel.Hint(HINT_SKILL_COVER,c:GetControler(),coverid|(coverid<<32))
 		Duel.Hint(HINT_SKILL,c:GetControler(),c:GetCode())			
 		--send to limbo then draw 1 if the skill was in the hand
-		Duel.DisableShuffleCheck(true)
-		Duel.SendtoDeck(c,tp,-2,REASON_RULE)
 		if e:GetHandler():IsPreviousLocation(LOCATION_HAND) then 
 			Duel.Draw(p,1,REASON_RULE)
 		end
+		e:Reset()
 	end
-	e:SetLabel(0)
 end
 
 -- Function for the skills that "trigger" at the start of the turn/Before the Draw

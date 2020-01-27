@@ -136,6 +136,7 @@ function Auxiliary.AddContinuousSkillProcedure(c,coverNum,drawless,flip)
 end
 function Auxiliary.continuousOp(flip)
 	return function(e,tp,eg,ep,ev,re,r,rp)
+		Duel.DisableShuffleCheck(true)
 		p=e:GetHandlerPlayer()
 		Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEDOWN,true,(1 << 2))
 		if flip then
@@ -190,6 +191,7 @@ function Auxiliary.SetSkillOp(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SKILL_COVER,c:GetControler(),coverid|(coverid<<32))
 		Duel.Hint(HINT_SKILL,c:GetControler(),c:GetCode())			
 		--send to limbo then draw 1 if the skill was in the hand
+		Duel.DisableShuffleCheck(true)
 		Duel.SendtoDeck(c,tp,-2,REASON_RULE)
 		if e:GetHandler():IsPreviousLocation(LOCATION_HAND) then 
 			Duel.Draw(p,1,REASON_RULE)

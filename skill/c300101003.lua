@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 --cannot activate during your first turn condition
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetTurnCount()<3
+	return not (Duel.GetTurnPlayer()==tp and Duel.GetTurnCount()<3)
 end
 function s.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)

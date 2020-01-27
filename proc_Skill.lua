@@ -221,5 +221,5 @@ function Auxiliary.AddPreDrawSkillProcedure(c,coverNum,drawless,skillcon,skillop
 	e1:SetCode(EVENT_PREDRAW)
 	e1:SetCondition(skillcon)
 	e1:SetOperation(skillop)
-	Duel.RegisterEffect(e1,c:GetControler())
+	Duel.RegisterEffect(e1,tp)
 end

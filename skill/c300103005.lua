@@ -7,6 +7,9 @@ end
 
 
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
+	--opd check
+	if Duel.GetFlagEffect(ep,id)>0 then return end
+	
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil,e,tp)
 	local tc=nil
 	if #g==1 and g:GetFirst():IsLocation(LOCATION_HAND) then tc=g:GetFirst() end
@@ -22,7 +25,8 @@ end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--ask if you want to activate the skill or not
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end 
-	
+	--opd register
+	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	--Pay LP 
 	Duel.PayLPCost(tp,1500)
 	--draw replace

@@ -15,36 +15,29 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
 	Duel.Hint(HINT_CARD,0,id)
 	--look at hand
-	local g=Duel.GetFieldGroup(1-tp,0,LOCATION_HAND)
-	if #g>0 then
-		Duel.ConfirmCards(tp,g)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-		if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-			--skill is active flag
-			Duel.RegisterFlagEffect(tp,id,0,0,0)
-			--mind scan
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e1:SetCode(EVENT_ADJUST)
-			e1:SetCondition(s.con1)
-			e1:SetOperation(s.op1)
-			Duel.RegisterEffect(e1,tp)
-			--flip back if LP<3000
-			local e2=Effect.CreateEffect(e:GetHandler())
-			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e2:SetCode(EVENT_ADJUST)
-			e2:SetCondition(s.con2)
-			e2:SetOperation(s.op2)
-			Duel.RegisterEffect(e2,tp)
-		end
-	end
+	
+	--skill is active flag
+	Duel.RegisterFlagEffect(tp,id,0,0,0)
+	--mind scan
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_ADJUST)
+	e1:SetCondition(s.con1)
+	e1:SetOperation(s.op1)
+	Duel.RegisterEffect(e1,tp)
+	--flip back if LP<3000
+	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_ADJUST)
+	e2:SetCondition(s.con2)
+	e2:SetOperation(s.op2)
+	Duel.RegisterEffect(e2,tp)
 end
-
 function s.con1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(ep,id)~=0
+	return Duel.GetFlagEffect(tp,id)~=0
 end
 function s.op1(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_SZONE,nil)
 	if #g>0 then
 		local tc=g:GetFirst()
 		while tc do
@@ -57,9 +50,9 @@ function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.con2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(ep,id)~=0 and Duel.GetLP(tp)<3000
+	return Duel.GetFlagEffect(tp,id)~=0 and Duel.GetLP(tp)<3000
 end
 function s.op2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(2<<32))
-	Duel.ResetFlagEffect(tp, id)
+	Duel.ResetFlagEffect(tp,id)
 end

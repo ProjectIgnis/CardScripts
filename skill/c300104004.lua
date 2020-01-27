@@ -13,9 +13,11 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.CanActivateSkill(tp) 
 	and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil)
 end
-function s.cfilter(c)
+function s.cfilter(c,tp)
+	local loc=LOCATION_MZONE
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then loc=0 end
 	return (
-			(Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,loc,1,nil) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp))
+			(Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,loc,1,nil,tp) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp))
 		or
 			(Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsPlayerCanDraw(tp,1))
 		)
@@ -28,8 +30,9 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
 	--opt register
 	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,0)
-	
-	local b1=(Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,loc,1,nil) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp))
+		local loc=LOCATION_MZONE
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then loc=0 end
+	  local b1=(Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,loc,1,nil,tp) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp))
     local b2=(Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsPlayerCanDraw(tp,1))
     local p=0
     if b1 and b2 then

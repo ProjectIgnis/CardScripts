@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={}
+s.listed_names={id}
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsDiscardable()
 end

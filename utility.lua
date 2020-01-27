@@ -1328,16 +1328,16 @@ function Auxiliary.EnableCheckReincarnation(c)
 	end
 	if m and not m.global_check then
 		m.global_check=true
-        local e1=Effect.GlobalEffect()
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_MATERIAL_CHECK)
-        e1:SetValue(Auxiliary.ReincarnationCheckValue)
-        local ge1=Effect.GlobalEffect()
-        ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-        ge1:SetLabelObject(e1)
-        ge1:SetTargetRange(0xff,0xff)
-        ge1:SetTarget(Auxiliary.ReincarnationCheckTarget)
-        Duel.RegisterEffect(ge1,0)
+		local e1=Effect.GlobalEffect()
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_MATERIAL_CHECK)
+		e1:SetValue(Auxiliary.ReincarnationCheckValue)
+		local ge1=Effect.GlobalEffect()
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+		ge1:SetLabelObject(e1)
+		ge1:SetTargetRange(0xff,0xff)
+		ge1:SetTarget(Auxiliary.ReincarnationCheckTarget)
+		Duel.RegisterEffect(ge1,0)
 	end
 end
 function Auxiliary.ReincarnationCheckTarget(e,c)
@@ -1508,36 +1508,41 @@ end
 --Functions to automate consistent start-of-duel activations for Duel Modes like Speed Duel, Sealed Duel
 --According to AlphaKretin, these two functions can be improved in Edopro
 function Auxiliary.EnableExtraRules(c,card,init,...)
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    e1:SetCode(EVENT_ADJUST)
-    e1:SetCountLimit(1)
-    e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
-    e1:SetRange(0xff)
-    e1:SetOperation(Auxiliary.EnableExtraRulesOperation(card,init,...))
-    c:RegisterEffect(e1)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_ADJUST)
+	e1:SetCountLimit(1)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
+	e1:SetRange(0xff)
+	e1:SetOperation(Auxiliary.EnableExtraRulesOperation(card,init,...))
+	c:RegisterEffect(e1)
 end
 function Auxiliary.EnableExtraRulesOperation(card,init,...)
-    local arg = {...}
-    return function(e,tp,eg,ep,ev,re,r,rp)
-        local c = e:GetHandler()
-        local p = c:GetControler()
-        Duel.DisableShuffleCheck()
-        Duel.SendtoDeck(c, nil, -2, REASON_RULE)
-        local ct = Duel.GetMatchingGroupCount(nil, p, LOCATION_HAND + LOCATION_DECK, 0, c)
-        if (Duel.IsDuelType(SPEED_DUEL) and ct < 20 or ct < 40)
-            and Duel.SelectYesNo(1 - p, aux.Stringid(4014, 5)) then
-            Duel.Win(1 - p, 0x55)
-        end
-        if c:IsPreviousLocation(LOCATION_HAND) then Duel.Draw(p, 1, REASON_RULE) end
-        if not card.global_active_check then
-            Duel.ConfirmCards(1-p, c)
-            if Duel.SelectYesNo(p,aux.Stringid(4014,6)) and Duel.SelectYesNo(1-p,aux.Stringid(4014,6)) then
-            	init(c,table.unpack(arg))
-            end
-            card.global_active_check = true
-        end
-    end
+	local arg = {...}
+	return function(e,tp,eg,ep,ev,re,r,rp)
+		local c = e:GetHandler()
+		local p = c:GetControler()
+		Duel.DisableShuffleCheck()
+		Duel.SendtoDeck(c,nil,-2,REASON_RULE)
+		local ct = Duel.GetMatchingGroupCount(nil,p,LOCATION_HAND+LOCATION_DECK,0,c)
+		if (Duel.IsDuelType(SPEED_DUEL) and ct < 20 or ct < 40) and Duel.SelectYesNo(1-p, aux.Stringid(4014,5)) then
+			Duel.Win(1-p,0x55)
+		end
+		if c:IsPreviousLocation(LOCATION_HAND) then Duel.Draw(p, 1, REASON_RULE) end
+		if not card.global_active_check then
+			Duel.ConfirmCards(1-p, c)
+			if Duel.SelectYesNo(p,aux.Stringid(4014,6)) and Duel.SelectYesNo(1-p,aux.Stringid(4014,6)) then
+				Duel.Hint(HINT_CARD,tp,c:GetCode())
+				Duel.Hint(HINT_OPSELECTED,tp,aux.Stringid(4014,7))
+				Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(4014,7))
+				init(c,table.unpack(arg))
+			else
+				Duel.Hint(HINT_OPSELECTED,tp,aux.Stringid(4014,8))
+				Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(4014,8))
+			end
+			card.global_active_check = true
+		end
+	end
 end
 --[[Function to perform "Either add it to the hand or do X"
 Required:

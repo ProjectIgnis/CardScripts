@@ -1,4 +1,5 @@
 --インヴェルズの門番
+--Steelswarm Gatekeeper
 local s,id=GetID()
 function s.initial_effect(c)
 	--extra summon
@@ -16,6 +17,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetRange(LOCATION_MZONE)
+		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 		e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

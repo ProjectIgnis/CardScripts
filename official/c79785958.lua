@@ -1,4 +1,5 @@
 --ヴェルズ・カストル
+--Evilswarm Castor
 local s,id=GetID()
 function s.initial_effect(c)
 	--extra summon
@@ -14,6 +15,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xa))
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)

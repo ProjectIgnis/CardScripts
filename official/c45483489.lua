@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={}
+s.listed_names={id}
 function s.rmcond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_COST) and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_MONSTER)
 		and re:GetHandler():IsAttribute(ATTRIBUTE_WATER)

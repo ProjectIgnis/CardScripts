@@ -162,7 +162,7 @@ function Auxiliary.AddSkillProcedure(c,coverNum,drawless,skillcon,skillop,countl
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_STARTUP)
 	e1:SetRange(0x5f)
-	e1:SetOperation(Auxiliary.SetSkillOp(coverNum,skillcon,skillop,countlimit))
+	e1:SetOperation(Auxiliary.SetSkillOp(coverNum,skillcon,skillop,countlimit,EVENT_FREE_CHAIN))
 	c:RegisterEffect(e1)
 	if drawless then
 		aux.RegisterDrawless(c)
@@ -171,13 +171,13 @@ end
 
 -- Duel.Hint(HINT_SKILL_COVER,1,coverID|(BackEntryID<<32))
 -- Duel.Hint(HINT_SKILL,1,FrontID)
-function Auxiliary.SetSkillOp(coverNum,skillcon,skillop,countlimit)
+function Auxiliary.SetSkillOp(coverNum,skillcon,skillop,countlimit,efftype)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		if skillop~=nil then
-			local e1=Effect.CreateEffect(c)	
+			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e1:SetCode(EVENT_FREE_CHAIN)
+			e1:SetCode(efftype)
 			if type(countlimit)=="number" then
 				e1:SetCountLimit(countlimit)
 			end
@@ -205,23 +205,15 @@ end
 -- drawless: if the player draw 1 less card at the start of the duel (bool)
 -- flip con: condition to activate the skill (function)
 -- flipOp: operation related to the skill activation (function)
-function Auxiliary.AddPreDrawSkillProcedure(c,coverNum,drawless,skillcon,skillop)
+function Auxiliary.AddPreDrawSkillProcedure(c,coverNum,drawless,skillcon,skillop,countlimit)
 	local e1=Effect.CreateEffect(c)	
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_STARTUP)
-	e1:SetCountLimit(1)
 	e1:SetRange(0x5f)
-	e1:SetLabel(coverid)
-	e1:SetOperation(Auxiliary.SetSkillOp)
+	e1:SetOperation(Auxiliary.SetSkillOp(coverNum,drawless,skillcon,skillop,countlimit,EVENT_PREDRAW))
 	c:RegisterEffect(e1)
 	if drawless then
 		aux.RegisterDrawless(c)
 	end
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PREDRAW)
-	e1:SetCondition(skillcon)
-	e1:SetOperation(skillop)
-	Duel.RegisterEffect(e1,tp)
 end

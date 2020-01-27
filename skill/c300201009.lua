@@ -15,7 +15,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
 	Duel.Hint(HINT_CARD,0,id)
 	--look at hand
-	local g=Duel.GetFieldGroup(1-tp,0,LOCATION_HAND)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 	if #g>0 then
 		Duel.ConfirmCards(tp,g)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)

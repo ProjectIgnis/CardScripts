@@ -162,7 +162,7 @@ function Auxiliary.AddSkillProcedure(c,coverNum,drawless,skillcon,skillop,countl
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_STARTUP)
 	e1:SetRange(0x5f)
-	e1:SetOperation(Auxiliary.SetSkillOp(coverNum,skillcon,skillop,countlimit,EVENT_FREE_CHAIN))
+	e1:SetOperation(Auxiliary.SetSkillOp(coverNum,drawless,skillcon,skillop,countlimit,EVENT_FREE_CHAIN))
 	c:RegisterEffect(e1)
 	if drawless then
 		aux.RegisterDrawless(c)
@@ -171,7 +171,7 @@ end
 
 -- Duel.Hint(HINT_SKILL_COVER,1,coverID|(BackEntryID<<32))
 -- Duel.Hint(HINT_SKILL,1,FrontID)
-function Auxiliary.SetSkillOp(coverNum,skillcon,skillop,countlimit,efftype)
+function Auxiliary.SetSkillOp(coverNum,drawless,skillcon,skillop,countlimit,efftype)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		if skillop~=nil then

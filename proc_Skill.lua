@@ -43,7 +43,8 @@ end
 
 function Auxiliary.drawlessop(e,tp,eg,ep,ev,re,r,rp)
 	if aux.DrawlessToken[e:GetHandlerPlayer()]==nil then
-		aux.DrawlessToken[e:GetHandlerPlayer()]=Duel.CreateToken(e:GetHandlerPlayer(),1)
+		aux.DrawlessToken[e:GetHandlerPlayer()]=Duel.CreateToken(e:GetHandlerPlayer(),946)
+		aux.DrawlessToken[e:GetHandlerPlayer()]:Type(0)
 		Duel.SendtoDeck(aux.DrawlessToken[e:GetHandlerPlayer()],nil,0,REASON_RULE)
 	end
 	e:Reset()

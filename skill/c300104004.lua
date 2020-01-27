@@ -39,7 +39,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
     else
         p=Duel.SelectOption(tp,aux.Stringid(id,2))+1
     end
-	if p==0
+	if p==0 then
 		local loc=LOCATION_MZONE
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then loc=0 end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
@@ -51,7 +51,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.SpecialSummon(sg,0,tp,tp,true,false,POS_FACEUP)
 			end
 		end
-	elseif p==1
+	elseif p==1 then
 		local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		if Duel.SendtoDeck(g2,nil,0,REASON_EFFECT)~=0
 		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then

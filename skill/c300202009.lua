@@ -35,13 +35,13 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
     else
         p=Duel.SelectOption(tp,aux.Stringid(id,2))+1
     end
-	if p==0
+	if p==0 then
 		local g1=Duel.SelectMatchingCard(tp,s.Amafilter,tp,LOCATION_HAND,0,1,1,nil)
 		local g2=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,g1:GetFirst())
 		g1:Merge(g2)
 		Duel.ConfirmCards(1-tp,g1)
 		Duel.Draw(tp,1,REASON_EFFECT)
-	elseif p=1
+	elseif p=1 then
 		Duel.Draw(tp,2,REASON_EFFECT)
 	else
 		local g1=Duel.SelectMatchingCard(tp,s.Amafilter,tp,LOCATION_HAND,0,1,1,nil)

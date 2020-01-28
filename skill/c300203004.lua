@@ -1,16 +1,16 @@
 --Hidden Parasite
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)	
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)	
 end
-
+function s.cfilter(c)
+	return c:IsFaceup() and not c:IsRace(RACE_INSECT)
+end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--twice per duel check
-	if Duel.GetFlagEffect(ep,id)<2 then return end
-	--opt check
-	if Duel.GetFlagEffect(ep,id+100)<1 then return end
+	if Duel.GetFlagEffect(ep,id)>1 then return end
 	--condition
-	return aux.CanActivateSkill(tp)
+	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) 
 end
 
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -18,8 +18,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
 	--used skill flag register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
-	--opt register
-	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,0)
 	local c=e:GetHandler()
 	
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)

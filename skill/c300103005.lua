@@ -14,7 +14,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=nil
 	if #g==1 and g:GetFirst():IsLocation(LOCATION_HAND) then tc=g:GetFirst() end
 	--condition
-	return Duel.GetCurrentChain()==0 and tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
+	return aux.CanActivateSkill(tp)
 		and Duel.GetDrawCount(tp)>0
 	and Duel.CheckLPCost(tp,1500)
 	

@@ -4,19 +4,21 @@ function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)	
 end
 function s.cfilter(c,code, code2)
-	return (c:IsCode(code) or c:IsCode(code2)) and c:IsDirectAttacked()
+	return (c:IsCode(code) or c:IsCode(code2)) and c:GetAttackAnnouncedCount()>0
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--"cost" check
 	if not (Duel.CheckLPCost(tp,1000) and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,64788463,90876561)) then return false end
 	--condition
-	return Duel.GetCurrentChain()==0 and Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return aux.CanActivateSkill(tp)
 	and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,25652259),tp,LOCATION_ONFIELD,0,1,nil)
 	and Duel.IsPlayerCanAdditionalSummon(tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
 	Duel.Hint(HINT_CARD,0,id)
+	--opt register
+	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,0)
 	--cost
 	Duel.PayLPCost(tp,1000)
 	local e1=Effect.CreateEffect(e:GetHandler())

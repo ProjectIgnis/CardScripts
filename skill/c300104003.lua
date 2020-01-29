@@ -1,14 +1,11 @@
 -- Dino Destruction
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)	
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)	
 end
-
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	--opt check
-	if Duel.GetFlagEffect(ep,id)==0 then return end
 	--condition
-	return aux.CanActivateSkill(tp)
+	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
@@ -34,7 +31,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 end
-function s.filter(c,tp)
+function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) and c:IsLevelAbove(6)
 end
 function s.EPop(e,tp,eg,ep,ev,re,r,rp)

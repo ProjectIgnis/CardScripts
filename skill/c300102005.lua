@@ -1,20 +1,15 @@
 -- Viral Infection
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)	
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)	
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	--opt check
-	if Duel.GetFlagEffect(ep,id)==0 then return end
 	--condition
-	return Duel.GetCurrentChain()==0 and Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
-	and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,LOCATION_ONFIELD,0,1,nil)
+	return aux.CanActivateSkill(tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
 	Duel.Hint(HINT_CARD,0,id)
-	--opt register
-	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,0)
 	
 	local ct=Duel.DiscardHand(tp,aux.TRUE,1,60,REASON_EFFECT+REASON_DISCARD)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))

@@ -5,21 +5,24 @@ function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFlagEffect(ep,id)>0 then return end
 	--condition
-	return Duel.GetCurrentChain()==0 and Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
-	and Duel.GetFlagEffect(tp,id)==0
+	return aux.CanActivateSkill(tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
 	Duel.RegisterFlagEffect(tp,id,0,0,1)
 	
+	--opd register
+	Duel.RegisterFlagEffect(ep,id,0,0,0)
+	
 	--first check because EVENT_ADJUST is not raised at the resolution of the skill
-	local g=Duel.GetDecktopGroup(e:GetHandler():GetControler(),1)
-	local g2=Duel.GetDecktopGroup(1-e:GetHandler():GetControler(),1)
+	local g=Duel.GetDecktopGroup(e:tp,1)
+	local g2=Duel.GetDecktopGroup(1-tp,1)
 	
 	if g:GetFirst():GetFlagEffect(id)==0 then
-		Duel.ConfirmDecktop(e:GetHandler():GetControler(),1)
+		Duel.ConfirmDecktop(tp,1)
 		g:GetFirst():RegisterFlagEffect(id,RESET_EVENT+0x1fe0000,0,1)
 	end
 	if g2:GetFirst():GetFlagEffect(id)==0 then
@@ -32,7 +35,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EVENT_ADJUST)
 	e2:SetOperation(s.operation)
 	Duel.RegisterEffect(e2,tp)
-	
 end
 
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -40,11 +42,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Duel.GetDecktopGroup(1-e:GetHandler():GetControler(),1)
 	
 	if g:GetFirst():GetFlagEffect(id)==0 then
-		Duel.ConfirmDecktop(e:GetHandler():GetControler(),1)
+		Duel.ConfirmDecktop(tp,1)
 		g:GetFirst():RegisterFlagEffect(id,RESET_EVENT+0x1fe0000,0,1)
 	end
 	if g2:GetFirst():GetFlagEffect(id)==0 then
-		Duel.ConfirmDecktop(1-e:GetHandler():GetControler(),1)
+		Duel.ConfirmDecktop(tp,1)
 		g2:GetFirst():RegisterFlagEffect(id,RESET_EVENT+0x1fe0000,0,1)
 	end
 end

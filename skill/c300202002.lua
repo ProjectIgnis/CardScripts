@@ -3,13 +3,12 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)	
 end
-
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opt check
-	if Duel.GetFlagEffect(ep,id)==0 then return end
+	if Duel.GetFlagEffect(ep,id)>0 then return end
 	--condition
-	return Duel.GetCurrentChain()==0 and Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
-	and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,LOCATION_ONFIELD,0,1,nil)
+	return aux.CanActivateSkill(tp)
+	and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
@@ -17,7 +16,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--opt register
 	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,0)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-	local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,LOCATION_MZONE,0,nil)*200
+	local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,LOCATION_MZONE,0,nil)*300
 	if #g==0 or atk==0 then return end
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do

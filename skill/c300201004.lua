@@ -18,7 +18,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	
 	--first check because EVENT_ADJUST is not raised at the resolution of the skill
-	local g=Duel.GetDecktopGroup(e:tp,1)
+	local g=Duel.GetDecktopGroup(tp,1)
 	local g2=Duel.GetDecktopGroup(1-tp,1)
 	
 	if g:GetFirst():GetFlagEffect(id)==0 then

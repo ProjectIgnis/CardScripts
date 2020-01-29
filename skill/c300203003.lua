@@ -7,19 +7,14 @@ function s.flipconfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT) and c:IsType(TYPE_NORMAL) and c:IsLevelBelow(3)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	--opd check
-	if Duel.GetFlagEffect(ep,id)==0 then return end
 	--condition
 	return aux.CanActivateSkill(tp) 
-	and Duel.IsExistingMatchingCard(s.flipconfilter,c:GetControler(),LOCATION_ONFIELD,0,1,nil)
+	and Duel.IsExistingMatchingCard(s.flipconfilter,tp,LOCATION_ONFIELD,0,1,nil)
 	and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>=2
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
 	Duel.Hint(HINT_CARD,0,id)
-	--opd register
-	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,0)
-	
 	
 	local g=Duel.SelectReleaseGroupCost(tp,s.flipconfilter,1,1,false,aux.ReleaseCheckMMZ,nil,ft,tp)
 	Duel.DiscardHand(tp,aux.TRUE,2,2,REASON_COST+REASON_DISCARD) 

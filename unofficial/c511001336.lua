@@ -96,8 +96,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_EXTRA+LOCATION_GRAVE,0,e:GetHandler(),e,tp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,ct,ct,s.rescon,1,tp,HINTMSG_SPSUMMON)
 	if #sg<=0 then return end
-	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP) == #sg then
+	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP) > 0 then
 		for oc in aux.Next(mg) do
 			local tc=sg:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE):GetFirst()
 			if not tc then break end

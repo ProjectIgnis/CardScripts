@@ -97,9 +97,12 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,ct,ct,s.rescon,1,tp,HINTMSG_SPSUMMON)
 	if #sg<=0 then return end
 	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-	for oc in aux.Next(mg) do
-		local tc=sg:Select(tp,1,1,nil):GetFirst()
-		Duel.Overlay(tc,oc)
-		sg:RemoveCard(tc)
+	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP) == #sg then
+		for oc in aux.Next(mg) do
+			local tc=sg:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE):GetFirst()
+			if not tc then break end
+			Duel.Overlay(tc,oc)
+			sg:RemoveCard(tc)
+		end
 	end
 end

@@ -62,13 +62,16 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
+function s.atkfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
+end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsType,1,nil,TYPE_MONSTER)
+	return eg:IsExists(s.atkfilter,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local ct=eg:FilterCount(Card.IsType,nil,TYPE_MONSTER)
+	local ct=eg:FilterCount(s.atkfilter,nil)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -102,4 +105,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

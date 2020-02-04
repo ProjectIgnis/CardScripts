@@ -1,5 +1,5 @@
 --アクセスコード・トーカー
---Access Code Talker
+--Accesscode Talker
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -63,7 +63,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonType(SUMMON_TYPE_LINK) and e:GetLabelObject():GetLabel()==1
 end
 function s.filter(c,e)
-	return c:IsType(TYPE_LINK) and c:IsLocation(LOCATION_GRAVE) and c:IsCanBeEffectTarget(e)
+	return c:IsType(TYPE_LINK) and (c:IsLocation(LOCATION_GRAVE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup())) and c:IsCanBeEffectTarget(e)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return e:GetHandler():GetMaterial():IsContains(chkc) and s.filter(chkc,e) end
@@ -118,4 +118,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,str)
 	end
 end
-

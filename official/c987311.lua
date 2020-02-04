@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xaf}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsControler(tp)
 end

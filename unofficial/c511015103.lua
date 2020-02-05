@@ -72,30 +72,28 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		g=sg
 	end
 	if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) > 0 then
-			for tc in aux.Next(g) do
-				if tc:IsLocation(LOCATION_MZONE) then
-					s.disop(tc,e:GetHandler())
-				end
+		for tc in aux.Next(g) do
+			if tc:IsLocation(LOCATION_MZONE) then
+				s.disop(tc,e:GetHandler())
 			end
-		else
-			return
 		end
 	else
-		local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,g,g,e)
-		if #xyzg>0 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-			if c:IsRelateToEffect(e) and e:IsHasType(EFFECT_TYPE_ACTIVATE) and g:IsExists(Card.IsCode,1,nil,47198668) then
-				e1=Effect.CreateEffect(c)
-				e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(511002116)
-				e1:SetReset(RESET_CHAIN)
-				c:RegisterEffect(e1)
-				g:AddCard(c)
-			end
-			Duel.XyzSummon(tp,xyz,g)
+		return
+	end
+	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,g,g,e)
+	if #xyzg>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
+		if c:IsRelateToEffect(e) and e:IsHasType(EFFECT_TYPE_ACTIVATE) and g:IsExists(Card.IsCode,1,nil,47198668) then
+			e1=Effect.CreateEffect(c)
+			e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(511002116)
+			e1:SetReset(RESET_CHAIN)
+			c:RegisterEffect(e1)
+			g:AddCard(c)
 		end
+		Duel.XyzSummon(tp,xyz,g)
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp,tc)

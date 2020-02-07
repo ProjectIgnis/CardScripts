@@ -403,7 +403,7 @@ function Card.UpdateScale(c,amt,reset,rc)
 end
 
 function Auxiliary.Stringid(code,id)
-	return id|code<<32
+	return (id&0xfffff)|code<<20
 end
 function Auxiliary.Next(g)
 	local first=true

@@ -61,7 +61,6 @@ end
 function s.eventop(e, tp)
     --if no challenge queued
     if e:GetLabelObject():GetLabel() == 0 then
-        --if challenge already queued
         --decrement "timer" until next challenge
         s.adjustCount = s.adjustCount - 1
         --if next challenge is due
@@ -74,8 +73,10 @@ function s.eventop(e, tp)
                 challenge = Duel.GetRandomNumber(1, #s.challenges)
             end
             --announce the challenge
-            Duel.SelectOption(0, aux.Stringid(5000, challenge - 1)) --if over 15 wraps to next token
-            Duel.SelectOption(1, aux.Stringid(5000, challenge - 1))
+            local index = challenge - 1
+            local str = aux.Stringid(5000 + index // 16, index % 16)
+            Duel.SelectOption(0, str)
+            Duel.SelectOption(1, str)
             --queue the challenge
             e:GetLabelObject():SetLabel(challenge)
             --raise the event for the challenge to happen
@@ -83,6 +84,7 @@ function s.eventop(e, tp)
             --reset timer
             s.adjustCount = s.getAdjustCount()
         end
+    --if challenge already queued
     elseif Duel.GetCurrentChain() == 0 then
         --raise the event again without changing the challenge until the challenge happenes
         Duel.RaiseEvent(Group.CreateGroup(), EVENT_PEGASUS_SPEAKS, e, 0, 0, 0, 0)

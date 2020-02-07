@@ -15,7 +15,7 @@ function s.initial_effect(c)
     --enable REVERSE_DECK function
     Duel.EnableGlobalFlag(GLOBALFLAG_DECK_REVERSE_CHECK)
     --Add Extra Rule procedure
-    aux.EnableExtraRule(c, s, s.init)
+    aux.EnableExtraRules(c, s, s.init)
 end
 function s.init(c)
     s[0] = false

@@ -71,7 +71,7 @@ end
 function s.loseop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id+1)>0 then
 		local WIN_REASON_FINAL_DRAW=0x22
-		Duel.Win(tp,WIN_REASON_FINAL_DRAW)
+		Duel.Win(1-tp,WIN_REASON_FINAL_DRAW)
 	end
 end
 --draw overwrite, credit to Edo and AlphaKretin

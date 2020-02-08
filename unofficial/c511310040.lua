@@ -154,7 +154,13 @@ function s.playCard(c, p)
         else
             --activate backrow
             local ae = c:GetActivateEffect()
-            if ae and ae:IsActivatable(p) and Duel.SelectYesNo(p, 94) then
+            if not ae then return false end
+            local check,eg,ep,ev,re,r,rp = Duel.CheckEvent(ae:GetCode(), true)
+            local con = ae:GetCondition()
+            local cost = ae:GetCost()
+            if check and (not con or con(ae,p,eg,ep,ev,re,r,rp)) and 
+            	(not cost or cost(ae,p,eg,ep,ev,re,r,rp)) and ae:IsActivatable(p, true, true) 
+            	and Duel.SelectYesNo(p, 94) then
                 --not just for show, actually helps it not crash! go figure
                 if Duel.MoveToField(c, p, p, LOCATION_SZONE, POS_FACEDOWN, true, 0x1f) then
                     Duel.Activate(ae)

@@ -47,7 +47,7 @@ function s.cfilter(c,tp,rp)
 		and rp~=tp and c:IsSetCard(0x119) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp,rp)
+	return eg:IsExists(s.cfilter,1,nil,tp,rp) and not eg:IsContains(e:GetHandler())
 end
 function s.filter(c,e,tp,tc)
 	return c:IsSetCard(0x119) and c:IsLevelBelow(4)

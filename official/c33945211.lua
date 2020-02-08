@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end 
 function s.cfilter(c,tp)
 	return c:IsSetCard(0x12b) and c:IsType(TYPE_TRAP)
-		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
+		and c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 s.listed_series={0x12b}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

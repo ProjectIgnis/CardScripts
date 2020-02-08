@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={}
+s.listed_names={id}
 s.listed_series={0x130}
 function s.setfilter(c,e,tp)
 	if not c:IsSetCard(0x130) then return end

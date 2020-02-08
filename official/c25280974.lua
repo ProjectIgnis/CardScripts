@@ -1,8 +1,10 @@
 --魔道化リジョン
+--Legion the Fiend Jester
 local s,id=GetID()
 function s.initial_effect(c)
 	--extra summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetRange(LOCATION_MZONE)
@@ -10,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_SPELLCASTER))
 	e1:SetValue(0x1)
 	c:RegisterEffect(e1)
-	--tohand
+	--to hand
 	local e2=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)

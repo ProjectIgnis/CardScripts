@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={}
+s.listed_names={id}
 s.listed_series={0xfc}
 function s.incon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
@@ -55,7 +55,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(200)
-		e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xfc))
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end

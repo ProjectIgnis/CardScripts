@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_DRAW)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetOperation(s.drop)
+	e2:SetCondition(s.drop)
 	c:RegisterEffect(e2)
 	local g=Group.CreateGroup()
 	g:KeepAlive()
@@ -80,6 +80,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		pg:AddCard(tc)
 		tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
+	return false
 end
 function s.pubcon(e)
 	return e:GetHandler():GetFlagEffect(id)~=0

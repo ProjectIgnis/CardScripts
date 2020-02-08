@@ -42,11 +42,11 @@ function s.rescheck(c,lv)
 	return lv-c:GetLevel()>=8
 end
 function s.cfilter(c)
-	return c:IsReleasable() and c:IsHasLevel()
+	return c:IsReleasable() and c:HasLevel()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	--if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsHasLevel,1,false,s.rescon,nil) end
-	--local rg=Duel.SelectReleaseGroupCost(tp,Card.IsHasLevel,1,99,false,s.rescon,nil)
+	--if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.HasLevel,1,false,s.rescon,nil) end
+	--local rg=Duel.SelectReleaseGroupCost(tp,Card.HasLevel,1,99,false,s.rescon,nil)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon,0) end
 	local rg=aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon,1,tp,HINTMSG_RELEASE)
@@ -68,6 +68,7 @@ function s.desfilter(c,tp)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end

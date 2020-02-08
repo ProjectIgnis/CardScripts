@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.xyzlv)
 	c:RegisterEffect(e3)
 end
-s.listed_names={}
+s.listed_names={id}
 function s.spfilter(c,e,tp)
 	return (c:IsLevel(3) or c:IsLevel(4) or c:IsLevel(5)) and c:IsAttribute(ATTRIBUTE_WATER)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)

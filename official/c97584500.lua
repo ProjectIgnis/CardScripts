@@ -1,4 +1,5 @@
 --ゴーストリック・マミー
+--Ghostrick Mummy
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon limit
@@ -18,6 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--extra summon
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)

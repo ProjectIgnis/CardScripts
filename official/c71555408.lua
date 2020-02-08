@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xfc}
-s.listed_names={}
+s.listed_names={id}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	if ph~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
@@ -61,7 +61,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetValue(s.efilter)
 		e2:SetOwnerPlayer(tp)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2,true)
 	end
 end

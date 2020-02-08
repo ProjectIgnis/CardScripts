@@ -1,5 +1,5 @@
 --塊斬機ラプラシア
---Batch Processlayer Laplacian
+--Primathmech Laplacian
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -123,7 +123,7 @@ function s.stop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsSetCard(0x132) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
+	return c:IsFaceup() and c:IsSetCard(0x132) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
 		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

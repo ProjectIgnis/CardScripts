@@ -389,7 +389,7 @@ function s.atop(e, tp)
     if Duel.IsAttackCostPaid() ~= 2 then
         local CARD_YUGIOH = 5000
         s.announce_filter = {CARD_YUGIOH, OPCODE_ISCODE}
-        Duel.AnnounceCardFilter(tp, table.unpack(s.announce_filter))
+        Duel.AnnounceCard(tp, table.unpack(s.announce_filter))
         Duel.AttackCostPaid()
     end
 end

@@ -61,6 +61,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	if #g~=0 then
 		if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
 			Duel.Hint(HINT_SKILL_FLIP,0,id|(2<<32))
+			s[2+tp]=0
 		end
 		Duel.ConfirmCards(1-tp,g)
 	end

@@ -21,12 +21,13 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(s.searchtg)
 		e1:SetOperation(s.searchop)
 		Duel.RegisterEffect(e1,tp)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-		e2:SetProperty(EFFECT_FLAG_DELAY)
-		e2:SetCode(EVENT_PHASE+PHASE_END)
-		e2:SetOperation(s.loseop)
-		Duel.RegisterEffect(e2,tp)
+		
+		local e3=Effect.CreateEffect(e:GetHandler())
+		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e3:SetCode(EVENT_PHASE+PHASE_END)
+		e3:SetCountLimit(1)
+		e3:SetOperation(s.loseop)
+		Duel.RegisterEffect(e3,p)
 	end
 	--1 flag = 1 counter
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
@@ -43,7 +44,9 @@ end
 function s.searchtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end
 	local dt=Duel.GetDrawCount(tp)
-	if dt~=0 then
+	if dt~=0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		Duel.RegisterFlagEffect(tp,id+1,0,0,0)
+		
 		_replace_count=0
 		_replace_max=dt
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -54,6 +57,7 @@ function s.searchtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetReset(RESET_PHASE+PHASE_DRAW)
 		e1:SetValue(0)
 		Duel.RegisterEffect(e1,tp)
+		
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
@@ -65,9 +69,9 @@ function s.searchop(e,tp,eg,ep,ev,re,r,rp)
 	if #g~=0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
-		Duel.RegisterFlagEffect(tp,id+1,0,0,0)
 	end
 end
+
 function s.loseop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id+1)>0 then
 		local WIN_REASON_FINAL_DRAW=0x22

@@ -23,7 +23,7 @@ s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 
 	--Check for a monster with 2000+ ATK, besides "Galaxy-Eyes Photon Dragon"
 function s.costfilter(c,ft,tp)
-	return c:IsAttackAbove(2000) and not c:IsCode(CARD_GALAXYEYES_P_DRAGON) and (ft>0 or c:GetSequence()<5)
+	return (c:IsControler(tp) or c:IsFaceup()) and c:IsAttackAbove(2000) and not c:IsCode(CARD_GALAXYEYES_P_DRAGON) and (ft>0 or c:GetSequence()<5)
 		and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,c,e)
 end
 	--Tribute cost
@@ -36,7 +36,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Opponent's monster with 2000+ ATK and can be tributed
 function s.filter(c,e)
-	return c:IsAttackAbove(2000) and c:IsReleasableByEffect(e)
+	return c:IsFaceup() and c:IsAttackAbove(2000) and c:IsReleasableByEffect(e)
 end
 	--Check for "Galaxy-Eyes Photon Dragon"
 function s.spfilter(c,e,tp)

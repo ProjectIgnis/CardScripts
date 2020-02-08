@@ -59,7 +59,7 @@ end
 	--Player's spellcaster monster effect activated 
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if rc:IsRace(RACE_SPELLCASTER) and re:IsActiveType(TYPE_MONSTER) then
+	if rc:IsRace(RACE_SPELLCASTER) and re:IsActiveType(TYPE_MONSTER) and ep==tp then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end

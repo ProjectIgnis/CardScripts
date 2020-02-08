@@ -1,4 +1,5 @@
 --鎖付き真紅眼牙
+--Red-Eyes Fang with Chain
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -96,12 +97,14 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			--Def
+			if not tc:IsOriginalType(TYPE_LINK) then
 			local e2=Effect.CreateEffect(tc)
 			e2:SetType(EFFECT_TYPE_EQUIP)
 			e2:SetCode(EFFECT_SET_DEFENSE)
 			e2:SetValue(tc:GetDefense())
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
+			end
 			--Equip limit
 			local e3=Effect.CreateEffect(tc)
 			e3:SetType(EFFECT_TYPE_SINGLE)

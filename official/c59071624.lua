@@ -94,7 +94,7 @@ end
 function s.cfilter(c,tp)
 	return c:IsType(TYPE_MONSTER)
 		and c:GetPreviousControler()==1-tp and c:IsPreviousLocation(LOCATION_MZONE) 
-		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REDIRECT) and c:GetReasonPlayer()==tp
+		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==tp
 end
 	--Check for opponent's sent monster in GY/banished
 function s.ssfilter(c,e,tp)

@@ -1,5 +1,5 @@
 --戦華の仲－孫謀
---Senka Intermediary - Sun Mou
+--Ancient Warriors - Masterful Sun Mou
 local s,id=GetID()
 function s.initial_effect(c)
 	--no attack
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_CHAIN_SOLVED)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,id+1)

@@ -1,5 +1,5 @@
 --魅惑の合わせ鏡
---Split Mirrors of Seduction
+--Alluring Mirror Split
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -67,6 +67,7 @@ end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and (rp~=tp or (rp==tp and re:GetHandler():IsSetCard(0x64))) and c:IsPreviousControler(tp)
+		and r&REASON_EFFECT==REASON_EFFECT
 	end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

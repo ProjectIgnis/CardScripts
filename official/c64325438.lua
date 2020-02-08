@@ -1,6 +1,6 @@
 --王の支配
---Generaid Territory
---script originaly scripted by andré
+--Generaider Boss Room
+--original script by andré
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -36,7 +36,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()

@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.op2)
 	c:RegisterEffect(e4)
 end
-s.listed_names={}
+s.listed_names={id}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():GetSummonPlayer()==tp and eg:GetFirst():IsSummonType(SUMMON_TYPE_LINK)
 end
@@ -94,10 +94,10 @@ function s.op2(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_SET_BASE_ATTACK)
-	e2:SetValue(c:GetBaseAttack()//2)
+	e2:SetValue(c:GetBaseAttack()/2)
 	c:RegisterEffect(e2)
-	local e3=e1:Clone()
+	local e3=e2:Clone()
 	e3:SetCode(EFFECT_SET_BASE_DEFENSE)
-	e3:SetValue(c:GetBaseDefense()//2)
+	e3:SetValue(c:GetBaseDefense()/2)
 	c:RegisterEffect(e3)
 end

@@ -15,7 +15,7 @@ Duel.TossCoin=function(...)
 	local params={...}
 	local tp=params[1]
 	if Duel.GetFlagEffect(tp,id)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		Duel.RegisterFlagEffect(tp,id+2,0,0,0)
+		Duel.RegisterFlagEffect(tp,id+1,0,0,0)
 	end
 	return tossc(...)
 end
@@ -36,7 +36,6 @@ function s.initial_effect(c)
 		ge1:SetOperation(s.repop(id,Duel.GetDiceResult,Duel.SetDiceResult,function(tp) return Duel.AnnounceNumber(tp,1,2,3,4,5,6,7) end))
 		Duel.RegisterEffect(ge1,0)	
 		local ge2=ge1:Clone()
-		ge2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)return Duel.GetFlagEffect(ep,id+2)>0 end)
 		ge2:SetCode(EFFECT_TOSS_COIN_REPLACE)
 		ge2:SetOperation(s.repop(id+1,Duel.GetCoinResult,Duel.SetCoinResult,function(tp) return 1-Duel.AnnounceCoin(tp) end))
 		Duel.RegisterEffect(ge2,0)	

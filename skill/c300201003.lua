@@ -65,7 +65,9 @@ end
 --draw overwrite, credit to Edo and AlphaKretin
 local ddr=Duel.Draw
 Duel.Draw = function(...)
-  local tp={...}[1]
+	local tb={...}
+	local tp=tb[1]
+	local count=tb[2]
   local count={...}[2]
   if (Duel.GetFlagEffect(tp,id)>2 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) ) then
     local g=Duel.SelectMatchingCard(tp,LOCATION_DECK,0,tp,count,count)

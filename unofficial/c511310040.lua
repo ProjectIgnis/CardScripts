@@ -278,13 +278,15 @@ table.insert(s.challenges, s.destroy1500LessATK)
 
 --10: If you had a card destroyed this turn, you may destroy one of your opponent's cards.
 function s.paybackDestroy(e, tp)
-    if s[tp] then
+	local c0 = s[tp]
+	local c1 = s[1-tp]
+    if c0 then
         local dc = Duel.SelectMatchingCard(tp, aux.TRUE, tp, 0, LOCATION_ONFIELD, 0, 1, nil)
         if #dc > 0 then
             Duel.Destroy(dc, REASON_RULE)
         end
     end
-    if s[1 - tp] then
+    if c1 then
         local dc = Duel.SelectMatchingCard(1 - tp, aux.TRUE, 1 - tp, 0, LOCATION_ONFIELD, 0, 1, nil)
         if #dc > 0 then
             Duel.Destroy(dc, REASON_RULE)

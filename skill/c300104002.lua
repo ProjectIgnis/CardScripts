@@ -16,6 +16,13 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
 	Duel.Hint(HINT_CARD,0,id)
 	local c=e:GetHandler()
+	--Umi activation
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.ffilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,tp)
+	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND,0,1,nil,76634149) and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+		local tc=g:Select(tp,1,1,nil):GetFirst()
+		aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	end
 	--trap immune
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -34,6 +41,9 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCondition(s.leavecon)
 	e2:SetOperation(s.leaveop)
 	Duel.RegisterEffect(e2,tp)
+end
+function s.ffilter(c,tp)
+	return c:IsCode(CARD_UMI) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true)
 end
 function s.etarget(e,te)
 	return te:IsActiveType(TYPE_TRAP)

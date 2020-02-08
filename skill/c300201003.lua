@@ -13,13 +13,19 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	
 	if Duel.GetFlagEffect(tp,id)==0 then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_DELAY)
+		e1:SetCode(EVENT_PREDRAW)
+		e1:SetCondition(s.searchcon)
+		e1:SetTarget(s.searchtg)
+		e1:SetOperation(s.searchop)
+		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		e2:SetProperty(EFFECT_FLAG_DELAY)
-		e2:SetCode(EVENT_PREDRAW)
-		e2:SetCondition(s.searchcon)
-		e2:SetTarget(s.searchtg)
-		e2:SetOperation(s.searchop)
+		e2:SetCode(EVENT_PHASE+PHASE_END)
+		e2:SetOperation(s.loseop)
 		Duel.RegisterEffect(e2,tp)
 	end
 	--1 flag = 1 counter
@@ -59,9 +65,15 @@ function s.searchop(e,tp,eg,ep,ev,re,r,rp)
 	if #g~=0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
+		Duel.RegisterFlagEffect(tp,id+1,0,0,0)
 	end
 end
-
+function s.loseop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFlagEffect(tp,id+1)>0 then
+		local WIN_REASON_FINAL_DRAW=0x22
+		Duel.Win(tp,WIN_REASON_FINAL_DRAW)
+	end
+end
 --draw overwrite, credit to Edo and AlphaKretin
 local ddr=Duel.Draw
 Duel.Draw = function(...)
@@ -71,6 +83,7 @@ Duel.Draw = function(...)
   if (Duel.GetFlagEffect(tp,id)>2 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) ) then
     local g=Duel.SelectMatchingCard(tp,LOCATION_DECK,0,tp,count,count)
     Duel.SendToHand(g,tp,REASON_EFFECT)
+	Duel.RegisterFlagEffect(tp,id+1,0,0,0)
   else
     ddr(...)
   end

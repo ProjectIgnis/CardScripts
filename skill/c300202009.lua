@@ -2,15 +2,18 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)	
-	
-	
 end
 
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
-	if Duel.GetFlagEffect(ep,id)==0 then return end
+	if Duel.GetFlagEffect(ep,id)>0 and Duel.GetFlagEffect(ep,id+1)>0 then return end
+	
+	local b1=(Duel.GetFlagEffect(ep,id)==0 and Duel.IsExistingMatchingCard(s.Amafilter,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDraw(tp,1))
+    local b2=(Duel.GetFlagEffect(ep,id+1)==0 and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x4) and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x64) and Duel.IsPlayerCanDraw(tp,2))
+    local b3= b1 and b2 and Duel.IsPlayerCanDraw(tp,3)
+	
 	--condition
-	return aux.CanActivateSkill(tp) 
+	return aux.CanActivateSkill(tp) and (b1 or b2 or b3) 
 	
 end
 function s.Amafilter(c)
@@ -23,12 +26,14 @@ end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
 	Duel.Hint(HINT_CARD,0,id)
-	--opt register
-	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,0)
-	local b1=(Duel.IsExistingMatchingCard(s.Amafilter,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDraw(tp,1))
-    local b2=(Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x4) and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x64) and Duel.IsPlayerCanDraw(tp,2))
-    local p=0
-    if b1 and b2 then
+	local b1=(Duel.GetFlagEffect(ep,id)==0 and Duel.IsExistingMatchingCard(s.Amafilter,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDraw(tp,1))
+    local b2=(Duel.GetFlagEffect(ep,id+1)==0 and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x4) and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x64) and Duel.IsPlayerCanDraw(tp,2))
+    local b3= b1 and b2 and Duel.IsPlayerCanDraw(tp,3)
+	local p=0
+	Debug.Message(b1)
+	Debug.Message(b2)
+	Debug.Message(b3)
+    if b3 then
         p=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
     elseif b1 then
         p=Duel.SelectOption(tp,aux.Stringid(id,1))
@@ -37,19 +42,25 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
     end
 	if p==0 then
 		local g1=Duel.SelectMatchingCard(tp,s.Amafilter,tp,LOCATION_HAND,0,1,1,nil)
-		local g2=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,g1:GetFirst())
+		local g2=Duel.SelectMatchingCard(tp,s.Hapfilter,tp,LOCATION_HAND,0,1,1,g1:GetFirst())
 		g1:Merge(g2)
 		Duel.ConfirmCards(1-tp,g1)
 		Duel.Draw(tp,1,REASON_EFFECT)
+		-- opd register
+		Duel.RegisterFlagEffect(ep,id,0,0,0)
 	elseif p==1 then
 		Duel.Draw(tp,2,REASON_EFFECT)
+		-- opd register
+		Duel.RegisterFlagEffect(ep,id+1,0,0,0)
 	else
 		local g1=Duel.SelectMatchingCard(tp,s.Amafilter,tp,LOCATION_HAND,0,1,1,nil)
-		local g2=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,g1:GetFirst())
+		local g2=Duel.SelectMatchingCard(tp,s.Hapfilter,tp,LOCATION_HAND,0,1,1,g1:GetFirst())
 		g1:Merge(g2)
 		Duel.ConfirmCards(1-tp,g1)
 		Duel.Draw(tp,1,REASON_EFFECT)
 		Duel.Draw(tp,2,REASON_EFFECT)
+		-- opd register
+		Duel.RegisterFlagEffect(ep,id,0,0,0)
+		Duel.RegisterFlagEffect(ep,id+1,0,0,0)
 	end
-	
 end

@@ -23,9 +23,12 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(s.atkfilter)
 		e1:SetValue(s.atkvalue)
 		Duel.RegisterEffect(e1,tp)
-		local e2=e1:Clone()
-		e1:SetCode(EFFECT_UPDATE_DEFENSE)
-		e1:SetValue(s.defvalue)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_UPDATE_DEFENSE)
+		e2:SetTargetRange(LOCATION_MZONE,0)
+		e2:SetTarget(s.atkfilter)
+		e2:SetValue(s.defvalue)
 		Duel.RegisterEffect(e2,tp)
 		--double damage
 		local e3=Effect.CreateEffect(c)
@@ -46,8 +49,8 @@ end
 function s.atkvalue(e,c)
 	return Duel.GetFlagEffect(tp,id)*100
 end
-function s.atkvalue(e,c)
-	return Duel.GetFlagEffect(tp,id)*(-100)
+function s.defvalue(e,c)
+	return Duel.GetFlagEffect(tp,id)*-100
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

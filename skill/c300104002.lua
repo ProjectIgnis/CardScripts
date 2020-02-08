@@ -10,26 +10,27 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--"cost" check
 	if not (Duel.IsExistingMatchingCard(s.flipconfilter,tp,LOCATION_ONFIELD,0,1,nil)) then return false end
 	--condition
-	return aux.CanActivateSkill(tp)
+	return aux.CanActivateSkill(tp) and Duel.GetFlagEffect(ep,id)==0
+end
+function s.ffilter(c,tp)
+	return c:IsCode(CARD_UMI) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
 	Duel.Hint(HINT_CARD,0,id)
 	local c=e:GetHandler()
-	--Umi activation
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.ffilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,tp)
-	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND,0,1,nil,76634149) and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.ffilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,tp)
+	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_ONFIELD,0,1,nil,76634149) and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
 		aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 	end
 	--trap immune
-	local e1=Effect.CreateEffect(c)
+	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.etarget)
-	e1:SetCondition(s.econ)
 	e1:SetValue(s.efilter)
 	Duel.RegisterEffect(e1,tp)
 	--draw+reset
@@ -41,21 +42,14 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCondition(s.leavecon)
 	e2:SetOperation(s.leaveop)
 	Duel.RegisterEffect(e2,tp)
+	Duel.RegisterFlagEffect(ep,id,0,0,0)
 end
-function s.ffilter(c,tp)
-	return c:IsCode(CARD_UMI) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true)
-end
-function s.etarget(e,te)
+function s.efilter(e,te)
 	return te:IsActiveType(TYPE_TRAP)
 end
-function s.econ(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.flipconfilter,tp,LOCATION_ONFIELD,0,1,nil)
-end
-function s.efilter(e,c)
+function s.etarget(e,c)
 	return c:IsAttribute(ATTRIBUTE_WATER) 
 end
-
-
 function s.cfilter(c,tp,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsCode(76634149) and c:GetPreviousControler()==tp 
 end
@@ -65,6 +59,6 @@ end
 function s.leaveop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(2<<32))
 	Duel.Draw(tp,2,REASON_EFFECT)
-	e:GetLabelObject():Reset()
 	e:Reset()
+	Duel.ResetFlagEffect(tp,id)
 end

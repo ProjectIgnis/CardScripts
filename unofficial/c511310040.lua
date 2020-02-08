@@ -461,6 +461,7 @@ table.insert(s.challenges, s.discardMulligan)
 
 --22: Everyone draw the bottom card of their Deck.
 function s.drawBottom(e, tp)
+	Duel.DisableShuffleCheck()
     local tc = Duel.GetFieldGroup(tp, LOCATION_DECK, 0):GetFirst() --first card in deck is bottom
     if tc then
         Duel.SendtoHand(tc, nil, REASON_RULE + REASON_DRAW)

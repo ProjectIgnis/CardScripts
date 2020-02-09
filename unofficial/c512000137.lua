@@ -20,7 +20,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	s.announce_filter={ac,OPCODE_ISCODE,OPCODE_NOT}
 	while (#codes<5 and Duel.SelectYesNo(tp,aux.Stringid(1040,2))) do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
-		local ac=Duel.AnnounceCardFilter(tp,table.unpack(s.announce_filter))
+		local ac=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
 		table.merge(s.announce_filter,{ac,OPCODE_ISCODE,OPCODE_NOT,OPCODE_AND})
 		table.insert(codes,ac)
 	end

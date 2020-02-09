@@ -13,8 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)	
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	--immune
-	Debug.Message("test")
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)

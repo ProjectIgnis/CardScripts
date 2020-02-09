@@ -42,7 +42,7 @@ function Fusion.AddProcMix(c,sub,insf,...)
 	local mat={}
 	for i=1,#val do
 		if type(val[i])=='function' then
-			fun[i]=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return (val[i](c,fc,contact,tp,sub,mg,sg,contact) or (sub2 and c:IsHasEffect(511002961))) and not c:IsHasEffect(6205579) end
+			fun[i]=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return (val[i](c,fc,sumtype,tp,sub,mg,sg,contact) or (sub2 and c:IsHasEffect(511002961))) and not c:IsHasEffect(6205579) end
 		elseif type(val[i])=='table' then
 			fun[i]=Fusion.ParseMaterialTable(val[i],mat)
 		else

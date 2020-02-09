@@ -12,7 +12,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--ask if you want to activate the skill or not
-	if not Duel.SelectYesNo(tp,aux.Stringid(id,2)) then return end 
+	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end 
 	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
 	Duel.Hint(HINT_CARD,0,id)
 	--opd register

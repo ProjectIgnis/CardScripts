@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetValue(s.attrval)
 	e1:SetOperation(s.attrcon)
 	c:RegisterEffect(e1)
-	s.atteff=e1
 	--fusion summon
 	local params = {aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),nil,s.fextra,nil,Fusion.ForcedHandler}
 	local e2=Effect.CreateEffect(c)
@@ -30,15 +29,12 @@ function s.attrtg(e,c)
 	return c:GetCounter(COUNTER_PREDATOR)>0
 end
 function s.attrval(e,c,rp)
-	rp=s.atteff:GetLabel()
-	s.atteff:SetLabel(nil)
 	if rp==e:GetHandlerPlayer() then
 		return ATTRIBUTE_DARK
 	else return c:GetAttribute() end
 end
 function s.attrcon(scard,sumtype,tp)
-	s.atteff:SetLabel(tp)
-	return sumtype==SUMMON_TYPE_FUSION
+	return (sumtype&MATERIAL_FUSION)~=0
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetCounter(COUNTER_PREDATOR)>0

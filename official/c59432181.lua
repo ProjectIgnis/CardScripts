@@ -47,5 +47,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chngcon(scard,sumtype,tp)
-	return sumtype==SUMMON_TYPE_FUSION
+	return (sumtype&MATERIAL_FUSION)~=0
 end

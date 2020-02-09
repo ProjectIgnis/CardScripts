@@ -1,6 +1,5 @@
 --Name Erasure
---  By Shad3
---fixed by MLD
+--original script by Shad3, fixes by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Effect
+	--declare
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_HANDES+CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -26,11 +25,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local announce_filter={}
 	for i=1,ct do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
-		if #s.codes>0 then
-			code=Duel.AnnounceCardFilter(tp,table.unpack(announce_filter))
-		else
-			code=Duel.AnnounceCard(tp)
-		end
+		code=Duel.AnnounceCard(tp,table.unpack(announce_filter))
 		table.insert(s.codes,code)
 		table.insert(announce_filter,code)
 		table.insert(announce_filter,OPCODE_ISCODE)

@@ -3,7 +3,6 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)	
 end
-
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
 	if Duel.GetFlagEffect(ep,id)>0 and Duel.GetFlagEffect(ep,id+1)>0 then return end
@@ -34,11 +33,11 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Debug.Message(b2)
 	Debug.Message(b3)
     if b3 then
-        p=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
+        p=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
     elseif b1 then
-        p=Duel.SelectOption(tp,aux.Stringid(id,1))
+        p=Duel.SelectOption(tp,aux.Stringid(id,0))
     else
-        p=Duel.SelectOption(tp,aux.Stringid(id,2))+1
+        p=Duel.SelectOption(tp,aux.Stringid(id,1))+1
     end
 	if p==0 then
 		local g1=Duel.SelectMatchingCard(tp,s.Amafilter,tp,LOCATION_HAND,0,1,1,nil)
@@ -63,4 +62,5 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterFlagEffect(ep,id,0,0,0)
 		Duel.RegisterFlagEffect(ep,id+1,0,0,0)
 	end
+	
 end

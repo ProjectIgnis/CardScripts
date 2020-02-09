@@ -14,13 +14,27 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_DECK,0,1,nil) end
-	--not c:IsType(TYPE_EXTRA)
-	s.announce_filter={TYPE_EXTRA,OPCODE_ISTYPE,OPCODE_NOT}
-	local ac=Duel.AnnounceCardFilter(tp,table.unpack(s.announce_filter))
-	Duel.SetTargetParam(ac)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,ANNOUNCE_CARD_FILTER)
+    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_DECK,0,1,nil) end
+    local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_DECK,0,nil)
+    local ids={}
+    for tc in aux.Next(g) do
+        ids[tc:GetCode()]=true
+    end
+    s.announce_filter={}
+    for code,i in pairs(ids) do
+        if #s.announce_filter==0 then
+            table.insert(s.announce_filter,code)
+            table.insert(s.announce_filter,OPCODE_ISCODE)
+        else
+            table.insert(s.announce_filter,code)
+            table.insert(s.announce_filter,OPCODE_ISCODE)
+            table.insert(s.announce_filter,OPCODE_OR)
+        end
+    end
+    local ac=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
+    Duel.SetTargetParam(ac)
+    Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK)
+    Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,ANNOUNCE_CARD_FILTER)
 end
 function s.rmfilter(c,ac)
 	return c:IsCode(ac) and c:IsAbleToRemove()

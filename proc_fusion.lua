@@ -92,9 +92,11 @@ function Fusion.ConditionMix(insf,sub,...)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
+				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
+				if notfusion then
 					sumtype=0
+				elseif contact then
+					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
 				local sub=not listedmats and (sub or notfusion) and not contact
@@ -121,9 +123,11 @@ function Fusion.OperationMix(insf,sub,...)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
+				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
+				if notfusion then
 					sumtype=0
+				elseif contact then
+					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
 				local sub=not listedmats and (sub or notfusion) and not contact
@@ -299,9 +303,11 @@ function Fusion.ConditionMixRep(insf,sub,fun1,minc,maxc,...)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
+				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
+				if notfusion then
 					sumtype=0
+				elseif contact then
+					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
 				mustg=Auxiliary.GetMustBeMaterialGroup(tp,eg,tp,c,mg,REASON_FUSION)
@@ -328,9 +334,11 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
+				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
+				if notfusion then
 					sumtype=0
+				elseif contact then
+					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
 				local sub=not listedmats and (sub or notfusion) and not contact
@@ -572,9 +580,11 @@ function Fusion.ConditionMixRepUnfix(insf,sub,minc,maxc,...)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
+				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
+				if notfusion then
 					sumtype=0
+				elseif contact then
+					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
 				local sub=not listedmats and (sub or notfusion) and not contact
@@ -600,9 +610,11 @@ function Fusion.OperationMixRepUnfix(insf,sub,minc,maxc,...)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
+				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
+				if notfusion then
 					sumtype=0
+				elseif contact then
+					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
 				local sub=not listedmats and (sub or notfusion) and not contact

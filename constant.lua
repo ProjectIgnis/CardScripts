@@ -909,3 +909,8 @@ FUSPROC_LISTEDMATS = 0x400
 --Flags for the type of ritual sumon
 RITPROC_EQUAL      = 0x1
 RITPROC_GREATER    = 0x2
+--Material types constant
+MATERIAL_FUSION    = 0x1<<32
+MATERIAL_SYNCHRO   = 0x2<<32
+MATERIAL_XYZ       = 0x4<<32
+MATERIAL_LINK      = 0x8<<32

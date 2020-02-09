@@ -69,7 +69,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 			end
 	end
 	elseif p==1 then
-		local tc=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+		local tc=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
 		if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)~=0 
 		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
 			if tc:IsLocation(LOCATION_DECK) then Duel.ShuffleDeck(tc:GetControler()) end
@@ -89,7 +89,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 		
-		local tc=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+		local tc=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
 		if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)~=0 
 		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
 			if tc:IsLocation(LOCATION_DECK) then Duel.ShuffleDeck(tc:GetControler()) end

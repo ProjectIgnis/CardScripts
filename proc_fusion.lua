@@ -9,7 +9,7 @@ end
 function Fusion.ParseMaterialTable(tab,mat)
 	local named_mats={}
 	local tmp_extramat_func=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return (sub2 and c:IsHasEffect(511002961)) end
-	local name_func=function(tab) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,contact,fc:GetControler(),table.unpack(tab)) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end end
+	local name_func=function(tab) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,sumtype,fc:GetControler(),table.unpack(tab)) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end end
 	local func=aux.FALSE
 	for _,fmat in ipairs(tab) do
 		if type(fmat)=="function" then
@@ -47,7 +47,7 @@ function Fusion.AddProcMix(c,sub,insf,...)
 			fun[i]=Fusion.ParseMaterialTable(val[i],mat)
 		else
 			local addmat=true
-			fun[i]=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,contact,fc:GetControler(),val[i]) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end
+			fun[i]=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,sumtype,fc:GetControler(),val[i]) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end
 			for index, value in ipairs(mat) do
 				if value==val[i] then
 					addmat=false

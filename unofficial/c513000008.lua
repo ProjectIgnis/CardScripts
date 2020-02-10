@@ -14,7 +14,7 @@ end
 s.listed_series={0x48,0x1048,0x1073}
 s.listed_names={511000296}
 function s.filter1(c,e,tp)
-	local m = _G["c"..c:GetCode()]
+	local m = c:GetMetatable()
 	if not m then return false end
 	local no, rk=tonumber(m.xyz_number), c:GetRank()
 	if not no or no < 101 or no > 107 or not c:IsSetCard(0x48) or rk <= 0 then return false end

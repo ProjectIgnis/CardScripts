@@ -42,7 +42,8 @@ function s.spfilter(c,e,tp,rg,se)
 		local ft=Duel.GetUsableMZoneCount(tp)
 		local mft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local exft=Duel.GetLocationCountFromEx(tp)
-		local ect=_G["c" .. CARD_SUMMON_GATE] and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (_G["c" .. CARD_SUMMON_GATE][tp] - 1)
+		local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
+		local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (gate[tp] - 1)
 		if ect then exft=math.min(exft,ect) end
 		maxc=math.min(maxc,ft)
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=math.min(ft,1) mft=math.min(mft,1) exft=math.min(exft,1) end
@@ -72,7 +73,8 @@ function s.resconse1(fc,mft,mg2,se)
 end
 function s.resconse2(fc,rg,mft)
 	return	function(sg,e,tp,mg)
-				local ect=_G["c" .. CARD_SUMMON_GATE] and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (_G["c" .. CARD_SUMMON_GATE][tp] - 1)
+				local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
+				local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (gate[tp] - 1)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA) 
 				Fusion.CheckExact=#sg
 				local res=Duel.GetLocationCountFromEx(tp,tp,rg)>=exct and (not ect or exct<ect) 
@@ -114,7 +116,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local ft=Duel.GetUsableMZoneCount(tp)
 		local mft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local exft=Duel.GetLocationCountFromEx(tp)
-		local ect=_G["c" .. CARD_SUMMON_GATE] and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (_G["c" .. CARD_SUMMON_GATE][tp] - 1)
+		local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
+		local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (gate[tp] - 1)
 		if ect then exft=math.min(exft,ect) end
 		maxc=math.min(maxc,ft)
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=math.min(ft,1) mft=math.min(mft,1) exft=math.min(exft,1) end
@@ -126,7 +129,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ct<#rsg then return end
 	local mft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local exft=Duel.GetLocationCountFromEx(tp)
-	local ect=_G["c" .. CARD_SUMMON_GATE] and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (_G["c" .. CARD_SUMMON_GATE][tp] - 1)
+	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
+	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (gate[tp] - 1)
 	if ect then exft=math.min(exft,ect) end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then mft=math.min(mft,1) exft=math.min(exft,1) end
 	mg:Sub(rsg)

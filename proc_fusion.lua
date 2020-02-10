@@ -57,8 +57,7 @@ function Fusion.AddProcMix(c,sub,insf,...)
 		end
 	end
 	if c.material_count==nil then
-		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		if #mat>0 then
 			mt.material_count=#mat
 			mt.material=mat
@@ -272,8 +271,7 @@ function Fusion.AddProcMixRep(c,sub,insf,fun1,minc,maxc,...)
 		end
 	end
 	if c.material_count==nil then
-		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		if #mat>0 then
 			mt.material_count=#mat
 			mt.material=mat
@@ -547,8 +545,7 @@ function Fusion.AddProcMixRepUnfix(c,sub,insf,...)
 		maxc=maxc+f[3]
 	end
 	if c.material_count==nil then
-		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		if #mat>0 then
 			mt.material_count=#mat
 			mt.material=mat
@@ -827,8 +824,7 @@ end
 
 
 function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc)
-	local code=c:GetOriginalCode()
-	local mt=_G["c" .. code]
+	local mt=c:GetMetatable()
 	local t={}
 	if mt.contactfus then
 		t=mt.contactfus

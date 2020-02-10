@@ -20,8 +20,7 @@ function Xyz.AddProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk)
 	--mustbemat for Startime Magician
 	if not maxct then maxct=ct end	
 	if c.xyz_filter==nil then
-		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		mt.xyz_filter=function(mc,ignoretoken,xyz,tp) return mc and (not f or f(mc,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or mc:IsXyzLevel(c,lv)) and (not mc:IsType(TYPE_TOKEN) or ignoretoken) end
 		mt.xyz_parameters={mt.xyz_filter,lv,ct,alterf,desc,maxct,op,mustbemat,exchk}
 		mt.minxyzct=ct

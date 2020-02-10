@@ -1,4 +1,5 @@
 --覇王の逆鱗
+--Supreme Rage
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -75,7 +76,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ft1>0 then loc=loc+LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE end
 	if ft2>0 then loc=loc+LOCATION_EXTRA end
 	if loc==0 then return end
-	local ect=_G["c" .. CARD_SUMMON_GATE] and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and _G["c" .. CARD_SUMMON_GATE][tp]
+	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
+	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if ect then ft2=math.min(ft2,ect) end
 	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,loc,0,nil,e,tp)
 	if #sg==0 then return end

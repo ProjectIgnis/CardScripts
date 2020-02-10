@@ -38,14 +38,14 @@ function s.spfilter(c,e,tp)
 		and no and no>=101 and no<=107 and c:IsSetCard(0x1048) 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ect=cCARD_SUMMON_GATE and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and cCARD_SUMMON_GATE[tp]
+	local ect=c29724053 and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and c29724053[tp]
 	if chk==0 then return Duel.GetLocationCountFromEx(tp)>2 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,3,nil,e,tp) and (not ect or ect>=3) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCountFromEx(tp)<3 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-	local ect=cCARD_SUMMON_GATE and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and cCARD_SUMMON_GATE[tp]
+	local ect=c29724053 and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and c29724053[tp]
 	if ect~=nil and ect<3 then return end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if #g<3 then return end

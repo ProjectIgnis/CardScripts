@@ -25,6 +25,10 @@ function Card.GetMetatable(c)
 	return mt
 end
 
+function Duel.GetMetatable(code)
+	return _G["c" .. code]
+end
+
 bit={}
 function bit.band(a,b)
 	return a&b

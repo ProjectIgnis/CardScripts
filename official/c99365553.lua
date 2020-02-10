@@ -1,4 +1,5 @@
 --ライトパルサー・ドラゴン
+--Lightpulsar Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -8,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon1)
+	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
@@ -16,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.spcon2)
+	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 	--spsummon
@@ -49,10 +52,23 @@ function s.spcon1(e,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	return ft>-2 and #rg1>0 and #rg2>0 and aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0)
 end
-function s.spop1(e,tp,eg,ep,ev,re,r,rp,c)
+function s.sptg1(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
+	local g=nil
 	local rg=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
-	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE)
+	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
+end
+function s.spop1(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
 end
 function s.spfilter2(c,att)
 	return c:IsAttribute(att) and c:IsAbleToGraveAsCost()
@@ -69,13 +85,26 @@ function s.spcon2(e,c)
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND,0,1,nil,ATTRIBUTE_LIGHT)
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND,0,1,nil,ATTRIBUTE_DARK)
 end
+function s.rescon2(sg,e,tp,mg)
+	return sg:IsExists(s.atchk1,1,nil,sg)
+end
+function s.sptg2(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
+	local g=nil
+	local rg=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_HAND,0,nil,ATTRIBUTE_LIGHT+ATTRIBUTE_DARK)
+	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon2,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
+end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g1=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_HAND,0,1,1,nil,ATTRIBUTE_LIGHT)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_HAND,0,1,1,nil,ATTRIBUTE_DARK)
-	g1:Merge(g2)
-	Duel.SendtoGrave(g1,REASON_COST)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.SendtoGrave(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.spcon3(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

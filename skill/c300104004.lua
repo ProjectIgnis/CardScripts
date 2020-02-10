@@ -5,9 +5,6 @@ function s.initial_effect(c)
 end
 
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	--opd check
-	-- if Duel.GetFlagEffect(ep,id)>0 then return end
-	
 	local b1=(Duel.GetFlagEffect(ep,id)==0 and s.sumtg(e,tp,eg,ep,ev,re,r,rp,0))
     local b2=(Duel.GetFlagEffect(ep,id+1)==0 and s.tdtg(e,tp,eg,ep,ev,re,r,rp,0))
     
@@ -57,6 +54,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
     end
 	
 	if p==0 then
+		Duel.RegisterFlagEffect(ep,id,0,0,0)
 		local loc=LOCATION_MZONE
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then loc=0 end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
@@ -69,6 +67,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 			end
 	end
 	elseif p==1 then
+		Duel.RegisterFlagEffect(ep,id+1,0,0,0)
 		local tc=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
 		if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)~=0 
 		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
@@ -77,6 +76,8 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
 	else
+		Duel.RegisterFlagEffect(ep,id,0,0,0)
+		Duel.RegisterFlagEffect(ep,id+1,0,0,0)
 		local loc=LOCATION_MZONE
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then loc=0 end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)

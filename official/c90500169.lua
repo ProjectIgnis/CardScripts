@@ -20,12 +20,12 @@ function s.filter(c,e,tp,ft)
 	if op==cp and locct<=-1 then return false end
 	if op~=cp and locct<=0 then return false end
 	local class=c:GetMetatable()
-	return class and class.lvdncount~=nil and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,class,e,tp,op)
+	return class and class.lvdn~=nil and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,class,e,tp,op)
 end
 function s.spfilter(c,class,e,tp,op)
 	if not c:IsControler(op) then return false end
 	local code=c:GetCode()
-	for i=1,class.lvdncount do
+	for i=1,#class.lvdn do
 		if code==class.lvdn[i] then return c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP,op) end
 	end
 	return false

@@ -1,4 +1,5 @@
 --暗黒のミミック LV3
+--Dark Mimic LV3
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.lvdncount=1
+s.listed_names={74713516}
 s.lvdn={74713516}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1 then e:SetLabel(2)

@@ -1196,11 +1196,6 @@ function Auxiliary.RegisterClientHint(card,property,tp,player1,player2,str,reset
 		Duel.RegisterEffect(eff,tp)
 	end
 end
---for zone checking (zone is the zone, tp is referencial player)
-function Auxiliary.IsZone(c,zone,tp)
-	local rzone = c:IsControler(tp) and (1 <<c:GetSequence()) or (1 << (16+c:GetSequence()))
-	return (rzone & zone) > 0
-end
 function Auxiliary.FieldSummonProcTg(fun1,fun2)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,c,...)
 		if not c then

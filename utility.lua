@@ -19,8 +19,9 @@ function Duel.LoadCardScript(code)
 	end
 end
 
-function Card.GetMetatable(c)
+function Card.GetMetatable(c,currentCode)
 	local code=c:GetOriginalCode()
+	if currentCode then code=c:GetCode() end
 	local mt=_G["c" .. code]
 	return mt
 end

@@ -30,7 +30,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 end
 function s.atfilter(c)
-	local class=c:GetMetatable()
+	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
 	return no and no>=101 and no<=107 and c:IsFaceup() and c:IsSetCard(0x1048)

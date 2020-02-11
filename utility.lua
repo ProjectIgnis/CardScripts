@@ -211,11 +211,9 @@ function Auxiliary.GetMustBeMaterialGroup(tp,eg,sump,sc,g,r)
 	local eff={Duel.GetPlayerEffect(tp,EFFECT_MUST_BE_MATERIAL)}
 	local sg=Group.CreateGroup()
 	for _,te in ipairs(eff) do
-		if te:GetCode()==EFFECT_MUST_BE_MATERIAL then
-			local val=type(te:GetValue())=='function' and te:GetValue()(te,eg,sump,sc,g) or te:GetValue()
-			if val&r>0 then
-				sg:AddCard(te:GetHandler())
-			end
+		local val=type(te:GetValue())=='function' and te:GetValue()(te,eg,sump,sc,g) or te:GetValue()
+		if val&r>0 then
+			sg:AddCard(te:GetHandler())
 		end
 	end
 	return sg

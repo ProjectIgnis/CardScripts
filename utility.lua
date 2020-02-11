@@ -75,29 +75,136 @@ function userdatatype(o)
 	end
 end
 
-function Card.CheckAdjacent(c)
-	local p=c:GetControler()
-	local seq=c:GetSequence()
-	if seq>4 then return false end
-	return (seq>0 and Duel.CheckLocation(p,LOCATION_MZONE,seq-1))
-		or (seq<4 and Duel.CheckLocation(p,LOCATION_MZONE,seq+1))
-end
-function Card.MoveAdjacent(c)
-	local tp=c:GetControler()
-	local seq=c:GetSequence()
-	if seq>4 then return end
-	local flag=0
-	if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
-	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
-	if flag==0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	Duel.MoveSequence(c,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag),2))
+function Auxiliary.Stringid(code,id)
+	return (id&0xfffff)|code<<20
 end
 
 function Group.ForEach(g,f,...)
 	for tc in aux.Next(g) do
 		f(tc,...)
 	end
+end
+
+function Auxiliary.Next(g)
+	local first=true
+	return	function()
+				if first then first=false return g:GetFirst()
+				else return g:GetNext() end
+			end
+end
+
+function Auxiliary.NULL()
+end
+
+function Auxiliary.TRUE()
+	return true
+end
+
+function Auxiliary.FALSE()
+	return false
+end
+
+function Auxiliary.AND(...)
+	local funs={...}
+	return	function(...)
+				for _,f in ipairs(funs) do
+					if not f(...) then return false end
+				end
+				return true
+			end
+end
+
+function Auxiliary.OR(...)
+	local funs={...}
+	return	function(...)
+				for _,f in ipairs(funs) do
+					if f(...) then return true end
+				end
+				return false
+			end
+end
+
+function Auxiliary.tableAND(...)
+	local funs={...}
+	return	function(...)
+				local ret={}
+				for _,f in ipairs(funs) do
+					local res={f(...)}
+					for _,val in pairs(res) do
+						ret[_]=val and (ret[_]==nil or ret[_])
+					end
+				end
+				return ret
+			end
+end
+
+function Auxiliary.tableOR(...)
+	local funs={...}
+	return	function(...)
+				local ret={}
+				for _,f in ipairs(funs) do
+					local res={f(...)}
+					for _,val in pairs(res) do
+						ret[_]=val or not (ret[_]==nil or not ret[_])
+					end
+				end
+				return ret
+			end
+end
+
+function Auxiliary.NOT(f)
+	return	function(...)
+				return not f(...)
+			end
+end
+
+function Auxiliary.TargetEqualFunction(f,value,...)
+	local params={...}
+	return	function(effect,target)
+				return f(target,table.unpack(params))==value
+			end
+end
+
+function Auxiliary.TargetBoolFunction(f,...)
+	local params={...}
+	return	function(effect,target)
+				return f(target,table.unpack(params))
+			end
+end
+
+function Auxiliary.FilterEqualFunction(f,value,...)
+	local params={...}
+	return	function(target)
+				return f(target,table.unpack(params))==value
+			end
+end
+
+--used for Material Types Filter Bool (works for IsRace, IsAttribute, IsType)
+function Auxiliary.FilterSummonCode(...)
+	local params={...}
+	return	function(c,scard,sumtype,tp)
+				return c:IsSummonCode(scard,sumtype,tp,table.unpack(params))
+			end
+end
+
+function Auxiliary.FilterBoolFunctionEx(f,value)
+	return	function(target,scard,sumtype,tp)
+				return f(target,value,scard,sumtype,tp)
+			end
+end
+
+function Auxiliary.FilterBoolFunctionEx2(f,...)
+	local params={...}
+	return	function(target,scard,sumtype,tp)
+				return f(target,scard,sumtype,tp,table.unpack(params))
+			end
+end
+
+function Auxiliary.FilterBoolFunction(f,...)
+	local params={...}
+	return	function(target)
+				return f(target,table.unpack(params))
+			end
 end
 
 function Auxiliary.ParamsFromTable(tab,key,...)
@@ -206,361 +313,6 @@ function Card.RegisterEffect(c,e,forced,...)
 	return reg_e
 end
 
-function Card.IsColumn(c,seq,tp,loc)
-	if not c:IsOnField() then return false end
-	local cseq=c:GetSequence()
-	local seq=seq
-	local loc=loc and loc or c:GetLocation()
-	local tp=tp and tp or c:GetControler()
-	if c:IsLocation(LOCATION_MZONE) then
-		if cseq==5 then cseq=1 end
-		if cseq==6 then cseq=3 end
-	else
-		if cseq==6 then cseq=5 end
-	end
-	if loc==LOCATION_MZONE then
-		if seq==5 then seq=1 end
-		if seq==6 then seq=3 end
-	else
-		if cseq==6 then cseq=5 end
-	end
-	if c:IsControler(tp) then
-		return cseq==seq
-	else
-		return cseq==4-seq
-	end
-end
-
-function Card.UpdateAttack(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local atk=c:GetAttack()
-	if atk>=-amt then --If amt is positive, it would become negative and always be lower than or equal to atk, if amt is negative, it would become postive and if it is too much it would be higher than atk
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		if c==rc then
-			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		end
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetAttack()-atk
-	end
-	return 0
-end
-
-function Card.UpdateDefense(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local def=c:GetDefense()
-	if def and def>=-amt then --See Card.UpdateAttack
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_DEFENSE)
-		if c==rc then
-			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		end
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetDefense()-def
-	end
-	return 0
-end
-
-function Card.UpdateLevel(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local lv=c:GetLevel()
-	if c:IsLevelBelow(2147483647) then
-		if lv+amt<=0 then amt=-(lv-1) end --Unlike ATK, if amt is too much should reduce as much as possible
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetLevel()-lv
-	end
-	return 0
-end
-
-function Card.UpdateRank(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local rk=c:GetRank()
-	if c:IsRankBelow(2147483647) then
-		if rk+amt<=0 then amt=-(rk-1) end --See Card.UpdateLevel
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_RANK)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetRank()-rk
-	end
-	return 0
-end
-
-function Card.UpdateLink(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local lk=c:GetLink()
-	if c:IsLinkBelow(2147483647) then
-		if lk+amt<=0 then amt=-(lk-1) end --See Card.UpdateLevel
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LINK)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		return c:GetLink()-lk
-	end
-	return 0
-end
-
-function Card.UpdateScale(c,amt,reset,rc)
-	rc=rc and rc or c
-	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
-	reset=reset and reset or RESET_EVENT+r
-	local scl=c:GetLeftScale()
-	if scl then
-		if scl+amt<=0 then amt = -(scl-1) end --See Card.UpdateLevel
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LSCALE)
-		e1:SetValue(amt)
-		e1:SetReset(reset)
-		c:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_UPDATE_RSCALE)
-		c:RegisterEffect(e2)
-		return c:GetLeftScale()-scl
-	end
-	return 0
-end
-
-function Auxiliary.Stringid(code,id)
-	return (id&0xfffff)|code<<20
-end
-function Auxiliary.Next(g)
-	local first=true
-	return	function()
-				if first then first=false return g:GetFirst()
-				else return g:GetNext() end
-			end
-end
-function Auxiliary.NULL()
-end
-function Auxiliary.TRUE()
-	return true
-end
-function Auxiliary.FALSE()
-	return false
-end
-function Auxiliary.AND(...)
-	local funs={...}
-	return	function(...)
-				for _,f in ipairs(funs) do
-					if not f(...) then return false end
-				end
-				return true
-			end
-end
-function Auxiliary.OR(...)
-	local funs={...}
-	return	function(...)
-				for _,f in ipairs(funs) do
-					if f(...) then return true end
-				end
-				return false
-			end
-end
-function Auxiliary.tableAND(...)
-	local funs={...}
-	return	function(...)
-				local ret={}
-				for _,f in ipairs(funs) do
-					local res={f(...)}
-					for _,val in pairs(res) do
-						ret[_]=val and (ret[_]==nil or ret[_])
-					end
-				end
-				return ret
-			end
-end
-function Auxiliary.tableOR(...)
-	local funs={...}
-	return	function(...)
-				local ret={}
-				for _,f in ipairs(funs) do
-					local res={f(...)}
-					for _,val in pairs(res) do
-						ret[_]=val or not (ret[_]==nil or not ret[_])
-					end
-				end
-				return ret
-			end
-end
-function Auxiliary.NOT(f)
-	return	function(...)
-				return not f(...)
-			end
-end
-function Auxiliary.BeginPuzzle(effect)
-	local e1=Effect.GlobalEffect()
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_TURN_END)
-	e1:SetCountLimit(1)
-	e1:SetOperation(Auxiliary.PuzzleOp)
-	Duel.RegisterEffect(e1,0)
-	local e2=Effect.GlobalEffect()
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCode(EFFECT_SKIP_DP)
-	e2:SetTargetRange(1,0)
-	Duel.RegisterEffect(e2,0)
-	local e3=Effect.GlobalEffect()
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetCode(EFFECT_SKIP_SP)
-	e3:SetTargetRange(1,0)
-	Duel.RegisterEffect(e3,0)
-end
-function Auxiliary.PuzzleOp(e,tp)
-	Duel.SetLP(0,0)
-end
-function Auxiliary.IsGeminiState(effect)
-	local c=effect:GetHandler()
-	return not c:IsDisabled() and c:IsGeminiState()
-end
-function Auxiliary.IsNotGeminiState(effect)
-	local c=effect:GetHandler()
-	return c:IsDisabled() or not c:IsGeminiState()
-end
-function Auxiliary.GeminiNormalCondition(effect)
-	local c=effect:GetHandler()
-	return c:IsFaceup() and not c:IsGeminiState()
-end
-function Auxiliary.EnableGeminiAttribute(c)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_GEMINI_SUMMONABLE)
-	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_ADD_TYPE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e2:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
-	e2:SetCondition(aux.GeminiNormalCondition)
-	e2:SetValue(TYPE_NORMAL)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_REMOVE_TYPE)
-	e3:SetValue(TYPE_EFFECT)
-	c:RegisterEffect(e3)
-end
---register effect of return to hand for Spirit monsters
-function Auxiliary.EnableSpiritReturn(c,event1,...)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(event1)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetOperation(Auxiliary.SpiritReturnReg)
-	c:RegisterEffect(e1)
-	for i,event in ipairs{...} do
-		local e2=e1:Clone()
-		e2:SetCode(event)
-		c:RegisterEffect(e2)
-	end
-end
-function Auxiliary.SpiritReturnReg(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e1:SetDescription(1104)
-	e1:SetCategory(CATEGORY_TOHAND)
-	e1:SetCode(EVENT_PHASE+PHASE_END)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
-	if e:GetCode() == EVENT_FLIP_SUMMON_SUCCESS or e:GetCode() == EVENT_FLIP then
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	else
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TEMP_REMOVE-RESET_LEAVE+RESET_PHASE+PHASE_END)
-	end
-	e1:SetCondition(Auxiliary.SpiritReturnCondition)
-	e1:SetTarget(Auxiliary.SpiritReturnTarget)
-	e1:SetOperation(Auxiliary.SpiritReturnOperation)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	c:RegisterEffect(e2)
-end
-function Auxiliary.SpiritReturnCondition(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsHasEffect(EFFECT_SPIRIT_DONOT_RETURN) then return false end
-	if e:IsHasType(EFFECT_TYPE_TRIGGER_F) then
-		return not c:IsHasEffect(EFFECT_SPIRIT_MAYNOT_RETURN)
-	else return c:IsHasEffect(EFFECT_SPIRIT_MAYNOT_RETURN) end
-end
-function Auxiliary.SpiritReturnTarget(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
-end
-function Auxiliary.SpiritReturnOperation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		Duel.SendtoHand(c,nil,REASON_EFFECT)
-	end
-end
-function Auxiliary.TargetEqualFunction(f,value,...)
-	local params={...}
-	return	function(effect,target)
-				return f(target,table.unpack(params))==value
-			end
-end
-function Auxiliary.TargetBoolFunction(f,...)
-	local params={...}
-	return	function(effect,target)
-				return f(target,table.unpack(params))
-			end
-end
-function Auxiliary.FilterEqualFunction(f,value,...)
-	local params={...}
-	return	function(target)
-				return f(target,table.unpack(params))==value
-			end
-end
---used for Material Types Filter Bool (works for IsRace, IsAttribute, IsType)
-function Auxiliary.FilterSummonCode(...)
-	local params={...}
-	return	function(c,scard,sumtype,tp)
-				return c:IsSummonCode(scard,sumtype,tp,table.unpack(params))
-			end
-end
-function Auxiliary.FilterBoolFunctionEx(f,value)
-	return	function(target,scard,sumtype,tp)
-				return f(target,value,scard,sumtype,tp)
-			end
-end
-function Auxiliary.FilterBoolFunctionEx2(f,...)
-	local params={...}
-	return	function(target,scard,sumtype,tp)
-				return f(target,scard,sumtype,tp,table.unpack(params))
-			end
-end
-function Auxiliary.FilterBoolFunction(f,...)
-	local params={...}
-	return	function(target)
-				return f(target,table.unpack(params))
-			end
-end
 Auxiliary.ProcCancellable=false
 function Auxiliary.IsMaterialListCode(c,...)
 	if not c.material then return false end
@@ -710,6 +462,274 @@ function Auxiliary.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
 	return ex and (cp==tp or cp==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE)
+end
+
+function Card.CheckAdjacent(c)
+	local p=c:GetControler()
+	local seq=c:GetSequence()
+	if seq>4 then return false end
+	return (seq>0 and Duel.CheckLocation(p,LOCATION_MZONE,seq-1))
+		or (seq<4 and Duel.CheckLocation(p,LOCATION_MZONE,seq+1))
+end
+
+function Card.MoveAdjacent(c)
+	local tp=c:GetControler()
+	local seq=c:GetSequence()
+	if seq>4 then return end
+	local flag=0
+	if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
+	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
+	if flag==0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+	Duel.MoveSequence(c,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag),2))
+end
+
+
+function Card.IsColumn(c,seq,tp,loc)
+	if not c:IsOnField() then return false end
+	local cseq=c:GetSequence()
+	local seq=seq
+	local loc=loc and loc or c:GetLocation()
+	local tp=tp and tp or c:GetControler()
+	if c:IsLocation(LOCATION_MZONE) then
+		if cseq==5 then cseq=1 end
+		if cseq==6 then cseq=3 end
+	else
+		if cseq==6 then cseq=5 end
+	end
+	if loc==LOCATION_MZONE then
+		if seq==5 then seq=1 end
+		if seq==6 then seq=3 end
+	else
+		if cseq==6 then cseq=5 end
+	end
+	if c:IsControler(tp) then
+		return cseq==seq
+	else
+		return cseq==4-seq
+	end
+end
+
+function Card.UpdateAttack(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local atk=c:GetAttack()
+	if atk>=-amt then --If amt is positive, it would become negative and always be lower than or equal to atk, if amt is negative, it would become postive and if it is too much it would be higher than atk
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		if c==rc then
+			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		end
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetAttack()-atk
+	end
+	return 0
+end
+
+function Card.UpdateDefense(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local def=c:GetDefense()
+	if def and def>=-amt then --See Card.UpdateAttack
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_DEFENSE)
+		if c==rc then
+			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		end
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetDefense()-def
+	end
+	return 0
+end
+
+function Card.UpdateLevel(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local lv=c:GetLevel()
+	if c:IsLevelBelow(2147483647) then
+		if lv+amt<=0 then amt=-(lv-1) end --Unlike ATK, if amt is too much should reduce as much as possible
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_LEVEL)
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetLevel()-lv
+	end
+	return 0
+end
+
+function Card.UpdateRank(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local rk=c:GetRank()
+	if c:IsRankBelow(2147483647) then
+		if rk+amt<=0 then amt=-(rk-1) end --See Card.UpdateLevel
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_RANK)
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetRank()-rk
+	end
+	return 0
+end
+
+function Card.UpdateLink(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local lk=c:GetLink()
+	if c:IsLinkBelow(2147483647) then
+		if lk+amt<=0 then amt=-(lk-1) end --See Card.UpdateLevel
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_LINK)
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		return c:GetLink()-lk
+	end
+	return 0
+end
+
+function Card.UpdateScale(c,amt,reset,rc)
+	rc=rc and rc or c
+	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
+	reset=reset and reset or RESET_EVENT+r
+	local scl=c:GetLeftScale()
+	if scl then
+		if scl+amt<=0 then amt = -(scl-1) end --See Card.UpdateLevel
+		local e1=Effect.CreateEffect(rc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_LSCALE)
+		e1:SetValue(amt)
+		e1:SetReset(reset)
+		c:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_UPDATE_RSCALE)
+		c:RegisterEffect(e2)
+		return c:GetLeftScale()-scl
+	end
+	return 0
+end
+
+function Auxiliary.BeginPuzzle()
+	local e1=Effect.GlobalEffect()
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_TURN_END)
+	e1:SetCountLimit(1)
+	e1:SetOperation(Auxiliary.PuzzleOp)
+	Duel.RegisterEffect(e1,0)
+	local e2=Effect.GlobalEffect()
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCode(EFFECT_SKIP_DP)
+	e2:SetTargetRange(1,0)
+	Duel.RegisterEffect(e2,0)
+	local e3=Effect.GlobalEffect()
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetCode(EFFECT_SKIP_SP)
+	e3:SetTargetRange(1,0)
+	Duel.RegisterEffect(e3,0)
+end
+function Auxiliary.PuzzleOp(e,tp)
+	Duel.SetLP(0,0)
+end
+function Auxiliary.IsGeminiState(effect)
+	local c=effect:GetHandler()
+	return not c:IsDisabled() and c:IsGeminiState()
+end
+function Auxiliary.IsNotGeminiState(effect)
+	local c=effect:GetHandler()
+	return c:IsDisabled() or not c:IsGeminiState()
+end
+function Auxiliary.GeminiNormalCondition(effect)
+	local c=effect:GetHandler()
+	return c:IsFaceup() and not c:IsGeminiState()
+end
+function Auxiliary.EnableGeminiAttribute(c)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_GEMINI_SUMMONABLE)
+	c:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_ADD_TYPE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e2:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e2:SetCondition(aux.GeminiNormalCondition)
+	e2:SetValue(TYPE_NORMAL)
+	c:RegisterEffect(e2)
+	local e3=e2:Clone()
+	e3:SetCode(EFFECT_REMOVE_TYPE)
+	e3:SetValue(TYPE_EFFECT)
+	c:RegisterEffect(e3)
+end
+--register effect of return to hand for Spirit monsters
+function Auxiliary.EnableSpiritReturn(c,event1,...)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(event1)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetOperation(Auxiliary.SpiritReturnReg)
+	c:RegisterEffect(e1)
+	for i,event in ipairs{...} do
+		local e2=e1:Clone()
+		e2:SetCode(event)
+		c:RegisterEffect(e2)
+	end
+end
+function Auxiliary.SpiritReturnReg(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e1:SetDescription(1104)
+	e1:SetCategory(CATEGORY_TOHAND)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
+	if e:GetCode() == EVENT_FLIP_SUMMON_SUCCESS or e:GetCode() == EVENT_FLIP then
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	else
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TEMP_REMOVE-RESET_LEAVE+RESET_PHASE+PHASE_END)
+	end
+	e1:SetCondition(Auxiliary.SpiritReturnCondition)
+	e1:SetTarget(Auxiliary.SpiritReturnTarget)
+	e1:SetOperation(Auxiliary.SpiritReturnOperation)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	c:RegisterEffect(e2)
+end
+function Auxiliary.SpiritReturnCondition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsHasEffect(EFFECT_SPIRIT_DONOT_RETURN) then return false end
+	if e:IsHasType(EFFECT_TYPE_TRIGGER_F) then
+		return not c:IsHasEffect(EFFECT_SPIRIT_MAYNOT_RETURN)
+	else return c:IsHasEffect(EFFECT_SPIRIT_MAYNOT_RETURN) end
+end
+function Auxiliary.SpiritReturnTarget(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
+end
+function Auxiliary.SpiritReturnOperation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		Duel.SendtoHand(c,nil,REASON_EFFECT)
+	end
 end
 --filter for the immune effect of qli monsters
 function Auxiliary.qlifilter(e,te)

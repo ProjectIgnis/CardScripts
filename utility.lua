@@ -67,56 +67,6 @@ function bit.replace(r,v,field,width)
 	return (r&~(m<<f))|((v&m)<< f)
 end
 
-Group.__band = function (o1,o2)
-	if userdatatype(o1)~="Group" then o1,o2=o2,o1 end
-	o1=o1:Clone()
-	o1=o1-(o1-o2)
-	return o1
-end
-
-Group.__add = function (o1,o2)
-	if userdatatype(o1)~="Group" then o1,o2=o2,o1 end
-	o1=o1:Clone()
-	if userdatatype(o2)=="Card" then
-		o1:AddCard(o2)
-	else
-		o1:Merge(o2)
-	end
-	return o1
-end
-
-Group.__sub = function (o1,o2)
-	o1=o1:Clone()
-	if userdatatype(o2)=="Card" then
-		o1:RemoveCard(o2)
-	else
-		o1:Sub(o2)
-	end
-	return o1
-end
-
-Group.__len = function (g)
-	return g:GetCount()
-end
-
-Group.__eq = function (g1,g2)
-	return #g1==#g2
-end
-
-Group.__lt = function (g1,g2)
-	return #g1<#g2
-end
-
-Group.__le = function (g1,g2)
-	return #g1<=#g2
-end
-
---Returns 2 groups, the 1st group is the one with cards that match the function, the second is the one with cards that don't
-Group.Split = function (g,fun,ex,...)
-	local ng=g:Filter(fun,ex,...)
-	return ng,g-ng
-end
-
 function userdatatype(o)
 	if type(o)~="userdata" then return "not userdata"
 	elseif o.GetOriginalCode then return "Card"
@@ -145,10 +95,8 @@ function Card.MoveAdjacent(c)
 end
 
 function Group.ForEach(g,f,...)
-	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		f(tc,...)
-		tc=g:GetNext()
 	end
 end
 
@@ -177,13 +125,11 @@ function Auxiliary.GetExtraMaterials(tp,mustg,sc,summon_type)
 	local eff={Duel.GetPlayerEffect(tp,EFFECT_EXTRA_MATERIAL)}
 	local t={}
 	for _,te in ipairs(eff) do
-		if te:GetCode()==EFFECT_EXTRA_MATERIAL then
-			local eg=te:GetValue()(0,summon_type,te,tp,sc)-mustg
-			eg:KeepAlive()
-			tg=tg+eg
-			local efun=te:GetOperation() and te:GetOperation() or aux.TRUE
-			table.insert(t,{eg,efun,te})
-		end
+		local eg=te:GetValue()(0,summon_type,te,tp,sc)-mustg
+		eg:KeepAlive()
+		tg=tg+eg
+		local efun=te:GetOperation() and te:GetOperation() or aux.TRUE
+		table.insert(t,{eg,efun,te})
 	end
 	return t,tg
 end
@@ -217,10 +163,6 @@ function Auxiliary.GetMustBeMaterialGroup(tp,eg,sump,sc,g,r)
 		end
 	end
 	return sg
-end
-
-function Group.Includes(g1,g2)
-	return #(g1-g2)+#g2==#g1
 end
 
 --for additional registers

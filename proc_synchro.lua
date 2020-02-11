@@ -26,7 +26,7 @@ function Synchro.AddProcedure(c,...)
 	--parameters (f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 	if c.synchro_type==nil then
 		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		mt.synchro_type=1
 		mt.synchro_parameters={...}
 		if type(mt.synchro_parameters[2])=='function' then
@@ -782,8 +782,7 @@ end
 function Synchro.AddMajesticProcedure(c,f1,cbt1,f2,cbt2,f3,cbt3,...)
 	--parameters: function, can be tuner, reqm
 	if c.synchro_type==nil then
-		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		mt.synchro_type=2
 		mt.synchro_parameters={f1,cbt1,f2,cbt2,f3,cbt3,...}
 	end
@@ -1082,8 +1081,7 @@ end
 function Synchro.AddDarkSynchroProcedure(c,f1,f2,plv,nlv,...)
 	--functions, default/dark wave level, reqm
 	if c.synchro_type==nil then
-		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		mt.synchro_type=3
 		mt.synchro_parameters={f1,f2,plv,nlv,...}
 	end

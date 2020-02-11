@@ -38,7 +38,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph>PHASE_MAIN1 and ph<PHASE_MAIN2
 end
 function s.atkfilter(c)
-	local m=_G["c"..c:GetCode()]
+	local m=c:GetMetatable()
 	if not m then return false end
 	return c:IsFaceup() and c:IsSetCard(0x48) and c:IsType(TYPE_XYZ) 
 		and c:GetOriginalRace()&RACE_DRAGON==RACE_DRAGON and c:GetOriginalAttribute()&ATTRIBUTE_LIGHT==ATTRIBUTE_LIGHT 
@@ -69,7 +69,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
-	local m=_G["c"..tc:GetCode()]
+	local m=tc:GetMetatable()
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_SET_ATTACK_FINAL)

@@ -19,8 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.costfilter(c,e,tp,ft)
 	if not c:IsSetCard(0x41) or not c:IsAbleToGraveAsCost() then return false end
-	local code=c:GetCode()
-	local class=_G["c"..code]
+	local class=c:GetMetatable()
 	return (ft>0 or c:GetSequence()<5) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,class,e,tp)
 end
 function s.spfilter(c,class,e,tp)
@@ -50,7 +49,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local code=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	local class=_G["c"..code]
+	local class=Duel.GetMetatable(code)
 	if class==nil or class.lvupcount==nil then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,class,e,tp)

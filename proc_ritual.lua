@@ -241,8 +241,7 @@ end,"handler","filter","lv","desc","extrafil","extraop","matfilter","stage2","lo
 
 function Ritual.AddProcCode(c,_type,lv,desc,...)
 	if not c:IsStatus(STATUS_COPYING_EFFECT) and c.fit_monster==nil then
-		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		mt.fit_monster={...}
 	end
 	return Ritual.AddProc(c,_type,Auxiliary.FilterBoolFunction(Card.IsCode,...),lv,desc)

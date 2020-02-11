@@ -1,4 +1,5 @@
 --アームド・ドラゴン LV7
+--Armed Dragon LV7
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -20,9 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.lvupcount=1
-s.lvup={46384672}
-s.lvdncount=2
+s.listed_names={46384672}
 s.lvdn={46384672,980973}
 function s.cfilter(c,tp)
 	local atk=c:GetAttack()

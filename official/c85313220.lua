@@ -1,4 +1,5 @@
 --漆黒の魔王 LV4
+--Dark Lucious LV4
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable
@@ -28,8 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={12817939}
-s.lvupcount=1
-s.lvup={12817939}
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local d=Duel.GetAttackTarget()

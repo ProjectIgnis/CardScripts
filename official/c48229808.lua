@@ -1,4 +1,5 @@
 --ホルスの黒炎竜 LV8
+--Horus the Black Flame Dragon LV8
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -22,9 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.lvupcount=1
-s.lvup={11224103}
-s.lvdncount=2
+s.listed_names={11224103}
 s.lvdn={75830094,11224103}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsHasType(EFFECT_TYPE_ACTIVATE)

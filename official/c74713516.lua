@@ -1,4 +1,5 @@
 --暗黒のミミック LV1
+--Dark Mimic LV1
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -23,8 +24,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={1102515}
-s.lvupcount=1
-s.lvup={1102515}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)

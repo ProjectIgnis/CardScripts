@@ -1,4 +1,5 @@
 --アームド・ドラゴン LV10
+--Armed Dragon LV10
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -30,9 +31,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={73879377}
-s.lvupcount=1
-s.lvup={73879377}
-s.lvdncount=3
 s.lvdn={73879377,46384672,980973}
 function s.spfilter(c,ft,tp)
 	return c:IsCode(73879377)

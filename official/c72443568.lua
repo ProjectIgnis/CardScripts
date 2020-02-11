@@ -1,4 +1,5 @@
 --サイレント・マジシャン LV8
+--Silent Magician LV8
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -18,9 +19,6 @@ function s.initial_effect(c)
 	e2:SetValue(s.efilter)
 	c:RegisterEffect(e2)
 end
-s.lvupcount=1
-s.lvup={73665146}
-s.lvdncount=1
 s.lvdn={73665146}
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()

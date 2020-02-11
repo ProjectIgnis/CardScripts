@@ -1,4 +1,5 @@
 --アルティメット・インセクト LV5
+--Ultimate Insect LV5
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk down
@@ -35,10 +36,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_FLIP)
 	c:RegisterEffect(e5)
 end
-s.listed_names={19877898}
-s.lvupcount=2
-s.lvup={34088136,19877898}
-s.lvdncount=2
+s.listed_names={19877898,34088136}
 s.lvdn={49441499,34088136}
 function s.con(e)
 	return e:GetHandler():GetFlagEffect(id)~=0

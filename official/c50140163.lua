@@ -9,9 +9,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
 end
-s.lvupcount=1
-s.lvup={23756165}
-s.lvdncount=2
+s.listed_names={23756165}
 s.lvdn={23756165,87257460}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

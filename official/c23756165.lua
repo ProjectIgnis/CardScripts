@@ -22,10 +22,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_ALLURE_LVUP)
 end
-s.listed_names={50140163}
-s.lvupcount=2
-s.lvup={50140163,87257460}
-s.lvdncount=1
+s.listed_names={50140163,87257460}
 s.lvdn={87257460}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

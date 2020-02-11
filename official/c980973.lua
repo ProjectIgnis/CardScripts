@@ -16,8 +16,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={46384672}
-s.lvupcount=1
-s.lvup={46384672}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end

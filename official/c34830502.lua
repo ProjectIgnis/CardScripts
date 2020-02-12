@@ -37,7 +37,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={19877898,34088136}
-s.lvdn={49441499,34088136}
+s.LVnum=5
+s.LVset=0x5d
 function s.con(e)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end

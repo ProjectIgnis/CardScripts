@@ -24,7 +24,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={11224103}
-s.lvdn={75830094,11224103}
+s.LVnum=8
+s.LVset=0x3
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and re:IsActiveType(TYPE_SPELL) and Duel.IsChainNegatable(ev)

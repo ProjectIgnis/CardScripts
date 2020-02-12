@@ -70,11 +70,13 @@ function bit.replace(r,v,field,width)
 	return (r&~(m<<f))|((v&m)<< f)
 end
 
-function userdatatype(o)
-	if type(o)~="userdata" then return "not userdata"
+local _type = type
+function type(o)
+	if _type(o)~="userdata" then return _type(o)
 	elseif o.GetOriginalCode then return "Card"
 	elseif o.KeepAlive then return "Group"
 	elseif o.SetLabelObject then return "Effect"
+	else return "userdata"
 	end
 end
 
@@ -428,29 +430,34 @@ function Auxiliary.sumreg(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function Auxiliary.sumlimit(sumtype)
+	return function(e,se,sp,st)
+		return (st&sumtype)==sumtype
+	end
+end
 --sp_summon condition for fusion monster
 function Auxiliary.fuslimit(e,se,sp,st)
-	return st&SUMMON_TYPE_FUSION==SUMMON_TYPE_FUSION
+	return aux.sumlimit(SUMMON_TYPE_FUSION)(e,se,sp,st)
 end
 --sp_summon condition for ritual monster
 function Auxiliary.ritlimit(e,se,sp,st)
-	return st&SUMMON_TYPE_RITUAL==SUMMON_TYPE_RITUAL
+	return aux.sumlimit(SUMMON_TYPE_RITUAL)(e,se,sp,st)
 end
 --sp_summon condition for synchro monster
 function Auxiliary.synlimit(e,se,sp,st)
-	return st&SUMMON_TYPE_SYNCHRO==SUMMON_TYPE_SYNCHRO
+	return aux.sumlimit(SUMMON_TYPE_SYNCHRO)(e,se,sp,st)
 end
 --sp_summon condition for xyz monster
 function Auxiliary.xyzlimit(e,se,sp,st)
-	return st&SUMMON_TYPE_XYZ==SUMMON_TYPE_XYZ
+	return aux.sumlimit(SUMMON_TYPE_XYZ)(e,se,sp,st)
 end
 --sp_summon condition for pendulum monster
 function Auxiliary.penlimit(e,se,sp,st)
-	return st&SUMMON_TYPE_PENDULUM==SUMMON_TYPE_PENDULUM
+	return aux.sumlimit(SUMMON_TYPE_PENDULUM)(e,se,sp,st)
 end
 --sp_summon condition for link monster
 function Auxiliary.lnklimit(e,se,sp,st)
-	return st&SUMMON_TYPE_LINK==SUMMON_TYPE_LINK
+	return aux.sumlimit(SUMMON_TYPE_LINK)(e,se,sp,st)
 end
 --effects inflicting damage to tp
 function Auxiliary.damcon1(e,tp,eg,ep,ev,re,r,rp)
@@ -697,14 +704,14 @@ function Auxiliary.ComposeNumberDigitByDigit(tp,min,max)
 	local mi=maxdc-1
 	local aux=min
 	for i=1,maxdc do
-		dbdmin[i]=math.floor(aux/(10^mi))
+		dbdmin[i]=aux//(10^mi)
 		aux=aux%(10^mi)
 		mi=mi-1
 	end
 	aux=max
 	mi=maxdc-1
 	for i=1,maxdc do
-		dbdmax[i]=math.floor(aux/(10^mi))
+		dbdmax[i]=aux//(10^mi)
 		aux=aux%(10^mi)
 		mi=mi-1
 	end

@@ -202,7 +202,7 @@ function Fusion.ShuffleMaterial(e,tc,tp,sg)
 	sg:Clear()
 end
 function Fusion.OnFieldMat(filter,...)
-	if userdatatype(filter) == "Card" then
+	if type(filter) == "Card" then
 		--filter is actually the card parameter
 		return filter:IsOnField() and filter:IsAbleToGrave()
 	end
@@ -220,7 +220,7 @@ function Fusion.OnFieldMat(filter,...)
 	end
 end
 function Fusion.InHandMat(filter,...)
-	if userdatatype(filter) == "Card" then
+	if type(filter) == "Card" then
 		--filter is actually the card parameter
 		return filter:IsLocation(LOCATION_HAND) and filter:IsAbleToGrave()
 	end

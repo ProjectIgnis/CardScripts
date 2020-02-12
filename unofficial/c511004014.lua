@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	local proc=Duel.SendtoGrave
 	Duel.SendtoGrave=function(tg,r,tp)
 		if tp then
-			if userdatatype(tg)=='Card' then
+			if type(tg)=='Card' then
 				tg:RegisterFlagEffect(511004018,RESET_EVENT+RESETS_STANDARD,0,1)
-			elseif userdatatype(tg)=='Group' then
+			elseif type(tg)=='Group' then
 				for tc in aux.Next(tg) do tc:RegisterFlagEffect(511004018,RESET_EVENT+RESETS_STANDARD,0,1) end
 			end
 			return proc(tg,r,tp)

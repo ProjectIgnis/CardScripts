@@ -22,7 +22,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={46384672}
-s.lvdn={46384672,980973}
+s.LVnum=7
+s.LVset=0x111
 function s.cfilter(c,tp)
 	local atk=c:GetAttack()
 	if atk<0 then atk=0 end

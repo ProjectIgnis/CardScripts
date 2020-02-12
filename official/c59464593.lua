@@ -31,7 +31,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={73879377}
-s.lvdn={73879377,46384672,980973}
+s.LVnum=10
+s.LVset=0x111
 function s.spfilter(c,ft,tp)
 	return c:IsCode(73879377)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())

@@ -824,7 +824,7 @@ end
 
 
 function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc)
-	local mt=c:GetMetatable()
+	local mt=c:GetMetatable(true)
 	local t={}
 	if mt.contactfus then
 		t=mt.contactfus

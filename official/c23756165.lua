@@ -23,7 +23,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_ALLURE_LVUP)
 end
 s.listed_names={50140163,87257460}
-s.lvdn={87257460}
+s.LVnum=5
+s.LVset=0x14
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetSummonType()==SUMMON_TYPE_SPECIAL+1 then

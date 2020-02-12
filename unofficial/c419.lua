@@ -309,8 +309,9 @@ if not GenerateEffect then
 		end
 		Duel.RaiseEvent(lvg,511002524,e,REASON_EFFECT,rp,ep,0)
 	end
-
-	function GenerateEffect.cardianchk(c,tp,eg,ep,ev,re,r,rp)
+	
+	Cardian={}
+	function Cardian.check(c,tp,eg,ep,ev,re,r,rp)
 		if c:IsSetCard(0xe6) and c:IsType(TYPE_MONSTER) then
 			local eff={c:GetCardEffect(511001692)}
 			for _,te2 in ipairs(eff) do

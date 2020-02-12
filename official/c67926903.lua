@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.ovfilter(c,tp,lc)
-	local class=c:GetMetatable()
+	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
 	return c:IsFaceup() and no and no>=101 and no<=107 and c:IsSetCard(0x1048,lc,SUMMON_TYPE_XYZ,tp)

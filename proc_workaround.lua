@@ -163,14 +163,6 @@ function Auxiliary.IsZone(c,zone,tp)
 	end
 	return (rzone & zone) > 0
 end
---Necessary for lighter handling of Dvergs, Generaid of Iron
-function Group.GetClass(g,f,...)
-    local t={}
-    for tc in aux.Next(g) do
-        table.insert(t,f(tc,table.unpack({...})))
-    end
-    return t
-end
 --Helpers to print hints for attribute-related cards such as Cynet Codec
 function Auxiliary.BitSplit(v)
 	local res={}

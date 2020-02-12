@@ -20,6 +20,7 @@ function s.filter(c,e,tp,ft)
 	if op==cp and locct<=-1 then return false end
 	if op~=cp and locct<=0 then return false end
 	local class=c:GetMetatable()
+	local class=c:GetMetatable(true)
 	return class and class.LVnum~=nil and class.LVset~=nil and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,class,e,tp,op)
 end
 function s.spfilter(c,oclass,e,tp,op)
@@ -44,6 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)==0 then return end
 	if Duel.GetLocationCount(op,LOCATION_MZONE)<=0 then return end
 	local class=c:GetMetatable()
+	local class=c:GetMetatable(true)
 	if class==nil or class.LVnum==nil or class.LVset==nil then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,class,e,tp,op)

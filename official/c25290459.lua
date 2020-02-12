@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.costfilter(c,e,tp)
 	if not c:IsSetCard(0x41) or not c:IsAbleToGraveAsCost() or not c:IsFaceup() then return false end
-	local class=c:GetMetatable()
+	local class=c:GetMetatable(true)
 	if class==nil or class.listed_names==nil then return false end
 	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,class,e,tp)
 end

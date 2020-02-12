@@ -46,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,1,REASON_EFFECT)
 		if tc then
 			Duel.ConfirmCards(1-tp,tc)
-			if c419.cardianchk(tc,tp,eg,ep,ev,re,r,rp) then
+			if Cardian.check(tc,tp,eg,ep,ev,re,r,rp) then
 				Duel.ShuffleHand(tp)
 			else
 				Duel.SendtoGrave(tc,REASON_EFFECT)

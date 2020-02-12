@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x107f,0x1048}
 function s.filter(c)
-	local class=c:GetMetatable()
+	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
 	return c:IsFaceup() and c:IsSetCard(0x107f) and c:IsSetCard(0x1048) and no and no==39

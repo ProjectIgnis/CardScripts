@@ -23,7 +23,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={58206034,85313220}
-s.lvdn={85313220}
+s.LVnum=6
+s.LVset=0x4f
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local d=Duel.GetAttackTarget()

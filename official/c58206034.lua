@@ -19,7 +19,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={12817939}
-s.lvdn={85313220,12817939}
+s.LVnum=8
+s.LVset=0x4f
 function s.discon(e)
 	return e:GetHandler():GetFlagEffect(12817939)~=0
 end

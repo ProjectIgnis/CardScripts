@@ -26,7 +26,7 @@ function s.spfilter(c,oclass,e,tp,op)
 	if not c:IsControler(op) then return false end
 	local class=c:GetMetatable()
 	local code=c:GetCode()
-	return class.LVnum<oclass.LVnum and class.LVset==oclass.LVset and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP,op)
+	return class.LVnum~=nil and class.LVnum<oclass.LVnum and class.LVset==oclass.LVset and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP,op)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

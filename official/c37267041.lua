@@ -27,7 +27,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={74388798}
-s.lvdn={1995985,74388798}
+s.LVnum=7
+s.LVset=0xe7
 function s.distg(e,c)
 	return c:IsType(TYPE_SPELL)
 end

@@ -29,7 +29,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={37267041}
-s.lvdn={1995985}
+s.LVnum=5
+s.LVset=0xe7
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end

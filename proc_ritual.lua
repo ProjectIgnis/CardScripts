@@ -5,6 +5,12 @@ end
 if not Ritual then
 	Ritual = aux.RitualProcedure
 end
+function Ritual.GetMatchingFilterFunction(c)
+	if not c.ritual_matching_function or not c.ritual_matching_function[c] then
+		return aux.TRUE
+	end
+	return c.ritual_matching_function[c]
+end
 function Ritual.CheckMatFilter(matfilter,e,tp,mg,mg2)
 	if matfilter then
 		if type(matfilter)=="function" then
@@ -42,6 +48,12 @@ end
 Ritual.CreateProc = aux.FunctionWithNamedArgs(
 function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
 	--lv can be a function (like GetLevel/GetOriginalLevel), fixed level, if nil it defaults to GetLevel
+	if filter and type(filter)=="function" then
+		if not c.ritual_matching_function then
+			c.ritual_matching_function={}
+		end
+		c.ritual_matching_function[c]=filter
+	end
 	local e1=Effect.CreateEffect(c)
 	if desc then
 		e1:SetDescription(desc)

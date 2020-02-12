@@ -55,7 +55,7 @@ local function fieldargs(f,width)
 	w=width or 1
 	assert(f>=0,"field cannot be negative")
 	assert(w>0,"width must be positive")
-	assert(f+w<=32,"trying to access non-existent bits")
+	assert(f+w<=64,"trying to access non-existent bits")
 	return f,~(-1<<w)
 end
 

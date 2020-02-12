@@ -488,8 +488,7 @@ EFFECT_XYZ_LEVEL                    = 242
 EFFECT_EXTRA_RITUAL_MATERIAL        = 243
 EFFECT_NONTUNER                     = 244
 EFFECT_OVERLAY_REMOVE_REPLACE       = 245
-EFFECT_SCRAP_CHIMERA                = 246
-EFFECT_TUNE_MAGICIAN_X              = 247
+EFFECT_CANNOT_BE_MATERIAL           = 248
 EFFECT_PRE_MONSTER                  = 250
 EFFECT_MATERIAL_CHECK               = 251
 EFFECT_DISABLE_FIELD                = 260
@@ -909,3 +908,8 @@ FUSPROC_LISTEDMATS = 0x400
 --Flags for the type of ritual sumon
 RITPROC_EQUAL      = 0x1
 RITPROC_GREATER    = 0x2
+--Material types constant
+MATERIAL_FUSION    = 0x1<<32
+MATERIAL_SYNCHRO   = 0x2<<32
+MATERIAL_XYZ       = 0x4<<32
+MATERIAL_LINK      = 0x8<<32

@@ -40,7 +40,7 @@ function Auxiliary.AddUnionProcedure(c,f,oldequip,oldprotect)
 	c:RegisterEffect(e4)
 	--auxiliary function compatibility
 	if oldequip then
-		local m=_G["c"..c:GetOriginalCode()]
+		local m=c:GetMetatable()
 		m.old_union=true
 	end
 end

@@ -1,4 +1,3 @@
---Kragen Spawn
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -66,7 +65,8 @@ function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousPosition(POS_FACEUP) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.rescon(sg,e,tp,mg)
-	local ect=cCARD_SUMMON_GATE and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and cCARD_SUMMON_GATE[tp]
+	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
+	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	return Duel.GetLocationCountFromEx(tp)>=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA) 
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 		and Duel.GetUsableMZoneCount(tp)>=#sg
@@ -88,12 +88,12 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_EXTRA+LOCATION_GRAVE,0,e:GetHandler(),e,tp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,ct,ct,s.rescon,1,tp,HINTMSG_SPSUMMON)
 	if #sg<=0 then return end
-	aux.MainAndExtraSpSummonLoop(s.ovop(mg),0,0,0,false,false)(e,tp,eg,ep,ev,re,r,rp,sg)
-end
-function s.ovop(mg)
-	return	function(e,tp,eg,ep,ev,re,r,rp,tc)
-				local og=mg:Select(tp,1,1,nil)
-				Duel.Overlay(tc,og)
-				mg:Sub(og)
-			end
+	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP) > 0 then
+		for oc in aux.Next(mg) do
+			local tc=sg:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE):GetFirst()
+			if not tc then break end
+			Duel.Overlay(tc,oc)
+			sg:RemoveCard(tc)
+		end
+	end
 end

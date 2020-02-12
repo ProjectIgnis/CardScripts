@@ -126,8 +126,7 @@ function s.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.ovfilter(c)
-	local code=c:GetCode()
-	local class=_G["c"..code]
+	local class=c:GetMetatable()
 	if class==nil then return false end
 	local no=class.xyz_number
 	return c:IsFaceup() and no and no>=101 and no<=107 and c:IsSetCard(0x1048)

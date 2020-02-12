@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(aux.IsMaterialListCode,CARD_NEOS),nil,s.fextra,nil,nil,s.stage2,2,0,nil,FUSPROC_NOTFUSION))
+	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(aux.IsMaterialListCode,CARD_NEOS),nil,s.fextra,nil,nil,s.stage2,2,0,nil,FUSPROC_NOTFUSION|FUSPROC_LISTEDMATS))
 	--destroy replace
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

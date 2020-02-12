@@ -67,7 +67,8 @@ function s.spfilter(c,e,tp)
 	return c:IsCode(43387895,70771599,42160203,96733134) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ect=cCARD_SUMMON_GATE and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and cCARD_SUMMON_GATE[tp]
+	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
+	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if chk==0 then
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return false end
 		local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
@@ -84,7 +85,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
 	if Duel.Destroy(dg,REASON_EFFECT)>0 or #dg==0 then
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-		local ect=cCARD_SUMMON_GATE and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and cCARD_SUMMON_GATE[tp]
+		local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
+		local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local ftt=Duel.GetUsableMZoneCount(tp)
 		local ftex=Duel.GetLocationCountFromEx(tp)
@@ -93,7 +95,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #g<=3 then return end
 		local spg=aux.SelectUnselectGroup(g,e,tp,4,4,s.rescon(ft,ftex,ftt,ect),1,tp,HINTMSG_SPSUMMON)
 		if #spg<=3 then return end
-		if not aux.MainAndExtraSpSummonLoop(s.disop,0,0,0,true,false)(e,tp,eg,ep,ev,re,r,rp,spg) then return end
+		if Duel.SpecialSummon(spg,0,tp,tp,false,false,POS_FACEUP) > 0 then
+			for tc in aux.Next(spg) do
+				if tc:IsLocation(LOCATION_MZONE) then
+					s.disop(tc,e:GetHandler())
+				end
+			end
+		else
+			return
+		end
 		local og=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsCode),tp,LOCATION_EXTRA+LOCATION_GRAVE,0,nil,69610326)
 		local drg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil,42160203)
 		if #og>1 and #drg>0 and Duel.SelectYesNo(tp,aux.Stringid(12744567,0)) then
@@ -107,15 +117,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.disop(e,tp,eg,ep,ev,re,r,rp,tc)
-	local e1=Effect.CreateEffect(e:GetHandler())
+function s.disop(tc,c)
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_SINGLE)
+	local e2=e1:Clone()
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e2)
 end

@@ -25,7 +25,7 @@ function Link.AddProcedure(c,f,min,max,specialchk,desc)
 	c:RegisterEffect(e1)
 end
 function Link.ConditionFilter(c,f,lc,tp)
-	return c:IsCanBeLinkMaterial(lc,tp) and (not f or f(c,lc,SUMMON_TYPE_LINK,tp))
+	return c:IsCanBeLinkMaterial(lc,tp) and (not f or f(c,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp))
 end
 function Link.GetLinkCount(c)
 	if c:IsLinkMonster() and c:GetLink()>1 then

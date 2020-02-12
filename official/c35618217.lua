@@ -58,7 +58,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.chngcon(scard,sumtype,tp)
-	return sumtype==SUMMON_TYPE_FUSION
+	return (sumtype&MATERIAL_FUSION)~=0
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0

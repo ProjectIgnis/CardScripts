@@ -12,7 +12,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1048}
 function s.filter(c,tp,tid)
-	local class=c:GetMetatable()
+	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
 	return no and no>=101 and no<=107 and c:IsSetCard(0x1048) and c:IsReason(REASON_DESTROY) and c:GetTurnID()==tid

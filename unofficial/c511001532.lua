@@ -37,7 +37,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)
 end
 function s.atfilter(c)
-	local class=c:GetMetatable()
+	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
 	return no and no>=101 and no<=107 and c:IsFaceup() and c:IsSetCard(0x1048)

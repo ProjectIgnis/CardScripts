@@ -19,7 +19,7 @@ function s.filter(c,e,tp,ft)
 	local cp=c:GetControler()
 	if op==cp and locct<=-1 then return false end
 	if op~=cp and locct<=0 then return false end
-	local class=c:GetMetatable()
+	local class=c:GetMetatable(true)
 	return class and class.lvdncount~=nil and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,class,e,tp,op)
 end
 function s.spfilter(c,class,e,tp,op)
@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not tc or not tc:IsRelateToEffect(e) or not tc:IsFaceup() then return end
 	if Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)==0 then return end
 	if Duel.GetLocationCount(op,LOCATION_MZONE)<=0 then return end
-	local class=c:GetMetatable()
+	local class=c:GetMetatable(true)
 	if class==nil or class.lvdncount==nil then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,class,e,tp,op)

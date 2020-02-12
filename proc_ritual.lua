@@ -6,7 +6,7 @@ if not Ritual then
 	Ritual = aux.RitualProcedure
 end
 function Ritual.GetMatchingFilterFunction(c)
-	local mt=c:GetMetatable()
+	local mt=c.__index
 	if not mt.ritual_matching_function or not mt.ritual_matching_function[c] then
 		return aux.TRUE
 	end
@@ -50,7 +50,7 @@ Ritual.CreateProc = aux.FunctionWithNamedArgs(
 function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
 	--lv can be a function (like GetLevel/GetOriginalLevel), fixed level, if nil it defaults to GetLevel
 	if filter and type(filter)=="function" then
-		local mt=c:GetMetatable()
+		local mt=c.__index
 		if not mt.ritual_matching_function then
 			mt.ritual_matching_function={}
 		end

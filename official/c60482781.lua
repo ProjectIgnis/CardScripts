@@ -19,7 +19,8 @@ function s.initial_effect(c)
 	e2:SetCondition(s.sumcon)
 	c:RegisterEffect(e2) 
 end
-s.lvdn={47507260,74591968}
+s.LVnum=6
+s.LVset=0x5f
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return e:GetHandler()==Duel.GetAttacker() and d and d:IsFacedown() and d:IsDefensePos()

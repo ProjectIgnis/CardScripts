@@ -1098,18 +1098,14 @@ function Auxiliary.zptcon(filter)
         return eg:IsExists(Auxiliary.zptfilter(filter),1,nil,e:GetHandler(),tp)
     end
 end
---function to check if a card are same atribute.
+--function to check if all the cards in a group have a common property
 function Group.CheckSameProperty(g,f,...)
-	local prop
-	local arg = {...}
+	local prop=nil
 	for tc in aux.Next(g) do
-		if not prop then
-			prop = f(tc,table.unpack(arg))
-		else
-			prop = prop & f(tc,table.unpack(arg))
-		end
+		prop = prop and (prop&f(tc,...)) or f(tc,...)
+		if prop==0 then return false,0 end
 	end
-	return prop ~= 0, prop
+	return prop~=0, prop
 end
 --Functions to automate consistent start-of-duel activations for Duel Modes like Speed Duel, Sealed Duel
 --According to AlphaKretin, these two functions can be improved in Edopro

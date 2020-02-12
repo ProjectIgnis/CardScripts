@@ -15,7 +15,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={74713516}
-s.lvdn={74713516}
+s.LVnum=3
+s.LVset=0x53
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1 then e:SetLabel(2)
 	else e:SetLabel(1) end

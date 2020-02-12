@@ -20,10 +20,8 @@ function Duel.LoadCardScript(code)
 end
 
 function Card.GetMetatable(c,currentCode)
-	local code=c:GetOriginalCode()
-	if currentCode then code=c:GetCode() end
-	local mt=_G["c" .. code]
-	return mt
+	if currentCode then return _G["c" .. c:GetCode()] end
+	return c.__index
 end
 
 function Duel.GetMetatable(code)

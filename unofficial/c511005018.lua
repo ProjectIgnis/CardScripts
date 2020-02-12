@@ -1,15 +1,7 @@
 --Balance Blaster
 --  By Shad3
 
-local function getID()
-	local str=string.match(debug.getinfo(2,'S')['source'],"c%d+%.lua")
-	str=string.sub(str,1,string.len(str)-4)
-	local scard=_G[str]
-	local s_id=tonumber(string.sub(str,2))
-	return scard,s_id
-end
-
-local scard,s_id=getID()
+local scard,s_id=GetID()
 
 function scard.initial_effect(c)
 	--Global Reg

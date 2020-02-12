@@ -1,4 +1,5 @@
 --覇王眷竜オッドアイズ
+--Supreme King Dragon Odd-Eyes
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
@@ -114,7 +115,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=math.min(Duel.GetLocationCountFromEx(tp),2)
 	if ft==0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	local ect=_G["c" .. CARD_SUMMON_GATE] and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and _G["c" .. CARD_SUMMON_GATE][tp]
+	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
+	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if ect then ft=math.min(ft,ect) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,ft,nil,e,tp)

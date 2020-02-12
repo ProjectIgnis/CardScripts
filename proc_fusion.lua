@@ -9,7 +9,7 @@ end
 function Fusion.ParseMaterialTable(tab,mat)
 	local named_mats={}
 	local tmp_extramat_func=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return (sub2 and c:IsHasEffect(511002961)) end
-	local name_func=function(tab) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,contact,fc:GetControler(),table.unpack(tab)) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end end
+	local name_func=function(tab) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,sumtype,fc:GetControler(),table.unpack(tab)) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end end
 	local func=aux.FALSE
 	for _,fmat in ipairs(tab) do
 		if type(fmat)=="function" then
@@ -42,12 +42,12 @@ function Fusion.AddProcMix(c,sub,insf,...)
 	local mat={}
 	for i=1,#val do
 		if type(val[i])=='function' then
-			fun[i]=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return (val[i](c,fc,contact,tp,sub,mg,sg,contact) or (sub2 and c:IsHasEffect(511002961))) and not c:IsHasEffect(6205579) end
+			fun[i]=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return (val[i](c,fc,sumtype,tp,sub,mg,sg,contact) or (sub2 and c:IsHasEffect(511002961))) and not c:IsHasEffect(6205579) end
 		elseif type(val[i])=='table' then
 			fun[i]=Fusion.ParseMaterialTable(val[i],mat)
 		else
 			local addmat=true
-			fun[i]=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,contact,fc:GetControler(),val[i]) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end
+			fun[i]=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,sumtype,fc:GetControler(),val[i]) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end
 			for index, value in ipairs(mat) do
 				if value==val[i] then
 					addmat=false
@@ -57,8 +57,7 @@ function Fusion.AddProcMix(c,sub,insf,...)
 		end
 	end
 	if c.material_count==nil then
-		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		if #mat>0 then
 			mt.material_count=#mat
 			mt.material=mat
@@ -92,9 +91,11 @@ function Fusion.ConditionMix(insf,sub,...)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
+				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
+				if notfusion then
 					sumtype=0
+				elseif contact then
+					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
 				local sub=not listedmats and (sub or notfusion) and not contact
@@ -121,9 +122,11 @@ function Fusion.OperationMix(insf,sub,...)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
+				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
+				if notfusion then
 					sumtype=0
+				elseif contact then
+					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
 				local sub=not listedmats and (sub or notfusion) and not contact
@@ -268,8 +271,7 @@ function Fusion.AddProcMixRep(c,sub,insf,fun1,minc,maxc,...)
 		end
 	end
 	if c.material_count==nil then
-		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		if #mat>0 then
 			mt.material_count=#mat
 			mt.material=mat
@@ -299,9 +301,11 @@ function Fusion.ConditionMixRep(insf,sub,fun1,minc,maxc,...)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
+				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
+				if notfusion then
 					sumtype=0
+				elseif contact then
+					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
 				mustg=Auxiliary.GetMustBeMaterialGroup(tp,eg,tp,c,mg,REASON_FUSION)
@@ -328,9 +332,11 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
+				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
+				if notfusion then
 					sumtype=0
+				elseif contact then
+					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
 				local sub=not listedmats and (sub or notfusion) and not contact
@@ -539,8 +545,7 @@ function Fusion.AddProcMixRepUnfix(c,sub,insf,...)
 		maxc=maxc+f[3]
 	end
 	if c.material_count==nil then
-		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		if #mat>0 then
 			mt.material_count=#mat
 			mt.material=mat
@@ -572,9 +577,11 @@ function Fusion.ConditionMixRepUnfix(insf,sub,minc,maxc,...)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
+				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
+				if notfusion then
 					sumtype=0
+				elseif contact then
+					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
 				local sub=not listedmats and (sub or notfusion) and not contact
@@ -600,9 +607,11 @@ function Fusion.OperationMixRepUnfix(insf,sub,minc,maxc,...)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
-				local sumtype=SUMMON_TYPE_FUSION
-				if notfusion or contact then
+				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
+				if notfusion then
 					sumtype=0
+				elseif contact then
+					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
 				local sub=not listedmats and (sub or notfusion) and not contact
@@ -815,8 +824,7 @@ end
 
 
 function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc)
-	local code=c:GetOriginalCode()
-	local mt=_G["c" .. code]
+	local mt=c.__index
 	local t={}
 	if mt.contactfus then
 		t=mt.contactfus

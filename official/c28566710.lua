@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(1,1)
 		e1:SetReset(RESET_CHAIN)
 		Duel.RegisterEffect(e1,tp)
-		if tc then Duel.CalculateDamage(sc,tc) end
+		if tc then Duel.ForceAttack(sc,tc) end
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

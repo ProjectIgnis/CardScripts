@@ -26,7 +26,7 @@ function Synchro.AddProcedure(c,...)
 	--parameters (f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 	if c.synchro_type==nil then
 		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		mt.synchro_type=1
 		mt.synchro_parameters={...}
 		if type(mt.synchro_parameters[2])=='function' then
@@ -54,17 +54,17 @@ function Synchro.CheckFilterChk(c,f1,f2,sub1,sub2,sc,tp)
 	if f(te,c) then
 		reset=true
 	end
-	local res=(c:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO,tp) and (not f1 or f1(c,sc,SUMMON_TYPE_SYNCHRO,tp))) or not f2 or f2(c,sc,SUMMON_TYPE_SYNCHRO,tp) or (sub1 and sub1(c,sc,SUMMON_TYPE_SYNCHRO,tp)) or (sub2 and sub2(c,sc,SUMMON_TYPE_SYNCHRO,tp))
+	local res=(c:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) and (not f1 or f1(c,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp))) or not f2 or f2(c,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) or (sub1 and sub1(c,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) or (sub2 and sub2(c,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp))
 	if reset then
 		Duel.AssumeReset()
 	end
 	return res
 end
 function Synchro.TunerFilter(c,f1,sub1,sc,tp)
-	return (c:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO,tp) and (not f1 or f1(c,sc,SUMMON_TYPE_SYNCHRO,tp))) or (sub1 and sub1(c,sc,SUMMON_TYPE_SYNCHRO,tp))
+	return (c:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) and (not f1 or f1(c,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp))) or (sub1 and sub1(c,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp))
 end
 function Synchro.NonTunerFilter(c,f2,sub2,sc,tp)
-	return not f2 or f2(c,sc,SUMMON_TYPE_SYNCHRO,tp) or (sub2 and sub2(c,sc,SUMMON_TYPE_SYNCHRO,tp))
+	return not f2 or f2(c,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) or (sub2 and sub2(c,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp))
 end
 function Synchro.Condition(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 	return	function(e,c,smat,mg,min,max)
@@ -782,8 +782,7 @@ end
 function Synchro.AddMajesticProcedure(c,f1,cbt1,f2,cbt2,f3,cbt3,...)
 	--parameters: function, can be tuner, reqm
 	if c.synchro_type==nil then
-		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		mt.synchro_type=2
 		mt.synchro_parameters={f1,cbt1,f2,cbt2,f3,cbt3,...}
 	end
@@ -906,10 +905,10 @@ function Synchro.MajesticCheck2(sg,card1,card2,card3,lv,sc,tp,f1,cbt1,f2,cbt2,f3
 	end]]
 	local reqm={...}
 	local tunechk=false
-	if not f1(card1,sc,SUMMON_TYPE_SYNCHRO,tp) or not f2(card2,sc,SUMMON_TYPE_SYNCHRO,tp) or not f3(card3,sc,SUMMON_TYPE_SYNCHRO,tp) then return false end
-	if cbt1 and card1:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO,tp) then tunechk=true end
-	if cbt2 and card2:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO,tp) then tunechk=true end
-	if cbt3 and card3:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO,tp) then tunechk=true end
+	if not f1(card1,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) or not f2(card2,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) or not f3(card3,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) then return false end
+	if cbt1 and card1:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) then tunechk=true end
+	if cbt2 and card2:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) then tunechk=true end
+	if cbt3 and card3:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) then tunechk=true end
 	if not tunechk then return false end
 	local lvchk=false
 	for _,reqmat in ipairs(reqm) do
@@ -1082,8 +1081,7 @@ end
 function Synchro.AddDarkSynchroProcedure(c,f1,f2,plv,nlv,...)
 	--functions, default/dark wave level, reqm
 	if c.synchro_type==nil then
-		local code=c:GetOriginalCode()
-		local mt=_G["c" .. code]
+		local mt=c:GetMetatable()
 		mt.synchro_type=3
 		mt.synchro_parameters={f1,f2,plv,nlv,...}
 	end
@@ -1201,7 +1199,7 @@ function Synchro.DarkCheck2(sg,card1,card2,plv,nlv,sc,tp,f1,f2,...)
 		c=sg:GetNext()
 	end]]
 	local reqm={...}
-	if (f1 and not f1(card1,sc,SUMMON_TYPE_SYNCHRO,tp)) or (f2 and not f2(card2,sc,SUMMON_TYPE_SYNCHRO,tp)) or not card2:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO,tp) or not card2:IsSetCard(0x600) then return false end
+	if (f1 and not f1(card1,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) or (f2 and not f2(card2,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) or not card2:IsType(TYPE_TUNER,sc,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) or not card2:IsSetCard(0x600) then return false end
 	local lvchk=false
 	for _,reqmat in ipairs(reqm) do
 		if not reqmat(sg,sc,tp) then return false end

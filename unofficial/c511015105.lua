@@ -57,7 +57,8 @@ function s.filter3(c,e,tp,syn,odd)
 	return result
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ect=cCARD_SUMMON_GATE and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and cCARD_SUMMON_GATE[tp]
+	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
+	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if chkc then return false end
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.IsPlayerCanSpecialSummonCount(tp,2) 
 		and (not ect or ect>=2) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
@@ -70,12 +71,21 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,Group:FromCards(c1,c2),2,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ect=cCARD_SUMMON_GATE and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and cCARD_SUMMON_GATE[tp]
+	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
+	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 
 		or Duel.GetLocationCountFromEx(tp)<=0 or Duel.GetUsableMZoneCount(tp)<=1 then return false end
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if not aux.MainAndExtraSpSummonLoop(s.disop,0,0,0,false,false)(e,tp,eg,ep,ev,re,r,rp,sg) then return end
+	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP) > 0 then
+		for tc in aux.Next(sg) do
+			if tc:IsLocation(LOCATION_MZONE) then
+				s.disop(tc,e:GetHandler())
+			end
+		end
+	else
+		return
+	end
 	Duel.BreakEffect()
 	local g=Duel.GetMatchingGroup(function(sc) return sc:IsType(TYPE_PENDULUM) and sc:IsSynchroSummonable(nil,sg) end,tp,LOCATION_EXTRA,0,nil)
 	if #g>0 then

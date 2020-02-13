@@ -1,4 +1,5 @@
 --アルティメット・インセクト LV7
+--Ultimate Insect LV7
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk,def down
@@ -14,10 +15,9 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e2)
 end
-s.lvupcount=1
-s.lvup={34830502}
-s.lvdncount=3
-s.lvdn={49441499,34088136,34830502}
+s.listed_names={34830502}
+s.LVnum=7
+s.LVset=0x5d
 function s.con(e)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end

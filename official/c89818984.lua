@@ -1,4 +1,5 @@
 --花札衛－柳に小野道風－
+--Flower Cardian Willow with Calligrapher
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -9,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetCondition(s.hspcon)
+	e1:SetTarget(s.hsptg)
 	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_CARDIAN)
 	--draw
@@ -32,12 +34,28 @@ function s.hspfilter(c)
 end
 function s.hspcon(e,c)
 	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-1
-		and Duel.CheckReleaseGroup(c:GetControler(),s.hspfilter,1,nil)
+	local tp=c:GetControler()
+	local rg=Duel.GetReleaseGroup(tp)
+	return aux.SelectUnselectGroup(rg,e,tp,1,1,s.rescon,0)
+end
+function s.rescon(sg,e,tp,mg)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.hspfilter,1,nil,tp)
+end
+function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetReleaseGroup(tp)
+	local g=aux.SelectUnselectGroup(rg,e,tp,1,1,s.rescon,1,tp,HINTMSG_RELEASE,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(c:GetControler(),s.hspfilter,1,1,nil)
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

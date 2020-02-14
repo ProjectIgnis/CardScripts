@@ -51,11 +51,11 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)
 end
 function s.spfilter(c,e,tp,eg)
-	return eg:IsContains(c) and c:IsType(TYPE_LINK)
-		and Duel.IsExistingMatchingCard(s.colfilter,tp,LOCATION_MZONE,0,1,nil,e,tp,c)
+	return eg:IsContains(c) and Duel.IsExistingMatchingCard(s.colfilter,tp,LOCATION_MZONE,0,1,nil,e,tp,c)
 end
 function s.colfilter(c,e,tp,spc)
-	local zone=c:GetToBeLinkedZone(spc,tp,true)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_LINK),tp,LOCATION_ONFIELD,0,nil)
+	local zone=g:GetToBeLinkedZone(spc,tp,true)
 	return c:IsType(TYPE_LINK) and spc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.rmfilter(c)

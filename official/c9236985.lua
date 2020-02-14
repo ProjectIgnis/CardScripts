@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	if not s.ritual_matching_function then
 		s.ritual_matching_function={}
 	end
-	s.ritual_matching_function[c]=aux.FilterEqualFunction(Card.IsSetCard,0x3a))
+	s.ritual_matching_function[c]=aux.FilterEqualFunction(Card.IsSetCard,0x3a)
 end
 s.listed_series={0x3a}
 function s.filter(c,e,tp,lp)

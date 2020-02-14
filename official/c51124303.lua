@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	if not s.ritual_matching_function then
 		s.ritual_matching_function={}
 	end
-	s.ritual_matching_function[c]=aux.FilterEqualFunction(Card.IsSetCard,0xb4))
+	s.ritual_matching_function[c]=aux.FilterEqualFunction(Card.IsSetCard,0xb4)
 end
 s.listed_series={0xb4}
 function s.spfilter(c,e,tp,mc)

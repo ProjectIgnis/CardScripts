@@ -109,7 +109,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 					local mg=Duel.GetRitualMaterial(tp)
 					local mg2=extrafil and extrafil(e,tp,eg,ep,ev,re,r,rp,chk) or Group.CreateGroup()
 					Ritual.CheckMatFilter(matfilter,e,tp,mg,mg2)
-					return Duel.IsExistingMatchingCard(Ritual.Filter,tp,location,0,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,forcedselection,lv)
+					return Duel.IsExistingMatchingCard(aux.NecroValleyFilter(Ritual.Filter),tp,location,0,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,forcedselection,lv)
 				end
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,location)
 			end

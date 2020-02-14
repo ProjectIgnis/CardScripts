@@ -89,6 +89,7 @@ function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
 	Duel.SendtoGrave(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.atkval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,LOCATION_MZONE)*1000

@@ -1,4 +1,5 @@
 --アルティマヤ・ツィオルキン
+--Ultimaya Tzolkin
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -15,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_EXTRA)
 	e2:SetCondition(s.sprcon)
+	e2:SetTarget(s.sprtg)
 	e2:SetOperation(s.sprop)
 	c:RegisterEffect(e2)
 	--special summon
@@ -48,6 +50,7 @@ function s.sprfilter(c)
 end
 function s.sprfilter1(c,tp,g,sc)
 	local lv=c:GetLevel()
+	local g=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_MZONE,0,nil)
 	return c:IsType(TYPE_TUNER) and g:IsExists(s.sprfilter2,1,c,tp,c,sc,lv)
 end
 function s.sprfilter2(c,tp,mc,sc,lv)
@@ -61,15 +64,27 @@ function s.sprcon(e,c)
 	local g=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_MZONE,0,nil)
 	return g:IsExists(s.sprfilter1,1,nil,tp,g,c)
 end
-function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.sprtg(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_MZONE,0,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g1=g:FilterSelect(tp,s.sprfilter1,1,1,nil,tp,g,c)
-	local mc=g1:GetFirst()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=g:FilterSelect(tp,s.sprfilter2,1,1,mc,tp,mc,c,mc:GetLevel())
-	g1:Merge(g2)
-	Duel.SendtoGrave(g1,REASON_COST)
+	local g1=g:Filter(s.sprfilter1,nil)
+	local mg1=aux.SelectUnselectGroup(g1,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE,nil,nil,true)
+	if #mg1>0 then
+		local mc=mg1:GetFirst()
+		local g2=g:Filter(s.sprfilter2,mc,tp,mc,c,mc:GetLevel())
+		local mg2=aux.SelectUnselectGroup(g2,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+		mg1:Merge(mg2)
+	end
+	if #mg1==2 then
+		mg1:KeepAlive()
+		e:SetLabelObject(mg1)
+		return true
+	end
+	return false
+end
+function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsControler,1,nil,tp)

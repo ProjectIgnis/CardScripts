@@ -429,7 +429,9 @@ table.insert(s.challenges, s.destroyMonster)
 
 --19: Destroy all Spell and Trap Cards.
 function s.destroyBackrow(e, tp)
-    s.destroyFilter(aux.TRUE, LOCATION_SZONE)
+    s.destroyFilter(function(c)
+        return c:IsType(TYPE_SPELL+TYPE_TRAP)
+    end, LOCATION_ONFIELD)
 end
 table.insert(s.challenges, s.destroyBackrow)
 

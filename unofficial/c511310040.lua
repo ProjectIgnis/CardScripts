@@ -139,30 +139,30 @@ function s.playCard(c, p)
                 --TODO: This could be made more efficient surely
                 if canSummon and not canPendActivate and Duel.SelectYesNo(p, 1152) then --Special Summon
                     --play monster to the field (skill summon!)
+                    Duel.DisableShuffleCheck() --don't shuffle for taking the spell out of the deck
                     return Duel.MoveToField(c, p, p, LOCATION_MZONE, POS_FACEUP, true, 0x1f)
                 elseif canPendActivate and not canSummon and Duel.SelectYesNo(p, 1160) then --Activate in PZONE
+                    Duel.DisableShuffleCheck() --don't shuffle for taking the spell out of the deck
                     return Duel.MoveToField(c, p, p, LOCATION_PZONE, POS_FACEUP, true)
                 elseif canSummon and canPendActivate then
                     local opt = Duel.SelectOption(p, 1203, 1152, 1160) --N/A, SS, PZone
                     if opt == 1 then
+                        Duel.DisableShuffleCheck() --don't shuffle for taking the spell out of the deck
                         return Duel.MoveToField(c, p, p, LOCATION_MZONE, POS_FACEUP, true, 0x1f)
                     elseif opt == 2 then
+                        Duel.DisableShuffleCheck() --don't shuffle for taking the spell out of the deck
                         return Duel.MoveToField(c, p, p, LOCATION_PZONE, POS_FACEUP, true)
                     end
                 end
             end
         else
             --activate backrow
-            local ae = c:GetActivateEffect()
-            if not ae then return false end
-            local check,eg,ep,ev,re,r,rp = Duel.CheckEvent(ae:GetCode(), true)
-            local con = ae:GetCondition()
-            local cost = ae:GetCost()
-            if check and (not con or con(ae,p,eg,ep,ev,re,r,rp)) and 
-            	(not cost or cost(ae,p,eg,ep,ev,re,r,rp)) and ae:IsActivatable(p, true, true) 
-            	and Duel.SelectYesNo(p, 94) then
+            local ae=c:CheckActivateEffect(false,false,false)
+            if ae~=nil and Duel.SelectYesNo(p, 94) then
+                Duel.DisableShuffleCheck() --don't shuffle for taking the card out of the deck
                 --not just for show, actually helps it not crash! go figure
                 if Duel.MoveToField(c, p, p, LOCATION_SZONE, POS_FACEDOWN, true, 0x1f) then
+                    Duel.DisableShuffleCheck(false) --turn shuffling back on in case the activate card should
                     Duel.Activate(ae)
                     return true
                 end

@@ -400,20 +400,46 @@ function s.becomeNormal(e, tp)
     --disable
     local e1 = Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetTargetRange(LOCATION_MZONE, LOCATION_MZONE)
     e1:SetCode(EFFECT_DISABLE)
+    e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+    e1:SetTarget(s.nortg)
+    e1:SetTargetRange(0x7f,0x7f)
     Duel.RegisterEffect(e1, tp)
     s.applyNewChallengeReset(e1)
-    --type
-    local e2 = Effect.CreateEffect(c)
+    --cannot activate
+    local e2=Effect.CreateEffect(c)
     e2:SetType(EFFECT_TYPE_FIELD)
-    e2:SetTargetRange(LOCATION_MZONE, LOCATION_MZONE)
-    e2:SetCode(EFFECT_CHANGE_TYPE)
-    e2:SetValue(TYPE_NORMAL)
+    e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+    e2:SetCode(EFFECT_CANNOT_ACTIVATE)
+    e2:SetTargetRange(1,1)
+    e2:SetValue(s.norlimit)
     Duel.RegisterEffect(e2, tp)
     s.applyNewChallengeReset(e2)
+    --type
+    local e3 = Effect.CreateEffect(c)
+    e3:SetType(EFFECT_TYPE_FIELD)
+    e3:SetCode(EFFECT_ADD_TYPE)
+    e3:SetValue(TYPE_NORMAL)
+    e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+    e3:SetTargetRange(0x7f,0x7f)
+    e3:SetTarget(s.nortg)
+    Duel.RegisterEffect(e3, tp)
+    s.applyNewChallengeReset(e3)
+    local e4=e3:Clone()
+    e4:SetCode(EFFECT_REMOVE_TYPE)
+    e4:SetValue(TYPE_EFFECT)
+    Duel.RegisterEffect(e4, tp)
+    s.applyNewChallengeReset(e4)
 end
 table.insert(s.challenges, s.becomeNormal)
+
+function s.nortg(e,c)
+    return c:IsType(TYPE_MONSTER)
+end
+
+function s.norlimit(e,re,tp)
+    return re:IsActiveType(TYPE_MONSTER)
+end
 
 --17: Destroy all cards on the field.
 function s.destroyAll(e, tp)

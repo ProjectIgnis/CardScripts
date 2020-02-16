@@ -1,4 +1,5 @@
 --原始太陽ヘリオス
+--Helios - The Primordial Sun
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)

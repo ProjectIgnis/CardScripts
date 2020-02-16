@@ -1,54 +1,35 @@
 --堕天使ゼラート
+--Darklord Zerato
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SUMMON_PROC)
-	e1:SetCondition(s.sumcon)
-	e1:SetOperation(s.sumop)
-	e1:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e1)
+	--summon with 1 tribute
+	local e1=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
+	local e2=aux.AddNormalSetProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
 	--destroy
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(s.descost)
-	e2:SetTarget(s.destg)
-	e2:SetOperation(s.desop)
-	c:RegisterEffect(e2)
-	--
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_PHASE+PHASE_END)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_DESTROY)
+	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1)
-	e3:SetCondition(s.sdescon)
-	e3:SetTarget(s.sdestg)
-	e3:SetOperation(s.sdesop)
+	e3:SetCost(s.descost)
+	e3:SetTarget(s.destg)
+	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
+	--self destroy
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,2))
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e4:SetCode(EVENT_PHASE+PHASE_END)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(1)
+	e4:SetCondition(s.sdescon)
+	e4:SetTarget(s.sdestg)
+	e4:SetOperation(s.sdesop)
+	c:RegisterEffect(e4)
 end
-function s.mfilter(c,tp)
-	return c:IsAttribute(ATTRIBUTE_DARK) and (c:IsControler(tp) or c:IsFaceup())
-end
-function s.sumcon(e,c,minc)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
+function s.otfilter(c)
 	local ag=Duel.GetMatchingGroup(Card.IsAttribute,tp,LOCATION_GRAVE,0,nil,ATTRIBUTE_DARK)
-	return c:GetLevel()>6 and minc<=1 and Duel.CheckTribute(c,1,1,mg)
-		and ag:GetClassCount(Card.GetCode)>=4
-end
-function s.sumop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	local sg=Duel.SelectTribute(tp,c,1,1,mg)
-	c:SetMaterial(sg)
-	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
+	return c:IsAttribute(ATTRIBUTE_DARK) and ag:GetClassCount(Card.GetCode)>=4
 end
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToGraveAsCost()

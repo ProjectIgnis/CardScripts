@@ -92,7 +92,6 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 		--change ATK
 		local atk=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_MZONE,0,nil,0x55):GetSum(Card.GetBaseAttack)
-		Debug.Message(atk)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_SET_ATTACK_FINAL)

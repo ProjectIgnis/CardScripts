@@ -1,8 +1,10 @@
 --U.A.ターンオーバー・タクティクス
+--U.A. Turnover Tactics
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -12,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xb2}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xb2)
 end
@@ -52,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Select(tp,1,1,nil)
 	g:Remove(Card.IsCode,nil,sg:GetFirst():GetCode())
 	ct1=ct1-1
-	while ct1>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) do
+	while ct1>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g1=g:Select(tp,1,1,nil)
 		g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
@@ -71,7 +74,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 	if ct2>0 and Duel.IsExistingMatchingCard(Card.IsCanBeSpecialSummoned,tp,0,LOCATION_DECK,1,nil,e,0,1-tp,false,false)
-		and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
+		and Duel.SelectYesNo(1-tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 		local sg2=Duel.SelectMatchingCard(1-tp,Card.IsCanBeSpecialSummoned,tp,0,LOCATION_DECK,1,ct2,nil,e,0,1-tp,false,false)

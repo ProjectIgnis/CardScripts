@@ -1,4 +1,5 @@
 --混沌幻魔アーミタイル
+--Armityle the Chaos Phantom
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -21,6 +22,7 @@ function s.initial_effect(c)
 	e4:SetValue(10000)
 	c:RegisterEffect(e4)
 end
+s.listed_names={6007213,32491822,69890967}
 function s.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
 end

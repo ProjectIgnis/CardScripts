@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.lvfilter(c,lv)
-	return c:IsFaceup() and c:IsHasLevel() and not c:IsLevel(lv)
+	return c:IsFaceup() and c:HasLevel() and not c:IsLevel(lv)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -49,7 +49,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		c:RegisterEffect(e1)
 		if (c:IsLevel(lv)) then
 			Duel.Recover(tp,lv*200,REASON_EFFECT)
@@ -68,7 +68,7 @@ function s.splimit(e,c)
 	return not c:IsType(TYPE_SYNCHRO) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsRace(RACE_FIEND) and c:IsHasLevel() and c:IsLevelBelow(lv-1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_FIEND) and c:HasLevel() and c:IsLevelBelow(lv-1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lv=e:GetHandler():GetLevel()

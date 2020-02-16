@@ -1,5 +1,5 @@
 --No.26 次元孔路オクトバイパス
---Number 26: Octobypass the Dimensional Pathway
+--Number 26: Spaceway Octobypass
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -47,7 +47,7 @@ function s.btop(e,tp,eg,ep,ev,re,r,rp)
     e1:SetTargetRange(LOCATION_MZONE,0)
     e1:SetCondition(s.atkcon)
     e1:SetTarget(s.atktg)
-    e1:SetReset(RESET_PHASE+PHASE_END)
+    e1:SetReset(RESET_PHASE+PHASE_BATTLE)
     Duel.RegisterEffect(e1,p)
     --check
     local e2=Effect.CreateEffect(c)
@@ -56,7 +56,7 @@ function s.btop(e,tp,eg,ep,ev,re,r,rp)
     e2:SetCode(EVENT_ATTACK_ANNOUNCE)
     e2:SetOperation(s.checkop)
     e2:SetLabelObject(e1)
-    e2:SetReset(RESET_PHASE+PHASE_END)
+    e2:SetReset(RESET_PHASE+PHASE_BATTLE)
     Duel.RegisterEffect(e2,p)
     --direct Attack
     local e3=Effect.CreateEffect(c)
@@ -64,15 +64,16 @@ function s.btop(e,tp,eg,ep,ev,re,r,rp)
     e3:SetCode(EFFECT_DIRECT_ATTACK)
     e3:SetTargetRange(LOCATION_MZONE,0)
     e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_MONSTER))
+    e3:SetReset(RESET_PHASE+PHASE_BATTLE)
     Duel.RegisterEffect(e3,p)
-	--cannot select attack target
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetValue(1)
-	e4:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e4,p)
+    --
+    local e4=Effect.CreateEffect(c)
+    e4:SetType(EFFECT_TYPE_SINGLE)
+    e4:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
+    e4:SetTargetRange(LOCATION_MZONE,0)
+    e4:SetValue(1)
+    e4:SetReset(RESET_PHASE+PHASE_BATTLE)
+    Duel.RegisterEffect(e4,p)
 end
 function s.atkcon(e)
     return Duel.GetFlagEffect(e:GetHandlerPlayer(),id)~=0

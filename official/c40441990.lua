@@ -1,5 +1,5 @@
 --星遺物－『星鍵』
---World Legacy - "World Sword"
+--World Legacy - "World Key"
 local s,id=GetID()
 function s.initial_effect(c)
 	--extra summon
@@ -40,6 +40,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetTargetRange(LOCATION_HAND,0)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)

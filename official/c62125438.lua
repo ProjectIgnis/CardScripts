@@ -1,8 +1,10 @@
 --シンクロン・キャリアー
+--Synchron Carrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--extra summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetRange(LOCATION_MZONE)

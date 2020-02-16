@@ -1,6 +1,6 @@
 --星杯竜イムドゥーク
---Star Grail Dragon Imduk
---Scripted by Eerie Code
+--Imduk the World Chalice Dragon
+--scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	Link.AddProcedure(c,s.matfilter,1,1)
 	--extra summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetRange(LOCATION_MZONE)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_START)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
@@ -35,6 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xfd}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsType(TYPE_NORMAL,lc,sumtype,tp) and not c:IsType(TYPE_TOKEN,lc,sumtype,tp)
 end

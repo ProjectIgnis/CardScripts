@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x71}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
@@ -32,13 +33,12 @@ function s.tdfilter2(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
-	end
+	if not (tc and tc:IsRelateToEffect(e)) or Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 then return end
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x71),tp,LOCATION_MZONE,0,nil)
-	tc=g:GetFirst()
-	if not tc then return end
+  local ct=0
 	for tc in aux.Next(g) do
+    local preatk=tc:GetAttack()
+    local predef=tc:GetDefense()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -48,7 +48,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		tc:RegisterEffect(e2)
+		if preatk~=tc:GetAttack() or predef~=tc:GetDefense() then ct=ct+1 end
 	end
+  if ct==0 then return end
 	local dg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tdfilter2),tp,LOCATION_GRAVE,0,nil)
 	if #dg~=0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()

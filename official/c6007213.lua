@@ -1,4 +1,5 @@
 --神炎皇ウリア
+--Uria, Lord of Searing Flames
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -41,15 +42,32 @@ end
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_TRAP) and c:IsAbleToGraveAsCost()
 end
+function s.exfilter(c)
+	return c:IsType(TYPE_TRAP) and c:IsAbleToGraveAsCost()
+end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil)
+	local g=nil
+	if Duel.IsPlayerAffectedByEffect(tp,100338034) then
+		g=Duel.GetMatchingGroup(s.exfilter,tp,LOCATION_ONFIELD,0,nil)
+	else
+		g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil)
+	end
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #g>2 and aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1),0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil)
+	local g=nil
+	if Duel.IsPlayerAffectedByEffect(tp,100338034) then
+		g=Duel.GetMatchingGroup(s.exfilter,tp,LOCATION_ONFIELD,0,nil)
+	else
+		g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil)
+	end
 	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE)
+	local dg=sg:Filter(Card.IsFacedown,nil)
+	if #dg>0 then
+		Duel.ConfirmCards(1-tp,dg)
+	end
 	Duel.SendtoGrave(sg,REASON_COST)
 end
 function s.atkfilter(c)

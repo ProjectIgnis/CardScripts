@@ -1,4 +1,5 @@
 --失楽園
+--Fallen Paradise
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -33,6 +34,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={6007213,32491822,69890967,43378048}
 function s.immtg(e,c)
 	return c:IsCode(6007213,32491822,69890967,43378048)
 end

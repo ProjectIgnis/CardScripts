@@ -1,4 +1,5 @@
 --降雷皇ハモン
+--Hamon, Lord of Striking Thunder
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -40,38 +41,33 @@ end
 function s.spfilter(c)
 	return c:IsFaceup() and c:GetType()==TYPE_SPELL+TYPE_CONTINUOUS and c:IsAbleToGraveAsCost()
 end
+function s.exfilter(c)
+	return s.spfilter(c) or (c:IsFacedown() and c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost())
+end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<-2 then return false end
-	if ft<=0 then
-		local ct=-ft+1
-		return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE,0,ct,nil)
-			and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_ONFIELD,0,3,nil)
+	local g=nil
+	if Duel.IsPlayerAffectedByEffect(tp,100338019) then
+		g=Duel.GetMatchingGroup(s.exfilter,tp,LOCATION_ONFIELD,0,nil)
 	else
-		return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_ONFIELD,0,3,nil)
+		g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil)
 	end
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #g>2 and aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1),0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<=0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil)
-		local ct=-ft+1
-		local g1=sg:FilterSelect(tp,Card.IsLocation,ct,ct,nil,LOCATION_MZONE)
-		if ct<3 then
-			sg:Sub(g1)
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-			local g2=sg:Select(tp,3-ct,3-ct,nil)
-			g1:Merge(g2)
-		end
-		Duel.SendtoGrave(g1,REASON_COST)
+	local g=nil
+	if Duel.IsPlayerAffectedByEffect(tp,100338019) then
+		g=Duel.GetMatchingGroup(s.exfilter,tp,LOCATION_ONFIELD,0,nil)
 	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_ONFIELD,0,3,3,nil)
-		Duel.SendtoGrave(g,REASON_COST)
+		g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil)
 	end
+	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE)
+	local dg=sg:Filter(Card.IsFacedown,nil)
+	if #dg>0 then
+		Duel.ConfirmCards(1-tp,dg)
+	end
+	Duel.SendtoGrave(sg,REASON_COST)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

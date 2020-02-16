@@ -54,9 +54,10 @@ end
 function s.limcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.imfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil) 
 end
-function s.atfilter(c,lv)
-	return c:IsFaceup() and c:IsSetCard(0x131) and c:GetLevel()>lv
+function s.atfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x131)
 end
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x131) and Duel.IsExistingMatchingCard(s.atfilter,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetLevel())
+	local g=Duel.GetMatchingGroup(s.atfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
+	return c:IsFaceup() and c:IsSetCard(0x131) and g:GetMaxGroup(Card.GetLevel):IsContains(c)
 end

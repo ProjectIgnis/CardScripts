@@ -1,4 +1,5 @@
 --グレイドル・コンバット
+--Graydle Combat
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xd1}
 function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0xd1)
 end
@@ -57,11 +59,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetType()==TYPE_SPELL or c:GetType()==TYPE_TRAP then
-		c:CancelToGrave(false)
-	end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
+	end
+	if e:IsActiveType(TYPE_SPELL+TYPE_TRAP) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		c:CancelToGrave(false)
 	end
 end

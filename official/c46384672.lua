@@ -1,4 +1,5 @@
 --アームド・ドラゴン LV5
+--Armed Dragon LV5
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle destroy
@@ -33,10 +34,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={73879377}
-s.lvupcount=1
-s.lvup={73879377}
-s.lvdncount=1
-s.lvdn={980973}
+s.LVnum=5
+s.LVset=0x111
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end

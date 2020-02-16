@@ -52,8 +52,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0x57a}
-function s.matfilter(c)
-	return c:IsLevel(1) and c:IsLinkSetCard(0x57a)
+function s.matfilter(c,lc,sumtype,tp)
+	return c:IsLevel(1) and c:IsSetCard(0x57a,lc,sumtype,tp)
 end
 function s.imcon(e)
 	return e:GetHandler():IsLinked()
@@ -94,7 +94,7 @@ end
 function s.checkfilter(c,e,tp)
 	local mg=c:GetMutualLinkedGroup()
 	local octg=e:GetHandler():GetMutualLinkedGroup()
-	return c:IsLinkSetCard(0x57a) and c:IsControler(tp) and c:IsReason(REASON_DESTROY)
+	return c:IsSetCard(0x57a) and c:IsControler(tp) and c:IsReason(REASON_DESTROY)
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and not (mg:IsContains(e:GetHandler()) and octg:IsContains(c))
 end

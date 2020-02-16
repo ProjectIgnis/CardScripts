@@ -34,8 +34,8 @@ function s.initial_effect(c)
 end
 s.counter_place_list={COUNTER_SPELL}
 s.listed_names={72443568}
-s.lvupcount=1
-s.lvup={72443568}
+s.LVnum=4
+s.LVset=0xe8
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	if ep~=tp then
 		e:GetHandler():AddCounter(COUNTER_SPELL,1)

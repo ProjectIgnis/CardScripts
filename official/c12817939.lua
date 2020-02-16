@@ -1,4 +1,5 @@
 --漆黒の魔王 LV6
+--Dark Lucius LV6
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable
@@ -21,11 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={58206034}
-s.lvupcount=2
-s.lvup={85313220,58206034}
-s.lvdncount=1
-s.lvdn={85313220}
+s.listed_names={58206034,85313220}
+s.LVnum=6
+s.LVset=0x4f
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local d=Duel.GetAttackTarget()

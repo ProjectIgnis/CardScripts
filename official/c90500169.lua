@@ -19,16 +19,12 @@ function s.filter(c,e,tp,ft)
 	local cp=c:GetControler()
 	if op==cp and locct<=-1 then return false end
 	if op~=cp and locct<=0 then return false end
-	local class=c:GetMetatable()
-	return class and class.lvdncount~=nil and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,class,e,tp,op)
+	local class=c:GetMetatable(true)
+	return class and class.LVnum~=nil and class.LVset~=nil and Duel.IsExistingMatchingCard(s.spfilter,op,LOCATION_GRAVE,0,1,nil,class,e,tp,op)
 end
-function s.spfilter(c,class,e,tp,op)
-	if not c:IsControler(op) then return false end
-	local code=c:GetCode()
-	for i=1,class.lvdncount do
-		if code==class.lvdn[i] then return c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP,op) end
-	end
-	return false
+function s.spfilter(c,oclass,e,tp,op)
+	local class=c:GetMetatable(true)
+	return class.LVnum~=nil and class.LVnum<oclass.LVnum and class.LVset==oclass.LVset and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP,op)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -45,10 +41,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not tc or not tc:IsRelateToEffect(e) or not tc:IsFaceup() then return end
 	if Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)==0 then return end
 	if Duel.GetLocationCount(op,LOCATION_MZONE)<=0 then return end
-	local class=c:GetMetatable()
-	if class==nil or class.lvdncount==nil then return end
+	local class=c:GetMetatable(true)
+	if class==nil or class.LVnum==nil or class.LVset==nil then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,class,e,tp,op)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,op,LOCATION_GRAVE,0,1,1,nil,class,e,tp,op)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,op,true,false,POS_FACEUP)
 	end

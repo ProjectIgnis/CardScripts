@@ -74,7 +74,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local at=Duel.GetAttackTarget()
-		local m=at:GetMetatable()
+		local m=at:GetMetatable(true)
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(at),tp,nil,nil,REASON_XYZ)
 		return #pg<=1 and m and m.xyz_number and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,at,m.xyz_number,pg)
 	end
@@ -84,7 +84,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.NegateAttack() then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<0 then return end
 	local tc=Duel.GetAttackTarget()
-	local m=tc:GetMetatable()
+	local m=tc:GetMetatable(true)
 	if not tc or tc:IsFacedown() or not tc:IsRelateToBattle() or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) or not m then return end
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(tc),tp,nil,nil,REASON_XYZ)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

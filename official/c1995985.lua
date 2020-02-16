@@ -1,4 +1,5 @@
 --サイレント・ソードマン LV3
+--Silent Swordsman LV3
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable effect
@@ -34,8 +35,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={74388798}
-s.lvupcount=1
-s.lvup={74388798}
+s.LVnum=3
+s.LVset=0xe7
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not re:GetHandler():IsType(TYPE_SPELL) or rp==tp then return end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end

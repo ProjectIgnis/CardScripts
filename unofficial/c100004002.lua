@@ -43,9 +43,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge3,0)
 	end)
 end
-s.lvupcount=1
-s.lvup={id+1}
-s.lvdncount=1
+s.listed_names={id+1}
 s.lvdn={100004001}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and e:GetHandler():GetFlagEffect(id)==0

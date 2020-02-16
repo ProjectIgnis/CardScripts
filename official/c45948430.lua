@@ -1,7 +1,7 @@
 --超戦士の萌芽
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Ritual.CreateProc({handler=c,lvtypeRITPROC_GREATER,filter=aux.FilterBoolFunction(Card.IsSetCard,0x10cf),lv=8,extrafil=s.extragroup,
+	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_GREATER,filter=aux.FilterBoolFunction(Card.IsSetCard,0x10cf),lv=8,extrafil=s.extragroup,
 									extraop=s.extraop,matfilter=s.matfilter,location=LOCATION_HAND|LOCATION_GRAVE,forcedselection=s.ritcheck,specificmatfilter=s.specificfilter})
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES)
 	c:RegisterEffect(e1)

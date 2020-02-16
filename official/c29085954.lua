@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c,e,tp,mc,pg)
-	local m=c:GetMetatable()
+	local m=c:GetMetatable(true)
 	if not m then return false end
 	local no=m.xyz_number
 	return no and no>=1 and no<=99 and c:IsSetCard(0x48) and mc:IsCanBeXyzMaterial(c,tp)

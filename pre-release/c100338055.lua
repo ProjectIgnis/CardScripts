@@ -50,9 +50,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,6007213,32491822,69890967),tp,LOCATION_MZONE,0,1,nil) then
+	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,6007213,32491822,69890967),tp,LOCATION_MZONE,0,1,nil)
+		and e:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetHandler()==e:GetOwner() then
 		Duel.SetChainLimit(s.chlimit)
 	end
+end
+function s.chlimit(e,ep,tp)
+	return tp==ep
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local chkf=tp

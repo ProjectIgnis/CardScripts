@@ -194,7 +194,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 				Ritual.CheckMatFilter(matfilter,e,tp,mg,mg2)
 				local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local tg=Duel.SelectMatchingCard(tp,Ritual.Filter,tp,location,0,1,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,forcedselection,lv)
+				local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Ritual.Filter),tp,location,0,1,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,forcedselection,lv)
 				if #tg>0 then
 					local tc=tg:GetFirst()
 					local lv=(lv and (type(lv)=="function" and lv()) or lv) or tc:GetLevel()

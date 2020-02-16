@@ -1,4 +1,5 @@
 --サイレント・ソードマン LV7
+--Silent Swordsman LV7
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -25,10 +26,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
-s.lvupcount=1
-s.lvup={74388798}
-s.lvdncount=2
-s.lvdn={1995985,74388798}
+s.listed_names={74388798}
+s.LVnum=7
+s.LVset=0xe7
 function s.distg(e,c)
 	return c:IsType(TYPE_SPELL)
 end

@@ -51,12 +51,10 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)
 end
 function s.spfilter(c,e,tp,eg)
-	return eg:IsContains(c) and c:IsType(TYPE_LINK)
-		and Duel.IsExistingMatchingCard(s.colfilter,tp,LOCATION_MZONE,0,1,nil,e,tp,c)
-end
-function s.colfilter(c,e,tp,spc)
-	local zone=c:GetToBeLinkedZone(spc,tp,true)
-	return c:IsType(TYPE_LINK) and spc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_LINK),tp,LOCATION_ONFIELD,0,nil)
+	if #g<=0 then return false end
+	local zone=g:GetToBeLinkedZone(c,tp,true)
+	return eg:IsContains(c) and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.rmfilter(c)
 	return c:IsType(TYPE_LINK) and c:IsLink(1) and c:IsAbleToRemove() and aux.SpElimFilter(c)
@@ -80,14 +78,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local spc=tg:GetFirst()
 	local rmc=tg:GetNext()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not spc:IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(s.colfilter,tp,LOCATION_MZONE,0,nil,e,tp,spc)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_LINK),tp,LOCATION_ONFIELD,0,nil)
 	if #g>0 then
-		local tc=g:GetFirst()
-		local zone=0
-		while tc do
-			zone=zone+(tc:GetToBeLinkedZone(spc,tp,true))
-			tc=g:GetNext()
-		end
+		local zone=g:GetToBeLinkedZone(spc,tp,true)
 		if zone>0 and Duel.SpecialSummon(spc,0,tp,tp,true,false,POS_FACEUP,zone)>0 and rmc and rmc:IsRelateToEffect(e)
 			and Duel.Remove(rmc,POS_FACEUP,REASON_EFFECT)>0 and rmc:IsLocation(LOCATION_REMOVED) then
 			Duel.BreakEffect()

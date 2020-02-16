@@ -1,4 +1,5 @@
 --アルティメット・インセクト LV1
+--Ultimate Insect LV1
 local s,id=GetID()
 function s.initial_effect(c)
 	--immune spell
@@ -35,8 +36,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={34088136}
-s.lvupcount=1
-s.lvup={34088136}
+s.LVnum=1
+s.LVset=0x5d
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL)
 end

@@ -1,4 +1,5 @@
 --ホルスの黒炎竜 LV6
+--Horus the Black Flame Dragon LV6
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle destroy
@@ -31,10 +32,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={48229808}
-s.lvupcount=1
-s.lvup={48229808}
-s.lvdncount=1
-s.lvdn={75830094}
+s.LVnum=6
+s.LVset=0x3
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end

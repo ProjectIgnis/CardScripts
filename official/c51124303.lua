@@ -21,6 +21,10 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
+	if not s.ritual_matching_function then
+		s.ritual_matching_function={}
+	end
+	s.ritual_matching_function[c]=aux.FilterEqualFunction(Card.IsSetCard,0xb4)
 end
 s.listed_series={0xb4}
 function s.spfilter(c,e,tp,mc)

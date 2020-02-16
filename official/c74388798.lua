@@ -1,4 +1,5 @@
 --サイレント・ソードマン LV5
+--Silent Swordsman LV5
 local s,id=GetID()
 function s.initial_effect(c)
 	--immune spell
@@ -28,10 +29,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={37267041}
-s.lvupcount=1
-s.lvup={37267041}
-s.lvdncount=1
-s.lvdn={1995985}
+s.LVnum=5
+s.LVset=0xe7
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end

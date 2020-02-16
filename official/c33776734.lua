@@ -1,4 +1,5 @@
 --ハネクリボー LV9
+--Winged Kuriboh LV9
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -47,8 +48,9 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.lvupcount=1
-s.lvup={id}
+s.listed_names={id} --not standard, but required for Level Up!
+s.LVnum=9
+s.LVset=0x10a4
 function s.checkop1(e,tp,eg,ep,ev,re,r,rp)
 	if re and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) then
 		re:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)

@@ -1,4 +1,5 @@
 --漆黒の魔王 LV8
+--Dark Lucius LV8
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable
@@ -17,10 +18,9 @@ function s.initial_effect(c)
 	e2:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e2)
 end
-s.lvupcount=1
-s.lvup={12817939}
-s.lvdncount=2
-s.lvdn={85313220,12817939}
+s.listed_names={12817939}
+s.LVnum=8
+s.LVset=0x4f
 function s.discon(e)
 	return e:GetHandler():GetFlagEffect(12817939)~=0
 end

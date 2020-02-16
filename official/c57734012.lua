@@ -42,7 +42,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)~=0 end
 end
 function s.filter1(c,e,tp)
-	local m=c:GetMetatable()
+	local m=c:GetMetatable(true)
 	if not m then return false end
 	if c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,c)<=0 then
 		return false
@@ -79,7 +79,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=g1:GetFirst()
 	if tc1 and Duel.SpecialSummon(tc1,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(tc1),tp,nil,nil,REASON_XYZ)
-		local m=tc1:GetMetatable()
+		local m=tc1:GetMetatable(true)
 		if not m then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g2=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc1,m.xyz_number,pg)

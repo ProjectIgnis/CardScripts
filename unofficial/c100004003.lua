@@ -14,9 +14,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.lvupcount=1
-s.lvup={100004002}
-s.lvdncount=2
+s.listed_names={100004002}
 s.lvdn={100004002,100004001}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

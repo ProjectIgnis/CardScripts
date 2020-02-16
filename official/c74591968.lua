@@ -1,4 +1,5 @@
 --ミスティック・ソードマン LV4
+--Mystic Swordsman LV4
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle destroy
@@ -38,10 +39,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4) 
 end
 s.listed_names={60482781}
-s.lvupcount=1
-s.lvup={60482781}
-s.lvdncount=1
-s.lvdn={47507260}
+s.LVnum=4
+s.LVset=0x5f
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end

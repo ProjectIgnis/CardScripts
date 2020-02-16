@@ -22,10 +22,9 @@ function Duel.LoadCardScript(code)
 	end
 end
 
-function Card.GetMetatable(c)
-	local code=c:GetOriginalCode()
-	local mt=_G["c" .. code]
-	return mt
+function Card.GetMetatable(c,currentCode)
+	if currentCode then return _G["c" .. c:GetCode()] end
+	return c.__index
 end
 
 function Duel.GetMetatable(code)
@@ -56,7 +55,7 @@ local function fieldargs(f,width)
 	w=width or 1
 	assert(f>=0,"field cannot be negative")
 	assert(w>0,"width must be positive")
-	assert(f+w<=32,"trying to access non-existent bits")
+	assert(f+w<=64,"trying to access non-existent bits")
 	return f,~(-1<<w)
 end
 
@@ -1098,18 +1097,14 @@ function Auxiliary.zptcon(filter)
         return eg:IsExists(Auxiliary.zptfilter(filter),1,nil,e:GetHandler(),tp)
     end
 end
---function to check if a card are same atribute.
+--function to check if all the cards in a group have a common property
 function Group.CheckSameProperty(g,f,...)
-	local prop
-	local arg = {...}
+	local prop=nil
 	for tc in aux.Next(g) do
-		if not prop then
-			prop = f(tc,table.unpack(arg))
-		else
-			prop = prop & f(tc,table.unpack(arg))
-		end
+		prop = prop and (prop&f(tc,...)) or f(tc,...)
+		if prop==0 then return false,0 end
 	end
-	return prop ~= 0, prop
+	return prop~=0, prop
 end
 --Functions to automate consistent start-of-duel activations for Duel Modes like Speed Duel, Sealed Duel
 --According to AlphaKretin, these two functions can be improved in Edopro

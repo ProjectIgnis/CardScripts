@@ -30,8 +30,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_ALLURE_LVUP)
 end
 s.listed_names={23756165}
-s.lvupcount=1
-s.lvup={23756165}
+s.LVnum=3
+s.LVset=0x14
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetEquipGroup():Filter(s.eqfilter,nil)
 	return #g==0

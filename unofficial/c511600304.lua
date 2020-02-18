@@ -22,13 +22,13 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1,alias+100)
+	e2:SetCountLimit(1,alias+1)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x135}
-s.listed_names={101011053}
+s.listed_names={59332125}
 function s.filter(c)
 	return c:IsSetCard(0x135) and c:IsFaceup() and c:GetSequence()<5
 end
@@ -48,7 +48,7 @@ function s.tdfilter(c)
 	return c:IsSetCard(0x135) and c:IsLinkMonster() and c:IsAbleToExtra()
 end
 function s.thfilter(c)
-	return c:IsCode(101011053) and c:IsAbleToHand()
+	return c:IsCode(59332125) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end

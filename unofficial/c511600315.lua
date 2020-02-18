@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e2:SetCountLimit(1,alias+100)
+	e2:SetCountLimit(1,alias+1)
 	e2:SetCondition(s.damcon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.damtg)
@@ -70,11 +70,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	if not ex then ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER) end
-	local op=1
-	if cv~=0 then op=Duel.SelectOption(tp,aux.Stringid(16617334,0),aux.Stringid(81524756,0)) end
-	e:SetLabel(op)
+	e:SetLabel(Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3)))
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()

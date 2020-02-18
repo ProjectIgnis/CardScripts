@@ -62,6 +62,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x12b}
 s.listed_names={67712104}
 function s.matfilter(c)
 	return c:IsCode(67712104)

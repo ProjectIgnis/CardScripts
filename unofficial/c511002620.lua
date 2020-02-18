@@ -13,6 +13,7 @@ end
 function s.fusfilter(c,e,tp,fe)
 	return c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) 
 		and Duel.IsExistingMatchingCard(s.synfilter,tp,LOCATION_EXTRA,0,1,c,e,tp,c,fe)
+		and Duel.GetLocationCountFromEx(tp,fe,nil,c)>1
 end
 function s.filter(c,e,fc,sc)
 	return c:IsFaceup() and c:IsCanBeSynchroMaterial(sc) and c:IsCanBeFusionMaterial(fc) and (not e or not c:IsImmuneToEffect(e))
@@ -40,7 +41,7 @@ function s.rescon(fc,sc,fe)
 					t[tc]=e1
 					tc=sg:GetNext()
 				end
-				local res=fc:CheckFusionMaterial(sg,nil,sg) and sc:IsSynchroSummonable(nil,sg) and Duel.GetLocationCountFromEx(tp,tp,sg)>1
+				local res=fc:CheckFusionMaterial(sg,nil,sg) and sc:IsSynchroSummonable(nil,sg)
 				tc=sg:GetFirst()
 				while tc do
 					t[tc]:Reset()

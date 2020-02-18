@@ -53,12 +53,12 @@ function s.initial_effect(c)
 	e9:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	c:RegisterEffect(e9)
 end
-s.listed_series={0x23b}
+s.listed_series={0x13c}
 function s.etarget(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x23b)
+	return c:IsFaceup() and c:IsSetCard(0x13c)
 end
 function s.tgfilter(c,p)
-	return c:IsFaceup() and c:IsSetCard(0x23b) and c:GetOwner()==p and not c:IsControler(p)
+	return c:IsFaceup() and c:IsSetCard(0x13c) and c:GetOwner()==p and not c:IsControler(p)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tgfilter,1,nil,tp)

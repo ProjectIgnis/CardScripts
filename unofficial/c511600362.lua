@@ -3,7 +3,7 @@
 --Scripted by Larry126
 local s,id,alias=GetID()
 function s.initial_effect(c)
-	local alias=GetOriginalCodeRule()
+	alias=GetOriginalCodeRule()
 	--Gain LP
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(alias,0))

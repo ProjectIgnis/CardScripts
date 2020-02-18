@@ -103,19 +103,18 @@ s[0]=0
 s[1]=0
 function s.raccheck(p)
 	local rac=0
-	for i=0,4 do
-		local tc=Duel.GetFieldCard(p,LOCATION_MZONE,i)
-		if tc and tc:IsFaceup() then
-			rac=(rac|tc:GetAttribute())
-		end
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,p,LOCATION_MZONE,0,nil)
+	local tc=g:GetFirst()
+	for tc in aux.Next(g) do
+		rac=(rac|tc:GetAttribute())
 	end
 	s[p]=rac
 end
 function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerAffectedByEffect(0,id) then
+	if not Duel.IsPlayerAffectedByEffect(0,97811903) then
 		s.raccheck(0)
 	else s[0]=0 end
-	if not Duel.IsPlayerAffectedByEffect(1,id) then
+	if not Duel.IsPlayerAffectedByEffect(1,97811903) then
 		s.raccheck(1)
 	else s[1]=0 end
 end

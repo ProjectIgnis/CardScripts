@@ -1,6 +1,6 @@
 --Elimigate
 --アサシン・ゲート
---updated by Larry126
+--Elimigate
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)

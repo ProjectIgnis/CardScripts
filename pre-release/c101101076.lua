@@ -1,4 +1,4 @@
---メガリス・フール
+--影依の偽典
 --Shaddoll Ruq
 --scripted by Naim
 local s,id=GetID()

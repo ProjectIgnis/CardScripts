@@ -1,14 +1,15 @@
---Ｎｏ．ＸＸ インフィニティ・ダークホープ
---Number XX: Infinity Dark Hope
+--Ｎｏ．ＸＸ インフィニティ・ダークホープ (Manga)
+--Number XX: Utopic Dark Infinity (Manga)
 --fixed and updated by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--xyz summon
-	Xyz.AddProcedure(c,nil,10,3)
 	c:EnableReviveLimit()
+	Xyz.AddProcedure(c,nil,10,2,nil,nil,99)
 	--Gain LP
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(53701074,0))
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_RECOVER)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Battle
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
@@ -45,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if aux.nzatk(tc) and tc:IsRelateToEffect(e) then
 		local c=e:GetHandler()
 		local fid=c:GetFieldID()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+		tc:RegisterFlagEffect(alias,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -59,7 +60,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabelObject():GetFlagEffectLabel(id)~=e:GetLabel() then
+	if e:GetLabelObject():GetFlagEffectLabel(alias)~=e:GetLabel() then
 		e:Reset()
 		return false
 	else return true end
@@ -81,8 +82,8 @@ function s.btcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.bttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id0)==0 end
-	e:GetHandler():RegisterFlagEffect(id0,RESET_CHAIN,0,1)
+	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
+	e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

@@ -1,4 +1,5 @@
--- Fallen Angel of Roses (anime)
+--魔天使ローズ・ソーサラー (Anime)
+--Fallen Angel of Roses (Anime)
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,6 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={96470883}
+s.listed_series={0x218}
 function s.spfilter(c,ft)
 	return c:IsFaceup() and c:IsCode(96470883) and c:IsAbleToHandAsCost() and (ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end

@@ -1,5 +1,4 @@
 --Frightfur Parade
---fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate
@@ -13,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xad}
 function s.cfilter(c,tp)
 	return c:IsOnField() and c:IsControler(1-tp)
 end

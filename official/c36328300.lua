@@ -38,7 +38,7 @@ function s.exfilter(c,tp)
 	return Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c))>0
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)>=7 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg)
+	return sg:GetClassCount(Card.GetCode)==#sg and Duel.GetLocationCountFromEx(tp,tp,sg)>0,sg:GetClassCount(Card.GetCode)~=#sg
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

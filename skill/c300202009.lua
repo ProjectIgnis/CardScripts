@@ -29,9 +29,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
     local b2=(Duel.GetFlagEffect(ep,id+1)==0 and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x4) and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x64) and Duel.IsPlayerCanDraw(tp,2))
     local b3= b1 and b2 and Duel.IsPlayerCanDraw(tp,3)
 	local p=0
-	Debug.Message(b1)
-	Debug.Message(b2)
-	Debug.Message(b3)
     if b3 then
         p=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
     elseif b1 then

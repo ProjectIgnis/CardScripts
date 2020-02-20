@@ -41,7 +41,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	--1 flag = 1 counter
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
-	Debug.Message(Duel.GetFlagEffect(tp,id))
 end
 function s.atkfilter(e,c)
 	return c:IsRace(RACE_ZOMBIE)

@@ -1,3 +1,4 @@
+--クイズ： 数学の５０００
 --Quiz Action - Math 5000
 local s,id=GetID()
 function s.initial_effect(c)

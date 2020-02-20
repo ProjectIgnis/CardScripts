@@ -1,3 +1,4 @@
+--クイズ： 理科の１００
 --Quiz Action - Science for 100
 local s,id=GetID()
 function s.initial_effect(c)

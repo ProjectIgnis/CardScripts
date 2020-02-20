@@ -1,3 +1,4 @@
+--クイズ： なぞなぞの１０００
 --Quiz Action - Trivia for 1000
 local s,id=GetID()
 function s.initial_effect(c)

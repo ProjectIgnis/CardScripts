@@ -1,3 +1,4 @@
+--クイズ： 数学の１００
 --Quiz Action - Math for 100
 local s,id=GetID()
 function s.initial_effect(c)

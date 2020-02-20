@@ -1,3 +1,4 @@
+--大凶
 --Lousy Luck
 local s,id=GetID()
 function s.initial_effect(c)

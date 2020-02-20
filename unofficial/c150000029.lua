@@ -1,34 +1,18 @@
+--フレイム・ガード
 --Flame Guard
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--reflect
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--become action card
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_BECOME_QUICK)
-	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_REMOVE_TYPE)
-	e3:SetValue(TYPE_QUICKPLAY)
-	c:RegisterEffect(e3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
-	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	if ex then return true end
-	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
-	if not ex then return false end
-	if cp~=PLAYER_ALL then return Duel.IsPlayerAffectedByEffect(cp,EFFECT_REVERSE_RECOVER)
-	else return Duel.IsPlayerAffectedByEffect(0,EFFECT_REVERSE_RECOVER)
-		or Duel.IsPlayerAffectedByEffect(1,EFFECT_REVERSE_RECOVER)
-	end
+	return aux.damcon1(e,tp,eg,ep,ev,re,r,rp) or aux.damcon1(e,1-tp,eg,ep,ev,re,r,rp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
@@ -36,16 +20,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
+	e1:SetTargetRange(1,1)
 	e1:SetLabel(cid)
-	e1:SetValue(s.refcon)
+	e1:SetValue(s.damcon)
 	e1:SetReset(RESET_CHAIN)
 	Duel.RegisterEffect(e1,tp)
 end
-function s.refcon(e,re,val,r,rp,rc)
+function s.damcon(e,re,val,r,rp,rc)
 	local cc=Duel.GetCurrentChain()
-	if cc==0 or (r&REASON_EFFECT)==0 then return end
+	if cc==0 or bit.band(r,REASON_EFFECT)==0 then return val end
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
-	if cid==e:GetLabel() then return 0
-	else return val end
+	if cid==e:GetLabel() then return 0 else return val end
 end

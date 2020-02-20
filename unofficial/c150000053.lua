@@ -1,3 +1,4 @@
+--クイズ： 数学の２００
 --Quiz Action - Math for 200
 local s,id=GetID()
 function s.initial_effect(c)

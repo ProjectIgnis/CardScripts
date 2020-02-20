@@ -14,8 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local phase=Duel.GetCurrentPhase()
-	if (phase~=PHASE_DAMAGE and phase~=PHASE_DAMAGE_CAL) or Duel.IsDamageCalculated() then return false end
+	if not (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) then return false end
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	return d~=nil and a:IsRelateToBattle() and d:IsRelateToBattle()

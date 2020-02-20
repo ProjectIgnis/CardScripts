@@ -1,5 +1,5 @@
 --突撃
---Assault
+--Charge Recklessly
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,12 +11,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	if not (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) then return false end
 	local tc=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
 	if not at or tc:IsFacedown() or at:IsFacedown() then return false end
 	if tc:IsControler(1-tp) then tc=at end
 	e:SetLabelObject(tc)
-	return tc:IsControler(tp) and tc:IsLocation(LOCATION_MZONE) 
+	return tc:IsControler(tp) and tc:IsLocation(LOCATION_MZONE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

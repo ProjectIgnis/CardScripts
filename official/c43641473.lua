@@ -17,7 +17,7 @@ function s.tcfilter(tc,ec)
 	return tc:IsFaceup() and ec:CheckEquipTarget(tc)
 end
 function s.ecfilter(c)
-	return c:IsType(TYPE_EQUIP) and c:GetEquipTarget()~=nil and Duel.IsExistingTarget(s.tcfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),c)
+	return c:IsType(TYPE_EQUIP) and (not c:IsOriginalType(TYPE_MONSTER) or c:IsOriginalType(TYPE_UNION)) and c:GetEquipTarget()~=nil and Duel.IsExistingTarget(s.tcfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -34,7 +34,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tc=g:GetFirst()
 	if tc==ec then tc=g:GetNext() end
-	if ec:IsFaceup() and ec:IsRelateToEffect(e) then
-		Duel.Equip(tp,ec,tc)
+	if ec:IsFaceup() and ec:IsRelateToEffect(e) then 
+		if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+			Duel.Equip(tp,ec,tc)
+		else 
+			Duel.SendtoGrave(ec,REASON_EFFECT) 
+		end
 	end
 end

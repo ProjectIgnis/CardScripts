@@ -59,5 +59,5 @@ function s.atfilter(c)
 end
 function s.atlimit(e,c)
 	local g=Duel.GetMatchingGroup(s.atfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
-	return c:IsFaceup() and c:IsSetCard(0x131) and g:GetMaxGroup(Card.GetLevel):IsContains(c)
+	return c:IsFaceup() and c:IsSetCard(0x131) and not g:GetMaxGroup(Card.GetLevel):IsContains(c)
 end

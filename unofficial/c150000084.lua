@@ -26,7 +26,8 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(0,id)>0
+	return (Duel.GetBattleDamage(0)>0 or Duel.GetBattleDamage(1)>0)
+		and Duel.GetFlagEffect(0,id)>0
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ge1=Effect.CreateEffect(e:GetHandler())

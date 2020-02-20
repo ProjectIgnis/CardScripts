@@ -1,6 +1,7 @@
 --地縛原
 --Earthbound Tundra
 --Scripted by Larry126
+local s,id=GetID()
 function s.initial_effect(c)
 	--cannot summon in def
 	local e1=Effect.CreateEffect(c)

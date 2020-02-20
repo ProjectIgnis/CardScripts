@@ -1,8 +1,9 @@
--- Acrobatic Circus
+--アスレチック・サーカス
+--Acrobatic Circus
 local s,id=GetID()
 
 function s.initial_effect(c)
-	aux.CallToken(301)
+	Duel.LoadCardScript("c301.lua")
 end
 
 s.af="a"
@@ -12,4 +13,4 @@ s.tableAction = {
 150000033,
 150000042,
 150000071
-}
+} 

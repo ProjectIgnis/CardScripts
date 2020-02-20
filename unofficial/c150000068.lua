@@ -22,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local tc=g:GetFirst()
 	if chkc then return chkc:IsControler(tp) and g:IsContains(chkc) and chkc:IsCanBeEffectTarget(e) end
-	if chk==0 then return g:GetCount()==1 and tc:IsCanBeEffectTarget(e) end
+	if chk==0 then return #g==1 and tc:IsCanBeEffectTarget(e) end
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 end

@@ -1,12 +1,13 @@
 --Battle Lock
-function c150000006.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
-	e1:SetCondition(c150000006.condition)
-	e1:SetOperation(c150000006.activate)
+	e1:SetCondition(s.condition)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--become action card
 	local e2=Effect.CreateEffect(c)
@@ -19,11 +20,11 @@ function c150000006.initial_effect(c)
 	e3:SetValue(TYPE_QUICKPLAY)
 	c:RegisterEffect(e3)
 end
-function c150000006.condition(e,tp,eg,ep,ev,re,r,rp)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return tp~=Duel.GetTurnPlayer() and bit.band(ph,PHASE_MAIN2+PHASE_END)==0
+	return tp~=Duel.GetTurnPlayer() and (ph&PHASE_MAIN2+PHASE_END)==0
 end
-function c150000006.activate(e,tp,eg,ep,ev,re,r,rp)
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)

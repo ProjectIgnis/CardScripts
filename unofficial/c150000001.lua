@@ -37,7 +37,7 @@ end
 function s.refcon(e,re,val,r,rp,rc)
 	local cc=Duel.GetCurrentChain()
 	local cc=Duel.GetCurrentChain()
-	if cc==0 or bit.band(r,REASON_EFFECT)==0 then return end
+	if cc==0 or (r&REASON_EFFECT)==0 then return end
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
 	if cid==e:GetLabel() then return 0 end
 	return val

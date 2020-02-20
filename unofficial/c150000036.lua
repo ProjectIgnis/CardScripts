@@ -1,13 +1,14 @@
 --Illusion Fire
-function c150000036.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--multi atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(c150000036.condition)
-	e1:SetTarget(c150000036.target)
-	e1:SetOperation(c150000036.operation)
+	e1:SetCondition(s.condition)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--become action card
 	local e2=Effect.CreateEffect(c)
@@ -20,13 +21,13 @@ function c150000036.initial_effect(c)
 	e3:SetValue(TYPE_QUICKPLAY)
 	c:RegisterEffect(e3)
 end
-function c150000036.condition(e,tp,eg,ep,ev,re,r,rp)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
-function c150000036.filter(c)
+function s.filter(c)
 	return c:IsFaceup()
 end
-function c150000036.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -36,12 +37,12 @@ function c150000036.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_OATH)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(c150000036.ftarget)
+	e1:SetTarget(s.ftarget)
 	e1:SetLabel(g:GetFirst():GetFieldID())
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function c150000036.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		local ct=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
@@ -50,11 +51,11 @@ function c150000036.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EXTRA_ATTACK)
 			e1:SetValue(ct-1)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 	end
 end
-function c150000036.ftarget(e,c)
+function s.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end

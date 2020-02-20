@@ -1,13 +1,14 @@
 --Restore
-function c150000061.initial_effect(c)
+local s,id=GetID()
+function s.initial_effect(c)
 	--
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_RECOVER+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(c150000061.target)
-	e1:SetOperation(c150000061.operation)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--become action card
 	local e2=Effect.CreateEffect(c)
@@ -20,17 +21,17 @@ function c150000061.initial_effect(c)
 	e3:SetValue(TYPE_QUICKPLAY)
 	c:RegisterEffect(e3)
 end
-function c150000061.filter(c)
+function s.filter(c)
 	return c:IsFaceup() and c:GetAttack()~=c:GetBaseAttack()
 end
-function c150000061.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c150000061.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c150000061.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c150000061.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,0)
 end
-function c150000061.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local atk=tc:GetAttack()
@@ -41,7 +42,7 @@ function c150000061.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(tc:GetBaseAttack())
 		tc:RegisterEffect(e1)
 	end

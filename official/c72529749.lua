@@ -21,7 +21,7 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=eg:Filter(aux.zptfilter(nil),nil,e:GetHandler())
+	local g=aux.zptgroup(eg,nil,e:GetHandler())
 	local tg=g:Filter(Card.IsLocation,nil,LOCATION_MZONE)
 	Duel.SetTargetCard(tg)
 	local g2=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)

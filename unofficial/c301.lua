@@ -36,77 +36,89 @@ if not ActionDuel then
 		--act ac in hand
 		local e6=Effect.GlobalEffect()
 		e6:SetType(EFFECT_TYPE_FIELD)
-		e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
 		e6:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
-		e6:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
-		e6:SetTarget(function(e,c) return c:IsType(TYPE_ACTION) and c:IsType(TYPE_SPELL) end)
+		e6:SetTargetRange(0xff,0xff)
+		e6:SetTarget(function(e,c) return c:IsActionCard() and not c:IsType(TYPE_FIELD) end)
 		Duel.RegisterEffect(e6,0)
+		local e7=Effect.GlobalEffect()
+		e7:SetType(EFFECT_TYPE_FIELD)
+		e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
+		e7:SetCode(EFFECT_BECOME_QUICK)
+		e7:SetTargetRange(0xff,0xff)
+		e7:SetTarget(function(e,c) return c:IsActionCard() and not c:IsType(TYPE_FIELD) end)
+		Duel.RegisterEffect(e7,0)
 	end
 
 	function ActionDuel.op(e,tp,eg,ep,ev,re,r,rp)
-		local draw={0,0}
-	--  local ag={Duel.GetMatchingGroup(function(c) return c.af end,tp,0xff,0,nil),Duel.GetMatchingGroup(function(c) return c.af end,tp,0,0xff,nil)}
-		local g=Duel.GetMatchingGroup(function(c) return c.af end,tp,0xff,0xff,nil)
-		Duel.DisableShuffleCheck()
-		for c in aux.Next(g) do
-			if c:IsLocation(LOCATION_HAND) then
-				draw[1+c:GetOwner()] = draw[1+c:GetOwner()] + 1
-			end
-			if not e:GetLabelObject() then
-				e:SetLabelObject(c)
-				for _,tc in ipairs({c,Duel.CreateToken(1-tp,c:GetOriginalCode())}) do
-					--redirect
-					local e1=Effect.CreateEffect(tc)
-					e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-					e1:SetCode(EVENT_LEAVE_FIELD)
-					e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-					e1:SetOperation(function(e) Duel.SendtoDeck(e:GetHandler(),nil,-2,REASON_RULE) end)
-					tc:RegisterEffect(e1)
-					local e2=Effect.CreateEffect(c)
-					e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS) 
-					e2:SetCode(EVENT_CHAIN_END)
-					e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-					e2:SetLabelObject(tc)
-					e2:SetOperation(ActionDuel.returnop)
-					Duel.RegisterEffect(e2,0)
-					--unaffectable
-					local ea=Effect.CreateEffect(tc)
-					ea:SetType(EFFECT_TYPE_SINGLE)
-					ea:SetCode(EFFECT_CANNOT_TO_DECK)
-					ea:SetRange(LOCATION_SZONE)
-					ea:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-					tc:RegisterEffect(ea)
-					local eb=ea:Clone()
-					eb:SetCode(EFFECT_CANNOT_REMOVE)
-					tc:RegisterEffect(eb)
-					local ec=ea:Clone()
-					ec:SetCode(EFFECT_CANNOT_TO_HAND)
-					tc:RegisterEffect(ec)
-					local ed=ea:Clone()
-					ed:SetCode(EFFECT_CANNOT_TO_GRAVE)
-					tc:RegisterEffect(ed)
-					local ee=ea:Clone()
-					ee:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-					ee:SetValue(1)
-					tc:RegisterEffect(ee)
-					-- add ability Yell when Vanilla mode activated
-					if Duel.IsExistingMatchingCard(Card.IsCode,tp,0xff,0xff,1,nil,CARD_VANILLA_MODE) then
-						table.insert(tc.tableAction,CARD_POTENTIAL_YELL)
-						table.insert(tc.tableAction,CARD_ABILITY_YELL)
-					end
-					-- move to field
-					if Duel.CheckLocation(tc:GetOwner(),LOCATION_FZONE,0) then
-						Duel.MoveToField(tc,tc:GetOwner(),tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,true)
-					else
-						Duel.SendtoDeck(tc,nil,-2,REASON_RULE)
-					end
+		local actionFieldToBeUsed={}
+		local announceFilter={TYPE_ACTION,OPCODE_ISTYPE,TYPE_FIELD,OPCODE_ISTYPE,OPCODE_AND}
+		while #actionFieldToBeUsed==0 do
+			for p=0,1 do
+				if Duel.SelectYesNo(p,aux.Stringid(301,3)) then
+					Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(301,4))
+					local af=Duel.AnnounceCard(p,table.unpack(announceFilter))
+					table.insert(actionFieldToBeUsed,af)
 				end
-			else
-				Duel.SendtoDeck(c,nil,-2,REASON_RULE)
 			end
+			if #actionFieldToBeUsed>0 then break
+			else Duel.Hint(HINT_MESSAGE,0,aux.Stringid(301,5)) Duel.Hint(HINT_MESSAGE,1,aux.Stringid(301,5)) end
 		end
+		if #actionFieldToBeUsed>1 then
+			Duel.Hint(HINT_MESSAGE,0,aux.Stringid(301,6))
+			Duel.Hint(HINT_MESSAGE,1,aux.Stringid(301,6))
+			local coin=Duel.TossCoin(0,1)
+			table.remove(actionFieldToBeUsed,coin+1)
+		end
+		Duel.Hint(HINT_CARD,0,actionFieldToBeUsed[1])
 		for p=0,1 do
-			if draw[1+p]>0 then Duel.Draw(p,draw[1+p],REASON_RULE) end
+			local tc=Duel.CreateToken(p,actionFieldToBeUsed[1])
+			e:SetLabelObject(tc)
+			--redirect
+			local e1=Effect.CreateEffect(tc)
+			e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+			e1:SetCode(EVENT_LEAVE_FIELD)
+			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetOperation(function(e) Duel.SendtoDeck(e:GetHandler(),nil,-2,REASON_RULE) end)
+			tc:RegisterEffect(e1)
+			local e2=Effect.CreateEffect(tc)
+			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS) 
+			e2:SetCode(EVENT_CHAIN_END)
+			e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+			e2:SetLabelObject(tc)
+			e2:SetOperation(ActionDuel.returnop)
+			Duel.RegisterEffect(e2,0)
+			--unaffectable
+			local ea=Effect.CreateEffect(tc)
+			ea:SetType(EFFECT_TYPE_SINGLE)
+			ea:SetCode(EFFECT_CANNOT_TO_DECK)
+			ea:SetRange(LOCATION_SZONE)
+			ea:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+			tc:RegisterEffect(ea)
+			local eb=ea:Clone()
+			eb:SetCode(EFFECT_CANNOT_REMOVE)
+			tc:RegisterEffect(eb)
+			local ec=ea:Clone()
+			ec:SetCode(EFFECT_CANNOT_TO_HAND)
+			tc:RegisterEffect(ec)
+			local ed=ea:Clone()
+			ed:SetCode(EFFECT_CANNOT_TO_GRAVE)
+			tc:RegisterEffect(ed)
+			local ee=ea:Clone()
+			ee:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+			ee:SetValue(1)
+			tc:RegisterEffect(ee)
+			-- add ability Yell when Vanilla mode activated
+			if Duel.IsExistingMatchingCard(Card.IsCode,tp,0xff,0xff,1,nil,CARD_VANILLA_MODE) then
+				table.insert(tc.tableAction,CARD_POTENTIAL_YELL)
+				table.insert(tc.tableAction,CARD_ABILITY_YELL)
+			end
+			-- move to field
+			if Duel.CheckLocation(tc:GetOwner(),LOCATION_FZONE,0) then
+				Duel.MoveToField(tc,tc:GetOwner(),tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,true)
+			else
+				Duel.SendtoDeck(tc,nil,-2,REASON_RULE)
+			end
 		end
 	end
 	function ActionDuel.returnop(e)
@@ -119,7 +131,7 @@ if not ActionDuel then
 	------------------------------------------------------------------------------
 	-- Add Action Card
 	function ActionDuel.acfilter(c)
-		return c:IsType(TYPE_ACTION) and c:IsType(TYPE_SPELL)
+		return c:IsActionCard() and c:IsType(TYPE_SPELL)
 	end
 	--Check whether tp already has an Action Card in hand
 	function ActionDuel.handcheck(tp)

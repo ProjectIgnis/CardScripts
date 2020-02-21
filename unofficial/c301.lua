@@ -7,7 +7,7 @@ if not ActionDuel then
 		local e1=Effect.GlobalEffect()
 		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_NO_TURN_RESET)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PREDRAW)
+		e1:SetCode(EVENT_ADJUST)
 		e1:SetCountLimit(1)
 		e1:SetOperation(ActionDuel.op)
 		Duel.RegisterEffect(e1,0)

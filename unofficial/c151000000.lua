@@ -1,6 +1,21 @@
 --Action Field Functions
 if not ActionDuel then
 
+	function Card.IsActionCard(c)
+		return c:IsType(TYPE_ACTION) and not c.af
+	end
+
+	function Card.IsActionField(c)
+		return c:IsType(TYPE_ACTION) and c.af
+	end
+
+	local tableActionGeneric={
+		150000024,150000033,
+		150000047,150000042,
+		150000011,150000044,
+		150000022,150000020
+	}
+
 	ActionDuel={}
 
 	local function ActionDuelRules()
@@ -39,14 +54,14 @@ if not ActionDuel then
 		e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
 		e6:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 		e6:SetTargetRange(0xff,0xff)
-		e6:SetTarget(function(e,c) return c:IsActionCard() end)
+		e6:SetTarget(aux.TargetBoolFunction(Card.IsActionCard))
 		Duel.RegisterEffect(e6,0)
 		local e7=Effect.GlobalEffect()
 		e7:SetType(EFFECT_TYPE_FIELD)
 		e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
 		e7:SetCode(EFFECT_BECOME_QUICK)
 		e7:SetTargetRange(0xff,0xff)
-		e7:SetTarget(function(e,c) return c:IsActionCard() end)
+		e7:SetTarget(aux.TargetBoolFunction(Card.IsActionCard))
 		Duel.RegisterEffect(e7,0)
 		local e7=Effect.GlobalEffect()
 		e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -125,7 +140,6 @@ if not ActionDuel then
 			ee:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 			ee:SetValue(1)
 			tc:RegisterEffect(ee)
-			if not tc.tableAction then tc.tableAction=tableActionGeneric end
 			-- add ability Yell when Vanilla mode activated
 			if Duel.IsExistingMatchingCard(Card.IsCode,tp,0xff,0xff,1,nil,CARD_VANILLA_MODE) then
 				table.insert(tc.tableAction,CARD_POTENTIAL_YELL)
@@ -147,16 +161,12 @@ if not ActionDuel then
 		end
 	end
 	------------------------------------------------------------------------------
-	-- Add Action Card
-	function ActionDuel.acfilter(c)
-		return c:IsActionCard() and c:IsType(TYPE_SPELL)
-	end
 	--Check whether tp already has an Action Card in hand
 	function ActionDuel.handcheck(tp)
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_EARTHBOUND_TUNDRA) then
-			return Duel.IsExistingMatchingCard(ActionDuel.acfilter,tp,LOCATION_HAND,0,2,nil)
+			return Duel.IsExistingMatchingCard(Card.IsActionCard,tp,LOCATION_HAND,0,2,nil)
 		else
-			return Duel.IsExistingMatchingCard(ActionDuel.acfilter,tp,LOCATION_HAND,0,1,nil)
+			return Duel.IsExistingMatchingCard(Card.IsActionCard,tp,LOCATION_HAND,0,1,nil)
 		end
 	end
 	function ActionDuel.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -168,7 +178,7 @@ if not ActionDuel then
 	function ActionDuel.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
 		local originalField=e:GetLabelObject():GetLabelObject()
-		local t=string.find(originalField.af,'m') and originalField.tableAction or (c.tableAction and c.tableAction or originalField.tableAction)
+		local t=string.find(originalField.af,'m') and originalField.tableAction or (c.tableAction and c.tableAction or (originalField.tableAction and originalField.tableAction or tableActionGeneric))
 		if chk==0 then return #t>0 end
 		ac=Duel.GetRandomNumber(1,#t)
 		e:SetLabel(t[ac])
@@ -202,7 +212,7 @@ if not ActionDuel then
 				Duel.RegisterFlagEffect(1-tp,320,RESET_PHASE+PHASE_END,0,1)
 			end
 		end
-		if Duel.IsExistingMatchingCard(ActionDuel.acfilter,tokenp,LOCATION_HAND,0,2,nil)
+		if Duel.IsExistingMatchingCard(Card.IsActionCard,tokenp,LOCATION_HAND,0,2,nil)
 			and Duel.Remove(token,POS_FACEUP,REASON_EFFECT) then
 			local g=Duel.SelectMatchingCard(tokenp,Card.IsFaceup,tokenp,0,LOCATION_MZONE,1,1,nil)
 			local e1=Effect.CreateEffect(e:GetHandler())
@@ -246,14 +256,6 @@ if not ActionDuel then
 	end
 
 	ActionDuelRules()
-
-	Card.IsActionCard=function(c)
-		return c:IsType(TYPE_ACTION) and not c.af
-	end
-
-	Card.IsActionField=function(c)
-		return c:IsType(TYPE_ACTION) and c.af
-	end
 	
 	COVER_ACTION=301
 	CARD_VANILLA_MODE=511004400

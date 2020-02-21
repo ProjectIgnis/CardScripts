@@ -1,8 +1,8 @@
---アシッドレイン (Action Field)
---Acidic Downpour (Action Field)
+--ウォーターワールド (Action Field)
+--Umiiruka (Action Field)
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -13,13 +13,13 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_EARTH))
-	e2:SetValue(-500)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER))
+	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	--Def down
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
-	e3:SetValue(400)
+	e3:SetValue(-400)
 	c:RegisterEffect(e3)
 end
 s.af="a"

@@ -1,0 +1,48 @@
+name: Delta repository generator
+on:
+  push:
+    branches:
+      - master
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    env:
+      REMOTE: ProjectIgnis/DeltaBeta.git
+      DESTINATION: DeltaBeta/script
+      BASE_SHA: 49f1929369aa26fb60e8c2f5afff28f51977990b
+    steps:
+    - uses: actions/checkout@v1
+    - name: Clone destination repository
+      run: |
+        cd $HOME
+        git clone https://${{ secrets.DEPLOY_TOKEN }}@github.com/$REMOTE
+        mkdir -p $DESTINATION
+    - name: Copy new or changed files
+      id: copy
+      run: |
+        ADDED=$(git diff --name-only --diff-filter=d $BASE_SHA | grep -vP "(^|/)\..*")
+        if [[ "$ADDED" ]]; then
+          rsync -avR $ADDED $HOME/$DESTINATION
+        fi
+    - name: Remove deleted files
+      run: |
+        REMOVED=$(git diff --name-only --diff-filter=D $BASE_SHA)
+        cd $HOME/$DESTINATION
+        if [[ "$REMOVED" ]]; then
+          git rm -rf --ignore-unmatch $REMOVED
+        fi
+    - name: Commit and push with original metadata
+      run: |
+        MESSAGE=$(git log -1 --pretty=%B)
+        AUTHOR=$(git log -1 --pretty=format:'%an')
+        EMAIL=$(git log -1 --pretty=format:'%ae')
+        COMMITTER=$(git log -1 --pretty=format'%cn')
+        CEMAIL=$(git log -1 --pretty=format:'%ce')
+        cd $HOME/$DESTINATION
+        git config user.email "$CEMAIL"
+        git config user.name "$COMMITTER"
+        git add -A .
+        if [[ $(git status --porcelain) ]]; then
+          git commit --author="$AUTHOR <$EMAIL>" -m "$MESSAGE"
+          git push
+        fi

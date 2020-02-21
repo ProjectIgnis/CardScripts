@@ -5,12 +5,12 @@ local s,id=GetID()
 function s.initial_effect(c)
     --Fusion
     local e1=Fusion.CreateSummonEff({handler=c,desc=aux.Stringid(id,0),extrafil=function()return nil,s.matcheck end})
-    e1:SetDescription(aux.Stringid(id,0)
+    e1:SetDescription(aux.Stringid(id,0))
     e1:SetCost(s.costhint)
     c:RegisterEffect(e1)
     --Ritual
     local e2=Ritual.CreateProc({handler=c,lvtype=RITPROC_GREATER,desc=aux.Stringid(id,1),forcedselection=s.forcedselection})
-    e2:SetDescription(aux.Stringid(id,1)
+    e2:SetDescription(aux.Stringid(id,1))
     e2:SetCost(s.costhint)
     c:RegisterEffect(e2)
 end

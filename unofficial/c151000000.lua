@@ -7,7 +7,7 @@ if not ActionDuel then
 		local e1=Effect.GlobalEffect()
 		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_NO_TURN_RESET)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PREDRAW)
+		e1:SetCode(EVENT_ADJUST)
 		e1:SetCountLimit(1)
 		e1:SetOperation(ActionDuel.op)
 		Duel.RegisterEffect(e1,0)
@@ -55,7 +55,7 @@ if not ActionDuel then
 		local announceFilter={TYPE_ACTION,OPCODE_ISTYPE,TYPE_FIELD,OPCODE_ISTYPE,OPCODE_AND}
 		while #actionFieldToBeUsed==0 do
 			for p=0,1 do
-				if Duel.SelectYesNo(p,aux.Stringid(151000000,3) then
+				if Duel.SelectYesNo(p,aux.Stringid(151000000,3)) then
 					Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(151000000,4))
 					local af=Duel.AnnounceCard(p,table.unpack(announceFilter))
 					table.insert(actionFieldToBeUsed,af)
@@ -73,6 +73,7 @@ if not ActionDuel then
 		Duel.Hint(HINT_CARD,0,actionFieldToBeUsed[1])
 		for p=0,1 do
 			local tc=Duel.CreateToken(p,actionFieldToBeUsed[1])
+			e:SetLabelObject(tc)
 			--redirect
 			local e1=Effect.CreateEffect(tc)
 			e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -269,7 +270,7 @@ if not ActionDuel then
 	10080320,
 	7617062,
 	37694547,
-	31510000007655,
+	33017655,
 	56594520,
 	87430998,
 	62265044,

@@ -7,7 +7,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--fusion
 	local e2=Effect.CreateEffect(c)
@@ -18,7 +17,6 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.spcost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -26,29 +24,8 @@ function s.initial_effect(c)
 	table.insert(GhostBelleTable,e2)
 end
 s.listed_series={0x9d}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if s.spcon(e,tp,eg,ep,ev,re,r,rp) and s.spcost(e,tp,eg,ep,ev,re,r,rp,0)
-		and s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
-		and Duel.SelectYesNo(tp,94) then
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_TOGRAVE)
-		e:SetOperation(s.spop)
-		s.spcost(e,tp,eg,ep,ev,re,r,rp,1)
-		s.sptg(e,tp,eg,ep,ev,re,r,rp,1)
-		if not GhostBelleTable then GhostBelleTable={} end
-		table.insert(GhostBelleTable,e)
-	else
-		e:SetCategory(0)
-		e:SetOperation(nil)
-		if GhostBelleTable then table.remove(GhostBelleTable,e) end
-	end
-end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.filter0(c)
 	return c:IsOnField() and c:IsAbleToRemove()

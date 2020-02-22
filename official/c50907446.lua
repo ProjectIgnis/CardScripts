@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x9d}
-function s.ffilter(c,fc,sumtype,tp,sp,sub,mg,sg)
+function s.ffilter(c,fc,sumtype,sp,sub,mg,sg)
 	return c:IsSetCard(0x9d,fc,sumtype,tp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

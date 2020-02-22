@@ -1085,7 +1085,7 @@ function Auxiliary.zptgroup(eg,filter,c,tp)
 end
 function Auxiliary.zptgroupcon(eg,filter,c,tp)
 	local fil=eg:Filter(function()return not filter or filter(c,tp) end,nil)
-	return (fil&c:GetLinkedGroup())>0 or eg:IsExists(Auxiliary.zptfilter,1,nil,c)
+	return #(fil&c:GetLinkedGroup())>0 or eg:IsExists(Auxiliary.zptfilter,1,nil,c)
 end
 function Auxiliary.zptfilter(c,ec)
 	return (ec:GetLinkedZone(c:GetPreviousControler())&(1<<c:GetPreviousSequence()))~=0

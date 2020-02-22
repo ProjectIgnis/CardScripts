@@ -71,11 +71,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for gemini monster that be special summoned
 function s.filter1(c,e,tp)
-	return c:IsType(TYPE_DUAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsType(TYPE_GEMINI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 	--Check for gemini monster
 function s.filter2(c)
-	return c:IsFaceup() and c:IsType(TYPE_DUAL) and c:IsReleasableByEffect()
+	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and c:IsReleasableByEffect()
 end
 	--Check for FIRE warrior monster
 function s.filter3(c,e,tp)

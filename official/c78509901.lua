@@ -4,14 +4,15 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_SPSUMMON_PROC)
-	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetRange(LOCATION_HAND)
-	e2:SetCondition(s.spcon)
-	e2:SetOperation(s.spop)
-	c:RegisterEffect(e2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetCondition(s.spcon1)
+	e1:SetTarget(s.sptg1)
+	e1:SetOperation(s.spop1)
+	c:RegisterEffect(e1)
 	--extra att
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -31,44 +32,39 @@ function s.initial_effect(c)
 end
 s.listed_series={0xe3}
 s.listed_names={CARD_VIJAM,4998619}
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe3) and c:IsAbleToGraveAsCost()
+function s.spfilter(c,ft)
+	return c:IsFaceup() and c:IsSetCard(0xe3) and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)
 end
-function s.mzfilter(c)
-	return c:GetSequence()<5
-end
-function s.spcon(e,c)
+function s.spcon1(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=-ft+1
-	return ft>-2 and #mg>1 and (ft>0 or mg:IsExists(s.mzfilter,ct,nil))
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil,ft)
+	return ft>-1 and #rg>0 and aux.SelectUnselectGroup(rg,e,tp,2,2,nil,0)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+function s.sptg1(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
 	local g=nil
-	if ft>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		g=mg:Select(tp,2,2,nil)
-	elseif ft==0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		g=mg:FilterSelect(tp,s.mzfilter,1,1,nil)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g2=mg:Select(tp,1,1,g)
-		g:Merge(g2)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		g=mg:FilterSelect(tp,s.mzfilter,2,2,nil)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil,Duel.GetLocationCount(tp,LOCATION_MZONE))
+	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,nil,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
 	end
+	return false
+end
+function s.spop1(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.SendtoGrave(g,REASON_COST)
-	local e1=Effect.CreateEffect(c)
+	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(2000)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
-	c:RegisterEffect(e1)
+	e:GetHandler():RegisterEffect(e1)
+	g:DeleteGroup()
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_VIJAM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

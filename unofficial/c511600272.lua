@@ -1,10 +1,11 @@
 --コードブレイカー・ウイルスソードマン
---Codebreaker Virus Swordsman
+--Codebreaker Virus Swordsman (Anime)
 --Scripted by Larry126
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x583),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x13c),2,2)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(168917,0))
@@ -37,17 +38,17 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x23b}
+s.listed_series={0x13c}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.spfilter(c,e,tp,zones)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x23b)
+	return c:IsLevelBelow(4) and c:IsSetCard(0x13c)
 		and (zones[0]>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,0,zones[0])
 		or zones[1]>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1,zones[1]))
 end
 function s.spfilter2(c,e,tp,sump,zone)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x23b)
+	return c:IsLevelBelow(4) and c:IsSetCard(0x13c)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,sump,zone)
 end
 function s.filter(c,e,tp)
@@ -89,7 +90,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()~=nil
 end
 function s.damfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x23b)
+	return c:IsFaceup() and c:IsSetCard(0x13c)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end

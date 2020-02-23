@@ -59,10 +59,9 @@ end
 function s.xop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_GRAVE,0,e:GetHandler(),0x126)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsSetCard),tp,LOCATION_GRAVE,0,nil,0x126)
 	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.xcheck,1,tp,HINTMSG_XMATERIAL)
 	if #sg==3 then
 		Duel.Overlay(tc,sg)
 	end
 end
-

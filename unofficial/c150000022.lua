@@ -1,5 +1,8 @@
---Action Card - Encore
-function c150000022.initial_effect(c)
+--アンコール
+--Encore
+--Scripted by Larry126
+local s,id=GetID()
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -7,45 +10,36 @@ function c150000022.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(c150000022.condition)
-	e1:SetTarget(c150000022.target)
-	e1:SetOperation(c150000022.operation)
+	e1:SetCondition(s.condition)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--become action card
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_BECOME_QUICK)
-	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_REMOVE_TYPE)
-	e3:SetValue(TYPE_QUICKPLAY)
-	c:RegisterEffect(e3)
 end
-function c150000022.condition(e,tp,eg,ep,ev,re,r,rp)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
-function c150000022.filter(c)
-	return c:IsSetCard(0xac1) and c:IsType(TYPE_SPELL) and c:CheckActivateEffect(false,false,false)~=nil and not c:IsType(TYPE_FIELD)
+function s.filter(c)
+	return c:IsType(TYPE_ACTION) and c:IsType(TYPE_SPELL) and not c:IsType(TYPE_FIELD)
+		and c:CheckActivateEffect(false,false,false)~=nil
 end
-function c150000022.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local b1=Duel.IsExistingMatchingCard(c150000022.filter,tp,LOCATION_GRAVE,0,1,nil,tp)
+	local b1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,tp)
 	local op=0
 	if b1 then
-	op=Duel.SelectOption(tp,aux.Stringid(150000022,0),aux.Stringid(150000022,1))
+	op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
 	else
-	op=Duel.SelectOption(tp,aux.Stringid(150000022,1))+1
+	op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
 	end
 	if op==0 then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,c150000022.filter,tp,0,LOCATION_GRAVE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_GRAVE,1,1,nil)
 	else
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 	end
 	e:SetLabel(op)
 end
-function c150000022.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then
 		local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
@@ -56,7 +50,7 @@ function c150000022.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_TYPE)
 		e1:SetValue(tpe)
-		e1:SetReset(RESET_EVENT+0x1fc0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 		c:RegisterEffect(e1)
 		local te=tc:GetActivateEffect()
 		local tg=te:GetTarget()
@@ -76,7 +70,7 @@ function c150000022.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_TYPE)
 		e1:SetValue(tpe)
-		e1:SetReset(RESET_EVENT+0x1fc0000)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 		c:RegisterEffect(e1)
 		local te=tc:GetActivateEffect()
 		local tg=te:GetTarget()

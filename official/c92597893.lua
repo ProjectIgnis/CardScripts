@@ -1,5 +1,5 @@
 --
---Freedan, the Winds of Mischief
+--Feedran, the Winds of Mischief
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

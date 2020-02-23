@@ -36,9 +36,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x23b}
+s.listed_series={0x13c}
 function s.lfilter(c)
-	return c:IsType(TYPE_LINK,lc,SUMMON_TYPE_LINK) and c:IsSetCard(0x23b,lc,SUMMON_TYPE_LINK)
+	return c:IsType(TYPE_LINK,lc,SUMMON_TYPE_LINK) and c:IsSetCard(0x13c,lc,SUMMON_TYPE_LINK)
 end
 function s.lcheck(g,lc)
 	return g:IsExists(s.lfilter,1,nil,lc)
@@ -47,7 +47,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.spfilter(c,e,tp,zones)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x23b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp,zones)
+	return c:IsLevelBelow(4) and c:IsSetCard(0x13c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp,zones)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zones=Duel.GetLinkedZone(1-tp)&0x1f
@@ -67,7 +67,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()~=nil
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x23b)
+	return c:IsFaceup() and c:IsSetCard(0x13c)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP)

@@ -1,42 +1,34 @@
---Action Card - Miracle
-function c150000042.initial_effect(c)
+--奇跡
+--Miracle
+local s,id=GetID()
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e1:SetTarget(c150000042.target)
-	e1:SetCondition(c150000042.condition)
-	e1:SetOperation(c150000042.activate)
+	e1:SetTarget(s.target)
+	e1:SetCondition(s.condition)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--become action card
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_BECOME_QUICK)
-	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_REMOVE_TYPE)
-	e3:SetValue(TYPE_QUICKPLAY)
-	c:RegisterEffect(e3)
 end
-function c150000042.condition(e,tp,eg,ep,ev,re,r,rp)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	return d and a
 end
-function c150000042.filter(c)
+function s.filter(c)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	return c==a or c==d
 end
-function c150000042.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) end
-	if chk==0 then return Duel.IsExistingTarget(c150000042.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,c150000042.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
-function c150000042.activate(e,tp,eg,ep,ev,re,r,rp)
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
@@ -49,15 +41,15 @@ function c150000042.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e2:SetCondition(c150000042.rdcon)
-		e2:SetOperation(c150000042.rdop)
+		e2:SetCondition(s.rdcon)
+		e2:SetOperation(s.rdop)
 		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		tc:RegisterEffect(e2,true)
 	end
 end
-function c150000042.rdcon(e,tp,eg,ep,ev,re,r,rp)
+function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==e:GetOwnerPlayer()
 end
-function c150000042.rdop(e,tp,eg,ep,ev,re,r,rp)
+function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev/2)
 end

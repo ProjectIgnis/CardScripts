@@ -61,7 +61,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if e:GetLabel()==0 then return b and s.filter(chkc)
 		else return b and s.filter2(chkc,e,tp) end
 	end
-	local b1=Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,tp) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	local ct=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	local b1=Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,tp) and (ct>1 or (ct>0 and not e:GetHandler():IsLocation(LOCATION_HAND)))
 	local b2=Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,0,1,nil,e,tp)
 	if chk==0 then return b1 or b2 end
 	local op=0

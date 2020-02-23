@@ -1,4 +1,5 @@
 --幻魔の殉教者
+--Phantasmal Martyrs
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={6007213,32491822}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(6007213,32491822)
 end

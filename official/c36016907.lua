@@ -22,7 +22,7 @@ function s.initial_effect(c)
     e2:SetCode(EVENT_FREE_CHAIN)
     e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
     e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMING_MAIN_END)
+    e2:SetHintTiming(0,TIMING_MAIN_END)
     e2:SetCountLimit(1,id+1)
     e2:SetCondition(s.spcon)
     e2:SetTarget(s.sptg)
@@ -64,7 +64,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local tc=Duel.GetFirstTarget()
-    if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+    if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
         local e1=Effect.CreateEffect(c)
         e1:SetType(EFFECT_TYPE_SINGLE)
         e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
@@ -72,21 +72,21 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
         e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
         e1:SetValue(LOCATION_REMOVED)
         tc:RegisterEffect(e1,true)
-        if  c:IsRelateToEffect(e) then
-			Duel.BreakEffect()
-			Duel.Remove(c,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)
-			local e2=Effect.CreateEffect(e:GetHandler())
-			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e2:SetCode(EVENT_PHASE+PHASE_END)
-			e2:SetReset(RESET_PHASE+PHASE_END)
-			e2:SetLabelObject(c)
-			e2:SetCountLimit(1)
-			e2:SetOperation(s.retop)
-			Duel.RegisterEffect(e2,tp)
-		end
+        Duel.SpecialSummonComplete()
+        if c:IsRelateToEffect(e) then
+		Duel.BreakEffect()
+		Duel.Remove(c,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCode(EVENT_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetLabelObject(c)
+		e2:SetCountLimit(1)
+		e2:SetOperation(s.retop)
+		Duel.RegisterEffect(e2,tp)
+        end
     end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
     Duel.ReturnToField(e:GetLabelObject())
 end
-

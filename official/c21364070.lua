@@ -165,7 +165,7 @@ function s.rtfilter2(c,e,tp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==tp and not c:IsLocation(LOCATION_EXTRA)
 end
 function s.atkcond2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.rtfilter,1,nil,e,tp)
+	return eg:IsExists(s.rtfilter2,1,nil,e,tp) and not eg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0

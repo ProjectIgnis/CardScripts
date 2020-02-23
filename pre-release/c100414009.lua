@@ -1,5 +1,5 @@
 --魔救の奇跡－ドラガイト
---Adamacia Rise - Dragite
+--Adamatia Rise - Dragite
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -59,6 +59,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 		and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
 		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_WATER)
+		and ep==1-tp
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

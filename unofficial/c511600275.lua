@@ -39,12 +39,12 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x23b}
+s.listed_series={0x13c}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x23b)
+	return c:IsFaceup() and c:IsSetCard(0x13c)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x23b) and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsSetCard(0x13c) and c:IsLinkMonster()
 end
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)

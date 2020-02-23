@@ -90,13 +90,14 @@ function s.btcon(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.bttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
+	local at=Duel.GetAttackTarget()
 	if chk==0 then
-		local at=Duel.GetAttackTarget()
 		if not at then return false end
 		if not a:IsControler(tp) then a,at=at,a end
 		return a:IsType(TYPE_LINK) and a:IsSetCard(0x135) and a:IsControler(tp) and not at:IsControler(tp)
 	end
-	Duel.SetTargetCard(a)
+	local tc=a:IsControler(tp) and a or at
+	Duel.SetTargetCard(tc)
 end
 function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -113,7 +114,7 @@ function s.btop(e,tp,eg,ep,ev,re,r,rp)
 		d:RegisterEffect(e2)
 	end
 	local tc=a:IsControler(tp) and a or d
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_DAMAGE_STEP_END)
@@ -129,6 +130,7 @@ function s.spfilter(c,e,tp,lk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,0,1,nil,e,tp,e:GetLabel())
 	if #g>0 then
 	   Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) 

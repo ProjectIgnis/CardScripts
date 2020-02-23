@@ -88,7 +88,7 @@ function s.linksumval(e,c)
 	return SUMMON_TYPE_LINK,0x60
 end
 function s.tgcon(e)
-	return e:GetHandler():IsLinkState()
+	return e:GetHandler():IsLinked()
 end
 function s.cfil(c,tp)
 	return c:GetPreviousControler()==tp

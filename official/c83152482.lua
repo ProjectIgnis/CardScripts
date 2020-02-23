@@ -81,13 +81,10 @@ function s.equipop(c,e,tp,tc)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_EQUIP_LIMIT)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetValue(s.eqlimit)
+	e2:SetValue(true)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	tc:RegisterEffect(e2)
 	return true
-end
-function s.eqlimit(e,c)
-	return c:GetControler()==e:GetHandlerPlayer()
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsCode(e:GetLabel())

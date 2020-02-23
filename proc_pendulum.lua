@@ -54,7 +54,7 @@ function Pendulum.Condition()
 				local rscale=rpz:GetRightScale()
 				local loc=0
 				if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_HAND end
-				if Duel.GetLocationCountFromEx(tp)>0 then loc=loc+LOCATION_EXTRA end
+				if Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM)>0 then loc=loc+LOCATION_EXTRA end
 				if loc==0 then return false end
 				local g=nil
 				if og then
@@ -71,7 +71,7 @@ function Pendulum.Operation()
 				local lscale=c:GetLeftScale()
 				local rscale=rpz:GetRightScale()
 				local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
-				local ft2=Duel.GetLocationCountFromEx(tp)
+				local ft2=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM)
 				local ft=Duel.GetUsableMZoneCount(tp)
 				if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then
 					if ft1>0 then ft1=1 end

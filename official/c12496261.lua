@@ -1,5 +1,5 @@
 --ドラグニティナイト－ハールーン
---Dragunity Knight – Harloon 
+--Dragunity Knight – Luin
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -49,7 +49,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if c:IsFaceup() and c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) then
 		aux.EquipByEffectAndLimitRegister(c,e,tp,tc)
 	end
 end
@@ -81,7 +81,7 @@ function s.eqop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetValue(s.eqlimit2)
+		e1:SetValue(true)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		--equip effect
@@ -96,8 +96,3 @@ function s.eqop2(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e3)
 	end
 end
-function s.eqlimit2(e,c)
-	local tp=e:GetHandlerPlayer()
-	return c:IsControler(tp)
-end
-

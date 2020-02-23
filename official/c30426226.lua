@@ -1,4 +1,5 @@
 --スウィッチヒーロー
+--Switcheroroo
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 	local g1=g:Filter(Card.IsControler,nil,tp)
 	local g2=g:Filter(Card.IsControler,nil,1-tp)
-	if chk==0 then return #g>0 and #g1==#g2
+	if chk==0 then return #g>0 and #g1<6 and #g1==#g2
 		and g:FilterCount(s.filter,nil)==0 end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,#g,0,0)
 end

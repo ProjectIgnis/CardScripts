@@ -1,5 +1,5 @@
 --究極宝玉陣
---Ultimate Crystal Formation
+--Ultimate Crystal Magic
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -38,7 +38,8 @@ function s.exfilter(c,tp)
 	return Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c))>0
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)>=7 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg)
+	local countmatch=#sg==sg:GetClassCount(Card.GetCode)
+	return countmatch and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg),not countmatch
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

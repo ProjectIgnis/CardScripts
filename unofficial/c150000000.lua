@@ -32,9 +32,9 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetRange(LOCATION_FZONE)
 	e5:SetCode(EVENT_TO_HAND)
-	e5:SetCondition(s.discon)
-	e5:SetTarget(s.distg)
-	e5:SetOperation(s.disop)
+	e5:SetCondition(s.tgcon)
+	e5:SetTarget(s.tgtg)
+	e5:SetOperation(s.tgop)
 	c:RegisterEffect(e5)
 	--action card
 	local e5=Effect.CreateEffect(c)
@@ -52,24 +52,24 @@ end
 function s.poslimit(e,c)
 	return c:IsPosition(POS_FACEUP_ATTACK)
 end
-function s.disfilter(c)
-	return c:IsSetCard(0xac1)
+function s.tgfilter(c)
+	return c:IsType(TYPE_ACTION)
 end
-function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.disfilter,1,nil)
+function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.tgfilter,1,nil)
 end
-function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,1-ep,LOCATION_HAND)
 	Duel.SetChainLimit(s.limit(ep))
 end
 function s.limit(ep)
 	return  function (e,lp,tp)
-				return not (e:GetHandler():IsSetCard(0xac1) and tp~=1-ep)
+				return not (e:GetHandler():IsType(TYPE_ACTION) and tp~=1-ep)
 			end
 end
-function s.disop(e,tp,eg,ep,ev,re,r,rp)
+function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(s.disfilter,1-ep,LOCATION_HAND,0,nil)
+	local g=Duel.GetMatchingGroup(s.tgfilter,1-ep,LOCATION_HAND,0,nil)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end

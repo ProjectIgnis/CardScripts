@@ -69,7 +69,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lkfilter(c)
-	return c:IsLinkMonster() and c:IsFaceup()
+	return c:IsType(TYPE_LINK) and c:IsFaceup()
 end
 function s.cfilter2(c,sc,seq,tp)
 	return seq and (c:GetLinkedZone(tp)&(1<<seq))~=0 or c:GetLinkedGroup():IsContains(sc)

@@ -1,4 +1,5 @@
 --螺旋槍殺
+--Spiral Spear Strike
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_names={66889139}
 function s.pietg(e,c)
-	return c:IsCode(6368038,16589042,66889139)
+	return c:IsCode(6368038,16589042,CARD_GAIA_CHAMPION)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

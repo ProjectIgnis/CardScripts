@@ -29,12 +29,12 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		local rc=re:GetHandler()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local tc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil):Filter(aux.NOT(Card.IsStatus),nil,STATUS_BATTLE_DESTROYED)
+		local tc=g:Select(tp,1,1,nil):GetFirst()
 		if tc then
 			rc:CancelToGrave()
 			Duel.Overlay(tc,Group.FromCards(rc))
 		end
 	end
 end
-

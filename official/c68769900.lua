@@ -78,7 +78,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_MZONE)
 end
 function s.eqfilter(c,ec)
-	return c:IsSetCard(0x13f) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(0x13f) and not c:IsCode(id)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

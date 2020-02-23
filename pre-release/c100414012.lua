@@ -1,5 +1,5 @@
 --魔救の救砕
---Adamacia Relieve
+--Adamatia Relieve
 --Logical Nonsense
 
 local s,id=GetID()
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCost(s.descost)
 	e1:SetTarget(s.destg)

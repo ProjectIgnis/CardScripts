@@ -50,6 +50,6 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
-	Duel.Release(g,REASON_COST)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	g:DeleteGroup()
 end

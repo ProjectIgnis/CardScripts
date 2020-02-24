@@ -1,4 +1,5 @@
 --BK シャドー
+--Battlin' Boxer Shadow
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -20,7 +21,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local g=Group.CreateGroup()
 		local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 		local tc=mg:GetFirst()
-		for tc in aux.Next(g) do
+		for tc in aux.Next(mg) do
 			g:Merge(tc:GetOverlayGroup())
 			tc=mg:GetNext()
 		end

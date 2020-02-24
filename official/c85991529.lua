@@ -1,4 +1,5 @@
 --Kozmo－ダークプラネット
+--Kozmo Dark Planet
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -15,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--cannot be targeted
@@ -52,22 +54,35 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0xd2}
+
+function s.rescon(sg,e,tp,mg)
+	return sg:GetSum(Card.GetLevel)>=10
+	--return sg:CheckWithSumGreater(Card.GetLevel,10)
+end
 function s.spfilter(c)
 	return c:IsSetCard(0xd2) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<=0 then return false end
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,c)
-	return g:CheckWithSumGreater(Card.GetLevel,10)
+	local tp=e:GetHandlerPlayer()
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,e:GetHandler())
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon,0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,e:GetHandler())
+	local g=aux.SelectUnselectGroup(rg,e,tp,1,#rg,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local mg=g:SelectWithSumGreater(tp,Card.GetLevel,10)
-	Duel.Remove(mg,POS_FACEUP,REASON_COST)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)

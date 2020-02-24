@@ -1,4 +1,5 @@
 --天地開闢
+--Beginning of Heaven and Earth
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,24 +23,22 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return #g>2 and g:IsExists(s.filter2,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
+function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(s.filter2,1,nil)
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_DECK,0,nil)
-	if g:IsExists(s.filter2,1,nil) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg1=g:FilterSelect(tp,s.filter2,1,1,nil)
-		g:RemoveCard(sg1:GetFirst())
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg2=g:Select(tp,2,2,nil)
-		sg1:Merge(sg2)
-		Duel.ConfirmCards(1-tp,sg1)
+	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,1,tp,HINTMSG_ATOHAND)
+	if #sg>0 then
+		Duel.ConfirmCards(1-tp,sg)
 		Duel.ShuffleDeck(tp)
-		local tg=sg1:Select(1-tp,1,1,nil)
+		local tg=sg:Select(1-tp,1,1,nil)
 		local tc=tg:GetFirst()
 		Duel.Hint(HINT_CARD,0,tc:GetCode())
 		if s.filter2(tc) and tc:IsAbleToHand() then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
-			sg1:RemoveCard(tc)
+			sg:RemoveCard(tc)
 		end
-		Duel.SendtoGrave(sg1,REASON_EFFECT)
+		Duel.SendtoGrave(sg,REASON_EFFECT)
 	end
 end

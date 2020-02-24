@@ -54,7 +54,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0xd2}
-
 function s.rescon(sg,e,tp,mg)
 	return sg:GetSum(Card.GetLevel)>=10
 	--return sg:CheckWithSumGreater(Card.GetLevel,10)

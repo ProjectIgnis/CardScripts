@@ -1,7 +1,6 @@
 --ウィッチクラフト・デモンストレーション
 --Witchcrafter Demonstration
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,8 +16,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--If you control a "Witchcrafter" monster, recycle this card
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_LEAVE_GRAVE)
 	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_LEAVE_GRAVE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetRange(LOCATION_GRAVE)
@@ -30,7 +29,6 @@ function s.initial_effect(c)
 end
 	--Part of "Witchcrafter" archetype
 s.listed_series={0x128}
-
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x128) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -56,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,0,1)
 	end
 end
-	--Player's spellcaster monster effect activated 
+	--Player's spellcaster monster effect activated
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if rc:IsRace(RACE_SPELLCASTER) and re:IsActiveType(TYPE_MONSTER) and ep==tp then

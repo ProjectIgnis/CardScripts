@@ -1,5 +1,5 @@
 --ウイッチクラフト・シュミッタ
---Witchcraft Schmitta
+--Witchcrafter Schmietta
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x128}
 s.listed_names={}
@@ -35,8 +35,8 @@ function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() and aux.WitchcraftDiscardCost(aux.FilterBoolFunction(Card.IsType,TYPE_SPELL))(e,tp,eg,ep,ev,re,r,rp,0) end
-	aux.WitchcraftDiscardCost(aux.FilterBoolFunction(Card.IsType,TYPE_SPELL))(e,tp,eg,ep,ev,re,r,rp,1)
+	if chk==0 then return e:GetHandler():IsReleasable() and aux.WitchcrafterDiscardCost(aux.FilterBoolFunction(Card.IsType,TYPE_SPELL))(e,tp,eg,ep,ev,re,r,rp,0) end
+	aux.WitchcrafterDiscardCost(aux.FilterBoolFunction(Card.IsType,TYPE_SPELL))(e,tp,eg,ep,ev,re,r,rp,1)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.spfilter(c,e,tp)
@@ -70,4 +70,3 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-

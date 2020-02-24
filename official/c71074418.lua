@@ -1,11 +1,11 @@
 --ウィッチクラフトゴーレム・アルル
---Witchcraft Golem Alur
+--Witchcrafter Golem Aruru
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_BECOME_TARGET)
 	e2:SetCondition(s.thcon2)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))

@@ -37,7 +37,7 @@ function s.spfilter1(c,att)
 end
 function s.spcon1(e,c)
 	if c==nil then return true end
-	local tp=c:GetControler()
+	local tp=e:GetHandlerPlayer()
 	local rg1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ATTRIBUTE_LIGHT)
 	local rg2=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,ATTRIBUTE_DARK)
 	local rg=rg1:Clone()

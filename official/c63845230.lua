@@ -69,7 +69,7 @@ function s.spcon(e,c)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,e:GetHandler())
-	local g=aux.SelectUnselectGroup(rg,e,tp,5,99,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
+	local g=aux.SelectUnselectGroup(rg,e,tp,5,99,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,aux.ChkfMMZ(1),nil,true)
 	if #g>0 then
 		g:KeepAlive()
 		e:SetLabelObject(g)

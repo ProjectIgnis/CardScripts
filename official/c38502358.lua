@@ -1,5 +1,5 @@
 --星痕の機界騎士
---Mekk-Knight of the World Remains
+--Mekk-Knight Spectrum Supreme
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10c}
 function s.dircon(e)
-	return e:GetHandler():GetColumnGroupCount()==0
+	return e:GetHandler():GetColumnGroupCount()==1
 end
 function s.indcon(e)
 	local c=e:GetHandler()

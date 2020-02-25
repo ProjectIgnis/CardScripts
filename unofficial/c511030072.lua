@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_seires={0x578}
+s.listed_series={0x578}
 s.listed_names={511009503}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsSetCard(0x578) and c:IsType(TYPE_LINK)

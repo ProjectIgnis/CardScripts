@@ -1,3 +1,4 @@
+--
 --Redbeard, the Plunder Patroll Matey
 --scripted by senpaizuri
 local s,id=GetID()
@@ -29,8 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x13f}
-s.listed_names={}
-s.listed_seires={0x13f}
+s.listed_names={id}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end

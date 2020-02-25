@@ -37,7 +37,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x13f}
-s.listed_seires={0x13f}
 function s.atktg(e,c)
 	return c:IsRace(RACE_FIEND) and c~=e:GetHandler()
 end

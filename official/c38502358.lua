@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10c}
 function s.dircon(e)
-	return e:GetHandler():GetColumnGroupCount()==1
+	return e:GetHandler():GetColumnGroupCount()==0
 end
 function s.indcon(e)
 	local c=e:GetHandler()

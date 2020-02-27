@@ -1,5 +1,5 @@
 --翠嵐の機界騎士
---Mekk-Knight of the Green Heights
+--Mekk-Knight Green Horizon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10c}
 function s.cfilter(c)
-	return c:GetColumnGroupCount()>1
+	return c:GetColumnGroupCount()>0
 end
 function s.hspcon(e,c)
 	if c==nil then return true end

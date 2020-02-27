@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
-	e1:SetTarget(s.target(Ritual.Target(s.filter,RITPROC_GREATER),Ritual.Target(s.filter,RITPROC_GREATER)))
+	e1:SetTarget(s.target(Ritual.Target(s.filter,RITPROC_GREATER),Ritual.Operation(s.filter,RITPROC_GREATER)))
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)

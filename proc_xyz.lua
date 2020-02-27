@@ -381,7 +381,7 @@ function Auxiliary.HarmonizingMagFilterXyz(c,e,f)
 end
 function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 	--og: use special material
-	return	function(e,c,og,min,max)
+	return	function(e,c,must,og,min,max)
 				if c==nil then return true end
 				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 				local tp=c:GetControler()
@@ -412,6 +412,7 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 					end
 				end
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_XYZ)
+				if must then mustg:Merge(must) end
 				if not mg:Includes(mustg) then return false end
 				if not mustbemat then
 					mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
@@ -425,7 +426,7 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 			end
 end
 function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk,c,og,min,max)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
 				if og and not min then
 					if (#og>=minc and #og<=maxc) or not og:IsExists(Card.IsHasEffect,1,nil,511002116) then
 						og:KeepAlive()
@@ -536,6 +537,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 						end
 					end
 					local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_XYZ)
+					if must then mustg:Merge(must) end
 					if not mustbemat then
 						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
 					end
@@ -626,7 +628,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 			end
 end
 function Xyz.Operation(f,lv,minc,maxc,mustbemat,exchk)
-	return	function(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
+	return	function(e,tp,eg,ep,ev,re,r,rp,c,must,og,min,max)
 				local g=e:GetLabelObject()
 				if not g then return end
 				local remg=g:Filter(Card.IsHasEffect,nil,511002116)
@@ -647,7 +649,7 @@ function Xyz.Operation(f,lv,minc,maxc,mustbemat,exchk)
 end
 --Xyz summon(alterf)
 function Xyz.Condition2(alterf,op)
-	return	function(e,c,og,min,max)
+	return	function(e,c,must,og,min,max)
 				if c==nil then return true end
 				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 				local tp=c:GetControler()
@@ -658,6 +660,7 @@ function Xyz.Condition2(alterf,op)
 					mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 				end
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,og,tp,c,mg,REASON_XYZ)
+				if must then mustg:Merge(must) end
 				if #mustg>1 or (min and min>1) or not mg:Includes(mustg) then return false end
 				local mustc=mustg:GetFirst()
 				if mustc then
@@ -668,7 +671,7 @@ function Xyz.Condition2(alterf,op)
 			end
 end
 function Xyz.Target2(alterf,op)
-	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,og,min,max)
+	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
 				local cancel=not og and Duel.GetCurrentChain()<=0
 				Auxiliary.ProcCancellable=cancel
 				if og and not min then
@@ -684,6 +687,7 @@ function Xyz.Target2(alterf,op)
 						mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 					end
 					local mustg=Auxiliary.GetMustBeMaterialGroup(tp,og,tp,c,mg,REASON_XYZ)
+					if must then mustg:Merge(must) end
 					local oc
 					if #mustg>0 then
 						oc=mustg:GetFirst()
@@ -701,7 +705,7 @@ function Xyz.Target2(alterf,op)
 			end
 end	
 function Xyz.Operation2(alterf,op)
-	return	function(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
+	return	function(e,tp,eg,ep,ev,re,r,rp,c,must,og,min,max)
 				local oc=e:GetLabelObject()
 				local mg2=oc:GetOverlayGroup()
 				if #mg2~=0 then

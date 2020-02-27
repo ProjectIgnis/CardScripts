@@ -16,7 +16,7 @@ function s.filter(c,rk)
 	return c:GetLevel()==rk
 end
 function s.xyzfilter(c,mg)
-	return c:IsXyzSummonable(mg,1,#mg)
+	return c:IsXyzSummonable(nil,mg,1,#mg)
 end
 function s.cfilter(c,e,tp)
 	local rk=c:GetRank()
@@ -49,6 +49,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,mg,1,#mg)
+		Duel.XyzSummon(tp,xyz,nil,mg,1,#mg)
 	end
 end

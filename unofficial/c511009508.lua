@@ -56,11 +56,11 @@ function s.cfilter(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spfilter,1,nil,tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-		and e:GetHandler():IsXyzSummonable(nil)
+		and e:GetHandler():IsXyzSummonable()
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsXyzSummonable(nil) and Duel.SelectYesNo(tp,aux.Stringid(4003,7)) then
+	if c:IsXyzSummonable() and Duel.SelectYesNo(tp,aux.Stringid(4003,7)) then
 		Duel.XyzSummon(tp,c,nil)
 	end
 end

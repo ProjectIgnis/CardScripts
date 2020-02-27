@@ -30,7 +30,7 @@ function s.xyzfilter(c,sg,e)
 		mc:RegisterEffect(e1)
 		sg:AddCard(mc)
 	end
-	local res=c:IsXyzSummonable(sg,ct,ct)
+	local res=c:IsXyzSummonable(nil,sg,ct,ct)
 	if e1 then e1:Reset() sg:RemoveCard(mc) end
 	return res
 end
@@ -95,7 +95,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			c:RegisterEffect(e1)
 			g:AddCard(c)
 		end
-		Duel.XyzSummon(tp,xyz,g)
+		Duel.XyzSummon(tp,xyz,nil,g)
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp,tc)

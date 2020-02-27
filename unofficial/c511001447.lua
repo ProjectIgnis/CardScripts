@@ -29,7 +29,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()~=e:GetLabel()
 end
 function s.xyzfilter(c,mg)
-	return c:IsXyzSummonable(mg,2,2)
+	return c:IsXyzSummonable(nil,mg,2,2)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if ep~=tp or Duel.GetCurrentPhase()~=PHASE_DRAW or Duel.GetTurnPlayer()~=tp 
@@ -46,7 +46,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 			if #xyzg>0 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-				Duel.XyzSummon(tp,xyz,g)
+				Duel.XyzSummon(tp,xyz,nil,g)
 			end
 		end
 	end

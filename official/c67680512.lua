@@ -38,7 +38,7 @@ function s.linkcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function s.lkfilter(c,mg)
-	return c:IsAttribute(ATTRIBUTE_DARK) and not c:IsCode(id) and c:IsLinkSummonable(mg,2,2)
+	return c:IsAttribute(ATTRIBUTE_DARK) and not c:IsCode(id) and c:IsLinkSummonable(nil,mg,2,2)
 end
 function s.filter(tc,c,tp)
 	local mg=Group.FromCards(c,tc)
@@ -60,7 +60,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,s.lkfilter,tp,LOCATION_EXTRA,0,1,1,nil,mg)
 		local sc=g:GetFirst()
 		if sc then
-			Duel.LinkSummon(tp,sc,mg,2,2)
+			Duel.LinkSummon(tp,sc,nil,mg,2,2)
 		end
 	end
 end

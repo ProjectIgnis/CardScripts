@@ -90,7 +90,7 @@ function s.xyzfilter(c,m,cc)
 	e1:SetValue(SUMMON_TYPE_XYZ)
 	e1:SetReset(RESET_CHAIN)
 	c:RegisterEffect(e1)
-	local res=c:IsXyzSummonable(m,#m,#m)
+	local res=c:IsXyzSummonable(nil,m,#m,#m)
 	e1:Reset()
 	return res
 end
@@ -125,6 +125,6 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(SUMMON_TYPE_XYZ)
 		e1:SetReset(RESET_CHAIN)
 		tc:RegisterEffect(e1)
-		Duel.XyzSummon(tp,tc,m)
+		Duel.XyzSummon(tp,tc,nil,m)
 	end
 end

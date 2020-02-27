@@ -28,7 +28,7 @@ function s.xyzfilter(c,mg,sc,set)
 			tc=mg:GetNext()
 		end
 	end
-	local res=c:IsXyzSummonable(mg,#mg,#mg)
+	local res=c:IsXyzSummonable(nil,mg,#mg,#mg)
 	for _,te in ipairs(reset) do
 		te:Reset()
 	end
@@ -76,6 +76,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,g)
+		Duel.XyzSummon(tp,xyz,nil,g)
 	end
 end

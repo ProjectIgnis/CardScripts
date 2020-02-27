@@ -67,7 +67,7 @@ function s.spfilter(c,e,tp)
 	return c:IsLevelAbove(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.xyzchk(c,sg,minc,maxc,tp)
-	return c:IsXyzSummonable(sg,minc,maxc) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
+	return c:IsXyzSummonable(nil,sg,minc,maxc) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
 end
 function s.spcheck(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetLocation)==#sg and sg:GetClassCount(Card.GetLevel)==1
@@ -107,7 +107,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,sg)
+		Duel.XyzSummon(tp,xyz,nil,sg)
 	end
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)

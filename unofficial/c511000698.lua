@@ -33,7 +33,7 @@ function s.mfilter(c,g,tg,ct,tp)
 	return res
 end
 function s.xyzfilter(c,g)
-	return c:IsXyzSummonable(g,3,3)
+	return c:IsXyzSummonable(nil,g,3,3)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x1e,0,nil)
@@ -57,6 +57,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		matg:KeepAlive()
-		Duel.XyzSummon(tp,xyz,matg)
+		Duel.XyzSummon(tp,xyz,nil,matg)
 	end
 end

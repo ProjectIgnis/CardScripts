@@ -16,13 +16,13 @@ function s.filter(c,e,tp)
 	return c:IsSetCard(0x76) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.xyzfilter(c,mg,tp,chk)
-	return c:IsXyzSummonable(mg,2,2) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0)
+	return c:IsXyzSummonable(nil,mg,2,2) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0)
 end
 function s.mfilter1(c,mg,exg,tp)
 	return mg:IsExists(s.mfilter2,1,c,c,exg,tp)
 end
 function s.zonecheck(c,tp,g)
-	return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 and c:IsXyzSummonable(g)
+	return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 and c:IsXyzSummonable(nil,g)
 end
 function s.mfilter2(c,mc,exg,tp)
 	local g=Group.FromCards(c,mc)
@@ -59,6 +59,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,g)
+		Duel.XyzSummon(tp,xyz,nil,g)
 	end
 end

@@ -13,14 +13,14 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.announcecost)
-	e1:SetTarget(s.target(s.synfilter,s.srescon))
-	e1:SetOperation(s.operation(s.synfilter,function(sc,g,tp) Synchro.Send=5 Duel.SynchroSummon(tp,sc,nil,g,#g,#g) end))
+	e1:SetTarget(s.target(TYPE_SYNCHRO,Card.IsSynchroSummonable))
+	e1:SetOperation(s.operation(TYPE_SYNCHRO,Card.IsSynchroSummonable,function(sc,g,tp) Synchro.Send=5 Duel.SynchroSummon(tp,sc,nil,g,#g,#g) end))
 	c:RegisterEffect(e1)
 	--xyz summon
 	local e2=e1:Clone()
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetTarget(s.target(s.xyzfilter,s.xrescon))
-	e2:SetOperation(s.operation(s.xyzfilter,function(sc,g,tp) Duel.XyzSummon(tp,sc,g) end))
+	e2:SetTarget(s.target(TYPE_XYZ,Card.IsXyzSummonable))
+	e2:SetOperation(s.operation(TYPE_XYZ,Card.IsXyzSummonable,function(sc,g,tp) Duel.XyzSummon(tp,sc,nil,g) end))
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x132}
@@ -34,26 +34,21 @@ end
 function s.matfilter(c,e,tp)
 	return c:IsSetCard(0x132) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.synfilter(c,mg,tp,chk)
-	return c:IsSetCard(0x132) and c:IsType(TYPE_SYNCHRO) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0) and (not mg or c:IsSynchroSummonable(nil,mg,#mg,#mg))
-end
-function s.srescon(exg)
-	return function(sg,e,tp,mg)
-		return aux.dncheck(sg,e,tp,mg) and exg:IsExists(Card.IsSynchroSummonable,1,nil,nil,sg,#sg,#sg)
+function s.filter(montype,chkfun)
+	return function(c,mg,tp,chk)
+		return c:IsSetCard(0x132) and c:IsType(montype) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0) and (not mg or chkfun(c,nil,mg,#mg,#mg))
 	end
 end
-function s.xyzfilter(c,mg,tp,chk)
-	return c:IsSetCard(0x132) and c:IsType(TYPE_XYZ) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0) and (not mg or c:IsXyzSummonable(mg,#mg,#mg))
-end
-function s.xrescon(exg)
+function s.rescon(exg,chkfun)
 	return function(sg,e,tp,mg)
-		return aux.dncheck(sg,e,tp,mg) and exg:IsExists(Card.IsXyzSummonable,1,nil,sg,#sg,#sg)
+		local _1,_2=aux.dncheck(sg,e,tp,mg)
+		return _1 and exg:IsExists(chkfun,1,nil,nil,sg,#sg,#sg),_2
 	end
 end
-function s.target(fil,con)
+function s.target(montype,chkfun)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-		local exg=Duel.GetMatchingGroup(fil,tp,LOCATION_EXTRA,0,nil,nil,tp)
-		local cancelcon=con(exg)
+		local exg=Duel.GetMatchingGroup(s.filter(montype,chkfun),tp,LOCATION_EXTRA,0,nil,nil,tp)
+		local cancelcon=s.rescon(exg,chkfun)
 		if chkc then return chkc:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(0x132) and chkc:IsCanBeSpecialSummoned(e,0,tp,false,false) and cancelcon(Group.FromCards(chkc)) end
 		local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 		local min=math.min(math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and 1 or 99),1)
@@ -64,7 +59,7 @@ function s.target(fil,con)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,#sg,0,0)
 	end
 end
-function s.operation(fil,fun)
+function s.operation(montype,chkfun,fun)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetTargetCards(e):Filter(s.relfilter,nil,e,tp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<#g or #g==0 or (Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and #g>1) then return end
@@ -81,7 +76,7 @@ function s.operation(fil,fun)
 		end
 		Duel.SpecialSummonComplete()
 		Duel.BreakEffect()
-		local syng=Duel.GetMatchingGroup(fil,tp,LOCATION_EXTRA,0,nil,g,tp,true)
+		local syng=Duel.GetMatchingGroup(s.filter(montype,chkfun),tp,LOCATION_EXTRA,0,nil,g,tp,true)
 		if #syng>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local c=syng:Select(tp,1,1,nil):GetFirst()

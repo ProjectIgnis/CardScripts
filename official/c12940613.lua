@@ -1,4 +1,5 @@
 --マドルチェ・マナー
+--Madolche Lesson
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -33,7 +34,7 @@ function s.tdfilter2(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not (tc and tc:IsRelateToEffect(e)) or Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 then return end
+	if not (tc and tc:IsRelateToEffect(e)) or Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)==0 then return end
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x71),tp,LOCATION_MZONE,0,nil)
   local ct=0
 	for tc in aux.Next(g) do
@@ -50,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 		if preatk~=tc:GetAttack() or predef~=tc:GetDefense() then ct=ct+1 end
 	end
-  if ct==0 then return end
+	if ct==0 then return end
 	local dg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tdfilter2),tp,LOCATION_GRAVE,0,nil)
 	if #dg~=0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()

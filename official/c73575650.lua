@@ -49,7 +49,7 @@ function s.tgfilter1(c,tp)
 end
 --Check for flip monster
 function s.thfilter1(c,tc,code)
-	return c:IsType(TYPE_FLIP) and c:IsAbleToHand() and not c:IsCode(code)
+	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_FLIP) and c:IsAbleToHand() and not c:IsCode(code)
 	and c:GetOriginalAttribute()==tc:GetOriginalAttribute()
 end
 --Activation legality
@@ -90,9 +90,8 @@ function s.tgfilter2(c,tp)
 end
 --Check for monster with same attribute but lower level
 function s.thfilter2(c,tc)
-	return c:IsAbleToHand() 
-	and c:GetOriginalLevel()<tc:GetOriginalLevel()
-	and c:GetOriginalAttribute()==tc:GetOriginalAttribute()
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+		and c:GetOriginalLevel()<tc:GetOriginalLevel() and c:GetOriginalAttribute()==tc:GetOriginalAttribute()
 end
 --Activation legality
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -57,11 +57,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	for gc in aux.Next(Duel.GetMatchingGroup(s.cfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)) do
 		att=att|gc:GetAttribute()
 	end
-	if (att==0) or not tg:IsRelateToEffect(e) or not (ft>0) then return end
+	if (att==0) or not (ft>0) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,att):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local c=e:GetHandler()
+		if not tg:IsRelateToEffect(e) then return end
 		Duel.Equip(tp,tg,tc,true)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

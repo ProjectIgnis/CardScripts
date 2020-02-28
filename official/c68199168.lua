@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.scon0)
+	e1:SetTarget(s.stg0)
 	e1:SetOperation(s.sop0)
 	c:RegisterEffect(e1)
 	--negate
@@ -37,6 +38,11 @@ end
 function s.scon0(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DRAW and eg:IsExists(s.cfilter,1,nil,1-tp)
 		and Duel.GetFieldGroupCount(1-tp,0,LOCATION_ONFIELD+LOCATION_HAND)>0
+end
+function s.stg0(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetFieldGroupCount(1-tp,0,LOCATION_ONFIELD+LOCATION_HAND)>0 and
+		Duel.IsExistingMatchingCard(Card.IsType,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,nil,TYPE_MONSTER) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,LOCATION_ONFIELD+LOCATION_HAND)
 end
 function s.sop0(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

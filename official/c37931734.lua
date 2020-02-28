@@ -1,5 +1,5 @@
 --王の襲来
---Generaid Battle
+--Generaider Boss Fight
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,5 +25,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
-	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	if not aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp) then return end
+	Duel.BreakEffect()
+	Duel.Draw(1-tp,1,REASON_EFFECT)
 end

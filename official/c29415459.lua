@@ -1,5 +1,5 @@
 --黄華の機界騎士
---Mekk-Knight of the Yellow Bloom
+--Mekk-Knight Yellow Star
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

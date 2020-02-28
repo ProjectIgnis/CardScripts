@@ -53,7 +53,7 @@ function s.filter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,Group.FromCards(c,e:GetHandler()))
 end
 function s.xyzfilter(c,mg)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_XYZ) and c:IsXyzSummonable(mg,2,2)
+	return c:IsSetCard(0x119) and c:IsType(TYPE_XYZ) and c:IsXyzSummonable(nil,mg,2,2)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -91,7 +91,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,g)
+		Duel.XyzSummon(tp,xyz,nil,g)
 	end
 end
 function s.efcon(e,tp,eg,ep,ev,re,r,rp)

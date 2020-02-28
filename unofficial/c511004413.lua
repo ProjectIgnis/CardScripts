@@ -30,7 +30,7 @@ function s.filter3(c,e,tp,mc,xc)
 	e1:SetReset(RESET_CHAIN)
 	xc:RegisterEffect(e1)
 	local mg=Group.FromCards(mc,xc)
-	local chk=c:IsXyzSummonable(mg,2,2)
+	local chk=c:IsXyzSummonable(nil,mg,2,2)
 	e1:Reset()
 	return chk
 end
@@ -63,6 +63,6 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 		e1:SetValue(xc:GetRank())
 		e1:SetReset(RESET_CHAIN)
 		xc:RegisterEffect(e1)
-		Duel.XyzSummon(tp,tc,mg)
+		Duel.XyzSummon(tp,tc,nil,mg)
 	end
 end

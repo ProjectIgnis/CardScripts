@@ -1,5 +1,5 @@
 --宵星の騎士ギルス
---Girsu, Mekk-Knight Orcust of the Nightfall Star
+--Mekk-Knight Orcust Girsu
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

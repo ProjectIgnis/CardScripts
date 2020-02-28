@@ -94,7 +94,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.xyzfilter(c)
-	return c:IsSetCard(0x107a) and c:IsXyzSummonable(nil)
+	return c:IsSetCard(0x107a) and c:IsXyzSummonable()
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -105,6 +105,6 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tg=g:Select(tp,1,1,nil)
-		Duel.XyzSummon(tp,tg:GetFirst(),nil)
+		Duel.XyzSummon(tp,tg:GetFirst())
 	end
 end

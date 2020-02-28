@@ -27,7 +27,7 @@ function s.xyzfilter(c,mg)
 		tc:RegisterEffect(e1)
 		tc=g:GetNext()
 	end
-	local res=c:IsXyzSummonable(mg)
+	local res=c:IsXyzSummonable(nil,mg)
 	tc=g:GetFirst()
 	while tc do
 		tc:ResetEffect(EFFECT_XYZ_MATERIAL,RESET_CODE)
@@ -58,6 +58,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e1)
 			tc=g2:GetNext()
 		end
-		Duel.XyzSummon(tp,xyz,mg,99,99)
+		Duel.XyzSummon(tp,xyz,nil,mg,99,99)
 	end
 end

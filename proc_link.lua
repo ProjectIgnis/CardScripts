@@ -100,7 +100,7 @@ function Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
 		and (not specialchk or specialchk(sg,lc,tp)) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0
 end
 function Link.Condition(f,minc,maxc,specialchk)
-	return	function(e,c,g,min,max)
+	return	function(e,c,must,g,min,max)
 				if c==nil then return true end
 				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 				local tp=c:GetControler()
@@ -109,6 +109,7 @@ function Link.Condition(f,minc,maxc,specialchk)
 				end
 				local mg=g:Filter(Link.ConditionFilter,nil,f,c,tp)
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_LINK)
+				if must then mustg:Merge(must) end
 				if min and min < minc then return false end
 				if max and max > maxc then return false end
 				min = min or minc
@@ -122,7 +123,7 @@ function Link.Condition(f,minc,maxc,specialchk)
 			end
 end
 function Link.Target(f,minc,maxc,specialchk)
-	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,g,min,max)
+	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,g,min,max)
 				if not g then
 					g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 				end
@@ -132,6 +133,7 @@ function Link.Target(f,minc,maxc,specialchk)
 				max = max or maxc
 				local mg=g:Filter(Link.ConditionFilter,nil,f,c,tp)
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_LINK)
+				if must then mustg:Merge(must) end
 				local emt,tg=aux.GetExtraMaterials(tp,mustg+mg,c,SUMMON_TYPE_LINK)
 				local sg=Group.CreateGroup()
 				local finish=false
@@ -172,7 +174,7 @@ function Link.Target(f,minc,maxc,specialchk)
 			end
 end
 function Link.Operation(f,minc,maxc,specialchk)
-	return	function(e,tp,eg,ep,ev,re,r,rp,c,g,min,max)
+	return	function(e,tp,eg,ep,ev,re,r,rp,c,must,g,min,max)
 				local g,filt,emt=e:GetLabelObject():GetTarget()()
 				e:GetLabelObject():Reset()
 				for _,ex in ipairs(filt) do

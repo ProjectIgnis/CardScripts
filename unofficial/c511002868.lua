@@ -22,7 +22,7 @@ function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil)
 end
 function s.xyzfilter(c)
-	return c:IsXyzSummonable(nil) and c:IsSetCard(0xba)
+	return c:IsXyzSummonable() and c:IsSetCard(0xba)
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -32,7 +32,7 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.xyzfilter,tp,LOCATION_EXTRA,0,1,1,nil):GetFirst()
 	if tc then
-		Duel.XyzSummon(tp,tc,nil)
+		Duel.XyzSummon(tp,tc)
 		if not tc:IsHasEffect(511002571) then return end
 		local eff={tc:GetCardEffect(511002571)}
 		local te=nil

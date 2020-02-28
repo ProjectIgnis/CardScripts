@@ -22,7 +22,7 @@ function s.spfilter(c,mg,lv)
 		mc:AssumeProperty(ASSUME_TYPE,mc:GetOriginalType())
 		mc:AssumeProperty(ASSUME_LEVEL,lv)
 	end)
-	return c:IsXyzSummonable(mg,2,2)
+	return c:IsXyzSummonable(nil,mg,2,2)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -72,7 +72,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local xyz=(g1+g2):Select(tp,1,1,nil):GetFirst()
 	if xyz then
 		if not s.spfilter(xyz,g,lv1) then s.spfilter(xyz,g,lv2) end
-		Duel.XyzSummon(tp,xyz,g)
+		Duel.XyzSummon(tp,xyz,nil,g)
 		Duel.AssumeReset()
 	end
 end

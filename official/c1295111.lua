@@ -46,18 +46,23 @@ function s.lmfilter(c,lc,tp)
 		and c:IsSummonCode(lc,SUMMON_TYPE_LINK,tp,lc:GetCode()) and c:IsCanBeLinkMaterial(lc,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,c,lc)>0
 end
-function s.linkcon(e,c)
+function s.linkcon(e,c,must,g,min,max)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local g=Duel.GetMatchingGroup(s.lmfilter,tp,LOCATION_MZONE,0,nil,c,tp)
 	local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,g,REASON_LINK)
+	if must then mustg:Merge(must) end
 	return ((#mustg==1 and s.lmfilter(mustg:GetFirst(),c,tp)) or (#mustg==0 and #g>0))
 		and Duel.GetFlagEffect(tp,id)==0
 end
-function s.linktg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+function s.linktg(e,tp,eg,ep,ev,re,r,rp,chk,c,must,g,min,max)
 	local g=Duel.GetMatchingGroup(s.lmfilter,tp,LOCATION_MZONE,0,nil,c,tp)
 	local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,g,REASON_LINK)
+	if must then mustg:Merge(must) end
 	if #mustg>0 then
+		if #mustg>1 then
+			return false
+		end
 		mustg:KeepAlive()
 		e:SetLabelObject(mustg)
 		return true
@@ -70,7 +75,7 @@ function s.linktg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 		return true
 	else return false end
 end
-function s.linkop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.linkop(e,tp,eg,ep,ev,re,r,rp,c,must,g,min,max)
 	local mg=e:GetLabelObject()
 	c:SetMaterial(mg)
 	Duel.SendtoGrave(mg,REASON_MATERIAL+REASON_LINK)

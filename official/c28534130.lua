@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.spfilter2(c,mc)
-	return c:IsSetCard(0x119) and c:IsLinkSummonable(nil,mc)
+	return c:IsSetCard(0x119) and c:IsLinkSummonable(mc)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x119) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,1,nil,c)
@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=tg:Select(tp,1,1,nil)
 		local sc=sg:GetFirst()
-		Duel.LinkSummon(tp,sc,nil,tc)
+		Duel.LinkSummon(tp,sc,tc)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CANNOT_ATTACK)

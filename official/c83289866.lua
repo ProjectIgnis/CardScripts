@@ -1,5 +1,5 @@
 --ウィッチクラフト・バイストリート
---Witchcraft Bystreet
+--Witchcrafter Bystreet
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,11 +16,11 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x128))
 	e2:SetValue(s.indct)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--replace discard effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_WITCHCRAFT_REPLACE)
+	e3:SetCode(EFFECT_WITCHCRAFTER_REPLACE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,id)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
-	e3:SetCountLimit(1,id)
+	e4:SetCountLimit(1,id)
 	e4:SetCondition(s.tfcond)
 	e4:SetTarget(s.tftg)
 	e4:SetOperation(s.tfop)
@@ -46,7 +46,7 @@ function s.indct(e,re,r,rp)
 	end
 end
 function s.tfcond(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x128),tp,LOCATION_MZONE,0,1,nil) and Duel.GetTurnPlayer()==tp
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x128),tp,LOCATION_MZONE,0,1,nil) and Duel.GetTurnPlayer()==tp
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end

@@ -20,7 +20,7 @@ function s.mfilter2(c,c1,tp)
 	return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,Group.FromCards(c,c1))
 end
 function s.xyzfilter(c,mg)
-	return c:IsXyzSummonable(mg,2,2)
+	return c:IsXyzSummonable(nil,mg,2,2)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tid=Duel.GetTurnCount()
@@ -44,6 +44,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,mg1)
+		Duel.XyzSummon(tp,xyz,nil,mg1)
 	end
 end

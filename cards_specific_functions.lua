@@ -326,30 +326,30 @@ function Auxiliary.MaleficSummonOperation(cd,loc)
 				Duel.Remove(tc,POS_FACEUP,REASON_COST)
 			end
 end
---Discard cost for Witchcraft monsters, supports the replacements from the Continuous Spells
-function Auxiliary.WitchcraftDiscardFilter(c,tp)
-	return c:IsHasEffect(EFFECT_WITCHCRAFT_REPLACE,tp) and c:IsAbleToGraveAsCost()
+--Discard cost for Witchcrafter monsters, supports the replacements from the Continuous Spells
+function Auxiliary.WitchcrafterDiscardFilter(c,tp)
+	return c:IsHasEffect(EFFECT_WITCHCRAFTER_REPLACE,tp) and c:IsAbleToGraveAsCost()
 end
-function Auxiliary.WitchcraftDiscardGroup(minc)
+function Auxiliary.WitchcrafterDiscardGroup(minc)
 	return	function(sg,e,tp,mg)
-				if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_WITCHCRAFT_REPLACE,tp) then
+				if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_WITCHCRAFTER_REPLACE,tp) then
 					return #sg==1,#sg>1
 				else
 					return #sg>=minc
 				end
 			end
 end
-function Auxiliary.WitchcraftDiscardCost(f,minc,maxc)
+function Auxiliary.WitchcrafterDiscardCost(f,minc,maxc)
 	if f then f=aux.AND(f,Card.IsDiscardable) else f=Card.IsDiscardable end
 	if not minc then minc=1 end
 	if not maxc then maxc=1 end
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
-				if chk==0 then return Duel.IsExistingMatchingCard(f,tp,LOCATION_HAND,0,minc,nil) or Duel.IsExistingMatchingCard(Auxiliary.WitchcraftDiscardFilter,tp,LOCATION_ONFIELD,0,1,nil,tp) end
+				if chk==0 then return Duel.IsExistingMatchingCard(f,tp,LOCATION_HAND,0,minc,nil) or Duel.IsExistingMatchingCard(Auxiliary.WitchcrafterDiscardFilter,tp,LOCATION_ONFIELD,0,1,nil,tp) end
 				local g=Duel.GetMatchingGroup(f,tp,LOCATION_HAND,0,nil)
-				g:Merge(Duel.GetMatchingGroup(Auxiliary.WitchcraftDiscardFilter,tp,LOCATION_ONFIELD,0,nil,tp))
-				local sg=Auxiliary.SelectUnselectGroup(g,e,tp,1,maxc,Auxiliary.WitchcraftDiscardGroup(minc),1,tp,aux.Stringid(EFFECT_WITCHCRAFT_REPLACE,2))
-				if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_WITCHCRAFT_REPLACE,tp) then
-					local te=sg:GetFirst():IsHasEffect(EFFECT_WITCHCRAFT_REPLACE,tp)
+				g:Merge(Duel.GetMatchingGroup(Auxiliary.WitchcrafterDiscardFilter,tp,LOCATION_ONFIELD,0,nil,tp))
+				local sg=Auxiliary.SelectUnselectGroup(g,e,tp,1,maxc,Auxiliary.WitchcrafterDiscardGroup(minc),1,tp,aux.Stringid(EFFECT_WITCHCRAFTER_REPLACE,2))
+				if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_WITCHCRAFTER_REPLACE,tp) then
+					local te=sg:GetFirst():IsHasEffect(EFFECT_WITCHCRAFTER_REPLACE,tp)
 					te:UseCountLimit(tp)
 					Duel.SendtoGrave(sg,REASON_COST)
 				else

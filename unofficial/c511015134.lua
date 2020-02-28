@@ -22,7 +22,7 @@ function s.xyzfilter(c,sg,e,tp)
 	if c.rum_xyzsummon then
 		se=c.rum_xyzsummon(c)
 	end
-	local res=c:IsXyzSummonable(sg,#sg,#sg)
+	local res=c:IsXyzSummonable(nil,sg,#sg,#sg)
 	if se then
 		se:Reset()
 	end
@@ -126,7 +126,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,g)
+		Duel.XyzSummon(tp,xyz,nil,g)
 		xyz:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 	end
 end

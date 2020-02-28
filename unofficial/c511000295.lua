@@ -92,7 +92,7 @@ function s.filterchk2(c,mg,matg,ct,tp)
 	return res
 end
 function s.xyzfilter(c,mg)
-	return c:IsXyzSummonable(mg,5,5)
+	return c:IsXyzSummonable(nil,mg,5,5)
 end
 function s.matfilter(c)
 	return c:IsSetCard(0x48) and c:IsType(TYPE_MONSTER)
@@ -145,6 +145,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		Duel.XyzSummon(tp,xyz,matg)
+		Duel.XyzSummon(tp,xyz,nil,matg)
 	end
 end

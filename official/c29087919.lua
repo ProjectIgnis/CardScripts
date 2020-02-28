@@ -16,7 +16,7 @@ function s.filter(c,e,tp)
 	return c:IsSetCard(0x1072) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.xyzfilter(c,mg,ct)
-	return c:IsXyzSummonable(mg,2,ct)
+	return c:IsXyzSummonable(nil,mg,2,ct)
 end
 function s.mfilter1(c,mg,exg,ct)
 	return mg:IsExists(s.mfilter2,1,nil,Group.FromCards(c),mg,exg,ct)
@@ -27,7 +27,7 @@ function s.mfilter2(c,g,mg,exg,ct)
 		if c:IsCode(tc:GetCode()) then return false end
 	end
 	g:AddCard(c)
-	local result=exg:IsExists(Card.IsXyzSummonable,1,nil,g,#g,#g)
+	local result=exg:IsExists(Card.IsXyzSummonable,1,nil,nil,g,#g,#g)
 		or (#g<ct and mg:IsExists(s.mfilter2,1,nil,g,mg,exg,ct))
 	g:RemoveCard(c)
 	return result
@@ -46,7 +46,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local sg2=mg:FilterSelect(tp,s.mfilter2,1,1,nil,sg1,mg,exg,ct)
 	sg1:Merge(sg2)
 	while #sg1<ct and mg:IsExists(s.mfilter2,1,nil,sg1,mg,exg,ct)
-		and (not exg:IsExists(Card.IsXyzSummonable,1,nil,sg1,#sg1,#sg1) or Duel.SelectYesNo(tp,aux.Stringid(id,0))) do
+		and (not exg:IsExists(Card.IsXyzSummonable,1,nil,nil,sg1,#sg1,#sg1) or Duel.SelectYesNo(tp,aux.Stringid(id,0))) do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg3=mg:FilterSelect(tp,s.mfilter2,1,1,nil,sg1,mg,exg,ct)
 		sg1:Merge(sg3)
@@ -58,7 +58,7 @@ function s.filter2(c,e,tp)
 	return c:IsRelateToEffect(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spfilter(c,mg,ct)
-	return c:IsXyzSummonable(mg,ct,ct)
+	return c:IsXyzSummonable(nil,mg,ct,ct)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
@@ -69,6 +69,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,g)
+		Duel.XyzSummon(tp,xyz,nil,g)
 	end
 end

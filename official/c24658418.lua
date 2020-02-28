@@ -45,7 +45,7 @@ function s.mfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x7b) and not c:IsType(TYPE_TOKEN)
 end
 function s.xyzfilter(c,mg)
-	return c:IsSetCard(0x7b) and c:IsXyzSummonable(mg)
+	return c:IsSetCard(0x7b) and c:IsXyzSummonable(nil,mg)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -60,6 +60,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,g,1,99)
+		Duel.XyzSummon(tp,xyz,nil,g,1,99)
 	end
 end

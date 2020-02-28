@@ -50,7 +50,7 @@ function s.filter3(c,e,tp,xyz,odd)
 	e1:SetValue(7)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	xyz:RegisterEffect(e1)
-	local result=c:IsXyzSummonable(Group.FromCards(xyz,odd),2,2)
+	local result=c:IsXyzSummonable(nil,Group.FromCards(xyz,odd),2,2)
 	e1:Reset()
 	return result
 end
@@ -86,11 +86,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		return
 	end
 	Duel.BreakEffect()
-	local g=Duel.GetMatchingGroup(function(sc) return sc:IsType(TYPE_PENDULUM) and sc:IsType(TYPE_XYZ) and sc:IsXyzSummonable(sg,2,2) end,tp,LOCATION_EXTRA,0,nil)
+	local g=Duel.GetMatchingGroup(function(sc) return sc:IsType(TYPE_PENDULUM) and sc:IsType(TYPE_XYZ) and sc:IsXyzSummonable(nil,sg,2,2) end,tp,LOCATION_EXTRA,0,nil)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=g:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,sg)
+		Duel.XyzSummon(tp,xyz,nil,sg)
 		if not c:IsRelateToEffect(e) or not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 		xyz:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 		local e1=Effect.CreateEffect(c)

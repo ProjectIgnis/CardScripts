@@ -1,5 +1,5 @@
 --星痕の機界騎士
---Mekk-Knight of the World Remains
+--Mekk-Knight Spectrum Supreme
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

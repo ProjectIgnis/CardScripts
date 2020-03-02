@@ -3,12 +3,12 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x3008),nil,nil,nil,nil,s.stage2)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x120),nil,nil,nil,nil,s.stage2)
 	e1:SetHintTiming(0,0x1c0+TIMING_MAIN_END)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x120,0x3008}
+s.listed_series={0x120}
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==2 then
 		if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
@@ -33,4 +33,3 @@ end
 function s.splimit(e,c)
 	return not c:IsSetCard(0x120)
 end
-

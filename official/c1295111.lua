@@ -67,7 +67,7 @@ function s.linktg(e,tp,eg,ep,ev,re,r,rp,chk,c,must,g,min,max)
 		e:SetLabelObject(mustg)
 		return true
 	end
-	local tc=g:SelectUnselect(Group.CreateGroup(),tp,true,true)
+	local tc=g:SelectUnselect(Group.CreateGroup(),tp,false,true)
 	if tc then
 		local sg=Group.FromCards(tc)
 		sg:KeepAlive()

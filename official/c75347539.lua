@@ -1,5 +1,5 @@
 --磁石の戦士マグネット・バルキリオン
---Valkyrion The Magna Warrior
+--Valkyrion the Magna Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

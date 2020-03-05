@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.sprcon)
+	e1:SetTarget(s.sprtg)
 	e1:SetOperation(s.sprop)
 	c:RegisterEffect(e1)
 	--destroy
@@ -50,10 +51,21 @@ function s.sprcon(e,c)
 	local rg=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #rg>1 and aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),0)
 end
-function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.sprtg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
+end
+function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2

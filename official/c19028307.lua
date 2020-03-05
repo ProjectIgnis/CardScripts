@@ -1,4 +1,5 @@
 --獣神機王バルバロスUr
+--Beast Machine King Barbaros Ür
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -8,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--no battle damage
@@ -16,39 +18,44 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_NO_BATTLE_DAMAGE)
 	c:RegisterEffect(e2)
 end
+function s.rescon(sg,e,tp,mg)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.atchk1,1,nil,sg)
+end
+function s.atchk1(c,sg)
+	return c:IsRace(RACE_MACHINE) and sg:FilterCount(s.atchk2,c)==1
+end
+function s.atchk2(c)
+	return c:IsRace(RACE_BEASTWARRIOR)
+end
 function s.spfilter(c,rac)
-	return c:IsRace(rac) and c:IsAbleToRemoveAsCost() and (not c:IsLocation(LOCATION_MZONE) or c:IsFaceup()) 
-		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true,true))
+	return c:IsRace(rac) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
 end
 function s.spcon(e,c)
+	local c=e:GetHandler()
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local n=0
-	if Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE,0,1,c,RACE_BEASTWARRIOR) then n=n-1 end
-	if Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE,0,1,c,RACE_MACHINE) then n=n-1 end
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>n
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,0x16,0,1,c,RACE_BEASTWARRIOR)
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,0x16,0,1,c,RACE_MACHINE)
+	local rg1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,RACE_MACHINE)
+	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,RACE_BEASTWARRIOR)
+	local rg=rg1:Clone()
+	rg:Merge(rg2)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #rg1>0 and #rg2>0 
+		and aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,RACE_MACHINE)
+	rg:Merge(Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,RACE_BEASTWARRIOR))
+	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g1=nil
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft~=0 then
-		local loc=0x16
-		if ft<0 then loc=LOCATION_MZONE end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		g1=Duel.SelectMatchingCard(tp,s.spfilter,tp,loc,0,1,1,c,RACE_BEASTWARRIOR)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g2=Duel.SelectMatchingCard(tp,s.spfilter,tp,loc,0,1,1,c,RACE_MACHINE)
-		g1:Merge(g2)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		g1=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_MZONE,0,1,1,c,RACE_BEASTWARRIOR+RACE_MACHINE)
-		local rc=RACE_BEASTWARRIOR
-		if g1:GetFirst():IsRace(RACE_BEASTWARRIOR) then rc=RACE_MACHINE end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g2=Duel.SelectMatchingCard(tp,s.spfilter,tp,0x16,0,1,1,c,rc)
-		g1:Merge(g2)
-	end
-	Duel.Remove(g1,POS_FACEUP,REASON_COST)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
 end

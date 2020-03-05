@@ -1,5 +1,5 @@
 --魔弾の悪魔 ザミエル
---Magibullet Fiend Zamiel
+--Magical Musket Mastermind Zakiel
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,9 +13,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.otop)
 	e1:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_SET_PROC)
-	c:RegisterEffect(e2)
 	--activate from hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)

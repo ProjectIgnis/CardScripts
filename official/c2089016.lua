@@ -1,8 +1,10 @@
 --先史遺産トゥスパ・ロケット
 --Chronomaly Tuspa Rocket
 --Logical Nonsense
+
 --Substitute ID
 local s,id=GetID()
+
 function s.initial_effect(c)
 	--Upon normal summon, ATK loss to a target
 	local e1=Effect.CreateEffect(c)
@@ -32,7 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Part of "Chronomaly" archetype
-s.listed_series={0x70,0x48}
+s.listed_series={0x70}
 	--Check for "Chronomaly" monster
 function s.atkcfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x70) and (c:IsLevelAbove(1) or c:IsRankAbove(1)) and c:IsAbleToGraveAsCost()
@@ -65,19 +67,19 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
 	--If Xyz Summoned using this card on field
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_XYZ and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+		and e:GetHandler():GetReasonCard():IsSetCard(0x48)
 end
 	--Grant double attack to "Number" Xyz
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
-	if not rc:IsSetCard(0x48) then return end
 	local e1=Effect.CreateEffect(rc)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -96,4 +98,3 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	rc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 end
-

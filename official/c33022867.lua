@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
@@ -18,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--act limit
@@ -31,35 +33,25 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
-function s.mzfilter(c,tp)
-	return c:IsControler(tp) and c:GetSequence()<5
-end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local rg=Duel.GetReleaseGroup(tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=-ft+1
-	return ft>-3 and #rg>2 and (ft>0 or rg:IsExists(s.mzfilter,ct,nil,tp))
+	return aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetReleaseGroup(tp)
+	local mg=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+	if #mg==3 then
+		mg:KeepAlive()
+		e:SetLabelObject(mg)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=nil
-	if ft>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		g=rg:Select(tp,3,3,nil)
-	elseif ft>-2 then
-		local ct=-ft+1
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		g=rg:FilterSelect(tp,s.mzfilter,ct,ct,nil,tp)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local g2=rg:Select(tp,3-ct,3-ct,g)
-		g:Merge(g2)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		g=rg:FilterSelect(tp,s.mzfilter,3,3,nil,tp)
-	end
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.Release(g,REASON_COST)
 	local atk=0
 	local tc=g:GetFirst()
@@ -75,6 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetValue(atk)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 	c:RegisterEffect(e1)
+	g:DeleteGroup()
 end
 function s.actcon(e)
 	local ph=Duel.GetCurrentPhase()

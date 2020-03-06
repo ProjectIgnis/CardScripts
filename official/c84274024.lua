@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
-	--sp summon (fusion)
+	--to hand or special summon (xyz)
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetRange(LOCATION_SZONE)
@@ -118,7 +118,7 @@ function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,e:GetLabel())
 	if #g>0 then
 		tc=g:GetFirst()
@@ -126,7 +126,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 						return tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end,
 						function(c)
 						Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end,
-						aux.Stringid(id,2))
+						aux.Stringid(id,0))
 		end
 	
 end

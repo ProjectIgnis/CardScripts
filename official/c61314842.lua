@@ -1,4 +1,5 @@
 --高等紋章術
+--Advanced Heraldry Art
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and mg:IsExists(s.mfilter1,1,nil,mg,exg) end
+		and mg:IsExists(s.mfilter1,1,nil,mg,exg,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg1=mg:FilterSelect(tp,s.mfilter1,1,1,nil,mg,exg,tp)
 	local tc1=sg1:GetFirst()

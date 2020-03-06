@@ -24,7 +24,7 @@ end
 s.material_setcode=0xbb
 function s.valcheck(e,c)
 	local hc=e:GetHandler()
-	local ct=hc:GetMaterial():GetClassCount(Card.GetSummonCode,hc,SUMMON_TYPE_FUSION,hc:GetControler())
+	local ct=hc:GetMaterial():GetClassCount(Card.GetCode,hc,SUMMON_TYPE_FUSION,hc:GetControler())
 	e:GetLabelObject():SetLabel(ct)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)

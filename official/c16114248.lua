@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.ffilter(c,fc,sumtype,tp,sub,mg,sg)
-	return c:IsRace(RACE_MACHINE,fc,sumtype,tp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or sg:IsExists(s.fusfilter,1,c,c:GetSummonCode(fc,sumtype,tp),fc,tp))
+	return c:IsRace(RACE_MACHINE,fc,sumtype,tp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,tp))
 end
 function s.fusfilter(c,code,fc,tp)
 	return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,tp,code) or c:IsHasEffect(511002961)

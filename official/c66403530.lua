@@ -63,7 +63,7 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsContains(e:GetHandler()) then return false end
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK)
 	for tc in aux.Next(g) do
-		if eg:IsExists(aux.zptfilter(nil),1,nil,tc) then return true end
+		if aux.zptgroupcon(eg,nil,tc) then return true end
 	end
 	return false
 end

@@ -1,7 +1,7 @@
 --オッドアイズ・アドベント
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Ritual.CreateProc(c,RITPROC_GREATER,s.ritualfil,nil,s.extrafil,s.extraop,s.forcedgroup,nil,LOCATION_HAND+LOCATION_GRAVE)
+	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_GREATER,filter=s.ritualfil,extrafil=s.extrafil,extraop=s.extraop,matfilter=s.forcedgroup,location=LOCATION_HAND+LOCATION_GRAVE})
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end

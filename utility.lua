@@ -1079,22 +1079,23 @@ function Auxiliary.FilterFaceupFunction(f,...)
 end
 --Filter for "If a [filter] monster is Special Summoned to a zone this card points to"
 --Includes non-trivial handling of self-destructing Burning Abyss monsters
-function Auxiliary.zptfilter(filter)
-    return function(c,ec,tp)
-        if filter and not filter(c,tp) then return false end
-        if c:IsLocation(LOCATION_MZONE) then
-            return ec:GetLinkedGroup():IsContains(c)
-        else
-            return (ec:GetLinkedZone(c:GetPreviousControler())&(1<<c:GetPreviousSequence()))~=0
-        end
-    end
+function Auxiliary.zptgroup(eg,filter,c,tp)
+	local fil=eg:Filter(function()return not filter or filter(c,tp) end,nil)
+	return (fil&c:GetLinkedGroup()) + eg:Filter(Auxiliary.zptfilter,nil,c)
+end
+function Auxiliary.zptgroupcon(eg,filter,c,tp)
+	local fil=eg:Filter(function()return not filter or filter(c,tp) end,nil)
+	return #(fil&c:GetLinkedGroup())>0 or eg:IsExists(Auxiliary.zptfilter,1,nil,c)
+end
+function Auxiliary.zptfilter(c,ec)
+	return (ec:GetLinkedZone(c:GetPreviousControler())&(1<<c:GetPreviousSequence()))~=0
 end
 --Condition for "If a [filter] monster is Special Summoned to a zone this card points to"
 --Includes non-trivial handling of self-destructing Burning Abyss monsters
 --Passes tp so you can check control
 function Auxiliary.zptcon(filter)
     return function(e,tp,eg,ep,ev,re,r,rp)
-        return eg:IsExists(Auxiliary.zptfilter(filter),1,nil,e:GetHandler(),tp)
+		return Auxiliary.zptgroupcon(eg,filter,e:GetHandler(),tp)
     end
 end
 --function to check if all the cards in a group have a common property

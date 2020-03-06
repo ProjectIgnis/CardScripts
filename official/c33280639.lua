@@ -1,4 +1,5 @@
 --破壊剣士の揺籃
+--Prologue of the Destruction Swordsman
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,21 +24,20 @@ function s.initial_effect(c)
 end
 s.listed_series={0xd6,0xd7}
 s.listed_names={11790356}
-function s.cfilter1(c,tp)
+function s.cfilter1(c)
 	return c:IsSetCard(0xd6) and not c:IsCode(id) and c:IsAbleToGraveAsCost()
-		and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_DECK,0,1,c)
 end
 function s.cfilter2(c)
 	return c:IsSetCard(0xd7) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
+function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(s.cfilter1,1,nil) and sg:IsExists(s.cfilter2,1,nil)
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_DECK,0,1,nil,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g1=Duel.SelectMatchingCard(tp,s.cfilter1,tp,LOCATION_DECK,0,1,1,nil,tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=Duel.SelectMatchingCard(tp,s.cfilter2,tp,LOCATION_DECK,0,1,1,g1:GetFirst())
-	g1:Merge(g2)
-	Duel.SendtoGrave(g1,REASON_COST)
+	local g=Duel.GetMatchingGroup(s.cfilter1,tp,LOCATION_DECK,0,nil)+Duel.GetMatchingGroup(s.cfilter2,tp,LOCATION_DECK,0,nil)
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE,s.rescon)
+	Duel.SendtoGrave(sg,REASON_COST)
 end
 function s.filter(c,e,tp)
 	return c:IsCode(11790356) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

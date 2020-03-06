@@ -1,4 +1,5 @@
 --人造人間－サイコ・ロード
+--Jinzo - Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -16,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--cannot trigger
@@ -75,18 +77,33 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.NegateEffect(ev)
 	end
 end
-function s.spfilter(c,ft,tp)
-	return c:IsFaceup() and c:IsCode(77585513) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp)))
+function s.spfilter(c,tp)
+	return c:IsFaceup() and c:IsCode(77585513) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return tp>-1 and Duel.CheckReleaseGroup(tp,s.spfilter,1,nil,ft,tp)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil)
+	return ft>-1 and #rg>0 and aux.SelectUnselectGroup(rg,e,tp,1,1,nil,0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
+	local g=nil
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil)
+	local g=aux.SelectUnselectGroup(rg,e,tp,1,1,nil,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,s.spfilter,1,1,nil,Duel.GetLocationCount(tp,LOCATION_MZONE),tp)
-	Duel.Release(g,REASON_COST)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.SendtoGrave(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_TRAP)

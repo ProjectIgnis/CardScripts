@@ -1,4 +1,5 @@
 --青眼の亜白龍
+--Blue-Eyes Alternative White Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -10,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--code
@@ -34,20 +36,31 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_BLUEEYES_W_DRAGON}
-function s.spcfilter(c)
+function s.spcfilter(c,tp)
 	return c:IsCode(CARD_BLUEEYES_W_DRAGON) and not c:IsPublic()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_HAND,0,1,nil)
+	local rg=Duel.GetMatchingGroup(s.spcfilter,tp,LOCATION_HAND,0,nil)
+	return #rg>0 and aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetMatchingGroup(s.spcfilter,tp,LOCATION_HAND,0,nil)
+	local g=aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_CONFIRM,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local g=Duel.SelectMatchingCard(tp,s.spcfilter,tp,LOCATION_HAND,0,1,1,nil)
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
+	g:DeleteGroup()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end

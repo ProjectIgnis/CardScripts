@@ -1,4 +1,5 @@
 --フレムベル・デスガンナー
+--Flamvell Commando
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_LIMIT_SUMMON_PROC)
 	e2:SetCondition(s.sumcon)
+	e2:SetTarget(s.sumtg)
 	e2:SetOperation(s.sumop)
 	e2:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e2)
@@ -33,17 +35,30 @@ end
 function s.mfilter(c,tp)
 	return c:IsSetCard(0x2c) and (c:IsControler(tp) or c:IsFaceup())
 end
-function s.sumcon(e,c,minc)
+function s.sumcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	return minc<=1 and Duel.CheckTribute(c,1,1,mg)
+	local rg=Duel.GetReleaseGroup(tp)
+	return aux.SelectUnselectGroup(rg,e,tp,1,1,s.rescon,0)
+end
+function s.rescon(sg,e,tp,mg)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.mfilter,1,nil,tp)
+end
+function s.sumtg(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetReleaseGroup(tp)
+	local g=aux.SelectUnselectGroup(rg,e,tp,1,1,s.rescon,1,tp,HINTMSG_RELEASE,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	local sg=Duel.SelectTribute(tp,c,1,1,mg)
-	c:SetMaterial(sg)
-	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.cfilter(c)
 	return c:GetDefense()==200 and c:IsAbleToRemoveAsCost()

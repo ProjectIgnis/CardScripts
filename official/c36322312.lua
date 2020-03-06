@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(0)
+	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--indes
@@ -46,18 +47,26 @@ s.listed_series={0x51}
 function s.spfilter(c)
 	return c:IsOriginalType(TYPE_MONSTER) and c:IsSetCard(0x51) and c:IsAbleToGraveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
-function s.spcheck(sg,e,tp)
-	return Duel.GetMZoneCount(tp,sg,tp)>0
-end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local g=Duel.GetMatchingGroup(s.spfilter,c:GetControler(),LOCATION_HAND+LOCATION_ONFIELD,0,c)
-	return aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,0)
+	return aux.SelectUnselectGroup(g,e,tp,2,2,aux.ChkfMMZ(1),0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,c)
+	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,c)
-	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,1,tp,HINT_SELECTMSG)
-	Duel.SendtoGrave(sg,REASON_COST)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.SendtoGrave(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.indesfil(c)
 	return c:IsFaceup() and c:IsSetCard(0x51) and c:IsOriginalType(TYPE_MONSTER) and c:IsType(TYPE_EQUIP)

@@ -1,4 +1,5 @@
 --トゥーン・ブラック・マジシャン・ガール
+--Toon Dark Magician Girl
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -9,6 +10,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--destroy
@@ -55,20 +57,27 @@ s.listed_names={15259703,30208479}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(15259703)
 end
-function s.spcfilter(c,ft,tp)
-	return ft>0 or (c:IsControler(tp) and c:GetSequence()<5)
-end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil) 
-		and ft>-1 and Duel.CheckReleaseGroup(tp,s.spcfilter,1,nil,ft,tp)
+	local rg=Duel.GetReleaseGroup(tp)
+	return aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetReleaseGroup(tp)
+	local mg=aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+	if #mg==1 then
+		mg:KeepAlive()
+		e:SetLabelObject(mg)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=Duel.SelectReleaseGroup(tp,s.spcfilter,1,1,nil,ft,tp)
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.sfilter(c)
 	return c:IsReason(REASON_DESTROY) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==15259703 and c:IsPreviousLocation(LOCATION_ONFIELD)

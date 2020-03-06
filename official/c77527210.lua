@@ -1,5 +1,5 @@
 --神聖なる魂
---Soul of Purity
+--Soul of Purity and Light
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

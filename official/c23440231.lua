@@ -79,42 +79,16 @@ function s.spcon(e,c)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local c=e:GetHandler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=nil
 	local rg1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c)
 	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,c)
 	local rg3=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	if c:IsHasEffect(34822850) then
-		if ft>0 then
-			g=aux.SelectUnselectGroup(rg1,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
-		else
-			local ct=-ft+1
-			g=rg1:FilterSelect(tp,Card.IsLocation,ct,ct,nil,LOCATION_MZONE)
-			if ct<3 then
-				sg:Sub(g)
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-				local g2=rg1:Select(tp,3-ct,3-ct,nil)
-				g:Merge(g2)
-			end
-		end
+		g=aux.SelectUnselectGroup(rg1,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
+	elseif Duel.IsPlayerAffectedByEffect(tp,69832741) then
+		g=aux.SelectUnselectGroup(rg2,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
 	else
-		if Duel.IsPlayerAffectedByEffect(tp,69832741) then
-			if ft>0 then
-				g=aux.SelectUnselectGroup(rg2,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
-			else
-				local ct=-ft+1
-				g=rg2:FilterSelect(tp,Card.IsLocation,ct,ct,nil,LOCATION_MZONE)
-				if ct<3 then
-					sg:Sub(g)
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-					local g2=rg2:Select(tp,3-ct,3-ct,nil)
-					g:Merge(g2)
-				end
-			end
-		else
-			g=aux.SelectUnselectGroup(rg3,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
-		end
+		g=aux.SelectUnselectGroup(rg3,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
 	end
 	if #g>0 then
 		g:KeepAlive()

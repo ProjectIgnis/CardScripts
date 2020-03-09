@@ -20,6 +20,24 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
+	--register names
+	if not s.global_flag then
+		s.global_flag=true
+		s.name_list={}
+		s.name_list[0]={}
+		s.name_list[1]={}
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_PHASE+PHASE_END)
+		ge1:SetCountLimit(1)
+		ge1:SetCondition(s.resetop)
+		Duel.RegisterEffect(ge1,0)
+	end
+end
+function s.resetop(e,tp,eg,ep,ev,re,r,rp)
+	s.name_list[0]={}
+	s.name_list[1]={}
+	return false
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x578) and c:IsAbleToHand()
@@ -27,7 +45,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
-	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(7044562,0)) then
+	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(7044562,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
@@ -41,7 +59,7 @@ function s.costfilter(c,e,tp)
 end
 function s.tgfilter(c,e,tp,code)
 	local zone=c:GetFreeLinkedZone()&0x1f
-	return c:IsSetCard(0x578) and c:IsLinkMonster() and c:IsCanBeEffectTarget(e) and zone>0 
+	return c:IsSetCard(0x578) and c:IsType(TYPE_LINK) and c:IsCanBeEffectTarget(e) and zone>0 
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,code,zone)
 end
 function s.spfilter(c,e,tp,code,zone)

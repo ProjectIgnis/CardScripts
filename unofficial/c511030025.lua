@@ -45,7 +45,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
-	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(7044562,0)) then
+	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(7044562,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
@@ -59,7 +59,7 @@ function s.costfilter(c,e,tp)
 end
 function s.tgfilter(c,e,tp,code)
 	local zone=c:GetFreeLinkedZone()&0x1f
-	return c:IsSetCard(0x578) and c:IsType(TYPE_LINK) and c:IsCanBeEffectTarget(e) and zone>0 
+	return c:IsSetCard(0x578) and c:IsLinkMonster() and c:IsCanBeEffectTarget(e) and zone>0 
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,code,zone)
 end
 function s.spfilter(c,e,tp,code,zone)

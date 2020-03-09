@@ -21,23 +21,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--register names
-	if not s.global_flag then
-		s.global_flag=true
-		s.name_list={}
-		s.name_list[0]={}
-		s.name_list[1]={}
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_PHASE+PHASE_END)
-		ge1:SetCountLimit(1)
-		ge1:SetCondition(s.resetop)
-		Duel.RegisterEffect(ge1,0)
-	end
-end
-function s.resetop(e,tp,eg,ep,ev,re,r,rp)
-	s.name_list[0]={}
-	s.name_list[1]={}
-	return false
+	aux.GlobalCheck(s,function()
+        s.name_list={}
+        s.name_list[0]={}
+        s.name_list[1]={}
+        aux.AddValuesReset(function()
+                            s.name_list[0]={}
+                            s.name_list[1]={}
+                            end)
+        end)
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x578) and c:IsAbleToHand()

@@ -34,7 +34,7 @@ function s.initial_effect(c)
     e3:SetCondition(s.tgcon)
     e3:SetValue(s.tgtg)
     c:RegisterEffect(e3)
-    --spsummon
+    --search
     local e4=Effect.CreateEffect(c)
     e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
     e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -87,7 +87,7 @@ function s.tgtg(e,c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    return c:IsSummonType(SUMMON_TYPE_FUSION) and rp~=tp and c:IsReason(REASON_EFFECT)
+    return c:IsSummonType(SUMMON_TYPE_FUSION) and rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.thfilter(c)
     return c:IsType(TYPE_SPELL) and c:IsAbleToHand()
@@ -104,4 +104,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
         Duel.ConfirmCards(1-tp,g)
     end
 end
-

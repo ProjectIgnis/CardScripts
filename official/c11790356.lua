@@ -1,4 +1,5 @@
 --破戒蛮竜－バスター・ドラゴン
+--Buster Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -38,6 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={78193831}
+s.listed_series={0xd6,0xd7}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xd7),tp,LOCATION_MZONE,0,1,nil)
 end
@@ -60,6 +62,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
+end
+function s.cfilter(c)
+	return c:IsSetCard(0xd7) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function s.filter2(c)
 	return c:IsSetCard(0xd6) and c:IsType(TYPE_MONSTER) and not c:IsForbidden()

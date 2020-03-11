@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tc,tp)
-	return c:IsLinkMonster() and not c:IsCode(tc:GetSummonCode(nil,SUMMON_TYPE_LINK,tp))
+	return c:IsLinkMonster() and not c:IsCode(tc:GetCode(nil,SUMMON_TYPE_LINK,tp))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end

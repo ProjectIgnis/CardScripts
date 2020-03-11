@@ -1,4 +1,5 @@
 --万華鏡－華麗なる分身－
+--Elegant Egotist
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_HARPIE_LADY}
+s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_HARPIE_LADY)
 end

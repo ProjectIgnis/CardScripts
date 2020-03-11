@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTarget(s.distg2)
 	e2:SetOperation(s.disop2)
+	e2:SetCountLimit(1)
 	c:RegisterEffect(e2)
 	local g=Group.CreateGroup()
 	g:KeepAlive()
@@ -78,7 +79,7 @@ function s.disop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disfilter2(c,e,tp)
-	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and c:IsControler(1-tp) and c:IsCanBeEffectTarget(e)
+	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and (c:GetSummonPlayer()==1-tp) and c:IsCanBeEffectTarget(e)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.disfilter2,nil,e,tp)
@@ -87,8 +88,8 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetCurrentChain()==0 then g:Clear() end
 		g:Merge(tg)
 		e:GetLabelObject():SetLabelObject(g)
-		if Duel.GetFlagEffect(tp,id)==0 then
-			Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
+		if e:GetHandler():GetFlagEffect(id)==0 then
+			e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1)
 			Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
 		end
 	end

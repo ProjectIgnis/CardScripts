@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spfilter(c,tp)
-	return  c:IsAttribute(ATTRIBUTE_WIND) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end
 function s.spcon(e,c)
@@ -46,6 +46,12 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 		return true
 	end
 	return false
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)

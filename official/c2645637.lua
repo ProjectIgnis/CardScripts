@@ -54,10 +54,12 @@ function s.filter(c)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and aux.FilterFaceupFunction(aux.nzatk(chkc)) end
-	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(aux.nzatk),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
+	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 and
+		Duel.IsExistingTarget(aux.FilterFaceupFunction(aux.nzatk),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,aux.FilterFaceupFunction(aux.nzatk),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
+	e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

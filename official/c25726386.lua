@@ -14,20 +14,20 @@ function s.initial_effect(c)
 	e1:SetCost(s.rcost)
 	c:RegisterEffect(e1)
 	--negate
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_TODECK)
-	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetCountLimit(1,id+1)
-	e3:SetCode(EVENT_CHAINING)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.discon)
-	e3:SetTarget(s.distg)
-	e3:SetOperation(s.disop)
-	c:RegisterEffect(e3)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_TODECK)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCountLimit(1,id+1)
+	e2:SetCode(EVENT_CHAINING)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(s.discon)
+	e2:SetTarget(s.distg)
+	e2:SetOperation(s.disop)
+	c:RegisterEffect(e2)
 	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e3)
+	table.insert(GhostBelleTable,e2)
 end
 s.listed_series={0x138}
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
@@ -68,4 +68,3 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

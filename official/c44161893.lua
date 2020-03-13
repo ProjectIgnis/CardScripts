@@ -113,4 +113,3 @@ end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*300
 end
-

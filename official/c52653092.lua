@@ -1,10 +1,11 @@
 --SNo.0 ホープ・ゼアル
+--Number S0: Utopic ZEXAL
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()
 	Xyz.AddProcedure(c,s.xyzfilter,nil,3,s.ovfilter,aux.Stringid(id,0),nil,s.xyzop,false,s.xyzcheck)
-	--cannot disable spsummon
+	--xyz summon cannot be negated
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.effcon2)
 	e3:SetOperation(s.spsumsuc)
 	c:RegisterEffect(e3)
-	--atk & def
+	--atk & def increase
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_UPDATE_ATTACK)
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e5)
-	--activate limit
+	--prevent effects activation
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetType(EFFECT_TYPE_QUICK_O)

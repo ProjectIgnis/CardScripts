@@ -81,4 +81,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SendtoHand(c,tp,REASON_EFFECT)
 	end
 end
-

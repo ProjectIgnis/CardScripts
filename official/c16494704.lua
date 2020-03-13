@@ -1,4 +1,5 @@
 --オッドアイズ・アドベント
+--Odd-Eyes Advent
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_GREATER,filter=s.ritualfil,extrafil=s.extrafil,extraop=s.extraop,matfilter=s.forcedgroup,location=LOCATION_HAND+LOCATION_GRAVE})

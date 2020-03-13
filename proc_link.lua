@@ -116,8 +116,16 @@ function Link.Condition(f,minc,maxc,specialchk)
 				max = max or maxc
 				if mustg:IsExists(aux.NOT(Link.ConditionFilter),1,nil,f,c,tp) or #mustg>max then return false end
 				local emt,tg=aux.GetExtraMaterials(tp,mustg+mg,c,SUMMON_TYPE_LINK)
-				local sg=mustg
-				local res=(mg+tg):Includes(mustg) and (mg+tg):IsExists(Link.CheckRecursive,1,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt)
+				local res=(mg+tg):Includes(mustg) and #mustg<=max
+				if res then
+					if #mustg==max then
+						local sg=Group.CreateGroup()
+						res=mustg:IsExists(Link.CheckRecursive,1,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt)
+					elseif #mustg<max then
+						local sg=mustg
+						res=(mg+tg):IsExists(Link.CheckRecursive,1,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt)
+					end
+				end
 				aux.DeleteExtraMaterialGroups(emt)
 				return res
 			end

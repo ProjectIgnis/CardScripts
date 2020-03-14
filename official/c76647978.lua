@@ -32,7 +32,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,e:GetHandler():GetCardID())
 	end
 	Fusion.CheckExact=nil
 end
@@ -43,7 +43,7 @@ function s.mgfilter(c,e,tp,fusc,mg)
 		and fusc:CheckFusionMaterial(mg,c,PLAYER_NONE|FUSPROC_NOTFUSION)
 end
 function s.spfilter(c,e,tp)
-	if c:IsFaceup() and c:GetFlagEffect(id)~=0 then
+	if c:IsFaceup() and c:GetFlagEffect(id)~=0 and c:GetFlagEffectLabel(id)==e:GetHandler():GetCardID() then
 		local mg=c:GetMaterial()
 		local ct=#mg
 		return ct>0 and ct<=Duel.GetLocationCount(tp,LOCATION_MZONE)

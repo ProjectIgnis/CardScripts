@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_HAND,0)
 	e1:SetCondition(s.otcon)
-	e1:SetTarget(aux.FieldSummonProcTg(s.ottg))
+	e1:SetTarget(aux.FieldSummonProcTg(s.ottg,s.sumtg))
 	e1:SetOperation(s.otop)
 	e1:SetCountLimit(1)
 	e1:SetValue(SUMMON_TYPE_TRIBUTE)
@@ -57,10 +57,21 @@ function s.ottg(e,c)
 	local mi,ma=c:GetTributeRequirement()
 	return mi<=2 and ma>=2 and c:IsRace(RACE_FAIRY)
 end
-function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.sumtg(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_GRAVE,0,2,2,nil)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_GRAVE,0,2,2,true,nil)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
+end
+function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
+	local sg=e:GetLabelObject()
+	if not sg then return end
+	Duel.Remove(sg,POS_FACEUP,REASON_COST)
+	sg:DeleteGroup()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

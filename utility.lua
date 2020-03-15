@@ -1088,7 +1088,7 @@ function Auxiliary.zptgroupcon(eg,filter,c,tp)
 	return #(fil&c:GetLinkedGroup())>0 or eg:IsExists(Auxiliary.zptfilter,1,nil,c)
 end
 function Auxiliary.zptfilter(c,ec)
-	return (ec:GetLinkedZone(c:GetPreviousControler())&(1<<c:GetPreviousSequence()))~=0
+	return not c:IsLocation(LOCATION_MZONE) and (ec:GetLinkedZone(c:GetPreviousControler())&(1<<c:GetPreviousSequence()))~=0
 end
 --Condition for "If a [filter] monster is Special Summoned to a zone this card points to"
 --Includes non-trivial handling of self-destructing Burning Abyss monsters

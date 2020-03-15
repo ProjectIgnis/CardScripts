@@ -1080,11 +1080,11 @@ end
 --Filter for "If a [filter] monster is Special Summoned to a zone this card points to"
 --Includes non-trivial handling of self-destructing Burning Abyss monsters
 function Auxiliary.zptgroup(eg,filter,c,tp)
-	local fil=eg:Filter(function()return not filter or filter(c,tp) end,nil)
+	local fil=eg:Filter(function(cc)return not filter or filter(cc,tp) end,nil)
 	return (fil&c:GetLinkedGroup()) + eg:Filter(Auxiliary.zptfilter,nil,c)
 end
 function Auxiliary.zptgroupcon(eg,filter,c,tp)
-	local fil=eg:Filter(function()return not filter or filter(c,tp) end,nil)
+	local fil=eg:Filter(function(cc)return not filter or filter(cc,tp) end,nil)
 	return #(fil&c:GetLinkedGroup())>0 or eg:IsExists(Auxiliary.zptfilter,1,nil,c)
 end
 function Auxiliary.zptfilter(c,ec)

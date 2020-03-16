@@ -1,4 +1,5 @@
 --幻煌龍の天渦
+--Phantasm Spiral Assault
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -44,6 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e0:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e0:SetValue(0)
 		tc:RegisterEffect(e0)
+		--win
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 		e1:SetCode(EVENT_BATTLE_DESTROYING)
@@ -70,8 +72,7 @@ function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	te:SetValue(value)
 	e:GetOwner():SetTurnCounter(value)
 	if value>2 then
-		local WIN_REASON_CELESTIAL_WHIRLPOOL=0x1c
-		Duel.Win(tp,WIN_REASON_CELESTIAL_WHIRLPOOL)
+		Duel.Win(tp,WIN_REASON_PHANTASM_SPIRAL)
 	end
 end
 function s.handcon(e)

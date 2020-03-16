@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Effect.CreateEffect(c)	
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_BATTLE_START)
@@ -52,7 +52,7 @@ function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	local lp1=Duel.GetLP(tp)-1
 	local lp2=Duel.GetLP(1-tp)-1
 	Duel.ChangeBattleDamage(tp,lp1)
-	Duel.ChangeBattleDamage(1-tp,lp2)	
+	Duel.ChangeBattleDamage(1-tp,lp2)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_MAIN1

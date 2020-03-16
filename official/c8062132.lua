@@ -100,7 +100,6 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	c:AddCounter(0x11,1)
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
-	local WIN_REASON_VENNOMINAGA = 0x12
 	local c=e:GetHandler()
 	if c:GetCounter(0x11)==3 then
 		Duel.Win(tp,WIN_REASON_VENNOMINAGA)

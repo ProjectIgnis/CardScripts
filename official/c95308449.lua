@@ -88,11 +88,11 @@ function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if t[0]>0 or t[1]>0 then
 		if t[0]==t[1] then
-			Duel.Win(PLAYER_NONE,0x11)
+			Duel.Win(PLAYER_NONE,WIN_REASON_FINAL_COUNTDOWN)
 		elseif t[0]>t[1] then
-			Duel.Win(0,0x11)
+			Duel.Win(0,WIN_REASON_FINAL_COUNTDOWN)
 		else
-			Duel.Win(1,0x11)
+			Duel.Win(1,WIN_REASON_FINAL_COUNTDOWN)
 		end
 	end
 end

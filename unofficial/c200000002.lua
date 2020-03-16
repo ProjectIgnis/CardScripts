@@ -1,4 +1,4 @@
---
+--Creator of Miracles
 local s,id=GetID()
 function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.illegal=true
+s.listed_series={0x107f,0x1048}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	s.announce_filter={id+1,OPCODE_ISCODE,nil,OPCODE_ISCODE,OPCODE_NOT,OPCODE_AND}
@@ -52,6 +53,5 @@ function s.wincon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
-	local WIN_REASON_MIRACLE_CRETER=0x30
-	Duel.Win(tp,WIN_REASON_MIRACLE_CRETER)
+	Duel.Win(tp,WIN_REASON_CREATOR_MIRACLE)
 end

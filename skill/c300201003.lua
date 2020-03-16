@@ -1,7 +1,7 @@
 --Final Draw
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)	
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
@@ -21,7 +21,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(s.searchtg)
 		e1:SetOperation(s.searchop)
 		Duel.RegisterEffect(e1,tp)
-		
 		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_PHASE+PHASE_END)
@@ -45,7 +44,6 @@ function s.searchtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dt=Duel.GetDrawCount(tp)
 	if dt~=0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.RegisterFlagEffect(tp,id+1,0,0,0)
-		
 		_replace_count=0
 		_replace_max=dt
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -70,10 +68,8 @@ function s.searchop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-
 function s.loseop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id+1)>0 then
-		local WIN_REASON_FINAL_DRAW=0x22
 		Duel.Win(1-tp,WIN_REASON_FINAL_DRAW)
 	end
 end
@@ -83,11 +79,11 @@ Duel.Draw = function(...)
 	local tb={...}
 	local tp=tb[1]
 	local count=tb[2]
-  if (Duel.GetFlagEffect(tp,id)>2 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) ) then
-    local g=Duel.SelectMatchingCard(tp,LOCATION_DECK,0,tp,count,count)
-    Duel.SendToHand(g,tp,REASON_EFFECT)
-	Duel.RegisterFlagEffect(tp,id+1,0,0,0)
-  else
-    ddr(...)
-  end
+	if (Duel.GetFlagEffect(tp,id)>2 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) ) then
+		local g=Duel.SelectMatchingCard(tp,LOCATION_DECK,0,tp,count,count)
+		Duel.SendToHand(g,tp,REASON_EFFECT)
+		Duel.RegisterFlagEffect(tp,id+1,0,0,0)
+	else
+		ddr(...)
+	end
 end

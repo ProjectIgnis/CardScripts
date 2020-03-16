@@ -57,9 +57,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
-	local WIN_REASON_DESTINY_LEO=0x17
 	local c=e:GetHandler()
 	if c:GetCounter(0x2b)==3 then
-		Duel.Win(tp,WIN_REASON_DESTINY_LEO)
+		Duel.Win(tp,WIN_REASON_PUPPET_LEO)
 	end
 end

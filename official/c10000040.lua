@@ -1,4 +1,5 @@
 --光の創造神 ホルアクティ
+--Holactie the Creator of Light
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -31,6 +32,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.winop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={10000000,10000010,10000020}
 function s.spfilter(c,code)
 	local code1,code2=c:GetOriginalCodeRule()
 	return code1==code or code2==code
@@ -75,7 +77,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g1,REASON_COST)
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
-	local WIN_REASON_CREATORGOD=0x13
 	local p=e:GetHandler():GetSummonPlayer()
 	Duel.Win(p,WIN_REASON_CREATORGOD)
 end

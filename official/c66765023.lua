@@ -47,6 +47,5 @@ function s.wincon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttackTarget()==nil
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Win(tp,0x1e)
+	Duel.Win(tp,WIN_REASON_FLYING_ELEPHANT)
 end
-

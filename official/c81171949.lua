@@ -1,4 +1,5 @@
 --ジャックポット7
+--Jackpot 7
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -45,7 +46,6 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT)~=0 then
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 		if Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,3,nil) then
-			local WIN_REASON_JACKPOT7=0x19
 			Duel.Win(tp,WIN_REASON_JACKPOT7)
 		end
 	end

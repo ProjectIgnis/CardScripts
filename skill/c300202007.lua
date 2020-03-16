@@ -30,8 +30,8 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain()==0 and Duel.GetTurnCount()==1
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	--aroma effect
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

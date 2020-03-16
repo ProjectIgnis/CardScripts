@@ -44,8 +44,8 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 	end
 	
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	
 	--removal of 1 dino + 1 non dino
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil,e,tp)

@@ -10,8 +10,8 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.CanActivateSkill(tp) and s.target(e,tp,eg,ep,ev,re,r,rp,0)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	
 	local chkf=tp

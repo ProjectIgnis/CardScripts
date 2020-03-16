@@ -8,8 +8,8 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.CanActivateSkill(tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	local c=e:GetHandler()
 	
 	if Duel.GetFlagEffect(tp,id)==0 then

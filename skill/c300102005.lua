@@ -8,8 +8,8 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.CanActivateSkill(tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	
 	local ct=Duel.DiscardHand(tp,aux.TRUE,1,60,REASON_EFFECT+REASON_DISCARD)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
@@ -19,7 +19,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	elseif op==1 then g=Duel.SelectMatchingCard(1-tp,s.tgfilter,1-tp,LOCATION_DECK,0,ct,ct,nil,TYPE_SPELL)
 	else g=Duel.SelectMatchingCard(1-tp,s.tgfilter,1-tp,LOCATION_DECK,0,ct,ct,nil,TYPE_TRAP) end
 	if Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
-		Duel.Hint(HINT_SKILL_FLIP,0,id|(2<<32))
+		Duel.Hint(HINT_SKILL_FLIP,tp,id|(2<<32))
 	end
 end
 function s.tgfilter(c,ty)

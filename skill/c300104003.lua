@@ -8,8 +8,8 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	--opt register
 	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,0)
 	local sg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
@@ -35,5 +35,5 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) and c:IsLevelAbove(6)
 end
 function s.EPop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(2<<32))
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(2<<32))
 end

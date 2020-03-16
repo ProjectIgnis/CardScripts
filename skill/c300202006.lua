@@ -11,8 +11,8 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	--opd register
 	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,0)
 	

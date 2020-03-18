@@ -28,14 +28,22 @@ function Auxiliary.CheckZonesReleaseSummonCheck(must,oneof)
 		return Duel.GetMZoneCount(tp,sg+must,zone)>0 and count<2,count>=2
 	end
 end
-function Duel.CheckReleaseGroupSummon(c,tp,e,fil,minc,maxc,zone,ex,...)
-	local rg,rgex=Duel.GetReleaseGroup(tp,false):Filter(aux.TRUE,ex):Split(fil,nil,...)
+function Duel.CheckReleaseGroupSummon(c,tp,e,fil,minc,maxc,last,...)
+	local zone=0xff
+	local params={...}
+	local ex=last
+	if type(last)=="number" then
+		zone=last
+		ex=params[1]
+		table.remove(params,1)
+	end
+	local rg,rgex=Duel.GetReleaseGroup(tp,false):Filter(aux.TRUE,ex):Split(fil,nil,table.unpack(params))
 	if #rg<minc or rgex:IsExists(Card.IsHasEffect,nil,EFFECT_EXTRA_RELEASE) then return false end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local must,nonmust=rg:Split(Card.IsHasEffect,nil,EFFECT_EXTRA_RELEASE)
 	local mustc=#must
 	if mustc>maxc then return false end
-	if (mustc-maxc>=0) and Duel.GetMZoneCount(tp,must,zone)>0 then return true end
+	if (mustc-minc>=0) and Duel.GetMZoneCount(tp,must,zone)>0 then return true end
 	local extraoneof,nonmust=nonmust:Split(aux.ReleaseNonSumCheck,nil,tp,e)
 	local count=mustc+#nonmust+(#extraoneof>0 and 1 or 0)
 	return count>=minc and aux.SelectUnselectGroup(nonmust,e,tp,minc-mustc,maxc-mustc,aux.CheckZonesReleaseSummonCheck(must,extraoneof),0)
@@ -46,7 +54,18 @@ function Auxiliary.CheckZonesReleaseSummonCheckSelection(must,oneof)
 		return sg:Includes(must) and Duel.GetMZoneCount(tp,sg,zone)>0 and count<2,count>=2
 	end
 end
-function Duel.SelectReleaseGroupSummon(c,tp,e,fil,minc,maxc,cancelable,zone,ex,...)
+function Duel.SelectReleaseGroupSummon(c,tp,e,fil,minc,maxc,last,...)
+	local cancelable=false
+	local zone=0xff
+	local ex=last
+	local params={...}
+	if type(last)=="boolean" then
+		cancelable=last
+		zone=params[1]
+		table.remove(params,1)
+		ex=params[1]
+		table.remove(params,1)
+	end
 	local rg,rgex=Duel.GetReleaseGroup(tp,false):Filter(aux.TRUE,ex):Split(fil,nil,...)
 	if #rg<minc or rgex:IsExists(Card.IsHasEffect,nil,EFFECT_EXTRA_RELEASE) then return nil end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -56,7 +75,8 @@ function Duel.SelectReleaseGroupSummon(c,tp,e,fil,minc,maxc,cancelable,zone,ex,.
 	if (mustc-maxc>=0) and Duel.GetMZoneCount(tp,must,zone)>0 then return must:Select(tp,mustc,mustc,true) end
 	local extraoneof,nonmust=nonmust:Split(aux.ReleaseNonSumCheck,nil,tp,e)
 	local count=mustc+#nonmust+(#extraoneof>0 and 1 or 0)
-	return count>=minc and aux.SelectUnselectGroup(rg,e,tp,minc,maxc,aux.CheckZonesReleaseSummonCheckSelection(must,extraoneof),1,tp,nil,function(sg,e,tp,g) return sg:Includes(must) and Duel.GetMZoneCount(tp,sg,zone)>0 end,nil,true)
+	local res=count>=minc and aux.SelectUnselectGroup(rg,e,tp,minc,maxc,aux.CheckZonesReleaseSummonCheckSelection(must,extraoneof),1,tp,500,function(sg,e,tp,g) return sg:Includes(must) and Duel.GetMZoneCount(tp,sg,zone)>0 end,nil,cancelable)
+	return #res>0 and res or nil
 end
 --Lair of Darkness
 function Auxiliary.ReleaseCostFilter(c,f,...)

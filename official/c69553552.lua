@@ -1,3 +1,4 @@
+--Ｆ．Ａ．フォーミュラアスリートウィナーズ
 --F.A. Winners
 --Scripted by Eerie Code
 local s,id=GetID()

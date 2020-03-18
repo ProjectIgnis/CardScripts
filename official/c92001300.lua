@@ -1,4 +1,5 @@
 --古代の機械城
+--Ancient Gear Castle
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0xb)

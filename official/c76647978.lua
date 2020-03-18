@@ -9,7 +9,7 @@ function s.initial_effect(c)
 					if chk==0 then
 						return tg(e,tp,eg,ep,ev,re,r,rp,chk)
 					end
-					tg(e,tp,eg,ep,ev,re,r,rp,chk) 
+					tg(e,tp,eg,ep,ev,re,r,rp,chk)
 					if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 						Duel.SetChainLimit(aux.FALSE)
 					end

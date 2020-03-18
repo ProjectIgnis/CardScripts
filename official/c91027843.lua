@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.eqcon)
 	e4:SetTarget(s.eqtg)
 	e4:SetOperation(s.eqop)
-	c:RegisterEffect(e4)	
+	c:RegisterEffect(e4)
 	--material check
 	aux.GlobalCheck(s,function()
 		local e1=Effect.GlobalEffect()

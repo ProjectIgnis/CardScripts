@@ -37,7 +37,8 @@ end
 	--Check for FIRE warrior monster or equip spell from hand and field
 function s.costfilter(c,tp)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
-	and (c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE)) or (c:IsType(TYPE_EQUIP) and c:IsPosition(POS_FACEUP)) and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
+	and (c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE)) or (c:IsType(TYPE_EQUIP) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()))
+	and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 	--Send FIRE warrior monster or equip spell to GY as cost
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

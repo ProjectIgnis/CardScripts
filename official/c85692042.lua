@@ -1,5 +1,5 @@
 --塊斬機ダランベルシアン
---Batch Processlayer d'Alembertian
+--Primathmech Alembertian
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -119,17 +119,20 @@ function s.stfilter(c)
 end
 s.sttg=s.tg(s.stfilter)
 s.stop=s.op(s.stfilter)
+function s.cfilter(c,ft,tp)
+	return ft>0 or (c:IsControler(tp) and c:GetSequence()<5)
+end
+function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,ft,tp) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,ft,tp)
+	Duel.Release(g,REASON_COST)
+end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x132) and c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil) end
-	local sg=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
-	Duel.Release(sg,REASON_COST)
-end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

@@ -105,8 +105,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if not hc then return end
 	local ct=hc:GetCounter(0x1)
 	if Duel.SendtoHand(hc,nil,REASON_EFFECT)~=0 and hc:IsLocation(LOCATION_HAND) and Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.Destroy(eg,REASON_EFFECT)
-		if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		if Duel.Destroy(eg,REASON_EFFECT)~=0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()
 			c:AddCounter(0x1,ct)
 		end

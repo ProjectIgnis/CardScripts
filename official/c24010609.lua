@@ -107,7 +107,11 @@ function s.rescon(field,ft)
 	return function(sg,e,tp,mg)
 		local c1=sg:GetClassCount(Card.GetCode)
 		local c2=#sg
-		return c1==c2 and (not field or (#sg<ft or sg:IsExists(Card.IsType,1,nil,TYPE_FIELD))),c1~=c2
+		local c22=c2
+		if sg:IsExists(Card.IsType,1,nil,TYPE_FIELD) then
+			c22=c22-1
+		end
+		return c1==c2 and c22<=ft,c1~=c2
 	end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
@@ -117,7 +121,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetHandler():GetFlagEffectLabel(id) or 0
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local field=false
-	if g:IsExists(Card.IsType,1,nil,TYPE_FIELD) then field=true ft=ft+1 end
+	if g:IsExists(Card.IsType,1,nil,TYPE_FIELD) then field=true end
 	ft=math.min(math.min(ft,g:GetClassCount(Card.GetCode)),ct)
 	if ft<1 then return end
 	local tg=aux.SelectUnselectGroup(g,e,tp,1,ft,s.rescon(field,ft),1,tp,HINTMSG_SET)

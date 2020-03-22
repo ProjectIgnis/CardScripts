@@ -118,7 +118,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local field=false
 	if g:IsExists(Card.IsType,1,nil,TYPE_FIELD) then field=true ft=ft+1 end
-	ft=math.min(ft,g:GetClassCount(Card.GetCode))
+	ft=math.min(math.min(ft,g:GetClassCount(Card.GetCode)),ct)
 	if ft<1 then return end
 	local tg=aux.SelectUnselectGroup(g,e,tp,1,ft,s.rescon(field,ft),1,tp,HINTMSG_SET)
 	Duel.SSet(tp,tg)

@@ -1,4 +1,5 @@
 --電磁石の戦士マグネット・ベルセリオン
+--Berserkion the Electromagna Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -9,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--destroy
@@ -34,54 +36,52 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2066}
 s.listed_names={42023223,79418928,15502037}
-function s.cfilter(c)
-	return (not c:IsLocation(LOCATION_MZONE) or c:IsFaceup()) and c:IsAbleToRemoveAsCost() 
-		and (c:IsLocation(LOCATION_HAND+LOCATION_SZONE) or aux.SpElimFilter(c,true,true))
+function s.rescon(sg,e,tp,mg)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.cchk1,1,nil,sg)
 end
-function s.sprfilter1(c,mg,ft)
-	local mg2=mg:Clone()
-	local ct=ft
-	if c:IsLocation(LOCATION_MZONE) then ct=ct+1 end
-	mg2:RemoveCard(c)
-	return c:IsCode(42023223) and mg2:IsExists(s.sprfilter2,1,nil,mg2,ct)
+function s.cchk1(c,sg)
+	return c:IsCode(42023223) and sg:IsExists(s.cchk2,1,nil,sg)
 end
-function s.sprfilter2(c,mg,ft)
-	local mg2=mg:Clone()
-	local ct=ft
-	if c:IsLocation(LOCATION_MZONE) then ct=ct+1 end
-	mg2:RemoveCard(c)
-	return c:IsCode(79418928) and mg2:IsExists(s.sprfilter3,1,nil,ct)
+function s.cchk2(c,sg)
+	return c:IsCode(79418928) and sg:FilterCount(s.cchk3,c)==1
 end
-function s.sprfilter3(c,ft)
-	local ct=ft
-	if c:IsLocation(LOCATION_MZONE) then ct=ct+1 end
-	return c:IsCode(15502037) and ct>0
+function s.cchk3(c)
+	return c:IsCode(15502037)
+end
+function s.cfilter(c,code)
+	return c:IsCode(code) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
 end
 function s.spcon(e,c)
+	local c=e:GetHandler()
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
-	return mg:IsExists(s.sprfilter1,1,nil,mg,ft)
+	local rg1=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,42023223)
+	local rg2=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,79418928)
+	local rg3=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,15502037)
+	local rg=rg1:Clone()
+	rg:Merge(rg2)
+	rg:Merge(rg3)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #rg1>0 and #rg2>0 and #rg3>0 
+		and aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
+	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,42023223)
+	rg:Merge(Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,79418928))
+	rg:Merge(Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,15502037))
+	local g=aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=mg:FilterSelect(tp,s.sprfilter1,1,1,nil,mg,ft)
-	local tc1=g1:GetFirst()
-	mg:RemoveCard(tc1)
-	if tc1:IsLocation(LOCATION_MZONE) then ft=ft+1 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=mg:FilterSelect(tp,s.sprfilter2,1,1,nil,mg,ft)
-	local tc2=g2:GetFirst()
-	if tc2:IsLocation(LOCATION_MZONE) then ft=ft+1 end
-	mg:RemoveCard(tc2)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g3=mg:FilterSelect(tp,s.sprfilter3,1,1,nil,ft)
-	g1:Merge(g2)
-	g1:Merge(g3)
-	Duel.Remove(g1,POS_FACEUP,REASON_COST)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
 end
 function s.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x2066) or c:IsCode(99785935,39256679,11549357)) and c:IsLevelBelow(4) and c:IsAbleToRemoveAsCost() 

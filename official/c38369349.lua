@@ -57,26 +57,24 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(15259703)
 end
 function s.spcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp)
-	return aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),0)
+    if c==nil then return true end
+    return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,2,false,2,true,0xff,c,c:GetControler(),nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp)
-	local mg=aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
-	if #mg==2 then
-		mg:KeepAlive()
-		e:SetLabelObject(mg)
-		return true
-	end
-	return false
+    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+    local g=Duel.SelectReleaseGroup(tp,aux.TRUE,2,2,false,true,true,c,nil,nil,nil)
+    if g then
+        g:KeepAlive()
+        e:SetLabelObject(g)
+    return true
+    end
+    return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=e:GetLabelObject()
-	if not g then return end
-	Duel.Release(g,REASON_COST)
-	g:DeleteGroup()
+    local g=e:GetLabelObject()
+    if not g then return end
+    Duel.Release(g,REASON_COST)
+    g:DeleteGroup()
 end
 function s.sfilter(c)
 	return c:IsReason(REASON_DESTROY) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==15259703 and c:IsPreviousLocation(LOCATION_ONFIELD)

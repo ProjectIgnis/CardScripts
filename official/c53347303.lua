@@ -50,7 +50,7 @@ end
 s.listed_names={23995346}
 function s.spcon(e,c)
     if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,0xff,c,c:GetControler(),nil,23995346)
+    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,nil,c,c:GetControler(),nil,23995346)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
     local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

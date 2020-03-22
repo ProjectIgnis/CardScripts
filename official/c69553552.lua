@@ -1,3 +1,4 @@
+--Ｆ．Ａ．フォーミュラアスリートウィナーズ
 --F.A. Winners
 --Scripted by Eerie Code
 local s,id=GetID()
@@ -62,11 +63,10 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		local g=Duel.GetMatchingGroup(s.winfilter,tp,LOCATION_REMOVED,0,nil)
 		if g:GetClassCount(Card.GetCode)>=3 then
-			Duel.Win(tp,0x1d)
+			Duel.Win(tp,WIN_REASON_FA_WINNERS)
 		end
 	end
 end
 function s.winfilter(c)
 	return c:IsSetCard(0x107) and c:IsType(TYPE_FIELD) and c:GetFlagEffect(id)~=0
 end
-

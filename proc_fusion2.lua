@@ -82,17 +82,17 @@ function(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locatio
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,location)
 			end
 end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf")
-function aux.GrouptoFieldid(g)
+function aux.GrouptoCardid(g)
 	local res={}
 	for card in aux.Next(g) do
-		res[card:GetRealFieldID()] = true
+		res[card:GetCardID()] = true
 	end
 	return res
 end
-function Fusion.ChainMaterialPrompt(effswithgroup,fieldID,tp,e)
+function Fusion.ChainMaterialPrompt(effswithgroup,cardID,tp,e)
 	local effs = {}
 	for i,eff in ipairs(effswithgroup) do
-		if eff[2][fieldID] ~= nil then
+		if eff[2][cardID] ~= nil then
 			table.insert(effs,i)
 		end
 	end
@@ -133,7 +133,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locati
 				local effswithgroup={}
 				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value,sumlimit)
 				if #sg1 > 0 then
-					table.insert(effswithgroup,{e,aux.GrouptoFieldid(sg1)})
+					table.insert(effswithgroup,{e,aux.GrouptoCardid(sg1)})
 				end
 				Fusion.CheckAdditional=nil
 				local extraeffs = {Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)}
@@ -148,7 +148,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locati
 					end
 					local sg2=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg2,gc,chkf,value,sumlimit)
 					if #sg2 > 0 then
-						table.insert(effswithgroup,{ce,aux.GrouptoFieldid(sg2)})
+						table.insert(effswithgroup,{ce,aux.GrouptoCardid(sg2)})
 						sg1:Merge(sg2)
 					end
 					Fusion.CheckAdditional=nil
@@ -157,7 +157,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locati
 					local sg=sg1:Clone()
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 					local tc=sg:Select(tp,1,1,nil):GetFirst()
-					local sel=effswithgroup[Fusion.ChainMaterialPrompt(effswithgroup,tc:GetRealFieldID(),tp,e)]
+					local sel=effswithgroup[Fusion.ChainMaterialPrompt(effswithgroup,tc:GetCardID(),tp,e)]
 					local backupmat=nil
 					if sel[1]==e then
 						Fusion.CheckAdditional=checkAddition

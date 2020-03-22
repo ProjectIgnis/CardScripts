@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.xyz_number=88
+s.listed_series={0x48}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
 end
@@ -29,8 +30,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT) then
 		if c:GetOverlayCount()==0 then
-			local WIN_REASON_DESTINY_LEO=0x17
-			Duel.Win(c:GetControler(),WIN_REASON_DESTINY_LEO)
+			Duel.Win(c:GetControler(),WIN_REASON_PUPPET_LEO)
 		end
 	end
 end

@@ -1,6 +1,5 @@
 --Relay Soul (Anime)
---By Edo9300
---Cleaned Up and Fixed by MLD
+--scripted by edo9300, fixes by MLD
 Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -91,7 +90,6 @@ function s.losecon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.loseop(e,tp,eg,ep,ev,re,r,rp)
-	local WIN_REASON_RELAY_SOUL=0x1a
 	Duel.Win(e:GetLabel(),WIN_REASON_RELAY_SOUL)
 end
 function s.con(e)

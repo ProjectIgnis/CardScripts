@@ -3,15 +3,15 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e0=Effect.CreateEffect(c)
-	e0:SetDescription(aux.Stringid(id,0))
-	e0:SetType(EFFECT_TYPE_ACTIVATE)
-	e0:SetCode(EVENT_FREE_CHAIN)
-	e0:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e0:SetHintTiming(TIMING_DAMAGE_STEP)
-	e0:SetCondition(s.condition)
-	c:RegisterEffect(e0)
-	--set p
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP)
+	e1:SetCondition(s.condition)
+	c:RegisterEffect(e1)
+	--place a card in the pendulum zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -50,8 +50,7 @@ function s.filter(c)
 	return c:IsSetCard(0xe0) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function s.settg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsRelateToEffect(e)
-		and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
+	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)

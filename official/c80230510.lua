@@ -21,7 +21,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_SUMMON_PROC)
 	e1:SetTargetRange(LOCATION_HAND,0)
 	e1:SetCondition(s.otcon)
-	e1:SetTarget(aux.FieldSummonProcTg(s.ottg))
+	e1:SetTarget(aux.FieldSummonProcTg(s.ottg,s.sumtg))
 	e1:SetOperation(s.otop)
 	e1:SetCountLimit(1)
 	e1:SetValue(SUMMON_TYPE_TRIBUTE)
@@ -54,12 +54,27 @@ function s.ottg(e,c)
 	local mi,ma=c:GetTributeRequirement()
 	return mi<=2 and ma>=2
 end
+function s.sumtg(e,tp,eg,ep,ev,re,r,rp,c)
+	local mg1=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local mg2=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)
+	::restart::
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g1=mg1:Select(tp,1,1,true,nil)
+	if not g1 then return false end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local tc=mg2:SelectUnselect(g1,tp,false,false,2,2)
+	if mg2:IsContains(tc) then
+		g1:AddCard(tc)
+		g1:KeepAlive()
+		e:SetLabelObject(g1)
+		return true
+	end
+	goto restart
+end
 function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectMatchingCard(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
-	g1:Merge(g2)
-	Duel.Remove(g1,POS_FACEUP,REASON_COST)
+	local sg=e:GetLabelObject()
+	if not sg then return end
+	Duel.Remove(sg,POS_FACEUP,REASON_COST)
+	sg:DeleteGroup()
 	Duel.ResetFlagEffect(tp,id)
 end

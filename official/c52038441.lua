@@ -24,7 +24,7 @@ function s.negfilter(c,p,eg)
 	return c:IsSummonPlayer(p) and eg:IsContains(c) and (aux.nzatk(c) or aux.disfilter1(c))
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.cfilter(c,e,p,eg) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.negfilter(chkc,1-tp,eg) end
 	if chk==0 then return Duel.IsExistingTarget(s.negfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,1-tp,eg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.negfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,1-tp,eg)

@@ -12,8 +12,8 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--ask if you want to activate the skill or not
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end 
 	
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	--look at hand
 	
 	--skill is active flag
@@ -53,6 +53,6 @@ function s.con2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)~=0 and Duel.GetLP(tp)<3000
 end
 function s.op2(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(2<<32))
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(2<<32))
 	Duel.ResetFlagEffect(tp,id)
 end

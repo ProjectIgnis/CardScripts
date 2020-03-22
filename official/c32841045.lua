@@ -78,14 +78,14 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then e:SetLabel(0) return re==e and g and g:IsExists(s.chk,1,nil,tp,e) end
 	if #g>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-		e:SetLabel(g:Select(tp,1,1,nil):GetFirst():GetRealFieldID())
+		e:SetLabel(g:Select(tp,1,1,nil):GetFirst():GetCardID())
 	else
-		e:SetLabel(g:GetFirst():GetRealFieldID())
+		e:SetLabel(g:GetFirst():GetCardID())
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetCardFromFieldID(e:GetLabel())
+	local tc=Duel.GetCardFromCardID(e:GetLabel())
 	if not tc then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,e:GetLabelObject(),tc:GetCode())

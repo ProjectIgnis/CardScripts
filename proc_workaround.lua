@@ -11,6 +11,81 @@ end
 function Card.IsMonster(c)
 	return c:IsType(TYPE_MONSTER)
 end
+function Auxiliary.ReleaseNonSumCheck(c,tp,e)
+	if c:IsControler(tp) then return false end
+	local chk=false
+	for _,eff in ipairs({c:GetCardEffect(EFFECT_EXTRA_RELEASE_NONSUM)}) do
+		local val=eff:GetValue()
+		if type(val)=="number" then chk=val~=0
+		else chk=val(eff,e,REASON_COST,tp) end
+		if chk then return true end
+	end
+	return chk
+end
+function Auxiliary.ZoneCheckFunc(c,tp,zone)
+	if c:IsLocation(LOCATION_EXTRA) then
+		return function(sg) return Duel.GetLocationCountFromEx(tp,tp,sg,c) end
+	end
+	return function(sg) return Duel.GetMZoneCount(tp,sg,zone) end
+end
+function Auxiliary.CheckZonesReleaseSummonCheck(must,oneof,checkfunc)
+	return function(sg,e,tp,mg)
+		local count=#(oneof&sg)
+		return checkfunc(sg+must)>0 and count<2,count>=2
+	end
+end
+function Duel.CheckReleaseGroupSummon(c,tp,e,fil,minc,maxc,last,...)
+	local zone=0xff
+	local params={...}
+	local ex=last
+	if type(last)=="number" then
+		zone=last
+		ex=params[1]
+		table.remove(params,1)
+	end
+	local checkfunc=aux.ZoneCheckFunc(c,tp,zone)
+	local rg,rgex=Duel.GetReleaseGroup(tp,false):Filter(aux.TRUE,ex):Split(fil,nil,table.unpack(params))
+	if #rg<minc or rgex:IsExists(Card.IsHasEffect,nil,EFFECT_EXTRA_RELEASE) then return false end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local must,nonmust=rg:Split(Card.IsHasEffect,nil,EFFECT_EXTRA_RELEASE)
+	local mustc=#must
+	if mustc>maxc then return false end
+	if (mustc-minc>=0) and checkfunc(must)>0 then return true end
+	local extraoneof,nonmust=nonmust:Split(aux.ReleaseNonSumCheck,nil,tp,e)
+	local count=mustc+#nonmust+(#extraoneof>0 and 1 or 0)
+	return count>=minc and aux.SelectUnselectGroup(nonmust,e,tp,minc-mustc,maxc-mustc,aux.CheckZonesReleaseSummonCheck(must,extraoneof,checkfunc),0)
+end
+function Auxiliary.CheckZonesReleaseSummonCheckSelection(must,oneof,checkfunc)
+	return function(sg,e,tp,mg)
+		local count=#(oneof&sg)
+		return sg:Includes(must) and checkfunc(sg)>0 and count<2,count>=2
+	end
+end
+function Duel.SelectReleaseGroupSummon(c,tp,e,fil,minc,maxc,last,...)
+	local cancelable=false
+	local zone=0xff
+	local ex=last
+	local params={...}
+	if type(last)=="boolean" then
+		cancelable=last
+		zone=params[1]
+		table.remove(params,1)
+		ex=params[1]
+		table.remove(params,1)
+	end
+	local checkfunc=aux.ZoneCheckFunc(c,tp,zone)
+	local rg,rgex=Duel.GetReleaseGroup(tp,false):Filter(aux.TRUE,ex):Split(fil,nil,...)
+	if #rg<minc or rgex:IsExists(Card.IsHasEffect,nil,EFFECT_EXTRA_RELEASE) then return nil end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local must,nonmust=rg:Split(Card.IsHasEffect,nil,EFFECT_EXTRA_RELEASE)
+	local mustc=#must
+	if mustc>maxc then return nil end
+	if (mustc-maxc>=0) and checkfunc(must)>0 then return must:Select(tp,mustc,mustc,true) end
+	local extraoneof,nonmust=nonmust:Split(aux.ReleaseNonSumCheck,nil,tp,e)
+	local count=mustc+#nonmust+(#extraoneof>0 and 1 or 0)
+	local res=count>=minc and aux.SelectUnselectGroup(rg,e,tp,minc,maxc,aux.CheckZonesReleaseSummonCheckSelection(must,extraoneof,checkfunc),1,tp,500,function(sg,e,tp,g) return sg:Includes(must) and Duel.GetMZoneCount(tp,sg,zone)>0 end,nil,cancelable)
+	return #res>0 and res or nil
+end
 --Lair of Darkness
 function Auxiliary.ReleaseCostFilter(c,f,...)
 	return c:IsFaceup() and c:IsReleasable() and c:IsHasEffect(59160188) 

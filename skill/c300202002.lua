@@ -9,8 +9,8 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,LOCATION_MZONE,0,nil)*300
@@ -35,5 +35,5 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 end
 function s.EPop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(2<<32))
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(2<<32))
 end

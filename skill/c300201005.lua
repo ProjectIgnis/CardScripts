@@ -53,14 +53,14 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 	end
 	
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g~=0 then
 		if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
-			Duel.Hint(HINT_SKILL_FLIP,0,id|(2<<32))
+			Duel.Hint(HINT_SKILL_FLIP,tp,id|(2<<32))
 			s[2+tp]=0
 		end
 		Duel.ConfirmCards(1-tp,g)

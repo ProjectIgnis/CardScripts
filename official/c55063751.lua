@@ -1,4 +1,5 @@
 --海亀壊獣ガメシエル
+--Gameciel, the Sea Turtle Kaiju
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1,e2=aux.AddKaijuProcedure(c)
@@ -16,6 +17,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xd3}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	return not re:GetHandler():IsCode(id) and Duel.IsChainNegatable(ev)
@@ -28,7 +30,9 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsAbleToRemove() end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetLocation())
+	else
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetPreviousLocation())
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)

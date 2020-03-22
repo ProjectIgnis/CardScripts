@@ -1,4 +1,5 @@
 --ラストバトル！
+--Last Turn
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -40,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 		e1:SetTargetRange(1,1)
-		e1:SetReset(RESET_CHAIN)
+		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		Duel.RegisterEffect(e1,tp)
 		if tc then Duel.ForceAttack(sc,tc) end
 	end
@@ -48,7 +49,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	if Duel.GetCurrentPhase()==PHASE_END then
+		e1:SetReset(RESET_PHASE+PHASE_END,2)
+	else
+		e1:SetReset(RESET_PHASE+PHASE_END)
+	end
 	e1:SetOperation(s.checkop)
 	Duel.RegisterEffect(e1,tp)
 end
@@ -56,10 +61,10 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local t1=Duel.GetFieldGroupCount(0,LOCATION_MZONE,0)
 	local t2=Duel.GetFieldGroupCount(1,LOCATION_MZONE,0)
 	if t1>0 and t2==0 then
-		Duel.Win(0,0x16)
+		Duel.Win(0,WIN_REASON_LAST_TURN)
 	elseif t2>0 and t1==0 then
-		Duel.Win(1,0x16)
+		Duel.Win(1,WIN_REASON_LAST_TURN)
 	else
-		Duel.Win(PLAYER_NONE,0x16)
+		Duel.Win(PLAYER_NONE,WIN_REASON_LAST_TURN)
 	end
 end

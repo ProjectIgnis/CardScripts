@@ -46,8 +46,8 @@ function s.ffilter(c,tp)
 	return c:IsCode(CARD_UMI) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	--opd register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	
@@ -78,8 +78,8 @@ function s.spfilter(c,e,tp)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end 
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	-- opt register
 	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,0)
 	

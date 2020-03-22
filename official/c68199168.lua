@@ -37,10 +37,10 @@ function s.cfilter(c,tp)
 end
 function s.scon0(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DRAW and eg:IsExists(s.cfilter,1,nil,1-tp)
-		and Duel.GetFieldGroupCount(1-tp,0,LOCATION_ONFIELD+LOCATION_HAND)>0
+		and Duel.GetFieldGroupCount(1-tp,LOCATION_ONFIELD+LOCATION_HAND,0)>0
 end
 function s.stg0(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(1-tp,0,LOCATION_MZONE+LOCATION_HAND)>0 end
+	if chk==0 then return Duel.GetFieldGroupCount(1-tp,LOCATION_MZONE+LOCATION_HAND,0)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,LOCATION_MZONE+LOCATION_HAND)
 end
 function s.sop0(e,tp,eg,ep,ev,re,r,rp)
@@ -71,4 +71,3 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-

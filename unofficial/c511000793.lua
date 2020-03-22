@@ -85,6 +85,5 @@ function s.lcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetLabelObject():IsReason(REASON_DESTROY)
 end
 function s.leaveop(e,tp,eg,ep,ev,re,r,rp)
-	local WIN_REASON_ZERO_GATE=0x53
 	Duel.Win(e:GetLabel(),WIN_REASON_ZERO_GATE)
 end

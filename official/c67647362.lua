@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13f}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsLinkSetCard,1,nil,0x13f)
+	return g:IsExists(Card.IsSetCard,1,nil,0x13f)
 end
 function s.tgfilter(c,ft)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT)

@@ -84,12 +84,12 @@ function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabelObject():GetLabel()==3 then
-		Duel.Win(PLAYER_NONE,0x57)
+		Duel.Win(PLAYER_NONE,WIN_REASON_DRAW_OF_FATE)
 	end
 	if e:GetLabelObject():GetLabel()==2 then
-		Duel.Win(tp,0x57)
+		Duel.Win(tp,WIN_REASON_DRAW_OF_FATE)
 	end
 	if e:GetLabelObject():GetLabel()==1 then
-		Duel.Win(1-tp,0x57)
+		Duel.Win(1-tp,WIN_REASON_DRAW_OF_FATE)
 	end
 end

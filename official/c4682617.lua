@@ -1,5 +1,5 @@
 --魔界劇団のカーテンコール
---Abyss Actors Curtain Call
+--Abyss Actors' Curtain Call
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -69,8 +69,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 function s.splimit(e,c)
 	return not (c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM))
 end
-

@@ -97,10 +97,10 @@ function s.damval2(e,re,val,r,rp,rc)
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)>1 and Duel.GetFlagEffect(1-tp,id)>1 then
-		Duel.Win(PLAYER_NONE,0x54)
+		Duel.Win(PLAYER_NONE,WIN_REASON_DEUCE)
 	elseif Duel.GetFlagEffect(tp,id)>1 then
-		Duel.Win(tp,0x54)
+		Duel.Win(tp,WIN_REASON_DEUCE)
 	elseif Duel.GetFlagEffect(1-tp,id)>1 then
-		Duel.Win(1-tp,0x54)
+		Duel.Win(1-tp,WIN_REASON_DEUCE)
 	end
 end

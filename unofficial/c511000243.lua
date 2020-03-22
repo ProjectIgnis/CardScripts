@@ -89,7 +89,6 @@ function s.check(g)
 	return g:GetClassCount(Card.GetCode)>=5
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
-	local WIN_REASON_EXODIUS = 0x14
 	local g1=Duel.GetFieldGroup(tp,LOCATION_GRAVE,0)
 	local g2=Duel.GetFieldGroup(tp,0,LOCATION_GRAVE)
 	local wtp=s.check(g1)

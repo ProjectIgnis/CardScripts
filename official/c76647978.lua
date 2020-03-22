@@ -9,20 +9,22 @@ function s.initial_effect(c)
 					if chk==0 then
 						return tg(e,tp,eg,ep,ev,re,r,rp,chk)
 					end
-					tg(e,tp,eg,ep,ev,re,r,rp,chk) 
+					tg(e,tp,eg,ep,ev,re,r,rp,chk)
 					if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 						Duel.SetChainLimit(aux.FALSE)
 					end
 				end)
 	c:RegisterEffect(e1)
-	if not UltraPolyTable then UltraPolyTable={} end
-	aux.GlobalCheck(s,function()
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetOperation(s.clear)
-		Duel.RegisterEffect(ge2,0)
-	end)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCost(aux.bfgcost)
+	e2:SetTarget(s.sptg)
+	e2:SetOperation(s.spop)
+	c:RegisterEffect(e2)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,2000) end
@@ -30,35 +32,9 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-		local c=e:GetHandler()
-		local g
-		if UltraPolyTable[c]==nil then
-			g=Group.CreateGroup()
-			g:KeepAlive()
-			local e2=Effect.CreateEffect(c)
-			e2:SetDescription(aux.Stringid(id,1))
-			e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-			e2:SetType(EFFECT_TYPE_IGNITION)
-			e2:SetRange(LOCATION_GRAVE)
-			e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-			e2:SetCost(s.spcost)
-			e2:SetTarget(s.sptg)
-			e2:SetOperation(s.spop)
-			e2:SetLabelObject(g)
-			e2:SetReset(RESET_EVENT+RESET_TODECK)
-			c:RegisterEffect(e2)
-			UltraPolyTable[c]=e2
-		else
-			g=UltraPolyTable[c]:GetLabelObject()
-		end
-		g:AddCard(tc)
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,e:GetHandler():GetCardID())
 	end
 	Fusion.CheckExact=nil
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.mgfilter(c,e,tp,fusc,mg)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
@@ -67,8 +43,7 @@ function s.mgfilter(c,e,tp,fusc,mg)
 		and fusc:CheckFusionMaterial(mg,c,PLAYER_NONE|FUSPROC_NOTFUSION)
 end
 function s.spfilter(c,e,tp)
-	local g=UltraPolyTable[e:GetHandler()]:GetLabelObject()
-	if c:IsFaceup() and c:GetFlagEffect(id)~=0 and g and g:IsContains(c) then
+	if c:IsFaceup() and c:GetFlagEffect(id)~=0 and c:GetFlagEffectLabel(id)==e:GetHandler():GetCardID() then
 		local mg=c:GetMaterial()
 		local ct=#mg
 		return ct>0 and ct<=Duel.GetLocationCount(tp,LOCATION_MZONE)

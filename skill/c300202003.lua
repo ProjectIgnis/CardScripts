@@ -33,8 +33,8 @@ function s.revfilter(c)
 end
 
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	--opd register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -63,8 +63,8 @@ function s.flipcon2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.flipop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-		Duel.Hint(HINT_CARD,0,id)
+		Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+		Duel.Hint(HINT_CARD,tp,id)
 		--opd register
 		Duel.RegisterFlagEffect(ep,id,0,0,0)
 	

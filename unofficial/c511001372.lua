@@ -81,7 +81,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetOverlayCount()==0 then
-		local WIN_REASON_DISASTER_LEO=0x18
 		Duel.Win(tp,WIN_REASON_DISASTER_LEO)
 	end
 end

@@ -11,7 +11,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.RegisterFlagEffect(tp,id,0,0,1)
 	
 	--opd register

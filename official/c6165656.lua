@@ -1,4 +1,5 @@
 --CNo.88 ギミック・パペット－ディザスター・レオ
+--Number C88: Gimmick Puppet Disaster Leo
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
-	--
+	--prevent target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -83,6 +84,5 @@ function s.wincon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and Duel.GetLP(1-tp)<=2000 and e:GetHandler():GetOverlayCount()==0
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
-	local WIN_REASON_DISASTER_LEO=0x18
 	Duel.Win(tp,WIN_REASON_DISASTER_LEO)
 end

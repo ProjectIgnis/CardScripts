@@ -22,8 +22,8 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	and Duel.CheckLPCost(tp,500)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	
 	Duel.PayLPCost(tp,500)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
@@ -32,6 +32,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil,lvl,code)
 	if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
-		Duel.Hint(HINT_SKILL_FLIP,0,id|(2<<32))
+		Duel.Hint(HINT_SKILL_FLIP,tp,id|(2<<32))
 	end
 end

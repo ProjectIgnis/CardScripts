@@ -52,25 +52,24 @@ function s.atkfilter(c,e)
 	return c:IsRelateToEffect(e) and c:IsFaceup()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.atkfilter,nil,e)
 	Duel.SendtoGrave(g,REASON_EFFECT)
-	local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
-		if ct>0 then
-			local c=e:GetHandler()
-			if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-			local og=ct
-			local atk=0
-			for tc in aux.Next(og) do
-				local oatk=math.max(tc:GetTextAttack(),0)
-				atk=atk+oatk
-			end
+	local ct=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE)
+	if #ct>0 then
+		if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
+		local atk=0
+		for tc in aux.Next(ct) do
+			local oatk=math.max(tc:GetTextAttack(),0)
+			atk=atk+oatk
+		end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(atk)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
-		end
+	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsType,1,nil,TYPE_SYNCHRO)

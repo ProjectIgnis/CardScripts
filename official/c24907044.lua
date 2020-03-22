@@ -1,4 +1,5 @@
 --魔界劇団－プリティ・ヒロイン
+--Abyss Actor - Leading Lady
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -44,6 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.setop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x10ec,0x20ec}
 function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	return ep==tp and a:IsControler(1-tp) and a:IsFaceup() and a:IsRelateToBattle()
@@ -99,8 +101,8 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (c:IsReason(REASON_BATTLE) or (rp==1-tp and c:IsReason(REASON_EFFECT)))
-		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsReason(REASON_BATTLE)
+		or (rp==1-tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE))
 end
 function s.cfilter(c)
 	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL) and c:IsSSetable()

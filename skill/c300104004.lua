@@ -41,8 +41,8 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	local b1=(Duel.GetFlagEffect(ep,id)==0 and s.sumtg(e,tp,eg,ep,ev,re,r,rp,0))
     local b2=(Duel.GetFlagEffect(ep,id+1)==0 and s.tdtg(e,tp,eg,ep,ev,re,r,rp,0))
 	if b1 and b2 then

@@ -1,4 +1,5 @@
 --召喚獣メルカバー
+--Invoked Mechaba
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -35,7 +36,9 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsAbleToRemove() end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetLocation())
+	else
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetPreviousLocation())
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)

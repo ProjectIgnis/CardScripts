@@ -10,8 +10,8 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.CanActivateSkill(tp) and Duel.IsPlayerCanDraw(tp,1)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	--used skill flag register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	local c=e:GetHandler()

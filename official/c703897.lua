@@ -37,8 +37,12 @@ end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsAbleToRemove() and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
+	if re:GetHandler():IsAbleToRemove() then
+		if re:GetHandler():IsRelateToEffect(re) then
+			Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetLocation())
+		else
+			Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetPreviousLocation())
+		end
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)

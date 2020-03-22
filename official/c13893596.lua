@@ -1,4 +1,5 @@
 --究極封印神エクゾディオス
+--Exodius the Ultimate Forbidden Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -91,7 +92,6 @@ function s.recon(e)
 	return e:GetHandler():IsFaceup()
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
-	local WIN_REASON_EXODIUS = 0x14
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,c)
 	if g:GetClassCount(Card.GetCode)==5 then

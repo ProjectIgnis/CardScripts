@@ -1,8 +1,9 @@
 --古聖戴サウラヴィス
+--Sauravis, the Ancient and Ascended
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--negate
+	--negate effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
-	--disable special summon
+	--negate special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_REMOVE)

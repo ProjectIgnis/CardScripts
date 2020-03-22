@@ -1,4 +1,5 @@
 --魂のリレー
+--Relay Soul
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -52,6 +53,5 @@ function s.con(e)
 	return e:GetHandlerPlayer()==e:GetOwnerPlayer()
 end
 function s.leaveop(e,tp,eg,ep,ev,re,r,rp)
-	local WIN_REASON_RELAY_SOUL=0x1a
 	Duel.Win(e:GetLabel(),WIN_REASON_RELAY_SOUL)
 end

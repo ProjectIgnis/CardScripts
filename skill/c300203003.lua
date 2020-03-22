@@ -13,8 +13,8 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>=2
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
 	
 	local g=Duel.SelectReleaseGroupCost(tp,s.flipconfilter,1,1,false,aux.ReleaseCheckMMZ,nil,ft,tp)
 	Duel.DiscardHand(tp,aux.TRUE,2,2,REASON_COST+REASON_DISCARD) 

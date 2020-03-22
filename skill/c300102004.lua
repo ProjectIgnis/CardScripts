@@ -41,8 +41,8 @@ function s.repop(typ,func1,func2,func3)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		Duel.PayLPCost(ep,1000)
 		Duel.ResetFlagEffect(ep,id)
-		Duel.Hint(HINT_SKILL_FLIP,0,id|(1<<32))
-		Duel.Hint(HINT_CARD,0,id)
+		Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+		Duel.Hint(HINT_CARD,tp,id)
 		local dc={func1()}
 		local ct=(ev&0xff)+(ev>>16)
 		local ac=1

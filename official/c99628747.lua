@@ -41,9 +41,9 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,#tg,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-    local tg=Duel.GetTargetCards(e)
-    if #tg>0 then
-        Duel.Destroy(tg,REASON_EFFECT)
-    end
+	local tg=Duel.GetTargetCards(e)
+	if #tg>0 then
+		Duel.Destroy(tg,REASON_EFFECT)
+	end
 end
 

@@ -1,7 +1,9 @@
 --マシンナーズ・ピースキーパー
+--Machina Peacekeeper
+
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE),true,false)
+	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE),false)
 	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))

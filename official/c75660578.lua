@@ -1,5 +1,5 @@
 --死の王 ヘル
---Hel, Generaid of Death
+--Hela, Generaider Boss of Doom
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)

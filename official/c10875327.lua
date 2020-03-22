@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,1,aux.FilterBoolFunction(Card.IsSetCard,0x21),LOCATION_MZONE)
-	--
+	--self destruction
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SELF_DESTROY)
 	e1:SetCondition(s.sdcon)
 	c:RegisterEffect(e1)
-	--battle target
+	--cannot be battle target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e3)
-	--destroy
+	--destroy monsters
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)

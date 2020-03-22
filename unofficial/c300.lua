@@ -295,17 +295,16 @@ if not DeckMasters then
 	end
 
 	function DeckMasters.loseop2(e,tp,eg,ep,ev,re,r,rp)
-		local WIN_REASON_DM=0x56
 		local c1=getmatchgc(Card.IsDeckMaster,tp,0xff,0,nil)
 		local c2=getmatchgc(Card.IsDeckMaster,tp,0,0xff,nil)
 		local f1=Duel.GetFlagEffect(tp,300+1)+Duel.GetFlagEffect(tp,302)
 		local f2=Duel.GetFlagEffect(1-tp,300+1)+Duel.GetFlagEffect(1-tp,302)
 		if c1==0 and c2>0 and f1==0 then
-			Duel.Win(1-tp,WIN_REASON_DM)
+			Duel.Win(1-tp,WIN_REASON_DECK_MASTER)
 		elseif c1==0 and c2==0 and f2==0 and f1==0  then
-			Duel.Win(PLAYER_NONE,WIN_REASON_DM)
+			Duel.Win(PLAYER_NONE,WIN_REASON_DECK_MASTER)
 		elseif c1>0 and c2==0 and f2==0 then
-			Duel.Win(tp,WIN_REASON_DM)
+			Duel.Win(tp,WIN_REASON_DECK_MASTER)
 		end
 	end
 

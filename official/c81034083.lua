@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.extg)
 	c:RegisterEffect(e2)
 end
-s.listed_names={}
+s.listed_names={69890967,6007213,32491822}
 function s.thfilter(c)
 	return (c:IsCode(69890967,6007213,32491822) or aux.IsCodeListed(c,69890967,6007213,32491822)) and not c:IsCode(id) and c:IsAbleToHand()
 end

@@ -65,7 +65,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousPosition(POS_FACEUP) and not c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and not c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xfd) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

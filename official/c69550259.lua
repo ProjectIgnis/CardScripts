@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r&REASON_SYNCHRO==REASON_SYNCHRO
+	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sync=e:GetHandler():GetReasonCard()
@@ -29,13 +29,11 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local sync=c:GetReasonCard()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x2016,TYPES_TOKEN,0,0,sync:GetLevel(),RACE_MACHINE,ATTRIBUTE_WIND) then
 		local tk=Duel.CreateToken(tp,id+1)
-		Duel.SpecialSummonStep(tk,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(sync:GetLevel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tk:RegisterEffect(e1)
-		Duel.SpecialSummonComplete()
+		Duel.SpecialSummon(tk,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

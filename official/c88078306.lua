@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCost(s.cost)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
@@ -26,7 +26,6 @@ function s.initial_effect(c)
 end
 	--Lists "Hole" archetype
 s.listed_series={0x4c,0x89}
-
 	--Unaffected by "Hole" normal trap cards
 function s.efilter(e,te)
 	local c=te:GetHandler()
@@ -61,7 +60,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rg=aux.SelectUnselectGroup(sg,e,tp,2,2,s.setcheck,1,tp,HINTMSG_SET,s.setcheck)
 	if #rg>0 then
 		Duel.SSet(tp,rg)
-		Duel.ConfirmCards(1-tp,rg)
 		local tc=sg:GetFirst()
 		for tc in aux.Next(sg) do
 			local e1=Effect.CreateEffect(e:GetHandler())

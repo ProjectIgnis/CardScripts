@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	table.insert(GhostBelleTable,e1)
 end
 s.listed_series={0x145}
-s.listed_names={69890967}
+s.listed_names={6007213,32491822,69890967}
 function s.filter0(c)
 	return c:IsAbleToRemove()
 end

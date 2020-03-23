@@ -1,4 +1,5 @@
 --フィールドバリア
+--Field Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -12,8 +13,8 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE)
-	e2:SetTarget(s.infilter)
+	e2:SetTargetRange(LOCATION_FZONE,LOCATION_FZONE)
+	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--cannot activate
@@ -25,22 +26,7 @@ function s.initial_effect(c)
 	e3:SetTargetRange(1,1)
 	e3:SetValue(s.filter)
 	c:RegisterEffect(e3)
-	--cannot set
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_CANNOT_SSET)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetTargetRange(1,1)
-	e4:SetTarget(s.sfilter)
-	c:RegisterEffect(e4)
-end
-function s.infilter(e,c)
-	return c:IsType(TYPE_FIELD)
 end
 function s.filter(e,re,tp)
 	return re:GetHandler():IsType(TYPE_FIELD) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-end
-function s.sfilter(e,c,tp)
-	return c:IsType(TYPE_FIELD) and Duel.GetFieldCard(tp,LOCATION_SZONE,5)~=nil
 end

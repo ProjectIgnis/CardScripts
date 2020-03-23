@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={6007213}
+s.listed_names={6007213,32491822,69890967}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local dc=Duel.GetAttackTarget()

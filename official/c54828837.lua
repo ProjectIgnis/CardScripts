@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.ndop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={32491822}
+s.listed_names={6007213,32491822,69890967}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(32491822) and c:IsAttackPos()
 end

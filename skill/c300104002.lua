@@ -1,7 +1,7 @@
 --Terror from the Deep!
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)	
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)
 end
 function s.flipconfilter(c)
 	return c:IsFaceup() and c:IsCode(76634149)
@@ -51,7 +51,7 @@ function s.etarget(e,c)
 	return c:IsAttribute(ATTRIBUTE_WATER) 
 end
 function s.cfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsCode(76634149) and c:GetPreviousControler()==tp 
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsCode(76634149) and c:GetPreviousControler()==tp
 end
 function s.leavecon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,rp)

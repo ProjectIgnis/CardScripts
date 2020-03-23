@@ -1,8 +1,8 @@
--- Straight to the Grave
--- Skill activation
--- At the start of the Duel, place this card in your Field Zone and flip it over.
--- Effect
--- All Dinosaur, Zombie, and Rock monsters on the field gain 200 ATK/DEF.
+--Straight to the Grave
+--Skill activation
+--At the start of the Duel, place this card in your Field Zone and flip it over.
+--Effect
+--All Dinosaur, Zombie, and Rock monsters on the field gain 200 ATK/DEF.
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddFieldSkillProcedure(c,2,false)

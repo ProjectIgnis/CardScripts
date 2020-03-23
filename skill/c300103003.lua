@@ -1,16 +1,15 @@
 --Bandit
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)	
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
-
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
 	if Duel.GetFlagEffect(ep,id)>0 then return end
 	--condition
-	return aux.CanActivateSkill(tp) 
-	and Duel.GetLP(tp)<=1500
-	and Duel.GetMatchingGroupCount(s.filter,tp,0,LOCATION_ONFIELD,nil)>0
+	return aux.CanActivateSkill(tp)
+		and Duel.GetLP(tp)<=1500
+		and Duel.GetMatchingGroupCount(s.filter,tp,0,LOCATION_ONFIELD,nil)>0
 end
 function s.filter(c)
 	return c:IsFacedown() and c:IsAbleToChangeControler()

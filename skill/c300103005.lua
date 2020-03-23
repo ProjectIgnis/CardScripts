@@ -12,7 +12,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	if #g==1 and g:GetFirst():IsLocation(LOCATION_HAND) then tc=g:GetFirst() end
 	--condition
 	return Duel.GetCurrentChain()==0 and tp==Duel.GetTurnPlayer() and Duel.GetDrawCount(tp)>0 and Duel.CheckLPCost(tp,1500)
-		and	Duel.IsExistingMatchingCard(s.costfilter1,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,tc)
+		and Duel.IsExistingMatchingCard(s.costfilter1,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,tc)
 		and Duel.IsExistingMatchingCard(s.costfilter2,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,tc)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)

@@ -1,8 +1,8 @@
--- Mythic Deepth
+--Mythic Deepth
 --Skill activation
--- Flip this card over when you activate this Skill.
--- Effect
--- All Fish, Sea Serpent, Thunder, and Aqua monsters on the field gain 200 ATK/DEF. All Machine and Pyro monsters on the field lose 200 ATK/DEF. This card's name becomes "Umi" while on the field.
+--Flip this card over when you activate this Skill.
+--Effect
+--All Fish, Sea Serpent, Thunder, and Aqua monsters on the field gain 200 ATK/DEF. All Machine and Pyro monsters on the field lose 200 ATK/DEF. This card's name becomes "Umi" while on the field.
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddFieldSkillProcedure(c,2,false)

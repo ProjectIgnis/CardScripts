@@ -1,12 +1,12 @@
 --The World's Greatest Fisherman
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)	
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)
 end
 function s.cfilter(c)
 	local lvl=c:GetOriginalLevel()
 	return c:GetLevel()>0 and c:IsAttribute(ATTRIBUTE_WATER) and c:IsDiscardable()
-	and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,lvl,c:GetCode()) 
+	and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,lvl,c:GetCode())
 end
 function s.thfilter(c,lvl,code)
 	return c:IsFaceup() and c:IsLevelBelow(lvl*2)  and c:IsAbleToHand() and c:IsAttribute(ATTRIBUTE_WATER)
@@ -24,7 +24,6 @@ end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-	
 	Duel.PayLPCost(tp,500)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	local lvl=g:GetFirst():GetLevel()

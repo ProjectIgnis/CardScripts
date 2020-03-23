@@ -3,14 +3,11 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)	
 end
-
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	local b1=(Duel.GetFlagEffect(ep,id)==0 and s.sumtg(e,tp,eg,ep,ev,re,r,rp,0))
-    local b2=(Duel.GetFlagEffect(ep,id+1)==0 and s.tdtg(e,tp,eg,ep,ev,re,r,rp,0))
-    
+	local b2=(Duel.GetFlagEffect(ep,id+1)==0 and s.tdtg(e,tp,eg,ep,ev,re,r,rp,0))
 	--condition
 	return aux.CanActivateSkill(tp) and (b1 or b2)
-
 end
 --effect 1
 function s.cfilter(c)
@@ -44,15 +41,14 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	local b1=(Duel.GetFlagEffect(ep,id)==0 and s.sumtg(e,tp,eg,ep,ev,re,r,rp,0))
-    local b2=(Duel.GetFlagEffect(ep,id+1)==0 and s.tdtg(e,tp,eg,ep,ev,re,r,rp,0))
+	local b2=(Duel.GetFlagEffect(ep,id+1)==0 and s.tdtg(e,tp,eg,ep,ev,re,r,rp,0))
 	if b1 and b2 then
-        p=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
-    elseif b1 then
-        p=Duel.SelectOption(tp,aux.Stringid(id,0))
-    elseif b2 then
-        p=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-    end
-	
+		p=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
+	elseif b1 then
+		p=Duel.SelectOption(tp,aux.Stringid(id,0))
+	elseif b2 then
+		p=Duel.SelectOption(tp,aux.Stringid(id,1))+1
+	end
 	if p==0 then
 		Duel.RegisterFlagEffect(ep,id,0,0,0)
 		local loc=LOCATION_MZONE

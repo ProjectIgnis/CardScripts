@@ -1,9 +1,8 @@
 --Spell Proof Armor
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)	
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
-
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opt check
 	if Duel.GetFlagEffect(ep,id)>0 then return end

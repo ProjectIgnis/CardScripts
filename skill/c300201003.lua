@@ -11,7 +11,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	local c=e:GetHandler()
-	
 	if Duel.GetFlagEffect(tp,id)==0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -79,7 +78,7 @@ Duel.Draw = function(...)
 	local tb={...}
 	local tp=tb[1]
 	local count=tb[2]
-	if (Duel.GetFlagEffect(tp,id)>2 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) ) then
+	if (Duel.GetFlagEffect(tp,id)>2 and Duel.SelectYesNo(tp,aux.Stringid(id,0))) then
 		local g=Duel.SelectMatchingCard(tp,LOCATION_DECK,0,tp,count,count)
 		Duel.SendToHand(g,tp,REASON_EFFECT)
 		Duel.RegisterFlagEffect(tp,id+1,0,0,0)

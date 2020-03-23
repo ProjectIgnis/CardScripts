@@ -1,4 +1,4 @@
--- Mind Scan
+--Mind Scan
 local s,id=GetID()
 function s.initial_effect(c)
 	--skill
@@ -10,12 +10,10 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--ask if you want to activate the skill or not
-	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end 
-	
+	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	--look at hand
-	
 	--skill is active flag
 	Duel.RegisterFlagEffect(tp,id,0,0,0)
 	--mind scan
@@ -40,13 +38,12 @@ function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_SZONE,nil)
 	if #g>0 then
 		local tc=g:GetFirst()
-		while tc do
-		if tc:GetFlagEffect(id)==0 then
-			Duel.ConfirmCards(tp,tc)
-			tc:RegisterFlagEffect(id,RESET_EVENT+0x1fe0000,0,1)
+		for tc in aux.GetNext(g) do
+			if tc:GetFlagEffect(id)==0 then
+				Duel.ConfirmCards(tp,tc)
+				tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			end
 		end
-		tc=g:GetNext()
-		end	
 	end
 end
 function s.con2(e,tp,eg,ep,ev,re,r,rp)

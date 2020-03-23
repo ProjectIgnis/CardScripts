@@ -1,7 +1,7 @@
 --Switcheroo
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)	
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--twice per duel check
@@ -21,5 +21,4 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
-	
 end

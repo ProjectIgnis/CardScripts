@@ -1,4 +1,4 @@
---大凛魔天使ローザリアン
+--大凛魔天使ローザリアンzz
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

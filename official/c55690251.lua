@@ -1,4 +1,5 @@
 --堕天使ディザイア
+--Darklord Desire
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -8,19 +9,9 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	--normal summon with 1 tribute
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_SUMMON_PROC)
-	e2:SetCondition(s.otcon)
-	e2:SetOperation(s.otop)
-	e2:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_SET_PROC)
-	c:RegisterEffect(e3)
+	--summon with 1 tribute
+	local e2=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
+	local e3=aux.AddNormalSetProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
 	--send to grave
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
@@ -35,18 +26,6 @@ function s.initial_effect(c)
 end
 function s.otfilter(c,tp)
 	return c:IsRace(RACE_FAIRY) and (c:IsControler(tp) or c:IsFaceup())
-end
-function s.otcon(e,c,minc)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	return c:GetLevel()>6 and minc<=1 and Duel.CheckTribute(c,1,1,mg)
-end
-function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	local sg=Duel.SelectTribute(tp,c,1,1,mg)
-	c:SetMaterial(sg)
-	Duel.Release(sg, REASON_SUMMON+REASON_MATERIAL)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

@@ -67,7 +67,7 @@ function Auxiliary.NormalSummonOperation(min,max,sumop)
 	end
 end
 --add normal set
-function Auxiliary.AddNormalSetProcedure(c,ns,opt,min,max,val,desc,f,f)
+function Auxiliary.AddNormalSetProcedure(c,ns,opt,min,max,val,desc,f,sumop)
 	val = val or SUMMON_TYPE_TRIBUTE
 	local e1=Effect.CreateEffect(c)
 	if desc then e1:SetDescription(desc) end
@@ -81,7 +81,7 @@ function Auxiliary.AddNormalSetProcedure(c,ns,opt,min,max,val,desc,f,f)
 	if ns then
 		e1:SetCondition(Auxiliary.NormalSetCondition1(min,max,f))
 		e1:SetTarget(Auxiliary.NormalSetTarget(min,max,f))
-		e1:SetOperation(Auxiliary.NormalSetOperation(min,max,f))
+		e1:SetOperation(Auxiliary.NormalSetOperation(min,max,sumop))
 	else
 		e1:SetCondition(Auxiliary.NormalSetCondition2())
 	end

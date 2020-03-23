@@ -1,4 +1,4 @@
--- Grit
+--Grit
 local s,id=GetID()
 function s.initial_effect(c)
 	--skill
@@ -12,14 +12,13 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--ask if you want to activate the skill or not
-	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end 
+	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	--opd register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
-	
 	local n1=Duel.AnnounceLevel(tp,1,6,nil)
-	local n2=Duel.AnnounceLevel(tp,1,6,n1)		
+	local n2=Duel.AnnounceLevel(tp,1,6,n1)
 	local dc=Duel.TossDice(tp,1)
 	if n1==dc or n2==dc then
 		--immune
@@ -41,6 +40,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLP(tp)<1 then 
-		Duel.SetLP(tp,1) 
+		Duel.SetLP(tp,1)
 	end
 end

@@ -1,16 +1,16 @@
--- Peak Performance
--- Skill activation
--- At the start of the Duel, place this card in your Field Spell Zone and flip it over.
--- Effect
--- All Dragon, Winged Beast, and Thunder monsters on the field gain 200 ATK/DEF.
+--Peak Performance
+--Skill activation
+--At the start of the Duel, place this card in your Field Spell Zone and flip it over.
+--Effect
+--All Dragon, Winged Beast, and Thunder monsters on the field gain 200 ATK/DEF.
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddFieldSkillProcedure(c,2,false)
 	--Activate
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_ACTIVATE)
-	e3:SetCode(EVENT_FREE_CHAIN)
-	c:RegisterEffect(e3)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e1)
 	--Atk
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)

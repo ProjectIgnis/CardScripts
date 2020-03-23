@@ -1,4 +1,4 @@
--- Aroma Strategy
+--Aroma Strategy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +13,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 		if e:GetLabel()==0 then
 			local e1=Effect.CreateEffect(e:GetHandler())
@@ -43,6 +42,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(e:GetHandler():GetControler(),1)
 	if g:GetFirst():GetFlagEffect(id)==0 then
 		Duel.ConfirmDecktop(e:GetHandler():GetControler(),1)
-		g:GetFirst():RegisterFlagEffect(id,RESET_EVENT+0x1fe0000,0,1)
+		g:GetFirst():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
 end

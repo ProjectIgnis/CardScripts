@@ -1,7 +1,7 @@
 --Pal-O'Mine-zation!
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)	
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
@@ -15,7 +15,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	--opd register
 	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,0)
-	
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil)
 	local tc=g:GetFirst()

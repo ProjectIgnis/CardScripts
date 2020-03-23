@@ -1,7 +1,7 @@
 --Hyper Metamorphosis
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)	
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
 function s.flipconfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT) and c:IsType(TYPE_NORMAL) and c:IsLevelBelow(3)
@@ -15,11 +15,9 @@ end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-	
 	local g=Duel.SelectReleaseGroupCost(tp,s.flipconfilter,1,1,false,aux.ReleaseCheckMMZ,nil,ft,tp)
 	Duel.DiscardHand(tp,aux.TRUE,2,2,REASON_COST+REASON_DISCARD) 
 	Duel.Release(g,REASON_COST)
-	
 	local g2=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g2>0 then
 		Duel.SpecialSummon(g2,0,tp,tp,true,false,POS_FACEUP)

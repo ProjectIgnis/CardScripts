@@ -1,4 +1,4 @@
--- Flight of the Harpies
+--Flight of the Harpies
 local s,id=GetID()
 function s.initial_effect(c)
 	--skill
@@ -18,26 +18,23 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if not s[tp] then s[tp]=Duel.GetLP(tp) end
-    if s[tp]>Duel.GetLP(tp) then
-        s[2+tp]=s[2+tp]+(s[tp]-Duel.GetLP(tp))
-        s[tp]=Duel.GetLP(tp)
-    end
+	if s[tp]>Duel.GetLP(tp) then
+		s[2+tp]=s[2+tp]+(s[tp]-Duel.GetLP(tp))
+		s[tp]=Duel.GetLP(tp)
+	end
 end
-
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
 	return Duel.GetCurrentChain()==0 and tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
 		and Duel.GetDrawCount(tp)>0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
-		and s[2+tp]>=1800 
-	
+		and s[2+tp]>=1800
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x64) and c:IsAbleToHand()
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--ask if you want to activate the skill or not
-	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end 
-	
+	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 	--draw replace
 	local dt=Duel.GetDrawCount(tp)
 	if dt~=0 then
@@ -52,10 +49,8 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(0)
 		Duel.RegisterEffect(e1,tp)
 	end
-	
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-	
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g~=0 then

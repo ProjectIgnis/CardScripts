@@ -38,7 +38,7 @@ function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_SZONE,nil)
 	if #g>0 then
 		local tc=g:GetFirst()
-		for tc in aux.GetNext(g) do
+		for tc in aux.Next(g) do
 			if tc:GetFlagEffect(id)==0 then
 				Duel.ConfirmCards(tp,tc)
 				tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)

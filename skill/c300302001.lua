@@ -1,7 +1,7 @@
 --Fusion Party!
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)	
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop,1)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
@@ -13,7 +13,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
-	
 	local chkf=tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(s.filter1,nil,e)
 	local sg1=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
@@ -46,7 +45,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 	end
 end
-
 function s.filter1(c,e)
 	return not c:IsImmuneToEffect(e)
 end

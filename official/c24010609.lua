@@ -103,12 +103,12 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return ct and ct>0 and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,0)
 end
-function s.rescon(field,ft)
+function s.rescon(ft)
 	return function(sg,e,tp,mg)
+		local fc=sg:FilterCount(Card.IsType,nil,TYPE_FIELD)
 		local c1=sg:GetClassCount(Card.GetCode)
 		local c2=#sg
-		local morethan1=sg:IsExists(Card.IsType,2,nil,TYPE_FIELD)
-		return c1==c2 and not morethan1,c1~=c2 or morethan1
+		return c1==c2 and fc<=1 and c2-fc<=ft,c1~=c2 or fc>1 or c2-fc>ft
 	end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
@@ -117,12 +117,8 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE,0,nil)
 	local ct=e:GetHandler():GetFlagEffectLabel(id) or 0
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	local field=false
-	if g:IsExists(Card.IsType,1,nil,TYPE_FIELD) then field=true ft=ft+1 end
-	ft=math.min(math.min(ft,g:GetClassCount(Card.GetCode)),ct)
-	if ft<1 then return end
-	local tg=aux.SelectUnselectGroup(g,e,tp,1,ft,s.rescon(field,ft),1,tp,HINTMSG_SET)
-	Duel.SSet(tp,tg)
+	local tg=aux.SelectUnselectGroup(g,e,tp,1,math.min(ct,ft+1),s.rescon(ft),1,tp,HINTMSG_SET)
+	if #tg==0 or Duel.SSet(tp,tg)==0 then return end
 	for tc in aux.Next(tg) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

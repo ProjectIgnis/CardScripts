@@ -107,10 +107,8 @@ function s.rescon(field,ft)
 	return function(sg,e,tp,mg)
 		local c1=sg:GetClassCount(Card.GetCode)
 		local c2=#sg
-		if field and not sg:IsExists(Card.IsType,1,nil,TYPE_FIELD) and c2==ft then
-			return false,false
-		end
-		return c1==c2 and c2<=ft,c1~=c2
+		local morethan1=sg:IsExists(Card.IsType,2,nil,TYPE_FIELD)
+		return c1==c2 and not morethan1,c1~=c2 or morethan1
 	end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)

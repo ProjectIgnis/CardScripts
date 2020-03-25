@@ -1107,6 +1107,57 @@ function Group.CheckSameProperty(g,f,...)
 	end
 	return prop~=0, prop
 end
+
+function Auxiliary.AskEveryone(stringid)
+	local count0 = Duel.GetPlayersCount(0)
+	local count1 = Duel.GetPlayersCount(1)
+	--check if people want to duel
+	local stop=not Duel.SelectYesNo(0,stringid)
+	if not stop then
+		for i=2,count0 do
+			Duel.TagSwap(0)
+			stop=stop or not Duel.SelectYesNo(0,stringid)
+		end
+		Duel.TagSwap(0)
+	end
+	if not stop then
+			stop=not Duel.SelectYesNo(1,stringid)
+			if not stop then
+			for i=2,count1 do
+				Duel.TagSwap(1)
+				stop=stop or not Duel.SelectYesNo(1,stringid)
+			end
+			Duel.TagSwap(1)
+		end
+	end
+	return not stop
+end
+
+function Auxiliary.AskAny(stringid)
+	local count0 = Duel.GetPlayersCount(0)
+	local count1 = Duel.GetPlayersCount(1)
+	--check if people want to duel
+	local ok=Duel.SelectYesNo(0,stringid)
+	if not ok then
+		for i=2,count0 do
+			Duel.TagSwap(0)
+			ok=ok or Duel.SelectYesNo(0,stringid)
+		end
+		Duel.TagSwap(0)
+	end
+	if not ok then
+			ok=Duel.SelectYesNo(1,stringid)
+			if not ok then
+			for i=2,count1 do
+				Duel.TagSwap(1)
+				ok=ok or Duel.SelectYesNo(1,stringid)
+			end
+			Duel.TagSwap(1)
+		end
+	end
+	return ok
+end
+
 --Functions to automate consistent start-of-duel activations for Duel Modes like Speed Duel, Sealed Duel
 --According to AlphaKretin, these two functions can be improved in Edopro
 function Auxiliary.EnableExtraRules(c,card,init,...)

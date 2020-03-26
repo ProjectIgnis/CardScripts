@@ -1,4 +1,4 @@
---ディープ・スペース・クルーザー・ナイン
+--Junk Giant
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -8,20 +8,14 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
-	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsRace(RACE_MACHINE) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:GetLevel()>=5
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,c)
-end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,c)
-	Duel.SendtoGrave(g,REASON_COST)
+		and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)
 end

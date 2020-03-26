@@ -1,4 +1,5 @@
 --スキエルＣ３
+--Skiel Carrier 3
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -8,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--selfdes
@@ -31,18 +33,24 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3013}
 s.listed_names={100000060}
-function s.spfilter(c,ft,tp)
-	return c:IsCode(100000060) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
-end
 function s.spcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return ft>-1 and Duel.CheckReleaseGroup(tp,s.spfilter,1,nil,ft,tp)
+    if c==nil then return true end
+    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,nil,c,c:GetControler(),nil,100000060)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+    local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,nil,100000060)
+    if g then
+        g:KeepAlive()
+        e:SetLabelObject(g)
+    return true
+    end
+    return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,s.spfilter,1,1,nil,Duel.GetLocationCount(tp,LOCATION_MZONE),tp)
-	Duel.Release(g,REASON_COST)
+    local g=e:GetLabelObject()
+    if not g then return end
+    Duel.Release(g,REASON_COST)
+    g:DeleteGroup()
 end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())

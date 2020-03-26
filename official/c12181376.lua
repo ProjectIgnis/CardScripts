@@ -1,4 +1,5 @@
 --トライアングル・X・スパーク
+--Triangle Ecstasy Spark
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_HARPIE_LADY_SISTERS}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(ux.FilterFaceupFunction(Card.IsCode,CARD_HARPIE_LADY_SISTERS),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_HARPIE_LADY_SISTERS),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

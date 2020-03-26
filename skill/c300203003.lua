@@ -6,10 +6,14 @@ end
 function s.flipconfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_INSECT) and c:IsType(TYPE_NORMAL) and c:IsLevelBelow(3)
 end
+function s.spfilter(c,e,tp)
+	return c:IsCode(48579379) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
 	return aux.CanActivateSkill(tp) 
 	and Duel.IsExistingMatchingCard(s.flipconfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp)
 	and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>=2
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -29,9 +33,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.dop)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-end
-function s.spfilter(c,e,tp)
-	return c:IsCode(48579379) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.dcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp

@@ -43,26 +43,23 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.spcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp)
-	return aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),0)
+    if c==nil then return true end
+    return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,3,false,3,true,nil,c,c:GetControler(),nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp)
-	local mg=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
-	if #mg==3 then
-		mg:KeepAlive()
-		e:SetLabelObject(mg)
-		return true
-	end
-	return false
+    local g=Duel.SelectReleaseGroup(tp,aux.TRUE,3,3,false,true,true,c,nil,nil,nil)
+    if g then
+        g:KeepAlive()
+        e:SetLabelObject(g)
+    return true
+    end
+    return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=e:GetLabelObject()
-	if not g then return end
-	Duel.Release(g,REASON_COST)
-	g:DeleteGroup()
+    local g=e:GetLabelObject()
+    if not g then return end
+    Duel.Release(g,REASON_COST)
+    g:DeleteGroup()
 end
 function s.eqfilter(c)
 	return c:GetFlagEffect(id)~=0 

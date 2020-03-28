@@ -39,11 +39,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,PLAYER_ALL,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local d1=0
-	local d2=0
-	local d3=0
-	local d4=0
-	d1,d2,d3,d4=Duel.TossDice(tp,2,2)
+	local d1,d2,d3,d4=Duel.TossDice(tp,2,2)
 	local t1=d1+d2
 	local t2=d3+d4
 	if t1==t2 then return end
@@ -66,6 +62,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(1,0)
 	e2:SetReset(RESET_PHASE+PHASE_END,2)
 	Duel.RegisterEffect(e2,p)
+	--client hint
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e3:SetDescription(aux.Stringid(id,2))
@@ -89,6 +86,7 @@ function s.diceop(e,tp,eg,ep,ev,re,r,rp)
 		local ct=(ev&0xff)+(ev>>16)
 		Duel.Hint(HINT_CARD,0,id)
 		if ct>1 then
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 			local val,idx=Duel.AnnounceNumber(tp,table.unpack(dc,1,ct))
 			ac=idx+1
 		end

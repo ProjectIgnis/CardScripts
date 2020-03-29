@@ -96,7 +96,7 @@ function Auxiliary.UnionSumTarget(oldrule)
 		if chk==0 then return c:GetFlagEffect(code)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false,pos) end
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
-		c:RegisterFlagEffect(code,RESET_EVENT|(RESETS_STANDARD|RESET_DISABLE)&~RESET_LEAVE)|RESET_PHASE|PHASE_END,0,1)
+		c:RegisterFlagEffect(code,(RESET_EVENT|RESETS_STANDARD|RESET_DISABLE|RESET_PHASE|PHASE_END)&~RESET_LEAVE,0,1)
 	end
 end
 function Auxiliary.UnionSumOperation(oldrule)

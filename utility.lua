@@ -784,6 +784,10 @@ function Card.GetToBeLinkedZone(tc,c,tp,clink,emz)
 				zone=zone|(1<<-(seq-2)/2+6)
 			end
 		end
+	elseif tc:IsLocation(LOCATION_SZONE) and tc:IsControler(tp) then
+		if c:IsLinkMarker(LINK_MARKER_BOTTOM_LEFT) and seq < 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_RIGHT)) then zone=zone|(1<<(seq+1)) end
+		if c:IsLinkMarker(LINK_MARKER_BOTTOM) and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP)) then zone=zone|(1<<seq) end
+		if c:IsLinkMarker(LINK_MARKER_BOTTOM_RIGHT) and seq > 0 and seq <= 4 and (not clink or tc:IsLinkMarker(LINK_MARKER_TOP_LEFT)) then zone=zone(1<<(seq-1)) end
 	end
 	return zone
 end

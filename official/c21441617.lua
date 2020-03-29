@@ -23,12 +23,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x11b}
-s.listed_names={}
+s.listed_names={id}
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORPHEGEL_BABEL)
+	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsPlayerAffectedByEffect(tp,CARD_ORPHEGEL_BABEL)
+	return Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x11b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)

@@ -1,10 +1,10 @@
 --オルフェゴール・ガラテア
---Orphegel Galatea
+--Galatea, the Orcust Automaton
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2,nil,s.matcheck)
-	--indes
+	--cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -39,10 +39,10 @@ function s.indcon(e)
 	return e:GetHandler():IsLinked()
 end
 function s.tdcon1(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORPHEGEL_BABEL)
+	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
 end
 function s.tdcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsPlayerAffectedByEffect(tp,CARD_ORPHEGEL_BABEL)
+	return Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
 end
 function s.tdfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAbleToDeck()
@@ -72,4 +72,3 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SSet(tp,sg)
 	end
 end
-

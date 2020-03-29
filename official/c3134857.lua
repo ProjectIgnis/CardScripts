@@ -1,11 +1,11 @@
 --オルフェゴール・オーケストリオン
---Orphegor Orchestrion
+--Orcustrion
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2,nil,s.matcheck)
-	--indes
+	--cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -44,10 +44,10 @@ function s.indcon(e)
 	return e:GetHandler():IsLinked()
 end
 function s.tdcon1(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORPHEGEL_BABEL)
+	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
 end
 function s.tdcon2(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) and Duel.IsPlayerAffectedByEffect(tp,CARD_ORPHEGEL_BABEL)
+	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) and Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
 end
 function s.tdfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAbleToDeck()
@@ -59,9 +59,6 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_REMOVED,0,3,3,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsLinked()
-end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetTargetCards(e)
@@ -70,7 +67,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local og=Duel.GetOperatedGroup()
 	if #og==0 then return end
 	if og:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinked),tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		Duel.BreakEffect()
 		for tc in aux.Next(g) do
@@ -97,4 +94,3 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

@@ -1,5 +1,5 @@
 --オルフェゴール・ロンギルス
---Orphegel Longirus
+--Longirsu, the Orcust Orchestrator
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -40,10 +40,10 @@ function s.indcon(e)
 	return e:GetHandler():IsLinked()
 end
 function s.tdcon1(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORPHEGEL_BABEL)
+	return not Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
 end
 function s.tdcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsPlayerAffectedByEffect(tp,CARD_ORPHEGEL_BABEL)
+	return Duel.IsPlayerAffectedByEffect(tp,CARD_ORCUSTRATED_BABEL)
 end
 function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
@@ -80,4 +80,3 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(sg,REASON_EFFECT)
 	end
 end
-

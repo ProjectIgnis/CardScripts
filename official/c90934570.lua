@@ -1,4 +1,5 @@
 --侵略の侵喰崩壊
+--Infestation Terminus
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove & tohand
@@ -6,12 +7,13 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1c0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xa}
 function s.rmfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xa) and c:IsAbleToRemove()
 end

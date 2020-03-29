@@ -1,4 +1,5 @@
 --真竜剣皇マスターP
+--Master Peace, the True Dracoslaying King
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with s/t
@@ -34,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
-	e4:SetHintTiming(0,0x1e0)
+	e4:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e4:SetCondition(s.descon)
 	e4:SetCost(s.descost)
 	e4:SetTarget(s.destg)

@@ -28,12 +28,12 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetHintTiming(0,0x1e0)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e3:SetCondition(s.setcon2)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xed}
-s.listed_names={16428514}
+s.listed_names={id}
 function s.thfilter(c)
 	return c:IsSetCard(0xed) and not c:IsCode(id) and c:IsAbleToHand()
 end

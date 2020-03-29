@@ -1,4 +1,5 @@
 --セグメンタル・ドラゴン
+--Segmental Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon & set with no tribute
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetHintTiming(0,0x1e0)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e3:SetCondition(s.descon)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
@@ -38,7 +39,7 @@ function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(1300)
-	e1:SetReset(RESET_EVENT+0xff0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_DISABLE)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_BASE_DEFENSE)
@@ -68,4 +69,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

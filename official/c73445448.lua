@@ -1,4 +1,5 @@
 --No.22 不乱健
+--Number 22: Zombiestein
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,0x1c0)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCost(s.cost)

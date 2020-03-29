@@ -1,4 +1,5 @@
 --真六武衆－エニシ
+--Legendary Six Samurai - Enishi
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -10,13 +11,13 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1c0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e1:SetCondition(s.thcon)
 	e1:SetCost(s.thcost)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--atk,def
+	--atk/def increase
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -29,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x3d}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3d) and c:GetCode()~=id
 end

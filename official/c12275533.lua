@@ -1,4 +1,5 @@
 --機動要犀 トリケライナー
+--Trifortressops
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1e0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)

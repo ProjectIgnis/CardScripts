@@ -25,12 +25,13 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetHintTiming(0,0x1e0)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e3:SetCost(s.cost)
 	e2:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9b}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x9b)
 end

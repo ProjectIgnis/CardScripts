@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetHintTiming(0,0x1c0)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e3:SetCountLimit(1)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetValue(0x3008)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xa008}
 s.material_setcode={0x8,0xa008}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and aux.disfilter1(chkc) end

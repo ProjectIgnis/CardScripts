@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetHintTiming(0,0x1e0)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xee}
 s.listed_names={41091257}
 function s.sprfilter(c)
 	return c:IsSetCard(0xee) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)

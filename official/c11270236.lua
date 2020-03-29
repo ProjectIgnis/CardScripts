@@ -1,4 +1,5 @@
 --召喚獣エリュシオン
+--Invoked Elysium
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -28,11 +29,12 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetHintTiming(0,0x1e0)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xf4}
 s.material_setcode=0xf4
 function s.ffilter2(c)
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsLocation(LOCATION_MZONE)

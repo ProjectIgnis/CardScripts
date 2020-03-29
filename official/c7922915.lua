@@ -1,4 +1,5 @@
 --マジシャンズ・ナビゲート
+--Magician Navigation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--disable
+	--negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,0x1c0)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e2:SetCondition(s.negcon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.negtg)

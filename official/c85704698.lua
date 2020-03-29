@@ -1,4 +1,5 @@
 --リサイコロ
+--Re-dyce-cle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,0x1c0)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.syntg)

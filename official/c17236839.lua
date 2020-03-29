@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Fusion.CreateSummonEff(c,nil,Fusion.OnFieldMat,nil,nil,nil,s.stage2)
-	e1:SetHintTiming(0,0x1e0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 end
 function s.stage2(e,tc,tp,sg,chk)
@@ -28,7 +28,9 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if tc:GetFlagEffectLabel(id)~=e:GetLabel() then
 		e:Reset()
 		return false
-	else return true end
+	else
+		return true
+	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetLabelObject(),REASON_EFFECT)

@@ -1,4 +1,5 @@
 --水精鱗－ガイオアビス
+--Mermail Abyssgaios
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,0x1c0)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e2:SetCost(s.cost)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)

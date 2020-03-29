@@ -51,6 +51,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.winop)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x40}
 function s.cfilter(c)
 	return not c:IsAbleToDeckOrExtraAsCost()
 end

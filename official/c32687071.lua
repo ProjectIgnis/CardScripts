@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetTargetRange(LOCATION_DECK,LOCATION_DECK)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xe0}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end

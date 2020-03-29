@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.winop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={id}
 s.listed_series={0x1c}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -67,7 +68,7 @@ function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id+1)==0 end
 end
 function s.plop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsPlayerAffectedByEffect(tp,16625614) then return s.extraop(e,tp,eg,ep,ev,re,r,rp) end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_DARK_SANCTUARY) then return s.extraop(e,tp,eg,ep,ev,re,r,rp) end
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
@@ -92,20 +93,20 @@ function s.extraop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonStep(tc,181,tp,tp,true,false,POS_FACEUP)
 		tc:AddMonsterAttributeComplete()
 		--immune
-		local e7=Effect.CreateEffect(c)
-		e7:SetType(EFFECT_TYPE_SINGLE)
-		e7:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-		e7:SetRange(LOCATION_MZONE)
-		e7:SetCode(EFFECT_IMMUNE_EFFECT)
-		e7:SetValue(s.efilter)
-		e7:SetReset(RESET_EVENT+0x47c0000)
-		tc:RegisterEffect(e7)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetCode(EFFECT_IMMUNE_EFFECT)
+		e1:SetValue(s.efilter)
+		e1:SetReset(RESET_EVENT+0x47c0000)
+		tc:RegisterEffect(e1)
 		--cannot be target
-		local e8=Effect.CreateEffect(c)
-		e8:SetType(EFFECT_TYPE_SINGLE)
-		e8:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
-		e8:SetReset(RESET_EVENT+0x47c0000)
-		tc:RegisterEffect(e8)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+		e2:SetReset(RESET_EVENT+0x47c0000)
+		tc:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 	elseif tc and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then

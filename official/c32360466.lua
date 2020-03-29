@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x10cf,0xbd}
 function s.filter1(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end

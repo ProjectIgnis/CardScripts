@@ -1,7 +1,6 @@
 --斬機超階乗
---Processlayer Superfactorial
---Old script by AlphaKretin
---Script by edo9300
+--Mathmech Superfactorial
+--scripted by AlphaKretin and edo9300
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

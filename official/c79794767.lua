@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.rellimit)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xe0}
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 end

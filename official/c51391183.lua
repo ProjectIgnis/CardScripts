@@ -35,6 +35,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10ec}
+s.listed_names={id}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),0x10ec) end
@@ -69,15 +71,12 @@ end
 function s.splimit(e,c)
 	return not c:IsSetCard(0x10ec)
 end
-function s.atkfilter(c)
-	return c:IsSetCard(0x10ec) and c:IsFaceup()
-end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x10ec),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x10ec),tp,LOCATION_MZONE,0,nil)
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		local atkval=g:GetClassCount(Card.GetCode)*100
 		local e1=Effect.CreateEffect(c)

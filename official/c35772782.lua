@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if t1==t2 then return end
 	local p=0
 	if t1>t2 then p=tp else p=1-tp end
-	--cannot trigger
+	--cannot activate
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)

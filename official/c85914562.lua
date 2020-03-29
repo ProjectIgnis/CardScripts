@@ -1,5 +1,5 @@
 --魔救の探索者
---Adamacia Researcher 
+--Adamacia Researcher
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

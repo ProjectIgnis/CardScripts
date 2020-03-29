@@ -1,4 +1,5 @@
 --同姓同名同盟条約
+--Treaty on Uniform Nomenclature
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x11e0)
+	e1:SetHintTiming(0,0x11e0) --0x1000+0x100+0x80+0x40+0x20
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)

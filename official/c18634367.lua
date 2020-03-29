@@ -1,11 +1,12 @@
 --スクリーン・オブ・レッド
+--Red Screen
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x28)
+	e1:SetHintTiming(0,TIMING_END_PHASE+TIMING_BATTLE_START)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)

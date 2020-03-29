@@ -1,4 +1,5 @@
 --PSYフレームロード・Ζ
+--PSY-Framelord Zeta
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1)
-	e1:SetHintTiming(0,0x1e0+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_END_PHASE)
 	e1:SetHintTiming(TIMING_SPSUMMON)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)

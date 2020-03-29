@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x10c}
-s.listed_names={}
+s.listed_names={id}
 function s.cfilter(c)
 	return c:GetColumnGroupCount()>0
 end

@@ -23,9 +23,6 @@ s.listed_series={0x13f}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x13f)
 end
-function s.tgfilter(c,ft)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
-end
 function s.filter(c,e,tp,att)
 	return c:IsSetCard(0x13f) and c:IsAttribute(att)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -42,10 +39,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		att=att|gc:GetAttribute()
 	end
 	if chk==0 then return att>0 and ft2>0 and ft>0 
-		and Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,nil,ft)
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,att) 
+		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsType,TYPE_EFFECT),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,att)
 		and Duel.IsPlayerCanDraw(tp,1) end
-	local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,ft)
+	local g=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsType,TYPE_EFFECT),tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end

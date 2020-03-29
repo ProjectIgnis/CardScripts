@@ -1,6 +1,5 @@
 --魔晶龍ジルドラス
 --Zirdras, the Magicrystal Dragon
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -55,4 +54,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

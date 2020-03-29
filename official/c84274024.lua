@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--sp summon (fusion)
+	--special summon (fusion)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_POLYMERIZATION}
 function s.condition(f)
-	return  function(e,tp,eg,ep,ev,re,r,rp)
+	return function(e,tp,eg,ep,ev,re,r,rp)
 				return eg:IsExists(f,1,nil,e,tp)
 			end
 end
@@ -122,12 +122,8 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,e:GetLabel())
 	if #g>0 then
 		tc=g:GetFirst()
-		aux.ToHandOrElse(tc,tp,function(c)
-						return tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end,
-						function(c)
-						Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end,
+		aux.ToHandOrElse(tc,tp,function(c) return tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end,
+						function(c) Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end,
 						aux.Stringid(id,0))
 		end
-	
 end
-

@@ -1,5 +1,5 @@
 --魔弾の射手 ドクトル
---Magibullet Shooter Doctor
+--Magical Musketeer Doc
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate from hand

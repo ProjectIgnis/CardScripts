@@ -55,11 +55,8 @@ function s.relop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Release(sg,REASON_RULE)
 	end
 end
-function s.desfilter(c,tp)
-	return c:IsFaceup() and not c:IsRace(RACE_PLANT)
-end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetTurnPlayer()==1-tp and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

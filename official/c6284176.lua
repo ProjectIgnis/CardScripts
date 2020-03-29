@@ -75,7 +75,7 @@ function s.repfilter(c,tp)
 		and c:IsRace(RACE_PLANT) and c:IsReason(REASON_EFFECT)
 end
 function s.cfilter(c,e,tp)
-	return c:IsRace(RACE_PLANT) and c:IsControler(tp) and c:IsReleasableByEffect(e) 
+	return c:IsRace(RACE_PLANT) and c:IsControler(tp) and c:IsReleasableByEffect(e)
 		and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -98,4 +98,3 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	Duel.Release(tc,REASON_EFFECT+REASON_REPLACE)
 end
-

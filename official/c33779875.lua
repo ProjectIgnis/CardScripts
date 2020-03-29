@@ -74,4 +74,3 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(200*ct)
 	c:RegisterEffect(e1)
 end
-

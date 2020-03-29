@@ -133,7 +133,7 @@ function s.extram(chk,summon_type,e,...)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetCurrentChain()
-	if cid>0 and r&REASON_COST==REASON_COST  then
+	if cid>0 and r&REASON_COST==REASON_COST then
 		s[0]=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE,CHAININFO_TRIGGERING_CONTROLER)
 	end
 end

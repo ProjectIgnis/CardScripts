@@ -42,4 +42,3 @@ end
 function s.extg(e,c)
 	return c:IsRace(RACE_FIEND) and c:GetAttack()==0 and c:GetDefense()==0
 end
-

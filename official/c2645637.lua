@@ -88,4 +88,3 @@ function s.atkcon2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return loc==LOCATION_GRAVE and re:IsActiveType(TYPE_MONSTER)
 end
-

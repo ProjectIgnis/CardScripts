@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x141}
-s.listed_names={}
+s.listed_names={id}
 function s.filter(c)
 	return c:IsSetCard(0x141) and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or c:IsAbleToGrave()) and not c:IsCode(id)
 end
@@ -66,4 +66,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

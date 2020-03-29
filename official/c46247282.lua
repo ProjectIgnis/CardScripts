@@ -90,5 +90,5 @@ function s.disop(e,tp)
 		end
 		zone = zone &~dz
 	end
-	return zone 
+	return zone
 end

@@ -46,7 +46,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.exkfilter(c,sg,tp,oc)
 	local sg = sg + oc
-	return Duel.GetLocationCountFromEx(tp,tp,sg,c)>0 
+	return Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
 end
 function s.excheck(sg,tp,exg,ssg,c)
 	return ssg:IsExists(s.exkfilter,1,nil,sg,tp,c)

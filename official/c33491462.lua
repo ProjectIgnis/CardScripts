@@ -107,4 +107,3 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		lc:RegisterEffect(e1)
 	end
 end
-

@@ -63,12 +63,7 @@ function s.ndcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.ndfilter,1,nil,tp)
 end
 function s.ndop(e,tp,eg,ep,ev,re,r,rp)
-	local e0=Effect.CreateEffect(e:GetHandler())
-	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
-	e0:SetDescription(aux.Stringid(id,1))
-	e0:SetReset(RESET_PHASE+PHASE_END)
-	e0:SetTargetRange(1,0)
-	Duel.RegisterEffect(e0,tp)
+	aux.RegisterClientHint(e:GetHandler(),EFFECT_FLAG_OATH,tp,1,0,aux.Stringid(id,1),nil)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
@@ -82,4 +77,3 @@ function s.ndop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
-

@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x36}
+s.listed_names={id}
 function s.sfilter(c)
 	return c:IsSetCard(0x36) and c:GetCode()~=id and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
@@ -30,4 +31,3 @@ function s.sop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-s.listed_names={id}

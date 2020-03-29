@@ -1,5 +1,5 @@
 --魔弾の射手 カスパール
---Magibullet Shooter Caspar
+--Magical Musketeer Caspar
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate from hand

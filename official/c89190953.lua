@@ -16,9 +16,6 @@ function s.initial_effect(c)
 end
 s.listed_series={0x145}
 s.listed_names={6007213,32491822,69890967}
-function s.filter0(c)
-	return c:IsAbleToRemove()
-end
 function s.filter1(c,e)
 	return c:IsAbleToRemove() and not c:IsImmuneToEffect(e)
 end
@@ -32,7 +29,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=tp
-		local mg1=Duel.GetFusionMaterial(tp):Filter(s.filter0,nil)
+		local mg1=Duel.GetFusionMaterial(tp):Filter(Card.IsAbleToRemove,nil)
 		if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
 			local mg2=Duel.GetMatchingGroup(s.filter3,tp,LOCATION_GRAVE,0,nil)
 			mg1:Merge(mg2)

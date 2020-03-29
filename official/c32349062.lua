@@ -126,4 +126,3 @@ function s.disop2(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
-

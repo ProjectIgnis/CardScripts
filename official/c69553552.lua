@@ -30,11 +30,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x107}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107)
-end
 function s.indcon(e)
-	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x107),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
@@ -44,9 +41,7 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=a:GetBattleTarget()
 	if not d then return false end
 	if not a:IsControler(tp) then a,d=d,a end
-	return a:IsControler(tp) and a:IsSetCard(0x107)
-		and a:GetLevel()-a:GetOriginalLevel()>=5
-		and ep~=tp
+	return a:IsControler(tp) and a:IsSetCard(0x107) and a:GetLevel()-a:GetOriginalLevel()>=5 and ep~=tp
 end
 function s.rmfilter(c)
 	return c:IsAbleToRemove() and (c:IsLocation(LOCATION_ONFIELD) or aux.SpElimFilter(c,false,true))

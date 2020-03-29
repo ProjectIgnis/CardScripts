@@ -52,4 +52,3 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SortDecktop(tp,tp,#rg)
 	end
 end
-

@@ -44,7 +44,7 @@ end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	local des=eg:GetFirst()
 	local rc=des:GetReasonCard()
-	if (des:GetPreviousRaceOnField()&RACE_FIEND==RACE_FIEND and des:GetPreviousAttributeOnField()&ATTRIBUTE_DARK==ATTRIBUTE_DARK 
+	if (des:GetPreviousRaceOnField()&RACE_FIEND==RACE_FIEND and des:GetPreviousAttributeOnField()&ATTRIBUTE_DARK==ATTRIBUTE_DARK
 		and des:GetOwner()==(1-tp) and rc:IsRelateToBattle() and rc==e:GetHandler() and rc:GetSummonType()==SUMMON_TYPE_TRIBUTE+1)
 		then
 		Duel.Win(tp,WIN_REASON_EXODIA_DEFENDER) end

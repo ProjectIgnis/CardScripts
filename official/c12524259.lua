@@ -3,7 +3,7 @@
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip an union monster 
+	--equip an union monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)

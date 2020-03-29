@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate(s.filter2))
 	c:RegisterEffect(e2)
 end
-s.listed_names={}
+s.listed_names={id}
 s.listed_series={0x36}
 function s.cfilter1(c)
 	return c:IsDiscardable()

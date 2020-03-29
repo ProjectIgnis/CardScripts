@@ -65,4 +65,3 @@ function s.leaveop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,c:GetBaseAttack(),REASON_EFFECT)
 	e:Reset()
 end
-

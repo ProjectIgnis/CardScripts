@@ -29,14 +29,13 @@ function s.initial_effect(c)
 end
 s.listed_series={0x141}
 function s.costfilter(c,ft,tp)
-    return c:IsRace(RACE_PLANT)
-        and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5))
+	return c:IsRace(RACE_PLANT) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-    if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil,ft,tp) end
-    local g=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil,ft,tp)
-    Duel.Release(g,REASON_COST)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil,ft,tp) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil,ft,tp)
+	Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
@@ -67,4 +66,3 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRace(RACE_PLANT)
 end
-

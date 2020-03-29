@@ -9,17 +9,18 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
+function s.spfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,c)
+	local tp=e:GetHandlerPlayer()
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and aux.SelectUnselectGroup(rg,e,tp,1,1,nil,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local c=e:GetHandler()
@@ -33,7 +34,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,c)
-	Duel.SendtoGrave(g,REASON_COST)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.SendtoGrave(g,nil,REASON_COST)
+	g:DeleteGroup()
 end

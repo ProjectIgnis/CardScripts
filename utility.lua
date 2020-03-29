@@ -1232,12 +1232,12 @@ function Auxiliary.ToHandOrElse(card,player,check,oper,str,...)
 	end
 end
 function Auxiliary.thoeSend(card)
-    return Duel.SendtoGrave(card,REASON_EFFECT)
+	return Duel.SendtoGrave(card,REASON_EFFECT)
 end
 --To simply registering EFFECT_FLAG_CLIENT_HINT to players
---card: card that creates the hintmsg;		--property: additional properties like EFFECT_FLAG_OATH
---tp: the player registering the effect;	--player1,player2: the players to whom the hint is registered
---str: the string called; 					--reset: additional resets, other than RESET_PHASE+PHASE_END
+--card: card that creates the hintmsg; --property: additional properties like EFFECT_FLAG_OATH
+--tp: the player registering the effect; --player1,player2: the players to whom the hint is registered
+--str: the string called; --reset: additional resets, other than RESET_PHASE+PHASE_END
 function Auxiliary.RegisterClientHint(card,property,tp,player1,player2,str,reset)
 	if card then
 	if not property then property=0 end
@@ -1299,14 +1299,14 @@ function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp)
 			if of and Duel.Destroy(of,REASON_RULE)==0 then
 				Duel.SendtoGrave(c,REASON_RULE)
 				return false
-			else 
+			else
 				Duel.BreakEffect()
 			end
 		else
 			if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then
 				Duel.SendtoGrave(c,REASON_RULE)
 				return false
-			else 
+			else
 				Duel.BreakEffect()
 			end
 		end

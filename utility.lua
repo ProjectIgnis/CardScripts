@@ -400,7 +400,7 @@ end
 function Auxiliary.imval2(e,c)
 	return Auxiliary.imval1(e,c) and c:GetControler()~=e:GetHandlerPlayer()
 end
---filter for EFFECT_CANNOT_BE_EFFECT_TARGET + opponent 
+--filter for EFFECT_CANNOT_BE_EFFECT_TARGET + opponent
 function Auxiliary.tgoval(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end
@@ -412,11 +412,11 @@ end
 function Auxiliary.indoval(e,re,rp)
 	return rp==1-e:GetHandlerPlayer()
 end
---filter for non-zero ATK 
+--filter for non-zero ATK monsters
 function Auxiliary.nzatk(c)
 	return c:IsFaceup() and c:GetAttack()>0
 end
---filter for non-zero DEF
+--filter for non-zero DEF monsters
 function Auxiliary.nzdef(c)
 	return c:IsFaceup() and c:GetDefense()>0
 end
@@ -1098,9 +1098,9 @@ end
 --Includes non-trivial handling of self-destructing Burning Abyss monsters
 --Passes tp so you can check control
 function Auxiliary.zptcon(filter)
-    return function(e,tp,eg,ep,ev,re,r,rp)
+	return function(e,tp,eg,ep,ev,re,r,rp)
 		return Auxiliary.zptgroupcon(eg,filter,e:GetHandler(),tp)
-    end
+	end
 end
 --function to check if all the cards in a group have a common property
 function Group.CheckSameProperty(g,f,...)
@@ -1163,7 +1163,6 @@ function Auxiliary.AskAny(stringid)
 end
 
 --Functions to automate consistent start-of-duel activations for Duel Modes like Speed Duel, Sealed Duel
---According to AlphaKretin, these two functions can be improved in Edopro
 function Auxiliary.EnableExtraRules(c,card,init,...)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -1201,11 +1200,13 @@ function Auxiliary.EnableExtraRulesOperation(card,init,...)
 		end
 	end
 end
---[[Function to perform "Either add it to the hand or do X"
-Required:
-card: affected card to be moved; -player: player performing the operation
-Optional:
-check: condition for the secondary action, if not provided the default action is "Send it to the GY"; oper: secondary action; str: stirng to be used in the secondary option
+--[[
+Function to perform "Either add it to the hand or do X"
+-card: affected card to be moved;
+-player: player performing the operation
+-check: condition for the secondary action, if not provided the default action is "Send it to the GY";
+oper: secondary action;
+str: string to be used in the secondary option
 ]]
 function Auxiliary.ToHandOrElse(card,player,check,oper,str,...)
 	if card then
@@ -1234,10 +1235,15 @@ end
 function Auxiliary.thoeSend(card)
 	return Duel.SendtoGrave(card,REASON_EFFECT)
 end
---To simply registering EFFECT_FLAG_CLIENT_HINT to players
---card: card that creates the hintmsg; --property: additional properties like EFFECT_FLAG_OATH
---tp: the player registering the effect; --player1,player2: the players to whom the hint is registered
---str: the string called; --reset: additional resets, other than RESET_PHASE+PHASE_END
+--[[
+Function to simply registering EFFECT_FLAG_CLIENT_HINT to players
+-card: card that creates the hintmsg;
+-property: additional properties like EFFECT_FLAG_OATH
+-tp: the player registering the effect;
+-player1,player2: the players to whom the hint is registered
+-str: the string called;
+-reset: additional resets, other than RESET_PHASE+PHASE_END
+]]
 function Auxiliary.RegisterClientHint(card,property,tp,player1,player2,str,reset)
 	if card then
 	if not property then property=0 end

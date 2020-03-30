@@ -2,6 +2,7 @@
 --Blackwing - Aurora the Northern Lights
 local s,id=GetID()
 function s.initial_effect(c)
+	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -9,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--special summon
@@ -28,33 +30,45 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e3:SetValue(aux.FALSE)
 	c:RegisterEffect(e3)
-	c:EnableReviveLimit()
 end
-s.listed_series={0x33}
-function s.spfilter1(c,ft,tp)
-	if c:GetSequence()<5 then ft=ft+1 end
-	return c:IsFaceup() and c:IsSetCard(0x33) and c:IsType(TYPE_TUNER) and c:IsAbleToRemove()
-		and ft>-1 and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_MZONE,0,1,nil,ft)
+function s.rescon(sg,e,tp,mg)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.spfilter1,1,nil,sg) and sg:IsExists(s.spfilter2,1,nil,sg)
 end
-function s.spfilter2(c,ft)
-	return c:IsFaceup() and not c:IsType(TYPE_TUNER) and c:IsAbleToRemove() and (ft>0 or c:GetSequence()<5)
+function s.spfilter1(c,tp)
+	return not c:IsType(TYPE_TUNER)
+end
+function s.spfilter2(c,tp)
+	return c:IsSetCard(0x33) and c:IsType(TYPE_TUNER)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return ft>-2 and Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_MZONE,0,1,nil,ft,tp)
+	local rg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+	local g1=rg:Filter(s.spfilter1,nil)
+	local g2=rg:Filter(s.spfilter2,nil)
+	local g=g1:Clone()
+	g:Merge(g2)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0 and #g>1 
+		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+	local g1=rg:Filter(s.spfilter1,nil)
+	local g2=rg:Filter(s.spfilter2,nil)
+	g1:Merge(g2)
+	local sg=aux.SelectUnselectGroup(g1,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
+	if #sg>0 then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=Duel.SelectMatchingCard(tp,s.spfilter1,tp,LOCATION_MZONE,0,1,1,nil,ft,tp)
-	local tc=g1:GetFirst()
-	if tc:GetSequence()<5 then ft=ft+1 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_MZONE,0,1,1,nil,ft)
-	g1:Merge(g2)
-	Duel.Remove(g1,POS_FACEUP,REASON_COST)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
 end
 function s.filter(c)
 	return c:IsSetCard(0x33) and c:IsAbleToRemove()

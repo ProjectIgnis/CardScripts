@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(66889139)
+	e1:SetValue(CARD_GAIA_CHAMPION)
 	c:RegisterEffect(e1)
 	--decrease ATK and destroy
 	local e2=Effect.CreateEffect(c)

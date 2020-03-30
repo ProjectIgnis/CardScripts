@@ -74,11 +74,11 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.hspcon(e,c)
     if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsSetCard,1,false,1,true,nil,c,c:GetControler(),nil,0x10af)
+    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsSetCard,1,false,1,true,c,c:GetControler(),nil,false,nil,0x10af)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
     local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,false,true,true,c,nil,nil,nil,0x10af)
+    local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,false,true,true,c,nil,nil,false,nil,0x10af)
     if g then
         g:KeepAlive()
         e:SetLabelObject(g)

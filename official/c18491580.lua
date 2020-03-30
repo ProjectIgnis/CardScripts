@@ -30,10 +30,10 @@ s.listed_series={0x3b}
 s.listed_names={CARD_REDEYES_B_DRAGON}
 function s.hspcon(e,c)
     if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsSetCard,1,true,1,true,nil,c,c:GetControler(),e:GetHandler(),0x3b)
+    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsSetCard,1,true,1,true,c,c:GetControler(),nil,false,e:GetHandler(),0x3b)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,true,true,true,c,nil,nil,e:GetHandler(),0x3b)
+    local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,true,true,true,c,nil,nil,false,e:GetHandler(),0x3b)
     if g then
         g:KeepAlive()
         e:SetLabelObject(g)

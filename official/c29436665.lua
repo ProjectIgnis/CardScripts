@@ -41,10 +41,10 @@ end
 s.listed_names={CARD_DARK_MAGICIAN}
 function s.spcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,nil,c,c:GetControler(),nil,CARD_DARK_MAGICIAN)
+	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,CARD_DARK_MAGICIAN)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,nil,CARD_DARK_MAGICIAN)
+    local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,false,nil,CARD_DARK_MAGICIAN)
     if g then
         g:KeepAlive()
         e:SetLabelObject(g)

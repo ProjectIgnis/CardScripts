@@ -34,11 +34,11 @@ function s.val(e,c)
 end
 function s.spcon(e,c)
     if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,nil,c,c:GetControler(),nil,CARD_REDEYES_B_DRAGON)
+    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,CARD_REDEYES_B_DRAGON)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
     local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,nil,CARD_REDEYES_B_DRAGON)
+    local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,false,nil,CARD_REDEYES_B_DRAGON)
     if g then
         g:KeepAlive()
         e:SetLabelObject(g)

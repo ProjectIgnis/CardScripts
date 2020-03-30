@@ -35,10 +35,10 @@ s.listed_names={66073051,CARD_SANCTUARY_SKY}
 function s.hspcon(e,c)
 	if c==nil then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 		or Duel.IsEnvironment(CARD_SANCTUARY_SKY) end
-	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,nil,c,c:GetControler(),nil,66073051)
+	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,66073051)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,nil,66073051)
+    local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,false,nil,66073051)
     if g then
         g:KeepAlive()
         e:SetLabelObject(g)

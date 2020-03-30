@@ -37,10 +37,10 @@ end
 s.listed_series={0x69}
 function s.hspcon(e,c)
     if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsSetCard,1,true,1,true,nil,c,c:GetControler(),e:GetHandler(),0x69)
+    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsSetCard,1,true,1,true,c,c:GetControler(),nil,false,e:GetHandler(),0x69)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,true,true,true,c,nil,nil,e:GetHandler(),0x69)
+    local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,true,true,true,c,nil,nil,false,e:GetHandler(),0x69)
     if g then
         g:KeepAlive()
         e:SetLabelObject(g)

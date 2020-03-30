@@ -45,10 +45,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.hspcon(e,c)
     if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,nil,c,c:GetControler(),nil,id+1)
+    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,id+1)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,nil,id+1)
+    local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,false,nil,id+1)
     if g then
         g:KeepAlive()
         e:SetLabelObject(g)

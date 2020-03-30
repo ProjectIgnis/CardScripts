@@ -34,10 +34,10 @@ end
 s.listed_series={0x12}
 function s.spcon(e,c)
     if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,2,false,2,true,nil,c,c:GetControler(),nil)
+    return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,2,false,2,true,c,c:GetControler(),nil,false,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,s.aux.TRUE,2,2,false,true,true,c,nil,nil,nil)
+    local g=Duel.SelectReleaseGroup(tp,s.aux.TRUE,2,2,false,true,true,c,nil,nil,false,nil)
     if g then
         g:KeepAlive()
         e:SetLabelObject(g)

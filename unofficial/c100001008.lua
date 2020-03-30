@@ -34,10 +34,10 @@ function s.initial_effect(c)
 end
 function s.spcon(e,c)
     if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsLevelAbove,1,false,1,true,nil,c,c:GetControler(),nil,7)
+    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsLevelAbove,1,false,1,true,c,c:GetControler(),nil,false,nil,7)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsLevelAbove,1,1,false,true,true,c,nil,nil,nil,7)
+    local g=Duel.SelectReleaseGroup(tp,Card.IsLevelAbove,1,1,false,true,true,c,nil,nil,false,nil,7)
     if g then
         g:KeepAlive()
         e:SetLabelObject(g)

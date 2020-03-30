@@ -1,4 +1,5 @@
 --ゴブリン偵察部隊
+--Goblin Recon Squad
 local s,id=GetID()
 function s.initial_effect(c)
 	--confirm
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetAttackTarget()==nil
+	return ep~=tp and Duel.GetAttackTarget()==nil and Duel.GetFieldGroup(ep,LOCATION_HAND,0)>0
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(ep,LOCATION_HAND,0)

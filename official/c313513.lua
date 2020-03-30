@@ -22,6 +22,7 @@ function s.initial_effect(c)
 		end)
 	end)
 end
+s.listed_series={0x7}
 s.listed_names={83104731}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x7) and c:IsAbleToGraveAsCost()

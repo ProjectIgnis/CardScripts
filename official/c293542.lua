@@ -21,6 +21,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x27}
+s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(aux.FilterFaceupFunction(Card.IsLevelBelow,4),1,nil)
 end

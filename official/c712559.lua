@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x4}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local lv=0
 	local tc=eg:GetFirst()

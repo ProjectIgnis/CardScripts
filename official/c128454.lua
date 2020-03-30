@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x9f,0x98}
 function s.thfilter(c)
 	return ((c:IsLocation(LOCATION_PZONE) and (c:IsSetCard(0x9f) or c:IsSetCard(0x98)))
 		or (c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_PENDULUM))) and c:IsAbleToHand()

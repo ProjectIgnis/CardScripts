@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xc}
 function s.filter(c,e,tp)
 	local lv=c:GetLevel()
 	return lv>0 and lv<=4 and c:IsSetCard(0xc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

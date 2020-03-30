@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xb1}
 function s.filter(c)
 	return c:IsSetCard(0xb1) and c:IsDiscardable()
 end

@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x48}
 function s.indval(e,c)
 	return not c:IsSetCard(0x48)
 end

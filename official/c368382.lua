@@ -21,6 +21,8 @@ function s.initial_effect(c)
 	e3:SetCondition(s.spcon)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xd8}
+s.listed_names={id}
 function s.tfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xd8) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
 end

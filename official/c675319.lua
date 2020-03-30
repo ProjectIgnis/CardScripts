@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.repop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xf1}
 function s.atfilter(c,atk)
 	return c:IsFaceup() and c:IsRace(RACE_BEASTWARRIOR) and c:GetAttack()>atk
 end

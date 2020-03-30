@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.indval)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xd0}
 function s.filter(c)
 	return c:IsSetCard(0xd0) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end

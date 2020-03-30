@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x106e}
 function s.atkval(e,c)
 	return Duel.GetOverlayCount(c:GetControler(),1,0)*300
 end

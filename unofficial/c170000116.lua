@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--Increase ATK
@@ -63,15 +64,26 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0 and #g>1 
 		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,TYPE_PLUS+TYPE_MINUS)
-	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE)
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
 	local cg=sg:Filter(Card.IsFacedown,nil)
 	if #cg>0 then
 		Duel.ConfirmCards(1-tp,cg)
 	end
-	Duel.SendtoGrave(sg,REASON_COST)
-	c:SetMaterial(sg)
+	if #sg>0 then
+        sg:KeepAlive()
+        e:SetLabelObject(sg)
+    return true
+    end
+    return false
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+    local g=e:GetLabelObject()
+    if not g then return end
+	Duel.SendtoGrave(g,REASON_COST)
+	c:SetMaterial(g)
+	g:DeleteGroup()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PLUS+TYPE_MINUS)

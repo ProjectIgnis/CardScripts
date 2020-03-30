@@ -66,7 +66,7 @@ function s.spfilter(c,e,tp)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT) then
+	if c:IsRelateToEffect(e) and Duel.SendtoHand(c,nil,REASON_EFFECT)~0 and c:IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,c)
 		local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
 		if #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
@@ -84,13 +84,12 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 					local e2=e1:Clone()
 					e2:SetCode(EFFECT_UPDATE_DEFENSE)
 					sg:RegisterEffect(e2)
-					local e3=Effect.CreateEffect(c)
-					e3:SetType(EFFECT_TYPE_SINGLE)
-					e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+					local e3=e1:Clone()
 					e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 					e3:SetDescription(aux.Stringid(id,3))
+					e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+					e3:SetRange(LOCATION_MZONE)
 					e3:SetValue(1)
-					e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
 					sg:RegisterEffect(e3)
 				Duel.SpecialSummonComplete()
 			end

@@ -1,4 +1,5 @@
 --No.48 シャドー・リッチ
+--Number 48: Shadow Lich
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -36,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id+1}
 s.xyz_number=48
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp

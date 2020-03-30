@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetValue(1500)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3d}
 function s.filter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x3d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

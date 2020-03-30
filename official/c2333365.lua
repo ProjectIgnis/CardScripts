@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.atlimit)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x42}
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x42),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end

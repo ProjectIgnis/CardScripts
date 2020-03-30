@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop2)
 	c:RegisterEffect(e4)
 end
+s.listed_names={id}
 s.listed_series={0x107}
 function s.lvcon(e)
 	local ph=Duel.GetCurrentPhase()

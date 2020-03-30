@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x13}
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x13),0,LOCATION_MZONE,LOCATION_MZONE,c)*100
 end

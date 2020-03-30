@@ -26,6 +26,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x19}
+s.listed_names={id}
 function s.rmfilter(c)
 	return c:IsSetCard(0x19) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end

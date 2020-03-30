@@ -35,6 +35,7 @@ function s.initial_effect(c)
 		--Duel.RegisterEffect(e3,0)
 	end)
 end
+s.listed_series={0x103}
 s.act_turn=true
 function s.tgfilter(c)
 	return c:IsSetCard(0x103) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()

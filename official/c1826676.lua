@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
+s.listed_names={id}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

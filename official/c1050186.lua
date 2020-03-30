@@ -19,6 +19,8 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9c}
+s.listed_names={id}
 function s.filter(c)
 	return c:IsSetCard(0x9c) and not c:IsCode(id) and c:IsAbleToGrave()
 end

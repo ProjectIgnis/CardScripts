@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x38}
 function s.filter(c)
 	return c:IsSetCard(0x38) and c:IsType(TYPE_MONSTER)
 end

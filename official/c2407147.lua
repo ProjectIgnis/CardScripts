@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x39}
 function s.cfilter(c)
 	return c:IsSetCard(0x39) and c:GetCode()~=id
 end

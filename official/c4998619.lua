@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop2)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xe3}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xe3) and c:IsAbleToGraveAsCost()
 end
@@ -71,7 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(3000)
-	e1:SetReset(RESET_EVENT+0xff0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 	c:RegisterEffect(e1)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)

@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsLevel(3) and not c:IsCode(id)
 end

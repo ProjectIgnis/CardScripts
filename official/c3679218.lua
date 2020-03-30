@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x112}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsSetCard(0x112,lc,sumtype,tp) and not c:IsSummonCode(lc,sumtype,tp,id)
 end

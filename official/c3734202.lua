@@ -41,6 +41,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x2a}
+s.listed_names={id}
 function s.cfilter(c,race,ft,tp)
 	return c:IsRace(race) and c:IsAttribute(ATTRIBUTE_EARTH) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
 end

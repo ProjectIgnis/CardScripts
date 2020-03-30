@@ -47,7 +47,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.SelectReleaseGroupCost(tp,s.hspfilter,1,1,false,nil,nil,ft,tp)
 	Duel.Release(g,REASON_COST)
-	c:RegisterFlagEffect(0,RESET_EVENT+0x4fc0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+	c:RegisterFlagEffect(0,RESET_EVENT|(RESETS_STANDARD|RESET_OVERLAY)&~(RESET_TOFIELD|RESET_TURN_SET),EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 end
 function s.descfilter(c)
 	return c:IsSetCard(0x69)

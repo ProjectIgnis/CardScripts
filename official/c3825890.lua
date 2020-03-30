@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.desreptg)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x2e}
 function s.otfilter(c,tp)
 	return c:IsSetCard(0x2e) and (c:IsControler(tp) or c:IsFaceup())
 end

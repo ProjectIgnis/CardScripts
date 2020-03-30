@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	c:EnableReviveLimit()
 end
+s.listed_series={0x33}
 function s.spfilter1(c,ft,tp)
 	if c:GetSequence()<5 then ft=ft+1 end
 	return c:IsFaceup() and c:IsSetCard(0x33) and c:IsType(TYPE_TUNER) and c:IsAbleToRemove()

@@ -25,6 +25,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xea}
+s.listed_names={id}
 function s.cfilter(c)
 	return c:IsSetCard(0xea) and not c:IsCode(id) and c:IsDiscardable()
 end

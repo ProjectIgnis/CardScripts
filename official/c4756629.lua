@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.decop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xa}
 function s.rmfilter(c,tp)
 	return c:IsSetCard(0xa) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,c)

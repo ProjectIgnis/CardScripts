@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3e}
 function s.vfilter(c)
 	return c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE)
 end

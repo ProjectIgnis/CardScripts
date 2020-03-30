@@ -1,4 +1,5 @@
 --不知火流 燕の太刀
+--Shiranui Style Swallow's Slash
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -41,11 +42,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
 		if e:GetLabel()==1 then
 			e:SetLabel(0)
-			return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,s.spcheck,nil,dg) 
-				and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+			return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,s.spcheck,nil,dg) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 		else
-			return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,e:GetHandler())
-				and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+			return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,e:GetHandler()) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 		end
 	end
 	if e:GetLabel()==1 then

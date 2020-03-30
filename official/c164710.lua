@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
-	--lv
+	--level change
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)

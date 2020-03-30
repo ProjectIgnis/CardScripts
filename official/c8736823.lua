@@ -1,7 +1,6 @@
 --電脳堺姫－娘々
 --Cyberspace Princess Niangniang
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -78,12 +77,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e3,tp)
 		--Client hint
-		local e4=Effect.CreateEffect(e:GetHandler())
-		e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
-		e4:SetDescription(aux.Stringid(id,2))
-		e4:SetReset(RESET_PHASE+PHASE_END)
-		e4:SetTargetRange(1,0)
-		Duel.RegisterEffect(e4,tp)
+		aux.RegisterClientHint(e:GetHandler(),EFFECT_FLAG_OATH,tp,1,0,aux.Stringid(id,2),nil)
 	end
 end
 	--Restricted to level/rank 3+ monsters

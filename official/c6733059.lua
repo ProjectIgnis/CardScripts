@@ -1,4 +1,5 @@
 --死霊の巣
+--Skull Lair
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	--instant(chain)
+	--activate while already face-up
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)

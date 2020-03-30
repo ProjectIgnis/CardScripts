@@ -77,7 +77,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
-end 
+end
 function s.scfilter(c)
 	return c:IsSetCard(0x107a) and c:IsSynchroSummonable(nil)
 end

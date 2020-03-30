@@ -43,11 +43,8 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
-function s.confilter(c)
-	return c:IsPreviousLocation(LOCATION_GRAVE)
-end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.confilter,1,nil) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_GRAVE) and not eg:IsContains(e:GetHandler())
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetAttack()>0

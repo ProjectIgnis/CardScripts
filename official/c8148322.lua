@@ -16,11 +16,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x10f3}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10f3)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x10f3),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.fcheck(tp,sg,fc,mg)
 	return sg:IsExists(s.filter,2,nil,tp)

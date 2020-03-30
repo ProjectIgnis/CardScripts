@@ -1,5 +1,5 @@
 --妬絶の呪眼
---Jealous Disruption of the Evil Eye
+--Evil Eye Defeat
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,11 +17,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x129}
 s.listed_names={CARD_EVIL_EYE_SELENE}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x129)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x129),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.evilcond(c)
 	return c:IsFaceup() and c:IsCode(CARD_EVIL_EYE_SELENE)

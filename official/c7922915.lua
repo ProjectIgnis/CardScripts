@@ -34,8 +34,8 @@ function s.filter2(c,e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp) 
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND+LOCATION_DECK)
 end
@@ -48,16 +48,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g2=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		if #g2>0 then
-			Duel.BreakEffect() 
+			Duel.BreakEffect()
 			Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
 end
-function s.cfilter(c)
-	return c:IsCode(CARD_DARK_MAGICIAN) and c:IsFaceup()
-end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.exccon(e) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return aux.exccon(e) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_DARK_MAGICIAN),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.negfilter(c)
 	return aux.disfilter1(c) and c:IsType(TYPE_SPELL+TYPE_TRAP)

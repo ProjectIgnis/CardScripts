@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e0:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	e0:SetValue(1)
 	c:RegisterEffect(e0)
-	--special summon
+	--special summon a target
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--special summon itself
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

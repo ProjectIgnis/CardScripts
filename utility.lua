@@ -1236,7 +1236,7 @@ function Auxiliary.thoeSend(card)
 	return Duel.SendtoGrave(card,REASON_EFFECT)
 end
 --[[
-Function to simply registering EFFECT_FLAG_CLIENT_HINT to players
+Function to simplify registering EFFECT_FLAG_CLIENT_HINT to players
 -card: card that creates the hintmsg;
 -property: additional properties like EFFECT_FLAG_OATH
 -tp: the player registering the effect;

@@ -63,7 +63,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local dc=Duel.GetAttackTarget()
-	return (tc:IsCode(CARD_GAIA_CHAMPION) and tc:IsControler(tp)) 
+	return (tc:IsCode(CARD_GAIA_CHAMPION) and tc:IsControler(tp))
 		or (dc and dc:IsCode(CARD_GAIA_CHAMPION) and dc:IsControler(tp))
 end
 function s.descos(e,tp,eg,ep,ev,re,r,rp,chk)

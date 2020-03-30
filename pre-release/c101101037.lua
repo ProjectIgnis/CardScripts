@@ -39,8 +39,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-function s.matfilter(c)
-	return c:IsRace(RACE_DRAGON) and c:IsLevel(5)
+function s.matfilter(c,fc,sumtype,tp)
+	return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsLevel(5)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2

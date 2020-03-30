@@ -64,12 +64,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(1)
 		tc:RegisterEffect(e2)
 		--register a hint to the player
-		local hint=Effect.CreateEffect(c)
-		hint:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-		hint:SetDescription(aux.Stringid(id,2))
-		hint:SetReset(RESET_PHASE+PHASE_END)
-		hint:SetTargetRange(1,0)
-		Duel.RegisterEffect(hint,tp)
+		aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,2),nil)
 		Duel.BreakEffect()
 		Duel.Destroy(c,REASON_EFFECT)
 	end

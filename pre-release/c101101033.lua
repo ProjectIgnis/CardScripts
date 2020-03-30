@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--to grave
+	--send to grave
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_GRAVE)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={}
+s.listed_names={id}
 function s.gyfilter(c)
 	return c:IsRace(RACE_FISH) and not c:IsCode(id) and c:IsAbleToGrave()
 end

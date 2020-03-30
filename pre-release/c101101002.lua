@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--disable
+	--negate
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DISABLE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -62,7 +62,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not (tc:IsFaceup() and tc:IsRelateToEffect(e)) then return end
 	local g=Duel.GetMatchingGroup(s.disfilter,tp,0,LOCATION_MZONE,nil,tc:GetAttack())
 	local hc=g:GetFirst()
-	while hc do
+	for hc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -80,6 +80,5 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			hc:RegisterEffect(e3)
 		end
-		hc=g:GetNext()
 	end
 end

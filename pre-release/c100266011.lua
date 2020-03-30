@@ -1,6 +1,7 @@
 --化石融合－フォッシル・フュージョン
 --Fossil Fusion
 --Scripted by Eerie Code
+--to be rescripted to use the current fusion procedure when updated to its official ID
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

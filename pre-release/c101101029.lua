@@ -3,7 +3,7 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--sp summon
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={}
+s.listed_names={id}
 s.listed_series={0x13d}
 function s.tdfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToDeck() and not c:IsCode(id)

@@ -29,15 +29,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.indct(e,re,r,rp)
-    if r&REASON_EFFECT==REASON_EFFECT then
-        return 1
-    else return 0 end
+	if r&REASON_EFFECT==REASON_EFFECT then
+		return 1
+	else
+		return 0
+	end
 end
 function s.tdfilter(c)
 	return c:IsRace(RACE_BEAST) and c:IsAbleToDeck()
 end
 function s.tdcheck(sg,e,tp)
-    return sg:GetClassCount(Card.GetCode)==#sg
+	return sg:GetClassCount(Card.GetCode)==#sg
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil,e,tp)

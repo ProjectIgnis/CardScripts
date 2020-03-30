@@ -1,7 +1,6 @@
 --電脳エナジーショック
 --Cyber Energy Shock
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +19,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists "Jinzo"
 s.listed_names={77585513}
-
 	--Check for "Jinzo"
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(77585513)
@@ -79,14 +77,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			else --All "Jinzo" you control gains 800 ATK
 				local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 				local tc=g:GetFirst()
-				while tc do
+				for tc in aux.Next(g) do
 					local e1=Effect.CreateEffect(e:GetHandler())
 					e1:SetType(EFFECT_TYPE_SINGLE)
 					e1:SetCode(EFFECT_UPDATE_ATTACK)
 					e1:SetValue(800)
 					e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 					tc:RegisterEffect(e1)
-					tc=g:GetNext()
 				end
 			end
 		end

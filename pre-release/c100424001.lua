@@ -5,8 +5,8 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion summon
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunction(Card.IsRace,RACE_AQUA),s.matfilter)
-	--spsummon
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_AQUA),s.matfilter)
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_TRIPLE_TRIBUTE)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--indes
+	--cannot be destroyed by battle
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -48,12 +48,12 @@ function s.initial_effect(c)
 	e5:SetValue(aux.tgoval)
 	c:RegisterEffect(e5)
 end
+s.listed_names={id}
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER,fc,sumtype,tp) and c:GetLevel()==10
 end
 function s.hspfilter(c,tp,sc)
-	return c:IsRace(RACE_AQUA) and c:GetLevel()==10
-		and c:GetAttack()==0 and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
+	return c:IsRace(RACE_AQUA) and c:GetLevel()==10 and c:GetAttack()==0 and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
 end
 function s.hspcon(e,c)
 	if c==nil then return true end

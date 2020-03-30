@@ -1,5 +1,6 @@
 --螺旋融合
 --Spiral Fusion
+--to be rescripted to use the fusion procedure when it receives its official ID
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

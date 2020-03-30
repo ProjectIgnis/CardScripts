@@ -48,11 +48,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2,true)
 	end
 end
-function s.distg(e,c)
-	local code=e:GetLabel()
-	local code1,code2=c:GetOriginalCodeRule()
-	return code1==code or code2==code
-end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)

@@ -1,4 +1,5 @@
 --百獣王 ベヒーモス
+--Behemoth the King of All Animals
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon/set with 1 tribute

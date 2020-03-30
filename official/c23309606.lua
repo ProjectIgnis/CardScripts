@@ -1,4 +1,5 @@
 --炎獄魔人ヘル・バーナー
+--Infernal Incinerator
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon

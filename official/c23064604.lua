@@ -1,4 +1,5 @@
 --冥帝エレボス
+--Erebus the Underworld Monarch
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 1 tribute

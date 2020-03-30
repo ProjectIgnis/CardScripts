@@ -40,7 +40,7 @@ function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsLevelAbove(0)
+	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsLevelAbove(1) and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc) end

@@ -1,12 +1,12 @@
 --水晶機巧－ハリファイバー
---Crystron Halifiber
+--Crystron Halqifibrax
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	Link.AddProcedure(c,nil,2,2,s.lcheck)
 	c:EnableReviveLimit()
-	--spsummon
+	--special summon tuner
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.hsptg)
 	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--special summon from the Extra Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -73,8 +73,7 @@ function s.spfilter(c,e,tp)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp,tp,e:GetHandler())>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

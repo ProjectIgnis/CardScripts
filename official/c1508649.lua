@@ -52,8 +52,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c,g)
-	return c:IsFaceup() and c:IsSetCard(0x103) 
-		and g:IsContains(c) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return c:IsSetCard(0x103) and g:IsContains(c) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lg=e:GetHandler():GetLinkedGroup()
@@ -91,4 +90,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

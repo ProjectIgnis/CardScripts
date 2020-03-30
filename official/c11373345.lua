@@ -1,4 +1,5 @@
 --無力の証明
+--Proof of Powerlessness
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

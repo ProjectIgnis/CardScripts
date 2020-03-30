@@ -1,4 +1,5 @@
 --霊獣の連契
+--Ritual Beast Steeds
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --忍法 影縫いの術
+--Ninjitsu Art of Shadow Sealing
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

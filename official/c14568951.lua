@@ -1,4 +1,5 @@
 --青竜の忍者
+--Blue Dragon Ninja
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate

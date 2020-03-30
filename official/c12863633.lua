@@ -1,4 +1,5 @@
 --五稜星の呪縛
+--Curse of the Circle
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove

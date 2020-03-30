@@ -28,7 +28,7 @@ function s.hspcon(e,c)
     return Duel.CheckReleaseGroup(c:GetControler(),Card.IsRace,1,true,1,true,c,c:GetControler(),nil,false,e:GetHandler(),RACE_WARRIOR+RACE_FAIRY)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,true,true,true,c,nil,nil,e:GetHandler(),false,RACE_WARRIOR+RACE_FAIRY)
+    local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,true,true,true,c,nil,nil,false,e:GetHandler(),RACE_WARRIOR+RACE_FAIRY)
     if g then
         g:KeepAlive()
         e:SetLabelObject(g)

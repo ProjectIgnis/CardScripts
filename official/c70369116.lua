@@ -63,7 +63,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectMatchingCard(tp,s.copfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if not Duel.SendtoGrave(g,REASON_COST) then return end
 	local te=g:GetFirst():CheckActivateEffect(true,true,false)
-	e:SetCategory(te:GetCategory())
 	e:SetLabel(te:GetLabel())
 	e:SetLabelObject(te:GetLabelObject())
 	local tg=te:GetTarget()

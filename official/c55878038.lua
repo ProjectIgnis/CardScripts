@@ -44,7 +44,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 		for card in aux.Next(g) do
 			table.insert(tab,card:GetCardID())
 		end
-		g:KeepAlive()
 		e:SetLabel(table.unpack(tab))
 		return true
 	end
@@ -53,9 +52,10 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Group.CreateGroup()
 	for _,id in pairs({e:GetLabel()}) do
-		g:AddCard(Duel.GetCardFromCardID(id))
+		local card=Duel.GetCardFromCardID(id)
+		if not card then return end
+		g:AddCard(card)
 	end
-	if not g then return end
 	local lt=g:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_LIGHT)
 	local dt=g:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_DARK)
 	local lbl=1

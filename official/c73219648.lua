@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atktg)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x45}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end

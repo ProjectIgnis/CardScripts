@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.copyop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x99}
 function s.copycon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end

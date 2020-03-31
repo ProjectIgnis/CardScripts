@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.upop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x3d}
 function s.check(c,tp)
 	return c and c:IsSetCard(0x3d) and c:IsControler(tp)
 end

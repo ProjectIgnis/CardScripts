@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x86}
 function s.cfilter(c)
 	return c:IsSetCard(0x86) and c:GetBaseAttack()>0 and c:IsAbleToGraveAsCost()
 end

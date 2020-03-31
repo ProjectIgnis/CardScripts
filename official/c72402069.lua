@@ -51,6 +51,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.penop)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x10af,0xaf}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():GetControler()~=tp
 end

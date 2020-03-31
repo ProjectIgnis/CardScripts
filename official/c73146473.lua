@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1f}
 function s.cfilter(c,ft)
 	return ft>0 or c:GetSequence()<5
 end

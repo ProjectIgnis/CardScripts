@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x16}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x16) and c:IsType(TYPE_FUSION)
 end

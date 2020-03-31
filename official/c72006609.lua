@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.tglimit)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10c,0xfe}
 function s.lcheck(g,lc,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x10c,lc,SUMMON_TYPE_LINK,tp)
 end

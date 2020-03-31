@@ -6,6 +6,7 @@ function s.initial_effect(c)
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x19),2)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 end
+s.listed_series={0x19}
 s.material_setcode=0x19
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(function(c) return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_ONFIELD,0,nil)

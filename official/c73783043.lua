@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x2) and c:IsControler(tp) and not c:IsPublic()
 		and c:IsPreviousLocation(LOCATION_DECK) and c:IsPreviousControler(tp)

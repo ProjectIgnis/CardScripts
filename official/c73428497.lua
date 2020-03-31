@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x72}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x72)
 end

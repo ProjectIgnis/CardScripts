@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10cf}
 function s.filter(c,e,tp,ft)
 	return c:IsFaceup() and c:IsSetCard(0x10cf) and (ft>0 or c:GetSequence()<5)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,c:GetCode(),e,tp)

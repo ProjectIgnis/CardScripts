@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xaf,0xae}
 function s.desfilter1(c,tp,ec)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 		and Duel.IsExistingTarget(s.desfilter2,tp,LOCATION_ONFIELD,0,1,c,ec)

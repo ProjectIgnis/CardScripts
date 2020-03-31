@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2a}
 function s.indes(e,c)
 	return c:GetAttack()>=2000
 end

@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.negop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x9c}
 function s.atktg(e,c)
 	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x9c)
 end

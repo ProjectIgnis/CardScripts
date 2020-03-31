@@ -36,6 +36,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_series={0xaf,0xae}
 function s.ovfilter(c,tp,xyzc)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsSetCard(0x10af,xyzc,SUMMON_TYPE_XYZ,tp) and c:GetRank()==4
 end

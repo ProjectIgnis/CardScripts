@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.val2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x100d}
 function s.val1(e,c)
 	return c:GetLevel()*100
 end

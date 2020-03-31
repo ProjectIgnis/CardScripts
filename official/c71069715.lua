@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xae,0xaf}
 function s.indtg(e,c)
 	return c:IsSetCard(0xae)
 end

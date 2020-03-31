@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.gvop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xdd}
 function s.spfilter1(c,e,tp)
 	return c:IsType(TYPE_TUNER) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

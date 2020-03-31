@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xb2}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.GetCurrentPhase()~=PHASE_DAMAGE
 	local b2=Duel.CheckEvent(EVENT_BATTLE_START) and s.rmcon(e,tp,eg,ep,ev,re,r,rp) and s.rmtg(e,tp,eg,ep,ev,re,r,rp,0)

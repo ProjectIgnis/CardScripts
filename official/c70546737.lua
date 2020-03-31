@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x87}
 function s.filter(c,clv)
 	local lv=c:GetLevel()
 	return c:IsSetCard(0x87) and lv~=0 and lv~=clv

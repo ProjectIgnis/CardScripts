@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xad}
 function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsSetCard(0xad) and c:IsType(TYPE_FUSION)
 		and c:IsSummonType(SUMMON_TYPE_FUSION)

@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetValue(400)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x35}
 function s.con(e)
 	return Duel.GetFieldGroupCount(e:GetHandler():GetControler(),LOCATION_HAND,0)<=2
 end

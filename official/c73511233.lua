@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x98,0x99,0x9f}
 function s.thcfilter(c,tp)
 	return c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_FUSION)
 end

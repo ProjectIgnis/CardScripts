@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x7}
 function s.target(e,c)
 	return c:IsSetCard(0x7) and c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end

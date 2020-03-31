@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x33}
 function s.ctfilter(c)
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end

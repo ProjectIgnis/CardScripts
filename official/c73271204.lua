@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.milop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xe6}
 function s.filter(c)
 	return c:IsSetCard(0xe6) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end

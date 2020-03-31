@@ -93,7 +93,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetOperation(nil)
 	elseif op==ATTRIBUTE_LIGHT then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-		e:SetOperation(s.spop)
+		e:SetOperation(s.spop2)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 	elseif op==ATTRIBUTE_DARK then
 		e:SetCategory(CATEGORY_TODECK)
@@ -107,7 +107,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	e:SetLabel(0)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
+function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)

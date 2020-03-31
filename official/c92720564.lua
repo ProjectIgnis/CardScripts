@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.opd)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x26}
 function s.cona(e)
 	return e:GetHandler():IsAttackPos()
 end

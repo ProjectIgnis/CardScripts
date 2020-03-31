@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
 end

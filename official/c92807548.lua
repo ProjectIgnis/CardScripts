@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xef}
 function s.tgfilter(c)
 	return c:IsSetCard(0xef) and c:IsAbleToGrave()
 end

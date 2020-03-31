@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.bttg)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xb3}
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),0xb3)
 end

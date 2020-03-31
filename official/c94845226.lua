@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x35}
 function s.cfilter(c)
 	return c:IsSetCard(0x35) and c:IsDiscardable()
 end

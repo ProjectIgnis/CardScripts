@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x9f}
 function s.thfilter(c)
 	return c:IsSetCard(0x9f) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end

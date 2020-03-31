@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x83}
 function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(0x83)
 		and c:IsPreviousControler(tp) and c:IsAbleToRemoveAsCost()

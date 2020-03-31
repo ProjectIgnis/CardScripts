@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xc008}
 s.material_setcode={0x8,0xc008}
 function s.filter(c)
 	return c:IsSetCard(0xc008) and c:IsLevelBelow(4) and c:GetAttack()>0

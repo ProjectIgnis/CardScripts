@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x61,0x2b}
 function s.filter1(c)
 	return c:IsSetCard(0x61) and c:IsAbleToHand()
 end

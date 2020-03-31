@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xc6}
 function s.cfilter(c,tp)
 	return c:IsSetCard(0xc6) and c:IsReason(REASON_DESTROY) and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)

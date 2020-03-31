@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_BOTH_BATTLE_DAMAGE)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x4b}
 function s.spcon(e,c)
 	if c==nil then return Duel.GetCurrentPhase()==PHASE_MAIN2 end
 	local tp=c:GetControler()

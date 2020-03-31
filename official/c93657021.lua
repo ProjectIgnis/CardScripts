@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.indop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xc008}
 s.material_setcode={0x8,0xc008}
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_FUSION,fc,sumtype,tp) and c:IsSetCard(0xc008,fc,sumtype,tp)

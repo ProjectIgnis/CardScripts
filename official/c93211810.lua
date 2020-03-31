@@ -27,6 +27,7 @@ function s.initial_effect(c)
 		end)
 	end)
 end
+s.listed_series={0x101b}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:GetFlagEffect(id)==0 then

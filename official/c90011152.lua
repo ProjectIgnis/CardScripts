@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SWAP_BASE_AD)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xf}
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xf),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
 end

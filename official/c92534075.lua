@@ -29,6 +29,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x108}
+s.listed_names={id}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)

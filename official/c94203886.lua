@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x54}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x54) and c:GetCode()~=id
 end

@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x41}
 function s.filter(c,e,tp,ft)
 	if c:IsFacedown() or not c:IsSetCard(0x41) or not c:IsAbleToDeck() or (ft<=0 and c:GetSequence()>=5) then return false end
 	local op=c:GetOwner()

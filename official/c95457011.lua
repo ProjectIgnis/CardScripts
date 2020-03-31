@@ -28,6 +28,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xbe}
+s.listed_names={id}
 function s.spfilter(c,e,tp)
 	return c:GetAttack()==800 and c:GetDefense()==1000 and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end

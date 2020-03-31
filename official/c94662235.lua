@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x31}
 function s.check(tp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	return g:IsExists(aux.FilterFaceupFunction(Card.IsSetCard,0x31),1,nil)

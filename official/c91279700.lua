@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x65,0xa}
 function s.dscon(e)
 	return e:GetHandler():GetOverlayCount()~=0
 end

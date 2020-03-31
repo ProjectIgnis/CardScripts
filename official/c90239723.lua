@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x26}
 function s.cfilter(c)
 	return c:IsSetCard(0x26) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end

@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)	
 end
+s.listed_series={0xfc}
 function s.atkval(e,c)
 	return c:GetLinkedGroupCount()*300
 end

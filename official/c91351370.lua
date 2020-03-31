@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x33}
 function s.filter(c,val)
 	local atk=c:GetAttack()
 	return atk>=0 and atk<val and c:IsSetCard(0x33) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

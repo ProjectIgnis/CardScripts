@@ -44,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
     if not g then return end
     Duel.Release(g,REASON_COST)
     g:DeleteGroup()
-	c:RegisterFlagEffect(0,RESET_EVENT+0x4fc0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
+	c:RegisterFlagEffect(0,RESET_EVENT|(RESETS_STANDARD|RESET_OVERLAY)&~(RESET_TOFIELD|RESET_TURN_SET),EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and not e:GetHandler():IsStatus(STATUS_CHAINING)

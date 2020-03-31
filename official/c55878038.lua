@@ -40,14 +40,21 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	local g=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
 	if #g>0 then
+		local tab={}
+		for card in aux.Next(g) do
+			table.insert(tab,card:GetCardID())
+		end
 		g:KeepAlive()
-		e:SetLabelObject(g)
+		e:SetLabel(table.unpack(tab))
 		return true
 	end
 	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=e:GetLabelObject()
+	local g=Group.CreateGroup()
+	for _,id in pairs({e:GetLabel()}) do
+		g:AddCard(Duel.GetCardFromCardID(id))
+	end
 	if not g then return end
 	local lt=g:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_LIGHT)
 	local dt=g:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_DARK)
@@ -56,7 +63,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	elseif lt==0 then lbl=ATTRIBUTE_DARK end
 	e:GetLabelObject():SetLabel(lbl)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	--g:DeleteGroup()
 end
 function s.spfilter2(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

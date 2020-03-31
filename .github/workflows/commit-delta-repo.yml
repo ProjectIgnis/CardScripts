@@ -6,6 +6,7 @@ on:
 jobs:
   commit:
     runs-on: ubuntu-latest
+    if: false
     env:
       REMOTE: ProjectIgnis/DeltaBeta.git
       DESTINATION: DeltaBeta/script

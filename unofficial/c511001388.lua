@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--banish
@@ -32,15 +33,23 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.spcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #rg>2 and aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),0)
+    if c==nil then return true end
+    return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,3,false,3,true,c,c:GetControler(),nil,false,nil)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+    local g=Duel.SelectReleaseGroup(tp,aux.TRUE,3,3,false,true,true,c,nil,nil,false,nil)
+    if g then
+        g:KeepAlive()
+        e:SetLabelObject(g)
+    return true
+    end
+    return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp)
-	local sg=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE)
-	Duel.Release(sg,REASON_COST)
+    local g=e:GetLabelObject()
+    if not g then return end
+    Duel.Release(g,REASON_COST)
+    g:DeleteGroup()
 end
 function s.cfilter(c,tp)
 	local tpe=0

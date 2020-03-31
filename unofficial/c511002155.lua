@@ -1,16 +1,8 @@
 --Dark Alligator
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon with 3 tribute
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(78651105,1))
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_SUMMON_PROC)
-	e3:SetCondition(s.ttcon)
-	e3:SetOperation(s.ttop)
-	e3:SetValue(SUMMON_TYPE_TRIBUTE+1)
-	c:RegisterEffect(e3)
+	--summon with 4 tribute
+	local e2=aux.AddNormalSummonProcedure(c,true,true,4,4,SUMMON_TYPE_TRIBUTE+1,aux.Stringid(id,0))
 	--sp summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(78651105,2))

@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--1000 Damage
@@ -51,28 +52,44 @@ end
 function s.spfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost()
 end
+function s.exfilter(c)
+	return s.spfilter(c) or (c:IsFacedown() and c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost())
+end
 function s.spcon(e,c)
 	if c==nil then return true end
-	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)==0 then
-		return Duel.IsExistingMatchingCard(s.spfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
-			and Duel.IsExistingMatchingCard(s.spfilter,c:GetControler(),LOCATION_ONFIELD,0,3,nil)
+	local tp=c:GetControler()
+	local g=nil
+	if Duel.IsPlayerAffectedByEffect(tp,54828837) then
+		g=Duel.GetMatchingGroup(s.exfilter,tp,LOCATION_ONFIELD,0,nil)
 	else
-		return Duel.IsExistingMatchingCard(s.spfilter,c:GetControler(),LOCATION_ONFIELD,0,3,nil)
+		g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil)
 	end
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #g>2 and aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1),0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=nil
+	if Duel.IsPlayerAffectedByEffect(tp,54828837) then
+		g=Duel.GetMatchingGroup(s.exfilter,tp,LOCATION_ONFIELD,0,nil)
+	else
+		g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil)
+	end
+	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE,nil,nil,true)
+	local dg=sg:Filter(Card.IsFacedown,nil)
+	if #dg>0 then
+		Duel.ConfirmCards(1-tp,dg)
+	end
+	if #sg==3 then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)==0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g1=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_MZONE,0,1,1,nil)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g2=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_ONFIELD,0,2,2,g1:GetFirst())
-		g2:AddCard(g1:GetFirst())
-		Duel.SendtoGrave(g2,REASON_COST)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_ONFIELD,0,3,3,nil)
-		Duel.SendtoGrave(g,REASON_COST)
-	end
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.SendtoGrave(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.dmgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

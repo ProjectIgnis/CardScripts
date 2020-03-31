@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--atkup
@@ -49,19 +50,27 @@ s.listed_names={96561011,511000669}
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_GRAVE,0,nil,RACE_DRAGON)*400
 end
-function s.rfilter(c,ft,tp)
-	return c:IsCode(96561011) and c:GetEquipGroup():IsExists(Card.IsCode,1,nil,511000669) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) 
-		and (c:IsControler(tp) or c:IsFaceup())
+function s.hspfilter(c,tp)
+	return c:IsCode(96561011) and c:GetEquipGroup():IsExists(Card.IsCode,1,nil,511000669) 
 end
 function s.spcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return ft>-1 and Duel.CheckReleaseGroup(tp,s.rfilter,1,nil,ft,tp)
+    if c==nil then return true end
+    return Duel.CheckReleaseGroup(c:GetControler(),s.hspfilter,1,false,1,true,c,c:GetControler(),nil,false,nil)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+    local g=Duel.SelectReleaseGroup(tp,s.hspfilter,1,1,false,true,true,c,nil,nil,false,nil)
+    if g then
+        g:KeepAlive()
+        e:SetLabelObject(g)
+    return true
+    end
+    return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(c:GetControler(),s.rfilter,1,1,nil,Duel.GetLocationCount(tp,LOCATION_MZONE),tp)
-	Duel.Release(g,REASON_COST)
+    local g=e:GetLabelObject()
+    if not g then return end
+    Duel.Release(g,REASON_COST)
+    g:DeleteGroup()
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

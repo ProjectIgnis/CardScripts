@@ -33,34 +33,25 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop3)
 	c:RegisterEffect(e3)
 end
-function s.cfilter(c,ft,tp)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)
-		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5))
-end
 function s.spcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp)
-	return aux.SelectUnselectGroup(rg,e,tp,1,1,s.rescon,0)
-end
-function s.rescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.cfilter,1,nil,tp)
+    if c==nil then return true end
+    return Duel.CheckReleaseGroup(c:GetControler(),aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),1,false,1,true,c,c:GetControler(),nil,false,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp)
-	local g=aux.SelectUnselectGroup(rg,e,tp,1,1,s.rescon,1,tp,HINTMSG_RELEASE,nil,nil,true)
-	if #g>0 then
-		g:KeepAlive()
-		e:SetLabelObject(g)
-		return true
-	end
-	return false
+    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+    local g=Duel.SelectReleaseGroup(tp,aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),1,1,false,true,true,c,nil,nil,false,nil)
+    if g then
+        g:KeepAlive()
+        e:SetLabelObject(g)
+    return true
+    end
+    return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=e:GetLabelObject()
-	if not g then return end
-	Duel.Release(g,REASON_COST)
-	g:DeleteGroup()
+    local g=e:GetLabelObject()
+    if not g then return end
+    Duel.Release(g,REASON_COST)
+    g:DeleteGroup()
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1

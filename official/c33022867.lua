@@ -38,7 +38,7 @@ function s.spcon(e,c)
     return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,3,false,3,true,c,c:GetControler(),nil,false,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,s.aux.TRUE,3,3,false,true,true,c,nil,nil,false,nil)
+    local g=Duel.SelectReleaseGroup(tp,aux.TRUE,3,3,false,true,true,c,nil,nil,false,nil)
     if g then
         g:KeepAlive()
         e:SetLabelObject(g)

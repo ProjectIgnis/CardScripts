@@ -1,6 +1,5 @@
 --ギャラクシーアイズ ＦＡ・フォトン・ドラゴン (Manga)
 --Galaxy Eyes Full Armor Photon Dragon (Manga)
---fixed by MLD
 Duel.EnableGlobalFlag(GLOBALFLAG_DETACH_EVENT)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_EXTRA)
 	e1:SetCondition(s.xyzcon)
+	e1:SetTarget(s.xyztg)
 	e1:SetOperation(s.xyzop)
 	e1:SetValue(SUMMON_TYPE_XYZ)
 	c:RegisterEffect(e1)
@@ -66,24 +66,32 @@ s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.ovfilter(c,tp,xyz)
 	return c:IsFaceup() and c:IsCode(CARD_GALAXYEYES_P_DRAGON) and c:GetEquipCount()==2 and Duel.GetLocationCountFromEx(tp,tp,c,xyz)>0
 end
-function s.xyzcon(e,c,og)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	if og then return false end
+function s.xyzcon(e,c)
+    if c==nil then return true end
+    if og then return false end
 	local mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local mustg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,c,mg,REASON_XYZ)
 	if #mustg>0 or (min and min>1) then return false end
-	return mg:IsExists(s.ovfilter,1,nil,tp,c)
+    return Duel.CheckReleaseGroup(c:GetControler(),s.ovfilter,1,false,1,true,c,c:GetControler(),nil,false,nil)
 end
-function s.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og)
-	local mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local g=mg:FilterSelect(tp,s.ovfilter,1,1,nil,tp,c)
-	local eqg=g:GetFirst():GetEquipGroup()
-	c:SetMaterial(eqg)
-	Duel.Overlay(c,eqg)
-	Duel.Release(g,REASON_COST)
+function s.xyztg(e,tp,eg,ep,ev,re,r,rp,c)
+    local g=Duel.SelectReleaseGroup(tp,s.ovfilter,1,1,false,true,true,c,nil,nil,false,nil)
+    if g then
+        g:KeepAlive()
+        e:SetLabelObject(g)
+    return true
+    end
+    return false
 end
+function s.xyzop(e,tp,eg,ep,ev,re,r,rp,c)
+    local g=e:GetLabelObject()
+    if not g then return end
+    local eqg=g:GetFirst():GetEquipGroup()
+	e:GetHandler():SetMaterial(eqg)
+	Duel.Overlay(e:GetHandler(),eqg)
+    Duel.Release(g,REASON_COST)
+    g:DeleteGroup()
+ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end

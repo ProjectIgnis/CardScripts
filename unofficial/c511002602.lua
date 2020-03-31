@@ -30,50 +30,44 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x33}
-function s.spfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x33) and c:IsType(TYPE_TUNER) and c:IsAbleToRemove()
-end
-function s.spfilter2(c)
-	return c:IsFaceup() and not c:IsType(TYPE_TUNER) and c:IsAbleToRemove()
-end
 function s.rescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),s.spfilter1,s.spfilter2)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.spfilter1,1,nil,sg) and sg:IsExists(s.spfilter2,1,nil,sg)
 end
-function s.chk(c,sg,g,f,...)
-	if not f(c) then return false end
-	local res
-	if ... then
-		g:AddCard(c)
-		res=sg:IsExists(s.chk,1,g,sg,g,...)
-		g:RemoveCard(c)
-	else
-		res=true
-	end
-	return res
+function s.spfilter1(c,tp)
+	return not c:IsType(TYPE_TUNER)
+end
+function s.spfilter2(c,tp)
+	return c:IsSetCard(0x33) and c:IsType(TYPE_TUNER)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE,0,nil)
-	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE,0,nil)
+	local rg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,0,nil)
+	local g1=rg:Filter(s.spfilter1,nil)
+	local g2=rg:Filter(s.spfilter2,nil)
 	local g=g1:Clone()
 	g:Merge(g2)
-	return ft>-2 and #g1>0 and #g2>0 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0 and #g>1 
+		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,0,nil)
+	local g1=rg:Filter(s.spfilter1,nil)
+	local g2=rg:Filter(s.spfilter2,nil)
+	g1:Merge(g2)
+	local sg=aux.SelectUnselectGroup(g1,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
+	if #sg>0 then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE,0,nil)
-	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE,0,nil)
-	g1:Merge(g2)
-	local sg=aux.SelectUnselectGroup(g1,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE)
-	local lv=sg:GetSum(Card.GetLevel)
-	Duel.Remove(sg,POS_FACEUP,REASON_COST)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_CHANGE_LEVEL)
-	e1:SetValue(lv)
-	e1:SetReset(RESET_EVENT+0xff0000)
-	c:RegisterEffect(e1)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
 end
 function s.filter(c,lv)
 	return c:IsSetCard(0x33) and c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemove() and c:IsLevel(lv)

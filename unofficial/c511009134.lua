@@ -1,5 +1,4 @@
 --Doodle Beast - Tyranno
---fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -13,19 +12,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--normal summon with 1 tribute
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(55690251,0))
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_SUMMON_PROC)
-	e2:SetCondition(s.otcon)
-	e2:SetOperation(s.otop)
-	e2:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_SET_PROC)
-	c:RegisterEffect(e3)
+	--summon/set with 1 tribute
+	local e2=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE+1,aux.Stringid(id,0),s.otfilter)
+	local e3=aux.AddNormalSetProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE+1,aux.Stringid(id,0),s.otfilter)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_TRIBUTE
@@ -56,17 +45,4 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.otfilter(c,tp)
 	return c:IsSetCard(0x1518) and (c:IsControler(tp) or c:IsFaceup())
-end
-function s.otcon(e,c,minc)
-	if c==nil then return true end
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	return c:GetLevel()>6 and minc<=1 and Duel.CheckTribute(c,1,1,mg)
-end
-function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	local sg=Duel.SelectTribute(tp,c,1,1,mg)
-	c:SetMaterial(sg)
-	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
 end

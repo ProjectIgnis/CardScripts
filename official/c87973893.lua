@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.acop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x56}
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst()==e:GetHandler():GetEquipTarget()
 end

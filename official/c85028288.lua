@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x22}
 function s.efilter(e,re,rp)
 	return re:GetHandler():IsType(TYPE_TRAP+TYPE_MONSTER)
 end

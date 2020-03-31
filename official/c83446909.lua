@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x28}
 function s.spfilter(c,e,tp)
 	return c:GetCode()~=id and c:IsSetCard(0x28) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

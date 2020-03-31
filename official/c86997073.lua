@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x6013}
 function s.filter(c,e,sp)
 	return c:IsSetCard(0x6013) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end

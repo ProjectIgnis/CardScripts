@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.subval)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xad}
 function s.subval(e,c)
 	return c:IsSetCard(0xad)
 end

@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e6:SetCondition(s.descon)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x9c}
 function s.eqlimit(e,c)
 	return c:IsSetCard(0x9c) and c:GetControler()==e:GetHandler():GetControler()
 end

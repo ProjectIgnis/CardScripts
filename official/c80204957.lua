@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x11}
 function s.filter1(c)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x11) and c:IsAbleToHand()
 end

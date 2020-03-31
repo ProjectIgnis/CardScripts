@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.val)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x22}
 function s.filter(c)
 	return c:IsSetCard(0x22) and c:IsType(TYPE_MONSTER)
 end

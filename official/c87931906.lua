@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
 end
+s.listed_series={0xdf}
 function s.fcheck(tp,sg,fc)
     return sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA+LOCATION_DECK)<=1
 end

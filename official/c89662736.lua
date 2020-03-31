@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.naop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x88}
 function s.nacon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
 	return at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(0x88) and at:IsRace(RACE_BEASTWARRIOR)

@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ddop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x38}
 function s.atkcfilter(c)
 	return c:IsSetCard(0x38) and c:IsLevelAbove(1) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 		and Duel.IsExistingTarget(Card.IsFaceup,0,LOCATION_MZONE,LOCATION_MZONE,1,c)

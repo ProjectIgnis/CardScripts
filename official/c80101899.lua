@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 function s.rmfilter(c,tp)
 	return c:GetType()==TYPE_TRAP and not c:IsCode(id) and c:IsAbleToRemove()
 		and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,c,c:GetCode())

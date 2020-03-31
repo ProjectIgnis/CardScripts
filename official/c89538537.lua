@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x103}
 function s.rthcfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsAbleToHandAsCost()
 end

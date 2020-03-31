@@ -13,6 +13,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2b}
+s.listed_names={id}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x2b) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end

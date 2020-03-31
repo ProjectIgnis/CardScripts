@@ -29,6 +29,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(e3,0)
 	end
 end
+s.listed_series={0x38}
 function s.reset(e,tp,eg,ep,ev,re,r,rp)
 	s[0]=false
 	s[1]=false

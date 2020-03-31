@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.rev)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xaf}
 s.material_setcode=0xaf
 function s.rev(e,re,r,rp,rc)
 	return (r&REASON_EFFECT)~=0

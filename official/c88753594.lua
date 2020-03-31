@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e4:SetCountLimit(1,id)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xdf}
 s.material_setcode=0xdf
 function s.atkfilter(c)
 	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsRace(RACE_BEASTWARRIOR)

@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.limop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x8d}
 function s.sumcon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x8d),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end

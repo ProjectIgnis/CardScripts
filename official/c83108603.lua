@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.matop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x107d}
 function s.xyzfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 		and Duel.IsExistingMatchingCard(s.matfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,c)

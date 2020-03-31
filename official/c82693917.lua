@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x31}
 function s.value(e,c)
 	return c:GetLevel()*300
 end

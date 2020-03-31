@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tdop3)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x2034}
 s.listed_names={CARD_NEOS}
 s.material_setcode={0x8,0x3008,0x9,0x34,0x2034}
 function s.tdcost1(e,tp,eg,ep,ev,re,r,rp,chk)

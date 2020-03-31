@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x304e,0x604e}
 function s.filter(c)
 	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x304e) or c:IsSetCard(0x604e)) and c:IsAbleToHand()
 end

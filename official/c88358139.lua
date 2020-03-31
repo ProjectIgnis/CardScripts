@@ -15,6 +15,8 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9f}
+s.listed_names={id}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsSetCard(0x9f) and not c:IsCode(id)
 end

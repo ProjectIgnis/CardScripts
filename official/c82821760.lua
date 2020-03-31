@@ -49,6 +49,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.tdop)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x15}
 function s.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

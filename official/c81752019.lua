@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xe6}
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)

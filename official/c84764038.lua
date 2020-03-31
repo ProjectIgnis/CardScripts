@@ -40,6 +40,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xb1}
+s.listed_names={id}
 function s.sdfilter(c)
 	return not c:IsFaceup() or not c:IsSetCard(0xb1)
 end

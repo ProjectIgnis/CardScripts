@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e8:SetOperation(s.thop)
 	c:RegisterEffect(e8)
 end
+s.listed_series={0xd2}
 function s.filter(c)
 	return c:IsSetCard(0xd2) and c:IsRace(RACE_PSYCHIC)
 end

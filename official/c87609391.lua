@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x95,0xba}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local ec=e:GetHandler():GetEquipTarget()

@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.indval)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x98}
 function s.cfilter(c,tp)
 	return c:IsType(TYPE_PENDULUM) and not c:IsPublic()
 		and Duel.IsExistingTarget(s.scfilter,tp,LOCATION_PZONE,0,1,nil,c)
@@ -66,7 +67,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+0x1ec0000+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TEMP_REMOVE-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
 end
 function s.indcon(e)
 	local c=e:GetHandler()

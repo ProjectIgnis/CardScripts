@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.hspcon)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x70}
 function s.hspcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0

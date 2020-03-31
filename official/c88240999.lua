@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xb4}
 function s.mat_filter(c)
 	return c:GetLevel()~=10
 end

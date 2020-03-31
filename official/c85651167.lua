@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3b}
 function s.filter1(c,ec)
 	return c:GetEquipTarget()==ec
 end

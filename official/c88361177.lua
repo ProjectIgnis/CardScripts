@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.pcon)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x29}
 function s.pcon(e)
 	return e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x29)
 end

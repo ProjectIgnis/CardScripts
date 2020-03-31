@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x62}
 function s.filter(c)
 	return c:IsSetCard(0x62) and c:IsAbleToHand()
 end

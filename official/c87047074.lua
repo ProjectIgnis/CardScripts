@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.chop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x56}
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:GetHandler()==e:GetHandler():GetEquipTarget()
 end

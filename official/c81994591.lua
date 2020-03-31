@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.indop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1d}
 function s.filter(c)
 	return c:IsSetCard(0x1d) and c:GetCode()~=id and c:IsAbleToHand()
 end

@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.ceop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x33}
 function s.spfilter(c,e,tp)
 	return c:IsLevelAbove(5) and c:IsRace(RACE_WINGEDBEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

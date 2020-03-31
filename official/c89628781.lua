@@ -12,3 +12,4 @@ function s.initial_effect(c)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2b}

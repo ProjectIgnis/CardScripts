@@ -33,34 +33,28 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
-function s.rfilter(c)
-	return c:IsFaceup() and c:GetAttack()==0 and c:IsReleasable()
+function s.rfilter(c,tp)
+	return c:IsFaceup() and c:GetAttack()==0 and (c:IsControler(tp) or c:IsControler(1-tp))
 end
 function s.spcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil)
-	local rg2=Duel.GetReleaseGroup(1-tp):Filter(s.rfilter,nil)
-	rg:Merge(rg2)
-	return aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),0)
+    if c==nil then return true end
+    local tp=e:GetHandlerPlayer()
+    return Duel.CheckReleaseGroup(tp,s.rfilter,2,false,2,true,c,c:GetControler(),nil,true,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil)
-	local rg2=Duel.GetReleaseGroup(1-tp):Filter(s.rfilter,nil)
-	rg:Merge(rg2)
-	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
-	if #g>0 then
-		g:KeepAlive()
-		e:SetLabelObject(g)
-		return true
-	end
-	return false
+    local g=Duel.SelectReleaseGroup(tp,s.rfilter,2,2,false,true,true,c,nil,nil,true,nil,tp)
+    if g then
+        g:KeepAlive()
+        e:SetLabelObject(g)
+    return true
+    end
+    return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=e:GetLabelObject()
-	if not g then return end
-	Duel.Release(g,REASON_COST)
-	g:DeleteGroup()
+    local g=e:GetLabelObject()
+    if not g then return end
+    Duel.Release(g,REASON_COST)
+    g:DeleteGroup()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end

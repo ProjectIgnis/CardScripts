@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3d}
 function s.cfilter(c,ft)
 	return c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)
 end

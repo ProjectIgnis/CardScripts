@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sslimit)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 s.listed_series={0x121}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x121) and not c:IsCode(id)

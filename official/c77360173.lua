@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	--tohand
+	--add to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -22,6 +22,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x57}
+s.listed_names={id}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO)
 end

@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x604e}
 function s.filter(c)
 	return c:IsSetCard(0x604e) and c:IsAbleToDeck()
 end

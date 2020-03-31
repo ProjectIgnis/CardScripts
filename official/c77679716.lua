@@ -30,6 +30,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9a}
+s.listed_names={id}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x9a)
 end

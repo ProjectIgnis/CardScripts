@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x61,0x2b}
 function s.costfilter(c)
 	return c:IsSetCard(0x61) and not c:IsPublic()
 end

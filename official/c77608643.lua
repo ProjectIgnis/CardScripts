@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(g)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xc008}
 function s.filter(c,e,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
 		and c:IsPreviousControler(tp) and c:IsSetCard(0xc008)

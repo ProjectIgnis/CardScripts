@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x47}
+s.listed_series={0x47,0x1047}
 s.material_setcode={0x47,0x1047}
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION

@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.tgcon)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9b}
 function s.indtg(e,c)
 	return c:IsSetCard(0x9b) and c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end

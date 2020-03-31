@@ -70,7 +70,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCountLimit(1)
 		e3:SetCode(EVENT_PHASE+PHASE_END)
 		e3:SetOperation(s.tgop)
-		e3:SetReset(RESET_EVENT+0xc6e0000)
+		e3:SetReset(RESET_EVENT|(RESETS_STANDARD|RESET_MSCHANGE|RESET_OVERLAY)&~(RESET_TOFIELD|RESET_LEAVE|RESET_TEMP_REMOVE))
 		c:RegisterEffect(e3)
 	end
 end

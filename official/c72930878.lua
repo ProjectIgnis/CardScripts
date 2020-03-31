@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.handcon)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x33}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x33)
 end

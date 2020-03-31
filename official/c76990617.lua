@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9b}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x9b)
 end

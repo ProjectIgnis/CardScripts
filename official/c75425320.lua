@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xf9}
 function s.tdfilter(c)
 	return c:IsSetCard(0xf9) and c:IsAbleToDeck()
 end

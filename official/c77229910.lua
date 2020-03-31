@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x26}
 function s.dfilter(c,p)
 	return c:GetControler()==p and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x26)
 end

@@ -48,6 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x1034}
 function s.spfilter(c)
 	return c:IsSetCard(0x1034) and (not c:IsOnField() or c:IsFaceup())
 end

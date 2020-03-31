@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x43}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x43)
 end

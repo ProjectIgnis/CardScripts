@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.valcon)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x84}
 function s.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x84) and c:IsAbleToGrave()
 end

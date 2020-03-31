@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desrepop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xfc}
 function s.atkval(e,c)
 	local val=math.max(c:GetBaseDefense(),0)
 	return val*-1

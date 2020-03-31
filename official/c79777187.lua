@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.indct)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xc6,0x9f}
 function s.target(e,c)
 	return c:IsSetCard(0xc6) or c:IsSetCard(0x9f)
 end

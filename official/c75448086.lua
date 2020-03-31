@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 s.listed_series={0x134}
 function s.cfilter(c)
 	return c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER) and not c:IsPublic() and c:IsAbleToDeck()

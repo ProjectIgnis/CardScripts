@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x4}
 function s.valcon(e,re,r,rp)
 	return r==REASON_BATTLE
 end

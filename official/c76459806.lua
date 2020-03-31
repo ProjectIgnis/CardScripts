@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xb9}
 function s.filter(c)
 	return c:IsSetCard(0xb9) and c:IsAbleToHand()
 end

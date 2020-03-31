@@ -19,6 +19,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9f}
+s.listed_names={id}
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x9f) and c~=e:GetHandler()
 end

@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.datg(e,c)
 	return c:IsLevelBelow(3) and c:IsRace(RACE_SEASERPENT)
 end

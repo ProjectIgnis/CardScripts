@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetLabel(1)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x69}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()

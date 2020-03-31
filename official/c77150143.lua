@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.condition)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xf1}
 function s.filter(c)
 	return c:IsSetCard(0xf1) and c:IsDiscardable(REASON_EFFECT)
 end

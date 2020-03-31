@@ -1,5 +1,4 @@
 --ヴァンパイア・スカージレット
-
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,6 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop2)
 	c:RegisterEffect(e4)
 end
+s.listed_names={id}
 s.listed_series={0x8e}
 function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
@@ -96,4 +96,3 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

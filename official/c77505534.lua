@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x9d}
 function s.filter(c)
 	return c:IsSetCard(0x9d) and c:IsAbleToGrave()
 end

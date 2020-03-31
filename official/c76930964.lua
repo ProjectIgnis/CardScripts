@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--summon with 1 tribute
 	local e1=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
 	local e2=aux.AddNormalSetProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
-	--
+	--special summon from the Graveyard
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -17,6 +17,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x2b}
+s.listed_names={id}
 function s.otfilter(c,tp)
 	return c:IsSetCard(0x2b) and (c:IsControler(tp) or c:IsFaceup())
 end

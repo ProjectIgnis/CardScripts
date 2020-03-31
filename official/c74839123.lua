@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xad}
 function s.cfilter(c)
 	return c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and c:IsAbleToGraveAsCost()
 end

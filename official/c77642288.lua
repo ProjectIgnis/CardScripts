@@ -14,6 +14,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x19}
+s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.gbspcon(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():GetBattledGroupCount()>0

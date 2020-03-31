@@ -47,6 +47,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xf7}
 s.listed_names={8491961}
 function s.matval(c,sc)
 	local b

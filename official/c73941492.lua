@@ -47,6 +47,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.spop)
 	c:RegisterEffect(e7)
 end
+s.listed_names={id}
 s.listed_series={0x98}
 function s.filter(e,c)
 	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)

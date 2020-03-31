@@ -1,5 +1,5 @@
 --剣闘獣スパルティクス
--- Gladiator Beast Spartacus
+--Gladiator Beast Spartacus
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--spsummon limit
+	--special summon limit
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.splimit)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 s.listed_series={0x4d,0x19}
 function s.splimit(e,se,sp,st)
 	return st==(SUMMON_TYPE_SPECIAL+101) or st&SUMMON_TYPE_PENDULUM==SUMMON_TYPE_PENDULUM

@@ -22,6 +22,8 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x33}
+s.listed_names={id}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x33) and not c:IsCode(id)
 end

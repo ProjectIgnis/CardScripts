@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sumlimit)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 s.listed_series={0x121}
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x121) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)

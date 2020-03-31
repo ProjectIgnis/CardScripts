@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.atktg)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x71}
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetReasonPlayer()~=tp
 		and e:GetHandler():IsPreviousControler(tp)

@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x8d}
 function s.tg(e,c)
 	return c~=e:GetHandler() and (c:IsFacedown() or c:IsSetCard(0x8d))
 end

@@ -17,6 +17,8 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xf0}
+s.listed_names={id}
 function s.filter(c)
 	return c:IsSetCard(0xf0) and c:IsType(TYPE_MONSTER) and not c:IsCode(id) and c:IsAbleToHand()
 end

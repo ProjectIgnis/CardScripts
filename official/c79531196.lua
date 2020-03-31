@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1047,0x9b}
 function s.filter(c)
 	return (c:IsSetCard(0x1047) or c:IsSetCard(0x9b)) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end

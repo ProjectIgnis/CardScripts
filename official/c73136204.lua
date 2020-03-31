@@ -23,6 +23,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x90}
+s.listed_names={id}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local ac=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)

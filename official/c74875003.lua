@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e6:SetTarget(s.splimit)
 	c:RegisterEffect(e6)
 end
+s.listed_names={id}
 function s.filter(c,e,tp)
 	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

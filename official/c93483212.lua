@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,s.tfilter,1,1,Synchro.NonTuner(nil),2,99)
 	c:EnableReviveLimit()
-	--disable
+	--immune
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	--damage
+	--draw
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_DRAW)

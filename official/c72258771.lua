@@ -1,4 +1,5 @@
 --コアキメイル・ヴァラファール
+--Koa'ki Meiru Valafar
 local s,id=GetID()
 function s.initial_effect(c)
 	--cost
@@ -12,15 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.mtop)
 	c:RegisterEffect(e1)
 	--summon with 1 tribute
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,2))
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_SUMMON_PROC)
-	e2:SetCondition(s.otcon)
-	e2:SetOperation(s.otop)
-	e2:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e2)
+	local e2=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
 	--pierce
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -62,18 +55,6 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.otfilter(c,tp)
 	return c:IsSetCard(0x1d) and (c:IsControler(tp) or c:IsFaceup())
-end
-function s.otcon(e,c,minc)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	return c:GetLevel()>6 and minc<=1 and Duel.CheckTribute(c,1,1,mg)
-end
-function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	local sg=Duel.SelectTribute(tp,c,1,1,mg)
-	c:SetMaterial(sg)
-	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
 end
 function s.efilter(e,re,rp)
 	return re:IsActiveType(TYPE_TRAP)

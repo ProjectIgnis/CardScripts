@@ -1,4 +1,5 @@
 --The tripping Mercury
+--The Tripper Mercury (manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Pos Change
@@ -18,15 +19,7 @@ function s.initial_effect(c)
 	e4:SetValue(POS_FACEDOWN_ATTACK)
 	c:RegisterEffect(e4)
 	--summon with 3 tribute
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(3912064,0))
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_SUMMON_PROC)
-	e2:SetCondition(s.ttcon)
-	e2:SetOperation(s.ttop)
-	e2:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e2)
+	local e2=aux.AddNormalSummonProcedure(c,true,true,3,3,SUMMON_TYPE_TRIBUTE+1,aux.Stringid(id,0))
 	--atk down
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)

@@ -1,13 +1,15 @@
 --聖刻龍－ウシルドラゴン
+--Hieratic Dragon of Asar
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon from hand
 	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetCondition(s.hspcon)
+	e1:SetTarget(s.hsptg)
 	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
 	--destroy replace
@@ -20,31 +22,45 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desrepop)
 	c:RegisterEffect(e2)
 end
-function s.rfilter1(c,tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then ft=ft+1 end
-	return c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
-		and Duel.IsExistingMatchingCard(s.rfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,c,ft)
+function s.spfilter1(c,tp)
+	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
 end
-function s.rfilter2(c,ft)
-	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_NORMAL) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
-		and (ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
+function s.spfilter2(c,tp)
+	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_DRAGON) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
+end
+function s.rescon(sg,e,tp,mg)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg)
+end
+function s.chk(c,sg)
+	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and sg:IsExists(s.spfilter2,1,c)
 end
 function s.hspcon(e,c)
 	if c==nil then return true end
-	local tp=c:GetControler()
-	return Duel.IsExistingMatchingCard(s.rfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp)
+	local tp=e:GetHandlerPlayer()
+	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g=g1:Clone()
+	g:Merge(g2)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
+end
+function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
+	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	g1:Merge(g2)
+	local g=aux.SelectUnselectGroup(g1,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=Duel.SelectMatchingCard(tp,s.rfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
-	local tc=g1:GetFirst()
-	if tc:IsLocation(LOCATION_MZONE) and tc:GetSequence()<5 then ft=ft+1 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectMatchingCard(tp,s.rfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,g1,ft)
-	g1:Merge(g2)
-	Duel.Remove(g1,POS_FACEUP,REASON_COST)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
 end
 function s.repfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x69) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)

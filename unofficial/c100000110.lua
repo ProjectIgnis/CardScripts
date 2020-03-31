@@ -1,4 +1,5 @@
---眠れる巨人ズシン 
+--眠れる巨人ズシン
+--Zushin the Sleeping Giant (TF6)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -16,6 +17,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e4:SetRange(LOCATION_HAND)
 	e4:SetCondition(s.spcon)
+	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 	--atk/def up
@@ -81,19 +83,27 @@ function s.ctop(e,tp,c)
 		e:SetLabel(ct+1)
 	end
 end
-function s.filter(c,ft,tp)
-	return  c:IsFaceup() and c:IsLevel(1) and c:IsType(TYPE_NORMAL) and c:GetFlagEffect(id+1)~=0 and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
+function s.filter(c,tp)
+	return  c:IsFaceup() and c:IsLevel(1) and c:IsType(TYPE_NORMAL) and c:GetFlagEffect(id+1)~=0
 end
 function s.spcon(e,c)
-	local c=e:GetHandler()
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return ft>-1 and Duel.CheckReleaseGroup(tp,s.filter,1,nil,ft,tp)
+    if c==nil then return true end
+    return Duel.CheckReleaseGroup(c:GetControler(),s.filter,1,false,1,true,c,c:GetControler(),nil,false,nil)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+    local g=Duel.SelectReleaseGroup(tp,s.filter,1,1,false,true,true,c,nil,nil,false,nil)
+    if g then
+        g:KeepAlive()
+        e:SetLabelObject(g)
+    return true
+    end
+    return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,s.filter,1,1,nil,Duel.GetLocationCount(tp,LOCATION_MZONE),tp)
-	Duel.Release(g,REASON_COST)
+    local g=e:GetLabelObject()
+    if not g then return end
+    Duel.Release(g,REASON_COST)
+    g:DeleteGroup()
 end
 function s.atkup(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

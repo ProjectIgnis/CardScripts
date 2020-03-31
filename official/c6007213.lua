@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--atkup
@@ -39,10 +40,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-function s.spfilter(c)
+function s.spfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_TRAP) and c:IsAbleToGraveAsCost()
 end
-function s.exfilter(c)
+function s.exfilter(c,tp)
 	return c:IsType(TYPE_TRAP) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
@@ -56,19 +57,30 @@ function s.spcon(e,c)
 	end
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #g>2 and aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1),0)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=nil
 	if Duel.IsPlayerAffectedByEffect(tp,16317140) then
 		g=Duel.GetMatchingGroup(s.exfilter,tp,LOCATION_ONFIELD,0,nil)
 	else
 		g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil)
 	end
-	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE)
+	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE,nil,nil,true)
 	local dg=sg:Filter(Card.IsFacedown,nil)
 	if #dg>0 then
 		Duel.ConfirmCards(1-tp,dg)
 	end
-	Duel.SendtoGrave(sg,REASON_COST)
+	if #sg==3 then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+		return true
+	end
+	return false
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.SendtoGrave(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.atkfilter(c)
 	return c:GetType()==TYPE_TRAP+TYPE_CONTINUOUS

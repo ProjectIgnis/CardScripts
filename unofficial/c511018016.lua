@@ -2,15 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon proc
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SUMMON_PROC)
-	e1:SetCondition(s.sumcon)
-	e1:SetOperation(s.sumop)
-	e1:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e1)
+	local e1=aux.AddNormalSummonProcedure(c,true,true,1,3,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.cfilter)
 	--tribute check
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -71,23 +63,6 @@ function s.chk(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,tp)
 	return c:IsSetCard(0x12) and (c:IsControler(tp) or c:IsFaceup())
-end
-function s.sumcon(e,c,minc)
-	if c==nil then return true end
-	local min=1
-	if minc>=1 then min=minc end
-	if minc>3 then return false end
-	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	return c:GetLevel()>4 and Duel.CheckTribute(c,min,3,mg)
-end
-function s.sumop(e,tp,eg,ep,ev,re,r,rp,c,minc)
-	local min=1
-	if minc>=1 then min=minc end
-	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	local sg=Duel.SelectTribute(tp,c,min,3,mg)
-	c:SetMaterial(sg)
-	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

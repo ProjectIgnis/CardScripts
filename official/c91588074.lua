@@ -1,4 +1,5 @@
 --創星神 tierra
+--Tierra, Source of Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

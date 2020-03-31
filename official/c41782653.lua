@@ -15,8 +15,9 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
-	e2:SetCondition(s.sprcon)
-	e2:SetOperation(s.sprop)
+	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
+	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--negate
 	local e3=Effect.CreateEffect(c)
@@ -45,19 +46,32 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x10e}
-function s.sprfilter(c)
+function s.spfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) and c:IsAbleToDeckOrExtraAsCost()
 end
-function s.sprcon(e,c)
+function s.spcon(e,c)
 	if c==nil then return true end
-	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.sprfilter,tp,LOCATION_REMOVED,0,5,nil)
+	local tp=e:GetHandlerPlayer()
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_REMOVED,0,nil)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #rg>4 and aux.SelectUnselectGroup(rg,e,tp,5,5,nil,0)
 end
-function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,s.sprfilter,tp,LOCATION_REMOVED,0,5,5,nil)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
+	local g=nil
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_REMOVED,0,nil)
+	local g=aux.SelectUnselectGroup(rg,e,tp,5,5,nil,1,tp,HINTMSG_TODECK,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.SendtoDeck(g,nil,2,REASON_COST)
+	g:DeleteGroup()
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp

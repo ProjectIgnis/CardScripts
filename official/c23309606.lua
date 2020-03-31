@@ -1,4 +1,5 @@
 --炎獄魔人ヘル・バーナー
+--Infernal Incinerator
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon
@@ -8,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
 	e1:SetCondition(s.otcon)
+	e1:SetTarget(s.ottg)
 	e1:SetOperation(s.otop)
 	e1:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e1)
@@ -31,18 +33,28 @@ function s.otcon(e,c,minc)
 	local tp=c:GetControler()
 	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	hg:RemoveCard(c)
-	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
+	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	return #hg>0 and minc<=1 and Duel.CheckTribute(c,1,1,mg)
 		and hg:FilterCount(Card.IsAbleToGraveAsCost,nil)==#hg
 end
+function s.ottg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local sg=Duel.SelectTribute(tp,c,1,1,mg,nil,nil,true)
+	if sg and #sg>0 then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+		return true
+	end
+	return false
+end
 function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
-	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-	hg:RemoveCard(c)
+	local sg=e:GetLabelObject()
+	if not sg then return end
+	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)-c
 	Duel.SendtoGrave(hg,REASON_COST+REASON_DISCARD)
-	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	local sg=Duel.SelectTribute(tp,c,1,1,mg)
 	c:SetMaterial(sg)
 	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
+	sg:DeleteGroup()
 end
 function s.val(e,c)
 	local tp=c:GetControler()

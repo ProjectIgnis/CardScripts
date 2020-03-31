@@ -1,4 +1,5 @@
 --メタファイズ・エグゼキューター
+--Metaphys Executor
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -78,6 +79,7 @@ function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=e:GetLabelObject()
 	if not rg then return end
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
+	rg:DeleteGroup()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)

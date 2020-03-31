@@ -1,4 +1,5 @@
 --D－HERO ドグマガイ
+--Destiny HERO - Dogma
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -15,8 +16,8 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND)
-	e2:SetValue(1)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--special summon success
@@ -28,55 +29,39 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	c:EnableReviveLimit()
 end
-function s.rfilter(c,tp)
+function s.spfilter(c,tp)
 	return c:IsSetCard(0xc008) and (c:IsControler(tp) or c:IsFaceup())
-end
-function s.mzfilter(c,tp)
-	return c:IsControler(tp) and c:GetSequence()<5
-end
-function s.rmzfilter(c,tp)
-	return c:IsSetCard(0xc008) and c:IsControler(tp) and c:GetSequence()<5
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=-ft+1
-	return ft>-3 and #rg>2 and rg:IsExists(s.rfilter,1,nil,tp)
-		and (ft>0 or rg:IsExists(s.mzfilter,ct,nil,tp))
-		and (ft>-2 or rg:IsExists(s.rmzfilter,1,nil,tp))
+	local rg1=Duel.GetReleaseGroup(tp)
+	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil)
+	return aux.SelectUnselectGroup(rg1,e,tp,3,3,aux.ChkfMMZ(1),0)
+		and aux.SelectUnselectGroup(rg2,e,tp,1,1,aux.ChkfMMZ(1),0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil)
+	local mg1=aux.SelectUnselectGroup(rg1,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+	if #mg1>0 then
+		local sg=mg1:GetFirst()
+		local rg2=Duel.GetReleaseGroup(tp)
+		rg2:RemoveCard(sg)
+		local mg2=aux.SelectUnselectGroup(rg2,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+		mg1:Merge(mg2)
+	end
+	if #mg1==3 then
+		mg1:KeepAlive()
+		e:SetLabelObject(mg1)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=nil
-	if ft>-2 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		g=rg:FilterSelect(tp,Card.IsSetCard,1,1,nil,0xc008)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		g=rg:FilterSelect(tp,s.rmzfilter,1,1,nil,tp)
-	end
-	local tc=g:GetFirst()
-	if tc:IsControler(tp) and tc:GetSequence()<5 then ft=ft+1 end
-	if ft>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local g2=rg:Select(tp,2,2,tc)
-		g:Merge(g2)
-	elseif ft>-1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local g2=rg:FilterSelect(tp,s.mzfilter,1,1,tc,tp)
-		g:Merge(g2)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local g3=rg:Select(tp,1,1,g)
-		g:Merge(g3)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local g2=rg:FilterSelect(tp,s.mzfilter,2,2,tc,tp)
-		g:Merge(g2)
-	end
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.lp(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1

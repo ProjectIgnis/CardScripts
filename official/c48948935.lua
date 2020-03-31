@@ -1,4 +1,5 @@
 --仮面魔獣デス・ガーディウス
+--Masked Beast Des Gardius
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -9,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--equip
@@ -24,37 +26,39 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={22610082}
-function s.spfilter(c,g,ft,tp)
-	if c:IsControler(tp) and c:GetSequence()<5 then ft=ft+1 end
+function s.spfilter(c,tp)
 	return c:IsCode(13676474,86569121) and (c:IsControler(tp) or c:IsFaceup())
-		and (ft>0 or g:IsExists(s.mzfilter,1,c,tp))
-end
-function s.mzfilter(c,tp)
-	return c:IsControler(tp) and c:GetSequence()<5
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return ft>-2 and #rg>1 and rg:IsExists(s.spfilter,1,nil,rg,ft,tp)
+	local rg1=Duel.GetReleaseGroup(tp)
+	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil)
+	return aux.SelectUnselectGroup(rg1,e,tp,2,2,aux.ChkfMMZ(1),0)
+		and aux.SelectUnselectGroup(rg2,e,tp,1,1,aux.ChkfMMZ(1),0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE,0,nil)
+	local mg1=aux.SelectUnselectGroup(rg1,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+	if #mg1>0 then
+		local sg=mg1:GetFirst()
+		local rg2=Duel.GetReleaseGroup(tp)
+		rg2:RemoveCard(sg)
+		local mg2=aux.SelectUnselectGroup(rg2,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+		mg1:Merge(mg2)
+	end
+	if #mg1==2 then
+		mg1:KeepAlive()
+		e:SetLabelObject(mg1)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g1=rg:FilterSelect(tp,s.spfilter,1,1,nil,rg,ft,tp)
-	local tc=g1:GetFirst()
-	if tc:IsControler(tp) and tc:GetSequence()<5 then ft=ft+1 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	if ft>0 then
-		local g2=rg:Select(tp,1,1,tc)
-		g1:Merge(g2)
-	else
-		local g2=rg:FilterSelect(tp,s.mzfilter,1,1,tc,tp)
-		g1:Merge(g2)
-	end
-	Duel.Release(g1,REASON_COST)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

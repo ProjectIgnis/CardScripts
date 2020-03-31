@@ -1,5 +1,5 @@
 --究極宝玉神 レインボー・オーバー・ドラゴン
---Ultimate Crystal God Rainbow Over Dragon
+--Rainbow Overdragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetRange(LOCATION_EXTRA)
 	e2:SetCondition(s.hspcon)
+	e2:SetTarget(s.hsptg)
 	e2:SetOperation(s.hspop)
 	c:RegisterEffect(e2)
 	--atk up
@@ -50,12 +51,23 @@ function s.hspfilter(c,tp,sc)
 	return c:IsSetCard(0x2034,sc,SUMMON_TYPE_FUSION,tp) and c:GetLevel()==10 and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
 end
 function s.hspcon(e,c)
-	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),s.hspfilter,1,nil,c:GetControler(),c)
+    if c==nil then return true end
+    return Duel.CheckReleaseGroup(c:GetControler(),s.hspfilter,1,false,1,true,c,c:GetControler(),nil,false,nil)
+end
+function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
+    local g=Duel.SelectReleaseGroup(tp,s.hspfilter,1,1,false,true,true,c,nil,nil,false,nil)
+    if g then
+        g:KeepAlive()
+        e:SetLabelObject(g)
+    return true
+    end
+    return false
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,s.hspfilter,1,1,nil,tp,c)
-	Duel.Release(g,g,REASON_COST+REASON_MATERIAL)
+    local g=e:GetLabelObject()
+    if not g then return end
+    Duel.Release(g,REASON_COST)
+    g:DeleteGroup()
 end
 function s.cfilter(c)
 	return c:IsSetCard(0x1034) and c:GetAttack()>0 and c:IsAbleToRemoveAsCost()

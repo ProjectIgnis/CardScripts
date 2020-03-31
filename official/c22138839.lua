@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.hspcon)
+	e1:SetTarget(s.hsptg)
 	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
 	--counter
@@ -21,19 +22,28 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.counter_place_list={COUNTER_PREDATOR}
-function s.rfilter(c)
-	return c:GetCounter(COUNTER_PREDATOR)>0 and c:IsReleasable()
+function s.rfilter(c,tp)
+	return c:GetCounter(COUNTER_PREDATOR)>0 and c:IsControler(tp+1-tp)
 end
 function s.hspcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return ft>0 and Duel.IsExistingMatchingCard(s.rfilter,tp,0,LOCATION_MZONE,1,nil)
+    if c==nil then return true end
+    local tp=e:GetHandlerPlayer()
+    return Duel.CheckReleaseGroup(tp,s.rfilter,1,false,1,true,c,c:GetControler(),nil,true,nil,tp)
+end
+function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
+    local g=Duel.SelectReleaseGroup(tp,s.rfilter,1,1,false,true,true,c,nil,nil,true,nil,tp)
+    if g then
+        g:KeepAlive()
+        e:SetLabelObject(g)
+    return true
+    end
+    return false
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.Release(g,REASON_COST)
+    local g=e:GetLabelObject()
+    if not g then return end
+    Duel.Release(g,REASON_COST)
+    g:DeleteGroup()
 end
 function s.ccon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

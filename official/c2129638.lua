@@ -1,4 +1,5 @@
 --青眼の双爆裂龍
+--Blue-Eyes Twin Burst Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

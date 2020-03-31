@@ -1,6 +1,5 @@
 --コスモブレイン
 --Cosmo Brain
---
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -10,8 +9,9 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(s.sprcon)
-	e1:SetOperation(s.sprop)
+	e1:SetCondition(s.spcon1)
+	e1:SetTarget(s.sptg1)
+	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
@@ -25,25 +25,41 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-function s.sprfilter(c,tp)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsType(TYPE_EFFECT) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
+function s.spfilter1(c)
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsType(TYPE_EFFECT) and c:IsType(TYPE_MONSTER)
+		and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
-function s.sprcon(e,c)
+function s.spcon1(e,c)
 	if c==nil then return true end
-	local tp=c:GetControler()
-	return Duel.IsExistingMatchingCard(s.sprfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,tp)
+	local tp=e:GetHandlerPlayer()
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local rg=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE+LOCATION_HAND,0,nil)
+	return ft>-1 and #rg>0 and aux.SelectUnselectGroup(rg,e,tp,1,1,nil,0)
 end
-function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.sprfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,tp)
-	local lv=g:GetFirst():GetLevel()
+function s.sptg1(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
+	local g=nil
+	local rg=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE+LOCATION_HAND,0,nil)
+	local g=aux.SelectUnselectGroup(rg,e,tp,1,1,nil,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
+end
+function s.spop1(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.SendtoGrave(g,REASON_COST)
-	local e1=Effect.CreateEffect(c)
+	local lv=g:GetFirst():GetLevel()
+	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(lv*200)
-	e1:SetReset(RESET_EVENT+0xff0000)
-	c:RegisterEffect(e1)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_DISABLE)
+	e:GetHandler():RegisterEffect(e1)
+	g:DeleteGroup()
 end
 function s.costfilter(c,tp)
 	return c:IsType(TYPE_EFFECT) and Duel.GetMZoneCount(tp,c,tp)>0

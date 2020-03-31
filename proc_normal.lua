@@ -1,5 +1,5 @@
 --tribute
-function Auxiliary.AddNormalSummonProcedure(c,ns,opt,min,max,val,desc,f)
+function Auxiliary.AddNormalSummonProcedure(c,ns,opt,min,max,val,desc,f,sumop)
 	val = val or SUMMON_TYPE_TRIBUTE
 	local e1=Effect.CreateEffect(c)
 	if desc then e1:SetDescription(desc) end
@@ -13,7 +13,7 @@ function Auxiliary.AddNormalSummonProcedure(c,ns,opt,min,max,val,desc,f)
 	if ns then
 		e1:SetCondition(Auxiliary.NormalSummonCondition1(min,max,f))
 		e1:SetTarget(Auxiliary.NormalSummonTarget(min,max,f))
-		e1:SetOperation(Auxiliary.NormalSummonOperation(min,max))
+		e1:SetOperation(Auxiliary.NormalSummonOperation(min,max,sumop))
 	else
 		e1:SetCondition(Auxiliary.NormalSummonCondition2())
 	end
@@ -55,16 +55,19 @@ function Auxiliary.NormalSummonTarget(min,max,f)
 		return false
 	end
 end
-function Auxiliary.NormalSummonOperation(min,max)
+function Auxiliary.NormalSummonOperation(min,max,sumop)
 	return function (e,tp,eg,ep,ev,re,r,rp,c,minc,zone,relzone,exeff)
 		local g=e:GetLabelObject()
 		c:SetMaterial(g)
 		Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
+		if sumop then
+			sumop(g:Clone(),e,tp,eg,ep,ev,re,r,rp,c,minc,zone,relzone,exeff)
+		end
 		g:DeleteGroup()
 	end
 end
 --add normal set
-function Auxiliary.AddNormalSetProcedure(c,ns,opt,min,max,val,desc,f)
+function Auxiliary.AddNormalSetProcedure(c,ns,opt,min,max,val,desc,f,sumop)
 	val = val or SUMMON_TYPE_TRIBUTE
 	local e1=Effect.CreateEffect(c)
 	if desc then e1:SetDescription(desc) end
@@ -76,9 +79,9 @@ function Auxiliary.AddNormalSetProcedure(c,ns,opt,min,max,val,desc,f)
 		e1:SetCode(EFFECT_LIMIT_SET_PROC)
 	end
 	if ns then
-		e1:SetCondition(Auxiliary.NormalSetCondition1(min,max))
-		e1:SetTarget(Auxiliary.NormalSetTarget(min,max))
-		e1:SetOperation(Auxiliary.NormalSetOperation(min,max))
+		e1:SetCondition(Auxiliary.NormalSetCondition1(min,max,f))
+		e1:SetTarget(Auxiliary.NormalSetTarget(min,max,f))
+		e1:SetOperation(Auxiliary.NormalSetOperation(min,max,sumop))
 	else
 		e1:SetCondition(Auxiliary.NormalSetCondition2())
 	end
@@ -86,7 +89,7 @@ function Auxiliary.AddNormalSetProcedure(c,ns,opt,min,max,val,desc,f)
 	c:RegisterEffect(e1)
 	return e1
 end
-function Auxiliary.NormalSetCondition1(min,max)
+function Auxiliary.NormalSetCondition1(min,max,f)
 	return function (e,c,minc,zone,relzone,exeff)
 		if c==nil then return true end
 		local tp=c:GetControler()
@@ -104,7 +107,7 @@ function Auxiliary.NormalSetCondition2()
 		return false
 	end
 end
-function Auxiliary.NormalSetTarget(min,max)
+function Auxiliary.NormalSetTarget(min,max,f)
 	return function (e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
 		local mg=Duel.GetTributeGroup(c)
 		mg=mg:Filter(Auxiliary.IsZone,nil,relzone,tp)
@@ -120,10 +123,14 @@ function Auxiliary.NormalSetTarget(min,max)
 		return false
 	end
 end
-function Auxiliary.NormalSetOperation(min,max)
+function Auxiliary.NormalSetOperation(min,max,sumop)
 	return function (e,tp,eg,ep,ev,re,r,rp,c,minc,zone,relzone,exeff)
 		local g=e:GetLabelObject()
 		c:SetMaterial(g)
 		Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
+		if sumop then
+			sumop(g:Clone(),e,tp,eg,ep,ev,re,r,rp,c,minc,zone,relzone,exeff)
+		end
+		g:DeleteGroup()
 	end
 end

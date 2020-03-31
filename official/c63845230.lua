@@ -1,4 +1,5 @@
 --百万喰らいのグラットン
+--Eater of Millions
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -11,13 +12,14 @@ function s.initial_effect(c)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--atk/def
+	--atk/def change
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -28,7 +30,7 @@ function s.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
-	--cannot release
+	--cannot be tributed
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -36,6 +38,7 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetValue(1)
 	c:RegisterEffect(e5)
+	--cannot be material
 	local e6=e5:Clone()
 	e6:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 	c:RegisterEffect(e6)
@@ -49,43 +52,37 @@ function s.initial_effect(c)
 	e9:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
 	c:RegisterEffect(e9)
 	--remove
-	local ea=Effect.CreateEffect(c)
-	ea:SetDescription(aux.Stringid(id,0))
-	ea:SetCategory(CATEGORY_REMOVE)
-	ea:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	ea:SetCode(EVENT_BATTLE_START)
-	ea:SetCountLimit(1)
-	ea:SetTarget(s.rmtg)
-	ea:SetOperation(s.rmop)
-	c:RegisterEffect(ea)
+	local e10=Effect.CreateEffect(c)
+	e10:SetDescription(aux.Stringid(id,0))
+	e10:SetCategory(CATEGORY_REMOVE)
+	e10:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e10:SetCode(EVENT_BATTLE_START)
+	e10:SetCountLimit(1)
+	e10:SetTarget(s.rmtg)
+	e10:SetOperation(s.rmop)
+	c:RegisterEffect(e10)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=-ft+1
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c,POS_FACEDOWN)
-	return #g>=5 and (ft>0 or g:IsExists(Card.IsLocation,ct,nil,LOCATION_MZONE))
+	local tp=e:GetHandlerPlayer()
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-4 and #rg>4 and aux.SelectUnselectGroup(rg,e,tp,5,99,aux.ChkfMMZ(1),0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,e:GetHandler())
+	local g=aux.SelectUnselectGroup(rg,e,tp,5,99,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,aux.ChkfMMZ(1),nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=-ft+1
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c,POS_FACEDOWN)
-	local rg=nil
-	if ft<=0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		rg=g:FilterSelect(tp,Card.IsLocation,ct,ct,nil,LOCATION_MZONE)
-		if ct<5 then
-			g:Sub(rg)
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			local g1=g:Select(tp,5-ct,99-ct,nil)
-			rg:Merge(g1)
-		end
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		rg=g:Select(tp,5,99,nil)
-	end
-	Duel.Remove(rg,POS_FACEDOWN,REASON_COST)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Remove(g,POS_FACEDOWN,REASON_COST)
+	g:DeleteGroup()
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsFacedown,0,LOCATION_REMOVED,LOCATION_REMOVED,nil)*100

@@ -1,4 +1,5 @@
 --ブロックドラゴン
+--Block Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e2:SetTarget(s.sptg)
 	e2:SetCondition(s.spcon)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -45,13 +47,24 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE+LOCATION_MZONE+LOCATION_HAND,0,3,c)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE+LOCATION_MZONE+LOCATION_HAND,0,e:GetHandler())
+	return aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1),0) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0	
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE+LOCATION_MZONE+LOCATION_HAND,0,e:GetHandler())
+	local rg=aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
+	if #rg>0 then
+		rg:KeepAlive()
+		e:SetLabelObject(rg)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE+LOCATION_MZONE+LOCATION_HAND,0,3,3,c)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	local rg=e:GetLabelObject()
+	if not rg then return end
+	Duel.Remove(rg,POS_FACEUP,REASON_COST)
+	rg:DeleteGroup()
 end
 function s.indesval(e,re,r,rp)
 	return (r&REASON_BATTLE)==0

@@ -1,14 +1,16 @@
 --異次元ジェット・アイアン号
+--D.D. Jet Iron
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--special summon rule
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--spsummon
@@ -23,37 +25,51 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-function s.sprfilter(c)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToGraveAsCost()
-		and c:IsCode(80208158,16796157,43791861,79185500)
+function s.chk(c,sg,g,code,...)
+	if not c:IsCode(code) then return false end
+	local res
+	if ... then
+		g:AddCard(c)
+		res=sg:IsExists(s.chk,1,g,sg,g,...)
+		g:RemoveCard(c)
+	else
+		res=true
+	end
+	return res
+end
+function s.rescon(sg,e,tp,mg)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),80208158,16796157,43791861,79185500)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=-ft+1
-	local mg=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
-	return mg:GetClassCount(Card.GetCode)==4
-		and mg:Filter(Card.IsLocation,nil,LOCATION_MZONE):GetClassCount(Card.GetCode)>=ct
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+	local g1=rg:Filter(Card.IsCode,nil,80208158)
+	local g2=rg:Filter(Card.IsCode,nil,16796157)
+	local g3=rg:Filter(Card.IsCode,nil,43791861)
+	local g4=rg:Filter(Card.IsCode,nil,79185500)
+	local g=g1:Clone()
+	g:Merge(g2)
+	g:Merge(g3)
+	g:Merge(g4)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-4 and #g1>0 and #g2>0 and #g3>0 and #g4>0 
+		and aux.SelectUnselectGroup(g,e,tp,4,4,s.rescon,0)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND+LOCATION_MZONE,0,nil):Filter(Card.IsCode,nil,80208158,16796157,43791861,79185500)
+	local g=aux.SelectUnselectGroup(rg,e,tp,4,4,s.rescon,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
+	if #g>0 then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=-ft+1
-	local mg=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
-	local g=Group.CreateGroup()
-	for i=1,4 do
-		local tc=nil
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		if ct>0 then
-			tc=mg:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE):GetFirst()
-			ct=ct-1
-		else
-			tc=mg:Select(tp,1,1,nil):GetFirst()
-		end
-		mg:Remove(Card.IsCode,nil,tc:GetCode())
-		g:AddCard(tc)
-	end
-	Duel.SendtoGrave(g,REASON_COST)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.SendtoGrave(g,POS_FACEUP,REASON_COST)
+	g:DeleteGroup()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
@@ -64,7 +80,7 @@ function s.spfilter(c,e,tp,code)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,59822133)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=3
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,80208158)
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,16796157)
@@ -84,9 +100,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g1,4,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-	local g=Duel.GetTargetCards(e)
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then return end
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if #g>ft then return end
+	if g:GetCount()>ft then return end
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 end

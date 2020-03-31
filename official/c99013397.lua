@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.retop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x19}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local eqc=e:GetHandler():GetEquipTarget()
 	return eqc==Duel.GetAttacker()

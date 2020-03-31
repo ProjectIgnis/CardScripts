@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10db}
 function s.filter(c)
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x10db)
 end

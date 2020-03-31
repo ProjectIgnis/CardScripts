@@ -24,6 +24,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xc3}
+s.listed_names={id}
 function s.cfilter(c)
 	return c:IsSetCard(0xc3) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end

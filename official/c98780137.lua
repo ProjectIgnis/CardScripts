@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x8b}
 function s.filter(c,e,tp)
 	return c:GetCode()~=id and c:IsSetCard(0x8b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

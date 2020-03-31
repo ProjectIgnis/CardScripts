@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.xyzop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xf1}
 function s.rfilter(c,oc)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 		and c:CheckRemoveOverlayCard(tp,oc,REASON_COST)

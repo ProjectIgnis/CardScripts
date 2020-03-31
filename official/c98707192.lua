@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x8d}
 function s.sumcon(e)
 	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x8d),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end

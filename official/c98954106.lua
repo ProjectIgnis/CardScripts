@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 function s.filter(c)
 	return not c:IsCode(id) and c:IsAbleToDeck()
 end

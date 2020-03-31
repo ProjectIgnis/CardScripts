@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.splimit)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x8d}
 function s.splimit(e,c,tp,sumtp,sumpos)
 	return c:GetAttribute()~=ATTRIBUTE_DARK
 end

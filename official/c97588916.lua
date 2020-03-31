@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e6:SetValue(s.atlimit)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0xab}
 function s.splimcon(e)
 	return not e:GetHandler():IsForbidden()
 end

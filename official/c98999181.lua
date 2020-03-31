@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 s.listed_series={0x11f}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x11f) and c:IsType(TYPE_MONSTER) and not c:IsCode(id) and c:IsAbleToHand()

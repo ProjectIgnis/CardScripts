@@ -1,6 +1,6 @@
 Auxiliary={}
 aux=Auxiliary
-
+Debug.Message("This is a test with the utility file")
 Auxiliary.ProcCancellable=false
 
 function GetID()

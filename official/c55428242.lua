@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e5:SetTarget(s.distarget)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x4c,0x89}
 function s.efilter(e,te)
 	local c=te:GetHandler()
 	return c:GetType()==TYPE_TRAP and (c:IsSetCard(0x4c) or c:IsSetCard(0x89))

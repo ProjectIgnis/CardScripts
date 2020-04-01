@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.mtop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xee}
 function s.tgtg(e,c)
 	return c:IsSetCard(0xee) and c~=e:GetHandler()
 end

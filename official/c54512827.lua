@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x8d}
 function s.sfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x8d)
 end

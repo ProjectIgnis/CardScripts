@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xe}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain()==0 and eg:IsExists(Card.IsControler,1,nil,1-tp)
 end

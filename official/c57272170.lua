@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3a}
 function s.costfilter(c)
 	return c:IsSetCard(0x3a) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
 end

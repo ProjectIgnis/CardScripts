@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToGraveAsCost()
 end

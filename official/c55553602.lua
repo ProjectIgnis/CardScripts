@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9f,0x99}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:GetRace()~=0
 end

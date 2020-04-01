@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x19}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetCurrentPhase()==PHASE_DAMAGE and Duel.IsDamageCalculated() then return false end
 	return true

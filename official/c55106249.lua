@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.thop)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0xab}
 function s.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0xab) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end

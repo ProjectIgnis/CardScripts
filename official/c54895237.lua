@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x109}
 function s.gspcfilter(c,ft,tp,sft)
 	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToGraveAsCost()
 		and (ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))

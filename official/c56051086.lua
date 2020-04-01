@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x48}
 s.xyz_number=43
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and ec:IsSetCard(0x48)

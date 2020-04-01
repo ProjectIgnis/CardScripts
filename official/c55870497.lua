@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.skipop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x60}
 function s.skipcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and re:GetHandler():IsSetCard(0x60) and e:GetHandler():GetFlagEffect(1)>0

@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.opd)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x26}
 function s.filter(c,lv)
 	return c:IsSetCard(0x26) and c:GetLevel()==lv and c:IsAbleToHand()
 end

@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x30}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousPosition(POS_FACEUP)
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

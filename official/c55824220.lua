@@ -5,3 +5,4 @@ function s.initial_effect(c)
 	--Activate
 	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047)))
 end
+s.listed_series={0x1047}

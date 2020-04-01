@@ -4,19 +4,18 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
 	Pendulum.AddProcedure(c)
-	--atk
+	--atk change effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCountLimit(1)
 	e1:SetCondition(s.atkcon)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--summon with no tribute
+	--summon without using tributes
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -30,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SUMMON_COST)
 	e3:SetOperation(s.lvop)
 	c:RegisterEffect(e3)
-	--atk
+	--increase ATK
 	local e4=e2:Clone()
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetOperation(s.atkop2)

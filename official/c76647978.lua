@@ -34,7 +34,6 @@ function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,e:GetHandler():GetCardID())
 	end
-	Fusion.CheckExact=nil
 end
 function s.mgfilter(c,e,tp,fusc,mg)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)

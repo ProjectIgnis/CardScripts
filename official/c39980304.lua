@@ -41,7 +41,8 @@ end
 function s.filter(c,e)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove() and not c:IsImmuneToEffect(e)
 end
-function s.chain_target(e,te,tp)
+function s.chain_target(e,te,tp,value)
+	if value&SUMMON_TYPE_FUSION==0 then return Group.CreateGroup() end
 	if Duel.IsPlayerAffectedByEffect(tp,69832741) then
 		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_DECK,0,nil,te)
 	else

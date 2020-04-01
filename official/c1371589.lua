@@ -1,4 +1,5 @@
 --吸血コアラ
+--Vampiric Koala
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover

@@ -1,4 +1,5 @@
 --No.69 紋章神コート・オブ・アームズ
+--Number 69: Heraldry Crest
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

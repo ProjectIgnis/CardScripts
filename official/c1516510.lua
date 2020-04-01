@@ -1,4 +1,5 @@
 --ルーンアイズ・ペンデュラム・ドラゴン
+--Rune-Eyes Pendulum Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

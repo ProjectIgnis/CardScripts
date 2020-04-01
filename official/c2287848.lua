@@ -1,3 +1,4 @@
+--ヴェンデット・リバース
 --Vendread Revolution
 --Scripted by Eerie Code; fixed by senpaizuri
 local s,id=GetID()

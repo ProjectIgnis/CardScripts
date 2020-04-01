@@ -1,4 +1,5 @@
 --炎星師－チョウテン
+--Brotherhood of the Fire Fist - Spirit
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro limit

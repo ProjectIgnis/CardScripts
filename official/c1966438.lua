@@ -1,5 +1,5 @@
 --雙極の破械神
---Soukyoku no Hakaishin
+--Abominable Unchained Soul
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)

@@ -1,4 +1,5 @@
 --生者の書－禁断の呪術－
+--Book of Life
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

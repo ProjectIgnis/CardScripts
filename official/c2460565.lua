@@ -1,4 +1,5 @@
 --切り込み隊長
+--Marauding Captain
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot select battle target

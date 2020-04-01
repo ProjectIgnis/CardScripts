@@ -1,4 +1,5 @@
 --伝説の賭博師
+--Gambler of Legend
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

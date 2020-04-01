@@ -1,4 +1,5 @@
 --青き眼の威光
+--Majesty with Eyes of Blue
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --陽炎獣 スピンクス
+--Hazy Flame Sphynx
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be target

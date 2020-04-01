@@ -1,6 +1,5 @@
 --副話術士クララ＆ルーシカ
---Ventriloquists Clara & Lucika
---
+--Clara & Rushka, the Ventriloduo
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

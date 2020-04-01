@@ -1,4 +1,5 @@
 --聖光の宣告者
+--Herald of Pure Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

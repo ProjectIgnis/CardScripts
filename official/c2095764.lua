@@ -1,4 +1,5 @@
 --水竜星－ビシキ
+--Bixi, Water of the Yang Zing
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

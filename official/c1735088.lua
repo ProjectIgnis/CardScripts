@@ -1,6 +1,5 @@
 --発条補修ゼンマイコン
---Wind-Up Maintenance Zenmaicon
---
+--Wind-Up Zenmaintenance
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

@@ -1,4 +1,5 @@
 --邪神の大災害
+--Malevolent Catastrophe
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

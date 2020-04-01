@@ -1,4 +1,5 @@
 --ワン・フォー・ワン
+--One for One
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

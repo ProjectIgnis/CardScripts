@@ -1,4 +1,5 @@
 --白衣の天使
+--Numinous Healer
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover

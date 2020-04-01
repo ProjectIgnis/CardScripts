@@ -1,4 +1,5 @@
 --異形の従者
+--Servant of Catabolism
 local s,id=GetID()
 function s.initial_effect(c)
 	--direct attack

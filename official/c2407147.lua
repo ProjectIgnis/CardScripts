@@ -1,4 +1,5 @@
 --ラヴァル炎火山の侍女
+--Laval Volcano Handmaiden
 local s,id=GetID()
 function s.initial_effect(c)
 	--to grave

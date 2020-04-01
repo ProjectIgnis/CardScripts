@@ -1,4 +1,5 @@
 --剣闘獣サムニテ
+--Gladiator Beast Samnite
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

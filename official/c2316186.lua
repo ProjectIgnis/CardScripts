@@ -1,4 +1,5 @@
 --魔法の国の王女－クラン
+--Princess Curran
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

@@ -1,4 +1,5 @@
 --マックス・テレポーター
+--Overdrive Teleporter
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

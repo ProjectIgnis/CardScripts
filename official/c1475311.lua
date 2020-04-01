@@ -1,4 +1,5 @@
 --闇の誘惑
+--Allure of Darkness
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

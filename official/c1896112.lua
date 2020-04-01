@@ -1,4 +1,5 @@
 --次元誘爆
+--Dimension Explosion
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

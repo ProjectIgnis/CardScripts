@@ -1,4 +1,5 @@
 --ゴブリンの小役人
+--Minor Goblin Official
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

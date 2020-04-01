@@ -1,5 +1,5 @@
 --ブライニグル
---Brynigle
+--Brinegir
 --scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()

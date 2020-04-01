@@ -1,5 +1,5 @@
---Number 9: Dyson Sphere
 --No.9 天蓋星ダイソン・スフィア
+--Number 9: Dyson Sphere
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

@@ -1,4 +1,5 @@
 --救援光
+--Light of Redemption
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --ティマイオスの眼
+--The Eye of Timaeus
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -50,6 +50,7 @@ function s.initial_effect(c)
 		end)
 	end)
 end
+s.listed_series={0xaa}
 function s.splimit(e,c)
 	return not c:IsSetCard(0xaa)
 end

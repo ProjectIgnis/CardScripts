@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.chop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x35}
 function s.otfilter(c,tp)
 	return c:IsSetCard(0x35) and (c:IsControler(tp) or c:IsFaceup())
 end

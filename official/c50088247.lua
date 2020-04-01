@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_series={0x2f}
 function s.counterfilter(c)
 	return not c:IsLevelAbove(5)
 end

@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e5:SetCondition(s.thcon2)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xe0}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xe0)
 end

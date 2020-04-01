@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desrepop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x19}
 function s.atkval(e,c)
 	return e:GetHandler():GetCounter(0x7)*100
 end

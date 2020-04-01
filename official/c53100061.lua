@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xd}
 function s.filter(c)
 	return c:IsSetCard(0xd) and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
 end

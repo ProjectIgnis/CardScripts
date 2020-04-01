@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x2016}
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND)
 end

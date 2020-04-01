@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x19}
 function s.costfilter(c)
 	return c:IsSetCard(0x19) and c:IsDiscardable()
 end

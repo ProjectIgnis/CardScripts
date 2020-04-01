@@ -186,9 +186,11 @@ function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locati
 						local mat2=Duel.SelectFusionMaterial(tp,tc,ce:GetTarget()(ce,e,tp),gc,chkf)
 						Fusion.CheckAdditional=nil
 						ce:GetOperation()(sel[1],e,tp,tc,mat2,value)
+						backupmat=tc:GetMaterial():Clone()
 					end
 					stage2(e,tc,tp,backupmat,0)
 					Duel.SpecialSummonComplete()
+					stage2(e,tc,tp,backupmat,3)
 					if not sumlimit then
 						tc:CompleteProcedure()
 					end

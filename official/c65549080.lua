@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x37}
 function s.spfilter(c,ft)
 	return c:IsFaceup() and c:IsSetCard(0x37) and c:IsAbleToHandAsCost() and (ft>0 or c:GetSequence()<5)
 end
@@ -44,7 +45,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_SET_ATTACK)
 	e1:SetValue(1700)
-	e1:SetReset(RESET_EVENT+0xff0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 	e:GetHandler():RegisterEffect(e1)
 	g:DeleteGroup()
 end

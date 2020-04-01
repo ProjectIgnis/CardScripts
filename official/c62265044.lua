@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x29}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())

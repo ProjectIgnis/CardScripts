@@ -22,6 +22,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xd9}
+s.listed_names={id}
 function s.filter(c)
 	return c:IsSetCard(0xd9) and not c:IsCode(id) and c:IsAbleToHand()
 end

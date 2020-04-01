@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.zones)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xb3}
 function s.zones(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) and 0xff or 0xe
 end

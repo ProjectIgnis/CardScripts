@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_TO_DECK)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x9e}
 function s.thfilter(c)
 	return c:IsSetCard(0x9e) and c:IsAbleToHand()
 end

@@ -41,6 +41,7 @@ function s.initial_effect(c)
 			end)
 		end)
 end
+s.listed_series={0x101}
 function s.thcfilter(c,e,tp)
 	local attr=c:GetAttribute()
 	return c:IsSetCard(0x101) and c:IsControler(tp) 

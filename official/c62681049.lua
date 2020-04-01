@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetValue(LOCATION_DECKSHF)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xb3}
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelAbove(6) and c:IsSetCard(0xb3)
 end

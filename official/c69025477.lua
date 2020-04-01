@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desrepop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3d}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3d) and c:GetCode()~=id
 end

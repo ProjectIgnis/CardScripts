@@ -24,6 +24,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xaa}
+s.listed_names={id}
 function s.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0xaa)
 end

@@ -26,7 +26,7 @@ function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
-	e1:SetReset(RESET_EVENT+0xc6e0000)
+	e1:SetReset(RESET_EVENT|(RESETS_STANDARD|RESET_MSCHANGE|RESET_OVERLAY)&~(RESET_TOFIELD|RESET_LEAVE|RESET_TEMP_REMOVE))
 	c:RegisterEffect(e1)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

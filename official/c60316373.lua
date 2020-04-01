@@ -14,6 +14,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x76}
+s.listed_names={id}
 function s.rfilter(c)
 	return c:IsCode(id) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

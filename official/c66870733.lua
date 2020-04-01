@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x121}
 function s.imfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO)
 end

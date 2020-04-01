@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.elimit)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x3d}
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3d)
 end
@@ -73,7 +74,7 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit1(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_CONTROL|RESET_PHASE|PHASE_END,0,1)
 end
 function s.aclimit2(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end

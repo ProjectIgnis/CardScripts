@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atktg)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x4}
 s.material_setcode=0x4
 function s.atkcon1(e)
 	return e:GetHandler()==Duel.GetAttacker()

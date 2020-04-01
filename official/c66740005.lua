@@ -1,6 +1,5 @@
 --空牙団の闘士 ブラーヴォ
 --Blavo, Fighter of the Skyfang Brigade
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -27,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 s.listed_series={0x114}
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x114) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

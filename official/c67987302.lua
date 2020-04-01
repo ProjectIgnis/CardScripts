@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.efilter)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x21}
 function s.efilter(e,re,rp,c)
 	return re:GetOwner()==c
 end

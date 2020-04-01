@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.oop2)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x26}
 s.listed_names={2403771}
 function s.eqlimit(e,c)
 	return c:GetControler()==e:GetHandler():GetControler()

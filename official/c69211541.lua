@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e5:SetTarget(aux.TargetBoolFunction(Card.IsLevelBelow,5))
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x9f}
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) end

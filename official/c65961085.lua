@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.retop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x106e}
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsRace(RACE_SPELLCASTER)
 end

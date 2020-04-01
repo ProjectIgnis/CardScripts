@@ -23,6 +23,8 @@ function s.initial_effect(c)
 	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9b}
+s.listed_names={id}
 function s.filter(c)
 	return c:IsSetCard(0x9b) and c:IsType(TYPE_MONSTER) and not c:IsCode(id) and c:IsAbleToHand()
 end

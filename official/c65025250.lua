@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xb3}
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		and c:IsSetCard(0xb3) and not c:IsReason(REASON_REPLACE)

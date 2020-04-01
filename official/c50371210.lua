@@ -31,6 +31,8 @@ function s.initial_effect(c)
 	e4:SetTarget(s.ftarget)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xdd}
+s.listed_names={id}
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xdd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

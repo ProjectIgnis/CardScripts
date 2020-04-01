@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.xyzlimit)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x8e}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x8e) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end

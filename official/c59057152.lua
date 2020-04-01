@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x107a,0x207a}
 function s.eqcon1(e)
 	local eg=e:GetHandler():GetEquipGroup()
 	return not eg or not eg:IsExists(Card.IsSetCard,1,nil,0x207a)

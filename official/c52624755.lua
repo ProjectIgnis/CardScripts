@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 function s.filter(c,e,sp)
 	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end

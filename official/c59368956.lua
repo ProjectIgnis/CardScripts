@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xab}
 function s.filter(c)
 	return c:IsSetCard(0xab) and c:IsAbleToHand()
 end

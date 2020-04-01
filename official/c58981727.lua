@@ -98,7 +98,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetTarget(s.rettg)
 	e1:SetOperation(s.retop)
-	e1:SetReset(RESET_EVENT+0x1ec0000+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -22,6 +22,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x98,0x99,0x9f}
+s.listed_names={id}
 function s.scfilter(c)
 	return (c:IsSetCard(0x98) or c:IsSetCard(0x99) or c:IsSetCard(0x9f)) and not c:IsCode(id)
 end

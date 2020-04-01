@@ -16,6 +16,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x33}
+s.listed_names={id}
 function s.synlimit(e,c)
 	if not c then return false end
 	return not c:IsSetCard(0x33)

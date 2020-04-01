@@ -1,7 +1,7 @@
 --SR電々大公
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -12,6 +12,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2016}
+s.listed_names={id}
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x2016) and c:IsType(TYPE_TUNER) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkdn)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xe}
 function s.atkdn(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()

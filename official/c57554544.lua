@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x81}
 function s.filter1(c)
 	return c:IsType(TYPE_MONSTER)
 end

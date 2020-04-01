@@ -25,6 +25,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x19}
+s.listed_names={id}
 function s.retfilter(c)
 	return c:IsSetCard(0x19) and c:IsAbleToHand()
 end

@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x100a}
 function s.otfilter(c,tp)
 	return c:IsSetCard(0x100a) and (c:IsControler(tp) or c:IsFaceup())
 end

@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.sdesop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x57}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	e:GetHandler():SetTurnCounter(0)

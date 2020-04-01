@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x2b,0x61}
 function s.cfilter(c)
 	return (c:IsSetCard(0x2b) or c:IsSetCard(0x61)) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

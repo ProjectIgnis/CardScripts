@@ -43,6 +43,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x10ec}
+s.listed_names={id}
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		and c:IsSetCard(0x10ec) and not c:IsReason(REASON_REPLACE)

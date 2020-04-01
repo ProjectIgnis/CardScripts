@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 function s.filter(c)
 	return c:IsRace(RACE_THUNDER) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetLevel()==4
 		and not c:IsCode(id) and c:IsAttackBelow(1600) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)

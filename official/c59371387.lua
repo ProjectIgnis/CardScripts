@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x6013}
 function s.target(e,c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(0x6013)
 end

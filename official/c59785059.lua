@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xc8}
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xc8)
 end

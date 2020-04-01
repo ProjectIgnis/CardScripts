@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atlimit)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end

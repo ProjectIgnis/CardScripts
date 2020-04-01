@@ -37,6 +37,8 @@ function s.initial_effect(c)
 	e4:SetCondition(s.thcon)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xf3}
+s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():GetControler()~=tp and Duel.GetAttackTarget()==nil
 end

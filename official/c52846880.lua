@@ -33,6 +33,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xb4}
+s.listed_names={id}
 function s.mat_filter(c)
 	return not c:IsCode(id)
 end

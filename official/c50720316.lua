@@ -20,6 +20,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xa5,0x8}
+s.listed_names={id}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())

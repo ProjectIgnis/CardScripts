@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e4:SetCondition(aux.TRUE)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x9d,0xc4}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	if c:IsSetCard(0x9d) or c:IsSetCard(0xc4) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM

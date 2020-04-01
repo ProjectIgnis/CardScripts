@@ -33,6 +33,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop3)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x83}
+s.listed_names={id}
 function s.spcon(e,c)
     if c==nil then return true end
     return Duel.CheckReleaseGroup(c:GetControler(),aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),1,false,1,true,c,c:GetControler(),nil,false,nil)

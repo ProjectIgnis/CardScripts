@@ -29,6 +29,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.synop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xe6}
+s.listed_names={id}
 function s.hspfilter(c)
 	return c:IsSetCard(0xe6) and not c:IsCode(id)
 end

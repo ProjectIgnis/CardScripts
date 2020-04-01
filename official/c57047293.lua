@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xbb}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0xbb) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end

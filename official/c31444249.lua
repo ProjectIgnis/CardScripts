@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	if not AshBlossomTable then AshBlossomTable={} end
 	table.insert(AshBlossomTable,e4)
 end
+s.listed_series={0xbb}
 function s.lvtg(e,c)
 	return c:IsSetCard(0xbb) and c:GetOriginalLevel()>=2
 end

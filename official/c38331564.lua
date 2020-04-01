@@ -23,6 +23,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.effop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x86}
+s.listed_names={id}
 function s.filter(c)
 	return c:IsSetCard(0x86) and not c:IsCode(id) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end

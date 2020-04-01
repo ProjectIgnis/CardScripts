@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x107d}
 function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsSetCard(0x107d)
 end

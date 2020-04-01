@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xee}
 function s.eqfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xee)
 end

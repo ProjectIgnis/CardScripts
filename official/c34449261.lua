@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xad}
 function s.filter1(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsSetCard(0xad)
 		and Duel.IsExistingTarget(s.filter2,tp,0,LOCATION_MZONE,1,nil,tp,c)

@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.disop2)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x45}
 function s.exfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x45)
 end

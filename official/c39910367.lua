@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.addop2)
 	c:RegisterEffect(e6)
 end
+s.listed_names={id}
 s.counter_place_list={COUNTER_SPELL}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=re:GetHandler()

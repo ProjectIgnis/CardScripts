@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x19}
 function s.filter(c)
 	local lv=c:GetLevel()
 	return c:IsSetCard(0x19) and lv>0 and lv<5 and c:IsAbleToHand()

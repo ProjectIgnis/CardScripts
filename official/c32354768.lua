@@ -52,6 +52,7 @@ function s.initial_effect(c)
 	e6:SetValue(s.valcheck)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0xc4}
 function s.mtfilter(c)
 	return c:IsSetCard(0xc4) and c:IsType(TYPE_MONSTER)
 end

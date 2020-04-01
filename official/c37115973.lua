@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e6:SetValue(s.efilter)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x48}
 function s.filter(c)
 	return c:IsSetCard(0x48) and c:IsType(TYPE_XYZ) and c:IsAbleToExtra()
 end

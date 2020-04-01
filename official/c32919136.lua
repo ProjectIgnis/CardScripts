@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.ctval)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x45}
 function s.eqlimit(e,c)
 	return e:GetHandlerPlayer()~=c:GetControler() or e:GetHandler():GetEquipTarget()==c
 end

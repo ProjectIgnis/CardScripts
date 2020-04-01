@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.fuslimit)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9,0x1f,0x8}
 s.material_setcode={0x8,0x9,0x1f}
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsSetCard(0x8,fc,sumtype,tp) or c:IsSetCard(0x9,fc,sumtype,tp) or c:IsSetCard(0x1f,fc,sumtype,tp)

@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.pcon)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x39}
 function s.caop1(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()

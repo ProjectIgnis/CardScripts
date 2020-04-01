@@ -54,7 +54,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
 		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
-			tc:RegisterFlagEffect(id,RESET_EVENT+0x5fe0000,0,1)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_OVERLAY,0,1)
 		end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
@@ -74,7 +74,7 @@ function s.discon(e)
 	if g:IsExists(s.cfilter2,1,nil) then
 		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
-			tc:RegisterFlagEffect(id,RESET_EVENT+0x5fe0000,0,1)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_OVERLAY,0,1)
 			tc=g:GetNext()
 		end
 		return true

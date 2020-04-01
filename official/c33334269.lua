@@ -22,6 +22,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rtgop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xaf,0xae}
+s.listed_names={id}
 function s.tgfilter1(c,tp)
 	return ((c:IsSetCard(0xaf) and c:IsType(TYPE_MONSTER) and not c:IsCode(id)) or c:IsSetCard(0xae))
 		and Duel.IsExistingMatchingCard(s.tgfilter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x1d}
 s.listed_names={36623431}
 function s.cfilter(c)
 	return c:IsCode(36623431) and c:IsDiscardable()

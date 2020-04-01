@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.valcon)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x2}
 function s.valcon(e)
 	return e:GetHandler():GetFlagEffect(id)~=0
 		and Duel.IsExistingMatchingCard(s.cfilter,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)

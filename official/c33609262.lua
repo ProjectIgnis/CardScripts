@@ -12,6 +12,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xbe}
+s.listed_names={id}
 function s.cfilter(c)
 	return (c:GetAttack()==2400 or c:GetAttack()==2800) and c:GetDefense()==1000 and not c:IsPublic()
 end

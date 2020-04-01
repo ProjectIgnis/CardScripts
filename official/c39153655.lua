@@ -24,6 +24,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xaf}
+s.listed_names={id}
 function s.filter(c)
 	local lv=c:GetLevel()
 	return c:IsFaceup() and c:IsSetCard(0xaf) and lv>0 and lv~=4

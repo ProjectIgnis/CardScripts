@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.mtop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3e}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end

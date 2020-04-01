@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={74665651,1872843}
+s.listed_names={CARD_DREAM_MIRROR_JOY,1872843}
 s.listed_series={0x131}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
@@ -48,7 +48,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sscond(c)
-	return c:IsFaceup() and c:IsCode(74665651)
+	return c:IsFaceup() and c:IsCode(CARD_DREAM_MIRROR_JOY)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()

@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e1:SetValue(aux.imval1)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 function s.tg(e,c)
 	return c:IsRace(RACE_FAIRY)
 end

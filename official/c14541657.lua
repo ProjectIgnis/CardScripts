@@ -30,6 +30,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x2b}
+s.listed_names={id}
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x2b) and c~=e:GetHandler()
 end

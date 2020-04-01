@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x8}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end

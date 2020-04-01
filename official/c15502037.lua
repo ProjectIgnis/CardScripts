@@ -29,6 +29,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x2066}
+s.listed_names={id}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x2066) and not c:IsCode(id) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 function s.catg(e,c)
 	return not c:IsCode(id)
 end

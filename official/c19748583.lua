@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x107a}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x107a)
 end

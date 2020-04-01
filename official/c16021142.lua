@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9b}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

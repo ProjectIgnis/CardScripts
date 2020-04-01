@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.ctop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={id}
 s.listed_series={0x133}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x133) and c:IsType(TYPE_MONSTER)

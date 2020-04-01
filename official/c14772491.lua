@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	e1:SetLabelObject(e2)
 end
+s.listed_series={0x1f}
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x1f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

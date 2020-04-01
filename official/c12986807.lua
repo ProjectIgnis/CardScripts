@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.desreptg)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x39}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end

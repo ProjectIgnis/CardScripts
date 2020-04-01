@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x41}
 function s.cfilter(c)
 	return c:IsCode(1995985,73665146) and c:IsAbleToHand()
 end

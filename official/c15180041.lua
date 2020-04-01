@@ -54,6 +54,8 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop2)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xe7}
+s.listed_names={id}
 function s.spcon(e,c)
     if c==nil then return true end
     return Duel.CheckReleaseGroup(c:GetControler(),Card.IsRace,1,false,1,true,c,c:GetControler(),nil,false,nil,RACE_WARRIOR)

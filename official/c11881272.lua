@@ -66,7 +66,7 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
 	return ec==eg:GetFirst() and ec==Duel.GetAttacker()
-		 and ec:IsStatus(STATUS_OPPO_BATTLE) and ec:IsChainAttackable()
+		 and ec:IsStatus(STATUS_OPPO_BATTLE) and ec:CanChainAttack()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

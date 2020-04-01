@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x107a}
 function s.synlimit(e,c)
 	if not c then return false end
 	return not c:IsRace(RACE_WARRIOR)

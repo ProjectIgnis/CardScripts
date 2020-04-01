@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xf0}
 function s.damfil(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf0) and c:IsLevelAbove(1)
 end

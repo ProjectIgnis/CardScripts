@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x11a}
 function s.stage2(e,tc,tp,mg,chk)
 	if chk==1 then
 		local e1=Effect.CreateEffect(e:GetHandler())

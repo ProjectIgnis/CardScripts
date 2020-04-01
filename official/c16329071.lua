@@ -12,6 +12,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xfe}
+s.listed_names={id}
 function s.filter(c)
 	return c:IsSetCard(0xfe) and not c:IsCode(id) and (c:IsLocation(LOCATION_HAND+LOCATION_GRAVE) or c:IsFaceup()) and c:IsAbleToDeck()
 end

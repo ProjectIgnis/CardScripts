@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if r~=REASON_SUMMON then return false end
 	local rc=e:GetHandler():GetReasonCard()

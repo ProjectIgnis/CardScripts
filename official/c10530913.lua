@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x90}
 function s.cfilter(c)
 	return c:IsSetCard(0x90) and c:IsType(TYPE_MONSTER)
 end

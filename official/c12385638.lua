@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xd2}
 function s.tdtg(e,c)
 	return c:IsSetCard(0xd2)
 end

@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x2a}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	return ec:IsSetCard(0x2a) and ec:IsSummonType(SUMMON_TYPE_SYNCHRO) and ec:IsSummonPlayer(tp)

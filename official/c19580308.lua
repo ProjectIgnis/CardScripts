@@ -13,6 +13,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xaf,0xae}
+s.listed_names={id}
 function s.cfilter(c,ft)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and (c:IsSetCard(0xaf) or c:IsSetCard(0xae))
 		and not c:IsCode(id) and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)

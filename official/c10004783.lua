@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tfop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x1034}
 function s.tfcon(e,tp,eg,ep,ev,re,r,rp)
 	return (e:GetHandler():GetPreviousLocation()&LOCATION_ONFIELD)~=0
 end

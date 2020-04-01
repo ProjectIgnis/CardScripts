@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.ddop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x38}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end

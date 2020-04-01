@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3b}
 function s.indtg(e,c)
 	return c:IsSetCard(0x3b) and c~=e:GetHandler()
 end

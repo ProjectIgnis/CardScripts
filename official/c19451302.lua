@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetValue(aux.TargetBoolFunction(Card.IsSetCard,0x3c))
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3c}
 function s.indtg(e,c)
 	return c:GetAttack()==0 and c:IsAttackPos()
 end

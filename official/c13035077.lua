@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xf9}
 function s.indtg(e,c)
 	return c:IsSummonType(SUMMON_TYPE_TRIBUTE) and c:IsSetCard(0xf9)
 end

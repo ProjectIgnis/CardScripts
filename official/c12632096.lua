@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.ctop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0xe5}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0xe5)
 end

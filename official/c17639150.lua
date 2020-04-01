@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.thop)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0xaa}
 function s.effcon(e,c)
 	return c:IsSetCard(0xaa)
 end

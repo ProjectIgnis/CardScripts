@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetValue(4)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x26}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x26) and c:GetLevel()==4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

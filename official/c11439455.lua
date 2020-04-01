@@ -24,6 +24,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xdf}
+s.listed_names={id}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xdf) and not c:IsCode(id)
 end

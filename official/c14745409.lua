@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.eqop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x107a}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if not eg:IsContains(e:GetHandler()) then return end
 	local pe=e:GetLabelObject()

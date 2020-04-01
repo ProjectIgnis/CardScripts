@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_FLIP)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x3a}
 function s.filter(c)
 	return c:IsSetCard(0x3a) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end

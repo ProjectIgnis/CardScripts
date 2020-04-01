@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) or (c:IsCode(id) and c:IsFaceup())
 end

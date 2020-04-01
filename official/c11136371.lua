@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.plop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x1034}
 function s.cfilter(c)
 	return c:GetSequence()<5 and c:IsAbleToGraveAsCost()
 end

@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	c:EnableReviveLimit()
 end
+s.listed_series={0xc008}
 function s.spfilter(c,tp)
 	return c:IsSetCard(0xc008) and (c:IsControler(tp) or c:IsFaceup())
 end
@@ -74,7 +75,7 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetReset(RESET_EVENT+0x2fe0000+RESET_PHASE+PHASE_STANDBY)
+	e1:SetReset(RESET_EVENT|(RESETS_STANDARD|RESET_CONTROL)&~RESET_TOFIELD+RESET_PHASE+PHASE_STANDBY)
 	e1:SetCondition(s.lpc)
 	e1:SetOperation(s.lpcop)
 	c:RegisterEffect(e1)

@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x42,0x4b}
 function s.cfilter(c)
 	return c:IsFaceup() and (c:IsSetCard(0x42) or c:IsSetCard(0x4b)) and c:IsAbleToRemoveAsCost()
 end

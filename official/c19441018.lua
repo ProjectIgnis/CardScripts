@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x28}
 function s.spfilter(c)
 	return c:IsSetCard(0x28) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

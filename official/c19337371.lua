@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x64}
 s.listed_names={90219263}
 function s.filter(c)
 	return c:IsCode(90219263) and c:IsAbleToHand()

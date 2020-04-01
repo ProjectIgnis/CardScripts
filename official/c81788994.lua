@@ -67,7 +67,8 @@ end
 function s.chfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsControler(tp)) and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
 end
-function s.chtg(e,te,tp)
+function s.chtg(e,te,tp,value)
+	if value&SUMMON_TYPE_FUSION==0 then return Group.CreateGroup() end
 	return Duel.GetMatchingGroup(s.chfilter,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,nil,te,tp)
 end
 function s.chop(e,te,tp,tc,mat,sumtype,sg)

@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0x101b}
-s.listed_names={id}
+s.listed_names={id+1}
 function s.lvval(e,c)
 	local tp=c:GetControler()
 	return Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_MZONE,0,nil,id+1):GetSum(Card.GetLevel)

@@ -23,6 +23,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x4}
+s.listed_names={id}
 function s.cfilter(c)
 	return c:IsSetCard(0x4) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
 end

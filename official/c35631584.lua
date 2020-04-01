@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x53}
 function s.gfilter(c,tp)
 	return c:IsSetCard(0x53) and c:IsType(TYPE_XYZ) and c:IsControler(tp)
 end

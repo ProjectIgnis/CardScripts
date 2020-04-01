@@ -6,3 +6,4 @@ function s.initial_effect(c)
 	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0xe1))
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xe1}

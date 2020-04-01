@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10db,0xdb}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x10db)
 end

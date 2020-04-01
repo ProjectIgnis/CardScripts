@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xc8}
 function s.desfilter1(c,ft)
 	return c:IsFaceup() and c:IsSetCard(0xc8) and (ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end

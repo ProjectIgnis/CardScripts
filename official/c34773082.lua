@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xc3}
 s.listed_names={CARD_POLYMERIZATION}
 function s.filter1(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()

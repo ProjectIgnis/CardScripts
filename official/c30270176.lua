@@ -50,6 +50,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.damop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xe3}
 function s.spcfilter(c)
 	return c:IsSetCard(0xe3) and not c:IsPublic()
 end

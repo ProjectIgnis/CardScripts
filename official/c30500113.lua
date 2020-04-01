@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xba}
 function s.cfilter1(c,tp)
 	return c:IsSetCard(0xba) and c:IsPreviousControler(tp)
 end

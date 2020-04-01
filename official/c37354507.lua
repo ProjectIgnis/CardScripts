@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x61}
+s.listed_series={0x61,0x2b}
 function s.setfilter(c)
 	return c:IsSetCard(0x61) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end

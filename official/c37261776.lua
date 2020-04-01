@@ -46,6 +46,7 @@ function s.initial_effect(c)
 	e4:SetValue(0)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x119}
 s.material_setcode={0x119}
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)

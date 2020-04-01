@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3a}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3a)
 end

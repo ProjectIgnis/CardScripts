@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atkup)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x3008}
 s.material_setcode={0x8,0x3008}
 function s.atkup(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,0x3008)*100

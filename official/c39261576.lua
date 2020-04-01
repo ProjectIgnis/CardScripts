@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1047}
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then
 		e:SetLabelObject(tc)

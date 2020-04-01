@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.defval)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9f}
 function s.deffilter1(c,def)
 	return c:IsPosition(POS_FACEUP_DEFENSE) and c:GetDefense()~=def
 end

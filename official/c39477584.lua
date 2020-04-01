@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x35}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_DESTROY)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end

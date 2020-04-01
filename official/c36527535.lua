@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.dtcon)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9f}
 function s.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

@@ -67,7 +67,7 @@ function s.ftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local mg1=Duel.GetFusionMaterial(tp):Filter(Card.IsOnField,nil)
 		local res=Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,c)
 		if not res then
-			local ce=Duel.GetChainMaterial(tp)
+			local ce=Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)
 			if ce~=nil then
 				local fgroup=ce:GetTarget()
 				local mg2=fgroup(ce,e,tp)
@@ -86,7 +86,7 @@ function s.fop(e,tp,eg,ep,ev,re,r,rp)
 	local sg1=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,c)
 	local mg2=nil
 	local sg2=nil
-	local ce=Duel.GetChainMaterial(tp)
+	local ce=Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)
 	if ce~=nil then
 		local fgroup=ce:GetTarget()
 		mg2=fgroup(ce,e,tp)

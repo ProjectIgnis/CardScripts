@@ -41,7 +41,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local res=Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil)
 		Fusion.CheckAdditional=nil
 		if not res then
-			local ce=Duel.GetChainMaterial(tp)
+			local ce=Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)
 			if ce~=nil then
 				local fgroup=ce:GetTarget()
 				local mg3=fgroup(ce,e,tp)
@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Fusion.CheckAdditional=nil
 	local mg3=nil
 	local sg2=nil
-	local ce=Duel.GetChainMaterial(tp)
+	local ce=Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)
 	if ce~=nil then
 		local fgroup=ce:GetTarget()
 		mg3=fgroup(ce,e,tp)

@@ -193,7 +193,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
 		local mg=Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,nil)
-		local ce=Duel.GetChainMaterial(tp)
+		local ce=Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)
 		local mgc=Group.CreateGroup()
 		local mf=nil
 		if ce~=nil then
@@ -203,7 +203,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc,e,tp,mg,mgc,mf)
 	end
 	local mg=Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,nil)
-	local ce=Duel.GetChainMaterial(tp)
+	local ce=Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)
 	local mgc=Group.CreateGroup()
 	local mf=nil
 	if ce~=nil then
@@ -220,7 +220,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local mg=Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,nil)
-	local ce=Duel.GetChainMaterial(tp)
+	local ce=Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)
 	local mgc=Group.CreateGroup()
 	local mf=nil
 	if ce~=nil then

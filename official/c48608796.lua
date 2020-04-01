@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.indop)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0xf7}
 function s.atkval(e,c)
 	return c:GetOverlayCount()*200
 end

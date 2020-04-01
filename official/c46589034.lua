@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.xyzlimit)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xba}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsLevelAbove(1) and c:GetAttack()~=0 and c:GetDefense()~=0
 end

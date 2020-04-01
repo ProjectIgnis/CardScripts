@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.efilter)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xe1}
 function s.immcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil,0xe1)
 end

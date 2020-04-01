@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rlop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3d}
 s.listed_names={74094021}
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsCode(74094021)

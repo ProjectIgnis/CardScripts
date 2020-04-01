@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.dtop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xb1}
 function s.sdfilter(c)
 	return not c:IsFaceup() or not c:IsSetCard(0xb1)
 end

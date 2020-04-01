@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3008}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x3008) and (c:GetReason()&REASON_BATTLE)~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

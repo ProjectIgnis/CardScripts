@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_names={66889139}
+s.listed_names={CARD_GAIA_CHAMPION}
 function s.pietg(e,c)
 	return c:IsCode(6368038,16589042,CARD_GAIA_CHAMPION)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
-	return tc:IsControler(tp) and bc and bc:IsDefensePos() and tc:IsCode(66889139)
+	return tc:IsControler(tp) and bc and bc:IsDefensePos() and tc:IsCode(CARD_GAIA_CHAMPION)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

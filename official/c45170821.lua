@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.valop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x8}
 s.material_setcode=0x8
 function s.sfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x8)

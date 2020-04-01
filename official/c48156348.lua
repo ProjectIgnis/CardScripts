@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x19}
 s.listed_names={41470137}
 s.material_setcode=0x19
 function s.contactfil(tp)

@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id}
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	local c=Duel.GetLocationCount(tp,LOCATION_SZONE,PLAYER_NONE,0)
 	if e:GetHandler():IsFacedown() then return c>0 end

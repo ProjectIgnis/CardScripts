@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.val)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x4}
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_MZONE,0,nil)*100
 end

@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 and c:IsRelateToEffect(e) then
 		c:SetCardTarget(tc)
 		e:GetLabelObject():SetLabelObject(tc)
-		c:CreateRelation(tc,RESET_EVENT+0x5020000)
+		c:CreateRelation(tc,RESET_EVENT|RESET_OVERLAY|RESET_TOFIELD|RESET_TURN_SET)
 		tc:CreateRelation(c,RESET_EVENT+RESETS_STANDARD)
 	end
 end

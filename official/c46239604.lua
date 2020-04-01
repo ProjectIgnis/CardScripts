@@ -29,6 +29,8 @@ function s.initial_effect(c)
 	e3:SetValue(s.atlimit)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x12}
+s.listed_names={id}
 function s.atlimit(e,c)
 	return c~=e:GetHandler()
 end

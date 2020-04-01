@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 function s.spfilter(c,ft)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT) and not c:IsCode(id) and c:IsAbleToHandAsCost()
 end

@@ -34,6 +34,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x1066}
+s.listed_names={id}
 function s.thfilter(c)
 	return c:IsSetCard(0x1066) and not c:IsCode(id) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end

@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.efilter)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xaf}
 function s.filter1(c)
 	return c:IsFaceup() and c:IsSetCard(0xaf)
 end

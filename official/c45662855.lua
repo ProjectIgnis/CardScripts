@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x47,0x1047}
 function s.costfilter(c,tp)
 	return c:IsSetCard(0x47) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_GRAVE,0,1,c)

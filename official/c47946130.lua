@@ -46,6 +46,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xfc}
 function s.immval(e,te)
 	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) and e:GetHandlerPlayer() ~= te:GetHandlerPlayer()
 		and te:GetOwner():GetAttack()<=e:GetHandler():GetAttack() and te:IsActivated()

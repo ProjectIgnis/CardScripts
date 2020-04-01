@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tfop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x1034}
 function s.filter(c,tp)
 	return c:IsSetCard(0x1034) and c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE)
 end

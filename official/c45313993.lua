@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x57}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and eg:GetFirst():IsSetCard(0x57)
 end

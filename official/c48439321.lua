@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x71}
 function s.check(c,tp)
 	return c and c:IsControler(tp) and c:IsSetCard(0x71)
 end

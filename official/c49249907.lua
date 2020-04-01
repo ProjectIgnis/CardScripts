@@ -31,6 +31,8 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_series={0xb3}
+s.listed_names={id}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0xb3) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

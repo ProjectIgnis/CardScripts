@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x27}
 function s.cfilter(c,tp)
 	local rc=c:GetReasonCard()
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)

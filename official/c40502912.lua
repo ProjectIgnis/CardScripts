@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9b}
 function s.tgcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
 end

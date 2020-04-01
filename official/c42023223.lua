@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xe9,0x2066}
 function s.thfilter(c)
 	return c:IsSetCard(0xe9) and c:IsLevel(8) and c:IsAbleToHand()
 end

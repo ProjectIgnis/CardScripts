@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.indval)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x2f}
 function s.potg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return e:GetHandler():IsAttackPos() end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)

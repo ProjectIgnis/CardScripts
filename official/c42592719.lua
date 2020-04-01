@@ -30,6 +30,8 @@ function s.initial_effect(c)
 	e3:SetValue(s.splimit)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x19}
+s.listed_names={id}
 function s.splimit(e,se,sp,st)
 	return st==(SUMMON_TYPE_SPECIAL+107) or st&SUMMON_TYPE_PENDULUM==SUMMON_TYPE_PENDULUM
 end

@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x2c}
 function s.mfilter(c,tp)
 	return c:IsSetCard(0x2c) and (c:IsControler(tp) or c:IsFaceup())
 end

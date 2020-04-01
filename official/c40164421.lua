@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x38}
 function s.cfilter(c)
 	return c:IsSetCard(0x38) and c:IsType(TYPE_MONSTER)
 end

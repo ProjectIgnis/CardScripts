@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x106e}
 function s.cffilter(c)
 	return c:IsSetCard(0x106e) and c:IsType(TYPE_SPELL) and not c:IsPublic()
 end

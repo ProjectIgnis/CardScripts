@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x58}
 function s.filter1(c,tp)
 	local lv1=c:GetLevel()
 	return c:IsFaceup() and c:IsSetCard(0x58) and lv1~=0 and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,0,1,c,lv1)

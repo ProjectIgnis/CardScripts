@@ -24,6 +24,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x60}
+s.listed_names={id}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x60) and c:IsAbleToHand()
 end

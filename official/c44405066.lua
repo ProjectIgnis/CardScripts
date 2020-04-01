@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x3b}
 function s.indcon(e)
 	return e:GetHandler():GetOverlayCount()>0
 end

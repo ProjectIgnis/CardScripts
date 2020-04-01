@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x4093,0x46}
 function s.indestg(e,c)
 	return c:IsSetCard(0x4093) and c:IsType(TYPE_EFFECT) and c:GetEquipCount()>0
 end

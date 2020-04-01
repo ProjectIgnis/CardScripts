@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_TO_DECK)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x72}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)

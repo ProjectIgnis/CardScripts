@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desrepop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3d}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 		and ep~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)

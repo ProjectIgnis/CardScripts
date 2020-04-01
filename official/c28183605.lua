@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	aux.AddEREquipLimit(c,nil,s.eqval,aux.EquipByEffectAndLimitRegister,e2)
 end
+s.listed_series={0x29}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and ec:IsLevelBelow(3) and ec:IsSetCard(0x29) and ec:IsRace(RACE_DRAGON)
 end

@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.thop)
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x80}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return re and rp~=tp and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)

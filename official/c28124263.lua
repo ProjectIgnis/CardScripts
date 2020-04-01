@@ -30,6 +30,8 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x26}
+s.listed_names={id}
 function s.check(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsDisabled() and c:IsAttackPos() then e:SetLabel(1)

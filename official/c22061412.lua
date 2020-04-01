@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e4:SetValue(aux.fuslimit)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x3008}
 s.material_setcode={0x8,0x3008}
 function s.atkup(e,c)
 	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x3008),c:GetControler(),LOCATION_REMOVED,0,nil)*300

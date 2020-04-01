@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon2)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and (r&REASON_EFFECT)~=0 and e:GetHandler():IsPreviousControler(tp)
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

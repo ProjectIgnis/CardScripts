@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9f,0x99}
 function s.filter1(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end

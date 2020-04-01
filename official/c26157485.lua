@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x25}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x25) and c:IsAbleToGraveAsCost()
 end

@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_names={25247218,58843503}
+s.listed_names={58843503,25247218}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,25247218),tp,LOCATION_ONFIELD,0,1,nil)
 end

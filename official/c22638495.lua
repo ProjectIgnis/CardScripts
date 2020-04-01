@@ -32,7 +32,8 @@ function s.initial_effect(c)
 	e5:SetValue(aux.tgoval)
 	c:RegisterEffect(e5)
 end
-s.material_setcode=0xc7
+s.listed_series={0xc7}
+s.material_setcode={0xc7}
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsSetCard(0xc7,fc,sumtype,tp) and c:IsType(TYPE_PENDULUM,fc,sumtype,tp)
 end

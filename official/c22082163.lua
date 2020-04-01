@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x4}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

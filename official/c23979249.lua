@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x88}
 function s.cfilter(c,tp)
 	return c:IsSetCard(0x88) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE+LOCATION_GRAVE)

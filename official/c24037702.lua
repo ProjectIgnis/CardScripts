@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x38}
 function s.filter(c,tp)
 	if not c:IsType(TYPE_MONSTER) or not c:IsSetCard(0x38) or c:GetOriginalLevel()<=0 or not c:IsAbleToHand() then return false end
 	local g=Duel.GetDecktopGroup(tp,c:GetOriginalLevel())

@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9f}
 function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0 and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
 end

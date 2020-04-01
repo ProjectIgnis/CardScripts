@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.tgval)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2f}
 function s.tgval(e,re,rp)
 	return rp~=e:GetHandlerPlayer() and re:IsActiveType(TYPE_MONSTER)
 end

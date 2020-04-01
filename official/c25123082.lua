@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x106e}
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER)
 end
@@ -30,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(1000)
 		tc:RegisterEffect(e1)
-		tc:RegisterFlagEffect(id,RESET_EVENT+0x1220000+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_LEAVE|RESET_TODECK|RESET_TEMP_REMOVE|RESET_REMOVE|RESET_TOGRAVE)+RESET_PHASE+PHASE_END,0,1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetDescription(aux.Stringid(id,0))
 		e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

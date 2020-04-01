@@ -41,6 +41,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.disop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x99}
+s.listed_names={id}
 function s.regfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 		and c:IsType(TYPE_PENDULUM) and c:IsFaceup() and c:IsSetCard(0x99)

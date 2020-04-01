@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	e2:SetLabelObject(e1)
 end
+s.listed_series={0x2a}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0

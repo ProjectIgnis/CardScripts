@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.valop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3e}
 function s.filter(c)
 	return c:IsFaceup() and not (c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE))
 end

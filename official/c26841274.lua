@@ -4,6 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:RegisterEffect(Fusion.CreateSummonEff(c,nil,Fusion.OnFieldMat(aux.FilterBoolFunction(Card.IsSetCard,0xc008)),nil,nil,nil,s.stage2))
 end
+s.listed_series={0xc008}
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==0 then
 		local e1=Effect.CreateEffect(e:GetHandler())

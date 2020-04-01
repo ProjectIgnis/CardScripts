@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x98,0x9f,0x99}
 function s.tgtg(e,c)
 	return c:IsSetCard(0x98) or c:IsSetCard(0x9f) or c:IsSetCard(0x99)
 end

@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e5:SetCondition(s.sdcon)
 	c:RegisterEffect(e5)
 end
+s.listed_names={id}
 s.listed_series={0xaa}
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelAbove(5) and not c:IsType(TYPE_NORMAL)

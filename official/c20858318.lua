@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
+s.listed_names={76922029,6967870,61587183,48768179,74153887}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,76922029),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,6967870),tp,LOCATION_MZONE,0,1,nil)

@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x95}
 function s.cfilter(c)
 	return c:IsDiscardable() and c:IsType(TYPE_SPELL)
 end

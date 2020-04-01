@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e5:SetValue(aux.tgoval)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xab}
 function s.splimcon(e)
 	return not e:GetHandler():IsForbidden()
 end

@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x9f}
 function s.atktg(e,c)
 	return c:IsSetCard(0x9f)
 end

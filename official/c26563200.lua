@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x6d}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	if ph~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end

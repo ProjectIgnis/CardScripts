@@ -67,7 +67,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 		local tg=Group.CreateGroup()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		if ft>=g:GetCount() then
+		if ft>=#g then
 			tg:Merge(g)
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
@@ -80,7 +80,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		s.equipop(c,e,tp,tc,true)
 	end
 	Duel.EquipComplete()
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoGrave(g,REASON_RULE)
 	end
 end

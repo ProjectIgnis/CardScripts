@@ -88,6 +88,6 @@ end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if g:IsExists(Card.IsCode,1,nil,CARD_BLUEEYES_W_DRAGON) then
-		c:RegisterFlagEffect(id,RESET_EVENT+0x6e0000,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_LEAVE|RESET_TEMP_REMOVE),0,1)
 	end
 end

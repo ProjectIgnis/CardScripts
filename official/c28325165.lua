@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x10cd}
 function s.cfilter(c)
 	return c:IsSetCard(0x10cd) and c:IsType(TYPE_MONSTER)
 end

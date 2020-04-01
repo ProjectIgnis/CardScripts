@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.sumop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x604e}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x604e) and c:IsCanBeSpecialSummoned(e,152,tp,false,false)
 end

@@ -29,6 +29,8 @@ function s.initial_effect(c)
 	e3:SetCondition(s.spcon2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x20a2}
+s.listed_names={id}
 function s.thfilter(c)
 	return c:IsSetCard(0x20a2) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end

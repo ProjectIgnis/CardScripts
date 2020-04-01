@@ -72,7 +72,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 		e:GetLabelObject():SetLabel(1)
 		if c:GetFlagEffect(id)==0 then
-			c:RegisterFlagEffect(id,RESET_EVENT+0x1680000,0,0)
+			c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_LEAVE|RESET_TEMP_REMOVE|RESET_TOGRAVE|RESET_TURN_SET),0,0)
 			e:GetLabelObject():GetLabelObject():Clear()
 		end
 		e:GetLabelObject():GetLabelObject():AddCard(tc)

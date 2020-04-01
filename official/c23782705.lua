@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetValue(aux.imval1)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x36}
 function s.tg(e,c)
 	return c:IsSetCard(0x36) and c:GetCode()~=id
 end

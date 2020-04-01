@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x108}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x108),tp,LOCATION_MZONE,0,1,nil)

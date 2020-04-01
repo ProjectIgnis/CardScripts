@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetValue(CARD_CYBER_DRAGON)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x93,0x94,0x1093}
 function s.filter(c)
 	return (c:IsSetCard(0x93) or c:IsSetCard(0x94)) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end

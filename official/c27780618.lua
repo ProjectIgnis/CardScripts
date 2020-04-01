@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x8}
 s.listed_names={CARD_POLYMERIZATION}
 function s.tgfilter(c)
 	return c:IsSetCard(0x8) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()

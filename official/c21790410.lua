@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.shop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x56}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and ec:IsSetCard(0x56)
 end

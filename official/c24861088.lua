@@ -26,6 +26,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
+s.listed_series={0x70}
+s.listed_names={id}
 function s.chainfilter(re,tp,cid)
 	return re:GetHandler():IsSetCard(0x70)
 end

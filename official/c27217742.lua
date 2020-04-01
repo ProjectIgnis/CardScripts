@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 function s.thfilter(c)
 	return c:IsRace(RACE_THUNDER) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetLevel()==4 and not c:IsCode(id) and c:IsAbleToHand()
 end

@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xbe}
 function s.otfilter(c)
 	return c:IsSummonType(SUMMON_TYPE_TRIBUTE)
 end

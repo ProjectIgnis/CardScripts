@@ -46,6 +46,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x11a}
 s.material_setcode={0x11a}
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_LINK,fc,sumtype,tp) and c:IsSetCard(0x11a,fc,sumtype,tp)

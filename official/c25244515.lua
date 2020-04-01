@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xb3}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local phase=Duel.GetCurrentPhase()
 	if phase~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
@@ -84,7 +85,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetTarget(s.rettg)
 	e1:SetOperation(s.retop)
-	e1:SetReset(RESET_EVENT+0x1ec0000+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)

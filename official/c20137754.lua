@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xe3}
 function s.tgfilter(c)
 	return c:IsSetCard(0xe3) and c:IsAbleToGrave()
 end

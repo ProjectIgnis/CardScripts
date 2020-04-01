@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x88}
 function s.cfilter(c)
 	return c:IsSetCard(0x88) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end

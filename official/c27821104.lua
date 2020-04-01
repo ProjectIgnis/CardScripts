@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3d}
 function s.tfilter(c,atk,code,e,tp)
 	return c:IsSetCard(0x3d) and not c:IsCode(code) and c:GetAttack()==atk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

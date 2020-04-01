@@ -11,6 +11,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x106e}
+s.listed_names={id}
 function s.filter(c)
 	return (((c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsSetCard(0x106e))
 		or (c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_SPELLCASTER)))

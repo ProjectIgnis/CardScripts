@@ -30,6 +30,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x103}
+s.listed_names={id}
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end

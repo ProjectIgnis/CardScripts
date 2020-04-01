@@ -16,3 +16,4 @@ function s.initial_effect(c)
 	e2:SetValue(800)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x70}

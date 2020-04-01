@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.eqop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x107a}
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()

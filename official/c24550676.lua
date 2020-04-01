@@ -41,7 +41,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.material_setcode=0xdf
+s.listed_series={0xdf}
+s.material_setcode={0xdf}
 function s.tgvalue(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end

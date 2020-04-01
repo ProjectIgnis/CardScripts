@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.atlimit)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x2016}
 function s.costfilter(c)
 	return c:IsSetCard(0x2016) and c:IsType(TYPE_TUNER) and c:IsAbleToGraveAsCost()
 end

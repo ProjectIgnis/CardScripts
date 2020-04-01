@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x45}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
@@ -44,7 +45,7 @@ function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetValue(1500)
-	e1:SetReset(RESET_EVENT+0xff0000)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE&~RESET_TOFIELD)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_BASE_DEFENSE)
@@ -58,7 +59,7 @@ function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	e3:SetCountLimit(1)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetOperation(s.tgop)
-	e3:SetReset(RESET_EVENT+0xc6e0000)
+	e3:SetReset(RESET_EVENT|(RESETS_STANDARD|RESET_MSCHANGE|RESET_OVERLAY)&~(RESET_TOFIELD|RESET_LEAVE|RESET_TEMP_REMOVE))
 	c:RegisterEffect(e3)
 end
 function s.splimit(e,c,tp,sumtp,sumpos)

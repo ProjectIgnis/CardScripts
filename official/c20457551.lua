@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.desreptg)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x1d}
 function s.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
 		and e:GetHandler():GetEquipTarget():GetBattleTarget()

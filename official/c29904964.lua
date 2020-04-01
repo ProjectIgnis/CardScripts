@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.mtval)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10cf}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()

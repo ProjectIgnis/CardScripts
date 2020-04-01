@@ -19,7 +19,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
-s.material_setcode=0x19
+s.listed_series={0x19}
+s.material_setcode={0x19}
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(function(c) return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_ONFIELD,0,nil)
 end

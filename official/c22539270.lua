@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop2)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x24}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCurrentPhase()==PHASE_MAIN1 end
 	local e1=Effect.CreateEffect(e:GetHandler())

@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.sumop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x100a}
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	local c=e:GetHandler()

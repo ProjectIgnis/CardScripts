@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.desreptg)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x103}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return ph>PHASE_MAIN1 and ph<PHASE_MAIN2 and (ph~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
@@ -91,7 +92,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local tc=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
-	if tc and c:IsChainAttackable() and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+	if tc and c:CanChainAttack() and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		Duel.ChainAttack()
 	end
 end

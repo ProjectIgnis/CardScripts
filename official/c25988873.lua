@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetValue(TYPE_TUNER)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x29}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x29) and c:IsRace(RACE_WINGEDBEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

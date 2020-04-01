@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.flagop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x10}
 function s.flagop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsLocation(LOCATION_GRAVE) or (c:GetReason()&REASON_BATTLE)==0 then return end

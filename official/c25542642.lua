@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.spop)
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x10db}
 function s.target(e,tp,eg,ep,ev,re,r,rp,tc,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,1,0,0)

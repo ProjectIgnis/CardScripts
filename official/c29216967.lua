@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x83}
 function s.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x83) and c:IsAbleToGrave()
 end

@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x46,0x10f3}
 s.material_setcode={0xf3,0x10f3}
 function s.rmfilter(c,lv)
 	return c:IsFaceup() and c:IsLevelBelow(lv) and c:IsAbleToRemove()

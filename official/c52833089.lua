@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x33}
 function s.cfilter(c,tp)
 	return c:IsSetCard(0x33) and c:IsLocation(LOCATION_GRAVE)
 		and c:IsPreviousControler(tp) and (c:GetReason()&REASON_BATTLE)~=0

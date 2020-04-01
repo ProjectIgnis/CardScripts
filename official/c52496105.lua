@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.retop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x19}
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=c:GetPreviousEquipTarget()

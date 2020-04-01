@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x83}
 function s.lvfilter(c,lv)
 	local clv=c:GetLevel()
 	return c:IsFaceup() and c:IsSetCard(0x83) and clv>0 and clv~=lv

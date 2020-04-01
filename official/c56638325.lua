@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x9c}
 function s.limcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayCount()>0 and eg:IsExists(Card.IsSummonPlayer,1,nil,tp)
 end

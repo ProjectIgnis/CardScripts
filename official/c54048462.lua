@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x35}
 function s.costfilter(c)
 	return c:IsRace(RACE_FIEND) and c:IsDiscardable()
 end

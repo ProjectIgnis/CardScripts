@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e3)
 end
+s.listed_series={0x10f3}
 s.material_setcode={0xf3,0x10f3}
 function s.ffilter2(c,fc,sumtype,tp)
 	return c:GetOriginalLevel()>=8 and c:IsAttribute(ATTRIBUTE_DARK,fc,sumtype,tp)

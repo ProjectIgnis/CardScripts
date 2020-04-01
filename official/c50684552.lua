@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x16}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_DESTROY)~=0
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

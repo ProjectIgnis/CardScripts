@@ -59,6 +59,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.operation4)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x107a,0x207a}
 function s.confilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x107a)
 end

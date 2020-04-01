@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x42,0x4b,0x5042}
 function s.filter(c)
 	return c:IsSetCard(0x42) or c:IsSetCard(0x4b)
 end

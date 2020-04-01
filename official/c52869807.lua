@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetValue(-300)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x33}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and

@@ -49,6 +49,7 @@ function s.initial_effect(c)
 	e4:SetLabelObject(ng)
 	e5:SetLabelObject(ng)
 end
+s.listed_series={0x2b,0x61}
 function s.splimit(e,se,sp,st)
 	return (se:IsActiveType(TYPE_MONSTER) and se:GetHandler():IsSetCard(0x2b)) or se:GetHandler():IsSetCard(0x61)
 end

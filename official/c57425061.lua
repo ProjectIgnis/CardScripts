@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x8}
 function s.exfilter0(c)
 	return c:GetOriginalType()&TYPE_MONSTER==TYPE_MONSTER
 		and c:GetType()&(TYPE_TRAP+TYPE_CONTINUOUS)==TYPE_TRAP+TYPE_CONTINUOUS

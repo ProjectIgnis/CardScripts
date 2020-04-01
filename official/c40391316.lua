@@ -12,7 +12,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-s.material_setcode=0xf
+s.listed_series={0xf}
+s.material_setcode={0xf}
 function s.disop(e,tp)
 	local c=Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)
 	if c==0 then return end

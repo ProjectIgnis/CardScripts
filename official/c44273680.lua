@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x86}
 function s.cfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost()
 end

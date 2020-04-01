@@ -62,6 +62,7 @@ function s.initial_effect(c)
 	e6:SetLabel(5)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x9e}
 function s.confilter(c)
 	return c:IsSetCard(0x9e) and c:IsType(TYPE_MONSTER)
 end

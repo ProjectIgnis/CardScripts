@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9b}
 function s.condition(e,c)
 	return c:IsRace(RACE_FAIRY)
 end

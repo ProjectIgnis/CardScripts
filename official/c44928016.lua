@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 function s.cfilter(c,ft)
 	return c:IsRace(RACE_PLANT) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsCode(id) and c:IsAbleToGraveAsCost()
 		and (ft>0 or c:GetSequence()<5)

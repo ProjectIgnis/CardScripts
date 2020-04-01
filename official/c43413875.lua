@@ -33,6 +33,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xe6}
+s.listed_names={id}
 function s.hspfilter(c,tp)
 	return c:IsSetCard(0xe6) and c:GetLevel()==8 and not c:IsCode(id)
 end

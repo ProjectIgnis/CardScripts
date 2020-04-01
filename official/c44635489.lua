@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.xyzlimit)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x53}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)==0

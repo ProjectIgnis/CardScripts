@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.epop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xe6}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and r==REASON_RULE
 end

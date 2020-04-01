@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x1047}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if not aux.IsGeminiState(e) then return false end
 	local tc=eg:GetFirst()

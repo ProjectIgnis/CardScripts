@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.ofilter(c)
 	return c:GetOverlayCount()~=0
 end

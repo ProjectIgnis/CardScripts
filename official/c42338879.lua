@@ -35,7 +35,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	else
 		e1:SetValue(4)
 	end
-	e1:SetReset(RESET_EVENT+0xff0000)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE&~RESET_TOFIELD)
 	c:RegisterEffect(e1)
 end
 function s.recon(e)

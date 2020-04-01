@@ -36,7 +36,8 @@ function s.initial_effect(c)
 	e5:SetValue(s.atkup)
 	c:RegisterEffect(e5)
 end
-s.material_setcode=0x8
+s.listed_series={0x8}
+s.material_setcode={0x8}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:GetCode()~=id and c:IsAttribute(ATTRIBUTE_WATER)
 end

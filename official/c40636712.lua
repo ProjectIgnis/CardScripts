@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.posop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xc3,0xa9}
 s.material_setcode={0xa9,0xc3}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsDirectAttacked() end

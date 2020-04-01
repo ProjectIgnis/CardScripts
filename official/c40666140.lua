@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x42}
 function s.filter(c,e,tp)
 	local lv=c:GetLevel()
 	return c:IsFaceup() and lv>0 and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND,0,1,nil,lv,e,tp)

@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x100d}
 function s.spfilter(c)
 	return c:IsSetCard(0x100d) and c:IsType(TYPE_MONSTER)
 end

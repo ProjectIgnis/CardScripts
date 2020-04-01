@@ -1,5 +1,5 @@
 --讃美火
---Hymnal Flame
+--Firebrand Hymnist
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

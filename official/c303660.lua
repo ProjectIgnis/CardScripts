@@ -1,4 +1,5 @@
 --電脳増幅器
+--Amplifier
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --百獣大行進
+--The Big March of Animals
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

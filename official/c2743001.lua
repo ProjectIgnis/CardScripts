@@ -1,4 +1,5 @@
 --水晶機巧－フェニキシオン
+--Crystron Phoenix
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

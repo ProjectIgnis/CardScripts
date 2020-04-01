@@ -1,4 +1,5 @@
 --トイナイト
+--Toy Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

@@ -1,4 +1,5 @@
 --湿地草原
+--Wetlands
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

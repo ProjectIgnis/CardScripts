@@ -1,4 +1,5 @@
 --７つの武器を持つハンター
+--The Hunter with 7 Weapons
 local s,id=GetID()
 function s.initial_effect(c)
 	--arm

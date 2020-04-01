@@ -1,5 +1,5 @@
 --古代の機械素体
---Ancient Gearframe
+--Ancient Gear Frame
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

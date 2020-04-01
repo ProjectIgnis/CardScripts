@@ -1,5 +1,5 @@
 --虚の王 ウートガルザ
---Utgard, Generaider Boss of Lies
+--Utgarda, Generaider Boss of Delusion
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

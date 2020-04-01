@@ -1,4 +1,5 @@
 --甲虫装機 グルフ
+--Inzektor Ladybug
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip

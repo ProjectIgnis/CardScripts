@@ -1,4 +1,5 @@
 --時空の落とし穴
+--Time-Space Trap Hole
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

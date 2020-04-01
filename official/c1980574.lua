@@ -1,5 +1,5 @@
 --ホップ・イヤー飛行隊
---Hop-Eared Flying Squad
+--Hop Ear Squadron
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

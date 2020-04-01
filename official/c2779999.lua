@@ -1,4 +1,5 @@
 --棘の壁
+--Wall of Thorns
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

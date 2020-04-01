@@ -1,5 +1,5 @@
 --独法師
---Hitori Boushi
+--Bonze Alone
 --scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()

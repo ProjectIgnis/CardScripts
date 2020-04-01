@@ -1,3 +1,4 @@
+--F.A.オフロードGP 
 --F.A. Off-Road Grand Prix
 local s,id=GetID()
 function s.initial_effect(c)

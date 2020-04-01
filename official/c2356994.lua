@@ -1,4 +1,5 @@
 --偉大天狗
+--Great Long Nose
 local s,id=GetID()
 function s.initial_effect(c)
 	--spirit return

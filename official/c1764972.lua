@@ -1,4 +1,5 @@
 --デスカイザー・ドラゴン／バスター
+--Doomkaiser Dragon/Assault Mode
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

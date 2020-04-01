@@ -1,4 +1,5 @@
 --極星將テュール
+--Tyr of the Nordic Champions
 local s,id=GetID()
 function s.initial_effect(c)
 	--self destroy

@@ -1,4 +1,5 @@
 --遠心分離フィールド
+--Centrifugal Field
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

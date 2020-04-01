@@ -1,5 +1,5 @@
 --永の王 オルムガンド
---Jormungandr, Generaid of Eternity
+--Jormungandr, Generaider Boss of Eternity
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

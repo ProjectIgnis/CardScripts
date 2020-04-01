@@ -1,4 +1,5 @@
 --星因士 ウヌク
+--Satellarknight Unukalhai
 local s,id=GetID()
 function s.initial_effect(c)
 	--tograve

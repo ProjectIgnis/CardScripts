@@ -1,4 +1,5 @@
 --八汰鏡
+--Mirror of Yata
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsType,TYPE_SPIRIT))

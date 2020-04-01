@@ -1,4 +1,5 @@
 --銀の弓矢
+--Silver Bow and Arrow
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_FAIRY))

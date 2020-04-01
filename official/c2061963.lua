@@ -1,4 +1,5 @@
 --No.104 仮面魔踏士シャイニング
+--Number 104: Masquerade
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

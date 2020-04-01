@@ -1,5 +1,5 @@
 --戦華の雄－張徳
---Senka Champion - Zhang De
+--Ancient Warriors - Valiant Zhang De
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --王の報酬
---Generaid Reward
+--Generaider Boss Loot
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

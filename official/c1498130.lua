@@ -1,4 +1,5 @@
 --六武衆の影武者
+--Kagemusha of the Six Samurai
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

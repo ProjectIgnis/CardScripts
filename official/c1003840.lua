@@ -1,4 +1,5 @@
 --スターライト・ジャンクション
+--Starlight Junktion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

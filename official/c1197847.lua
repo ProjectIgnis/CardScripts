@@ -1,5 +1,5 @@
 --幻煌龍の螺旋波
---Spiral Wave of the Mythic Radiance Dragon
+--Phantasm Spiral Wave
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsType,TYPE_NORMAL))

@@ -1,4 +1,5 @@
 --銀河眼の光波刃竜
+--Galaxy-Eyes Cipher Blade Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

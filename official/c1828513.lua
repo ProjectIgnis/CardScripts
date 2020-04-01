@@ -1,4 +1,5 @@
 --六武衆の影－紫炎
+--Shadow of the Six Samurai - Shien
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

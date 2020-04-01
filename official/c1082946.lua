@@ -1,4 +1,5 @@
 --運命の火時計
+--Pyro Clock of Destiny
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --ZW－極星神馬聖鎧
+--ZW - Sleipnir Mail
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)

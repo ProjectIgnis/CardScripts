@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_DRAW)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
-	e1:SetReset(RESET_EVENT+0x1de0000)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TOHAND)
 	c:RegisterEffect(e1)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

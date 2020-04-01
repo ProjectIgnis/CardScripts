@@ -46,6 +46,8 @@ function s.initial_effect(c)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x29}
+s.listed_names={id}
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and not ec:IsCode(id) and ec:IsRace(RACE_DRAGON)
 end

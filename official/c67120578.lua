@@ -29,6 +29,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.efop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x54}
+s.listed_names={id}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -42,7 +44,7 @@ function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetReset(RESET_EVENT+0xff0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE&~RESET_TOFIELD)
 	e1:SetCode(EFFECT_CHANGE_LEVEL)
 	e1:SetValue(4)
 	c:RegisterEffect(e1)

@@ -28,8 +28,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={93754402}
-s.listed_series={0x79,0x7c}
+s.listed_names={id}
+s.listed_series={0x7c,0x79}
 function s.setcfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
 end

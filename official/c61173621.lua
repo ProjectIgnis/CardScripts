@@ -24,6 +24,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xad}
+s.listed_names={id}
 function s.filter(c)
 	return c:IsCode(id) and c:IsAbleToHand()
 end

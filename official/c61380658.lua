@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xe}
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0xe) and c~=e:GetHandler()
 end

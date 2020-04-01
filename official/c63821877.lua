@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x10db,0xdb}
 function s.efcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return r==REASON_XYZ and c:GetReasonCard():IsAttribute(ATTRIBUTE_DARK)

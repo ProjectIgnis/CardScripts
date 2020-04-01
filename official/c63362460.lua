@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xc008}
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL)
 end

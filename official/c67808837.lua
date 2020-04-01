@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.atkval)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x9f}
 function s.reg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)

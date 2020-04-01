@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.posop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3008}
 s.listed_names={79979666}
 function s.filter1(c,ft)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition() and c:IsCode(79979666) 

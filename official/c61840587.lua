@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e1)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x28}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x28) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

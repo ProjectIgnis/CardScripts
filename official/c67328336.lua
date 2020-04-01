@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x3013}
 function s.effval(e,re,rp)
 	return re:GetHandler():IsType(TYPE_SYNCHRO)
 end

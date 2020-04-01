@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xad}
 s.listed_names={CARD_POLYMERIZATION}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)

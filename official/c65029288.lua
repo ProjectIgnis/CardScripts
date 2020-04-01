@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x99,0x9f}
 s.listed_names={CARD_POLYMERIZATION}
 s.material_setcode={0x99,0x9f}
 function s.immcon(e,tp,eg,ep,ev,re,r,rp)

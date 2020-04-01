@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.eqop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xfa}
 s.listed_names={CARD_UMI}
 function s.cfilter(c)
 	return c:IsFacedown() or not c:IsType(TYPE_NORMAL)

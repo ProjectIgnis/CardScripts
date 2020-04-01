@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.cbop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1034}
 function s.repcon(e)
 	local c=e:GetHandler()
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsReason(REASON_DESTROY)

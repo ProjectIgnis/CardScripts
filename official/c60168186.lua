@@ -69,6 +69,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.damop)
 	c:RegisterEffect(e6)
 end
+s.listed_series={0x10af}
 function s.cfilter(c,tp,typ)
 	return c:IsFaceup() and c:IsType(typ) and c:IsSetCard(0x10af) and c:IsControler(tp) and not c:IsSummonLocation(LOCATION_EXTRA)
 end

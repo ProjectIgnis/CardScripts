@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xe1}
 function s.desfilter(c,tp)
 	if c:IsFacedown() then return false end
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)

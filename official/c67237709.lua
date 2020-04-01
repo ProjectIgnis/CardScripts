@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop2)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xd2}
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xd2) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end

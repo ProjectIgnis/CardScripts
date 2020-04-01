@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.imval1)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x3008}
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end

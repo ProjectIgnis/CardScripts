@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.defval)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(id)
 end

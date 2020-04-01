@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.copyop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x48}
 function s.ovfilter(c,tp,lc)
 	local class=c:GetMetatable(true)
 	if class==nil then return false end

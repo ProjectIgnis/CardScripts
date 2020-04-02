@@ -1,5 +1,5 @@
 --六花精シクラン
---Snowflower Sprite Cyclan
+--Cyclamen the Rikka Fairy
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

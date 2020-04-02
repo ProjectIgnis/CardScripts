@@ -1,5 +1,5 @@
 --魔救の救砕
---Adamatia Relieve
+--Adamancipator Relief
 --Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)

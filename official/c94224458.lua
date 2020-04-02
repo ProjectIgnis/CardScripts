@@ -1,5 +1,5 @@
 --白き宿命のエルドリクシル
---Eldlixir of White Fate
+--Eldlixir of White Destiny
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

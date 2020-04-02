@@ -1,5 +1,5 @@
 --魔救の探索者
---Adamacia Researcher
+--Adamancipator Researcher
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -27,7 +27,7 @@ end
 s.listed_names={id}
 s.listed_series={0x140}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_ROCK)  and not c:IsCode(id)
+	return c:IsFaceup() and c:IsRace(RACE_ROCK) and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

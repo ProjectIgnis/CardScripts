@@ -1,5 +1,5 @@
 --六花絢爛
---Stunning Snowflower
+--Rikka Glamour
 --scripted by Naim, updated by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

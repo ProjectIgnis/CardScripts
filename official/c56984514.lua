@@ -1,5 +1,5 @@
 --永久に輝けし黄金郷
---The Golden Land of Eternal Radiance
+--Golden Land Forever!
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)

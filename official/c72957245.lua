@@ -1,7 +1,6 @@
 --魔救の息吹
---Adamacia Sign
+--Adamancipator Signs
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

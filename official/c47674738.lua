@@ -1,5 +1,5 @@
 --魔救の奇跡－レオナイト
---Adamacia Rise - Leonite
+--Adamancipator Risen - Leonite
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

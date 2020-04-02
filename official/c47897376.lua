@@ -1,5 +1,5 @@
 --魔救の奇石－レオナイト
---Adamacia Crysta - Leonite
+--Adamancipator Crystal - Leonite
 local s,id=GetID()
 function s.initial_effect(c)
 	--decktop other

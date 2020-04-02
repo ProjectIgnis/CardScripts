@@ -1,5 +1,5 @@
 --六花精ボタン
---Snowflower Sprite Peony
+--Mudan the Rikka Fairy
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)

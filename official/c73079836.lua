@@ -1,5 +1,5 @@
 --魔救の奇跡－ラプタイト
---Adamacia Rise - Raptite
+--Adamancipator Risen - Raptite
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

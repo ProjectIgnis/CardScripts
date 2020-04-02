@@ -1,5 +1,5 @@
 --魔救の奇跡－ドラガイト
---Adamatia Rise - Dragite
+--Adamancipator Risen - Dragite
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

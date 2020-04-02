@@ -1,5 +1,5 @@
 --六花深々
---Silent Snowflower
+--Rikka Tranquility
 --scripted by Naim, updated by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

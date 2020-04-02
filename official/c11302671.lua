@@ -1,6 +1,6 @@
 --魔救の分析者
---Adamacia Analyzer
---Adamacia Seeker scripted by Eerie Code, adapted by AlphaKretin
+--Adamancipator Analyzer
+--based off of Eerie Code's Adamancipator Seeker, adapted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

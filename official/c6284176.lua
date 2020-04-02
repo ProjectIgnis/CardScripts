@@ -1,5 +1,5 @@
 --六花聖カンザシ
---Snowflower Saint Kanzashi
+--Kanzashi the Rikka Queen
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -71,8 +71,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsRace(RACE_PLANT) and c:IsReason(REASON_EFFECT)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_PLANT) and c:IsReason(REASON_EFFECT)
 end
 function s.cfilter(c,e,tp)
 	return c:IsRace(RACE_PLANT) and c:IsControler(tp) and c:IsReleasableByEffect(e)

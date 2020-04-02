@@ -1,5 +1,5 @@
 --六花聖ティアドロップ
---Snowflower Saint Teardrop
+--Teardrop the Rikka Queen
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

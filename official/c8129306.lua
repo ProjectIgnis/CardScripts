@@ -1,5 +1,5 @@
 --六花精プリム
---Snowflower Sprite Prim
+--Primula the Rikka Fairy
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)

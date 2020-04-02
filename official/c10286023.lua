@@ -1,5 +1,5 @@
 --魔救の奇石－ドラガイト
---Adamacia Crysta - Dragite
+--Adamancipator Crystal - Dragite
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

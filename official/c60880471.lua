@@ -1,5 +1,5 @@
 --六花精ヘレボラス
---Snowflower Sprite Helleborus
+--Hellebore the Rikka Fairy
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

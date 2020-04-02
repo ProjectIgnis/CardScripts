@@ -1,5 +1,5 @@
 --六花のひとひら
---Snowflower Petal
+--Rikka Petal
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)

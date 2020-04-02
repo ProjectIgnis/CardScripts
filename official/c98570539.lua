@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x131),matfilter=Fusion.OnFieldMat,extrafil=s.fextra,extraop=s.extraop})
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
 end

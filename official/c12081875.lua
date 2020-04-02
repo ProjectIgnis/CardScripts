@@ -88,12 +88,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 		for etc in aux.Next(g) do
-		    etc:CreateEffectRelation(te)
+			etc:CreateEffectRelation(te)
 		end
 		if op then op(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		tc:ReleaseEffectRelation(te)
 		for etc in aux.Next(g) do
-		    etc:ReleaseEffectRelation(te)
+			etc:ReleaseEffectRelation(te)
 		end
 		local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 		Duel.SendtoDeck(tc,nil,opt,REASON_EFFECT)
@@ -118,4 +118,3 @@ end
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
-

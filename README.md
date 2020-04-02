@@ -15,7 +15,9 @@ Reach out to us on Discord to learn how to contribute! Bug reports go on Discord
 
 ## Travis CI
 
-A basic Lua syntax check is done on scripts on pushes and pull requests. The `initial_effect` function is run for card scripts.
+A basic Lua syntax check is done on scripts on pushes and pull requests. It loads `constant.lua` and `utility.lua` into ocgcore. Then it searches through one subfolder level for files of the form `cX.lua`, where `X` is an integer, loading them into the core as a dummy card with the same passcode. Three-digit passcodes and 151000000 are skipped.
+
+The syntax checker will catch basic Lua syntax errors like missing `end` statements and runtime errors in `initial_effect` (or a lack of `initial_effect` in a card script). It will not catch runtime errors in other functions declared within a script unless they are called by `initial_effect` of some other script.
 
 This is not a static analyzer and it will not catch incorrect parameters for calls outside of `initial_effect` or any other runtime error.
 

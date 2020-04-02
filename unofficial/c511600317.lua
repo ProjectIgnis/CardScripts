@@ -8,13 +8,13 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e1:SetCountLimit(1,id)--EFFECT_COUNT_CODE_OATH
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)--EFFECT_COUNT_CODE_OATH
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	if not s.global_check then
 		s.global_check=true
-		local ge1=Effect.CreateEffect(c)
+		local ge1=Effect.GlobalEffect()
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DAMAGE)
 		ge1:SetOperation(s.checkop)

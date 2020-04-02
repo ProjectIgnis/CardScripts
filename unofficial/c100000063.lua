@@ -20,13 +20,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.piercetg)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x3013}
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end
 function s.piercecon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return d and a:IsControler(tp) and d:IsDefensePos() and a:IsSetCard(0x3013) and a:CanChainAttack()
+	return d and a:IsControler(tp) and d:IsPreviousPosition(POS_DEFENSE) and a:IsSetCard(0x3013) and a:CanChainAttack()
 end
 function s.piercetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttacker()

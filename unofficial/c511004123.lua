@@ -86,7 +86,7 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 				end
 				if ok then
 					local copye={}
-					for _,te3 in ipairs(teff) do
+					for k,te3 in ipairs(teff) do
 						if te3:GetLabel()==code then
 							table.insert(copye,teff[k])
 						end

@@ -15,7 +15,7 @@ s.listed_names={84013237}
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()
 	return c:IsFaceup() and c:IsCode(84013237) and c:GetOverlayGroup():GetCount()>=2 and (rk>0 or c:IsStatus(STATUS_NO_LEVEL)) 
-		and Duel.GetLocationCountFromEx(tp,tp,c)>1
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>1
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,2,nil,rk,e,tp,c)
 end
 function s.filter2(c,rk,e,tp,mc)
@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ect~=nil and ect<2 then return end
 	local tc=Duel.GetFirstTarget()
 	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) 
-		or Duel.GetLocationCountFromEx(tp,tp,tc)<=1 then return end
+		or Duel.GetLocationCountFromEx(tp,tp,nil,tc)<=1 then return end
 	local ov=tc:GetOverlayGroup()
 	if #ov<2 then return end
 	local g=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,tc:GetRank(),e,tp,tc)

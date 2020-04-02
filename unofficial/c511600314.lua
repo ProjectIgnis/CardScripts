@@ -1,5 +1,5 @@
 --Ａｉシャドー
---A.I. Shadow
+--A.I. Shadow (Anime)
 --Scripted by Larry126
 local s,id,alias=GetID()
 function s.initial_effect(c)

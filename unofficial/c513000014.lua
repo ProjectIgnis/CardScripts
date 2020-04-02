@@ -1,4 +1,5 @@
 --TG ハルバード・キャノン
+--T.G. Halberd Cannon anime
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -15,11 +16,11 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_MATERIAL_CHECK)
 	e2:SetValue(s.valcheck)
-	e2:SetLabelObject(e2)
+	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 	--Special Summon
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(35952884,1))
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -36,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	--negate activate
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(2061963,0))
+	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetCategory(CATEGORY_DISABLE)
 	e6:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e6:SetType(EFFECT_TYPE_QUICK_O)
@@ -54,7 +55,8 @@ function s.valcheck(e,c)
 	e:GetLabelObject():SetLabel(ct)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO and e:GetLabel()>0
+	local c=e:GetHandler()
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:GetMaterialCount()>0
 end
 function s.chkfilter(c,label)
 	return c:GetFlagEffect(label)>0
@@ -62,31 +64,29 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=e:GetLabel()
-	local label=5130014
+	local label=c:GetOriginalCodeRule()
 	while Duel.IsExistingMatchingCard(s.chkfilter,tp,LOCATION_MZONE,0,1,nil,label) do
 		label=label+1
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_DESTROY)
-	e1:SetDescription(aux.Stringid(97836203,0))
+	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_SUMMON)
-	e1:SetCountLimit(ct,label)
+	e1:SetCountLimit(ct,id)
 	e1:SetCondition(s.discon)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
-	e1:SetReset(RESET_EVENT+0x0ff0000)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
-	e2:SetDescription(aux.Stringid(97836203,1))
 	e2:SetCode(EVENT_FLIP_SUMMON)
 	c:RegisterEffect(e2)
 	local e3=e1:Clone()
-	e3:SetDescription(aux.Stringid(97836203,2))
 	e3:SetCode(EVENT_SPSUMMON)
 	c:RegisterEffect(e3)
-	c:RegisterFlagEffect(51300014,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(label,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain()==0

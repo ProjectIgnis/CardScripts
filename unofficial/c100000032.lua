@@ -1,4 +1,5 @@
 --ダーク・アーキタイプ
+--Dark Archetype
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
+	return e:GetHandler():IsLocation(LOCATION_GRAVE)
 end
 function s.filter(c,e,tp,dam)
 	return c:IsAttackBelow(dam) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

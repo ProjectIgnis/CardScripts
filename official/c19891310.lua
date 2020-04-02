@@ -1,4 +1,5 @@
 --ギアギアギア XG
+--Geargiagear Gigant XG
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -19,17 +20,11 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_REMOVE)
-	c:RegisterEffect(e3)
-	local e4=e2:Clone()
-	e4:SetCode(EVENT_TO_DECK)
-	c:RegisterEffect(e4)
 end
 s.listed_series={0x72}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

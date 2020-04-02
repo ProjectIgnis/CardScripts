@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),4,4)
-	--
+	--negate and destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	--disable
+	--negate effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
@@ -55,7 +55,6 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-
 function s.discon2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local oc=tc:GetBattleTarget()
@@ -80,8 +79,7 @@ function s.disop2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (c:IsReason(REASON_BATTLE) or
-		(c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)))
+	return (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)))
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function s.filter(c,e,tp)

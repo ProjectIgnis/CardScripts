@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e1:SetValue(86120751)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--search
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
@@ -57,8 +57,8 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT+REASON_DISCARD)~=0 then
-        	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-        	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
@@ -67,7 +67,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT))	and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
+	return (c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT)) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
 end
 function s.thfilter2(c)
 	return c:IsCode(47457347) and c:IsAbleToHand()

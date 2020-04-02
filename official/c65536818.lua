@@ -1,4 +1,5 @@
 --源竜星－ボウテンコウ
+--Denglong, First of the Yang Zing
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
@@ -30,17 +31,11 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e3:SetCode(EVENT_TO_GRAVE)
+	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	local e4=e3:Clone()
-	e4:SetCode(EVENT_REMOVE)
-	c:RegisterEffect(e4)
-	local e5=e3:Clone()
-	e5:SetCode(EVENT_TO_DECK)
-	c:RegisterEffect(e5)
 end
 s.listed_series={0x9e}
 function s.thfilter(c)

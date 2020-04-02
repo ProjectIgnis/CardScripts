@@ -1,4 +1,5 @@
 --ギアギガント X
+--Gear Gigant X
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -15,23 +16,17 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--spsummon
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_REMOVE)
-	c:RegisterEffect(e3)
-	local e4=e2:Clone()
-	e4:SetCode(EVENT_TO_DECK)
-	c:RegisterEffect(e4)
 end
 s.listed_series={0x72}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

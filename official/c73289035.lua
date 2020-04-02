@@ -1,4 +1,5 @@
 --武神帝－ツクヨミ
+--Bujintei Tsukuyomi
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -20,18 +21,12 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_REMOVE)
-	c:RegisterEffect(e3)
-	local e4=e2:Clone()
-	e4:SetCode(EVENT_TO_DECK)
-	c:RegisterEffect(e4)
 end
 s.listed_series={0x88}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

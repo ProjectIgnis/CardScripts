@@ -83,9 +83,9 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_ONFIELD,0,1,nil,e,tp) end
 	if Duel.SelectEffectYesNo(tp,c,96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-    local sg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
-    Duel.Hint(HINT_CARD,0,id)
-    Duel.SendtoGrave(sg,REASON_EFFECT+REASON_REPLACE)
+	local sg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	Duel.Hint(HINT_CARD,0,id)
+	Duel.SendtoGrave(sg,REASON_EFFECT+REASON_REPLACE)
 		return true
 	else return false end
 end

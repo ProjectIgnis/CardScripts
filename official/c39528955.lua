@@ -60,16 +60,15 @@ function s.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local ttp=tc:GetControler()
 	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) or Duel.GetLocationCount(ttp,LOCATION_MZONE,ttp,LOCATION_REASON_CONTROL)<=0 then return end
 	local p1,p2,i
-    if tc:IsControler(tp) then
-        i=0
-        p1=LOCATION_MZONE
-        p2=0
-    else
-        i=16
-        p2=LOCATION_MZONE
-        p1=0
-    end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-    Duel.MoveSequence(tc,math.log(Duel.SelectDisableField(tp,1,p1,p2,0),2)-i)
+	if tc:IsControler(tp) then
+		i=0
+		p1=LOCATION_MZONE
+		p2=0
+	else
+		i=16
+		p2=LOCATION_MZONE
+		p1=0
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+	Duel.MoveSequence(tc,math.log(Duel.SelectDisableField(tp,1,p1,p2,0),2)-i)
 end
-

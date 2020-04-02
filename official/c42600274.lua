@@ -24,23 +24,23 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.hspcon(e,c)
-    if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsRace,1,true,1,true,c,c:GetControler(),nil,false,e:GetHandler(),RACE_WARRIOR+RACE_FAIRY)
+	if c==nil then return true end
+	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsRace,1,true,1,true,c,c:GetControler(),nil,false,e:GetHandler(),RACE_WARRIOR+RACE_FAIRY)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,true,true,true,c,nil,nil,false,e:GetHandler(),RACE_WARRIOR+RACE_FAIRY)
-    if g then
-        g:KeepAlive()
-        e:SetLabelObject(g)
-    return true
-    end
-    return false
+	local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,true,true,true,c,nil,nil,false,e:GetHandler(),RACE_WARRIOR+RACE_FAIRY)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=e:GetLabelObject()
-    if not g then return end
-    Duel.Release(g,REASON_COST)
-    g:DeleteGroup()
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_RITUAL)

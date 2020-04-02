@@ -51,7 +51,7 @@ s.material={CARD_DARK_MAGICIAN,CARD_REDEYES_B_DRAGON}
 s.listed_names={CARD_DARK_MAGICIAN,CARD_REDEYES_B_DRAGON}
 s.material_setcode={0x3b,0x10a2}
 function s.ffilter(c,fc,sumtype,tp)
-    return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsType(TYPE_EFFECT,fc,sumtype,tp)
+	return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsType(TYPE_EFFECT,fc,sumtype,tp)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

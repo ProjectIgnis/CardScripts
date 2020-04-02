@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	e2:SetTarget(s.infilter)
-	e2:SetValue(indesval)
+	e2:SetValue(s.indesval)
 	c:RegisterEffect(e2)
 end
 function s.infilter(e,c)

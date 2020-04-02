@@ -1,4 +1,5 @@
 --貪欲な壺
+--Pot of Avarice
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

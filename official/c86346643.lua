@@ -1,17 +1,18 @@
 --レインボー・ネオス
+--Rainbow Neos
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,false,false,CARD_NEOS,aux.FilterBoolFunctionEx(Card.IsSetCard,0x2034))
-	--spsummon condition
+	--special summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.fuslimit)
 	c:RegisterEffect(e1)
-	--to deck
+	--send monsters to deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -22,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tdtg1)
 	e2:SetOperation(s.tdop1)
 	c:RegisterEffect(e2)
+	--send spell/trap to deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -32,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.tdtg2)
 	e3:SetOperation(s.tdop2)
 	c:RegisterEffect(e3)
+	--send GY to deck
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,3))
 	e4:SetType(EFFECT_TYPE_IGNITION)

@@ -37,24 +37,24 @@ function s.rfilter(c,tp)
 	return c:IsFaceup() and c:GetAttack()==0 and (c:IsControler(tp) or c:IsControler(1-tp))
 end
 function s.spcon(e,c)
-    if c==nil then return true end
-    local tp=e:GetHandlerPlayer()
-    return Duel.CheckReleaseGroup(tp,s.rfilter,2,false,2,true,c,c:GetControler(),nil,true,nil,tp)
+	if c==nil then return true end
+	local tp=e:GetHandlerPlayer()
+	return Duel.CheckReleaseGroup(tp,s.rfilter,2,false,2,true,c,c:GetControler(),nil,true,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,s.rfilter,2,2,false,true,true,c,nil,nil,true,nil,tp)
-    if g then
-        g:KeepAlive()
-        e:SetLabelObject(g)
-    return true
-    end
-    return false
+	local g=Duel.SelectReleaseGroup(tp,s.rfilter,2,2,false,true,true,c,nil,nil,true,nil,tp)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=e:GetLabelObject()
-    if not g then return end
-    Duel.Release(g,REASON_COST)
-    g:DeleteGroup()
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end

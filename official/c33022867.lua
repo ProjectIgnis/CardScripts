@@ -34,22 +34,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.spcon(e,c)
-    if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,3,false,3,true,c,c:GetControler(),nil,false,nil)
+	if c==nil then return true end
+	return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,3,false,3,true,c,c:GetControler(),nil,false,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,aux.TRUE,3,3,false,true,true,c,nil,nil,false,nil)
-    if g then
-        g:KeepAlive()
-        e:SetLabelObject(g)
-    return true
-    end
-    return false
+	local g=Duel.SelectReleaseGroup(tp,aux.TRUE,3,3,false,true,true,c,nil,nil,false,nil)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=e:GetLabelObject()
-    if not g then return end
-    Duel.Release(g,REASON_COST)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
 	local atk=0
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do

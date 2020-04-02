@@ -19,9 +19,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--Same thing as above, but upon special summon
-    local e2=e1:Clone()
-    e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-    c:RegisterEffect(e2)
+	local e2=e1:Clone()
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e2)
 end
 s.listed_names={16146511}
 	--Check for gemini or FIRE warrior, besides "Evocator Eveque"

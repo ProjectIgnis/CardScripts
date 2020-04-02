@@ -49,19 +49,19 @@ function s.hspcon(e,c)
 	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,80887952)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,false,nil,80887952)
-    if g then
-        g:KeepAlive()
-        e:SetLabelObject(g)
-    return true
-    end
-    return false
+	local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,false,nil,80887952)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=e:GetLabelObject()
-    if not g then return end
-    Duel.Release(g,REASON_COST)
-    g:DeleteGroup()
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.value(e,c)
 	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsType,TYPE_MONSTER),0,LOCATION_REMOVED,LOCATION_REMOVED,nil)*300

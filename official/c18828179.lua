@@ -26,23 +26,23 @@ function s.initial_effect(c)
 end
 s.listed_names={45045866}
 function s.spcon(e,c)
-    if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,45045866)
+	if c==nil then return true end
+	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,45045866)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,false,nil,45045866)
-    if g then
-        g:KeepAlive()
-        e:SetLabelObject(g)
-    return true
-    end
-    return false
+	local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,false,nil,45045866)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=e:GetLabelObject()
-    if not g then return end
-    Duel.Release(g,REASON_COST)
-    g:DeleteGroup()
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsDiscardable() and c:IsAbleToGraveAsCost()

@@ -72,12 +72,12 @@ function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	for etc in aux.Next(g) do
-	    etc:CreateEffectRelation(te)
+		etc:CreateEffectRelation(te)
 	end
 	if op then op(te,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,1) end
 	tc:ReleaseEffectRelation(te)
 	for etc in aux.Next(g) do
-	    etc:ReleaseEffectRelation(te)
+		etc:ReleaseEffectRelation(te)
 	end
 	Duel.BreakEffect()
 	Duel.SendtoDeck(te:GetHandler(),nil,2,REASON_EFFECT)

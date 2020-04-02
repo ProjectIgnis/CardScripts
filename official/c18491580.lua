@@ -29,23 +29,23 @@ end
 s.listed_series={0x3b}
 s.listed_names={CARD_REDEYES_B_DRAGON}
 function s.hspcon(e,c)
-    if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsSetCard,1,true,1,true,c,c:GetControler(),nil,false,e:GetHandler(),0x3b)
+	if c==nil then return true end
+	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsSetCard,1,true,1,true,c,c:GetControler(),nil,false,e:GetHandler(),0x3b)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,true,true,true,c,nil,nil,false,e:GetHandler(),0x3b)
-    if g then
-        g:KeepAlive()
-        e:SetLabelObject(g)
-    return true
-    end
-    return false
+	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,true,true,true,c,nil,nil,false,e:GetHandler(),0x3b)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=e:GetLabelObject()
-    if not g then return end
-    Duel.Release(g,REASON_COST)
-    g:DeleteGroup()
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

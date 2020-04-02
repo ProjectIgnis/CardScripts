@@ -55,8 +55,8 @@ function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.rescon(sg,e,tp,mg)
-    return aux.ChkfMMZ(2)(sg,e,tp,mg) and sg:FilterCount(s.spfilter,nil,e,tp)==2
-    	and sg:FilterCount(Card.IsLevelAbove,nil,5)==1 and sg:FilterCount(Card.IsLevelBelow,nil,4)==1
+	return aux.ChkfMMZ(2)(sg,e,tp,mg) and sg:FilterCount(s.spfilter,nil,e,tp)==2
+		and sg:FilterCount(Card.IsLevelAbove,nil,5)==1 and sg:FilterCount(Card.IsLevelBelow,nil,4)==1
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)

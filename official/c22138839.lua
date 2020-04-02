@@ -26,24 +26,24 @@ function s.rfilter(c,tp)
 	return c:GetCounter(COUNTER_PREDATOR)>0 and c:IsControler(tp+1-tp)
 end
 function s.hspcon(e,c)
-    if c==nil then return true end
-    local tp=e:GetHandlerPlayer()
-    return Duel.CheckReleaseGroup(tp,s.rfilter,1,false,1,true,c,c:GetControler(),nil,true,nil,tp)
+	if c==nil then return true end
+	local tp=e:GetHandlerPlayer()
+	return Duel.CheckReleaseGroup(tp,s.rfilter,1,false,1,true,c,c:GetControler(),nil,true,nil,tp)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,s.rfilter,1,1,false,true,true,c,nil,nil,true,nil,tp)
-    if g then
-        g:KeepAlive()
-        e:SetLabelObject(g)
-    return true
-    end
-    return false
+	local g=Duel.SelectReleaseGroup(tp,s.rfilter,1,1,false,true,true,c,nil,nil,true,nil,tp)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=e:GetLabelObject()
-    if not g then return end
-    Duel.Release(g,REASON_COST)
-    g:DeleteGroup()
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.ccon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

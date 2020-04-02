@@ -37,11 +37,11 @@ function s.cfilter(c,ec)
 	end
 end
 function s.hdcon(e,tp,eg,ep,ev,re,r,rp)
-    if eg:IsContains(e:GetHandler()) then return false end
-    for tc in aux.Next(Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK)) do
-        if eg:IsExists(s.cfilter,1,nil,tc) then return true end
-    end
-    return false
+	if eg:IsContains(e:GetHandler()) then return false end
+	for tc in aux.Next(Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK)) do
+		if eg:IsExists(s.cfilter,1,nil,tc) then return true end
+	end
+	return false
 end
 function s.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

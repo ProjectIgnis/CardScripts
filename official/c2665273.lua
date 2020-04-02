@@ -59,14 +59,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not (pc and c:IsRelateToEffect(e) and c:IsFaceup()) then return end
 	Duel.BreakEffect()
 	for _,p in pairs(ps) do
-	local g=Duel.SelectMatchingCard(p,s.filter,p,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,c)        
+	local g=Duel.SelectMatchingCard(p,s.filter,p,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,c)
 		if #g>0 then
-		    local og=g:GetFirst():GetOverlayGroup()
+			local og=g:GetFirst():GetOverlayGroup()
 			if #og>0 then
-			    Duel.SendtoGrave(og,REASON_RULE)
+				Duel.SendtoGrave(og,REASON_RULE)
 			end
 			g:GetFirst():CancelToGrave()
-		    Duel.Overlay(c,g)
+			Duel.Overlay(c,g)
 		end
 	end
 end

@@ -19,7 +19,9 @@ function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.eqfilter(c,tp)
 	if not c:IsFaceup() or not c:IsControlerCanBeChanged() then return false end
-	if c:IsType(TYPE_TRAPMONSTER) then return Duel.GetLocationCount(tp,LOCATION_SZONE,tp,LOCATION_REASON_CONTROL)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE,tp,0)>=2 end
+	if not Duel.IsDuelType(DUEL_TRAP_MONSTERS_NOT_USE_ZONE) and c:IsType(TYPE_TRAPMONSTER) then
+		return Duel.GetLocationCount(tp,LOCATION_SZONE,tp,LOCATION_REASON_CONTROL)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE,tp,0)>=2
+	end
 	return true
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

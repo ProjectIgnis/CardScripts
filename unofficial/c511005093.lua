@@ -121,13 +121,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(0,8000)
 	Duel.SetLP(1,8000)
 	--FOR RANDOOM
-	local rseed=0
-	for i=1,6 do
-		local r={Duel.TossCoin(i%2,5)}
-		for n=1,5 do
-			rseed=(rseed<<1)+r[n]
-		end
-	end
+	local rseed=Duel.GetRandomNumber()
 	math.randomseed(rseed)
 	local fg=Duel.GetFieldGroup(0,0x43,0x43)
 	--remove all cards
@@ -183,7 +177,7 @@ function s.flag_chk(c)
 end
 
 function s.nt_cd(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnCount()>1
+	return Duel.GetTurnCount()>0
 end
 
 local playerpack=Group.CreateGroup()

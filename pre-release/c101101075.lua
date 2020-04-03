@@ -44,9 +44,8 @@ function s.cost(target)
 		if chk==0 then
 			e:SetLabel(0)
 			local res=Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,target,e,tp,eg,ep,ev,re,r,rp,chk)
-			if res then e:SetLabel(1)
-				return res
-			end
+			if res then e:SetLabel(1) end
+			return res
 		end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,target,e,tp,eg,ep,ev,re,r,rp,chk)

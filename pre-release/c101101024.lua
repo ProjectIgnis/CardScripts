@@ -1,5 +1,5 @@
 --享楽の堕天使
---Darklord of Enjoyment
+--Darklord of Pleasure
 --Scripted by ahtelel7
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)

@@ -40,7 +40,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,s.tedfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,LOCATION_GRAVE)
 end
-function s.spfilter(c)
+function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0xa9) or c:IsSetCard(0xc3)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tedop(e,tp,eg,ep,ev,re,r,rp)

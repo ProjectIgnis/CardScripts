@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_NO_TURN_RESET)
 	e1:SetRange(0xff)
 	e1:SetOperation(s.op)
-	c:RegisterEffect(e1)
+	Duel.RegisterEffect(e1,0)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -87,6 +87,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp,chk)
 	if c:IsPreviousLocation(LOCATION_HAND) then
 		Duel.Draw(tp,1,REASON_RULE)
 	end
+	e:Reset()
 end
 function s.limitfilter(c)
 	return c:IsHasEffect(EFFECT_LIMIT_SUMMON_PROC) and c:GetFlagEffect(51160002)<=0

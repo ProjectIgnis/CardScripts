@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetRange(0x5f)
 	e1:SetOperation(s.op)
-	c:RegisterEffect(e1)
+	Duel.RegisterEffect(e1,0)
 	--Destiny Draw
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)

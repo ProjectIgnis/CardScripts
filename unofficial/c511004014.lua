@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetRange(0xff)
 	e1:SetOperation(s.op)
-	c:RegisterEffect(e1)
+	Duel.RegisterEffect(e1,0)
 	local proc=Duel.SendtoGrave
 	Duel.SendtoGrave=function(tg,r,tp)
 		if tp then
@@ -223,6 +223,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	for tc2 in aux.Next(g2) do
 		tc2:RegisterFlagEffect(511004017,0,0,0)
 	end
+	e:Reset()
 end
 function s.ttcon(e,c)
 	if c==nil then return true end

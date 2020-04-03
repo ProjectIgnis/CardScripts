@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.activecondition)
 	e1:SetOperation(s.activeoperation)
-	c:RegisterEffect(e1)
+	Duel.RegisterEffect(e1,0)
 	--skip draw phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)

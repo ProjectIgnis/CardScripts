@@ -1171,7 +1171,7 @@ function Auxiliary.EnableExtraRules(c,card,init,...)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
 	e1:SetRange(0xff)
 	e1:SetOperation(Auxiliary.EnableExtraRulesOperation(card,init,...))
-	c:RegisterEffect(e1)
+	Duel.RegisterEffect(e1,0)
 end
 function Auxiliary.EnableExtraRulesOperation(card,init,...)
 	local arg = {...}

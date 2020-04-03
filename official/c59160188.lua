@@ -25,13 +25,10 @@ function s.initial_effect(c)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK))
 	e3:SetCondition(s.condition)
 	c:RegisterEffect(e3)
-	local e4=e3:Clone()
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-	c:RegisterEffect(e4)
 	--token
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_PHASE+PHASE_END)
 	e5:SetRange(LOCATION_FZONE)
@@ -76,7 +73,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetTurnPlayer()
-	if ct==0 or not e:GetHandler():IsRelateToEffect(e) 
+	if ct==0 or not e:GetHandler():IsRelateToEffect(e)
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,1000,1000,3,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,p) then return end
 	local ct=math.min(Duel.GetLocationCount(p,LOCATION_MZONE),e:GetLabel())
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=math.min(1,ct) end

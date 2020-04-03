@@ -39,6 +39,6 @@ function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
 end
 function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.ChangeBattleDamage(ep,ev/2)
-    Duel.ChangeBattleDamage(1-ep,ev/2,false)
+	Duel.ChangeBattleDamage(ep,ev/2)
+	Duel.ChangeBattleDamage(1-ep,ev/2,false)
 end

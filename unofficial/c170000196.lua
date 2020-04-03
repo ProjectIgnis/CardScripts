@@ -1,7 +1,7 @@
 --Big Bang Dragon Blow
 local s,id=GetID()
 function s.initial_effect(c)
-    --fusion material
+	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,110000110,46232525)
 	aux.AddEquipProcedure(c)

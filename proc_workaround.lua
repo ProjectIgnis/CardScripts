@@ -92,7 +92,7 @@ function Auxiliary.ReleaseCostFilter(c,f,...)
 		and (not f or f(c,table.unpack({...})))
 end
 function Auxiliary.ReleaseCheckSingleUse(sg,tp,exg)
-    return #sg-#(sg-exg)<=1
+	return #sg-#(sg-exg)<=1
 end
 function Auxiliary.ReleaseCheckMMZ(sg,tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -188,8 +188,8 @@ function Card.IsOriginalCode(c,cd)
 	return c:GetOriginalCode()==cd
 end
 function Card.IsOriginalCodeRule(c,cd)
-    local c1,c2=c:GetOriginalCodeRule()
-    return c1==cd or c2==cd
+	local c1,c2=c:GetOriginalCodeRule()
+	return c1==cd or c2==cd
 end
 function Card.IsOriginalType(c,val)
 	return c:GetOriginalType() & val == val
@@ -211,9 +211,9 @@ end
 --For Links: false. For Xyzs: false, except if affected by  "EFFECT_RANK_LEVEL..." effects
 --For Dark Synchros: true, because they have a negative level. For level 0: true, because 0 is a value
 function Card.HasLevel(c)
-    return c:GetType()&TYPE_LINK~=TYPE_LINK 
-        and (c:GetType()&TYPE_XYZ~=TYPE_XYZ and not (c:IsHasEffect(EFFECT_RANK_LEVEL) or c:IsHasEffect(EFFECT_RANK_LEVEL_S)))
-        and not c:IsStatus(STATUS_NO_LEVEL)
+	return c:GetType()&TYPE_LINK~=TYPE_LINK 
+		and (c:GetType()&TYPE_XYZ~=TYPE_XYZ and not (c:IsHasEffect(EFFECT_RANK_LEVEL) or c:IsHasEffect(EFFECT_RANK_LEVEL_S)))
+		and not c:IsStatus(STATUS_NO_LEVEL)
 end
 function Card.IsSummonLocation(c,loc)
 	return c:GetSummonLocation()&loc~=0

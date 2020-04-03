@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function s.atklimit(e,c)
-    return c==e:GetHandler()
+	return c==e:GetHandler()
 end
 function s.indtg(e,c)
 	return c:GetMutualLinkedGroupCount()>0

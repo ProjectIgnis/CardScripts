@@ -17,23 +17,23 @@ function s.tpfilter(c)
 	return c:IsType(TYPE_LINK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chkc then return false end
-    if chk==0 then return Duel.IsExistingTarget(s.tpfilter,tp,LOCATION_MZONE,0,1,nil)
-        and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
-    local g1=Duel.SelectTarget(tp,s.tpfilter,tp,LOCATION_MZONE,0,1,1,nil)
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
-    local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
-    local g=g1+g2
-    Duel.SetTargetPlayer(tp)
-    Duel.SetTargetParam(1)
-    Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
-    Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	if chkc then return false end
+	if chk==0 then return Duel.IsExistingTarget(s.tpfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
+	local g1=Duel.SelectTarget(tp,s.tpfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
+	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=g1+g2
+	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetParam(1)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-    local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-    local g=Duel.GetTargetCards(e)
-    if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 then
-        Duel.Draw(p,d,REASON_EFFECT)
-    end
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	local g=Duel.GetTargetCards(e)
+	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 then
+		Duel.Draw(p,d,REASON_EFFECT)
+	end
 end

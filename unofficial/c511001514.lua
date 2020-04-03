@@ -22,24 +22,24 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spcon(e,c)
-    if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),1,false,1,true,c,c:GetControler(),nil,false,nil)
+	if c==nil then return true end
+	return Duel.CheckReleaseGroup(c:GetControler(),aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),1,false,1,true,c,c:GetControler(),nil,false,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-    local g=Duel.SelectReleaseGroup(tp,aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),1,1,false,true,true,c,nil,nil,false,nil)
-    if g then
-        g:KeepAlive()
-        e:SetLabelObject(g)
-    return true
-    end
-    return false
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local g=Duel.SelectReleaseGroup(tp,aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),1,1,false,true,true,c,nil,nil,false,nil)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=e:GetLabelObject()
-    if not g then return end
-    Duel.Release(g,REASON_COST)
-    g:DeleteGroup()
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1

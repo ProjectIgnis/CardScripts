@@ -66,7 +66,7 @@ end
 function s.statop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetHandler():GetBattleTarget()
 	local atk=bc:GetAttack()
-    local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(-atk)

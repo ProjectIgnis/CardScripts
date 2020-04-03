@@ -72,15 +72,15 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 		Duel.ConfirmCards(1-tp,cg)
 	end
 	if #sg>0 then
-        sg:KeepAlive()
-        e:SetLabelObject(sg)
-    return true
-    end
-    return false
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+	return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=e:GetLabelObject()
-    if not g then return end
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.SendtoGrave(g,REASON_COST)
 	c:SetMaterial(g)
 	g:DeleteGroup()

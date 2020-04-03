@@ -14,12 +14,12 @@ function s.matfilter(c,lc,stype,tp)
 end
 function s.frec(c,tp,sg,g,code,...)
 	if not c:IsSummonCode(fc,SUMMON_TYPE_FUSION,tp,code) then return false end
-    if ... then
-        g:AddCard(c)
-        local res=sg:IsExists(s.frec,1,g,tp,sg,g,...)
-        g:RemoveCard(c)
-        return res
-    else return true end
+	if ... then
+		g:AddCard(c)
+		local res=sg:IsExists(s.frec,1,g,tp,sg,g,...)
+		g:RemoveCard(c)
+		return res
+	else return true end
 end
 function s.fcheck(tp,sg,fc,mg)
 	return #sg==3 and sg:IsExists(s.frec,1,nil,tp,sg,Group.CreateGroup(),41230939,77625948,3019642)

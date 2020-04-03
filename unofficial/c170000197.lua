@@ -1,7 +1,7 @@
 --Rocket Hermos Cannon
 local s,id=GetID()
 function s.initial_effect(c)
-    --fusion material
+	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcCodeFun(c,30860696,46232525,1,true,true)
 	aux.AddEquipProcedure(c)

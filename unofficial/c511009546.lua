@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={41209827}
 function s.counterfilter(c)
-    return not c:IsCode(41209827)
+	return not c:IsCode(41209827)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

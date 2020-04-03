@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-    --spsummon proc
+	--spsummon proc
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -63,15 +63,15 @@ function s.filter2(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chkc then return chkc:IsLocation(LOCATION_SZONE) and s.filter2(chkc) and chkc~=e:GetHandler() end
-    if chk==0 then return Duel.IsExistingTarget(s.filter2,tp,LOCATION_SZONE,LOCATION_SZONE,1,e:GetHandler()) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-    local g=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,e:GetHandler())
-    Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g,1,0,0)
+	if chkc then return chkc:IsLocation(LOCATION_SZONE) and s.filter2(chkc) and chkc~=e:GetHandler() end
+	if chk==0 then return Duel.IsExistingTarget(s.filter2,tp,LOCATION_SZONE,LOCATION_SZONE,1,e:GetHandler()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,e:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then 
-	    Duel.Destroy(tc,REASON_EFFECT)
-	end    
+		Duel.Destroy(tc,REASON_EFFECT)
+	end	
 end

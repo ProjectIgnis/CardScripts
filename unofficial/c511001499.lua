@@ -61,7 +61,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=sg:RandomSelect(tp,1)
 	if #g>0 then
 		local tc=g:GetFirst()
-        local tpe=tc:GetType()
+		local tpe=tc:GetType()
 		local te=tc:GetActivateEffect()
 		if not te then return end
 		if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),tp,eg,ep,ev,re,r,rp,chain) then return end

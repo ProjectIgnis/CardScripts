@@ -28,11 +28,11 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    if not c:IsRelateToEffect(e) then return end
-    local ec=c:GetEquipTarget()
-    local tc=Duel.GetFirstTarget()
-    if ec:UpdateAttack(-1000,nil,c)==-1000 and tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-        Duel.Destroy(tc,REASON_EFFECT)
-    end
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	local ec=c:GetEquipTarget()
+	local tc=Duel.GetFirstTarget()
+	if ec:UpdateAttack(-1000,nil,c)==-1000 and tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		Duel.Destroy(tc,REASON_EFFECT)
+	end
 end

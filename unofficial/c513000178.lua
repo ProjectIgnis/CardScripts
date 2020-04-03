@@ -73,7 +73,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.turncon(e,tp,eg,ep,ev,re,r,rp)
-    	return Duel.GetTurnPlayer()~=tp
+		return Duel.GetTurnPlayer()~=tp
 end
 
 function s.turnop(e,tp,eg,ep,ev,re,r,rp)

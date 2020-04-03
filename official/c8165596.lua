@@ -86,8 +86,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
 	if (not c:IsRelateToEffect(e)) then
-	        Duel.SendtoHand(g,nil,REASON_EFFECT)
-            Duel.ConfirmCards(1-tp,g)
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g)
 	else aux.ToHandOrElse(tc,tp,function() return true end,
 						function() Duel.Overlay(e:GetHandler(),Group.FromCards(tc)) end,
 						aux.Stringid(id,3)

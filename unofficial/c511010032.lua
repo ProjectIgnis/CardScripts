@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.attg)
 	e1:SetOperation(s.atop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-    --battle indestructable
+	--battle indestructable
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

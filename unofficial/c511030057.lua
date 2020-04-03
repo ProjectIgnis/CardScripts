@@ -4,13 +4,13 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate
-    local e1=Effect.CreateEffect(c)
-    e1:SetCategory(CATEGORY_DISABLE+CATEGORY_DRAW)
-    e1:SetType(EFFECT_TYPE_ACTIVATE)
-    e1:SetCode(EVENT_CHAINING)
-    e1:SetCondition(s.discon)
-    e1:SetTarget(s.distg)
-    e1:SetOperation(s.disop)
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_DRAW)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_CHAINING)
+	e1:SetCondition(s.discon)
+	e1:SetTarget(s.distg)
+	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
@@ -26,22 +26,22 @@ function s.initial_effect(c)
 end
 s.listed_series={0x57a}
 function s.cfilter(c,tp)
-    return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x57a)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x57a)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-    if not (rp==1-tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and re:GetHandler():IsType(TYPE_MONSTER)) then return false end
-    local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-    return g and g:IsExists(s.cfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
+	if not (rp==1-tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and re:GetHandler():IsType(TYPE_MONSTER)) then return false end
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	return g and g:IsExists(s.cfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED) and Duel.IsPlayerCanDraw(tp,1) end
-    Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-    Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED) and Duel.IsPlayerCanDraw(tp,1) end
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-    if Duel.NegateEffect(ev) then
+	if Duel.NegateEffect(ev) then
 		Duel.Draw(tp,1,REASON_EFFECT)
-    end
+	end
 end
 function s.filter(c,tp)
 	return c:IsType(TYPE_LINK) and c:IsSetCard(0x57a) and (c:GetReason()&0x41)==0x41 and c:GetPreviousControler()==tp

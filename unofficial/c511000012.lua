@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetTargetRange(POS_FACEUP_DEFENSE,1)
-    e1:SetCondition(s.spccon)
+	e1:SetCondition(s.spccon)
 	c:RegisterEffect(e1)
 	--Change Battle Pos
 	local e3=Effect.CreateEffect(c)

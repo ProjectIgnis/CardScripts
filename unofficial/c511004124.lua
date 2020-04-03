@@ -22,12 +22,12 @@ function s.cfilter(c,tp)
 	local g=c:GetOverlayGroup()
 	local sum=0
 	local gc=g:GetFirst()
-    while gc do
-       	local atk=gc:GetAttack()
-       	if atk<0 then atk=0 end
-       	sum=sum+atk
-       	gc=g:GetNext()
-    end
+	while gc do
+	   	local atk=gc:GetAttack()
+	   	if atk<0 then atk=0 end
+	   	sum=sum+atk
+	   	gc=g:GetNext()
+	end
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and #g>0 
 		and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,sum)
 end

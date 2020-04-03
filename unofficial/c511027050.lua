@@ -19,7 +19,7 @@ function s.filter(c)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<Duel.GetLP(1-tp) and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)
-        and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) 
+		and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

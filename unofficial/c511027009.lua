@@ -72,7 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			end
 			Duel.SpecialSummonComplete()
 			Duel.BreakEffect()
-		    Duel.Destroy(tc,REASON_EFFECT)
+			Duel.Destroy(tc,REASON_EFFECT)
 		end
 	end
 end

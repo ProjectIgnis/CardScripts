@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
 	--ATK Increase
-    local e2=Effect.CreateEffect(c)
+	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)

@@ -79,7 +79,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-    return tp==Duel.GetTurnPlayer()
+	return tp==Duel.GetTurnPlayer()
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:GetCounter(0x1002)==1

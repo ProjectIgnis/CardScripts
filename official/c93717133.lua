@@ -27,23 +27,23 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spcon(e,c)
-    if c==nil then return true end
-    return Duel.CheckReleaseGroup(c:GetControler(),Card.IsAttackAbove,2,false,2,true,c,c:GetControler(),nil,false,nil,2000)
+	if c==nil then return true end
+	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsAttackAbove,2,false,2,true,c,c:GetControler(),nil,false,nil,2000)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,Card.IsAttackAbove,2,2,false,true,true,c,nil,nil,false,nil,2000)
-    if g then
-        g:KeepAlive()
-        e:SetLabelObject(g)
-    return true
-    end
-    return false
+	local g=Duel.SelectReleaseGroup(tp,Card.IsAttackAbove,2,2,false,true,true,c,nil,nil,false,nil,2000)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=e:GetLabelObject()
-    if not g then return end
-    Duel.Release(g,REASON_COST)
-    g:DeleteGroup()
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 	c:RegisterFlagEffect(0,RESET_EVENT|(RESETS_STANDARD|RESET_OVERLAY)&~(RESET_TOFIELD|RESET_TURN_SET),EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)

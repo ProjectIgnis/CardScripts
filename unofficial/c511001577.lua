@@ -39,10 +39,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=sg:Select(tp,1,1,nil)
 	if #g>0 then
 		local tc=g:GetFirst()
-        local tpe=tc:GetType()
+		local tpe=tc:GetType()
 		local te=tc:GetActivateEffect()
 		if te then
-    	    local con=te:GetCondition()
+			local con=te:GetCondition()
 			local co=te:GetCost()
 			local tg=te:GetTarget()
 			local op=te:GetOperation()

@@ -74,23 +74,23 @@ function s.disop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-    return (r&REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+	return (r&REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c,ec)
-    return c:IsLevel(9) and c:IsAbleToHand() 
-        and c:GetOriginalAttribute()~=ec:GetOriginalAttribute() 
-        and c:GetOriginalRace()~=ec:GetOriginalRace()
+	return c:IsLevel(9) and c:IsAbleToHand() 
+		and c:GetOriginalAttribute()~=ec:GetOriginalAttribute() 
+		and c:GetOriginalRace()~=ec:GetOriginalRace()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler()) end
-    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler()) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-    local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK,0,1,1,nil,e:GetHandler())
-    if #g>0 then
-        Duel.SendtoHand(g,nil,REASON_EFFECT)
-        Duel.ConfirmCards(1-tp,g)
-    end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK,0,1,1,nil,e:GetHandler())
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+	end
 end
 

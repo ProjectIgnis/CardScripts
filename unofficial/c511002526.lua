@@ -58,7 +58,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=2 then return end
 	if Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)>1 then
 		local tc=tg:GetFirst()
-        local te=tc:GetActivateEffect()
+		local te=tc:GetActivateEffect()
 		local tg=te:GetTarget()
 		local op=te:GetOperation()
 		if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end

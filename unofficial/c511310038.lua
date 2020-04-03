@@ -77,17 +77,17 @@ end
 if not table.includes then
 	--binary search
 	function table.includes(t,val)
-    	if #t<1 then return false end
-    	if #t==1 then return t[1]==val end --saves sorting for efficiency
-    	table.sort(t)
-    	local left=1
-    	local right=#t
-    	while left<=right do
-        	local middle=(left+right)//2
-        	if t[middle]==val1 then return true
-        	elseif t[middle]<val then left=middle+1
-        	else right=middle-1 end
-    	end
-    	return false
+		if #t<1 then return false end
+		if #t==1 then return t[1]==val end --saves sorting for efficiency
+		table.sort(t)
+		local left=1
+		local right=#t
+		while left<=right do
+			local middle=(left+right)//2
+			if t[middle]==val1 then return true
+			elseif t[middle]<val then left=middle+1
+			else right=middle-1 end
+		end
+		return false
 	end
 end

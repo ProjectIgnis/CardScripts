@@ -68,7 +68,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():IsDeckMaster()
+	return e:GetHandler():IsDeckMaster()
 end
 function s.accost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(Card.IsDiscardable,tp,LOCATION_HAND,0,e:GetHandler())>1 end

@@ -1,7 +1,7 @@
 --Spider Web
 local s,id=GetID()
 function s.initial_effect(c)
-    local e1=Effect.CreateEffect(c)
+	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.filter(c)
-    local tid=Duel.GetTurnCount()
+	local tid=Duel.GetTurnCount()
 	return c:IsAbleToHand() and c:GetFlagEffect(id)>0 and c:GetTurnID()~=tid 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

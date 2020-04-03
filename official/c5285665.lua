@@ -61,15 +61,15 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	sg:Merge(Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,46411259))
 	local g=aux.SelectUnselectGroup(sg,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
 	if #g>0 then
-        g:KeepAlive()
-        e:SetLabelObject(g)
-    return true
-    end
-    return false
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=e:GetLabelObject()
-    if not g then return end
+	local g=e:GetLabelObject()
+	if not g then return end
 	Duel.SendtoGrave(g,REASON_COST)
 	g:DeleteGroup()
 end

@@ -1,7 +1,7 @@
 --Boss Duel
 local s,id=GetID()
 function s.initial_effect(c)
-    --Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -132,22 +132,22 @@ function s.initial_effect(c)
 end
 s.listed_series={0x602}
 function s.stcon(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetTurnCount()==1
+	return Duel.GetTurnCount()==1
 end
 function s.stfilter(c)
-    return not c:IsSetCard(0x602)
+	return not c:IsSetCard(0x602)
 end
 function s.afilter0(c)
-    return c.mark and c.mark==0
+	return c.mark and c.mark==0
 end
 function s.afilter1(c)
-    return c.mark and c.mark==1
+	return c.mark and c.mark==1
 end
 function s.afilter2(c)
-    return c.mark and c.mark==2
+	return c.mark and c.mark==2
 end
 function s.afilter3(c)
-    return c.mark and c.mark==3
+	return c.mark and c.mark==3
 end
 function s.stop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

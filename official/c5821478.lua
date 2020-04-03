@@ -35,11 +35,11 @@ function s.cfilter(c,ec)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-    if eg:IsContains(e:GetHandler()) then return false end
-    for tc in aux.Next(Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK)) do
-        if eg:IsExists(s.cfilter,1,nil,tc) then return true end
-    end
-    return false
+	if eg:IsContains(e:GetHandler()) then return false end
+	for tc in aux.Next(Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK)) do
+		if eg:IsExists(s.cfilter,1,nil,tc) then return true end
+	end
+	return false
 end
 function s.desfilter(c)
 	return c:GetSequence()<5

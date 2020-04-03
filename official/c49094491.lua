@@ -56,8 +56,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-    local rc=c:GetReasonCard()
-    return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and rc:IsRace(RACE_CYBERSE) and rc:IsLinkAbove(2)
+	local rc=c:GetReasonCard()
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and rc:IsRace(RACE_CYBERSE) and rc:IsLinkAbove(2)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x119) and c:GetType()==TYPE_SPELL and c:IsAbleToHand()

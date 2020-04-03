@@ -4,19 +4,19 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_ACTIVATE)
-    e1:SetCode(EVENT_FREE_CHAIN)
-    e1:SetTarget(s.target)
-    c:RegisterEffect(e1)
-    --Cannot target
-    local e2=Effect.CreateEffect(c)
-    e2:SetType(EFFECT_TYPE_FIELD)
-    e2:SetRange(LOCATION_SZONE)
-    e2:SetTargetRange(0,LOCATION_MZONE)
-    e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-    e2:SetValue(s.atlimit)
-    c:RegisterEffect(e2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(s.target)
+	c:RegisterEffect(e1)
+	--Cannot target
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetTargetRange(0,LOCATION_MZONE)
+	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
+	e2:SetValue(s.atlimit)
+	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -57,7 +57,7 @@ function s.atkval(tp)
 	return val
 end
 function s.atlimit(e,c)
-    return c:IsFaceup() and c:IsRace(RACE_WINGEDBEAST) and c:GetAttack()<s.atkval(e:GetHandlerPlayer())
+	return c:IsFaceup() and c:IsRace(RACE_WINGEDBEAST) and c:GetAttack()<s.atkval(e:GetHandlerPlayer())
 end
 function s.evalue(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
@@ -69,19 +69,19 @@ function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetOriginalAttribute)==#sg and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,sg+e:GetHandler()) 
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    e:SetLabel(100)
-    return true
+	e:SetLabel(100)
+	return true
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    local c=e:GetHandler()
-    local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
-    if chk==0 then return e:GetLabel()==100 and c:IsAbleToGraveAsCost() and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
-    local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE)
-    tg:AddCard(c)
-    Duel.SendtoGrave(tg,REASON_COST)
-    e:SetLabel(0)
-    local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-    Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
+	local c=e:GetHandler()
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return e:GetLabel()==100 and c:IsAbleToGraveAsCost() and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
+	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE)
+	tg:AddCard(c)
+	Duel.SendtoGrave(tg,REASON_COST)
+	e:SetLabel(0)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)

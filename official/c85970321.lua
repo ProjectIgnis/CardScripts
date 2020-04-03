@@ -59,7 +59,7 @@ end
 s.cfilter=aux.FilterFaceupFunction(Card.IsSetCard,0xb3)
 function s.cedop(e,tp,eg,ep,ev,re,r,rp)
 	if eg and eg:IsExists(s.cfilter,1,nil) then
-	    Duel.SetChainLimitTillChainEnd(s.chlimit)
+		Duel.SetChainLimitTillChainEnd(s.chlimit)
 	end
 end
 function s.cedop2(e,tp,eg,ep,ev,re,r,rp)

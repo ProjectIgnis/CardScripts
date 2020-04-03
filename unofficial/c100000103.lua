@@ -17,7 +17,7 @@ end
 s.listed_names={CARD_DARK_MAGICIAN}
 s.dark_magician_list=true
 function s.counterfilter(c)
-    return not c:IsCode(CARD_DARK_MAGICIAN)
+	return not c:IsCode(CARD_DARK_MAGICIAN)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_DARK_MAGICIAN)

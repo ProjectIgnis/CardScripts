@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				end
 				tc:CancelToGrave()
 			end
-		    Duel.Overlay(tc,g)
+			Duel.Overlay(tc,g)
 		end
 	end
 end

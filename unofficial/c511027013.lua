@@ -51,22 +51,22 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_SZONE,1,1,nil,tp,eg,ep,ev,re,r,rp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
+	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
 		--Untargetable
-	    local e1=Effect.CreateEffect(c)
-	    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	    e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	    e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 		e1:SetCondition(s.tgocon)
-	    e1:SetValue(aux.tgoval)
-	    e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	    c:RegisterEffect(e1)
-	    local e2=e1:Clone()
-	    e2:SetType(EFFECT_TYPE_SINGLE)
-	    c:RegisterEffect(e2)
+		e1:SetValue(aux.tgoval)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		c:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		c:RegisterEffect(e2)
 		e:SetLabelObject(tc)
 	end
 end

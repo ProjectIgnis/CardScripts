@@ -1,7 +1,7 @@
 --ワルキューレ・ブリュンヒルデ
 local s,id=GetID()
 function s.initial_effect(c)
-    local e2=Effect.CreateEffect(c)
+	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)

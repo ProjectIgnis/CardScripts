@@ -62,8 +62,8 @@ function s.valcon(e,re,r,rp)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-    if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp and e:GetHandler():GetFlagEffect(id+1)==0 end
-    c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)
+	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp and e:GetHandler():GetFlagEffect(id+1)==0 end
+	c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)
 	return true
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

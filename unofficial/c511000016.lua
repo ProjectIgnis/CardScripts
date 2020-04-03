@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_BATTLE_DESTROYED)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.sdcon)
-    e3:SetTarget(s.sdtg)
-    e3:SetOperation(s.operation)
-    c:RegisterEffect(e3)
+	e3:SetTarget(s.sdtg)
+	e3:SetOperation(s.operation)
+	c:RegisterEffect(e3)
 end
 function s.nacon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -43,14 +43,14 @@ end
 function s.cbbtcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)>1
 end
-function s.filter(c,tp)                                                     ---------affects one side of field----------------
+function s.filter(c,tp)													 ---------affects one side of field----------------
 	return c:IsReason(REASON_BATTLE) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsType(TYPE_MONSTER)
 end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)
 end
 function s.sdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chk==0 then return true end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

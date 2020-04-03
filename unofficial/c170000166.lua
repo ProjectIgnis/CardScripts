@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-    --Negates Battle Damage
+	--Negates Battle Damage
    	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetRange(LOCATION_MZONE)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.rdcon)
 	e2:SetOperation(s.rdop)
 	c:RegisterEffect(e2)
-    --special summon
+	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)

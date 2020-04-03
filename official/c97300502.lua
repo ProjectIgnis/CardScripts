@@ -3,7 +3,7 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-    --fusion material
+	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,86120751,aux.FilterBoolFunctionEx(Card.IsType,TYPE_FUSION))
 	--atk up

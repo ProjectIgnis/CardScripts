@@ -20,11 +20,11 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg,d=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS,CHAININFO_TARGET_PARAM)
 	local tc=Duel.GetAttacker()
-    local ap=tc:GetControler()
+	local ap=tc:GetControler()
 	if tc:IsFaceup() and tc:CanAttack() then
 		if Duel.NegateAttack() then
 			Duel.Damage(1-ap,d,REASON_BATTLE)
-            Duel.Damage(ap,d/2,REASON_EFFECT)
+			Duel.Damage(ap,d/2,REASON_EFFECT)
 		end
 	end
 end

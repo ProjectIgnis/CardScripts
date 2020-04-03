@@ -15,29 +15,29 @@ function s.initial_effect(c)
 	--To deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-    e2:SetCategory(CATEGORY_TODECK)
-    e2:SetType(EFFECT_TYPE_QUICK_O)
-    e2:SetCode(EVENT_CHAINING)
+	e2:SetCategory(CATEGORY_TODECK)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_CHAINING)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
-    e2:SetCondition(s.tdcon)
-    e2:SetCost(s.tdcost)
-    e2:SetTarget(s.tdtg)
-    e2:SetOperation(s.tdop)
-    c:RegisterEffect(e2)
-    --To hand
-    local e3=Effect.CreateEffect(c)
-    e3:SetDescription(aux.Stringid(id,1))
-    e3:SetCategory(CATEGORY_TOHAND)
-    e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-    e3:SetCode(EVENT_BATTLE_DESTROYED)
-    e3:SetRange(LOCATION_GRAVE)
+	e2:SetCondition(s.tdcon)
+	e2:SetCost(s.tdcost)
+	e2:SetTarget(s.tdtg)
+	e2:SetOperation(s.tdop)
+	c:RegisterEffect(e2)
+	--To hand
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_TOHAND)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_BATTLE_DESTROYED)
+	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,id+1)
-    e3:SetCondition(s.thcon)
-    e3:SetTarget(s.thtg)
-    e3:SetOperation(s.thop)
-    c:RegisterEffect(e3)
+	e3:SetCondition(s.thcon)
+	e3:SetTarget(s.thtg)
+	e3:SetOperation(s.thop)
+	c:RegisterEffect(e3)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
@@ -71,19 +71,19 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-    if chk==0 then return c:IsAbleToHand() end
-    Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
-    Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,0,0)
+	if chk==0 then return c:IsAbleToHand() end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-    if c:IsRelateToEffect(e) then
-        Duel.SendtoHand(c,nil,REASON_EFFECT)
-    end
+	if c:IsRelateToEffect(e) then
+		Duel.SendtoHand(c,nil,REASON_EFFECT)
+	end
 end
 function s.thcfilter(c,tp)
-    return c:IsPreviousControler(tp) and c:IsRace(RACE_WINGEDBEAST) and c:IsReason(REASON_BATTLE)
+	return c:IsPreviousControler(tp) and c:IsRace(RACE_WINGEDBEAST) and c:IsReason(REASON_BATTLE)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-    return eg:IsExists(s.thcfilter,1,e:GetHandler(),tp)
+	return eg:IsExists(s.thcfilter,1,e:GetHandler(),tp)
 end

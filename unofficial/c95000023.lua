@@ -1,7 +1,7 @@
 --Numeron Network
 local s,id=GetID()
 function s.initial_effect(c)
-    --activate
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 s.mark=0
 function s.valcon(e,re,r,rp)
-    return (r&REASON_EFFECT)~=0
+	return (r&REASON_EFFECT)~=0
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)<=1

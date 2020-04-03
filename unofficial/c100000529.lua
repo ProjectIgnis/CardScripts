@@ -35,6 +35,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(tg1,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)~=0 then
 				if tg2:GetFirst() and tg2:GetFirst():IsRelateToEffect(e) then
 						Duel.Remove(tg2,POS_FACEUP,REASON_EFFECT)
-	            end
-    end
+				end
+	end
 end

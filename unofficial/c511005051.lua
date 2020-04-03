@@ -37,9 +37,9 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
   local tc=Duel.GetFirstTarget()
   if tc:IsRelateToEffect(e) then
-    local ttc=Duel.SelectMatchingCard(tp,s.sum_fil,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode()):GetFirst()
-    if ttc then
-      Duel.SpecialSummon(ttc,0,tp,tp,false,false,POS_FACEUP)
-    end
+	local ttc=Duel.SelectMatchingCard(tp,s.sum_fil,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode()):GetFirst()
+	if ttc then
+	  Duel.SpecialSummon(ttc,0,tp,tp,false,false,POS_FACEUP)
+	end
   end
 end

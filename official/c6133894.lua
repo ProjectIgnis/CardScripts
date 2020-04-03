@@ -31,23 +31,23 @@ function s.initial_effect(c)
 end
 s.listed_names={66073051,94585852}
 function s.spcon(e,c)
-    if c==nil then return Duel.IsEnvironment(94585852) end
-    return Duel.CheckReleaseGroup(c:GetControler(),aux.FilterFaceupFunction(Card.IsCode,66073051),1,false,1,true,c,c:GetControler(),nil,false,nil)
+	if c==nil then return Duel.IsEnvironment(94585852) end
+	return Duel.CheckReleaseGroup(c:GetControler(),aux.FilterFaceupFunction(Card.IsCode,66073051),1,false,1,true,c,c:GetControler(),nil,false,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,aux.FilterFaceupFunction(Card.IsCode,66073051),1,1,false,true,true,c,nil,nil,false,nil)
-    if g then
-        g:KeepAlive()
-        e:SetLabelObject(g)
-    return true
-    end
-    return false
+	local g=Duel.SelectReleaseGroup(tp,aux.FilterFaceupFunction(Card.IsCode,66073051),1,1,false,true,true,c,nil,nil,false,nil)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=e:GetLabelObject()
-    if not g then return end
-    Duel.Release(g,REASON_COST)
-    g:DeleteGroup()
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
 end
 function s.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

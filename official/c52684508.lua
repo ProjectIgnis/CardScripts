@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_REDEYES_B_DRAGON}
 function s.counterfilter(c)
-    return not c:IsCode(CARD_REDEYES_B_DRAGON)
+	return not c:IsCode(CARD_REDEYES_B_DRAGON)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_ATTACK)==0 end

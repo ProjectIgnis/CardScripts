@@ -87,14 +87,14 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_DECK,0,1,nil) end
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
-    local tc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
-    if tc then
-        Duel.ShuffleDeck(tp)
-        Duel.MoveSequence(tc,0)
-        Duel.ConfirmDecktop(tp,1)
-    end
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
+	local tc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+	if tc then
+		Duel.ShuffleDeck(tp)
+		Duel.MoveSequence(tc,0)
+		Duel.ConfirmDecktop(tp,1)
+	end
 end

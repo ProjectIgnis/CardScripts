@@ -1,7 +1,7 @@
 --Goddess Bow
 local s,id=GetID()
 function s.initial_effect(c)
-    --fusion material
+	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcCodeFun(c,25652259,46232525,1,true,true)
 	aux.AddEquipProcedure(c)
@@ -49,7 +49,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL)
 	e1:SetValue(1)
-    et:RegisterEffect(e1)
+	et:RegisterEffect(e1)
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_EXTRA_ATTACK)

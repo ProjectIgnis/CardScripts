@@ -3,10 +3,10 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-    --xyz summon
-    Xyz.AddProcedure(c,nil,4,3)
-    c:EnableReviveLimit()
-    --atk
+	--xyz summon
+	Xyz.AddProcedure(c,nil,4,3)
+	c:EnableReviveLimit()
+	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -90,14 +90,14 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.handtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)~=0 end
-    Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_HAND)
+	if chk==0 then return Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)~=0 end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_HAND)
 end
 function s.handop(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0)
-    if #g==0 then return end
-    local sg=g:RandomSelect(1-tp,1)
-    Duel.SendtoGrave(sg,REASON_EFFECT)
+	local g=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0)
+	if #g==0 then return end
+	local sg=g:RandomSelect(1-tp,1)
+	Duel.SendtoGrave(sg,REASON_EFFECT)
 end
 function s.montg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_MZONE,1,nil) end

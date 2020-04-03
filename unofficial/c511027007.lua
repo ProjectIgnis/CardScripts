@@ -4,7 +4,7 @@
 local COUNTER_BR=0x15a
 local s,id=GetID()
 function s.initial_effect(c)
-    c:EnableCounterPermit(COUNTER_BR)
+	c:EnableCounterPermit(COUNTER_BR)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -45,15 +45,15 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget() and Duel.GetAttackTarget():IsControler(tp)
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    local c=e:GetHandler()
-    if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,COUNTER_BR,1,REASON_COST) end
-    e:GetHandler():RemoveCounter(tp,COUNTER_BR,1,REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,COUNTER_BR,1,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,COUNTER_BR,1,REASON_COST)
 	if c:GetCounter(COUNTER_BR)<=0 then
 		Duel.Destroy(c,REASON_EFFECT)
 	end
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
+	local c=e:GetHandler()
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if not d then return end

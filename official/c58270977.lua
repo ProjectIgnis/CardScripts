@@ -25,7 +25,7 @@ function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x8) and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP)
 end
 function s.spcheck(sg,e,tp)
-    return aux.ChkfMMZ(1)(sg,e,tp) and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,sg,e,tp)
+	return aux.ChkfMMZ(1)(sg,e,tp) and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,sg,e,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetMatchingGroup(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,e,tp)

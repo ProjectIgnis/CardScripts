@@ -48,34 +48,34 @@ function s.remtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.remop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)
-    if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ct then return end
-    local g=Duel.GetDecktopGroup(tp,ct)
-    Duel.DisableShuffleCheck()
-    if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=ct then return end
-    g:KeepAlive()
-    local c=e:GetHandler()
-    c:SetTurnCounter(0)
-    local fid=c:GetFieldID()
-    for tc in aux.Next(g) do
-        tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
-    end
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-    e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
-    e1:SetCountLimit(1)
-    e1:SetLabel(fid)
-    e1:SetLabelObject(g)
-    e1:SetCondition(s.thcon)
-    e1:SetOperation(s.thop)
-    e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,1)
-    Duel.RegisterEffect(e1,tp)
+	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ct then return end
+	local g=Duel.GetDecktopGroup(tp,ct)
+	Duel.DisableShuffleCheck()
+	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=ct then return end
+	g:KeepAlive()
+	local c=e:GetHandler()
+	c:SetTurnCounter(0)
+	local fid=c:GetFieldID()
+	for tc in aux.Next(g) do
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+	end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCountLimit(1)
+	e1:SetLabel(fid)
+	e1:SetLabelObject(g)
+	e1:SetCondition(s.thcon)
+	e1:SetOperation(s.thop)
+	e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,1)
+	Duel.RegisterEffect(e1,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnPlayer()==tp
 end
 function s.thfilter(c,fid)
-    return c:GetFlagEffectLabel(id)==fid
+	return c:GetFlagEffectLabel(id)==fid
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject():Filter(s.thfilter,nil,e:GetLabel())--:Filter(Card.IsRelateToEffect,nil,e)

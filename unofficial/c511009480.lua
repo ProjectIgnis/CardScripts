@@ -67,30 +67,30 @@ function s.ovfilter(c,tp,xyz)
 	return c:IsFaceup() and c:IsCode(CARD_GALAXYEYES_P_DRAGON) and c:GetEquipCount()==2 and Duel.GetLocationCountFromEx(tp,tp,c,xyz)>0
 end
 function s.xyzcon(e,c)
-    if c==nil then return true end
-    if og then return false end
+	if c==nil then return true end
+	if og then return false end
 	local mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local mustg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,c,mg,REASON_XYZ)
 	if #mustg>0 or (min and min>1) then return false end
-    return Duel.CheckReleaseGroup(c:GetControler(),s.ovfilter,1,false,1,true,c,c:GetControler(),nil,false,nil)
+	return Duel.CheckReleaseGroup(c:GetControler(),s.ovfilter,1,false,1,true,c,c:GetControler(),nil,false,nil)
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.SelectReleaseGroup(tp,s.ovfilter,1,1,false,true,true,c,nil,nil,false,nil)
-    if g then
-        g:KeepAlive()
-        e:SetLabelObject(g)
-    return true
-    end
-    return false
+	local g=Duel.SelectReleaseGroup(tp,s.ovfilter,1,1,false,true,true,c,nil,nil,false,nil)
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
 end
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=e:GetLabelObject()
-    if not g then return end
-    local eqg=g:GetFirst():GetEquipGroup()
+	local g=e:GetLabelObject()
+	if not g then return end
+	local eqg=g:GetFirst():GetEquipGroup()
 	e:GetHandler():SetMaterial(eqg)
 	Duel.Overlay(e:GetHandler(),eqg)
-    Duel.Release(g,REASON_COST)
-    g:DeleteGroup()
+	Duel.Release(g,REASON_COST)
+	g:DeleteGroup()
  end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,0,1,e:GetHandler())

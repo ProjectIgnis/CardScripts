@@ -5,8 +5,8 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-    Link.AddProcedure(c,nil,2,3,s.lcheck)
-    --cannot be link material
+	Link.AddProcedure(c,nil,2,3,s.lcheck)
+	--cannot be link material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -45,7 +45,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12d}
 function s.lcheck(g,lc,sumtype,tp)
-    return g:IsExists(Card.IsRace,1,nil,RACE_WINGEDBEAST,lc,sumtype,tp)
+	return g:IsExists(Card.IsRace,1,nil,RACE_WINGEDBEAST,lc,sumtype,tp)
 end
 function s.indtg(e,c)
 	local oc=e:GetHandler()
@@ -83,9 +83,9 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-    local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
-    if #g>0 then
-        Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-    end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+	if #g>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	end
 end

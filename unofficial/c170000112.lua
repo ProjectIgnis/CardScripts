@@ -2,7 +2,7 @@
 Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-    local e1=Effect.CreateEffect(c)
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e1:SetValue(s.vala)

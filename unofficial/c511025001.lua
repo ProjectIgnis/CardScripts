@@ -40,7 +40,7 @@ end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc then
-        local tpe=tc:GetType()
+		local tpe=tc:GetType()
 		local te=tc:GetActivateEffect()
 		local opt=0
 		if te then

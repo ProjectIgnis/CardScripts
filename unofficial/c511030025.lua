@@ -22,14 +22,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--register names
 	aux.GlobalCheck(s,function()
-        s.name_list={}
-        s.name_list[0]={}
-        s.name_list[1]={}
-        aux.AddValuesReset(function()
-                            s.name_list[0]={}
-                            s.name_list[1]={}
-                            end)
-        end)
+		s.name_list={}
+		s.name_list[0]={}
+		s.name_list[1]={}
+		aux.AddValuesReset(function()
+							s.name_list[0]={}
+							s.name_list[1]={}
+							end)
+		end)
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x578) and c:IsAbleToHand()
@@ -108,17 +108,17 @@ end
 if not table.includes then
 	--binary search
 	function table.includes(t,val)
-    	if #t<1 then return false end
-    	if #t==1 then return t[1]==val end --saves sorting for efficiency
-    	table.sort(t)
-    	local left=1
-    	local right=#t
-    	while left<=right do
-        	local middle=(left+right)//2
-        	if t[middle]==val1 then return true
-        	elseif t[middle]<val then left=middle+1
-        	else right=middle-1 end
-    	end
-    	return false
+		if #t<1 then return false end
+		if #t==1 then return t[1]==val end --saves sorting for efficiency
+		table.sort(t)
+		local left=1
+		local right=#t
+		while left<=right do
+			local middle=(left+right)//2
+			if t[middle]==val1 then return true
+			elseif t[middle]<val then left=middle+1
+			else right=middle-1 end
+		end
+		return false
 	end
 end

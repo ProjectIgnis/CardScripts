@@ -47,10 +47,10 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end
-    Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.Draw(tp,1,REASON_EFFECT)
-    Duel.Draw(1-tp,1,REASON_EFFECT)
+	Duel.Draw(tp,1,REASON_EFFECT)
+	Duel.Draw(1-tp,1,REASON_EFFECT)
 end

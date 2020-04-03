@@ -56,7 +56,7 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
-     		and e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,1)
+	 		and e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,1)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		if tc:IsLocation(LOCATION_DECK) and tc:IsControler(tp) then

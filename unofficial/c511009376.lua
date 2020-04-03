@@ -133,7 +133,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-    return c:IsType(TYPE_MONSTER) and c:IsOnField()
+	return c:IsType(TYPE_MONSTER) and c:IsOnField()
 end
 function s.prcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
@@ -145,14 +145,14 @@ function s.prcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.prtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=e:GetLabelObject()
-    if chkc then return g:IsContains(chkc) end
+	if chkc then return g:IsContains(chkc) end
 	if chk==0 then return g and eg:IsExists(Card.IsCanBeEffectTarget,1,nil,e) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-    local sg=g:FilterSelect(tp,Card.IsCanBeEffectTarget,1,1,nil,e)
+	local sg=g:FilterSelect(tp,Card.IsCanBeEffectTarget,1,1,nil,e)
 	Duel.SetTargetCard(sg)
 end
 function s.prop(e,tp,eg,ep,ev,re,r,rp)
-    local tc=Duel.GetFirstTarget()
+	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

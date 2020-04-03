@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     if: false
     env:
-      REMOTE: ProjectIgnis/DeltaBeta.git
-      DESTINATION: DeltaBeta/script
-      BASE_SHA: 49f1929369aa26fb60e8c2f5afff28f51977990b
+      REMOTE: ProjectIgnis/DeltaHopeHarbinger.git
+      DESTINATION: DeltaHopeHarbinger/script
+      BASE_SHA: 20200403
     steps:
     - uses: actions/checkout@v1
     - name: Clone destination repository

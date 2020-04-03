@@ -30,25 +30,22 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD)>0
-		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0,tp,nil,s.cancelcon) end
+		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetLevel)==#sg
-end
-function s.cancelcon(sg,e,tp,mg)
-	return sg:IsExists(s.spfilter2,nil,1,e,tp)
+	return sg:GetClassCount(Card.GetLevel)==#sg and sg:IsExists(s.spfilter2,nil,1,e,tp)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD)<=0 then return end
 	local g=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp,lv)
-	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_SELECT,s.cancelcon,nil,true)
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_SELECT)
 	if #sg~=2 then return end
 	Duel.ConfirmCards(1-tp,sg)
 	Duel.ShuffleDeck(tp)
-	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
-	local cg=sg:FilterSelect(1-tp,s.spfilter2,1,1,nil,e,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local cg=sg:FilterSelect(tp,s.spfilter2,1,1,nil,e,tp)
 	local spt=cg:GetFirst()
 	if Duel.SpecialSummon(spt,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE)>0 then
 		sg:RemoveCard(spt)

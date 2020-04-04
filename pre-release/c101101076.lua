@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--fusion
 	local e2=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x9d),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
-									extrafil=s.fextra,extraop=Fusion.BanishMaterial,stage2=sstage2,desc=aux.Stringid(id,0)})
+									extrafil=s.fextra,extraop=Fusion.BanishMaterial,stage2=s.sstage2,desc=aux.Stringid(id,0)})
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCountLimit(1,id)
@@ -29,7 +29,7 @@ function s.fextra(e,tp,mg)
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
 	end
 end
-function s.stage2(e,tc,tp,sg,chk)
+function s.sstage2(e,tc,tp,sg,chk)
 	if chk==1 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

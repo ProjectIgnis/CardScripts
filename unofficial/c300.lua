@@ -15,7 +15,9 @@
 -- Duel.GetTargetCount()
 -- Duel.SelectTarget()
 
+if c300 then
 function c300.initial_effect(c)
+end
 end
 
 if not DeckMasters then

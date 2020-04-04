@@ -220,55 +220,55 @@ if not SealedDuel then
 		Duel.Hint(HINT_CARD,0,id)
 		--tag variable defining
 		local z,o=tp,1-tp
-			if not aux.AskEveryone(aux.Stringid(4006,9)) then
-				return
-			end
-			--pack selection
-			local pack1=Duel.CreateToken(0,511003041)
-			local pack2=Duel.CreateToken(0,511003042)
-			local pack3=Duel.CreateToken(0,511003043)
-			local pack4=Duel.CreateToken(0,511003044)
-			selectpack={}
+		if not aux.AskEveryone(aux.Stringid(4006,9)) then
+			return
+		end
+		--pack selection
+		local pack1=Duel.CreateToken(0,511003041)
+		local pack2=Duel.CreateToken(0,511003042)
+		local pack3=Duel.CreateToken(0,511003043)
+		local pack4=Duel.CreateToken(0,511003044)
+		selectpack={}
 
-			-- pack select
-			local sg=Group.FromCards(pack1,pack2,pack3,pack4):Select(tp,1,4,nil)
-			-- Duel.Hint(HINT_MESSAGE,1-tp,1211)
-			
-			--pack checking
-			selectpack[1]=sg:IsContains(pack1)
-			selectpack[2]=sg:IsContains(pack2)
-			selectpack[3]=sg:IsContains(pack3)
-			selectpack[4]=sg:IsContains(pack4)
-			if selectpack[3] and not selectpack[1] and not selectpack[2] and not selectpack[4] then
-				selectpack[2]=true
+		-- pack select
+		local sg=Group.FromCards(pack1,pack2,pack3,pack4):Select(tp,1,4,nil)
+		-- Duel.Hint(HINT_MESSAGE,1-tp,1211)
+		
+		--pack checking
+		selectpack[1]=sg:IsContains(pack1)
+		selectpack[2]=sg:IsContains(pack2)
+		selectpack[3]=sg:IsContains(pack3)
+		selectpack[4]=sg:IsContains(pack4)
+		if selectpack[3] and not selectpack[1] and not selectpack[2] and not selectpack[4] then
+			selectpack[2]=true
+		end
+		
+		--treat as all monster types
+		if Duel.SelectYesNo(tp,aux.Stringid(4009,0)) then
+			Duel.Hint(HINT_OPSELECTED,tp,aux.Stringid(4009,0)) 
+			local getrc=Card.GetRace
+			Card.GetRace=function(c)
+				if c:IsType(TYPE_MONSTER) then return 0xfffffff end
+				return getrc(c)
 			end
-			
-			--treat as all monster types
-			if Duel.SelectYesNo(tp,aux.Stringid(4009,0)) then
-				Duel.Hint(HINT_OPSELECTED,tp,aux.Stringid(4009,0)) 
-				local getrc=Card.GetRace
-				Card.GetRace=function(c)
-					if c:IsType(TYPE_MONSTER) then return 0xfffffff end
-					return getrc(c)
-				end
-				local getorigrc=Card.GetOriginalRace
-				Card.GetOriginalRace=function(c)
-					if c:IsType(TYPE_MONSTER) then return 0xfffffff end
-					return getorigrc(c)
-				end
-				local getprevrc=Card.GetPreviousRaceOnField
-				Card.GetPreviousRaceOnField=function(c)
-					if (c:GetPreviousTypeOnField()&TYPE_MONSTER)~=0 then return 0xfffffff end
-					return getprevrc(c)
-				end
-				local isrc=Card.IsRace
-				Card.IsRace=function(c,r)
-					if c:IsType(TYPE_MONSTER) then return true end
-					return isrc(c,r)
-				end
+			local getorigrc=Card.GetOriginalRace
+			Card.GetOriginalRace=function(c)
+				if c:IsType(TYPE_MONSTER) then return 0xfffffff end
+				return getorigrc(c)
 			end
-			--anime counterparts select
-			anime=aux.AskAny(aux.Stringid(4006,15))
+			local getprevrc=Card.GetPreviousRaceOnField
+			Card.GetPreviousRaceOnField=function(c)
+				if (c:GetPreviousTypeOnField()&TYPE_MONSTER)~=0 then return 0xfffffff end
+				return getprevrc(c)
+			end
+			local isrc=Card.IsRace
+			Card.IsRace=function(c,r)
+				if c:IsType(TYPE_MONSTER) then return true end
+				return isrc(c,r)
+			end
+		end
+		--anime counterparts select
+		anime=aux.AskAny(aux.Stringid(4006,15))
 			
 		--anime counterparts
 		local groups={}
@@ -320,9 +320,7 @@ if not SealedDuel then
 		for p=z,o do
 			for team=1,counts[p] do
 				local handcnt=Duel.GetFieldGroupCount(p,LOCATION_HAND,0)
-				for card in aux.Next(Duel.GetFieldGroup(p,0xff,0)) do
-					Duel.SendtoDeck(card,nil,-2,REASON_RULE)
-				end
+				Duel.SendtoDeck(Duel.GetFieldGroup(p,0xff,0),nil,-2,REASON_RULE)
 				for idx,code in ipairs(groups[p][team]) do
 					local loc=LOCATION_DECK
 					-- if idx<=handcnt then loc=LOCATION_HAND end
@@ -331,9 +329,7 @@ if not SealedDuel then
 				Debug.ReloadFieldEnd()
 				Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(4002,7))
 				local fg=Duel.GetFieldGroup(p,LOCATION_DECK+LOCATION_HAND,0)
-				for card in aux.Next(fg:Select(p,0,#fg-20,nil)) do
-					Duel.SendtoDeck(card,nil,-2,REASON_RULE)
-				end
+				Duel.SendtoDeck(fg:Select(p,0,#fg-20,nil),nil,-2,REASON_RULE)
 				if handcnt>0 then Duel.Draw(tp,handcnt,REASON_RULE) end
 				if counts[p]~=1 then
 					Duel.TagSwap(p)

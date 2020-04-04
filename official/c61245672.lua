@@ -32,7 +32,7 @@ function s.lcheck(g,lc)
 	return g:GetClassCount(Card.GetAttribute,lc,SUMMON_TYPE_LINK,tp)==#g
 end
 function s.atkval(e,c)
-	return c:GetLinkedGroupCount()*500
+	return c:GetLinkedGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER)*500
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end

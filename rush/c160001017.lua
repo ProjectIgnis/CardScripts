@@ -1,10 +1,12 @@
 --Kuribott
 --クリボット
+--Scripted by André
 local s,id=GetID()
 function s.initial_effect(c)
 	--
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.condition)
@@ -18,7 +20,6 @@ function s.condition(e,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.filter(c)
 	return c:IsCode(id) and c:IsAbleToHand()
@@ -28,9 +29,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.operation(e,tp)
+	--requirement
+	Duel.PayLPCost(tp,500)
+	--effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local tc = Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc then
 		Duel.SendtoHand(tc,tp,REASON_EFFECT)
 	end
 end

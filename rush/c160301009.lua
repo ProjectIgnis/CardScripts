@@ -5,7 +5,6 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Let a level 4 or lower spellcaster attack directly
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)

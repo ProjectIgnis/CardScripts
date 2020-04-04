@@ -1,4 +1,4 @@
---Commande duel 25
+--Command duel 25
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover
@@ -43,8 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct1>0 then
 		if ((op1 and check) or (not op1 and not check)) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			local lv=Duel.AnnounceNumber(tp,1,2,3,4,5,6,7,8,9,10,11,12)
-			local tc=g1:GetFirst()
-			while tc do
+			for tc in aux.Next(g1) do
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_CHANGE_LEVEL)
@@ -59,7 +58,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if ((op2 and check) or (not op2 and not check)) and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 			local lv=Duel.AnnounceNumber(1-tp,1,2,3,4,5,6,7,8,9,10,11,12)
 			local tc=g2:GetFirst()
-			while tc do
+			for tc in aux.Next(g2) do
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_CHANGE_LEVEL)

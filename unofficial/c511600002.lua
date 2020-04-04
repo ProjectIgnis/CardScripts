@@ -5,7 +5,6 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.EnableExtraRules(c,s,s.op)
-	Debug.Message("s")
 end
 function s.op(c)
 	--limit summon
@@ -38,13 +37,13 @@ function s.op(c)
 	e4:SetCode(EFFECT_SUMMON_PROC)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e4:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
-	e4:SetTarget(s.nttg)
+	e4:SetTarget(aux.FieldSummonProcTg(s.nttg))
 	e4:SetCondition(s.ntcon)
 	e4:SetValue(6)
 	Duel.RegisterEffect(e4,tp)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-	e5:SetTarget(s.nttg2)
+	e5:SetTarget(aux.FieldSummonProcTg(s.nttg2))
 	e5:SetValue(6)
 	Duel.RegisterEffect(e5,tp)
 	--spirit

@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x46}
 function s.counterfilter(c)
-	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsType(TYPE_FUSION)
+	return c:GetSummonLocation()~=LOCATION_EXTRA or c:IsType(TYPE_FUSION)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end

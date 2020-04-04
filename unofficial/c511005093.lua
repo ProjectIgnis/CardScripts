@@ -81,9 +81,6 @@ if not BoosterDraft then
 	end
 
 	function BoosterDraft.op(e,tp,eg,ep,ev,re,r,rp)
-		for _,card in ipairs(selfs) do
-			Duel.SendtoDeck(card,0,-2,REASON_RULE)
-		end
 		local z,o=tp,1-tp
 		--Hint
 		local counts={}
@@ -91,6 +88,15 @@ if not BoosterDraft then
 		counts[1]=Duel.GetPlayersCount(1)
 		Duel.DisableShuffleCheck()
 		Duel.Hint(HINT_CARD,0,id)
+		
+		for p=z,o do
+			for team=1,counts[p] do
+				Duel.SendtoDeck(Duel.GetFieldGroup(tp,0xff,0xff),0,-2,REASON_RULE)
+				if counts[p]~=1 then
+					Duel.TagSwap(p)
+				end
+			end
+		end
 		
 		local groups={}
 		groups[0]={}
@@ -111,20 +117,22 @@ if not BoosterDraft then
 					for i=1,5 do
 						local cpack=pack[i]
 						local c=cpack[Duel.GetRandomNumber(#cpack)]
-						g:AddCard(Debug.AddCard(c,t%2,t%2,LOCATION_GRAVE,0,POS_FACEUP))
+						g:AddCard(Debug.AddCard(c,t%2,t%2,LOCATION_GRAVE,1,POS_FACEUP))
 					end
 				end
 				table.insert(retpacks,g)
 			end
 			Debug.ReloadFieldEnd()
 			return retpacks
-		end
-				
+		end				
 		local packs = generate_packs()
+		local graveg=Duel.GetFieldGroup(p,LOCATION_GRAVE,LOCATION_GRAVE)
 		local pack=table.remove(packs, 1)
+		local confirmed=false
 		while pack do
 			for p=z,o do
 				for team=1,counts[p] do
+					if not confirmed then Debug.Message(#graveg) Duel.ConfirmCards(p,graveg) end
 					local tc=pack:Select(p,1,1,nil)
 					table.insert(groups[p][team],tc:GetFirst():GetCode())
 					pack:Sub(tc)
@@ -137,6 +145,7 @@ if not BoosterDraft then
 					end
 				end
 			end
+			confirmed=true
 		end
 		::exit::
 		for p=z,o do

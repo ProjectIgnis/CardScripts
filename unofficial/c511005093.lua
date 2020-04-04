@@ -116,7 +116,7 @@ if not BoosterDraft then
 				for p=1,3 do
 					for i=1,5 do
 						local cpack=pack[i]
-						local c=cpack[Duel.GetRandomNumber(#cpack)]
+						local c=cpack[Duel.GetRandomNumber(1,#cpack)]
 						g:AddCard(Debug.AddCard(c,t%2,t%2,LOCATION_GRAVE,1,POS_FACEUP))
 					end
 				end

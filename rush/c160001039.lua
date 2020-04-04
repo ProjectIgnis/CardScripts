@@ -3,6 +3,7 @@
 
 --Substitute ID
 local s,id=GetID()
+function s.initial_effect(c)
 	--Change the positions of up to 3 opponent's monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_POSITION)

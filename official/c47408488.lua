@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--counter
+	--add counters on event custom
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_COUNTER)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CUSTOM+id)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
-	--equip
+	--add counters on equip
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_COUNTER)
 	e3:SetDescription(aux.Stringid(id,0))
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.eqcon)
 	e3:SetOperation(s.ctop)
 	c:RegisterEffect(e3)
-	--place
+	--place from the deck
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_COUNTER)
 	e4:SetDescription(aux.Stringid(id,1))
@@ -55,7 +55,7 @@ end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local ct=e:GetHandler():GetCounter(0x6)
-		return ct>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>=ct
+		return ct>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>=ct-1
 	end
 end
 function s.plfilter(c)

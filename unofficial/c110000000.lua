@@ -14,14 +14,6 @@ function s.initial_effect(c)
 	e1:SetCondition(s.fstcond)
 	e1:SetOperation(s.op)
 	Duel.RegisterEffect(e1,0)
-	--damage
-	local e2=Effect.CreateEffect(c)
-	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e2:SetCode(EVENT_CHAIN_SOLVED)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetOperation(s.damop)
-	c:RegisterEffect(e2)
 	--add counter
 	local e3=Effect.CreateEffect(c)
 	e3:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
@@ -141,19 +133,13 @@ function s.op(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Draw(tp,1,REASON_RULE)
 	end
 end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local c=re:GetHandler()
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and c~=e:GetHandler()
-	 and c:GetControler()==e:GetHandler():GetControler() and not c:IsSetCard(0x500) then
-		Duel.Damage(rp,2000,REASON_EFFECT)
-	end
-end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,100100090) then return end
 	e:GetHandler():AddCounter(0x91,1)
 end
 function s.aclimit(e,re)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsType(TYPE_FIELD)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)
+		and (re:GetHandler():IsType(TYPE_FIELD) or not re:GetHandler():IsSetCard(0x500))
 end
 function s.aclimit2(e,c)
 	return c:IsType(TYPE_FIELD)

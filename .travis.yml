@@ -2,8 +2,10 @@ language: minimal
 os: linux
 dist: bionic
 git:
-  depth: 1
+  depth: 5
 install:
-- git clone --depth=1 --branch=$BINARY_BRANCH https://$BINARY_TOKEN@github.com/$BINARY_REPO.git bin
-- cp bin/script_syntax_check bin/libocgcore.so .
+- curl --retry 5 --connect-timeout 30 --location --remote-header-name --output ignis-test-bin.tar.gz https://github.com/ProjectIgnis/Checker/releases/download/1.0.0/ignis-test-bin.tar.gz
+- tar xf ignis-test-bin.tar.gz
+- cp ignis-test/script_syntax_check ignis-test/libocgcore.so .
+- rm -rf ignis-test
 script: ./script_syntax_check

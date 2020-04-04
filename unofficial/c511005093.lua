@@ -132,7 +132,7 @@ if not BoosterDraft then
 		while pack do
 			for p=z,o do
 				for team=1,counts[p] do
-					if not confirmed then Debug.Message(#graveg) Duel.ConfirmCards(p,graveg) end
+					if not confirmed then Duel.ConfirmCards(p,graveg) end
 					local tc=pack:Select(p,1,1,nil)
 					table.insert(groups[p][team],tc:GetFirst():GetCode())
 					pack:Sub(tc)

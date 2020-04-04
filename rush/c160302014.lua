@@ -12,26 +12,26 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	local bc=tc:GetBattleTarget()
-	return tc:IsPreviousControler(tp) and tc:IsRace(RACE_DRAGON)
-		and (tc:GetBattlePosition()&POS_FACEUP)~=0
-		and bc:IsRelateToBattle() and bc:IsControler(1-tp) and bc==Duel.GetAttacker()
+	local ec=eg:GetFirst()
+	return #eg==1 and ec:IsPreviousControler(tp) and ec:IsRace(RACE_DRAGON)
+		and (ec:GetPreviousRaceOnField()&RACE_DRAGON)~=0
+		and ec==Duel.GetAttackTarget() and ec:IsLocation(LOCATION_GRAVE) and ec:IsReason(REASON_BATTLE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
-	if #g>0 then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	end
+	if chk==0 then return #g>0 and Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetChainLimit(s.chlimit)
 end
 function s.chlimit(e,ep,tp)
 	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	-- effect
-	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,3,nil)
-	if Duel.Destroy(g,REASON_EFFECT)==0 then return end
-	Duel.Draw(tp,1,REASON_EFFECT)
+	local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
+	if Duel.SendtoGrave(tg,REASON_COST)~=0 then
+		local tc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+		if tc then
+			Duel.Destroy(tc,REASON_EFFECT)
+		end
+	end
 end

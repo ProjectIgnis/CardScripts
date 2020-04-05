@@ -1,4 +1,5 @@
 --異形神の契約書
+--Dark Contract with the Entities
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -88,7 +89,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(p,d,REASON_EFFECT)
 end
 function s.filter(c,tp,typ)
-	return c:IsType(typ) and c:IsSetCard(0x10af) and c:IsControler(tp) and not c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsType(typ) and c:IsSetCard(0x10af) and c:IsControler(tp) and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

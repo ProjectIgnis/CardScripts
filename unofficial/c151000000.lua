@@ -244,8 +244,10 @@ if not ActionDuel then
 			if tg then tg(te,tp,eg,ep,ev,re,r,rp,1) end
 			Duel.BreakEffect()
 			local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-			for etc in aux.Next(g) do
-				etc:CreateEffectRelation(te)
+			if g then
+				for etc in aux.Next(g) do
+					etc:CreateEffectRelation(te)
+				end
 			end
 			if op then op(te,tp,eg,ep,ev,re,r,rp) end
 			tc:ReleaseEffectRelation(te)

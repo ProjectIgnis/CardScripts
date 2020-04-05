@@ -254,7 +254,22 @@ if not AnimeArchetype then
             return c:IsSetCard(0x10e3) or c:IsCode(CARD_VIJAM)
         end
     end
-
+	
+	-- Darkness
+	-- ダークネス
+	-- Cyberdarkness Dragon/Darkness Metal, the Dragon of Dark Steel/Malevolent Mech - Goku En
+	-- Simorgh of Darkness/Darkness Destroyer/Umbral Soul
+	-- Darkness Neosphere/Hunter of Black Feathers/D/D/D Super Doom King Dark Armageddon
+	-- F.A. Dark Dragster/Light and Darkness Dragon/Red-Eyes Darkness Dragon
+	-- Red-Eyes Darkness Metal Dragon
+	function Card.IsDarkness(c,fbool)
+       if fbool then
+            return c:IsSetCard(0x316,nil,SUMMON_TYPE_FUSION) or c:IsFusionCode(table.unpack(AnimeArchetype.OCGDarkness))
+        else
+            return c:IsSetCard(0x316) or c:IsCode(table.unpack(AnimeArchetype.OCGDarkness))
+        end
+    end
+	
     -- Dart ダーツ
     -- Fire Darts
     function Card.IsDart(c,fbool)

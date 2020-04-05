@@ -1,4 +1,5 @@
 --忍法 分身の術
+--Ninjutsu Art of Duplication 
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -57,7 +58,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	sg:Remove(Card.IsLevelAbove,nil,slv+1)
 	if #sg==0 then return end
 	local cg=aux.SelectUnselectGroup(sg,e,tp,1,ft,s.rescon(slv),1,tp,HINTMSG_SPSUMMON)
-	for tc in aux.Next(sg) do
+	for tc in aux.Next(cg) do
 		local spos=0
 		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) then spos=spos+POS_FACEUP_ATTACK end
 		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then spos=spos+POS_FACEDOWN_DEFENSE end

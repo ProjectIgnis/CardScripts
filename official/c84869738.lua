@@ -57,15 +57,15 @@ end
 function s.exfilter2(c)
 	return c:IsLocation(LOCATION_EXTRA) and (c:IsType(TYPE_LINK) or (c:IsFaceup() and c:IsType(TYPE_PENDULUM)))
 end
-function s.rescon(ft1,ft2,ft3,ect,ft)
+function s.rescon(ft1,ft2,ft3,ft4,ft)
 	return	function(sg,e,tp,mg)
 				local exnpct=sg:FilterCount(c84869738.exfilter1,nil,LOCATION_EXTRA)
 				local expct=sg:FilterCount(c84869738.exfilter2,nil,LOCATION_EXTRA)
 				local mct=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
-				local exct=g:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
+				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				local groupcount=#sg
 				local classcount=sg:GetClassCount(Card.GetCode)
-				local res=ft2>=exnpct and ft3>=expct and ft1>=mct and ext>=exct and ft>=groupcount and classcount==groupcount
+				local res=ft3>=exnpct and ft4>=expct and ft1>=mct and ft>=groupcount and classcount==groupcount
 				return res, not res
 			end
 end
@@ -74,24 +74,31 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Destroy(dg,REASON_EFFECT)==0 then return end
 	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ft2=Duel.GetLocationCountFromEx(tp)
-	local ft2=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
-	local ft3=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM+TYPE_LINK)
+	local ft3=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
+	local ft4=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM+TYPE_LINK)
 	local ft=math.min(Duel.GetUsableMZoneCount(tp),4)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then
 		if ft1>0 then ft1=1 end
 		if ft2>0 then ft2=1 end
 		if ft3>0 then ft3=1 end
+		if ft4>0 then ft4=1 end
 		ft=1
 	end
 	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
 	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
+	if ect then
+		ft1 = math.min(ect, ft1)
+		ft2 = math.min(ect, ft2)
+		ft3 = math.min(ect, ft3)
+		ft4 = math.min(ect, ft4)
+	end
 	local loc=0
 	if ft1>0 then loc=loc+LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE end
-	if ect>0 and (ft2>0 or ft3>0) then loc=loc+LOCATION_EXTRA end
+	if ft2>0 or ft3>0 or ft4>0 then loc=loc+LOCATION_EXTRA end
 	if loc==0 then return end
 	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,loc,0,nil,e,tp)
 	if #sg==0 then return end
-	local rg=aux.SelectUnselectGroup(sg,e,tp,1,ft,s.rescon(ft1,ft2,ft3,ect,ft),1,tp,HINTMSG_SPSUMMON)
+	local rg=aux.SelectUnselectGroup(sg,e,tp,1,ft,s.rescon(ft1,ft2,ft3,ft4,ft),1,tp,HINTMSG_SPSUMMON)
 	Duel.SpecialSummon(rg,0,tp,tp,true,false,POS_FACEUP)
 end
 function s.xyzfilter(c)

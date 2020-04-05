@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local oc=g:GetNext()
 	if oc==e:GetLabelObject() then tc,oc=oc,tc end
 	if tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and tc:IsAbleToChangeControler() and Duel.Equip(tp,tc,oc,false) then
+		and tc:IsAbleToChangeControler() and Duel.Equip(tp,oc,tc,false) then
 		--no battle damage
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -66,4 +66,3 @@ end
 function s.repval(e,re,r,rp)
 	return (r&REASON_BATTLE+REASON_EFFECT)~=0
 end
-

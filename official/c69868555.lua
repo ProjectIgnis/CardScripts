@@ -44,7 +44,7 @@ function s.dfilter(c,eg)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and (c:IsLevel(7) or c:IsLevel(8)) and not eg:IsContains(c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(aux.NOT(Card.IsSummonLocation,LOCATION_GRAVE),1,nil) and Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_MZONE,0,1,nil,eg)
+	return eg:IsExists(aux.NOT(Card.IsSummonLocation),1,nil,LOCATION_GRAVE) and Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_MZONE,0,1,nil,eg)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -73,6 +73,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.dop)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	local e2=Effect.CreateEffect(e:GetHandler())
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 	Duel.RegisterEffect(e2,tp)
 end

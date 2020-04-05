@@ -63,9 +63,9 @@ function s.initial_effect(c)
 	)
 end
 s.listed_series={0x12b}
-s.listed_names={101010040}
+s.listed_names={67712104}
 function s.matchk(e,c)
-	if c:GetMaterial():IsExists(Card.IsLinkCode,1,nil,101010040) then
+	if c:GetMaterial():IsExists(Card.IsCode,1,nil,67712104) then
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE-RESET_TEMP_REMOVE,0,1)
 	end
 end

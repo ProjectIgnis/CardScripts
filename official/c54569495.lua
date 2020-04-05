@@ -33,7 +33,7 @@ s.listed_series={0x12b}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return a and d
+	return a and d and a:IsRelateToBattle() and d:IsRelateToBattle()
 end
 function s.cfilter(c)
 	return c:IsSetCard(0x12b) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
@@ -53,11 +53,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-		e1:SetRange(LOCATION_MZONE)
-		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e1:SetCondition(s.dcon)
-		e1:SetOperation(s.dop)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(1,0)
+		e1:SetValue(HALF_DAMAGE)
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		Duel.RegisterEffect(e1,tp)
 	end

@@ -1,6 +1,5 @@
 --電網の落とし穴
 --Network Trap Hole
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return not c:IsSummonPlayer(tp) and not (c:IsSummonLocation(LOCATION_DECK) or c:IsSummonLocation(LOCATION_GRAVE))
+	return not c:IsSummonPlayer(tp) and (c:IsSummonLocation(LOCATION_DECK) or c:IsSummonLocation(LOCATION_GRAVE))
 		and c:IsAbleToRemove(tp,POS_FACEDOWN) and c:IsLocation(LOCATION_MZONE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

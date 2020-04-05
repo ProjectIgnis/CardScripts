@@ -1,4 +1,5 @@
 --オルターガイスト・クンティエリ
+--Altergeist Kunquery
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate attack
@@ -58,7 +59,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		c:SetCardTarget(tc)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_ATTACK)
+		e1:SetCode(EFFECT_DISABLE)
 		e1:SetCondition(s.rcon)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)

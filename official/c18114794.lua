@@ -1,4 +1,5 @@
 --サモンブレーカー
+--Summon Breaker
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -41,9 +42,8 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		s[1]=0
 		s[2]=Duel.GetTurnCount()
 	end
-	local tc=eg:GetFirst()
 	local p1=false
-	for tc in aux.Next(g) do
+	for tc in aux.Next(eg) do
 		if tc:GetSummonPlayer()==turnp then p1=true end
 	end
 	if p1 then

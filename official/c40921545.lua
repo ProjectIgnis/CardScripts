@@ -1,4 +1,5 @@
 --ヴェルズ・カイトス
+--Evilswarm Ketos
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -29,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

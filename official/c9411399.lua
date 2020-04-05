@@ -1,4 +1,5 @@
 --D－HERO ディアボリックガイ
+--Destiny HERO - Malicious
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -12,8 +13,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.filter(c,e,sp)
-	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+function s.filter(c,e,tp)
+	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp)

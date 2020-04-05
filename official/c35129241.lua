@@ -43,7 +43,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,e,tp,re)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,tp) end
+	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,tp,re) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,eg,#eg,0,0)

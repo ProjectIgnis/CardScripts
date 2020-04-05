@@ -251,8 +251,10 @@ if not ActionDuel then
 			end
 			if op then op(te,tp,eg,ep,ev,re,r,rp) end
 			tc:ReleaseEffectRelation(te)
-			for etc in aux.Next(g) do
-				etc:ReleaseEffectRelation(te)
+			if g then
+				for etc in aux.Next(g) do
+					etc:ReleaseEffectRelation(te)
+				end
 			end
 		end
 	end

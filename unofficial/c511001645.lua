@@ -25,7 +25,7 @@ function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.SendtoDeck(g,nil,2,REASON_COST+REASON_MATERIAL)
 end
-function s.ffilter(c,fc,sub,mg,sg)
+function s.ffilter(c,fc,sub,sub2,mg,sg)
 	return c:IsSetCard(0x1f,fc,SUMMON_TYPE_FUSION,fc:GetControler()) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetFusionCode(fc,fc:GetControler()),fc,fc:GetControler()))
 end
 function s.fusfilter(c,code,fc,tp)

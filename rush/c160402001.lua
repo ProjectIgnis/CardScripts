@@ -29,7 +29,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(1-tp,LOCATION_ONFIELD,0)>0 end
 	Duel.SetTargetPlayer(1-tp)
-	local dam=Duel.GetFieldGroupCount(1-tp,LOCATION_ONFIELD,0)*300
+	local dam=Duel.GetFieldGroupCount(1-tp,LOCATION_ONFIELD,0)*400
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -37,6 +37,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST)
 	-- effect
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local dam=Duel.GetFieldGroupCount(1-tp,LOCATION_ONFIELD,0)*300
+	local dam=Duel.GetFieldGroupCount(1-tp,LOCATION_ONFIELD,0)*400
 	Duel.Damage(p,dam,REASON_EFFECT)
 end

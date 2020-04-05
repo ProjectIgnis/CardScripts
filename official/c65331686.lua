@@ -26,8 +26,8 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id)
 	e3:SetCost(s.cost)
-	e2:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
-	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
+	e3:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
+	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xad}

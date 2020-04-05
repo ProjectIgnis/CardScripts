@@ -30,6 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,3,3,nil)
 	Duel.SendtoDeck(g,nil,3,REASON_COST)
+	Duel.ShuffleDeck(tp)
 	--Effect
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)

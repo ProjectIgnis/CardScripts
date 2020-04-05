@@ -37,8 +37,8 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	filt=filt or {}
 	local oldfilt={table.unpack(filt)}
 	sg:AddCard(c)
-	for _,f in ipairs(filt) do
-		if not f[2](c,f[3],tp,sg,mg,lc,f[1],1) then
+	for _,filt in ipairs(filt) do
+		if not filt[2](c,filt[3],tp,sg,mg,lc,filt[1],1) then
 			sg:RemoveCard(c)
 			return false
 		end
@@ -61,8 +61,8 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 	if #sg>maxc then return false end
 	local oldfilt={table.unpack(filt)}
 	sg:AddCard(c)
-	for _,f in ipairs(filt) do
-		if not f[2](c,f[3],tp,sg,mg,lc,f[1],1) then
+	for _,filt in ipairs(filt) do
+		if not filt[2](c,filt[3],tp,sg,mg,lc,filt[1],1) then
 			sg:RemoveCard(c)
 			return false
 		end
@@ -91,8 +91,8 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 	return res
 end
 function Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
-	for _,f in ipairs(filt) do
-		if not sg:IsExists(f[2],1,nil,f[3],tp,sg,Group.CreateGroup(),lc,f[1],1) then
+	for _,filt in ipairs(filt) do
+		if not sg:IsExists(filt[2],1,nil,filt[3],tp,sg,Group.CreateGroup(),lc,filt[1],1) then
 			return false
 		end
 	end

@@ -20,7 +20,7 @@ end
 s.listed_series={0x46}
 	--Haven't summoned any non-fusions
 function s.counterfilter(c)
-	return c:IsSummonLocation()~=LOCATION_EXTRA or c:IsType(TYPE_FUSION)
+	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsType(TYPE_FUSION)
 end
 	--Can only special summon fusions from extra deck
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

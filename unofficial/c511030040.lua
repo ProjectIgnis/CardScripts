@@ -43,9 +43,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
-function s.matfilter(c)
-	return c:IsLevel(1) and c:IsLinkSetCard(0x57a)
+function s.matfilter(c,lc,sumtype,tp)
+	return c:IsSetCard(0x57a,fc,sumtype,tp) and c:IsLevel(1)
 end
+--function s.matcheck(g,lc,tp)
+--	return g:IsExists(Card.IsSetCard,1,nil,0x57a,lc,SUMMON_TYPE_LINK,tp)
+--end
 function s.lkcon(e)
 	local c=e:GetHandler()
 	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)

@@ -33,8 +33,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-function s.matfilter(c)
-	return c:IsLink(1) and c:IsLinkSetCard(0x57a)
+function s.matfilter(c,lc,sumtype,tp)
+	return c:IsSetCard(0x57a,fc,sumtype,tp) and c:IsLink(1)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()

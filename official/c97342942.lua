@@ -1,4 +1,5 @@
 --エクトプラズマー
+--Ectoplasmer
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local rg=Duel.SelectReleaseGroup(tp,s.rfilter,1,1,e:GetHandler(),e)
-	if Duel.Release(rg,REASON_EFFECT)>0 then
+	if rg and Duel.Release(rg,REASON_EFFECT)>0 then
 		local atk=rg:GetFirst():GetBaseAttack()/2
 		Duel.Damage(1-tp,atk,REASON_EFFECT)
 	end

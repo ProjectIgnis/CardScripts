@@ -17,7 +17,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,c,1,tp,1000)
 end
 function s.operation(e,tp)
-	if Duel.Recover(tp,1000,REASON_EFFECT)>0 then
+	if Duel.Recover(1-tp,1000,REASON_EFFECT)>0 then
 		local c = e:GetHandler()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

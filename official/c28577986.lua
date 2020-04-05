@@ -1,4 +1,5 @@
 --水精鱗－オーケアビス
+--Mermail Abyssocea
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -45,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local slv=tc:GetLevel()
 	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,slv,e,tp)
 	if #sg==0 then return end
-	local tg=aux.SelectUnselectGroup(sg,e,tp,1,nil,s.rescon(lv),1,tp,HINTMSG_SPSUMMON)
+	local tg=aux.SelectUnselectGroup(sg,e,tp,1,nil,s.rescon(slv),1,tp,HINTMSG_SPSUMMON)
 	Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
 	Duel.BreakEffect()
 	Duel.SendtoGrave(tc,REASON_EFFECT)

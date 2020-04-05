@@ -66,7 +66,7 @@ function s.sprcon(e,c)
 end
 function s.sprtg(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_MZONE,0,nil)
-	local g1=g:Filter(s.sprfilter1,nil)
+	local g1=g:Filter(s.sprfilter1,nil,tp,g,c)
 	local mg1=aux.SelectUnselectGroup(g1,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE,nil,nil,true)
 	if #mg1>0 then
 		local mc=mg1:GetFirst()

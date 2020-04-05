@@ -77,7 +77,9 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		if c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp)>0
 			and Duel.IsExistingMatchingCard(s.house_filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) then
 			local tg=Duel.GetFirstMatchingCard(s.house_filter,tp,LOCATION_EXTRA,0,nil,e,tp)
-			Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
+			if tg then
+				Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
+			end
 		end
 	end
 end

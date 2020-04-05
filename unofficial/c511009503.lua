@@ -46,7 +46,7 @@ function s.atkcon(e)
 end
 function s.atktg(e,c)
 	local lg=e:GetHandler():GetLinkedGroup()
-	return lg:IsContains(c) 
+	return lg:IsContains(c) and c:IsType(TYPE_LINK)
 end
 function s.adval(e,c)
 	return c:GetAttack()

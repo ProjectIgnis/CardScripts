@@ -1,10 +1,11 @@
---スピード・ワールド 
+--スピード・ワールド
+--Speed World
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x91)
 	c:SetCounterLimit(0x91,12)
-	--Activate	
-	local e1=Effect.CreateEffect(c)	
+	--Activate
+	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PREDRAW)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 	--damage
-	local e2=Effect.CreateEffect(c)	
+	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetCode(EVENT_CHAIN_SOLVED)
@@ -31,13 +32,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--activation
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)	
+	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(1,1)
 	e4:SetValue(s.aclimit)
-	Duel.RegisterEffect(e4,tp)	
+	Duel.RegisterEffect(e4,tp)
 	--unaffectable
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
@@ -94,7 +95,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp,chk)
 	if tc==nil then
 		Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		if tc2==nil then
-			local token=Duel.CreateToken(tp,id,nil,nil,nil,nil,nil,nil)		
+			local token=Duel.CreateToken(tp,id,nil,nil,nil,nil,nil,nil)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetCode(EFFECT_CHANGE_TYPE)
@@ -125,7 +126,8 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x91,1)
 end
 function s.aclimit(e,re)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsType(TYPE_FIELD)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)
+		and (re:GetHandler():IsType(TYPE_FIELD) or not re:GetHandler():IsSetCard(0x500))
 end
 function s.aclimit2(e,c)
 	return c:IsType(TYPE_FIELD)

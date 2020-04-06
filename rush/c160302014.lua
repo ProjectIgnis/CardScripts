@@ -11,11 +11,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+function s.filter(c,tp)
+	return c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
+		and c==Duel.GetAttackTarget() and c:IsRace(RACE_DRAGON)
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ec=eg:GetFirst()
-	return #eg==1 and ec:IsPreviousControler(tp) and ec:IsRace(RACE_DRAGON)
-		and (ec:GetPreviousRaceOnField()&RACE_DRAGON)~=0
-		and ec==Duel.GetAttackTarget() and ec:IsLocation(LOCATION_GRAVE) and ec:IsReason(REASON_BATTLE)
+	return eg:IsExists(s.filter,1,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)

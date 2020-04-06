@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047),nil,s.extrafil,nil,nil,s.stage2)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047),aux.FALSE,s.extrafil,nil,nil,s.stage2)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 	--Destroy

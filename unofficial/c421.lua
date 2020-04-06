@@ -140,7 +140,7 @@ if not DivineHierarchy then
 		return true
 	end
 	function DivineHierarchy.tglimit(e,c)
-		return c:GetFlagEffectLabel(513000065)
+		return c and c:GetFlagEffectLabel(513000065)
 			and e:GetHandler():GetFlagEffectLabel(513000065)>c:GetFlagEffectLabel(513000065) or false
 	end
 	function DivineHierarchy.stgcon(e,tp,eg,ep,ev,re,r,rp)

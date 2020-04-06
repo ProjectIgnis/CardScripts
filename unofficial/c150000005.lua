@@ -23,7 +23,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.GetAttacker():IsContains(tp) and Duel.GetAttacker():GetFlagEffect(id)==0
+	return not Duel.GetAttacker():IsControler(tp) and Duel.GetAttacker():GetFlagEffect(id)==0
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local ats=eg:GetFirst():GetAttackableTarget()

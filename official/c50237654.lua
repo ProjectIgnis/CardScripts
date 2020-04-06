@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,{CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL},aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER))
-	--draw
+	--Draw 1 card, if it was a spell/trap, set it
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon "Dark Magician" and "Dark Magician Girl"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -53,7 +53,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		if tc:IsType(TYPE_SPELL+TYPE_TRAP) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			Duel.SSet(tp,tc)
+			Duel.SSet(tp,tc,tp,false)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			if tc:IsType(TYPE_QUICKPLAY) then
@@ -91,4 +91,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sg1,0,tp,tp,true,false,POS_FACEUP)
 	end
 end
-

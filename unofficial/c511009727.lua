@@ -33,7 +33,7 @@ function s.spfilter(c,tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.spfilter,1,nil,tp) then
-		s[tc:GetControler()]=s[tc:GetControler()]+1
+		s[tp]=s[tp]+1
 	end
 end
 

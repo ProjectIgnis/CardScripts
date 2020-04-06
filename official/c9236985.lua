@@ -1,4 +1,5 @@
 --リチュアの写魂鏡
+--Gishki Photomirror
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3a}
 function s.filter(c,e,tp,lp)
-	if c:IsRitualMonster() or not c:IsSetCard(0x3a) 
+	if not c:IsRitualMonster() or not c:IsSetCard(0x3a) 
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false) then return false end
 	return lp>c:GetLevel()*500
 end

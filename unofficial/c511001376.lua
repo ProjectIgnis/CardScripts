@@ -66,7 +66,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(3682106)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	c:RegisterEffect(e1)
+	e:GetHandler():RegisterEffect(e1)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,5 +1,5 @@
 --HSR-GOMガン
---Hi-Speedroid GOM Gun
+--Hi-Speedroid Rubber Band Shooter
 --Scripted by Naim and Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,8 +32,7 @@ function s.nsfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsSummonable(true,nil)
 end
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
 function s.nsop(e,tp,eg,ep,ev,re,r,rp)

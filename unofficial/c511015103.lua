@@ -98,8 +98,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.XyzSummon(tp,xyz,nil,g)
 	end
 end
-function s.disop(e,tp,eg,ep,ev,re,r,rp,tc)
-	local e1=Effect.CreateEffect(e:GetHandler())
+function s.disop(tc,c)
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)

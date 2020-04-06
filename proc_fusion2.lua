@@ -183,7 +183,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locati
 						if fcheck then
 							if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
 						end
-						local mat2=Duel.SelectFusionMaterial(tp,tc,ce:GetTarget()(ce,e,tp),gc,chkf)
+						local mat2=Duel.SelectFusionMaterial(tp,tc,ce:GetTarget()(ce,e,tp,value),gc,chkf)
 						Fusion.CheckAdditional=nil
 						ce:GetOperation()(sel[1],e,tp,tc,mat2,value)
 						backupmat=tc:GetMaterial():Clone()

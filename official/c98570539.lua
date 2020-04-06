@@ -11,11 +11,19 @@ end
 s.listed_series={0x131}
 s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
 function s.fextra(e,tp,mg)
-	if Duel.IsEnvironment(CARD_DREAM_MIRROR_JOY,PLAYER_ALL,LOCATION_FZONE) then
-		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_HAND,0,nil)
+	local joy=Duel.IsEnvironment(CARD_DREAM_MIRROR_JOY,PLAYER_ALL,LOCATION_FZONE)
+	local terror=Duel.IsEnvironment(CARD_DREAM_MIRROR_TERROR,PLAYER_ALL,LOCATION_FZONE) and not Duel.IsPlayerAffectedByEffect(tp,69832741)
+	local joyg=Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_HAND,0,nil)
+	local terrorg=Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
+	if joy and terror then
+		joyg:Merge(terrorg)
+		return joyg
 	end
-	if Duel.IsEnvironment(CARD_DREAM_MIRROR_TERROR,PLAYER_ALL,LOCATION_FZONE) and not Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
+	if joy then
+		return joyg
+	end
+	if terror then
+		return terrorg
 	end
 end
 function s.extraop(e,tc,tp,sg)

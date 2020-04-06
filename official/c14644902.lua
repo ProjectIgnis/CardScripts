@@ -1,4 +1,5 @@
 --幻想召喚師
+--Summoner of Illusions
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -24,7 +25,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rg=Duel.SelectReleaseGroup(tp,s.rfilter,1,1,c,e,tp)
-	if Duel.Release(rg,REASON_EFFECT)>0 then
+	if rg and Duel.Release(rg,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 		if #sg>0 then

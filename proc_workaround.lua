@@ -216,7 +216,7 @@ function Card.HasLevel(c)
 		and not c:IsStatus(STATUS_NO_LEVEL)
 end
 function Card.IsSummonLocation(c,loc)
-	return c:GetSummonLocation()&loc~=0
+	return c:GetSummonLocation() & loc~=0
 end
 function Duel.GetTargetCards(e)
 	return Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)

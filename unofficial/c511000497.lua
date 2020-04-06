@@ -1,6 +1,7 @@
 --ネオス・ワイズマン (Anime)
 --Neos Wiseman (Anime)
 --updated by ClaireStanfield
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

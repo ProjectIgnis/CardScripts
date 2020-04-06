@@ -51,7 +51,7 @@ end
 s.listed_names={CARD_SALAMANGREAT_SANCTUARY}
 function s.lmfilter(c,lc,tp)
 	return c:IsFaceup() and c:IsLinkMonster()
-		and c:IsLinkCode(lc:GetCode()) and c:IsCanBeLinkMaterial(lc,tp)
+		and c:IsSummonCode(lc,SUMMON_TYPE_LINK,tp,lc:GetCode()) and c:IsCanBeLinkMaterial(lc,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,c,lc)>0
 end
 function s.linkcon(e,c)

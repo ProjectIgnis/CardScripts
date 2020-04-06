@@ -26,7 +26,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(ep,id)>0 then return end
 	--condition
 	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.revfilter,tp,LOCATION_HAND,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,17985575)
+		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,17985575)
 end
 function s.revfilter(c)
 	return c:IsCode(43973174) and not c:IsPublic()
@@ -58,7 +58,7 @@ end
 function s.flipcon2(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
 	if Duel.GetFlagEffect(ep,id)>0 then return end
-	return eg:IsExists(s.cfilter,1,nil,tp) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,43973174) 
+	return eg:IsExists(s.cfilter,1,nil,tp) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,43973174) 
 end
 function s.flipop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

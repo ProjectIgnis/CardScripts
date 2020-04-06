@@ -53,7 +53,7 @@ function s.cost(target)
 		e:SetLabelObject(g:GetFirst())
 	end
 end
-function s.stage2(e,tc,tp,sg,chk)
+function s.stage2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==1 and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local lp=e:GetLabelObject():GetAttack()
 		if lp>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

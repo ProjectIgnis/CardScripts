@@ -31,7 +31,6 @@ end
 function s.linkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.linkfilter,tp,LOCATION_MZONE,0,nil,e,tp)
 	if #g>0 then
-		e:SetLabelObject(g)
 		e:SetLabel(1)
 		local tc=g:GetFirst()
 		while tc do
@@ -44,18 +43,15 @@ function s.ndamcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_MZONE) and e:GetLabelObject():GetLabel()==1
 end
 function s.ndamop(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetLabelObject():GetLabelObject()
-	if g and #g>0 then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetTargetRange(LOCATION_MZONE,0)
-		e1:SetTarget(s.efilter)
-		e1:SetValue(1)
-		e1:SetLabelObject(g)
-		Duel.RegisterEffect(e1,tp)
-	end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetTarget(s.efilter)
+	e1:SetValue(1)
+	e1:SetReset(EVENT_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 end
 function s.efilter(e,c)
 	return c:GetFlagEffect(id)>0

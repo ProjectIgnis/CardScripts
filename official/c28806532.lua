@@ -55,7 +55,8 @@ end
 function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if #g<=0 then return end
-	local ct=math.min(2,Duel.GetLocationCount(tp,LOCATION_SZONE))
+	local a,b=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	local ct=math.min(2,a)
 	if ct<1 then return end
 	if #g>ct then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)

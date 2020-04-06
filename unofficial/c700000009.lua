@@ -33,7 +33,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,c)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return tc and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Destroy(tc,REASON_EFFECT)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)

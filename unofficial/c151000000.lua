@@ -256,6 +256,9 @@ if not ActionDuel then
 					etc:ReleaseEffectRelation(te)
 				end
 			end
+			tc:SetStatus(STATUS_LEAVE_CONFIRMED,true)
+			tc:CancelToGrave(false)
+			Duel.SendtoGrave(tc,REASON_RULE)
 		end
 	end
 

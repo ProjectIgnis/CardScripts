@@ -77,7 +77,7 @@ function s.tglimit(e,c)
 	return c~=e:GetHandler()
 end
 function s.tgval(e,re,rp)
-	if not aux.tgoval(e,re,rp) then return false end
+	if not aux.tgoval(e,re,rp) or not re:IsActiveType(TYPE_MONSTER) then return false end
 	local c=re:GetHandler()
 	local lv=e:GetHandler():GetLevel()
 	if c:GetRank()>0 then

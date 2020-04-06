@@ -19,12 +19,8 @@ function s.fextra(e,tp,mg)
 		joyg:Merge(terrorg)
 		return joyg
 	end
-	if joy then
-		return joyg
-	end
-	if terror then
-		return terrorg
-	end
+	if joy then return joyg end
+	if terror then return terrorg end
 end
 function s.extraop(e,tc,tp,sg)
 	local g1=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)

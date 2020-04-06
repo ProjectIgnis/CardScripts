@@ -37,9 +37,8 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-function s.descon(e,c)
-	if c==nil then return true end
-	return s[c:GetControler()]>=1
+function s.descon(e,tp)
+	return s[tp]>0
 end
 
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

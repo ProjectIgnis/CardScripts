@@ -50,12 +50,12 @@ function s.cost(target)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,target,e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SendtoGrave(g,REASON_COST)
-		e:SetLabel(g:GetFirst():GetAttack())
+		e:SetLabelObject(g:GetFirst())
 	end
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
-		local lp=e:GetLabel()
+		local lp=e:GetLabelObject():GetAttack()
 		if lp>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.BreakEffect()
 			Duel.Recover(tp,lp,REASON_EFFECT)

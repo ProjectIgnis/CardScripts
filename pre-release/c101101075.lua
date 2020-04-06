@@ -54,12 +54,13 @@ function s.cost(target)
 	end
 end
 function s.stage2(e,tc,tp,sg,chk)
-	if chk==1 and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if chk==1 and e:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetLabelObject() then
 		local lp=e:GetLabelObject():GetAttack()
 		if lp>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.BreakEffect()
 			Duel.Recover(tp,lp,REASON_EFFECT)
 		end
 		e:SetLabel(0)
+		e:SetLabelObject(nil)
 	end
 end

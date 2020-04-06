@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.atkval(e,c)
-	return c:GetLinkedGroupCount()*600
+	return c:GetLinkedGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER)*600
 end
 function s.filter(c)
 	return c:IsType(TYPE_TRAP) and not c:IsPublic()

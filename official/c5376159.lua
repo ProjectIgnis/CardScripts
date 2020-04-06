@@ -43,11 +43,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #fg>0 then
 		g=g-fg:GetMaxGroup(Card.GetLevel)
 	end
-	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
-		local ig=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-		if #ig==0 then return end
-		ig:ForEach(s.immop,e:GetHandler())
-	end
+	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+	local ig=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if #ig==0 then return end
+	ig:ForEach(s.immop,e:GetHandler())
 end
 function s.immop(tc,c)
 	local e1=Effect.CreateEffect(c)

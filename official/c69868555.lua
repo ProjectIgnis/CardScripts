@@ -48,7 +48,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=eg:Filter(aux.NOT(Card.IsSummonLocation,LOCATION_GRAVE),nil)
+	local g=eg:Filter(aux.NOT(Card.IsSummonLocation),nil,LOCATION_GRAVE)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g,0,0)
 end

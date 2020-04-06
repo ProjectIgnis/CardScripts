@@ -67,8 +67,11 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if rp==tp or c:IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainDisablable(ev) then return false end
-	return re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):IsContains(c)
+	if rp==tp or c:IsStatus(STATUS_BATTLE_DESTROYED) or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
+		return false
+	end
+	local gp=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	return gp and gp:IsContains(c) and Duel.IsChainDisablable(ev)	
 end
 function s.disfilter(c)
 	return c:IsSetCard(0xad) and c:IsAbleToRemoveAsCost()

@@ -1070,21 +1070,24 @@ if not AnimeArchetype then
 	-- Red (archetype) レッド
 	-- U.A. Dreadnought Dunker/Eternal Dread/Ojama Red
 	-- Number C106: Giant Red Hand/Construction Train Signal Red/The Wicked Dreadroot
-	-- Red Carpet/Red Cocoon/Red Nova Dragon
+	-- Red Carpet/Red Cocoon/Red Nova Dragon/Red Supernova Dragon
 	-- Red Screen/Dark Red Enchanter/Super Quantum Red Layer
 	-- Destiny HERO - Dreadmaster/Destiny HERO - Dread Servant/Dread Dragon
 	-- Akakieisu/Red Gadget/Red Gardna/Opticlops
 	-- Red Sprinter/Red Supremacy/Red Duston
-	-- Tyhone #2/Crimson Ninja/Red Nova
+	-- Tyhone #2/Crimson Ninja/Red Nova/Red Reboot
 	-- Red Medicine/Red Mirror/Red Rising Dragon
 	-- Red Resonator/Red Wyvern/Lord of the Red
 	-- Hundred Eyes Dragon
+	--
+	--
+	--
 	AnimeArchetype.OCGRed={
 		58831685,10202894,65570596,511001464,511001094,68722455,58165765,
 		45462639,511001095,511000365,14886469,30494314,81354330,86445415,
 		100000562,34475451,40975574,37132349,61019812,19025379,76547525,
 		55888045,97489701,67030233,65338781,45313993,8706701,21142671,72318602,
-		59975920
+		59975920,66141736,99585850,23002292
 	}
 	function Card.IsRed(c,fbool)
 		if fbool then

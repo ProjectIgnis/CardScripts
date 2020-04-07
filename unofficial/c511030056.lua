@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--ss not colinked
 	local e3=e2:Clone()
-	e2:SetCountLimit(1,id+1)
+	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(aux.NOT(s.spcon))
 	e3:SetLabel(0)
 	c:RegisterEffect(e3)
@@ -66,7 +66,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

@@ -27,7 +27,6 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-
 function s.spfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==tp)
 end
@@ -36,11 +35,9 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		s[tp]=s[tp]+1
 	end
 end
-
 function s.descon(e,tp)
 	return s[tp]>0
 end
-
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return true end

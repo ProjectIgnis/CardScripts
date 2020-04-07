@@ -29,7 +29,6 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	return at:IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
-
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,c)
@@ -44,13 +43,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-function s.repfil(c)
-	return c:IsDestructable()
-end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReason(REASON_BATTLE) and Duel.IsExistingMatchingCard(s.repfil,tp,LOCATION_PZONE,0,1,nil) end
+	if chk==0 then return e:GetHandler():IsReason(REASON_BATTLE) and Duel.IsExistingMatchingCard(Card.IsDestructable,tp,LOCATION_PZONE,0,1,nil) end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		local g=Duel.SelectMatchingCard(tp,s.repfil,tp,LOCATION_PZONE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,Card.IsDestructable,tp,LOCATION_PZONE,0,1,1,nil)
 		Duel.Destroy(g,REASON_EFFECT+REASON_REPLACE)
 		return true
 	else return false end

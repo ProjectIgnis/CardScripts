@@ -48,9 +48,11 @@ function s.operation(oldtg,oldop)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
-			if oldtg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-				Duel.BreakEffect()
-				oldop(e,tp,eg,ep,ev,re,r,rp)
+			if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+				if oldtg(e,tp,eg,ep,ev,re,r,rp,0) then
+					Duel.BreakEffect()
+					oldop(e,tp,eg,ep,ev,re,r,rp)
+				end
 			end
 		end
 	end

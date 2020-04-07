@@ -130,8 +130,8 @@ function s.edestg(e,tp,eg,ev,ep,re,r,rp,chk)
 end
 function s.edesop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local g=tg:Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
+	if not g then return end
 	local tc=g:GetFirst()
 	while tc do
 		local e1=Effect.CreateEffect(e:GetHandler())

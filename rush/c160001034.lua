@@ -16,7 +16,6 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end	
 end
-end
 function s.filter(c)
 	return c:IsFaceup() and c:GetBaseAttack()~=1500 and c:IsRace(RACE_SPELLCASTER) and c:IsLevelBelow(6)
 end

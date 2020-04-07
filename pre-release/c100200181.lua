@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Can be treated as 2 tributes for a warrior monster
 	local e2=Effect.CreateEffect(c)
-	e:SetDescription(aux.Stringid(id,1))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DOUBLE_TRIBUTE)
 	e2:SetValue(s.dccon)

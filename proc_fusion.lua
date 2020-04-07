@@ -169,8 +169,8 @@ function Fusion.OperationMix(insf,sub,...)
 				Duel.SetFusionMaterial(sg)
 			end
 end
-function Fusion.ConditionFilterMix(c,fc,sub,sub,contact,sumtype,matcheck,tp,...)
-	if matcheck~=0 and not matcheck(c,fc,sub,sub2,mg,sg,tp,contact,sumtype,sumtype) then return false end
+function Fusion.ConditionFilterMix(c,fc,sub,sub2,contact,sumtype,matcheck,tp,...)
+	if matcheck~=0 and not matcheck(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) then return false end
 	if contact then
 		if not c:IsCanBeFusionMaterial(fc,tp) then return false end
 	else

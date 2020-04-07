@@ -53,7 +53,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locatio
 						end
 						checkAddition=ret[2]
 					end
-					if gc and not mg1:Includes(gc) then return false end
+					if gc and not mg1:Includes(Group.CreateGroup()+gc) then return false end
 					Fusion.CheckAdditional=checkAddition
 					mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil)
 					Fusion.CheckExact=exactcount
@@ -131,7 +131,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locati
 				end
 				mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil)
 				mg1=mg1:Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
-				if gc and not mg1:Includes(gc) then return end
+				if gc and not mg1:Includes(Group.CreateGroup()+gc) then return end
 				Fusion.CheckExact=exactcount
 				Fusion.CheckAdditional=checkAddition
 				local effswithgroup={}

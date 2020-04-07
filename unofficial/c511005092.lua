@@ -330,6 +330,8 @@ if not SealedDuel then
 				Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(4002,7))
 				local fg=Duel.GetFieldGroup(p,LOCATION_DECK+LOCATION_HAND,0)
 				Duel.SendtoDeck(fg:Select(p,0,#fg-20,nil),nil,-2,REASON_RULE)
+				local edg=Duel.GetFieldGroup(p,LOCATION_EXTRA,0)
+				if #edg>0 then Duel.ConfirmCards(p,edg) end
 				if handcnt>0 then Duel.Draw(tp,handcnt,REASON_RULE) end
 				if counts[p]~=1 then
 					Duel.TagSwap(p)

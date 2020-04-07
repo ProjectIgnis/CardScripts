@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	--Add counter2
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e6:SetCode(EVENT_LEAVE_FIELD)
+	e6:SetCode(EVENT_LEAVE_FIELD_P)
 	e6:SetRange(LOCATION_FZONE)
 	e6:SetOperation(s.addop2)
 	c:RegisterEffect(e6)
@@ -67,12 +67,10 @@ function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.addop2(e,tp,eg,ep,ev,re,r,rp)
 	local count=0
-	local c=eg:GetFirst()
-	while c~=nil do
-		if not c:IsCode(id) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_DESTROY) then
+	for c in aux.Next(eg) do
+		if not c:IsCode(id) and c:IsLocation(LOCATION_ONFIELD) and c:IsReason(REASON_DESTROY) then
 			count=count+c:GetCounter(COUNTER_SPELL)
 		end
-		c=eg:GetNext()
 	end
 	if count>0 then
 		e:GetHandler():AddCounter(COUNTER_SPELL,count)

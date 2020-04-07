@@ -62,8 +62,7 @@ end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local mg=e:GetHandler():GetReasonCard():GetMaterial()
 	if chkc then return mg:IsContains(chkc) and s.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and mg:IsExists(s.filter,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg:IsExists(s.filter,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=mg:FilterSelect(tp,s.filter,1,1,nil,e,tp)
 	Duel.SetTargetCard(g)

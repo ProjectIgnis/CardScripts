@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.atkcon)
 	e2:SetCost(s.atkcost)
 	e2:SetOperation(s.atkop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 s.listed_series={0xfc}
 function s.atkval(e,c)
@@ -53,4 +53,3 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-

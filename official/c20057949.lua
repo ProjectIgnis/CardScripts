@@ -1,4 +1,5 @@
 --フォーチュン・インハーリット
+--Inherited Fortune
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

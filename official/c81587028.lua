@@ -1,4 +1,5 @@
 --おもちゃ箱
+--Box of Friends
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

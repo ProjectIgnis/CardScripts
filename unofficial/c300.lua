@@ -82,17 +82,16 @@ if not DeckMasters then
 		return Duel.GetFieldGroup(tp,int_s,int_o):GetCount()
 	end
 	local getmatchgc=Duel.GetMatchingGroupCount
-		Duel.GetMatchingGroupCount=function(f,tp,int_s,int_o,ex,...)
-		local arg={...}
-		return Duel.GetMatchingGroup(f,tp,int_s,int_o,ex,arg):GetCount()
-	end
+	Duel.GetMatchingGroupCount=function(...)
+									local arg={...}
+									return Duel.GetMatchingGroup(...):GetCount()
+								end
 	local getfmatch=Duel.GetFirstMatchingCard
-		Duel.GetFirstMatchingCard=function(f,tp,int_s,int_o,ex,...)
-		local arg={...}
-		return Duel.GetMatchingGroup(f,tp,int_s,int_o,ex,arg):GetFirst()
-	end
+	Duel.GetFirstMatchingCard=function(...)
+									return Duel.GetMatchingGroup(...):GetFirst()
+								end
 	local selmatchc=Duel.SelectMatchingCard
-		Duel.SelectMatchingCard=function(sp,f,tp,int_s,int_o,min,max,ex, ...)
+		Duel.SelectMatchingCard=function(sp,f,tp,int_s,int_o,min,max,ex,...)
 		local arg={...}
 		local f1=function(c) return not dmzonechk(c) end
 		if f~=nil then
@@ -105,10 +104,9 @@ if not DeckMasters then
 		end
 	end
 	local gettgc=Duel.GetTargetCount
-		Duel.GetTargetCount=function(f,tp,int_s,int_o,ex,...)
-		local arg={...}
-		return Duel.GetTarget(f,tp,int_s,int_o,ex,arg):GetCount()
-	end
+		Duel.GetTargetCount=function(...)
+								return Duel.GetTarget(...):GetCount()
+							end
 	local seltg=Duel.SelectTarget
 		Duel.SelectTarget=function(sp,f,tp,int_s,int_o,min,max,ex, ...)
 		local arg={...}

@@ -15,7 +15,7 @@ function s.filter(c,tp)
 	return c:GetControler()~=tp and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(s.filter,1,nil,tp) 
+	if chk==0 then return eg and eg:IsExists(s.filter,1,nil,tp) 
 		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil) end
 	local g=eg:Filter(s.filter,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)

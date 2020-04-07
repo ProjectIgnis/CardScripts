@@ -119,7 +119,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject()
-	if chk==0 then return #g>0 end
+	if chk==0 then return g and #g>0 end
 	e:SetLabelObject(nil)
 	Duel.SetTargetCard(g)
 end

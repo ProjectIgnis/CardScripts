@@ -59,6 +59,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local p=e:GetLabel()
+	local c=e:GetHandler()
 	if Duel.SelectYesNo(p,aux.Stringid(92266279,3)) then
 		local g=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_GRAVE,0,1,5,nil,TYPE_MONSTER)
 		local tc=g:GetFirst()

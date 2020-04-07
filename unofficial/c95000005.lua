@@ -1,7 +1,7 @@
 --Darkness/Trap A - (Zero)
 local s,id=GetID()
 function s.initial_effect(c)
-    --Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,7 +13,7 @@ end
 s.listed_names={95000004}
 s.mark=0
 function s.filter(c)
-   return c:IsFacedown() and c:IsCode(95000004)
+	return c:IsFacedown() and c:IsCode(95000004)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_SZONE,0,1,nil) end 
@@ -23,9 +23,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then 
-	    tc:RegisterFlagEffect(id,RESET_PHASE+PHASE_END+RESET_EVENT+RESETS_STANDARD,0,1)
-	    if tc:IsCode(95000004) then
+	if tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then
+		tc:RegisterFlagEffect(id,RESET_PHASE+PHASE_END+RESET_EVENT+RESETS_STANDARD,0,1)
+		if tc:IsCode(95000004) then
 		local te=tc:GetActivateEffect()
 		local tep=tc:GetControler()
 		if not te then

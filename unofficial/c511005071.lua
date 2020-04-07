@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.flagregister(c)
-	if c:IsFaceup() and c:GetFlagEffect(s_id)==0 then
+	if c:IsFaceup() and c:GetFlagEffect(id)==0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_ADJUST)
@@ -49,7 +49,7 @@ function s.flagregister(c)
 		e1:SetLabel(c:GetAttack())
 		e1:SetOperation(s.flagoperation2)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(s_id,RESET_EVENT+RESETS_STANDARD,0,1,0)
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,0)
 	end
 end
 function s.flagoperation1(e,tp,eg,ep,ev,re,r,rp)
@@ -58,7 +58,7 @@ end
 function s.flagoperation2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:GetLabel()==c:GetAttack() then return end
-	Duel.RaiseEvent(Group.FromCards(c),EVENT_CUSTOM+s_id,e,REASON_EFFECT,tp,tp,math.abs(e:GetLabel()-c:GetAttack()))
+	Duel.RaiseEvent(Group.FromCards(c),EVENT_CUSTOM+id,e,REASON_EFFECT,tp,tp,math.abs(e:GetLabel()-c:GetAttack()))
 	e:SetLabel(c:GetAttack())
 end
 function s.cond1(e,tp,eg,ep,ev,re,r,rp)
@@ -100,7 +100,7 @@ function s.operation1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descond(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	return ec and ec:GetFlagEffectLabel(s_id)==1
+	return ec and ec:GetFlagEffectLabel(id)==1
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
@@ -110,5 +110,5 @@ function s.flagcond(e,tp,eg,ep,ev,re,r,rp)
 	return ec and Duel.GetAttacker()==ec
 end
 function s.flagop2(e,tp,eg,ep,ev,re,r,rp)
-	ec:SetFlagEffectLabel(s_id,1)
+	ec:SetFlagEffectLabel(id,1)
 end

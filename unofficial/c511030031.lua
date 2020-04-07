@@ -32,10 +32,8 @@ function s.linkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.linkfilter,tp,LOCATION_MZONE,0,nil,e,tp)
 	if #g>0 then
 		e:SetLabel(1)
-		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-			tc=g:GetNext()
 		end
 	end
 end

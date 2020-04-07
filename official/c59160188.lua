@@ -61,7 +61,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if ec>0 then
 		local val=e:GetLabelObject():GetLabel()
 		e:GetLabelObject():SetLabel(val+ec)
-	end	
+	end
 end
 function s.clearop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetLabel(0)

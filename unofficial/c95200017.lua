@@ -38,6 +38,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(atk)
 		tc:RegisterEffect(e2)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-		tc=g:GetNext()
 	end
 end

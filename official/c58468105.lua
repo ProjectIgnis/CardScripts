@@ -71,7 +71,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 		return false
 	end
 	local gp=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return gp and gp:IsContains(c) and Duel.IsChainDisablable(ev)	
+	return gp and gp:IsContains(c) and Duel.IsChainDisablable(ev)
 end
 function s.disfilter(c)
 	return c:IsSetCard(0xad) and c:IsAbleToRemoveAsCost()

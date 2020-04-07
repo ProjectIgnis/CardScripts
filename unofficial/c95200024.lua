@@ -50,7 +50,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetValue(lv)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				tc:RegisterEffect(e1)
-				tc=g1:GetNext()
 			end
 		end
 	end
@@ -64,7 +63,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetValue(lv)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				tc:RegisterEffect(e1)
-				tc=g2:GetNext()
 			end
 		end
 	end

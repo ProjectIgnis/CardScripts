@@ -34,6 +34,7 @@ if not DestinyDraw then
 			if DestinyDraw[p]==nil and Duel.SelectYesNo(p,aux.Stringid(id,0)) then
 				DestinyDraw[p]=aux.SelectUnselectGroup(g,e,p,1,5,aux.dncheck,1,p)
 				DestinyDraw[p]:KeepAlive()
+				Duel.ShuffleDeck(p)
 			end
 		end
 		e:Reset()

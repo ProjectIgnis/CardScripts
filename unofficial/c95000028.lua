@@ -43,11 +43,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=sg:Select(tp,1,1,nil)
 		if #g then
 			local tc=g:GetFirst()
-    	    local tpe=tc:GetType()
+			local tpe=tc:GetType()
 			local te=tc:GetActivateEffect()
 			local opt=0
 			if te then
-    		    local con=te:GetCondition()
+				local con=te:GetCondition()
 				local co=te:GetCost()
 				local tg=te:GetTarget()
 				local op=te:GetOperation()
@@ -68,10 +68,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				if tg then tg(te,1-tp,eg,ep,ev,re,r,rp,1) end
 				local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 				if g then
-					local etc=g:GetFirst()
-					while etc do
+					for etc in aux.Next(g) do
 						etc:CreateEffectRelation(te)
-						etc=g:GetNext()
 					end
 				end
 				Duel.BreakEffect()

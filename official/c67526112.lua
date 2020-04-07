@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff({handler=c,extraop=s.extraop,stage2=s.stage2})
+	local e1=Fusion.CreateSummonEff({handler=c,extraop=s.extraop,stage2=s.stage2,matfilter=s.matfil})
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_DESTROY)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetHintTiming(0,0x1e0)
@@ -16,6 +16,9 @@ function s.initial_effect(c)
 					Duel.SetOperationInfo(0,CATEGORY_DESTROY,Duel.GetFusionMaterial(tp):Filter(Card.IsOnField,nil),1,tp,LOCATION_ONFIELD)
 				end)
 	c:RegisterEffect(e1)
+end
+function s.matfil(c,e,tp,chk)
+	return c:IsOnField() and c:IsDestructable(e) and not c:IsImmuneToEffect(e)
 end
 function s.extraop(e,tc,tp,sg)
 	Duel.Destroy(sg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)

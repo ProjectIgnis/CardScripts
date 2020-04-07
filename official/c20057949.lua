@@ -1,4 +1,5 @@
 --フォーチュン・インハーリット
+--Inherited Fortune
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,8 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x31}
 function s.checkop1(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousSetCard(0x31) then
 			s[tc:GetPreviousControler()]=true
 		end

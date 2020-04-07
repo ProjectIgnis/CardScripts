@@ -83,8 +83,7 @@ end
 function s.atop(e,tp,eg,ev,ep,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetTargetCards(e)
-	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_MUST_ATTACK)
@@ -96,7 +95,6 @@ function s.atop(e,tp,eg,ev,ep,re,r,rp)
 			e2:SetValue(1)
 			tc:RegisterEffect(e2)
 		end
-		tc=g:GetNext()
 	end
 end
 function s.adescon(e,tp,eg,ep,ev,re,r,rp)
@@ -130,8 +128,8 @@ function s.edestg(e,tp,eg,ev,ep,re,r,rp,chk)
 end
 function s.edesop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local g=tg:Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
+	if not g then return end
 	local tc=g:GetFirst()
 	while tc do
 		local e1=Effect.CreateEffect(e:GetHandler())

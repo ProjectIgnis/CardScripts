@@ -31,7 +31,12 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local tc=Duel.GetFirstTarget()
-	if e:GetHandler():IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) and tc:IsCode(ac) then
-		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+	if e:GetHandler():IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) then
+		if tc:IsCode(ac) then
+			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+		else
+			Duel.ConfirmCards(tp,tc)
+			Duel.ConfirmCards(1-tp,tc)
+		end
 	end
 end

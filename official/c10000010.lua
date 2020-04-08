@@ -1,4 +1,5 @@
 --ラーの翼神竜
+--The Winged Dragon of Ra
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
@@ -21,6 +22,7 @@ function s.initial_effect(c)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e5:SetValue(s.spval)
 	c:RegisterEffect(e5)
 	--One Turn Kill
 	local e6=Effect.CreateEffect(c)
@@ -50,6 +52,9 @@ function s.genchainlm(c)
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(s.genchainlm(e:GetHandler()))
+end
+function s.spval(e,se,sp,st)
+	return se and se:GetHandler():IsCode(83764718) and Duel.IsPlayerAffectedByEffect(sp,100424006)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLP(tp)>100 end

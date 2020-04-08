@@ -40,5 +40,5 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ftarget(e,c)
-	return c:IsLevelAbove(6)
+	return c:IsLevelBelow(6)
 end

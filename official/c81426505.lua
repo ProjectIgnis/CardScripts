@@ -44,6 +44,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=nil
 	if opt==0 then sg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	elseif opt==1 then sg=Duel.GetMatchingGroup(s.filter2,tp,0,LOCATION_ONFIELD,nil)
-	else sg=Duel.GetMatchingGroup(s.filter3,tp,0,LOCATION_SZONE,nil) end
+	else sg=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_SZONE,nil) end
 	Duel.Destroy(sg,REASON_EFFECT)
 end

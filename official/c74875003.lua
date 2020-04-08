@@ -1,4 +1,5 @@
 --ラーの使徒
+--Ra's Disciple
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -39,7 +40,7 @@ function s.initial_effect(c)
 	e6:SetTarget(s.splimit)
 	c:RegisterEffect(e6)
 end
-s.listed_names={id}
+s.listed_names={id,CARD_RA,10000020,10000000}
 function s.filter(c,e,tp)
 	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -60,7 +61,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sumval(e,c)
-	return not c:IsCode(10000000,10000010,10000020)
+	return not c:IsCode(10000000,CARD_RA,10000020)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not se:GetHandler():IsCode(id)

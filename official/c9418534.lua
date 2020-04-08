@@ -1,4 +1,5 @@
 --人造人間－サイコ・リターナー
+--Jinzo - Returner
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -17,9 +18,9 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e2)
 end
-s.listed_names={77585513}
+s.listed_names={CARD_JINZO}
 function s.filter(c,e,tp)
-	return c:IsCode(77585513) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(CARD_JINZO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

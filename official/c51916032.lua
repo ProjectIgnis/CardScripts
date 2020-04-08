@@ -1,4 +1,5 @@
 --人造人間－サイコ・ジャッカー
+--Jinzo - Jector
 local s,id=GetID()
 function s.initial_effect(c)
 	--change
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
-	e1:SetValue(77585513)
+	e1:SetValue(CARD_JINZO)
 	c:RegisterEffect(e1)
 	--tohand
 	local e2=Effect.CreateEffect(c)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xbc}
-s.listed_names={id}
+s.listed_names={id,CARD_JINZO}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)

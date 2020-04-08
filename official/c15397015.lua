@@ -52,7 +52,7 @@ function s.sumcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)>0
 end
 function s.sumlimit(e,se,sp,st,pos,tp)
-	return Duel.GetFieldGroupCount(sp,LOCATION_MZONE,0)==0 and sp~=e:GetHandlerPlayer()
+	return Duel.GetFieldGroupCount(sp,LOCATION_MZONE,0)==0
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION+TYPE_RITUAL+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM+TYPE_LINK)

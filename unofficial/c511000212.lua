@@ -1,3 +1,4 @@
+--死霊ゾーマ (Anime)
 --Zoma the Spirit (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.damcon)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
-	e1:SetReset(RESET_EVENT+RESETS_CANNOT_ACT)
+	e1:SetReset(RESET_EVENT+RESETS_CANNOT_ACT-RESET_TOGRAVE-RESET_REMOVE)
 	c:RegisterEffect(e1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

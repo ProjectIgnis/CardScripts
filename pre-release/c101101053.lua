@@ -46,7 +46,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=c:GetPreviousEquipTarget()
-	return c:IsReason(REASON_LOST_TARGET) and ec:IsLocation(LOCATION_GRAVE)
+	return c:IsReason(REASON_LOST_TARGET) and ec and ec:IsLocation(LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(5) and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE)  and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

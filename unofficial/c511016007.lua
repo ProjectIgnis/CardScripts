@@ -1,5 +1,5 @@
 --進化への懸け橋
---fixed by MLD
+--Burning Sonic
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -53,7 +53,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not re:IsActiveType(TYPE_SPELL+TYPE_TRAP) then return end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	local tc=c:GetFirstCardTarget()
-	if tg:IsContains(tc) and tc:IsLocation(LOCATION_MZONE) and Duel.SelectEffectYesNo(tp,c) then
+	if tc and tg:IsContains(tc) and tc:IsLocation(LOCATION_MZONE) and Duel.SelectEffectYesNo(tp,c) then
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.SendtoGrave(c,REASON_EFFECT)
 		local rg=Group.CreateGroup()

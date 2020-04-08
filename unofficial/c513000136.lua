@@ -1,8 +1,6 @@
---Saint Dragon - The God of Osiris
+--Slifer the Sky Dragon (Manga)
 --マイケル・ローレンス・ディーによってスクリプト
---scripted by MLD
---credit to TPD & Cybercatman
---updated by Larry126
+--scripted by MLD, credit to TPD & Cybercatman,updated by Larry126
 Duel.LoadScript("c421.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -73,7 +71,9 @@ end
 function s.sumonop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectTribute(tp,c,3,3)
 	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
+	if g then
+		Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
+	end
 end
 -------------------------------------------------------------------
 function s.atkfilter(c,e,tp)

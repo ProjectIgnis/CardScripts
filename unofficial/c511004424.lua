@@ -1,4 +1,4 @@
---supreme king dance
+--Supreme Faceoff
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -130,15 +130,13 @@ function s.edesop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetTargetCards(e)
 	if not g then return end
-	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetValue(1)
 		e1:SetReset(RESET_CHAIN)
 		tc:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 end
 function s.atcon2(e,tp,eg,ev,ep,re,r,rp)
@@ -153,14 +151,12 @@ function s.attg2(e,tp,eg,ev,ep,re,r,rp,chk)
 end
 function s.atop2(e,tp,eg,ev,ep,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_MUST_ATTACK)
 		e1:SetReset(RESET_PHASE+PHASE_BATTLE)
 		tc:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 	if #g==0 then return end
 	local e2=Effect.CreateEffect(e:GetHandler())

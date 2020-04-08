@@ -1,44 +1,43 @@
---Gladiator Beast Andabatae
---cleaned up by MLD
+--Gladiator Beast Andabata (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMixN(c,true,true,7573135,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x19),2)
 	Fusion.AddContactProc(c,s.contactfilter,s.contactop,s.splimit)
-	--spsummon when summoned
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(7573135,0))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetTarget(s.hsptg)
-	e3:SetOperation(s.hspop)
-	c:RegisterEffect(e3)
+	--special summon when summoned
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(7573135,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetTarget(s.esptg)
+	e1:SetOperation(s.espop)
+	c:RegisterEffect(e1)
 	--special summon after battle
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(48156348,1))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_PHASE+PHASE_BATTLE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(s.spcon)
-	e4:SetCost(s.spcost)
-	e4:SetTarget(s.sptg)
-	e4:SetOperation(s.spop)
-	c:RegisterEffect(e4)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(48156348,1))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(s.spcon)
+	e2:SetCost(s.spcost)
+	e2:SetTarget(s.sptg)
+	e2:SetOperation(s.spop)
+	c:RegisterEffect(e2)
 	--gain atk when a GB is shuffled
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(36378213,0))
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e5:SetCategory(CATEGORY_ATKCHANGE)
-	e5:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
-	e5:SetCode(EVENT_TO_DECK)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetCondition(s.atkcon)
-	e5:SetOperation(s.atkop)
-	c:RegisterEffect(e5)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(36378213,0))
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCategory(CATEGORY_ATKCHANGE)
+	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e3:SetCode(EVENT_TO_DECK)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(s.atkcon)
+	e3:SetOperation(s.atkop)
+	c:RegisterEffect(e3)
 end
 s.material_setcode=0x19
 function s.splimit(e,se,sp,st)
@@ -54,18 +53,18 @@ function s.contactop(g,tp)
 	end
 	Duel.SendtoDeck(g,nil,2,REASON_COST+REASON_MATERIAL)
 end
-function s.hspfilter(c,e,tp)
-	return c:IsSetCard(0x19) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,123,tp,true,false)
+function s.espfilter(c,e,tp)
+	return c:IsSetCard(0x19) and c:IsType(TYPE_FUSION)
+		and c:IsCanBeSpecialSummoned(e,123,tp,true,false) and not (c:IsCode(3779662) or c:IsCode(id))
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 
 end
-function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
-		and Duel.IsExistingMatchingCard(s.hspfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+function s.esptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.espfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function s.hspop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
+function s.espop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.hspfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.espfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.SpecialSummon(tc,123,tp,tp,true,false,POS_FACEUP)

@@ -1,5 +1,4 @@
---Gladiator Beast Tamer Editor
---cleaned up by MLD
+--Gladiator Beast Tamer Editor (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -7,21 +6,21 @@ function s.initial_effect(c)
 	Fusion.AddProcMixN(c,true,true,s.ffilter,2)
 	Fusion.AddContactProc(c,s.contactfilter,s.contactop,s.splimit)
 	--Special Summon
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(35089369,0))
-	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e5:SetType(EFFECT_TYPE_IGNITION)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetCountLimit(1)
-	e5:SetTarget(s.sptg)
-	e5:SetOperation(s.spop)
-	c:RegisterEffect(e5)
+	local e0=Effect.CreateEffect(c)
+	e0:SetDescription(aux.Stringid(35089369,0))
+	e0:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e0:SetType(EFFECT_TYPE_IGNITION)
+	e0:SetRange(LOCATION_MZONE)
+	e0:SetCountLimit(1)
+	e0:SetTarget(s.esptg)
+	e0:SetOperation(s.espop)
+	c:RegisterEffect(e0)
 	--negate attack
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_BE_BATTLE_TARGET)
-	e2:SetOperation(s.op)
-	c:RegisterEffect(e2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_BE_BATTLE_TARGET)
+	e1:SetOperation(s.op)
+	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(29612557,0))
@@ -79,20 +78,16 @@ function s.contactop(g,tp)
 	end
 	Duel.SendtoDeck(g,nil,2,REASON_COST+REASON_MATERIAL)
 end
-function s.sumfilter(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,124,tp,true,false)
+function s.espfilter(c,e,tp)
+	return c:IsSetCard(0x19) and c:IsType(TYPE_FUSION) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,124,tp,true,false)
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
-		and Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,1,nil,e,tp) end
+function s.esptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.espfilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<1 then return end
-	local rg=Duel.GetMatchingGroup(s.sumfilter,tp,0,LOCATION_EXTRA,nil,e,tp)
-	Duel.ConfirmCards(tp,rg)
+function s.espop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.sumfilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.espfilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,124,tp,g:GetFirst():GetControler(),true,false,POS_FACEUP_ATTACK)
 	end

@@ -140,7 +140,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummon(sg,0,tp,tp,true,false,POS_FACEDOWN_DEFENSE)
 	if tc:IsFaceup() then
-		if tc:IsHasEffect(EFFECT_DEVINE_LIGHT) then Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
+		if tc:IsHasEffect(EFFECT_LIGHT_OF_INTERVENTION) then Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
 		else
 			Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
 			tc:ClearEffectRelation()

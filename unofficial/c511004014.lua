@@ -74,7 +74,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		--faceup def
 		local e3=Effect.GlobalEffect()
 		e3:SetType(EFFECT_TYPE_FIELD)
-		e3:SetCode(EFFECT_DEVINE_LIGHT)
+		e3:SetCode(EFFECT_LIGHT_OF_INTERVENTION)
 		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		e3:SetTargetRange(1,1)
 		Duel.RegisterEffect(e3,tp)

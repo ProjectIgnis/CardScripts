@@ -1,4 +1,5 @@
 --聖なる輝き
+--Light of Intervention
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EFFECT_DEVINE_LIGHT)
+	e3:SetCode(EFFECT_LIGHT_OF_INTERVENTION)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(1,1)
 	c:RegisterEffect(e3)

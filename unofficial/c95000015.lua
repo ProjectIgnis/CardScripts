@@ -1,4 +1,4 @@
---Doppleganger
+--Pegasus/Spell B (Doppleganger)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -30,10 +30,6 @@ function s.filter(c,e,tp)
 		and (ft>0 or c:IsType(TYPE_FIELD))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	if e:GetHandler():IsLocation(LOCATION_HAND) then
-		ft=ft-1
-	end
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.filter(chkc,e,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_GRAVE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)

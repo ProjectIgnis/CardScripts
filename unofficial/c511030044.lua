@@ -64,6 +64,7 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local b=Duel.GetAttackTarget()
+	if not (a and b) then return false end
 	if a:IsControler(1-tp) then
 		a=Duel.GetAttackTarget()
 		b=Duel.GetAttacker()

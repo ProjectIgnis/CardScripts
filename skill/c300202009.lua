@@ -14,7 +14,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.Amafilter(c)
 	return c:IsSetCard(0x4) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
-	and Duel.IsExistingMatchingCard(s.Hapfilter,tp,LOCATION_HAND,0,1,c,e,tp)
+	and Duel.IsExistingMatchingCard(s.Hapfilter,tp,LOCATION_HAND,0,1,c)
 end
 function s.Hapfilter(c)
 	return c:IsSetCard(0x64) and c:IsType(TYPE_MONSTER) and not c:IsPublic()

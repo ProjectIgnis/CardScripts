@@ -57,7 +57,7 @@ function s.initial_effect(c)
 	e9:SetOperation(s.spop)
 	c:RegisterEffect(e9)
 end
-s.listed_names={10000010}
+s.listed_names={CARD_RA}
 function s.ttcon2(e,c,minc,zone,relzone,exeff)
 	if c==nil then return true end
 	if exeff then
@@ -126,7 +126,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsCode(10000010) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsCode(CARD_RA) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

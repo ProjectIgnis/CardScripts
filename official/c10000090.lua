@@ -1,4 +1,5 @@
 --ラーの翼神竜－不死鳥
+--The Winged Dragon of Ra - Immortal Phoenix
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -51,9 +52,9 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop2)
 	c:RegisterEffect(e5)
 end
-s.listed_names={10000010,10000080}
+s.listed_names={CARD_RA,10000080}
 function s.cfilter(c,tp)
-	return c:IsCode(10000010) and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
+	return c:IsCode(CARD_RA) and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp)

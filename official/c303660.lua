@@ -39,12 +39,12 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_CANNOT_DISABLE)
 	c:RegisterEffect(e5)
 end
-s.listed_names={77585513}
+s.listed_names={CARD_JINZO}
 function s.eqlimit(e,c)
-	return c:IsCode(77585513)
+	return c:IsCode(CARD_JINZO)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsCode(77585513)
+	return c:IsFaceup() and c:IsCode(CARD_JINZO)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

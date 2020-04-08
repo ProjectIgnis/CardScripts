@@ -11,7 +11,7 @@ They are automatically synchronized with servers.
 
 ## Contributing
 
-Reach out to us on Discord to learn how to contribute! Bug reports go on Discord; do NOT open an issue or pull request.
+Reach out to us on Discord to learn how to contribute! Bug reports go on Discord; do NOT open an issue or pull request if you're not one our contributors.
 
 ## Travis CI
 

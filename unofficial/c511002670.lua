@@ -1,4 +1,5 @@
 --デスサイズ・キラー
+--Dreadscythe Harvester (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -19,7 +20,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,e:GetHandler()) end
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,e:GetHandler()) end
 	local rg=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,e:GetHandler())
 	e:SetLabel(rg:GetFirst():GetAttack())
 	Duel.Release(rg,REASON_COST)

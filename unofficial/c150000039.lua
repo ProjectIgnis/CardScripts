@@ -31,8 +31,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetCondition(s.con2)
 	e3:SetOperation(function(e,tp)
-		if Duel.DiscardHand(1-tp,s.acfilter,1,1,REASON_EFFECT,nil)>0 then
-			Duel.ResetFlagEffect(1-tp,id)
+		if Duel.DiscardHand(tp,s.acfilter,1,1,REASON_EFFECT,nil)>0 then
+			Duel.Hint(HINT_CARD,0,id)
+			Duel.ResetFlagEffect(tp,id)
 		end
 	end)
 	Duel.RegisterEffect(e3,1-tp)
@@ -41,19 +42,20 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetCondition(s.con2)
 	e4:SetOperation(function(e,tp)
-		if Duel.SelectYesNo(1-tp,aux.Stringid(id,0))
-			and Duel.DiscardHand(1-tp,s.acfilter,1,1,REASON_EFFECT,nil)>0 then
-			Duel.ResetFlagEffect(1-tp,id)
+		if Duel.SelectYesNo(tp,aux.Stringid(id,0))
+			and Duel.DiscardHand(tp,s.acfilter,1,1,REASON_EFFECT,nil)>0 then
+			Duel.Hint(HINT_CARD,0,id)
+			Duel.ResetFlagEffect(tp,id)
 		end
 	end)
 	Duel.RegisterEffect(e4,1-tp)
 end
-function s.con(e,tp)
-	return Duel.GetFlagEffect(1-tp,id)>0
+function s.con(e)
+	return Duel.GetFlagEffect(e:GetHandlerPlayer(),id)>0
 end
 function s.acfilter(c)
 	return c:IsType(TYPE_ACTION) and not c:IsType(TYPE_FIELD) and c:IsAbleToGrave()
 end
 function s.con2(e,tp)
-	return Duel.GetFlagEffect(1-tp,id)>0 and Duel.IsExistingMatchingCard(s.acfilter,1-tp,LOCATION_HAND,0,1,nil)
+	return Duel.GetFlagEffect(tp,id)>0 and Duel.IsExistingMatchingCard(s.acfilter,tp,LOCATION_HAND,0,1,nil)
 end

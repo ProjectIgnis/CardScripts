@@ -223,7 +223,7 @@ if not ActionDuel then
 			if g:GetCount()>0 and g:GetFirst():RegisterEffect(e1) then
 				Duel.Damage(1-tokenp,300,REASON_EFFECT)
 			end
-		else ActionDuel.chktrap(token,tp,e) end
+		else ActionDuel.chktrap(token,tokenp,e) end
 	end
 	function ActionDuel.chktrap(tc,tp,e)
 		if tc and tc:IsType(TYPE_TRAP) and tc:CheckActivateEffect(false,false,false) 

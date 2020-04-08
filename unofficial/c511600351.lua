@@ -37,7 +37,6 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,alias+200)
 	e3:SetCost(aux.bfgcost)
-	e3:SetCondition(s.btcon)
 	e3:SetTarget(s.bttg)
 	e3:SetOperation(s.btop)
 	c:RegisterEffect(e3)
@@ -81,20 +80,15 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(p,dam,REASON_EFFECT)
 	end
 end
-function s.btcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	local a=Duel.GetAttacker()
-	local at=Duel.GetAttackTarget()
-	if not at then return false end
-	if not a:IsControler(tp) then a,at=at,a end
-	return a:IsType(TYPE_LINK) and a:IsSetCard(0x135) and a:IsControler(tp) and not at:IsControler(tp)
-end
 function s.bttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
 	if chk==0 then
 		if not at then return false end
 		if not a:IsControler(tp) then a,at=at,a end
-		return a:IsType(TYPE_LINK) and a:IsSetCard(0x135) and a:IsControler(tp) and not at:IsControler(tp)
+		return a:IsType(TYPE_LINK) and a:IsSetCard(0x135)
+			and a:IsControler(tp) and not a:IsAttack(3000)
+			and not at:IsControler(tp) and not at:IsAttack(3000)
 	end
 	local tc=a:IsControler(tp) and a or at
 	Duel.SetTargetCard(tc)

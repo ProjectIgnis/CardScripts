@@ -1,4 +1,4 @@
---Numeron Direct
+--Numeron Calling
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,17 +18,17 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,e,tp)
 	return c:IsAttackBelow(1000) and c:IsNumeron() and c:IsType(TYPE_XYZ)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>3
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
 	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>3 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,4,nil,e,tp) and (not ect or ect>=4) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=3 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
 	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if ect~=nil and ect<4 then return end

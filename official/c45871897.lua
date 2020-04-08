@@ -1,4 +1,5 @@
 --ロストガーディアン
+--Lost Guardian
 local s,id=GetID()
 function s.initial_effect(c)
 	--base defense
@@ -11,5 +12,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.defval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(RACE_ROCK),c:GetControler(),LOCATION_REMOVED,0,nil)*700
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_ROCK),c:GetControler(),LOCATION_REMOVED,0,nil)*700
 end

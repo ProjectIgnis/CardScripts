@@ -72,7 +72,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10af}
 function s.cfilter(c,tp,typ)
-	return c:IsFaceup() and c:IsType(typ) and c:IsSetCard(0x10af) and c:IsControler(tp) and not c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsFaceup() and c:IsType(typ) and c:IsSetCard(0x10af) and c:IsControler(tp) not c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,e:GetLabel())

@@ -399,7 +399,7 @@ function Auxiliary.LavaCondition(required,filter)
 	end
 end
 function Auxiliary.LavaTarget(required,filter)
-	return function(e,tp,eg,ep,ev,re,r,rp,c)
+	return function(e,c)
 		local tp=c:GetControler()
 		local mg=Duel.GetMatchingGroup(aux.AND(Card.IsReleasable,filter),tp,0,LOCATION_MZONE,nil)
 		local g=aux.SelectUnselectGroup(mg,e,tp,required,required,Auxiliary.LavaCheck,1,tp,HINTMSG_RELEASE,nil,nil,true)
@@ -413,7 +413,7 @@ function Auxiliary.LavaTarget(required,filter)
 	end
 end
 function Auxiliary.LavaOperation(required,filter)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	return function(e,c)
 		local g=e:GetLabelObject()
 		Duel.Release(g,REASON_COST)
 		g:DeleteGroup()

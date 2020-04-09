@@ -1,5 +1,5 @@
 --落消しのパズロミノ
---Orekeshi no Puzzomino
+--Puzzlomino, the Drop-n-Deleter
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -79,7 +79,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.desfilter1,tp,LOCATION_MZONE,0,1,nil,tp) end
 	local g=Duel.SelectTarget(tp,s.desfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	local oc=g:GetFirst()
-	local sg=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsLevel,c:GetLevel()),tp,0,LOCATION_MZONE,1,1,nil)
+	local sg=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsLevel,oc:GetLevel()),tp,0,LOCATION_MZONE,1,1,nil)
 	g:Merge(sg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end

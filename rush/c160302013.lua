@@ -17,8 +17,11 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+function s.filter1(c,e,tp)
+	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE)
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return eg:IsExists(s.filter1,1,nil,e,tp)
 end
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

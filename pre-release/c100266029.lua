@@ -3,7 +3,7 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_CARDIAN)
-	--draw
+	--Draw 1
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_SPECIAL_SUMMON)
@@ -27,11 +27,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xe6}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe6) and c:IsLevelBelow(7)
+function s.filter(c)
+	return c:IsFaceup() and c:IsSetCard(0xe6) and c:IsLevelBelow(2)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

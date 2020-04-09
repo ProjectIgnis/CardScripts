@@ -1,16 +1,22 @@
+--ジャッキー・ジャンパー
 --Jackie Jumper
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+	--Lists "Junk" archetype
+s.listed_series={0x43}
+
 function s.spfilter(c)
 	return c:IsSetCard(0x43) and c:IsAbleToGraveAsCost()
 end

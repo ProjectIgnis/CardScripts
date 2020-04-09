@@ -45,7 +45,8 @@ end
 	--Specifically lists itself and "Fossil Fusion"
 s.listed_names={id,CARD_FOSSIL_FUSION}
 function s.matfilter(c)
-	return c:HasLevel() and c:IsLevel(6,7)
+	local lv=c:GetLevel()
+	return c:HasLevel() and (lv==5 or lv==6)
 end
 	--Handle its special summon condition
 function s.splimit(e,se,sp,st)

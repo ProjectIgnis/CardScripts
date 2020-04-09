@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.lvop)
 	c:RegisterEffect(e3)
 	--increase ATK
-	local e4=e2:Clone()
+	local e4=e1:Clone()
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetOperation(s.atkop2)
 	c:RegisterEffect(e4)

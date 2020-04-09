@@ -66,7 +66,7 @@ end
 	--Gain DEF equal to battling monster's ATK
 function s.defop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local val=e:GetHandler():GetBattleTarget():GetBaseAttack()
+	local val=e:GetHandler():GetBattleTarget():GetAttack()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

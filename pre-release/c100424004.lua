@@ -70,7 +70,7 @@ end
 function s.atkboost(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local c=e:GetHandler()
-	if tc:IsSummonType(SUMMON_TYPE_TRIBUTE) and tc:IsCode(10000010) then
+	if tc:IsSummonType(SUMMON_TYPE_TRIBUTE) and tc:IsCode(CARD_RA) then
 		local g=tc:GetMaterial()
 		local gc=g:GetFirst()
 		local atk=0
@@ -79,7 +79,7 @@ function s.atkboost(e,tp,eg,ep,ev,re,r,rp)
 			atk=atk+gc:GetBaseAttack()
 			def=def+gc:GetBaseDefense()
 		end
-		local e1=Effect.CreateEffect(tc)
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetValue(atk)

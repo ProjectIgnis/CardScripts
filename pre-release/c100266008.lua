@@ -45,7 +45,7 @@ function s.splimit(e,se,sp,st)
 end
 	--Check for "Time Stream"
 function s.thfilter(c)
-	return c:IsCode(TIME_STREAM) and c:IsAbleToHand()
+	return c:IsCode(100266012) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

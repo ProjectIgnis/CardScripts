@@ -61,9 +61,12 @@ s.listed_names={CARD_RA}
 function s.ttcon2(e,c,minc,zone,relzone,exeff)
 	if c==nil then return true end
 	if exeff then
-		local ret={exeff:GetValue()(exeff,c)}
-		if #ret>1 then
-			zone=(ret[2]>>16)&0x7f
+		local ret=exeff:GetValue()
+		if type(ret)=="function" then
+			ret={ret(exeff,c)}
+			if #ret>1 then
+				zone=(ret[2]>>16)&0x7f
+			end
 		end
 	end
 	local tp=c:GetControler()
@@ -73,9 +76,12 @@ function s.ttcon2(e,c,minc,zone,relzone,exeff)
 end
 function s.tttg2(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
 	if exeff then
-		local ret={exeff:GetValue()(exeff,c)}
-		if #ret>1 then
-			zone=(ret[2]>>16)&0x7f
+		local ret=exeff:GetValue()
+		if type(ret)=="function" then
+			ret={ret(exeff,c)}
+			if #ret>1 then
+				zone=(ret[2]>>16)&0x7f
+			end
 		end
 	end
 	local mg=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)

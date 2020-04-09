@@ -1,4 +1,5 @@
 --聖刻神龍－エネアード
+--Hieratic Sun Dragon Overlord of Heliopolis
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -29,11 +30,13 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ct1=Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local rg=Duel.SelectReleaseGroupEx(tp,Card.IsReleasableByEffect,1,ct1,nil)
-	local ct2=Duel.Release(rg,REASON_EFFECT)
-	if ct2==0 then return end
-	Duel.BreakEffect()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local dg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,ct2,ct2,nil)
-	Duel.HintSelection(dg)
-	Duel.Destroy(dg,REASON_EFFECT)
+	if rg then
+		local ct2=Duel.Release(rg,REASON_EFFECT)
+		if ct2==0 then return end
+		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		local dg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,ct2,ct2,nil)
+		Duel.HintSelection(dg)
+		Duel.Destroy(dg,REASON_EFFECT)
+	end
 end

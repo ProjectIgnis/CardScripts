@@ -69,7 +69,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e1:SetRange(LOCATION_MZONE)
-		e1:SetValue(math.pow(2,(dieResult-1)))
+		e1:SetValue(2^(dieResult-1))
 		c:RegisterEffect(e1)
 	end
 end

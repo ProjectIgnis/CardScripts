@@ -42,7 +42,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	if not tc or tc:IsControler(1-tp) or not tc:IsRelateToBattle() then return end
-	local e1=Effect.CreateEffect(c)
+	local e1=Effect.CreateEffect(tc)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)

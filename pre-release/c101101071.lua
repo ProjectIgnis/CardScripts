@@ -27,7 +27,7 @@ end
 s.listed_series={0x244}
 s.listed_names={CARD_ALBUS}
 function s.filter(c,e,tp)
-	return (c:IsCode(CARD_ALBUS) or c:IsSetCard(0x244))
+	return (c:IsCode(CARD_ALBUS) or (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x244)))
 end
 function s.spfilter(c,e,tp)
 	return s.filter(c,e,tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)

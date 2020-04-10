@@ -34,6 +34,7 @@ end
 s.listed_series={0xa3}
 function s.filter(c,e,tp,re)
 	local re=c:GetReasonEffect()
+	if not re then return false end
 	local rc=re:GetHandler()
 	return c:IsSetCard(0xa3) and c:IsType(TYPE_SYNCHRO) and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_COST) and rc==c

@@ -46,6 +46,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	local c=e:GetHandler()
+	if not tg then return false end
 	return tg:IsContains(c) and c:IsFacedown()
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)

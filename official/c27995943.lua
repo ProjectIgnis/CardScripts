@@ -1,4 +1,5 @@
 --Dr.フランゲ
+--Dr. Frankenderp
 local s,id=GetID()
 function s.initial_effect(c)
 	--tohand
@@ -26,7 +27,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,1)
 	Duel.ConfirmCards(tp,g)
-	if not g:GetFirst():IsAbleToHand() or Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if not g:GetFirst():IsAbleToHand() or Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.MoveSequence(g:GetFirst(),1)
 	else
 		Duel.DisableShuffleCheck()

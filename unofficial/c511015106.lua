@@ -109,7 +109,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-function s.disop(e,tp,eg,ep,ev,re,r,rp,tc)
+function s.disop(e,tp,eg,ep,ev,re,r,rp,target,card)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

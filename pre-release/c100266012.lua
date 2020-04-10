@@ -51,7 +51,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_RELEASE,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-	--Tribute 1 "Fossil" fusion, and if you do, special summon another, 2 levels higher
+	--Tribute 1 "Fossil" fusion, and if you do, special summon another, 2 levels higher (treated as a fusion summon)
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.ssfilter,tp,LOCATION_EXTRA,0,1,1,nil,tc:GetLevel(),e,tp)
 		if #sg>0 then 
-			Duel.SpecialSummon(sg:GetFirst(),0,tp,tp,true,true,POS_FACEUP)
+			Duel.SpecialSummon(sg:GetFirst(),SUMMON_TYPE_FUSION,tp,tp,true,true,POS_FACEUP)
 		end
 	end
 end

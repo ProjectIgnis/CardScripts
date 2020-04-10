@@ -1,4 +1,5 @@
 --次元均衡
+--Dimension Equilibrium
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,6 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
+	if not eg then return end
 	local tc=eg:GetFirst()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 	 and a:IsCanBeEffectTarget(e) end

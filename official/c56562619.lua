@@ -1,7 +1,8 @@
 --黒竜の忍者
+--Black Dragon Ninja
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon condition
+	--special summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -140,7 +141,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			sg1=sg1:Select(tp,ft1,ft1,nil)
 		end
-		local sc=sg1:GetFirst()
 		for sc in aux.Next(sg1) do
 			Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
 		end
@@ -150,8 +150,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			sg2=sg2:Select(tp,ft2,ft2,nil)
 		end
-		local sc=sg2:GetFirst()
-		for sc in aux.Next(dg2) do
+		for sc in aux.Next(sg2) do
 			Duel.SpecialSummonStep(sc,0,tp,1-tp,false,false,POS_FACEUP)
 		end
 	end

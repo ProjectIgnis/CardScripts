@@ -1,4 +1,5 @@
 --痛み分け
+--Share the Pain
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,5 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectReleaseGroup(1-tp,nil,1,1,nil)
-	Duel.Release(g,REASON_RULE)
+	if g then
+		Duel.Release(g,REASON_RULE)
+	end
 end

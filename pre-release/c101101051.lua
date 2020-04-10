@@ -43,7 +43,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x244}
 function s.tgval(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and re:GetHandler():IsSummonLocation(LOCATION_EXTRA)
 end
 function s.check(c,tp)
 	return c and c:IsControler(tp) and c:IsSetCard(0x244)

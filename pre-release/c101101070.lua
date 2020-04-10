@@ -22,7 +22,7 @@ s.listed_names={id}
 
 	--Check for opponent's monster
 function s.desfilter(c,tp)
-	return c:IsFaceup() and c:GetAttack() and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,nil,c,c:GetAttack())
+	return c:IsFaceup() and c:GetAttack() and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,c,c:GetAttack())
 end
 	--Check for a monster in player's extra deck, whose ATK is higher than opponent's monster
 function s.tgfilter(c,rc)

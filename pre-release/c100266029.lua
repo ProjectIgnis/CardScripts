@@ -91,9 +91,6 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 					Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP) end,
 				aux.Stringid(id,3)
 				)
-			else
-				Duel.SendtoHand(sc,nil,REASON_EFFECT)
-				Duel.ConfirmCards(1-tp,sc)
 			end
 		else
 			Duel.SendtoGrave(tc,REASON_EFFECT)

@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
@@ -35,33 +36,50 @@ end
 s.listed_series={0x135}
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
-		if tc:IsFaceup() then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			e1:SetValue(800)
-			tc:RegisterEffect(e1)
-		end
-		if Duel.GetTurnPlayer()~=tp then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_FIELD)
-			e1:SetCode(EFFECT_MUST_ATTACK)
-			e1:SetTargetRange(0,LOCATION_MZONE)
-			e1:SetReset(RESET_PHASE+PHASE_END)
-			Duel.RegisterEffect(e1,tp)
-			local e2=e1:Clone()
-			e2:SetCode(EFFECT_MUST_ATTACK_MONSTER)
-			Duel.RegisterEffect(e2,tp)
-			local e3=Effect.CreateEffect(e:GetHandler())
-			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetCode(EFFECT_MUST_BE_ATTACKED)
-			e3:SetValue(1)
-			e3:SetReset(RESET_PHASE+PHASE_END+RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
-			tc:RegisterEffect(e3,true)
-			if Duel.GetAttackTarget() and Duel.GetAttackTarget()~=tc then Duel.ChangeAttackTarget(tc) end
+	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
+	if #g>0 and Duel.SelectYesNo(tp,94) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local sg=g:Select(tp,1,1,nil)
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,sg)
+	end
+end
+function s.tgfilter(c)
+	return c:IsControler(tp) and c:IsSetCard(0x135) and c:IsFaceup(0x135)
+end
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	if Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(tp,94) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
+		local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
+		local tc=Duel.GetFirstTarget()
+		if tc and tc:IsRelateToEffect(e) then
+			if tc:IsFaceup() then
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_UPDATE_ATTACK)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e1:SetValue(800)
+				tc:RegisterEffect(e1)
+			end
+			if Duel.GetTurnPlayer()~=tp then
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_FIELD)
+				e1:SetCode(EFFECT_MUST_ATTACK)
+				e1:SetTargetRange(0,LOCATION_MZONE)
+				e1:SetReset(RESET_PHASE+PHASE_END)
+				Duel.RegisterEffect(e1,tp)
+				local e2=e1:Clone()
+				e2:SetCode(EFFECT_MUST_ATTACK_MONSTER)
+				Duel.RegisterEffect(e2,tp)
+				local e3=Effect.CreateEffect(e:GetHandler())
+				e3:SetType(EFFECT_TYPE_SINGLE)
+				e3:SetCode(EFFECT_MUST_BE_ATTACKED)
+				e3:SetValue(1)
+				e3:SetReset(RESET_PHASE+PHASE_END+RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+				tc:RegisterEffect(e3,true)
+				if Duel.GetAttackTarget() and Duel.GetAttackTarget()~=tc then Duel.ChangeAttackTarget(tc) end
+			end
 		end
 	end
 end

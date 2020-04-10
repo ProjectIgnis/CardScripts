@@ -1,7 +1,9 @@
 --心変わり
+--Change of Heart
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Take control of an opponent's monster until end phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -20,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.GetControl(tc,tp,PHASE_END,1)
 	end
 end

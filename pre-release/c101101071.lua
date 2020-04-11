@@ -60,13 +60,12 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,0)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,1,1,nil,ft,e,tp)
-		local sc=sg:GetFirst()
-		if sc then
-			aux.ToHandOrElse(sc,tp,function(c)
-				return sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and ft>0 end,
-			function(c)
-				Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP) end,
-			aux.Stringid(id,2))
-		end
+	local sc=sg:GetFirst()
+	if sc then
+		aux.ToHandOrElse(sc,tp,function(c)
+			return sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and ft>0 end,
+		function(c)
+			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP) end,
+		aux.Stringid(id,2))
 	end
 end

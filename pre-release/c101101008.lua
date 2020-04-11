@@ -57,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0
 	 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x244),tp,LOCATION_MZONE,0,1,e:GetHandler())
-	 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+	 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local sg=g:Select(tp,1,1,nil)

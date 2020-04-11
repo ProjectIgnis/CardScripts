@@ -1,5 +1,5 @@
 --ヴォロスの仮面 
---Mask of Volos
+--Mask of Voloss
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk change
@@ -17,7 +17,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end	
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetBaseAttack()~=1500 and c:IsRace(RACE_SPELLCASTER) and c:IsLevelBelow(6)
+	return c:IsFaceup() and c:GetBaseAttack()~=1500 and c:IsLevelBelow(6)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,e:GetHandler()) end

@@ -32,7 +32,6 @@ function s.initial_effect(c)
 	e3:SetCost(s.plcost)
 	e3:SetTarget(s.pltg)
 	e3:SetOperation(s.plop)
-	e3:SetValue(s.extraop)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_DESTINY_BOARD}
@@ -72,6 +71,7 @@ function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return ft>0 and Duel.IsExistingMatchingCard(s.smfilter,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end
 end
 function s.plop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_DARK_SANCTUARY) then return s.extraop(e,tp,eg,ep,ev,re,r,rp) end
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.smfilter),tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil)

@@ -5,7 +5,9 @@ local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),extrafil=s.extrafil,stage2=s.stage2})
 	local tg=e1:GetTarget()
+	local op=e1:GetOperation()
 	e1:SetTarget(s.target(tg))
+	e1:SetOperation(s.operation(op))
 	e1:SetCost(s.cost(tg))
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
@@ -24,9 +26,17 @@ function s.target(target)
 		return target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
+function s.operation(operation)
+	return function(e,...)
+		e:SetLabel(1)
+		local res=operation(e,...)
+		e:SetLabel(0)
+		return res
+	end
+end
 function s.check(e)
 	return function(tp,sg,fc)
-		return not e:GetLabelObject() or not sg:IsContains(e:GetLabelObject())
+		return e:GetLabel()==1 or (not e:GetLabelObject() or not sg:IsContains(e:GetLabelObject()))
 	end
 end
 function s.extrafil(e,tp,mg1)

@@ -1,6 +1,5 @@
 --RUM－バリアンズ・フォース
 --Rank-Up-Magic Barian's Force
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -47,9 +46,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(sc,Group.FromCards(tc))
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
-		if Duel.GetOverlayCount(1-tp,0,1)~=0 then
+		local g1=Duel.GetOverlayGroup(tp,0,1)
+		if #g1>0 then
 			Duel.BreakEffect()
-			local g1=Duel.GetOverlayGroup(tp,0,1)
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 			local mg2=g1:Select(tp,1,1,nil)
 			local oc=mg2:GetFirst():GetOverlayTarget()

@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 	--fusion
-	local params = {nil,Fusion.ChechWithHandler(Fusion.OnFieldMat(aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON))),nil,nil,Fusion.ForcedHandler}
+	local params = {nil,Fusion.CheckWithHandler(Fusion.OnFieldMat(aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON))),nil,nil,Fusion.ForcedHandler}
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)

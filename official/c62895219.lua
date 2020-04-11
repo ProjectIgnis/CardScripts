@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 	--spsummon
-	local params = {nil,Fusion.ChechWithHandler(Fusion.OnFieldMat(aux.FilterBoolFunction(Card.IsSetCard,0x9b))),nil,nil,Fusion.ForcedHandler}
+	local params = {nil,Fusion.CheckWithHandler(Fusion.OnFieldMat(aux.FilterBoolFunction(Card.IsSetCard,0x9b))),nil,nil,Fusion.ForcedHandler}
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)

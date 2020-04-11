@@ -264,7 +264,7 @@ end
 function Fusion.ForcedHandler(e)
 	return e:GetHandler()
 end
-function Fusion.ChechWithHandler(fun,...)
+function Fusion.CheckWithHandler(fun,...)
 	local funs={fun,...}
 	return function(c,e,...)
 		if c==e:GetHandler() then

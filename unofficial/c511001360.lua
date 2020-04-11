@@ -1,3 +1,4 @@
+--潮の利
 --Tidal Advantage
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,13 +28,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetReset(RESET_PHASE+PHASE_END)
-	e2:SetTarget(s.filter)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER))
 	e2:SetValue(1)
 	Duel.RegisterEffect(e2,tp)
-end
-function s.filter(e,c)
-	return c:IsAttribute(ATTRIBUTE_WATER)
 end

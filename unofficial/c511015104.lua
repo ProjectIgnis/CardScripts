@@ -1,4 +1,5 @@
---Odd-Eyes Fusion Gate
+--オッドアイズ・フュージョンゲート
+--Odd-Eyes Fusiongate
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -104,8 +105,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-function s.disop(e,tp,eg,ep,ev,re,r,rp,tc)
-	local e1=Effect.CreateEffect(e:GetHandler())
+function s.disop(tc,c)
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)

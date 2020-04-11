@@ -23,12 +23,12 @@ function s.initial_effect(c)
 end
 s.counter_place_list={COUNTER_PREDATOR}
 function s.rfilter(c,tp)
-	return c:GetCounter(COUNTER_PREDATOR)>0 and c:IsControler(tp+1-tp)
+	return c:GetCounter(COUNTER_PREDATOR)>0 and c:IsControler(1-tp)
 end
 function s.hspcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
-	return Duel.CheckReleaseGroup(tp,s.rfilter,1,false,1,true,c,c:GetControler(),nil,true,nil,tp)
+	return Duel.CheckReleaseGroup(tp,s.rfilter,1,false,1,true,c,tp,nil,true,nil,tp)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectReleaseGroup(tp,s.rfilter,1,1,false,true,true,c,nil,nil,true,nil,tp)

@@ -1,5 +1,5 @@
 --マシンナーズ・カーネル
---Machina Colonel
+--Machina Citadel
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -68,7 +68,7 @@ function s.spcfilter(c,tp)
 		and (c:GetPreviousRaceOnField()&RACE_MACHINE)==RACE_MACHINE and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.spcfilter,1,e:GetHandler(),tp)
+	return eg:IsExists(s.spcfilter,1,e:GetHandler(),tp) and not eg:IsContains(e:GetHandler())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

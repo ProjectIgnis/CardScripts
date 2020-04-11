@@ -29,6 +29,11 @@ function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit)
 	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c)) and c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false)
 			and c:CheckFusionMaterial(mg,gc,chkf)
 end
+
+Fusion.ForcedMatValidity=function(c,e)
+	return c:IsFacedown() or not c:IsRelateToEffect(e) or c:IsImmuneToEffect(e)
+end
+
 Fusion.SummonEffTG = aux.FunctionWithNamedArgs(
 function(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -40,7 +45,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locatio
 				else
 					value = value and value|SUMMON_TYPE_FUSION or SUMMON_TYPE_FUSION
 				end
-				gc = type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc
+				gc = gc and Group.CreateGroup()+(type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc)
 				matfilter=matfilter or Card.IsAbleToGrave
 				stage2 = stage2 or aux.TRUE
 				if chk==0 then
@@ -53,7 +58,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locatio
 						end
 						checkAddition=ret[2]
 					end
-					if gc and not mg1:Includes(Group.CreateGroup()+gc) then return false end
+					if gc and not mg1:Includes(gc) then return false end
 					Fusion.CheckAdditional=checkAddition
 					mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil)
 					Fusion.CheckExact=exactcount
@@ -117,7 +122,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locati
 				else
 					value = value and value|SUMMON_TYPE_FUSION or SUMMON_TYPE_FUSION
 				end
-				gc = type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc
+				gc = gc and Group.CreateGroup()+(type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc)
 				matfilter=matfilter or Card.IsAbleToGrave
 				stage2 = stage2 or aux.TRUE
 				local checkAddition
@@ -131,7 +136,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locati
 				end
 				mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil)
 				mg1=mg1:Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
-				if gc and not mg1:Includes(Group.CreateGroup()+gc) then return end
+				if gc and not mg1:Includes(gc) or gc:IsExists(Fusion.ForcedMatValidity,1,nil,e) then return false end
 				Fusion.CheckExact=exactcount
 				Fusion.CheckAdditional=checkAddition
 				local effswithgroup={}

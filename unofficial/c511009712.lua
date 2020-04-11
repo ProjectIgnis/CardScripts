@@ -7,7 +7,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--
 	local e2=Effect.CreateEffect(c)
@@ -17,24 +16,11 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_RECOVER)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetCountLimit(1)
 	e2:SetCost(s.reccost)
 	e2:SetTarget(s.rectg)
 	e2:SetOperation(s.recop)
 	c:RegisterEffect(e2)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if s.reccost(e,tp,eg,ep,ev,re,r,rp,0) and s.rectg(e,tp,eg,ep,ev,re,r,rp,0)
-		and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
-		e:SetCategory(CATEGORY_RECOVER)
-		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		s.reccost(e,tp,eg,ep,ev,re,r,rp,1)
-		s.rectg(e,tp,eg,ep,ev,re,r,rp,1)
-		e:SetOperation(s.recop)
-	else
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
 end
 function s.costfilter(c,p)
 	local att=c:GetAttribute()

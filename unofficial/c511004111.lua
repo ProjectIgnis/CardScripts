@@ -1,3 +1,4 @@
+--荒野の大竜巻
 --Wasteland Tornado
 --scripted by:urielkama
 --fixed and cleaned up by MLD
@@ -33,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,510)
 			local sg=g:Select(p,1,1,nil)
-			Duel.SSet(dp,sg:GetFirst())
+			Duel.SSet(p,sg:GetFirst())
 		end
 	end
 end

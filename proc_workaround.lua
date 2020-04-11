@@ -309,3 +309,11 @@ function Auxiliary.GetRaceStrings(v)
 	end
 	return pairs(res)
 end
+
+--allow Duel.AnnounceCard to use 2 parameters (parameter 2 is an int type)
+local annc=Duel.AnnounceCard
+function Duel.AnnounceCard(p,...)
+    local params={...}
+    if #params==1 then params[2]=OPCODE_ISTYPE end
+    return annc(p,table.unpack(params))
+end

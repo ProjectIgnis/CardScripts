@@ -136,7 +136,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locati
 				end
 				mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil)
 				mg1=mg1:Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
-				if gc and not mg1:Includes(gc) or gc:IsExists(Fusion.ForcedMatValidity,1,nil,e) then return false end
+				if gc and (not mg1:Includes(gc) or gc:IsExists(Fusion.ForcedMatValidity,1,nil,e)) then return false end
 				Fusion.CheckExact=exactcount
 				Fusion.CheckAdditional=checkAddition
 				local effswithgroup={}

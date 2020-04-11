@@ -11,7 +11,9 @@ They are automatically synchronized with servers.
 
 ## Contributing
 
-Reach out to us on Discord to learn how to contribute! Bug reports go on Discord; do NOT open an issue or pull request if you're not one our contributors.
+Please keep all bug reports and questions on Discord; do NOT open an issue or pull request for this purpose.
+
+Reach out to us on Discord to learn how to contribute and start scripting! Before opening a pull request, please speak with a member of staff in `#card-scripting-101` first.
 
 ## Travis CI
 

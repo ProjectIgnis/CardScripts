@@ -31,7 +31,10 @@ function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit)
 end
 
 Fusion.ForcedMatValidity=function(c,e)
-	return c:IsFacedown() or not c:IsRelateToEffect(e) or c:IsImmuneToEffect(e)
+	if c==e:GetHandler() then
+		return c:IsFacedown() or not c:IsRelateToEffect(e)
+	end
+	return c:IsImmuneToEffect(e)
 end
 
 Fusion.SummonEffTG = aux.FunctionWithNamedArgs(

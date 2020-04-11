@@ -37,7 +37,7 @@ function s.spfilter(c,e,tp)
 	return s.filter(c,e,tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.thfilter(c,ft,e,tp)
-	return s.filter(c,e,tp) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) or c:IsAbleToHand())
+	return s.filter(c,e,tp) and ((ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)) or c:IsAbleToHand())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -63,13 +63,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		local sc=sg:GetFirst()
 		if sc then
 			aux.ToHandOrElse(sc,tp,function(c)
-					return sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and ft>0 end,
-					function(c)
-					Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP) end,
-					aux.Stringid(id,2)
-				)
-		else
-			Duel.SendtoHand(sc,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,sc)
+				return sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and ft>0 end,
+			function(c)
+				Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP) end,
+			aux.Stringid(id,2))
+		end
 	end
 end

@@ -38,7 +38,7 @@ Fusion.ForcedMatValidity=function(c,e)
 end
 
 Fusion.SummonEffTG = aux.FunctionWithNamedArgs(
-function(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf)
+function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
 				location = location or LOCATION_EXTRA
 				chkf = chkf and chkf|tp or tp
@@ -48,6 +48,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locatio
 				else
 					value = value and value|SUMMON_TYPE_FUSION or SUMMON_TYPE_FUSION
 				end
+				local gc=gc2
 				gc=type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc
 				gc=type(gc)=="Card" and Group.FromCards(gc) or gc
 				matfilter=matfilter or Card.IsAbleToGrave
@@ -116,7 +117,7 @@ function Fusion.ChainMaterialPrompt(effswithgroup,cardID,tp,e)
 	return effs[Duel.SelectOption(tp,false,table.unpack(desctable)) + 1]
 end
 Fusion.SummonEffOP = aux.FunctionWithNamedArgs(
-function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf)
+function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf)
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				location = location or LOCATION_EXTRA
 				chkf = chkf and chkf|tp or tp
@@ -126,6 +127,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locati
 				else
 					value = value and value|SUMMON_TYPE_FUSION or SUMMON_TYPE_FUSION
 				end
+				local gc=gc2
 				gc=type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc
 				gc=type(gc)=="Card" and Group.FromCards(gc) or gc
 				matfilter=matfilter or Card.IsAbleToGrave

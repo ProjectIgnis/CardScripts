@@ -59,7 +59,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.ssfilter,tp,LOCATION_EXTRA,0,1,1,nil,tc:GetLevel(),e,tp)
 		if #sg>0 then 
-			Duel.SpecialSummon(sg:GetFirst(),SUMMON_TYPE_FUSION,tp,tp,true,true,POS_FACEUP)
+			if Duel.SpecialSummon(sg:GetFirst(),SUMMON_TYPE_FUSION,tp,tp,true,true,POS_FACEUP)~=0 then
+				sg:GetFirst():CompleteProcedure()
+			end
 		end
 	end
 end

@@ -35,7 +35,6 @@ end
 s.listed_series={0x244}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--If special summoned from extra deck
 function s.cfilter(c)
 	return c:IsSummonLocation(LOCATION_EXTRA)
@@ -86,7 +85,6 @@ end
 	--All "Dragma" monsters gain 500 ATK
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x244),tp,LOCATION_MZONE,0,nil)
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

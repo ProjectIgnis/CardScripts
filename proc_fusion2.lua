@@ -32,7 +32,7 @@ end
 
 Fusion.ForcedMatValidity=function(c,e)
 	if c==e:GetHandler() then
-		return c:IsFacedown() or not c:IsRelateToEffect(e)
+		return (not c:IsFaceup() and c:IsLocation(LOCATION_ONFIELD)) or not c:IsRelateToEffect(e)
 	end
 	return c:IsImmuneToEffect(e)
 end
@@ -48,7 +48,8 @@ function(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locatio
 				else
 					value = value and value|SUMMON_TYPE_FUSION or SUMMON_TYPE_FUSION
 				end
-				gc = gc and Group.CreateGroup()+(type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc)
+				gc=type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc
+				gc=type(gc)=="Card" and Group.FromCards(gc) or gc
 				matfilter=matfilter or Card.IsAbleToGrave
 				stage2 = stage2 or aux.TRUE
 				if chk==0 then
@@ -125,7 +126,8 @@ function (fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locati
 				else
 					value = value and value|SUMMON_TYPE_FUSION or SUMMON_TYPE_FUSION
 				end
-				gc = gc and Group.CreateGroup()+(type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc)
+				gc=type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc
+				gc=type(gc)=="Card" and Group.FromCards(gc) or gc
 				matfilter=matfilter or Card.IsAbleToGrave
 				stage2 = stage2 or aux.TRUE
 				local checkAddition

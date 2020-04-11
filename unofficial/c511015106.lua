@@ -1,4 +1,5 @@
---Odd-Eyes Xyz Gate
+--オッドアイズ・エクシーズゲート
+--Odd-Eyes Xyzgate
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -109,8 +110,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-function s.disop(e,tp,eg,ep,ev,re,r,rp,target,card)
-	local c=e:GetHandler()
+function s.disop(tc,c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)

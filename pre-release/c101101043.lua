@@ -1,5 +1,5 @@
 --混沌魔龍カオス・ルーラー
---Chaos Dragon - Chaos Ruler
+--Chaos Ruler the Chaotic Demonic Dragon
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -57,7 +57,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsAbleToRemoveAsCost()
-		and aux.SpElimFilter(c,true)
+		and ((c:IsLocation(LOCATION_GRAVE+LOCATION_MZONE) and aux.SpElimFilter(c,true)) or c:IsLocation(LOCATION_HAND))
 end
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_LIGHT) and sg:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_DARK)

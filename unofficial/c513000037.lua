@@ -55,7 +55,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return ec:IsControler(tp) and ev>0
+	return ec and ec:IsControler(tp) and ev>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)

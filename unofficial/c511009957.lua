@@ -73,8 +73,8 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 		a:RegisterEffect(e2)
 		local e3=e2:Clone()
-        e3:SetCode(EFFECT_FIRST_ATTACK)
-        a:RegisterEffect(e3)
+		e3:SetCode(EFFECT_FIRST_ATTACK)
+		a:RegisterEffect(e3)
 		Duel.ChainAttack()
 	end
 end

@@ -48,8 +48,7 @@ function s.filter2(c,ec)
 	return c:IsFaceup() and c:IsLinkMonster() and c:GetLinkedGroup():IsContains(ec)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local lg1=Duel.GetLinkedGroup(tp,1,0)
-	return lg1 and lg1:IsContains(e:GetHandler())
+	return Duel.GetLinkedGroup(tp,LOCATION_MZONE,0):IsContains(e:GetHandler())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter1(chkc) and s.filter2(chkc,e:GetHandler()) end

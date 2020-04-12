@@ -43,8 +43,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x116)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	local lg1=Duel.GetLinkedGroup(tp,LOCATION_MZONE,0)
-	return lg1 and lg1:IsContains(e:GetHandler())
+	return Duel.GetLinkedGroup(tp,LOCATION_MZONE,0):IsContains(e:GetHandler())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

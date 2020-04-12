@@ -41,8 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local lg1=Duel.GetLinkedGroup(tp,LOCATION_MZONE,0)
-	return lg1 and lg1:IsContains(e:GetHandler())
+	return Duel.GetLinkedGroup(tp,LOCATION_MZONE,0):IsContains(e:GetHandler())
 end
 function s.filter(c)
 	return c:IsSetCard(0xfe) and c:IsAbleToHand()

@@ -23,10 +23,7 @@ function s.cfilter(c,g)
 	return g:IsContains(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local lg1=Duel.GetLinkedGroup(tp,LOCATION_MZONE,0)
-	local lg2=Duel.GetLinkedGroup(1-tp,LOCATION_MZONE,0)
-	lg1:Merge(lg2)
-	return lg1 and eg:IsExists(s.cfilter,1,nil,lg1)
+	return #(eg&Duel.GetLinkedGroup(tp,LOCATION_MZONE,LOCATION_MZONE))>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,5 +1,5 @@
 --クローラー・パラディオン
---Krawler Palladion
+--Crusadia Krawler
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -41,11 +41,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local lg1=Duel.GetLinkedGroup(tp,1,1)
-	local lg2=Duel.GetLinkedGroup(1-tp,1,1)
-	lg1:Merge(lg2)
-	return lg1 and lg1:IsContains(c)
+	local lg1=Duel.GetLinkedGroup(tp,LOCATION_MZONE,0)
+	return lg1 and lg1:IsContains(e:GetHandler())
 end
 function s.filter(c)
 	return c:IsSetCard(0xfe) and c:IsAbleToHand()
@@ -62,4 +59,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

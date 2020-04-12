@@ -1,5 +1,5 @@
 --星辰のパラディオン
---Palladion of the Celestial Bodies
+--Crusadia Draco
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -48,9 +48,7 @@ function s.filter2(c,ec)
 	return c:IsFaceup() and c:IsLinkMonster() and c:GetLinkedGroup():IsContains(ec)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local lg1=Duel.GetLinkedGroup(tp,1,1)
-	local lg2=Duel.GetLinkedGroup(1-tp,1,1)
-	lg1:Merge(lg2)
+	local lg1=Duel.GetLinkedGroup(tp,1,0)
 	return lg1 and lg1:IsContains(e:GetHandler())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

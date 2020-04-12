@@ -1,4 +1,5 @@
---Fast Chant
+--高速詠唱
+--High Speed Aria
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,e)
+function s.cfilter(c,e,tp)
 	local te,eg,ep,ev,re,r,rp=c:CheckActivateEffect(true,true,true)
 	if not te then return false end
 	local target=te:GetTarget()
@@ -26,10 +27,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,e)
+		return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil,e)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 	local te=g:GetFirst():CheckActivateEffect(true,true,false)
 	Duel.ClearTargetCard()

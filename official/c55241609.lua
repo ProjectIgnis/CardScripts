@@ -1,5 +1,5 @@
 --魔境のパラディオン
---Palladion of the Fiendish Illusion
+--Crusadia Reclusia
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -43,9 +43,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x116)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	local lg1=Duel.GetLinkedGroup(tp,1,1)
-	local lg2=Duel.GetLinkedGroup(1-tp,1,1)
-	lg1:Merge(lg2)
+	local lg1=Duel.GetLinkedGroup(tp,LOCATION_MZONE,0)
 	return lg1 and lg1:IsContains(e:GetHandler())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -65,4 +63,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-

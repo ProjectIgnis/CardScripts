@@ -1,4 +1,5 @@
 --シーアーカイバー
+--Sea Archiver
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -22,8 +23,8 @@ function s.cfilter(c,g)
 	return g:IsContains(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local lg1=Duel.GetLinkedGroup(tp,1,1)
-	local lg2=Duel.GetLinkedGroup(1-tp,1,1)
+	local lg1=Duel.GetLinkedGroup(tp,LOCATION_MZONE,0)
+	local lg2=Duel.GetLinkedGroup(1-tp,LOCATION_MZONE,0)
 	lg1:Merge(lg2)
 	return lg1 and eg:IsExists(s.cfilter,1,nil,lg1)
 end
@@ -44,4 +45,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1,true)
 	end
 end
-

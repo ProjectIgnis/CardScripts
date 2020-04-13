@@ -43,4 +43,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.handcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_ONFIELD,0)==0
+		and Duel.GetFieldGroupCount(1-e:GetHandlerPlayer(),LOCATION_ONFIELD,0)>1
 end

@@ -83,7 +83,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			else --If drawn card was not a "Flower Cardian" monster, destroy all monster you control and halve your LP
 				local dg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,0,nil)
 				Duel.Destroy(dg,REASON_EFFECT)
-				if #dg>0 then
+				if #Duel.GetOperatedGroup()>0 then
 					local lp=Duel.GetLP(tp)
 					Duel.SetLP(tp,math.ceil(lp/2))
 				end

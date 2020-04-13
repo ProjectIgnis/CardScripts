@@ -68,7 +68,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local c2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c1):GetFirst()
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,Group:FromCards(c1,c2),2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,Group.FromCards(c1,c2),2,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
@@ -80,7 +80,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP) > 0 then
 		for tc in aux.Next(sg) do
 			if tc:IsLocation(LOCATION_MZONE) then
-				s.disop(tc,e:GetHandler())
+				s.disop(e,tp,eg,ep,ev,re,r,rp,tc)
 			end
 		end
 	else

@@ -35,6 +35,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	--skip phases until Battle Phase
 	Duel.SkipPhase(tp,PHASE_BATTLE,RESET_PHASE+PHASE_END,1)
+	--prevent activations for the rest of that battle phase
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_FIELD)
+	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e0:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e0:SetTargetRange(0,1)
+	e0:SetValue(1)
+	e0:SetReset(RESET_PHASE+PHASE_BATTLE+PHASE_END)
+	Duel.RegisterEffect(e0,tp)
 	Duel.SkipPhase(tp,PHASE_MAIN2,RESET_PHASE+PHASE_END,1)
 	Duel.SkipPhase(tp,PHASE_END,RESET_PHASE+PHASE_END,1)
 	local e1=Effect.CreateEffect(c)

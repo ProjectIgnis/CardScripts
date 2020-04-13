@@ -51,8 +51,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.filter,1,false,nil,nil,e,tp,ft)
 	end
 	local rg=Duel.SelectReleaseGroupCost(tp,s.filter,1,1,false,nil,nil,e,tp,ft)
-	Duel.Release(rg,REASON_COST)
 	Duel.SetTargetParam(rg:GetFirst():GetLevel())
+	Duel.Release(rg,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

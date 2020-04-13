@@ -79,11 +79,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsReason(REASON_EFFECT)
+		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=eg:FilterCount(s.repfilter,nil,tp)
-	if chk==0 then return ct>0 and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
+	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp) and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		local c=e:GetHandler()
 		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)

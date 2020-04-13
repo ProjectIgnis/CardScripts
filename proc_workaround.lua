@@ -230,6 +230,21 @@ function Card.IsSequence(c,...)
 	end
 	return false
 end
+--Raises an event to be detected by Witch's Strike
+local ns=Duel.NegateSummon
+Duel.NegateSummon=function(g)
+    ns(g)
+    local ng = Group.CreateGroup()
+    if type(g) == "Card" then
+        if g:IsStatus(STATUS_SUMMON_DISABLED) then ng:AddCard(g) end
+    else
+        ng = g:Filter(Card.IsStatus,nil,STATUS_SUMMON_DISABLED)
+    end
+    if #ng>0 then
+        local EVENT_SUMMON_NEGATED = EVENT_CUSTOM+36458064
+        Duel.RaiseEvent(ng,EVENT_SUMMON_NEGATED,Effect.GlobalEffect(),0,0,0,0)
+    end
+end
 --for zone checking (zone is the zone, tp is referencial player)
 function Auxiliary.IsZone(c,zone,tp)
 	local rzone = c:IsControler(tp) and (1 <<c:GetSequence()) or (1 << (16+c:GetSequence()))

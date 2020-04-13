@@ -14,4 +14,4 @@ External contributions: please speak with a member of staff in `#card-scripting-
 - A pull request should contain only one card, except in the case of very closely coupled cards
 - The title should be of the form `Add "Card name"`
 - The description should contain a link to Yugipedia to confirm the script behaviour matches the card text
-- The supervising staff member should be requested or review or tagged in the pull request
+- The supervising staff members should be requested for review or tagged in the pull request

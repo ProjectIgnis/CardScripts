@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x2b}
-function s.target(e,tp,eg,ep,ev,re,r,rp,ch)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local seq=e:GetHandler():GetSequence()
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-seq)
 	if chk==0 then return tc and e:GetHandler():GetFlagEffect(id)==0 end

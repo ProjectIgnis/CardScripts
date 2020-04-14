@@ -47,7 +47,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			tc:ClearEffectRelation()
 		end
 	end
-	local tg=sg:GetFirst()
 	local fid=e:GetHandler():GetFieldID()
 	for tg in aux.Next(sg) do
 		local e1=Effect.CreateEffect(tg)

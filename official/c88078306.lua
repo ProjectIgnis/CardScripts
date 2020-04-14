@@ -38,13 +38,11 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Hole" normal traps
 function s.setfilter(c)
-	return c:GetType()==TYPE_TRAP and c:IsSSetable() 
-		and (c:IsSetCard(0x4c) or c:IsSetCard(0x89))
+	return c:GetType()==TYPE_TRAP and c:IsSSetable() and (c:IsSetCard(0x4c) or c:IsSetCard(0x89))
 end
 	--The 2 traps have different names from each other
 function s.setcheck(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetLocation)>=#sg
-		and sg:GetClassCount(Card.GetCode)>=#sg
+	return sg:GetClassCount(Card.GetLocation)>=#sg and sg:GetClassCount(Card.GetCode)>=#sg
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -60,7 +58,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rg=aux.SelectUnselectGroup(sg,e,tp,2,2,s.setcheck,1,tp,HINTMSG_SET,s.setcheck)
 	if #rg>0 then
 		Duel.SSet(tp,rg)
-		local tc=sg:GetFirst()
 		for tc in aux.Next(sg) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

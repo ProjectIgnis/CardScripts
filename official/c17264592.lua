@@ -1,6 +1,5 @@
 --U.A.コリバルリバウンダー
 --U.A. Rival Rebounder
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon from hand

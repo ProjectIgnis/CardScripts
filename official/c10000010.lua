@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e5:SetValue(s.spval)
 	c:RegisterEffect(e5)
-	--One Turn Kill
+	--change ATK
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,0))
 	e6:SetCategory(CATEGORY_ATKCHANGE)
@@ -91,7 +91,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

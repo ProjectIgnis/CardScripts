@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not lc:IsRelateToEffect(e) then return end
 	local lv=lc:GetLevel()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tc=g:GetFirst()
+	if not g then return end
 	for tc in aux.Next(g) do
 		if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 			local e1=Effect.CreateEffect(e:GetHandler())

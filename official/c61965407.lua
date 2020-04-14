@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--tohand
+	--add to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	e2:SetCountLimit(1,id)
 	c:RegisterEffect(e2)
-	--tograve
+	--return to the GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,id+1)
 	e3:SetLabel(2)
 	c:RegisterEffect(e3)
-	--tograve
+	--send itself to the GY
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -45,7 +45,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xbb}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.thfilter(c)
 	return c:IsSetCard(0xbb) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

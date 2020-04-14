@@ -85,5 +85,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
-	Duel.Destroy(g,REASON_EFFECT)
+	if g then
+		Duel.Destroy(g,REASON_EFFECT)
+	end
 end

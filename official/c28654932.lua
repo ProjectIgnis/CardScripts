@@ -1,4 +1,5 @@
 --深黒の落とし穴
+--Deep Dark Trap Hole
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)

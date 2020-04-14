@@ -1,4 +1,5 @@
 --剣闘調教
+--Gladiator Taming
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

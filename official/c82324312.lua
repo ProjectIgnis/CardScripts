@@ -1,6 +1,5 @@
 --ゴブリン偵察部隊
 --Goblin Recon Squad
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Look at 1 random card in opponent's hand. Send it to GY if spell

@@ -22,9 +22,10 @@ function s.initial_effect(c)
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() and c:GetControler()==c:GetEquipTarget():GetControler()
-		and c:GetEquipTarget():IsAbleToGraveAsCost() end
-	local g=Group.FromCards(c,c:GetEquipTarget())
+	local ec=c:GetEquipTarget()
+	if chk==0 then return c:IsAbleToGraveAsCost() and ec and c:GetControler()==ec:GetControler()
+		and ec:IsAbleToGraveAsCost() end
+	local g=Group.FromCards(c,ec)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

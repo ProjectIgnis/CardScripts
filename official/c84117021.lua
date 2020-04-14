@@ -86,6 +86,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e2,tp)
 	end
 end
+s.filter=aux.FilterFaceupFunction(Card.IsRace,RACE_SPELLCASTER)
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil)
 end

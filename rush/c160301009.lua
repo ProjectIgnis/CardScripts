@@ -1,7 +1,5 @@
 --ルミナス・シャーマン
 --Luminous Shaman
-
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
 	--Let a level 4 or lower spellcaster attack directly
@@ -21,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for level 4 or lower spellcaster
 function s.filter(c)
-	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsRace(RACE_SPELLCASTER)
+	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsRace(RACE_SPELLCASTER) and c:CanAttack()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

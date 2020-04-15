@@ -43,10 +43,9 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 				location = location or LOCATION_EXTRA
 				chkf = chkf and chkf|tp or tp
 				local sumlimit = (chkf&FUSPROC_NOTFUSION~=0)
-				if sumlimit then
-					value = value or 0
-				else
-					value = value and value|SUMMON_TYPE_FUSION or SUMMON_TYPE_FUSION
+				if not value then value=0 end
+				if not sumlimit then
+					value = value|SUMMON_TYPE_FUSION
 				end
 				local gc=gc2
 				gc=type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc
@@ -122,10 +121,9 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				location = location or LOCATION_EXTRA
 				chkf = chkf and chkf|tp or tp
 				local sumlimit = (chkf&FUSPROC_NOTFUSION ~= 0)
-				if sumlimit then
-					value = value or 0
-				else
-					value = value and value|SUMMON_TYPE_FUSION or SUMMON_TYPE_FUSION
+				if not value then value=0 end
+				if not sumlimit then
+					value = value|SUMMON_TYPE_FUSION
 				end
 				local gc=gc2
 				gc=type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc

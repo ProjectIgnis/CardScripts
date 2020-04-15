@@ -1,8 +1,9 @@
 --アフター・グロー
 --Afterglow (Anime)
 --Scripted by Hel
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)	
@@ -13,12 +14,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_DECK,0,nil,id)
-	if chk==0 then return #g>0 and g:FilterCount(Card.IsAbleToRemoveAsCost,nil)==#g end
+	local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_DECK,0,nil,alias)
+	if chk==0 then return #g>0 and g:FilterCount(Card.IsAbleToRemove,nil)==#g end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_DECK,0,nil,id)
+	local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_DECK,0,nil,alias)
 	local ct=Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	if ct>0 and c:IsRelateToEffect(e) then
 		c:CancelToGrave()

@@ -1,4 +1,5 @@
---Scab Scarknight(Anime)
+--スカブ・スカーナイト (Anime)
+--Scab Scarknight (Anime)
 --scripted by:urielkama
 --added Scab Counter placing and remove Self Destruction position related
 local s,id=GetID()
@@ -79,8 +80,7 @@ function s.indescon(e)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
-	return tc:IsRelateToBattle() and tc
-		and not tc:IsStatus(STATUS_BATTLE_DESTROYED)
+	return tc and tc:IsRelateToBattle() and not tc:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

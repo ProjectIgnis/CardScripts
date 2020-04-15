@@ -1,4 +1,5 @@
 --サッド・ストーリー ～忌むべき日～
+--Sad Story - Atrocious Day
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,7 +25,6 @@ function s.chainfilter(re,tp,cid)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)==0 end
-	Duel.Release(g,REASON_COST)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

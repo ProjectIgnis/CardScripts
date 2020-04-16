@@ -1,4 +1,5 @@
 --グレイドル・イーグル
+--Graydle Eagle
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -70,7 +71,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 		e4:SetCode(EVENT_LEAVE_FIELD)
 		e4:SetOperation(s.desop)
-		e4:SetReset(RESET_EVENT+RESETS_CANNOT_ACT)
+		e4:SetReset(RESET_EVENT+RESET_OVERLAY+RESET_TOFIELD)
 		e4:SetLabelObject(e3)
 		c:RegisterEffect(e4)
 	end
@@ -81,6 +82,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	else e:SetLabel(0) end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	e:Reset()
 	if e:GetLabelObject():GetLabel()~=0 then return end
 	local tc=e:GetHandler():GetEquipTarget()
 	if tc and tc:IsLocation(LOCATION_MZONE) then

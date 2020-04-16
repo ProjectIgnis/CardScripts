@@ -1,10 +1,11 @@
---Idaten, the Star of Supreme Victory
+--覇勝星イダテン (Anime)
+--Idaten the Conqueror Star (Anime)
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,function(c) return c:IsSky(true) end,function(c) return c:IsEarth(true) end)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSky),aux.FilterBoolFunctionEx(Card.IsEarth))
 	--atkdown
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)

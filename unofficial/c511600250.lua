@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	c:EnableCounterPermit(0x581)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,s.matfilter,2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsDrone),2)
 	--counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(3070049,0))
@@ -36,9 +36,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.material_setcode={0x581}
-function s.matfilter(c,fc,sumtype,tp)
-	return c:IsDrone(fc,sumtype,tp)
-end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end

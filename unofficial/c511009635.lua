@@ -1,4 +1,5 @@
---White Aura Whale (anime)
+--白闘気白鯨 (Manga)
+--White Aura Whale (Manga)
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)

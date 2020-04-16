@@ -1,9 +1,10 @@
---Earthbound Disciple Geo Griffon
+--地縛戒隷ジオグリフォン
+--Earthbound Servant Geo Gryphon
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,Card.IsEarthbound,1,1,Synchro.NonTuner(Card.IsEarthbound),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsEarthbound),1,1,Synchro.NonTuner(Card.IsEarthbound),1,99)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)

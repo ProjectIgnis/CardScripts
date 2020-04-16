@@ -1,5 +1,5 @@
---ＳＮｏ．０ ホープ・ゼアル
---Number S0: Utopic ZEXAL (Anime)
+--ＳＮｏ．０ ホープ・ゼアル (Manga)
+--Number S0: Utopic ZEXAL (Manga)
 --scripted by Larry126
 Duel.LoadScript("c420.lua")
 Duel.LoadScript("c52653092.lua")
@@ -75,7 +75,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.xyzfilter(c,xyz,sumtype,tp)
-	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsNumberS()
+	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsNumberS(xyz,sumtype,tp)
 end
 function s.effcon(e)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL

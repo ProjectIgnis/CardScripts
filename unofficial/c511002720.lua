@@ -1,10 +1,11 @@
---Earthbound Disciple Geo Gremlina
+--地縛戒隷ジオグレムリーナ
+--Earthbound Servant Geo Gremlina
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,function(c) return c:IsEarthbound(true) end,2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsEarthbound),2)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(48009503,0))
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.material_setcode=0x151a
+s.material_setcode={0x151a}
 function s.filter(c,tp)
 	return c:IsPreviousControler(1-tp) and (c:GetReason()&0x41)==0x41
 end

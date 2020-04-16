@@ -1,6 +1,5 @@
 --焔凰神－ネフティス
---Nephthys the Blazing Sacred Phoenix
---
+--Nephthys, the Sacred Flame
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

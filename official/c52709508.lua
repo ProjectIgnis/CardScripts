@@ -1,16 +1,17 @@
 --A・ジェネクス・トライフォース
+--Genex Ally Triforce
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x2),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--mat check
+	--material verification
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
 	e1:SetValue(s.valcheck)
 	c:RegisterEffect(e1)
-	--synchro success
+	--effect registratrion
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)

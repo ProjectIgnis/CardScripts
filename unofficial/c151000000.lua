@@ -5,6 +5,14 @@ if not ActionDuel then
 		return c:IsType(TYPE_ACTION) and not c.af
 	end
 
+	function Card.IsActionSpell(c)
+		return c:IsType(TYPE_ACTION) and c:IsType(TYPE_SPELL) and not c.af
+	end
+
+	function Card.IsActionTrap(c)
+		return c:IsType(TYPE_ACTION) and c:IsType(TYPE_TRAP) and not c.af
+	end
+
 	function Card.IsActionField(c)
 		return c:IsType(TYPE_ACTION) and c.af
 	end
@@ -51,24 +59,24 @@ if not ActionDuel then
 		--act ac in hand
 		local e6=Effect.GlobalEffect()
 		e6:SetType(EFFECT_TYPE_FIELD)
-		e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
-		e6:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
+		e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
+		e6:SetCode(EFFECT_BECOME_QUICK)
 		e6:SetTargetRange(0xff,0xff)
-		e6:SetTarget(aux.TargetBoolFunction(Card.IsActionCard))
+		e6:SetTarget(aux.TargetBoolFunction(Card.IsActionSpell))
 		Duel.RegisterEffect(e6,0)
-		local e7=Effect.GlobalEffect()
-		e7:SetType(EFFECT_TYPE_FIELD)
-		e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
-		e7:SetCode(EFFECT_BECOME_QUICK)
-		e7:SetTargetRange(0xff,0xff)
-		e7:SetTarget(aux.TargetBoolFunction(Card.IsActionCard))
+		local e7=e6:Clone()
+		e7:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 		Duel.RegisterEffect(e7,0)
-		local e7=Effect.GlobalEffect()
-		e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
-		e7:SetCode(EVENT_ADJUST)
-		e7:SetOperation(ActionDuel.cover)
-		Duel.RegisterEffect(e7,0)
+		local e8=e6:Clone()
+		e8:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
+		Duel.RegisterEffect(e8,0)
+		--cover
+		local e9=Effect.GlobalEffect()
+		e9:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e9:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
+		e9:SetCode(EVENT_ADJUST)
+		e9:SetOperation(ActionDuel.cover)
+		Duel.RegisterEffect(e9,0)
 	end
 
 	function ActionDuel.cfilter(c)

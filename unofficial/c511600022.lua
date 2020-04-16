@@ -129,6 +129,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.sumlimit(e,c,tp,sumtp,sumpos)
+	sumtp=sumtp or 0
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local tg,link=g:GetMaxGroup(Card.GetLink)
 	return (sumtp&SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK and c:GetLink()<link

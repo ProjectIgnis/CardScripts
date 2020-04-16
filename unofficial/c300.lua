@@ -16,8 +16,7 @@
 -- Duel.SelectTarget()
 
 if c300 then
-function c300.initial_effect(c)
-end
+	function c300.initial_effect(c) end
 end
 
 if not DeckMasters then
@@ -31,7 +30,7 @@ if not DeckMasters then
 				return isloc(c,loc)
 			end
 		end
-	local dmzonechk=function(c) 
+	local dmzonechk=function(c)
 		return (Duel.IsDuelType(DUEL_SEPARATE_PZONE) and isloc(c,LOCATION_MZONE) and c:GetSequence()==5) or (not Duel.IsDuelType(DUEL_SEPARATE_PZONE) and isloc(c,LOCATION_SZONE) and c:GetSequence()==6)
 	end
 	local isexist=Duel.IsExistingMatchingCard
@@ -55,9 +54,9 @@ if not DeckMasters then
 			f1=function(c) return f(c,table.unpack(arg)) and not dmzonechk(c) end
 		end
 		if arg~=nil then
-			return isexist(f1,tp,int_s,int_o,count,ex,table.unpack(arg))
+			return isexisttg(f1,tp,int_s,int_o,count,ex,table.unpack(arg))
 		else
-			return isexist(f1,tp,int_s,int_o,count,ex)
+			return isexisttg(f1,tp,int_s,int_o,count,ex)
 		end
 	end
 	local getmatchg=Duel.GetMatchingGroup
@@ -153,7 +152,7 @@ if not DeckMasters then
 			Duel.MoveSequence(c,6)
 		end
 	end
-	local function finish_setup() 
+	local function finish_setup()
 		--register
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

@@ -46,6 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local g=Duel.GetDecktopGroup(tp,ct):Filter(Card.IsSetCard,nil,0x9f)
 	local mg,lv=g:GetMaxGroup(Card.GetLevel)
+	if not mg then return end
 	local tg=mg:Filter(Card.IsCanBeSpecialSummoned,nil,e,0,tp,false,false)
 	if #tg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

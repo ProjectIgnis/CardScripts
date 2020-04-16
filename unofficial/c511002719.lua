@@ -1,8 +1,10 @@
+--地縛戒隷ジオグレムリン
 --Earthbound Servant Geo Gremlin
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	Synchro.AddProcedure(c,Card.IsEarthbound,1,1,Synchro.NonTuner(Card.IsEarthbound),1,99)
+	--synchro summon
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsEarthbound),1,1,Synchro.NonTuner(Card.IsEarthbound),1,99)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)

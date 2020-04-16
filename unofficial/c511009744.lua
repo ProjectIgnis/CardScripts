@@ -6,7 +6,8 @@ Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,function(c) return c:IsDrone() end,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsDrone),2)
+	c:EnableReviveLimit()
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(1118)

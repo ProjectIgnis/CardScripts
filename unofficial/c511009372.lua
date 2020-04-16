@@ -1,3 +1,4 @@
+--大精霊機巧軍－ペンデュラム・ルーラー
 --Master Spirit Tech Force - Pendulum Ruler
 --fixed by Larry126
 Duel.LoadScript("c420.lua")
@@ -5,7 +6,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c,false)
 	--fusion material
-	Fusion.AddProcMix(c,true,true,511009366,function(c) return c:IsSpirit(true) end)
+	Fusion.AddProcMix(c,true,true,511009366,aux.FilterBoolFunctionEx(Card.IsSpirit))
 	c:EnableReviveLimit()
 	--disable
 	local e1=Effect.CreateEffect(c)
@@ -46,7 +47,7 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetTarget(s.pztg)
-	e5:SetOperation(s.pzop)	
+	e5:SetOperation(s.pzop) 
 	c:RegisterEffect(e5)
 	--to extra
 	local e6=Effect.CreateEffect(c)
@@ -64,7 +65,7 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={0x154e}
-s.material_setcode=0x54e
+s.material_setcode={0x54e}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do

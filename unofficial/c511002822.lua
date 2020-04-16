@@ -1,3 +1,4 @@
+--天魔合唱
 --Prayer to the Evil Spirits
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
@@ -13,10 +14,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter1(c,e)
-	return c:IsLocation(LOCATION_HAND) and c:IsAngel() and (not e or not c:IsImmuneToEffect(e))
+	return c:IsLocation(LOCATION_HAND)
+		and c:IsAngel(nil,SUMMON_TYPE_FUSION,e:GetHandlerPlayer())
+		and (not e or not c:IsImmuneToEffect(e))
 end
 function s.filter2(c,e)
-	return c:IsCanBeFusionMaterial() and c:IsAngel() and (not e or not c:IsImmuneToEffect(e))
+	return c:IsCanBeFusionMaterial()
+		and c:IsAngel(nil,SUMMON_TYPE_FUSION,e:GetHandlerPlayer())
+		and (not e or not c:IsImmuneToEffect(e))
 end
 function s.filter3(c,e,tp,m,f)
 	return c:IsType(TYPE_FUSION) and (not f or f(c)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) 

@@ -38,7 +38,7 @@ function s.flagfilter(c)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local c=eg:GetFirst()
-	return c:IsLineMonster(c) and c:IsControler(tp) and not s.flagfilter(c)
+	return c:IsLineMonster() and c:IsControler(tp) and not s.flagfilter(c)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	eg:GetFirst():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)

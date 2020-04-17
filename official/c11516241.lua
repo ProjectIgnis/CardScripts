@@ -58,7 +58,7 @@ function s.spcheck(sg,tp,exg,dg)
 			if dg:IsContains(tc) then a=a+1 end
 		end
 	end
-	return #dg-a>=sg:GetFirst():GetLink()
+	return #dg-a>0
 end
 function s.cfilter(c)
 	return c:IsSetCard(0xfc) and c:IsType(TYPE_LINK)

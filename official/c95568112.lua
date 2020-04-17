@@ -1,6 +1,5 @@
 --レイン・ボーズ
 --Rain Bozu
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -64,7 +63,7 @@ function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	local atk=math.abs(Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)-Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA))
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and atk>0 then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and atk>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -78,7 +77,7 @@ function s.atkcon2(e)
 end
 function s.atkval(e,c)
 	local tp=c:GetControler()
-	return math.abs(Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)-Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA))*200
+	return (Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,LOCATION_EXTRA))*200
 end
 function s.defcon(e)
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()

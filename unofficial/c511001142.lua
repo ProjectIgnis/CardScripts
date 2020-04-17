@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.roll_dice=true
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetDecktopGroup(tp,1)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1,6) and Duel.IsPlayerCanDiscardDeck(tp,1) end

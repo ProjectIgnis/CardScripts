@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.synop)
 	c:RegisterEffect(e2)
 end
+s.roll_dice=true
 s.listed_series={0x2016}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x2016) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

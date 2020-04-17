@@ -48,6 +48,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end
 end
+s.roll_dice=true
 s.listed_series={0x577}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	table.insert(s.diceEffects[ep],re:GetHandler():GetFieldID())

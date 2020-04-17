@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.opd)
 	c:RegisterEffect(e3)
 end
+s.roll_dice=true
 s.listed_series={0x26}
 function s.spfilter(c,tp)
 	return c:IsSetCard(0x26) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)

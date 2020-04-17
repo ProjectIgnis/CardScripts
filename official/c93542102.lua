@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.opd)
 	c:RegisterEffect(e2)
 end
+s.roll_dice=true
 s.listed_series={0x26}
 function s.cona(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsDisabled() and e:GetHandler():IsAttackPos()

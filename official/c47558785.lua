@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.scop)
 	c:RegisterEffect(e1)
 end
+s.roll_dice=true
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetLeftScale()>1 end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)

@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetLabel(1)
 	c:RegisterEffect(e2)
 end
+s.roll_dice=true
 function s.cfilter(c,sp)
 	return c:IsFaceup() and c:GetSummonPlayer()==sp
 end

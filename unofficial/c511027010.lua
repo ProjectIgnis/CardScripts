@@ -49,6 +49,7 @@ function s.initial_effect(c)
 	e5:SetValue(aux.imval1)
 	c:RegisterEffect(e5)
 end
+s.roll_dice=true
 s.listed_series={0x577}
 function s.matfilter(c)
 	return c:IsLevelAbove(5) and c:IsType(TYPE_EFFECT)

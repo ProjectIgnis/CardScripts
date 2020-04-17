@@ -101,5 +101,6 @@ function s.dcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():IsSetCard(0x3013)
 end
 function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(tp)*2)
+Debug.Message(Duel.GetBattleDamage(tp))
+	Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(1-tp)*2)
 end

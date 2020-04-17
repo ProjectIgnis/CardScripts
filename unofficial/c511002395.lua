@@ -24,6 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
+	
 	local ct=Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
 	if ct>0 then
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and ct>1 then return end
@@ -42,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 			tc=sg:GetNext()
 		end
-		if #spg>0 and Duel.GetLocationCountFromEx(tp)>=#spg then
+		if #spg>0 and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_FUSION)>=#spg then
 			Duel.SpecialSummon(spg,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
 		end
 	end

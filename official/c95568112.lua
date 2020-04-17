@@ -3,7 +3,6 @@
 --
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
 	Pendulum.AddProcedure(c)
 	--atk
 	local e1=Effect.CreateEffect(c)
@@ -17,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg1)
 	e1:SetOperation(s.atkop1)
 	c:RegisterEffect(e1)
-	--atk/def
+	--atk/def while in the monster zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)

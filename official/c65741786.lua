@@ -62,7 +62,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(aux.indval)
 	e1:SetOwnerPlayer(ep)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	rc:RegisterEffect(e1)
+	rc:RegisterEffect(e1,true)
 end
 function s.indval(e,re,rp)
 	return rp==1-e:GetOwnerPlayer()

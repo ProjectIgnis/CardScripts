@@ -114,11 +114,11 @@ if not DeckMasters then
 			f1=function(c) return f(c,table.unpack(arg)) and not dmzonechk(c) end
 		end
 		if arg~=nil then
-			local sel=selmatchc(sp,f1,tp,int_s,int_o,min,max,ex,table.unpack(arg))
+			local sel=seltg(sp,f1,tp,int_s,int_o,min,max,ex,table.unpack(arg))
 			Duel.SetTargetCard(sel)
 			return sel
 		else
-			local sel=selmatchc(sp,f1,tp,int_s,int_o,min,max,ex)
+			local sel=seltg(sp,f1,tp,int_s,int_o,min,max,ex)
 			Duel.SetTargetCard(sel)
 			return sel
 		end

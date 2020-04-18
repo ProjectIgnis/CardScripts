@@ -1,4 +1,5 @@
 --No.7 ラッキー・ストライプ
+--Number 7: Lucky Straight
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

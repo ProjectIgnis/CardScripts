@@ -1,5 +1,5 @@
 --パーペチュアルキングデーモン
---Perpetual King Archfiend
+--Masterking Archfiend
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.mtcon)
 	e1:SetOperation(s.mtop)
 	c:RegisterEffect(e1)
-	--tograve
+	--send to grave
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)

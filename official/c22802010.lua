@@ -1,5 +1,5 @@
 --無差別崩壊
---Blind Ruination
+--Blind Obliteration
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

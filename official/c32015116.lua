@@ -33,7 +33,8 @@ function s.rdfilter(c,lv)
 	if lv<6 then
 		return c:IsFaceup() and c:GetLevel()==lv
 	else
-		return c:IsFaceup() and c:GetLevel()>=6 end
+		return c:IsFaceup() and c:GetLevel()>=6
+	end
 end
 function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

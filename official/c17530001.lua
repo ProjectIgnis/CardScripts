@@ -1,7 +1,8 @@
 --キューブン
+--Cuben
 local s,id=GetID()
 function s.initial_effect(c)
-	--
+	--die
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DICE)
@@ -21,6 +22,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	local dc=Duel.TossDice(tp,1)
+	--prevent summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_MZONE)

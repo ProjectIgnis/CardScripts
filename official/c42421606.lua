@@ -1,15 +1,16 @@
 --No.85 クレイジー・ボックス
+--Number 85: Crazy Box
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,nil,4,2)
 	c:EnableReviveLimit()
-	--
+	-- prevent itself from attacking
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	c:RegisterEffect(e1)
-	--
+	--roll die
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DICE+CATEGORY_DRAW)

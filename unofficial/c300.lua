@@ -104,7 +104,7 @@ if not DeckMasters then
 	end
 	local gettgc=Duel.GetTargetCount
 		Duel.GetTargetCount=function(...)
-								return Duel.GetTarget(...):GetCount()
+								return Duel.GetMatchingGroup(...):Filter(Card.IsCanBeEffectTarget,nil):GetCount()
 							end
 	local seltg=Duel.SelectTarget
 		Duel.SelectTarget=function(sp,f,tp,int_s,int_o,min,max,ex, ...)

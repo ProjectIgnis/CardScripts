@@ -3,7 +3,8 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047),Fusion.OnFieldMat,nil,nil,nil,s.stage2))
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047),Fusion.OnFieldMat,nil,nil,nil,s.stage2)
+	c:RegisterEffect(e1)
 	--atk up
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)

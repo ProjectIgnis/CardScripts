@@ -1,5 +1,5 @@
 --無差別崩壊
---Blind Ruination
+--Blind Obliteration
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.roll_dice=true
 function s.cfilter(c)
 	return c:IsFaceup() and (c:IsLevelBelow(1) or c:IsRankBelow(1))
 end

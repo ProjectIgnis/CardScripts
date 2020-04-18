@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rdop)
 	c:RegisterEffect(e2)
 end
+s.roll_dice=true
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
@@ -32,7 +33,8 @@ function s.rdfilter(c,lv)
 	if lv<6 then
 		return c:IsFaceup() and c:GetLevel()==lv
 	else
-		return c:IsFaceup() and c:GetLevel()>=6 end
+		return c:IsFaceup() and c:GetLevel()>=6
+	end
 end
 function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

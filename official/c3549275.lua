@@ -1,4 +1,5 @@
 --ダイス・ポット
+--Dice Jar
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -9,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.roll_dice=true
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,PLAYER_ALL,1)
@@ -20,8 +22,16 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		d1,d2=Duel.TossDice(tp,1,1)
 	end
 	if d1<d2 then
-		if d2==6 then Duel.Damage(tp,6000,REASON_EFFECT) else Duel.Damage(tp,d2*500,REASON_EFFECT) end
+		if d2==6 then
+			Duel.Damage(tp,6000,REASON_EFFECT)
+		else
+			Duel.Damage(tp,d2*500,REASON_EFFECT)
+		end
 	else
-		if d1==6 then Duel.Damage(1-tp,6000,REASON_EFFECT) else Duel.Damage(1-tp,d1*500,REASON_EFFECT) end
+		if d1==6 then
+			Duel.Damage(1-tp,6000,REASON_EFFECT)
+		else
+			Duel.Damage(1-tp,d1*500,REASON_EFFECT)
+		end
 	end
 end

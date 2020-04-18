@@ -1,4 +1,5 @@
 --No.7 ラッキー・ストライプ
+--Number 7: Lucky Straight
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -15,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.roll_dice=true
 s.xyz_number=7
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

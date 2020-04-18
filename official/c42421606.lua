@@ -1,15 +1,16 @@
 --No.85 クレイジー・ボックス
+--Number 85: Crazy Box
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,nil,4,2)
 	c:EnableReviveLimit()
-	--
+	-- prevent itself from attacking
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	c:RegisterEffect(e1)
-	--
+	--roll die
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DICE+CATEGORY_DRAW)
@@ -21,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.efop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.roll_dice=true
 s.xyz_number=85
 function s.efcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

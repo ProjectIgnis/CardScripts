@@ -1,4 +1,5 @@
 --ニードル・ウォール
+--Needle Wall
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rdop)
 	c:RegisterEffect(e2)
 end
+s.roll_dice=true
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end

@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.roll_dice=true
 function s.lkfilter(c,p)
 	return s.cfilter(c,p) and c:IsType(TYPE_LINK)
 end

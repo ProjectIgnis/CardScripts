@@ -1,4 +1,5 @@
 --サイコロン
+--Dicephoon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.roll_dice=true
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end

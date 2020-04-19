@@ -1,4 +1,5 @@
 --大王目玉
+--Big Eye
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

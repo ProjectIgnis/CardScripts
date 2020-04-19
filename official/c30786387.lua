@@ -40,10 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #rg>0 then
 		Duel.ConfirmCards(1-tp,rg)
 		Duel.ShuffleDeck(tp)
-		local tg=rg:GetFirst()
-		for tg in aux.Next(rg) do
-			Duel.MoveSequence(tg,0)
-		end
+		Duel.MoveToDeckTop(tg)
 		Duel.SortDecktop(tp,tp,3)
 	end
 end

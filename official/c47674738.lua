@@ -55,10 +55,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if ac>0 then
 		Duel.SortDecktop(tp,tp,ac)
-		for i=1,ac do
-			local mg=Duel.GetDecktopGroup(tp,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
-		end
+		Duel.MoveToDeckBottom(ac)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

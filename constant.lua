@@ -20,6 +20,10 @@ LOCATION_DECKSHF = 0x20001
 --Locations used for SetRange
 LOCATION_FZONE = 0x100
 LOCATION_PZONE = 0x200
+--Sequences used for SendtoDeck
+SEQ_DECKTOP     = 0
+SEQ_DECKBOTTOM  = 1
+SEQ_DECKSHUFFLE = 2
 --Positions
 POS_FACEUP_ATTACK    = 0x1
 POS_FACEDOWN_ATTACK  = 0x2

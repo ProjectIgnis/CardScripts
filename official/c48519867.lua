@@ -66,9 +66,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ac=5-ct
 	if ac>0 then
 		Duel.SortDecktop(tp,tp,ac)
-		for i=1,ac do
-			local mg=Duel.GetDecktopGroup(tp,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
-		end
+		Duel.MoveToDeckBottom(ac)
 	end
 end

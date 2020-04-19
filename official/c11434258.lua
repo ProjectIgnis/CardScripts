@@ -1,6 +1,5 @@
 --蛇龍の枷鎖
---Saryuja’s Shackles
---local s,id=GetID()
+--Saryuja's Shackles
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -38,11 +37,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 		local sg=g:Select(p,2,2,nil) --selects
-		Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
-		Duel.SortDecktop(p,p,2)
-		for i=1,2 do
-			local mg=Duel.GetDecktopGroup(p,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
+		Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+		local og=Duel.GetOperatedGroup()
+		local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_DECK)
+		if ct>1 then
+			Duel.SortDeckbottom(p,p,2)
 		end
 	end
 end

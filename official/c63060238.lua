@@ -87,6 +87,14 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetReset(RESET_PHASE+PHASE_END)
 		e5:SetTargetRange(1,0)
 		Duel.RegisterEffect(e5,tp)
+		--cant spsummon from main deck check
+		local e6=Effect.CreateEffect(c)
+		e6:SetType(EFFECT_TYPE_FIELD)
+		e6:SetCode(CARD_EHERO_BLAZEMAN)
+		e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e6:SetTargetRange(1,0)
+		e6:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e6,tp)
 	end
 end
 function s.splimit(e,c,tp,sumtp,sumpos)

@@ -1,5 +1,5 @@
 --夢幻崩界イヴリース
---Destroymare Iblee
+--Knightmare Corruptor Iblee
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

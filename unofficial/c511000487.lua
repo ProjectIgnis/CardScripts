@@ -29,7 +29,7 @@ function s.desfilter(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local dice=Duel.TossDice(tp,1)
 		if dice==1 then
 			Duel.Damage(tp,tc:GetAttack(),REASON_EFFECT)

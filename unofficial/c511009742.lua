@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst():IsControler(tp) and eg:GetFirst():IsDrone() and Duel.GetAttackTarget()==nil 
+	return ep~=tp and eg:GetFirst():IsControler(tp) and eg:GetFirst():IsDrone() and Duel.GetAttackTarget()==nil
 		and not eg:GetFirst():IsCode(id) and not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

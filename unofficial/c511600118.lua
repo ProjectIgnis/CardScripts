@@ -24,9 +24,9 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for ec in aux.Next(eg) do
 		if ec:IsPreviousLocation(LOCATION_MZONE) then
-			if ec:IsPreviousControler(0) then 
+			if ec:IsPreviousControler(0) then
 				Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
-			else 
+			else
 				Duel.RegisterFlagEffect(1,id,RESET_PHASE+PHASE_END,0,1)
 			end
 		end

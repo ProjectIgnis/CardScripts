@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
-	e1:SetTarget(s.target)  
+	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--Activate from hand
@@ -77,7 +77,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsAttribute(att) then
 			e1:SetValue(2*tc:GetAttack())
 		else
-			if tc:GetAttack()~=0 then g:AddCard(tc) end
+			if tc:GetAttack()~=0 then
+				g:AddCard(tc)
+			end
 			e1:SetValue(0)
 		end
 		tc:RegisterEffect(e1)

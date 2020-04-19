@@ -1,7 +1,6 @@
 --パラドクス・ハイドライブ・アトラース
 --Paradox Hydradrive Atlas
---Scripted by Playmaker 772211
---Updated and Fixed by Larry126
+--Scripted by Playmaker 772211, updated and fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -102,11 +101,8 @@ end
 function s.val(e,c)
 	return e:GetHandler():GetAttribute()
 end
-function s.filter(c,att)
-	return c:IsFaceup() and c:IsAttribute(att)
-end
 function s.con(e)
-	return Duel.IsExistingMatchingCard(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler(),e:GetHandler():GetAttribute())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttribute,e:GetHandler():GetAttribute()),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end
 function s.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()

@@ -39,14 +39,6 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
-function s.filter1(c,e)
-	return c:IsOnField() and not c:IsImmuneToEffect(e)
-end
-function s.filter2(c,e,tp,m,f)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x10af) and (not f or f(c))
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,tp)
-end
-
 function s.filter(c)
 	return c:IsFaceup() and c:GetLevel()>0 and c:IsSetCard(0xaf)
 end

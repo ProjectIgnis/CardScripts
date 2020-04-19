@@ -40,7 +40,7 @@ function Duel.MoveToDeckTop(obj)
 		for c in aux.Next(obj:Filter(Card.IsLocation,nil,LOCATION_DECK)) do
 			Duel.MoveSequence(c,SEQ_DECKTOP)
 		end
-	elseif typ=="Card"
+	elseif typ=="Card" then
 		if obj:IsLocation(LOCATION_DECK) then
 			Duel.MoveSequence(obj,SEQ_DECKTOP)
 		end
@@ -57,7 +57,7 @@ function Duel.MoveToDeckBottom(obj)
 		for c in aux.Next(obj:Filter(Card.IsLocation,nil,LOCATION_DECK)) do
 			Duel.MoveSequence(c,SEQ_DECKBOTTOM)
 		end
-	elseif typ=="Card"
+	elseif typ=="Card" then
 		if obj:IsLocation(LOCATION_DECK) then
 			Duel.MoveSequence(obj,SEQ_DECKBOTTOM)
 		end

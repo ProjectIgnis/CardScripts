@@ -36,7 +36,7 @@ function Auxiliary.CheckZonesReleaseSummonCheck(must,oneof,checkfunc)
 end
 function Duel.MoveToDeckTop(obj)
 	local typ=type(obj)
-	f typ=="Group" then
+	if typ=="Group" then
 		for c in aux.Next(obj:Filter(Card.IsLocation,nil,LOCATION_DECK)) do
 			Duel.MoveSequence(c,SEQ_DECKTOP)
 		end

@@ -24,7 +24,7 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if not val or val<2 then return false end
 	local lv=math.min(val-1,6)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,tp,lv) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_LVRANK)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LVRANK)
 	local dlv=Duel.AnnounceLevel(tp,1,lv)
 	Duel.SetTargetParam(dlv)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))

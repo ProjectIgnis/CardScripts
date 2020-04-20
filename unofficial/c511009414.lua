@@ -47,7 +47,7 @@ function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_LVRANK)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LVRANK)
 	local lv=Duel.AnnounceLevel(tp,1,4,e:GetHandler():GetLevel())
 	Duel.SetTargetParam(lv)
 end

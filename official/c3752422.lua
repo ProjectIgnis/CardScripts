@@ -47,7 +47,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return c:GetLevel()>1
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,c) end
 	local p=math.min(c:GetLevel()-1,5)
-	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_LVRANK)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LVRANK)
 	local lv=Duel.AnnounceLevel(tp,1,p)
 	Duel.SetTargetParam(lv)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)

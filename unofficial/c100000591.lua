@@ -33,6 +33,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 				if Duel.GetFlagEffect(tp,100000593)~=0 then ct=ct+1 end
 				if ct>0 and #g>0 then
 					Duel.BreakEffect()
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 					local g2=dg:Select(tp,ct,ct,nil)
 					if #g2>0 then
 						Duel.Destroy(g2,REASON_EFFECT)

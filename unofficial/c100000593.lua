@@ -13,6 +13,7 @@ end
 s.listed_names={100000594,100000595}
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	if c:GetFlagEffect(100000594)~=0 then
 		if Duel.GetCurrentChain()==1 then
 			if Duel.Damage(tp,1000,REASON_EFFECT)==1000 then

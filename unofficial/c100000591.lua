@@ -20,6 +20,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end 
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	if c:GetFlagEffect(100000594)~=0 then
 		if Duel.GetCurrentChain()==1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

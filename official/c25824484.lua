@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
 	else
-		Duel.MoveSequence(tc,1)
+		Duel.MoveToDeckBottom(tc)
 	end
 end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)

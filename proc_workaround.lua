@@ -34,6 +34,35 @@ function Auxiliary.CheckZonesReleaseSummonCheck(must,oneof,checkfunc)
 		return checkfunc(sg+must)>0 and count<2,count>=2
 	end
 end
+function Duel.MoveToDeckTop(obj)
+	local typ=type(obj)
+	if typ=="Group" then
+		for c in aux.Next(obj:Filter(Card.IsLocation,nil,LOCATION_DECK)) do
+			Duel.MoveSequence(c,SEQ_DECKTOP)
+		end
+	elseif typ=="Card" then
+		if obj:IsLocation(LOCATION_DECK) then
+			Duel.MoveSequence(obj,SEQ_DECKTOP)
+		end
+	end
+end
+function Duel.MoveToDeckBottom(obj,tp)
+	local typ=type(obj)
+	if typ=="number" and tp then
+		for i=1,obj do
+			local mg=Duel.GetDecktopGroup(tp,1)
+			Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)
+		end
+	elseif typ=="Group" then
+		for c in aux.Next(obj:Filter(Card.IsLocation,nil,LOCATION_DECK)) do
+			Duel.MoveSequence(c,SEQ_DECKBOTTOM)
+		end
+	elseif typ=="Card" then
+		if obj:IsLocation(LOCATION_DECK) then
+			Duel.MoveSequence(obj,SEQ_DECKBOTTOM)
+		end
+	end
+end
 function Duel.CheckReleaseGroupSummon(c,tp,e,fil,minc,maxc,last,...)
 	local zone=0xff
 	local params={...}

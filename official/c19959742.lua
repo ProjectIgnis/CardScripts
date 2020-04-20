@@ -1,4 +1,5 @@
 --リチュア・シェルフィッシュ
+--Gishki Mollusk
 local s,id=GetID()
 function s.initial_effect(c)
 	--confirm
@@ -17,9 +18,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return end
 	Duel.SortDecktop(tp,tp,3)
 	if Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))==1 then
-		for i=1,3 do
-			local mg=Duel.GetDecktopGroup(tp,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
-		end
+		Duel.MoveToDeckBottom(ct,tp)
 	end
 end

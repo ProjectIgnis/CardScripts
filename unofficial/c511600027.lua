@@ -57,11 +57,8 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
 		end
 		local ac=6-#tg
-		Duel.SortDecktop(tp,tp,ac)
-		for i=1,ac do
-			local mg=Duel.GetDecktopGroup(tp,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
-		end
+		Duel.MoveToDeckbottom(ac,tp)
+		Duel.SortDeckbottom(tp,tp,ac)
 	end
 end
 function s.spfilter(c,e,tp)

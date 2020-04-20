@@ -1,4 +1,5 @@
 --ダーク・ドリアード
+--Dark Doriado
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -46,34 +47,70 @@ function s.value(e,c)
 	end
 	return ct*200
 end
+function s.spfilter(c)
+	return c:IsType(TYPE_MONSTER) and (c:IsAttribute(ATTRIBUTE_EARTH) or c:IsAttribute(ATTRIBUTE_WATER)
+				or c:IsAttribute(ATTRIBUTE_FIRE) or  c:IsAttribute(ATTRIBUTE_WIND))
+end
+function s.get_series(c)
+	local res={}
+	if c:IsAttribute(ATTRIBUTE_EARTH) then table.insert(res,1) end
+	if c:IsAttribute(ATTRIBUTE_WATER) then table.insert(res,2) end
+	if c:IsAttribute(ATTRIBUTE_FIRE)  then table.insert(res,4) end
+	if c:IsAttribute(ATTRIBUTE_WIND)  then table.insert(res,8) end
+	return res
+end
+function s.rescon(c,sg,arch_tab)
+	local arch_lst=s.get_series(c)
+	for _,ar in ipairs(arch_lst) do
+		for __,chk in ipairs(arch_tab) do
+			if (ar&chk)==0 then
+				return true
+			end
+		end
+	end
+	return false
+end
 function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_EARTH)
-		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_WATER)
-		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_FIRE)
-		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_WIND) end
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil)
+	if chk==0 then return #g>=4 and g:IsExists(s.rescon,1,nil,Group.CreateGroup(),{0}) end
+end
+function update_table(global_table,c)
+	local tmp_table={}
+	local arch_lst=s.get_series(c)
+	for _,ar in ipairs(arch_lst) do
+		for __,chk in ipairs(global_table) do
+			if (ar&chk)==0 then
+				table.insert(tmp_table,ar|chk)
+			end
+		end
+	end
+	return tmp_table
 end
 function s.stop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_EARTH)
-		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_WATER)
-		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_FIRE)
-		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_WIND) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local g1=Duel.SelectMatchingCard(tp,Card.IsAttribute,tp,LOCATION_DECK,0,1,1,nil,ATTRIBUTE_EARTH)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local g2=Duel.SelectMatchingCard(tp,Card.IsAttribute,tp,LOCATION_DECK,0,1,1,nil,ATTRIBUTE_WATER)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local g3=Duel.SelectMatchingCard(tp,Card.IsAttribute,tp,LOCATION_DECK,0,1,1,nil,ATTRIBUTE_FIRE)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local g4=Duel.SelectMatchingCard(tp,Card.IsAttribute,tp,LOCATION_DECK,0,1,1,nil,ATTRIBUTE_WIND)
-		g1:Merge(g2)
-		g1:Merge(g3)
-		g1:Merge(g4)
-		Duel.ConfirmCards(1-tp,g1)
-		Duel.ShuffleDeck(tp)
-		local tc=g1:GetFirst()
-		for tc in aux.Next(g1) do
-			Duel.MoveSequence(tc,0)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil)
+	if #g>=4 and g:IsExists(s.rescon,1,nil,Group.CreateGroup(),{0}) then
+		local sg=Group.CreateGroup()
+		local arch_tab={0}
+		while #sg<4 do
+			local mg=g:Filter(s.rescon,sg,sg,arch_tab)
+			if #mg==0 then break end
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+			local tc=mg:SelectUnselect(sg,tp,false,false,4,4)
+			if not tc then break end
+			if sg:IsContains(tc) then
+				sg:RemoveCard(tc)
+				arch_tab={0}
+				for card in aux.Next(sg) do
+					arch_tab=update_table(arch_tab,card)
+				end
+			else
+				sg:AddCard(tc)
+				arch_tab=update_table(arch_tab,tc)
+			end		
 		end
+		Duel.ConfirmCards(1-tp,sg)
+		Duel.ShuffleDeck(tp)
+		Duel.MoveToDeckTop(sg)
 		Duel.SortDecktop(tp,tp,4)
 	end
 end

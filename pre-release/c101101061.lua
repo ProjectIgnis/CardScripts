@@ -46,11 +46,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local ac=ct-db
 	if ac>0 then
-		Duel.SortDecktop(tp,tp,ac)
-		for i=1,ac do
-			local mg=Duel.GetDecktopGroup(tp,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
-		end
+		Duel.MoveToDeckbottom(ac,tp)
+		Duel.SortDeckbottom(tp,tp,ac)
 	end
 	--Cannot special summon monsters, except rock monsters, for rest of the turn
 	local e1=Effect.CreateEffect(e:GetHandler())

@@ -27,9 +27,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.DisableShuffleCheck()
 		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_REVEAL)
 	end
-	Duel.SortDecktop(tp,tp,5-#sg)
-	for i=1,5-#sg do
-		local mg=Duel.GetDecktopGroup(tp,1)
-		Duel.MoveSequence(mg:GetFirst(),1)
-	end
+	Duel.MoveToDeckBottom(5-#sg,tp)
+	Duel.SortDeckbottom(tp,tp,5-#sg)
 end

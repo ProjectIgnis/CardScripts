@@ -1,5 +1,5 @@
 --ダーク・オカルティズム
---Dark Occultism
+--Dark Spirit's Mastery
 --Scripted by Larry126s
 local s,id=GetID()
 function s.initial_effect(c)
@@ -63,14 +63,11 @@ function s.tdrop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,g:GetClassCount(Card.GetCode),s.rescon,1,tp,HINTMSG_TODECK)
 	Duel.ConfirmCards(1-tp,sg)
-	Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
-	local ct=#Duel.GetOperatedGroup()
+	Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+	local og=Duel.GetOperatedGroup()
+	local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_DECK)
 	if ct>0 then
-		Duel.SortDecktop(tp,tp,ct)
-		for i=1,ct do
-			local mg=Duel.GetDecktopGroup(tp,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
-		end
+		Duel.SortDeckbottom(tp,tp,ct)
 		Duel.BreakEffect()
 		Duel.Draw(tp,ct,REASON_EFFECT)
 	end

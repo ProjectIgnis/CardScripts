@@ -1,4 +1,5 @@
 --コザッキーの研究成果
+--Fruits of Kozaky's Studies
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,4 @@
---Spacetime Trancendency
+--Spacetime Transcendence
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,8 +29,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		return aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon,0) end
-	local rg=aux.SelectUnselectGroup(mg,e,tp,nil,nil,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon)
+		return aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon,0)
+	end
+	local rg=aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon)
 	Duel.SetTargetParam(#rg)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)

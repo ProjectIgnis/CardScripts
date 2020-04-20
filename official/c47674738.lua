@@ -54,8 +54,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		ac=ac-1
 	end
 	if ac>0 then
-		Duel.SortDecktop(tp,tp,ac)
-		Duel.MoveToDeckBottom(ac)
+		Duel.MoveToDeckBottom(ac,tp)
+		Duel.SortDeckbottom(tp,tp,ac)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

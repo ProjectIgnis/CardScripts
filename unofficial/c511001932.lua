@@ -34,11 +34,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(tp,2,2,nil)
 		sg:AddCard(tc)
 		Duel.ShuffleDeck(tp)
-		local sgc=sg:GetFirst()
-		while sgc do
-			Duel.MoveSequence(sgc,0)
-			sgc=sg:GetNext()
-		end
-		Duel.SortDecktop(tp,tp,3)
+		Duel.MoveToDeckTop(sg)
+		Duel.SortDecktop(tp,tp,#sg)
 	end
 end

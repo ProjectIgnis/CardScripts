@@ -46,9 +46,9 @@ function Duel.MoveToDeckTop(obj)
 		end
 	end
 end
-function Duel.MoveToDeckBottom(obj)
+function Duel.MoveToDeckBottom(obj,tp)
 	local typ=type(obj)
-	if typ=="number" then
+	if typ=="number" and tp then
 		for i=1,obj do
 			local mg=Duel.GetDecktopGroup(tp,1)
 			Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)

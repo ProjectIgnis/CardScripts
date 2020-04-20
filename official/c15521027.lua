@@ -104,5 +104,5 @@ function s.opd(e,tp,eg,ep,ev,re,r,rp)
 	local op=Duel.SelectOption(tp,aux.Stringid(id,3),aux.Stringid(id,4))
 	Duel.SortDecktop(tp,tp,ct)
 	if op==0 then return end
-	Duel.MoveToDeckBottom(ct)
+	Duel.MoveToDeckBottom(ct,tp)
 end

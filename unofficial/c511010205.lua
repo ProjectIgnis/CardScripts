@@ -148,7 +148,7 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,0,LOCATION_REMOVED,nil,e:GetLabelObject())
-	local ct=Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+	local ct=Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 	if ct>0 then
 		Duel.SortDecktop(tp,1-tp,ct)
 		g:ForEach(function(tc)

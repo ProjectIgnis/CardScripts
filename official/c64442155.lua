@@ -1,5 +1,5 @@
 --慈悲深き機械天使
---The Merciful Machine Angel
+--Merciful Machine Angel
 --scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -39,16 +39,11 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
-		local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,LOCATION_HAND,0,nil)
-		if #g==0 then return end
-		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-		local sg=g:Select(p,1,1,nil)
-		Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
-		Duel.SortDecktop(p,p,1)
-		for i=1,1 do
-			local mg=Duel.GetDecktopGroup(p,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
-		end
+	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,LOCATION_HAND,0,nil)
+	if #g==0 then return end
+	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
+	local sg=g:Select(p,1,1,nil)
+	Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)

@@ -43,15 +43,6 @@ function s.get_series(c)
 	if c:IsSetCard(0x8f) then table.insert(res,8) end
 	return res
 end
-function bitsplit(n)
-	local t={}
-	if n>7 then n=n-8 table.insert(t,8) end
-	if n>3 then n=n-4 table.insert(t,4) end
-	if n>1 then n=n-2 table.insert(t,2) end
-	if n>0 then n=n-1 table.insert(t,1) end
-	table.sort(t)
-	return t
-end
 function s.rescon(c,sg,arch_tab,e,tp,mg)
 	if not aux.ChkfMMZ(#sg)(sg,e,tp,mg) then return false end
 	local arch_lst=s.get_series(c)

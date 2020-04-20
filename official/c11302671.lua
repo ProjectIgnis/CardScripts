@@ -61,7 +61,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local ac=5-ct
 	if ac>0 then
-		Duel.MoveToDeckBottom(ac)
+		Duel.MoveToDeckBottom(ac,tp)
 		Duel.SortDeckbottom(tp,tp,ac)
 	end
 end

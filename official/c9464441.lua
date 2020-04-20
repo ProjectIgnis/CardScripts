@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,0,1-tp,LOCATION_ONFIELD)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
+	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<5 then return end
 	Duel.ConfirmDecktop(tp,5)
 	local hg=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,nil)
 	local g=Duel.GetDecktopGroup(tp,5)
@@ -48,11 +48,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.DisableShuffleCheck()
 	end
-	Duel.SortDecktop(tp,tp,5)
-	for i=1,5 do
-		local mg=Duel.GetDecktopGroup(tp,1)
-		Duel.MoveSequence(mg:GetFirst(),1)
-	end
+	Duel.MoveToDeckbottom(5,tp)
+	Duel.SortDeckbottom(tp,tp,5)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)

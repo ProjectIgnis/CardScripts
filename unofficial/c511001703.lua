@@ -1,4 +1,4 @@
---Hanazumi
+--Flower Stacking (anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--arrange
@@ -24,12 +24,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=#g
 	if ct>0 then
 		Duel.ShuffleDeck(tp)
-		local tc=g:GetFirst()
-		while tc do
-			Duel.MoveSequence(tc,0)
-			tc=g:GetNext()
-		end
-		Duel.ConfirmDecktop(tp,ct)
+		Duel.MoveToDeckTop(g)
 		Duel.SortDecktop(tp,tp,ct)
 	end
 end

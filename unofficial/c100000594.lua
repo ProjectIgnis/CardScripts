@@ -65,7 +65,7 @@ function s.faop(e,tp,eg,ep,ev,re,r,rp)
 	if te and te:GetCode()==EVENT_FREE_CHAIN and te:IsActivatable(tep)
 		and (not tc:IsType(TYPE_SPELL) or tc:IsType(TYPE_QUICKPLAY)) then
 		Duel.Activate(te)
-	else
+	end
 	e:Reset()
 end
 function s.infcon(e,tp,eg,ep,ev,re,r,rp)

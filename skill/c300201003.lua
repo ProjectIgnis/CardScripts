@@ -82,7 +82,8 @@ Duel.Draw = function(...)
 		local g=Duel.SelectMatchingCard(tp,LOCATION_DECK,0,tp,count,count)
 		Duel.SendToHand(g,tp,REASON_EFFECT)
 		Duel.RegisterFlagEffect(tp,id+1,0,0,0)
+		return 0
 	else
-		ddr(...)
+		return ddr(...)
 	end
 end

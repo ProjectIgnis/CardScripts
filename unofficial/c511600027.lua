@@ -57,7 +57,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
 		end
 		local ac=6-#tg
-		Duel.MoveToDeckbottom(ac,tp)
+		Duel.MoveToDeckBottom(ac,tp)
 		Duel.SortDeckbottom(tp,tp,ac)
 	end
 end

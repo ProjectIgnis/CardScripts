@@ -48,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.DisableShuffleCheck()
 	end
-	Duel.MoveToDeckbottom(5,tp)
+	Duel.MoveToDeckBottom(5,tp)
 	Duel.SortDeckbottom(tp,tp,5)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)

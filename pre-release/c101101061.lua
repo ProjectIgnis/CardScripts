@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local ac=ct-db
 	if ac>0 then
-		Duel.MoveToDeckbottom(ac,tp)
+		Duel.MoveToDeckBottom(ac,tp)
 		Duel.SortDeckbottom(tp,tp,ac)
 	end
 	--Cannot special summon monsters, except rock monsters, for rest of the turn

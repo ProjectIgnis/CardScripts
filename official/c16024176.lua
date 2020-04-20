@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--spsummon from hand
+	--special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.hsptg)
 	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_CARDIAN)
-	--draw(spsummon)
+	--draw and special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_SPECIAL_SUMMON)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	--draw(battle)
+	--draw during battle
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -71,9 +71,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.BreakEffect()
 		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
-			if tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-				and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-				and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 			end
 		else

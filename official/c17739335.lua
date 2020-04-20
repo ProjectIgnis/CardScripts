@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x129),2)
-  	--effect gain
+	--effect gain
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
@@ -93,7 +93,7 @@ function s.ngtfilt(c,e)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local lg=e:GetHandler():GetLinkedGroup()
-	Duel.Hint(HINT_SELECTMSG,tp,560)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 	--!system 560 Select
 	local g=Duel.SelectMatchingCard(tp,s.ngtfilt,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,e,lg)
 	if #g>0 then

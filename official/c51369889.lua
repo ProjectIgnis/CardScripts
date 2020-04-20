@@ -52,11 +52,11 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			return false
 		end
 	end
-	Duel.Hint(HINT_SELECTMSG,tp,519)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)
 	local rt=Duel.GetTargetCount(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 	Duel.RemoveOverlayCard(tp,0,0,1,rt,REASON_COST,dg)
 	local count=#Duel.GetOperatedGroup()
-	Duel.Hint(HINT_SELECTMSG,tp,551)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
 	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,count,count,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
@@ -96,4 +96,3 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
-

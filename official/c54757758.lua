@@ -1,6 +1,5 @@
 --沼地のドロゴン
 --Mudragon of the Swamp
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -23,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tglimit)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-	--att change
+	--change attribute
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_QUICK_O)
@@ -42,7 +41,7 @@ function s.tglimit(e,c)
 end
 function s.atttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,563)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
 	local aat=Duel.AnnounceAttribute(tp,1,0xff-e:GetHandler():GetAttribute())
 	e:SetLabel(aat)
 end

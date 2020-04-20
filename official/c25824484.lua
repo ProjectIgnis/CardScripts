@@ -49,7 +49,7 @@ function s.sdop(e,tp,eg,ep,ev,re,r,rp)
 	if ct==0 then return end
 	local ac=1
 	if ct>1 then
-		Duel.Hint(HINGMSG_NUMBER,tp,HINT_NUMBER)
+		Duel.Hint(HINTMSG_NUMBER,tp,HINT_NUMBER)
 		if ct==2 then ac=Duel.AnnounceNumber(tp,1,2)
 		else ac=Duel.AnnounceNumber(tp,1,2,3) end
 	end

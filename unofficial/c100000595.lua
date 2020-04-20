@@ -63,7 +63,7 @@ function s.inftg(e,tp,eg,ep,ev,re,rs,rp,chk)
 		--find furthest "Zero" for maximum number of potential activated cards
 		local left=c:GetSequence()
 		local ic=ig:GetMaxGroup(function(oc,seq)return math.abs(oc:GetSequence()-seq)end,left)
-		if not ic then return false
+		if not ic then return false end
 		local right=ic:GetSequence()
 		if left>right then left,right=right,left end
 		return Duel.IsExistingMatchingCard(s.infacfilter,tp,LOCATION_SZONE,0,1,nil,left,right)

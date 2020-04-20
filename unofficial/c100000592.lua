@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={100000594,100000595}
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
+function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetFlagEffect(100000594)~=0 then
 		if Duel.GetCurrentChain()==1 then

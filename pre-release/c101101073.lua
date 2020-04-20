@@ -31,11 +31,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 				and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil)
 		else return false end
 	end
-	Duel.Hint(HINT_SELECTMSG,tp,519)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)
 	local rt=Duel.GetTargetCount(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,nil)
 	Duel.RemoveOverlayCard(tp,0,0,1,rt,REASON_COST,dg)
 	local count=#Duel.GetOperatedGroup()
-	Duel.Hint(HINT_SELECTMSG,tp,551)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,count,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 	e:SetLabel(count)

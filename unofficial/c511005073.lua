@@ -70,7 +70,7 @@ function s.solvop(e,tp,eg,ep,ev,re,r,rp)
 	local val=e:GetLabel()
 	if val>0 then
 		Duel.Damage(tp,val,REASON_EFFECT)
-		Duel.Hint(HINT_SELECTMSG,tp,502)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local tc=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 		if tc then Duel.Destroy(tc,REASON_EFFECT) end
 		elseif val<0 then

@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.hdcon)
 	e1:SetTarget(s.hdtg)
 	e1:SetOperation(s.hdop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--discard
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -55,7 +55,12 @@ function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(Card.IsDiscardable,tp,LOCATION_HAND,0,nil,REASON_EFFECT)
 	if ct==0 then return end
 	local sel
-	if ct<2 then sel=1 else Duel.Hint(HINT_SELECTMSG,tp,565) sel=Duel.AnnounceNumber(tp,1,2) end
+	if ct<2 then
+		sel=1
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NUMBER)
+		sel=Duel.AnnounceNumber(tp,1,2)
+	end
 	local g1=Duel.GetMatchingGroup(Card.IsDiscardable,tp,LOCATION_HAND,0,nil,REASON_EFFECT):RandomSelect(tp,sel)
 	local rt=Duel.SendtoGrave(g1,REASON_EFFECT+REASON_DISCARD)
 	if rt==0 or rt>Duel.GetMatchingGroupCount(Card.IsDiscardable,tp,0,LOCATION_HAND,nil,REASON_EFFECT) then return end

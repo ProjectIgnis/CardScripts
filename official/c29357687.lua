@@ -58,7 +58,7 @@ end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,560)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	if Duel.GetCurrentPhase()==PHASE_STANDBY then
 		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,EFFECT_FLAG_OATH,2,Duel.GetTurnCount())
@@ -109,7 +109,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local g=c:GetLinkedGroup()
 	if #g>0 then
-		if #g>1 then 
+		if #g>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			g=g:Select(tp,1,1,nil)
 		end

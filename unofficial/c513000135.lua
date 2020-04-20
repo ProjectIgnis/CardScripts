@@ -1,8 +1,6 @@
 --The God of Obelisk
 --マイケル・ローレンス・ディーによってスクリプト
---scripted by MLD
---credit to TPD & Cybercatman
---updated by Larry126
+--scripted by MLD, credits to TPD & Cybercatman, updated by Larry126
 Duel.LoadScript("c421.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -128,7 +126,6 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectReleaseGroupCost(tp,nil,2,2,false,nil,c)
 	Duel.Release(g,REASON_COST)
 end
------------------------------------------------------------------
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
@@ -139,7 +136,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,e:GetHandler():GetAttack(),REASON_EFFECT)
 	Duel.Destroy(Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil),REASON_EFFECT)
 end
------------------------------------------------------------------
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
 		and e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
@@ -168,14 +164,14 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		if direct and (#ag<=0 or (#ag>0 and Duel.SelectYesNo(tp,31))) then
 			Duel.CalculateDamage(c,nil)
 		else
-			Duel.Hint(HINT_SELECTMSG,tp,549)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACKTARGET)
 			Duel.CalculateDamage(c,ag:Select(tp,1,1,nil):GetFirst())
 		end
 	end
 end
 function s.adval(e,c)
 	local g=Duel.GetMatchingGroup(nil,0,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
-	if #g==0 then 
+	if #g==0 then
 		return 9999999
 	else
 		local tg,val=g:GetMaxGroup(Card.GetAttack)
@@ -187,7 +183,7 @@ function s.adval(e,c)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetAttack()>=9999999
+	return ep==1-tp and e:GetHandler():GetAttack()>=9999999
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,Duel.GetLP(ep)*100)

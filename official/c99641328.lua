@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct>5 then ct=5 end
 	local t={}
 	for i=1,ct do t[i]=i end
-	Duel.Hint(HINGMSG_NUMBER,tp,HINT_NUMBER)
+	Duel.Hint(HINTMSG_NUMBER,tp,HINT_NUMBER)
 	local ac=Duel.AnnounceNumber(tp,table.unpack(t))
 	Duel.ConfirmDecktop(tp,ac)
 	local g=Duel.GetDecktopGroup(tp,ac)
@@ -65,7 +65,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

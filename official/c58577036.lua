@@ -16,15 +16,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanSpecialSummon(tp) or not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
-	Duel.Hint(HINT_SELECTMSG,1-tp,HINGMSG_LVRANK)
+	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_LVRANK)
 	local lv=Duel.AnnounceLevel(1-tp)
 	local g=Duel.GetMatchingGroup(Card.IsSummonableCard,tp,LOCATION_DECK,0,nil)
 	local dcount=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	local seq=-1
-	local tc=g:GetFirst()
 	local spcard=nil
 	for tc in aux.Next(g) do
-		if tc:GetSequence()>seq then 
+		if tc:GetSequence()>seq then
 			seq=tc:GetSequence()
 			spcard=tc
 		end

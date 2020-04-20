@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		end
 	end
 	t[p]=nil
-	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_LVRANK)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LVRANK)
 	Duel.SetTargetParam(Duel.AnnounceNumber(tp,table.unpack(t)))
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

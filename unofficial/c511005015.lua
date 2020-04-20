@@ -15,7 +15,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(Card.CanAttack,tp,LOCATION_MZONE,0,1,nil) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,524)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWNATTACK)
 	local ac=Duel.SelectMatchingCard(tp,Card.CanAttack,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	local tc=nil
 	local tg_ok=Duel.IsExistingMatchingCard(Card.IsCanBeBattleTarget,tp,0,LOCATION_MZONE,1,nil,ac)
@@ -26,7 +26,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if direct_ok then
 		Duel.Damage(1-tp,ac:GetAttack(),REASON_BATTLE)
 	elseif tg_ok then
-		Duel.Hint(HINT_SELECTMSG,tp,525)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWNDEFENSE)
 		tc=Duel.SelectMatchingCard(tp,Card.IsCanBeBattleTarget,tp,0,LOCATION_MZONE,1,1,nil,ac):GetFirst()
 		Duel.CalculateDamage(ac,tc)
 	end

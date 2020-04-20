@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--to deck
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(511001629,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetCondition(s.con)
@@ -14,8 +14,7 @@ function s.initial_effect(c)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_DECK) and r&REASON_EFFECT~=0
-		and c:IsPreviousControler(tp)
+	return c:IsPreviousLocation(LOCATION_DECK) and r&REASON_EFFECT~=0 and c:IsPreviousControler(tp)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -55,11 +54,10 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()  
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)
 	if #g<=0 then return end
-	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local te=tc:GetActivateEffect()
 		if tc:GetFlagEffect(id)==0 and te then
 			local e1=Effect.CreateEffect(tc)
@@ -89,16 +87,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e1)
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
-		tc=g:GetNext()
 	end
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local te=c:GetActivateEffect()
 	local condition=te:GetCondition()
-	return (not condition or condition(te,tp,eg,ep,ev,re,r,rp)) 
-		and Duel.GetFlagEffect(tp,id)>0
-		and not e:GetHandler():IsStatus(STATUS_CHAINING)
+	return (not condition or condition(te,tp,eg,ep,ev,re,r,rp)) and Duel.GetFlagEffect(tp,id)>0 and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -114,8 +109,11 @@ function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	c:CreateEffectRelation(te)
 	if target then target(te,tp,eg,ep,ev,re,r,rp,1) end
-	for tc in aux.Next(Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)) do
-		tc:CreateEffectRelation(te)   
+	local ig=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	if ig and #ig>0 then
+		for tc in aux.Next(ig) do
+			tc:CreateEffectRelation(te)
+		end
 	end
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)

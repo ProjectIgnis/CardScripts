@@ -78,7 +78,7 @@ function s.infop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local left=c:GetSequence()
-	local Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local ic=Duel.SelectMatchingCard(tp,s.acinffilter,tp,LOCATION_SZONE,0,1,nil,left,tp):GetFirst()
 	if not ic then return end
 	local right=ic:GetSequence()

@@ -1,128 +1,96 @@
 --虚無
 --Zero
+--Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1)
+    local e1=Effect.CreateEffect(c)
+    e1:SetType(EFFECT_TYPE_ACTIVATE)
+    e1:SetCode(EVENT_FREE_CHAIN)
+    c:RegisterEffect(e1)
+	--Activate 1 Set Trap
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(511001283)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCondition(s.actcon)
+	e2:SetTarget(s.acttg)
+	e2:SetOperation(s.actop)
 	c:RegisterEffect(e2)
+	--Activate between Infinity
+	local e3=e2:Clone()
+	e3:SetCondition(s.infcon)
+	e3:SetTarget(s.inftg)
+	e3:SetOperation(s.infop)
+	c:RegisterEffect(e3)
 end
-s.listed_names={id+1}
-function s.cfilter(c)
-	return not c:IsHasEffect(511001283) and s.filter(c)
+s.listed_names={100000590,100000595}
+s.darkfilter=aux.FilterFaceupFunction(Card.IsCode,100000590)
+s.inffilter=aux.FilterFaceupFunction(Card.IsCode,100000595)
+function s.actcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(s.darkfilter,tp,LOCATION_ONFIELD,0,1,nil) 
+		and not Duel.IsExistingMatchingCard(s.inffilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
-function s.filter(c)
-	return c:IsFacedown() and c:CheckActivateEffect(true,true,false)~=nil
+function s.actfilter(c)
+	return c:IsFacedown() and c:GetSequence()<5 and c:CheckActivateEffect()
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,1,e:GetHandler()) end
+function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_SZONE,0,1,nil) end
 end
-function s.allfilter(c)
-	return c:IsFaceup() and c:IsCode(id+1)
+function s.actop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	local ac=Duel.SelectMatchingCard(s.actfilter,tp,LOCATION_SZONE,0,1,1,nil):GetFirst()
+	if ac then
+		ae=ac:CheckActivateEffect()
+		if ae then
+			Duel.Activate(ae)
+		end
+	end
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(tp,100000590,RESET_CHAIN,0,1)
-	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,1,e:GetHandler()) then return end
-	if Duel.IsExistingMatchingCard(s.allfilter,tp,LOCATION_SZONE,0,1,nil) then
-		local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_SZONE,0,e:GetHandler())
-		Duel.ChangePosition(sg,POS_FACEUP)
-		local tc=sg:GetFirst()
-		while tc do
-			local tpe=tc:GetType()
-			local te=tc:GetActivateEffect()
-			local tg=te:GetTarget()
-			local co=te:GetCost()
-			local op=te:GetOperation()
-			e:SetCategory(te:GetCategory())
-			e:SetProperty(te:GetProperty())
-			Duel.ClearTargetCard()
-			if (tpe&TYPE_FIELD)~=0 then
-				local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-				if Duel.IsDuelType(DUEL_OBSOLETE_RULING) then
-					if fc then Duel.Destroy(fc,REASON_RULE) end
-					fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-					if fc and Duel.Destroy(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
-				else
-					fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-					if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
-				end
-			end
-			Duel.Hint(HINT_CARD,0,tc:GetCode())
-			tc:CreateEffectRelation(te)
-			if (tpe&TYPE_EQUIP+TYPE_CONTINUOUS+TYPE_FIELD)==0 and not tc:IsHasEffect(EFFECT_REMAIN_FIELD) then
-				tc:CancelToGrave(false)
-			end
-			if co then co(te,tp,eg,ep,ev,re,r,rp,1) end
-			if tg then tg(te,tp,eg,ep,ev,re,r,rp,1) end
-			Duel.BreakEffect()
-			local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-			if g then
-				local etc=g:GetFirst()
-				while etc do
-					etc:CreateEffectRelation(te)
-					etc=g:GetNext()
-				end
-			end
-			if op then op(te,tp,eg,ep,ev,re,r,rp) end
-			tc:ReleaseEffectRelation(te)
-			if etc then	
-				etc=g:GetFirst()
-				while etc do
-					etc:ReleaseEffectRelation(te)
-					etc=g:GetNext()
-				end
-			end
-			tc=sg:GetNext()
-		end
-	else
-		local tc=Duel.GetMatchingGroup(s.filter,tp,LOCATION_SZONE,0,e:GetHandler()):RandomSelect(tp,1):GetFirst()
-		local tpe=tc:GetType()
-		local te=tc:GetActivateEffect()
-		local tg=te:GetTarget()
-		local co=te:GetCost()
-		local op=te:GetOperation()
-		e:SetCategory(te:GetCategory())
-		e:SetProperty(te:GetProperty())
-		Duel.ClearTargetCard()
-		if (tpe&TYPE_FIELD)~=0 then
-			local of=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-			if of then Duel.Destroy(of,REASON_RULE) end
-			of=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-			if of and Duel.Destroy(of,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
-		end
-		Duel.ChangePosition(tc,POS_FACEUP)
-		Duel.Hint(HINT_CARD,0,tc:GetCode())
-		tc:CreateEffectRelation(te)
-		if (tpe&TYPE_EQUIP+TYPE_CONTINUOUS+TYPE_FIELD)==0 then
-			tc:CancelToGrave(false)
-		end
-		if co then co(te,tp,eg,ep,ev,re,r,rp,1) end
-		if tg then tg(te,tp,eg,ep,ev,re,r,rp,1) end
-		Duel.BreakEffect()
-		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-		if g then
-			local etc=g:GetFirst()
-			while etc do
-				etc:CreateEffectRelation(te)
-				etc=g:GetNext()
-			end
-		end
-		if op then op(te,tp,eg,ep,ev,re,r,rp) end
-		tc:ReleaseEffectRelation(te)
-		if etc then	
-			etc=g:GetFirst()
-			while etc do
-				etc:ReleaseEffectRelation(te)
-				etc=g:GetNext()
-			end
-		end
+function s.infcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(s.darkfilter,tp,LOCATION_ONFIELD,0,1,nil) 
+		and Duel.IsExistingMatchingCard(s.inffilter,tp,LOCATION_ONFIELD,0,1,nil)
+end
+function s.infacfilter(c,left,right)
+	local seq=c:GetSequence()
+	return c:IsFacedown() and left<seq and seq<right and c:CheckActivateEffect()
+end
+function s.inftg(e,tp,eg,ep,ev,re,rs,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then
+		local ig=Duel.GetMatchingGroup(s.inffilter,tp,LOCATION_SZONE,0,nil)
+		--find furthest "Infinity" for maximum number of potential activated cards
+		local left=c:GetSequence()
+		local ic=ig:GetMaxGroup(function(oc,seq)return math.abs(oc:GetSequence()-seq)end,left)
+		if not ic then return false
+		local right=ic:GetSequence()
+		if left>right then left,right=right,left end
+		return Duel.IsExistingMatchingCard(s.infacfilter,tp,LOCATION_SZONE,0,1,nil,left,right)
+	end
+end
+function s.acinffilter(c,left,tp)
+	local right=c:GetSequence()
+	if left>right then left,right=right,left end
+	return c:IsFaceup() and c:IsCode(100000595) and Duel.IsExistingMatchingCard(s.infacfilter,tp,LOCATION_SZONE,0,1,nil,left,right)
+end
+function s.infop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	local left=c:GetSequence()
+	local Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local ic=Duel.SelectMatchingCard(tp,s.acinffilter,tp,LOCATION_SZONE,0,1,nil,left,tp):GetFirst()
+	if not ic then return end
+	local right=ic:GetSequence()
+	if left>right then left,right=right,left end
+	local ag=Duel.GetMatchingGroup(s.infacfilter,tp,LOCATION_SZONE,0,nil,left,right)
+	while #ag>0 do
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
+		local tg=ag:Select(tp,1,1,nil)
+		ag:Sub(tg)
+		local ac=tg:GetFirst()
+		local ae=ac:CheckActivateEffect()
+		ac:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,0)
+		Duel.Activate(ae)
 	end
 end

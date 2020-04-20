@@ -15,7 +15,6 @@ function s.initial_effect(c)
 	e2:SetCondition(s.con)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
-	
 	--reset flag when "Line World" leaves field
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -26,13 +25,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={511005032}
-
-function s.Worldfilter(c)
-	return c:IsFaceup() and c:IsCode(511005032)
-end
-function s.filter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:GetOwner()==1-tp
-end
 function s.flagfilter(c)
 	return c:GetFlagEffect(id)~=0
 end

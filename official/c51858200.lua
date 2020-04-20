@@ -3,11 +3,19 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e0)
+	--register when a card leaves the field
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_LEAVE_FIELD_P)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
-	--search
+	--add to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -19,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
+	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 	--fusion summon
 	local params = {nil,aux.FilterBoolFunction(Card.IsSetCard,0xf3)}
@@ -35,11 +44,18 @@ function s.initial_effect(c)
 end
 s.listed_series={0xf3}
 s.counter_list={COUNTER_PREDATOR}
-function s.cfilter(c)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetCounter(COUNTER_PREDATOR)>0
+function s.lvfdfilter(c)
+	return c:IsLocation(LOCATION_MZONE) and c:GetCounter(COUNTER_PREDATOR)>0
+end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	if eg:IsExists(s.lvfdfilter,1,nil) then
+		e:SetLabel(1)
+	else
+		e:SetLabel(0)
+	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil)
+	return e:GetLabelObject():GetLabel()==1
 end
 function s.thfilter(c)
 	return c:IsSetCard(0xf3) and c:IsAbleToHand()

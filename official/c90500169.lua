@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not tc or not tc:IsRelateToEffect(e) or not tc:IsFaceup() then return end
 	if Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)==0 then return end
 	if Duel.GetLocationCount(op,LOCATION_MZONE)<=0 then return end
-	local class=c:GetMetatable(true)
+	local class=tc:GetMetatable(true)
 	if class==nil or class.LVnum==nil or class.LVset==nil then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,op,LOCATION_GRAVE,0,1,1,nil,class,e,tp,op)

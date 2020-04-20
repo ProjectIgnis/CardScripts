@@ -1,4 +1,5 @@
 --超重武者装留チュウサイ
+--Superheavy Samurai Soulpeacemaker
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -50,7 +51,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetLabelObject(tc)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)
-	--spsummon
+	--tribute to special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -78,8 +79,10 @@ function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x9a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local eq=e:GetHandler():GetEquipTarget()
+	if eq and eq:GetSequence()>4 then ft=ft-1 end
+	if chk==0 then return ft>-1 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

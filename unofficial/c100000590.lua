@@ -25,25 +25,26 @@ function c100000590.initial_effect(c)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetOperation(c100000590.setop)
 	c:RegisterEffect(e3)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetRange(LOCATION_FZONE)
+	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e2:SetTargetRange(LOCATION_SZONE,0)
+	e2:SetCode(EFFECT_DARKNESS_HIDE)
+	e2:SetValue(function(e,c) return c:GetFlagEffect(100000590)~=0 end)
+	c:RegisterEffect(e2)
 end
-function c100000590.filter(c,code)
-	return c:IsCode(code) and c:IsSSetable()
+function c100000590.filter(c)
+	return c:IsCode(100000591,100000592,100000593,100000594,100000595) and c:IsSSetable()
 end
 function c100000590.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
 end
 function c100000590.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c100000590.filter,tp,0x03,0,1,nil,100000591)
-		and Duel.IsExistingMatchingCard(c100000590.filter,tp,0x03,0,1,nil,100000592)
-		and Duel.IsExistingMatchingCard(c100000590.filter,tp,0x03,0,1,nil,100000593)
-		and Duel.IsExistingMatchingCard(c100000590.filter,tp,0x03,0,1,nil,100000594)
-		and Duel.IsExistingMatchingCard(c100000590.filter,tp,0x03,0,1,nil,100000595) end
+	if chk==0 then 
+		return Duel.GetMatchingGroup(c100000590.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil):GetClassCount(Card.GetCode)==5 end
 	local g=Duel.GetMatchingGroup(c100000590.desfilter,tp,LOCATION_ONFIELD,0,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
-	
-end
-function c100000590.sfilter(c)
-	return c:IsSSetable() and (c:IsCode(100000591) or c:IsCode(100000592) or c:IsCode(100000593) or c:IsCode(100000594) or c:IsCode(100000595))
 end
 function c100000590.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -53,30 +54,24 @@ function c100000590.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ft<=4 then return end 
 	Duel.BreakEffect()
 	--darkness
-	if Duel.GetMatchingGroupCount(c100000590.filter,tp,0x03,0,nil,100000591)==0 then return end 
-	if Duel.GetMatchingGroupCount(c100000590.filter,tp,0x03,0,nil,100000592)==0 then return end 
-	if Duel.GetMatchingGroupCount(c100000590.filter,tp,0x03,0,nil,100000593)==0 then return end 
-	if Duel.GetMatchingGroupCount(c100000590.filter,tp,0x03,0,nil,100000594)==0 then return end 
-	if Duel.GetMatchingGroupCount(c100000590.filter,tp,0x03,0,nil,100000595)==0 then return end 
-	local sg=Duel.GetMatchingGroup(c100000590.sfilter,tp,0x03,0,nil)
-	local s1=sg:RandomSelect(tp,1):GetFirst()
-	Duel.SSet(tp,s1)
-	sg:Remove(Card.IsCode,nil,s1:GetCode())
-	Duel.BreakEffect()
-	local s2=sg:RandomSelect(tp,1):GetFirst()
-	Duel.SSet(tp,s2)
-	sg:Remove(Card.IsCode,nil,s2:GetCode())
-	Duel.BreakEffect()
-	local s3=sg:RandomSelect(tp,1):GetFirst()
-	Duel.SSet(tp,s3)
-	sg:Remove(Card.IsCode,nil,s3:GetCode())
-	Duel.BreakEffect()
-	local s4=sg:RandomSelect(tp,1):GetFirst()
-	Duel.SSet(tp,s4)
-	sg:Remove(Card.IsCode,nil,s4:GetCode())
-	Duel.BreakEffect()
-	local s5=sg:RandomSelect(tp,1):GetFirst()
-	Duel.SSet(tp,s5)
+	local sg=Duel.GetMatchingGroup(c100000590.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil)
+	if sg:GetClassCount(Card.GetCode)<5 then return end
+	if #sg==5 then
+		sg:ForEach(function(c)c:RegisterFlagEffect(100000590,RESETS_STANDARD-RESET_TOFIELD-RESET_TURN_SET,0,1)end)
+		Duel.SSet(tp,sg)
+	else
+		local setg=Group.CreateGroup()
+		while #setg<5 do
+			local tc=sg:Filter(function(c)return not setg:IsExists(Card.IsCode,nil,1,c:GetCode())end,nil):SelectUnselect(setg,tp)
+			if setg:IsContains(tc) then
+				setg=setg-tc
+			else
+				setg=setg+tc
+			end
+		end
+		setg:ForEach(function(c)c:RegisterFlagEffect(100000590,RESETS_STANDARD-RESET_TOFIELD-RESET_TURN_SET,0,1)end)
+		Duel.SSet(tp,setg)
+	end
 end
 function c100000590.cfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:IsType(TYPE_SPELL+TYPE_TRAP)
@@ -94,10 +89,9 @@ end
 function c100000590.setop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(c100000590.setfilter,tp,LOCATION_ONFIELD,0,nil)
-	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.ChangePosition(tc,POS_FACEDOWN)
 		Duel.RaiseEvent(tc,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
-		tc=g:GetNext()
 	end
+	Duel.ShuffleSetCard(Duel.GetFieldGroup(tp,LOCATION_SZONE,0):Filter(function(c)return c:GetSequence()<5 end,nil))
 end

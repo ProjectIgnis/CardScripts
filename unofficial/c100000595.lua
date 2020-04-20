@@ -32,7 +32,7 @@ function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 		and not Duel.IsExistingMatchingCard(s.zerofilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.actfilter(c)
-	return c:IsFacedown() and c:GetSequence()<5 and c:CheckActivateEffect()
+	return c:IsFacedown() and c:GetSequence()<5
 end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_SZONE,0,1,nil) end
@@ -42,11 +42,31 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local ac=Duel.SelectMatchingCard(s.actfilter,tp,LOCATION_SZONE,0,1,1,nil):GetFirst()
 	if ac then
-		ae=ac:CheckActivateEffect()
-		if ae then
-			Duel.Activate(ae)
-		end
+		--Force activation
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetCode(EVENT_ADJUST)
+		e1:SetCountLimit(1)
+		e1:SetLabelObject(tc)
+		e1:SetCondition(s.facon)
+		e1:SetOperation(s.faop)
+		Duel.RegisterEffect(e1,tp)
 	end
+end
+function s.facon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentChain()==0
+end
+function s.faop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if not tc or tc:IsFaceup() or not tc:IsLocation(LOCATION_SZONE) then return end
+	local te=tc:GetActivateEffect()
+	local tep=tc:GetControler()
+	if te and te:GetCode()==EVENT_FREE_CHAIN and te:IsActivatable(tep)
+		and (not tc:IsType(TYPE_SPELL) or tc:IsType(TYPE_QUICKPLAY)) then
+		Duel.Activate(te)
+	else
+	e:Reset()
 end
 function s.infcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.darkfilter,tp,LOCATION_ONFIELD,0,1,nil) 
@@ -84,13 +104,39 @@ function s.infop(e,tp,eg,ep,ev,re,r,rp)
 	local right=ic:GetSequence()
 	if left>right then left,right=right,left end
 	local ag=Duel.GetMatchingGroup(s.infacfilter,tp,LOCATION_SZONE,0,nil,left,right)
+	if #ag==0 then return end
+	ag:KeepAlive()
+	--Force activation
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetCode(EVENT_ADJUST)
+	e1:SetCountLimit(1)
+	e1:SetLabelObject(ag)
+	e1:SetCondition(s.facon2)
+	e1:SetOperation(s.faop2)
+	Duel.RegisterEffect(e1,tp)
+end
+function s.facon2(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentChain()==0
+end
+function s.faop2(e,tp,eg,ep,ev,re,r,rp)
+	local ag=e:GetLabelObject()
 	while #ag>0 do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
 		local tg=ag:Select(tp,1,1,nil)
 		ag:Sub(tg)
-		local ac=tg:GetFirst()
-		local ae=ac:CheckActivateEffect()
-		ac:RegisterFlagEffect(100000594,RESET_PHASE+PHASE_END,0,0)
-		Duel.Activate(ae)
+		local tc=tg:GetFirst()
+		if tc and tc:IsFacedown() and tc:IsLocation(LOCATION_SZONE) then 
+			local te=tc:GetActivateEffect()
+			local tep=tc:GetControler()
+			if te and te:GetCode()==EVENT_FREE_CHAIN and te:IsActivatable(tep)
+				and (not tc:IsType(TYPE_SPELL) or tc:IsType(TYPE_QUICKPLAY)) then
+				tc:RegisterFlagEffect(100000594,RESET_PHASE+PHASE_END,0,0)
+				Duel.Activate(ae)
+			end
+		end
 	end
+	ag:DeleteGroup()
+	e:Reset()
 end

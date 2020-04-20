@@ -38,9 +38,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={100000591,100000592,100000593,100000594,100000595}
+s.listed_names={511310101,511310102,511310103,511310104,511310105}
 function s.filter(c)
-	return c:IsCode(100000591,100000592,100000593,100000594,100000595) and c:IsSSetable()
+	return c:IsCode(511310101,511310102,511310103,511310104,511310105) and c:IsSSetable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
@@ -49,8 +49,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsCode,1,nil,100000591) and sg:IsExists(Card.IsCode,1,nil,100000592) and
-		sg:IsExists(Card.IsCode,1,nil,100000593) and sg:IsExists(Card.IsCode,1,nil,100000594) and sg:IsExists(Card.IsCode,1,nil,100000595)
+	return sg:IsExists(Card.IsCode,1,nil,511310101) and sg:IsExists(Card.IsCode,1,nil,511310102) and
+		sg:IsExists(Card.IsCode,1,nil,511310103) and sg:IsExists(Card.IsCode,1,nil,511310104) and sg:IsExists(Card.IsCode,1,nil,511310105)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

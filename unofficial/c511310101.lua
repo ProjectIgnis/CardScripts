@@ -11,17 +11,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={100000594,100000595}
+s.listed_names={511310104,511310105}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	if e:GetHandler():GetFlagEffect(100000594)~=0 and Duel.GetCurrentChain()==1 then
+	if e:GetHandler():GetFlagEffect(511310104)~=0 and Duel.GetCurrentChain()==1 then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
 	end
 end 
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if c:GetFlagEffect(100000594)~=0 then
+	if c:GetFlagEffect(511310104)~=0 then
 		if Duel.GetCurrentChain()==1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
@@ -30,8 +30,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			if Duel.Destroy(dg,REASON_EFFECT)~=0 then
 				g:Sub(dg)
 				local ct=0
-				if Duel.GetFlagEffect(tp,100000592)~=0 then ct=ct+1 end
-				if Duel.GetFlagEffect(tp,100000593)~=0 then ct=ct+1 end
+				if Duel.GetFlagEffect(tp,511310102)~=0 then ct=ct+1 end
+				if Duel.GetFlagEffect(tp,511310103)~=0 then ct=ct+1 end
 				if ct>0 and #g>0 then
 					Duel.BreakEffect()
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

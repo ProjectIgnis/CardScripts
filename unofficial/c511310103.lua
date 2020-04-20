@@ -10,16 +10,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={100000594,100000595}
+s.listed_names={511310104,511310105}
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if c:GetFlagEffect(100000594)~=0 then
+	if c:GetFlagEffect(511310104)~=0 then
 		if Duel.GetCurrentChain()==1 then
 			if Duel.Damage(tp,1000,REASON_EFFECT)==1000 then
 				local ct=0
-				if Duel.GetFlagEffect(tp,100000591)~=0 then ct=ct+1 end
-				if Duel.GetFlagEffect(tp,100000592)~=0 then ct=ct+1 end
+				if Duel.GetFlagEffect(tp,511310101)~=0 then ct=ct+1 end
+				if Duel.GetFlagEffect(tp,511310102)~=0 then ct=ct+1 end
 				if ct>0 then
 					Duel.BreakEffect()
 					Duel.Damage(tp,1000*ct,REASON_EFFECT)

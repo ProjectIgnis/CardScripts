@@ -10,19 +10,19 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={100000594,100000595}
+s.listed_names={511310104,511310105}
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if c:GetFlagEffect(100000594)~=0 then
+	if c:GetFlagEffect(511310104)~=0 then
 		if Duel.GetCurrentChain()==1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACK)
 			local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 			local ac=g:Select(tp,1,1,nil):GetFirst()
 			if ac:UpdateAttack(1000,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)==1000 then
 				local ct=0
-				if Duel.GetFlagEffect(tp,100000591)~=0 then ct=ct+1 end
-				if Duel.GetFlagEffect(tp,100000593)~=0 then ct=ct+1 end
+				if Duel.GetFlagEffect(tp,511310101)~=0 then ct=ct+1 end
+				if Duel.GetFlagEffect(tp,511310103)~=0 then ct=ct+1 end
 				if ct>0 then
 					Duel.BreakEffect()
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACK)

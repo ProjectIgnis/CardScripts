@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.infop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={100000590,100000594}
-s.darkfilter=aux.FilterFaceupFunction(Card.IsCode,100000590)
-s.zerofilter=aux.FilterFaceupFunction(Card.IsCode,100000594)
+s.listed_names={511310100,511310104}
+s.darkfilter=aux.FilterFaceupFunction(Card.IsCode,511310100)
+s.zerofilter=aux.FilterFaceupFunction(Card.IsCode,511310104)
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.darkfilter,tp,LOCATION_ONFIELD,0,1,nil) 
 		and not Duel.IsExistingMatchingCard(s.zerofilter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -92,7 +92,7 @@ end
 function s.acinffilter(c,left,tp)
 	local right=c:GetSequence()
 	if left>right then left,right=right,left end
-	return c:IsFaceup() and c:IsCode(100000594) and Duel.IsExistingMatchingCard(s.infacfilter,tp,LOCATION_SZONE,0,1,nil,left,right)
+	return c:IsFaceup() and c:IsCode(511310104) and Duel.IsExistingMatchingCard(s.infacfilter,tp,LOCATION_SZONE,0,1,nil,left,right)
 end
 function s.infop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -132,7 +132,7 @@ function s.faop2(e,tp,eg,ep,ev,re,r,rp)
 			local tep=tc:GetControler()
 			if te and te:GetCode()==EVENT_FREE_CHAIN and te:IsActivatable(tep)
 				and (not tc:IsType(TYPE_SPELL) or tc:IsType(TYPE_QUICKPLAY)) then
-				tc:RegisterFlagEffect(100000594,RESET_PHASE+PHASE_END,0,0)
+				tc:RegisterFlagEffect(511310104,RESET_PHASE+PHASE_END,0,0)
 				Duel.Activate(ae)
 			end
 		end

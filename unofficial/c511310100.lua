@@ -55,9 +55,8 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,0,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
-	local ct=Duel.Destroy(g,REASON_EFFECT)
-	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	if ct==0 or ft<5 then return end 
+	Duel.Destroy(g,REASON_EFFECT)
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<5 then return end 
 	Duel.BreakEffect()
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil)
 	if not s.rescon(sg) then return end

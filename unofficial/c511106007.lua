@@ -1,7 +1,6 @@
 --ハイドライブ・サイクル
 --Hydradrive Cycle (Anime)
 --scripted by Hatter
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -85,7 +84,7 @@ end
 function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,400) end
 	Duel.PayLPCost(tp,400)
-	Duel.Hint(HINT_SELECTMSG,tp,563)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
 	local aat=Duel.AnnounceAttribute(tp,1,0xf)
 	e:SetLabel(aat)
 end
@@ -97,19 +96,18 @@ function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tu,0)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
- 	local tu=Duel.GetTurnPlayer()
-	if e:GetHandler():IsRelateToEffect(e) and
-	 Duel.GetLocationCount(tu,LOCATION_MZONE)>0 and
-	  Duel.IsPlayerCanSpecialSummonMonster(tp,511009710,0x577,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_EARTH,POS_FACEUP,tu) then
-		local token=Duel.CreateToken(tu,511009710)
-		if Duel.SpecialSummon(token,0,tp,tu,false,false,POS_FACEUP)~=0 then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetValue(e:GetLabel())
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			token:RegisterEffect(e1)
-		end
+	local tu=Duel.GetTurnPlayer()
+	if e:GetHandler():IsRelateToEffect(e) and Duel.GetLocationCount(tu,LOCATION_MZONE)>0 and
+		Duel.IsPlayerCanSpecialSummonMonster(tp,511009710,0x577,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_EARTH,POS_FACEUP,tu) then
+			local token=Duel.CreateToken(tu,511009710)
+			if Duel.SpecialSummon(token,0,tp,tu,false,false,POS_FACEUP)~=0 then
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
+				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+				e1:SetValue(e:GetLabel())
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				token:RegisterEffect(e1)
+			end
 	end
 end

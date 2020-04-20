@@ -55,7 +55,7 @@ function s.attcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,563)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
 	local aat=Duel.AnnounceAttribute(tp,2,0xe)
 	e:SetLabel(aat)
 end

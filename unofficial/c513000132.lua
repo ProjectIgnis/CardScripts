@@ -31,18 +31,16 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
-
 function s.condition(e)
 	local tc=e:GetHandler():GetEquipTarget()
-return Duel.GetAttacker()==tc or Duel.GetAttackTarget()==tc
-end	
-
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)	
+	return Duel.GetAttacker()==tc or Duel.GetAttackTarget()==tc
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)	
-	Duel.Hint(HINT_SELECTMSG,tp,562)
+	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 	local rc=Duel.AnnounceAttribute(tp,1,0xffff)
 	e:GetLabelObject():SetLabel(rc)
 	e:GetHandler():SetHint(CHINT_ATTRIBUTE,rc)
@@ -50,22 +48,28 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if e:GetHandler():IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Equip(tp,e:GetHandler(),tc)
 	end
 end
-
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local q=e:GetLabel()
 	local c=e:GetHandler():GetEquipTarget()
 	local tc=Duel.GetAttacker()
-	if tc==c then tc=Duel.GetAttackTarget() end
-	if chk==0 then return tc  and tc:IsAttribute(q) end
+	if tc==c then
+		tc=Duel.GetAttackTarget()
+	end
+	if chk==0 then
+		return tc and tc:IsAttribute(q)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,tp,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler():GetEquipTarget()
 	local tc=Duel.GetAttacker()
 	if tc==c then tc=Duel.GetAttackTarget() end
-	if tc:IsRelateToBattle() then Duel.Damage(1-tp,1000,REASON_EFFECT) end
+	if tc:IsRelateToBattle() then
+		Duel.Damage(1-tp,1000,REASON_EFFECT)
+	end
 end

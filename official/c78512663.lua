@@ -5,7 +5,6 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,CARD_NEOS,89621922,80344569)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
-	aux.EnableNeosReturn(c)
 	--atkup
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
@@ -19,10 +18,12 @@ function s.initial_effect(c)
 	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetCategory(CATEGORY_TOHAND)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e6:SetCode(EVENT_CUSTOM+id)
+	e6:SetCode(EVENT_TO_DECK)
+	e6:SetCondition(s.thcon)
 	e6:SetTarget(s.thtg)
 	e6:SetOperation(s.thop)
 	c:RegisterEffect(e6)
+	aux.EnableNeosReturn(c,nil,nil,nil,e6)
 end
 s.listed_names={CARD_NEOS}
 s.material_setcode={0x8,0x3008,0x9,0x1f}
@@ -38,6 +39,9 @@ function s.splimit(e,se,sp,st)
 end
 function s.atkval(e,c)
 	return Duel.GetFieldGroupCount(0,LOCATION_ONFIELD,LOCATION_ONFIELD)*400
+end
+function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return re:GetLabelObject()==e
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

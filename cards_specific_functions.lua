@@ -176,7 +176,7 @@ end
 -- extracat: optional, eventual extra categories for the effect. Adding CATEGORY_TODECK is not necessary
 -- extrainfo: optional, eventual OperationInfo to be set in the target (see Nebula Neos)
 -- extraop: optional, eventual operation to be performed if the card is returned to the ED (see Nebula Neos, NOT Magma Neos)
-function Auxiliary.EnableNeosReturn(c,extracat,extrainfo,extraop)
+function Auxiliary.EnableNeosReturn(c,extracat,extrainfo,extraop,returneff)
 	if not extracat then extracat=0 end
 	--return
 	local e1=Effect.CreateEffect(c)
@@ -194,6 +194,10 @@ function Auxiliary.EnableNeosReturn(c,extracat,extrainfo,extraop)
 	e2:SetProperty(0)
 	e2:SetCondition(Auxiliary.NeosReturnCondition2)
 	c:RegisterEffect(e2)
+	if returneff then
+		e1:SetLabelObject(returneff)
+		e2:SetLabelObject(returneff)
+	end
 end
 function Auxiliary.NeosReturnCondition1(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsHasEffect(42015635)
@@ -222,8 +226,6 @@ function Auxiliary.NeosReturnOperation(c,extraop)
 			Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
 		end
 		if c:IsLocation(LOCATION_EXTRA) then
-			local id=c:GetCode()
-			Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,0,0,0,0)
 			if extraop then
 				extraop(e,tp,eg,ep,ev,re,r,rp)
 			end

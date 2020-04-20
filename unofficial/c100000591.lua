@@ -24,6 +24,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetCurrentChain()==1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+			if #g==0 then return end
 			local dg=g:Select(tp,1,1,nil)
 			if Duel.Destroy(dg,REASON_EFFECT)~=0 then
 				g:Sub(dg)

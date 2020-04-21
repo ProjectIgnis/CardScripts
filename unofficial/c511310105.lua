@@ -4,10 +4,10 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_ACTIVATE)
-    e1:SetCode(EVENT_FREE_CHAIN)
-    c:RegisterEffect(e1)
+  local e1=Effect.CreateEffect(c)
+  e1:SetType(EFFECT_TYPE_ACTIVATE)
+  e1:SetCode(EVENT_FREE_CHAIN)
+  c:RegisterEffect(e1)
 	--Activate 1 Set Trap
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -37,16 +37,19 @@ end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_SZONE,0,1,nil) end
 end
+function s.getflag(g)
+    local flag = 0
+    for c in aux.Next(g) do
+        flag = flag|((1<<c:GetSequence())<<(8+(16*c:GetControler())))
+    end
+    return ~flag
+end
 function s.SelectCardByZone(g,tp,hint)
-	local zone=0
-	for tc in aux.Next(g) do
-		zone=zone|(1<<tc:GetSequence())
-	end
-	if hint then Duel.Hint(HINT_SELECTMSG,tp,hint) end
-	local sel=Duel.SelectFieldZone(tp,1,LOCATION_SZONE,0,~zone)
-	local seq=math.log(2,sel)
-	local c=Duel.GetFirstMatchingCard(Card.IsSequence,tp,LOCATION_SZONE,0,nil,seq)
-	return c
+    if hint then Duel.Hint(HINT_SELECTMSG,tp,hint) end
+    local sel=Duel.SelectFieldZone(tp,1,LOCATION_SZONE,0,s.getflag(g))>>8
+    local seq=math.log(sel,2)
+    local c=Duel.GetFieldCard(tp,LOCATION_SZONE,seq)
+    return c
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -62,7 +65,7 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EVENT_ADJUST)
 		e1:SetCountLimit(1)
-		e1:SetLabelObject(tc)
+		e1:SetLabelObject(ac)
 		e1:SetCondition(s.facon)
 		e1:SetOperation(s.faop)
 		Duel.RegisterEffect(e1,tp)

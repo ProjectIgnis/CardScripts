@@ -43,7 +43,7 @@ function s.filter(c)
 	return c:IsCode(511310101,511310102,511310103,511310104,511310105) and c:IsSSetable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
+	if chk==0 then
 		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil):GetClassCount(Card.GetCode)==5 end
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,0,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
@@ -56,7 +56,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,0,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
 	Duel.Destroy(g,REASON_EFFECT)
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<5 then return end 
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<5 then return end
 	Duel.BreakEffect()
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil)
 	if not s.rescon(sg) then return end
@@ -64,6 +64,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #sg>0 then
 		setg:ForEach(function(c)c:RegisterFlagEffect(id,RESETS_STANDARD-RESET_TOFIELD-RESET_TURN_SET,0,1)end)
 		Duel.SSet(tp,setg)
+		Duel.ShuffleSetCard(setg)
 	end
 end
 s.setfilter=aux.FilterFaceupFunction(Card.IsType,TYPE_TRAP)

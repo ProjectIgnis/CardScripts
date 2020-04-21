@@ -35,7 +35,9 @@ function s.actfilter(c)
 	return c:IsFacedown() and c:GetSequence()<5
 end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_SZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_SZONE,0,1,nil)
+        and c:GetFlagEffect(id)==0 end
+    c:RegisterFlagEffect(id,RESET_CHAIN,0,0)
 end
 function s.getflag(g)
     local flag = 0
@@ -63,16 +65,12 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetCode(EVENT_ADJUST)
+		e1:SetCode(EVENT_CHAIN_END)
 		e1:SetCountLimit(1)
 		e1:SetLabelObject(ac)
-		e1:SetCondition(s.facon)
 		e1:SetOperation(s.faop)
 		Duel.RegisterEffect(e1,tp)
 	end
-end
-function s.facon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0
 end
 function s.faop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
@@ -96,6 +94,7 @@ end
 function s.inftg(e,tp,eg,ep,ev,re,rs,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
+        if c:GetFlagEffect(id)~=0 then return false end
 		local ig=Duel.GetMatchingGroup(s.inffilter,tp,LOCATION_SZONE,0,nil)
 		--find furthest "Zero" for maximum number of potential activated cards
 		local left=c:GetSequence()
@@ -104,7 +103,8 @@ function s.inftg(e,tp,eg,ep,ev,re,rs,rp,chk)
 		local right=ic:GetSequence()
 		if left>right then left,right=right,left end
 		return Duel.IsExistingMatchingCard(s.infacfilter,tp,LOCATION_SZONE,0,1,nil,left,right)
-	end
+    end
+    c:RegisterFlagEffect(id,RESET_CHAIN,0,0)
 end
 function s.acinffilter(c,left,tp)
 	local right=c:GetSequence()
@@ -115,44 +115,22 @@ function s.infop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local left=c:GetSequence()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local ic=Duel.SelectMatchingCard(tp,s.acinffilter,tp,LOCATION_SZONE,0,1,1,nil,left,tp):GetFirst()
+    local ig=Duel.GetMatchingGroup(s.acinffilter,tp,LOCATION_SZONE,0,nil,left,tp)
+    local ic
+    if #ig==1 then
+        ic=ig:GetFirst()
+    else
+        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+        ic=ig:Select(tp,1,1,nil):GetFirst()
+    end
 	if not ic then return end
 	local right=ic:GetSequence()
 	if left>right then left,right=right,left end
 	local ag=Duel.GetMatchingGroup(s.infacfilter,tp,LOCATION_SZONE,0,nil,left,right)
-	if #ag==0 then return end
-	ag:KeepAlive()
-	--Force activation
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetCode(EVENT_ADJUST)
-	e1:SetCountLimit(1)
-	e1:SetLabelObject(ag)
-	e1:SetCondition(s.facon2)
-	e1:SetOperation(s.faop2)
-	Duel.RegisterEffect(e1,tp)
-end
-function s.facon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0
-end
-function s.faop2(e,tp,eg,ep,ev,re,r,rp)
-	local ag=e:GetLabelObject()
-	while #ag>0 do
-		--workaround to not reveal card names
-		local tc=s.SelectCardByZone(ag,tp,HINTMSG_RESOLVEEFFECT)
-		ag:RemoveCard(tc)
-		if tc and tc:IsFacedown() and tc:IsLocation(LOCATION_SZONE) then
-			local te=tc:GetActivateEffect()
-			local tep=tc:GetControler()
-			if te and te:GetCode()==EVENT_FREE_CHAIN and te:IsActivatable(tep)
-				and (not tc:IsType(TYPE_SPELL) or tc:IsType(TYPE_QUICKPLAY)) then
-				tc:RegisterFlagEffect(511310104,RESET_PHASE+PHASE_END,0,0)
-				Duel.Activate(te)
-			end
-		end
-	end
-	ag:DeleteGroup()
-	e:Reset()
+	if #ag>0 then
+        Duel.ChangePosition(ag,POS_FACEUP)
+        for ac in aux.Next(ag) do
+            Duel.RaiseSingleEvent(ac,EVENT_CUSTOM+511310104,e,0,tp,tp,0)
+        end
+    end
 end

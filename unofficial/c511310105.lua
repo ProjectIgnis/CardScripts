@@ -36,22 +36,22 @@ function s.actfilter(c)
 end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_SZONE,0,1,nil)
-        and c:GetFlagEffect(id)==0 end
-    c:RegisterFlagEffect(id,RESET_CHAIN,0,0)
+		and c:GetFlagEffect(id)==0 end
+	c:RegisterFlagEffect(id,RESET_CHAIN,0,0)
 end
 function s.getflag(g)
-    local flag = 0
-    for c in aux.Next(g) do
-        flag = flag|((1<<c:GetSequence())<<(8+(16*c:GetControler())))
-    end
-    return ~flag
+	local flag = 0
+	for c in aux.Next(g) do
+		flag = flag|((1<<c:GetSequence())<<(8+(16*c:GetControler())))
+	end
+	return ~flag
 end
 function s.SelectCardByZone(g,tp,hint)
-    if hint then Duel.Hint(HINT_SELECTMSG,tp,hint) end
-    local sel=Duel.SelectFieldZone(tp,1,LOCATION_SZONE,0,s.getflag(g))>>8
-    local seq=math.log(sel,2)
-    local c=Duel.GetFieldCard(tp,LOCATION_SZONE,seq)
-    return c
+	if hint then Duel.Hint(HINT_SELECTMSG,tp,hint) end
+	local sel=Duel.SelectFieldZone(tp,1,LOCATION_SZONE,0,s.getflag(g))>>8
+	local seq=math.log(sel,2)
+	local c=Duel.GetFieldCard(tp,LOCATION_SZONE,seq)
+	return c
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -94,7 +94,7 @@ end
 function s.inftg(e,tp,eg,ep,ev,re,rs,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-        if c:GetFlagEffect(id)~=0 then return false end
+		if c:GetFlagEffect(id)~=0 then return false end
 		local ig=Duel.GetMatchingGroup(s.inffilter,tp,LOCATION_SZONE,0,nil)
 		--find furthest "Zero" for maximum number of potential activated cards
 		local left=c:GetSequence()
@@ -103,8 +103,8 @@ function s.inftg(e,tp,eg,ep,ev,re,rs,rp,chk)
 		local right=ic:GetSequence()
 		if left>right then left,right=right,left end
 		return Duel.IsExistingMatchingCard(s.infacfilter,tp,LOCATION_SZONE,0,1,nil,left,right)
-    end
-    c:RegisterFlagEffect(id,RESET_CHAIN,0,0)
+	end
+	c:RegisterFlagEffect(id,RESET_CHAIN,0,0)
 end
 function s.acinffilter(c,left,tp)
 	local right=c:GetSequence()
@@ -115,22 +115,22 @@ function s.infop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local left=c:GetSequence()
-    local ig=Duel.GetMatchingGroup(s.acinffilter,tp,LOCATION_SZONE,0,nil,left,tp)
-    local ic
-    if #ig==1 then
-        ic=ig:GetFirst()
-    else
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-        ic=ig:Select(tp,1,1,nil):GetFirst()
-    end
+	local ig=Duel.GetMatchingGroup(s.acinffilter,tp,LOCATION_SZONE,0,nil,left,tp)
+	local ic
+	if #ig==1 then
+		ic=ig:GetFirst()
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		ic=ig:Select(tp,1,1,nil):GetFirst()
+	end
 	if not ic then return end
 	local right=ic:GetSequence()
 	if left>right then left,right=right,left end
 	local ag=Duel.GetMatchingGroup(s.infacfilter,tp,LOCATION_SZONE,0,nil,left,right)
 	if #ag>0 then
-        Duel.ChangePosition(ag,POS_FACEUP)
-        for ac in aux.Next(ag) do
-            Duel.RaiseSingleEvent(ac,EVENT_CUSTOM+511310104,e,0,tp,tp,0)
-        end
-    end
+		Duel.ChangePosition(ag,POS_FACEUP)
+		for ac in aux.Next(ag) do
+			Duel.RaiseSingleEvent(ac,EVENT_CUSTOM+511310104,e,0,tp,tp,0)
+		end
+	end
 end

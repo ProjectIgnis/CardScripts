@@ -28,7 +28,7 @@ s.listed_names={511310100,511310104}
 s.darkfilter=aux.FilterFaceupFunction(Card.IsCode,511310100)
 s.zerofilter=aux.FilterFaceupFunction(Card.IsCode,511310104)
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.darkfilter,tp,LOCATION_ONFIELD,0,1,nil) 
+	return Duel.IsExistingMatchingCard(s.darkfilter,tp,LOCATION_ONFIELD,0,1,nil)
 		and not Duel.IsExistingMatchingCard(s.zerofilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.actfilter(c)
@@ -37,10 +37,24 @@ end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_SZONE,0,1,nil) end
 end
+function s.SelectCardByZone(g,tp,hint)
+	local zone=0
+	for tc in aux.Next(g) do
+		zone=zone|(1<<tc:GetSequence())
+	end
+	if hint then Duel.Hint(HINT_SELECTMSG,tp,hint) end
+	local sel=Duel.SelectFieldZone(tp,1,LOCATION_SZONE,0,~zone)
+	local seq=math.log(2,sel)
+	local c=Duel.GetFirstMatchingCard(Card.IsSequence,tp,LOCATION_SZONE,0,nil,seq)
+	return c
+end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local ac=Duel.SelectMatchingCard(s.actfilter,tp,LOCATION_SZONE,0,1,1,nil):GetFirst()
+	local ag=Duel.GetMatchingGroup(s.actfilter,tp,LOCATION_SZONE,0,nil)
+	if #ag==0 then return end
+	--workaround to not reveal card names
+	local ac=s.SelectCardByZone(ag,tp,HINTMSG_RESOLVEEFFECT)
 	if ac then
 		--Force activation
 		local e1=Effect.CreateEffect(c)
@@ -69,12 +83,12 @@ function s.faop(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 function s.infcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.darkfilter,tp,LOCATION_ONFIELD,0,1,nil) 
+	return Duel.IsExistingMatchingCard(s.darkfilter,tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.zerofilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.infacfilter(c,left,right)
 	local seq=c:GetSequence()
-	return c:IsFacedown() and left<seq and seq<right and c:CheckActivateEffect()
+	return c:IsFacedown() and left<seq and seq<right and c:CheckActivateEffect(false,false,false)
 end
 function s.inftg(e,tp,eg,ep,ev,re,rs,rp,chk)
 	local c=e:GetHandler()
@@ -82,7 +96,7 @@ function s.inftg(e,tp,eg,ep,ev,re,rs,rp,chk)
 		local ig=Duel.GetMatchingGroup(s.inffilter,tp,LOCATION_SZONE,0,nil)
 		--find furthest "Zero" for maximum number of potential activated cards
 		local left=c:GetSequence()
-		local ic=ig:GetMaxGroup(function(oc,seq)return math.abs(oc:GetSequence()-seq)end,left)
+		local ic=ig:GetMaxGroup(function(oc,seq)return math.abs(oc:GetSequence()-seq)end,left):GetFirst()
 		if not ic then return false end
 		local right=ic:GetSequence()
 		if left>right then left,right=right,left end
@@ -123,11 +137,11 @@ end
 function s.faop2(e,tp,eg,ep,ev,re,r,rp)
 	local ag=e:GetLabelObject()
 	while #ag>0 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
-		local tg=ag:Select(tp,1,1,nil)
-		ag:Sub(tg)
+		--workaround to not reveal card names
+		local tc=s.SelectCardByZone(ag,tp,HINTMSG_RESOLVEEFFECT)
+		ag:RemoveCard(tc)
 		local tc=tg:GetFirst()
-		if tc and tc:IsFacedown() and tc:IsLocation(LOCATION_SZONE) then 
+		if tc and tc:IsFacedown() and tc:IsLocation(LOCATION_SZONE) then
 			local te=tc:GetActivateEffect()
 			local tep=tc:GetControler()
 			if te and te:GetCode()==EVENT_FREE_CHAIN and te:IsActivatable(tep)

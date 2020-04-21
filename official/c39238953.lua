@@ -1,4 +1,5 @@
 --天声の服従
+--Lullaby of Obedience
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,8 +19,8 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,2000)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_DECK,1,nil)
-		or Duel.IsPlayerCanSpecialSummon(tp) end
+	if chk==0 then return (Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_DECK,1,nil) or Duel.IsPlayerCanSpecialSummon(tp))
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
 	s.announce_filter={TYPE_MONSTER,OPCODE_ISTYPE,TYPE_EXTRA,OPCODE_ISTYPE,OPCODE_NOT,OPCODE_AND}
   	local ac=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))

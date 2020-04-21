@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.acttg)
 	e2:SetOperation(s.actop)
 	c:RegisterEffect(e2)
-	--Activate between Infinity
+	--Activate between Zero
 	local e3=e2:Clone()
 	e3:SetCondition(s.infcon)
 	e3:SetTarget(s.inftg)
@@ -116,7 +116,7 @@ function s.infop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local left=c:GetSequence()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local ic=Duel.SelectMatchingCard(tp,s.acinffilter,tp,LOCATION_SZONE,0,1,nil,left,tp):GetFirst()
+	local ic=Duel.SelectMatchingCard(tp,s.acinffilter,tp,LOCATION_SZONE,0,1,1,nil,left,tp):GetFirst()
 	if not ic then return end
 	local right=ic:GetSequence()
 	if left>right then left,right=right,left end
@@ -143,14 +143,13 @@ function s.faop2(e,tp,eg,ep,ev,re,r,rp)
 		--workaround to not reveal card names
 		local tc=s.SelectCardByZone(ag,tp,HINTMSG_RESOLVEEFFECT)
 		ag:RemoveCard(tc)
-		local tc=tg:GetFirst()
 		if tc and tc:IsFacedown() and tc:IsLocation(LOCATION_SZONE) then
 			local te=tc:GetActivateEffect()
 			local tep=tc:GetControler()
 			if te and te:GetCode()==EVENT_FREE_CHAIN and te:IsActivatable(tep)
 				and (not tc:IsType(TYPE_SPELL) or tc:IsType(TYPE_QUICKPLAY)) then
 				tc:RegisterFlagEffect(511310104,RESET_PHASE+PHASE_END,0,0)
-				Duel.Activate(ae)
+				Duel.Activate(te)
 			end
 		end
 	end

@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={100000701,60417395}
+s.listed_names={511310107,60417395}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function s.cosfilter(c,e,tp)
-	return c:IsCode(100000701) and c:IsAbleToGraveAsCost()
+	return c:IsCode(511310107) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost()
@@ -29,7 +29,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(tc,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsCode(60417395) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsCode(60417395) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -41,6 +41,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

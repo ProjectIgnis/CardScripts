@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCondition(s.atkcon)
 	e2:SetTarget(s.atktg)
 	e2:SetValue(s.adval)
@@ -42,11 +42,16 @@ function s.zones(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetLinkedZone(tp)>>8) & 0xff
 end
 function s.atkcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL 
+	if Duel.GetCurrentPhase()~=PHASE_DAMAGE_CAL then return false end
+	local a=Duel.GetAttacker()
+	local tp=e:GetHandlerPlayer()
+	if a:IsControler(1-tp) then a=Duel.GetAttackTarget() end
+	local lg=e:GetHandler():GetLinkedGroup()
+	return lg:IsContains(a)
 end
 function s.atktg(e,c)
 	local lg=e:GetHandler():GetLinkedGroup()
-	return lg:IsContains(c) and c:IsType(TYPE_LINK)
+	return lg:IsContains(c) and c:IsLinkMonster() and (c==Duel.GetAttacker() or c==Duel.GetAttackTarget())
 end
 function s.adval(e,c)
 	return c:GetAttack()

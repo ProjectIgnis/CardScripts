@@ -44,11 +44,16 @@ function Duel.MoveToDeckTop(obj)
 		if obj:IsLocation(LOCATION_DECK) then
 			Duel.MoveSequence(obj,SEQ_DECKTOP)
 		end
+	else
+		error("Parameter 1 should be \"Card\" or \"Group\"",2)
 	end
 end
 function Duel.MoveToDeckBottom(obj,tp)
 	local typ=type(obj)
-	if typ=="number" and tp then
+	if typ=="number" then
+		if type(tp)~="number" then
+			error("Parameter 2 should be \"number\"",2)
+		end
 		for i=1,obj do
 			local mg=Duel.GetDecktopGroup(tp,1)
 			Duel.MoveSequence(mg:GetFirst(),SEQ_DECKBOTTOM)
@@ -61,6 +66,8 @@ function Duel.MoveToDeckBottom(obj,tp)
 		if obj:IsLocation(LOCATION_DECK) then
 			Duel.MoveSequence(obj,SEQ_DECKBOTTOM)
 		end
+	else
+		error("Parameter 1 should be \"Card\" or \"Group\" or \"number\"",2)
 	end
 end
 function Duel.CheckReleaseGroupSummon(c,tp,e,fil,minc,maxc,last,...)

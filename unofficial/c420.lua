@@ -239,10 +239,17 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x514,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGDice))
 	end
 
-	-- Darkness ダークネス
-	-- Darkness Neosphere
+	-- Darkness
+	-- ダークネス
+	-- Cyberdarkness Dragon/Darkness Metal, the Dragon of Dark Steel/Malevolent Mech - Goku En/Simorgh of Darkness
+	-- Umbral Soul/Darkness Destroyer/Darkness Neosphere/Hunter of Black Feathers
+	-- D/D/D Super Doom King Dark Armageddon/F.A. Dark Dragster/Light and Darkness Dragon/Red-Eyes Darkness Dragon
+	-- Red-Eyes Darkness Metal Dragon
 	AnimeArchetype.OCGDarkness={
-		60417395
+		18967507,79266769,31571902,22586618,
+		86229493,93709215,60417395,73018302,
+		18897163,6764709,47297616,96561011,
+		88264978
 	}
 	function Card.IsDarkness(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0

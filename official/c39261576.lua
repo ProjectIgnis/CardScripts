@@ -22,7 +22,16 @@ s.listed_series={0x1047}
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then
 		e:SetLabelObject(tc)
-		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_CHAIN_END)
+		e1:SetOperation((function(p,_e)
+							return function(e)
+									Duel.RaiseSingleEvent(_e:GetHandler(),EVENT_CUSTOM+id,_e,0,p,p,0)
+									e:Reset()
+								end
+						end)(tp,e))
+		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)

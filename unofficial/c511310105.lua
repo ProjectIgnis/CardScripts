@@ -4,10 +4,10 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-  local e1=Effect.CreateEffect(c)
-  e1:SetType(EFFECT_TYPE_ACTIVATE)
-  e1:SetCode(EVENT_FREE_CHAIN)
-  c:RegisterEffect(e1)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e1)
 	--Activate 1 Set Trap
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -37,6 +37,7 @@ function s.actfilter(c)
 	return c:IsFacedown() and c:GetSequence()<5
 end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_SZONE,0,1,nil)
 		and c:GetFlagEffect(id)==0 end
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,0)

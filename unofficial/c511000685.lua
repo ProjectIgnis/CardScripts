@@ -1,4 +1,5 @@
 --ＷＲＵＭ－ホープ・フォース
+--Double-Rank-Up-Magic Utopia Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,12 +16,12 @@ s.listed_names={84013237}
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()
 	return c:IsFaceup() and c:IsCode(84013237) and c:GetOverlayGroup():GetCount()>=2 and (rk>0 or c:IsStatus(STATUS_NO_LEVEL)) 
-		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>1
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,2,nil,rk,e,tp,c)
 end
 function s.filter2(c,rk,e,tp,mc)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
 	return c:IsType(TYPE_XYZ) and (c:IsRank(rk+1) or c:IsRank(rk+2)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter1(chkc,e,tp) end
@@ -42,8 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if ect~=nil and ect<2 then return end
 	local tc=Duel.GetFirstTarget()
-	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) 
-		or Duel.GetLocationCountFromEx(tp,tp,nil,tc)<=1 then return end
+	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) then return end
 	local ov=tc:GetOverlayGroup()
 	if #ov<2 then return end
 	local g=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,tc:GetRank(),e,tp,tc)

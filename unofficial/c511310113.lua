@@ -15,7 +15,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.rvop)
 	c:RegisterEffect(e1)
 	--Rerrange cards
-	--TODO
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1)
+	e2:SetTarget(s.retg)
+	e2:SetOperation(s.reop)
+	c:RegisterEffect(e2)
 	--Set card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
@@ -27,6 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--Change LP
 	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,3))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetCountLimit(1)
@@ -42,6 +50,51 @@ end
 function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,LOCATION_SZONE,0,1,1,nil)
+end
+function s.refilter(c)
+	return c:GetFlagEffect(511310100)~=0 and c:GetSequence()<5
+end
+function s.retg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.refilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
+end
+function s.getflag(g)
+	local flag = 0
+	for c in aux.Next(g) do
+		flag = flag|((1<<c:GetSequence())<<(8+(16*c:GetControler())))
+	end
+	return ~flag
+end
+function s.reop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(s.refilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
+	if #g==0 then return end
+	local p
+	if g:GetClassCount(Card.GetControler)>1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+		p=g:Select(tp,1,1,nil):GetFirst():GetControler()
+		g=g:Filter(Card.IsControler,nil,p)
+	else
+		p=g:GetFirst():GetControler()
+	end
+	local sg=g:Filter(s.setfilter,nil)
+	if #sg>0 then
+		Duel.SSet(sg)
+		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
+	end
+	g=g:Filter(Card.IsFacedown,nil)
+	local filter=s.getflag(g)
+	for tc in aux.Next(g) do
+		Duel.HintSelection(Group.FromCards(tc))
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+		local zone=Duel.SelectFieldZone(tp,1,LOCATION_SZONE,LOCATION_SZONE,filter)
+		filter=filter|zone
+		local seq=math.log(zone>>8,2)
+		local oc=Duel.GetFieldCard(tp,LOCATION_SZONE,seq)
+		if oc then
+			Duel.SwapSequence(tc,oc)
+		else
+			Duel.MoveSequence(tc,seq)
+		end
+	end
 end
 function s.setfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable(true)

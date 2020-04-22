@@ -1,6 +1,5 @@
 --Reservation Reward
---	By Shad3
---fixed by MLD
+--Original script by Shad3
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -33,13 +32,12 @@ function s.initial_effect(c)
 	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) 
-		or (re:GetActiveType()&TYPE_SPELL+TYPE_QUICKPLAY)~=TYPE_SPELL+TYPE_QUICKPLAY then return end
+	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or (re:GetActiveType()&TYPE_SPELL+TYPE_QUICKPLAY)~=TYPE_SPELL+TYPE_QUICKPLAY then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	local tc=g:GetFirst()
-	while tc do
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
-		tc=g:GetNext()
+	if g then
+		for tc in aux.Next(g) do
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		end
 	end
 end
 function s.atktg(e,c)
@@ -57,25 +55,30 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
 	if tc then
-		local fid=c:GetFieldID()
-		Duel.ConfirmCards(1-tp,tc)
-		Duel.BreakEffect()
 		Duel.SSet(tp,tc)
-		tc:SetStatus(STATUS_SET_TURN,false)
-		tc:RegisterFlagEffect(511005055,RESET_EVENT+RESETS_STANDARD,0,1,fid)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_BECOME_TARGET)
-		e1:SetLabelObject(tc)
-		e1:SetLabel(fid)
-		e1:SetCondition(s.atkcon)
-		e1:SetOperation(s.atkop)
-		Duel.RegisterEffect(e1,tp)
+		if tc:IsType(TYPE_QUICKPLAY) then
+			local e1=Effect.CreateEffect(e)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+			e1:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e1)
+			local fid=c:GetFieldID()
+			tc:RegisterFlagEffect(id+100,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+			e2:SetCode(EVENT_BECOME_TARGET)
+			e2:SetLabelObject(tc)
+			e2:SetLabel(fid)
+			e2:SetCondition(s.atkcon)
+			e2:SetOperation(s.atkop)
+			Duel.RegisterEffect(e2,tp)
+		end
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if not tc or tc:GetFlagEffectLabel(511005055)~=e:GetLabel() then
+	if not tc or tc:GetFlagEffectLabel(id+100)~=e:GetLabel() then
 		e:Reset()
 		return false
 	else return re:GetHandler()==tc end
@@ -85,16 +88,16 @@ function s.atkfilter(c)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.atkfilter,nil)
-	local tc=g:GetFirst()
-	while tc do
-		local e1=Effect.CreateEffect(e:GetOwner())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetCondition(s.acon)
-		e1:SetValue(s.aval)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
-		tc:RegisterEffect(e1)
-		tc=g:GetNext()
+	if g then
+		for tc in aux.Next(g) do
+			local e1=Effect.CreateEffect(e:GetOwner())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+			e1:SetCondition(s.acon)
+			e1:SetValue(s.aval)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+			tc:RegisterEffect(e1)
+		end
 	end
 end
 function s.acon(e)

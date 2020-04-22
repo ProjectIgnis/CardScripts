@@ -1,5 +1,7 @@
 --ダークネス・ネクロスライム
+--Darkness Necroslime
 local s,id=GetID()
+Duel.LoadScript("c420.lua")
 function s.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -18,13 +20,8 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
-s.collection={
-	[79182538]=true;[42071342]=true;[60417395]=true;[88264978]=true;[96561011]=true;
-	[56647086]=true;[33655493]=true;[47297616]=true;[44330098]=true;[93709215]=true;
-	[77121851]=true;[63120904]=true;[19153634]=true;[28933734]=true;
-}
 function s.filter(c,e,tp)
-	return (c:IsSetCard(0x316) or s.collection[c:GetCode()]) and not c:IsCode(id) 
+	return c:IsDarkness() and not c:IsCode(id)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -37,7 +37,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x154a,sc,sumtype,playerid) or c:IsSetCard(0xef,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGAngel))
 	end
 
-	-- Anti アンチ 
+	-- Anti アンチ
 	-- Dystopia the Despondent/Delta Crow - Anti Reverse/Anti-Alian
 	function Card.IsAnti(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
@@ -105,7 +105,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x2509,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGBattleguard))
 	end
 
-	-- Blackwing Tamer 
+	-- Blackwing Tamer
 	-- ＢＦＴ
 	-- ブラックフェザーテイマー
 	-- Blackwing Tamer - Obsidian Hawk Joe
@@ -144,8 +144,8 @@ if not AnimeArchetype then
 	end
 
 	-- C (archetype)
-	-- Ｃ 
-	-- カオス 
+	-- Ｃ
+	-- カオス
 	-- is "C" or Cxyz or Cnumber
 	function Card.IsC(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
@@ -170,7 +170,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x50e,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGCat))
 	end
 
-	-- Celestial 
+	-- Celestial
 	-- 天輪
 	-- てんりん
 	-- Celestial Double Star Shaman/Guiding Light
@@ -180,7 +180,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x254a,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,69865139,25472513)
 	end
 
-	-- Champion 
+	-- Champion
 	-- 王者
 	-- おうじゃ
 	-- Champion's Vigilance
@@ -197,7 +197,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x510,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,97811903,82044279,33900648)
 	end
 
-	-- Comics Hero 
+	-- Comics Hero
 	-- ＣＨ
 	-- コミックヒーロー
 	-- CXyz Comics Hero Legend Arthur/Comics Hero King Arthur
@@ -207,9 +207,9 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x511,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,77631175,13030280)
 	end
 
-	-- Cubic Seed 
+	-- Cubic Seed
 	-- 方界胤
-	-- ほうかいいん 
+	-- ほうかいいん
 	-- Vijam the cubic seed
 	function Card.IsCubicSeed(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
@@ -225,7 +225,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x513,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,43061293)
 	end
 
-	-- Dice (archetype) ダイス 
+	-- Dice (archetype) ダイス
 	-- Speedroid Red-Eyed Dice/Speedroid Tri-Eyed Dice/Dice Armadillo
 	-- Dice Try!/Dice Jar/Dice Roll Battle
 	-- Dice Re-Roll
@@ -238,7 +238,26 @@ if not AnimeArchetype then
 		playerid=playerid or PLAYER_NONE
 		return c:IsSetCard(0x514,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGDice))
 	end
-	-- Dog ドッグ 
+
+	-- Darkness
+	-- ダークネス
+	-- Cyberdarkness Dragon/Darkness Metal, the Dragon of Dark Steel/Malevolent Mech - Goku En/Simorgh of Darkness
+	-- Umbral Soul/Darkness Destroyer/Darkness Neosphere/Hunter of Black Feathers
+	-- D/D/D Super Doom King Dark Armageddon/F.A. Dark Dragster/Light and Darkness Dragon/Red-Eyes Darkness Dragon
+	-- Red-Eyes Darkness Metal Dragon
+	AnimeArchetype.OCGDarkness={
+		18967507,79266769,31571902,22586618,
+		86229493,93709215,60417395,73018302,
+		18897163,6764709,47297616,96561011,
+		88264978
+	}
+	function Card.IsDarkness(c,sc,sumtype,playerid)
+		sumtype=sumtype or 0
+		playerid=playerid or PLAYER_NONE
+		return c:IsSetCard(0x316,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGDarkness))
+	end
+
+	-- Dog ドッグ
 	-- Assault Dog/Mad Dog of Darkness/Ancient Gear Hunting Hound
 	-- Performapal Bubblebowwow/Alien Dog/Guard Dog
 	-- Kozmo DOG Fighter/Skull Dog Marron/Wind-Up Dog
@@ -284,7 +303,7 @@ if not AnimeArchetype then
 	end
 
 
-	-- Druid ドルイド 
+	-- Druid ドルイド
 	-- Secret Sect Druid Wid/Secret Sect Druid Dru/Aurkus, Lightsworn Druid
 	AnimeArchetype.OCGDruid={
 		24062258,97064649,7183277
@@ -295,7 +314,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x8c,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGDruid))
 	end
 
-	-- Dyson ダイソン 
+	-- Dyson ダイソン
 	-- Number C9: Chaos Dyson Sphere/Number 9: Dyson Sphere
 	function Card.IsDyson(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
@@ -322,7 +341,7 @@ if not AnimeArchetype then
 
 	-- Earthbound (list to update)
 	-- 地縛
-	-- じばく 
+	-- じばく
 	-- Earthbound Revival/Roar of the Earthbound/Earthbound Whirlwind
 	-- Earthbound Linewalker/Call of the Earthbound
 	AnimeArchetype.OCGEarthbound={
@@ -334,7 +353,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x151a,sc,sumtype,playerid) or c:IsSetCard(0x21,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGEarthbound))
 	end
 
-	-- Elf エルフ 
+	-- Elf エルフ
 	-- Ghost Fairy Elfobia/Wing Egg Elf/Elf's Light
 	-- Ancient Elf/ Kozmoll Dark Lady/Shining Elf/
 	-- Mystical Fairy Elfuria/Prediction Princess Petalelf/Dancing Elf
@@ -351,7 +370,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x51b,sc,sumtype,playerid) or c:IsSetCard(0xe4,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGElf))
 	end
 
-	-- Emissary of Darkness 
+	-- Emissary of Darkness
 	-- 冥府の使者
 	-- めいふのししゃ
 	-- Gorz the Emissary of Darkness/Emissary of Darkness Token
@@ -378,9 +397,9 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x51d,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGFairy))
 	end
 
-	-- Forest (archetype) 
+	-- Forest (archetype)
 	-- 森
-	-- もり 
+	-- もり
 	-- Ancient Forest/Witch of the Black Forest/Naturia Forest
 	-- Forest/Yellow Baboon, Archer of the Forest/Murmur of the Forest
 	-- Wood Remains/Wodan the Resident of the Forest/Alpacaribou, Mystical Beast of the Forest
@@ -395,12 +414,12 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x51f,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGForest))
 	end
 
-	-- Fossil (not finished) 
+	-- Fossil (not finished)
 	-- 化石
 	-- かせき
 	-- Release from Stone/Fossil Dig/Fossil Excavation
 	AnimeArchetype.OCGFossil={
-		
+
 	}
 	function Card.IsFossil(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
@@ -408,7 +427,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x512,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGFossil))
 	end
 
-	-- Gem-Knight Lady ジェムナイトレディ 
+	-- Gem-Knight Lady ジェムナイトレディ
 	-- Gem-Knight Lady Brilliant Diamond/Gem-Knight Lady Lapis Lazuli
 	function Card.IsGemKnightLady(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
@@ -417,7 +436,7 @@ if not AnimeArchetype then
 	end
 
 	-- Gorgonic
-	-- ゴルゴニック 
+	-- ゴルゴニック
 	-- Gorgonic Gargoyle/Gorgonic Guardian/Gorgonic Ghoul
 	-- Gorgonic Cerberus/Gorgonic Golem
 	AnimeArchetype.OCGGorgonic={
@@ -428,7 +447,7 @@ if not AnimeArchetype then
 		playerid=playerid or PLAYER_NONE
 		return c:IsSetCard(0x522,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGGorgonic))
 	end
-	-- Goyo ゴヨウ 
+	-- Goyo ゴヨウ
 	-- Brotherhood of the Fire Fist - Coyote/Goyo Emperor/Goyo Guardian
 	-- Goyo King/Goyo Chaser/Goyo Defender
 	-- Goyo Predator
@@ -469,9 +488,9 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x527,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGHand))
 	end
 
-	-- Heavy Industry 
+	-- Heavy Industry
 	-- 重機
-	-- じゅうき 
+	-- じゅうき
 	-- Digvorzhak, King of Heavy Industry/Heavy Freight Train Derricrane/Jumbo Drill
 	AnimeArchetype.OCGHeavyIndustry={
 		42851643,29515122,13647631
@@ -482,9 +501,9 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x529,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGHeavyIndustry))
 	end
 
-	-- Hell 
+	-- Hell
 	-- 地獄
-	-- ヘル 
+	-- ヘル
 	-- Hundred-Footed Horror/Chthonian Soldier/Mefist the Infernal General
 	AnimeArchetype.OCGHell={
 		36029076,46820049,50916353
@@ -495,7 +514,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x567,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGHell))
 	end
 
-	-- Heraldic 
+	-- Heraldic
 	-- 紋章
 	-- もんしょう
 	-- Number 18: Heraldry Patriarch/Number 8: Heraldic King Genom-Heritage/Medallion of the Ice Barrier
@@ -508,14 +527,14 @@ if not AnimeArchetype then
 	end
 
 
-	-- Hunder サンダー 
+	-- Hunder サンダー
 	-- Ally of Justice Thunder Armor/Evilswarm Thunderbird/Elemental HERO Thunder Giant
 	-- Mahunder/Pahunder/Brohunder
 	-- Sishunder/Phantom Beast Thunder-Pegasus/Gouki Thunder Ogre/
 	-- Thunder End Dragon/Thunder Kid/Thunder Crash/
 	-- Thunder Short/ Thunder Sea Horse/Thunder Dragon/
 	-- Raigeki Break/Raigeki Bottle/Raigeki
-	-- Thunder Unicorn/Twin-Headed Thunder Dragon/D/D/D Gust King Alexander / 
+	-- Thunder Unicorn/Twin-Headed Thunder Dragon/D/D/D Gust King Alexander /
 	-- D/D/D Gust High King Alexander / Number 91: Thunder Spark Dragon/ Black Thunder
 	-- Blizzard Thunderbird/Blue Thunder T-45 Mega Thunderball/
 	-- Thunder King, the Lightningstrike Kaiju
@@ -549,7 +568,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x52a,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGInu))
 	end
 
-	-- Ivy アイヴィ 
+	-- Ivy アイヴィ
 	-- Wall of Ivy/Ivy Shackles/Ivy Token
 	AnimeArchetype.OCGIvy={
 		30069398,14730606,30069399
@@ -560,7 +579,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x52b,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGIvy))
 	end
 
-	-- Jester ジェスター 
+	-- Jester ジェスター
 	-- Majester Paladin, the Ascending Dracoslayer/Jester Confit/Jester Lord
 	AnimeArchetype.OCGJester={
 		72992744,8487449,88722973,
@@ -579,7 +598,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x52d,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,60410769)
 	end
 
-	-- King (not finished) 
+	-- King (not finished)
 	-- 王
 	-- おう
 	-- Brron, Mad King of Dark World/The Furious Sea King/Zeman the Ape King
@@ -653,7 +672,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x52f,sc,sumtype,playerid) or c:IsSetCard(0xf8,sc,sumtype,playerid) or c:IsSetCard(0x81,sc,sumtype,playerid) or c:IsSetCard(0xda,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGKing))
 	end
 
-	-- Knight (not finished) ナイト 
+	-- Knight (not finished) ナイト
 	-- Arcana Knight Joker/Dark Titan of Terror/Ancient Gear Knight
 	-- Arma Knight/Arcanite Magician/ Arcanite Magician/Assault Mode
 	-- D.D. Unicorn Knight/Insect Knight/Infernity Knight
@@ -703,11 +722,11 @@ if not AnimeArchetype then
 	function Card.IsKnight(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
 		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x530,sc,sumtype,playerid) or c:IsSetCard(0x1047,sc,sumtype,playerid) or c:IsSetCard(0x9c,sc,sumtype,playerid) or c:IsSetCard(0xc8,sc,sumtype,playerid) 
+		return c:IsSetCard(0x530,sc,sumtype,playerid) or c:IsSetCard(0x1047,sc,sumtype,playerid) or c:IsSetCard(0x9c,sc,sumtype,playerid) or c:IsSetCard(0xc8,sc,sumtype,playerid)
 				or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGKnight))
 	end
 
-	-- Koala コアラ 
+	-- Koala コアラ
 	AnimeArchetype.OCGKoala={
 		-- Big Koala, Des Koala, Vampire Koala, Sea Koala, Koalo-Koala, Tree Otter
 		42129512,69579761,1371589,87685879,7243511,71759912,
@@ -718,7 +737,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x531,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGKoala))
 	end
 
-	-- Lamp ランプ 
+	-- Lamp ランプ
 	-- Performapal Trump Witch/Performapal Trump Girl/Mech Mole Zombie
 	-- F.A. Circuit Grand Prix/Ancient Lamp/Mystic Lamp
 	-- Lord of the Lamp/ La Jinn the Mystical Genie of the Lamp
@@ -732,7 +751,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x532,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGLamp))
 	end
 
-	-- Landstar ランドスター 
+	-- Landstar ランドスター
 	-- Comrade Swordsman of Landstar/Swordsman of Landstar
 	function Card.IsLandstar(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
@@ -740,7 +759,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x533,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,3573512,83602069)
 	end
 
-	-- Line Monster ラインモンスター 
+	-- Line Monster ラインモンスター
 	-- Number 72: Shogi Rook/Shogi Knight/Shogi Lance
 	AnimeArchetype.OCGLineMonster={
 		32476434,41493640,75253697
@@ -751,7 +770,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x564,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGLineMonster))
 	end
 
-	-- Magnet 
+	-- Magnet
 	-- 磁石
 	-- マグネット
 	function Card.IsMagnet(c,sc,sumtype,playerid)
@@ -771,7 +790,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x535,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGMantis))
 	end
 
-	-- Melodious Songstress 
+	-- Melodious Songstress
 	-- 幻奏の歌姫
 	-- げんそうのうたひめ
 	-- Soprano the Melodious Songstress/Solo the Melodious Songstress
@@ -781,7 +800,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x209b,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,14763299,62895219)
 	end
 
-	-- Motor モーター 
+	-- Motor モーター
 	-- Fiendish Engine Ω
 	function Card.IsMotor(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
@@ -803,9 +822,9 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x538,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGNeko))
 	end
 
-	-- Number 39: Utopia (archetype)  
+	-- Number 39: Utopia (archetype)
 	-- Ｎｏ．３９ 希望皇ホープ
-	-- ナンバーズ３９ きぼうおうホープ 
+	-- ナンバーズ３９ きぼうおうホープ
 	-- Number S39: Utopia the Lightning/Number S39: Utopia Prime/Number 39: Utopia
 	-- Number 39: Utopia Roots
 	AnimeArchetype.OCGN39Utopia={
@@ -819,9 +838,9 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x539,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGN39Utopia))
 	end
 
-	-- Number C39: Utopia (archetype) 
-	-- ＣＮｏ．３９ 希望皇ホープレイ 
-	-- カオスナンバーズ３９ きぼうおうホープレイ 
+	-- Number C39: Utopia (archetype)
+	-- ＣＮｏ．３９ 希望皇ホープレイ
+	-- カオスナンバーズ３９ きぼうおうホープレイ
 	-- Number C39: Utopia Ray/Number C39: Utopia Ray Victory/Number C39: Utopia Ray V
 	AnimeArchetype.OCGCN39UtopiaRay={
 		56840427,87911394,66970002
@@ -831,9 +850,9 @@ if not AnimeArchetype then
 		playerid=playerid or PLAYER_NONE
 		return c:IsSetCard(0x1539,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGCN39UtopiaRay))
 	end
-	-- Number S 
+	-- Number S
 	-- ＳＮｏ.
-	-- シャイニングナンバーズ 
+	-- シャイニングナンバーズ
 	-- Number S39: Utopia the Lightning/Number S39: Utopia the Lightning/Number S0: Utopic ZEXAL
 	AnimeArchetype.OCGNumberS={
 		52653092,56832966,86532744
@@ -844,7 +863,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x2048,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGNumberS))
 	end
 
-	-- Numeron ヌメロン 
+	-- Numeron ヌメロン
 	-- Number 100: Numeron Dragon
 	-- Rank-Up-Magic Numeron Force
 	-- Rank-Down-Magic Numeron Fall
@@ -859,7 +878,7 @@ if not AnimeArchetype then
 
 	-- Papillon パピヨン
 	-- Moonlit Papillon
-	function Card.IsPapillon(c,sc,sumtype,playerid) 
+	function Card.IsPapillon(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
 		playerid=playerid or PLAYER_NONE
 		return c:IsSetCard(0x53c,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,16366944)
@@ -873,7 +892,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x53d,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,49966595,6205579)
 	end
 
-	-- Pixie (not finished) 
+	-- Pixie (not finished)
 	-- 妖精
 	-- ようせい
 	-- Ghost Fairy Elfobia/Fairy of the Fountain/Prickle Fairy
@@ -893,7 +912,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x53e,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGPixie))
 	end
 
-	-- Priestess 
+	-- Priestess
 	-- 巫女
 	-- みこ
 	-- Priestess with Eyes of Blue/Maiden of the Aqua/Winda, Priestess of Gusto
@@ -968,7 +987,7 @@ if not AnimeArchetype then
 			or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGRed))
 	end
 
-	-- Seal 
+	-- Seal
 	-- 封じ
 	-- ふうじ
 	-- Mask of Restrict/Block Attack/Stop Defense
@@ -982,7 +1001,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x545,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGSeal))
 	end
 
-	-- Shaman シャーマン 
+	-- Shaman シャーマン
 	-- Elemental HERO Necroid Shaman/Sylvan Sagequoia/The Legendary Fisherman
 	-- The Legendary Fisherman III/The Legendary Fisherman II/Lumina, Twilightsworn Shaman
 	-- Neo Flamvell Shaman
@@ -996,7 +1015,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x546,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGShaman))
 	end
 
-	-- Shark (archetype)シャーク 
+	-- Shark (archetype)シャーク
 	-- Eagle Shark/Hyper-Ancient Shark Megalodon/Number C32: Shark Drake Veiss
 	-- Shark Caesar/Cat Shark/Gazer Shark
 	-- Cyber Shark/Shark Stickers/Shark Cruiser
@@ -1046,7 +1065,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x549,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,31930787,75733063)
 	end
 
-	-- Sky (not finished) 
+	-- Sky (not finished)
 	-- 天
 	-- てん
 	-- Fire Formation - Tenki/Fire Formation - Tenken/Fire Formation - Tensu
@@ -1082,7 +1101,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x54a,sc,sumtype,playerid) or c:IsSetCard(0xf6,sc,sumtype,playerid) or c:IsSetCard(0x3042,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGSky))
 	end
 
-	-- Slime スライム 
+	-- Slime スライム
 	-- Slime Toad/Graydle Slime/Graydle Slime Jr.
 	-- Jam Breeding Machine/Slime token/Change Slime
 	-- Jam Defender/D/D Swirl Slime/D/D Necro Slime
@@ -1098,7 +1117,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x54b,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGSlime))
 	end
 
-	-- Sphere スフィア 
+	-- Sphere スフィア
 	-- Abyss-sphere/Vylon Sphere/Number C9: Chaos Dyson Sphere
 	-- The Atmosphere/Sphere of Chaos/Blast Sphere
 	-- Daigusto Sphreez/Darkness Neosphere/Troposphere
@@ -1115,8 +1134,8 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x54c,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGSphere))
 	end
 
-	--- Spirit (archetype) 
-	--- 精霊 
+	--- Spirit (archetype)
+	--- 精霊
 	--- スピリット
 	--- Blue-Eyes Spirit Dragon
 	function Card.IsSpirit(c,sc,sumtype,playerid)
@@ -1147,7 +1166,7 @@ if not AnimeArchetype then
 	end
 
 	-- Stone (list to do)
-	-- 岩石 
+	-- 岩石
 	-- がんせき
 	-- Boulder Tortoise/Giant Soldier of Stone/Rock Spirit/Sentry Soldier of Stone
 	AnimeArchetype.OCGStone={
@@ -1161,7 +1180,7 @@ if not AnimeArchetype then
 
 	-- Superheavy
 	-- 超重
-	-- ちょうじゅう 
+	-- ちょうじゅう
 
 	-- Tachyon タキオン
 	AnimeArchetype.OCGTachyon={
@@ -1175,7 +1194,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x555,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGTachyon))
 	end
 
-	-- Tachyon Dragon 
+	-- Tachyon Dragon
 	-- 時空竜
 	-- タキオン・ドラゴン
 	AnimeArchetype.OCGTachyonDragon={
@@ -1208,7 +1227,7 @@ if not AnimeArchetype then
 	function Card.IsToyArcV(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
 		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x55a,sc,sumtype,playerid) or c:IsSetCard(0xad,sc,sumtype,playerid) 
+		return c:IsSetCard(0x55a,sc,sumtype,playerid) or c:IsSetCard(0xad,sc,sumtype,playerid)
 	end
 
 	--V (GX Archetype)
@@ -1252,7 +1271,7 @@ if not AnimeArchetype then
 
 	-- White ホワイト
 	-- Great White/Cyberse Whitehat/Malefic Blue-Eyes White Dragon
-	-- The All-Seeing White Tiger/Deep-Eyes White Dragon/ Paladin of White Dragon/ 
+	-- The All-Seeing White Tiger/Deep-Eyes White Dragon/ Paladin of White Dragon/
 	-- Naturia White Oak/White Night Dragon/Blue-Eyes Alternative White Dragon/
 	-- Blue-Eyes White Dragon/ The White Stone of Ancients/The White Stone of Legend/
 	-- White Aura Dolphin/White Aura Biphamet/White Aura Whale/

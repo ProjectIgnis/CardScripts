@@ -8,6 +8,11 @@ function GetID()
 end
 
 function Duel.LoadCardScript(code)
+	if type(code)=="number" then
+		code="c"..code..".lua"
+	elseif type(code)~="string" then
+		error("Parameter 1 should be \"number\" or \"string\"",2)
+	end
 	local card=string.sub(code,0,string.len(code)-4)
 	if not _G[card] then
 		local oldtable,oldcode=GetID()

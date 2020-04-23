@@ -57,7 +57,8 @@ end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_EXTRA,0,nil)
-	if chk==0 then return g:GetClassCount(Card.GetCode)>=2 end
+	local g2=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_EXTRA,nil)
+	if chk==0 then return g:GetClassCount(Card.GetCode)>=2 and g2:GetCount()>=2 end
 	--Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,tp,LOCATION_EXTRA)
 end
 	--Send 2 monsters with different names from extra deck to GY, opponent also sends 2

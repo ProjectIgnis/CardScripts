@@ -232,7 +232,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGDruid={
 		24062258,97064649,7183277
 	}
-	Card.OCGDruid=MakeCheck({0x8c},AnimeArchetype.OCGDruid)
+	Card.IsDruid=MakeCheck({0x8c},AnimeArchetype.OCGDruid)
 
 	-- Dyson ダイソン
 	-- Number C9: Chaos Dyson Sphere/Number 9: Dyson Sphere
@@ -303,7 +303,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGForest={
 		77797992,87624166,14015067,4192696,87430998,46668237,60398723,37322745,36318200,24096499,78010363,42883273,65303664,17733394
 	}
-	Card.IsFairy=MakeCheck({0x51f},AnimeArchetype.OCGForest)
+	Card.IsForest=MakeCheck({0x51f},AnimeArchetype.OCGForest)
 
 	-- Fossil (not finished)
 	-- 化石
@@ -427,19 +427,11 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGJester={
 		72992744,8487449,88722973,
 	}
-	function Card.IsJester(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x52c,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGJester))
-	end
+	Card.IsJester=MakeCheck({0x52c},AnimeArchetype.OCGJester)
 
 	-- Jutte ジュッテ
 	-- Jutte Fighter
-	function Card.IsJutte(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x52d,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,60410769)
-	end
+	Card.IsJutte=MakeCheck({0x52d},{60410769})
 
 	-- King (not finished)
 	-- 王
@@ -510,12 +502,7 @@ if not AnimeArchetype then
 		38180759,22858242,
 		85457355
 	}
-	function Card.IsKing(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		if c:IsChampion(sc,sumtype,playerid) then return true end
-		return c:IsSetCard(0x52f,sc,sumtype,playerid) or c:IsSetCard(0xf8,sc,sumtype,playerid) or c:IsSetCard(0x81,sc,sumtype,playerid) or c:IsSetCard(0xda,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGKing))
-	end
+	Card.IsKing=MakeCheck({0x52f,0xf8,0x81,0xda},AnimeArchetype.OCGKing,{"IsChampion"})
 
 	-- Knight (not finished) ナイト
 	-- Arcana Knight Joker/Dark Titan of Terror/Ancient Gear Knight
@@ -564,23 +551,14 @@ if not AnimeArchetype then
 		99348756,66661678,52575195,35429292,89731911,68670547,50725996,39507162,36039163,81306586,
 		6740720,69514125
 	}
-	function Card.IsKnight(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x530,sc,sumtype,playerid) or c:IsSetCard(0x1047,sc,sumtype,playerid) or c:IsSetCard(0x9c,sc,sumtype,playerid) or c:IsSetCard(0xc8,sc,sumtype,playerid)
-				or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGKnight))
-	end
+	Card.IsKnight=MakeCheck({0x530,0x1047,0x9c,0xc8},AnimeArchetype.OCGKnight)
 
 	-- Koala コアラ
 	AnimeArchetype.OCGKoala={
 		-- Big Koala, Des Koala, Vampire Koala, Sea Koala, Koalo-Koala, Tree Otter
 		42129512,69579761,1371589,87685879,7243511,71759912,
 	}
-	function Card.IsKoala(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x531,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGKoala))
-	end
+	Card.IsKoala=MakeCheck({0x531},AnimeArchetype.OCGKoala)
 
 	-- Lamp ランプ
 	-- Performapal Trump Witch/Performapal Trump Girl/Mech Mole Zombie
@@ -588,52 +566,32 @@ if not AnimeArchetype then
 	-- Lord of the Lamp/ La Jinn the Mystical Genie of the Lamp
 	AnimeArchetype.OCGLamp={
 		54912977,97590747,98049915, 39838559,99510761,91584698,
-		id02073,63545455
+		42002073,63545455
 	}
-	function Card.IsLamp(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x532,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGLamp))
-	end
+	Card.IsLamp=MakeCheck({0x532},AnimeArchetype.OCGLamp)
 
 	-- Landstar ランドスター
 	-- Comrade Swordsman of Landstar/Swordsman of Landstar
-	function Card.IsLandstar(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x533,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,3573512,83602069)
-	end
+	Card.IsLandstar=MakeCheck({0x533},{3573512,83602069})
 
 	-- Line Monster ラインモンスター
 	-- Number 72: Shogi Rook/Shogi Knight/Shogi Lance
 	AnimeArchetype.OCGLineMonster={
 		32476434,41493640,75253697
 	}
-	function Card.IsLineMonster(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x564,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGLineMonster))
-	end
+	Card.IsLineMonster=MakeCheck({0x564},AnimeArchetype.OCGLineMonster)
 
 	-- Magnet
 	-- 磁石
 	-- マグネット
-	function Card.IsMagnet(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x534,sc,sumtype,playerid) or c:IsSetCard(0x2066,sc,sumtype,playerid)
-	end
+	Card.IsMagnet=MakeCheck({0x534,0x2066})
 
 	-- Mantis カマキリ
 	-- Empress Mantis
 	AnimeArchetype.OCGMantis={
 		58818411
 	}
-	function Card.IsMantis(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x535,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGMantis))
-	end
+	Card.IsMantis=MakeCheck({0x535},AnimeArchetype.OCGMantis)
 
 	-- Mask  (Last updated by 23rd Apr 2020)
 	-- 仮面 (base)
@@ -648,29 +606,17 @@ if not AnimeArchetype then
 		49064413,10189126,82432018,57882509,56948373,
 		3149764,16392422,20765952,28933734,22610082
 	}
-	function Card.IsMask(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x583,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGMask))
-	end
+	Card.IsMask=MakeCheck({0x583},AnimeArchetype.OCGMask)
 
 	-- Melodious Songstress
 	-- 幻奏の歌姫
 	-- げんそうのうたひめ
 	-- Soprano the Melodious Songstress/Solo the Melodious Songstress
-	function Card.IsMelodiousSongtress(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x209b,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,14763299,62895219)
-	end
+	Card.IsMelodiousSongtress=MakeCheck({0x209b},{14763299,62895219})
 
 	-- Motor モーター
 	-- Fiendish Engine Ω
-	function Card.IsMotor(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x537,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,82556058)
-	end
+	Card.IsMotor=MakeCheck({0x537},{82556058})
 
 	-- Neko 猫
 	-- Dark Cat with White Tail/Kinka-byo/Black Cat-astrophe

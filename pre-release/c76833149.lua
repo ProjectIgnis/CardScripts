@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.mttg)
 	e1:SetOperation(s.mtop)
@@ -51,7 +52,7 @@ function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
+	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local g=Duel.SelectMatchingCard(tp,s.mtfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,e:GetHandler(),e)
 	local tc=g:GetFirst()

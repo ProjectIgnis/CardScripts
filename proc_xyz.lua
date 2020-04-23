@@ -519,6 +519,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 						xg=xyztempg1
 					end
 					local mg
+					local g
 					if og then
 						g=og
 						mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)

@@ -191,7 +191,7 @@ if not AnimeArchetype then
 		18897163,6764709,47297616,96561011,
 		88264978
 	}
-	Card.IsDarkness=MakeCheck({0x514},AnimeArchetype.OCGDarkness)
+	Card.IsDarkness=MakeCheck({0x316},AnimeArchetype.OCGDarkness)
 
 	-- Dog ドッグ
 	-- Assault Dog/Mad Dog of Darkness/Ancient Gear Hunting Hound
@@ -205,7 +205,7 @@ if not AnimeArchetype then
 		29491334,86652646,12076263,96930127,11987744,86889202,
 		39246582,23297235,6480253,47929865,94667532
 	}
-	Card.IsDog=MakeCheck({0x514},AnimeArchetype.OCGDog)
+	Card.IsDog=MakeCheck({0x516},AnimeArchetype.OCGDog)
 
 	-- Doll ドール
 	-- Aqua Madoor/Tribute Doll/Malice Doll of Demise
@@ -215,11 +215,7 @@ if not AnimeArchetype then
 		72657739,91939608,85639257,2903036,49563947,82579942,
 		92418590,39806198
 	}
-	function Card.IsDoll(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x517,sc,sumtype,playerid) or c:IsSetCard(0x9d,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGDoll))
-	end
+	Card.IsDoll=MakeCheck({0x517,0x9d},AnimeArchetype.OCGDoll)
 
 
 	-- Drone
@@ -228,11 +224,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGDrone={
 		24610207,756652,4474060
 	}
-	function Card.IsDrone(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x581,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGDrone))
-	end
+	Card.IsDrone=MakeCheck({0x581},AnimeArchetype.OCGDrone)
 
 
 	-- Druid ドルイド
@@ -240,19 +232,11 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGDruid={
 		24062258,97064649,7183277
 	}
-	function Card.IsDruid(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x8c,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGDruid))
-	end
+	Card.OCGDruid=MakeCheck({0x8c},AnimeArchetype.OCGDruid)
 
 	-- Dyson ダイソン
 	-- Number C9: Chaos Dyson Sphere/Number 9: Dyson Sphere
-	function Card.IsDyson(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x519,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,1992816,32559361)
-	end
+	Card.IsDyson=MakeCheck({0x519},{1992816,32559361})
 
 	-- Earth (archetype) (to do)
 	-- 地
@@ -264,12 +248,7 @@ if not AnimeArchetype then
 		3136426,64681263,97612389,86016245,91020571,58601383,97204936,63465535,4587638,38296564,60627999,
 		79569173,97169186,26381750,70156997,20590784,77428945,54762426,46918794,95220856,2084239,77754944
 	}
-	function Card.IsEarth(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		if c:IsEarthbound(sc,sumtype,playerid) or c:IsHell(sc,sumtype,playerid) then return true end
-		return c:IsSetCard(0x51a,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGEarth))
-	end
+	Card.IsEarth=MakeCheck({0x51a},AnimeArchetype.OCGEarth,{"IsEarthbound","IsHell"})
 
 	-- Earthbound (list to update)
 	-- 地縛
@@ -279,11 +258,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGEarthbound={
 		64187086,56339050,96907086,67987302,65743242
 	}
-	function Card.IsEarthbound(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x151a,sc,sumtype,playerid) or c:IsSetCard(0x21,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGEarthbound))
-	end
+	Card.IsEarthbound=MakeCheck({0x151a,0x21},AnimeArchetype.OCGEarthbound)
 
 	-- Elf エルフ
 	-- Ghost Fairy Elfobia/Wing Egg Elf/Elf's Light
@@ -296,21 +271,13 @@ if not AnimeArchetype then
 		68625727,59983499,21417692,69140098,42386471,61807040,
 		11613567,15025844,98299011
 	}
-	function Card.IsElf(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x51b,sc,sumtype,playerid) or c:IsSetCard(0xe4,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGElf))
-	end
+	Card.IsElf=MakeCheck({0x51b,0xe4},AnimeArchetype.OCGElf)
 
 	-- Emissary of Darkness
 	-- 冥府の使者
 	-- めいふのししゃ
 	-- Gorz the Emissary of Darkness/Emissary of Darkness Token
-	function Card.IsEmissaryOfDarkness(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x51c,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,44330098,44330099)
-	end
+	Card.IsEmissaryOfDarkness=MakeCheck({0x51c,0xe4},{44330098,44330099})
 
 	-- Fairy (archetype) フェアリー
 	-- Ancient Fairy Dragon/CXyz Dark Fairy Cheer Girl/Nekogal #1
@@ -323,11 +290,7 @@ if not AnimeArchetype then
 		86937530,55623480,52022648,42921475,20315854,45939611,
 		6979239
 	}
-	function Card.IsFairy(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x51d,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGFairy))
-	end
+	Card.IsFairy=MakeCheck({0x51d},AnimeArchetype.OCGFairy)
 
 	-- Forest (archetype)
 	-- 森
@@ -340,11 +303,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGForest={
 		77797992,87624166,14015067,4192696,87430998,46668237,60398723,37322745,36318200,24096499,78010363,42883273,65303664,17733394
 	}
-	function Card.IsForest(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x51f,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGForest))
-	end
+	Card.IsFairy=MakeCheck({0x51f},AnimeArchetype.OCGForest)
 
 	-- Fossil (not finished)
 	-- 化石
@@ -353,19 +312,11 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGFossil={
 
 	}
-	function Card.IsFossil(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x512,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGFossil))
-	end
+	Card.IsFossil=MakeCheck({0x512},AnimeArchetype.OCGFossil)
 
 	-- Gem-Knight Lady ジェムナイトレディ
 	-- Gem-Knight Lady Brilliant Diamond/Gem-Knight Lady Lapis Lazuli
-	function Card.IsGemKnightLady(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x3047,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,47611119,19355597)
-	end
+	Card.IsGemKnightLady=MakeCheck({0x3047},{47611119,19355597})
 
 	-- Gorgonic
 	-- ゴルゴニック
@@ -374,11 +325,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGGorgonic={
 		64379261,84401683,98637386,37168514,90764875
 	}
-	function Card.IsGorgonic(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x522,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGGorgonic))
-	end
+	Card.IsGorgonic=MakeCheck({0x522},AnimeArchetype.OCGGorgonic)
 	-- Goyo ゴヨウ
 	-- Brotherhood of the Fire Fist - Coyote/Goyo Emperor/Goyo Guardian
 	-- Goyo King/Goyo Chaser/Goyo Defender
@@ -387,19 +334,11 @@ if not AnimeArchetype then
 		49785720,59255742,7391448,84305651,63364266,58901502,
 		98637386
 	}
-	function Card.IsGoyo(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x523,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGGoyo))
-	end
+	Card.IsGoyo=MakeCheck({0x523},AnimeArchetype.OCGGoyo)
 
 	-- Granel
 	-- グランエル
-	function Card.IsGranel(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x524,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,2137678,4545683)
-	end
+	Card.IsGranel=MakeCheck({0x524},{2137678,4545683})
 
 	-- Hand (archetype) ハンド
 	-- Ice Hand/Ancient Gear Fist/Performapal Sleight Hand Magician
@@ -414,11 +353,7 @@ if not AnimeArchetype then
 		97570038,28003512,63746411,40555959,68535320,21414674,
 		22530212,13317419,95453143,47840168,11845050
 	}
-	function Card.IsHand(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x527,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGHand))
-	end
+	Card.IsHand=MakeCheck({0x527},AnimeArchetype.OCGHand)
 
 	-- Heavy Industry
 	-- 重機
@@ -427,11 +362,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGHeavyIndustry={
 		42851643,29515122,13647631
 	}
-	function Card.IsHeavyIndustry(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x529,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGHeavyIndustry))
-	end
+	Card.IsHeavyIndustry=MakeCheck({0x529},AnimeArchetype.OCGHeavyIndustry)
 
 	-- Hell
 	-- 地獄
@@ -440,11 +371,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGHell={
 		36029076,46820049,50916353
 	}
-	function Card.IsHell(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x567,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGHell))
-	end
+	Card.IsHell=MakeCheck({0x567},AnimeArchetype.OCGHell)
 
 	-- Heraldic
 	-- 紋章
@@ -452,11 +379,7 @@ if not AnimeArchetype then
 	-- Number 18: Heraldry Patriarch/Number 8: Heraldic King Genom-Heritage/Medallion of the Ice Barrier
 
 	-- Heraldic
-	function Card.IsHeraldic(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x566,sc,sumtype,playerid) or c:IsSetCard(0x76,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,23649496,47387961)
-	end
+	Card.IsHeraldic=MakeCheck({0x566,0x76},{23649496,47387961})
 
 
 	-- Hunder サンダー
@@ -477,11 +400,7 @@ if not AnimeArchetype then
 		30010480,698785,77506119,54752875,6766208,987311,
 		84417082,4178474,11741041,12580477
 	}
-	function Card.IsHunder(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x565,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGHunder))
-	end
+	Card.IsHunder=MakeCheck({0x565},AnimeArchetype.OCGHunder)
 
 	-- Inu 犬
 	-- Mad Dog of Darkness/Ancient Gear Hunting Hound/Caninetaur
@@ -494,22 +413,14 @@ if not AnimeArchetype then
 		27971137,58616392,11548522,
 		94667532,27750191
 	}
-	function Card.IsInu(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x52a,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGInu))
-	end
+	Card.IsInu=MakeCheck({0x52a},AnimeArchetype.OCGInu)
 
 	-- Ivy アイヴィ
 	-- Wall of Ivy/Ivy Shackles/Ivy Token
 	AnimeArchetype.OCGIvy={
 		30069398,14730606,30069399
 	}
-	function Card.IsIvy(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x52b,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGIvy))
-	end
+	Card.IsIvy=MakeCheck({0x52b},AnimeArchetype.OCGIvy)
 
 	-- Jester ジェスター
 	-- Majester Paladin, the Ascending Dracoslayer/Jester Confit/Jester Lord

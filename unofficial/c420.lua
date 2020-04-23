@@ -225,7 +225,8 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x513,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,43061293)
 	end
 
-	-- Dice (archetype) ダイス
+	-- Dice (archetype)
+	-- ダイス
 	-- Speedroid Red-Eyed Dice/Speedroid Tri-Eyed Dice/Dice Armadillo
 	-- Dice Try!/Dice Jar/Dice Roll Battle
 	-- Dice Re-Roll
@@ -239,7 +240,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x514,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGDice))
 	end
 
-	-- Darkness
+	-- Darkness  (Last updated by 23rd Apr 2020)
 	-- ダークネス
 	-- Cyberdarkness Dragon/Darkness Metal, the Dragon of Dark Steel/Malevolent Mech - Goku En/Simorgh of Darkness
 	-- Umbral Soul/Darkness Destroyer/Darkness Neosphere/Hunter of Black Feathers
@@ -651,6 +652,7 @@ if not AnimeArchetype then
 	-- Vennominon the King of Poisonous Snakes/Number 8: Heraldic King Genom-Heritage/Rise to Full Height
 	-- King of the Swamp/Beastking of the Swamps/Imperial Tombs of Necrovalley
 	-- Coach King Giantrainer/Coach Captain Bearman
+	-- Morph King Stygi-Gel
 
 	-- archtype:Fire King/Supreme King/Monarch (spell/trap)/Dracoverlord
 	AnimeArchetype.OCGKing={
@@ -663,7 +665,8 @@ if not AnimeArchetype then
 		35058857,CARD_NECROVALLEY,47387961,6901008,18891691,63571750,89959682,43791861,51371017,82213171,10071456,29155212,
 		4179849,71411377,5901497,58477767,19254117,33950246,51452091,16509093,93016201,26586849,56058888,72405967,
 		86742443,86327225,61370518,88307361,29762407,80955168,72709014,24857466,52589809,5309481,10613952,84025439,
-		38180759,22858242
+		38180759,22858242,
+		85457355
 	}
 	function Card.IsKing(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
@@ -788,6 +791,25 @@ if not AnimeArchetype then
 		sumtype=sumtype or 0
 		playerid=playerid or PLAYER_NONE
 		return c:IsSetCard(0x535,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGMantis))
+	end
+
+	-- Mask  (Last updated by 23rd Apr 2020)
+	-- 仮面 (base)
+	-- かめん (ruby)
+	-- Mask of Restrict/Grand Tiki Elder/Masked Clown
+	-- Masked Beast Des Gardius/Curse of the Masked Beast/The Masked Beast
+	-- Masked Sorcerer/Mask of Brutality/Mask of Weakness
+	-- Mask of the Accursed/Tutan Mask/Toon Masked Sorcerer
+	-- Mask of Dispel/Mask of Darkness/The Mask of Remnants
+	AnimeArchetype.OCGMask={
+		29549364,13676474,77581312,48948935,94377247,
+		49064413,10189126,82432018,57882509,56948373,
+		3149764,16392422,20765952,28933734,22610082
+	}
+	function Card.IsMask(c,sc,sumtype,playerid)
+		sumtype=sumtype or 0
+		playerid=playerid or PLAYER_NONE
+		return c:IsSetCard(0x583,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGMask))
 	end
 
 	-- Melodious Songstress
@@ -952,7 +974,7 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x542,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGRacoon))
 	end
 
-	-- Red (archetype) レッド	 Last updated by 16th Apr 2020
+	-- Red (archetype) レッド   Last updated by 16th Apr 2020
 	-- Sub-archetype: Red-Eyes/Red Dragon Archfiend
 	-- U.A. Dreadnought Dunker/Vampire Red Baron/Xtra HERO Dread Decimator/Eternal Dread
 	-- Ojama Red/Number C106: Giant Red Hand/Construction Train Signal Red/The Wicked Dreadroot
@@ -1015,8 +1037,10 @@ if not AnimeArchetype then
 		return c:IsSetCard(0x546,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGShaman))
 	end
 
-	-- Shark (archetype)シャーク
-	-- Eagle Shark/Hyper-Ancient Shark Megalodon/Number C32: Shark Drake Veiss
+	-- Shark (archetype)  (Last updated by 23rd Apr 2020)
+	-- シャーク
+	-- Eagle Shark/Valiant Shark Lancer/Hyper-Ancient Shark Megalodon
+	-- Number C32: Shark Drake Veiss/Buzzsaw Shark
 	-- Shark Caesar/Cat Shark/Gazer Shark
 	-- Cyber Shark/Shark Stickers/Shark Cruiser
 	-- Shark Fortress/Sharkraken/Abyssal Kingshark
@@ -1026,14 +1050,14 @@ if not AnimeArchetype then
 	-- Depth Shark/Number 37: Hope Woven Dragon Spider Shark/Number 32: Shark Drake
 	-- Number 71: Rebarian Shark/Number 47: Nightmare Shark/Hammer Shark
 	-- Bahamut Shark/Panther Shark/Mermaid Shark
-	-- Metabo-Shark/Left-Hand Shark/Right-Hand Shark
+	-- Metabo-Shark/Left-Hand Shark/Lantern Shark/Right-Hand Shark
 	AnimeArchetype.OCGShark={
-		7500772,10532969,49221191,14306092,84224627,23536866,
-		32393580,20838380,20358953,50449881,71923655,44223284,
-		69155991,70655556,63193879,5014629,51227866,25484449,
-		64319467,17643265,34290067,37798171,37279508,65676461,
-		59479050,31320433,17201174,440556,70101178,87047161,
-		37792478,47840168,11845050
+		7500772,23672629,10532969,49221191,7150545,14306092,
+		84224627,23536866,32393580,20838380,20358953,50449881,
+		71923655,44223284,69155991,70655556,63193879,5014629,
+		51227866,25484449,64319467,17643265,34290067,37798171,
+		37279508,65676461,59479050,31320433,17201174,440556,
+		70101178,87047161,37792478,47840168,70156946,11845050
 	}
 	function Card.IsShark(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0

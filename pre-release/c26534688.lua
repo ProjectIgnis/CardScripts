@@ -69,7 +69,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmcfilter(c,tp)
-	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsType(TYPE_SYNCHRO) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:GetSummonPlayer()==tp
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsType(TYPE_SYNCHRO) and c:GetSummonPlayer()==tp
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()

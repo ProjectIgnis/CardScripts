@@ -6,23 +6,20 @@ if not AnimeArchetype then
 		return function(c,sc,sumtype,playerid)
 			sumtype=sumtype or 0
 			playerid=playerid or PLAYER_NONE
-			local res=false
 			if extrafuncs then
 				for _,func in pairs(extrafuncs) do
-					res=res or Card[func](c,sc,sumtype,playerid)
+					if Card[func](c,sc,sumtype,playerid) then return true end
 				end
-				if res then return true end
 			end
 			if setcodes then
 				for _,setcode in pairs(setcodes) do
-					res=res or c:IsSetCard(setcode,sc,sumtype,playerid)
+					if c:IsSetCard(setcode,sc,sumtype,playerid) then return true end
 				end
-				if res then return true end
 			end
 			if archtable then
-				res=c:IsSummonCode(sc,sumtype,playerid,table.unpack(archtable))
+				if c:IsSummonCode(sc,sumtype,playerid,table.unpack(archtable)) then return true
 			end
-			return res
+			return false
 		end
 	end
 

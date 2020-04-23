@@ -6,6 +6,14 @@ function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,nil,5,2,aux.FilterFaceupFunction(Card.IsRank,4),aux.Stringid(id,0))
 	c:EnableReviveLimit()
+	--can not be xyz material
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
+	e0:SetCondition(s.xyzcon)
+	e0:SetValue(1)
+	c:RegisterEffect(e0)
 	--pierce
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -23,6 +31,10 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
+end
+function s.xyzcon(e)
+	local c=e:GetHandler()
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_XYZ)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

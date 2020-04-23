@@ -23,9 +23,11 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetHintTiming(0,TIMING_DAMAGE_STEP+TIMING_END_PHASE)
 	e2:SetCountLimit(1)
+	e2:SetCondition(s.atkcon)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
@@ -37,8 +39,11 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0) and Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0 end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,PLAYER_ALL,LOCATION_ONFIELD)
+	local g1=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,0,nil)
+	local g2=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+	if chk==0 then return g1:GetCount()>0 and g2:GetCount()>0 end
+	g1:Merge(g2)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
 end
 function s.check(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetControler)==#sg
@@ -49,6 +54,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if #sg==2 then
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
+end
+function s.atkcon(e,tp,eg,ep,ev,re,r,rp)	
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()	
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:GetBaseAttack()>0
@@ -72,6 +80,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(tc:GetBaseAttack()/2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)

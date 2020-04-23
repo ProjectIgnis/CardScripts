@@ -1,4 +1,4 @@
---享楽の堕天使
+--悦楽の堕天使
 --Darklord of Pleasure
 --Scripted by ahtelel7
 local s,id=GetID()

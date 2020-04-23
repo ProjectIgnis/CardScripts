@@ -56,9 +56,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(atk)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_UPDATE_DEFENSE)
-		c:RegisterEffect(e2)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
@@ -75,7 +72,8 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
     c:RegisterEffect(e1)
 end
 function s.efilter(e,te)
-    return te:IsActiveType(TYPE_MONSTER) and e:GetHandler()~=te:GetHandler() and te:GetHandler():IsSummonType(LOCATION_EXTRA)
+    return te:IsActiveType(TYPE_MONSTER) and te:IsActivated()
+		and e:GetHandler()~=te:GetHandler() and te:GetHandler():GetSummonLocation()==LOCATION_EXTRA
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

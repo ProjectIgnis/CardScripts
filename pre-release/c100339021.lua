@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--search
 	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_TODECK)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1,id)

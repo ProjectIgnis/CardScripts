@@ -31,6 +31,7 @@ end
 	--Excavate equal to the number of rock monsters controlled +5, add 1 rock to hand whose level is equal/less than number of revealed cards
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_ROCK),tp,LOCATION_MZONE,0,nil)+5
+	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<ct then return end
 	Duel.ConfirmDecktop(tp,ct)
 	local g=Duel.GetDecktopGroup(tp,ct)
 	local db=0

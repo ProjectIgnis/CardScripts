@@ -1,4 +1,4 @@
---悦楽の堕天使
+--享楽の堕天使
 --Darklord of Delight
 --Logical Nonsense
 

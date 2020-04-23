@@ -60,6 +60,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetTargetCards(e)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)~=0 and #tg>0 then
+		c:CompleteProcedure()
 		Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 	end
 end

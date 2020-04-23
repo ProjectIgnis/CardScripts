@@ -1,6 +1,7 @@
---リサイコロ
+--リサイコロ (Anime)
 --Re-dyce-cle (Anime)
 --scripted by Hatter
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon

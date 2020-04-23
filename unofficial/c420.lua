@@ -699,7 +699,7 @@ if not AnimeArchetype then
 		95511642,56827051,3381441,27107590,36734924,54455435,
 		17214465
 	}
-	Card.IsPixie=MakeCheck({0x53f},AnimeArchetype.OCGPriestess)
+	Card.IsPriestess=MakeCheck({0x53f},AnimeArchetype.OCGPriestess)
 
 	-- Puppet パペット
 	-- Puppet Master/Junk Puppet/Puppet Ritual
@@ -798,7 +798,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGShining={
 		22061412,88820235,25366484,62829077,53347303,90263923,12927849,21481146,2061963
 	}
-	Card.IsShining=MakeCheck({0x548},AnimeArchetype.OCGShining)
+	Card.IsShining=MakeCheck({0x548},AnimeArchetype.OCGShining,{"IsNumberS"})
 
 	-- Skiel
 	-- スキエル
@@ -928,23 +928,14 @@ if not AnimeArchetype then
 		97574404,62017867,96746083,51638941,21208154,62180201,57793869,88581108,58859575,84243274
 		--LV, Vision HERO
 	}
-	function Card.IsV(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		if c:Is_V_(sc,sumtype,playerid) then return true end
-		return c:IsSetCard(0x55a,sc,sumtype,playerid) or c:IsSetCard(0x41,sc,sumtype,playerid) or c:IsSetCard(0x5008,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGV))
-	end
+	Card.IsV=MakeCheck({0x55a,0x41,0x5008},AnimeArchetype.OCGV,{"Is_V_"})
 
 	-- V (Zexal archetype)
 	-- V
 	-- ブイ
 
 	-- Number C39: Utopia Ray V/V Salamander/V－LAN Hydra/V-LAN Token
-	function Card.Is_V_(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x155a,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,33725002,66970002,13536606,13536607)
-	end
+	Card.Is_V_=MakeCheck({0x155a},{33725002,66970002,13536606,13536607})
 
 	--W
 	-- Arcana Force XXI - The World/VW-Tiger Catapult/VWXYZ-Dragon Catapult Cannon
@@ -955,12 +946,7 @@ if not AnimeArchetype then
 		84243274,65687442
 		--Windwitch/ ZW
 	}
-
-	function Card.IsW(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x56b,sc,sumtype,playerid) or c:IsSetCard(0xf0,sc,sumtype,playerid) or c:IsSetCard(0x7e,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGW))
-	end
+	Card.IsW=MakeCheck({0x56b,0xf0,0x7e},AnimeArchetype.OCGW)
 
 	-- White ホワイト
 	-- Great White/Cyberse Whitehat/Malefic Blue-Eyes White Dragon
@@ -988,20 +974,12 @@ if not AnimeArchetype then
 		84812868,32825095,84335863,
 		19885332
 	}
-	function Card.IsWhite(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x55d,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGWhite))
-	end
+	Card.IsWhite=MakeCheck({0x55d},AnimeArchetype.OCGWhite)
 
 	-- Wisel
 	-- ワイゼル
 	-- Meklord Emperor Wisel/Meklord Army of Wisel
-	function Card.IsWisel(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x560,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,68140974,39648965)
-	end
+	Card.IsWisel=MakeCheck({0x560},{68140974,39648965})
 
 	--X
 	AnimeArchetype.OCGX={
@@ -1010,24 +988,14 @@ if not AnimeArchetype then
 		84243274,2111707,91998119,99724761
 		--CXyz, X-Saber
 	}
-
-	function Card.IsX(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x56c,sc,sumtype,playerid) or c:IsSetCard(0x1073,sc,sumtype,playerid) or c:IsSetCard(0x100d,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGX))
-	end
+	Card.IsX=MakeCheck({0x56c,0x1073,0x100d},AnimeArchetype.OCGX)
 
 	--Y
 	AnimeArchetype.OCGY={
 		23915499,76895648,56111151,3912064,911883,14731897,65622692,81332143,84243274,2111707,91998119,25119460
 		--PSYFrame
 	}
-
-	function Card.IsY(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x56d,sc,sumtype,playerid) or c:IsSetCard(0xc1,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGY))
-	end
+	Card.IsY=MakeCheck({0x56d,0xc1},AnimeArchetype.OCGY)
 
 
 	-- Yomi 黄泉
@@ -1036,34 +1004,21 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGYomi={
 		12538374,51534754
 	}
-	function Card.IsYomi(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x563,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,12538374,51534754)
-	end
+	Card.IsYomi=MakeCheck({0x563},AnimeArchetype.OCGYomi)
 
 	-- Yubel (archetype) ユベル
 	AnimeArchetype.OCGYubel={
 		-- Yubel, Yubel terror, Yubel nighmare
 		78371393,4779091,31764700
 	}
-	function Card.IsYubel(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x561,sc,sumtype,playerid)  or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGYubel))
-	end
+	Card.IsYubel=MakeCheck({0x561},AnimeArchetype.OCGYubel)
 
 	--Z
 	AnimeArchetype.OCGZ={
 		50319138,95027497,29389368,64500000,62499965,30562585,51865604,65172015,40854197,27134689,84243274,91998119,99724761,25119460
 		--ZW -
 	}
-
-	function Card.IsZ(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x56e,sc,sumtype,playerid) or c:IsSetCard(0x7e,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGZ))
-	end
+	Card.IsZ=MakeCheck({0x56e,0x7e},AnimeArchetype.OCGZ)
 
 	-- ∞ (Infinity)
 	-- ∞
@@ -1073,11 +1028,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGInfinity={
 		63468625,4545683,31930787,68140974
 	}
-	function Card.IsInfinity(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x562,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGInfinity))
-	end
+	Card.IsInfinity=MakeCheck({0x562},AnimeArchetype.OCGInfinity)
 
 
 	-- Monarch
@@ -1117,10 +1068,6 @@ if not AnimeArchetype then
 	75840616,77387463,80921533,93483212,99427357,82301904,
 	04591250,62188962,40473581,56907389
 	}
-	function Card.IsMonarch(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x571,sc,sumtype,playerid) or c:IsSetCard(0xbe,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGMonarch))
-	end
+	Card.IsMonarch=MakeCheck({0x571,0xbe},AnimeArchetype.OCGMonarch)
 
 end

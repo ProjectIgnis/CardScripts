@@ -66,7 +66,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if chk==0 then return true end
 	local c=e:GetHandler()
 	local dice=Duel.TossDice(1-tp,1)
-	local att=math.pow(2,dice-1)
+	local att=2^(dice-1)
 	local tg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local g=Group.CreateGroup()
 	for tc in aux.Next(tg) do

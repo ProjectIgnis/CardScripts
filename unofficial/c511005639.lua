@@ -101,7 +101,8 @@ function s.arcanareg(c,coin)
 	e4:SetCondition(s.descon)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
-	e4:SetReset(RESET_EVENT+RESETS_CANNOT_ACT)
+	e4:SetReset(RESET_EVENT+RESET_OVERLAY+RESET_TOFIELD)
+	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
 	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
@@ -126,12 +127,14 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.dregop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetFlagEffectLabel(36690018)==0 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_CANNOT_ACT,0,1)
-	end
+		e:SetLabel(1)
+	else e:SetLabel(0) end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK) and c:GetFlagEffect(id)~=0
+	local res=c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK) and e:GetLabelObject():GetLabel()~=0
+	if not res then e:Reset() end
+	return res
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -143,7 +146,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
 	if Duel.Destroy(g,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) then
-		c:ResetFlagEffect(id)
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -155,6 +157,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
 		Duel.RegisterEffect(e1,tp)
 	end
+	e:Reset()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp 

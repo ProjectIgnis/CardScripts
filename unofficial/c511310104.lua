@@ -37,6 +37,7 @@ function s.actfilter(c)
 	return c:IsFacedown() and c:GetSequence()<5
 end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_SZONE,0,1,nil)
 	and c:GetFlagEffect(id)==0 end
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,0)

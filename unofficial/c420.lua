@@ -17,7 +17,7 @@ if not AnimeArchetype then
 				end
 			end
 			if archtable then
-				if c:IsSummonCode(sc,sumtype,playerid,table.unpack(archtable)) then return true
+				if c:IsSummonCode(sc,sumtype,playerid,table.unpack(archtable)) then return true end
 			end
 			return false
 		end

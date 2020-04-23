@@ -1,6 +1,30 @@
 --Anime Archtype
 if not AnimeArchetype then
 	AnimeArchetype = {}
+	
+	local MakeCheck=function(setcodes,archtable,extrafuncs)
+		return function(c,sc,sumtype,playerid)
+			sumtype=sumtype or 0
+			playerid=playerid or PLAYER_NONE
+			local res=false
+			if extrafuncs then
+				for _,func in pairs(extrafuncs) do
+					res=res or Card[func](c,sc,sumtype,playerid)
+				end
+				if res then return true end
+			end
+			if setcodes then
+				for _,setcode in pairs(setcodes) do
+					res=res or c:IsSetCard(setcode,sc,sumtype,playerid)
+				end
+				if res then return true end
+			end
+			if archtable then
+				res=c:IsSummonCode(sc,sumtype,playerid,table.unpack(archtable))
+			end
+			return res
+		end
+	end
 
 	-- Alligator
 	-- アリゲーター
@@ -8,11 +32,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGAlligator={
 		39984786,4611269,59383041,66451379
 	}
-	function Card.IsAlligator(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x502,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGAlligator))
-	end
+	Card.IsAlligator=MakeCheck({0x502},AnimeArchetype.OCGAlligator)
 
 	-- Angel (archetype) list to update
 	-- 天使
@@ -31,19 +51,11 @@ if not AnimeArchetype then
 		74137509,17653779,9032529,79571449,2130625,49674183,
 		69992868,96470883,11398951
 	}
-	function Card.IsAngel(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x154a,sc,sumtype,playerid) or c:IsSetCard(0xef,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGAngel))
-	end
+	Card.IsAngel=MakeCheck({0x154a,0xef},AnimeArchetype.OCGAngel)
 
 	-- Anti アンチ
 	-- Dystopia the Despondent/Delta Crow - Anti Reverse/Anti-Alian
-	function Card.IsAnti(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x503,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,52085072,59839761,43583400)
-	end
+	Card.IsAnti=MakeCheck({0x503},{52085072,59839761,43583400})
 
 	-- Assassin アサシン
 	-- Ansatsu/Dark Hunter/Night Assailant
@@ -54,44 +66,23 @@ if not AnimeArchetype then
 		2191144,25262697,28150174,
 		77558536
 	}
-	function Card.IsAssassin(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x504,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGAssassin))
-	end
+	Card.IsAssassin=MakeCheck({0x504},AnimeArchetype.OCGAssassin)
 
 	-- Astral アストラル
 	-- Astral Barrier/Astral Barrier
-	function Card.IsAstral(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x505,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,37053871,45950291)
-	end
+	Card.IsAstral=MakeCheck({0x505},{37053871,45950291})
 
 	-- Atlandis アトランタル
 	-- Number C6: Chronomaly Chaos Atlandis/Number 6: Chronomaly Atlandis
-	function Card.IsAtlandis(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x506,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,9161357,6387204)
-	end
+	Card.IsAtlandis=MakeCheck({0x506},{9161357,6387204})
 
 	-- Barian (archetype) バリアン
 	-- CXyz Barian Hope/ Number 71: Rebarian Shark
-	function Card.IsBarian(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		if c:IsBarians(sc,sumtype,playerid) or c:IsBattleguard(sc,sumtype,playerid) then return true end
-		return c:IsSetCard(0x509,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,67926903,59479050)
-	end
+	Card.IsBarian=MakeCheck({0x509},{67926903,59479050},{"IsBarians","IsBattleguard"})
 
 	-- Barian's バリアンズ
 	-- Rank-Up-Magic Barian's Force, Rank-Up-Magic Limited Barian's Force
-	function Card.IsBarians(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x1509,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,47660516,92365601)
-	end
+	Card.IsBarians=MakeCheck({0x1509},{47660516,92365601})
 
 	-- Battleguard バーバリアン
 	AnimeArchetype.OCGBattleguard={
@@ -99,21 +90,13 @@ if not AnimeArchetype then
 		-- Battleguard Howling, Battleguard Rage
 		39389320,20394040,40453765,78621186,42233477
 	}
-	function Card.IsBattleguard(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x2509,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGBattleguard))
-	end
+	Card.IsBattleguard=MakeCheck({0x2509},AnimeArchetype.OCGBattleguard)
 
 	-- Blackwing Tamer
 	-- ＢＦＴ
 	-- ブラックフェザーテイマー
 	-- Blackwing Tamer - Obsidian Hawk Joe
-	function Card.IsBlackwingTamer(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x2033,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,81983656)
-	end
+	Card.IsBlackwingTamer=MakeCheck({0x2033},{81983656})
 
 	-- Butterfly
 	-- 蝶
@@ -123,12 +106,7 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGButterfly={
 		16984449,69243953,57261568,3966653
 	}
-	function Card.IsButterfly(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		if c:IsPhantomButterfly(sc,sumtype,playerid) then return true end
-		return c:IsSetCard(0x50c,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGButterfly))
-	end
+	Card.IsButterfly=MakeCheck({0x50c},AnimeArchetype.OCGButterfly,{"IsPhantomButterfly"})
 
 	-- Phantom Butterfly
 	-- 幻蝶
@@ -137,21 +115,13 @@ if not AnimeArchetype then
 	AnimeArchetype.OCGPhantomButterfly={
 		63630268
 	}
-	function Card.IsPhantomButterfly(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x150c,sc,sumtype,playerid) or c:IsSetCard(0x6a,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGPhantomButterfly))
-	end
+	Card.IsPhantomButterfly=MakeCheck({0x150c,0x6a},AnimeArchetype.OCGPhantomButterfly)
 
 	-- C (archetype)
 	-- Ｃ
 	-- カオス
 	-- is "C" or Cxyz or Cnumber
-	function Card.IsC(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x1048,sc,sumtype,playerid) or c:IsSetCard(0x1073,sc,sumtype,playerid) or c:IsSetCard(0x568,sc,sumtype,playerid)
-	end
+	Card.IsC=MakeCheck({0x1048,0x1073,0x568})
 
 	-- Cat キャット (list to update)
 	-- Cat Shark/Nekogal #2/Mimicat
@@ -164,66 +134,39 @@ if not AnimeArchetype then
 		25531465,96501677,51777272,11439455,14878871,52346240,
 		54191698,70975131
 	}
-	function Card.IsCat(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x50e,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGCat))
-	end
+	Card.IsCat=MakeCheck({0x50e},AnimeArchetype.OCGCat)
 
 	-- Celestial
 	-- 天輪
 	-- てんりん
 	-- Celestial Double Star Shaman/Guiding Light
-	function Card.IsCelestial(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x254a,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,69865139,25472513)
-	end
+	Card.IsCelestial=MakeCheck({0x254a},{69865139,25472513})
 
 	-- Champion
 	-- 王者
 	-- おうじゃ
 	-- Champion's Vigilance
-	function Card.IsChampion(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x152f,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,82382815)
-	end
+	Card.IsChampion=MakeCheck({0x152f},{82382815})
+	
 	-- Clear クリアー
 	-- Clear Vice Dragon/Clear World
-	function Card.IsClear(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x510,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,97811903,82044279,33900648)
-	end
+	Card.IsClear=MakeCheck({0x510},{97811903,82044279,33900648})
 
 	-- Comics Hero
 	-- ＣＨ
 	-- コミックヒーロー
 	-- CXyz Comics Hero Legend Arthur/Comics Hero King Arthur
-	function Card.IsComicsHero(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x511,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,77631175,13030280)
-	end
+	Card.IsComicsHero=MakeCheck({0x511},{77631175,13030280})
 
 	-- Cubic Seed
 	-- 方界胤
 	-- ほうかいいん
 	-- Vijam the cubic seed
-	function Card.IsCubicSeed(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x10e3,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,CARD_VIJAM)
-	end
+	Card.IsCubicSeed=MakeCheck({0x10e3},{CARD_VIJAM})
 
 	-- Dart ダーツ
 	-- Fire Darts
-	function Card.IsDart(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x513,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,43061293)
-	end
+	Card.IsCubicSeed=MakeCheck({0x513},{43061293})
 
 	-- Dice (archetype)
 	-- ダイス
@@ -234,11 +177,7 @@ if not AnimeArchetype then
 		16725505,27660735,69893315,59905358,3549275,88482761,
 		83241722
 	}
-	function Card.IsDice(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x514,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGDice))
-	end
+	Card.IsDice=MakeCheck({0x514},AnimeArchetype.OCGDice)
 
 	-- Darkness  (Last updated by 23rd Apr 2020)
 	-- ダークネス
@@ -252,11 +191,7 @@ if not AnimeArchetype then
 		18897163,6764709,47297616,96561011,
 		88264978
 	}
-	function Card.IsDarkness(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x316,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGDarkness))
-	end
+	Card.IsDarkness=MakeCheck({0x514},AnimeArchetype.OCGDarkness)
 
 	-- Dog ドッグ
 	-- Assault Dog/Mad Dog of Darkness/Ancient Gear Hunting Hound
@@ -270,11 +205,7 @@ if not AnimeArchetype then
 		29491334,86652646,12076263,96930127,11987744,86889202,
 		39246582,23297235,6480253,47929865,94667532
 	}
-	function Card.IsDog(c,sc,sumtype,playerid)
-		sumtype=sumtype or 0
-		playerid=playerid or PLAYER_NONE
-		return c:IsSetCard(0x516,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGDog))
-	end
+	Card.IsDog=MakeCheck({0x514},AnimeArchetype.OCGDog)
 
 	-- Doll ドール
 	-- Aqua Madoor/Tribute Doll/Malice Doll of Demise

@@ -81,7 +81,7 @@ if not AnimeArchetype then
 	function Card.IsBarian(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
 		playerid=playerid or PLAYER_NONE
-		if c:IsBarians(fbool) or c:IsBattleguard(fbool) then return true end
+		if c:IsBarians(sc,sumtype,playerid) or c:IsBattleguard(sc,sumtype,playerid) then return true end
 		return c:IsSetCard(0x509,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,67926903,59479050)
 	end
 
@@ -126,7 +126,7 @@ if not AnimeArchetype then
 	function Card.IsButterfly(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
 		playerid=playerid or PLAYER_NONE
-		if c:IsPhantomButterfly(fbool) then return true end
+		if c:IsPhantomButterfly(sc,sumtype,playerid) then return true end
 		return c:IsSetCard(0x50c,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGButterfly))
 	end
 
@@ -336,7 +336,7 @@ if not AnimeArchetype then
 	function Card.IsEarth(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
 		playerid=playerid or PLAYER_NONE
-		if c:IsEarthbound(fbool) or c:IsHell(fbool) then return true end
+		if c:IsEarthbound(sc,sumtype,playerid) or c:IsHell(sc,sumtype,playerid) then return true end
 		return c:IsSetCard(0x51a,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGEarth))
 	end
 
@@ -671,7 +671,7 @@ if not AnimeArchetype then
 	function Card.IsKing(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
 		playerid=playerid or PLAYER_NONE
-		if c:IsChampion(fbool) then return true end
+		if c:IsChampion(sc,sumtype,playerid) then return true end
 		return c:IsSetCard(0x52f,sc,sumtype,playerid) or c:IsSetCard(0xf8,sc,sumtype,playerid) or c:IsSetCard(0x81,sc,sumtype,playerid) or c:IsSetCard(0xda,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGKing))
 	end
 
@@ -1077,7 +1077,7 @@ if not AnimeArchetype then
 	function Card.IsShining(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
 		playerid=playerid or PLAYER_NONE
-		if c:IsNumberS(fbool) then return true end
+		if c:IsNumberS(sc,sumtype,playerid) then return true end
 		return c:IsSetCard(0x548,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGShining))
 	end
 
@@ -1121,7 +1121,7 @@ if not AnimeArchetype then
 	function Card.IsSky(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
 		playerid=playerid or PLAYER_NONE
-		if c:IsCelestial(fbool) or c:IsAngel(fbool) then return true end
+		if c:IsCelestial(sc,sumtype,playerid) or c:IsAngel(sc,sumtype,playerid) then return true end
 		return c:IsSetCard(0x54a,sc,sumtype,playerid) or c:IsSetCard(0xf6,sc,sumtype,playerid) or c:IsSetCard(0x3042,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGSky))
 	end
 
@@ -1214,7 +1214,7 @@ if not AnimeArchetype then
 	function Card.IsTachyon(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
 		playerid=playerid or PLAYER_NONE
-		if c:IsTachyonDragon(fbool) then return true end
+		if c:IsTachyonDragon(sc,sumtype,playerid) then return true end
 		return c:IsSetCard(0x555,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGTachyon))
 	end
 
@@ -1262,7 +1262,7 @@ if not AnimeArchetype then
 	function Card.IsV(c,sc,sumtype,playerid)
 		sumtype=sumtype or 0
 		playerid=playerid or PLAYER_NONE
-		if c:Is_V_(fbool) then return true end
+		if c:Is_V_(sc,sumtype,playerid) then return true end
 		return c:IsSetCard(0x55a,sc,sumtype,playerid) or c:IsSetCard(0x41,sc,sumtype,playerid) or c:IsSetCard(0x5008,sc,sumtype,playerid) or c:IsSummonCode(sc,sumtype,playerid,table.unpack(AnimeArchetype.OCGV))
 	end
 

@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.thfilter(c,code)
-	return c:IsType(TYPE_TRAP) and not c:IsOriginalCode(code)
+	return c:IsType(TYPE_TRAP) and not c:IsOriginalCode(code) and c:IsAbleToHand()
 end
 function s.rmfilter(c,tp)
 	return c:IsType(TYPE_TRAP) and c:IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,c,c:GetOriginalCode())

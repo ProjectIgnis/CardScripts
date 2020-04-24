@@ -1,5 +1,5 @@
 --揚陸群艦アンブロエール
---Landing Podship Ambrowhale
+--Amphibious Swarmship Amblowhale
 --Scripted by AlphaKretin and ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -61,7 +61,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsLinkBelow(3) and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT))
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

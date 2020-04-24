@@ -79,24 +79,24 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
 	end
 end
-function s.fuscond(e,tp,eg,ep,ev,re,r,rp)
+function s.fuscond(e)
 	local ph=Duel.GetCurrentPhase()
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function s.fuslimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER)
 end
-function s.syncond(e,tp,eg,ep,ev,re,r,rp)
+function s.syncond(e)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==tp and (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
+	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function s.synlimit(e,re,tp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
-function s.xyzcond(e,tp,eg,ep,ev,re,r,rp)
+function s.xyzcond(e)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==tp and ((ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or  ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
+	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and ((ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or  ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function s.xyzlimit(e,re,tp)
-	return re:GetHandler() and re:GetHandler():IsLocation(LOCATION_GRAVE)
+	return re:GetActivateLocation()==LOCATION_GRAVE
 end

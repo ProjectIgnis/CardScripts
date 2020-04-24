@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1,id+100)
+	e2:SetCondition(s.ctcond)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.cttg)
 	e2:SetOperation(s.ctop)
@@ -67,6 +68,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e2,true)
 		end
 	end
+end
+function s.ctcond(e,tp,eg,ep,ev,re,r,rp)
+	local phase=Duel.GetCurrentPhase()
+	return Duel.GetTurnPlayer()==tp and (phase==PHASE_MAIN1 or phase==PHASE_MAIN2)
 end
 function s.cttarget(c,e)
 	return c:IsSetCard(0x55) and c:IsFaceup() and c:IsControlerCanBeChanged() and (not e or c:IsCanBeEffectTarget(e))

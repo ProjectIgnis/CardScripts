@@ -17,10 +17,11 @@ function s.initial_effect(c)
 	--Set
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_PHASE+PHASE_END)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
+	e2:SetCondition(s.setcond)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
@@ -50,6 +51,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil)
 		Duel.Remove(g:GetFirst(),POS_FACEUP,REASON_EFFECT)
 	end
+end
+function s.setcond(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()==PHASE_END
 end
 function s.setfilter(c)
 	return c:IsSetCard(0x143) and c:IsSSetable()

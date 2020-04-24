@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
-	local e1=Effect.CreateEffect(c) 
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ADJUST)
 	e1:SetCountLimit(1)
@@ -252,7 +252,7 @@ function s.atgfilter(c,ap)
 end
 function s.block(e,tp,eg,ep,ev,re,r,rp)
 	local te,tg=Duel.GetChainInfo(ev+1,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TARGET_CARDS)
-	if te and te~=re and te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and #tg==1 then
+	if te and te~=re and te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and tg and #tg==1 then
 		local g=eg:Filter(s.tgfilter,nil,te,tg:GetFirst():GetControler())
 		if #g>0 and Duel.SelectYesNo(g:GetFirst():GetSummonPlayer(),aux.Stringid(68823957,1)) then
 			local p=g:GetFirst():GetSummonPlayer()

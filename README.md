@@ -11,7 +11,11 @@ They are automatically synchronized with servers.
 
 ## Contributing
 
-Reach out to us on Discord to learn how to contribute! Bug reports go on Discord; do NOT open an issue or pull request if you're not one our contributors.
+Please keep all bug reports and questions on Discord; do NOT open an issue or pull request for this purpose.
+
+Reach out to us on Discord to learn how to contribute and start scripting! Before opening a pull request, please speak with a member of staff in `#card-scripting-101` first and read `CONTRIBUTING.md`.
+
+Notes for maintainers: pull requests containing one or very few commits should generally be **squash-merged** to keep history clean
 
 ## Travis CI
 
@@ -21,10 +25,13 @@ Reach out to us on Discord to learn how to contribute! Bug reports go on Discord
 
 * This is not a static analyzer and it will not catch incorrect parameters for calls outside of `initial_effect` or any other runtime error.
 
+* If a pushed HEAD commit title contains `[ci skip]`, `[skip ci]`, `[travis skip]`, or `[skip travis]`, this is skipped.
+
 ## GitHub Actions
 
 * Scripts that have been added or changed since the last tag are committed directly to the [delta repository](https://github.com/ProjectIgnis/DeltaHopeHarbinger) to sync with clients.
 * Scripts that were deleted since the last Actions run are deleted from the delta repository.
+* If a pushed HEAD commit title contains `[ci skip]`, `[skip ci]`, `[actions skip]`, or `[skip actions]`, this is skipped.
 
 ## Copyright notice and license
 

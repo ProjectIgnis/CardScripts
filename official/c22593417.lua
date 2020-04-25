@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--link summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2)
 	c:EnableReviveLimit()
-	--discard
+	--discard when a monster is summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_HANDES)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.hdtg)
 	e1:SetOperation(s.hdop)
 	c:RegisterEffect(e1)
-	--discard
+	--discard (ignition)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_HANDES+CATEGORY_DAMAGE)

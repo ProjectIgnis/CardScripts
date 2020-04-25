@@ -1,7 +1,8 @@
 --幻影の妖精
+--Dreamsprite
 local s,id=GetID()
 function s.initial_effect(c)
-	--change target
+	--change attack target
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)

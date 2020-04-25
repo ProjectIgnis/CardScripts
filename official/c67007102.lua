@@ -63,7 +63,7 @@ function s.setcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_END
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x143) and c:IsSSetable()
+	return c:IsSetCard(0x143) and c:IsSSetable() and not c:IsForbidden()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

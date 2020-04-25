@@ -1,6 +1,6 @@
 --嵐闘機爆流
 --Stormrider Blast
---Scripted by Belisk.
+--Scripted by Belisk
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -49,16 +49,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_MUST_ATTACK_MONSTER)
+	e5:SetValue(s.atval)
 	c:RegisterEffect(e5)
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_FIELD)
-	e6:SetCode(EFFECT_MUST_BE_ATTACKED)
-	e6:SetTargetRange(LOCATION_MZONE,0)
-	e6:SetRange(LOCATION_FZONE)
-	e6:SetTarget(aux.TargetBoolFunction(s.atfilter))
-	e6:SetCondition(s.atcon)
-	e6:SetValue(1)
-	c:RegisterEffect(e6)
 end
 function s.atkfilter(c)
 	return c:IsType(TYPE_FIELD) and c:IsSetCard(0x580)
@@ -93,4 +85,9 @@ function s.atfilter(c)
 end
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(s.atfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+end
+function s.atval(e,c)
+	local g=Duel.GetMatchingGroup(s.atfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
+	if #g>1 then return false end
+	return g:IsContains(c)
 end

@@ -1,4 +1,5 @@
 --賢者の石 サバティエル
+--Sabatiel - The Philosopher's Stone (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -41,13 +42,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.PayLPCost(tp,Duel.GetLP(tp)/2)
+	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	local c=e:GetHandler()
 	local ct=e:GetLabel()
-	if chk==0 then 
+	if chk==0 then
 		if ct<3 then
 			return s.cost(e,tp,eg,ep,ev,re,r,rp,0) 
 				and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
@@ -84,7 +85,7 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
-		--tohand
+		--add to hand
 		local e1=Effect.CreateEffect(c)
 		e1:SetCategory(CATEGORY_TOHAND)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)

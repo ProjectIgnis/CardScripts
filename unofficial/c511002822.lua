@@ -14,13 +14,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter1(c,e)
-	return c:IsLocation(LOCATION_HAND)
-		and c:IsAngel(nil,SUMMON_TYPE_FUSION,e:GetHandlerPlayer())
+	return c:IsLocation(LOCATION_HAND) and c:IsAngel(nil,SUMMON_TYPE_FUSION,e:GetHandlerPlayer())
 		and (not e or not c:IsImmuneToEffect(e))
 end
 function s.filter2(c,e)
-	return c:IsCanBeFusionMaterial()
-		and c:IsAngel(nil,SUMMON_TYPE_FUSION,e:GetHandlerPlayer())
+	return c:IsCanBeFusionMaterial() and c:IsAngel(nil,SUMMON_TYPE_FUSION,e:GetHandlerPlayer())
 		and (not e or not c:IsImmuneToEffect(e))
 end
 function s.filter3(c,e,tp,m,f)
@@ -33,7 +31,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg1=Duel.GetFusionMaterial(tp):Filter(s.filter1,nil)
-		local mg2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_GRAVE,0,nil)
+		local mg2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_GRAVE,0,nil,e)
 		mg1:Merge(mg2)
 		Fusion.CheckAdditional=s.fcheck
 		Fusion.CheckExact=2
@@ -42,7 +40,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			local ce=Duel.GetChainMaterial(tp)
 			if ce~=nil then
 				local fgroup=ce:GetTarget()
-				local mg2=fgroup(ce,e,tp):Filter(s.filter2,nil)
+				local mg2=fgroup(ce,e,tp):Filter(s.filter2,nil,e)
 				local mf=ce:GetValue()
 				res=Duel.IsExistingMatchingCard(s.filter3,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf)
 			end

@@ -47,7 +47,7 @@ function s.atkcon(e)
 	local tp=e:GetHandlerPlayer()
 	if a:IsControler(1-tp) then a=Duel.GetAttackTarget() end
 	local lg=e:GetHandler():GetLinkedGroup()
-	return lg:IsContains(a)
+	return a and lg:IsContains(a)
 end
 function s.atktg(e,c)
 	local lg=e:GetHandler():GetLinkedGroup()
@@ -64,10 +64,8 @@ function s.linkop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		e:SetLabelObject(g)
 		e:SetLabel(1)
-		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-			tc=g:GetNext()
 		end
 	end
 end

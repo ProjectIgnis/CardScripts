@@ -1,6 +1,5 @@
---coded by Lyris
 --Flash Fang
---fixed by MLD
+--original script by Lyris, fixed by MLD
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,8 +22,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	local c=e:GetHandler()
 	local fid=c:GetFieldID()
-	local tc=sg:GetFirst()
-	while tc do
+	for tc in aux.Next(sg) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -37,7 +35,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EVENT_BATTLE_DAMAGE)
 		e2:SetOperation(s.regop)
 		tc:RegisterEffect(e2)
-		tc=sg:GetNext()
 	end
 	sg:KeepAlive()
 	local e2=Effect.CreateEffect(c)
@@ -67,12 +64,10 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local fid=e:GetLabel()
 	local dg=g:Filter(s.desfilter,nil,fid)
-	if #dg~=0 then
+	if dg and #dg>0 then
 		local dam=0
-		local tc=dg:GetFirst()
-		while tc do
+		for tc in aux.Next(dg) do
 			dam=dam+(tc:GetFlagEffectLabel(51107006)-fid)
-			tc=dg:GetNext()
 		end
 		return Duel.IsExistingMatchingCard(s.desopfilter,tp,0,LOCATION_MZONE,1,nil,dam)
 	else
@@ -86,12 +81,12 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local fid=e:GetLabel()
 	local dg=g:Filter(s.desfilter,nil,fid)
 	g:DeleteGroup()
-	local dam=0
-	local tc=dg:GetFirst()
-	while tc do
-		dam=dam+(tc:GetFlagEffectLabel(51107006)-fid)
-		tc=dg:GetNext()
+	if dg then
+		local dam=0
+		for tc in aux.Next(dg) do
+			dam=dam+(tc:GetFlagEffectLabel(51107006)-fid)
+		end
+		local sg=Duel.GetMatchingGroup(s.desopfilter,tp,0,LOCATION_MZONE,nil,dam)
+		Duel.Destroy(sg,REASON_EFFECT)
 	end
-	local sg=Duel.GetMatchingGroup(s.desopfilter,tp,0,LOCATION_MZONE,nil,dam)
-	Duel.Destroy(sg,REASON_EFFECT)
 end

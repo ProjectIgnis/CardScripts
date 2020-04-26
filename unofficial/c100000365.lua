@@ -20,11 +20,11 @@ end
 function s.filter(c)
 	return c:IsCode(6007213,32491822,69890967) and c:IsAbleToRemove()
 end
-function s.fcheck(c,sg,g,e,code,...)
+function s.fcheck(c,sg,g,code,...)
 	if not c:IsCode(code) then return false end
 	if ... then
 		g:AddCard(c)
-		local res=sg:IsExists(s.fcheck,1,g,sg,g,e,...)
+		local res=sg:IsExists(s.fcheck,1,g,sg,g,...)
 		g:RemoveCard(c)
 		return res
 	else return true end
@@ -36,7 +36,7 @@ function s.fselect(c,tp,mg,sg,e,...)
 		res=mg:IsExists(s.fselect,1,sg,tp,mg,sg,e,...)
 	elseif Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg) then
 		local g=Group.CreateGroup()
-		res=sg:IsExists(s.fcheck,1,g,sg,g,e,...)
+		res=sg:IsExists(s.fcheck,1,g,sg,g,...)
 	end
 	sg:RemoveCard(c)
 	return res

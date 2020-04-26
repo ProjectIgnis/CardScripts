@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(function(e,se,sp,st) return se:GetHandler():IsCode(100000365) end)
+	e1:SetValue(function(e,se,sp,st) return se:GetHandler():IsCode(89190953) end)
 	c:RegisterEffect(e1)
 	--Cannot be Destroyed by Battle
 	local e2=Effect.CreateEffect(c)
@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.ssop)
 	c:RegisterEffect(e5)
 end
-s.listed_names={100000365}
+s.listed_names={89190953}
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:GetControler()~=tp and chkc:IsLocation(LOCATION_MZONE) end

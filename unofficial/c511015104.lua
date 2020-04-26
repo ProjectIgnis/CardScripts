@@ -1,6 +1,5 @@
 --オッドアイズ・フュージョンゲート
 --Odd-Eyes Fusiongate
---fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

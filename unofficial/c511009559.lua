@@ -1,3 +1,4 @@
+--ＲＵＭ－マジカル・フォース
 --Rank-Up-Magic Magical Force
 --fixed by MLD
 local s,id=GetID()

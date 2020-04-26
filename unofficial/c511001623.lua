@@ -1,3 +1,4 @@
+--トライアングル・ギミック・ボックス
 --Triangle Gimmick Box
 local s,id=GetID()
 function s.initial_effect(c)

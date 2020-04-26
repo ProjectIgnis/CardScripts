@@ -1,3 +1,4 @@
+--ＤＤＤ エクシーズ
 --D/D/D Xyz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +15,8 @@ end
 s.listed_series={0x10af}
 s.listed_names={47198668}
 function s.filter(c,e,tp)
-	return c:IsCanBeEffectTarget(e) and c:IsSetCard(0x10af) and c:IsType(TYPE_PENDULUM) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+	return c:IsCanBeEffectTarget(e) and c:IsSetCard(0x10af)
+		and c:IsType(TYPE_PENDULUM) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.xyzfilter(c,sg,e)
@@ -35,7 +37,7 @@ function s.xyzfilter(c,sg,e)
 	return res
 end
 function s.rescon(mft,exft,ft)
-	return	function(sg,e,tp,mg)
+	return  function(sg,e,tp,mg)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				local mct=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 				return exft>=exct and mft>=mct and ft>=#sg 
@@ -45,7 +47,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,nil,e,tp)
-	local ftex=Duel.GetLocationCountFromEx(tp)
+	local ftex=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ftt=Duel.GetUsableMZoneCount(tp)
 	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
@@ -62,7 +64,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetTargetCards(e)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and #g>1 then return end
-	local ftex=Duel.GetLocationCountFromEx(tp)
+	local ftex=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM)
 	local ftt=Duel.GetUsableMZoneCount(tp)
 	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
 	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]

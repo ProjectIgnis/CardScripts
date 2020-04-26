@@ -1,4 +1,5 @@
---Number Ci1000: Numerronius Numerronia
+--ＣｉＮｏ．１０００ 夢幻虚光神ヌメロニアス・ヌメロニア
+--Number iC1000: Numeronius Numeronia
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -84,8 +85,8 @@ function s.check(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.cfilter(c,e,tp,xyz)
-	return c:IsCode(511000294) and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and c:IsCanBeXyzMaterial(xyz,tp)
-		and (not e or c:IsRelateToEffect(e))
+	return c:IsCode(511000294) and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY)
+		and c:IsCanBeXyzMaterial(xyz,tp) and (not e or c:IsRelateToEffect(e))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,nil,tp,e:GetHandler())
@@ -93,8 +94,9 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(s.cfilter,nil,nil,tp,e:GetHandler())
 	if chk==0 then
+		local c=e:GetHandler()
 		local pg=aux.GetMustBeMaterialGroup(tp,g,tp,nil,nil,REASON_XYZ)
-		return #pg<=0 and Duel.GetLocationCountFromEx(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+		return #pg<=0 and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 	end
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
@@ -104,7 +106,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) then return end
 	local g=eg:Filter(s.cfilter,nil,e,tp,c)
 	local pg=aux.GetMustBeMaterialGroup(tp,g,tp,nil,nil,REASON_XYZ)
-	if #g>0 and #pg<=0 and Duel.GetLocationCountFromEx(tp)>0 then
+	if #g>0 and #pg<=0 and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 then
 		c:SetMaterial(g)
 		Duel.Overlay(c,g)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)

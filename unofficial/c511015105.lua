@@ -1,4 +1,5 @@
---Odd-Eyes Synchro Gate
+--オッドアイズ・シンクロゲート
+--Odd-Eyes Synchrogate
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

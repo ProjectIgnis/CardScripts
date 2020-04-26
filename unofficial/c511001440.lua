@@ -1,3 +1,4 @@
+--シンクロン・キーパー
 --Synchron Keeper
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,11 +19,13 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,e,tp,clv)
 	local lv=c:GetLevel()
-	return c:IsAbleToRemoveAsCost() and lv>0 and c:IsType(TYPE_TUNER) and Duel.GetLocationCountFromEx(tp,tp,c)>0 and aux.SpElimFilter(c,true)
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lv+clv)
+	return c:IsAbleToRemoveAsCost() and lv>0 and c:IsType(TYPE_TUNER)
+		and aux.SpElimFilter(c,true) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lv+clv,c)
 end
-function s.spfilter(c,e,tp,lv)
-	return c:IsType(TYPE_SYNCHRO) and c:IsLevel(lv) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
+function s.spfilter(c,e,tp,lv,tc)
+	return c:IsType(TYPE_SYNCHRO) and c:IsLevel(lv)
+		and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0 
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -46,10 +49,8 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp,val,r,rc)
 	Duel.NegateEffect(ev)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,e:GetLabel())
-	local tc=g:GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,e:GetLabel()):GetFirst()
 	if tc and Duel.SpecialSummon(tc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)>0 then
 		tc:CompleteProcedure()
 		local e1=Effect.CreateEffect(e:GetHandler())

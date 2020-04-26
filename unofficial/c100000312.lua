@@ -1,4 +1,5 @@
 --過去世
+--Past Life
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,11 +16,12 @@ end
 function s.cfilter(c,e,tp)
 	local lv=c:GetLevel()
 	local atk=c:GetAttack()
-	return lv>0 and Duel.GetLocationCountFromEx(tp,tp,c)>0 
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,lv,atk,e,tp)
+	return lv>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,lv,atk,e,tp,c)
 end
-function s.spfilter(c,lv,atk,e,tp)
-	return c:IsLevel(lv) and c:GetAttack()==atk and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+function s.spfilter(c,lv,atk,e,tp,gc)
+	return c:IsLevel(lv) and c:GetAttack()==atk
+		and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+		and Duel.GetLocationCountFromEx(tp,tp,gc,c)>0 
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
@@ -40,7 +42,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	local val=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local lv=val&0xff
 	local atk=val>>8

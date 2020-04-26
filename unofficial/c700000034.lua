@@ -1,13 +1,14 @@
+--古代の機械混沌融合
+--Chaos Ancient Gear Fusion
 --Scripted by Eerie Code
---Ancient Gear Chaos Fusion
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -51,13 +52,13 @@ function s.spfilter(c,e,tp,rg,se)
 	end
 end
 function s.rescon1(fc,mft,exft,ft,mg2,se)
-	return	function(sg,e,tp,mg)
+	return  function(sg,e,tp,mg)
 				local mg3=mg2:Filter(aux.TRUE,sg)
 				return ft>=#sg and aux.SelectUnselectGroup(mg3,e,tp,#sg,#sg,s.rescon2(fc,mft,exft),0)
 			end
 end
 function s.rescon2(fc,mft,exft)
-	return	function(sg,e,tp,mg)
+	return  function(sg,e,tp,mg)
 				Fusion.CheckExact=#sg
 				local res=exft>=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA) and mft>=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 					and fc:CheckFusionMaterial(sg,nil,tp)
@@ -66,13 +67,13 @@ function s.rescon2(fc,mft,exft)
 			end
 end
 function s.resconse1(fc,mft,mg2,se)
-	return	function(sg,e,tp,mg)
+	return  function(sg,e,tp,mg)
 				local mg3=mg2:Filter(aux.TRUE,sg)
 				return aux.SelectUnselectGroup(mg3,e,tp,#sg,#sg,s.resconse2(fc,sg,mft),0)
 			end
 end
 function s.resconse2(fc,rg,mft)
-	return	function(sg,e,tp,mg)
+	return  function(sg,e,tp,mg)
 				local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
 				local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (gate[tp] - 1)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA) 

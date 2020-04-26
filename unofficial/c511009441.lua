@@ -1,4 +1,4 @@
---覇王龍ズァーク
+--覇王龍ズァーク (Anime)
 --Supreme King Z-ARC (Anime)
 local s,id=GetID()
 function s.initial_effect(c)

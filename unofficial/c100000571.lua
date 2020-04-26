@@ -1,4 +1,5 @@
 --磁力融合
+--Magnet Fusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

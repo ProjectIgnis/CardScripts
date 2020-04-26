@@ -1,4 +1,5 @@
---Number 100: Numeron Dragon
+--Ｎｏ．１００ ヌメロン・ドラゴン (Anime)
+--Number 100: Numeron Dragon (Anime)
 --By Edo9300
 --atkup fixed by eclair
 --forced trigger fixed by MLD
@@ -70,7 +71,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

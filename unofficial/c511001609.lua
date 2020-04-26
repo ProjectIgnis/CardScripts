@@ -1,3 +1,4 @@
+--ランクゲイザー
 --Rank Gazer
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,9 +41,9 @@ function s.cfilter(c,tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(102380,0)) then
 		Duel.Hint(HINT_CARD,0,id)

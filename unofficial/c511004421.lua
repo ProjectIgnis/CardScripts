@@ -1,3 +1,4 @@
+--ＲＵＭ－光波衝撃
 --Rank-Up-Magic Cipher Shock
 --fixed by MLD
 local s,id=GetID()
@@ -19,7 +20,9 @@ function s.filter(c,e,tp)
 end
 function s.spfilter(c,e,tp,mc,rk,pg)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
-	return c:IsType(TYPE_XYZ) and mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsSetCard(0xe5) and c:IsRank(rk) and mc:IsCanBeXyzMaterial(c,tp) 
+	return c:IsType(TYPE_XYZ) and mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp)
+		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+		and c:IsSetCard(0xe5) and c:IsRank(rk) and mc:IsCanBeXyzMaterial(c,tp)
 		and (#pg<=0 or pg:IsContains(mc)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.target(e,tp,eg,ev,ep,re,r,rp,chk,chkc)
@@ -30,7 +33,7 @@ function s.target(e,tp,eg,ev,ep,re,r,rp,chk,chkc)
 	if d and d:IsControler(tp) then g:AddCard(d) end
 	if chkc then return g:IsContains(chkc) and s.filter(chkc,e,tp) end
 	if chk==0 then return g:IsExists(s.filter,1,nil,e,tp) end
-	local fid=e:GetHandler():GetFieldID()
+	local fid=e:GetFieldID()
 	local sg=g:FilterSelect(tp,s.filter,1,1,nil,e,tp)
 	Duel.SetTargetCard(sg)
 	local fg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
@@ -48,8 +51,7 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 	local c=e:GetHandler()
 	local fid=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local tc=Duel.GetFirstTarget()
-	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) 
-		or Duel.GetLocationCountFromEx(tp,tp,tc)<=0 then return end
+	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -57,8 +59,7 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	tc:RegisterEffect(e1)
 	local g=Duel.GetMatchingGroup(s.disfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,fid)
-	local dc=g:GetFirst()
-	while dc do
+	for dc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -69,7 +70,6 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		dc:RegisterEffect(e2)
-		dc=g:GetNext()
 	end
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -88,8 +88,7 @@ function s.sumop(e,tp,eg,ev,ep,re,r,rp)
 	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(tc),tp,nil,nil,REASON_XYZ)
 	Duel.BreakEffect()
-	local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+1,pg)
-	local sc=sg:GetFirst()
+	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+1,pg):GetFirst()
 	if sc then
 		local mg=tc:GetOverlayGroup()
 		if #mg~=0 then

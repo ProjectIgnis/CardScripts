@@ -1,3 +1,4 @@
+--Ｎｏ．４ 猛毒刺胞ステルス・クラーゲン
 --Number 4: Stealth Kragen
 local s,id=GetID()
 function s.initial_effect(c)

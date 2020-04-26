@@ -27,7 +27,7 @@ function s.initial_effect(c)
 			s[1]=false
 		end)
 	end)
-end	
+end 
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_END and s[tp]
 end

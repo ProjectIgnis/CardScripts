@@ -97,7 +97,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=g:Select(tp,1,1,nil):GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
-		local mg=Duel.SelectMatchingCard(tp,s.scfilter2,tp,LOCATION_PZONE,0,1,1,nil,c,sc)
+		local mg=Duel.SelectMatchingCard(tp,s.scfilter2,tp,LOCATION_PZONE,0,1,1,nil,c,sc,tp)
 		mg:AddCard(c)
 		Duel.SynchroSummon(tp,sc,nil,mg)
 	end

@@ -2,6 +2,8 @@
 --Performapal Odd-Eyes Synchron (Anime)
 local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
+	--pendulum
 	Pendulum.AddProcedure(c)
 	--eff
 	local e1=Effect.CreateEffect(c)

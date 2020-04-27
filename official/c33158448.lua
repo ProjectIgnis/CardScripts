@@ -1,9 +1,10 @@
+--Ｆ．Ａ．ライトニングマスター
 --F.A. Dawn Dragster
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
-	--atk up
+	--increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
+	--registration
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
@@ -18,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(aux.chainreg)
 	c:RegisterEffect(e2)
+	--increase level
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_LVCHANGE)
@@ -28,14 +31,14 @@ function s.initial_effect(c)
 	e3:SetCondition(s.lvcon)
 	e3:SetOperation(s.lvop)
 	c:RegisterEffect(e3)
-	--pierce
+	--piercing damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e4)
-	--negate
+	--negate Spell/Trap Card or effect
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetCode(EVENT_CHAINING)
@@ -57,17 +60,16 @@ end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		local e4=Effect.CreateEffect(c)
-		e4:SetType(EFFECT_TYPE_SINGLE)
-		e4:SetCode(EFFECT_UPDATE_LEVEL)
-		e4:SetValue(1)
-		e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-		e4:SetRange(LOCATION_MZONE)
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-		c:RegisterEffect(e4)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_LEVEL)
+		e1:SetValue(1)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		c:RegisterEffect(e1)
 	end
 end
-
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 		and ep~=tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
@@ -86,4 +88,3 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-

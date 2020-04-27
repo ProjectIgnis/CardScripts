@@ -1,8 +1,9 @@
+--Ｆ．Ａ．ウィップクロッサー
 --F.A. Whip Crosser
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--atk up
+	--increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -29,41 +30,42 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(0,1)
 	c:RegisterEffect(e3)
-	--lv up
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e0:SetCode(EVENT_CHAINING)
-	e0:SetRange(LOCATION_MZONE)
-	e0:SetOperation(aux.chainreg)
-	c:RegisterEffect(e0)
+	--registration
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetCategory(CATEGORY_LVCHANGE)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e4:SetCode(EVENT_CHAIN_SOLVING)
+	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e4:SetCode(EVENT_CHAINING)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(s.lvcon)
-	e4:SetOperation(s.lvop)
+	e4:SetOperation(aux.chainreg)
 	c:RegisterEffect(e4)
-	--discard limit
+	--increase level
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD)
-	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetCategory(CATEGORY_LVCHANGE)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e5:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e5:SetCode(EVENT_CHAIN_SOLVING)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetTargetRange(0,1)
-	e5:SetCode(EFFECT_CANNOT_DISCARD_HAND)
-	e5:SetCondition(s.excon)
-	e5:SetValue(1)
+	e5:SetCondition(s.lvcon)
+	e5:SetOperation(s.lvop)
 	c:RegisterEffect(e5)
+	--restricts discarding
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD)
+	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e6:SetRange(LOCATION_MZONE)
-	e6:SetTargetRange(0,LOCATION_HAND)
-	e6:SetCode(EFFECT_CANNOT_TO_GRAVE_AS_COST)
+	e6:SetTargetRange(0,1)
+	e6:SetCode(EFFECT_CANNOT_DISCARD_HAND)
 	e6:SetCondition(s.excon)
+	e6:SetValue(1)
 	c:RegisterEffect(e6)
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_FIELD)
+	e7:SetRange(LOCATION_MZONE)
+	e7:SetTargetRange(0,LOCATION_HAND)
+	e7:SetCode(EFFECT_CANNOT_TO_GRAVE_AS_COST)
+	e7:SetCondition(s.excon)
+	c:RegisterEffect(e7)
 end
 s.listed_series={0x107}
 function s.atkval(e,c)
@@ -105,4 +107,3 @@ end
 function s.excon(e)
 	return e:GetHandler():IsLevelAbove(7)
 end
-

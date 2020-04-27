@@ -80,8 +80,8 @@ Duel.Draw = function(...)
 	local tp=tb[1]
 	local count=tb[2]
 	if (Duel.GetFlagEffect(tp,id)>2 and Duel.SelectYesNo(tp,aux.Stringid(id,0))) then
-		local g=Duel.SelectMatchingCard(tp,LOCATION_DECK,0,tp,count,count)
-		Duel.SendToHand(g,tp,REASON_EFFECT)
+		local g=Duel.SelectMatchingCard(tp,s.searchfilter,tp,LOCATION_DECK,0,count,count,nil)
+		Duel.SendtoHand(g,tp,REASON_EFFECT)
 		Duel.RegisterFlagEffect(tp,id+1,0,0,0)
 		return 0
 	else

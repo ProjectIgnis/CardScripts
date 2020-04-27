@@ -58,6 +58,7 @@ function s.searchtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function s.searchop(e,tp,eg,ep,ev,re,r,rp)
+	if not _replace_count then return end
 	_replace_count=_replace_count+1
 	if _replace_count>_replace_max then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

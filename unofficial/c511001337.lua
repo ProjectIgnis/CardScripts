@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_LEAVE_FIELD)
+	e3:SetCode(EVENT_LEAVE_FIELD_P)
 	e3:SetOperation(s.op)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
@@ -69,7 +69,7 @@ end
 function s.rescon(sg,e,tp,mg)
 	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
 	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	return Duel.GetLocationCountFromEx(tp)>=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA) 
+	return Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)>=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA) 
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 		and Duel.GetUsableMZoneCount(tp)>=#sg
 		and (not ect or sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)<=ect) 

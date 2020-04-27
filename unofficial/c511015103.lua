@@ -19,7 +19,7 @@ function s.filter(c,e,tp)
 		and c:IsType(TYPE_PENDULUM) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.xyzfilter(c,sg,e)
+function s.xyzfilter(c,sg,e,tp)
 	local ct=#sg
 	local mc=e:GetHandler()
 	local e1=nil
@@ -32,7 +32,7 @@ function s.xyzfilter(c,sg,e)
 		mc:RegisterEffect(e1)
 		sg:AddCard(mc)
 	end
-	local res=c:IsXyzSummonable(nil,sg,ct,ct)
+	local res=c:IsXyzSummonable(nil,sg,ct,ct) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
 	if e1 then e1:Reset() sg:RemoveCard(mc) end
 	return res
 end
@@ -41,7 +41,7 @@ function s.rescon(mft,exft,ft)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				local mct=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 				return exft>=exct and mft>=mct and ft>=#sg 
-					and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,sg,sg,e)
+					and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,sg,sg,e,tp)
 			end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -84,7 +84,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	else
 		return
 	end
-	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,g,g,e)
+	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,g,g,e,tp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()

@@ -11,11 +11,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={25862681,2403771}
 s.tempcard=nil
-function s.filter1(c,ntg,tp)
+function s.filter1(c,ntg,tp,e)
 	if c:IsFacedown() or c:GetLevel()<=0 or not c:IsType(TYPE_TUNER) then return false end
 	s.tempcard=c
-	local res=aux.SelectUnselectGroup(ntg,nil,tp,nil,nil,s.rescon,0)
+	local res=aux.SelectUnselectGroup(ntg,e,tp,nil,nil,s.rescon,0)
 	s.tempcard=nil
 	return res
 end
@@ -38,7 +39,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
 	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-		and (not ect or ect>=2) and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil,nt,tp) 
+		and (not ect or ect>=2) and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil,nt,tp,e) 
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
@@ -50,11 +51,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ect~=nil and ect<2 then return end
 	local nt=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_MZONE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_MZONE,0,1,1,nil,nt,tp)
-	local tc=g:GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_MZONE,0,1,1,nil,nt,tp,e):GetFirst()
 	if tc then
 		s.tempcard=tc
-		local sg=aux.SelectUnselectGroup(mg,e,tp,nil,nil,s.rescon,1,tp,HINTMSG_TOGRAVE,s.rescon)
+		local sg=aux.SelectUnselectGroup(nt,e,tp,nil,nil,s.rescon,1,tp,HINTMSG_TOGRAVE,s.rescon)
 		s.tempcard=nil
 		sg:AddCard(tc)
 		local g1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,2403771,sg)

@@ -1,4 +1,5 @@
---星墜つる地に立つ閃珖
+--星墜つる地に立つ閃珖 (Manga)
+--Stardust Re-Spark (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,7 +20,7 @@ end
 function s.filter(c,e,tp)
 	if not c:IsCanBeSpecialSummoned(e,0,tp,false,false) or not c:IsSetCard(0xa3) then return false end
 	if c:IsLocation(LOCATION_EXTRA) then
-		return Duel.GetLocationCountFromEx(tp)>0
+		return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 	else
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
 		if c:IsLocation(LOCATION_HAND) then

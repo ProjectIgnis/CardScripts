@@ -67,7 +67,6 @@ function s.sefilter(c,e,tp,lv)
 	return c:IsSetCard(0xad) and c:IsLevel(lv) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsType(TYPE_FUSION)
 end
 function s.exop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.sefilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,e:GetLabel())
 	if #g>0 then

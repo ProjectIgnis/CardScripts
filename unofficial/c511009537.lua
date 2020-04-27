@@ -1,4 +1,5 @@
---Supreme King Wrath
+--覇王の逆鱗 (Anime)
+--Supreme Rage (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -56,7 +57,7 @@ function s.spfilterchk(c,g,sg,code,...)
 	else return true end
 end
 function s.rescon(mft,exft,ft,ect)
-	return	function(sg,e,tp,mg)
+	return  function(sg,e,tp,mg)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				local mct=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 				return (not ect or ect>=exct) and exft>=exct and mft>=mct and ft>=#sg 
@@ -76,7 +77,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)+dg:FilterCount(function(c) return c:GetSequence()<5 end,nil)
 		local ftt=Duel.GetUsableMZoneCount(tp)
 		local ftex=Duel.GetLocationCountFromEx(tp,tp,dg)
-		return sg:IsExists(Card.IsCode,1,nil,43387895) and sg:IsExists(Card.IsCode,1,nil,70771599) and sg:IsExists(Card.IsCode,1,nil,42160203) and sg:IsExists(Card.IsCode,1,nil,96733134)
+		return sg:IsExists(Card.IsCode,1,nil,43387895) and sg:IsExists(Card.IsCode,1,nil,70771599)
+			and sg:IsExists(Card.IsCode,1,nil,42160203) and sg:IsExists(Card.IsCode,1,nil,96733134)
 			and aux.SelectUnselectGroup(sg,e,tp,4,4,s.rescon(ft,ftex,ftt,ect),0)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,4,tp,LOCATION_EXTRA+LOCATION_GRAVE)

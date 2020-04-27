@@ -59,10 +59,10 @@ end
 function s.filter1(c,e,tp)
 	local lv=c:GetLevel()
 	return lv>0 and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,lv,e,tp,c)
-		and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
 function s.filter2(c,lv,e,tp,tc)
 	return c:IsType(TYPE_FUSION) and c:GetLevel()==lv
+		and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,tc:IsCode(84327329) and c:GetOriginalCode()==id,false)
 end
 function s.filter3(c,lv,e,tp,tc)
@@ -82,13 +82,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	local tc=e:GetLabelObject()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,s.filter3,tp,LOCATION_EXTRA,0,1,1,nil,e:GetLabel(),e,tp,tc):GetFirst()
-	local clayGuardianChk=tc:GetPreviousCodeOnField()==84327329 and sc:IsOriginalCode(id)
-	if sc and Duel.SpecialSummon(sc,0,tp,tp,clayGuardianChk,false,POS_FACEUP)>0 and clayGuardianChk then
-		sc:CompleteProcedure()
+	if sc then
+		local clayGuardianChk=tc:GetPreviousCodeOnField()==84327329 and sc:IsOriginalCode(id)
+		if Duel.SpecialSummon(sc,0,tp,tp,clayGuardianChk,false,POS_FACEUP)>0 and clayGuardianChk then
+			sc:CompleteProcedure()
+		end
 	end
 end
 ---------------------------------------------------------------------

@@ -1,3 +1,4 @@
+--七皇転生
 --Reincarnation of the Seven Emperors
 local s,id=GetID()
 function s.initial_effect(c)
@@ -124,14 +125,15 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		return true
 	else return false end
 end
-function s.filter(c,e,tp)
+function s.filter(c,e,tp,tc)
 	return c:IsRankBelow(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp)
+		and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
-	if chk==0 then return tc and tc:IsAbleToRemove() and tc:GetOverlayGroup():IsExists(Card.IsAbleToRemove,tc:GetOverlayCount(),nil) 
-		and Duel.GetLocationCountFromEx(tp,tp,tc)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return tc and tc:IsAbleToRemove()
+		and tc:GetOverlayGroup():IsExists(Card.IsAbleToRemove,tc:GetOverlayCount(),nil) 
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,tc) end
 	local g=tc:GetOverlayGroup()
 	g:AddCard(tc)
 	Duel.SetTargetCard(tc)
@@ -177,7 +179,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())

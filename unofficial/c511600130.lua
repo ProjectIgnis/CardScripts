@@ -57,7 +57,6 @@ function s.caop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,dc)
 		Duel.BreakEffect()
 		if dc:IsType(TYPE_MONSTER) and Duel.SendtoGrave(dc,REASON_COST+REASON_DISCARD)>0 and dc:IsLocation(LOCATION_GRAVE) then
-			Debug.Message("Dorō! Monsutākādo!")
 			Duel.ChainAttack()
 		else
 			e:Reset()

@@ -14,12 +14,9 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()==nil
 end
-function s.atkfilter(c,e)
-	return c:IsDestructable() and (c:IsType(TYPE_RITUAL) or c:IsType(TYPE_FUSION))
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetAttacker()
-	if chk==0 then return tg:IsOnField() and tg:IsDestructable() end
+	if chk==0 then return tg:IsOnField() and tg:IsDestructable() and (tg:IsType(TYPE_RITUAL) or tg:IsType(TYPE_FUSION)) end
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
 end

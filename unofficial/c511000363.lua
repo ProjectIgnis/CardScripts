@@ -19,7 +19,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=(e:GetHandler():GetReasonEffect() and e:GetHandler():GetReasonEffect():GetOwner()) 
 		or (e:GetHandler():IsReason(REASON_BATTLE) and e:GetHandler():GetReasonCard())
-	if tc and tc:IsRelateToBattle()(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToBattle() and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

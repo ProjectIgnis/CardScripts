@@ -88,13 +88,13 @@ function s.spcon(e,c)
 		and g:FilterCount(s.cfilter,nil)+Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 
-function s.matfilter(c,tp)
-	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_PENDULUM) and Duel.GetReleaseGroup(tp):IsContains(c)
+function s.matfilter(c)
+	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_PENDULUM)
 end
 
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetReleaseGroup(tp)
-	local o=Group.FilterCount(g,s.matfilter,nil,tp)
+	local o=Group.FilterCount(g,s.matfilter,nil)
 	e:SetLabel(o)
 	Duel.Release(g,REASON_COST)
 	e:GetHandler():RegisterFlagEffect(id,0,0,0)

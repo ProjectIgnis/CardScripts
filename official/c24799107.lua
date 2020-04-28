@@ -72,6 +72,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		if re:GetHandler():IsRelateToEffect(re) then
 			Duel.Destroy(eg,REASON_EFFECT)
 		end
+		if not c:IsRelateToEffect(e) then return end
 		Duel.BreakEffect()
 		Duel.SendtoDeck(c,nil,0,REASON_EFFECT)
 		if c:IsLocation(LOCATION_EXTRA) and Duel.IsExistingMatchingCard(s.house_filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) then

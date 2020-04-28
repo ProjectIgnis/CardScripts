@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.thcon)
 	e1:SetCost(s.thcost)
@@ -80,4 +81,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-

@@ -72,14 +72,10 @@ if not GenerateEffect then
 	end
 	
 	--Anime card constants
-	TYPE_ARMOR		=	0x10000000
-	TYPE_PLUS		=	0x20000000
-	TYPE_MINUS		=	0x40000000
+	RACE_YOKAI	  =   0x80000000
+	RACE_CHARISMA   =   0x100000000
 	
-	RACE_YOKAI		=	0x80000000
-	RACE_CHARISMA	=	0x100000000
-	
-	ATTRIBUTE_LAUGH	=	0x80
+	ATTRIBUTE_LAUGH =   0x80
 	
 	function GenerateEffect.op5(e,tp,eg,ep,ev,re,r,rp)
 		--ATK = 285, prev ATK = 284
@@ -102,7 +98,7 @@ if not GenerateEffect then
 				local lv=tc:GetLevel()
 				tc:RegisterFlagEffect(585,nil,0,1,lv)
 				tc:RegisterFlagEffect(584,nil,0,1,lv)
-			end	
+			end 
 			tc=g:GetNext()
 		end
 	end

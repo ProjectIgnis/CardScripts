@@ -27,6 +27,7 @@ function s.spfilter(c,e,tp,sg)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,3,false,s.spcheck,nil,e) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local sg=Duel.SelectReleaseGroupCost(tp,nil,3,3,false,s.spcheck,nil,e)
 	Duel.Release(sg,REASON_COST)
 end

@@ -21,19 +21,19 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.atcon)
 	e2:SetTarget(s.attg)
 	e2:SetOperation(s.atop)
 	c:RegisterEffect(e2)
+	local e3=e2:Clone()
+	e3:SetCode(EVENT_REMOVE)
+	c:RegisterEffect(e3)
 end
 s.listed_series={0x107b,0x48}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107b)
-end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x107b),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -48,11 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_COST) and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_MONSTER)
-		and c:IsPreviousLocation(LOCATION_OVERLAY)
-end
-function s.cfilter2(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)
+	return c:IsReason(REASON_COST) and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_OVERLAY)
 end
 function s.cfilter3(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x48)
@@ -63,7 +59,7 @@ end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ph=Duel.GetCurrentPhase()
-	local tg=Duel.GetMatchingGroup(s.cfilter2,tp,LOCATION_MZONE,0,1,nil,e)
+	local tg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,nil,e)
 	local sg=Duel.GetMatchingGroup(s.cfilter3,tp,LOCATION_MZONE,0,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,CARD_GALAXYEYES_P_DRAGON)
@@ -83,7 +79,6 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
 	if ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE then
-		local sc=sg:GetFirst()
 		for sc in aux.Next(sg) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

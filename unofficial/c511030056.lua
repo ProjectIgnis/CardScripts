@@ -3,10 +3,10 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.matfilter,1)
-	--cannot link material
+	--cannot be Link Material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.lkcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--ss colinked
+	--Special Summon if co-linked
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	e2:SetLabel(1)
 	c:RegisterEffect(e2)
-	--ss not colinked
+	--Special Summon if not co-linked
 	local e3=e2:Clone()
 	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(aux.NOT(s.spcon))
@@ -57,9 +57,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local colinked=false
 	if e:GetLabel()==1 then colinked=true end
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c:IsControler(tp) and s.spfilter(chkc,e,tp,colinked) end
-	if chk==0 then return Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,colinked)
-		and Duel.GetFlagEffect(tp,id+e:GetLabel())==0 end
-	Duel.RegisterFlagEffect(tp,id+e:GetLabel(),RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,colinked) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,colinked)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,LOCATION_GRAVE)

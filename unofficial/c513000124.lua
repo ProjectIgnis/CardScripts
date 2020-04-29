@@ -1,3 +1,4 @@
+--インフェルニティ・ゼロ (Anime)
 --Infernity Zero (Anime)
 --Scripted by Belisk 
 local s,id=GetID()
@@ -72,7 +73,7 @@ function s.initial_effect(c)
 	end
 end
 function s.econ(e,tp)
-	return e:GetLabelObject():IsActivatable(e:GetLabel())
+	return e:GetLabelObject() and e:GetLabelObject():IsActivatable(e:GetLabel())
 end
 function s.spcon(e,tp)
 	return Duel.GetLP(tp)<=0

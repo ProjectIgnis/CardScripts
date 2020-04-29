@@ -3,10 +3,10 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x578),3)
 	c:EnableReviveLimit()
-	--return to hand
+	--Return to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(5043010,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x578}
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	local ct=c:GetMutualLinkedGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER)
@@ -52,8 +53,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():IsLinked()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)

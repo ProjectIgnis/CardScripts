@@ -59,7 +59,7 @@ function s.initial_effect(c)
 		end
 	end
 end
-s.listed_names={}
+s.listed_names={id}
 s.matfilter=aux.FilterBoolFunctionEx(Card.IsType,TYPE_NORMAL)
 function s.emzcon(e,c)
 	local tp=e:GetHandler():GetControler()
@@ -97,8 +97,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfil,1,nil,1-tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(500)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)

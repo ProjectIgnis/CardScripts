@@ -1,5 +1,6 @@
 --Dowsing Fusion (anime)
 --rescripted by Naim (to match the Fusion Summon Procedure)
+local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Fusion.CreateSummonEff(c,nil,aux.FALSE,s.fextra,s.extraop)

@@ -3,10 +3,10 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.matfilter,1)
-	--cannot link material
+	--cannot be Link Material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_DIRECT_ATTACK)
 	e2:SetCondition(s.dacon)
 	c:RegisterEffect(e2)
-	--destroy monster if co-linked
+	--Destroy monster if co-linked
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(21420702,0))
 	e3:SetCategory(CATEGORY_DESTROY)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.destg1)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	--destroy card
+	--Destroy card
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(5556499,0))
 	e4:SetCategory(CATEGORY_DESTROY)
@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x57a}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsSetCard(0x57a,fc,sumtype,tp) and c:IsLevel(1)
 end
@@ -63,9 +64,7 @@ function s.cfilter(c)
 end
 function s.destg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:GetSequence()<5 end
-	if chk==0 then return Duel.IsExistingTarget(s.cfilter,tp,0,LOCATION_MZONE,1,nil)
-		and Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return Duel.IsExistingTarget(s.cfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.cfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,LOCATION_MZONE)
@@ -77,9 +76,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil)
-		and Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)

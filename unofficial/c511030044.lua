@@ -3,7 +3,7 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.matfilter,2)
 	--cannot be targeted by attacks
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-	--atk up
+	--increase ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_FIELD)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.atkcon)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
-	--co-link before destruction check
+	--co-linked before destruction check
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_LEAVE_FIELD_P)
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.checkcon)
 	e4:SetOperation(s.checkop)
 	c:RegisterEffect(e4)
-	--draw
+	--Draw
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_DRAW)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -109,8 +109,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():GetLabel()==1
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	e:GetLabelObject():SetLabel(0)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)

@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_BATTLE_DAMAGE)
-	e1:SetCountLimit(1,id)--+EFFECT_COUNT_CODE_OATH
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return ep==tp and Duel.GetBattleDamage(ep)>=1000 end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	--SpSummon
+	--Special Summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(8062132,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)

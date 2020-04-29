@@ -1,4 +1,5 @@
 --Ｓｐ－強欲で謙虚な壺
+--Speed Spell - Pot of Duality
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.con)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)

@@ -35,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsAttackAbove(2300) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsAttackAbove(2300) then
 		local zones=Duel.GetLinkedZone(tp)
 		local tg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,zones)
 		if #tg<=0 then return end

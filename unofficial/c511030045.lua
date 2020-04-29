@@ -41,8 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #sg<count then count=#sg end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then count=1 end
 	if c:IsFaceup() and c:IsRelateToEffect(e) and zone~=0 then
-		for i=0,count,1
-		do
+		for i=0,count,1 do
 			local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c)
 			local tc=g:GetFirst()
 			if tc then

@@ -66,6 +66,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetOperation(s.checkop)
+	e2:SetReset(RESET_PHASE+PHASE_END)
 	e2:SetLabelObject(e1)
 	Duel.RegisterEffect(e2,tp)
 end
@@ -112,4 +113,3 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT)
 	end
 end
-

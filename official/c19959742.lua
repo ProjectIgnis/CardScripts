@@ -18,6 +18,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return end
 	Duel.SortDecktop(tp,tp,3)
 	if Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))==1 then
-		Duel.MoveToDeckBottom(ct,tp)
+		Duel.MoveToDeckBottom(3,tp)
 	end
 end

@@ -1,4 +1,4 @@
---Ａｉシャドー
+--Ａｉシャドー (Anime)
 --A.I. Shadow (Anime)
 --Scripted by Larry126
 local s,id,alias=GetID()
@@ -61,17 +61,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.RegisterEffect(e1,tp)
 				local e2=e1:Clone()
 				e2:SetCode(EFFECT_MUST_ATTACK_MONSTER)
+				e2:SetValue(s.atklimit)
 				Duel.RegisterEffect(e2,tp)
-				local e3=Effect.CreateEffect(e:GetHandler())
-				e3:SetType(EFFECT_TYPE_SINGLE)
-				e3:SetCode(EFFECT_MUST_BE_ATTACKED)
-				e3:SetValue(1)
-				e3:SetReset(RESET_PHASE+PHASE_END+RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
-				tc:RegisterEffect(e3,true)
+				tc:CreateEffectRelation(e2)
 				if Duel.GetAttackTarget() and Duel.GetAttackTarget()~=tc then Duel.ChangeAttackTarget(tc) end
 			end
 		end
 	end
+end
+function s.atklimit(e,c)
+    return c:IsRelateToEffect(e)
 end
 function s.check(c,tp)
 	return c and c:IsControler(tp) and c:IsSetCard(0x135)

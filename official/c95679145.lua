@@ -29,7 +29,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for a fusion/synchro/Xyz/link monster
 function s.costfilter(c,ft)
 	return c:IsType(TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK) and c:IsAbleToRemoveAsCost()

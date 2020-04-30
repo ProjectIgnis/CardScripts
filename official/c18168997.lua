@@ -31,7 +31,6 @@ function s.initial_effect(c)
 end
 	--Lists "Darklord" archetype
 s.listed_series={0xef}
-
 	--Pay 1000 LP
 function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
@@ -73,4 +72,3 @@ function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	Duel.SendtoDeck(te:GetHandler(),nil,2,REASON_EFFECT)
 end
-

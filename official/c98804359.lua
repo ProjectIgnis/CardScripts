@@ -51,7 +51,9 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 		return true
-	else return false end
+	else
+		return false
+	end
 end
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
@@ -59,4 +61,3 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
 end
-

@@ -95,4 +95,3 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleHand(1-p)
 	end
 end
-

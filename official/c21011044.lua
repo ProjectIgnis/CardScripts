@@ -51,4 +51,3 @@ end
 function s.sameatt(c,att)
 	return c:IsFaceup() and c:IsAttribute(att) and c:IsAbleToGrave()
 end
-

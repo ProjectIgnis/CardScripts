@@ -82,4 +82,3 @@ end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-

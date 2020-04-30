@@ -91,4 +91,3 @@ function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(p,e:GetLabelObject():GetAttack(),REASON_EFFECT)
 	end
 end
-

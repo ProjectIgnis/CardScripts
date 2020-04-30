@@ -1,4 +1,5 @@
---Time Magic Hammer
+--タイムマジック・ハンマー (Anime)
+--Time Magic Hammer (Anime)
 --reworked by senpaizuri
 local s,id=GetID()
 function s.initial_effect(c)
@@ -92,7 +93,7 @@ function s.act(e,tp,eg,ep,ev,re,r,rp)
 		for tc in aux.Next(g) do
 			if tc:GetFlagEffect(id)>0 then
 				c:SetCardTarget(tc)
-				local ct=tc:GetFlagEffectLabel()
+				local ct=tc:GetFlagEffectLabel(id)
 				maxct=math.max(ct,maxct)
 			end
 		end

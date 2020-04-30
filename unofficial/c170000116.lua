@@ -1,7 +1,9 @@
---Conduction Warrior Linear Magnum Plus Minus
+--超電導戦士 リニア・マグナム±
+--Conduction Warrior Linear Magnum ±
 Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddPlusMinusAttribute()
 	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -22,28 +24,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.atkgtg)
 	e2:SetOperation(s.atkgop)
 	c:RegisterEffect(e2)
-	--must attack
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_MUST_ATTACK)
-	e3:SetCondition(s.becon)
-	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_CANNOT_EP)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetTargetRange(1,0)
-	e4:SetCondition(s.becon)
-	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD)
-	e5:SetCode(EFFECT_MUST_BE_ATTACKED)
-	e5:SetTargetRange(0,LOCATION_MZONE)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetValue(s.atkval)
-	e5:SetTarget(s.atktg)
-	c:RegisterEffect(e5)
 end
 function s.spfilter(c,tpe)
 	return c:IsType(tpe) and c:IsAbleToGraveAsCost()
@@ -107,17 +87,4 @@ function s.atkgop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
-end
-function s.atkfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_PLUS+TYPE_MINUS)
-end
-function s.becon(e)
-	return e:GetHandler():CanAttack() 
-		and Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
-end
-function s.atktg(e,c)
-	return c:IsFaceup() and c:IsType(TYPE_PLUS+TYPE_MINUS)
-end
-function s.atkval(e,c)
-	return not c:IsImmuneToEffect(e) and c==e:GetHandler()
 end

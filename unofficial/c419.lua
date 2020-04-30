@@ -72,7 +72,7 @@ if not GenerateEffect then
 	end
 	
 	--Anime card constants
-	RACE_YOKAI	  =   0x80000000
+	RACE_YOKAI  =   0x80000000
 	RACE_CHARISMA   =   0x100000000
 	
 	ATTRIBUTE_LAUGH =   0x80
@@ -470,4 +470,43 @@ if not GenerateEffect then
 	end
 	
 	finish_setup()
+
+	function Card.AddPlusMinusAttribute(c)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
+		e1:SetCondition(GenerateEffect.chargeCon)
+		e1:SetValue(GenerateEffect.repel)
+		c:RegisterEffect(e1)
+		--must attack
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_MUST_ATTACK)
+		e2:SetCondition(GenerateEffect.attractcon)
+		c:RegisterEffect(e2)
+		local e3=e2:Clone()
+		e3:SetCode(EFFECT_MUST_ATTACK_MONSTER)
+		e3:SetValue(GenerateEffect.attract)
+		c:RegisterEffect(e3)
+	end
+	function GenerateEffect.chargeCon(e)
+		return e:GetHandler():IsType(TYPE_PLUS+TYPE_MINUS)
+	end
+	function GenerateEffect.repel(e,c)
+		return c:IsFaceup() and e:GetHandler():GetType()&(TYPE_PLUS|TYPE_MINUS)==c:GetType()&(TYPE_PLUS|TYPE_MINUS)
+			and c:GetType()&(TYPE_PLUS|TYPE_MINUS)~=(TYPE_PLUS|TYPE_MINUS)
+	end
+	function GenerateEffect.attractfilter(c,tpe)
+		local t=(~tpe)&(TYPE_PLUS|TYPE_MINUS)~=0 and (~tpe)&(TYPE_PLUS|TYPE_MINUS) or (TYPE_PLUS|TYPE_MINUS)
+		return c:IsFaceup() and c:IsType(t)
+	end
+	function GenerateEffect.attractcon(e)
+		return GenerateEffect.chargeCon(e) and e:GetHandler():CanAttack()
+			and Duel.IsExistingMatchingCard(GenerateEffect.attractfilter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil,e:GetHandler():GetType())
+	end
+	function GenerateEffect.attract(e,c)
+		local tpe=e:GetHandler():GetType()
+		local t=(~tpe)&(TYPE_PLUS|TYPE_MINUS)~=0 and (~tpe)&(TYPE_PLUS|TYPE_MINUS) or (TYPE_PLUS|TYPE_MINUS)
+		return c:IsType(t)
+	end
 end

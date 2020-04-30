@@ -15,12 +15,10 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetProperty(EFFECT_FLAG_CVAL_CHECK)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.spcon1)
 	e2:SetTarget(s.sptg1)
 	e2:SetOperation(s.spop1)
-	e2:SetValue(s.valcheck)
 	c:RegisterEffect(e2)
 	--immune
 	local e3=Effect.CreateEffect(c)
@@ -69,9 +67,6 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)~=0 then
 		c:CompleteProcedure()
 	end
-end
-function s.valcheck(e)
-	Duel.SetChainLimit(aux.FALSE)
 end
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()

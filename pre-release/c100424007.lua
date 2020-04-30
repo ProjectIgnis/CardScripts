@@ -47,8 +47,7 @@ function s.actcon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsOriginalCodeRule,CARD_RA),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cost=Duel.GetLP(tp)-100

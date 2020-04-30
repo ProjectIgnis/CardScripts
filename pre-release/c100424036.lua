@@ -35,7 +35,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists itself and "Jinzo"
 s.listed_names={id,CARD_JINZO}
-
 	--Check for a monster that is owned by your opponent
 function s.cfilter(c,e)
 	return c:IsType(TYPE_MONSTER) and c:GetControler()~=c:GetOwner() and c:IsAbleToGraveAsCost()
@@ -72,8 +71,7 @@ function s.filter(c)
 end
 	--Opponent draws during draw phase
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and (r&REASON_RULE)~=0
-	 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
+	return ep~=tp and (r&REASON_RULE)~=0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 	--Activation legality
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

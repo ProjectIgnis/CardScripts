@@ -30,7 +30,7 @@ s.listed_names={26905245}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0x54b,TYPES_TOKEN,500,500,1,RACE_AQUA,ATTRIBUTE_WATER) 
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0x54b,TYPES_TOKEN,500,500,1,RACE_AQUA,ATTRIBUTE_WATER)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,0)

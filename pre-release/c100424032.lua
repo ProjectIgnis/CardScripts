@@ -26,7 +26,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_JINZO}
-
 function s.thfilter(c)
 	return ((aux.IsCodeListed(c,CARD_JINZO) and c:IsType(TYPE_SPELL+TYPE_TRAP)) or c:IsCode(CARD_JINZO)) and c:IsAbleToHand()
 end

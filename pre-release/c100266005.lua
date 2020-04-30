@@ -35,7 +35,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists itself and "Fossil Fusion"
 s.listed_names={id,CARD_FOSSIL_FUSION}
-
 	--Check for "Fossil Fusion" or 1 card that specifically lists "Fossil Fusion"
 function s.thfilter(c)
 	return c:IsAbleToHand() and not c:IsCode(id)

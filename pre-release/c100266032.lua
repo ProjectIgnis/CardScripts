@@ -29,7 +29,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists itself
 s.listed_names={id}
-
 	--If this card was destroyed by battle or card effect while on the field
 function s.thccon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

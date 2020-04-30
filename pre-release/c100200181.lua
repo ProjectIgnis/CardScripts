@@ -41,7 +41,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for level 5+ monster
 function s.spfilter(c)
 	return c:IsLevelAbove(5) and c:IsAbleToGraveAsCost()

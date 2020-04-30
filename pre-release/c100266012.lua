@@ -31,7 +31,6 @@ end
 s.listed_series={0x243}
 	--Specifically lists "Fossil Fusion"
 s.listed_names={CARD_FOSSIL_FUSION}
-
 	--Check for "Fossil" fusion monster to tribute
 function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsSetCard(0x243) and c:IsReleasableByEffect()
@@ -58,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.Release(tc,REASON_EFFECT)==0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.ssfilter,tp,LOCATION_EXTRA,0,1,1,nil,tc:GetLevel(),e,tp)
-		if #sg>0 then 
+		if #sg>0 then
 			if Duel.SpecialSummon(sg:GetFirst(),SUMMON_TYPE_FUSION,tp,tp,true,true,POS_FACEUP)~=0 then
 				sg:GetFirst():CompleteProcedure()
 			end
@@ -67,7 +66,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Fossil" fusion to banish
 function s.cfilter(c,e,tp)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x243) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x243) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp)
 end
 	--Check for "Fossil" fusion to special summon

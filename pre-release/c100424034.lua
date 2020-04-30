@@ -76,7 +76,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				end
 			else --All "Jinzo" you control gains 800 ATK
 				local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
-				local tc=g:GetFirst()
 				for tc in aux.Next(g) do
 					local e1=Effect.CreateEffect(e:GetHandler())
 					e1:SetType(EFFECT_TYPE_SINGLE)

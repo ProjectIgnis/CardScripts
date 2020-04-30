@@ -72,7 +72,6 @@ function s.atkboost(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if tc:IsSummonType(SUMMON_TYPE_TRIBUTE) and tc:IsCode(CARD_RA) then
 		local g=tc:GetMaterial()
-		local gc=g:GetFirst()
 		local atk=0
 		local def=0
 		for gc in aux.Next(g) do

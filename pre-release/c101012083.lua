@@ -80,15 +80,13 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.fuscond(e)
-	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end
 function s.fuslimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER)
 end
 function s.syncond(e)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
+	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and Duel.IsMainPhase()
 end
 function s.synlimit(e,re,tp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)

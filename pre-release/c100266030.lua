@@ -39,7 +39,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Lists the "Flower Cardian" archetype
 s.listed_series={0xe6}
-
 	--Check for synchro monster
 function s.exfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsAbleToHand()

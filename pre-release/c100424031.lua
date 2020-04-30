@@ -32,7 +32,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists itself and "Jinzo"
 s.listed_names={id,CARD_JINZO}
-
 	--Check for trap card
 function s.cfilter(c,e,tp,sc)
 	return c:IsFaceup() and c:IsType(TYPE_TRAP)
@@ -70,10 +69,6 @@ end
 function s.sscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
-end
-	--Check for trap card
-function s.desfilter(c)
-	return c:IsType(TYPE_TRAP)
 end
 	--Check for "Jinzo"
 function s.ssfilter(c,e,tp)

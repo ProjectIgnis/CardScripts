@@ -42,7 +42,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists itself and "The Winged Dragon of Ra"
 s.listed_names={id,CARD_RA}
-
 	--If player took battle or effect damage
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and r&(REASON_BATTLE+REASON_EFFECT)~=0

@@ -1,3 +1,4 @@
+--覇王乱舞
 --Supreme Faceoff
 --fixed by MLD
 local s,id=GetID()
@@ -120,7 +121,7 @@ function s.edescon(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and tc+tg:FilterCount(s.cdfilter,nil,tp)-#tg>0
 end
-function s.edestg(e,tp,eg,ev,ep,re,r,rp,chk)
+function s.edestg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	local g=tg:Filter(s.cdfilter,nil,tp)

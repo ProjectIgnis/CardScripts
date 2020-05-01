@@ -60,7 +60,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local gc=g:GetFirst()
 		local lv=gc:GetLevel()
 		if Duel.SendtoGrave(gc,REASON_EFFECT)~=0 and gc:IsLocation(LOCATION_GRAVE) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-			Duel.BreakEffect()
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

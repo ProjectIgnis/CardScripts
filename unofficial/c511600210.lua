@@ -1,6 +1,7 @@
 --ドロップフレーム・ウェッジ
 --Drop Frame Wedge
 --scripted by Larry126
+--fixed by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
 	--selfdes
@@ -68,8 +69,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_CHAIN)
 		Duel.RegisterEffect(e1,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g2=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,0,1,e:GetHandler())
-		if Duel.SendtoGrave(g2,REASON_EFFECT)>0 then
+		local g2=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,0,1,true,e:GetHandler())
+		if g2 and Duel.SendtoGrave(g2,REASON_EFFECT)>0 then
 			Duel.RegisterFlagEffect(tp,c:GetFieldID(),RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,2)
 		end
 	end
@@ -79,7 +80,7 @@ function s.damval(e,re,val,r,rp,rc)
 	if cc==0 or r&REASON_EFFECT==0 then return val end
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
 	if cid~=e:GetLabel() then return val end
-	return val/math.pow(2,Duel.GetFlagEffect(e:GetHandlerPlayer(),e:GetOwner():GetFieldID()))
+	return val/(1<<Duel.GetFlagEffect(e:GetHandlerPlayer(),e:GetOwner():GetFieldID()))
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -49,6 +49,18 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
+	--lizard check
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(51476410)
+	e1:SetTargetRange(LOCATION_GRAVE,0)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTarget(s.lizfilter)
+	e1:SetValue(1)
+	Duel.RegisterEffect(e1,tp)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalRace(RACE_CYBERSE)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsRace(RACE_CYBERSE)

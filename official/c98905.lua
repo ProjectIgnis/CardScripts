@@ -26,9 +26,8 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if not eg then return end
 	local sg=eg:Filter(s.cfilter,nil)
-	local tc=sg:GetFirst()
 	for tc in aux.Next(sg) do
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD&~(RESET_TOGRAVE|RESET_LEAVE),0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TOGRAVE|RESET_LEAVE),0,1)
 	end
 end
 function s.filter(c,e,tp,rp)

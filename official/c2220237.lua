@@ -58,8 +58,11 @@ function s.matfilter(c,lc,sumtype,tp)
 	return c:IsRace(RACE_CYBERSE,lc,sumtype,tp) and c:IsType(TYPE_LINK,lc,sumtype,tp)
 end
 function s.damval1(e,re,val,r,rp,rc)
-	if r&REASON_EFFECT~=0 then return 0
-	else return val end
+	if r&REASON_EFFECT~=0 then
+		return 0
+	else
+		return val
+	end
 end
 function s.damval2(e,re,val,r,rp,rc)
 	local c=e:GetHandler()

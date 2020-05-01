@@ -67,7 +67,7 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tg=Duel.GetTargetCards(e)
-	if #tg==0 then return end
+	if not tc or #tg==0 then return end
 	if Duel.SendtoDeck(tg,nil,SEQ_DECKTOP,REASON_EFFECT)==0 then return end
 	local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_DECK)
 	if ct>0 then Duel.SortDecktop(tp,tp,ct) end

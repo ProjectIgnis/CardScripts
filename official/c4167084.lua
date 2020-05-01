@@ -71,8 +71,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then Duel.Destroy(g,REASON_EFFECT) end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_FAIRY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

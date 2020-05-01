@@ -47,4 +47,3 @@ function s.disop(e,tp)
 	local flag=(c:GetLinkedZone(tp)&0xff0000ff)
 	return flag
 end
-

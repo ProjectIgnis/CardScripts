@@ -1,10 +1,11 @@
---Performapal Sandwich Wingman
+--Ｅｍウィング・サンドイッチマン
+--Performage Wing Sandwichman
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
 	Pendulum.AddProcedure(c)
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(95100067,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_CUSTOM+id)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--lvup
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(26082117,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--lv change
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(95100067,2))
+	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
@@ -130,4 +131,3 @@ function s.lvop2(e,tp,eg,ep,ev,re,r,rp)
 		tc=g:GetNext()
 	end
 end
-

@@ -15,7 +15,7 @@ function Link.AddProcedure(c,f,min,max,specialchk,desc)
 		e1:SetDescription(1174)
 	end
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetRange(LOCATION_EXTRA)
 	if max==nil then max=c:GetLink() end
 	e1:SetCondition(Link.Condition(f,min,max,specialchk))

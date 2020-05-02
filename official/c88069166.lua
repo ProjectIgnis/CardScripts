@@ -1,4 +1,5 @@
 --オーディンの眼
+--Odin's Eye
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -33,7 +34,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetChainLimit(s.chlimit)
 end
@@ -67,5 +68,7 @@ function s.rcon(e)
 end
 function s.ctarget(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()
-	if tc then e:GetHandler():CancelCardTarget(tc) end
+	if tc then
+		e:GetHandler():CancelCardTarget(tc)
+	end
 end

@@ -129,11 +129,11 @@ end
 --helper function to "play" a card
 function s.playCard(c, p)
     if c and not c:IsForbidden() then
-        local canSummon = Duel.GetLocationCount(p, LOCATION_MZONE) > 0
-        local canPendActivate =
+        if c:IsType(TYPE_MONSTER) then
+            local canSummon = Duel.GetLocationCount(p, LOCATION_MZONE) > 0
+            local canPendActivate =
             c:IsType(TYPE_PENDULUM) and
             (Duel.CheckLocation(p, LOCATION_PZONE, 0) or Duel.CheckLocation(p, LOCATION_PZONE, 1))
-        if c:IsType(TYPE_MONSTER) then
             --check for monster seperately so skips next block if is monster
             if (canSummon or canPendActivate) then
                 --TODO: This could be made more efficient surely
@@ -156,16 +156,9 @@ function s.playCard(c, p)
                 end
             end
         else
-            --activate backrow
-            local ae=c:CheckActivateEffect(false,false,false)
-            if ae~=nil and Duel.SelectYesNo(p, 94) then
-                Duel.DisableShuffleCheck() --don't shuffle for taking the card out of the deck
-                --not just for show, actually helps it not crash! go figure
-                if Duel.MoveToField(c, p, p, LOCATION_SZONE, POS_FACEDOWN, true, 0x1f) then
-                    Duel.DisableShuffleCheck(false) --turn shuffling back on in case the activate card should
-                    Duel.Activate(ae)
-                    return true
-                end
+            if c:IsSSetable() and Duel.SelectYesNo(tp, 94) then
+                Duel.DisableShuffleCheck() --don't shuffle for taking the spell out of the deck
+                Duel.SSet(p, c)
             end
         end
     end

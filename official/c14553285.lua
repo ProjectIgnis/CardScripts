@@ -49,7 +49,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.counter_place_list={COUNTER_SPELL}
-s.listed_names={31924889}
+s.listed_names={CARD_ASSAULT_MODE,31924889}
 s.assault_mode=31924889
 function s.addct(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

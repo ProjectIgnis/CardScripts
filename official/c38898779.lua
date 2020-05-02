@@ -1,4 +1,5 @@
 --ギガンテック・ファイター/バスター
+--Colossal Fighter/Assault Mode
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -38,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={23693634}
+s.listed_names={CARD_ASSAULT_MODE,23693634}
 s.assault_mode=23693634
 function s.tgfilter(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsAbleToGrave()

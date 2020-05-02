@@ -621,6 +621,10 @@ table.insert(s.challenges, s.goFaceUp)
 function s.swapControl(e, tp)
     local g1 = Duel.GetFieldGroup(tp, LOCATION_MZONE, 0)
     local g2 = Duel.GetFieldGroup(tp, 0, LOCATION_MZONE)
+    --cannot handle the extra monster zone
+    if #g1>5 or #g2>5 then
+        return
+    end
     if #g1 == #g2 then
         Duel.SwapControl(g1, g2)
         return

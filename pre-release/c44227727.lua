@@ -19,12 +19,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x13f}
-s.listed_names={101012089}
+s.listed_names={80621422}
 function s.efilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x13f) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function s.eqfilter(c,tc)
-	return not c:IsForbidden() and ((c:IsCode(101012089) and c:CheckEquipTarget(tc)) or (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x13f)))
+	return not c:IsForbidden() and ((c:IsCode(80621422) and c:CheckEquipTarget(tc)) or (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x13f)))
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.efilter(chkc,tp) end
@@ -53,3 +53,4 @@ end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
+

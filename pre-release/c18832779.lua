@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.negcon)
 	e2:SetCost(s.negcost)
 	e2:SetTarget(s.negtg)
@@ -97,3 +97,4 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+

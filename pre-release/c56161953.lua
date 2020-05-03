@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BE_MATERIAL)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.tdcon)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
@@ -66,3 +66,4 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
 	end
 end
+

@@ -1,4 +1,5 @@
 --人造人間－サイコ・ショッカー
+--Jinzo (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -77,7 +78,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsActiveType(TYPE_TRAP) and rc:IsOnField() then
 		Duel.NegateEffect(ev)
 		if rc:IsRelateToEffect(re) then
-			Duel.Destroy(eg,REASON_EFFECT)
+			Duel.Destroy(rc,REASON_EFFECT)
 		end
 	end
 end

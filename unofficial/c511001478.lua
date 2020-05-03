@@ -1,7 +1,8 @@
+--ナイト・オブ・ペンタクルス
 --Knight of Pentacles
 local s,id=GetID()
 function s.initial_effect(c)
-	--coin
+	--Toss a coin on Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(97574404,0))
 	e1:SetCategory(CATEGORY_COIN)
@@ -25,47 +26,38 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local res=0
-	if c:IsHasEffect(73206827) then
-		res=1-Duel.SelectOption(tp,60,61)
-	else res=Duel.TossCoin(tp,1) end
-	s.arcanareg(c,res)
-end
-function s.arcanareg(c,coin)
-	--coin effect
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetCondition(s.indcon)
-	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-	c:RegisterEffect(e1)
-	--
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_CANNOT_ATTACK)
-	e2:SetCondition(s.atcon)
-	c:RegisterEffect(e2)
-	--
-	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_DESTROY)
-	e3:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
-	e3:SetCode(EVENT_DAMAGE_STEP_END)
-	e3:SetCondition(s.descon)
-	e3:SetTarget(s.destg)
-	e3:SetOperation(s.desop)
-	c:RegisterEffect(e3)
-	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD_DISABLE,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
-end
-function s.indcon(e)
-	return e:GetHandler():GetFlagEffectLabel(36690018)==1
-end
-function s.atcon(e)
-	return e:GetHandler():GetFlagEffectLabel(36690018)==0
+	local res=Duel.TossCoin(tp,1)
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,EFFECT_FLAG_CLIENT_HINT,1,0,63-res)
+	if res==0 then	--Tails
+		--Cannot attack
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CANNOT_ATTACK)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		c:RegisterEffect(e1)
+		--destroy if attacked
+		local e2=Effect.CreateEffect(c)
+		e2:SetCategory(CATEGORY_DESTROY)
+		e2:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
+		e2:SetCode(EVENT_DAMAGE_STEP_END)
+		e2:SetCondition(s.descon)
+		e2:SetTarget(s.destg)
+		e2:SetOperation(s.desop)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		c:RegisterEffect(e2)
+	elseif res==1 then	--Heads
+		--Cannot be destroyed by battle
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+		e3:SetValue(1)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		c:RegisterEffect(e3)
+	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetFlagEffectLabel(36690018)==0 and c:IsRelateToBattle() and Duel.GetAttackTarget() and c==Duel.GetAttackTarget()
+	return c:IsRelateToBattle() and Duel.GetAttackTarget() and c==Duel.GetAttackTarget()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

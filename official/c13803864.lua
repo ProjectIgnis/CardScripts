@@ -1,4 +1,5 @@
 --キング・もけもけ
+--Mokey Mokey King
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -10,17 +11,11 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e1:SetCode(EVENT_TO_GRAVE)
+	e1:SetCode(EVENT_LEAVE_FIELD)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EVENT_REMOVE)
-	c:RegisterEffect(e2)
-	local e3=e1:Clone()
-	e3:SetCode(EVENT_TO_DECK)
-	c:RegisterEffect(e3)
 end
 s.listed_names={27288416}
 function s.spfilter(c,e,tp)

@@ -1,4 +1,5 @@
 --アルカナコール
+--Arcana Call
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x5}
 function s.filter(c)
-	return c:GetFlagEffect(36690018)~=0
+	return c:IsSetCard(0x5) and c:GetFlagEffect(36690018)>0
 end
 function s.rfilter(c)
 	return c:IsSetCard(0x5) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)

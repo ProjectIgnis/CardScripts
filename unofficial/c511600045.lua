@@ -1,7 +1,6 @@
 --トリックスター・トリート (Anime)
 --Trickstar Treat (Anime)
---scripted by Larry126
---fixed by MLD
+--scripted by Larry126, fixed by D
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0xfb)
@@ -138,7 +137,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc:GetFlagEffectLabel(id)~=e:GetLabel() then
+	if tc and tc:GetFlagEffectLabel(id)~=e:GetLabel() then
 		e:Reset()
 		return false
 	else return true end

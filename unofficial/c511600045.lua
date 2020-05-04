@@ -1,6 +1,6 @@
 --トリックスター・トリート (Anime)
 --Trickstar Treat (Anime)
---scripted by Larry126, fixed by D
+--scripted by Larry126, fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0xfb)

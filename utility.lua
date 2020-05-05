@@ -1207,7 +1207,7 @@ function Auxiliary.EnableExtraRulesOperation(card,init,...)
 end
 --[[
 Function to perform "Either add it to the hand or do X"
--card: affected card to be moved;
+-card: affected card or group of cards to be moved;
 -player: player performing the operation
 -check: condition for the secondary action, if not provided the default action is "Send it to the GY";
 oper: secondary action;
@@ -1218,8 +1218,20 @@ function Auxiliary.ToHandOrElse(card,player,check,oper,str,...)
 		if not check then check=Card.IsAbleToGrave end
 		if not oper then oper=aux.thoeSend end
 		if not str then str=574 end
-		local b1=card:IsAbleToHand()
-		local b2=check(card,...)
+		local b1,b2
+		if type(card)=="Group" then
+			for ctg in aux.Next(card) do
+				if not ctg:IsAbleToHand() then
+					b1=false
+				end
+				if not check(ctg,...) then
+					b2=false
+				end
+			end
+		else
+			b1=card:IsAbleToHand()
+			b2=check(card,...)
+		end
 		local opt
 		if b1 and b2 then
 			opt=Duel.SelectOption(player,573,str)

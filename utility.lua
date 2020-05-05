@@ -1218,7 +1218,7 @@ function Auxiliary.ToHandOrElse(card,player,check,oper,str,...)
 		if not check then check=Card.IsAbleToGrave end
 		if not oper then oper=aux.thoeSend end
 		if not str then str=574 end
-		local b1,b2
+		local b1,b2=true,true
 		if type(card)=="Group" then
 			for ctg in aux.Next(card) do
 				if not ctg:IsAbleToHand() then

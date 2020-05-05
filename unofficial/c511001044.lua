@@ -1,4 +1,5 @@
---DD魔導賢者ケプラー
+--DD魔導賢者ケプラー (Anime)
+--D/D Savant Kepler (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -35,14 +36,14 @@ function s.filter(c,lv)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local scl=e:GetHandler():GetLeftScale()-5
+	local scl=math.max(0,e:GetHandler():GetLeftScale()-5)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,sc1)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 end
 function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local scl=c:GetLeftScale()-5
+	local scl=math.max(0,e:GetHandler():GetLeftScale()-5)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_LSCALE)

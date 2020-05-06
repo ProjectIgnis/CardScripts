@@ -2,10 +2,10 @@
 --Number C107: Neo Galaxy-Eyes Tachyon Dragon (Anime)
 --Scripted By TheOnePharaoh
 --fixed by MLD & Larry126
+Duel.LoadCardScript("c68396121.lua")
 local s,id,alias=GetID()
-local s,id=GetID()
 function s.initial_effect(c)
-	alias=c:GetOriginalCodeRule()
+	alias=c:Alias()
 	--xyz summon
 	Xyz.AddProcedure(c,nil,9,3)
 	c:EnableReviveLimit()

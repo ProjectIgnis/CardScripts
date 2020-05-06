@@ -58,12 +58,15 @@ end
 function s.retg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.refilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
 end
-function s.getflag(g)
-	local flag = 0
-	for c in aux.Next(g) do
-		flag = flag|((1<<c:GetSequence())<<(8+(16*c:GetControler())))
-	end
-	return ~flag
+function s.getflag(g,tp)
+    local flag = 0
+    for c in aux.Next(g) do
+        flag = flag|((1<<c:GetSequence())<<(8+(16*c:GetControler())))
+    end
+    if tp~=0 then
+        flag=((flag<<16)&0xffff)|((flag>>16)&0xffff)
+    end
+    return ~flag
 end
 function s.reop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.refilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
@@ -82,7 +85,7 @@ function s.reop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
 	end
 	g=g:Filter(Card.IsFacedown,nil)
-	local filter=s.getflag(g)
+	local filter=s.getflag(g,tp)
 	for tc in aux.Next(g) do
 		Duel.HintSelection(Group.FromCards(tc))
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)

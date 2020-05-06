@@ -14,48 +14,62 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD)
+		ge1:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+		ge1:SetTargetRange(0xff,0xff)
+		ge1:SetTarget(function(e,c) return c:GetFlagEffect(id)>0 end)
+		ge1:SetValue(1)
+		Duel.RegisterEffect(ge1,0)
+	end)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsType(TYPE_MONSTER)
-		and Duel.IsExistingMatchingCard(s.hlfilter,tp,LOCATION_GRAVE,0,5,nil)
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return #eg==1 and s.cfilter(eg:GetFirst(),tp)
 end
 function s.hlfilter(c)
 	return c:IsSetCard(0x567) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return #eg==1 and eg:IsExists(s.cfilter,1,nil,tp)
+function s.rescon(tc)
+	return function(sg,e,tp,mg)
+		for sc in aux.Next(sg) do
+			sc:RegisterFlagEffect(id,0,0,0)
+		end
+--		Synchro.AdditionalCost=sg
+		local res=not sg:IsExists(aux.NOT(s.hlfilter),1,nil)
+			and Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,tc)
+		for sc in aux.Next(sg) do
+			sc:ResetFlagEffect(id)
+		end
+--		Synchro.AdditionalCost=nil
+		return res
+	end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.hlfilter,tp,LOCATION_GRAVE,0,5,eg) end
-	local g=Duel.SelectMatchingCard(tp,s.hlfilter,tp,LOCATION_GRAVE,0,5,5,eg)
+	local tc=eg:GetFirst()
+	local sg=Duel.GetMatchingGroup(s.hlfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,tc)
+	if chk==0 then return aux.SelectUnselectGroup(sg,e,tp,5,5,s.rescon(tc),0) end
+	local g=aux.SelectUnselectGroup(sg,e,tp,5,5,s.rescon(tc),1,tp,HINTMSG_REMOVE)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)   
 end
-function s.scfilter1(c,tp,mc,mg)
-	return Duel.IsExistingMatchingCard(s.scfilter2,tp,LOCATION_MZONE,0,1,nil,mc,c,tp,mg)
-end
-function s.scfilter2(c,mc,sync,tp,mg)
-	mg:AddCard(mc)
-	return c:IsCanBeSynchroMaterial(sync) and sync:IsSynchroSummonable(mc,mg)
-		and Duel.GetLocationCountFromEx(tp,tp,mg,sync)>0
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local sg=eg:GetFirst()
-	local mg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.scfilter1,tp,LOCATION_EXTRA,0,1,nil,tp,sg,mg) end
-	sg:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	if chk==0 then return true end
+	Duel.SetTargetCard(eg:GetFirst())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=eg:GetFirst()
-	if c:GetFlagEffect(id)==0 then return end
-	c:ResetFlagEffect(id)
-	local mg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	mg:AddCard(c)
-	local g=Duel.GetMatchingGroup(s.scfilter1,tp,LOCATION_EXTRA,0,nil,tp,c,mg)
-	if #g>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sc=g:Select(tp,1,1,nil):GetFirst()
-		Duel.SynchroSummon(tp,sc,c)
-		c:SetReason(REASON_MATERIAL+REASON_SYNCHRO,true)
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) then
+		local g=Duel.GetMatchingGroup(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,nil,tc)
+		if #g>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sc=g:Select(tp,1,1,nil):GetFirst()
+			Duel.SynchroSummon(tp,sc,tc)
+			tc:SetReason(REASON_MATERIAL+REASON_SYNCHRO,true)
+		end
 	end
 end

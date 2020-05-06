@@ -119,6 +119,6 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if #g<=0 or g:IsExists(aux.NOT(s.retcfilter2),1,nil,tp) then return end
 	for tc in aux.Next(g) do
-		Duel.MoveToField(tc,tp,tp,tc:GetPreviousLocation(),tc:GetPreviousPosition(),true,math.pow(2,tc:IsPreviousLocation(LOCATION_PZONE) and tc:GetPreviousSequence()==4 and 1 or tc:GetPreviousSequence()))
+		Duel.MoveToField(tc,tp,tp,tc:GetPreviousLocation(),tc:GetPreviousPosition(),true,2^(tc:IsPreviousLocation(LOCATION_PZONE) and tc:GetPreviousSequence()==4 and 1 or tc:GetPreviousSequence()))
 	end
 end

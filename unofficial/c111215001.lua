@@ -1,4 +1,5 @@
 --霧の王城
+--Fog Castle (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -64,7 +65,7 @@ end
 function s.disop(e,tp)
 	local c=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if c==0 then return end
-	return math.pow(2,e:GetLabel())
+	return 2^(e:GetLabel())
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsDuelType(SPEED_DUEL) and e:GetHandler():GetFlagEffect(tp,id)>2 

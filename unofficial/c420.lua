@@ -163,7 +163,7 @@ if not AnimeArchetype then
 
 	-- Dart ダーツ
 	-- Fire Darts
-	Card.IsCubicSeed=MakeCheck({0x513},{43061293})
+	Card.IsDart=MakeCheck({0x513},{43061293})
 
 	-- Dice (archetype)
 	-- ダイス

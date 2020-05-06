@@ -56,5 +56,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=g:Select(tp,1,1,nil):GetFirst()
 		Duel.SynchroSummon(tp,sc,c)
+		c:SetReason(REASON_MATERIAL+REASON_SYNCHRO,true)
 	end
 end

@@ -13,7 +13,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.roll_dice=true
 s.listed_names={150000075}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp

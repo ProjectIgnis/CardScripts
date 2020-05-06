@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.ctop)
 	c:RegisterEffect(e1)
 end
+s.roll_dice=true
 function s.lcheck(g,lc,tp)
 	return g:GetClassCount(Card.GetAttribute)==#g
 end

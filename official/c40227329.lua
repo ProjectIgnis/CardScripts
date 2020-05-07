@@ -80,7 +80,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
+	local b1=not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK) and Duel.IsAbleToEnterBP()
 	local b2=Duel.GetFlagEffect(1-tp,id+1)==0
 	local b3=Duel.GetFlagEffect(1-tp,id+2)==0
 	if chk==0 then return b1 or b2 or b3 end

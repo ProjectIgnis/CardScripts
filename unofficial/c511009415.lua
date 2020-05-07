@@ -1,5 +1,6 @@
 --スターヴ・ヴェネミー・ドラゴン (Manga)
 --Starving Venemy Dragon (Manga)
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -137,7 +138,7 @@ function s.adcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
 end
 function s.adtg(e,c)
-	return c:GetCounter(0x1149)~=0 and not c:IsSetCard(0x576)
+	return c:GetCounter(0x1149)~=0 and not c:IsStarvingVenemy()
 end
 function s.adval(e,c)
 	return c:GetCounter(0x1149)*-100

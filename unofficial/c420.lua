@@ -176,7 +176,7 @@ if not AnimeArchetype then
 	}
 	Card.IsDice=MakeCheck({0x514},AnimeArchetype.OCGDice)
 
-	-- Darkness  (Last updated by 23rd Apr 2020)
+	-- Darkness  (Last updated on 23rd Apr 2020)
 	-- ダークネス
 	-- Cyberdarkness Dragon/Darkness Metal, the Dragon of Dark Steel/Malevolent Mech - Goku En/Simorgh of Darkness
 	-- Umbral Soul/Darkness Destroyer/Darkness Neosphere/Hunter of Black Feathers
@@ -590,7 +590,7 @@ if not AnimeArchetype then
 	}
 	Card.IsMantis=MakeCheck({0x535},AnimeArchetype.OCGMantis)
 
-	-- Mask  (Last updated by 23rd Apr 2020)
+	-- Mask  (Last updated on 23rd Apr 2020)
 	-- 仮面 (base)
 	-- かめん (ruby)
 	-- Mask of Restrict/Grand Tiki Elder/Masked Clown
@@ -714,7 +714,7 @@ if not AnimeArchetype then
 	}
 	Card.IsRaccoon=MakeCheck({0x542},AnimeArchetype.OCGRacoon)
 
-	-- Red (archetype) レッド   Last updated by 16th Apr 2020
+	-- Red (archetype) レッド   (Last updated on 16th Apr 2020)
 	-- Sub-archetype: Red-Eyes/Red Dragon Archfiend
 	-- U.A. Dreadnought Dunker/Vampire Red Baron/Xtra HERO Dread Decimator/Eternal Dread
 	-- Ojama Red/Number C106: Giant Red Hand/Construction Train Signal Red/The Wicked Dreadroot
@@ -867,6 +867,11 @@ if not AnimeArchetype then
 	-- Starship Spy Plane
 	-- Number 42: Galaxy Tomahawk
 	Card.IsStarship=MakeCheck({0x54f},{15458892,10389142})
+
+	-- Starving Venemy  (Last updated on 7th May 2020)
+	-- スターヴ・ヴェネミー
+	-- Starving Venemy Lethal Dose Dragon
+	Card.IsStarvingVenemy=MakeCheck({0x576},{22070401})
 
 	-- Statue スタチュー
 	-- Tiki Curse/Guardian Statue/Tiki Soul

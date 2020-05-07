@@ -1,4 +1,5 @@
 --威圧する魔眼
+--Overpowering Eye
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,9 +7,13 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsAbleToEnterBP()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsAttackBelow(2000) and c:IsRace(RACE_ZOMBIE)

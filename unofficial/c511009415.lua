@@ -60,6 +60,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.adval)
 	c:RegisterEffect(e5)
 end
+s.counter_list={0x1149}
 s.listed_series={0x576}
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and ev>0
@@ -123,26 +124,21 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end
-
-
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
-	while tc do
-		tc:AddCounter(0x1114,1,REASON_EFFECT)
-		tc=g:GetNext()
+	for tc in aux.Next() do
+		tc:AddCounter(0x1149,1,REASON_EFFECT)
 	end
 end
-
 function s.adcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
 end
 function s.adtg(e,c)
-	return c:GetCounter(0x1114)~=0 and not c:IsSetCard(0x576)
+	return c:GetCounter(0x1149)~=0 and not c:IsSetCard(0x576)
 end
 function s.adval(e,c)
-	return c:GetCounter(0x1114)*-100
+	return c:GetCounter(0x1149)*-100
 end

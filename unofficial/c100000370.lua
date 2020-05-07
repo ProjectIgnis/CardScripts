@@ -1,7 +1,9 @@
 --王家之劍
+--Royal Sword
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x95)
+	c:SetCounterLimit(0x95,4)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsCode,6614221))
 	--Atk up
 	local e2=Effect.CreateEffect(c)
@@ -27,6 +29,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.drop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={6614221}
 function s.value(e,c)
 	return e:GetHandler():GetCounter(0x95)*800
 end

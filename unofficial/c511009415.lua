@@ -129,7 +129,7 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	for tc in aux.Next() do
+	for tc in aux.Next(g) do
 		tc:AddCounter(0x1149,1,REASON_EFFECT)
 	end
 end

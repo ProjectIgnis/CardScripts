@@ -1,4 +1,5 @@
---化石融合－フォッシル・フュージョン
+--化石融合－フォッシル・フュージョン (VG)
+--Fossil Fusion (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,12 +11,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x521}
+s.listed_series={0x243}
 function s.filter1(c,e)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove() and (not e or not c:IsImmuneToEffect(e))
 end
 function s.filter2(c,e,tp,m,f)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x521) and (not f or f(c)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x243) and (not f or f(c)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
 		and c:CheckFusionMaterial(m,nil,tp)
 end
 function s.fcheck(tp,sg,fc)

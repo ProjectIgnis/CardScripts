@@ -533,7 +533,7 @@ if not AnimeArchetype then
 	-- Paladin of the Cursed Dragon/Dark Magician Knight/Blade Knight
 	-- Penguin Knight/Nightmare Penguin/Seiyaryu/Avenging Knight Parshath
 	-- Dragon Master Knight/Mermaid Knight/Midnight Fiend
-	-- Super Roboyarou,Red-Eyes Metal Knight Gearfried
+	-- Super Roboyarou/Red-Eyes Metal Knight Gearfried/Fossil Warrior Skull Knight
 
 	-- TellarKnight/Igknight/Gem-Knight
 	AnimeArchetype.OCGKnight={
@@ -546,7 +546,7 @@ if not AnimeArchetype then
 		42956963,59290628,78402798,6150044,31924889,359563,72926163,40391316,12744567,97204936,
 		21249921,34116027,900787,80159717,25682811,2191144,85684223,48739166,2986553,31320433,
 		99348756,66661678,52575195,35429292,89731911,68670547,50725996,39507162,36039163,81306586,
-		6740720,69514125
+		6740720,69514125,100266007
 	}
 	Card.IsKnight=MakeCheck({0x530,0x1047,0x9c,0xc8},AnimeArchetype.OCGKnight)
 
@@ -644,6 +644,7 @@ if not AnimeArchetype then
 		56840427,87911394,66970002
 	}
 	Card.IsCN39UtopiaRay=MakeCheck({0x1539},AnimeArchetype.OCGCN39UtopiaRay)
+
 	-- Number S
 	-- ＳＮｏ.
 	-- シャイニングナンバーズ
@@ -652,15 +653,6 @@ if not AnimeArchetype then
 		52653092,56832966,86532744
 	}
 	Card.IsNumberS=MakeCheck({0x2048},AnimeArchetype.OCGNumberS)
-
-	-- Numeron ヌメロン
-	-- Number 100: Numeron Dragon
-	-- Rank-Up-Magic Numeron Force
-	-- Rank-Down-Magic Numeron Fall
-	AnimeArchetype.OCGNumeron={
-		57314798,48333324,71345905
-	}
-	Card.IsNumeron=MakeCheck({0x53a},AnimeArchetype.OCGNumeron)
 
 	-- Papillon パピヨン
 	-- Moonlit Papillon

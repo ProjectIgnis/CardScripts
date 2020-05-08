@@ -1,4 +1,5 @@
---中生代化石騎士 スカルナイト
+--中生代化石騎士 スカルナイト (VG)
+--Fossil Warrior Skull Knight (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -20,9 +21,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={100000025}
+s.listed_names={100266011}
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsCode(100000025)
+	return se:GetHandler():IsCode(100266011)
 end
 function s.ffilter1(c,fc,sumtype,tp)
 	return c:IsRace(RACE_ROCK,fc,sumtype,tp) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)
@@ -34,12 +35,12 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker() and e:GetHandler():CanChainAttack()
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)~=0
 end
-function s.atop(e,tp,eg,ep,ev,re,r,rp)	
+function s.atop(e,tp,eg,ep,ev,re,r,rp)  
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_EXTRA_ATTACK)	
+		e1:SetCode(EFFECT_EXTRA_ATTACK) 
 		e1:SetCondition(s.con)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_BATTLE)

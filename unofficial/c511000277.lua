@@ -1,4 +1,5 @@
---Number C1: Gate of Chaos Numeron - Shunya
+--ＣＮｏ．１ ゲート・オブ・カオス・ヌメロン－シニューニャ
+--Number C1: Numeron Chaos Gate Sunya
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -29,13 +30,13 @@ function s.initial_effect(c)
 	e4:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e4)
 end
-s.listed_names={511000275}
+s.listed_names={100266026,100266022}
 s.xyz_number=1
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,511000230) and Duel.IsEnvironment(511000275)
+	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,100266022) and Duel.IsEnvironment(100266026)
 end
 function s.descon(e)
-	return not Duel.IsEnvironment(511000275)
+	return not Duel.IsEnvironment(100266026)
 end
 function s.bancon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)

@@ -81,7 +81,7 @@ function s.cfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp) and re:GetHandler()~=e:GetHandler()
+	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,0,nil,TYPE_SPELL+TYPE_TRAP)

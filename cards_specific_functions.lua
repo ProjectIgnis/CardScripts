@@ -445,11 +445,12 @@ end
 function Auxiliary.NumeronDetachCost(min,max)
 	if max==nil then max=min end
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-	local nn=Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
-	if chk==0 then return nn or e:GetHandler():CheckRemoveOverlayCard(tp,min,REASON_COST) end
-	if nn and Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1)) then
-		Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
-		return
+		local nn=Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
+		if chk==0 then return nn or e:GetHandler():CheckRemoveOverlayCard(tp,min,REASON_COST) end
+		if nn and Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1)) then
+			Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
+			return
+		end
+		e:GetHandler():RemoveOverlayCard(tp,min,max,REASON_COST)
 	end
-	e:GetHandler():RemoveOverlayCard(tp,min,max,REASON_COST)
 end

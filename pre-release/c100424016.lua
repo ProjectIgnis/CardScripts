@@ -31,6 +31,15 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
+	--atk up
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCode(EFFECT_UPDATE_ATTACK)
+	e4:SetCondition(s.adcon)
+	e4:SetValue(s.atkval)
+	c:RegisterEffect(e4)
 end
 s.listed_series={0x13}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -53,8 +62,6 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		local sg=g:Select(tp,1,1,nil):GetFirst()
 		if Duel.Equip(tp,sg,c,true) then
-			local atk=sg:GetTextAttack()
-			if atk<0 then atk=0 end
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
@@ -62,12 +69,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(s.eqlimit)
 			e1:SetLabelObject(c)
 			sg:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_EQUIP)
-			e2:SetCode(EFFECT_UPDATE_ATTACK)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e2:SetValue(atk)
-			sg:RegisterEffect(e2)
+			sg:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 			Duel.ShuffleExtra(1-tp)
 		end
 	end
@@ -102,4 +104,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	if not g then return end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	g:DeleteGroup()
+end
+function s.efilter(c)
+	return c:GetFlagEffect(id)~=0
+end
+function s.adcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetEquipGroup():IsExists(s.efilter,1,nil)
+end
+function s.atkval(e,c)
+	return e:GetHandler():GetEquipGroup():Filter(s.efilter,nil):GetSum(Card.GetAttack)
 end

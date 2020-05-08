@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_BATTLE_DAMAGE)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_HAND)
+	e2:SetCondition(s.spcond)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -31,7 +32,7 @@ function s.filter(c)
 	return not (c:IsFaceup() and c:IsCode(100266020))
 end
 function s.field(c)
-	return c:IsCode(CARD_NUMERON_NETWORK) and not c:IsForbidden() and c:GetActivateEffect():IsActivatable(tp,true,true)
+	return c:IsCode(CARD_NUMERON_NETWORK) and not c:IsForbidden()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0 or not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -48,6 +49,9 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.field,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,tp):GetFirst()
 	return aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+end
+function s.spcond(e,tp,eg,ep,ev,re,r,rp)
+	return (r&REASON_BATTLE)>0 and ep==tp
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

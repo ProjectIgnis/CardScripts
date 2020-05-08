@@ -82,7 +82,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ct=c:GetLabelObject():GetLabel()
+	local ct=e:GetLabelObject():GetLabel()
 	e:SetLabel(ct)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp)
 		and ct>0 and rp~=tp and (r&REASON_EFFECT)~=0

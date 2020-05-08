@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:GetDefense()==0
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:GetDefense()==0 and not c:IsType(TYPE_LINK)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil) end

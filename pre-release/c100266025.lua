@@ -18,11 +18,15 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(s.condition)
 	e2:SetCost(aux.NumeronDetachCost(1))
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_series={0x246}
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetAttackTarget()~=nil
+end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x246),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(g) do

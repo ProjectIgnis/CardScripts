@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	return aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_BATTLE)>0 and ep==tp
+	return ep==tp
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

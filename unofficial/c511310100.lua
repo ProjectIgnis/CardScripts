@@ -54,7 +54,7 @@ function s.rescon(sg,e,tp,mg)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,0,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_SZONE,0,e:GetHandler())
 	Duel.Destroy(g,REASON_EFFECT)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<5 then return end
 	Duel.BreakEffect()
@@ -81,7 +81,7 @@ function s.cfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(s.cfilter,1,nil,tp) and re and re:GetHandler()~=e:GetHandler()
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,0,nil,TYPE_SPELL+TYPE_TRAP)

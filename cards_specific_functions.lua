@@ -443,7 +443,11 @@ function Auxiliary.KaijuCondition(e,c)
 end
 --handle detach costs for "Numeron" Xyz monsters that ignore costs due to the effect of "Numeron Network"
 function Auxiliary.NumeronDetachCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK) then return true end
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+	local nn=Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
+	if chk==0 then return nn or e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+	if nn and Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1)) then
+		Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
+		return
+	end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end

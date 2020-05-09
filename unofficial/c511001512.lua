@@ -22,7 +22,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local fid=e:GetHandler():GetFieldID()
 		tc:RegisterFlagEffect(51101512,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1,fid)
-		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
@@ -37,7 +36,7 @@ end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if not tc or tc:GetFlagEffectLabel(51101512)~=e:GetLabel() then e:Reset() return false end
-	return Duel.GetBattleDamage(tp)>0 and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
+	return Duel.GetBattleDamage(tp)>0 and Duel.IsBattlePhase()
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local dam=Duel.GetBattleDamage(tp)

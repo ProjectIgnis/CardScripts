@@ -60,7 +60,7 @@ function s.lvlcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
 	if not bc then return false end
 	if tc:IsControler(1-tp) then bc,tc=tc,bc end
-	return bc:IsFaceup() and tc:IsFaceup() and tc:IsSetCard(0x107)
+	return bc:IsFaceup() and tc:IsFaceup() and tc:IsSetCard(0x107) and tc:HasLevel()
 end
 function s.lvlop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

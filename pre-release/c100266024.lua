@@ -30,7 +30,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x246),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(g) do
-		local e1=Effect.CreateEffect(tc)
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(tc:GetAttack()*2)

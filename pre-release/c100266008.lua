@@ -1,7 +1,6 @@
 --新生代化石騎士 スカルポーン
 --Fossil Warrior Skull Bone
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

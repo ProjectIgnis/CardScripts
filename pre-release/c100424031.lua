@@ -33,7 +33,7 @@ end
 	--Specifically lists itself and "Jinzo"
 s.listed_names={id,CARD_JINZO}
 	--Check for trap card
-function s.cfilter(c,e,tp,sc)
+function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_TRAP)
 end
 	--If there is a face-up trap card on either field/in either GY
@@ -63,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 	--Check if current phase is a main phase
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return Duel.IsMainPhase()
 end
 	--Tribute this card as cost
 function s.sscost(e,tp,eg,ep,ev,re,r,rp,chk)

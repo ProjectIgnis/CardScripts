@@ -31,7 +31,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for level 4 or lower WATER (except for this card's name)
 function s.filter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelBelow(4) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -53,7 +52,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Start of opponent's battle phase and player controls no monsters
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
+	return Duel.GetTurnPlayer()==1-tp and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

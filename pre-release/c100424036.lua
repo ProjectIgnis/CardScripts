@@ -65,13 +65,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-	--Check for "Jinzo"
-function s.filter(c)
-	return c:IsFaceup() and c:IsCode(CARD_JINZO)
-end
 	--Opponent draws during draw phase
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and (r&REASON_RULE)~=0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
+	return ep==1-tp and (r&REASON_RULE)~=0
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_JINZO),tp,LOCATION_ONFIELD,0,1,nil)
 end
 	--Activation legality
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

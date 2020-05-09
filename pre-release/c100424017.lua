@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.cfilter(c,ft)
 	return c:IsFaceup() and c:IsSetCard(0x13) and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)

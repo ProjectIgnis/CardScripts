@@ -1,4 +1,5 @@
 --ヴァルキュルスの影霊衣
+--Nekroz of Valkyrus
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -68,7 +69,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct==0 then ct=1 end
 	if ct>2 then ct=2 end
 	local g=Duel.SelectReleaseGroupEx(tp,s.filter,1,ct,nil)
-	if #g>0 then
+	if g and #g>0 then
 		Duel.HintSelection(g)
 		local rct=Duel.Release(g,REASON_EFFECT)
 		Duel.Draw(tp,rct,REASON_EFFECT)

@@ -2,10 +2,10 @@
 --Borreload Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),3)
 	c:EnableReviveLimit()
-	--cannot be target
+	--cannot be targeted
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(s.efilter1)
 	c:RegisterEffect(e2)
-	--atk down
+	--reduce ATK/DEF
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
-	--control
+	--take control
 	local e4=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
+	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_CONTROL)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_BATTLE_START)

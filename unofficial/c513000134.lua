@@ -70,7 +70,6 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(df,0)
 	end)
 end
-s.listed_names={95286165,10000010,511000987}
 --De-Fusion
 function s.dffilter(c)
 	if not c:IsCode(95286165) then return false end
@@ -115,7 +114,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local atk=tc:GetAttack()
 	tc:ResetEffect(RESET_LEAVE,RESET_EVENT)
 	if tc:RegisterFlagEffect(236,RESET_EVENT+RESETS_STANDARD,0,1) then
-		Duel.Recover(tp,atk,REASON_EFFECT)
+		Duel.Recover(tc:GetControler(),atk,REASON_EFFECT)
 		tc:ClearEffectRelation()
 		local tg=Duel.GetMatchingGroup(s.tgfilter,tp,0xff,0xff,Group.FromCards(tc,c),tc)
 		for ec in aux.Next(tg) do

@@ -47,6 +47,8 @@ function s.initial_effect(c)
 	if not s.global_check then
 		s.global_check=true
 		s[0]=nil
+		s[1]=nil
+		s[2]=nil
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DETACH_MATERIAL)
@@ -134,17 +136,24 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetCurrentChain()
 	if cid>0 and r&REASON_COST==REASON_COST then
-		s[0]=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE,CHAININFO_TRIGGERING_CONTROLER)
+		s[0],s[1]=Duel.GetChainInfo(cid,CHAININFO_CHAIN_ID),Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)
+		local seq=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_SEQUENCE)
+		local te=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_EFFECT)
+		local tc=te:GetHandler()
+		if tc:IsRelateToEffect(te) then
+			if tc:IsControler(1-tp) then seq=seq+16 end
+		else
+			if tc:GetPreviousControler()==1-tp then seq=seq+16 end
+		end
+		s[2]=seq
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	local loc,seq,p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE,CHAININFO_TRIGGERING_CONTROLER)
-	if p==1-tp then seq=seq+16 end
-	return Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE,CHAININFO_TRIGGERING_CONTROLER)==s[0]
+	local loc,seq=s[1],s[2]
+	if c:IsStatus(STATUS_BATTLE_DESTROYED) or not seq then return false end
+	return Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)==s[0]
 		and re:IsActiveType(TYPE_XYZ) and (loc&LOCATION_MZONE)~=0 and bit.extract(c:GetLinkedZone(),seq)~=0
-		and e:GetHandler():GetFlagEffect(1)>0
 end
 function s.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

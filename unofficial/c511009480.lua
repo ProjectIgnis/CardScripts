@@ -151,8 +151,8 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE,1,nil) and c:IsAbleToRemove() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE,1,1,nil)
-	local g2=Group.FromCards(c,g)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g2,2,0,0)
+	g:AddCard(c)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,2,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

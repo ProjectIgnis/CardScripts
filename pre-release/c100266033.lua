@@ -50,7 +50,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,0,1,e:GetHandler())
-		and Duel.IsBattlePhase() and Duel.IsChainNegatable(ev)
+		and ep==1-tp and Duel.IsBattlePhase() and Duel.IsChainNegatable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -1,3 +1,4 @@
+--ＲＵＭ－千死蛮巧 (Anime)
 --Rank-Up-Magic Admiration of the Thousands (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -127,6 +128,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		Duel.XyzSummon(tp,xyz,nil,g)
-		xyz:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		xyz:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
 end

@@ -246,7 +246,7 @@ function s.payatkop(e,tp,eg,ep,ev,re,r,rp)
 		e7:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE)
 		e7:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
 		e7:SetCondition(s.dfcon)
-		e7:SetTarget(function(e,c) return c:GetFlagEffect(id)>0 end)
+		e7:SetTarget(function(e,c) return c:GetFlagEffect(id+100)>0 end)
 		e7:SetValue(function(e,c) return c==e:GetHandler() end)
 		e7:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e7)
@@ -343,7 +343,7 @@ function s.uncon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.unop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetHandler():GetBattleTarget()
-	bc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
+	bc:RegisterFlagEffect(id+100,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
 end
 function s.dircon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()==nil and Duel.GetAttacker()==e:GetHandler() and e:GetHandler():GetFlagEffect(236)<=0

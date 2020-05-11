@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(id0)
+	e3:SetCode(id+1000)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
@@ -110,6 +110,6 @@ function s.mvchk(e,tp,eg,ep,ev,re,r,rp)
 		e:SetLabel(c:GetSequence())
 	elseif c:GetSequence()~=e:GetLabel() or c:GetControler()~=c:GetPreviousControler() then
 		e:SetLabel(c:GetSequence())
-		Duel.RaiseSingleEvent(c,id0,e,0,0,0,0)
+		Duel.RaiseSingleEvent(c,id+1000,e,0,0,0,0)
 	end
 end

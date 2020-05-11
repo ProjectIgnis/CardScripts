@@ -35,7 +35,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--effect
 	local tc=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil):GetFirst()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

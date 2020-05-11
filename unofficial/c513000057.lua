@@ -1,9 +1,10 @@
---賢者の石 サバティエル
+--賢者の石 サバティエル (Anime)
 --Sabatiel - The Philosopher's Stone (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_DESTROYED)
@@ -50,9 +51,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ct=e:GetLabel()
 	if chk==0 then
 		if ct<3 then
+			e:SetDescription(aux.Stringid(id,4))
 			return s.cost(e,tp,eg,ep,ev,re,r,rp,0) 
 				and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
 		else
+			e:SetDescription(aux.Stringid(id,5))
 			return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		end
 	end
@@ -90,7 +93,7 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCategory(CATEGORY_TOHAND)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 		e1:SetCode(EVENT_CHAIN_SOLVED)
-		e1:SetRange(LOCATION_DECK)
+		e1:SetRange(0xff)
 		e1:SetCondition(s.accon)
 		e1:SetTarget(s.thtg)
 		e1:SetOperation(s.thop)
@@ -114,6 +117,8 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabel(tc:GetPreviousSequence())
 		e1:SetReset(RESET_CHAIN)
 		Duel.RegisterEffect(e1,tp)
+		c:ResetFlagEffect(id)
+		c:RegisterFlagEffect(id,0,EFFECT_FLAG_CLIENT_HINT,0,0,aux.Stringid(id,math.min(2,e:GetLabel())))
 	end
 end
 function s.apply(e,tp,eg,ep,ev,re,r,rp)

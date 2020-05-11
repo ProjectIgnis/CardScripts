@@ -42,18 +42,18 @@ function s.initial_effect(c)
 	e3:SetOperation(s.mtop)
 	c:RegisterEffect(e3)
 	--banish
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(511000183,1))
-	e3:SetCategory(CATEGORY_DISABLE)
-	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EVENT_CHAINING)
-	e3:SetCondition(s.rmcon)
-	e3:SetCost(s.rmcost)
-	e3:SetTarget(s.rmtg)
-	e3:SetOperation(s.rmop)
-	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(511000183,1))
+	e4:SetCategory(CATEGORY_DISABLE)
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCode(EVENT_CHAINING)
+	e4:SetCondition(s.rmcon)
+	e4:SetCost(s.rmcost)
+	e4:SetTarget(s.rmtg)
+	e4:SetOperation(s.rmop)
+	c:RegisterEffect(e4)
 	aux.GlobalCheck(s,function()
 		local ge=Effect.CreateEffect(c)
 		ge:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -142,15 +142,12 @@ function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,e:GetHandler():GetOverlayGroup():GetCount(),e:GetHandler():GetOverlayGroup():GetCount(),REASON_COST)
 end
-function s.rmfilter(c)
-	return c:IsAbleToRemove()
-end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE,1,nil) and c:IsAbleToRemove() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,nil) and c:IsAbleToRemove() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,1,nil)
 	g:AddCard(c)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,2,0,0)
 end
@@ -164,10 +161,8 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Remove(g,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
 		local og=Duel.GetOperatedGroup()
 		if not og:IsContains(tc) then mcount=0 end
-		local oc=og:GetFirst()
-		while oc do
+		for tc in aux.Next(og) do
 			oc:RegisterFlagEffect(CARD_GALAXYEYES_P_DRAGON,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-			oc=og:GetNext()
 		end
 		og:KeepAlive()
 		local e1=Effect.CreateEffect(c)
@@ -188,19 +183,16 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local sg=g:Filter(s.retfilter,nil)
 	g:DeleteGroup()
-	local tc=sg:GetFirst()
-	while tc do
-		 Duel.ReturnToField(tc) 
-		tc=sg:GetNext()
+	for tc in aux.Next(sg) do
+		 Duel.ReturnToField(tc)
 	end
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	
-	while tc do
-		if tc:IsFaceup() and (r&0x80)==0x80 then
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	if eg and #eg>0 then
+		for tc in aux.Next(eg) do
+			if tc:IsFaceup() and (r&REASON_COST)==REASON_COST then
+				tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			end
 		end
-		tc=eg:GetNext()
 	end
 end

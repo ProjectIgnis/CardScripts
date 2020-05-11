@@ -1,6 +1,7 @@
 --ヘル・チューニング
 --Hell Tuning
---Scripted by the Razgriz
+--Scripted by the Razgriz and Larry126
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,20 +33,20 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return #eg==1 and s.cfilter(eg:GetFirst(),tp)
 end
 function s.hlfilter(c)
-	return c:IsSetCard(0x567) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsHell() and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.rescon(tc)
 	return function(sg,e,tp,mg)
 		for sc in aux.Next(sg) do
 			sc:RegisterFlagEffect(id,0,0,0)
 		end
---		Synchro.AdditionalCost=sg
+--	  Synchro.AdditionalCost=sg
 		local res=not sg:IsExists(aux.NOT(s.hlfilter),1,nil)
 			and Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,tc)
 		for sc in aux.Next(sg) do
 			sc:ResetFlagEffect(id)
 		end
---		Synchro.AdditionalCost=nil
+--	  Synchro.AdditionalCost=nil
 		return res
 	end
 end

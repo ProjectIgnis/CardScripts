@@ -17,16 +17,14 @@ function s.filter(c,tp,tid)
 	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
-	return no and no>=101 and no<=107 and c:IsSetCard(0x1048)
-		and c:IsReason(REASON_DESTROY) and c:GetTurnID()==tid
+	return no and no>=101 and no<=107 and c:IsSetCard(0x1048) and c:IsReason(REASON_DESTROY) and c:GetTurnID()==tid
 		and c:IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp,ct)
 	local class=c:GetMetatable()
 	if class==nil then return false end
 	local no=class.xyz_number
-	return no and no>=101 and no<=107 and c:IsSetCard(0x1048)
-		and Duel.GetLocationCountFromEx(1-tp,tp,nil,c)>=ct
+	return no and no>=101 and no<=107 and c:IsSetCard(0x1048) and Duel.GetLocationCountFromEx(1-tp,tp,nil,c)>=ct
 		and c:IsCanBeSpecialSummoned(e,0,1-tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -53,7 +51,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if ect~=nil and ct>ect then return end
 	if ct>0 then
-		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(c)
@@ -69,7 +66,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g2=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,ct,ct,nil,e,tp,ct)
-		local tc2=g2:GetFirst()
 		for tc2 in aux.Next(g2) do
 			Duel.SpecialSummonStep(tc2,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE)
 			local e1=Effect.CreateEffect(c)

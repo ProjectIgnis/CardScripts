@@ -37,16 +37,16 @@ function s.initial_effect(c)
 	e4:SetTarget(s.numtg)
 	e4:SetOperation(s.numop)
 	c:RegisterEffect(e4)
-	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(93016201,0))
-	e6:SetType(EFFECT_TYPE_QUICK_O)
-	e6:SetCode(EVENT_SPSUMMON)
-	e6:SetRange(LOCATION_SZONE)
-	e6:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
-	e6:SetCondition(s.numcon)
-	e6:SetTarget(s.numtg)
-	e6:SetOperation(s.numop)
-	c:RegisterEffect(e6)
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(93016201,0))
+	e5:SetType(EFFECT_TYPE_QUICK_O)
+	e5:SetCode(EVENT_SPSUMMON)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
+	e5:SetCondition(s.numcon)
+	e5:SetTarget(s.numtg)
+	e5:SetOperation(s.numop)
+	c:RegisterEffect(e5)
 	local chain=Duel.GetCurrentChain
 	copychain=0
 	Duel.GetCurrentChain=function()
@@ -55,10 +55,10 @@ function s.initial_effect(c)
 	end
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0
+	return ep==1-tp and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0
 end
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end	
+	if chk==0 then return true end
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

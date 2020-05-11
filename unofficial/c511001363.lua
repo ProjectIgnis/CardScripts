@@ -142,13 +142,12 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og)
 	local mg=Duel.GetMatchingGroup(s.ovfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	og:Merge(mg)
 	local tc=mg:GetFirst()
-	while tc do
+	for tc in aux.Next(mg) do
 		local ov=tc:GetOverlayGroup()
 		if #ov>0 then
 			Duel.Overlay(c,ov)
 			og:Merge(ov)
 		end
-		tc=mg:GetNext()
 	end
 	c:SetMaterial(og)
 	Duel.Overlay(c,og)

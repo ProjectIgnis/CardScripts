@@ -75,9 +75,7 @@ function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.copycon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return false end
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2
+	return Duel.GetTurnPlayer()==tp and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.copytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and aux.disfilter1(chkc) end
@@ -130,8 +128,10 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	for tc in aux.Next(g) do
-		tc:AddCounter(0x1149,1,REASON_EFFECT)
+	if g and #g>0 then
+		for tc in aux.Next(g) do
+			tc:AddCounter(0x1149,1,REASON_EFFECT)
+		end
 	end
 end
 function s.adcon(e)

@@ -30,24 +30,21 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x246)
-end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x246)r,tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	local tc=g:GetFirst()
-	while tc do
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e2:SetValue(tc:GetAttack()*2)
-		tc:RegisterEffect(e2)
-		tc=g:GetNext()
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x246),tp,LOCATION_MZONE,0,nil)
+	if g and #g>0 then
+		for tc in aux.Next(g) do
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetValue(tc:GetAttack()*2)
+			tc:RegisterEffect(e1)
+		end
 	end
 end
 function s.indes(e,c)

@@ -59,14 +59,14 @@ function s.retg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.refilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) end
 end
 function s.getflag(g,tp)
-    local flag = 0
-    for c in aux.Next(g) do
-        flag = flag|((1<<c:GetSequence())<<(8+(16*c:GetControler())))
-    end
-    if tp~=0 then
-        flag=((flag<<16)&0xffff)|((flag>>16)&0xffff)
-    end
-    return ~flag
+	local flag = 0
+	for c in aux.Next(g) do
+		flag = flag|((1<<c:GetSequence())<<(8+(16*c:GetControler())))
+	end
+	if tp~=0 then
+		flag=((flag<<16)&0xffff)|((flag>>16)&0xffff)
+	end
+	return ~flag
 end
 function s.reop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.refilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)

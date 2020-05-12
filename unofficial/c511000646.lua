@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e3:SetCountLimit(1)
+	e3:SetCondition(s.coscond)
 	e3:SetOperation(s.costop)
 	c:RegisterEffect(e3)
 	--bp
@@ -32,8 +33,10 @@ function s.initial_effect(c)
 	e4:SetTargetRange(1,0)
 	c:RegisterEffect(e4)
 end
+function s.coscond(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp
+end
 function s.costop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return end
 	if Duel.GetLP(tp)>=500 then
 		Duel.PayLPCost(tp,500)
 	else

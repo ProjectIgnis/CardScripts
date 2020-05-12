@@ -52,9 +52,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>=2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,2,2,nil)
+		aux.RankUpUsing(sg,84013237,aux.Stringid(id,0))
 		local ct=Duel.SpecialSummon(sg,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		for spc in aux.Next(sg) do
-			spc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,84013237)
 			spc:CompleteProcedure()
 		end
 		if ct>1 then

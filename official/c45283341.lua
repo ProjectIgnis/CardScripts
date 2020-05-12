@@ -70,8 +70,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ctcond(e,tp,eg,ep,ev,re,r,rp)
-	local phase=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==tp and (phase==PHASE_MAIN1 or phase==PHASE_MAIN2)
+	return Duel.GetTurnPlayer()==tp and Duel.IsMainPhase()
 end
 function s.cttarget(c,e)
 	return c:IsSetCard(0x55) and c:IsFaceup() and c:IsControlerCanBeChanged() and (not e or c:IsCanBeEffectTarget(e))

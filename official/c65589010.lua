@@ -66,7 +66,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:IsReason(REASON_DESTROY)
+	return rp==1-tp and c:IsReason(REASON_DESTROY)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -86,4 +86,3 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(sg,REASON_EFFECT)
 	end
 end
-

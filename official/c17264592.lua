@@ -78,5 +78,5 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end

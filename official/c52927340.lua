@@ -27,7 +27,7 @@ end
 s.listed_series={0x103}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x103),tp,LOCATION_ONFIELD,0,1,nil)
+	return at:GetControler()==1-tp and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x103),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

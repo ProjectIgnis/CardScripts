@@ -93,7 +93,7 @@ function s.synlimit(e,re,tp)
 end
 function s.xyzcond(e)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and ((ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or  ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
+	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and (Duel.IsBattlePhase() or Duel.IsMainPhase())
 end
 function s.xyzlimit(e,re,tp)
 	return re:GetActivateLocation()==LOCATION_GRAVE

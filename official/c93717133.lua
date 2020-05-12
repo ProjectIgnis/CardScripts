@@ -46,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and not e:GetHandler():IsStatus(STATUS_CHAINING)
+	return Duel.IsBattlePhase() and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -90,7 +90,6 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local sg=g:Filter(s.retfilter,nil)
 	g:DeleteGroup()
-	local tc=sg:GetFirst()
 	for tc in aux.Next(sg) do
 		if Duel.ReturnToField(tc) and tc==e:GetOwner() and tc:IsFaceup() and e:GetLabel()~=0 then
 			local e1=Effect.CreateEffect(e:GetOwner())

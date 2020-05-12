@@ -40,8 +40,7 @@ function s.announcecost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x13f) and (c:IsFaceup() or not c:IsLocation(LOCATION_SZONE))
@@ -97,4 +96,3 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

@@ -32,13 +32,9 @@ function s.initial_effect(c)
 end
 	--Specifically lists itself and "Jinzo"
 s.listed_names={id,CARD_JINZO}
-	--Check for trap card
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_TRAP)
-end
 	--If there is a face-up trap card on either field/in either GY
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_TRAP),tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

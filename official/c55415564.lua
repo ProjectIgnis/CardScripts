@@ -67,17 +67,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
-	--Check for "D/D"
-function s.discfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xaf)
-end
 	--If no other "D/D" on your side
 function s.atkcon(e)
-	return not Duel.IsExistingMatchingCard(s.discfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xaf),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 	--During opponent's turn
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.disfilter(c)
 	return aux.disfilter1(c) and c:IsSummonType(SUMMON_TYPE_PENDULUM)

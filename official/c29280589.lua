@@ -36,8 +36,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==1-tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
+	return Duel.GetTurnPlayer()==1-tp and Duel.IsMainPhase()
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_MZONE)
@@ -58,4 +57,3 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
 end
-

@@ -57,7 +57,7 @@ function s.op(e)
 				e1:SetDescription(te:GetDescription())
 			end
 			e1:SetLabelObject(te)
-			e1:SetType(EFFECT_TYPE_XMATERIAL+te:GetType())
+			e1:SetType(EFFECT_TYPE_XMATERIAL+te:GetType()&(~EFFECT_TYPE_SINGLE))
 			if te:GetCode() then
 				e1:SetCode(te:GetCode())
 			end

@@ -1,4 +1,6 @@
---CNo.80 葬装覇王レクイエム・イン・バーサーク
+--ＣＮｏ.８０ 葬装覇王レクイエム・イン・バーサーク (Anime)
+--Number C80: Requiem in Berserk (Anime)
+Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c20563387.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -6,55 +8,66 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,5,3)
 	c:EnableReviveLimit()
 	--Rank Up Check
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetOperation(s.rankupregop)
-	c:RegisterEffect(e1)
-	--equip
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(876330,0))
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCategory(CATEGORY_EQUIP)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetTarget(s.eqtg)
-	e2:SetOperation(s.eqop)
-	e2:SetLabelObject(e1)
-	c:RegisterEffect(e2)
-	--remove
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(612115,0))
-	e3:SetCategory(CATEGORY_REMOVE)
-	e3:SetProperty(0,EFFECT_FLAG2_XMDETACH)
-	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1)
-	e3:SetCost(s.rmcost)
-	e3:SetTarget(s.rmtg)
-	e3:SetOperation(s.rmop)
-	c:RegisterEffect(e3)
+	aux.EnableCheckRankUp(c,nil,s.rankupregop,93568288)
 	--battle indestructable
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e4:SetValue(s.indes)
-	c:RegisterEffect(e4)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	c:RegisterEffect(e1)
+	--remove
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(612115,0))
+	e2:SetCategory(CATEGORY_REMOVE)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1)
+	e2:SetCost(s.rmcost)
+	e2:SetTarget(s.rmtg)
+	e2:SetOperation(s.rmop)
+	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	--equip
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(876330,0))
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetCategory(CATEGORY_EQUIP)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetTarget(s.eqtg)
+	e3:SetOperation(s.eqop)
+	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+	c:RegisterEffect(e3)
 end
-s.listed_names={93568288,100000581,111011002,511000580,511002068,511002164,93238626}
+s.listed_series={0x48}
+s.listed_names={93568288}
 s.xyz_number=80
-function s.rumfilter(c)
-	return c:IsCode(93568288) and not c:IsPreviousLocation(LOCATION_OVERLAY)
-end
 function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	local rc=re:GetHandler()
-	if e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and (rc:IsSetCard(0x95) or rc:IsCode(100000581) or rc:IsCode(111011002) or rc:IsCode(511000580) or rc:IsCode(511002068) or rc:IsCode(511002164) or rc:IsCode(93238626)) and e:GetHandler():GetMaterial():IsExists(s.rumfilter,1,nil) then
-		e:SetLabel(1)
-	else
-		e:SetLabel(0)
-	end
-	
-	if e:GetHandler():GetFlagEffect(511015134)~=0 then e:SetLabel(1) end
+	--disable
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_BE_BATTLE_TARGET)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCondition(s.discon)
+	e1:SetOperation(s.disop)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	c:RegisterEffect(e1)
+	--destroy replace
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_EQUIP)
+	e2:SetCode(EFFECT_DESTROY_REPLACE)
+	e2:SetTarget(s.reptg)
+	e2:SetOperation(s.repop)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	c:RegisterEffect(e2)
+	--Negate Damage
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_CHAIN_SOLVING)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetCondition(aux.damcon1)
+	e3:SetOperation(s.repop2)
+	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+	c:RegisterEffect(e3)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc~=e:GetHandler() end
@@ -71,10 +84,6 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(c,REASON_EFFECT)
 		return
 	end
-	local sp=false
-	if e:GetLabelObject():GetLabel()==1 then
-		sp=true
-	end
 	Duel.Equip(tp,c,tc,true)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -90,34 +99,6 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetValue(2000)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)
-	if sp then
-		--disable
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetCode(EVENT_BE_BATTLE_TARGET)
-		e3:SetRange(LOCATION_SZONE)
-		e3:SetCondition(s.discon)
-		e3:SetOperation(s.disop)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-		c:RegisterEffect(e3)
-		--destroy replace
-		local e4=Effect.CreateEffect(c)
-		e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_EQUIP)
-		e4:SetCode(EFFECT_DESTROY_REPLACE)
-		e4:SetTarget(s.reptg)
-		e4:SetOperation(s.repop)
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
-		c:RegisterEffect(e4)
-		--Negate Damage
-		local e5=Effect.CreateEffect(c)
-		e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e5:SetCode(EVENT_CHAIN_SOLVING)
-		e5:SetRange(LOCATION_SZONE)
-		e5:SetCondition(aux.damcon1)
-		e5:SetOperation(s.repop2)
-		e5:SetReset(RESET_EVENT+RESETS_STANDARD)
-		c:RegisterEffect(e5)
-	end
 end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
@@ -237,7 +218,4 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		bg=sg:Filter(Card.IsLocation,nil,LOCATION_SZONE)
 	end
 	Duel.Remove(bg,POS_FACEUP,REASON_EFFECT)
-end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
 end

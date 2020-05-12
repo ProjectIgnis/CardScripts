@@ -1,4 +1,6 @@
---Number C39: Utopia Ray V (anime)
+--ＣＮｏ．３９ 希望皇ホープレイＶ (Anime)
+--Number C39: Utopia Ray V (Anime)
+Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c66970002.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -6,18 +8,15 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,5,3)
 	c:EnableReviveLimit()
 	--Rank Up Check
+	aux.EnableCheckRankUp(c,s.rankupregcon,s.rankupregop)
+	--battle indestructable
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(s.rankupregcon)
-	e1:SetOperation(s.rankupregop)
-	c:RegisterEffect(e1)	
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e2:SetValue(s.indes)
-	c:RegisterEffect(e2)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	c:RegisterEffect(e1)
 end
+s.listed_series={0x48}
 s.listed_names={92365601}
 s.xyz_number=39
 function s.rankupregcon(e,tp,eg,ep,ev,re,r,rp)
@@ -27,7 +26,7 @@ function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--destroy
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(66970002,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -60,7 +59,4 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Damage(1-tp,atk,REASON_EFFECT)
 		end
 	end
-end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
 end

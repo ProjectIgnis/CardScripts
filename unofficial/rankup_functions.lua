@@ -22,6 +22,7 @@ function Auxiliary.RankUpCheckValue(...)
 	local monsterFilter={...}
 	return function(e,c)
 		e:GetLabelObject():SetLabel(0)
+		local g=c:GetMaterial():Filter(Auxiliary.RankUpBaseFilter,nil,c)
 		for _,filter in ipairs(monsterFilter) do
 			if type(filter)=="function" and g:IsExists(filter,1,nil) then
 				e:GetLabelObject():SetLabel(1)

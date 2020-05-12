@@ -1,5 +1,5 @@
 --カッター・シャーク
---Cutter Shark
+--Buzzsaw Shark
 --Scripted by Eerie Code and Edo9300
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +28,7 @@ function s.filter(c,e,tp)
 end
 function s.spfilter(c,e,tp,tc)
 	return c:IsRace(RACE_FISH) and c:GetLevel()==tc:GetLevel() and not c:IsCode(tc:GetCode())
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end
@@ -44,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc):GetFirst()
-		if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
+		if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetDescription(aux.Stringid(id,1))
 			e1:SetType(EFFECT_TYPE_SINGLE)

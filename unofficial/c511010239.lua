@@ -1,4 +1,4 @@
---CNo.39 希望皇ホープレイ・ヴィクトリー (Anime)
+--ＣＮｏ.３９ 希望皇ホープレイ・ヴィクトリー (Anime)
 --Number C39: Utopia Ray Victory (Anime)
 Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c87911394.lua")
@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x48}
 s.listed_names={84013237}
 s.xyz_number=39
 function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
@@ -31,9 +32,10 @@ function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.actcon)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
-	--
+	--negate
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(52085072,0))
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_DISABLE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)

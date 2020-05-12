@@ -1,4 +1,6 @@
---CNo.43 魂魄傀儡鬼神カオス・マリオネッター
+--ＣＮｏ.４３ 魂魄傀儡鬼神カオス・マリオネッター (Anime)
+--Number C43: High Manipulator of Chaos (Anime)
+Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c32446630.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -6,33 +8,22 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),3,4)
 	c:EnableReviveLimit()
 	--Rank Up Check
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(s.rankupregcon)
-	e1:SetOperation(s.rankupregop)
-	c:RegisterEffect(e1)
+	aux.EnableCheckRankUp(c,nil,s.rankupregop,56051086)
 	--battle indestructable
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e5:SetValue(s.indes)
-	c:RegisterEffect(e5)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	c:RegisterEffect(e1)
 end
-s.listed_names={56051086,100000581,111011002,511000580,511002068,511002164,93238626,32446631}
+s.listed_series={0x48}
+s.listed_names={56051086,32446631}
 s.xyz_number=43
-function s.rumfilter(c)
-	return c:IsCode(56051086) and not c:IsPreviousLocation(LOCATION_OVERLAY)
-end
-function s.rankupregcon(e,tp,eg,ep,ev,re,r,rp)
-		local rc=re:GetHandler()
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and (rc:IsSetCard(0x95) or rc:IsCode(100000581) or rc:IsCode(111011002) or rc:IsCode(511000580) or rc:IsCode(511002068) or rc:IsCode(511002164) or rc:IsCode(93238626)) and e:GetHandler():GetMaterial():IsExists(s.rumfilter,1,nil)
-end
 function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-		--token
+	--token
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(32446630,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -54,7 +45,7 @@ function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)
 	--Negates Battle Damage
-   	local e3=Effect.CreateEffect(c)
+	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
@@ -125,7 +116,4 @@ function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkval(e,c)
 	return e:GetHandler():GetOverlayCount()-1
-end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
 end

@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetRange(LOCATION_EXTRA)
 	e1:SetCondition(s.hspcon)
+	e1:SetTarget(s.hsptg)
 	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
 	--triple tribute
@@ -58,11 +59,22 @@ end
 function s.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.CheckReleaseGroup(tp,s.hspfilter,1,nil,tp,c)
+	return Duel.CheckReleaseGroup(tp,s.hspfilter,1,false,1,true,c,tp,nil,nil,nil,tp,c)
+end
+function s.hsptg(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.SelectReleaseGroup(tp,s.hspfilter,1,1,false,true,true,c,tp,nil,false,nil,tp,e:GetHandler())
+	if g then
+		g:KeepAlive()
+		e:SetLabelObject(g)
+	return true
+	end
+	return false
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,s.hspfilter,1,1,nil,tp,c)
-	Duel.Release(g,g,REASON_COST+REASON_MATERIAL)
+	local g=e:GetLabelObject()
+	if not g then return end
+	Duel.Release(g,REASON_COST+REASON_MATERIAL)
+	g:DeleteGroup()
 end
 function s.tglimit(e,c)
 	return c:GetCode()~=id

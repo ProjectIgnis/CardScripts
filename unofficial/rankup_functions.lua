@@ -69,3 +69,13 @@ function Auxiliary.RankUpUsing(cg,id,hint)
 		cg:RegisterFlagEffect(511000685,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,hint and EFFECT_FLAG_CLIENT_HINT or 0,1,id,hint)
 	end
 end
+
+function Auxiliary.RankUpComplete(cg,hint)
+	if type(cg)=="Group" then
+		for c in aux.Next(cg) do
+			c:RegisterFlagEffect(511015134,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,hint and EFFECT_FLAG_CLIENT_HINT or 0,1,nil,hint)
+		end
+	else
+		cg:RegisterFlagEffect(511015134,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,hint and EFFECT_FLAG_CLIENT_HINT or 0,1,nil,hint)
+	end
+end

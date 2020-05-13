@@ -139,11 +139,11 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		s[0],s[1]=Duel.GetChainInfo(cid,CHAININFO_CHAIN_ID),Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)
 		local seq=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_SEQUENCE)
 		local te=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_EFFECT)
-		local tc=te:GetHandler()
+		local tc,p=te:GetHandler(),e:GetHandler():GetControler()
 		if tc:IsRelateToEffect(te) then
-			if tc:IsControler(1-tp) then seq=seq+16 end
+			if tc:IsControler(1-p) then seq=seq+16 end
 		else
-			if tc:GetPreviousControler()==1-tp then seq=seq+16 end
+			if tc:GetPreviousControler()==1-p then seq=seq+16 end
 		end
 		s[2]=seq
 	end

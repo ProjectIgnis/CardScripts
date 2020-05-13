@@ -61,8 +61,8 @@ function s.hspcon(e,c)
 	local tp=c:GetControler()
 	return Duel.CheckReleaseGroup(tp,s.hspfilter,1,false,1,true,c,tp,nil,nil,nil,tp,c)
 end
-function s.hsptg(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.SelectReleaseGroup(tp,s.hspfilter,1,1,false,true,true,c,tp,nil,false,nil,tp,e:GetHandler())
+function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local g=Duel.SelectReleaseGroup(tp,s.hspfilter,1,1,false,true,true,c,tp,nil,false,nil,tp,c)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)

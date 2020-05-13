@@ -44,7 +44,7 @@ function s.con(e)
 	return Duel.GetFlagEffect(e:GetHandlerPlayer(),e:GetHandler():GetFieldID())==0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and (aux.damcon1(e,0,eg,ep,ev,re,r,rp) or aux.damcon1(e,1,eg,ep,ev,re,r,rp))
+	return ep==1-tp and (aux.damcon1(e,0,eg,ep,ev,re,r,rp) or aux.damcon1(e,1,eg,ep,ev,re,r,rp))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -99,18 +99,20 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.negfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local dg=Group.CreateGroup()
-	for tc in aux.Next(g) do
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e2)
-		if not tc:IsImmuneToEffect(e1) and not tc:IsImmuneToEffect(e2) then dg=dg+tc end
+	if g and #g>0 then
+		for tc in aux.Next(g) do
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_DISABLE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e1)
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_DISABLE_EFFECT)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e2)
+			if not tc:IsImmuneToEffect(e1) and not tc:IsImmuneToEffect(e2) then dg=dg+tc end
+		end
 	end
 	Duel.AdjustInstantly(c)
 	if #dg>0 then

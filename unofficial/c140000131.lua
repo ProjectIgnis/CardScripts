@@ -31,9 +31,6 @@ function s.initial_effect(c)
 end
 s.listed_names={71625222}
 s.roll_dice=true
-function s.hermos_filter(c)
-	return c:IsCode(71625222)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

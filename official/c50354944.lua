@@ -39,7 +39,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for level 5+ monster
 function s.spfilter(c)
 	return c:IsLevelAbove(5) and c:IsAbleToGraveAsCost()
@@ -71,7 +70,7 @@ function s.atkfilter(c)
 end
 	--Check if it is the battle phase
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.IsBattlePhase()
 end
 	--Activation legality
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

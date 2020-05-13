@@ -78,7 +78,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.eqfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_WARRIOR)
@@ -117,4 +117,3 @@ end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-

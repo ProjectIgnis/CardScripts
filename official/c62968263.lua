@@ -78,7 +78,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		else 
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
-	if ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE then
+	if Duel.IsBattlePhase() then
 		for sc in aux.Next(sg) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

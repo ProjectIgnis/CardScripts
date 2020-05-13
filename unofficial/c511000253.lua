@@ -49,7 +49,7 @@ end
 s.listed_names={89190953}
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:GetControler()~=tp and chkc:IsLocation(LOCATION_MZONE) end
+	if chkc then return chkc:GetControler()==1-tp and chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return c:CanAttack() 
 		and Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)   

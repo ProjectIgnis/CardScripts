@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.costfilter(c)
 	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK)

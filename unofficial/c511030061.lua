@@ -56,7 +56,7 @@ function s.colinkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.mvcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and e:GetHandler():GetMutualLinkedGroupCount()>0
+	return Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() and e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.mvfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x57a) and c:IsType(TYPE_LINK) and c:IsLink(1) and c:IsInMainMZone(tp)

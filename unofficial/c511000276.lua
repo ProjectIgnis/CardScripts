@@ -38,7 +38,6 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Select(tp,4,4,nil)
 	if #sg>0 then
 		local fid=e:GetHandler():GetFieldID()
-		local tc=sg:GetFirst()
 		for tc in aux.Next(sg) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			tc:RegisterFlagEffect(51100276,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)

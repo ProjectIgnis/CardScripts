@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x135}
 function s.chk(e,tp,eg,ep,ev,re,r,rp)
-	if s.condition() and Duel.GetFlagEffect(0,id)==0 then
+	if  Duel.IsBattlePhase() and Duel.GetFlagEffect(0,id)==0 then
 		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_BATTLE,0,1)
 		if Duel.GetAttacker():IsType(TYPE_LINK) and Duel.GetAttackTarget() and Duel.GetAttackTarget():IsType(TYPE_LINK) then
 			Duel.RegisterFlagEffect(0,id+1,RESET_PHASE+PHASE_BATTLE,0,1)
@@ -42,8 +42,7 @@ function s.chk(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition()
-	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end
 function s.filter1(c)
 	return c:IsSetCard(0x135) and c:IsFaceup() and c:GetSequence()>4
@@ -115,7 +114,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
-	return s.condition() and Duel.GetTurnPlayer()~=tp and Duel.GetFlagEffect(0,id+1)>0
+	return s.condition() and Duel.GetTurnPlayer()==1-tp and Duel.GetFlagEffect(0,id+1)>0
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)

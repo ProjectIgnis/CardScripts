@@ -35,10 +35,10 @@ s.listed_series={0x33}
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.spfilter1,1,nil,sg) and sg:IsExists(s.spfilter2,1,nil,sg)
 end
-function s.spfilter1(c,tp)
+function s.spfilter1(c)
 	return not c:IsType(TYPE_TUNER)
 end
-function s.spfilter2(c,tp)
+function s.spfilter2(c)
 	return c:IsSetCard(0x33) and c:IsType(TYPE_TUNER)
 end
 function s.spcon(e,c)
@@ -95,12 +95,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local code=tc:GetOriginalCode()
 		local ba=tc:GetBaseAttack()
 		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN, 1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
-		e2:SetCode(EFFECT_SET_BASE_ATTACK)
-		e2:SetValue(ba)
-		c:RegisterEffect(e2)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+		e1:SetCode(EFFECT_SET_BASE_ATTACK)
+		e1:SetValue(ba)
+		c:RegisterEffect(e1)
 	end
 end

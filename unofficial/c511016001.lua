@@ -18,10 +18,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
-	while tc do
-		local val=tc:GetFlagEffectLabel(36690018)
-		tc:SetFlagEffectLabel(36690018,1-val)
-		tc=g:GetNext()
+	if g and #g>0 then
+		for tc in aux.Next(g) do
+			local val=tc:GetFlagEffectLabel(36690018)
+			tc:SetFlagEffectLabel(36690018,1-val)
+		end
 	end
 end

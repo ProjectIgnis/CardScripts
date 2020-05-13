@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(s.splimit)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--chain attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -33,9 +33,9 @@ function s.ffilter2(c,fc,sumtype,tp)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker() and e:GetHandler():CanChainAttack()
-		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)~=0
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
-function s.atop(e,tp,eg,ep,ev,re,r,rp)  
+function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)

@@ -68,7 +68,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xf8)
 end
 function s.atcon(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE 
+	return Duel.GetTurnPlayer()==1-tp and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE 
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)

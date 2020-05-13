@@ -69,7 +69,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep~=tp and c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetBattleTarget()~=nil
+	return ep==1-tp and c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetBattleTarget()~=nil
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DoubleBattleDamage(ep)

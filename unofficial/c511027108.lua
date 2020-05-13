@@ -20,7 +20,7 @@ function s.initial_effect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD)
 		ge1:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-		ge1:SetTargetRange(0xff,0xff)
+		ge1:SetTargetRange(LOCATION_ALL,LOCATION_ALL)
 		ge1:SetTarget(function(e,c) return c:GetFlagEffect(id)>0 end)
 		ge1:SetValue(1)
 		Duel.RegisterEffect(ge1,0)
@@ -40,13 +40,13 @@ function s.rescon(tc)
 		for sc in aux.Next(sg) do
 			sc:RegisterFlagEffect(id,0,0,0)
 		end
---	  Synchro.AdditionalCost=sg
+	--Synchro.AdditionalCost=sg
 		local res=not sg:IsExists(aux.NOT(s.hlfilter),1,nil)
 			and Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,tc)
 		for sc in aux.Next(sg) do
 			sc:ResetFlagEffect(id)
 		end
---	  Synchro.AdditionalCost=nil
+	--Synchro.AdditionalCost=nil
 		return res
 	end
 end
@@ -55,7 +55,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=Duel.GetMatchingGroup(s.hlfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,tc)
 	if chk==0 then return aux.SelectUnselectGroup(sg,e,tp,5,5,s.rescon(tc),0) end
 	local g=aux.SelectUnselectGroup(sg,e,tp,5,5,s.rescon(tc),1,tp,HINTMSG_REMOVE)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)   
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

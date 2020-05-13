@@ -1,4 +1,5 @@
---No.16 色の支配者ショック・ルーラー
+--Ｎｏ.１６ 色の支配者ショック・ルーラー (Anime)
+--Number 16: Shock Master (Anime)
 Duel.LoadCardScript("c54719828.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,20 +9,20 @@ function s.initial_effect(c)
 	--act limit
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(54719828,0))
-	e1:SetProperty(0,EFFECT_FLAG2_XMDETACH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1)
+	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 	--battle indestructable
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e2:SetValue(s.indes)
+	e2:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x48}
 s.xyz_number=16
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -81,7 +82,4 @@ function s.disoperation(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsActiveType(type) and re:GetHandler():IsControler(1-tp) then
 		Duel.NegateEffect(ev)
 	end
-end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
 end

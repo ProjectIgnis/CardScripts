@@ -4,7 +4,7 @@
 local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:Alias()
-	--SpecialSummon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--atkup
+	--increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -54,8 +54,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc and tc:IsSetCard(0x54) and tc:IsControler(tp)
-		and Duel.GetAttackTarget() and not Duel.GetAttackTarget():IsControler(tp)
+	if tc and tc:IsSetCard(0x54) and tc:IsControler(tp) and Duel.GetAttackTarget() and not Duel.GetAttackTarget():IsControler(tp)
 		and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

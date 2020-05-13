@@ -52,7 +52,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler()==Duel.GetAttacker()
+	return ep==1-tp and e:GetHandler()==Duel.GetAttacker()
 end
 function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HalfBattleDamage(ep)

@@ -1,5 +1,5 @@
 --ブルーアイズ・ソリッド・ドラゴン
---BLue-Eyes Solid Dragon
+--Blue-Eyes Solid Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate
@@ -57,7 +57,7 @@ function s.filter(c,e,tp)
 	return c:IsCode(CARD_BLUEEYES_W_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

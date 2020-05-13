@@ -61,7 +61,7 @@ function s.typecount(c)
 	return c:GetType()&TYPE_FUSION+TYPE_RITUAL+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM+TYPE_LINK
 end
 function s.aclimit1(e,tp,eg,ep,ev,re,r,rp)
-	if ep~=tp or not re:IsActiveType(TYPE_MONSTER) then return end
+	if ep==1-tp or not re:IsActiveType(TYPE_MONSTER) then return end
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_CONTROL+RESET_PHASE+PHASE_END,0,1)
 end
 function s.aclimit2(e,tp,eg,ep,ev,re,r,rp)

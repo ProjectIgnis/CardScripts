@@ -15,25 +15,6 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e1)
-end
-s.listed_series={0x48}
-s.listed_names={56051086,32446631}
-s.xyz_number=43
-function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	--token
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
-	e1:SetCondition(s.spcon)
-	e1:SetCost(s.spcost)
-	e1:SetTarget(s.sptg)
-	e1:SetOperation(s.spop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 	--indestructable
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -42,8 +23,6 @@ function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsCode,32446631))
 	e2:SetValue(1)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e2)
 	--Negates Battle Damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -51,8 +30,6 @@ function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e3:SetCondition(s.rdcon)
 	e3:SetOperation(s.rdop)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e3)
 	--atk
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -61,8 +38,47 @@ function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e4:SetTarget(aux.TargetBoolFunction(Card.IsCode,32446631))
 	e4:SetValue(s.atkval)
-	e4:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e4)
+	--token
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e5:SetType(EFFECT_TYPE_IGNITION)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCountLimit(1)
+	e5:SetCondition(s.spcon)
+	e5:SetCost(s.spcost)
+	e5:SetTarget(s.sptg)
+	e5:SetOperation(s.spop)
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetTargetRange(LOCATION_MZONE,0)
+	e6:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e6:SetCondition(s.efcon)
+	e6:SetTarget(s.eftg)
+	e6:SetLabelObject(e2)
+	c:RegisterEffect(e6)
+	local e7=e6:Clone()
+	e7:SetLabelObject(e3)
+	c:RegisterEffect(e7)
+	local e8=e6:Clone()
+	e8:SetLabelObject(e4)
+	c:RegisterEffect(e8)
+	local e9=e6:Clone()
+	e9:SetLabelObject(e5)
+	c:RegisterEffect(e9,false,REGISTER_FLAG_DETACH_XMAT)
+end
+s.listed_series={0x48}
+s.listed_names={56051086,32446631}
+s.xyz_number=43
+function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+end
+function s.efcon(e)
+	return e:GetHandler():GetFlagEffect(id)>0
+end
+function s.eftg(e,c)
+	return c==e:GetHandler()
 end
 function s.cfilter(c,lp)
 	return c:IsFaceup() and c:GetAttack()>lp

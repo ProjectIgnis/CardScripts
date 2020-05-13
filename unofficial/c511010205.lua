@@ -78,6 +78,23 @@ function s.initial_effect(c)
 	e9:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e9:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e9)
+	--material
+	local e10=Effect.CreateEffect(c)
+	e10:SetDescription(aux.Stringid(id,3))
+	e10:SetType(EFFECT_TYPE_IGNITION)
+	e10:SetRange(LOCATION_MZONE)
+	e10:SetCountLimit(1)
+	e10:SetTarget(s.ovtg)
+	e10:SetOperation(s.ovop)
+	local e11=Effect.CreateEffect(c)
+	e11:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+	e11:SetRange(LOCATION_MZONE)
+	e11:SetTargetRange(LOCATION_MZONE,0)
+	e11:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e11:SetCondition(s.efcon)
+	e11:SetTarget(s.eftg)
+	e11:SetLabelObject(e10)
+	c:RegisterEffect(e11)
 end
 s.listed_series={0x48}
 s.listed_names={90126061}
@@ -188,17 +205,13 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	--material
-	local e9=Effect.CreateEffect(c)
-	e9:SetDescription(aux.Stringid(id,3))
-	e9:SetType(EFFECT_TYPE_IGNITION)
-	e9:SetRange(LOCATION_MZONE)
-	e9:SetCountLimit(1)
-	e9:SetTarget(s.ovtg)
-	e9:SetOperation(s.ovop)
-	e9:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e9)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+end
+function s.efcon(e)
+	return e:GetHandler():GetFlagEffect(id)>0
+end
+function s.eftg(e,c)
+	return c==e:GetHandler()
 end
 function s.ovtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_HAND,0,1,nil) end

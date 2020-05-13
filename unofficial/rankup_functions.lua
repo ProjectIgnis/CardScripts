@@ -23,12 +23,14 @@ function Auxiliary.RankUpCheckValue(...)
 	return function(e,c)
 		e:GetLabelObject():SetLabel(0)
 		local g=c:GetMaterial():Filter(Auxiliary.RankUpBaseFilter,nil,c)
+		if #g==0 then return end
+		if #monsterFilter==0 and #g>0 then e:GetLabelObject():SetLabel(1) return end
 		for _,filter in ipairs(monsterFilter) do
 			if type(filter)=="function" and g:IsExists(filter,1,nil) then
-				e:GetLabelObject():SetLabel(1)
+				e:GetLabelObject():SetLabel(1) return
 			elseif type(filter)=="number" then
 				if g:IsExists(Card.IsSummonCode,1,nil,c,c:GetSummonType(),c:GetSummonPlayer(),filter) then
-					e:GetLabelObject():SetLabel(1)
+					e:GetLabelObject():SetLabel(1) return
 				end
 			end
 		end

@@ -76,10 +76,10 @@ s.listed_series={0x48}
 s.listed_names={93568288}
 s.xyz_number=80
 function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE,0,1)
+	e:GetHandler():RegisterFlagEffect(FLAG_RANKUP+id,RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD-RESET_LEAVE,0,1)
 end
 function s.efcon(e)
-	return e:GetHandler():GetFlagEffect(id)>0
+	return e:GetHandler():GetFlagEffect(FLAG_RANKUP+id)>0
 end
 function s.eftg(e,c)
 	return c==e:GetHandler()

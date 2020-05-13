@@ -1,4 +1,7 @@
 --Rank-Up related functions
+
+FLAG_RANKUP = 511001822
+
 function Auxiliary.EnableCheckRankUp(c,condition,operation,...)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)

@@ -43,10 +43,10 @@ function s.rankupregcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsCode(92365601) 
 end
 function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	e:GetHandler():RegisterFlagEffect(FLAG_RANKUP+id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
 end
 function s.efcon(e)
-	return e:GetHandler():GetFlagEffect(id)>0
+	return e:GetHandler():GetFlagEffect(FLAG_RANKUP+id)>0
 end
 function s.eftg(e,c)
 	return c==e:GetHandler()

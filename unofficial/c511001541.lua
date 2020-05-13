@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_EFFECT)==REASON_EFFECT and rp~=tp
+	return (r&REASON_EFFECT)==REASON_EFFECT and rp==1-tp
 end
 function s.cfilter(c,fc,e,tp)
 	local fd=c:GetCode()

@@ -31,7 +31,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp and Duel.GetAttackTarget()==nil and Duel.GetFlagEffect(tp,id)~=0
+	return at:GetControler()==1-tp and Duel.GetAttackTarget()==nil and Duel.GetFlagEffect(tp,id)~=0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

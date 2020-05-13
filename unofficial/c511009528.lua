@@ -96,9 +96,8 @@ function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c~=e:GetHandler()
 end
 function s.cpcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return false end
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2
+	if Duel.GetTurnPlayer()==1-tp then return false end
+	return Duel.IsMainPhase() or Duel.IsBattlePhase()
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsType(TYPE_MONSTER) end

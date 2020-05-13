@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	if ep~=tp and Duel.GetAttackTarget()==nil then
+	if ep==1-tp and Duel.GetAttackTarget()==nil then
 		local c=e:GetHandler()
 		c:SetFlagEffectLabel(51107006,c:GetFlagEffectLabel(51107006)+ev)
 	end

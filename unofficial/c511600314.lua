@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetValue(800)
 				tc:RegisterEffect(e1)
 			end
-			if Duel.GetTurnPlayer()~=tp then
+			if Duel.GetTurnPlayer()==1-tp then
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_FIELD)
 				e1:SetCode(EFFECT_MUST_ATTACK)
@@ -70,7 +70,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atklimit(e,c)
-    return c:IsRelateToEffect(e)
+	return c:IsRelateToEffect(e)
 end
 function s.check(c,tp)
 	return c and c:IsControler(tp) and c:IsSetCard(0x135)
@@ -86,7 +86,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

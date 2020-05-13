@@ -78,7 +78,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if (phase~=PHASE_DAMAGE and phase~=PHASE_DAMAGE_CAL) or Duel.IsDamageCalculated() then return false end
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return a:GetControler()~=tp and d and d==e:GetHandler()
+	return a:GetControler()==1-tp and d and d==e:GetHandler()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(alias)

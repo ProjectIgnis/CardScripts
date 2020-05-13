@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_names={511310107,60417395}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function s.cosfilter(c,e,tp)
 	return c:IsCode(511310107) and c:IsAbleToGraveAsCost()

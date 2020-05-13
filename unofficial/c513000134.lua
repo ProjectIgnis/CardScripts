@@ -276,7 +276,7 @@ function s.payatkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
-	if ep~=tp then return end
+	if ep==1-tp then return end
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

@@ -49,6 +49,7 @@ function s.op(e)
 		local effs={c:GetCardEffect(511002571)}
 		for _,eff in ipairs(effs) do
 			local te=eff:GetLabelObject()
+			if te:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then te=te:GetLabelObject() end
 			local resetflag,resetcount=te:GetReset()
 			local rm,max,code=te:GetCountLimit()
 			local prop1,prop2=eff:GetProperty()

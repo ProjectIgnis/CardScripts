@@ -1,58 +1,55 @@
---CNo.107 超銀河眼の時空龍 (Anime)
+--ＣＮｏ.１０７ 超銀河眼の時空龍 (Anime)
 --Number C107: Neo Galaxy-Eyes Tachyon Dragon (Anime)
 --Scripted By TheOnePharaoh
---fixed by MLD & Larry126
+--Fixed by MLD & Larry126
+Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c68396121.lua")
-local s,id,alias=GetID()
+local s,id=GetID()
 function s.initial_effect(c)
-	alias=c:Alias()
 	--xyz summon
 	Xyz.AddProcedure(c,nil,9,3)
 	c:EnableReviveLimit()
 	--Rank Up Check
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetCode(EFFECT_MATERIAL_CHECK)
-	e0:SetValue(s.valcheck)
-	c:RegisterEffect(e0)
+	aux.EnableCheckRankUp(c,nil,s.rankupregop,88177324)
+	--battle indestructable
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetLabelObject(e0)
-	e1:SetOperation(s.rankupregop)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e1)
 	--negate
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(alias,0))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCost(s.negcost)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	--battle indestructable
+	--Double Snare
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e3:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCode(3682106)
 	c:RegisterEffect(e3)
-	--Double Snare
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(3682106)
-	c:RegisterEffect(e4)
 	--triple attacks
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCondition(s.atkcon)
+	e4:SetCost(s.atkcost)
+	e4:SetTarget(s.atktg)
+	e4:SetOperation(s.atkop)
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(alias,1))
-	e5:SetType(EFFECT_TYPE_IGNITION)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetCondition(s.atkcon)
-	e5:SetCost(s.atkcost)
-	e5:SetTarget(s.atktg)
-	e5:SetOperation(s.atkop)
-	e5:SetLabelObject(e1)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+	e5:SetRange(LOCATION_ONFIELD)
+	e5:SetTargetRange(LOCATION_ONFIELD,0)
+	e5:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e5:SetCondition(s.efcon)
+	e5:SetTarget(s.eftg)
+	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
@@ -68,9 +65,9 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.listed_series={0x95,0x48}
+s.listed_series={0x48}
+s.listed_names={88177324}
 s.xyz_number=107
-s.listed_names={88177324,100000581,111011002,511000580,511002068,511002164,93238626}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if rc then
@@ -158,7 +155,8 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(ssg)
 		for sc in aux.Next(ssg) do
 			local e3=Effect.CreateEffect(c)
-			e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+			e3:SetDescription(aux.Stringid(id,2))
+			e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_CLIENT_HINT)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_CANNOT_TRIGGER)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
@@ -166,30 +164,17 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.rumfilter(c)
-	return c:IsCode(88177324) and not c:IsPreviousLocation(LOCATION_OVERLAY)
-end
-function s.valcheck(e,c)
-	local mg=c:GetMaterial()
-	if mg:IsExists(s.rumfilter,1,nil) then
-		e:SetLabel(1)
-	else
-		e:SetLabel(0)
-	end
-end
 function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	local rc=re:GetHandler()
-	if e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and (rc:IsSetCard(0x95)
-		or rc:IsCode(100000581) or rc:IsCode(111011002) or rc:IsCode(511000580)
-		or rc:IsCode(511002068) or rc:IsCode(511002164) or rc:IsCode(93238626))
-		and e:GetLabelObject():GetLabel()==1 then
-		e:SetLabel(1)
-	else
-		e:SetLabel(0)
-	end
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+end
+function s.efcon(e)
+	return e:GetHandler():GetFlagEffect(id)>0
+end
+function s.eftg(e,c)
+	return c==e:GetHandler()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP() and e:GetLabelObject():GetLabel()==1
+	return Duel.IsAbleToEnterBP()
 end
 function s.rfilter(c)
 	return c:GetAttackAnnouncedCount()<=0

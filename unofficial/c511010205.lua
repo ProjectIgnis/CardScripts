@@ -1,11 +1,15 @@
---CNo.5 亡朧龍カオス・キマイラ・ドラゴン (Anime)
+--ＣＮｏ.５ 亡朧龍 カオス・キマイラ・ドラゴン (Anime)
+--Number C5: Chaos Chimera Dragon (Anime)
 --fixed by MLD
+Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c69757518.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,nil,6,3,nil,nil,99)
 	c:EnableReviveLimit()
+	--Rank Up Check
+	aux.EnableCheckRankUp(c,nil,s.rankupregop,90126061)
 	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -29,7 +33,7 @@ function s.initial_effect(c)
 	--banish
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_REMOVE)
-	e4:SetDescription(aux.Stringid(612115,0))
+	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
@@ -48,7 +52,7 @@ function s.initial_effect(c)
 	--back to deck
 	local e6=Effect.CreateEffect(c)
 	e6:SetCategory(CATEGORY_TODECK)
-	e6:SetDescription(aux.Stringid(2772236,0))
+	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
 	e6:SetCountLimit(1)
@@ -59,7 +63,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 	--reattach
 	local e8=Effect.CreateEffect(c)
-	e8:SetDescription(aux.Stringid(14005031,0))
+	e8:SetDescription(aux.Stringid(id,2))
 	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e8:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e8:SetRange(LOCATION_MZONE)
@@ -68,20 +72,31 @@ function s.initial_effect(c)
 	e8:SetTarget(s.mattg)
 	e8:SetOperation(s.matop)
 	c:RegisterEffect(e8)
-	--Rank Up Check
-	local e9=Effect.CreateEffect(c)
-	e9:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e9:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e9:SetCondition(s.rankupregcon)
-	e9:SetOperation(s.rankupregop)
-	c:RegisterEffect(e9)
 	--battle indestructable
+	local e9=Effect.CreateEffect(c)
+	e9:SetType(EFFECT_TYPE_SINGLE)
+	e9:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e9:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	c:RegisterEffect(e9)
+	--material
 	local e10=Effect.CreateEffect(c)
-	e10:SetType(EFFECT_TYPE_SINGLE)
-	e10:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e10:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
-	c:RegisterEffect(e10)
+	e10:SetDescription(aux.Stringid(id,3))
+	e10:SetType(EFFECT_TYPE_IGNITION)
+	e10:SetRange(LOCATION_MZONE)
+	e10:SetCountLimit(1)
+	e10:SetTarget(s.ovtg)
+	e10:SetOperation(s.ovop)
+	local e11=Effect.CreateEffect(c)
+	e11:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+	e11:SetRange(LOCATION_MZONE)
+	e11:SetTargetRange(LOCATION_MZONE,0)
+	e11:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e11:SetCondition(s.efcon)
+	e11:SetTarget(s.eftg)
+	e11:SetLabelObject(e10)
+	c:RegisterEffect(e11)
 end
+s.listed_series={0x48}
 s.listed_names={90126061}
 s.xyz_number=5
 function s.atkval(e,c)
@@ -188,27 +203,14 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(c,g)
 	end
 end
-function s.rumfilter(c)
-	return c:IsCode(90126061) and not c:IsPreviousLocation(LOCATION_OVERLAY)
-end
-function s.rankupregcon(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():GetFlagEffect(511015134)~=0 then return true end
-	local rc=re:GetHandler()
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and re and (rc:IsSetCard(0x95) or rc:IsCode(100000581,111011002,511000580,511002068,511002164,93238626))
-		and e:GetHandler():GetMaterial() and e:GetHandler():GetMaterial():IsExists(s.rumfilter,1,nil)
-end
 function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	--material
-	local e9=Effect.CreateEffect(c)
-	e9:SetDescription(aux.Stringid(12744567,0))
-	e9:SetType(EFFECT_TYPE_IGNITION)
-	e9:SetRange(LOCATION_MZONE)
-	e9:SetCountLimit(1)
-	e9:SetTarget(s.ovtg)
-	e9:SetOperation(s.ovop)
-	e9:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e9)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+end
+function s.efcon(e)
+	return e:GetHandler():GetFlagEffect(id)>0
+end
+function s.eftg(e,c)
+	return c==e:GetHandler()
 end
 function s.ovtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_HAND,0,1,nil) end

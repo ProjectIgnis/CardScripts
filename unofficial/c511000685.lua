@@ -1,4 +1,5 @@
 --ＷＲＵＭ－ホープ・フォース
+--Double-Rank-Up-Magic Utopia Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,14 +15,14 @@ end
 s.listed_names={84013237}
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()
-	return c:IsFaceup() and c:IsCode(84013237) and c:GetOverlayGroup():GetCount()>=2
+	return c:IsFaceup() and c:IsCode(84013237) and #c:GetOverlayGroup()>=2
 		and (rk>0 or c:IsStatus(STATUS_NO_LEVEL))
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,2,nil,rk,e,tp,c)
 end
 function s.filter2(c,rk,e,tp,mc)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
 	return c:IsType(TYPE_XYZ) and (c:IsRank(rk+1) or c:IsRank(rk+2))
-		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>1
+		and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)>1
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -51,26 +52,25 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>=2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,2,2,nil)
+		aux.RankUpUsing(sg,84013237,aux.Stringid(id,0))
 		local ct=Duel.SpecialSummon(sg,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
-		local spc=sg:GetFirst()
-		while spc do
+		for spc in aux.Next(sg) do
 			spc:CompleteProcedure()
-			spc=sg:GetNext()
 		end
 		if ct>1 then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 			local ovg=ov:Select(tp,2,2,nil)
 			Duel.SendtoGrave(ovg,REASON_EFFECT)
-			for i=1,2 do
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-				local ovsg=ovg:Select(tp,1,1,nil)
-				local osg=sg:Select(tp,1,1,nil)
-				Duel.HintSelection(osg)
-				Duel.Overlay(osg:GetFirst(),ovsg)
-				ovg:Sub(ovsg)
-				sg:Sub(osg)
-			end
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+			local ovsg=ovg:Select(tp,1,1,nil)
+			local osg=sg:Select(tp,1,1,nil)
+			ovg:Sub(ovsg)
+			sg:Sub(osg)
+			Duel.HintSelection(osg)
+			Duel.Overlay(osg:GetFirst(),ovsg)
+			Duel.HintSelection(sg)
+			Duel.Overlay(sg:GetFirst(),ovg)
 		end
 	end
 end

@@ -4,9 +4,8 @@
 --Fixed by MLD & Larry126
 Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c68396121.lua")
-local s,id,alias=GetID()
+local s,id=GetID()
 function s.initial_effect(c)
-	alias=c:Alias()
 	--xyz summon
 	Xyz.AddProcedure(c,nil,9,3)
 	c:EnableReviveLimit()
@@ -45,8 +44,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetTargetRange(LOCATION_MZONE,0)
+	e5:SetRange(LOCATION_ONFIELD)
+	e5:SetTargetRange(LOCATION_ONFIELD,0)
 	e5:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e5:SetCondition(s.efcon)
 	e5:SetTarget(s.eftg)
@@ -83,15 +82,6 @@ function s.startop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterFlagEffect(511010210,RESET_PHASE+PHASE_END,0,1,tc:GetPosition())
 		tc:RegisterFlagEffect(511010211,RESET_PHASE+PHASE_END,0,1,tc:GetSequence())
 	end
-end
-function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-end
-function s.efcon(e)
-	return e:GetHandler():GetFlagEffect(id)>0
-end
-function s.eftg(e,c)
-	return c==e:GetHandler()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -173,6 +163,15 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 			sc:RegisterEffect(e3)
 		end
 	end
+end
+function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+end
+function s.efcon(e)
+	return e:GetHandler():GetFlagEffect(id)>0
+end
+function s.eftg(e,c)
+	return c==e:GetHandler()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()

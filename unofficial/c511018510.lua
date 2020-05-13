@@ -1,3 +1,4 @@
+--ＲＵＭ－光波追撃
 --Rank-Up-Magic Cipher Pursuit
 --cleaned up by MLD
 local s,id=GetID()
@@ -65,13 +66,18 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local ac={}
 		for _,teh in ipairs(eff) do
 			local temp=teh:GetLabelObject()
+			if temp:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then temp=temp:GetLabelObject() end
+			local con=temp:GetCondition()
+			local cost=temp:GetCost()
 			local tg=temp:GetTarget()
-			if not tg or tg(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0) then
+			if (not con or con(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE))
+				and (not cost or cost(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0))
+				and (not tg or tg(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0)) then
 				table.insert(ac,teh)
 				table.insert(acd,temp:GetDescription())
 			end
 		end
-		if #ac<=0 or not Duel.SelectYesNo(tp,aux.Stringid(48680970,0)) then return end
+		if #ac<=0 or not Duel.SelectEffectYesNo(tp,sc) then return end
 		Duel.BreakEffect()
 		if #ac==1 then te=ac[1] elseif #ac>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
@@ -82,28 +88,24 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if not te then return end
 		local teh=te
 		te=teh:GetLabelObject()
+		if te:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then te=te:GetLabelObject() end
+		local cost=te:GetCost()
+		if cost then cost(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		local tg=te:GetTarget()
-		local op=te:GetOperation()
 		if tg then tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		Duel.BreakEffect()
 		sc:CreateEffectRelation(te)
 		Duel.BreakEffect()
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-		if g then
-			local etc=g:GetFirst()
-			while etc do
-				etc:CreateEffectRelation(te)
-				etc=g:GetNext()
-			end
+		for etc in aux.Next(g) do
+			etc:CreateEffectRelation(te)
 		end
+		local op=te:GetOperation()
 		if op then op(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		sc:ReleaseEffectRelation(te)
-		if etc then	
-			etc=g:GetFirst()
-			while etc do
-				etc:ReleaseEffectRelation(te)
-				etc=g:GetNext()
-			end
+		tc:ReleaseEffectRelation(te)
+		for etc in aux.Next(g) do
+			etc:ReleaseEffectRelation(te)
 		end
 	end
 end

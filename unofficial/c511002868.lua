@@ -34,12 +34,13 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.XyzSummon(tp,tc)
 		if not tc:IsHasEffect(511002571) then return end
-		local eff={tc:GetCardEffect(511002571)}
+		local effs={tc:GetCardEffect(511002571)}
 		local te=nil
 		local acd={}
 		local ac={}
-		for _,teh in ipairs(eff) do
+		for _,teh in ipairs(effs) do
 			local temp=teh:GetLabelObject()
+			if temp:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then temp=temp:GetLabelObject() end
 			local con=temp:GetCondition()
 			local cost=temp:GetCost()
 			local tg=temp:GetTarget()
@@ -60,7 +61,8 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		if not te then return end
 		local teh=te
 		te=teh:GetLabelObject()
-		local cost=temp:GetCost()
+		if te:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then te=te:GetLabelObject() end
+		local cost=te:GetCost()
 		if cost then cost(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		local tg=te:GetTarget()
 		if tg then tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end

@@ -1,3 +1,4 @@
+--ライジング・ホープ
 --Utopia Rising
 --scripted by:urielkama
 --fixed by MLD
@@ -71,8 +72,7 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:GetEquipGroup():IsContains(e:GetOwner()) then e:Reset() return end
 	if c:IsDisabled() then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,e:GetHandler())
-	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local code=tc:GetOriginalCode()
 		if tc:IsHasEffect(511002571) then
 			local teff={tc:GetCardEffect(511002571)}
@@ -92,7 +92,9 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 						end
 					end
 					for _,te4 in ipairs(copye) do
-						local tec2=te4:GetLabelObject():Clone()
+						local teh=te4:GetLabelObject()
+						if teh:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then teh=teh:GetLabelObject() end
+						local tec2=teh:Clone()
 						c:RegisterEffect(tec2)
 						local tec=te4:Clone()
 						tec:SetLabelObject(tec2)
@@ -108,7 +110,6 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 				end
 			end
 		end
-		tc=g:GetNext()
 	end
 end
 function s.codechk(c,code)

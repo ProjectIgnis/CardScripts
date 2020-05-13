@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	--Rank Up Check
 	aux.EnableCheckRankUp(c,nil,s.rankupregop,15914410)
 	--damage
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)

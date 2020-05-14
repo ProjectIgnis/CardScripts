@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.indes)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x48}
 s.roll_dice=true
 s.xyz_number=7
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)

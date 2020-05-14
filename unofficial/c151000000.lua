@@ -228,7 +228,7 @@ if not ActionDuel then
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-300)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			if g:GetCount()>0 and g:GetFirst():RegisterEffect(e1) then
+			if #g>0 and g:GetFirst():RegisterEffect(e1) then
 				Duel.Damage(1-tokenp,300,REASON_EFFECT)
 			end
 		else ActionDuel.chktrap(token,tokenp,e) end

@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x48}
 s.xyz_number=39
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()~=nil

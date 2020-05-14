@@ -54,6 +54,7 @@ function s.initial_effect(c)
 		else return chain() end
 	end
 end
+s.listed_series={0x246}
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0
 end

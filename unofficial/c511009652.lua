@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_MSET)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x56f}
 function s.atkval(e,c)
 	return c:GetLinkedGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER)*600
 end

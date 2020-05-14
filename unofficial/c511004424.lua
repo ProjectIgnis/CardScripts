@@ -52,6 +52,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.atop2)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0xf8}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
 	if chk==0 then return true end

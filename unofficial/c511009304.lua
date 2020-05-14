@@ -61,6 +61,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
+s.listed_series={0x19}
 s.material_setcode=0x19
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsSetCard(0x19,fc,sumtype,tp) and c:GetLevel()>=5

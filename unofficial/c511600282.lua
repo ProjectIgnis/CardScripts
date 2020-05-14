@@ -48,6 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.operation)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x119}
 s.listed_names={CARD_SALAMANGREAT_SANCTUARY}
 function s.lmfilter(c,lc,tp)
 	return c:IsFaceup() and c:IsLinkMonster()

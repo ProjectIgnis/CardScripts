@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x48,0x246}
 s.xyz_number=4
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

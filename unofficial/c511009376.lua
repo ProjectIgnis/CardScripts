@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.prop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xc008}
 s.material_setcode={0x8,0xc008}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION

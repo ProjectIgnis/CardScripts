@@ -70,6 +70,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(df,0)
 	end)
 end
+s.listed_names={95286165,10000010,511000987}
 --De-Fusion
 function s.dffilter(c)
 	if not c:IsCode(95286165) then return false end
@@ -477,7 +478,7 @@ function s.valcheck(e,c)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+0xff0000)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE&~RESET_TOFIELD)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_BASE_DEFENSE)

@@ -28,7 +28,8 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.listed_names={100266021}
+s.listed_series={0x48}
+s.listed_names={100266026}
 function s.cfilter(c)
 	return c:GetPreviousCodeOnField()==100266021
 end

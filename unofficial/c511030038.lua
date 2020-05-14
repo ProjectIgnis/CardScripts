@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x577}
 function s.monfilter(c)
 	return c:IsLinkMonster() and c:IsSetCard(0x577) and c:IsFaceup()
 end

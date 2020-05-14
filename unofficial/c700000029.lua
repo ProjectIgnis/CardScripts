@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9b}
 s.material_setcode={0x9b,0x209b}
 function s.matcheck(e,c)
 	local ct=c:GetMaterialCount()
@@ -26,6 +27,6 @@ function s.matcheck(e,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(ct*300)
-	e1:SetReset(RESET_EVENT+0xff0000)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE&~RESET_TOFIELD)
 	c:RegisterEffect(e1)
 end

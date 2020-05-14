@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tkop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x577}
 function s.filter(c,e,tp)
 	return c:IsPreviousControler(tp) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP))
 end

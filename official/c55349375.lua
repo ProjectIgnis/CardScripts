@@ -28,6 +28,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drawop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x13f}
+s.listed_names={id}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x13f) and not c:IsCode(id)
 end

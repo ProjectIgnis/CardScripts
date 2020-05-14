@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.desop)
 	c:RegisterEffect(e7)
 end
+s.listed_names={83764718}
 function s.genchainlm(c)
 	return function (e,rp,tp)
 				return e:GetHandler()==c

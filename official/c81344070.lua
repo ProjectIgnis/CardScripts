@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x13f}
 function s.spcfilter(c,tp)
 	return c:IsSetCard(0x13f) and c:IsOriginalType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and Duel.GetMZoneCount(tp,c)>0

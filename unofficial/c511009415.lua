@@ -46,16 +46,6 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_PZONE)
 	e4:SetOperation(s.acop)
 	c:RegisterEffect(e4)
-	--atk def
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD)
-	e5:SetCode(EFFECT_UPDATE_ATTACK)
-	e5:SetRange(LOCATION_MZONE+LOCATION_PZONE)
-	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e5:SetCondition(s.adcon)
-	e5:SetTarget(s.adtg)
-	e5:SetValue(s.adval)
-	c:RegisterEffect(e5)
 end
 s.counter_list={0x1149}
 s.listed_series={0x576}
@@ -124,13 +114,4 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(g) do
 		tc:AddCounter(0x1149,#eg,REASON_EFFECT)
 	end
-end
-function s.adcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
-end
-function s.adtg(e,c)
-	return c:GetCounter(0x1149)>0 and not c:IsStarvingVenemy()
-end
-function s.adval(e,c)
-	return c:GetCounter(0x1149)*-100
 end

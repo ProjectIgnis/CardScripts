@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_FOSSIL_FUSION}
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or st==SUMMON_TYPE_FUSION+0x20
 end

@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x141}
 	--Specifically lists itself
 s.listed_names={id}
 	--Check for plant monster/"Rikka" card

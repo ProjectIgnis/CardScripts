@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e5:SetValue(0x8f)
 	c:RegisterEffect(e5)
 end
+s.listed_names={id}
 s.listed_series={0x54,0x59,0x82,0x8f}
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

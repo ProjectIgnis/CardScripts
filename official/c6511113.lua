@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.operation)
 	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_names={id}
 s.listed_series={0x108a,0x4c,0x89}
 function s.imcon(e)
 	return e:GetHandler():GetOverlayCount()>0

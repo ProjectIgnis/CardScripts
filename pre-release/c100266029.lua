@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 s.listed_series={0xe6}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xe6) and c:IsLevelBelow(2)

@@ -1,5 +1,6 @@
 --ＲＵＭ－千死蛮巧 (Anime)
 --Rank-Up-Magic Admiration of the Thousands (Anime)
+Duel.LoadScript("rankup_functions.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,5 +1,6 @@
 --ＷＲＵＭ－ホープ・フォース
 --Double-Rank-Up-Magic Utopia Force
+Duel.LoadScript("rankup_functions.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

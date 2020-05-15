@@ -1,5 +1,5 @@
 --破械雙王神ライゴウ
---Hakai Souohshin Raigou
+--Unchained Abomination
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,8 +36,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsType,1,nil,TYPE_LINK,lc,sumtype,tp)
+function s.lcheck(g,lc,tp)
+	return g:IsExists(Card.IsType,1,nil,TYPE_LINK,lc,SUMMON_TYPE_LINK,tp)
 end
 function s.cfilter(c)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)

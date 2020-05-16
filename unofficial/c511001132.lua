@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
-   	--Special Summon destroyed monsters
+	--Special Summon destroyed monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(27769400,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

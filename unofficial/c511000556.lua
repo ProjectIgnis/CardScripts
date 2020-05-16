@@ -33,6 +33,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return ex and (cp==tp or cp==PLAYER_ALL) and Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_RECOVER)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp,val,r,rc)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 	local e1=Effect.CreateEffect(c)

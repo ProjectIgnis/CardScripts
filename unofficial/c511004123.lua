@@ -52,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_ADJUST)
-		e1:SetRange(LOCATION_MZONE)	
+		e1:SetRange(LOCATION_MZONE) 
 		e1:SetOperation(s.copyop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
@@ -123,7 +123,7 @@ end
 function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetOwner():GetEquipTarget()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,tc)
-	if not g:IsExists(s.codechk,1,nil,e:GetLabel()) or tc:IsDisabled() or e:GetOwner():IsDisabled() then
+	if not g:IsExists(s.codechk,1,nil,e:GetLabel()) or not tc or tc:IsDisabled() or e:GetOwner():IsDisabled() then
 		local te1=e:GetLabelObject()
 		local te2=te1:GetLabelObject()
 		if te2 then

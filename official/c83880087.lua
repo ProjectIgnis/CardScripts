@@ -1,4 +1,5 @@
 --ムーンバリア
+--Light Wing Shield
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -73,5 +74,5 @@ function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 		and ep==e:GetOwnerPlayer() and ev==1
 end
 function s.rop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+	return Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end

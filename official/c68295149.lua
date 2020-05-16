@@ -34,8 +34,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-function s.lcheck(g,lc,tp)
-	return g:IsExists(Card.IsType,1,nil,TYPE_FRSX,lc,SUMMON_TYPE_LINK,tp)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsType,1,nil,TYPE_FRSX,lc,sumtype,tp)
 end
 function s.atkfilter(c)
 	return c:IsType(TYPE_FRSX) and c:GetAttack()>0

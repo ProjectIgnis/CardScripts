@@ -64,11 +64,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12b}
 s.listed_names={67712104}
-function s.matfilter(c)
-	return c:IsCode(67712104)
-end
-function s.spcheck(g,lc,tp)
-	return g:IsExists(s.matfilter,1,nil)
+function s.spcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsCode,1,nil,67712104,lc,sumtype,tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattleTarget() and not e:GetHandler():GetBattleTarget():IsControler(tp)

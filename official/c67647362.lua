@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13f}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x13f)
+	return g:IsExists(Card.IsSetCard,1,nil,0x13f,lc,sumtype,tp)
 end
 function s.filter(c,e,tp,att)
 	return c:IsSetCard(0x13f) and c:IsAttribute(att)

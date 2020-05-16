@@ -40,8 +40,8 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_EVIL_EYE_SELENE}
 s.listed_series={0x129}
-function s.matcheck(g,lc,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x129)
+function s.matcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,0x129,lc,sumtype,tp)
 end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0x129)

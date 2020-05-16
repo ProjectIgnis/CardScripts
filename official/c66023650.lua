@@ -45,8 +45,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x114}
-function s.lcheck(g,lc,tp)
-	return g:GetClassCount(Card.GetRace,lc,SUMMON_TYPE_LINK,tp)==#g
+function s.lcheck(c,lc,sumtype,tp)
+	return g:GetClassCount(Card.GetRace,lc,sumtype,tp)==#g
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

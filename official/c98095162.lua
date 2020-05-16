@@ -41,8 +41,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-function s.spcheck(g,lc,tp)
-	return g:GetClassCount(Card.GetRace,lc,SUMMON_TYPE_LINK,tp)==#g and g:CheckSameProperty(Card.GetAttribute,lc,SUMMON_TYPE_LINK,tp)
+function s.spcheck(g,lc,sumtype,tp)
+	return g:GetClassCount(Card.GetRace,lc,sumtype,tp)==#g and g:CheckSameProperty(Card.GetAttribute,lc,sumtype,tp)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

@@ -39,8 +39,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xdc}
-function s.matcheck(g,lc,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0xdc,lc,SUMMON_TYPE_LINK,tp)
+function s.matcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,0xdc,lc,sumtype,tp)
 end
 function s.incon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

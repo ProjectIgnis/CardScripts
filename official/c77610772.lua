@@ -41,8 +41,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0xfd}
-function s.spcheck(g,lc,tp)
-	return g:GetClassCount(Card.GetRace,lc,SUMMON_TYPE_LINK,tp)>1 and g:GetClassCount(Card.GetAttribute,lc,SUMMON_TYPE_LINK,tp)>1
+function s.spcheck(g,lc,sumtype,tp)
+	return g:GetClassCount(Card.GetRace,lc,sumtype,tp)>1 and g:GetClassCount(Card.GetAttribute,lc,sumtype,tp)>1
 end
 function s.incon(e)
 	return e:GetHandler():IsLinked()

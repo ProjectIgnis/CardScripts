@@ -53,8 +53,8 @@ s.listed_series={0x577}
 function s.matfilter(c)
 	return c:IsLevelAbove(5) and c:IsType(TYPE_EFFECT)
 end
-function s.matcheck(g,lc,tp)
-	return g:IsExists(s.matfilter,1,nil)
+function s.matcheck(g,lc,sumtype,tp)
+	return g:IsExists(s.matfilter,1,nil,lc,sumtype,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

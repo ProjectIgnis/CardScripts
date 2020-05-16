@@ -24,8 +24,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x11f}
-function s.lcheck(g,lc)
-	return g:IsExists(Card.IsType,1,nil,TYPE_RITUAL)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsType,1,nil,TYPE_RITUAL,lc,sumtype,tp)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

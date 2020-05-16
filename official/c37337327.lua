@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunction(s.matfilter),2,2,s.lcheck)
+	Link.AddProcedure(c,s.matfilter,2,2,s.lcheck)
 	--synchro effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -34,8 +34,8 @@ s.listed_series={0x43}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsType(TYPE_EFFECT,lc,sumtype,tp) and c:IsRace(RACE_WARRIOR+RACE_MACHINE,lc,sumtype,tp)
 end
-function s.lcheck(g,lc)
-	return g:IsExists(Card.IsType,1,nil,TYPE_TUNER)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsType,1,nil,TYPE_TUNER,lc,sumtype,tp)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()

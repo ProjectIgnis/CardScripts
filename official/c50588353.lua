@@ -34,8 +34,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-function s.lcheck(g,lc)
-	return g:IsExists(Card.IsType,1,nil,TYPE_TUNER)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsType,1,nil,TYPE_TUNER,lc,sumtype,tp)
 end
 function s.hspcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

@@ -1,10 +1,12 @@
+--ＥＭオッドアイズ・ユニコーン
+--Performapal Odd-Eyes Unicorn (anime)
 --Scripted by Eerie Code
---Performapal Odd-Eyes Unicorn
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum summon
 	Pendulum.AddProcedure(c)
-	--Increase ATK
+	--ATK up (pendulum effect)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -17,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-	--atk
+	--ATK up (monster effect)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
@@ -33,7 +35,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return at:IsControler(tp) and at:IsSetCard(0x99)
 end
 function s.atkfil(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f) and c:GetAttack()>0
+	return c:IsFaceup() and c:IsSetCard(0x9f) and c:GetAttack()>0 and c:IsAttackPos()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttacker():IsCanBeEffectTarget(e) and Duel.IsExistingMatchingCard(s.atkfil,tp,LOCATION_MZONE,0,1,nil) end

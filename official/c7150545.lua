@@ -46,10 +46,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc):GetFirst()
 		if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 			local e1=Effect.CreateEffect(c)
-			e1:SetDescription(aux.Stringid(id,1))
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_TRIGGER)
-			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			sc:RegisterEffect(e1)
 		end

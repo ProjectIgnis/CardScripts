@@ -220,7 +220,7 @@ if not ActionDuel then
 				Duel.RegisterFlagEffect(1-tp,320,RESET_PHASE+PHASE_END,0,1)
 			end
 		end
-		if Duel.IsExistingMatchingCard(Card.IsActionCard,tokenp,LOCATION_HAND,0,2,nil)
+		if token and Duel.IsExistingMatchingCard(Card.IsActionCard,tokenp,LOCATION_HAND,0,2,nil)
 			and Duel.Remove(token,POS_FACEUP,REASON_EFFECT) then
 			local g=Duel.SelectMatchingCard(tokenp,Card.IsFaceup,tokenp,0,LOCATION_MZONE,1,1,nil)
 			local e1=Effect.CreateEffect(e:GetHandler())

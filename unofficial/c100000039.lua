@@ -1,4 +1,5 @@
 --ゴースト・コンバート
+--Convert Ghost
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,9 +25,6 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
-		aux.RemainFieldCost(e,tp,eg,ep,ev,re,r,rp,1)
-	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -38,12 +36,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or c:IsStatus(STATUS_LEAVE_CONFIRMED) then return end
-	if c:IsCanTurnSet() and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if not c:IsRelateToEffect(e) then return end
+	if c:IsSSetable(true) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		Duel.BreakEffect()
+		c:CancelToGrave()
 		Duel.ChangePosition(c,POS_FACEDOWN)
 		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
-	else
-		c:CancelToGrave(false)
 	end
 end

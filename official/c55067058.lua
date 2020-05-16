@@ -23,7 +23,5 @@ function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 		and ep==e:GetOwnerPlayer() and re:GetHandler():GetOverlayCount()>=ev-1
 end
 function s.rop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT) then
-		return true
-	end
+	return e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT) 
 end

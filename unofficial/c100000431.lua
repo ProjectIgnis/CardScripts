@@ -1,4 +1,5 @@
 --バイ＝マーセの癇癪
+--Passion of Baimasse
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,3 +1,4 @@
+--ラプターズ・ストーム
 --Raptor's Storm
 local s,id=GetID()
 function s.initial_effect(c)

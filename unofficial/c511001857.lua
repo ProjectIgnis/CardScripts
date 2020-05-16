@@ -1,3 +1,4 @@
+--ラスト・トリック
 --Last Trick
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +21,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if rp==tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsActiveType(TYPE_SPELL) then return end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(e:GetOwner())
 	e1:SetCode(EVENT_LEAVE_FIELD_P)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetOperation(s.repop)

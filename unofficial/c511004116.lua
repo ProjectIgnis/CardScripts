@@ -1,4 +1,4 @@
---聖種の影芽
+--Ｖａｉｎ－裏切りの嘲笑
 --Vain Betrayer (anime)
 --Script by Rundas
 Duel.LoadScript("c420.lua")
@@ -38,7 +38,7 @@ function s.filter(c)
 end
 
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMatchingGroupCount(s.filter,tp,0,LOCATION_DECK,nil)>0 end
+	if chk==0 then return Duel.IsPlayerCanDiscardDeck(1-tp,1) end
 end
 
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)

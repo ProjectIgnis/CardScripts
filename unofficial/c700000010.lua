@@ -1,5 +1,5 @@
---EMオッドアイズ・ユニコーン
---Performapal Odd-Eyes Unicorn
+--EMオッドアイズ・ユニコーン (Anime)
+--Performapal Odd-Eyes Unicorn (Anime)
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

@@ -84,13 +84,13 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 		e4:SetCode(EFFECT_LIMIT_SUMMON_PROC)
 		e4:SetTargetRange(0xff,0xff)
-		e4:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,c)return c:GetLevel()>=10 and c:GetFlagEffect(id+1)==1 end)
+		e4:SetTarget(aux.FieldSummonProcTg(s.tttg1))
 		e4:SetCondition(s.ttcon)
 		e4:SetOperation(s.ttop)
 		e4:SetValue(SUMMON_TYPE_TRIBUTE)
 		Duel.RegisterEffect(e4,tp)
 		local e5=e4:Clone()
-		e5:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,c)return c:GetLevel()>=10 and c:GetFlagEffect(511004017)==1 end)
+		e5:SetTarget(aux.FieldSummonProcTg(s.tttg2))
 		e5:SetCode(EFFECT_LIMIT_SET_PROC)
 		Duel.RegisterEffect(e5,tp)
 		--Cannot Attack
@@ -228,6 +228,12 @@ end
 function s.ttcon(e,c)
 	if c==nil then return true end
 	return Duel.GetTributeCount(c)>=3
+end
+function s.tttg1(e,c)
+	return c==0 or c==1 or c:GetLevel()>=10 and c:GetFlagEffect(id+1)==1
+end
+function s.tttg2(e,c)
+	return c==0 or c==1 or c:GetLevel()>=10 and c:GetFlagEffect(511004017)==1
 end
 function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectTribute(tp,c,3,3)

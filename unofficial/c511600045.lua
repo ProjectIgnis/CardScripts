@@ -137,13 +137,14 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc and tc:GetFlagEffectLabel(id)~=e:GetLabel() then
+	if tc:GetFlagEffectLabel(id)==e:GetLabel() then
+		return true
+	else
 		e:Reset()
 		return false
-	else return true end
+	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.Destroy(e:GetLabelObject(),REASON_EFFECT)
-	end
+	local tc=e:GetLabelObject()
+	Duel.Destroy(tc,REASON_EFFECT)
 end

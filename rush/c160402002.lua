@@ -28,7 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DOUBLE_TRIBUTE)
 	e1:SetValue(s.condition)
-	c:RegisterEffect(e1)
+	e:GetHandler():RegisterEffect(e1)
 end
 function s.condition(e,c)
 	return c:IsRace(RACE_DRAGON)

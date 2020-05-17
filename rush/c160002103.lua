@@ -1,4 +1,4 @@
--- ビックリード・ドラゴン
+--ビックリード・ドラゴン
 --Shocklead Dragon
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil,tp)
 		local g2=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-		local atk=g2:GetMaxGroup(Card.GetAttack)
+		local _,atk=g2:GetMaxGroup(Card.GetAttack)
 		for tc in aux.Next(g) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

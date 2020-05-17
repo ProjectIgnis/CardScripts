@@ -15,14 +15,11 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
-function s.filter(c,tp)
-	return c:IsFaceup() and not Duel.IsExistingMatchingCard(s.filter2,tp,0,LOCATION_MZONE,1,c,c:GetAttack())
-end
-function s.filter2(c,atk)
-	return c:IsFaceup() and c:GetAttack()>atk
+function s.filter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:GetAttack()>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil,TYPE_MONSTER,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil,tp) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -30,10 +27,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,1,REASON_COST)
 	--effect
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil,tp)
-		local g2=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-		local _,atk=g2:GetMaxGroup(Card.GetAttack)
-		for tc in aux.Next(g) do
+		local pg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+		local og=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil,tp)
+		local _,atk=pg:GetMaxGroup(Card.GetAttack)
+		local sub1,_=og:GetMaxGroup(Card.GetAttack)
+		for tc in aux.Next(sub1) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -56,5 +54,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.bttg(e,c)
-	return c:IsFacedown() or not c:IsDefensePos()
+	return c:IsFacedown() or not c:IsAttackPos()
 end

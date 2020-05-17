@@ -84,13 +84,15 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 		e4:SetCode(EFFECT_LIMIT_SUMMON_PROC)
 		e4:SetTargetRange(0xff,0xff)
-		e4:SetTarget(aux.FieldSummonProcTg(s.tttg1))
-		e4:SetCondition(s.ttcon)
-		e4:SetOperation(s.ttop)
+		e4:SetCondition(Auxiliary.NormalSummonCondition1(3,3))
+		e4:SetTarget(aux.FieldSummonProcTg(s.tttg1,Auxiliary.NormalSummonTarget(3,3)))
+		e4:SetOperation(Auxiliary.NormalSummonOperation(3,3))
 		e4:SetValue(SUMMON_TYPE_TRIBUTE)
 		Duel.RegisterEffect(e4,tp)
 		local e5=e4:Clone()
-		e5:SetTarget(aux.FieldSummonProcTg(s.tttg2))
+		e5:SetCondition(Auxiliary.NormalSetCondition1(3,3))
+		e5:SetTarget(aux.FieldSummonProcTg(s.tttg2,Auxiliary.NormalSetTarget(3,3)))
+		e5:SetOperation(Auxiliary.NormalSetOperation(3,3))
 		e5:SetCode(EFFECT_LIMIT_SET_PROC)
 		Duel.RegisterEffect(e5,tp)
 		--Cannot Attack
@@ -218,27 +220,18 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NOT(Card.IsHasEffect),tp,0xff,0xff,nil,EFFECT_LIMIT_SUMMON_PROC)
 	local g2=Duel.GetMatchingGroup(aux.NOT(Card.IsHasEffect),tp,0xff,0xff,nil,EFFECT_LIMIT_SET_PROC)
 	for tc in aux.Next(g) do
-		tc:RegisterFlagEffect(id+1,0,0,0)
+		tc:RegisterFlagEffect(511004015,0,0,0)
 	end
 	for tc2 in aux.Next(g2) do
 		tc2:RegisterFlagEffect(511004017,0,0,0)
 	end
 	e:Reset()
 end
-function s.ttcon(e,c)
-	if c==nil then return true end
-	return Duel.GetTributeCount(c)>=3
-end
 function s.tttg1(e,c)
-	return c==0 or c==1 or c:GetLevel()>=10 and c:GetFlagEffect(id+1)==1
+	return c==0 or c==1 or c:GetLevel()>=10 and c:GetFlagEffect(511004015)==1
 end
 function s.tttg2(e,c)
 	return c==0 or c==1 or c:GetLevel()>=10 and c:GetFlagEffect(511004017)==1
-end
-function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectTribute(tp,c,3,3)
-	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():GetFlagEffect(511000173)>0 and re:IsActiveType(TYPE_TRAP+TYPE_SPELL) then

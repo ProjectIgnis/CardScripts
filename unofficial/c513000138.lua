@@ -8,17 +8,8 @@ Duel.LoadScript("c421.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-	e1:SetCondition(s.ttcon)
-	e1:SetOperation(s.ttop)
-	e1:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_LIMIT_SET_PROC)
-	c:RegisterEffect(e2)
+	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3)
+	local e2=aux.AddNormalSetProcedure(c,true,false,3,3)
 	--atk
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -37,15 +28,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 -------------------------------------------------------------------
-function s.ttcon(e,c)
-	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-3 and Duel.GetTributeCount(c)>=3
-end
-function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectTribute(tp,c,3,3)
-	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
-end
 function s.filter(c)
 	return c:IsFaceup() and not c:IsHasEffect(21208154)
 end

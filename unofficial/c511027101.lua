@@ -65,7 +65,7 @@ end
 
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	return ec and ec==Duel.GetAttacker()
+	return ec and ec==Duel.GetAttacker() and Duel.GetAttackTarget()~=nil
 end
 
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -79,6 +79,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.ChangeBattleDamage(tp,0)
+	Duel.ChangeBattleDamage(1-tp,0)
 	if Duel.GetAttackTarget()~=nil then
 		Duel.Destroy(Duel.GetAttackTarget(),REASON_EFFECT)
 	end

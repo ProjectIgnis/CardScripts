@@ -74,8 +74,6 @@ end
 
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local at=Duel.GetAttackTarget()
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
@@ -83,10 +81,10 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,1)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
-	if at and at:IsRelateToBattle() then
-		if Duel.Destroy(at,REASON_EFFECT)>0 then
-			Duel.Damage(p,d,REASON_EFFECT)
-		end	
+	local at=Duel.GetAttackTarget()
+	if at and at:IsRelateToBattle() and Duel.Destroy(at,REASON_EFFECT)>0 then
+		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+		Duel.Damage(p,d,REASON_EFFECT)
 	end
 	
 end

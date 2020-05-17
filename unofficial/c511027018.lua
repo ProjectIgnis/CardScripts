@@ -52,7 +52,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		if Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 then
 			Duel.ShuffleDeck(1-tp)
-			Duel.DiscardDeck(1-tp,#og*5,REASON_EFFECT)
+			Duel.DiscardDeck(1-tp,math.min(#og*5,Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)),REASON_EFFECT)
 		end
 	end
 end

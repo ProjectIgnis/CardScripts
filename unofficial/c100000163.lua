@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	--summon with 1 tribute
 	local e2=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),nil,s.otop)
 	local con=e2:GetCondition()
-	e2:SetCondition(function(e,c) return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0 and con(e,c) end)
+	e2:SetCondition(function(e,_c) return Duel.GetFieldGroupCount(_c:GetControler(),0,LOCATION_MZONE)>0 and con(e,_c) end)
 	--atk
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)

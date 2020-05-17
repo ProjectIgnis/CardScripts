@@ -36,7 +36,8 @@ end
 
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	if chk==0 then return 
+		Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
@@ -79,7 +80,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.ChangeBattleDamage(tp,0)
 	if Duel.GetAttackTarget()~=nil then
-	Duel.Destroy(Duel.GetAttackTarget(),REASON_EFFECT)
+		Duel.Destroy(Duel.GetAttackTarget(),REASON_EFFECT)
 	end
 	Duel.Damage(p,d,REASON_EFFECT)
 end

@@ -45,14 +45,15 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_DECK,nil)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 	local og=Duel.GetOperatedGroup()
+	local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
 	Duel.BreakEffect()
-	if Duel.GetMatchingGroupCount(s.filter,tp,0,LOCATION_DECK,nil)==0 then 
+	if Duel.GetMatchingGroupCount(s.filter,tp,0,LOCATION_DECK,nil)==0 and ct==#og then 
 		Duel.Recover(tp,#og*500,REASON_EFFECT)
 		Duel.BreakEffect()
-			if Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 then
+		if Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 then
 			Duel.ShuffleDeck(1-tp)
-			Duel.DiscardDeck(1-tp,math.max(#og*5,Duel.GetFieldGroupCount(1-tp,0,LOCATION_DECK)),REASON_EFFECT)
-			end
+			Duel.DiscardDeck(1-tp,#og*5,REASON_EFFECT)
+		end
 	end
 end
 

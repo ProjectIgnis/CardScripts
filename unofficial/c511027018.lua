@@ -30,11 +30,11 @@ end
 --activate + send to grave
 
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsV()
+	return Duel.GetAttacker():Is_V_()
 end
 
 function s.filter(c)
-	return c:IsV()
+	return c:Is_V_()
 end
 
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -60,5 +60,5 @@ end
 --negate effect + cannot attack
 
 function s.disable(e,c)
-	return c:IsV()
+	return c:Is_V_()
 end

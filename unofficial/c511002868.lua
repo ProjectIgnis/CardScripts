@@ -70,14 +70,18 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		tc:CreateEffectRelation(te)
 		Duel.BreakEffect()
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-		for etc in aux.Next(g) do
-			etc:CreateEffectRelation(te)
+		if g and #g>0 then
+			for etc in aux.Next(g) do
+				etc:CreateEffectRelation(te)
+			end
 		end
 		local operation=te:GetOperation()
 		if operation then operation(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		tc:ReleaseEffectRelation(te)
-		for etc in aux.Next(g) do
-			etc:ReleaseEffectRelation(te)
+		if g and #g>0 then
+			for etc in aux.Next(g) do
+				etc:ReleaseEffectRelation(te)
+			end
 		end
 	end
 end

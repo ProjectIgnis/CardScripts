@@ -928,8 +928,8 @@ if not AnimeArchetype then
 	-- V
 	-- ブイ
 
-	-- Number C39: Utopia Ray V/V Salamander/V－LAN Hydra/V-LAN Token
-	Card.Is_V_=MakeCheck({0x155a},{33725002,66970002,13536606,13536607})
+	-- Number C39: Utopia Ray V/V Salamander/V－LAN Hydra/V-LAN Token/Vain Betrayer
+	Card.Is_V_=MakeCheck({0x155a},{33725002,66970002,13536606,13536607,94933468})
 
 	--W
 	-- Arcana Force XXI - The World/VW-Tiger Catapult/VWXYZ-Dragon Catapult Cannon

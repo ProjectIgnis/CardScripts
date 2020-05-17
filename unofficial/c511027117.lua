@@ -40,7 +40,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     c:RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter2(c,e,tp)
-    return c:IsFaceup() and (c:GetAttack()>0 or not c:IsDisabled()) and c:IsCanBeEffectTarget(e)
+    return c:IsFaceup() and (c:GetAttack()>0 or not c:IsDisabled())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

@@ -16,7 +16,6 @@ end
 s.listed_names={CARD_REDEYES_B_DRAGON}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	
 end
 function s.filter(c,e,tp)
 	return c:IsCode(CARD_REDEYES_B_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

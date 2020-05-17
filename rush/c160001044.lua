@@ -1,4 +1,5 @@
---One-Side Flip - ワンサイド・リバース
+--ワンサイド・リバース
+--One-Side Flip
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

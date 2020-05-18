@@ -1,16 +1,16 @@
---ZW－荒鷲激神爪
---ZW - Eagle Claw (anime)
+--ZW－荒鷲激神爪 (Anime)
+--ZW - Eagle Claw (Anime)
 --Script by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
 	--normal summon without tribute
 	local e1=Effect.CreateEffect(c)
-    	e1:SetDescription(aux.Stringid(id,0))
-    	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-    	e1:SetType(EFFECT_TYPE_SINGLE)
-    	e1:SetCode(EFFECT_SUMMON_PROC)
-    	e1:SetCondition(s.sumcon)
-    	c:RegisterEffect(e1)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_SUMMON_PROC)
+	e1:SetCondition(s.sumcon)
+	c:RegisterEffect(e1)
 	--equip
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_EQUIP)
@@ -37,9 +37,9 @@ end
 s.listed_names={56840427}
 
 function s.sumcon(e,c,minc)
-    if c==nil then return true end
-    return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-        and Duel.GetLP(tp)<=Duel.GetLP(1-tp)-2000
+	if c==nil then return true end
+	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+		and Duel.GetLP(e:GetHandlerPlayer())<=Duel.GetLP(1-e:GetHandlerPlayer())-2000
 end
 
 function s.filter(c)
@@ -85,15 +85,23 @@ end
 
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	return ec and (ec==Duel.GetAttacker() or ec==Duel.GetAttackTarget()) and ec:GetBattleTarget() and ec:GetBattleTarget():IsControler(1-tp) and rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return ec and (ec==Duel.GetAttacker() or ec==Duel.GetAttackTarget()) and ec:GetBattleTarget()
+		and ec:GetBattleTarget():IsControler(1-tp) and rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainNegatable(ev) and e:GetHandler():GetFlagEffect(id)==0
 end
 
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1)
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+	end
 end
 
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateEffect(ev)
+	Duel.NegateActivation(ev)
+	if re:GetHandler():IsRelateToEffect(re) then
+		Duel.Destroy(eg,REASON_EFFECT)
+	end
 end

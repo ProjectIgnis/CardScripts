@@ -31,7 +31,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)==s[0] and Duel.IsChainDisablable(ev) 
+	return Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)==s[0] and c:IsActiveType(TYPE_XYZ) and Duel.IsChainDisablable(ev) 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -50,11 +50,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
-function s.acfilter(c)
-	return c:IsActiveType(TYPE_XYZ) and c:IsFaceup()
-end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.acfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil) 
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType),0,LOCATION_MZONE,LOCATION_MZONE,1,nil,TYPE_XYZ) 
 end
 function s.aclimit(e,re)
 	local g=Duel.GetMatchingGroup(s.acfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)

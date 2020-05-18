@@ -85,7 +85,7 @@ end
 
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	return ec and (ec==Duel.GetAttacker() or ec==Duel.GetAttackTarget()) and ec:GetBattleTarget() and ec:GetBattleTarget():GetControler()==1-tp and rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return ec and (ec==Duel.GetAttacker() or ec==Duel.GetAttackTarget()) and ec:GetBattleTarget() and ec:GetBattleTarget():IsControler(1-tp) and rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainNegatable(ev) and e:GetHandler():GetFlagEffect(id)==0
 end
 

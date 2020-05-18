@@ -13,9 +13,10 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+	--Check for effects that detach material
 	if not s.global_check then
 		s.global_check=true
-		c511027118[0]=nil
+		s[0]=nil
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DETACH_MATERIAL)
@@ -26,11 +27,11 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetCurrentChain()
 	if cid>0 then
-		c511027118[0]=Duel.GetChainInfo(cid,CHAININFO_CHAIN_ID)
+		s[0]=Duel.GetChainInfo(cid,CHAININFO_CHAIN_ID)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)==c511027118[0] and Duel.IsChainDisablable(ev) 
+	return Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)==s[0] and Duel.IsChainDisablable(ev) 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -50,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.acfilter(c)
-	return c:IsType(TYPE_XYZ) and c:IsFaceup()
+	return c:IsActiveType(TYPE_XYZ) and c:IsFaceup()
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.acfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil) 
@@ -60,7 +61,9 @@ function s.aclimit(e,re)
 	if not re:IsActiveType(TYPE_XYZ) or g:GetMaxGroup(Card.GetRank):IsContains(re:GetHandler()) then return false end
 	local eff={re:GetHandler():GetCardEffect(511002571)}
 	for _,ree in ipairs(eff) do
-		if re==ree:GetLabelObject() then return true end
+		local te=ree:GetLabelObject()
+		if te:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then te=te:GetLabelObject() end
+		if re==te then return true end
 	end
 	return false
 end

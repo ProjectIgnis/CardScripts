@@ -92,7 +92,7 @@ end
 --desrep
 
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,e) end
+    if chk==0 then return e:GetHandler():IsAbleToHand() and eg:IsExists(s.repfilter,1,nil,e) end
     return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function s.repval(e,c)

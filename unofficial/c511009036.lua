@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetHintTiming(TIMING_TOHAND)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--damage
 	local e3=Effect.CreateEffect(c)

@@ -1,4 +1,4 @@
--- 嵐闘機ストームライダーガーゴイリード
+--嵐闘機ストームライダーガーゴイリード
 --Stormrider Gargoyle
 --Scripted by Belisk
 local s,id=GetID()
@@ -40,7 +40,7 @@ function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.actfilter(c,tp)
-	return c:IsCode(511600232) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsCode(511600232) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.actfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,tp) end
@@ -58,7 +58,7 @@ function s.actcon2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.actfilter2(c,e,tp,code)
 	return c:IsSetCard(0x580) and c:IsType(TYPE_FIELD) 
-		and (c:IsAbleToHand() or c:GetActivateEffect():IsActivatable(tp)) and c:GetOriginalCode()~=code
+		and (c:IsAbleToHand() or c:GetActivateEffect():IsActivatable(tp,true,true)) and c:GetOriginalCode()~=code
 end
 function s.acttg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_FZONE,0,nil)
@@ -78,7 +78,7 @@ function s.actop2(e,tp,eg,ep,ev,re,r,rp)
 		if tc then
 			local te=tc:GetActivateEffect()
 			local b1=tc:IsAbleToHand()
-			local b2=te:IsActivatable(tp)
+			local b2=te:IsActivatable(tp,true,true)
 			if b1 and (not b2 or Duel.SelectYesNo(tp,aux.Stringid(89208725,1))) then
 				Duel.SendtoHand(tc,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,tc)

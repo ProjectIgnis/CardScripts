@@ -1,3 +1,4 @@
+--ラスト・リゾート (Anime)
 --Last Resort (Anime)
 --by scripted by GameMaster(GM)
 local s,id=GetID()
@@ -15,7 +16,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
 end
 function s.filter(c,tp)
-	return c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp) end

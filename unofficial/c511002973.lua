@@ -1,4 +1,5 @@
---Gladiator Beast Assault Fort
+--剣闘獣の強襲城
+--Gladiator Beast's Assault Fort
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -153,7 +154,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.acfilter(c,tp)
 	local te=c:GetActivateEffect()
-	return c:IsCode(511002975) and te:IsActivatable(tp)
+	return c:IsCode(511002975) and te:IsActivatable(tp,true,true)
 end
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,0,nil)

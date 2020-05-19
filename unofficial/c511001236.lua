@@ -46,6 +46,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g1=eg:Filter(s.filter,nil,tp)
 	local g2=eg:Filter(s.filter,nil,1-tp)
 	local lv1=g1:GetSum(Card.GetLevel)

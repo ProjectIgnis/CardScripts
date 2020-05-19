@@ -38,6 +38,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,atk)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if not d or not a:IsRelateToBattle() or not d:IsRelateToBattle() or a:IsStatus(STATUS_BATTLE_DESTROYED) 

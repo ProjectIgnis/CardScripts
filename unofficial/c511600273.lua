@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--indes
 	local e2=Effect.CreateEffect(c)
@@ -54,6 +55,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e9)
 end
 s.listed_series={0x13c}
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS,true)
+	if res and s.damcon(e,tp,teg,tep,tev,tre,tr,trp) and s.damtg(e,tp,teg,tep,tev,tre,tr,trp,0) then
+		e:SetOperation(s.damop)
+		s.damtg(e,tp,teg,tep,tev,tre,tr,trp,1)
+		e:SetCategory(CATEGORY_DAMAGE)
+		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	else
+		e:SetOperation(nil)
+		e:SetCategory(0)
+		e:SetProperty(0)
+	end
+end
 function s.etarget(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x13c)
 end

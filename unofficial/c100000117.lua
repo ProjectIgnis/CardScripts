@@ -30,6 +30,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(tp)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

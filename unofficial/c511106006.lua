@@ -60,6 +60,7 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local sg=Duel.SelectTarget(tp,s.posfilter,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 	if Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)~=0 then
@@ -125,6 +126,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,tk,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,511009659,(0x3e|0x537),TYPES_TOKEN,0,0,1,RACE_INSECT,ATTRIBUTE_LIGHT,POS_FACEUP_DEFENSE,1-tp) then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end

@@ -1,4 +1,5 @@
---No Cheaters Allowed
+--イカサマ御法度 (Anime)
+--Fraud Freeze (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +7,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetTarget(s.target1)
 	c:RegisterEffect(e1)
 	--tohand
 	local e2=Effect.CreateEffect(c)
@@ -35,25 +35,15 @@ end
 function s.ofilter(c)
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsSummonLocation(LOCATION_HAND)
 end
-function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if s.thcon(e,tp,eg,ep,ev,re,r,rp) and s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
-		and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
-		e:SetCategory(CATEGORY_TOHAND)
-		e:SetOperation(s.thop)
-		s.thtg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetCategory(0)
-		e:SetOperation(nil)
-	end
-end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) 
 		and Duel.IsExistingMatchingCard(s.ofilter,tp,0,LOCATION_MZONE,1,nil) 
 		and (not e:GetHandler():IsStatus(STATUS_CHAINING) or e:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0
+		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil) end
+	e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1)
 	local sg=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,sg,#sg,0,0)
 end

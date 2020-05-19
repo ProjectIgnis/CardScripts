@@ -31,6 +31,7 @@ function s.targetat(e,tp,eg,ev,ep,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tg,#tg,0,0)
 end
 function s.operationat(e,tp,eg,ev,ep,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local tg=Duel.GetTargetCards(e)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

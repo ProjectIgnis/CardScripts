@@ -6,6 +6,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_DRAW_PHASE)
+	e1:SetTarget(s.tg)
 	c:RegisterEffect(e1)
 	--pos
 	local e2=Effect.CreateEffect(c)
@@ -17,6 +18,18 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
+end
+function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_MSET,true)
+	if res and s.target(e,tp,teg,tep,tev,tre,tr,trp,0) then
+		e:SetOperation(s.operation)
+		s.target(e,tp,teg,tep,tev,tre,tr,trp,1)
+		e:SetCategory(CATEGORY_POSITION)
+	else
+		e:SetOperation(nil)
+		e:SetCategory(0)
+	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) end

@@ -9,7 +9,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_BATTLE_START)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--
 	local e2=Effect.CreateEffect(c)
@@ -21,16 +20,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tg)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local ex,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE,true)
-	if ex and s.con(e,tp,teg,tep,tev,tre,tr,trp) and s.tg(e,tp,teg,tep,tev,tre,tr,trp,0) and Duel.SelectYesNo(tp,94) then
-		s.tg(e,tp,teg,tep,tev,tre,tr,trp,1)
-		e:SetOperation(s.op)
-	else
-		e:SetOperation(nil)
-	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)

@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)	
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	e:SetLabel(3)
 	if Duel.GetLP(tp)<2000 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.SetLP(tp,2000,REASON_EFFECT)
@@ -39,6 +40,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<2000 and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.SetLP(tp,2000,REASON_EFFECT)
 	local ct=e:GetLabelObject():GetLabel()
 	ct=ct-1

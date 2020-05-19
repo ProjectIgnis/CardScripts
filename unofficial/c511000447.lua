@@ -22,8 +22,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_BATTLE_DESTROYING,true)
-	if res and s.poscon(e,tp,teg,tep,tev,tre,tr,trp) and s.postg(e,tp,teg,tep,tev,tre,tr,trp,0) 
-		and Duel.SelectYesNo(tp,94) then
+	if res and s.poscon(e,tp,teg,tep,tev,tre,tr,trp) and s.postg(e,tp,teg,tep,tev,tre,tr,trp,0) then
 		e:SetCategory(CATEGORY_POSITION)
 		e:SetOperation(s.posop)
 		s.postg(e,tp,teg,tep,tev,tre,tr,trp,1)

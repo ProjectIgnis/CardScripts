@@ -19,9 +19,10 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and ev>=1000
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local d=math.floor(ev/1000)
 	local tc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
 	if not tc then return end
-	if tc:GetCounter(0x91)<d then tc:RemoveCounter(tp,0x91,tc:GetCounter(0x91),REASON_RULE)	
+	if tc:GetCounter(0x91)<d then tc:RemoveCounter(tp,0x91,tc:GetCounter(0x91),REASON_RULE) 
 	else tc:RemoveCounter(tp,0x91,d,REASON_RULE) end	
 end

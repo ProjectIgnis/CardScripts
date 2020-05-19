@@ -5,6 +5,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetTarget(s.tg)
 	c:RegisterEffect(e1)
 	--cannot direct attack
@@ -22,6 +23,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_BATTLE_DAMAGE)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetCondition(s.condition)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
@@ -34,9 +36,11 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetOperation(s.operation)
 		s.target(e,tp,teg,tep,tev,tre,tr,trp,1)
 		e:SetCategory(CATEGORY_DRAW)
+		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_PLAYER_TARGET)
 	else
 		e:SetOperation(nil)
 		e:SetCategory(0)
+		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	end
 end
 function s.atktarget(e,c)   
@@ -52,6 +56,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end

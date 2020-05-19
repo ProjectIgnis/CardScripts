@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--no damage & spsummon
@@ -46,11 +46,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetOperation(s.damop)
 		s.damtg(e,tp,teg,tep,tev,tre,tr,trp,1)
 		e:SetCategory(CATEGORY_DAMAGE)
-		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_PLAYER_TARGET)
+		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_PLAYER_TARGET)
 	else
 		e:SetOperation(nil)
 		e:SetCategory(0)
-		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

@@ -43,6 +43,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.exfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 	local g=Duel.SelectMatchingCard(tp,s.exfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
@@ -92,11 +93,12 @@ end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tu=Duel.GetTurnPlayer()
 	if chk==0 then return Duel.GetLocationCount(tu,LOCATION_MZONE)>0  
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,511009710,0x577,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_EARTH,POS_FACEUP,tu) end	
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,511009710,0x577,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_EARTH,POS_FACEUP,tu) end   
 		Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tu,0)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tu,0)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tu=Duel.GetTurnPlayer()
 	if e:GetHandler():IsRelateToEffect(e) and Duel.GetLocationCount(tu,LOCATION_MZONE)>0 and
 		Duel.IsPlayerCanSpecialSummonMonster(tp,511009710,0x577,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_EARTH,POS_FACEUP,tu) then

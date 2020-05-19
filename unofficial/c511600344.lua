@@ -55,6 +55,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return tc:IsSetCard(0x101) and tc:IsRelateToBattle() and not c:IsControler(tp) and c:IsRelateToBattle()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetLabelObject()
 	if c:IsFaceup() and c:IsRelateToBattle() then
 		local e1=Effect.CreateEffect(e:GetHandler())

@@ -5,6 +5,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(s.tg)
 	c:RegisterEffect(e1)
 	--draw
 	local e2=Effect.CreateEffect(c)
@@ -18,6 +19,20 @@ function s.initial_effect(c)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
+end
+function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_BATTLE_DAMAGE,true)
+	if res and s.drcon(e,tp,teg,tep,tev,tre,tr,trp) and s.drtg(e,tp,teg,tep,tev,tre,tr,trp,0) then
+		e:SetOperation(s.drop)
+		s.drtg(e,tp,teg,tep,tev,tre,tr,trp,1)
+		e:SetCategory(CATEGORY_DRAW)
+		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	else
+		e:SetOperation(nil)
+		e:SetCategory(0)
+		e:SetProperty(0)
+	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
@@ -121,7 +136,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Equip(tp,tc,g:GetFirst())
 			end
 			tc:ReleaseEffectRelation(te)
-			if etc then	
+			if etc then 
 				etc=g:GetFirst()
 				while etc do
 					etc:ReleaseEffectRelation(te)

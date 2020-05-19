@@ -5,6 +5,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(s.tg)
 	c:RegisterEffect(e1)
 	--cannot direct attack
 	local e2=Effect.CreateEffect(c)
@@ -26,7 +27,19 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-function s.atktarget(e,c)	
+function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_BATTLE_DAMAGE,true)
+	if res and s.condition(e,tp,teg,tep,tev,tre,tr,trp) and s.target(e,tp,teg,tep,tev,tre,tr,trp,0) then
+		e:SetOperation(s.operation)
+		s.target(e,tp,teg,tep,tev,tre,tr,trp,1)
+		e:SetCategory(CATEGORY_DRAW)
+	else
+		e:SetOperation(nil)
+		e:SetCategory(0)
+	end
+end
+function s.atktarget(e,c)   
 	return c:GetAttack()>=1000
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

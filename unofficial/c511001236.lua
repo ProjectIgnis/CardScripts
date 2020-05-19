@@ -1,4 +1,5 @@
 --モンスターレジスター
+--Monster Register
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_DRAW_PHASE)
 	e1:SetCost(s.cost)
+	e1:SetTarget(s.tg)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -27,6 +29,18 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
+end
+function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS,true)
+	if res and s.target(e,tp,teg,tep,tev,tre,tr,trp,0) then
+		e:SetOperation(s.activate)
+		s.target(e,tp,teg,tep,tev,tre,tr,trp,1)
+		e:SetCategory(CATEGORY_DECKDES)
+	else
+		e:SetOperation(nil)
+		e:SetCategory(0)
+	end
 end
 function s.cfilter(c)
 	return c:GetLevel()>0

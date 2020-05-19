@@ -36,7 +36,7 @@ end
 s.listed_series={0x578}
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local ct=c:GetMutualLinkedGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER)
+	local ct=c:GetMutualLinkedGroup():FilterCount(Card.IsLinkMonster,nil)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and chkc:IsAbleToHand() end
 	if chk==0 then return ct>0 and Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
@@ -49,7 +49,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsType(TYPE_LINK) and Duel.IsChainNegatable(ev)
+	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and re:IsActiveType(TYPE_LINK) and Duel.IsChainNegatable(ev)
 		and e:GetHandler():IsLinked()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)

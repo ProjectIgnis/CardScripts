@@ -43,7 +43,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x135}
 function s.cfilter(c)
-	return c:GetPreviousTypeOnField()&TYPE_LINK==TYPE_LINK
+	return c:GetPreviousTypeOnField()&TYPE_LINK==TYPE_LINK and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
@@ -60,7 +60,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:IsType(TYPE_LINK) and tc:GetLinkedGroup():IsContains(e:GetHandler())
+	return tc:IsLinkMonster() and tc:GetLinkedGroup():IsContains(e:GetHandler())
 		and tc:IsRelateToBattle() and tc:IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -86,7 +86,7 @@ function s.bttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if not at then return false end
 		if not a:IsControler(tp) then a,at=at,a end
-		return a:IsType(TYPE_LINK) and a:IsSetCard(0x135)
+		return a:IsLinkMonster() and a:IsSetCard(0x135)
 			and a:IsControler(tp) and not a:IsAttack(3000)
 			and not at:IsControler(tp) and not at:IsAttack(3000)
 	end
@@ -119,7 +119,7 @@ function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp,lk)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x135) and c:GetLink()<lk
+	return c:IsLinkMonster() and c:IsSetCard(0x135) and c:GetLink()<lk
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

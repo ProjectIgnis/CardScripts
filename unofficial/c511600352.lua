@@ -49,7 +49,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x135}
 function s.target(e,c)
-	return c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(e:GetHandler())
+	return c:IsLinkMonster() and c:GetLinkedGroup():IsContains(e:GetHandler())
 end
 function s.aefilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsActivated()

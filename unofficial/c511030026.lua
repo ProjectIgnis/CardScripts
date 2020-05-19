@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x578}
 function s.lcheck(g,lc)
-	return g:IsExists(Card.IsType,1,nil,TYPE_LINK)
+	return g:IsExists(Card.IsLinkMonster,1,nil)
 end
 function s.remcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

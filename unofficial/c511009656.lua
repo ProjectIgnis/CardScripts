@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c,ec)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsRace(RACE_ZOMBIE) and c:GetLinkedGroup():IsContains(ec)
+	return c:IsLinkMonster() and c:IsRace(RACE_ZOMBIE) and c:GetLinkedGroup():IsContains(ec)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e:GetHandler()) end

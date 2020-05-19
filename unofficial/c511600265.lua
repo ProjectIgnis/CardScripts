@@ -30,10 +30,10 @@ function s.descon(e)
 	return Duel.GetLP(1-e:GetHandlerPlayer())<=Duel.GetLP(e:GetHandlerPlayer()) or Duel.GetCurrentPhase()==PHASE_END
 end
 function s.filter(c)
-	return c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and c:IsLinkBelow(2)
+	return c:IsSetCard(0x12b) and c:IsLinkMonster() and c:IsLinkBelow(2)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsLinkAbove(3)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsLinkAbove(3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil)

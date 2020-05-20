@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.cost)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-    	--special summon
+	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -93,20 +93,20 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-    local a=Duel.GetAttacker()
-    local d=Duel.GetAttackTarget()
-    if not a:IsRelateToBattle() or not d:IsRelateToBattle() then return end
-    local e1=Effect.CreateEffect(e:GetHandler())
-    e1:SetOwnerPlayer(tp)
-    e1:SetType(EFFECT_TYPE_SINGLE)
-    e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-    e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-    if a:GetControler()==tp then
-        e1:SetValue(d:GetAttack())
-        a:RegisterEffect(e1)
-    else
-        e1:SetValue(a:GetAttack())
-        d:RegisterEffect(e1)
+	local a=Duel.GetAttacker()
+	local d=Duel.GetAttackTarget()
+	if not a:IsRelateToBattle() or not d:IsRelateToBattle() then return end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetOwnerPlayer(tp)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	if a:GetControler()==tp then
+		e1:SetValue(d:GetAttack())
+		a:RegisterEffect(e1)
+	else
+		e1:SetValue(a:GetAttack())
+		d:RegisterEffect(e1)
 end
 end
 

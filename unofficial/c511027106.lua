@@ -1,5 +1,5 @@
---ＺＷ－風神雲龍剣
---ZW - Tornado Bringer (anime)
+--ＺＷ－風神雲龍剣 (Anime)
+--ZW - Tornado Bringer (Anime)
 --Script by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,15 +21,15 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetValue(s.val)
 	c:RegisterEffect(e2)
-    	--destroy replace
-    	local e3=Effect.CreateEffect(c)
-    	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    	e3:SetCode(EFFECT_DESTROY_REPLACE)
-    	e3:SetRange(LOCATION_SZONE)
-    	e3:SetTarget(s.reptg)
-    	e3:SetValue(s.repval)
-    	e3:SetOperation(s.repop)
-    	c:RegisterEffect(e3)
+	--destroy replace
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EFFECT_DESTROY_REPLACE)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetTarget(s.reptg)
+	e3:SetValue(s.repval)
+	e3:SetOperation(s.repop)
+	c:RegisterEffect(e3)
 end
 
 s.listed_names={56840427}
@@ -78,25 +78,25 @@ end
 --protecc
 
 function s.val(e,re,rp)
-    return re:IsHasCategory(CATEGORY_DESTROY)
+	return re:IsHasCategory(CATEGORY_DESTROY)
 end
 
 --desrep
 
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return e:GetHandler():IsAbleToHand() and eg:IsExists(s.repfilter,1,nil,e)
-			  and not e:GetHandler():IsStatus(STATUS_DESTROY_CONFIRMED) end
-    return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
+	if chk==0 then return e:GetHandler():IsAbleToHand() and eg:IsExists(s.repfilter,1,nil,e)
+		and not e:GetHandler():IsStatus(STATUS_DESTROY_CONFIRMED) end
+	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 
 function s.repval(e,c)
-    return s.repfilter(c,e)
+	return s.repfilter(c,e)
 end
 
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
+	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 end
 
 function s.repfilter(c,e)
-    return c==e:GetHandler():GetEquipTarget()
+	return c==e:GetHandler():GetEquipTarget()
 end

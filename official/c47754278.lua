@@ -45,12 +45,7 @@ function s.cfilter(c,ft,tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then
-		if Duel.GetFlagEffect(tp,id)==0 then
-			Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
-		end
-		return Duel.CheckReleaseGroupCost(tp,s.cfilter,s[tp],false,aux.ChkfMMZ(1),nil,ft,tp)
-	end
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,aux.ChkfMMZ(1),nil,ft,tp) end
 	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,aux.ChkfMMZ(1),nil,ft,tp)
 	Duel.Release(g,REASON_COST)
 end

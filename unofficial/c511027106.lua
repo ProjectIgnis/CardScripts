@@ -83,8 +83,8 @@ function s.repval(e,c)
 	return s.repfilter(c,e)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
+	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT+REASON_REPLACE)
 end
 function s.repfilter(c,e)
-	return c==e:GetHandler():GetEquipTarget()
+	return c==e:GetHandler():GetEquipTarget() and not c:IsReason(REASON_REPLACE)
 end

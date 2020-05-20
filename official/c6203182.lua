@@ -101,7 +101,7 @@ end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=c:GetPreviousEquipTarget()
-	if c:IsReason(REASON_LOST_TARGET) and ec:IsReason(REASON_SYNCHRO+REASON_FUSION+REASON_XYZ+REASON_LINK) then
+	if c:IsReason(REASON_LOST_TARGET) and ec and ec:IsReason(REASON_SYNCHRO+REASON_FUSION+REASON_XYZ+REASON_LINK) then
 		e:SetLabelObject(ec:GetReasonCard())
 		return true
 	else

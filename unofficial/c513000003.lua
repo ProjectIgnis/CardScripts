@@ -55,6 +55,7 @@ function s.initial_effect(c)
 	e9:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e9:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e9:SetCode(EVENT_TO_DECK)
+	e9:SetCondition(s.drcon)
 	e9:SetTarget(s.drtg)
 	e9:SetOperation(s.drop)
 	c:RegisterEffect(e9)
@@ -96,6 +97,10 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and c:IsFaceup() and c:IsAbleToDeck() then
 		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
 	end
+end
+function s.drcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

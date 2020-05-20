@@ -99,7 +99,7 @@ function s.repval(e,c)
 end
 
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
+	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT+REASON_REPLACE)
 end
 
 function s.repfilter(c,e)

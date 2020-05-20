@@ -75,6 +75,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(g,POS_FACEDOWN)
 		Duel.RaiseEvent(g,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
 		Duel.ShuffleSetCard(Duel.GetFieldGroup(tp,LOCATION_SZONE,0):Filter(function(c)return c:GetSequence()<5 end,nil))
+		g:ForEach(function(c)c:SetStatus(STATUS_SET_TURN,true)end)
 	end
 end
 function s.cfilter(c,tp)

@@ -1,5 +1,5 @@
--- 聖剣士の柄持ちヒルト S
--- Hilt the Noble Arms Bearer
+--聖剣士の柄持ちヒルト S
+--Hilt the Noble Arms Bearer
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-
 function s.filter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsRace(RACE_WARRIOR)
 end

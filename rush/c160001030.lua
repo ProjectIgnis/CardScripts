@@ -32,8 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_PYRO),tp,LOCATION_MZONE,0,nil)
 	local ct=Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,nil,TYPE_NORMAL)
-	local tc=g:GetFirst()
-	if not tc then return end
+	if not g then return end
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

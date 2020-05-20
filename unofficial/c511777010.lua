@@ -1,4 +1,5 @@
 --暴君の威圧
+--Solemn Authority (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

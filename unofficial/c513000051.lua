@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCost(s.cost)
 	c:RegisterEffect(e1)
-	--swarm
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(102380,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

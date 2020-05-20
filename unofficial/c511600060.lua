@@ -67,7 +67,9 @@ function s.damval(e,re,val,r,rp,rc)
 	if r==REASON_BATTLE then
 		e:SetLabel(1)
 		return val/2
-	else return val end
+	else
+		return val
+	end
 end
 function s.edcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():GetLabel()==1

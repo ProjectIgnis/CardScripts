@@ -94,12 +94,14 @@ function s.relcon(e)
 	return e:GetOwner():IsRelateToCard(e:GetHandler())
 end
 function s.deschk(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst() local des=0
-	while tc do
-	if tc:GetFlagEffect(id)~=0 then des=des+1 end
-	tc=eg:GetNext()
+	local des=0
+	if eg then
+		for tc in aux.Next(eg) do
+			if tc:GetFlagEffect(id)~=0 then des=des+1 end
+		end
 	end
-	if des>0 then e:GetHandler():RegisterFlagEffect(id+100,RESET_EVENT+RESETS_STANDARD,0,1)
+	if des>0 then
+		e:GetHandler():RegisterFlagEffect(id+100,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -110,7 +112,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():ResetFlagEffect(id+100)
 end
 function s.costfilter(c)
-	return c:IsRace(RACE_INSECT) 
+	return c:IsRace(RACE_INSECT)
 end
 function s.cos(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,false,nil) end

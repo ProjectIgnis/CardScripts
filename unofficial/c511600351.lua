@@ -73,7 +73,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 		local dam=eg:GetFirst():GetAttack()
 		if dam<0 then dam=0 end
@@ -95,8 +95,7 @@ function s.bttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
+	local a,d=Duel.GetAttacker(),Duel.GetAttackTarget()
 	if a:IsFaceup() and a:IsRelateToBattle() and d:IsFaceup() and d:IsRelateToBattle() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -127,6 +126,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,0,1,nil,e,tp,e:GetLabel())
 	if #g>0 then
-	   Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) 
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) 
 	end
 end

@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType),0,LOCATION_MZONE,LOCATION_MZONE,1,nil,TYPE_XYZ) 
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),0,LOCATION_MZONE,LOCATION_MZONE,1,nil) 
 end
 function s.aclimit(e,re)
 	local g=Duel.GetMatchingGroup(s.acfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)

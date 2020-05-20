@@ -103,5 +103,5 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.repfilter(c,e)
-	return c==e:GetHandler():GetEquipTarget()
+	return c==e:GetHandler():GetEquipTarget() and not c:IsReason(REASON_REPLACE)
 end

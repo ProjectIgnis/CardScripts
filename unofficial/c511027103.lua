@@ -1,5 +1,5 @@
---ZW－雷神猛虎剣
---ZW - Lightning Blade (anime)
+--ZW－雷神猛虎剣 (Anime)
+--ZW - Lightning Blade (Anime)
 --Script by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -89,16 +89,19 @@ end
 --desrep
 
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToHand() and eg:IsExists(s.repfilter,1,nil,e) end
+	if chk==0 then return e:GetHandler():IsAbleToHand() and eg:IsExists(s.repfilter,1,nil,e)
+		       and not e:GetHandler():IsStatus(STATUS_DESTROY_CONFIRMED) end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
+
 function s.repval(e,c)
 	return s.repfilter(c,e)
 end
+
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT+REASON_REPLACE)
+	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 end
 
 function s.repfilter(c,e)
-	return c==e:GetHandler():GetEquipTarget() and c:IsReason(REASON_EFFECT)
+	return c==e:GetHandler():GetEquipTarget()
 end

@@ -79,7 +79,7 @@ end
 --protecc
 
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget()~=nil
+	return e:GetHandler():GetEquipTarget()
 end
 
 function s.val(e,re)

@@ -511,7 +511,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 					end
 					--end of part 1
 				else
-					local cancel=not og and Duel.GetCurrentChain()<=0
+					local cancel=not og and Duel.IsSummonCancelable()
 					local xg=nil
 					if tp==0 then
 						xg=xyztempg0
@@ -618,7 +618,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 								and (not lv or not matg:IsExists(Card.IsHasEffect,1,nil,86466163) or Xyz.MatNumChkF2(matg,lv,c)) and matg:Includes(mustg) then
 								finish=true
 							end
-							cancel=not og and Duel.GetCurrentChain()<=0 and #sg==0
+							cancel=not og and Duel.IsSummonCancelable() and #sg==0
 						end
 						sg:KeepAlive()
 						e:SetLabelObject(sg)
@@ -673,7 +673,7 @@ function Xyz.Condition2(alterf,op)
 end
 function Xyz.Target2(alterf,op)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
-				local cancel=not og and Duel.GetCurrentChain()<=0
+				local cancel=not og and Duel.IsSummonCancelable()
 				Auxiliary.ProcCancellable=cancel
 				if og and not min then
 					og:KeepAlive()

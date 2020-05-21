@@ -38,7 +38,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local sg=g:Select(tp,1,1,nil)
 			Synchro.Send=2
 			Duel.SynchroSummon(tp,sg:GetFirst(),nil,tg)
-			Synchro.Send=0
 		end
 	end
 end

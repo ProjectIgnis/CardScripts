@@ -42,6 +42,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		mat:AddCard(c)
 		Synchro.Send=2
 		Duel.SynchroSummon(tp,tc,nil,mat)
-		Synchro.Send=0
 	end
 end

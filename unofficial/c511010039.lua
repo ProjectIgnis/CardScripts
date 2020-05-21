@@ -55,7 +55,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local to=Duel.SelectMatchingCard(tp,s.ofilter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 	local toc=1
 	local toc=to:GetOverlayCount()
-	local atk=math.ceil(((tc:GetRank()-c:GetRank())*100)*toc)
+	local atk=abs.ceil(((tc:GetRank()-c:GetRank())*100)*toc)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)

@@ -1,4 +1,5 @@
 --竜星の極み
+--Yang Zing Unleashed
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -38,11 +39,7 @@ function s.mfilter2(c)
 	return c:IsHasEffect(EFFECT_HAND_SYNCHRO) and c:IsType(TYPE_MONSTER)
 end
 function s.cfilter(c,syn)
-	local b1=true
-	if c:IsHasEffect(EFFECT_HAND_SYNCHRO) then
-		b1=Duel.CheckTunerMaterial(syn,c,nil,s.mfilter,1,99)
-	end
-	return b1 and syn:IsSynchroSummonable(c)
+	return syn:IsSynchroSummonable(c)
 end
 function s.spfilter(c,mg)
 	return mg:IsExists(s.cfilter,1,nil,c)

@@ -64,12 +64,7 @@ end
 s.listed_names={95286165,10000010,511000987}
 --De-Fusion
 function s.dffilter(c)
-	if not c:IsCode(95286165) then return false end
-	local effs={c:GetCardEffect()}
-	for _,eff in ipairs(effs) do
-		if eff:GetLabel()==608286299 then return false end
-	end
-	return true
+	return c:IsCode(95286165) and not c:IsHasEffect(608286299)
 end
 function s.dfop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.dffilter,tp,0xff,0xff,nil)
@@ -80,10 +75,14 @@ function s.dfop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_ACTIVATE)
 		e1:SetCode(tc:GetActivateEffect():GetCode())
 		e1:SetProperty(tc:GetActivateEffect():GetProperty()|EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetLabel(608286299)
 		e1:SetTarget(s.tg)
 		e1:SetOperation(s.op)
 		tc:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(tc)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(608286299)
+		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		tc:RegisterEffect(e2)
 	end
 end
 function s.dffilter2(c)

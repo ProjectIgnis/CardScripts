@@ -1,3 +1,4 @@
+--プラズマイール
 --Plasma Eel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -84,13 +85,14 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(-500)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		e:SetLabelObject(e1)
 		e:SetLabel(2)
 	else
-		local pe=e:GetLabelObject()
 		local ct=e:GetLabel()
 		e:SetLabel(ct+1)
+		local pe=e:GetLabelObject()
+		if not pe then return end
 		pe:SetValue(ct*-500)
 	end
 end

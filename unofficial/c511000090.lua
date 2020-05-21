@@ -63,11 +63,8 @@ function s.getflag(g,p)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetTurnCounter()>0 and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 	local zone=Duel.SelectFieldZone(tp,1,0,LOCATION_MZONE,s.getflag(Duel.GetFieldGroup(tp,0,LOCATION_MZONE),1-tp))
 	Duel.SetTargetParam(math.log(zone,2)-16)
-	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,0,-e:GetHandler():GetTurnCounter()*500)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

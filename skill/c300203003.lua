@@ -27,7 +27,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		local e0=Effect.CreateEffect(e:GetHandler())
 		e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e0:SetCode(EVENT_SPSUMMON_SUCCESS)
-		e0:SetOperation(s.sumsuc)
+		e0:SetOperation(function () Duel.SetChainLimitTillChainEnd(aux.FALSE) end)
 		g2:GetFirst():RegisterEffect(e0)
 		Duel.SpecialSummon(g2,0,tp,tp,true,false,POS_FACEUP)
 		e0:Reset()
@@ -45,7 +45,4 @@ function s.dcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HalfBattleDamage(ep)
-end
-function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetChainLimitTillChainEnd(aux.FALSE)
 end

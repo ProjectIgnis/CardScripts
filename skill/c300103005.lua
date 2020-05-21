@@ -54,7 +54,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-		e2:SetOperation(s.sumsuc)
+		e2:SetOperation(function () Duel.SetChainLimitTillChainEnd(aux.FALSE) end)
 		g:GetFirst():RegisterEffect(e2)
 		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 		e2:Reset()
@@ -70,7 +70,4 @@ function s.costfilter2(c)
 end
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_DINOSAUR) and c:IsLevelAbove(7) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
-end
-function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetChainLimitTillChainEnd(aux.FALSE)
 end

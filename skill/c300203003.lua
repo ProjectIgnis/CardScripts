@@ -24,7 +24,13 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Release(g,REASON_COST)
 	local g2=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g2>0 then
+		local e0=Effect.CreateEffect(e:GetHandler())
+		e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		e0:SetCode(EVENT_SPSUMMON_SUCCESS)
+		e0:SetOperation(s.sumsuc)
+		g2:GetFirst():RegisterEffect(e0)
 		Duel.SpecialSummon(g2,0,tp,tp,true,false,POS_FACEUP)
+		e0:Reset()
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -39,4 +45,7 @@ function s.dcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HalfBattleDamage(ep)
+end
+function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.SetChainLimitTillChainEnd(aux.FALSE)
 end

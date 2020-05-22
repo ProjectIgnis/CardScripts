@@ -1,33 +1,37 @@
+--スター・エクスカージョン
 --Star Excursion
+--rescripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetCondition(s.rmcon)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local at=Duel.GetAttackTarget()
-	return at and a:IsType(TYPE_SYNCHRO) and at:IsType(TYPE_SYNCHRO)
+	local at=eg:GetFirst()
+	local a=at:GetBattleTarget()
+	return Duel.IsBattlePhase() and Duel.GetTurnPlayer()~=tp and at and at:IsType(TYPE_SYNCHRO)
+		and at:IsControler(tp) and a and a:IsType(TYPE_SYNCHRO) and a:IsControler(1-tp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local a=Duel.GetAttacker()
-	local at=Duel.GetAttackTarget()
-	if chk==0 then return at and a:IsAbleToRemove() and at:IsAbleToRemove() end
+	local at=eg:GetFirst()
+	local a=at:GetBattleTarget()
+	if chk==0 then return at and a and a:IsAbleToRemove() and at:IsAbleToRemove() end
 	local g=Group.FromCards(a,at)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,2,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local at=Duel.GetAttackTarget()
+	local at=eg:GetFirst()
+	local a=at:GetBattleTarget()
+	if not a or not at or not a:IsRelateToBattle() or not at:IsRelateToBattle() then return end
 	local g=Group.FromCards(a,at)
-	if Duel.Remove(g,0,REASON_EFFECT+REASON_TEMPORARY)~=0 and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if Duel.Remove(g,0,REASON_EFFECT)~=0 then
 		local og=Duel.GetOperatedGroup()
 		for oc in aux.Next(og) do
 			if oc:IsControler(tp) then
@@ -105,9 +109,10 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject():GetLabelObject()
 	local sg=g:Filter(s.retfilter,nil)
 	for tc in aux.Next(sg) do
-		Duel.ReturnToField(tc)
-		tc:SetStatus(STATUS_SUMMON_TURN+STATUS_FORM_CHANGED,false)
+		local sp=tc:GetPreviousControler()
+		Duel.SpecialSummonStep(tc,0,sp,sp,false,false,POS_FACEUP)
 	end
+	Duel.SpecialSummonComplete()
 	if re then re:Reset() end
 	g:DeleteGroup()
 	e:Reset()

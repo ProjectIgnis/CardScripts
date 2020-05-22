@@ -91,7 +91,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.atkfilter,nil)
 	if g then
 		for tc in aux.Next(g) do
-			Debug.Message(tc:GetAttack())
 			local e1=Effect.CreateEffect(e:GetOwner())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)

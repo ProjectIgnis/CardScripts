@@ -91,9 +91,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.atkfilter,nil)
 	if g then
 		for tc in aux.Next(g) do
+			Debug.Message(tc:GetAttack())
 			local e1=Effect.CreateEffect(e:GetOwner())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+			e1:SetRange(LOCATION_MZONE)
 			e1:SetCondition(s.acon)
 			e1:SetValue(s.aval)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)

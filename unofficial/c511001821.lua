@@ -1,4 +1,5 @@
---Necroid Synchro
+--ネクロイド・シンクロ (Manga)
+--Necroid Synchro (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro effect
@@ -29,14 +30,13 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		e1:SetOperation(s.regop)
-		tc:RegisterEffect(e1)
+		sc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetLabelObject(e1)
 		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_SPSUMMON_NEGATED)
 		e2:SetOperation(s.resetop)
 		Duel.RegisterEffect(e2,0)
-		
 		e1:SetLabelObject(e2)
 		Duel.SynchroSummon(tp,sc,nil,mg)
 	end

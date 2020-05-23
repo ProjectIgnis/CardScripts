@@ -6,7 +6,9 @@ function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	local eff=Fusion.AddProcMixN(c,true,true,s.ffilter,3)
-	eff[1]:SetValue(s.matfilter)
+	if not c:IsStatus(STATUS_COPYING_EFFECT) then
+		eff[1]:SetValue(s.matfilter)
+	end
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--remove
 	local e1=Effect.CreateEffect(c)

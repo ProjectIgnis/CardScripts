@@ -4,48 +4,17 @@ function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	--opt check
-	if Duel.GetFlagEffect(ep,id)>0 then return end
 	--condition
-	return aux.CanActivateSkill(tp) and (s.fustarget(e,tp,eg,ep,ev,re,r,rp,0) or s.RitualTarget(e,tp,eg,ep,ev,re,r,rp,0))
+	return aux.CanActivateSkill(tp) and (s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0) or s.ritTarget(e,tp,eg,ep,ev,re,r,rp,0))
 end
 s.listed_names={64631466,63519819}
-
-function s.cfilter(c,e,tp)
-	if not c:IsDiscardable() then return false end
-	local chkf=tp
-	local mg1=Duel.GetFusionMaterial(tp)
-	mg1:RemoveCard(c)
-	local res=Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,c,e,tp,mg1,nil,chkf,c)
-	if not res then
-		local ce=Duel.GetChainMaterial(tp)
-		if ce~=nil then
-			local fgroup=ce:GetTarget()
-			local mg2=fgroup(ce,e,tp)
-			mg2:RemoveCard(c)
-			local mf=ce:GetValue()
-			res=Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,c,e,tp,mg2,mf,chkf)
-		end
-	end
-	return res
-end
-function s.filter2(c,e,tp,m,f,chkf,card)
-	m:RemoveCard(card)
-	return c:IsType(TYPE_FUSION) and (not f or f(c)) and c:IsCode(63519819)
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
-end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-	
-	--opd register
-	Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,0)
-	
 	--ritual
-	local g1=s.RitualTarget(e,tp,eg,ep,ev,re,r,rp,0)	
+	local g1=s.ritTarget(e,tp,eg,ep,ev,re,r,rp,0)	
 	--fusion
-	local g2=s.fustarget(e,tp,eg,ep,ev,re,r,rp,0)
-
+	local g2=s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
 	local opt=0
 	if g1 and g2 then
 		opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
@@ -55,45 +24,36 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		opt=Duel.SelectOption(tp,aux.Stringid(id,2))+1
 	else return end
 	if opt==0 then
-		s.RitualTarget(e,tp,eg,ep,ev,re,r,rp,1)
+		s.ritTarget(e,tp,eg,ep,ev,re,r,rp,1)
 		local mg=Duel.GetRitualMaterial(tp)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tg=Duel.SelectMatchingCard(tp,s.Ritfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg,ft)
-		local tc=tg:GetFirst()
-		
+		local tc=Duel.SelectMatchingCard(tp,s.ritfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg,ft):GetFirst()
 		if tc then
 			mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)
-			if tc:IsCode(21105106) then
-				tc:ritual_custom_operation(mg)
-				local mat=tc:GetMaterial()
-				Duel.ReleaseRitualMaterial(mat)
+			local mat=nil
+			if ft>0 then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+				mat=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,tc:GetLevel(),tc)
 			else
-				local mat=nil
-				if ft>0 then
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-					mat=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,tc:GetLevel(),tc)
-				else
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-					mat=mg:FilterSelect(tp,s.mfilterf,1,1,nil,tp,mg,tc)
-					Duel.SetSelectedCard(mat)
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-					local mat2=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,tc:GetLevel(),tc)
-					mat:Merge(mat2)
-				end
-				tc:SetMaterial(mat)
-				Duel.ReleaseRitualMaterial(mat)
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+				mat=mg:FilterSelect(tp,s.mfilterf,1,1,nil,tp,mg,tc)
+				Duel.SetSelectedCard(mat)
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+				local mat2=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,tc:GetLevel(),tc)
+				mat:Merge(mat2)
 			end
+			tc:SetMaterial(mat)
+			Duel.ReleaseRitualMaterial(mat)
 			Duel.BreakEffect()
 			Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 			tc:CompleteProcedure()
 		end
 	else
-		s.fustarget(e,tp,eg,ep,ev,re,r,rp,1)
-		--fusion summoned
+		s.fusTarget(e,tp,eg,ep,ev,re,r,rp,1)
 		local chkf=tp
-		local mg1=Duel.GetFusionMaterial(tp):Filter(s.filter1,nil,e)
-		local sg1=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
+		local mg1=Duel.GetFusionMaterial(tp):Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
+		local sg1=Duel.GetMatchingGroup(s.fusfilter,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
 		local mg2=nil
 		local sg2=nil
 		local ce=Duel.GetChainMaterial(tp)
@@ -101,7 +61,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 			local fgroup=ce:GetTarget()
 			mg2=fgroup(ce,e,tp)
 			local mf=ce:GetValue()
-			sg2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
+			sg2=Duel.GetMatchingGroup(s.fusfilter,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
 		end
 		if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
 			local sg=sg1:Clone()
@@ -127,15 +87,14 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 end
 -- ritual
 function s.ritDiscardFilter(c,e,tp,m,ft)
-	  return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.Ritfilter,tp,LOCATION_HAND,0,1,c,e,tp,m-c,ft)
+	  return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.ritfilter,tp,LOCATION_HAND,0,1,c,e,tp,m-c,ft)
 end
 function s.ritual_filter(c)
-	return c:IsType(TYPE_RITUAL) and c:IsCode(64631466)
+	return c:IsRitualMonster() and c:IsCode(64631466)
 end
-function s.Ritfilter(c,e,tp,m,ft)
+function s.ritfilter(c,e,tp,m,ft)
 	if not s.ritual_filter(c) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m:Filter(Card.IsCanBeRitualMaterial,c,c)
-	if c:IsCode(21105106) then return c:ritual_custom_condition(mg,ft) end
 	if ft>0 then
 		return mg:CheckWithSumGreater(Card.GetRitualLevel,c:GetLevel(),c)
 	else
@@ -146,28 +105,40 @@ function s.mfilterf(c,tp,mg,rc)
 	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) then
 		Duel.SetSelectedCard(c)
 		return mg:CheckWithSumGreater(Card.GetRitualLevel,rc:GetLevel(),rc)
-		
-	else return false end
-end
-function s.RitualTarget(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local mg=Duel.GetRitualMaterial(tp)
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		return ft>-1 and Duel.IsExistingMatchingCard(s.ritDiscardFilter,tp,LOCATION_HAND,0,1,nil,e,tp,mg,ft)
+	else
+		return false
 	end
+end
+function s.ritTarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=Duel.GetRitualMaterial(tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chk==0 then return ft>-1 and Duel.IsExistingMatchingCard(s.ritDiscardFilter,tp,LOCATION_HAND,0,1,nil,e,tp,mg,ft) end
 	Duel.DiscardHand(tp,s.ritDiscardFilter,1,1,REASON_COST+REASON_DISCARD,nil,e,tp,mg,ft)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 --fusion
-function s.filter1(c,e)
-	return not c:IsImmuneToEffect(e)
+function s.cfilter(c,e,tp)
+	if not c:IsDiscardable() then return false end
+	local chkf=tp
+	local mg1=Duel.GetFusionMaterial(tp)
+	local res=Duel.IsExistingMatchingCard(s.fusfilter,tp,LOCATION_EXTRA,0,1,c,e,tp,mg1-c,nil,chkf)
+	if not res then
+		local ce=Duel.GetChainMaterial(tp)
+		if ce~=nil then
+			local fgroup=ce:GetTarget()
+			local mg2=fgroup(ce,e,tp)
+			local mf=ce:GetValue()
+			res=Duel.IsExistingMatchingCard(s.fusfilter,tp,LOCATION_EXTRA,0,1,c,e,tp,mg2-c,mf,chkf)
+		end
+	end
+	return res
 end
-function s.filter2(c,e,tp,m,f,chkf)
+function s.fusfilter(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and (not f or f(c)) and c:IsCode(63519819)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
-function s.fustarget(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.fusTarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,nil,e,tp)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end

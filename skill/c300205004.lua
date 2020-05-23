@@ -68,7 +68,7 @@ function s.lpop1(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(Duel.GetLP(p))
 	if e:GetLabelObject():GetLabel()<3 then
 		e:GetLabelObject():SetLabel(e:GetLabelObject():GetLabel()+1)
-		Debug.Message(e:GetLabelObject():GetLabel() .. "counter(s) on the Skill")
+		Debug.Message(e:GetLabelObject():GetLabel() .. " counter(s) on the Skill")
 	end 
 end
 function s.lpop2(e,tp,eg,ep,ev,re,r,rp)
@@ -85,7 +85,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)>0
 	--fusion
 	local g2=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0
-	return (e:GetLabelObject():GetLabel()>1 and  g1) or (e:GetLabelObject():GetLabel()>2 and  g2)
+	return Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp and ((e:GetLabelObject():GetLabel()>1 and  g1) or (e:GetLabelObject():GetLabel()>2 and g2))
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	--discard
@@ -103,14 +103,14 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	else return end
 	if opt==0 then
 		e:GetLabelObject():SetLabel(e:GetLabelObject():GetLabel()-2)
-		Debug.Message(e:GetLabelObject():GetLabel() .. "counter on the Skill")
+		Debug.Message(e:GetLabelObject():GetLabel() .. " counter(s) on the Skill")
 		local g=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0)
 		if #g==0 then return end
 		local sg=g:RandomSelect(1-tp,1)
 		Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
 	else 
 		e:GetLabelObject():SetLabel(e:GetLabelObject():GetLabel()-3)
-		Debug.Message(e:GetLabelObject():GetLabel() .. "counter on the Skill")
+		Debug.Message(e:GetLabelObject():GetLabel() .. " counter(s) on the Skill")
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 		if #g==0 then return end
 		local sg=g:Select(tp,1,1,nil)

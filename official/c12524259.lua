@@ -3,8 +3,9 @@
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip an union monster
+	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)

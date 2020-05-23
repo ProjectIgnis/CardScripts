@@ -1,7 +1,8 @@
 --カオス・コア
+--Chaos Core (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x93)
+	c:EnableCounterPermit(0x202)
 	--be target
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
@@ -35,21 +36,21 @@ function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g1=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,6007213)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,32491822)	
+	local g2=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,32491822)
 	g1:Merge(g2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g3=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,69890967)	
+	local g3=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,69890967)
 	g1:Merge(g3)
 	Duel.SendtoGrave(g1,REASON_COST)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanAddCounter(0x93,1) end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x93)
+	if chk==0 then return e:GetHandler():IsCanAddCounter(0x202,1) end
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x202)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		c:AddCounter(0x93,3)
+		c:AddCounter(0x202,3)
 	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
@@ -57,8 +58,8 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return at and at==e:GetHandler()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x93,1,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x93,1,REASON_COST)	
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x202,1,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,0x202,1,REASON_COST)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,4 +1,5 @@
 --BF－大旆のヴァーユ
+--Blackwing - Vayu the Emblem of Honor (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

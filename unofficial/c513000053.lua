@@ -44,14 +44,16 @@ function s.initial_effect(c)
 	e6:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TRAP))
 	c:RegisterEffect(e6)
 	--self destroy
---[[	local e7=Effect.CreateEffect(c)
+--[[
+	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_FIELD)
 	e7:SetCode(EFFECT_SELF_DESTROY)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e7:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	e7:SetTarget(s.distg)
-	c:RegisterEffect(e7)]]
+	c:RegisterEffect(e7)
+	]]
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

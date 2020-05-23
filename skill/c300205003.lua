@@ -11,7 +11,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(ep,id)>0 then return end
 	--condition
 	return aux.CanActivateSkill(tp) 
-	and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp) 
+	and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) 
 	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -23,7 +23,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 	
 	local c=e:GetHandler()
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
 	if #g>0 then 
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())

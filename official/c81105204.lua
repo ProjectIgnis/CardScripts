@@ -1,4 +1,5 @@
 --BF－残夜のクリス
+--Blackwing - Kris the Crack of Dawn
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

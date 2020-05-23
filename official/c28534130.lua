@@ -64,22 +64,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		e3:SetOperation(s.regop)
 		sc:RegisterEffect(e3)
-		local e4=Effect.CreateEffect(c)
-		e4:SetLabelObject(e3)
-		e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e4:SetCode(EVENT_SPSUMMON_NEGATED)
-		e4:SetOperation(s.resetop)
-		Duel.RegisterEffect(e4,0)
-		
-		e3:SetLabelObject(e4)
 		Duel.LinkSummon(tp,sc,tc,nil)
 	end
-end
-function s.resetop(e)
-	e:GetLabelObject():Reset()
-	e:Reset()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=e:GetOwner()
@@ -92,7 +81,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_TRIGGER)
 	c:RegisterEffect(e2)
-	e:GetLabelObject():Reset()
 	e:Reset()
 end
 function s.tdfilter(c)
@@ -107,7 +95,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then 
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
 	end
 end

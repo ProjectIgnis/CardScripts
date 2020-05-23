@@ -1,7 +1,6 @@
 --オーバーロード・アンカー (Anime)
 --Overload Anchor (Anime)
---scripted by Larry126
---cleaned up by MLD
+--scripted by Larry126, cleaned up by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

@@ -32,11 +32,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-
 s.listed_names={56840427}
-
 --equip
-
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsCode(56840427) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -45,7 +42,6 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsCode,56840427),tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
-
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
@@ -71,37 +67,28 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)
 end
-
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-
 --protecc
-
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipTarget()
 end
-
 function s.val(e,re)
 	return re:IsHasCategory(CATEGORY_DESTROY)
 end
-
 --desrep
-
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() and eg:IsExists(s.repfilter,1,nil,e)
-		       and not e:GetHandler():IsStatus(STATUS_DESTROY_CONFIRMED) end
+		and not e:GetHandler():IsStatus(STATUS_DESTROY_CONFIRMED) end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
-
 function s.repval(e,c)
 	return s.repfilter(c,e)
 end
-
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT+REASON_REPLACE)
 end
-
 function s.repfilter(c,e)
 	return c==e:GetHandler():GetEquipTarget() and not c:IsReason(REASON_REPLACE)
 end

@@ -1,4 +1,5 @@
 --王者の調和
+--King's Synchro (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

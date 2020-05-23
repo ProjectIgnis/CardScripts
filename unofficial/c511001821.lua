@@ -1,4 +1,5 @@
---Necroid Synchro
+--ネクロイド・シンクロ (Manga)
+--Necroid Synchro (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro effect
@@ -28,22 +29,11 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		e1:SetOperation(s.regop)
-		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetLabelObject(e1)
-		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_SPSUMMON_NEGATED)
-		e2:SetOperation(s.resetop)
-		Duel.RegisterEffect(e2,0)
-		
-		e1:SetLabelObject(e2)
+		sc:RegisterEffect(e1)
 		Duel.SynchroSummon(tp,sc,nil,mg)
 	end
-end
-function s.resetop(e)
-	e:GetLabelObject():Reset()
-	e:Reset()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=e:GetOwner()
@@ -58,6 +48,5 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2,true)
-	e:GetLabelObject():Reset()
 	e:Reset()
 end

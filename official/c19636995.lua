@@ -1,3 +1,4 @@
+--急き兎馬
 --Rapid Red Hared Mare
 --scripted by Edo9300
 local s,id=GetID()

@@ -1,4 +1,5 @@
 --俊足なカバ バリキテリウム
+--Dynatherium
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--spsummon
+	--special summon when summoned
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)

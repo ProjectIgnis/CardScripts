@@ -1,4 +1,5 @@
 --カイザー・シースネーク
+--Kaiser Sea Snake
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.hspcon)
 	c:RegisterEffect(e1)
-	--spsummon
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

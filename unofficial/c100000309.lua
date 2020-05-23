@@ -1,5 +1,6 @@
 --ワイゼルＡ５
 --Wisel Attack 5
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -27,11 +28,11 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(s.tg)
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsInfinity))
 	c:RegisterEffect(e3)
 	--negate
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(67098114,0))
+	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_CHAINING)
@@ -50,7 +51,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.dop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x3013}
+s.listed_series={0x562}
 s.listed_names={100000048}
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -72,10 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
-end
-function s.tg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x3013)
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsInfinity),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.GetAttacker() and Duel.GetAttacker():IsSetCard(0x3013)
@@ -95,8 +93,8 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetFirst():IsSetCard(0x3013)
+	return eg:GetFirst():IsInfinity()
 end
 function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(1-tp)*2)
+	Duel.DoubleBattleDamage(1-tp)
 end

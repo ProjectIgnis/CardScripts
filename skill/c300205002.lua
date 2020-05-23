@@ -8,14 +8,13 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.CanActivateSkill(tp)
 	and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil)
 end
-s.listed_names={15259703}
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	Duel.DiscardHand(tp,s.filter,1,1,REASON_COST+REASON_DISCARD)
 	local g1=Duel.IsPlayerCanDraw(tp,2)
 	
-	local g=Duel.GetMatchingGroup(s.cfilter,c:GetControler(),LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
 	local g2=(Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) and ct>3)
 
@@ -39,7 +38,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(2<<32))
 end
 function s.filter(c)
-	return c:IsType(TYPE_NORMAL) and c:IsLevelBelow(2) and c:IsDiscardable()
+	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_FIEND) and c:IsDiscardable()
 end
 function s.cfilter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FIEND)

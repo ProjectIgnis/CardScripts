@@ -15,13 +15,9 @@ end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-	--opd register
-	Duel.RegisterFlagEffect(ep,id,0,0,0)
-	
 	local c=e:GetHandler()
-	
 	if Duel.GetFlagEffect(tp,id+1)==0 then
-		--add counter
+		--Add counter
 		local lp1=Duel.GetLP(c:GetControler())
 		local lp2=Duel.GetLP(1-c:GetControler())
 		local e1=Effect.CreateEffect(c)
@@ -40,7 +36,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCondition(s.lpcon2)
 		e2:SetOperation(s.lpop2)
 		Duel.RegisterEffect(e2,tp)
-		--discard/Destruction
+		--Discard/Destroy
 		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_FREE_CHAIN)
@@ -49,67 +45,103 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCondition(s.con)
 		e3:SetOperation(s.op)
 		Duel.RegisterEffect(e3,tp)
+		--player hint for number of counters
+		local e4=Effect.CreateEffect(e:GetHandler())
+		e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+		e4:SetDescription(aux.Stringid(id,0))
+		e4:SetCode(id)
+		e4:SetTargetRange(1,0)
+		Duel.RegisterEffect(e4,tp)
 	end
 	Duel.RegisterFlagEffect(ep,id+1,0,0,0)
-	
 end
---Lose lp check
+--Lose LP check
 function s.lpcon1(e,tp,eg,ep,ev,re,r,rp)
 	local p=e:GetHandler():GetControler()
-	return (Duel.GetLP(p)~=e:GetLabel() and not Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil)) or Duel.GetLP(p)>e:GetLabel()
+	return Duel.GetLP(p)~=e:GetLabel()
 end
 function s.lpcon2(e,tp,eg,ep,ev,re,r,rp)
 	local p=e:GetHandler():GetControler()
-	return (Duel.GetLP(1-p)~=e:GetLabel() and not Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)) or Duel.GetLP(1-p)>e:GetLabel()
+	return Duel.GetLP(1-p)~=e:GetLabel()
 end
 function s.lpop1(e,tp,eg,ep,ev,re,r,rp)
 	local p=e:GetHandler():GetControler()
+	if Duel.GetLP(p)>e:GetLabel() then
+		e:SetLabel(Duel.GetLP(p))
+		return
+	end
 	e:SetLabel(Duel.GetLP(p))
 	if e:GetLabelObject():GetLabel()<3 then
 		e:GetLabelObject():SetLabel(e:GetLabelObject():GetLabel()+1)
-		Debug.Message(e:GetLabelObject():GetLabel() .. " counter(s) on the Skill")
+		local ce=Duel.IsPlayerAffectedByEffect(tp,id)
+		if ce then
+			local nce=ce:Clone()
+			ce:Reset()
+			nce:SetDescription(aux.Stringid(id,e:GetLabelObject():GetLabel()))
+			Duel.RegisterEffect(nce,tp)
+		end
 	end
 end
 function s.lpop2(e,tp,eg,ep,ev,re,r,rp)
 	local p=e:GetHandler():GetControler()
+	if Duel.GetLP(1-p)>e:GetLabel() then
+		e:SetLabel(Duel.GetLP(1-p))
+		return
+	end
 	e:SetLabel(Duel.GetLP(1-p))
 	if e:GetLabelObject():GetLabel()<3 then
 		e:GetLabelObject():SetLabel(e:GetLabelObject():GetLabel()+1)
-		Debug.Message(e:GetLabelObject():GetLabel() .. " counter(s) on the Skill")
+		local ce=Duel.IsPlayerAffectedByEffect(tp,id)
+		if ce then
+			local nce=ce:Clone()
+			ce:Reset()
+			nce:SetDescription(aux.Stringid(id,e:GetLabelObject():GetLabel()))
+			Duel.RegisterEffect(nce,tp)
+		end
 	end
 end
---
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	--
+	--discard
 	local g1=Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)>0
-	--fusion
+	--destroy
 	local g2=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0
 	return Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp and ((e:GetLabelObject():GetLabel()>1 and  g1) or (e:GetLabelObject():GetLabel()>2 and g2))
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	--discard
 	local g1=e:GetLabelObject():GetLabel()>1 and Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)>0
-	--destruction
+	--destroy
 	local g2=e:GetLabelObject():GetLabel()>2 and Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0
-
 	local opt=0
 	if g1 and g2 then
-		opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
+		opt=Duel.SelectOption(tp,aux.Stringid(id,4),aux.Stringid(id,5))
 	elseif g1 then
-		opt=Duel.SelectOption(tp,aux.Stringid(id,1))
+		opt=Duel.SelectOption(tp,aux.Stringid(id,4))
 	elseif g2 then
-		opt=Duel.SelectOption(tp,aux.Stringid(id,2))+1
+		opt=Duel.SelectOption(tp,aux.Stringid(id,5))+1
 	else return end
 	if opt==0 then
 		e:GetLabelObject():SetLabel(e:GetLabelObject():GetLabel()-2)
-		Debug.Message(e:GetLabelObject():GetLabel() .. " counter(s) on the Skill")
+		local ce=Duel.IsPlayerAffectedByEffect(tp,id)
+		if ce then
+			local nce=ce:Clone()
+			ce:Reset()
+			nce:SetDescription(aux.Stringid(id,e:GetLabelObject():GetLabel()))
+			Duel.RegisterEffect(nce,tp)
+		end
 		local g=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0)
 		if #g==0 then return end
 		local sg=g:RandomSelect(1-tp,1)
 		Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
 	else 
 		e:GetLabelObject():SetLabel(e:GetLabelObject():GetLabel()-3)
-		Debug.Message(e:GetLabelObject():GetLabel() .. " counter(s) on the Skill")
+		local ce=Duel.IsPlayerAffectedByEffect(tp,id)
+		if ce then
+			local nce=ce:Clone()
+			ce:Reset()
+			nce:SetDescription(aux.Stringid(id,e:GetLabelObject():GetLabel()))
+			Duel.RegisterEffect(nce,tp)
+		end
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 		if #g==0 then return end
 		local sg=g:Select(tp,1,1,nil)

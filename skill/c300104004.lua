@@ -1,7 +1,7 @@
 --Cocoon of Ultra Evolution (Skill Card)
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)	
+	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	local b1=(Duel.GetFlagEffect(ep,id)==0 and s.sumtg(e,tp,eg,ep,ev,re,r,rp,0))
@@ -11,8 +11,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 end
 --effect 1
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_INSECT) and c:IsReleasableByEffect()
-		and c:GetEquipCount()>0
+	return c:IsFaceup() and c:IsRace(RACE_INSECT) and c:IsReleasableByEffect() and c:GetEquipCount()>0
 end
 function s.sumfilter(c,e,tp)
 	return c:IsRace(RACE_INSECT) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
@@ -71,8 +70,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	elseif p==1 then
 		Duel.RegisterFlagEffect(ep,id+1,0,0,0)
 		local tc=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
-		if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)~=0 
-		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+		if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
 			if tc:IsLocation(LOCATION_DECK) then Duel.ShuffleDeck(tc:GetControler()) end
 			Duel.BreakEffect()
 			Duel.Draw(tp,1,REASON_EFFECT)
@@ -97,10 +95,8 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 				e1:Reset()
 			end
 		end
-		
 		local tc=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
-		if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)~=0 
-		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+		if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
 			if tc:IsLocation(LOCATION_DECK) then Duel.ShuffleDeck(tc:GetControler()) end
 			Duel.BreakEffect()
 			Duel.Draw(tp,1,REASON_EFFECT)

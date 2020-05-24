@@ -12,7 +12,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	--ritual
-	local g1=s.ritTarget(e,tp,eg,ep,ev,re,r,rp,0)	
+	local g1=s.ritTarget(e,tp,eg,ep,ev,re,r,rp,0)
 	--fusion
 	local g2=s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
 	local opt=0
@@ -85,7 +85,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(2<<32))
 end
--- ritual
+--ritual
 function s.ritDiscardFilter(c,e,tp,m,ft)
 	  return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.ritfilter,tp,LOCATION_HAND,0,1,c,e,tp,m-c,ft)
 end

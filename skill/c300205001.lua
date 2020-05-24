@@ -7,9 +7,8 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
 	if Duel.GetFlagEffect(ep,id)>0 then return end
 	--condition
-	return aux.CanActivateSkill(tp) 
-	and Duel.IsExistingMatchingCard(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil,e,tp) 
-	and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return aux.CanActivateSkill(tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil,e,tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
@@ -21,7 +20,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	
 	local c=e:GetHandler()
 	local g=Duel.SelectMatchingCard(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
-	if #g>0 then 
+	if #g>0 then
 		local tc=g:GetFirst()
 		Duel.GetControl(tc,tp)
 		local e1=Effect.CreateEffect(e:GetHandler())

@@ -31,7 +31,6 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
 	if Duel.GetFlagEffect(ep,id)>0 then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.ffilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,tp)
-
 	--condition
 	return aux.CanActivateSkill(tp) 
 	and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -75,7 +74,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-	-- opt register
+	--opt register
 	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,0)
 	
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -88,6 +87,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(function () Duel.SetChainLimitTillChainEnd(aux.FALSE) end)
 		g:GetFirst():RegisterEffect(e1)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		e1:Reset()	
+		e1:Reset()
 	end
 end

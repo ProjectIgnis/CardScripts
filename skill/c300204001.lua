@@ -44,7 +44,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetOperation(s.drop)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3,tp)
-	
 	--MOBC
 	local e4=Effect.CreateEffect(e:GetHandler())
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -74,7 +73,6 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
-
 function s.afilter(c,tp)
 	return c:IsControler(tp) and c:IsCode(30208479)
 end
@@ -83,7 +81,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToHand() 
+	return c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)

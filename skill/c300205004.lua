@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,2,false,nil,nil)
-	local e1=Effect.CreateEffect(c)	
+	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_STARTUP)
@@ -21,35 +21,34 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	
 	if Duel.GetFlagEffect(tp,id+1)==0 then
-		
 		--add counter
 		local lp1=Duel.GetLP(c:GetControler())
 		local lp2=Duel.GetLP(1-c:GetControler())
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_ADJUST)
+		e1:SetLabel(lp1)
+		e1:SetLabelObject(e)
+		e1:SetCondition(s.lpcon1)
+		e1:SetOperation(s.lpop1)
+		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_ADJUST)
-		e2:SetLabel(lp1)
+		e2:SetLabel(lp2)
 		e2:SetLabelObject(e)
-		e2:SetCondition(s.lpcon1)
-		e2:SetOperation(s.lpop1)
+		e2:SetCondition(s.lpcon2)
+		e2:SetOperation(s.lpop2)
 		Duel.RegisterEffect(e2,tp)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetCode(EVENT_ADJUST)
-		e3:SetLabel(lp2)
-		e3:SetLabelObject(e)
-		e3:SetCondition(s.lpcon2)
-		e3:SetOperation(s.lpop2)
-		Duel.RegisterEffect(e3,tp)
 		--discard/Destruction
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_FREE_CHAIN)
-		e1:SetCountLimit(1)
-		e1:SetLabelObject(e)
-		e1:SetCondition(s.con)
-		e1:SetOperation(s.op)
-		Duel.RegisterEffect(e1,tp)
+		local e3=Effect.CreateEffect(e:GetHandler())
+		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e3:SetCode(EVENT_FREE_CHAIN)
+		e3:SetCountLimit(1)
+		e3:SetLabelObject(e)
+		e3:SetCondition(s.con)
+		e3:SetOperation(s.op)
+		Duel.RegisterEffect(e3,tp)
 	end
 	Duel.RegisterFlagEffect(ep,id+1,0,0,0)
 	
@@ -69,7 +68,7 @@ function s.lpop1(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabelObject():GetLabel()<3 then
 		e:GetLabelObject():SetLabel(e:GetLabelObject():GetLabel()+1)
 		Debug.Message(e:GetLabelObject():GetLabel() .. " counter(s) on the Skill")
-	end 
+	end
 end
 function s.lpop2(e,tp,eg,ep,ev,re,r,rp)
 	local p=e:GetHandler():GetControler()
@@ -77,7 +76,7 @@ function s.lpop2(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabelObject():GetLabel()<3 then
 		e:GetLabelObject():SetLabel(e:GetLabelObject():GetLabel()+1)
 		Debug.Message(e:GetLabelObject():GetLabel() .. " counter(s) on the Skill")
-	end 
+	end
 end
 --
 function s.con(e,tp,eg,ep,ev,re,r,rp)

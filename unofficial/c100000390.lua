@@ -14,9 +14,9 @@ function s.filter(c,p)
 end
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(s.filter,tp),tp,LOCATION_GRAVE,0,nil)
+		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(s.filter),tp,LOCATION_GRAVE,0,nil,tp)
 	else
-		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(s.filter,tp),tp,LOCATION_ONFIELD,0,nil)
+		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(s.filter),tp,LOCATION_ONFIELD,0,nil,tp)
 	end
 	return nil
 end

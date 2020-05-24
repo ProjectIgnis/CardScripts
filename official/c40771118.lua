@@ -62,7 +62,7 @@ function s.smfilter(c)
 	return c:IsCode(table.unpack(CARDS_SPIRIT_MESSAGE)) and not c:IsForbidden()
 end
 function s.plcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
+	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and not e:GetHandler():IsStatus(STATUS_CHAINING) end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)

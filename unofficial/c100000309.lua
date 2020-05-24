@@ -70,7 +70,7 @@ function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsInfinity),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.GetAttacker() and Duel.GetAttacker():IsSetCard(0x3013)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.GetAttacker() and Duel.GetAttacker():IsInfinity()
 		and ep==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) and Duel.IsChainNegatable(ev)
 		and Duel.GetTurnPlayer()==tp
 end

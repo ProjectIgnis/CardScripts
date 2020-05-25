@@ -1,6 +1,6 @@
+--マジシャンズ・クロス (Anime)
 --Magicians Unite (Anime)
---マジシャンズ・クロス
---edited by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -61,7 +61,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetCardTarget():IsContains(e:GetLabelObject())
+	return e:GetLabelObject() and #e:GetHandler():GetCardTarget()>0 and e:GetHandler():GetCardTarget():IsContains(e:GetLabelObject())
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

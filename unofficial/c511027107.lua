@@ -97,7 +97,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		e1:SetValue(a:GetAttack())
 		d:RegisterEffect(e1)
-end
+	end
 end
 --special summon
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

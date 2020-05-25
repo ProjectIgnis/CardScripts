@@ -42,7 +42,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		og:KeepAlive()
 		local c=e:GetHandler()
-		local res=Duel.GetTurnPlayer()~=tp and 4 or 3
+		local res=Duel.GetTurnPlayer()==1-tp and 4 or 3
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)

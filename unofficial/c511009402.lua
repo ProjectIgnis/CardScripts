@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--atkup
+	--ATK increase
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -35,11 +35,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_MZONE,0,1,1,nil,Duel.GetLocationCount(tp,LOCATION_MZONE),tp)
 	Duel.SendtoHand(g,nil,REASON_COST)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(73734821)
-end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) 
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,73734821),tp,LOCATION_MZONE,0,1,nil)
 		and e:GetHandler():GetBattleTarget()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

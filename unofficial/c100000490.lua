@@ -34,7 +34,7 @@ function s.xyzfilter(c,mg,sc,set)
 	return res
 end
 function s.rescon(set)
-	return  function(sg,e,tp,mg)
+	return function(sg,e,tp,mg)
 				return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,sg,e:GetHandler(),set)
 			end
 end

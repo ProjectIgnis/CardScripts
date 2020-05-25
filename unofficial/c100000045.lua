@@ -83,6 +83,6 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_SET_ATTACK)
 		e2:SetValue(tc:GetAttack()/2)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e2)	   
+		tc:RegisterEffect(e2)
 	end
 end

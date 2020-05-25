@@ -79,9 +79,9 @@ end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	local bc=tc:GetBattleTarget()
-		local dam=bc:GetAttack()
-		if dam<0 then dam=0 end
-		Duel.Damage(1-tp,dam,REASON_EFFECT)
+	local dam=bc:GetAttack()
+	if dam<0 then dam=0 end
+	Duel.Damage(1-tp,dam,REASON_EFFECT)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

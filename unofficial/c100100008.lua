@@ -22,9 +22,9 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	if chk==0 then return tc and tc:IsCanRemoveCounter(tp,0x91,2,REASON_COST) end	
+	if chk==0 then return tc and tc:IsCanRemoveCounter(tp,0x91,2,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	tc:RemoveCounter(tp,0x91,2,REASON_COST) 
+	tc:RemoveCounter(tp,0x91,2,REASON_COST)
 end
 function s.fcheck(tp,sg,fc)
 	return sg:IsExists(aux.FilterBoolFunction(Card.IsType,TYPE_SYNCHRO,fc,SUMMON_TYPE_FUSION,tp),1,nil)
@@ -37,7 +37,7 @@ function s.fextra(e,tp,mg)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (r&0x41)==0x41 and rp~=tp and c:IsPreviousControler(tp)
+	return (r&(REASON_EFFECT+REASON_DESTROY))==(REASON_EFFECT+REASON_DESTROY) and rp==1-tp and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

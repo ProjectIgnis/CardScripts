@@ -1,4 +1,5 @@
 --No.39 希望皇ホープ・ルーツ (Anime)
+--Number 39: Utopia Roots (Anime)
 Duel.LoadCardScript("84124261.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,11 +18,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 	--battle indestructable
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e6:SetValue(s.indes)
-	c:RegisterEffect(e6)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e2:SetValue(s.indes)
+	c:RegisterEffect(e2)
 end
 s.xyz_number=39
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

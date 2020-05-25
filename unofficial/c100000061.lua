@@ -47,7 +47,7 @@ s.listed_series={0x3013}
 s.listed_names={100000067}
 function s.con(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetReasonEffect() 
+	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetReasonEffect()
 		and c:GetReasonEffect():GetHandler():IsCode(100000067)
 end
 function s.val(e,c)
@@ -57,7 +57,7 @@ function s.effval(e,re)
 	return re:GetHandlerPlayer()~=e:GetHandlerPlayer()
 end
 function s.eqlfilter(c)
-	return c:GetFlagEffect(id)~=0 
+	return c:GetFlagEffect(id)~=0
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetEquipGroup():Filter(s.eqlfilter,nil)

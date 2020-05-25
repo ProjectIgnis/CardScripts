@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.lvcon)
 	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

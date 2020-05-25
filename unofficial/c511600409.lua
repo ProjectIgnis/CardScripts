@@ -48,7 +48,7 @@ function s.effval(e,re)
 	return re:GetHandlerPlayer()~=e:GetHandlerPlayer()
 end
 function s.eqlfilter(c)
-	return c:GetFlagEffect(id)~=0 
+	return c:GetFlagEffect(id)~=0
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetEquipGroup():Filter(s.eqlfilter,nil)

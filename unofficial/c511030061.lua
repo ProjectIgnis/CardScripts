@@ -61,7 +61,7 @@ end
 function s.mvfilter(c,tp)
 	return c:IsSetCard(0x57a) and c:IsLinkMonster() and c:IsLink(1) and c:IsInMainMZone(tp)
 end
-function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc~=e:GetHandler() and s.mvfilter(chkc,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.mvfilter,tp,LOCATION_MZONE,0,1,e:GetHandler(),tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)

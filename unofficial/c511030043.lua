@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x57a}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsSetCard(0x57a,fc,sumtype,tp) and c:IsLink(1)
 end

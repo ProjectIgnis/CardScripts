@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(s.colinkcon)
+	e2:SetCondition(s.atkcon)
 	e2:SetValue(1000)
 	c:RegisterEffect(e2)
 	--move
@@ -50,11 +50,14 @@ function s.lkcon(e)
 	local c=e:GetHandler()
 	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
 end
+function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsLinked()
+end
 function s.colinkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.mvcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() and e:GetHandler():GetMutualLinkedGroupCount()>0
+	return Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() and s.colinkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.mvfilter(c,tp)
 	return c:IsSetCard(0x244) and c:IsLinkMonster() and c:IsLink(1) and c:IsInMainMZone(tp)

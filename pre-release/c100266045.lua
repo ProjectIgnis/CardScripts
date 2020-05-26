@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_SZONE)
+	e3:SetCountLimit(1)
 	e3:SetTarget(s.mvtg)
 	e3:SetOperation(s.mvop)
 	c:RegisterEffect(e3)
@@ -69,6 +70,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	if tc then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,tc)
 	end
 end
 s.mvfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x244)

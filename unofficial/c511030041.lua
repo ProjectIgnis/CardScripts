@@ -45,9 +45,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x57a}
+s.listed_series={0x244}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x57a,fc,sumtype,tp) and c:IsLevel(1)
+	return c:IsSetCard(0x244,fc,sumtype,tp) and c:IsLevel(1)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()

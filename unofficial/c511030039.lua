@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,c:Alias()+100)
+	e2:SetCountLimit(1,c:Alias()+1)
 	e2:SetCondition(s.spcon2)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -34,11 +34,14 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,id),tp,LOCATION_MZONE,0,1,nil)
 end
+function s.filter(c,p)
+	return c:IsCode(id) and c:IsControler(p)
+end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return not eg:IsContains(e:GetHandler()) and eg:IsExists(aux.FilterFaceupFunction(Card.IsCode,id),1,nil,tp)
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.filter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(id) and c:IsControler(tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

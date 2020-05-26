@@ -50,7 +50,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 	local tc=e:GetLabelObject()
-	if tc and tc:IsRelateToBattle() and tc:IsFaceup() then 
+	if tc and tc:IsRelateToBattle() and tc:IsFaceup() then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

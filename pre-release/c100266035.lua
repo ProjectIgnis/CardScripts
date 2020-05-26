@@ -30,11 +30,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x244}
 s.listed_names={id}
-function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x244)
-end
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x244),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

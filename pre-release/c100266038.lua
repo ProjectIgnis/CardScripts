@@ -58,26 +58,22 @@ function s.imcon(e)
 	return e:GetHandler():IsLinked()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local b=Duel.GetAttackTarget()
+	local a,b=Duel.GetAttacker(),Duel.GetAttackTarget()
 	if not (a and b) then return false end
 	if a:IsControler(1-tp) then
-		a=Duel.GetAttackTarget()
-		b=Duel.GetAttacker()
+		a,b=b,a
 	end
 	local mg=a:GetMutualLinkedGroup()
 	local octg=e:GetHandler():GetMutualLinkedGroup()
-	return a and a:IsControler(tp) and a:IsLinkMonster() and a:IsSetCard(0x244) 
+	return a and a:IsControler(tp) and a:IsLinkMonster() and a:IsSetCard(0x244)
 		and a~=e:GetHandler() and b and b:IsControler(1-tp)
 		and mg:IsContains(e:GetHandler()) and octg:IsContains(a)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local atkct=#e:GetHandler():GetMutualLinkedGroup():Filter(Card.IsType,nil,TYPE_MONSTER)
-	local a=Duel.GetAttacker()
-	local b=Duel.GetAttackTarget()
-	if a:IsControler(1-tp) then 
-		a=Duel.GetAttackTarget()
-		b=Duel.GetAttacker()
+	local a,b=Duel.GetAttacker(),Duel.GetAttackTarget()
+	if a:IsControler(1-tp) then
+		a,b=b,a
 	end
 	if a and a:IsRelateToBattle() and a:IsFaceup() and a:IsControler(tp) and atkct>0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -91,9 +87,7 @@ end
 function s.checkfilter(c,e,tp)
 	local mg=c:GetMutualLinkedGroup()
 	local octg=e:GetHandler():GetMutualLinkedGroup()
-	return c:IsSetCard(0x244) and c:IsLinkMonster() 
-		and c:IsControler(tp) and c:IsReason(REASON_DESTROY)
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsSetCard(0x244) and c:IsLinkMonster() and c:IsControler(tp) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and not (mg:IsContains(e:GetHandler()) and octg:IsContains(c))
 end
 function s.checkcon(e,tp,eg,ep,ev,re,r,rp)

@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
 	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ft2=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	if e:GetHandler():IsLocation(LOCATION_SZONE) then ft2=ft2-1 end
+	if not e:GetHandler():IsLocation(LOCATION_SZONE) then ft2=ft2-1 end
 	if chk==0 then return ft1>0 and ft2>0 and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	e:SetLabel(g:GetFirst():GetLevel())

@@ -3,10 +3,10 @@
 --Anime version scripted by pyrQ, updated by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x244),1)
-	--cannot link material
+	--cannot be Link Material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.lkcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--atkup
+	--increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.atkcon)
 	e2:SetValue(1000)
 	c:RegisterEffect(e2)
-	--move
+	--Switch locations
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_QUICK_O)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.mvtg)
 	e3:SetOperation(s.mvop)
 	c:RegisterEffect(e3)
-	--negate attack
+	--Negate attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -57,10 +57,11 @@ function s.colinkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.mvcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() and s.colinkcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() and e:GetHandler():IsInMainMZone(tp)
+		and s.colinkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.mvfilter(c,tp)
-	return c:IsSetCard(0x244) and c:IsLinkMonster() and c:IsLink(1) and c:IsInMainMZone(tp)
+	return c:IsSetCard(0x244) and c:IsInMainMZone(tp)
 end
 function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.mvfilter,tp,LOCATION_MZONE,0,1,e:GetHandler(),tp) end

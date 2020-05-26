@@ -63,11 +63,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
-function s.rmfilter(c)
+function s.rmfilter(c,e)
 	return c:GetFlagEffectLabel(id)==e:GetLabel()
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE,0,nil,e)
 	if #g>0 then Duel.Remove(g,POS_FACEUP,REASON_EFFECT) end
 end
 function s.zone_count(z)

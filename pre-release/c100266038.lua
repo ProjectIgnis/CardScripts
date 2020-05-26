@@ -72,7 +72,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 		and mg:IsContains(e:GetHandler()) and octg:IsContains(a)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local atkct=e:GetHandler():GetMutualLinkedGroupCount()
+	local atkct=#e:GetHandler():GetMutualLinkedGroup():Filter(Card.IsType,nil,TYPE_MONSTER)
 	local a=Duel.GetAttacker()
 	local b=Duel.GetAttackTarget()
 	if a:IsControler(1-tp) then 

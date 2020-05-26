@@ -48,7 +48,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.spfilter(c,e,tp,colinked)
-	return c:IsSetCard(0x244) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(0x244) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and not c:IsCode(id)
 		and ((c:IsType(TYPE_LINK) and colinked) or (c:IsLevelBelow(4) and not colinked))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

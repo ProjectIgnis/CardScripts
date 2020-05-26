@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x244}
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL) and not c:IsType(TYPE_FIELD) and c:IsSetCard(0x244) and c:IsAbleToHand()
+	return not c:IsType(TYPE_FIELD) and c:IsSetCard(0x244) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

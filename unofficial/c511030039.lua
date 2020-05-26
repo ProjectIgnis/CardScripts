@@ -1,26 +1,27 @@
 --電幻機塊コンセントロール (Anime)
 --Appliancer Socketroll (Anime)
---scripted by pyrQ
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon from the hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,c:Alias())
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
 	--Special Summon from the Deck
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+1)
+	e2:SetCountLimit(1,c:Alias()+100)
 	e2:SetCondition(s.spcon2)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -37,7 +38,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(aux.FilterFaceupFunction(Card.IsCode,id),1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsCode(id) and c:IsControler(tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

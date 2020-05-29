@@ -101,8 +101,8 @@ function s.matfilter(c)
 	return c:IsSetCard(0x48) and c:IsType(TYPE_MONSTER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local mg1=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_GRAVE,0,nil,100266026)
-	local mg2=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE,0,nil)
+	local mg1=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,100266026)
+	local mg2=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg1:IsExists(s.filterchk1,1,nil,mg2,Group.CreateGroup(),tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
@@ -110,23 +110,26 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	local matg=Group.CreateGroup()
-	local mg1=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_GRAVE,0,nil,100266026)
-	local mg2=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE,0,nil)
+	local mg1=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,100266026)
+	local mg2=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local sg1=mg1:FilterSelect(tp,s.filterchk1,1,1,nil,mg2,matg,tp)
 	local tc1=sg1:GetFirst()
+	local reset={}
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_TYPE)
 	e1:SetValue(TYPE_MONSTER)
-	e1:SetReset(RESET_CHAIN)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	tc1:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_XYZ_LEVEL)
 	e2:SetValue(12)
-	e2:SetReset(RESET_CHAIN)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	tc1:RegisterEffect(e2)
+	table.insert(reset,e1)
+	table.insert(reset,e2)
 	matg:AddCard(tc1)
 	mg2:RemoveCard(tc1)
 	for i=1,4 do
@@ -137,10 +140,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_XYZ_LEVEL)
 		e2:SetValue(12)
-		e2:SetReset(RESET_CHAIN)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc2:RegisterEffect(e2)
 		matg:AddCard(tc2)
 		mg2:RemoveCard(tc2)
+		table.insert(reset,e2)
 	end
 	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,matg)
 	if #xyzg>0 then
@@ -149,5 +153,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 		Duel.XyzSummon(tp,xyz,nil,matg)
+	else
+		for _,eff in ipairs(reset) do
+			eff:Reset()
+		end
 	end
 end

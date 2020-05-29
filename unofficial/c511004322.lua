@@ -135,7 +135,7 @@ function s.activeoperation(e,tp,eg,ep,ev,re,r,rp)
 	local hand2=Duel.GetMatchingGroup(Card.GetControler,tp,0,LOCATION_HAND,nil)
 	Duel.SendtoDeck(hand2,1-tp,0,REASON_RULE)
 	--if duel is using obsolete ruling change the draw count to 0 to avoid player from draw the first card.
-	if Duel.IsDuelType(DUEL_OBSOLETE_RULING) then
+	if Duel.IsDuelType(DUEL_1ST_TURN_DRAW) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetType(EFFECT_TYPE_FIELD)

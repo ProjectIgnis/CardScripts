@@ -23,7 +23,7 @@ function s.cfilter(c,e,tp,ft)
 	local lv=c:GetLevel()
 	return c:IsFaceup() and lv>0 and c:IsSetCard(0x2b)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5))
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,lv+3,e,tp)
+		and Duel.IsExistingMatchingCard(aux.GoatDeckSearch(s.filter),tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,lv+3,e,tp)
 end
 function s.filter(c,lv,e,tp)
 	return c:IsLevelBelow(lv) and c:IsRace(RACE_BEAST+RACE_WINGEDBEAST+RACE_INSECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

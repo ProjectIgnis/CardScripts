@@ -59,7 +59,7 @@ function s.filter(c)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.GoatDeckSearch(s.filter),tp,LOCATION_DECK,0,1,nil) end
 	local dt=Duel.GetDrawCount(tp)
 	if dt~=0 then
 		_replace_count=0

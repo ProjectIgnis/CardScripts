@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsAttackBelow(500) and c:IsRace(RACE_MACHINE)
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c:GetCode(),e,tp)
+		and Duel.IsExistingMatchingCard(aux.GoatDeckSearch(s.filter2),tp,LOCATION_DECK,0,1,nil,c:GetCode(),e,tp)
 end
 function s.filter2(c,code,e,tp)
 	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

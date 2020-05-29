@@ -19,7 +19,7 @@ function s.attfilter(c,att)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and not c:IsAttribute(att)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rvfilter,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.SelectMatchingCard(tp,s.rvfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()

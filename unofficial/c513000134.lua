@@ -6,17 +6,8 @@ Duel.LoadScript("c421.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Summon With 3 Tributes
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-	e1:SetCondition(s.sumoncon)
-	e1:SetOperation(s.sumonop)
-	e1:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_LIMIT_SET_PROC)
-	c:RegisterEffect(e2)
+	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3)
+	local e2=aux.AddNormalSetProcedure(c,true,false,3,3)
 	--Unstoppable Attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -73,12 +64,7 @@ end
 s.listed_names={95286165,10000010,511000987}
 --De-Fusion
 function s.dffilter(c)
-	if not c:IsCode(95286165) then return false end
-	local effs={c:GetCardEffect()}
-	for _,eff in ipairs(effs) do
-		if eff:GetLabel()==608286299 then return false end
-	end
-	return true
+	return c:IsCode(95286165) and not c:IsHasEffect(608286299)
 end
 function s.dfop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.dffilter,tp,0xff,0xff,nil)
@@ -89,10 +75,14 @@ function s.dfop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_ACTIVATE)
 		e1:SetCode(tc:GetActivateEffect():GetCode())
 		e1:SetProperty(tc:GetActivateEffect():GetProperty()|EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetLabel(608286299)
 		e1:SetTarget(s.tg)
 		e1:SetOperation(s.op)
 		tc:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(tc)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(608286299)
+		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		tc:RegisterEffect(e2)
 	end
 end
 function s.dffilter2(c)
@@ -139,17 +129,6 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 -------------------------------------------
---Summon With 3 Tributes
-function s.sumoncon(e,c)
-	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-3 and Duel.GetTributeCount(c)>=3
-end
-function s.sumonop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectTribute(tp,c,3,3)
-	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
-end
--------------------------------------------
 --Resurrection
 function s.egpcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_GRAVE)
@@ -194,7 +173,7 @@ function s.payatkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCondition(s.dfcon)
 		e1:SetValue(c:GetBaseAttack()+lp)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_BASE_DEFENSE)
@@ -284,7 +263,7 @@ function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(ev)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -300,7 +279,7 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(lp-1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -329,13 +308,13 @@ function s.tatkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(e:GetLabel())
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	e2:SetValue(e:GetLabelObject():GetLabel())
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)
 end
 function s.uncon(e,tp,eg,ep,ev,re,r,rp)
@@ -478,7 +457,7 @@ function s.valcheck(e,c)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE&~RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_BASE_DEFENSE)

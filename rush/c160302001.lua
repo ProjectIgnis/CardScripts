@@ -24,9 +24,9 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return con end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	-- requirement
+	--requirement
 	Duel.DiscardDeck(tp,1,REASON_COST)
-	-- effect
+	--effect
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,0,0)

@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--indes
 	local e2=Effect.CreateEffect(c)
@@ -22,18 +21,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xfb}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.tg(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
-	if chk==0 then return true end
-	if s.tg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e:SetOperation(s.op)
-		s.tg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
-end
 function s.filter(c,ec)
 	return c:IsLinkMonster() and c:IsFaceup() and c:IsSetCard(0xfb)
 		and (c:GetLinkedGroup():IsExists(Card.IsAbleToGraveAsCost,1,nil) or ec:IsAbleToGraveAsCost())

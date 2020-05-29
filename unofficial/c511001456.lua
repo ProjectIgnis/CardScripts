@@ -61,6 +61,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if target and target(e,tp,eg,ep,ev,re,r,rp,0) then target(e,tp,eg,ep,ev,re,r,rp,1) end
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local te=e:GetLabelObject()
 	if not te then return end
 	local op=te:GetOperation()

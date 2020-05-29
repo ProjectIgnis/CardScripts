@@ -51,7 +51,13 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 then
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+		e2:SetOperation(function () Duel.SetChainLimitTillChainEnd(aux.FALSE) end)
+		g:GetFirst():RegisterEffect(e2)
 		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
+		e2:Reset()
 	end
 end
 function s.costfilter1(c)

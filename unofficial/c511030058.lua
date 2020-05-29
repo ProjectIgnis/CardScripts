@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.dmgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x57a}
+s.listed_series={0x244}
 function s.confilter(c)
-	return c:IsSetCard(0x57a) and c:IsType(TYPE_LINK) and c:IsFaceup()
+	return c:IsSetCard(0x244) and c:IsType(TYPE_LINK) and c:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil)

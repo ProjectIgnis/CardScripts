@@ -1,6 +1,6 @@
---乾燥機塊ドライドレイク
---Appliancer Dryer Drake
---scripted by pyrQ
+--乾燥機塊ドライドレイク (Anime)
+--Appliancer Dryer Drake (Anime)
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -44,9 +44,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atknegop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x57a}
+s.listed_series={0x244}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x57a,fc,sumtype,tp) and c:IsLink(1)
+	return c:IsSetCard(0x244,fc,sumtype,tp) and c:IsLink(1)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()
@@ -59,12 +59,12 @@ function s.mvcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() and e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.mvfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x57a) and c:IsType(TYPE_LINK) and c:IsLink(1) and c:IsInMainMZone(tp)
+	return c:IsSetCard(0x244) and c:IsLinkMonster() and c:IsLink(1) and c:IsInMainMZone(tp)
 end
-function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc~=e:GetHandler() and s.mvfilter(chkc,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.mvfilter,tp,LOCATION_MZONE,0,1,e:GetHandler(),tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.mvfilter,tp,LOCATION_MZONE,0,1,1,e:GetHandler(),tp)
 end
 function s.mvop(e,tp,eg,ep,ev,re,r,rp)

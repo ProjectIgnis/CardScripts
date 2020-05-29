@@ -155,7 +155,7 @@ function Link.Target(f,minc,maxc,specialchk)
 					local cg=(mg+tg):Filter(Link.CheckRecursive,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt,filters)
 					if #cg==0 then break end
 					finish=#sg>=min and #sg<=max and Link.CheckGoal(tp,sg,c,min,f,specialchk,filters)
-					cancel=not og and Duel.GetCurrentChain()<=0 and #sg==0
+					cancel=not og and Duel.IsSummonCancelable() and #sg==0
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
 					local tc=Group.SelectUnselect(cg,sg,tp,finish,cancel,1,1)
 					if not tc then break end

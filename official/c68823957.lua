@@ -68,16 +68,14 @@ function s.cecon(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabelObject(tc)
 	return tc:IsLocation(LOCATION_MZONE) and tc:IsFacedown()
 end
-function s.cefilter(c,re,rp,tf,ceg,cep,cev,cre,cr,crp,oc)
-	return oc~=c and tf(re,rp,ceg,cep,cev,cre,cr,crp,0,c)
+function s.cefilter(c,ct,oc)
+	return oc~=c and Duel.CheckChainTarget(ct,c)
 end
 function s.cetg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local tf=re:GetTarget()
-	local res,ceg,cep,cev,cre,cr,crp=Duel.CheckEvent(re:GetCode(),true)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.cefilter(chkc,re,rp,tf,ceg,cep,cev,cre,cr,crp) end
-	if chk==0 then return Duel.IsExistingTarget(s.cefilter,tp,LOCATION_MZONE,0,1,e:GetLabelObject(),re,rp,tf,ceg,cep,cev,cre,cr,crp,e:GetHandler()) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.cefilter(chkc,ev,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingTarget(s.cefilter,tp,LOCATION_MZONE,0,1,e:GetLabelObject(),ev,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.cefilter,tp,LOCATION_MZONE,0,1,1,e:GetLabelObject(),re,rp,tf,ceg,cep,cev,cre,cr,crp,e:GetHandler())
+	Duel.SelectTarget(tp,s.cefilter,tp,LOCATION_MZONE,0,1,1,e:GetLabelObject(),ev,e:GetHandler())
 end
 function s.ceop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

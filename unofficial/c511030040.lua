@@ -44,10 +44,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x57a,fc,sumtype,tp) and c:IsLevel(1)
+	return c:IsSetCard(0x244,fc,sumtype,tp) and c:IsLevel(1)
 end
 --function s.matcheck(g,lc,tp)
---	return g:IsExists(Card.IsSetCard,1,nil,0x57a,lc,SUMMON_TYPE_LINK,tp)
+--	return g:IsExists(Card.IsSetCard,1,nil,0x244,lc,SUMMON_TYPE_LINK,tp)
 --end
 function s.lkcon(e)
 	local c=e:GetHandler()

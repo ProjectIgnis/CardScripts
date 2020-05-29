@@ -105,7 +105,7 @@ function s.retfilter(c,e,tp)
 	return c:IsLinkMonster() and c:IsAbleToExtra() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x578) and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,e:GetHandler():GetLinkedZone())
+	return c:IsSetCard(0x578) and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,e:GetHandler():GetLinkedZone())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=e:GetHandler():GetLinkedZone()

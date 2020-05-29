@@ -26,6 +26,10 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		sg2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
 	end
 	if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+		e1:SetOperation(function () Duel.SetChainLimitTillChainEnd(aux.FALSE) end)
 		local sg=sg1:Clone()
 		if sg2 then sg:Merge(sg2) end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -36,6 +40,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 			tc:SetMaterial(mat1)
 			Duel.SendtoGrave(mat1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 			Duel.BreakEffect()
+			tc:RegisterEffect(e1)
 			Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
 		else
 			local mat2=Duel.SelectFusionMaterial(tp,tc,mg2,nil,chkf)
@@ -43,6 +48,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 			fop(ce,e,tp,tc,mat2)
 		end
 		tc:CompleteProcedure()
+		e1:Reset()
 	end
 end
 function s.filter1(c,e)

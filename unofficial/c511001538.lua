@@ -23,6 +23,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ex
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)

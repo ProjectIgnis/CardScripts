@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
-	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetTargetRange(0xff,0xff)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,48068379))
 	e1:SetValue(s.lklimit)
@@ -73,4 +73,3 @@ end
 function s.valcheck(e,c)
 	e:GetLabelObject():SetLabel(c:GetMaterial():GetFirst():GetLink())
 end
-

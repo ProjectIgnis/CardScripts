@@ -3,14 +3,17 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_ACTIVATE)
-	e0:SetCode(EVENT_FREE_CHAIN)
-	c:RegisterEffect(e0)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e1:SetTarget(s.target)
+	c:RegisterEffect(e1)
 	--no damage & spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_BATTLED)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCondition(s.damcon)
@@ -36,6 +39,20 @@ function s.initial_effect(c)
 	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
 end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_BATTLED,true)
+	if res and s.damcon(e,tp,teg,tep,tev,tre,tr,trp) and s.damtg(e,tp,teg,tep,tev,tre,tr,trp,0) then
+		e:SetOperation(s.damop)
+		s.damtg(e,tp,teg,tep,tev,tre,tr,trp,1)
+		e:SetCategory(CATEGORY_DAMAGE)
+		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_PLAYER_TARGET)
+	else
+		e:SetOperation(nil)
+		e:SetCategory(0)
+		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	end
+end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
@@ -60,7 +77,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 or not e:GetHandler():IsRelateToEffect(e) then return end
 	local sg=g:GetMaxGroup(Card.GetLink)
 	if #sg>1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		sg=sg:Select(tp,1,1,nil)
 	end
 	local tc=sg:GetFirst()

@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_LEAVE_FIELD)
 	e4:SetCondition(s.ctcon2)
-	e4:SetLabelObject(e0)
+	e4:SetLabelObject(e3)
 	e4:SetOperation(s.ctop2)
 	c:RegisterEffect(e4)
 end

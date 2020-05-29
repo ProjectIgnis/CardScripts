@@ -61,16 +61,30 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=tg:Select(tp,1,1,nil)
 		local sc=sg:GetFirst()
-		Duel.LinkSummon(tp,sc,tc,nil)
 		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetCode(EFFECT_CANNOT_ATTACK)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e3:SetOperation(s.regop)
 		sc:RegisterEffect(e3)
-		local e4=e3:Clone()
-		e4:SetCode(EFFECT_CANNOT_TRIGGER)
-		sc:RegisterEffect(e4)
+		Duel.LinkSummon(tp,sc,tc,nil)
 	end
+end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local rc=e:GetOwner()
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(rc)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_CANNOT_ATTACK)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_CANNOT_TRIGGER)
+	c:RegisterEffect(e2)
+	e:Reset()
+end
+function s.tdfilter(c)
+	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK) and c:IsAbleToExtra()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end
@@ -81,7 +95,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then 
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
 	end
 end

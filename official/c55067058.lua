@@ -1,4 +1,5 @@
 --No.19 フリーザードン
+--Number 19: Freezadon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -22,11 +23,5 @@ function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 		and ep==e:GetOwnerPlayer() and re:GetHandler():GetOverlayCount()>=ev-1
 end
 function s.rop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=(ev&0xffff)
-	if ct==1 then
-		e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)
-	else
-		e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)
-		re:GetHandler():RemoveOverlayCard(tp,ct-1,ct-1,REASON_COST)
-	end
+	return e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT) 
 end

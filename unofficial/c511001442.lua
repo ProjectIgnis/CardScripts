@@ -1,3 +1,4 @@
+--精神汚染
 --Spirit Contamination
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,6 +12,17 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+	--
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_PREDRAW)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCondition(s.thcon)
+	e2:SetTarget(s.thtg)
+	e2:SetOperation(s.thop)
+	c:RegisterEffect(e2)
 	aux.GlobalCheck(s,function()
 		s[0]=false
 		s[1]=false
@@ -44,21 +56,47 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp)
 	s[1]=false
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return s[tp]
-end
-function s.filter(c)
-	return c:IsDestructable() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return s[tp] and Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc:IsControler(1-tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chkc then return chkc:IsOnField() and chkc:IsType(TYPE_SPELL+TYPE_TRAP) and chkc:IsControler(1-tp) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsType,tp,0,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,Card.IsType,tp,0,LOCATION_ONFIELD,1,1,nil,TYPE_SPELL+TYPE_TRAP)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
+	end
+end
+function s.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
+		and Duel.GetDrawCount(tp)>0
+end
+function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsAbleToHand() end
+	local dt=Duel.GetDrawCount(tp)
+	if dt~=0 then
+		_replace_count=0
+		_replace_max=dt
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetCode(EFFECT_DRAW_COUNT)
+		e1:SetTargetRange(1,0)
+		e1:SetReset(RESET_PHASE+PHASE_DRAW)
+		e1:SetValue(0)
+		Duel.RegisterEffect(e1,tp)
+	end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
+end
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	_replace_count=_replace_count+1
+	if _replace_count<=_replace_max and c:IsRelateToEffect(e) then
+		Duel.SendtoHand(c,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,c)
 	end
 end

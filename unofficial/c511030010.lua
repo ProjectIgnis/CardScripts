@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.indtg(e,c)
-	return c:IsLinkMonster() and c:IsSetCard(0x578) and c:IsFaceup() and c:IsControler(e:GetHandler():GetControler())
+	return c:IsLinkMonster() and c:IsSetCard(0x578) and c:IsControler(e:GetHandler():GetControler())
 		and (e:GetHandler():GetLinkedGroup():IsContains(c) or c:GetLinkedGroup():IsContains(e:GetHandler()))
 end
 function s.indval1(e,re,r,rp)
@@ -41,7 +41,7 @@ function s.indval2(e,re,r,rp)
 	else return 0 end
 end
 function s.atkfilter(c,e)
-	return c:IsLinkMonster() and c:IsSetCard(0x578) and c:IsFaceup() and c:IsControler(e:GetHandler():GetControler())
+	return c:IsLinkMonster() and c:IsSetCard(0x578) and c:IsControler(e:GetHandler():GetControler())
 		and (e:GetHandler():GetLinkedGroup():IsContains(c) or c:GetLinkedGroup():IsContains(e:GetHandler()))
 end
 function s.atkcon(e)

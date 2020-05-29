@@ -1,6 +1,6 @@
---洗濯機塊ランドリードラゴン
---Appliancer Laundry Dragon
---scripted by pyrQ
+--洗濯機塊ランドリードラゴン (Anime)
+--Appliancer Laundry Dragon (Anime)
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -33,8 +33,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x244}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x57a,fc,sumtype,tp) and c:IsLink(1)
+	return c:IsSetCard(0x244,fc,sumtype,tp) and c:IsLink(1)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()

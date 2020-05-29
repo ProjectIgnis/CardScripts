@@ -23,8 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10b}
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
+	local a,d=Duel.GetAttacker(),Duel.GetAttackTarget()
 	return a:IsControler(tp) and a:GetSequence()<5 and a:IsFaceup() and a:IsSetCard(0x10b)
 		or d and d:IsControler(tp) and d:GetSequence()<5 and d:IsFaceup() and d:IsSetCard(0x10b)
 end
@@ -37,6 +36,6 @@ function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.ChangeBattleDamage(tp,0)
 end
- 

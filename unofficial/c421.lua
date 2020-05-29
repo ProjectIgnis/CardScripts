@@ -1,5 +1,5 @@
 --Divine Hierarchy Token
---scripted by Larry126
+--Scripted by Larry126
 if not DivineHierarchy then
 	DivineHierarchy = {}
 	local function finish_setup()
@@ -148,13 +148,10 @@ if not DivineHierarchy then
 		local owner=false
 		local effs={c:GetCardEffect()}
 		for _,eff in ipairs(effs) do
-			owner=(eff:GetOwner()~=c and not eff:GetOwner():IsCode(0)
-				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+			local check=(eff:GetOwner()~=c and not eff:GetOwner():IsCode(0)
+				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE) and eff:GetCode()~=EFFECT_SPSUMMON_PROC
 				and (eff:GetTarget()==aux.PersistentTargetFilter or not eff:IsHasType(EFFECT_TYPE_GRANT+EFFECT_TYPE_FIELD)))
-				and (eff:GetOwner()~=c and not eff:GetOwner():IsCode(0)
-				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-				and (eff:GetTarget()==aux.PersistentTargetFilter or not eff:IsHasType(EFFECT_TYPE_GRANT+EFFECT_TYPE_FIELD)))
-				or owner
+			owner=check or owner
 		end
 		return c:GetFlagEffect(513000065)>0 and (owner or c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetPreviousLocation()~=0)
 	end
@@ -163,7 +160,7 @@ if not DivineHierarchy then
 		local effs={c:GetCardEffect()}
 		for _,eff in ipairs(effs) do
 			if eff:GetOwner()~=c and not eff:GetOwner():IsCode(0)
-				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE) and eff:GetCode()~=EFFECT_SPSUMMON_PROC
 				and (eff:GetTarget()==aux.PersistentTargetFilter or not eff:IsHasType(EFFECT_TYPE_GRANT+EFFECT_TYPE_FIELD)) then
 				eff:Reset()
 			end

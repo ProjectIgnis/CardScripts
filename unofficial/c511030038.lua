@@ -1,6 +1,6 @@
 --ハイドライブ・プロテクション
 --Hydradrive Protection
---scripted by pyrQ
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -40,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if #tg<1 then return end
+	if #tg<2 then return end
 	local tc1=tg:GetFirst()
 	tc1:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	local tc2=tg:GetNext()

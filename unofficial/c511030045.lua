@@ -1,6 +1,6 @@
---機塊テスト
---Appliancer Test
---scripted by pyrQ
+--機塊テスト (Anime)
+--Appliancer Test (Anime)
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -9,19 +9,19 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,c:Alias(),EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x57a}
+s.listed_series={0x244}
 function s.filter(c,e,tp)
-	return c:GetSequence()>4 and c:IsSetCard(0x57a) and c:IsLinkMonster()
+	return c:GetSequence()>4 and c:IsSetCard(0x244) and c:IsLinkMonster()
 		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,fc)
 	local zone=fc:GetToBeLinkedZone(c,tp,true)
-	return c:IsSetCard(0x57a) and c:IsLinkMonster() and c:IsLink(1)
+	return c:IsSetCard(0x244) and c:IsLinkMonster() and c:IsLink(1)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -20,9 +20,7 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	local c=e:GetHandler()
 	if tc==c or tc:GetControler()~=tp or tc:IsFacedown() or not tc:IsLocation(LOCATION_MZONE) or not tc:IsSetCard(0x3d) then return false end
-	local tf=re:GetTarget()
-	local res,ceg,cep,cev,cre,cr,crp=Duel.CheckEvent(re:GetCode(),true)
-	return tf(re,rp,ceg,cep,cev,cre,cr,crp,0,c)
+	return Duel.CheckChainTarget(ev,c)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

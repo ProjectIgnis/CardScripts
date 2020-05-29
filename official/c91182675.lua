@@ -47,7 +47,7 @@ s.counter_place_list={COUNTER_SPELL}
 s.listed_series={0x10d}
 s.listed_names={55424270}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_PZONE,0) == 1
+	return Duel.GetFieldGroupCount(tp,LOCATION_PZONE,0)==1
 end
 function s.ctfilter(c)
 	return c:IsFaceup() and c:IsCanAddCounter(COUNTER_SPELL,1)
@@ -57,7 +57,7 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc~=c and s.ctfilter(chkc) end
 	if chk==0 then return e:GetHandler():IsDestructable()
 		and Duel.IsExistingTarget(s.ctfilter,tp,LOCATION_ONFIELD,0,1,c) end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.ctfilter,tp,LOCATION_ONFIELD,0,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,COUNTER_SPELL)
@@ -65,9 +65,7 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) 
-		and Duel.Destroy(c,REASON_EFFECT)~=0
-		and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)~=0 and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		tc:AddCounter(COUNTER_SPELL,1)
 	end
 end
@@ -98,4 +96,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

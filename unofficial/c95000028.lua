@@ -1,3 +1,4 @@
+--ドン・サウザンド／罠Ｂ
 --Don Thousand/Trap B
 --Numeron Spell Revision
 local s,id=GetID()
@@ -75,7 +76,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 				if op then op(te,1-tp,eg,ep,ev,re,r,rp) end
 				tc:ReleaseEffectRelation(te)
-				if etc then	
+				if etc then 
 					etc=g:GetFirst()
 					while etc do
 						etc:ReleaseEffectRelation(te)

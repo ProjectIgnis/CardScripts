@@ -17,11 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xe5}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLP(tp)>Duel.GetLP(1-tp) then
-		return Duel.GetLP(tp)-Duel.GetLP(1-tp)>=2000
-	else
-		return Duel.GetLP(1-tp)-Duel.GetLP(tp)>=2000
-	end
+	return math.abs(Duel.GetLP(tp)-Duel.GetLP(1-tp))>=2000
 end
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()
@@ -31,7 +27,7 @@ function s.filter1(c,e,tp)
 end
 function s.filter2(c,e,tp,mc,rk,pg)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
-	return c:IsType(TYPE_XYZ) and mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsRank(rk) and c:IsSetCard(0xe5) and mc:IsCanBeXyzMaterial(c,tp) 
+	return c:IsType(TYPE_XYZ) and mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsRank(rk) and c:IsSetCard(0xe5) and mc:IsCanBeXyzMaterial(c,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and (#pg<=0 or pg:IsContains(mc)) 
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
@@ -67,15 +63,18 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		for _,teh in ipairs(eff) do
 			local temp=teh:GetLabelObject()
 			if temp:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then temp=temp:GetLabelObject() end
-			local con=temp:GetCondition()
-			local cost=temp:GetCost()
-			local tg=temp:GetTarget()
-			if (not con or con(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE))
-				and (not cost or cost(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0))
-				and (not tg or tg(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0)) then
+			local te=temp:Clone()
+			sc:RegisterEffect(te,true)
+			local con=te:GetCondition()
+			local cost=te:GetCost()
+			local tg=te:GetTarget()
+			if (not con or con(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE))
+				and (not cost or cost(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0))
+				and (not tg or tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0)) then
 				table.insert(ac,teh)
-				table.insert(acd,temp:GetDescription())
+				table.insert(acd,te:GetDescription())
 			end
+			te:Reset()
 		end
 		if #ac<=0 or not Duel.SelectEffectYesNo(tp,sc) then return end
 		Duel.BreakEffect()
@@ -87,8 +86,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if not te then return end
 		local teh=te
-		te=teh:GetLabelObject()
-		if te:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then te=te:GetLabelObject() end
+		local temp=teh:GetLabelObject()
+		if temp:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then temp=temp:GetLabelObject() end
+		te=temp:Clone()
+		sc:RegisterEffect(te,true)
 		local cost=te:GetCost()
 		if cost then cost(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		local tg=te:GetTarget()
@@ -97,15 +98,20 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		sc:CreateEffectRelation(te)
 		Duel.BreakEffect()
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-		for etc in aux.Next(g) do
-			etc:CreateEffectRelation(te)
+		if g and #g>0 then
+			for etc in aux.Next(g) do
+				etc:CreateEffectRelation(te)
+			end
 		end
 		local op=te:GetOperation()
 		if op then op(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		sc:ReleaseEffectRelation(te)
 		tc:ReleaseEffectRelation(te)
-		for etc in aux.Next(g) do
-			etc:ReleaseEffectRelation(te)
+		if g and #g>0 then
+			for etc in aux.Next(g) do
+				etc:ReleaseEffectRelation(te)
+			end
 		end
+		te:Reset()
 	end
 end

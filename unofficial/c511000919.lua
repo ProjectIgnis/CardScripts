@@ -1,3 +1,4 @@
+--月輪鏡
 --Full Moon Mirror
 local s,id=GetID()
 function s.initial_effect(c)
@@ -47,7 +48,7 @@ function s.accost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.filter(c,tp)
-	return c:IsCode(100000080) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsCode(100000080) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,tp) end

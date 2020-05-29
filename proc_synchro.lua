@@ -21,6 +21,7 @@ function Synchro.NonTunerCode(...)
 				return target:IsNotTuner(scard,tp) and target:IsSummonCode(scard,sumtype,tp,table.unpack(params))
 			end
 end
+Synchro.CheckAdditional=nil
 --Synchro monster, m-n tuners + m-n monsters
 function Synchro.AddProcedure(c,...)
 	--parameters (f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
@@ -507,7 +508,8 @@ function Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp)
 			end
 		end
 	end
-	return (lvchk or sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc))
+	return (not Synchro.CheckAdditional or Synchro.CheckAdditional(tp,sg,sc))
+	and (lvchk or sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc))
 	and ((sc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0)
 		or (not sc:IsLocation(LOCATION_EXTRA) and Duel.GetMZoneCount(tp,sg,tp)>0))
 end
@@ -567,7 +569,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 						local cancel=false
 						local finish=false
 						if tune then
-							cancel=not mgchk and Duel.GetCurrentChain()<=0 and #tsg==0
+							cancel=not mgchk and Duel.IsSummonCancelable() and #tsg==0
 							local g3=ntg:Filter(Synchro.CheckP32,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,c,tp,pg,mgchk,min,max)
 							g2=g:Filter(Synchro.CheckP31,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk,min,max)
 							if #g3>0 and #tsg>=min1 and tsg:IsExists(Synchro.TunerFilter,#tsg,nil,f1,sub1,c,tp) and (not req1 or req1(tsg,c,tp)) then
@@ -613,7 +615,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 								and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp)) then
 									finish=true
 							end
-							cancel = (not mgchk and Duel.GetCurrentChain()<=0) and #sg==0
+							cancel = (not mgchk and Duel.IsSummonCancelable()) and #sg==0
 							g2=g:Filter(Synchro.CheckP32,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,c,tp,pg,mgchk,min,max)
 							if #g2==0 then break end
 							local g3=g:Filter(Synchro.CheckP31,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk,min,max)
@@ -661,7 +663,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 						local cancel=false
 						local finish=false
 						if tune then
-							cancel=not mgchk and Duel.GetCurrentChain()<=0 and #tsg==0
+							cancel=not mgchk and Duel.IsSummonCancelable() and #tsg==0
 							local g3=ntg:Filter(Synchro.CheckP42,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,c,tp,pg,mgchk,min,max)
 							g2=tg:Filter(Synchro.CheckP41,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk,min,max)
 							if #g3>0 and #tsg>=min1 and (not req1 or req1(tsg,c,tp)) then
@@ -697,7 +699,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 								and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp) then
 								finish=true
 							end
-							cancel=not mgchk and Duel.GetCurrentChain()<=0 and #sg==0
+							cancel=not mgchk and Duel.IsSummonCancelable() and #sg==0
 							g2=ntg:Filter(Synchro.CheckP42,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,c,tp,pg,mgchk,min,max)
 							if #g2==0 then break end
 							local g3=tg:Filter(Synchro.CheckP41,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk,min,max)
@@ -775,6 +777,7 @@ function Synchro.Operation(e,tp,eg,ep,ev,re,r,rp,c,smat,mg)
 		Duel.SendtoGrave(g,REASON_MATERIAL+REASON_SYNCHRO)
 	end
 	Synchro.Send=0
+	Synchro.CheckAdditional=nil
 	g:DeleteGroup()
 end
 
@@ -926,7 +929,8 @@ function Synchro.MajesticCheck2(sg,card1,card2,card3,lv,sc,tp,f1,cbt1,f2,cbt2,f3
 			end
 		end
 	end
-	if not lvchk and not sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc) then return false end
+	if (not lvchk and not sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc))
+		or (Synchro.CheckAdditional and not Synchro.CheckAdditional(tp,sg,sc)) then return false end
 	if sc:IsLocation(LOCATION_EXTRA) then
 		return Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0
 	else
@@ -1024,7 +1028,7 @@ function Synchro.MajesticTarget(f1,cbt1,f2,cbt2,f3,cbt3,...)
 				local card1=nil
 				local card2=nil
 				local card3=nil
-				local cancel=not mgchk and Duel.GetCurrentChain()<=0
+				local cancel=not mgchk and Duel.IsSummonCancelable()
 				while #sg<3 do
 					local g2=g:Filter(Synchro.MajesticCheck1,sg,g,sg,card1,card2,card3,lv,c,tp,pg,f1,cbt1,f2,cbt2,f3,cbt3,table.unpack(t))
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
@@ -1216,6 +1220,7 @@ function Synchro.DarkCheck2(sg,card1,card2,plv,nlv,sc,tp,f1,f2,...)
 			end
 		end
 	end
+	if Synchro.CheckAdditional and not Synchro.CheckAdditional(tp,sg,sc) then return false end
 	if sc:IsLocation(LOCATION_EXTRA) then
 		if Duel.GetLocationCountFromEx(tp,tp,sg,sc)<=0 then return false end
 	else
@@ -1354,7 +1359,7 @@ function Synchro.DarkTarget(f1,f2,plv,nlv,...)
 				local lv=c:GetLevel()
 				local card1=nil
 				local card2=nil
-				local cancel=not mgchk and Duel.GetCurrentChain()<=0
+				local cancel=not mgchk and Duel.IsSummonCancelable()
 				while #sg<2 do
 					local g2=g:Filter(Synchro.DarkCheck1,sg,g,sg,card1,card2,plv,nlv,c,tp,pg,f1,f2,table.unpack(t))
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)

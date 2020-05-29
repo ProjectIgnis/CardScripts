@@ -82,7 +82,7 @@ function s.reop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(s.setfilter,nil)
 	if #sg>0 then
 		Duel.SSet(tp,sg)
-		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
+		Duel.RaiseEvent(sg,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
 	end
 	g=g:Filter(Card.IsFacedown,nil)
 	local filter=s.getflag(g,tp)

@@ -19,7 +19,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -38,7 +37,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HalfBattleDamage(ep)

@@ -1,3 +1,4 @@
+--ダーク・サンクチュアリ
 --Dark Sanctuary
 local s,id=GetID()
 function s.initial_effect(c)

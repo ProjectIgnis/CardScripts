@@ -302,14 +302,9 @@ if not AnimeArchetype then
 	}
 	Card.IsForest=MakeCheck({0x51f},AnimeArchetype.OCGForest)
 
-	-- Fossil (not finished)
-	-- 化石
-	-- かせき
-	-- Release from Stone/Fossil Dig/Fossil Excavation
-	AnimeArchetype.OCGFossil={
-
-	}
-	Card.IsFossil=MakeCheck({0x512},AnimeArchetype.OCGFossil)
+	-- Gaia the Dragon Champion
+	-- Gaia the Dragon Champion/Sky Galloping Gaia the Dragon Champion
+	Card.IsGaiatheDragonChampion=MakeCheck({0x521},{66889139,2519690})
 
 	-- Gem-Knight Lady ジェムナイトレディ
 	-- Gem-Knight Lady Brilliant Diamond/Gem-Knight Lady Lapis Lazuli
@@ -928,8 +923,8 @@ if not AnimeArchetype then
 	-- V
 	-- ブイ
 
-	-- Number C39: Utopia Ray V/V Salamander/V－LAN Hydra/V-LAN Token
-	Card.Is_V_=MakeCheck({0x155a},{33725002,66970002,13536606,13536607})
+	-- Number C39: Utopia Ray V/V Salamander/V－LAN Hydra/V-LAN Token/Vain Betrayer
+	Card.Is_V_=MakeCheck({0x155a},{33725002,66970002,13536606,13536607,94933468})
 
 	--W
 	-- Arcana Force XXI - The World/VW-Tiger Catapult/VWXYZ-Dragon Catapult Cannon

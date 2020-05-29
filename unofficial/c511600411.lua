@@ -1,4 +1,5 @@
---Wisel Top (Anime)
+--スキエルＡ (TF5)
+--Skiel Attack (TF5)
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,9 +12,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.sdcon)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsInfinity()
-end
+s.listed_series={0x562}
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsInfinity),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end

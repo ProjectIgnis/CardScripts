@@ -1,4 +1,5 @@
 --天使の手鏡
+--Fairy's Hand Mirror
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -20,16 +21,14 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabelObject(tc)
 	return tc:IsLocation(LOCATION_MZONE)
 end
-function s.filter(c,re,rp,tf,ceg,cep,cev,cre,cr,crp)
-	return tf(re,rp,ceg,cep,cev,cre,cr,crp,0,c)
+function s.filter(c,ct)
+	return Duel.CheckChainTarget(ct,c)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local tf=re:GetTarget()
-	local res,ceg,cep,cev,cre,cr,crp=Duel.CheckEvent(re:GetCode(),true)
-	if chkc then return chkc~=e:GetLabelObject() and chkc:IsLocation(LOCATION_MZONE) and tf(re,rp,ceg,cep,cev,cre,cr,crp,0,chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetLabelObject(),re,rp,tf,ceg,cep,cev,cre,cr,crp) end
+	if chkc then return chkc~=e:GetLabelObject() and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,ev) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetLabelObject(),ev) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetLabelObject(),re,rp,tf,ceg,cep,cev,cre,cr,crp)
+	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetLabelObject(),ev)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)

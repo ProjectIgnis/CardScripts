@@ -1,4 +1,5 @@
 --エクシーズ・ユニット
+--Xyz Unit
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsType,TYPE_XYZ))
@@ -26,11 +27,5 @@ function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 		and ep==e:GetOwnerPlayer() and e:GetHandler():GetEquipTarget()==re:GetHandler() and re:GetHandler():GetOverlayCount()>=ev-1
 end
 function s.rop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=(ev&0xffff)
-	if ct==1 then
-		Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-	else
-		Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-		re:GetHandler():RemoveOverlayCard(tp,ct-1,ct-1,REASON_COST)
-	end
+	return Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end

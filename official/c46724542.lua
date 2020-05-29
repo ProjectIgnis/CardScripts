@@ -29,8 +29,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)	
 end
-function s.lcheck(g,lc,tp)
-	return g:IsExists(Card.IsSummonCode,1,nil,lc,SUMMON_TYPE_LINK,tp,CARD_CYBER_DRAGON)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsSummonCode,1,nil,lc,sumtype,tp,CARD_CYBER_DRAGON)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) and e:GetHandler():GetAttackAnnouncedCount()<1

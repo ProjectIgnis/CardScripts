@@ -32,8 +32,8 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={0x1130}
-function s.lcheck(g,lc,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x1130,lc,SUMMON_TYPE_LINK,tp)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,0x1130,lc,sumtype,tp)
 end
 function s.linkcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp and Duel.IsMainPhase()

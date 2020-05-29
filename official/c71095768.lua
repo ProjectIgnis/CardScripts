@@ -59,8 +59,8 @@ end
 function s.mfilter(c)
 	return c:HasLevel() and not c:IsLevel(0)
 end
-function s.matcheck(g,lc,tp)
-	return g:GetClassCount(Card.GetLevel,lc,SUMMON_TYPE_LINK,tp)==1
+function s.matcheck(g,lc,sumtype,tp)
+	return g:GetClassCount(Card.GetLevel)==1
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

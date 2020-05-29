@@ -1,5 +1,6 @@
--- Dark Spell Regeneration
--- scripted by: UnknownGuest
+--暗黒の魔再生 (Anime)
+--Dark Spell Regeneration (Anime)
+--scripted by: UnknownGuest
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Activate
@@ -21,7 +22,7 @@ function s.filter(c,e,tp)
 	if pre[1] then
 		for i,eff in ipairs(pre) do
 			local prev=eff:GetValue()
-			if type(prev)~='function' or prev(eff,te,tp) then return false end
+			if type(prev)~='function' or prev(eff,e,tp) then return false end
 		end
 	end
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)

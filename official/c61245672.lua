@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_names={}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:GetClassCount(Card.GetAttribute,lc,sumtype,tp)==#g
+	return g:CheckDifferentPropertyBinary(Card.GetAttribute,lc,sumtype,tp)
 end
 function s.atkval(e,c)
 	return c:GetLinkedGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER)*500

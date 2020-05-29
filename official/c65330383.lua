@@ -28,8 +28,8 @@ function s.initial_effect(c)
 	e2:SetValue(s.aclimit)
 	c:RegisterEffect(e2)
 end
-function s.lcheck(g,lc)
-	return g:GetClassCount(Card.GetCode)==#g
+function s.lcheck(g,lc,sumtype,tp)
+	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

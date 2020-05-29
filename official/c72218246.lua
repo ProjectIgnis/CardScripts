@@ -1,5 +1,5 @@
 --クロスローズ・ドラゴン
---Cross Rose Dragon
+--Crossrose Dragon
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x123,0x1123}
 function s.spcheck(g,lc,sumtype,tp)
-	return g:GetClassCount(Card.GetRace,lc,sumtype,tp)>1
+	return g:CheckDifferentPropertyBinary(Card.GetRace,lc,sumtype,tp)
 end
 function s.mzfilter(c)
 	return c:IsRace(RACE_PLANT)

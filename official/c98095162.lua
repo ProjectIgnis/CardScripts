@@ -1,5 +1,5 @@
 --ライトロード・ドミニオン キュリオス
---Kyrios, Dominion of the Lightsworn
+--Curious, the Lightsworn Dominion
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.spcheck(g,lc,sumtype,tp)
-	return g:GetClassCount(Card.GetRace,lc,sumtype,tp)==#g and g:CheckSameProperty(Card.GetAttribute,lc,sumtype,tp)
+	return g:CheckDifferentPropertyBinary(Card.GetRace,lc,sumtype,tp) and g:CheckSameProperty(Card.GetAttribute,lc,sumtype,tp)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

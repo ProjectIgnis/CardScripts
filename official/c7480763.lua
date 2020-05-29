@@ -36,8 +36,8 @@ end
 s.listed_series={0x97}
 
 	--Monsters with different names
-function s.matfilter(g,lc)
-	return g:GetClassCount(Card.GetCode)==#g
+function s.matfilter(g,lc,sumtype,tp)
+	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
 end
 	--"Artifact" monster that can be set as a spell
 function s.setfilter(c)

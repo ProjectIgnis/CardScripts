@@ -41,7 +41,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	c:AddCounter(COUNTER_SPELL,3)
 	if Duel.GetTurnPlayer()==tp and c:IsCanRemoveCounter(tp,COUNTER_SPELL,1,REASON_EFFECT)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		and Duel.SelectEffectYesNo(tp,c) then
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 		Duel.SelectTarget(tp,s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c)

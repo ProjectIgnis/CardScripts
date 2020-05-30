@@ -83,5 +83,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g~=0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
+	else
+		Duel.GoatConfirm(tp,LOCATION_DECK)
 	end
 end

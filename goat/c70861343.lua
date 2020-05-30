@@ -23,7 +23,6 @@ function s.cfilter(c,e,tp,ft)
 	local lv=c:GetLevel()
 	return c:IsFaceup() and lv>0 and c:IsSetCard(0x2b)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5))
-		and true
 end
 function s.filter(c,lv,e,tp)
 	return c:IsLevelBelow(lv) and c:IsRace(RACE_BEAST+RACE_WINGEDBEAST+RACE_INSECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -43,10 +42,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e:GetLabel(),e,tp)
 	local tc=g:GetFirst()
-	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-		c:SetCardTarget(tc)
+	if tc then
+		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+			c:SetCardTarget(tc)
+		end
+		Duel.SpecialSummonComplete()
+	else
+		Duel.GoatConfirm(tp,LOCATION_HAND+LOCATION_DECK)
 	end
-	Duel.SpecialSummonComplete()
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()

@@ -20,15 +20,10 @@ function s.filter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
-	if chk==0 then return true
-		or Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	local op=0
-	if true
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil) then
+	if Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil) then
 		op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-	elseif Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil) then
-		Duel.SelectOption(tp,aux.Stringid(id,2))
-		op=1
 	else
 		Duel.SelectOption(tp,aux.Stringid(id,1))
 		op=0
@@ -56,6 +51,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
+		else
+			Duel.GoatConfirm(tp,LOCATION_DECK)
 		end
 	end
 end

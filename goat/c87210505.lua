@@ -37,7 +37,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
-	if tc and Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP)>0 then
-		tc:CompleteProcedure()
+	if tc then
+		if Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP)>0 then
+			tc:CompleteProcedure()
+		end
+	else
+		Duel.GoatConfirm(tp,LOCATION_HAND+LOCATION_DECK)
 	end
 end

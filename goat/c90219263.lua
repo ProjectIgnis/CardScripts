@@ -23,8 +23,7 @@ function s.filter(c,e,tp)
 	return c:IsCode(CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and true end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -32,7 +31,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
-	if tc and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)~=0 then
-		tc:CompleteProcedure()
+	if tc then
+		if Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)~=0 then
+			tc:CompleteProcedure()
+		end
+	else
+		Duel.GoatConfirm(tp,LOCATION_HAND+LOCATION_DECK)
 	end
 end

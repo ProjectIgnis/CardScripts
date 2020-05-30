@@ -13,7 +13,6 @@ function s.initial_effect(c)
 end
 function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsAttackBelow(500) and c:IsRace(RACE_MACHINE)
-		and true
 end
 function s.filter2(c,code,e,tp)
 	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -37,6 +36,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK,0,1,ft,nil,tc:GetCode(),e,tp)
 		if #sg>0 then
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+		else
+			Duel.GoatConfirm(tp,LOCATION_DECK)
 		end
 	end
 end

@@ -36,8 +36,7 @@ function s.filter(c,e,tp)
 	return c:IsCode(85605684) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return s[tp] and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
-		true end
+	if chk==0 then return s[tp] and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -46,5 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
+	else
+		Duel.GoatConfirm(tp,LOCATION_HAND+LOCATION_DECK)
 	end
 end

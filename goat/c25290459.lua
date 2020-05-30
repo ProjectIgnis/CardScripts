@@ -54,5 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP)
 		if tc:GetPreviousLocation()==LOCATION_DECK then Duel.ShuffleDeck(tp) end
+	else
+		Duel.GoatConfirm(tp,LOCATION_HAND+LOCATION_DECK)
 	end
 end

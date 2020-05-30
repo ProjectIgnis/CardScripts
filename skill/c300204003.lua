@@ -6,6 +6,7 @@ end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
 	return aux.CanActivateSkill(tp) and (s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0) or s.ritTarget(e,tp,eg,ep,ev,re,r,rp,0))
+		and Duel.GetFlagEffect(tp,id)==0
 end
 s.listed_names={64631466,63519819}
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -23,6 +24,16 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	elseif g2 then
 		opt=Duel.SelectOption(tp,aux.Stringid(id,2))+1
 	else return end
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	--cannot conduct BP this turn
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_BP)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e1:SetTargetRange(1,0)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,3),nil)
 	if opt==0 then
 		s.ritTarget(e,tp,eg,ep,ev,re,r,rp,1)
 		local mg=Duel.GetRitualMaterial(tp)

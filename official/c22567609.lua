@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			else
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local sg=g:Select(tp,1,ft,nil)
-				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 			end
 		end
 	end

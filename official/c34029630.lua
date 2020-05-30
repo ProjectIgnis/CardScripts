@@ -39,7 +39,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsCanAddCounter(tp,COUNTER_SPELL,3,c) end
 	c:AddCounter(COUNTER_SPELL,3)
-	if s.condition(e,tp,eg,ep,ev,re,r,rp) and s.target2(e,tp,eg,ep,ev,re,r,rp,0,chkc)
+	if not Duel.IsDuelType(DUEL_USE_TRAPS_IN_NEW_CHAIN) and s.condition(e,tp,eg,ep,ev,re,r,rp) and s.target2(e,tp,eg,ep,ev,re,r,rp,0,chkc)
 		and Duel.SelectEffectYesNo(tp,c,94) then
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))

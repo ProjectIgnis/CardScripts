@@ -2,10 +2,6 @@
 if not Duel.IsSummonCancelable then
 	Duel.IsSummonCancelable=function()return Duel.GetCurrentChain()<=0 end
 end
-function Duel.IsExistingMatchingCardGoat(...)
-	if --[[Duel.IsDuelType(DUEL_GOAT_SOMETHING)]] true then return true end
-	return Duel.IsExistingMatchingCard(...)
-end
 function Card.IsInMainMZone(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and (not tp or c:IsControler(tp))
 end

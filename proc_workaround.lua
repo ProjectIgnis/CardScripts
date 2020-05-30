@@ -4,7 +4,15 @@ if not Duel.IsSummonCancelable then
 end
 --stub function
 function Duel.GoatConfirm(tp,loc)
-
+	local dg,hg=Duel.GetFieldGroup(tp,loc&(LOCATION_HAND|LOCATION_DECK),0):Split(Card.IsLocation,nil,LOCATION_DECK)
+	Duel.ConfirmCards(tp,dg)
+	Duel.ConfirmCards(1-tp,dg+hg)
+	if #hg>1 then
+		Duel.ShuffleHand(tp)
+	end
+	if #dg>1 then
+		Duel.ShuffleDeck(tp)
+	end
 end
 function Card.IsInMainMZone(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and (not tp or c:IsControler(tp))

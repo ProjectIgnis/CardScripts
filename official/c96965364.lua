@@ -18,7 +18,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cfilter(c,e,tp,ft)
 	local lv=c:GetLevel()
-	return lv>0 and Duel.IsExistingMatchingCard(aux.GoatDeckSearch(s.spfilter),tp,LOCATION_DECK,0,1,nil,lv+1,e,tp)
+	return lv>0 and Duel.IsExistingMatchingCardGoat(s.spfilter,tp,LOCATION_DECK,0,1,nil,lv+1,e,tp)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.spfilter(c,lv,e,tp)

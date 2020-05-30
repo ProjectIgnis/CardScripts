@@ -22,5 +22,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.MoveSequence(tc,0)
 			Duel.ConfirmDecktop(tp,1)
 		end
+	else
+		Duel.GoatConfirm(tp,LOCATION_DECK)
 	end
 end

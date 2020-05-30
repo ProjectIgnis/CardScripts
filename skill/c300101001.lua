@@ -46,10 +46,10 @@ function s.atkfilter(e,c)
 	return c:IsRace(RACE_ZOMBIE)
 end
 function s.atkvalue(e,c)
-	return Duel.GetFlagEffect(tp,id)*100
+	return Duel.GetFlagEffect(e:GetHandlerPlayer(),id)*100
 end
 function s.defvalue(e,c)
-	return Duel.GetFlagEffect(tp,id)*-100
+	return Duel.GetFlagEffect(e:GetHandlerPlayer(),id)*-100
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

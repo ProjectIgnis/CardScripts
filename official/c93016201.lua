@@ -5,9 +5,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(s.cost1)
-	e1:SetTarget(s.target1)
-	e1:SetOperation(s.activate1)
 	c:RegisterEffect(e1)
 	--Activate(timing)
 	local e2=Effect.CreateEffect(c)
@@ -43,42 +40,6 @@ function s.initial_effect(c)
 	e4:SetTarget(s.target3)
 	e4:SetOperation(s.activate3)
 	c:RegisterEffect(e4)
-end
-function s.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	e:SetLabel(0)
-	if not Duel.CheckLPCost(tp,800) then return end
-	local ct=Duel.GetCurrentChain()
-	if ct==1 then return end
-	local pe=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT)
-	if not pe:IsHasCategory(CATEGORY_SPECIAL_SUMMON) then return end
-	if not Duel.IsChainDisablable(ct-1) then return end
-	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		Duel.PayLPCost(tp,800)
-		e:SetLabel(1)
-	end
-end
-function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if e:GetLabel()~=1 then return end
-	local ct=Duel.GetCurrentChain()
-	local te=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT)
-	local tc=te:GetHandler()
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,1,0,0)
-	if tc:IsRelateToEffect(te) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
-	end
-end
-function s.activate1(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if e:GetLabel()~=1 then return end
-	if not c:IsRelateToEffect(e) then return end
-	local ct=Duel.GetChainInfo(0,CHAININFO_CHAIN_COUNT)
-	local te=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT)
-	local tc=te:GetHandler()
-	if Duel.NegateEffect(ct-1) and tc:IsRelateToEffect(te) then
-		Duel.Destroy(tc,REASON_EFFECT)
-	end
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain()==0

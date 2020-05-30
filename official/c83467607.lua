@@ -1,4 +1,5 @@
 --リフレクト・ネイチャー
+--Nature's Reflection
 local s,id=GetID()
 function s.initial_effect(c)
 	--reflect
@@ -19,5 +20,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.refcon(e,re,val,r,rp,rc)
-	return re and not re:IsHasType(EFFECT_TYPE_CONTINUOUS) and rp~=e:GetOwnerPlayer()
+	return re and not re:IsHasType(EFFECT_TYPE_CONTINUOUS) and rp==1-e:GetOwnerPlayer()
 end

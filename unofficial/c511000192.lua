@@ -1,4 +1,5 @@
---Number F0: Future Hope
+--ＦＮｏ．０ 未来皇ホープ
+--Number F0: Utopic Future
 Duel.LoadCardScript("c65305468.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -58,6 +59,7 @@ function s.initial_effect(c)
 	e7:SetDescription(aux.Stringid(59251766,0))
 	e7:SetType(EFFECT_TYPE_QUICK_O)
 	e7:SetCode(EVENT_FREE_CHAIN)
+	e7:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e7:SetCountLimit(1)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCost(s.cost)
@@ -68,6 +70,7 @@ function s.initial_effect(c)
 	e8:SetDescription(aux.Stringid(20450925,0))
 	e8:SetType(EFFECT_TYPE_QUICK_O)
 	e8:SetCode(EVENT_FREE_CHAIN)
+	e8:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e8:SetCountLimit(1)
 	e8:SetRange(LOCATION_MZONE)
 	e8:SetCost(s.cost)

@@ -41,8 +41,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3d}
 s.counter_place_list={0x3}
-function s.lcheck(g,lc,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x3d,lc,SUMMON_TYPE_LINK,tp)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,0x3d,lc,sumtype,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

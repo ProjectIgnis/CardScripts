@@ -44,8 +44,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x575,0x574}
-function s.matcheck(g,lc,tp)
-	return g:IsExists(Card.IsType,1,nil,TYPE_LINK)
+function s.matcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsType,1,nil,TYPE_LINK,lc,sumtype,tp)
 end
 function s.matcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

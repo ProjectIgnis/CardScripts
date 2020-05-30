@@ -68,8 +68,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.listed_names={alias}
-function s.lcheck(g,lc,tp)
-	return g:GetClassCount(Card.GetAttribute)==#g
+function s.lcheck(g,lc,sumtype,tp)
+	return g:CheckDifferentPropertyBinary(Card.GetAttribute,lc,sumtype,tp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

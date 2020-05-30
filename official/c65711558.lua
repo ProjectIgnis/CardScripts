@@ -46,11 +46,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x137}
-function s.lfilter(c,lc)
-	return c:IsSetCard(0x137) and c:IsAttribute(ATTRIBUTE_WIND,lc,SUMMON_TYPE_LINK)
+function s.lfilter(c,lc,sumtype,tp)
+	return c:IsSetCard(0x137,lc,sumtype,tp) and c:IsAttribute(ATTRIBUTE_WIND,lc,sumtype,tp)
 end
-function s.lcheck(g,lc)
-	return g:IsExists(s.lfilter,1,nil,lc)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(s.lfilter,1,nil,lc,sumtype,tp)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x137) and c:IsAbleToHand()

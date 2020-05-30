@@ -28,8 +28,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={}
-function s.lcheck(g,lc)
-	return g:GetClassCount(Card.GetAttribute,lc,SUMMON_TYPE_LINK,tp)==#g
+function s.lcheck(g,lc,sumtype,tp)
+	return g:CheckDifferentPropertyBinary(Card.GetAttribute,lc,sumtype,tp)
 end
 function s.atkval(e,c)
 	return c:GetLinkedGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER)*500

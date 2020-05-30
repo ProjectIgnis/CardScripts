@@ -60,6 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCondition(s.sendcon)
 		e3:SetTarget(s.sendtg)
 		e3:SetOperation(s.sendop)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3)
 	end
 end

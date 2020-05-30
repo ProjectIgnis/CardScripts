@@ -97,7 +97,7 @@ function Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
 		end
 	end
 	return #sg>=minc and sg:CheckWithSumEqual(Link.GetLinkCount,lc:GetLink(),#sg,#sg)
-		and (not specialchk or specialchk(sg,lc,tp)) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0
+		and (not specialchk or specialchk(sg,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp)) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0
 end
 function Link.Condition(f,minc,maxc,specialchk)
 	return	function(e,c,must,g,min,max)

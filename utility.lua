@@ -1116,6 +1116,40 @@ function Group.CheckSameProperty(g,f,...)
 	end
 	return prop~=0, prop
 end
+local function checkrecbin(c,g,val,f,...)
+	local prop=f(c,...)&(~val)
+	if prop==0 then return false end
+	local i=1
+	while i<=prop do
+		if prop&i~=0 then
+			if #g<2 or g:IsExists(checkrecbin,1,c,g-c,val|i,f,...) then return true end
+		end
+		i=i<<1
+	end
+	return false
+end
+--function to check if every card in a group has at least a different property from the others
+--with a function that stores the properties in binary form
+function Group.CheckDifferentPropertyBinary(g,f,...)
+	if #g<2 then return true end
+	return g:IsExists(checkrecbin,1,nil,g,0,f,...)
+end
+local function checkrec(c,g,t,f,...)
+	for _,prop in ipairs({f(c,...)}) do
+		if not t[prop] then
+			t[prop]=true
+			if #g<2 or g:IsExists(checkrec,1,c,g-c,t,f,...) then return true end
+			t[prop]=nil
+		end
+	end
+	return false
+end
+--function to check if every card in a group has at least a different property from the others
+--with a function that stores the properties in multiple returns form
+function Group.CheckDifferentProperty(g,f,...)
+	if #g<2 then return true end
+	return g:IsExists(checkrec,1,nil,g,{},f,...)
+end
 
 function Auxiliary.AskEveryone(stringid)
 	local count0 = Duel.GetPlayersCount(0)

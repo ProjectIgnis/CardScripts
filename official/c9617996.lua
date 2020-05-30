@@ -33,8 +33,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)	
 end
-function s.lcheck(g,lc,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x116,lc,SUMMON_TYPE_LINK,tp)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,0x116,lc,sumtype,tp)
 end
 function s.atkval(e,c)
 	local g=e:GetHandler():GetLinkedGroup():Filter(Card.IsFaceup,nil) 

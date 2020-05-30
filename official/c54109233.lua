@@ -6,8 +6,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_END_PHASE)
-	e1:SetTarget(s.target1)
-	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
@@ -39,20 +37,6 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c)
 	return c:IsLevelBelow(3) and c:GetFlagEffect(id)~=0
-end
-function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if Duel.GetCurrentPhase()==PHASE_END and Duel.SelectYesNo(tp,94) then
-		e:SetCategory(CATEGORY_DESTROY)
-		e:SetLabel(1)
-		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
-		e:GetHandler():RegisterFlagEffect(id+1,RESET_PHASE+PHASE_END,0,1)
-		e:GetHandler():RegisterFlagEffect(0,RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,65)
-	else
-		e:SetCategory(0)
-		e:SetLabel(0)
-	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id+1)==0 end

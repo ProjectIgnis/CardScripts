@@ -28,11 +28,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x27}
-function s.lcheck(g,lc)
-	return g:IsExists(s.mzfilter,1,nil)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(s.mzfilter,1,nil,lc,sumtype,tp)
 end
-function s.mzfilter(c)
-	return c:IsSetCard(0x27) and c:IsType(TYPE_TUNER)
+function s.mzfilter(c,lc,sumtype,tp)
+	return c:IsSetCard(0x27,lc,sumtype,tp) and c:IsType(TYPE_TUNER,lc,sumtype,tp)
 end
 function s.tgtg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0x27) and c:IsType(TYPE_SYNCHRO)

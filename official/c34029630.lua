@@ -39,12 +39,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsCanAddCounter(tp,COUNTER_SPELL,3,c) end
 	c:AddCounter(COUNTER_SPELL,3)
-	if Duel.GetTurnPlayer()==tp and c:IsCanRemoveCounter(tp,COUNTER_SPELL,1,REASON_EFFECT)
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if s.condition(e,tp,eg,ep,ev,re,r,rp) and s.target2(e,tp,eg,ep,ev,re,r,rp,0,chkc)
+		and Duel.SelectEffectYesNo(tp,c,94) then
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 		Duel.SelectTarget(tp,s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c)
+		c:RegisterFlagEffect(0,RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,65)
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	else
 		e:SetProperty(0)

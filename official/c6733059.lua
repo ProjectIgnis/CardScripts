@@ -7,8 +7,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
-	e1:SetCost(s.cost)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--activate while already face-up
 	local e2=Effect.CreateEffect(c)
@@ -32,25 +30,19 @@ end
 function s.tfilter(c,ct)
 	return c:IsFaceup() and c:GetLevel()==ct
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local chkcost=e:GetLabel()==1 and true or false
-	if chk==0 then e:SetLabel(0) return true end
-	if chkcost and s.descost(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		s.descost(e,tp,eg,ep,ev,re,r,rp,1)
-		e:SetCategory(CATEGORY_DESTROY)
-		e:SetOperation(s.desop)
-	else
-		e:SetCategory(0)
-		e:SetOperation(nil)
+function s.rescon(fg)
+	return function(sg,e,tp,mg)
+		return fg:IsExists(Card.IsLevel,1,sg,#sg),not fg:IsExists(Card.IsLevelAbove,1,sg,#sg)
 	end
 end
-function s.rescon(sg,e,tp,mg)
-	return Duel.IsExistingMatchingCard(s.tfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,sg,#sg)
+function s.lvfilter(c,ct)
+	return c:IsFaceup() and c:IsLevelBelow(ct)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	if chk==0 then return aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon,0) end
-	local rg=aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon)
+	local fg=Duel.GetMatchingGroup(s.lvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,#cg)
+	if chk==0 then return aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon(fg),0) end
+	local rg=aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon(fg),1,tp,HINTMSG_REMOVE,s.rescon(fg))
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	Duel.SetTargetParam(#rg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)

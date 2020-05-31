@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--battle indes
+	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetValue(s.valcon)
 	c:RegisterEffect(e1)
-	--add to hand
+	--Add to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--special summon
+	--Special summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_DESTROYED)
-	e4:SetCountLimit(1,id+100)
+	e4:SetCountLimit(1,id+1)
 	e4:SetCondition(s.spcond)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)

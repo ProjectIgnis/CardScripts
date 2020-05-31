@@ -1,7 +1,6 @@
 --ガーディアン・スライム
 --Guardian Slime
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_DEFCHANGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.defcon)
 	e2:SetOperation(s.defop)
 	c:RegisterEffect(e2)
@@ -34,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetCountLimit(1,id+200)
+	e3:SetCountLimit(1,id+2)
 	e3:SetCondition(s.thcon)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
@@ -81,7 +80,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for 1 spell/trap that specifically lists "The Winged Dragon of Ra"
 function s.thfilter(c)
-	return aux.IsCodeListed(c,10000010) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return aux.IsCodeListed(c,CARD_RA) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -18,14 +18,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 	--Specifically lists "Jinzo"
-s.listed_names={77585513}
-	--Check for "Jinzo"
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(77585513)
-end
+s.listed_names={CARD_JINZO}
 	--If the player controls "Jinzo"
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_JINZO),tp,LOCATION_ONFIELD,0,1,nil)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -45,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			local op=0
 			local b1=(#dg>0)
-			local b2=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+			local b2=Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_JINZO),tp,LOCATION_MZONE,0,1,nil)
 			Duel.Hint(HINT_SELECTMSG,tp,0)
 			if b1 and b2 then op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 			elseif b1 then op=Duel.SelectOption(tp,aux.Stringid(id,1))
@@ -75,7 +71,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 					sc:RegisterEffect(e3)
 				end
 			else --All "Jinzo" you control gains 800 ATK
-				local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
+				local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCode,CARD_JINZO),tp,LOCATION_MZONE,0,nil)
 				for tc in aux.Next(g) do
 					local e1=Effect.CreateEffect(e:GetHandler())
 					e1:SetType(EFFECT_TYPE_SINGLE)

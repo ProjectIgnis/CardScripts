@@ -42,7 +42,7 @@ function s.operation1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,re,rp)
-	return e:GetHandlerPlayer()~=rp
+	return e:GetHandlerPlayer()==1-rp
 end
 function s.tgfilter(c,tp)
 	return c:IsControler(tp) and c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsType(TYPE_MONSTER)

@@ -1,5 +1,5 @@
 --閃刀姫 ジーク
---Sky Striker Ace - Sieg
+--Sky Striker Ace - Zeke
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -77,7 +77,7 @@ end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	return Duel.GetTurnCount()~=e:GetLabel() and Duel.GetTurnPlayer()~=tp
-		and tc:GetReasonEffect():GetHandler()==e:GetHandler()
+		and tc and tc:GetReasonEffect() and tc:GetReasonEffect():GetHandler()==e:GetHandler()
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())
@@ -98,4 +98,3 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsRelateToEffect(e) then Duel.SendtoGrave(tc,REASON_EFFECT) end
 	end
 end
-

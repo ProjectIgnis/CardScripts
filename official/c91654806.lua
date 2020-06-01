@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--If correctly calls opponent's drawn card, send this card to GY to draw 1
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_HANDES+CATEGORY_DRAW)
+	e3:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DRAW)
 	e3:SetCountLimit(id+1)

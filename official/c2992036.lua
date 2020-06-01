@@ -50,6 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not tg or #tg==0 then return end
 	aux.ToHandOrElse(tg,tp,s.sploopcond,s.sploopop,aux.Stringid(id,2),e,tp,#tg)
 	--register special summon limitation
+	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)

@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,id+100)==0
+	return Duel.GetFlagEffect(tp,id+1)==0
 end
 function s.checktribute(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -65,7 +65,7 @@ function s.checktribute(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetOperation(s.atkboost)
 	Duel.RegisterEffect(e1,0)
-	Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
 end
 function s.atkboost(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

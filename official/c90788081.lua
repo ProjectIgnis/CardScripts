@@ -29,18 +29,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		local count=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
 		if c:UpdateLevel(count,RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)==count then
-			return  c:UpdateAttack(count*100,RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+			return c:UpdateAttack(count*100,RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		end
 	end
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsSummonLocation(LOCATION_EXTRA)
-end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsFaceup() and chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSummonLocation,LOCATION_EXTRA),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsSummonLocation,LOCATION_EXTRA),tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

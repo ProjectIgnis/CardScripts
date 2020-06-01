@@ -1,7 +1,6 @@
 --宇宙との交信
---At One with the Universe
+--In Touch with the Cosmos
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_HANDES+CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DRAW)
-	e3:SetCountLimit(id+100)
+	e3:SetCountLimit(id+1)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCondition(s.drcon)
 	e3:SetTarget(s.drtg)

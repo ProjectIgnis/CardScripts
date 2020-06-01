@@ -27,10 +27,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13}
 function s.atkfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x13) and (c:GetAttack()~=c:GetBaseAttack() or Duel.IsExistingMatchingCard(s.mkfilter,tp,LOCATION_MZONE,0,1,c))
-end
-function s.mkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13)
+	return c:IsFaceup() and c:IsSetCard(0x13) and (c:GetAttack()~=c:GetBaseAttack()
+		or Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x13),tp,LOCATION_MZONE,0,1,c))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsSetCard(0x13) end
@@ -43,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local atk=0
-		local g=Duel.GetMatchingGroup(s.mkfilter,tp,LOCATION_MZONE,0,nil)
+		local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x13),tp,LOCATION_MZONE,0,nil)
 		for bc in aux.Next(g) do
 			atk=atk+bc:GetBaseAttack()
 		end

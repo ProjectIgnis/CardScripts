@@ -55,7 +55,7 @@ function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(s.genchainlm(e:GetHandler()))
 end
 function s.spval(e,se,sp,st)
-	return se and se:GetHandler():IsCode(83764718) and Duel.IsPlayerAffectedByEffect(sp,100424006)
+	return se and se:GetHandler():IsCode(83764718) and Duel.IsPlayerAffectedByEffect(sp,41044418)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLP(tp)>100 end

@@ -4,16 +4,16 @@
 local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()
-   --link summon
+	--link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_CYBERSE),3,3,s.lcheck)
-	--indes
+	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(s.indes)
 	c:RegisterEffect(e1)
-	--
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg1)
 	e2:SetOperation(s.spop1)
 	c:RegisterEffect(e2)
-	--
+	--Special Summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(alias,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -61,7 +61,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local zone=c:GetLinkedZone(tp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then 
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 end
@@ -72,8 +72,11 @@ function s.cfilter2(c,sc,seq,tp)
 	return seq and (c:GetLinkedZone(tp)&(1<<seq))~=0 or c:GetLinkedGroup():IsContains(sc)
 end
 function s.cfilter(c,lg,tp)
-	if c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) then return lg:IsExists(s.cfilter2,1,nil,c)
-	elseif c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp then return lg:IsExists(s.cfilter2,1,nil,c,c:GetPreviousSequence(),tp) end
+	if c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) then
+		return lg:IsExists(s.cfilter2,1,nil,c)
+	elseif c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp then
+		return lg:IsExists(s.cfilter2,1,nil,c,c:GetPreviousSequence(),tp)
+	end
 	return false
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

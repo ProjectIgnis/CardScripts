@@ -1,4 +1,4 @@
---concentration duel
+--Concentration Duel
 local s,id=GetID()
 function s.initial_effect(c)
 	--protection

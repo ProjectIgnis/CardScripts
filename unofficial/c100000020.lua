@@ -1,9 +1,10 @@
---アフター・グロー 
+--アフター・グロー
+--Afterglow
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)	
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetOperation(s.activate)
@@ -32,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and (r&REASON_RULE)~=0 and Duel.GetTurnPlayer()==tp and Duel.GetTurnCount()~=e:GetLabel() 
+	return ep==tp and (r&REASON_RULE)~=0 and Duel.GetTurnPlayer()==tp and Duel.GetTurnCount()~=e:GetLabel()
 		and Duel.GetCurrentPhase()==PHASE_DRAW
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)

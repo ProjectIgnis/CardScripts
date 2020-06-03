@@ -1,4 +1,5 @@
 --ハーピィの狩場
+--Harpie's Hunting Ground
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,16 +8,6 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--trigger
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetRange(LOCATION_FZONE)
-	e2:SetOperation(s.check)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_DESTROY)
 	e4:SetDescription(aux.Stringid(id,0))
@@ -38,19 +29,28 @@ function s.initial_effect(c)
 	local e6=e5:Clone()
 	e6:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e6)
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_SUMMON_SUCCESS)
+		ge1:SetOperation(s.check)
+		Duel.RegisterEffect(ge1,0)
+		local ge2=ge1:Clone()
+		ge2:SetCode(EVENT_SPSUMMON_SUCCESS)
+		Duel.RegisterEffect(ge2,0)
+	end)
 end
 s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS}
 function s.check(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=eg:GetFirst()
-	local tp1=false local tp2=false
+	local g1=Group.CreateGroup()
+	local g2=Group.CreateGroup()
 	for tc in aux.Next(eg) do
 		if tc:IsFaceup() and tc:IsCode(CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS) then
-			if tc:IsControler(tp) then tp1=true else tp2=true end
+			if tc:IsControler(0) then g1:AddCard(tc) else g2:AddCard(tc) end
 		end
 	end
-	if tp1 then Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,r,rp,tp,0) end
-	if tp2 then Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,r,rp,1-tp,0) end
+	if #g1>0 then Duel.RaiseEvent(g1,EVENT_CUSTOM+id,re,r,rp,0,0) end
+	if #g2>0 then Duel.RaiseEvent(g2,EVENT_CUSTOM+id,re,r,rp,1,0) end
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

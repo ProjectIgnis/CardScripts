@@ -1,4 +1,5 @@
 --大樹海
+--Verdant Sanctuary
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,13 +8,6 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--trigger
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetOperation(s.check)
-	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetDescription(aux.Stringid(id,0))
@@ -23,14 +17,19 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_TO_GRAVE)
+		ge1:SetOperation(s.check)
+		Duel.RegisterEffect(ge1,0)
+	end)
 end
 function s.check(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
 		if tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsReason(REASON_DESTROY)
 			and tc:IsRace(RACE_INSECT) and tc:GetLevel()~=0 and tc:IsPreviousPosition(POS_FACEUP) then
-			Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,r,rp,tc:GetPreviousControler(),tc:GetLevel())
+			Duel.RaiseEvent(tc,EVENT_CUSTOM+id,re,r,rp,tc:GetControler(),tc:GetLevel())
 		end
 	end
 end

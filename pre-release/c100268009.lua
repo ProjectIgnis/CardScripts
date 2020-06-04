@@ -37,15 +37,11 @@ function s.thfilter1(c,att)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil,tp) end
-	Duel.DiscardHand(tp,s.tgfilter,1,1,REASON_COST,tp)
+	Duel.DiscardHand(tp,s.tgfilter,1,1,REASON_COST,nil,tp)
 	e:SetLabel(Duel.GetOperatedGroup():GetFirst():GetAttribute())
 end
-function s.thfilter2(c)
-	return c:IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) and c:IsLevelAbove(4) and c:IsLevelBelow(8)
-		and not c:IsSummonableCard() and c:IsAbleToHand()
-end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil,tp) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

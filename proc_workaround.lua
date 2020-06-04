@@ -6,7 +6,7 @@ end
 function Duel.GoatConfirm(tp,loc)
 	local dg,hg=Duel.GetFieldGroup(tp,loc&(LOCATION_HAND|LOCATION_DECK),0):Split(Card.IsLocation,nil,LOCATION_DECK)
 	Duel.ConfirmCards(tp,dg)
-	Duel.ConfirmCards(1-tp,dg+hg)
+	Duel.ConfirmCards(1-tp,hg)
 	if #hg>1 then
 		Duel.ShuffleHand(tp)
 	end

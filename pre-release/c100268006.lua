@@ -91,6 +91,6 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		g:RemoveCard(sg)
 	end
-	Duel.SendtoDeck(g,tp,SEQ_DECKBOTTOM,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	Duel.SortDeckbottom(tp,tp,#g)
 end

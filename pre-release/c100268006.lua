@@ -92,8 +92,9 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		g:RemoveCard(sg)
 	end
 	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
-	local g1=g:Filter(Card.IsControler,nil,tp)
-	local g2=g:Filter(Card.IsControler,nil,1-tp)
+	local og=Duel.GetOperatedGroup()
+	local g1=og:Filter(Card.IsControler,nil,tp):Filter(Card.IsLocation,nil,LOCATION_DECK)
+	local g2=og:Filter(Card.IsControler,nil,1-tp):Filter(Card.IsLocation,nil,LOCATION_DECK)
 	if #g1>0 then
 		Duel.SortDeckbottom(tp,tp,#g1)
 	end

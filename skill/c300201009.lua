@@ -23,6 +23,8 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ShuffleDeck(g:GetFirst():GetControler())
 			Duel.BreakEffect()
 			Duel.Draw(g:GetFirst():GetControler(),#g,REASON_EFFECT)
+		else
+			Duel.ShuffleHand(g:GetFirst():GetControler())
 		end
 	end
 end

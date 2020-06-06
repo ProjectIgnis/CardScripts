@@ -235,7 +235,8 @@ function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():GetFlagEffect(511000173)>0 and re:IsActiveType(TYPE_TRAP+TYPE_SPELL) then
+	if re:GetHandler():GetFlagEffect(511000173)>0 and re:IsActiveType(TYPE_TRAP+TYPE_SPELL) 
+		and re:IsActivatable(rp) and re:GetHandler():GetReasonEffect()~=re then
 		Duel.NegateEffect(ev)
 	end
 end

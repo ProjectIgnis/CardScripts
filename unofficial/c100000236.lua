@@ -1,4 +1,5 @@
 --トライアングル・フォース
+--Triangle Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:GetCode()==id and c:GetActivateEffect():IsActivatable(tp)
+	return c:GetCode()==id and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,tp)

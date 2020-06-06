@@ -33,6 +33,7 @@ function s.condition(e,tp,eg,ev,ep,re,r,rp)
 	return d and d:IsControler(tp)
 end
 function s.operation(e,tp,eg,ev,ep,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
@@ -52,6 +53,7 @@ function s.con1(e,tp,eg,ev,ep,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)==0 and e:GetHandler():GetCardTarget():GetCount()>0
 end
 function s.op1(e,tp,eg,ev,ep,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	local ecg=c:GetCardTarget()
@@ -96,6 +98,7 @@ function s.con2(e,tp,eg,ev,ep,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function s.op2(e,tp,eg,ev,ep,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local ct=c:GetTurnCounter()
 	ct=ct+1

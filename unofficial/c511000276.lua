@@ -1,5 +1,5 @@
+--ヌメロン・ダイレクト
 --Numeron Calling
-Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -12,12 +12,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_names={511000275}
+s.listed_series={0x246}
+s.listed_names={100266026}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsEnvironment(511000275)
+	return Duel.IsEnvironment(100266026)
 end
 function s.filter(c,e,tp)
-	return c:IsAttackBelow(1000) and c:IsNumeron() and c:IsType(TYPE_XYZ)
+	return c:IsAttackBelow(1000) and c:IsSetCard(0x246) and c:IsType(TYPE_XYZ)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>3
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -38,7 +39,6 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Select(tp,4,4,nil)
 	if #sg>0 then
 		local fid=e:GetHandler():GetFieldID()
-		local tc=sg:GetFirst()
 		for tc in aux.Next(sg) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			tc:RegisterFlagEffect(51100276,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)

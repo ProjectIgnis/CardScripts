@@ -5,16 +5,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(s.condition1)
 	c:RegisterEffect(e1)
-	--Activate (sp summon)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_ACTIVATE)
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e2:SetCondition(s.condition2)
-	e2:SetTarget(s.target)
-	c:RegisterEffect(e2)
 	--trigger
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_RECOVER)
@@ -34,26 +25,8 @@ function s.initial_effect(c)
 	e4:SetCondition(s.descon)
 	c:RegisterEffect(e4)
 end
-function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS,true)
-	return not res or not teg:IsExists(s.tgfilter,1,nil,nil,tp)
-end
-function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.tgfilter,1,nil,nil,tp)
-end
 function s.tgfilter(c,e,tp)
 	return c:IsControler(1-tp) and (not e or c:IsRelateToEffect(e))
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if s.sptg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(61965407,0)) then
-		e:SetCategory(CATEGORY_RECOVER)
-		e:SetOperation(s.spop)
-		s.sptg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetCategory(0)
-		e:SetOperation(nil)
-	end
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.tgfilter,1,nil,nil,tp) end

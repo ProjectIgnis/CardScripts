@@ -1,3 +1,4 @@
+--銀河黒龍渦
 --Galaxy Dragon Maelstrom
 local s,id=GetID()
 function s.initial_effect(c)

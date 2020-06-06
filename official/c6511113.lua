@@ -38,13 +38,14 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCode(EVENT_FREE_CHAIN)
-	e5:SetHintTiming(0x3c0)
+	e5:SetHintTiming(TIMING_SUMMON+TIMING_FLIPSUMMON+TIMING_MSET+TIMING_BATTLE_START+TIMING_MAIN_END)
 	e5:SetCountLimit(1)
 	e5:SetCost(s.cost)
 	e5:SetTarget(s.target)
 	e5:SetOperation(s.operation)
 	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_names={id}
 s.listed_series={0x108a,0x4c,0x89}
 function s.imcon(e)
 	return e:GetHandler():GetOverlayCount()>0

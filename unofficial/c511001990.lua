@@ -1,7 +1,7 @@
 --Bee Formation
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,s.filter,nil,nil,TIMING_STANDBY_PHASE,0x1c0)
+	aux.AddPersistentProcedure(c,0,aux.FilterFaceupFunction(Card.IsSetCard,0x12f),nil,nil,TIMING_STANDBY_PHASE,0x1c0)
 	--Destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -22,9 +22,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0x12f}
-function s.filter(c)
-	return c:IsSetCard(0x12f) and c:IsFaceup()
-end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_DESTROY_CONFIRMED) then return false end

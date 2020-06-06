@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x55,0x7b}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
-function s.lcheck(g,lc)
+function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsAttackAbove,1,nil,2000)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

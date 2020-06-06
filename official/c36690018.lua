@@ -1,4 +1,5 @@
 --逆転する運命
+--Reversal of Fate
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,8 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x5}
 function s.filter(c)
-	return c:GetFlagEffect(id)~=0
+	return c:IsSetCard(0x5) and c:GetFlagEffect(id)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

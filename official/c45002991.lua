@@ -1,5 +1,5 @@
 --アークロード・パラディオン
---Arch-lord Palladion
+--Crusadia Equimax
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,8 +36,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xfe,0x116}
-function s.lcheck(g,lc)
-	return g:IsExists(Card.IsType,1,nil,TYPE_LINK)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsType,1,nil,TYPE_LINK,lc,sumtype,tp)
 end
 function s.atkval(e,c)
 	local g=e:GetHandler():GetLinkedGroup():Filter(Card.IsFaceup,nil)
@@ -62,7 +62,7 @@ end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and aux.disfilter1(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
@@ -94,4 +94,3 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

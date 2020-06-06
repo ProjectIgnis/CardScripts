@@ -66,7 +66,7 @@ function Auxiliary.UnionTarget(f,oldrule)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		local g=Duel.SelectTarget(tp,Auxiliary.UnionFilter,tp,LOCATION_MZONE,0,1,1,c,f,oldrule)
 		Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
-		c:RegisterFlagEffect(code,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(code,RESET_EVENT+(RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE)+RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function Auxiliary.UnionOperation(f)
@@ -96,7 +96,7 @@ function Auxiliary.UnionSumTarget(oldrule)
 		if chk==0 then return c:GetFlagEffect(code)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false,pos) end
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
-		c:RegisterFlagEffect(code,(RESET_EVENT|RESETS_STANDARD|RESET_DISABLE|RESET_PHASE|PHASE_END)&~RESET_LEAVE,0,1)
+		c:RegisterFlagEffect(code,RESET_EVENT+(RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE)+RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function Auxiliary.UnionSumOperation(oldrule)
@@ -122,7 +122,7 @@ function Auxiliary.UnionReplace(oldrule)
 end
 function Auxiliary.UnionLimit(f)
 	return function (e,c)
-		return (not f or f(c)) or e:GetHandler():GetEquipTarget()==c 
+		return (not f or f(c)) or e:GetHandler():GetEquipTarget()==c
 	end
 end
 function Auxiliary.IsUnionState(effect)

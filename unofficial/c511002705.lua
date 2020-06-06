@@ -113,6 +113,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and ev>0
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	while tc do

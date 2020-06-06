@@ -1,4 +1,5 @@
---Number C1: Gate of Chaos Numeron - Shunya
+--ＣＮｏ．１ ゲート・オブ・カオス・ヌメロン－シニューニャ
+--Number C1: Numeron Chaos Gate Sunya
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -23,19 +24,20 @@ function s.initial_effect(c)
 	e2:SetOperation(s.banop)
 	c:RegisterEffect(e2)
 	--battle indestructable
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e4:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
-	c:RegisterEffect(e4)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e3:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	c:RegisterEffect(e3)
 end
-s.listed_names={511000275}
+s.listed_series={0x48}
+s.listed_names={100266026}
 s.xyz_number=1
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,511000230) and Duel.IsEnvironment(511000275)
+	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,100266022) and Duel.IsEnvironment(100266026)
 end
 function s.descon(e)
-	return not Duel.IsEnvironment(511000275)
+	return not Duel.IsEnvironment(100266026)
 end
 function s.bancon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
@@ -86,19 +88,19 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		local e4=Effect.CreateEffect(c)
-		e4:SetDescription(aux.Stringid(id,3))
-		e4:SetCategory(CATEGORY_DAMAGE)
-		e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-		e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-		e4:SetCondition(s.damcon)
-		e4:SetCost(s.damcost)
-		e4:SetTarget(s.damtg)
-		e4:SetOperation(s.damop)
-		e4:SetLabel(e:GetLabel())
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
-		c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,3))
+		e1:SetCategory(CATEGORY_DAMAGE)
+		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+		e1:SetCondition(s.damcon)
+		e1:SetCost(s.damcost)
+		e1:SetTarget(s.damtg)
+		e1:SetOperation(s.damop)
+		e1:SetLabel(e:GetLabel())
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 		Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
 	end
 end

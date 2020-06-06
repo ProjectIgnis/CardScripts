@@ -1,4 +1,5 @@
 --古生代化石マシン スカルコンボイ
+--Fossil Machine Skull Convoy
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(s.splimit)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

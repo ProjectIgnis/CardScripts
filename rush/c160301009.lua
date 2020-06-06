@@ -15,7 +15,6 @@ end
 	--Check if this card can be sent to GY
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-
 end
 	--Check for level 4 or lower spellcaster
 function s.filter(c)

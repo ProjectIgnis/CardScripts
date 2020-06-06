@@ -2,11 +2,12 @@
 --Number S0: Utopic ZEXAL (Manga)
 --scripted by Larry126
 Duel.LoadScript("c420.lua")
-Duel.LoadScript("c52653092.lua")
+Duel.LoadCardScript("c52653092.lua")
 local s,id,alias=GetID()
 local zexal=nil
 function target()
 end
+s.listed_series={0x48}
 function s.initial_effect(c)
 	zexal=c
 	alias=c:GetOriginalCodeRule()

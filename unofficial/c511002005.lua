@@ -1,10 +1,11 @@
---Performapal Sandwich Wingman
+--Ｅｍウィング・サンドイッチマン
+--Performage Wing Sandwichman
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
 	Pendulum.AddProcedure(c)
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(95100067,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_CUSTOM+id)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--lvup
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(26082117,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--lv change
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(95100067,2))
+	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
@@ -45,12 +46,12 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tot=Duel.IsDuelType(DUEL_SEPARATE_PZONE) and 13 or 4
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_PZONE,LOCATION_PZONE,nil)
-	local tc=g:GetFirst()
-	while tc do
-		tc:ResetFlagEffect(id+tot-tc:GetSequence())
-		Duel.RaiseSingleEvent(tc,EVENT_CUSTOM+id,e,0,tp,tp,0)
-		tc:RegisterFlagEffect(id+tc:GetSequence(),RESET_EVENT+RESETS_STANDARD,0,1)
-		tc=g:GetNext()
+	if #g>0 then
+		for tc in aux.Next(g) do
+			tc:ResetFlagEffect(id+tot-tc:GetSequence())
+			Duel.RaiseSingleEvent(tc,EVENT_CUSTOM+id,e,0,tp,tp,0)
+			tc:RegisterFlagEffect(id+tc:GetSequence(),RESET_EVENT+RESETS_STANDARD,0,1)
+		end
 	end
 end
 function s.filter(c)
@@ -119,15 +120,14 @@ function s.lvop2(e,tp,eg,ep,ev,re,r,rp)
 	local seq=c:GetSequence()
 	local lv=c:GetLevel()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.seqfilter,nil,e,tp,seq,lv,nil)
-	local tc=g:GetFirst()
-	while tc do
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CHANGE_LEVEL)
-		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
-		tc=g:GetNext()
+	if #g>0 then
+		for tc in aux.Next(g) do
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_CHANGE_LEVEL)
+			e1:SetValue(lv)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e1)
+		end
 	end
 end
-

@@ -1,9 +1,10 @@
---Demon Moncarch
+--魔帝アングマール (Manga)
+--Angmarl the Fiendish Monarch (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--copy Spell
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(95100047,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCondition(s.condition)
@@ -20,7 +21,7 @@ function s.filter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(95100047,1))
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	local te=g:GetFirst():CheckActivateEffect(false,true,true)
 	s[Duel.GetCurrentChain()]=te

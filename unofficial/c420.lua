@@ -163,7 +163,7 @@ if not AnimeArchetype then
 
 	-- Dart ダーツ
 	-- Fire Darts
-	Card.IsCubicSeed=MakeCheck({0x513},{43061293})
+	Card.IsDart=MakeCheck({0x513},{43061293})
 
 	-- Dice (archetype)
 	-- ダイス
@@ -176,7 +176,7 @@ if not AnimeArchetype then
 	}
 	Card.IsDice=MakeCheck({0x514},AnimeArchetype.OCGDice)
 
-	-- Darkness  (Last updated by 23rd Apr 2020)
+	-- Darkness  (Last updated on 23rd Apr 2020)
 	-- ダークネス
 	-- Cyberdarkness Dragon/Darkness Metal, the Dragon of Dark Steel/Malevolent Mech - Goku En/Simorgh of Darkness
 	-- Umbral Soul/Darkness Destroyer/Darkness Neosphere/Hunter of Black Feathers
@@ -302,14 +302,9 @@ if not AnimeArchetype then
 	}
 	Card.IsForest=MakeCheck({0x51f},AnimeArchetype.OCGForest)
 
-	-- Fossil (not finished)
-	-- 化石
-	-- かせき
-	-- Release from Stone/Fossil Dig/Fossil Excavation
-	AnimeArchetype.OCGFossil={
-
-	}
-	Card.IsFossil=MakeCheck({0x512},AnimeArchetype.OCGFossil)
+	-- Gaia the Dragon Champion
+	-- Gaia the Dragon Champion/Sky Galloping Gaia the Dragon Champion
+	Card.IsGaiatheDragonChampion=MakeCheck({0x521},{66889139,2519690})
 
 	-- Gem-Knight Lady ジェムナイトレディ
 	-- Gem-Knight Lady Brilliant Diamond/Gem-Knight Lady Lapis Lazuli
@@ -533,7 +528,7 @@ if not AnimeArchetype then
 	-- Paladin of the Cursed Dragon/Dark Magician Knight/Blade Knight
 	-- Penguin Knight/Nightmare Penguin/Seiyaryu/Avenging Knight Parshath
 	-- Dragon Master Knight/Mermaid Knight/Midnight Fiend
-	-- Super Roboyarou,Red-Eyes Metal Knight Gearfried
+	-- Super Roboyarou/Red-Eyes Metal Knight Gearfried/Fossil Warrior Skull Knight
 
 	-- TellarKnight/Igknight/Gem-Knight
 	AnimeArchetype.OCGKnight={
@@ -546,7 +541,7 @@ if not AnimeArchetype then
 		42956963,59290628,78402798,6150044,31924889,359563,72926163,40391316,12744567,97204936,
 		21249921,34116027,900787,80159717,25682811,2191144,85684223,48739166,2986553,31320433,
 		99348756,66661678,52575195,35429292,89731911,68670547,50725996,39507162,36039163,81306586,
-		6740720,69514125
+		6740720,69514125,100266007
 	}
 	Card.IsKnight=MakeCheck({0x530,0x1047,0x9c,0xc8},AnimeArchetype.OCGKnight)
 
@@ -590,7 +585,7 @@ if not AnimeArchetype then
 	}
 	Card.IsMantis=MakeCheck({0x535},AnimeArchetype.OCGMantis)
 
-	-- Mask  (Last updated by 23rd Apr 2020)
+	-- Mask  (Last updated on 23rd Apr 2020)
 	-- 仮面 (base)
 	-- かめん (ruby)
 	-- Mask of Restrict/Grand Tiki Elder/Masked Clown
@@ -644,6 +639,7 @@ if not AnimeArchetype then
 		56840427,87911394,66970002
 	}
 	Card.IsCN39UtopiaRay=MakeCheck({0x1539},AnimeArchetype.OCGCN39UtopiaRay)
+
 	-- Number S
 	-- ＳＮｏ.
 	-- シャイニングナンバーズ
@@ -652,15 +648,6 @@ if not AnimeArchetype then
 		52653092,56832966,86532744
 	}
 	Card.IsNumberS=MakeCheck({0x2048},AnimeArchetype.OCGNumberS)
-
-	-- Numeron ヌメロン
-	-- Number 100: Numeron Dragon
-	-- Rank-Up-Magic Numeron Force
-	-- Rank-Down-Magic Numeron Fall
-	AnimeArchetype.OCGNumeron={
-		57314798,48333324,71345905
-	}
-	Card.IsNumeron=MakeCheck({0x53a},AnimeArchetype.OCGNumeron)
 
 	-- Papillon パピヨン
 	-- Moonlit Papillon
@@ -714,7 +701,7 @@ if not AnimeArchetype then
 	}
 	Card.IsRaccoon=MakeCheck({0x542},AnimeArchetype.OCGRacoon)
 
-	-- Red (archetype) レッド   Last updated by 16th Apr 2020
+	-- Red (archetype) レッド   (Last updated on 16th Apr 2020)
 	-- Sub-archetype: Red-Eyes/Red Dragon Archfiend
 	-- U.A. Dreadnought Dunker/Vampire Red Baron/Xtra HERO Dread Decimator/Eternal Dread
 	-- Ojama Red/Number C106: Giant Red Hand/Construction Train Signal Red/The Wicked Dreadroot
@@ -868,6 +855,11 @@ if not AnimeArchetype then
 	-- Number 42: Galaxy Tomahawk
 	Card.IsStarship=MakeCheck({0x54f},{15458892,10389142})
 
+	-- Starving Venemy  (Last updated on 7th May 2020)
+	-- スターヴ・ヴェネミー
+	-- Starving Venemy Lethal Dose Dragon
+	Card.IsStarvingVenemy=MakeCheck({0x576},{22070401})
+
 	-- Statue スタチュー
 	-- Tiki Curse/Guardian Statue/Tiki Soul
 	-- Dragon Statue
@@ -931,8 +923,8 @@ if not AnimeArchetype then
 	-- V
 	-- ブイ
 
-	-- Number C39: Utopia Ray V/V Salamander/V－LAN Hydra/V-LAN Token
-	Card.Is_V_=MakeCheck({0x155a},{33725002,66970002,13536606,13536607})
+	-- Number C39: Utopia Ray V/V Salamander/V－LAN Hydra/V-LAN Token/Vain Betrayer
+	Card.Is_V_=MakeCheck({0x155a},{33725002,66970002,13536606,13536607,94933468})
 
 	--W
 	-- Arcana Force XXI - The World/VW-Tiger Catapult/VWXYZ-Dragon Catapult Cannon

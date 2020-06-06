@@ -1,8 +1,8 @@
---coded by Lyris
+--ダメージ・ブースト
 --Damage Boost
+--Scritped by Lyris
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate only when your opponent activates a card effect that would negate the effect of a card you control that inflicts damage to your opponent. Negate the effect, and destroy that card. Then, double the damage inflicted to your opponent. [The Legendary Fisherman III]
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

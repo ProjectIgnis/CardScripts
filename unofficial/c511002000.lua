@@ -1,3 +1,4 @@
+--ＣＸ ズババ最強ジェネラル
 --CXyz Zubaba Saikyo General
 local s,id=GetID()
 function s.initial_effect(c)
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--equip
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(95100062,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetRange(LOCATION_MZONE)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	aux.AddEREquipLimit(c,nil,function(ec,_,tp) return ec:IsControler(tp) end,s.equipop,e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(95100062,1))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
@@ -27,7 +28,22 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+	e2:SetRange(LOCATION_ONFIELD)
+	e2:SetTargetRange(LOCATION_ONFIELD,0)
+	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e2:SetCondition(s.efcon)
+	e2:SetTarget(s.eftg)
+	e2:SetLabelObject(e2)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+end
+s.listed_names={31563350}
+function s.efcon(e)
+	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,31563350)
+end
+function s.eftg(e,c)
+	return c==e:GetHandler()
 end
 function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -67,8 +83,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and bc:IsType(TYPE_MONSTER) 
-		and e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,31563350)
+	return c:IsRelateToBattle() and bc:IsType(TYPE_MONSTER)
 end
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and e:GetHandler():GetEquipGroup():IsContains(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

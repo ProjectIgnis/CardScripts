@@ -31,3 +31,4 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_CANNOT_MSET)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x50b}

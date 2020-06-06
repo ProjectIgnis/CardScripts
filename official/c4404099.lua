@@ -14,16 +14,24 @@ function s.initial_effect(c)
 	e1:SetTarget(s.addct)
 	e1:SetOperation(s.addc)
 	c:RegisterEffect(e1)
-	--attackup
+	--register before leaving
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_LEAVE_FIELD)
-	e2:SetCondition(s.atkcon)
-	e2:SetOperation(s.atkop)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_LEAVE_FIELD_P)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
+	--increase ATK
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode(EVENT_LEAVE_FIELD)
+	e3:SetCondition(s.atkcon)
+	e3:SetOperation(s.atkop)
+	e3:SetLabelObject(e2)
+	c:RegisterEffect(e3)
 end
-s.counter_list={0x1023}
+s.counter_list={0x23}
 function s.addct(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x23)
@@ -33,14 +41,17 @@ function s.addc(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():AddCounter(0x23,1)
 	end
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetHandler():GetCounter(0x23)
+	e:SetLabel(ct)
+end
+function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	local ct=e:GetLabelObject():GetLabel()
 	e:SetLabel(ct)
 	return ct>0 and not e:GetHandler():IsLocation(LOCATION_DECK)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_FISH+RACE_SEASERPENT),tp,LOCATION_MZONE,0,nil)
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

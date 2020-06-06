@@ -1,4 +1,5 @@
 --シャドウナイトデーモン
+--Shadowknight Archfiend
 local s,id=GetID()
 function s.initial_effect(c)
 	--maintain
@@ -27,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rdop)
 	c:RegisterEffect(e3)
 end
+s.roll_dice=true
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
@@ -50,7 +52,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler()==Duel.GetAttacker()
+	return ep==1-tp and e:GetHandler()==Duel.GetAttacker()
 end
 function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HalfBattleDamage(ep)

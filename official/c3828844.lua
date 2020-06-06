@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x141}
 	--Specifically lists itself
 s.listed_names={id}
 	--Check for plant monster/"Rikka" card
@@ -56,7 +57,7 @@ end
 	--Add 1 plant monster/"Rikka" card from GY to hand
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

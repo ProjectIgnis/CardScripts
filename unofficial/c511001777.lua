@@ -1,4 +1,6 @@
---CNo.43 魂魄傀儡鬼神カオス・マリオネッター
+--ＣＮｏ.４３ 魂魄傀儡鬼神カオス・マリオネッター (Anime)
+--Number C43: High Manipulator of Chaos (Anime)
+Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c32446630.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -6,43 +8,13 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),3,4)
 	c:EnableReviveLimit()
 	--Rank Up Check
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(s.rankupregcon)
-	e1:SetOperation(s.rankupregop)
-	c:RegisterEffect(e1)
+	aux.EnableCheckRankUp(c,nil,s.rankupregop,56051086)
 	--battle indestructable
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e5:SetValue(s.indes)
-	c:RegisterEffect(e5)
-end
-s.listed_names={56051086,100000581,111011002,511000580,511002068,511002164,93238626,32446631}
-s.xyz_number=43
-function s.rumfilter(c)
-	return c:IsCode(56051086) and not c:IsPreviousLocation(LOCATION_OVERLAY)
-end
-function s.rankupregcon(e,tp,eg,ep,ev,re,r,rp)
-		local rc=re:GetHandler()
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and (rc:IsSetCard(0x95) or rc:IsCode(100000581) or rc:IsCode(111011002) or rc:IsCode(511000580) or rc:IsCode(511002068) or rc:IsCode(511002164) or rc:IsCode(93238626)) and e:GetHandler():GetMaterial():IsExists(s.rumfilter,1,nil)
-end
-function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-		--token
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(32446630,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
-	e1:SetCondition(s.spcon)
-	e1:SetCost(s.spcost)
-	e1:SetTarget(s.sptg)
-	e1:SetOperation(s.spop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	c:RegisterEffect(e1)
 	--indestructable
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -51,17 +23,13 @@ function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsCode,32446631))
 	e2:SetValue(1)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e2)
 	--Negates Battle Damage
-   	local e3=Effect.CreateEffect(c)
+	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e3:SetCondition(s.rdcon)
 	e3:SetOperation(s.rdop)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e3)
 	--atk
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -70,8 +38,47 @@ function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e4:SetTarget(aux.TargetBoolFunction(Card.IsCode,32446631))
 	e4:SetValue(s.atkval)
-	e4:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e4)
+	--token
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e5:SetType(EFFECT_TYPE_IGNITION)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCountLimit(1)
+	e5:SetCondition(s.spcon)
+	e5:SetCost(s.spcost)
+	e5:SetTarget(s.sptg)
+	e5:SetOperation(s.spop)
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetTargetRange(LOCATION_MZONE,0)
+	e6:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e6:SetCondition(s.efcon)
+	e6:SetTarget(s.eftg)
+	e6:SetLabelObject(e2)
+	c:RegisterEffect(e6)
+	local e7=e6:Clone()
+	e7:SetLabelObject(e3)
+	c:RegisterEffect(e7)
+	local e8=e6:Clone()
+	e8:SetLabelObject(e4)
+	c:RegisterEffect(e8)
+	local e9=e6:Clone()
+	e9:SetLabelObject(e5)
+	c:RegisterEffect(e9,false,REGISTER_FLAG_DETACH_XMAT)
+end
+s.listed_series={0x48}
+s.listed_names={56051086,32446631}
+s.xyz_number=43
+function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(FLAG_RANKUP+id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
+end
+function s.efcon(e)
+	return e:GetHandler():GetFlagEffect(FLAG_RANKUP+id)>0
+end
+function s.eftg(e,c)
+	return c==e:GetHandler()
 end
 function s.cfilter(c,lp)
 	return c:IsFaceup() and c:GetAttack()>lp
@@ -125,7 +132,4 @@ function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkval(e,c)
 	return e:GetHandler():GetOverlayCount()-1
-end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
 end

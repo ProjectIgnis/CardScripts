@@ -4,6 +4,7 @@ function s.initial_effect(c)
 	--skill
 	aux.AddPreDrawSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
+s.roll_dice=true
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
 	if Duel.GetFlagEffect(ep,id)>0 then return end
@@ -39,7 +40,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLP(tp)<1 then 
+	if Duel.GetLP(tp)<1 then
 		Duel.SetLP(tp,1)
 	end
 end

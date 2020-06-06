@@ -30,7 +30,7 @@ end
 s.listed_names={id}
 s.listed_series={0x1130}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x1130)
+	return g:IsExists(Card.IsSetCard,1,nil,0x1130,lc,sumtype,tp)
 end
 function s.lkfilter(c,mg)
 	return c:IsAttribute(ATTRIBUTE_DARK) and not c:IsCode(id) and c:IsLinkSummonable(nil,mg,2,2)

@@ -64,9 +64,13 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.tgfilter,nil,e,tp,false)
 	if #tg>0 then
+		for tc in aux.Next(tg) do
+			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
+		end
 		local g=e:GetLabelObject():GetLabelObject()
 		if Duel.GetCurrentChain()==0 then g:Clear() end
 		g:Merge(tg)
+		g:Remove(function(c) return c:GetFlagEffect(id)==0 end,nil)
 		e:GetLabelObject():SetLabelObject(g)
 		if Duel.GetFlagEffect(tp,id)==0 then
 			Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
@@ -78,6 +82,8 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=e:GetLabelObject():Filter(s.tgfilter,nil,e,tp,false)
 	if chkc then return g:IsContains(chkc) and s.tgfilter(chkc,e,tp,true) end
 	if chk==0 then 
+		Duel.ResetFlagEffect(tp,id)
+		for tc in aux.Next(g) do tc:ResetFlagEffect(id) end
 		return #g>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
 	end
 	if #g==1 then

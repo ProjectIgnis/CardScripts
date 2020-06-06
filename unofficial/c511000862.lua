@@ -5,8 +5,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(s.cost)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--Activate
 	local e2=Effect.CreateEffect(c)
@@ -19,32 +17,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	return true
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local label=e:GetLabel()
-	if chk==0 then
-		e:SetLabel(0)
-		return true
-	end
-	local ct=Duel.GetCurrentChain()
-	if ct==1 then return end
-	local ct=Duel.GetCurrentChain()
-	local te,p=Duel.GetChainInfo(ct-1,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
-	local g=Group.FromCards(te:GetHandler())
-	if s.discon(e,tp,g,p,ct-1,te,REASON_EFFECT,p) and (label~=1 or s.discost(e,tp,g,p,ct-1,te,REASON_EFFECT,p,0)) 
-		and s.distg(e,tp,g,p,ct-1,te,REASON_EFFECT,p,0) and Duel.SelectYesNo(tp,94) then
-		if label==1 then s.discost(e,tp,g,p,ct-1,te,REASON_EFFECT,p,1) end
-		e:SetCategory(CATEGORY_DISABLE)
-		e:SetOperation(s.disop)
-		s.distg(e,tp,g,p,ct-1,te,REASON_EFFECT,p,1)
-	else
-		e:SetCategory(0)
-		e:SetOperation(nil)
-	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()

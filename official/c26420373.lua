@@ -1,3 +1,4 @@
+
 --SRパッシングライダー
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetRange(LOCATION_HAND)
-	e2:SetCountLimit(1,id)
+	e2:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e2:SetCondition(s.hspcon)
 	c:RegisterEffect(e2)
 	--special summon

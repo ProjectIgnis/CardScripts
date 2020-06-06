@@ -86,6 +86,7 @@ function s.initial_effect(c)
 	ee:SetCode(EFFECT_CANNOT_REMOVE)
 	c:RegisterEffect(ee)
 end
+s.listed_series={0x500}
 function s.ctcon2(e,re)
 	return re:GetOwner()~=e:GetOwner() and e:GetHandler():GetFlagEffect(110000000)==0
 end
@@ -137,7 +138,7 @@ function s.tgn(e,c)
 end
 function s.ctopx(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if ep~=tp then return end
+	if ep==1-tp then return end
 	local ct=math.floor(ev/1000)
 	c:RemoveCounter(tp,0x91,ct,REASON_RULE)
 end

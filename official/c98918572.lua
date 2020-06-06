@@ -1,4 +1,5 @@
 --十二獣の相剋
+--Zoodiac Gathering
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -43,6 +44,7 @@ function s.rop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	local tg=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_MZONE,0,1,1,rc,ct)
 	tg:GetFirst():RemoveOverlayCard(tp,ct,ct,REASON_COST)
+	return ct
 end
 function s.xyzfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0xf1)

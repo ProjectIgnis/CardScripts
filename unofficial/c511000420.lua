@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Guess top
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100243009,1))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_SZONE)
@@ -33,8 +33,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	local opt=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	if (opt==0 and tc:IsType(TYPE_MONSTER)) then
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,1-tp,POS_FACEDOWN_DEFENSE) then
-			Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEDOWN_DEFENSE)
+		if tc:IsCanBeSpecialSummoned(e,0,1-tp,false,false,POS_FACEDOWN_DEFENSE,1-tp) then
+			Duel.SpecialSummon(tc,0,1-tp,1-tp,false,false,POS_FACEDOWN_DEFENSE)
 		end
 	elseif (opt==1 and tc:IsType(TYPE_SPELL)) then
 		Duel.SSet(1-tp,tc)

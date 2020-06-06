@@ -6,6 +6,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_BATTLE_START)
+	e1:SetTarget(s.tg)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCondition(s.damcon)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
@@ -28,6 +30,20 @@ function s.initial_effect(c)
 	e3:SetOperation(s.mtop)
 	c:RegisterEffect(e3)
 end
+function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_LEAVE_FIELD,true)
+	if res and s.damcon(e,tp,teg,tep,tev,tre,tr,trp) and s.damtg(e,tp,teg,tep,tev,tre,tr,trp,0) then
+		e:SetOperation(s.damop)
+		s.damtg(e,tp,teg,tep,tev,tre,tr,trp,1)
+		e:SetCategory(CATEGORY_DAMAGE)
+		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	else
+		e:SetOperation(nil)
+		e:SetCategory(0)
+		e:SetProperty(0)
+	end
+end
 function s.cfilter(c,re)
 	return c:IsPreviousLocation(LOCATION_MZONE) and (c:GetReason()&0x41)==0x41 and re:IsActiveType(TYPE_EFFECT)
 end
@@ -35,7 +51,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	e:SetLabelObject(re)
 	return eg:IsExists(s.cfilter,1,nil,re) and 
-		((Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) or (ph==PHASE_DAMAGE and not Duel.IsDamageCalculated()))
+		(Duel.IsBattlePhase() or (ph==PHASE_DAMAGE and not Duel.IsDamageCalculated()))
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

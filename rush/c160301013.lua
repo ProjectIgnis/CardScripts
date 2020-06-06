@@ -1,5 +1,5 @@
 --ダーク・リベレイション
---Dark Liberation 
+--Dark Liberation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Shuffle 4 spellcasters into deck to destroy opponent's attack position monsters
@@ -21,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,4,nil) end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.filter(c)
 	return c:IsAttackPos()

@@ -15,6 +15,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and ev>0
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

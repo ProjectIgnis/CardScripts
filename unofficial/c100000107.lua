@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x5}
 s.listed_names={id+1}
 function s.cfilter(c)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x5)

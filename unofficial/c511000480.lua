@@ -1,4 +1,5 @@
---Summon Dice
+--サモン・ダイス (Anime)
+--Summon Dice (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

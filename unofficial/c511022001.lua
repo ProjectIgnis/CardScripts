@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x11a}
 function s.filter(c)
 	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0x11a)
 end
@@ -21,7 +22,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:GetMinGroup(Card.GetLink)
 	if not sg then return false end
 	local dinlk=sg:GetFirst():GetLink()
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp~=tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsLinkMonster()
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsLinkMonster()
 		and re:GetHandler():GetLink()>=dinlk and Duel.IsExistingMatchingCard(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -69,7 +70,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SSet(tp,sg:GetFirst())
 		end
 	end
-	if Duel.GetTurnPlayer()~=tp and Duel.IsAbleToEnterBP() then
+	if Duel.GetTurnPlayer()==1-tp and Duel.IsAbleToEnterBP() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_CANNOT_EP)

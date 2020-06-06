@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,tp)
 	return c:IsType(TYPE_SPELL) and c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousControler(tp)
-		and (c:GetReason()&0x41)==0x41
+		and (c:GetReason()&(REASON_EFFECT+REASON_DESTROY))==(REASON_EFFECT+REASON_DESTROY)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and eg:IsExists(s.filter,1,nil,tp)
@@ -35,7 +35,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--effect
 	local tc=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil):GetFirst()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

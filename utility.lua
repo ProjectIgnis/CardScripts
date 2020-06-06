@@ -385,7 +385,7 @@ end
 --condition of EVENT_TO_GRAVE + destroyed_by_opponent_from_field
 function Auxiliary.dogcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and rp~=tp
+	return c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and rp==1-tp
 end
 --condition of "except the turn this card was sent to the Graveyard"
 function Auxiliary.exccon(e)
@@ -1116,6 +1116,40 @@ function Group.CheckSameProperty(g,f,...)
 	end
 	return prop~=0, prop
 end
+local function checkrecbin(c,g,val,f,...)
+	local prop=f(c,...)&(~val)
+	if prop==0 then return false end
+	local i=1
+	while i<=prop do
+		if prop&i~=0 then
+			if #g<2 or g:IsExists(checkrecbin,1,c,g-c,val|i,f,...) then return true end
+		end
+		i=i<<1
+	end
+	return false
+end
+--function to check if every card in a group has at least a different property from the others
+--with a function that stores the properties in binary form
+function Group.CheckDifferentPropertyBinary(g,f,...)
+	if #g<2 then return true end
+	return g:IsExists(checkrecbin,1,nil,g,0,f,...)
+end
+local function checkrec(c,g,t,f,...)
+	for _,prop in ipairs({f(c,...)}) do
+		if not t[prop] then
+			t[prop]=true
+			if #g<2 or g:IsExists(checkrec,1,c,g-c,t,f,...) then return true end
+			t[prop]=nil
+		end
+	end
+	return false
+end
+--function to check if every card in a group has at least a different property from the others
+--with a function that stores the properties in multiple returns form
+function Group.CheckDifferentProperty(g,f,...)
+	if #g<2 then return true end
+	return g:IsExists(checkrec,1,nil,g,{},f,...)
+end
 
 function Auxiliary.AskEveryone(stringid)
 	local count0 = Duel.GetPlayersCount(0)
@@ -1207,7 +1241,7 @@ function Auxiliary.EnableExtraRulesOperation(card,init,...)
 end
 --[[
 Function to perform "Either add it to the hand or do X"
--card: affected card to be moved;
+-card: affected card or group of cards to be moved;
 -player: player performing the operation
 -check: condition for the secondary action, if not provided the default action is "Send it to the GY";
 oper: secondary action;
@@ -1218,8 +1252,20 @@ function Auxiliary.ToHandOrElse(card,player,check,oper,str,...)
 		if not check then check=Card.IsAbleToGrave end
 		if not oper then oper=aux.thoeSend end
 		if not str then str=574 end
-		local b1=card:IsAbleToHand()
-		local b2=check(card,...)
+		local b1,b2=true,true
+		if type(card)=="Group" then
+			for ctg in aux.Next(card) do
+				if not ctg:IsAbleToHand() then
+					b1=false
+				end
+				if not check(ctg,...) then
+					b2=false
+				end
+			end
+		else
+			b1=card:IsAbleToHand()
+			b2=check(card,...)
+		end
 		local opt
 		if b1 and b2 then
 			opt=Duel.SelectOption(player,573,str)

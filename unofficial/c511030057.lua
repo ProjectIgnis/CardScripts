@@ -1,6 +1,6 @@
 --機塊コーティング
 --Appliancer Coating
---scripted by pyrQ
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate
@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x57a}
+s.listed_series={0x244}
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x57a)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x244)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not (rp==1-tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and re:GetHandler():IsType(TYPE_MONSTER)) then return false end
@@ -44,8 +44,8 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,tp)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x57a) and (c:GetReason()&0x41)==0x41 and c:GetPreviousControler()==tp
-		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+	return c:GetPreviousTypeOnField()&0x4000001==0x4000001 and c:IsPreviousSetCard(0x244) and (c:GetReason()&0x41)==0x41
+		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)
@@ -54,24 +54,22 @@ function s.spfilter(c,e,tp,eg)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_LINK),tp,LOCATION_ONFIELD,0,nil)
 	if #g<=0 then return false end
 	local zone=g:GetToBeLinkedZone(c,tp,true)
-	return eg:IsContains(c) and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return eg:IsContains(c) and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.rmfilter(c)
-	return c:IsType(TYPE_LINK) and c:IsLink(1) and c:IsAbleToRemove() and aux.SpElimFilter(c)
+	return c:IsLinkMonster() and c:IsLink(1) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=eg:Filter(Card.IsType,nil,TYPE_LINK):Filter(Card.IsCanBeEffectTarget,nil,e)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp,eg)
+		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,eg)
 		and Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil)
 		and e:GetHandler():IsAbleToRemove() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local spg=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp,eg)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local rmg=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,spg,1,0,g:GetFirst():GetLocation())
-	rmg:AddCard(e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,rmg,2,0,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,spg,1,tp,spg:GetFirst():GetLocation())
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,rmg+e:GetHandler(),2,PLAYER_ALL,rmg:GetFirst():GetLocation()+e:GetHandler():GetLocation())
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)

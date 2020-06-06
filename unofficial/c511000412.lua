@@ -1,3 +1,4 @@
+--戦慄のアースバウンド
 --Fearful Earthbound
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,8 +12,8 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DAMAGE)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCondition(s.damcon)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	if s.damcon(e,tp,eg,ep,ev,re,r,rp) and s.damtg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,94) then
+	if s.damcon(e,tp,eg,ep,ev,re,r,rp) and s.damtg(e,tp,eg,ep,ev,re,r,rp,0) then
 		e:SetCategory(CATEGORY_DAMAGE)
 		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e:SetOperation(s.damop)
@@ -35,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
-end	
+end 
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)

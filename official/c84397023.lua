@@ -1,4 +1,5 @@
 --レベル変換実験室
+--Level Conversion Lab
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -9,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
+s.roll_dice=true
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_HAND,0,1,nil,TYPE_MONSTER) end
 end

@@ -1,7 +1,6 @@
 --中世代化石騎士 スカルナイト
 --Fossil Warrior Skull Knight
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -55,8 +54,7 @@ end
 	--If able to make a second attack
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Duel.GetAttacker()==c and aux.bdocon(e,tp,eg,ep,ev,re,r,rp)
-		and c:CanChainAttack()
+	return Duel.GetAttacker()==c and aux.bdocon(e,tp,eg,ep,ev,re,r,rp) and c:CanChainAttack()
 end
 	--Can make a second attack in a row
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
@@ -73,7 +71,7 @@ end
 	--Destroy 1 monster on the field
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

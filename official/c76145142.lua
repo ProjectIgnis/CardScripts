@@ -33,8 +33,8 @@ function s.initial_effect(c)
 	e3:SetCondition(s.tdcon2)
 	c:RegisterEffect(e3)
 end
-function s.matcheck(g,lc,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x11b,lc,SUMMON_TYPE_LINK,tp)
+function s.matcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,0x11b,lc,sumtype,tp)
 end
 function s.indcon(e)
 	return e:GetHandler():IsLinked()

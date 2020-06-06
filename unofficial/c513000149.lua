@@ -28,18 +28,27 @@ end
 function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_GRAVE,0,nil)
-	Synchro.Send=2   
-	if Duel.SynchroSummon(tp,tc,nil,mg) then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetRange(LOCATION_MZONE)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetCountLimit(1)
-		tc:RegisterEffect(e1)
-	end
-	Synchro.Send=0
+	Synchro.Send=2
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+	e1:SetOperation(s.regop)
+	tc:RegisterEffect(e1)
+	Duel.SynchroSummon(tp,tc,nil,mg)
+end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local rc=e:GetOwner()
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(rc)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetOperation(s.desop)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetCountLimit(1)
+	c:RegisterEffect(e1)
+	e:Reset()
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)

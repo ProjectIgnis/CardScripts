@@ -104,6 +104,7 @@ function s.initial_effect(c)
 	ee:SetCode(EFFECT_CANNOT_REMOVE)
 	c:RegisterEffect(ee)
 end
+s.listed_series={0x500}
 function s.ctcon2(e,re)
 	return re:GetOwner()~=e:GetOwner() and e:GetHandler():GetFlagEffect(id)==0
 end

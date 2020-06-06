@@ -43,18 +43,12 @@ if not GenerateEffect then
 		local arm4=arm3:Clone()
 		Duel.RegisterEffect(arm4,1)
 		
-		--Ignore Indestructability
-		local indes=Effect.GlobalEffect()
-		indes:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		indes:SetCode(EVENT_DAMAGE_CALCULATING)
-		indes:SetOperation(GenerateEffect.batregop)
-		Duel.RegisterEffect(indes,0)
-		local indes2=Effect.GlobalEffect()
-		indes2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		indes2:SetCode(EVENT_BATTLED)
-		indes2:SetOperation(GenerateEffect.batend)
-		Duel.RegisterEffect(indes2,0)
-		IndesTable={}
+		--Ignore Battle Indestructability
+		local batIndes=Effect.GlobalEffect()
+		batIndes:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		batIndes:SetCode(EVENT_ADJUST)
+		batIndes:SetOperation(GenerateEffect.batregop)
+		Duel.RegisterEffect(batIndes,0)
 		
 		--Relay Soul/Zero Gate
 		local rs1=Effect.GlobalEffect()
@@ -81,11 +75,8 @@ if not GenerateEffect then
 		--ATK = 285, prev ATK = 284
 		--LVL = 585, prev LVL = 584
 		--DEF = 385, prev DEF = 384
-		local c=e:GetHandler()
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0xff,0xff,nil)
-		if not g then return end
-		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			if tc:GetFlagEffect(285)==0 and tc:GetFlagEffect(585)==0 then
 				local atk=tc:GetAttack()
 				local def=tc:GetDefense()
@@ -98,8 +89,7 @@ if not GenerateEffect then
 				local lv=tc:GetLevel()
 				tc:RegisterFlagEffect(585,nil,0,1,lv)
 				tc:RegisterFlagEffect(584,nil,0,1,lv)
-			end 
-			tc=g:GetNext()
+			end
 		end
 	end
 	function GenerateEffect.atkcfilter(c)
@@ -127,8 +117,7 @@ if not GenerateEffect then
 		local g6=Group.CreateGroup() --gain def
 		--local g7=Group.CreateGroup() --lose def
 		--local g8=Group.CreateGroup() --gain def from original
-		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			local prevatk=0
 			if tc:GetFlagEffect(285)>0 then prevatk=tc:GetFlagEffectLabel(285) end
 			g1:AddCard(tc)
@@ -155,11 +144,9 @@ if not GenerateEffect then
 			else
 				tc:RegisterFlagEffect(285,nil,0,1,0)
 			end
-			tc=g:GetNext()
 		end
 		
-		local dc=dg:GetFirst()
-		while dc do
+		for dc in aux.Next(dg) do
 			local prevdef=0
 			if dc:GetFlagEffect(385)>0 then prevdef=dc:GetFlagEffectLabel(385) end
 			g5:AddCard(dc)
@@ -183,7 +170,6 @@ if not GenerateEffect then
 			else
 				dc:RegisterFlagEffect(385,nil,0,1,0)
 			end
-			dc=dg:GetNext()
 		end
 		
 		Duel.RaiseEvent(g1,511001265,re,REASON_EFFECT,rp,ep,0)
@@ -227,8 +213,7 @@ if not GenerateEffect then
 		--local g6=Group.CreateGroup() --gain def
 		--local g7=Group.CreateGroup() --lose def
 		--local g8=Group.CreateGroup() --gain def from original
-		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			local prevatk=0
 			if tc:GetFlagEffect(285)>0 then prevatk=tc:GetFlagEffectLabel(285) end
 			g1:AddCard(tc)
@@ -255,11 +240,9 @@ if not GenerateEffect then
 			else
 				tc:RegisterFlagEffect(285,nil,0,1,0)
 			end
-			tc=g:GetNext()
 		end
 		
-		local dc=dg:GetFirst()
-		while dc do
+		for dc in aux.Next(dg) do
 			local prevdef=0
 			if dc:GetFlagEffect(385)>0 then prevdef=dc:GetFlagEffectLabel(385) end
 			g5:AddCard(dc)
@@ -283,7 +266,6 @@ if not GenerateEffect then
 			else
 				dc:RegisterFlagEffect(285,nil,0,1,0)
 			end
-			dc=dg:GetNext()
 		end
 		
 		Duel.RaiseEvent(g1,511001265,e,REASON_EFFECT,rp,ep,0)
@@ -294,14 +276,12 @@ if not GenerateEffect then
 		Duel.RaiseEvent(g9,511010103,e,REASON_EFFECT,rp,ep,0)
 		
 		local lvg=Duel.GetMatchingGroup(GenerateEffect.lvcfilter,tp,0x7f,0x7f,nil)
-		local lvc=lvg:GetFirst()
-		while lvc do
+		for lvc in aux.Next(lvg) do
 			local prevlv=lvc:GetFlagEffectLabel(585)
 			lvc:ResetFlagEffect(584)
 			lvc:ResetFlagEffect(585)
 			lvc:RegisterFlagEffect(584,nil,0,1,prevlv)
 			lvc:RegisterFlagEffect(585,nil,0,1,lvc:GetLevel())
-			lvc=lvg:GetNext()
 		end
 		Duel.RaiseEvent(lvg,511002524,e,REASON_EFFECT,rp,ep,0)
 	end
@@ -362,60 +342,6 @@ if not GenerateEffect then
 		end
 	end
 
-	function GenerateEffect.batregop(e,tp,eg,ep,ev,re,r,rp)
-		IndesTable={}
-		local a=Duel.GetAttacker()
-		local d=Duel.GetAttackTarget()
-		if a then
-			local aex={a:GetCardEffect(511010508)}
-			local aei={a:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE),a:GetCardEffect(EFFECT_INDESTRUCTABLE_COUNT),a:GetCardEffect(EFFECT_DESTROY_REPLACE)}
-			for _,te in ipairs(aei) do
-				for _,ce in ipairs(aex) do
-					local val=ce:GetValue()
-					if type(val)~='function' or val(ce,te) then
-						if not IndesTable[te] then
-							table.insert(IndesTable,te)
-							IndesTable[te]=te:GetCondition()
-							te:SetCondition(aux.FALSE)
-						end
-						break
-					end
-				end
-			end
-		end
-		if d then
-			local check=false
-			local dex={d:GetCardEffect(511010508)}
-			local dei={d:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE),d:GetCardEffect(EFFECT_INDESTRUCTABLE_COUNT),d:GetCardEffect(EFFECT_DESTROY_REPLACE)}
-			for _,te in ipairs(dei) do
-				for _,ce in ipairs(dex) do
-					local val=ce:GetValue()
-					if type(val)~='function' or val(ce,te) then
-						if not IndesTable[te] then
-							table.insert(IndesTable,te)
-							IndesTable[te]=te:GetCondition()
-							te:SetCondition(aux.FALSE)
-						end
-						break
-					end
-				end
-			end
-		end
-	end
-	function GenerateEffect.batend(e,tp,eg,ep,ev,re,r,rp)
-		for _,te in ipairs(IndesTable) do
-			if te then
-				local con=IndesTable[te]
-				if con then
-					te:SetCondition(con)
-				else
-					te:SetCondition(aux.TRUE)
-				end
-			end
-		end
-		IndesTable={}
-	end
-
 	function GenerateEffect.relayop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		if Duel.GetLP(0)<=0 and not Duel.IsPlayerAffectedByEffect(0,EFFECT_CANNOT_LOSE_LP) and Duel.GetFlagEffect(0,511002521)==0 
@@ -469,6 +395,67 @@ if not GenerateEffect then
 		end
 	end
 	
+	IndesTable={}
+	function GenerateEffect.batregop(e,tp,eg,ep,ev,re,r,rp)
+		local tg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		for tc in aux.Next(tg) do
+			local effs={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE),tc:GetCardEffect(EFFECT_INDESTRUCTABLE_COUNT),tc:GetCardEffect(EFFECT_DESTROY_REPLACE)}
+			for _,eff in ipairs(effs) do
+				if not IndesTable[eff] then
+					IndesTable[eff]=true
+					if eff:GetCode()==EFFECT_DESTROY_REPLACE then
+						local tg=eff:GetTarget()
+						eff:SetTarget(GenerateEffect.newBatTgReplace(tg))
+					else
+						if eff:IsHasType(EFFECT_TYPE_SINGLE) then
+							local con=eff:GetCondition()
+							eff:SetCondition(GenerateEffect.newBatCon(con))
+						elseif eff:IsHasType(EFFECT_TYPE_FIELD) then
+							local tg=eff:GetTarget()
+							eff:SetTarget(GenerateEffect.newBatTg(tg))
+						end
+					end
+				end
+			end
+		end
+	end
+	function GenerateEffect.newBatCon(con)
+		return function(e)
+			if not e then return false end
+			local c=e:GetHandler()
+			local effs={c:GetCardEffect(511010508)}
+			for _,eff in ipairs(effs) do
+				local val=eff:GetValue()
+				if val==1 or (type(val)=='function' and val(eff,e,c)) then return false end
+			end
+			return not con or con(e)
+		end
+	end
+	function GenerateEffect.newBatTg(tg)
+		return function(e,c)
+			if not e or not c then return false end
+			local effs={c:GetCardEffect(511010508)}
+			for _,eff in ipairs(effs) do
+				local val=eff:GetValue()
+				if val==1 or val(eff,e,c) then return false end
+			end
+			return not tg or tg(e,c)
+		end
+	end
+	function GenerateEffect.replaceFilter(c,e)
+		local effs={c:GetCardEffect(511010508)}
+		for _,eff in ipairs(effs) do
+		local val=eff:GetValue()
+			if val==1 or val(eff,e,c) then return false end
+		end   
+		return true
+	end
+	function GenerateEffect.newBatTgReplace(tg)
+		return function(e,tp,eg,ep,ev,re,r,rp,chk)
+			return tg(e,tp,eg:Filter(GenerateEffect.replaceFilter,nil,e),ep,ev,re,r,rp,chk)
+		end
+	end
+
 	finish_setup()
 
 	function Card.AddPlusMinusAttribute(c)

@@ -1,5 +1,5 @@
 --破械雙王神ライゴウ
---Hakai Souohshin Raigou
+--Unchained Abomination
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

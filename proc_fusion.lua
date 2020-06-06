@@ -824,6 +824,7 @@ end
 
 
 function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc)
+	if c:IsStatus(STATUS_COPYING_EFFECT) then return end
 	local mt=c.__index
 	local t={}
 	if mt.contactfus then

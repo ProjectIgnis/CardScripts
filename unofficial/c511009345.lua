@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={6205579}
 function s.filter(c,ft1,ft2,tp)
 	local p=c:GetControler()
 	if c:IsFacedown() then return false end

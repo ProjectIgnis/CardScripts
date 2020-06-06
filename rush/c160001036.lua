@@ -1,5 +1,5 @@
--- 交戦魚サメガロン
--- Warfish Sharkmegalon
+--交戦魚サメガロン
+--Warfish Sharkmegalon
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -17,7 +17,7 @@ function s.costfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and c:IsAttribute(ATTRIBUTE_WATER)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDefensePos,tp,0,LOCATION_MZONE,1,e:GetHandler()) end

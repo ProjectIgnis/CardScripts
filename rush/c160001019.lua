@@ -14,7 +14,6 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,600) end
-	
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetDefense()>0

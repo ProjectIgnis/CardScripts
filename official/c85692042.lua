@@ -44,7 +44,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if st then ct = 4 end
 	if l4 then ct = 3 end
 	if mm then ct = 2 end
-	if chk==0 then return (hand or mon or st) and c:CheckRemoveOverlayCard(tp,ct,REASON_COST) end
+	if chk==0 then return (l4 or mm or st) and c:CheckRemoveOverlayCard(tp,ct,REASON_COST) end
 	local selections={}
 	if st and c:CheckRemoveOverlayCard(tp,4,REASON_COST) then
 		table.insert(selections,4)

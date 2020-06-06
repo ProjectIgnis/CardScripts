@@ -1,3 +1,4 @@
+--ドン・サウザンド／罠Ｂ
 --Don Thousand/Trap B
 --Numeron Spell Revision
 local s,id=GetID()
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 end
 s.mark=3
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) 
+	return rp==1-tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)<=1 and Duel.IsChainNegatable(ev)
 end
 function s.filter(c,tp,eg,ep,ev,re,r,rp)
@@ -75,7 +76,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 				if op then op(te,1-tp,eg,ep,ev,re,r,rp) end
 				tc:ReleaseEffectRelation(te)
-				if etc then	
+				if etc then 
 					etc=g:GetFirst()
 					while etc do
 						etc:ReleaseEffectRelation(te)

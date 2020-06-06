@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1034}
 function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_DECK) and c:IsPreviousControler(tp) and c:IsControler(tp) 
 		and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1034)

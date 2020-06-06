@@ -1,6 +1,6 @@
---計量機塊カッパスケール
---Appliancer Kappa Scale
---scripted by pyrQ
+--計量機塊カッパスケール (Anime)
+--Appliancer Kappa Scale (Anime)
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link Summon
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id)
+	e2:SetCountLimit(1,c:Alias())
 	e2:SetCondition(s.spcon)
 	e2:SetCost(s.spcost)
 	e2:SetTarget(s.sptg)
@@ -29,14 +29,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Special Summon if not co-linked
 	local e3=e2:Clone()
-	e3:SetCountLimit(1,id+1)
+	e3:SetCountLimit(1,c:Alias()+1)
 	e3:SetCondition(aux.NOT(s.spcon))
 	e3:SetLabel(0)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x57a}
+s.listed_series={0x244}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x57a,fc,sumtype,tp) and c:IsLevel(1)
+	return c:IsSetCard(0x244,fc,sumtype,tp) and c:IsLevel(1)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()
@@ -50,7 +50,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.spfilter(c,e,tp,colinked)
-	return c:IsSetCard(0x57a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(0x244) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 		and ((c:IsType(TYPE_LINK) and colinked) or (c:IsLevelBelow(4) and not colinked))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

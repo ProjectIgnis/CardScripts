@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x10af}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x10af),aux.FALSE,s.fextra,Fusion.BanishMaterial,Fusion.ForcedHandler}
 	local c=e:GetHandler()

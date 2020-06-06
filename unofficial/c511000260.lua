@@ -1,4 +1,5 @@
---Polar God Emperor Loki
+--極神皇ロキ (Anime)
+--Loki, Lord of the Aesir (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro Summon

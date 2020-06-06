@@ -1,3 +1,4 @@
+--レベル・タックス
 --Level Tax
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_ADJUST)
-	e2:SetRange(LOCATION_SZONE)	
+	e2:SetRange(LOCATION_SZONE) 
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 	--30459350 chk
@@ -27,9 +28,8 @@ function s.filter(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.filter,0,0xff,0xff,nil,5)
-	local tc=g:GetFirst()
-	while tc do
+	local g=Duel.GetMatchingGroup(s.filter,0,0xff,0xff,nil)
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SUMMON_COST)
@@ -55,8 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetOperation(s.resetop)
 		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e4)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
-		tc=g:GetNext()
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
 end
 function s.costchk(e,c,tp)
@@ -78,5 +77,6 @@ function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 		e1:Reset()
 		e2:Reset()
 		e3:Reset()
+		e:GetHandler():ResetFlagEffect(id)
 	end
 end

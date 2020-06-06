@@ -17,8 +17,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.ctop)
 	c:RegisterEffect(e1)
 end
-function s.lcheck(g,lc,tp)
-	return g:GetClassCount(Card.GetAttribute)==#g
+s.roll_dice=true
+function s.lcheck(g,lc,sumtype,tp)
+	return g:CheckDifferentPropertyBinary(Card.GetAttribute,lc,sumtype,tp)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonLocation()==LOCATION_EXTRA

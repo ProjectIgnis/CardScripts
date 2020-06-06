@@ -220,7 +220,7 @@ if not ActionDuel then
 				Duel.RegisterFlagEffect(1-tp,320,RESET_PHASE+PHASE_END,0,1)
 			end
 		end
-		if Duel.IsExistingMatchingCard(Card.IsActionCard,tokenp,LOCATION_HAND,0,2,nil)
+		if token and Duel.IsExistingMatchingCard(Card.IsActionCard,tokenp,LOCATION_HAND,0,2,nil)
 			and Duel.Remove(token,POS_FACEUP,REASON_EFFECT) then
 			local g=Duel.SelectMatchingCard(tokenp,Card.IsFaceup,tokenp,0,LOCATION_MZONE,1,1,nil)
 			local e1=Effect.CreateEffect(e:GetHandler())
@@ -228,7 +228,7 @@ if not ActionDuel then
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-300)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			if g:GetCount()>0 and g:GetFirst():RegisterEffect(e1) then
+			if #g>0 and g:GetFirst():RegisterEffect(e1) then
 				Duel.Damage(1-tokenp,300,REASON_EFFECT)
 			end
 		else ActionDuel.chktrap(token,tokenp,e) end

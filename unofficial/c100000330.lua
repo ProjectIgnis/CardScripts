@@ -41,7 +41,7 @@ function s.actcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetTurnID()~=Duel.GetTurnCount()
 end
 function s.filter(c,tp)
-	return c:IsCode(100000331) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsCode(100000331) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)

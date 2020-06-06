@@ -63,7 +63,7 @@ function s.atkfilter(c)
 	return math.max(c:GetBaseAttack(),0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if chk==0 then return true end
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local dice=Duel.TossDice(1-tp,1)
 	local att=2^(dice-1)

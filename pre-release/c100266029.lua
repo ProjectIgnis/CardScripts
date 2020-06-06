@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 s.listed_series={0xe6}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xe6) and c:IsLevelBelow(2)
@@ -86,11 +87,12 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 			local sc=sg:GetFirst()
 			if sc then
 				aux.ToHandOrElse(sc,tp,function(c)
-					return sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-				end,function(c)
-					Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP) end,
-				aux.Stringid(id,3)
-				)
+											return sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+										end,
+										function(c)
+											return Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
+										end,
+				aux.Stringid(id,3))
 			end
 		else
 			Duel.SendtoGrave(tc,REASON_EFFECT)

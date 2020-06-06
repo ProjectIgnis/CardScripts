@@ -1,4 +1,5 @@
---タイム・ストリーム
+--タイム・ストリーム (VG)
+--Time Stream (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={100000027,100000026,100000028}
+s.listed_names={100266006,100266007,100266008}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.PayLPCost(tp,Duel.GetLP(tp)/2)
@@ -25,8 +26,8 @@ end
 function s.spfilter(c,e,tp,rc)
 	if not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,true,false) 
 		or Duel.GetLocationCountFromEx(tp,tp,rc,c)<=0 or not c:CheckFusionMaterial() then return false end
-	local res1=c:IsCode(100000027) and rc:IsCode(100000026)
-	local res2=c:IsCode(100000028) and rc:IsCode(100000027)
+	local res1=c:IsCode(100266007) and rc:IsCode(100266008)
+	local res2=c:IsCode(100266006) and rc:IsCode(100266007)
 	return res1 or res2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

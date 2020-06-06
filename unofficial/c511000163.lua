@@ -1,3 +1,4 @@
+--プラズマイール
 --Plasma Eel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,7 +25,7 @@ function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end 
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -73,7 +74,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -84,13 +85,14 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(-500)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		e:SetLabelObject(e1)
 		e:SetLabel(2)
 	else
-		local pe=e:GetLabelObject()
 		local ct=e:GetLabel()
 		e:SetLabel(ct+1)
+		local pe=e:GetLabelObject()
+		if not pe then return end
 		pe:SetValue(ct*-500)
 	end
 end

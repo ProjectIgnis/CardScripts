@@ -45,7 +45,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter2(c)
 	local te=c:GetActivateEffect()
-	return te and not (te:GetProperty()&EFFECT_FLAG_DAMAGE_STEP) and c:IsType(TYPE_FIELD)
+	return c:IsType(TYPE_FIELD) and te and not te:IsHasProperty(EFFECT_FLAG_DAMAGE_STEP)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_DECK,0,nil)

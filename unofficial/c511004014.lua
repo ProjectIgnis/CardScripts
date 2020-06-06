@@ -214,8 +214,8 @@ function s.tttg2(e,c)
 	return c==0 or c==1 or c:GetLevel()>=10 and c:GetFlagEffect(511004017)==1
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():GetFlagEffect(511000173)>0 and re:IsActiveType(TYPE_TRAP+TYPE_SPELL)
-		and not re:IsActivatable(rp) and re:GetHandler():GetReasonEffect()~=re then
+	if re:GetHandler():GetFlagEffect(511000173)>0 and re:IsActiveType(TYPE_TRAP+TYPE_SPELL) 
+		and re:IsActivatable(rp) and re:GetHandler():GetReasonEffect()~=re then
 		Duel.NegateEffect(ev)
 	end
 end

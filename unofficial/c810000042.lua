@@ -1,6 +1,6 @@
--- Amplifier (Anime)
--- scripted by: UnknownGuest
---fixed by MLD
+--電脳増幅器 (Anime)
+--Amplifier (Anime)
+--Scripted by UnknownGuest and fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Activate

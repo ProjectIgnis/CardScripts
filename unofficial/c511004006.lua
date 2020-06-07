@@ -1,3 +1,4 @@
+--ダーク・ネクロフィア (Manga)
 --Dark Necrofear (Manga)
 --Scripted by Edo9300
 local s,id=GetID()
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	--possess
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetCondition(s.con)
 	e2:SetOperation(s.op)

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tfop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x0c0}
 function s.filter(c,e,tp)
 	return  c:IsRace(RACE_SPELLCASTER) and c:IsDefense(1500)
 		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))

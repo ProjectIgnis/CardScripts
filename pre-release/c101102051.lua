@@ -45,7 +45,7 @@ function s.rmfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
 end
 function s.extrafil(c,e,tp)
-	return c:IsSetCard(0x10db) or c:IsSetCard(0xba) or c:IsSetCard(0x2073) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and (c:IsSetCard(0x10db) or c:IsSetCard(0xba) or c:IsSetCard(0x2073))
 end
 function s.fieldfil(c)
 	return c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK)
@@ -83,7 +83,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) then return end
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(tc),tp,nil,nil,REASON_XYZ)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+e:GetLabel(),pg,Group.FromCards(tc))
+	local g=Duel.SelectMatchingCard(tp,aux.AND(s.extrafil,s.filter2),tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+e:GetLabel(),pg,Group.FromCards(tc))
 	local sc=g:GetFirst()
 	if sc then
 		local mg=tc:GetOverlayGroup()

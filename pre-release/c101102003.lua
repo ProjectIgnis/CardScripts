@@ -48,11 +48,11 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-function s.cfilter(c)
-	return c:IsSetCard(0xdb) and c:IsPreviousLocation(LOCATION_GRAVE)
+function s.cfilter(c,tp)
+	return c:IsSetCard(0xdb) and c:IsPreviousLocation(LOCATION_GRAVE) and c:IsControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil)
+	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

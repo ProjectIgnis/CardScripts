@@ -56,7 +56,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e0,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 	if not (c:IsRelateToEffect(e) and c:IsFaceup()) then return end
-	local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
+	local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,c)
 	local atk=g:GetSum(Card.GetBaseAttack)
 	if c:UpdateAttack(atk)==atk and c:GetOverlayGroup():IsExists(s.ovfilter,1,nil) then
 		local g1=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,c)

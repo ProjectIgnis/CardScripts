@@ -37,21 +37,21 @@ function s.filter2(c,e,tp,mc,rk,pg,sg)
 		and mc:IsCanBeXyzMaterial(c,tp) and (#pg<=0 or pg:IsContains(mc))
 end
 function s.rescon(exg,fg)
-	return	function(sg,e,tp,mg)
+	return function(sg,e,tp,mg)
 		return fg:IsExists(s.filter1,1,sg,e,tp,sg,exg,#sg)
 	end
 end
 function s.rmfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
 end
-function s.extrafil(c)
+function s.extrafil(c,e,tp)
 	return c:IsSetCard(0x10db) or c:IsSetCard(0xba) or c:IsSetCard(0x2073) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.fieldfil(c)
 	return c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local exg=Duel.GetMatchingGroup(s.extrafil,tp,LOCATION_EXTRA,0,nil)
+	local exg=Duel.GetMatchingGroup(s.extrafil,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.fieldfil(chkc) and s.filter1(chkc,e,tp,Group.FromCards(chkc),exg,e:GetLabel()) end
 	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,nil)
 	local fg=Duel.GetMatchingGroup(s.fieldfil,tp,LOCATION_MZONE,0,nil)

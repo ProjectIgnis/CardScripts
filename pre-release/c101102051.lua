@@ -47,14 +47,14 @@ end
 function s.extrafil(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and (c:IsSetCard(0x10db) or c:IsSetCard(0xba) or c:IsSetCard(0x2073))
 end
-function s.fieldfil(c)
-	return c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK)
+function s.fieldfil(c,e)
+	return c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local exg=Duel.GetMatchingGroup(s.extrafil,tp,LOCATION_EXTRA,0,nil,e,tp)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.fieldfil(chkc) and s.filter1(chkc,e,tp,Group.FromCards(chkc),exg,e:GetLabel()) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.fieldfil(chkc,e) and s.filter1(chkc,e,tp,Group.FromCards(chkc),exg,e:GetLabel()) end
 	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,nil)
-	local fg=Duel.GetMatchingGroup(s.fieldfil,tp,LOCATION_MZONE,0,nil)
+	local fg=Duel.GetMatchingGroup(s.fieldfil,tp,LOCATION_MZONE,0,nil,e)
 	if chk==0 then 
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)

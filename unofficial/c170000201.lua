@@ -1,4 +1,5 @@
---Legend of Heart
+--レジェンド・オブ・ハート (Anime)
+--Legend of Heart (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,12 +7,16 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={110000101}
+s.listed_names={1784686,46232525,11082056,80019195,85800949,84565800,48179391,110000100,110000101}
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentChain()==0 and Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp
+end
 function s.costfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToRemoveAsCost()
 end

@@ -29,6 +29,7 @@ function s.spfilter(c)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
+	local tp=c:GetControler()
 	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil)
 	return aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),0,c)
 end

@@ -136,7 +136,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 				end
 				Duel.RaiseEvent(Group.CreateGroup(tc),EVENT_CHAIN_SOLVED,te,0,tp,tp,Duel.GetCurrentChain())
 				tc:ReleaseEffectRelation(te)
-				if etc then	
+				if etc then
 					etc=g:GetFirst()
 					while etc do
 						etc:ReleaseEffectRelation(te)

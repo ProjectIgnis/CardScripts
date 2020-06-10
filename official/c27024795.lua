@@ -33,7 +33,7 @@ end
 s.listed_series={0x42,0x4b}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and eg:IsContains(e:GetHandler()) and re:IsActiveType(TYPE_LINK) and re:GetHandler():IsSetCard(0x42)
+	return #eg==1 and eg:IsContains(e:GetHandler()) and re and re:IsActiveType(TYPE_LINK) and re:GetHandler():IsSetCard(0x42)
 end
 function s.matfilter(c)
 	return c:IsSetCard(0x42) and c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsLocation(LOCATION_DECK)) and c:IsLevelAbove(1)
@@ -83,4 +83,4 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
-end 
+end

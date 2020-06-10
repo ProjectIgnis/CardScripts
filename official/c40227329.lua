@@ -1,10 +1,10 @@
 --GO-DDD神零王ゼロゴッド・レイジ
---Divine Go-D/D/D Zero King Zero G.O.D. Reiji
+--Go! - D/D/D Divine Zero King Rage
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--damage reduce
+	--Decrease Damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 	c:RegisterEffect(e2)
-	--decrease tribute
+	--Decrease tribute
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.ntcon)
 	e3:SetTarget(aux.FieldSummonProcTg(s.nttg))
 	c:RegisterEffect(e3)
-	--apply effect
+	--Apply effects
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_IGNITION)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.target)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
-	--change atk
+	--Change atk
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,5))
 	e5:SetCategory(CATEGORY_ATKCHANGE)
@@ -45,12 +45,13 @@ function s.initial_effect(c)
 	e5:SetCondition(s.atkcon)
 	e5:SetOperation(s.atkop)
 	c:RegisterEffect(e5)
-	--battle
+	--Prevent Damage
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
 	e6:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e6:SetValue(1)
 	c:RegisterEffect(e6)
+	--Battle protection
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
 	e7:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

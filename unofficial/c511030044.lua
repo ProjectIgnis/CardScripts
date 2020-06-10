@@ -79,7 +79,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local atkct=e:GetHandler():GetMutualLinkedGroupCount()
 	local a=Duel.GetAttacker()
 	local b=Duel.GetAttackTarget()
-	if a:IsControler(1-tp) then 
+	if a:IsControler(1-tp) then
 		a=Duel.GetAttackTarget()
 		b=Duel.GetAttacker()
 	end

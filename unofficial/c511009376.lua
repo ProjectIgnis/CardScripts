@@ -1,3 +1,4 @@
+--Ｄ－ＨＥＲＯ ダスクユートピアガイ
 --Destiny HERO - Dusktopia Anime
 --fixed by MLD
 local s,id=GetID()
@@ -18,8 +19,8 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.fuscon)
-	e1:SetTarget(Fusion.SummonEffTG())
-	e1:SetOperation(Fusion.SummonEffOP())
+	e2:SetTarget(Fusion.SummonEffTG())
+	e2:SetOperation(Fusion.SummonEffOP())
 	c:RegisterEffect(e2)
 	--Protection
 	local e3=Effect.CreateEffect(c)

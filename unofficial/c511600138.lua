@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e4:SetValue(0x601)
 	c:RegisterEffect(e4)
 end
-function s.tgcon(e,c)
+function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
 	return tc and tc:IsFaceup() and tc:GetAttack()>e:GetHandler():GetBaseAttack() and tc:IsControler(1-tp)
 end

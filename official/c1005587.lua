@@ -40,7 +40,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		Duel.AdjustInstantly()
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-		if tc:IsImmuneToEffect(e1) then return end
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

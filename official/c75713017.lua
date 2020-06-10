@@ -1,5 +1,5 @@
 --燎星のプロメテオロン
---Prometeoron the Burning Asteroid
+--Prometeor, the Burning Star
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,15 +15,11 @@ function s.initial_effect(c)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetAttacker()==c and aux.bdocon(e,tp,eg,ep,ev,re,r,rp) and c:CanChainAttack(0) then
-		local seq=c:GetBattleTarget():GetPreviousSequence()
-		if seq<5 then
-			e:SetLabel(seq)
-			return true
-		else return false end
-	else
-		return false
-	end
+	local bc=c:GetBattleTarget()
+	if not bc then return false end
+	local seq=bc:GetPreviousSequence()
+	e:SetLabel(seq+16)
+	return Duel.GetAttacker()==c and aux.bdocon(e,tp,eg,ep,ev,re,r,rp) and c:CanChainAttack(0) and seq<5
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
@@ -35,7 +31,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DISABLE_FIELD)
-	e1:SetLabel(seq*0x10000)
+	e1:SetLabel(0x1<<seq)
 	e1:SetOperation(s.disop)
 	e1:SetReset(RESET_PHASE+PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)

@@ -1,4 +1,5 @@
 --トゥーン・キングダム
+--Toon Kingdom
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -36,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.repval)
 	c:RegisterEffect(e4)
 end
+s.listed_names={15259703}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetDecktopGroup(tp,3)
 	if chk==0 then return g:FilterCount(Card.IsAbleToRemove,nil,tp,POS_FACEDOWN)==3 end

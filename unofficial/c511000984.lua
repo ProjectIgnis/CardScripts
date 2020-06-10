@@ -4,21 +4,21 @@ function s.initial_effect(c)
 	--Activate
 	aux.AddEquipProcedure(c)
 	--Atk up
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetValue(500)
-	c:RegisterEffect(e2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(500)
+	c:RegisterEffect(e1)
 	--Activate
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_DAMAGE_STEP_END)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCondition(s.accon)
-	e4:SetCost(s.accost)
-	e4:SetTarget(s.actg)
-	e4:SetOperation(s.acop)
-	c:RegisterEffect(e4)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_DAMAGE_STEP_END)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCondition(s.accon)
+	e2:SetCost(s.accost)
+	e2:SetTarget(s.actg)
+	e2:SetOperation(s.acop)
+	c:RegisterEffect(e2)
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
@@ -88,7 +88,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if op then op(te,tp,eg,ep,ev,re,r,rp) end
 	tc:ReleaseEffectRelation(te)
-	if etc then	
+	if etc then
 		etc=g:GetFirst()
 		while etc do
 			etc:ReleaseEffectRelation(te)

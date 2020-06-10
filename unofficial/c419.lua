@@ -426,7 +426,7 @@ if not GenerateEffect then
 			local effs={c:GetCardEffect(511010508)}
 			for _,eff in ipairs(effs) do
 				local val=eff:GetValue()
-				if val==1 or val(eff,e,c) then return false end
+				if val==1 or (type(val)=='function' and val(eff,e,c)) then return false end
 			end
 			return not con or con(e)
 		end

@@ -32,13 +32,11 @@ function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ft2=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local att=0
 	for gc in aux.Next(Duel.GetMatchingGroup(s.cfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)) do
 		att=att|gc:GetAttribute()
 	end
-	if chk==0 then return att>0 and ft2>0 and ft>0 
+	if chk==0 then return att>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
 		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsType,TYPE_EFFECT),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,att)
 		and Duel.IsPlayerCanDraw(tp,1) end

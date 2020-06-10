@@ -57,8 +57,11 @@ end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xba) and c:HasLevel() and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
+function s.xyzdarkfilter(c)
+	return c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK)
+end
 function s.xyzfilter(c)
-	return c:IsFaceup() and c:GetOverlayCount()>0 and c:GetOverlayGroup():IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_DARK)
+	return c:IsFaceup() and c:GetOverlayCount()>0 and c:GetOverlayGroup():IsExists(s.xyzdarkfilter,1,nil)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil)

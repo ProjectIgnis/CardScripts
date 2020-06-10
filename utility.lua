@@ -1384,6 +1384,9 @@ end
 function Duel.IsBattlePhase()
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
 end
+function Duel.IsTurnPlayer(player)
+	return Duel.GetTurnPlayer()==player
+end
 
 Duel.LoadScript("cards_specific_functions.lua")
 Duel.LoadScript("proc_fusion.lua")

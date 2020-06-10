@@ -59,5 +59,5 @@ function s.atkfil(c)
 	return c:IsFaceup() and c:IsSetCard(0x247) and c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_EFFECT)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.atkfil,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.atkfil,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
 end

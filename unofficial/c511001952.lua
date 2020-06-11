@@ -1,6 +1,7 @@
 --Phantasmal Lord Ultimitl Bishbaalkin (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x601)
 	--level 0
 	Synchro.AddDarkSynchroProcedure(c,Synchro.NonTuner(nil),nil,0)
 	c:SetStatus(STATUS_NO_LEVEL,true)
@@ -42,13 +43,6 @@ function s.initial_effect(c)
 	e5:SetTarget(s.destg)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
-	--add setcode
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e6:SetCode(EFFECT_ADD_SETCODE)
-	e6:SetValue(0x601)
-	c:RegisterEffect(e6)
 end
 function s.val(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,LOCATION_MZONE)*1000

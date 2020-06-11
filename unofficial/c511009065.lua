@@ -1,17 +1,10 @@
 --Superheavy Samurai Ninja Sarutobi
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x9a)
 	--synchro summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_MACHINE),1,1,Synchro.NonTunerEx(Card.IsSetCard,0x9a),1,99)
 	c:EnableReviveLimit()
-	--add setcode
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_ADD_SETCODE)
-	e1:SetValue(0x9a)
-	c:RegisterEffect(e1)
-	
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(96029574,0))

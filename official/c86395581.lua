@@ -6,13 +6,7 @@
 local s,id=GetID()
 
 function s.initial_effect(c)
-	--Always treated as a "Charmer" card
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_ADD_SETCODE)
-	e1:SetValue(0xbf)
-	c:RegisterEffect(e1)
+	c:AddSetcodesRule(0xbf)
 	--Discard this + WIND monster; add WIND monster with <= 1500 DEF, locked into WIND effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

@@ -1,16 +1,10 @@
 --超重剣聖ムサ－C
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x9a)
 	--synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--add setcode
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e0:SetCode(EFFECT_ADD_SETCODE)
-	e0:SetValue(0x9a)
-	c:RegisterEffect(e0)
 	--salvage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

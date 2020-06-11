@@ -7,6 +7,25 @@ function GetID()
 	return self_table,self_code
 end
 
+local function setcodecondition(e)
+	return e:GetHandler():IsCode(e:GetHandler():GetOriginalCodeRule())
+end
+
+function Card.AddSetcodesRule(c,...)
+	local t={}
+	for _,setcode in pairs({...}) do
+		local e=Effect.CreateEffect(c)
+		e:SetType(EFFECT_TYPE_SINGLE)
+		e:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e:SetCode(EFFECT_ADD_SETCODE)
+		e:SetValue(setcode)
+		e:SetCondition(setcodecondition)
+		c:RegisterEffect(e)
+		table.insert(t,e)
+	end
+	return t
+end
+
 function Duel.LoadCardScript(code)
 	if type(code)=="number" then
 		code="c"..code..".lua"

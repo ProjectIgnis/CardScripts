@@ -1,6 +1,7 @@
 --Superheavy Samurai Steam Fiend Tetsudo'o
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x9a)
 	--synchro summon
 	c:EnableReviveLimit()
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(Card.IsSetCard,0x9a),1,99)
@@ -36,13 +37,6 @@ function s.initial_effect(c)
 	e4:SetTarget(s.damtg)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
-	--add setcode
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e5:SetCode(EFFECT_ADD_SETCODE)
-	e5:SetValue(0x9a)
-	c:RegisterEffect(e5)
 end
 s.listed_series={0x9a}
 

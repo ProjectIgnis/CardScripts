@@ -3,6 +3,7 @@
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x119)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)
@@ -15,12 +16,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Treated as "Salamangreat"
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCode(EFFECT_ADD_SETCODE)
-	e2:SetValue(0x119)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SUMMON,s.counterfilter)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)

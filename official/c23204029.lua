@@ -1,6 +1,7 @@
 --C・HERO カオス
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x3008)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa008),2)
@@ -32,13 +33,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	--add setcode
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetCode(EFFECT_ADD_SETCODE)
-	e4:SetValue(0x3008)
-	c:RegisterEffect(e4)
 end
 s.listed_series={0xa008}
 s.material_setcode={0x8,0xa008}

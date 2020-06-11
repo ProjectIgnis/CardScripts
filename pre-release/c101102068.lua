@@ -3,16 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add setcode
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_ADD_SETCODE)
-	e1:SetValue(0x10db)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetValue(0xba)
-	c:RegisterEffect(e2)
+	c:AddSetcodesRule(0x10db,0xba)
 	--Activate
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_ACTIVATE)

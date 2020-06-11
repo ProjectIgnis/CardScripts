@@ -1,6 +1,7 @@
 --虹彩の魔術師
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x10f2)
 	Pendulum.AddProcedure(c)
 	--Double damage
 	local e1=Effect.CreateEffect(c)
@@ -25,13 +26,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--add setcode
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EFFECT_ADD_SETCODE)
-	e3:SetValue(0x10f2)
-	c:RegisterEffect(e3)
 end
 s.listed_series={0x20f2}
 function s.dbcon(e,tp,eg,ep,ev,re,r,rp)

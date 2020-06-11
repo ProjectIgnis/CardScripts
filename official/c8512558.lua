@@ -3,6 +3,7 @@
 --Scripted by Logical Nonsense and AlphaKretin, revised handling of archetype check by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x54,0x59,0x82,0x8f)
 	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -13,22 +14,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Add setcode
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCode(EFFECT_ADD_SETCODE)
-	e2:SetValue(0x54)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetValue(0x59)
-	c:RegisterEffect(e3)
-	local e4=e2:Clone()
-	e4:SetValue(0x82)
-	c:RegisterEffect(e4)
-	local e5=e2:Clone()
-	e5:SetValue(0x8f)
-	c:RegisterEffect(e5)
 end
 s.listed_names={id}
 s.listed_series={0x54,0x59,0x82,0x8f}

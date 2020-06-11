@@ -3,13 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add setcode
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e0:SetCode(EFFECT_ADD_SETCODE)
-	e0:SetValue(0x107)
-	c:RegisterEffect(e0)
+	c:AddSetcodesRule(0x107)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

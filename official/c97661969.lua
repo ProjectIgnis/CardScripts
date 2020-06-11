@@ -3,16 +3,10 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x10c0)
 	--Link summon
 	Link.AddProcedure(c,nil,2,2,s.lcheck)
 	c:EnableReviveLimit()
-	--Add setcode
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_ADD_SETCODE)
-	e1:SetValue(0x10c0)
-	c:RegisterEffect(e1)
 	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

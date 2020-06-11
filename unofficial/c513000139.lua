@@ -1,6 +1,6 @@
---The Wicked Eraser (Anime)
---邪神イレイザー
---マイケル・ローレンス・ディーによってスクリプト
+--邪神イレイザー (Manga)
+--マイケル・ローレンス・ディーによってスクリプト (Manga)
+--The Wicked Eraser (Manga)
 --scripted by MLD
 --credit to TPD & Cybercatman
 --updated by Larry126
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	--Eraser
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(57793869,0))
+	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EVENT_TO_GRAVE)
 	e5:SetTarget(s.erastg)
@@ -33,14 +33,11 @@ function s.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e6:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e6:SetCode(EVENT_ADJUST)
-	e6:SetRange(0xff&~LOCATION_GRAVE)
+	e6:SetRange(LOCATION_ALL&~LOCATION_GRAVE)
 	e6:SetLabelObject(e5)
 	e6:SetOperation(s.op)
 	c:RegisterEffect(e6)
-end
-function s.op(e,tp,eg,ev,ep,re,r,rp)
-	e:GetLabelObject():SetLabel(e:GetHandler():GetFlagEffectLabel(513000065))
-end
+
 function s.adval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_ONFIELD)*1000
 end
@@ -50,6 +47,8 @@ function s.erastg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 end
 function s.erasop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,tp,id)
+	Duel.Hint(HINT_CARD,1-tp,id)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local c=e:GetHandler()
 	local phr=e:GetLabel()
@@ -73,4 +72,7 @@ function s.erasop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
+end
+function s.op(e,tp,eg,ev,ep,re,r,rp)
+	e:GetLabelObject():SetLabel(e:GetHandler():GetFlagEffectLabel(513000065))
 end

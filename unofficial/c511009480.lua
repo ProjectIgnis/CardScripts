@@ -64,7 +64,8 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.ovfilter(c,tp,xyz)
-	return c:IsFaceup() and c:IsCode(CARD_GALAXYEYES_P_DRAGON) and c:GetEquipCount()==2 and Duel.GetLocationCountFromEx(tp,tp,c,xyz)>0
+	return c:IsFaceup() and c:IsCode(CARD_GALAXYEYES_P_DRAGON) and c:GetEquipCount()==2
+		and Duel.GetLocationCountFromEx(tp,tp,c,xyz)>0
 end
 function s.xyzcon(e,c)
 	if c==nil then return true end
@@ -72,10 +73,10 @@ function s.xyzcon(e,c)
 	local mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local mustg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,c,mg,REASON_XYZ)
 	if #mustg>0 or (min and min>1) then return false end
-	return Duel.CheckReleaseGroup(c:GetControler(),s.ovfilter,1,false,1,true,c,c:GetControler(),nil,false,nil)
+	return Duel.CheckReleaseGroup(c:GetControler(),s.ovfilter,1,false,1,true,c,c:GetControler(),nil,false,nil,tp,c)
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,s.ovfilter,1,1,false,true,true,c,nil,nil,false,nil)
+	local g=Duel.SelectReleaseGroup(tp,s.ovfilter,1,1,false,true,true,c,nil,nil,false,nil,tp,c)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)

@@ -1,4 +1,5 @@
 --Action Field Functions
+local id=151000000
 if not ActionDuel then
 
 	function Card.IsActionCard(c)

@@ -105,7 +105,7 @@ function s.rescon(checkfunc)
 end
 function s.hnfilter(c,e,tp,sg)
 	return c:IsCode(13331639) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
-			and Duel.GetLocationCountFromEx(tp,tp,sg+e:GetHandler(),c)>0
+			and Duel.GetLocationCountFromEx(tp,tp,sg and (sg+e:GetHandler()) or nil,c)>0
 end
 function s.hncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

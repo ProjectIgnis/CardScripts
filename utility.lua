@@ -1,8 +1,6 @@
 Auxiliary={}
 aux=Auxiliary
 
-Auxiliary.ProcCancellable=false
-
 function GetID()
 	return self_table,self_code
 end

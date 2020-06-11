@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.descon)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x2016}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2016)
 end

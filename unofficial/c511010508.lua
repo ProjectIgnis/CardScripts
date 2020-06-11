@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x10f2}
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetMatchingGroup(aux.nzatk,tp,LOCATION_MZONE,LOCATION_MZONE,c)

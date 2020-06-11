@@ -61,6 +61,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge3,0)
 	end)
 end
+s.listed_series={0x4a}
 s.listed_names={36894320,8967776}
 function s.costfilter(c)
 	return c:IsFaceup() and c:IsCode(36894320) and c:IsAbleToGraveAsCost()

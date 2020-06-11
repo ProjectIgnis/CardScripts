@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x7}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	if rp~=tp or not re:GetHandler():IsSetCard(0x7) then return end
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)

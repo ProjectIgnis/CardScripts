@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.descon)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x4}
 function s.tgfilter(c,e,tp)
 	return c:IsControler(1-tp) and (not e or c:IsRelateToEffect(e))
 end

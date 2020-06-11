@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e1:SetLabelObject(e0)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3008}
 function s.filter(c,e)
 	return c:IsSetCard(0x3008) and c:IsSummonable(true,e)
 end

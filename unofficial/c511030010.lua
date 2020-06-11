@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atklimit)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x578}
 function s.indtg(e,c)
 	return c:IsLinkMonster() and c:IsSetCard(0x578) and c:IsControler(e:GetHandler():GetControler())
 		and (e:GetHandler():GetLinkedGroup():IsContains(c) or c:GetLinkedGroup():IsContains(e:GetHandler()))

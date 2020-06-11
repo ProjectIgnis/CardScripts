@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	c:RegisterEffect(e4)
 end
+s.listed_names={100000333}
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetTurnID()~=Duel.GetTurnCount()
 end

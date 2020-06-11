@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x578}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	if chk==0 then return a and Duel.GetAttackTarget()~=nil and a:IsLinkMonster()

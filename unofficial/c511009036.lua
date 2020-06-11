@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xaf}
 function s.thfilter(c,tp)
 	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0xaf) and c:IsPreviousControler(tp) and c:IsControler(tp) 
 		and c:IsPreviousLocation(LOCATION_ONFIELD)

@@ -74,7 +74,7 @@ function s.initial_effect(c)
 	e10:SetOperation(s.mtop)
 	c:RegisterEffect(e10)
 end
-s.listed_names={94212438,31829185}
+s.listed_names={CARD_DESTINY_BOARD,31829185}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsCode,1,nil,31829185)
 end
@@ -229,7 +229,7 @@ function s.moveop(e,tp,eg,ep,ev,re,r,rp,c,og)
 end
 function s.efilter(e,te)
 	local tc=te:GetOwner()
-	return tc~=e:GetOwner() and not tc:IsCode(94212438)
+	return tc~=e:GetOwner() and not tc:IsCode(CARD_DESTINY_BOARD)
 end
 function s.dirtg(e,c)
 	return not Duel.IsExistingMatchingCard(aux.FilterEqualFunction(Card.GetFlagEffect,0,id),c:GetControler(),0,LOCATION_MZONE,1,nil)

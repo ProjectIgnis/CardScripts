@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.act2)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x84}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return ph>=0x08 and ph<=0x20 and re:IsActiveType(TYPE_TRAP)

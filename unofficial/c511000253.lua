@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.ssop)
 	c:RegisterEffect(e5)
 end
-s.listed_names={89190953}
+s.listed_names={89190953,100000365}
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:GetControler()==1-tp and chkc:IsLocation(LOCATION_MZONE) end

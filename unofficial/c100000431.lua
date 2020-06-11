@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x21}
 function s.cfilter(c)
 	return c:IsPosition(POS_FACEUP) and c:IsSetCard(0x21)
 end

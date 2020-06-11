@@ -36,7 +36,7 @@ if not ActionDuel then
 		Duel.RegisterEffect(e1,0)
 		-- Add Action Card
 		local e2=Effect.GlobalEffect()
-		e2:SetDescription(aux.Stringid(151000000,0))
+		e2:SetDescription(aux.Stringid(id,0))
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetRange(LOCATION_FZONE)
 		e2:SetCode(EVENT_FREE_CHAIN)
@@ -95,18 +95,18 @@ if not ActionDuel then
 		local announceFilter={TYPE_ACTION,OPCODE_ISTYPE,TYPE_FIELD,OPCODE_ISTYPE,OPCODE_AND}
 		while #actionFieldToBeUsed==0 do
 			for p=0,1 do
-				if Duel.SelectYesNo(p,aux.Stringid(151000000,3)) then
-					Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(151000000,4))
+				if Duel.SelectYesNo(p,aux.Stringid(id,3)) then
+					Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,4))
 					local af=Duel.AnnounceCard(p,table.unpack(announceFilter))
 					table.insert(actionFieldToBeUsed,af)
 				end
 			end
 			if #actionFieldToBeUsed>0 then break
-			else Duel.Hint(HINT_MESSAGE,0,aux.Stringid(151000000,5)) Duel.Hint(HINT_MESSAGE,1,aux.Stringid(151000000,5)) end
+			else Duel.Hint(HINT_MESSAGE,0,aux.Stringid(id,5)) Duel.Hint(HINT_MESSAGE,1,aux.Stringid(id,5)) end
 		end
 		if #actionFieldToBeUsed>1 then
-			Duel.Hint(HINT_MESSAGE,0,aux.Stringid(151000000,6))
-			Duel.Hint(HINT_MESSAGE,1,aux.Stringid(151000000,6))
+			Duel.Hint(HINT_MESSAGE,0,aux.Stringid(id,6))
+			Duel.Hint(HINT_MESSAGE,1,aux.Stringid(id,6))
 			local coin=Duel.TossCoin(0,1)
 			table.remove(actionFieldToBeUsed,coin+1)
 		end
@@ -180,7 +180,7 @@ if not ActionDuel then
 	function ActionDuel.condition(e,tp,eg,ep,ev,re,r,rp)
 		return (not ActionDuel.handcheck(tp) or string.find(e:GetLabelObject():GetLabelObject().af,'m'))
 			and Duel.GetFlagEffect(e:GetHandlerPlayer(),320)==0
-			and Duel.GetFlagEffect(e:GetHandlerPlayer(),151000000)==0
+			and Duel.GetFlagEffect(e:GetHandlerPlayer(),id)==0
 			and not e:GetHandler():IsStatus(STATUS_CHAINING)
 	end
 	function ActionDuel.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -192,12 +192,12 @@ if not ActionDuel then
 		e:SetLabel(t[ac])
 	end
 	function ActionDuel.operation(e,tp,eg,ep,ev,re,r,rp)
-		if Duel.GetCurrentChain()>0 and not Duel.SelectYesNo(tp,aux.Stringid(151000000,0)) then return end
+		if Duel.GetCurrentChain()>0 and not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 		local originalField=e:GetLabelObject():GetLabelObject()
 		if ActionDuel.handcheck(tp) and not string.find(originalField.af,'m') then return end
 		local hintp,token,tokenp={}
 		if not ActionDuel.handcheck(1-tp) and not (string.find(originalField.af,'t') and Duel.GetLP(tp)>Duel.GetLP(1-tp))
-			and Duel.SelectYesNo(1-tp,aux.Stringid(151000000,1)) then
+			and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 			local rps=Duel.RockPaperScissors(false)
 			if rps<2 then
 				tokenp=rps
@@ -208,8 +208,8 @@ if not ActionDuel then
 		end
 		if Duel.GetRandomNumber(0,1)==0 then table.insert(hintp,tp) end
 		for _,p in ipairs(hintp) do
-			Duel.Hint(HINT_MESSAGE,p,aux.Stringid(151000000,2))
-			Duel.RegisterFlagEffect(p,151000000,RESET_PHASE+PHASE_END,0,1)
+			Duel.Hint(HINT_MESSAGE,p,aux.Stringid(id,2))
+			Duel.RegisterFlagEffect(p,id,RESET_PHASE+PHASE_END,0,1)
 		end
 		if tokenp then 
 			token=Duel.CreateToken(tokenp,e:GetLabel())
@@ -295,7 +295,7 @@ if not ActionDuel then
 	23424603,
 	62188962,
 	82999629,
-	22702055,
+	CARD_UMI,
 	86318356,
 	4215636,
 	32391631,
@@ -306,7 +306,7 @@ if not ActionDuel then
 	56074358,
 	80921533,
 	14001430,
-	22702055,
+	CARD_UMI,
 	22751868,
 	75782277,
 	10080320,

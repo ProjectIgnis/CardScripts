@@ -1167,7 +1167,24 @@ function Group.CheckDifferentProperty(g,f,...)
 	if #g<2 then return true end
 	return g:IsExists(checkrec,1,nil,g,{},f,...)
 end
-
+function Auxiliary.PropertyTableFilter(f,...)
+	local cachetab={}
+	local truthtable={}
+	for _,elem in pairs({...}) do
+		truthtable[elem]=true
+	end
+	return function(c,...)
+		if not cachetab[c] then
+			cachetab[c]={}
+			for _,val in pairs({f(c,...)}) do
+				if truthtable[val] then
+					table.insert(cachetab[c],val)
+				end
+			end
+		end
+		return table.unpack(cachetab[c])
+	end
+end
 function Auxiliary.AskEveryone(stringid)
 	local count0 = Duel.GetPlayersCount(0)
 	local count1 = Duel.GetPlayersCount(1)

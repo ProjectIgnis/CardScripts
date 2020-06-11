@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x29}
 s.listed_names={0x29}
 function s.thfilter(c)
 	return c:IsLevelAbove(5) and c:IsSetCard(0x29) and c:IsAbleToHand()

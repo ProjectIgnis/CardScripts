@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.setop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x10db,0xba,0x95}
+s.listed_series={0x95}
 function s.spcfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_XYZ)
 end

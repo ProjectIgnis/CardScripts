@@ -2,7 +2,7 @@
 --U.A. Goalkeeper
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--indes
+	--Prevent destruction
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -26,6 +26,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.indop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0xb2}
+s.listed_names={id}
 function s.spfilter(c,ft)
 	return c:IsFaceup() and c:IsSetCard(0xb2) and not c:IsCode(id) and c:IsAbleToHandAsCost()
 		and (ft>0 or c:GetSequence()<5)

@@ -36,13 +36,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ct=ev
 	local label=Duel.GetFlagEffectLabel(0,id)
 	if label then
-		if ev==bit.rshift(label,16) then ct=bit.band(label,0xffff) end
+		if ev==(label>>16) then ct=(label&0xffff) end
 	end
 	if chkc then return chkc:IsOnField() and s.filter(chkc,ct) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetLabelObject(),ct) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetLabelObject(),ct)
-	local val=ct+bit.lshift(ev+1,16)
+	local val=ct+(ev+1<<16)
 	if label then
 		Duel.SetFlagEffectLabel(0,21501505,val)
 	else

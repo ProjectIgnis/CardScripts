@@ -1,9 +1,6 @@
 --邪神イレイザー (Manga)
---マイケル・ローレンス・ディーによってスクリプト (Manga)
 --The Wicked Eraser (Manga)
---scripted by MLD
---credit to TPD & Cybercatman
---updated by Larry126
+--Scripted by MLD & Larry126, credit to TPD & Cybercatman
 Duel.LoadScript("c421.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,7 +34,7 @@ function s.initial_effect(c)
 	e6:SetLabelObject(e5)
 	e6:SetOperation(s.op)
 	c:RegisterEffect(e6)
-
+end
 function s.adval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_ONFIELD)*1000
 end

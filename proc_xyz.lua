@@ -5,6 +5,7 @@ end
 if not Xyz then
 	Xyz = aux.XyzProcedure
 end
+Xyz.ProcCancellable=false
 function Xyz.AlterFilter(c,alterf,xyzc,e,tp,op)
 	if not alterf(c,tp,xyzc) or not c:IsCanBeXyzMaterial(xyzc,tp) or (c:IsControler(1-tp) and not c:IsHasEffect(EFFECT_XYZ_MATERIAL)) 
 		or (op and not op(e,tp,0,c)) then return false end
@@ -674,7 +675,7 @@ end
 function Xyz.Target2(alterf,op)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
 				local cancel=not og and Duel.IsSummonCancelable()
-				Auxiliary.ProcCancellable=cancel
+				Xyz.ProcCancellable=cancel
 				if og and not min then
 					og:KeepAlive()
 					e:SetLabelObject(og)

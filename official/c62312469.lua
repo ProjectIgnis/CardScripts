@@ -29,8 +29,9 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
 end
+local ATTRIBUTES=ATTRIBUTE_EARTH|ATTRIBUTE_WATER|ATTRIBUTE_FIRE|ATTRIBUTE_WIND
 function s.atktg(e,c)
-	return c:IsAttribute(ATTRIBUTE_EARTH+ATTRIBUTE_WATER+ATTRIBUTE_FIRE+ATTRIBUTE_WIND)
+	return c:IsAttribute(ATTRIBUTES)
 end
 function s.value(e,c)
 	local tp=e:GetHandlerPlayer()
@@ -48,10 +49,10 @@ function s.value(e,c)
 	return ct*200
 end
 function s.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_EARTH|ATTRIBUTE_WATER|ATTRIBUTE_FIRE|ATTRIBUTE_WIND)
+	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTES)
 end
 function s.rescon(sg,e,tp,mg)
-	return true,not sg:CheckDifferentPropertyBinary(function(c)return c:GetAttribute()&(ATTRIBUTE_EARTH|ATTRIBUTE_WATER|ATTRIBUTE_FIRE|ATTRIBUTE_WIND)end)
+	return true,not sg:CheckDifferentPropertyBinary(function(c)return c:GetAttribute()&(ATTRIBUTES)end)
 end
 function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil)
@@ -59,7 +60,7 @@ function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.stop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil)
-	local sg=aux.SelectUnselectGroup(g,e,tp,4,4,s.rescon,1,tp,HINTMSG_TARGET,s.rescon)
+	local sg=aux.SelectUnselectGroup(g,e,tp,4,4,s.rescon,1,tp,HINTMSG_TARGET)
 	if sg then
 		Duel.ConfirmCards(1-tp,sg)
 		Duel.ShuffleDeck(tp)

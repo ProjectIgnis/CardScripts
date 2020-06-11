@@ -59,7 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.announcecost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return end
+	if chk==0 then return true end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -55,7 +55,7 @@ function Auxiliary.ReincarnationCheckCondition(condition,...)
 			if nameFilter[flagLabel] then return true end
 		end
 		return e:GetLabel()==1 and e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
-			and (condition and condition(e,tp,eg,ep,ev,re,r,rp) or true)
+			and (not condition or condition(e,tp,eg,ep,ev,re,r,rp))
 	end
 end
 

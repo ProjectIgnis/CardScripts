@@ -1,5 +1,5 @@
---Twilight Ninja Nichirin, the Chunin
 --黄昏の中忍－ニチリン
+--Twilight Ninja Nichirin, the Chunin
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0x2b)

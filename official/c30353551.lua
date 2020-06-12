@@ -1,4 +1,5 @@
 --人海戦術
+--Human-Wave Tactics
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,5 +1,5 @@
---Number 39: Utopia Beyond
 --No.39 希望皇ビヨンド・ザ・ホープ
+--Number 39: Utopia Beyond
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0x107f)

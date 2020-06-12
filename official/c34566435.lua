@@ -1,4 +1,5 @@
 --エッジインプ・DTモドキ
+--Edge Imp Frightfuloid
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0xad)

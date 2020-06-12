@@ -1,4 +1,5 @@
 --白翼の魔術師
+--White Wing Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0x2017)

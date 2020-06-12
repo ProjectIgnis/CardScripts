@@ -1,8 +1,9 @@
 --クロノグラフ・マジシャン
+--Chronograph Sorcerer
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--pendulum set/spsummon
+	--Place card in the pendulum zone/special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	if not AshBlossomTable then AshBlossomTable={} end
 	table.insert(AshBlossomTable,e1)
-	--Special Summon
+	--Special Summon itself
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,3))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special Summon Z-Arc
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,5))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)

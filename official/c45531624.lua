@@ -1,5 +1,5 @@
---Celtic Guard of Noble Arms
 --エルフの聖剣士
+--Celtic Guard of Noble Arms
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0xe4)

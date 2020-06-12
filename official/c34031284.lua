@@ -1,5 +1,5 @@
--- おジャマ・エンペラー
--- Ojama Emperor
+--おジャマ・エンペラー
+--Ojama Emperor
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

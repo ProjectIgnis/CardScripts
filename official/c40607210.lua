@@ -1,6 +1,5 @@
 --ヴァンパイア・グレイス
 --Vampire Grace
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When a level 5+ zombie is special summoned to your field, revive itself

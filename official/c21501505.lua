@@ -1,4 +1,5 @@
 --暗遷士 カンゴルゴーム
+--Cairngorgon, Antiluminescent Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

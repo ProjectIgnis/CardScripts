@@ -1,4 +1,5 @@
 --白き霊龍
+--Dragon Spirit of White
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0xdd)

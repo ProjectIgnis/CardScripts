@@ -1,4 +1,5 @@
 --RR－シンギング・レイニアス
+--Raidraptor - Singing Lanius
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon rule

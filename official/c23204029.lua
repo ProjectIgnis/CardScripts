@@ -1,4 +1,5 @@
 --C・HERO カオス
+--Contrast HERO Chaos
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0x3008)

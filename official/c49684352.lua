@@ -1,4 +1,5 @@
 --虹彩の魔術師
+--Double Iris Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0x10f2)

@@ -1,4 +1,5 @@
 --マグネット・フィールド
+--Magnetic Field
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--bounce
+	--Return to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -50,7 +51,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
@@ -60,11 +61,11 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	if not d then return end
 	if d:IsControler(tp) then
 		e:SetLabelObject(a)
-		return d:IsRace(RACE_ROCK) and d:IsAttribute(ATTRIBUTE_EARTH)
+		return d:IsRace(RACE_ROCK) and d:IsAttribute(ATTRIBUTE_EARTH) and d:IsFaceup()
 			and a:IsRelateToBattle() and a:IsLocation(LOCATION_ONFIELD)
 	elseif a:IsControler(tp) then
 		e:SetLabelObject(d)
-		return a:IsRace(RACE_ROCK) and a:IsAttribute(ATTRIBUTE_EARTH)
+		return a:IsRace(RACE_ROCK) and a:IsAttribute(ATTRIBUTE_EARTH) and a:IsFaceup()
 			and d:IsRelateToBattle() and d:IsLocation(LOCATION_ONFIELD)
 	end
 	return false
@@ -73,7 +74,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local tc=e:GetLabelObject()
-	if tc:IsRelateToBattle() then
+	if tc and tc:IsRelateToBattle() then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

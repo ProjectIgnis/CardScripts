@@ -2,7 +2,7 @@
 --Windcaster Torna
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--Change Position
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -24,13 +24,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_COST)
-	--effect
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,Card.IsCanChangePosition,tp,0,LOCATION_MZONE,1,1,nil)
-		if #g>0 then
-			Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+	if g and Duel.SendtoGrave(g,REASON_COST)> then
+		--effect
+		if c:IsRelateToEffect(e) and c:IsFaceup() then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+			local g=Duel.SelectMatchingCard(tp,Card.IsCanChangePosition,tp,0,LOCATION_MZONE,1,1,nil)
+			if #g>0 then
+				Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+			end
 		end
 	end
 end

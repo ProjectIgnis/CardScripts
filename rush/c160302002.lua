@@ -2,7 +2,7 @@
 --Gravity Press Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--ATK/DEF decrease
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)

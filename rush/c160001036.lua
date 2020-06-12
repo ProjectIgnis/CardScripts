@@ -2,7 +2,7 @@
 --Warfish Sharkmegalon
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--Position change
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -25,13 +25,14 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--requirement
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST)
-	--effect
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,Card.IsDefensePos,tp,0,LOCATION_MZONE,1,1,nil)
-		if #g>0 then
-			Duel.ChangePosition(g,0,0,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+	if Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST)>0 then
+		--effect
+		if c:IsRelateToEffect(e) and c:IsFaceup() then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+			local g=Duel.SelectMatchingCard(tp,Card.IsDefensePos,tp,0,LOCATION_MZONE,1,1,nil)
+			if #g>0 then
+				Duel.ChangePosition(g,0,0,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+			end
 		end
 	end
 end

@@ -34,8 +34,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-	--Effect
-	local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,6),tp,0,LOCATION_MZONE,nil)
-	if #sg>0 then Duel.Destroy(sg,REASON_EFFECT) end
+	if Duel.SendtoGrave(e:GetHandler(),REASON_COST)>0 then
+		--Effect
+		local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,6),tp,0,LOCATION_MZONE,nil)
+		if #sg>0 then
+			Duel.Destroy(sg,REASON_EFFECT)
+		end
+	end
 end

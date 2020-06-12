@@ -19,10 +19,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--requirement
-	Duel.PayLPCost(tp,1000)
-	--effect
-	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_ONFIELD,nil)
-	if #g>0 then
-		Duel.ConfirmCards(tp,g)
+	if Duel.PayLPCost(tp,1000)==1000 then
+		--effect
+		local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_ONFIELD,nil)
+		if #g>0 then
+			Duel.ConfirmCards(tp,g)
+		end
 	end
 end

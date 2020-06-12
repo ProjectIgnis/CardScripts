@@ -2,7 +2,7 @@
 --Thunder the Lightning
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--ATK Change
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)

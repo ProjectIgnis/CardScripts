@@ -29,9 +29,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	--Requirement
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,3,3,nil)
-	Duel.SendtoDeck(g,nil,3,REASON_COST)
-	Duel.ShuffleDeck(tp)
-	--Effect
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)
+	if Duel.SendtoDeck(g,nil,3,REASON_COST)>0 then
+		Duel.ShuffleDeck(tp)
+		--Effect
+		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+		Duel.Draw(p,d,REASON_EFFECT)
+	end
 end

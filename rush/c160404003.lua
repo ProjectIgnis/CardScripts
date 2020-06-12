@@ -1,5 +1,5 @@
 --黒炎弾
--- Inferno Fire Blast (Rush)
+--Inferno Fire Blast (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage

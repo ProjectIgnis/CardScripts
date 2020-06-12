@@ -1,6 +1,5 @@
 --火麺上忍ゴックブート
 --Gockboot the Fiery Noodle Jonin
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

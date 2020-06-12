@@ -1,7 +1,8 @@
+--反攻の竜撃
 --Counteroffensive Dragonstrike
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Destroy 1 monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

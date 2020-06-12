@@ -1,8 +1,8 @@
--- サターン・キング・ビートル
+--サターン・キング・ビートル
 --Saturn King Beetle
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--ATK increase
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetRange(LOCATION_MZONE)
@@ -19,8 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil)
-	and Duel.GetMatchingGroupCount(Card.IsLevel,tp,LOCATION_GRAVE,0,nil,1)>0
-	end
+		and Duel.GetMatchingGroupCount(Card.IsLevel,tp,LOCATION_GRAVE,0,nil,1)>0 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -2,7 +2,7 @@
 --Phoenix Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--Add card to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)

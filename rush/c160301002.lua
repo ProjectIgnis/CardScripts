@@ -24,7 +24,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
-	if g and Duel.SendtoGrave(g,REASON_COST)> then
+	if g and Duel.SendtoGrave(g,REASON_COST)>0 then
 		--effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)

@@ -1,4 +1,5 @@
 --青氷の白夜龍
+--White Night Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate
@@ -24,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.cbtg)
 	e2:SetOperation(s.cbop)
 	c:RegisterEffect(e2)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

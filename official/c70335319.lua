@@ -1,5 +1,5 @@
 --ゴッドアイズ・ファントム・ドラゴン
---God-Eyes Phantom Dragon
+--All-Eyes Phantom Dragon
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -62,6 +62,7 @@ function s.initial_effect(c)
 	e6:SetTarget(s.distg)
 	e6:SetOperation(s.disop)
 	c:RegisterEffect(e6)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0

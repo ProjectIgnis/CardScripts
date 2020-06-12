@@ -3,14 +3,14 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--special summon condition
+	--Special summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon procedure
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DESTROY)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	--negate
+	--Negate Spell/Trap
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.negtg)
 	e4:SetOperation(s.negop)
 	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_series={0xbb}
 function s.spfilter(c)

@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x4a}
 s.listed_names={74530899,8967776}
 function s.spcon(e,c)
 	if c==nil then return true end

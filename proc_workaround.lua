@@ -1,8 +1,3 @@
---Utilities to be added to the core
-if not Duel.IsSummonCancelable then
-	Duel.IsSummonCancelable=function()return Duel.GetCurrentChain()<=0 end
-end
---stub function
 function Duel.GoatConfirm(tp,loc)
 	local dg,hg=Duel.GetFieldGroup(tp,loc&(LOCATION_HAND|LOCATION_DECK),0):Split(Card.IsLocation,nil,LOCATION_DECK)
 	Duel.ConfirmCards(tp,dg)
@@ -14,6 +9,7 @@ function Duel.GoatConfirm(tp,loc)
 		Duel.ShuffleDeck(tp)
 	end
 end
+--Utilities to be added to the core
 function Card.IsInMainMZone(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and (not tp or c:IsControler(tp))
 end
@@ -358,4 +354,11 @@ function Auxiliary.GetRaceStrings(v)
 		end
 	end
 	return pairs(res)
+end
+--Multi purpose token
+if not c946 then
+	c946 = {}
+	setmetatable(c946, Card)
+	rawset(c946,"__index",c946)
+	c946.initial_effect=function()end
 end

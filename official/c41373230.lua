@@ -3,10 +3,10 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-    --fusion material
-    c:EnableReviveLimit()
-    Fusion.AddProcMix(c,true,true,CARD_ALBUS,aux.FilterBoolFunctionEx(Card.IsAttackAbove,2500))
-    --atk
+	--fusion material
+	c:EnableReviveLimit()
+	Fusion.AddProcMix(c,true,true,CARD_ALBUS,aux.FilterBoolFunctionEx(Card.IsAttackAbove,2500))
+	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
@@ -62,17 +62,17 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsSummonType(SUMMON_TYPE_FUSION) then return end
 	--immune
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_SINGLE)
-    e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-    e1:SetRange(LOCATION_MZONE)
-    e1:SetCode(EFFECT_IMMUNE_EFFECT)
-    e1:SetValue(s.efilter)
-    e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-    c:RegisterEffect(e1)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EFFECT_IMMUNE_EFFECT)
+	e1:SetValue(s.efilter)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	c:RegisterEffect(e1)
 end
 function s.efilter(e,te)
-    return te:IsActiveType(TYPE_MONSTER) and te:IsActivated()
+	return te:IsActiveType(TYPE_MONSTER) and te:IsActivated()
 		and e:GetHandler()~=te:GetHandler() and te:GetHandler():GetSummonLocation()==LOCATION_EXTRA
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)

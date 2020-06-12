@@ -2,7 +2,7 @@
 --One-Side Flip
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Position change
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_POSITION)

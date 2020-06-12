@@ -1,7 +1,6 @@
 --魔救の奇縁
 --Adamancipator Friends
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

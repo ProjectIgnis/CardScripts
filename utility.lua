@@ -1,10 +1,27 @@
 Auxiliary={}
 aux=Auxiliary
 
-Auxiliary.ProcCancellable=false
-
 function GetID()
 	return self_table,self_code
+end
+
+local function setcodecondition(e)
+	return e:GetHandler():IsCode(e:GetHandler():GetOriginalCodeRule())
+end
+
+function Card.AddSetcodesRule(c,...)
+	local t={}
+	for _,setcode in pairs({...}) do
+		local e=Effect.CreateEffect(c)
+		e:SetType(EFFECT_TYPE_SINGLE)
+		e:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e:SetCode(EFFECT_ADD_SETCODE)
+		e:SetValue(setcode)
+		e:SetCondition(setcodecondition)
+		c:RegisterEffect(e)
+		table.insert(t,e)
+	end
+	return t
 end
 
 function Duel.LoadCardScript(code)
@@ -1150,7 +1167,24 @@ function Group.CheckDifferentProperty(g,f,...)
 	if #g<2 then return true end
 	return g:IsExists(checkrec,1,nil,g,{},f,...)
 end
-
+function Auxiliary.PropertyTableFilter(f,...)
+	local cachetab={}
+	local truthtable={}
+	for _,elem in pairs({...}) do
+		truthtable[elem]=true
+	end
+	return function(c,...)
+		if not cachetab[c] then
+			cachetab[c]={}
+			for _,val in pairs({f(c,...)}) do
+				if truthtable[val] then
+					table.insert(cachetab[c],val)
+				end
+			end
+		end
+		return table.unpack(cachetab[c])
+	end
+end
 function Auxiliary.AskEveryone(stringid)
 	local count0 = Duel.GetPlayersCount(0)
 	local count1 = Duel.GetPlayersCount(1)

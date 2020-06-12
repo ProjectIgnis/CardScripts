@@ -1,17 +1,11 @@
---Number 39: Utopia Beyond
 --No.39 希望皇ビヨンド・ザ・ホープ
+--Number 39: Utopia Beyond
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x107f)
 	--xyz summon
 	Xyz.AddProcedure(c,nil,6,2)
 	c:EnableReviveLimit()
-	--add setcode
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e0:SetCode(EFFECT_ADD_SETCODE)
-	e0:SetValue(0x107f)
-	c:RegisterEffect(e0)
 	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

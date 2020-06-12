@@ -1,4 +1,5 @@
 --幻影騎士団サイレントブーツ
+--The Phantom Knights of Silent Boots
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

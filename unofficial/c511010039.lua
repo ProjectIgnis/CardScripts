@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.indes)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x48}
 s.xyz_number=39
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

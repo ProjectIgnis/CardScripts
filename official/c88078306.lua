@@ -1,7 +1,6 @@
 --[JP name]
 --Traptrix Genlisea
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

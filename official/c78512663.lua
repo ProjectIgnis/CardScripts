@@ -1,29 +1,30 @@
 --E・HERO マグマ・ネオス
+--Elemental HERO Magma Neos
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,CARD_NEOS,89621922,80344569)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
-	--atkup
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e5:SetCode(EFFECT_UPDATE_ATTACK)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetValue(s.atkval)
-	c:RegisterEffect(e5)
-	--tohand
-	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(id,1))
-	e6:SetCategory(CATEGORY_TOHAND)
-	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e6:SetCode(EVENT_TO_DECK)
-	e6:SetCondition(s.thcon)
-	e6:SetTarget(s.thtg)
-	e6:SetOperation(s.thop)
-	c:RegisterEffect(e6)
-	aux.EnableNeosReturn(c,nil,nil,nil,e6)
+	--ATK increase
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(s.atkval)
+	c:RegisterEffect(e1)
+	--Add to hand
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCode(EVENT_TO_DECK)
+	e2:SetCondition(s.thcon)
+	e2:SetTarget(s.thtg)
+	e2:SetOperation(s.thop)
+	c:RegisterEffect(e2)
+	aux.EnableNeosReturn(c,nil,nil,nil,e2)
 end
 s.listed_names={CARD_NEOS}
 s.material_setcode={0x8,0x3008,0x9,0x1f}

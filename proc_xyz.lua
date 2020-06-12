@@ -5,6 +5,7 @@ end
 if not Xyz then
 	Xyz = aux.XyzProcedure
 end
+Xyz.ProcCancellable=false
 function Xyz.AlterFilter(c,alterf,xyzc,e,tp,op)
 	if not alterf(c,tp,xyzc) or not c:IsCanBeXyzMaterial(xyzc,tp) or (c:IsControler(1-tp) and not c:IsHasEffect(EFFECT_XYZ_MATERIAL)) 
 		or (op and not op(e,tp,0,c)) then return false end
@@ -61,7 +62,6 @@ function Xyz.AddProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk)
 		e2:SetOperation(Xyz.Operation2(alterf,op))
 		c:RegisterEffect(e2)
 	end
-	
 	if not xyztemp then
 		xyztemp=true
 		xyztempg0=Group.CreateGroup()
@@ -70,9 +70,7 @@ function Xyz.AddProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk)
 		xyztempg1:KeepAlive()
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		e3:SetCode(EVENT_ADJUST)
-		e3:SetCountLimit(1)
+		e3:SetCode(EVENT_STARTUP)
 		e3:SetOperation(Xyz.MatGenerate)
 		Duel.RegisterEffect(e3,0)
 	end
@@ -82,6 +80,7 @@ function Xyz.MatGenerate(e,tp,eg,ep,ev,re,r,rp)
 	xyztempg0:AddCard(tck0)
 	local tck1=Duel.CreateToken(1,946)
 	xyztempg1:AddCard(tck1)
+	e:Reset()
 end
 --Xyz Summon(normal)
 function Xyz.MatFilter2(c,f,lv,xyz,tp)
@@ -674,7 +673,7 @@ end
 function Xyz.Target2(alterf,op)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
 				local cancel=not og and Duel.IsSummonCancelable()
-				Auxiliary.ProcCancellable=cancel
+				Xyz.ProcCancellable=cancel
 				if og and not min then
 					og:KeepAlive()
 					e:SetLabelObject(og)

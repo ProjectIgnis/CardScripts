@@ -1,4 +1,5 @@
 --シフトチェンジ
+--c59560625.lua
 local s,id=GetID()
 function s.initial_effect(c)
 	--change target
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.filter1(c,e)
 	return c:IsCanBeEffectTarget(e)

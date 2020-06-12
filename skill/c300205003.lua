@@ -20,7 +20,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	--cost
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
-	
 	local c=e:GetHandler()
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
 	if #g>0 then

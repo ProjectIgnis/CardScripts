@@ -1,6 +1,8 @@
 --白翼の魔術師
+--White Wing Magician
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x2017)
 	Pendulum.AddProcedure(c)
 	--Negate
 	local e1=Effect.CreateEffect(c)
@@ -18,13 +20,6 @@ function s.initial_effect(c)
 	e2:SetValue(LOCATION_REMOVED)
 	e2:SetCondition(s.rmcon)
 	c:RegisterEffect(e2)
-	--add setcode
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EFFECT_ADD_SETCODE)
-	e3:SetValue(0x2017)
-	c:RegisterEffect(e3)
 end
 function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsControler(tp)

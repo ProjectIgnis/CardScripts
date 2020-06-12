@@ -1,4 +1,5 @@
 --ジャンク・ブレイカー
+--Fiendish Commander Yameruler
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable
@@ -8,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetOperation(s.sumsuc)
 	c:RegisterEffect(e1)
+	--Prevent Tribute Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)

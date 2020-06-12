@@ -1,4 +1,5 @@
 --水精鱗－アビストリーテ
+--Mermail Abysstrite
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

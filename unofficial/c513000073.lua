@@ -51,6 +51,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tdop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x23}
 s.listed_names={79856792,27564031}
 function s.spfilter(c)
 	return c:IsCode(79856792) and c:IsAbleToGraveAsCost()

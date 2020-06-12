@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e5:SetCondition(s.descon)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x50b}
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS,true)
 	return not res or not teg:IsExists(s.tgfilter,1,nil,nil,tp)

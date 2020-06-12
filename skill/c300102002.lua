@@ -1,8 +1,4 @@
---Mythic Deepth
---Skill activation
---Flip this card over when you activate this Skill.
---Effect
---All Fish, Sea Serpent, Thunder, and Aqua monsters on the field gain 200 ATK/DEF. All Machine and Pyro monsters on the field lose 200 ATK/DEF. This card's name becomes "Umi" while on the field.
+--Mythic Deepth (Skill Card)
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddFieldSkillProcedure(c,2,false)
@@ -11,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Atk
+	--ATK increase
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -19,11 +15,11 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetValue(s.val)
 	c:RegisterEffect(e2)
-	--Def
+	--DEF increase
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
-	--change name
+	--Change Name
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -34,7 +30,11 @@ function s.initial_effect(c)
 end
 function s.val(e,c)
 	local r=c:GetRace()
-	if bit.band(r,RACE_FISH+RACE_SEASERPENT+RACE_THUNDER+RACE_AQUA)>0 then return 200
-	elseif bit.band(r,RACE_MACHINE+RACE_PYRO)>0 then return -200
-	else return 0 end
+	if r&(RACE_FISH+RACE_SEASERPENT+RACE_THUNDER+RACE_AQUA)>0 then
+		return 200
+	elseif r&(RACE_MACHINE+RACE_PYRO)>0 then
+		return -200
+	else
+		return 0
+	end
 end

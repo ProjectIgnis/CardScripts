@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.value)
 	c:RegisterEffect(e4)
 end
+s.listed_names={100000331}
 function s.value(e,re,dam,r,rp,rc)
 	if (r&REASON_BATTLE)~=0 then
 		return dam/2

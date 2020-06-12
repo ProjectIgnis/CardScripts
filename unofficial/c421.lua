@@ -1,4 +1,4 @@
---Divine Hierarchy Token
+--Divine Hierarchy Rules
 --Scripted by Larry126
 if not DivineHierarchy then
 	DivineHierarchy = {}
@@ -40,7 +40,7 @@ if not DivineHierarchy then
 		ep:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ep:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 		ep:SetRange(LOCATION_MZONE)
-		ep:SetCode(EVENT_PHASE+PHASE_END)
+		ep:SetCode(EVENT_TURN_END)
 		ep:SetCondition(DivineHierarchy.stgcon)
 		ep:SetOperation(DivineHierarchy.stgop)
 		 --release limit

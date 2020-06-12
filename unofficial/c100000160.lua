@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e5)
 end
+s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)

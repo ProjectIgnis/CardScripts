@@ -1,7 +1,6 @@
 --教導の大神祇官
 --Maximus Dragma
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

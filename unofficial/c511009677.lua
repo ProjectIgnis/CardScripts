@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x574}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_BATTLED,true)

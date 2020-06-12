@@ -1,4 +1,4 @@
--- Double Evolution Pill (Skill Card)
+--Double Evolution Pill (Skill Card)
 local s,id=GetID()
 function s.initial_effect(c)
 	--skill
@@ -20,7 +20,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 	--opd register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
-	--Pay LP 
+	--Pay LP
 	Duel.PayLPCost(tp,1500)
 	--draw replace
 	local dt=Duel.GetDrawCount(tp)

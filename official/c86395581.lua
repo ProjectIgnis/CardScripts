@@ -1,18 +1,10 @@
 --風霊媒師ウィン
 --Wynn the Wind Spirit Medium
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
-	--Always treated as a "Charmer" card
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_ADD_SETCODE)
-	e1:SetValue(0xbf)
-	c:RegisterEffect(e1)
+	c:AddSetcodesRule(0xbf)
 	--Discard this + WIND monster; add WIND monster with <= 1500 DEF, locked into WIND effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -103,4 +95,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-

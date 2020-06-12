@@ -13,11 +13,9 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	Duel.DiscardHand(tp,s.filter,1,1,REASON_COST+REASON_DISCARD)
 	local g1=Duel.IsPlayerCanDraw(tp,2)
-	
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
 	local g2=(Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) and ct>3)
-
 	local opt=0
 	if g1 and g2 then
 		opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))

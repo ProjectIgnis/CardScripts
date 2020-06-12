@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCondition(s.atkcon)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x247))
+	e2:SetTarget(s.atktg)
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -54,6 +54,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
+end
+function s.atktg(e,c)
+	return c:IsSetCard(0x247) and c:IsType(TYPE_FUSION)
 end
 function s.atkfil(c)
 	return c:IsFaceup() and c:IsSetCard(0x247) and c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_EFFECT)

@@ -98,7 +98,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 end
 --ritual
 function s.ritDiscardFilter(c,e,tp,m,ft)
-	  return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.ritfilter,tp,LOCATION_HAND,0,1,c,e,tp,m-c,ft)
+	return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.ritfilter,tp,LOCATION_HAND,0,1,c,e,tp,m-c,ft)
 end
 function s.ritual_filter(c)
 	return c:IsRitualMonster() and c:IsCode(64631466)

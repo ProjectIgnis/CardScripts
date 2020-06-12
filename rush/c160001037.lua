@@ -1,4 +1,5 @@
---Piercing! - 貫通！
+--貫通！
+--Piercing!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

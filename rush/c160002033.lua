@@ -1,10 +1,11 @@
+--デーモンの呼び笛
 --The Flute of Calling Daemon
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.condition)

@@ -37,7 +37,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 	end
-	
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLP(tp)<1 then

@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)	
 end
+s.listed_series={0x116}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x116,lc,sumtype,tp)
 end

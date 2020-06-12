@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.atkop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x52e}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(Card.IsPosition,1,nil,POS_FACEUP_DEFENSE) end
 	Duel.SetTargetCard(eg)

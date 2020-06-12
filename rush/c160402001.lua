@@ -34,9 +34,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--requirement
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST)
-	--effect
-	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local dam=Duel.GetFieldGroupCount(1-tp,LOCATION_ONFIELD,0)*400
-	Duel.Damage(p,dam,REASON_EFFECT)
+	if Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST)>0 then
+		--effect
+		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+		local dam=Duel.GetFieldGroupCount(1-tp,LOCATION_ONFIELD,0)*400
+		Duel.Damage(p,dam,REASON_EFFECT)
+	end
 end

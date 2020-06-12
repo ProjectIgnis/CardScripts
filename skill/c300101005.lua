@@ -1,9 +1,4 @@
---Tomb of the Pharaoh
---Skill activation
---At the start of the Duel, place this card in your Field Zone and flip it over.
---Effect
---This card's name is always treated as "Necrovalley".
---All "Gravekeeper's" monsters on the field gain 200 ATK/DEF.
+--Tomb of the Pharaoh (Skill Card)
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddFieldSkillProcedure(c,2,false)
@@ -12,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Atk&Def
+	--ATK/DEF increase
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -24,7 +19,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
-	--change name
+	--Change name
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)

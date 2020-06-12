@@ -1,6 +1,5 @@
 --アルカナ エクストラジョーカー
 --Arcana Extra Joker
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -90,4 +89,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

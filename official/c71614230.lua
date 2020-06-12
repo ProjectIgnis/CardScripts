@@ -1,12 +1,13 @@
+--ケンドウ魂ＫＡＩ－ＤＥＮ
 --Kai-Den Kendo Spirit
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum Summon
 	Pendulum.AddProcedure(c)
-	--spirit return
+	--Spirit return
 	aux.EnableSpiritReturn(c,EVENT_SUMMON_SUCCESS,EVENT_FLIP)
-	--to hand
+	--Return itself to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--gy
+	--Send to GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -49,7 +50,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	if #pg==0 then return end
 	local pc=nil
 	if #pg>1 then
-		pc=pg:Select(tp,1,1,nil)
+		pc=pg:Select(tp,1,1,nil):GetFirst()
 	else
 		pc=pg:GetFirst()
 	end
@@ -57,4 +58,3 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local g=pc:GetColumnGroup():Filter(Card.IsControler,nil,1-tp)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end
-

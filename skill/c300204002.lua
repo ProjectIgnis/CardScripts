@@ -16,8 +16,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	--opd register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
-	
-	
 	--decrease tribute
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)

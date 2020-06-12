@@ -17,7 +17,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	--cost
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
-	
+	--control
 	local c=e:GetHandler()
 	local g=Duel.SelectMatchingCard(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
 	if #g>0 then

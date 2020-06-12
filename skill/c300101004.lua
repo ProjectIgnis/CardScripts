@@ -37,7 +37,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
-	
 	--additional normal summon
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetDescription(aux.Stringid(id,2))

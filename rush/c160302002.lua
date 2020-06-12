@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--ATK/DEF decrease
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND)
+	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)

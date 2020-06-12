@@ -62,13 +62,7 @@ function s.initial_effect(c)
 	e7:SetTarget(s.destg)
 	e7:SetOperation(s.desop)
 	c:RegisterEffect(e7)
-	--Double Snare
-	local e8=Effect.CreateEffect(c)
-	e8:SetType(EFFECT_TYPE_SINGLE)
-	e8:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e8:SetRange(LOCATION_MZONE)
-	e8:SetCode(3682106)
-	c:RegisterEffect(e8)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_names={77585513}
 function s.disop(e,tp,eg,ep,ev,re,r,rp)

@@ -1,4 +1,5 @@
 --コアキメイル・サンドマン
+--Koa'ki Meiru Sandman
 local s,id=GetID()
 function s.initial_effect(c)
 	--cost
@@ -24,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_names={36623431}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)

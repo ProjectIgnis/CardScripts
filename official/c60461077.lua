@@ -1,4 +1,5 @@
 --剛鬼ライジングスコーピオ
+--Gouki Riscorpio
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with no tribute

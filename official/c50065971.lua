@@ -1,4 +1,5 @@
 --超重忍者シノビ－Ａ・Ｃ
+--Superheavy Samurai Stealth Ninja
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0x9a)

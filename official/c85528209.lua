@@ -1,4 +1,5 @@
 --超重魔獣キュウ－B
+--Superheavy Samurai Beast Kyubi
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0x9a)
@@ -6,20 +7,20 @@ function s.initial_effect(c)
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,0x9a),1,99)
 	c:EnableReviveLimit()
 	--defense attack
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_DEFENSE_ATTACK)
+	e1:SetValue(1)
+	c:RegisterEffect(e1)
+	--DEF increase
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_DEFENSE_ATTACK)
-	e2:SetValue(1)
+	e2:SetCode(EFFECT_UPDATE_DEFENSE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(s.sccon)
+	e2:SetValue(s.adval)
 	c:RegisterEffect(e2)
-	--
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_UPDATE_DEFENSE)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.sccon)
-	e3:SetValue(s.adval)
-	c:RegisterEffect(e3)
 end
 s.listed_series={0x9a}
 function s.sccon(e)

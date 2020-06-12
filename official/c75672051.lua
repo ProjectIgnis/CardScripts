@@ -1,4 +1,5 @@
 --黒牙の魔術師
+--Black Fang Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0x2073)
@@ -48,7 +49,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return r&REASON_EFFECT+REASON_BATTLE~=0
+	return r&(REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

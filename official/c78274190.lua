@@ -1,4 +1,5 @@
 --超重輝将サン－5
+--Superheavy Samurai General Coral
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0x9a)

@@ -1,3 +1,4 @@
+--サブテラーの刀匠
 --Subterror Nemesis Defender
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,4 +1,5 @@
 --超重忍者サルト－B
+--Superheavy Samurai Ninja Sarutobi
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0x9a)

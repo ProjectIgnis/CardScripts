@@ -1,7 +1,8 @@
 --悲劇の引き金
+--Remote Revenge
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -31,7 +32,7 @@ end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	local tf=re:GetTarget()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.CheckChainTarget(ev,tc) then
+	if tc and tc:IsRelateToEffect(e) and Duel.CheckChainTarget(ev,tc) then
 		local g=Group.FromCards(tc)
 		Duel.ChangeTargetCard(ev,g)
 	end

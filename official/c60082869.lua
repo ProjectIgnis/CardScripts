@@ -1,4 +1,5 @@
 --砂塵の大竜巻
+--Dust Tornado
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

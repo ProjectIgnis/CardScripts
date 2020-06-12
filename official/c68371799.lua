@@ -1,4 +1,5 @@
 --デーモンの将星
+--Archfiend Commander
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

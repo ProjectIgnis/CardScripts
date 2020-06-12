@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon procedure
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,false,false,101102014,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x247),2)
+	Fusion.AddProcMixN(c,true,true,101102014,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x247),2)
 	--Activation limit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

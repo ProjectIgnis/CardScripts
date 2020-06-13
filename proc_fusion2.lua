@@ -64,7 +64,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					end
 					if gc and not mg1:Includes(gc) then return false end
 					Fusion.CheckAdditional=checkAddition
-					mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil)
+					mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil):Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
 					Fusion.CheckExact=exactcount
 					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value,sumlimit)
 					Fusion.CheckAdditional=nil

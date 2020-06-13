@@ -1,5 +1,5 @@
 --ナチュル・ナーブ
---aturia Vein
+--Naturia Vein
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate

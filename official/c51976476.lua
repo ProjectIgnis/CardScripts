@@ -1,4 +1,5 @@
 --姑息な落とし穴
+--Double Trap Hole
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,7 +16,7 @@ function s.filter(c,e,tp)
 		and (not e or (c:IsRelateToEffect(e) and c:IsLocation(LOCATION_MZONE)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(s.filter,1,nil,nil,1-tp) end
+	if chk==0 then return eg and eg:IsExists(s.filter,1,nil,nil,1-tp) end
 	local g=eg:Filter(s.filter,nil,nil,1-tp)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)

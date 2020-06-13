@@ -304,7 +304,7 @@ function s.trapoperation(e,tp,eg,ep,ev,re,r,rp)
 		local tg=te:GetTarget()
 		local co=te:GetCost()
 		local op=te:GetOperation()
-		if te:IsActivatable(tp) then
+		if te and te:IsActivatable(tp) then
 			e:SetCategory(te:GetCategory())
 			e:SetProperty(te:GetProperty())
 			Duel.ClearTargetCard()

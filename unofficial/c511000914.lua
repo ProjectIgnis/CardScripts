@@ -40,11 +40,11 @@ end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,c) end
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	c:RegisterFlagEffect(e:GetFieldID(),RESET_CHAIN,0,1,c:GetFlagEffect(id))
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-	c:RegisterFlagEffect(e:GetFieldID(),RESET_CHAIN,0,1,c:GetFlagEffect(id))
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

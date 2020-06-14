@@ -1,10 +1,11 @@
 --トーテムバード
+--Totem Bird
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WIND),3,2)
 	c:EnableReviveLimit()
-	--negate activate
+	--Negate activation
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--atkdown
+	--ATK decrease
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -26,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.adcon)
 	e2:SetValue(-300)
 	c:RegisterEffect(e2)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)

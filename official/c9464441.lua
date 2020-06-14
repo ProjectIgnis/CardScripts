@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
-	--excavate
+	--Excavate and add to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--negate s/t or effect
+	--Negate Spell/Trap or effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4 end
@@ -52,10 +53,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SortDeckbottom(tp,tp,5)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
 		and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
 		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_WATER)
-		and ep==1-tp
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

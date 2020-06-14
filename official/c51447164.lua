@@ -1,4 +1,5 @@
 --TG ブレード・ガンナー
+--T.G. Blade Blaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	--Remove
+	--Banish this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE)
@@ -41,13 +42,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	--Double Snare
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(3682106)
-	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_series={0x27}
 s.synchro_tuner_required=1
@@ -71,7 +66,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.rmfilter(c)
 	return c:IsSetCard(0x27) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)

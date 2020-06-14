@@ -51,7 +51,6 @@ function s.initial_effect(c)
 	e6:SetTarget(s.thtg)
 	e6:SetOperation(s.thop)
 	c:RegisterEffect(e6)
-	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 	--Check for single Set
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)

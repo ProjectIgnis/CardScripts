@@ -1,5 +1,5 @@
 --焔聖騎士導-ローラン
---Flame Noble Knight Vanguard Roland
+--Infernoble Knight Vanguard - Roland
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro summon
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.regcon)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
-	--Equip from grave, quick-play
+	--Equip itself from grave (Quick)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -90,6 +90,7 @@ function s.equiptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
 function s.equipop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

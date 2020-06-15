@@ -46,13 +46,11 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetFirstTarget()
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ft2=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local att=0
 	for gc in aux.Next(Duel.GetMatchingGroup(s.cfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)) do
 		att=att|gc:GetAttribute()
 	end
-	if (att==0) or not (ft>0) then return end
+	if att==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,att):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then

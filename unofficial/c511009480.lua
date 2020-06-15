@@ -163,7 +163,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local og=Duel.GetOperatedGroup()
 		if not og:IsContains(tc) then mcount=0 end
 		for tc in aux.Next(og) do
-			oc:RegisterFlagEffect(CARD_GALAXYEYES_P_DRAGON,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			tc:RegisterFlagEffect(CARD_GALAXYEYES_P_DRAGON,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 		og:KeepAlive()
 		local e1=Effect.CreateEffect(c)

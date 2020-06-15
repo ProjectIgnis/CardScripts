@@ -35,7 +35,6 @@ end
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	if #sg>maxc then return false end
 	filt=filt or {}
-	local oldfilt={table.unpack(filt)}
 	sg:AddCard(c)
 	for _,filt in ipairs(filt) do
 		if not filt[2](c,filt[3],tp,sg,mg,lc,filt[1],1) then
@@ -47,19 +46,16 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 		res=aux.CheckValidExtra(c,tp,sg,mg,lc,emt,filt)
 		if not res then
 			sg:RemoveCard(c)
-			filt={table.unpack(oldfilt)}
 			return false
 		end
 	end
 	local res=Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
-		or (#sg<maxc and mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt))
+		or (#sg<maxc and mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)}))
 	sg:RemoveCard(c)
-	filt={table.unpack(oldfilt)}
 	return res
 end
 function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	if #sg>maxc then return false end
-	local oldfilt={table.unpack(filt)}
 	sg:AddCard(c)
 	for _,filt in ipairs(filt) do
 		if not filt[2](c,filt[3],tp,sg,mg,lc,filt[1],1) then
@@ -71,7 +67,6 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 		res=aux.CheckValidExtra(c,tp,sg,mg,lc,emt,filt)
 		if not res then
 			sg:RemoveCard(c)
-			filt={table.unpack(oldfilt)}
 			return false
 		end
 	end

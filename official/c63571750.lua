@@ -1,4 +1,5 @@
 --王家の財宝
+--Pharaoh's Treasure
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_DECK_REVERSE_CHECK)
@@ -19,7 +20,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	c:CancelToGrave()
-	Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(c,tp,2,REASON_EFFECT)
 	Duel.ShuffleDeck(tp)
 	c:ReverseInDeck()
 	local e1=Effect.CreateEffect(c)

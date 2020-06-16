@@ -1401,7 +1401,7 @@ function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 			end
 		end
-		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(c,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 		local te=c:GetActivateEffect()
 		te:UseCountLimit(tp,1,true)
 		local tep=c:GetControler()
@@ -1420,6 +1420,17 @@ function Duel.IsBattlePhase()
 end
 function Duel.IsTurnPlayer(player)
 	return Duel.GetTurnPlayer()==player
+end
+function Auxiliary.DoubleSnareValidity(c,range,property)
+	if c then
+		if not property then property=0 end
+		local eff=Effect.CreateEffect(c)
+		eff:SetType(EFFECT_TYPE_SINGLE)
+		eff:SetProperty(EFFECT_FLAG_CANNOT_DISABLE|EFFECT_FLAG_SINGLE_RANGE|property)
+		eff:SetRange(range)
+		eff:SetCode(3682106)
+		c:RegisterEffect(eff)
+	end
 end
 
 Duel.LoadScript("cards_specific_functions.lua")

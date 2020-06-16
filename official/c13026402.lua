@@ -1,4 +1,5 @@
 --トラップ処理班 Aチーム
+--A-Team: Trap Disposal Unit
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp~=tp

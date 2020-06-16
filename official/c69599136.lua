@@ -1,4 +1,5 @@
 --底なし落とし穴
+--Floodgate Trap Hole
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,7 +22,7 @@ function s.filter(c,tp)
 	return c:IsFaceup() and not c:IsSummonPlayer(tp) and c:IsCanTurnSet()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(s.filter,1,nil,tp) end
+	if chk==0 then return eg and eg:IsExists(s.filter,1,nil,tp) end
 	local g=eg:Filter(s.filter,nil,tp)
 	Duel.SetTargetCard(g)
 end

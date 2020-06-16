@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Link summon
 	Link.AddProcedure(c,s.matfilter,1,1)
 	c:EnableReviveLimit()
-	--negate
+	--Negate Trap Card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_series={0x135}
 function s.matfilter(c,lc,sumtype,tp)

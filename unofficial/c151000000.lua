@@ -156,7 +156,7 @@ if not ActionDuel then
 			end
 			-- move to field
 			if Duel.CheckLocation(tc:GetOwner(),LOCATION_FZONE,0) then
-				Duel.MoveToField(tc,tc:GetOwner(),tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,true)
+				Duel.MoveToField(tc,tc:GetOwner(),tc:GetOwner(),LOCATION_FZONE,POS_FACEUP,true)
 			else
 				Duel.SendtoDeck(tc,nil,-2,REASON_RULE)
 			end
@@ -166,7 +166,7 @@ if not ActionDuel then
 		local c=e:GetLabelObject()
 		local tp=c:GetControler()
 		if Duel.CheckLocation(tp,LOCATION_FZONE,0) then
-			Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			Duel.MoveToField(c,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 		end
 	end
 	------------------------------------------------------------------------------

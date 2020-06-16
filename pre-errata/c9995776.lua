@@ -19,5 +19,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.infilter(e,c)
-	return (c:GetType()&0x20004)==0x20004 and c:GetCode()~=id
+	return (c:GetType()&0x20004)==0x20004 and c:GetOriginalCode()~=id
 end

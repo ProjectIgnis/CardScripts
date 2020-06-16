@@ -63,7 +63,7 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
-	if #g>0 then
+	if g and #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 	g:DeleteGroup()

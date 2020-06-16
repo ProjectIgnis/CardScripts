@@ -1,4 +1,5 @@
 --光と闇の竜
+--Light and Darkness Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -39,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.tgspsum)
 	e4:SetOperation(s.opspsum)
 	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.codisable(e,tp,eg,ep,ev,re,r,rp)
 	return (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsActiveType(TYPE_MONSTER))

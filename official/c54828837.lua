@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.ndcon)
 	e4:SetOperation(s.ndop)
 	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 end
 s.listed_names={6007213,32491822,69890967}
 function s.cfilter(c)

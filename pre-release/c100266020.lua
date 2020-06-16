@@ -3,7 +3,7 @@
 --scripted by King Yamato and Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate "Numeron Network"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon and end Battle Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -31,8 +31,8 @@ s.listed_names={100266020,CARD_NUMERON_NETWORK}
 function s.filter(c)
 	return not (c:IsFaceup() and c:IsCode(100266020))
 end
-function s.field(c)
-	return c:IsCode(CARD_NUMERON_NETWORK) and not c:IsForbidden()
+function s.field(c,tp)
+	return c:IsCode(CARD_NUMERON_NETWORK) and c:GetActivateEffect():IsActivatable(tp,true,true) and not c:IsForbidden()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0 or not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -43,7 +43,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.field,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.field,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,tp) end
 	if not Duel.CheckPhaseActivity() then Duel.RegisterFlagEffect(tp,CARD_MAGICAL_MIDBREAKER,RESET_CHAIN,0,1) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

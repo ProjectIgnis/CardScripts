@@ -97,7 +97,7 @@ end
 function Auxiliary.fieldop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DisableShuffleCheck(true)
 	p=e:GetHandler():GetControler()
-	Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEDOWN,true)
+	Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_FZONE,POS_FACEDOWN,true)
 	Duel.ChangePosition(e:GetHandler(),POS_FACEUP)
 	if e:GetHandler():IsPreviousLocation(LOCATION_HAND) then 
 		Duel.Draw(p,1,REASON_RULE)

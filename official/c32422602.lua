@@ -1,5 +1,5 @@
 --戦華の智－諸葛孔
---Senka Strategist – Zhuge Kong
+--Ancient Warriors - Ingenious Zhuge Kong
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,id+2)
 	e3:SetCondition(s.negcon2)
 	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_names={40428851}
 s.listed_series={0x137}

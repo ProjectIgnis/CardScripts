@@ -1,3 +1,4 @@
+--緊急回避
 --Emergency Evasion
 local s,id=GetID()
 function s.initial_effect(c)

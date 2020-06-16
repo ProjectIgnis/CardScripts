@@ -1401,7 +1401,7 @@ function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 			end
 		end
-		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(c,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 		local te=c:GetActivateEffect()
 		te:UseCountLimit(tp,1,true)
 		local tep=c:GetControler()

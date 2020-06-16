@@ -1,5 +1,5 @@
---ヌメロン・ネットワーク
---Numeron Network
+--ヌメロン・ネットワーク (Anime)
+--Numeron Network (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -64,7 +64,7 @@ end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c then
-		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(c,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 		Duel.RaiseEvent(c,EVENT_CHAIN_SOLVED,c:GetActivateEffect(),0,tp,tp,Duel.GetCurrentChain())
 	end
 end

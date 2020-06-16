@@ -1,4 +1,5 @@
---Parasite Magic
+--パラサイト・マジック
+--Parasite Spell
 --fixed by MLD
 Duel.LoadScript("c420.lua")
 local s,id=GetID()

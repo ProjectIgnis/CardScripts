@@ -1,3 +1,4 @@
+--Ｔｈｅ ｓｕｐｐｒｅｓｓｉｏｎ ＰＬＵＴＯ
 --The Suppression Pluto
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,7 +37,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			if tc:IsType(TYPE_MONSTER) then
 				Duel.GetControl(tc,tp)
 			else
-				Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,tc:GetPosition(),true)
+				local loc=LOCATION_SZONE
+				if tc:IsType(TYPE_FIELD) then
+					loc=LOCATION_FZONE
+				end
+				Duel.MoveToField(tc,tp,tp,loc,tc:GetPosition(),true)
 			end
 		end
 	end

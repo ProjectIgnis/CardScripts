@@ -57,7 +57,9 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	if tc then
+		local loc=LOCATION_SZONE
 		if (tpe&TYPE_FIELD)~=0 then
+			loc=LOCATION_FZONE
 			local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
 			if Duel.GetFlagEffect(tp,62765383)>0 then
 				if fc then Duel.Destroy(fc,REASON_RULE) end
@@ -68,7 +70,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 				if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 			end
 		end
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 		Duel.RaiseEvent(tc,EVENT_CHAIN_SOLVED,tc:GetActivateEffect(),0,tp,tp,Duel.GetCurrentChain())
 	end
 end

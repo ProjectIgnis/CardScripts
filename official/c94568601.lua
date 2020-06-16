@@ -42,13 +42,7 @@ function s.initial_effect(c)
 	e5:SetCost(s.spcost)
 	e5:SetOperation(s.spcop)
 	c:RegisterEffect(e5)
-	--Double Snare
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetCode(3682106)
-	c:RegisterEffect(e6)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.distg(e,c)
 	if not c:IsType(TYPE_TRAP) or c:GetCardTargetCount()==0 then return false end

@@ -4,17 +4,17 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_DETACH_EVENT)
-	--link summon
+	--Link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.mfilter,2,nil,s.matcheck)
-	--cannot be link material
+	--Cannot be link material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--xyz summon
+	--Xyz summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--destroy
+	--Flag check
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetOperation(aux.chainreg)
 	c:RegisterEffect(e3)
+	--Destroy
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_DESTROY)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -44,6 +45,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 	if not s.global_check then
 		s.global_check=true
 		s[0]=nil

@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--disable
+	--Negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.negcon)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
-	--damage
+	--Inflict Damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DAMAGE)
@@ -29,13 +29,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
-	--Double Snare
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(3682106)
-	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 end
 s.listed_series={0xaf}
 function s.cfilter(c)

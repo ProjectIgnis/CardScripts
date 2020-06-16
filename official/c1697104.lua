@@ -22,13 +22,14 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_names={CARD_PSYFRAME_DRIVER}
 function s.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return ep==1-tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 		and (Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 or Duel.IsPlayerAffectedByEffect(tp,CARD_PSYFRAME_LAMBDA))
 end
 function s.spfilter(c,e,tp)

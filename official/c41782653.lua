@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_series={0x10e}
 function s.spfilter(c)

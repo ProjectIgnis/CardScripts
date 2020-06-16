@@ -57,6 +57,7 @@ function s.initial_effect(c)
 	e6:SetTarget(s.thtg)
 	e6:SetOperation(s.thop)
 	c:RegisterEffect(e6)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.counter_place_list={COUNTER_SPELL}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,4 +1,5 @@
 --ZW－荒鷲激神爪
+--ZW - Eagle Claw
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -30,13 +31,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.negcon)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
-	--Double Snare
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(3682106)
-	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 end
 s.listed_series={0x107f}
 function s.spcon(e,c)

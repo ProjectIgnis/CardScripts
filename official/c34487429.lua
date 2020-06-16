@@ -1,4 +1,5 @@
 --虹の古代都市－レインボー・ルイン
+--Ancient City - Rainbow Ruins
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -59,6 +60,7 @@ function s.initial_effect(c)
 	e6:SetCondition(s.rdcon)
 	e6:SetOperation(s.rdop)
 	c:RegisterEffect(e6)
+	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 end
 s.listed_series={0x1034}
 function s.desrepcon(e)

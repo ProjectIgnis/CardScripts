@@ -1,5 +1,6 @@
 --ネフティスの鳳凰神
---Sacred Phoenix of Nephthys
+--Sacred Phoenix of Nephthys (GOAT)
+--Doesn't resurrect if destroyed while equipped
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -33,7 +34,7 @@ function s.initial_effect(c)
 end
 function s.spr(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if (r&REASON_DESTROY|REASON_EFFECT)~=(REASON_DESTROY|REASON_EFFECT) then return end
+	if (r&REASON_DESTROY|REASON_EFFECT)~=(REASON_DESTROY|REASON_EFFECT) or c:IsPreviousLocation(LOCATION_SZONE) then return end
 	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
 		e:SetLabel(Duel.GetTurnCount())
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,2)

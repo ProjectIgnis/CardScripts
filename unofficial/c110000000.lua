@@ -115,7 +115,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	local tc2=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
 	if tc==nil then
-		Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 		if tc2==nil then
 			local token=Duel.CreateToken(tp,id,nil,nil,nil,nil,nil,nil)
 			local e1=Effect.CreateEffect(e:GetHandler())
@@ -125,7 +125,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp,chk)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 			e1:SetValue(TYPE_SPELL+TYPE_FIELD)
 			token:RegisterEffect(e1)
-			Duel.MoveToField(token,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true)
+			Duel.MoveToField(token,tp,1-tp,LOCATION_FZONE,POS_FACEUP,true)
 		end
 	else
 		Duel.SendtoDeck(e:GetHandler(),nil,-2,REASON_EFFECT)

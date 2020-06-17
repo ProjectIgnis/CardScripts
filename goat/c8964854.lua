@@ -1,6 +1,7 @@
 --コンビネーション・アタック
 --Combination Attack (GOAT)
 --If a replay occurred, the monster can be targeted
+--Can summon an union equipped by Union Rider as well
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,7 +23,7 @@ function s.filter(c,e,tp)
 end
 function s.eqfilter(c,e,tp,ec)
 	local op=c:GetOwner()
-	return c:IsHasEffect(EFFECT_UNION_STATUS) and c:GetEquipTarget()==ec
+	return (c:IsHasEffect(EFFECT_UNION_STATUS) or c:GetFlagEffect(11743119)~=0) and c:GetEquipTarget()==ec
 		and Duel.GetLocationCount(op,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,op)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

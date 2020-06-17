@@ -1,5 +1,6 @@
 --超再生能力
---Super Rejuvenation
+--Super Rejuvenation (GOAT)
+--Monsters tributed by the opponent on your field count among yours
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,11 +33,9 @@ end
 function s.addcount(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
 		local pl=tc:GetPreviousLocation()
-		if pl==LOCATION_MZONE and tc:GetPreviousRaceOnField()==RACE_DRAGON then
-			local p=tc:GetReasonPlayer()
-			s[p]=s[p]+1
-		elseif pl==LOCATION_HAND and tc:IsType(TYPE_MONSTER) and tc:GetOriginalRace()==RACE_DRAGON then
-			local p=tc:GetPreviousControler()
+		local p=tc:GetPreviousControler()
+		if (pl==LOCATION_MZONE and tc:GetPreviousRaceOnField()==RACE_DRAGON)
+			or (pl==LOCATION_HAND and tc:IsType(TYPE_MONSTER) and tc:GetOriginalRace()==RACE_DRAGON) then
 			s[p]=s[p]+1
 		end
 	end

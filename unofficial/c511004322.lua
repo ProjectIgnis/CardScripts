@@ -1,7 +1,7 @@
 --Concentration Duel
 local s,id=GetID()
 function s.initial_effect(c)
-	--protection
+	--Protection
 	local ea=Effect.CreateEffect(c)
 	ea:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	ea:SetType(EFFECT_TYPE_SINGLE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	eb:SetCode(EFFECT_CANNOT_TO_HAND)
 	c:RegisterEffect(eb)
 	local ec=ea:Clone()
-	ec:SetCode(EFFECT_CANNOT_TO_DECK) 
+	ec:SetCode(EFFECT_CANNOT_TO_DECK)
 	c:RegisterEffect(ec)
 	local ed=ea:Clone()
 	ed:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -230,7 +230,9 @@ function s.spelloperation(e,tp,eg,ep,ev,re,r,rp)
 			e:SetCategory(te:GetCategory())
 			e:SetProperty(te:GetProperty())
 			Duel.ClearTargetCard()
+			local loc=LOCATION_SZONE
 			if (tpe&TYPE_FIELD)~=0 then
+				loc=LOCATION_FZONE
 				local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
 				if Duel.GetFlagEffect(tp,62765383)>0 then
 					if fc then Duel.Destroy(fc,REASON_RULE) end
@@ -242,7 +244,7 @@ function s.spelloperation(e,tp,eg,ep,ev,re,r,rp)
 				end
 			end
 			Duel.DisableShuffleCheck()
-			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 			Duel.Hint(HINT_CARD,0,tc:GetCode())
 			tc:CreateEffectRelation(te)
 			if co then co(te,tp,eg,ep,ev,re,r,rp,1) end

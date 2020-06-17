@@ -1,3 +1,4 @@
+--緊急回避
 --Emergency Evasion
 local s,id=GetID()
 function s.initial_effect(c)
@@ -77,7 +78,7 @@ function s.drcon1(e,c,og)
 	return Duel.IsPlayerCanDraw(tp,1) and c:GetFlagEffect(511001749)==0
 end
 function s.retfilter(c,tp,tpe)
-	return c:GetFlagEffect(id)>0 and c:IsLocation(LOCATION_REMOVED) and c:IsType(tpe) 
+	return c:GetFlagEffect(id)>0 and c:IsLocation(LOCATION_REMOVED) and c:IsType(tpe)
 		and (Duel.GetLocationCount(tp,c:GetPreviousLocation())>0 or c:IsType(TYPE_FIELD))
 end
 function s.drop1(e,tp,eg,ep,ev,re,r,rp,c,og)

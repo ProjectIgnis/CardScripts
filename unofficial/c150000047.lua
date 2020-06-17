@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
-	if re:GetHandler():IsRelateToEffect(re) then
+	if re and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end

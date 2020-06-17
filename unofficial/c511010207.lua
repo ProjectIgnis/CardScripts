@@ -1,7 +1,6 @@
 --ＣＮｏ.１０７ 超銀河眼の時空龍 (Anime)
 --Number C107: Neo Galaxy-Eyes Tachyon Dragon (Anime)
---Scripted By TheOnePharaoh
---Fixed by MLD & Larry126
+--Scripted By TheOnePharaoh, fixed by MLD & Larry126
 Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c68396121.lua")
 local s,id=GetID()
@@ -27,13 +26,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 	--Double Snare
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(3682106)
-	c:RegisterEffect(e3)
-	--triple attacks
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
+	--Three attacks
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_IGNITION)
@@ -142,7 +136,11 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		elseif rc:GetFlagEffectLabel(id+1)==LOCATION_EXTRA then
 			Duel.SendtoDeck(rc,rc:GetFlagEffectLabel(511010209),0,REASON_EFFECT)
 		else
-			Duel.MoveToField(rc,rc:GetFlagEffectLabel(511010209),rc:GetFlagEffectLabel(511010209),rc:GetFlagEffectLabel(id+1),rc:GetFlagEffectLabel(511010210),true)
+			local loc=rc:GetFlagEffectLabel(id+1)
+			if rc:IsType(TYPE_FIELD) then
+				loc=LOCATION_FZONE
+			end
+			Duel.MoveToField(rc,rc:GetFlagEffectLabel(511010209),rc:GetFlagEffectLabel(511010209),loc,rc:GetFlagEffectLabel(511010210),true)
 			if rc:GetSequence()~=rc:GetFlagEffectLabel(511010211) then
 				Duel.MoveSequence(rc,rc:GetFlagEffectLabel(511010211))
 			end

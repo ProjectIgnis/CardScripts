@@ -1,6 +1,4 @@
 --ウェポンチェンジ
---Weapon Change (GOAT)
---The atk/def is still linked to the spell
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -48,16 +46,13 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(def)
-		e1:SetCondition(s.con)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
 		tc:RegisterEffect(e1)
-		local e2=e1:Clone()
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
 		e2:SetValue(atk)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
 		tc:RegisterEffect(e2)
 	end
-end
-function s.con(e)
-	if not e:GetOwner():IsLocation(LOCATION_SZONE) then e:Reset() return false end
-	return not e:GetOwner():IsDisabled()
 end

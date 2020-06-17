@@ -1,5 +1,5 @@
---Dododo Witch (Anime)
 --ドドドウィッチ (Anime)
+--Dododo Witch (Anime)
 --Script by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,15 +16,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
-
 function s.chainfilter(re,tp,cid)
 	return not ((re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)) or (re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP)))
 end
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_SZONE,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE,0xff)>0 and Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)==0
+	return Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_SZONE,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE,0xff)>0
+		and Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)==0
 end
-
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -36,12 +34,10 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE,0xff)==0 or not e:GetHandler():IsLocation(LOCATION_HAND) then return end
 	Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 end
-
 function s.aclimit(e,re,tp)
 	return re:IsActiveType(TYPE_SPELL) or re:IsActiveType(TYPE_TRAP)
 end

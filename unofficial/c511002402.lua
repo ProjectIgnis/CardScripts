@@ -1,4 +1,5 @@
---Reptia Egg
+--レプティア・エッグ (Anime)
+--Reptia Egg (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--register

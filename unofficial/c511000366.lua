@@ -1,4 +1,5 @@
---Samsara Dragon
+--輪廻竜サンサーラ (Anime)
+--Samsara Dragon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--revive 

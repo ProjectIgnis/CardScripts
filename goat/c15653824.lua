@@ -1,4 +1,7 @@
 --スカル・ナイト
+--Skull Knight #2 (GOAT)
+--Triggers on tribute set as well
+--Missing proper triggering for the summoning player
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -11,12 +14,26 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e2:SetRange(0xff)
+	e2:SetCode(EVENT_MSET)
+	e2:SetCondition(s.spcon2)
+	c:RegisterEffect(e2)
 end
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if r~=REASON_SUMMON then return false end
 	local rc=e:GetHandler():GetReasonCard()
 	return rc:IsFaceup() and rc:IsRace(RACE_FIEND)
+end
+function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=eg:GetFirst()
+	if not tc:IsSummonType(SUMMON_TYPE_TRIBUTE) or not tc:GetMaterial():IsContains(c) 
+		or not c:IsReason(REASON_SUMMON) then return false end
+	return tc:IsRace(RACE_FIEND)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

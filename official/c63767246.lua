@@ -2,10 +2,10 @@
 --Number 38: Hope Harbinger Dragon Titanic Galaxy
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon
 	Xyz.AddProcedure(c,nil,8,2)
 	c:EnableReviveLimit()
-	--negate
+	--Negate a Spell
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	--change battle target
+	--Change attack target
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.cbcost)
 	e2:SetOperation(s.cbop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	--atk up
+	--ATK increase
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
@@ -100,12 +100,13 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			g=g:Select(tp,1,1,nil)
 		end
-		if g then
+		local ec=g:GetFirst()
+		if ec then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(g:GetFirst():GetBaseAttack())
+			e1:SetValue(ec:GetBaseAttack())
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		end

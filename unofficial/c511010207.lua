@@ -142,7 +142,11 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		elseif rc:GetFlagEffectLabel(id+1)==LOCATION_EXTRA then
 			Duel.SendtoDeck(rc,rc:GetFlagEffectLabel(511010209),0,REASON_EFFECT)
 		else
-			Duel.MoveToField(rc,rc:GetFlagEffectLabel(511010209),rc:GetFlagEffectLabel(511010209),rc:GetFlagEffectLabel(id+1),rc:GetFlagEffectLabel(511010210),true)
+			local loc=rc:GetFlagEffectLabel(id+1)
+			if rc:IsType(TYPE_FIELD) then
+				loc=LOCATION_FZONE
+			end
+			Duel.MoveToField(rc,rc:GetFlagEffectLabel(511010209),rc:GetFlagEffectLabel(511010209),loc,rc:GetFlagEffectLabel(511010210),true)
 			if rc:GetSequence()~=rc:GetFlagEffectLabel(511010211) then
 				Duel.MoveSequence(rc,rc:GetFlagEffectLabel(511010211))
 			end

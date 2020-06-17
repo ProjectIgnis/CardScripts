@@ -1,3 +1,4 @@
+--上級魔術士の呪文詠唱
 --Master Magician's Incantation
 --original script by Shad3
 --Works perfectly for "EVENT_FREE_CHAIN" and "EVENT_CHAINING" spells only
@@ -88,7 +89,11 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ClearTargetCard()
 	e:SetProperty(te:GetProperty())
 	if tc:IsLocation(LOCATION_HAND) then
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		local loc=LOCATION_SZONE
+		if tc:IsType(TYPE_FIELD) then
+			loc=LOCATION_FZONE
+		end
+		Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 	else
 		Duel.ChangePosition(tc,POS_FACEUP)
 	end

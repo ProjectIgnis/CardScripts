@@ -34,7 +34,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			if (con and not con(te,1-tp,eg,ep,ev,re,r,rp)) or (co and not co(te,1-tp,eg,ep,ev,re,r,rp,0)) or (tg and not tg(te,1-tp,eg,ep,ev,re,r,rp,0)) 
 				or (not tc:IsType(TYPE_FIELD) and Duel.GetLocationCount(1-tp,LOCATION_SZONE)<=0) then return end
 			Duel.ClearTargetCard()
+			local loc=LOCATION_SZONE
 			if (tpe&TYPE_FIELD)~=0 then
+				loc=LOCATION_FZONE
 				local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
 				if Duel.IsDuelType(DUEL_1_FIELD) then
 					if fc then Duel.Destroy(fc,REASON_RULE) end
@@ -45,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 					if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 				end
 			end
-			Duel.MoveToField(tc,1-tp,1-tp,LOCATION_SZONE,POS_FACEUP,true)
+			Duel.MoveToField(tc,1-tp,1-tp,loc,POS_FACEUP,true)
 			Duel.Hint(HINT_CARD,0,tc:GetOriginalCode())
 			tc:CreateEffectRelation(te)
 			if (tpe&TYPE_EQUIP+TYPE_CONTINUOUS+TYPE_FIELD)==0 then

@@ -1,7 +1,8 @@
+--ジャンク・マイスター
 --Junk Meister
 local s,id=GetID()
 function s.initial_effect(c)
-	--
+	--Activate a "Junk" card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BATTLED)
@@ -27,6 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e:SetCategory(te:GetCategory())
 	e:SetProperty(te:GetProperty())
 	Duel.ClearTargetCard()
+	local loc=LOCATION_SZONE
 	if (tpe&TYPE_FIELD)~=0 then
 		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 		if fc then Duel.SendtoGrave(fc,REASON_RULE) end
@@ -34,8 +36,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
 			if fc and Duel.Destroy(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 		end
+		loc=LOCATION_FZONE
 	end
-	Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+	Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 	Duel.Hint(HINT_CARD,0,tc:GetCode())
 	tc:CreateEffectRelation(te)
 	if (tpe&TYPE_EQUIP+TYPE_CONTINUOUS+TYPE_FIELD)==0 then

@@ -54,7 +54,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
+	local loc=LOCATION_SZONE
+	if tc:IsType(TYPE_FIELD) then
+		loc=LOCATION_FZONE
+	end
+	if tc and Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true) then
 		--Untargetable
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

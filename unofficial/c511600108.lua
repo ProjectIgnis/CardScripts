@@ -10,7 +10,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x95}
 function s.filter(c,e,tp,eg,ep,ev,re,r,rp,b)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local te=c:CheckActivateEffect(false,false,false)
@@ -42,7 +41,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e:SetCategory(te:GetCategory())
 	e:SetProperty(te:GetProperty())
 	Duel.ClearTargetCard()
-	Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+	local loc=LOCATION_SZONE
+	if tc:IsType(TYPE_FIELD) then
+		loc=LOCATION_FZONE
+	end
+	Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 	if tpe&(TYPE_FIELD|TYPE_CONTINUOUS|TYPE_EQUIP)==0 and not tc:IsHasEffect(EFFECT_REMAIN_FIELD) then
 		tc:CancelToGrave(false)
 	end

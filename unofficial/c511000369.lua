@@ -139,6 +139,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		local loc=LOCATION_SZONE
 		if pzone==1 then loc=LOCATION_PZONE end
+		if tc:IsType(TYPE_FIELD) then loc=LOCATION_FZONE end
 		Duel.MoveToField(tc,tp,p,loc,pos,true,(1<<seq))
 		tc=sg2:GetNext()
 	end

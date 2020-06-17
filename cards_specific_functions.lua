@@ -293,25 +293,26 @@ function Auxiliary.MaleficUniqueFilter(cc)
 			end
 end
 --Procedure for Malefic monsters' Special Summon (includes handling of Malefic Paradox Gear)
-function Auxiliary.AddMaleficSummonProcedure(c,code,loc)
+function Auxiliary.AddMaleficSummonProcedure(c,code,loc,excon)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(Auxiliary.MaleficSummonCondition(code,loc))
+	e1:SetCondition(Auxiliary.MaleficSummonCondition(code,loc,excon))
 	e1:SetOperation(Auxiliary.MaleficSummonOperation(code,loc))
 	c:RegisterEffect(e1)
 end
 function Auxiliary.MaleficSummonFilter(c,cd)
-	return c:IsCode(cd) and c:IsAbleToRemoveAsCost()
+	return ((cd and c:IsCode(cd)) or (not cd and c:IsSetCard(0x23))) and c:IsAbleToRemoveAsCost()
 end
 function Auxiliary.MaleficSummonSubstitute(c,cd,tp)
 	return c:IsHasEffect(48829461,tp) and c:IsAbleToRemoveAsCost()
 end
-function Auxiliary.MaleficSummonCondition(cd,loc)
+function Auxiliary.MaleficSummonCondition(cd,loc,excon)
 	return 	function(e,c)
+				if excon and not excon(e,c) then return false end
 				if c==nil then return true end
 				return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 					and (Duel.IsExistingMatchingCard(Auxiliary.MaleficSummonFilter,c:GetControler(),loc,0,1,nil,cd)

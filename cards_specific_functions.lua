@@ -301,6 +301,7 @@ function Auxiliary.AddMaleficSummonProcedure(c,code,loc,excon)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(Auxiliary.MaleficSummonCondition(code,loc,excon))
+	e1:SetTarget(Auxiliary.MaleficSummonTarget(code,loc))
 	e1:SetOperation(Auxiliary.MaleficSummonOperation(code,loc))
 	c:RegisterEffect(e1)
 end
@@ -319,14 +320,27 @@ function Auxiliary.MaleficSummonCondition(cd,loc,excon)
 					or Duel.IsExistingMatchingCard(Auxiliary.MaleficSummonSubstitute,c:GetControler(),LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,cd,c:GetControler()))
 			end
 end
-function Auxiliary.MaleficSummonOperation(cd,loc)
-	return	function(e,tp,eg,ep,ev,re,r,rp,c)
+function Auxiliary.MaleficSummonTarget(cd,loc)
+	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c)
 				local g=Duel.GetMatchingGroup(Auxiliary.MaleficSummonFilter,tp,loc,0,nil,cd)
 				g:Merge(Duel.GetMatchingGroup(Auxiliary.MaleficSummonSubstitute,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,c:GetControler()))
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-				local tc=g:Select(tp,1,1,nil):GetFirst()
+				local sg=aux.SelectUnselectGroup(g,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
+				if #sg>0 then
+					sg:KeepAlive()
+					e:SetLabelObject(sg)
+					return true
+				end
+				return false
+			end
+end
+function Auxiliary.MaleficSummonOperation(cd,loc)
+	return	function(e,tp,eg,ep,ev,re,r,rp,c)
+				local g=e:GetLabelObject()
+				if not g then return end
+				local tc=g:GetFirst()
 				if tc:IsHasEffect(48829461,tp) then tc:IsHasEffect(48829461,tp):UseCountLimit(tp) end
 				Duel.Remove(tc,POS_FACEUP,REASON_COST)
+				g:DeleteGroup()
 			end
 end
 --Discard cost for Witchcrafter monsters, supports the replacements from the Continuous Spells

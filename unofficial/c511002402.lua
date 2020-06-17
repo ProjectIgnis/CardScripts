@@ -2,7 +2,7 @@
 --Reptia Egg (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--register
+	--Register
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.regcon)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.spcost)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
+	--Pyro Clock of Destiny
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SINGLE_RANGE)

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(0xf7)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
-	--damage
+	--Damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
-	--add counter
+	--Add counter
 	local e3=Effect.CreateEffect(c)
 	e3:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetTargetRange(1,1)
 	e4:SetValue(s.aclimit)
 	Duel.RegisterEffect(e4,tp)
-	--unaffectable
+	--Unaffectable
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
@@ -51,7 +51,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_IMMUNE_EFFECT)
 	e6:SetValue(s.ctcon2)
 	c:RegisterEffect(e6)
-	--cannot set
+	--Cannot set
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_FIELD)
 	e7:SetCode(EFFECT_CANNOT_SSET)
@@ -60,7 +60,7 @@ function s.initial_effect(c)
 	e7:SetTargetRange(1,1)
 	e7:SetTarget(s.aclimit2)
 	c:RegisterEffect(e7)
-	--lose counter
+	--Lose counter
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e8:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)

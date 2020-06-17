@@ -1,6 +1,6 @@
 --リメンバー・アタック
 --Remember Attack
---Scripted by Shad3, fixed ny MLD
+--Scripted by Shad3, fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -86,7 +86,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if op then op(te,tp,eg,ep,ev,re,r,rp) end
 		tc:ReleaseEffectRelation(te)
-		if etc then	
+		if etc then
 			etc=g:GetFirst()
 			while etc do
 				etc:ReleaseEffectRelation(te)

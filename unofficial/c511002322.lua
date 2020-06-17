@@ -30,11 +30,10 @@ function s.filter(c,tp)
 	if c:IsType(TYPE_FIELD) then
 		return c:CheckActivateEffect(true,true,true)~=nil and c:IsLocation(LOCATION_HAND)
 	elseif (c:GetType()&0x20002)==0x20002 then
-		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and (c:GetActivateEffect():IsActivatable(tp) 
+		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and (c:GetActivateEffect():IsActivatable(tp)
 			or c:CheckActivateEffect(true,true,true)~=nil)
 	end
 	return false
-	
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0x13,0,1,nil,tp) end
@@ -83,7 +82,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if op then op(te,tp,eg,ep,ev,re,r,rp) end
 		tc:ReleaseEffectRelation(te)
-		if etc then	
+		if etc then
 			etc=g:GetFirst()
 			while etc do
 				etc:ReleaseEffectRelation(te)

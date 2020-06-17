@@ -2,12 +2,12 @@
 --Kabuki Stage - Cherry Blossom Mountain
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--pos
+	--Change position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_POSITION)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--activate
+	--Activate
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_IGNITION)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.actg)
 	e4:SetOperation(s.acop)
 	c:RegisterEffect(e4)
-	--random attack
+	--Random attack
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e5:SetRange(LOCATION_SZONE)
@@ -101,13 +101,13 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if op then op(te,tp,eg,ep,ev,re,r,rp) end
 		tc:ReleaseEffectRelation(te)
-		if etc then	
+		if etc then
 			etc=g:GetFirst()
 			while etc do
 				etc:ReleaseEffectRelation(te)
 				etc=g:GetNext()
 			end
-		end 
+		end
 	end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

@@ -2,7 +2,7 @@
 --Scan Doll
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.acttg)
 	e1:SetOperation(s.actop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--ATK update
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(50449881,2))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -26,8 +26,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp, 1000) end
-	Duel.PayLPCost(tp, 1000)
+	if chk==0 then return Duel.CheckLPCost(tp,1000) end
+	Duel.PayLPCost(tp,1000)
 end
 function s.actfilter(c,tp)
 	return c:IsType(TYPE_TRAP) and c:GetActivateEffect():IsActivatable(1-tp)
@@ -77,7 +77,7 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			if op then op(te,1-tp,eg,ep,ev,re,r,rp) end
 			tc:ReleaseEffectRelation(te)
-			if etc then	
+			if etc then
 				etc=g:GetFirst()
 				while etc do
 					etc:ReleaseEffectRelation(te)
@@ -105,7 +105,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

@@ -107,8 +107,8 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if g then
 		local tgc=g:GetFirst()
 		while tgc do
-		  tgc:CreateEffectRelation(te)
-		  tgc=g:GetNext()
+			tgc:CreateEffectRelation(te)
+			tgc=g:GetNext()
 		end
 	end
 	tc:SetStatus(STATUS_ACTIVATED,true)
@@ -117,8 +117,8 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if g then
 		local tgc=g:GetFirst()
 		while tgc do
-		  tgc:ReleaseEffectRelation(te)
-		  tgc=g:GetNext()
+			tgc:ReleaseEffectRelation(te)
+			tgc=g:GetNext()
 		end
 	end
 end

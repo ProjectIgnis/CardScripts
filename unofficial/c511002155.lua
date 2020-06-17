@@ -2,9 +2,9 @@
 --Dark Alligator (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon with 4 tribute
+	--Summon with 4 tribute
 	local e1=aux.AddNormalSummonProcedure(c,true,true,4,4,SUMMON_TYPE_TRIBUTE+1,aux.Stringid(id,0))
-	--sp summon
+	--Special Summon tokens
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)

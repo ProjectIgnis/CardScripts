@@ -1,15 +1,13 @@
 --Ｎｏ．１００ ヌメロン・ドラゴン (Anime)
 --Number 100: Numeron Dragon (Anime)
---By Edo9300
---atkup fixed by eclair
---forced trigger fixed by MLD
+--scripted by Edo9300, fixes by eclair and MLD
 Duel.LoadCardScript("c57314798.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,nil,1,2)
 	c:EnableReviveLimit()
-	--special summon
+	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -20,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--atk change
+	--ATK change (trigger)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -28,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-	--destroy and return
+	--Destroy and return
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DESTROY)
@@ -38,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	--attack up
+	--AtK increase
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_ATKCHANGE)
 	e4:SetDescription(aux.Stringid(id,2))
@@ -48,7 +46,7 @@ function s.initial_effect(c)
 	e4:SetCost(s.regcost)
 	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
-	--battle indestructable
+	--Cannot be destroyed by battle
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

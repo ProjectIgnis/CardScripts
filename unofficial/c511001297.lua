@@ -14,11 +14,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsBattleguard()
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunctio(Card.IsBattleguard),tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>=2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -65,7 +65,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			etc:CreateEffectRelation(te)
 		end
 	end
-	if op then 
+	if op then
 		if tc:IsSetCard(0x95) then
 			op(e,tp,eg,ep,ev,re,r,rp)
 		else

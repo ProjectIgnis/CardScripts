@@ -1,7 +1,7 @@
 --Concentration Duel
 local s,id=GetID()
 function s.initial_effect(c)
-	--protection
+	--Protection
 	local ea=Effect.CreateEffect(c)
 	ea:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	ea:SetType(EFFECT_TYPE_SINGLE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	eb:SetCode(EFFECT_CANNOT_TO_HAND)
 	c:RegisterEffect(eb)
 	local ec=ea:Clone()
-	ec:SetCode(EFFECT_CANNOT_TO_DECK) 
+	ec:SetCode(EFFECT_CANNOT_TO_DECK)
 	c:RegisterEffect(ec)
 	local ed=ea:Clone()
 	ed:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)

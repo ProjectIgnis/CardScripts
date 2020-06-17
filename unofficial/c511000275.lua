@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--activate opponent's turn
+	--Activate in the opponent's turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.actg)
 	e2:SetOperation(s.acop)
 	c:RegisterEffect(e2)
-	--no remove overlay
+	--No detach cost
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCondition(s.rcon)
 	c:RegisterEffect(e3)
-	--activate opponent's turn
+	--Activate in the opponent's turn
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(12079734,0))
 	e4:SetType(EFFECT_TYPE_QUICK_O)

@@ -1,7 +1,6 @@
 --ＣＮｏ.１０７ 超銀河眼の時空龍 (Anime)
 --Number C107: Neo Galaxy-Eyes Tachyon Dragon (Anime)
---Scripted By TheOnePharaoh
---Fixed by MLD & Larry126
+--Scripted By TheOnePharaoh, fixed by MLD & Larry126
 Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c68396121.lua")
 local s,id=GetID()
@@ -27,13 +26,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 	--Double Snare
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(3682106)
-	c:RegisterEffect(e3)
-	--triple attacks
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
+	--Three attacks
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_IGNITION)

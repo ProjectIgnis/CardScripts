@@ -37,8 +37,11 @@ function s.initial_effect(c)
 end
 s.listed_series={0x574}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800)
-	else Duel.PayLPCost(tp,800)	end
+	if chk==0 then
+		return Duel.CheckLPCost(tp,800)
+	else
+		Duel.PayLPCost(tp,800)
+	end
 end
 function s.filter(c,tp,eg,ep,ev,re,r,rp)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL)

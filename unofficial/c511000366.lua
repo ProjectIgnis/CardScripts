@@ -2,7 +2,7 @@
 --Samsara Dragon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--revive 
+	--Special summon from the Graveyard
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

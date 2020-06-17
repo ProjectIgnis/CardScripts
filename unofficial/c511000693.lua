@@ -1,3 +1,4 @@
+--手中掌握
 --Hand Control
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,7 +13,8 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
-	local ac=Duel.AnnounceCard(tp)
+	s.announce_filter={TYPE_SPELL,OPCODE_ISTYPE}
+	local ac=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
 	Duel.SetTargetParam(ac)
 	e:GetHandler():SetHint(CHINT_CARD,ac)
 	Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,ANNOUNCE_CARD)
@@ -62,16 +64,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			end
 			if op then op(te,1-tp,eg,ep,ev,re,r,rp) end
 			tc:ReleaseEffectRelation(te)
-			if etc then	
+			if etc then 
 				etc=g:GetFirst()
 				while etc do
 					etc:ReleaseEffectRelation(te)
 					etc=g:GetNext()
 				end
-			end
-		else
-			if tc:IsSummonable(true,nil) then
-				Duel.Summon(1-tp,tc,true,nil)
 			end
 		end
 	end

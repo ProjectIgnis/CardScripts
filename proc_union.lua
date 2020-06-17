@@ -20,7 +20,9 @@ function Auxiliary.AddUnionProcedure(c,f,oldequip,oldprotect)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCondition(Auxiliary.IsUnionState)
+	if oldequip then
+		e2:SetCondition(Auxiliary.IsUnionState)
+	end
 	e2:SetTarget(Auxiliary.UnionSumTarget(oldequip))
 	e2:SetOperation(Auxiliary.UnionSumOperation(oldequip))
 	c:RegisterEffect(e2)
@@ -29,7 +31,9 @@ function Auxiliary.AddUnionProcedure(c,f,oldequip,oldprotect)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetCode(EFFECT_DESTROY_SUBSTITUTE)
-	e3:SetCondition(Auxiliary.IsUnionState)
+	if oldprotect then
+		e3:SetCondition(Auxiliary.IsUnionState)
+	end
 	e3:SetValue(Auxiliary.UnionReplace(oldprotect))
 	c:RegisterEffect(e3)
 	--eqlimit

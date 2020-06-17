@@ -63,23 +63,17 @@ function s.initial_effect(c)
 	e6:SetOperation(s.disop)
 	c:RegisterEffect(e6)
 end
-
 --special summon condition
-
 function s.sumval(e,tp,eg,ep,ev,re,r,rp)	
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
 end
-
 --special summon proc
-
 function s.cfilter(c)
 	return c:GetSequence()<5
 end
-
 function s.pfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsRace(RACE_DRAGON)
 end
-
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -88,11 +82,9 @@ function s.spcon(e,c)
 	return (#g>0 or #rg>0) and g:FilterCount(Card.IsReleasable,nil)==#g and #g>0 and g:IsExists(s.pfilter,1,nil)
 		and g:FilterCount(s.cfilter,nil)+Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
-
 function s.matfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsType(TYPE_PENDULUM)
 end
-
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetReleaseGroup(tp)
 	local o=Group.FilterCount(g,s.matfilter,nil)
@@ -100,19 +92,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Release(g,REASON_COST)
 	e:GetHandler():RegisterFlagEffect(id,0,0,0)
 end
-
 --atk change for non direct attack
-
 function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
 	return e:GetHandler():GetFlagEffect(id)~=0 and tc and tc:IsFaceup()
 end
-
 function s.atktg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return e:GetHandler():GetBattleTarget()~=nil end
 	e:GetHandler():GetBattleTarget():CreateEffectRelation(e)
 end
-
 function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
@@ -138,27 +126,21 @@ function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 		end
 end
-
 function s.atkupval(e,tp,eg,ep,ev,re,r,rp)
 	local v=e:GetLabelObject():GetLabel()	
 	return v*1000
 end
-
 function s.atkdownval(e,tp,eg,ep,ev,re,r,rp)
 	local v=e:GetLabelObject():GetLabel()
 	return -v*1000
 end
-
 --atk change for direct attack
-
 function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
-
 function s.atktg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return e:GetHandler():GetBattleTarget()==nil end
 end
-
 function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
@@ -174,13 +156,10 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)	
 	end
 end
-
 --skip turn
-
 function s.skipcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst()==e:GetHandler()
 end
-
 function s.skipop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.SkipPhase(tp,PHASE_BATTLE,RESET_PHASE+PHASE_END,1)
@@ -212,44 +191,36 @@ function s.skipop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_PHASE+PHASE_MAIN1+RESET_SELF_TURN)
 	Duel.RegisterEffect(e2,tp)
 end
-
 --negate
-
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	return ep~=tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
 end
 
-function s.disfilter(c)
-	return c:IsAbleToGraveAsCost()
-end
-
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.disfilter,tp,LOCATION_SZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_SZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.disfilter,tp,LOCATION_SZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_SZONE,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
-
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
-
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-    local tc=re:GetHandler()
+	local tc=re:GetHandler()
 	local x
 	if tc:IsOnField() then x=true end
 	if not tc:IsOnField() then x=false end
-    if Duel.NegateActivation(ev) and tc:IsSSetable() then
-	if tc:IsFaceup() and x==true then
-		tc:CancelToGrave()
-        Duel.ChangePosition(tc,POS_FACEDOWN)
-        Duel.RaiseEvent(tc,EVENT_SSET,e,REASON_EFFECT,1-tp,1-tp,0)
-	end
-	if x==false then
-	Duel.SSet(1-tp,tc)
-    Duel.RaiseEvent(tc,EVENT_SSET,e,REASON_EFFECT,1-tp,1-tp,0)
+ 	if Duel.NegateActivation(ev) and tc:IsSSetable() then
+		if tc:IsFaceup() and x==true then
+			tc:CancelToGrave()
+			Duel.ChangePosition(tc,POS_FACEDOWN)
+			Duel.RaiseEvent(tc,EVENT_SSET,e,REASON_EFFECT,1-tp,1-tp,0)
+		end
+		if x==false then
+		Duel.SSet(1-tp,tc)
+		Duel.RaiseEvent(tc,EVENT_SSET,e,REASON_EFFECT,1-tp,1-tp,0)
 	end
 end
 local e1=Effect.CreateEffect(e:GetHandler())

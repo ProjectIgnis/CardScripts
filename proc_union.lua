@@ -20,7 +20,7 @@ function Auxiliary.AddUnionProcedure(c,f,oldequip,oldprotect)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCondition(Auxiliary.UnionSumCondition)
+	e2:SetCondition(Auxiliary.IsUnionState)
 	e2:SetTarget(Auxiliary.UnionSumTarget(oldequip))
 	e2:SetOperation(Auxiliary.UnionSumOperation(oldequip))
 	c:RegisterEffect(e2)
@@ -29,6 +29,7 @@ function Auxiliary.AddUnionProcedure(c,f,oldequip,oldprotect)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetCode(EFFECT_DESTROY_SUBSTITUTE)
+	e3:SetCondition(Auxiliary.IsUnionState)
 	e3:SetValue(Auxiliary.UnionReplace(oldprotect))
 	c:RegisterEffect(e3)
 	--eqlimit
@@ -80,11 +81,6 @@ function Auxiliary.UnionOperation(f)
 		end
 		if not Duel.Equip(tp,c,tc,false) then return end
 		aux.SetUnionState(c)
-	end
-end
-function Auxiliary.UnionSumCondition()
-	return function (e,tp,eg,ep,ev,re,r,rp)
-		return e:GetHandler():GetFlagEffect(11743119)==0
 	end
 end
 function Auxiliary.UnionSumTarget(oldrule)

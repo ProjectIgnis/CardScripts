@@ -1,5 +1,6 @@
 --見習い魔術師
---Apprentice Magician
+--Apprentice Magician (GOAT)
+--Triggers on the field
 local s,id=GetID()
 function s.initial_effect(c)
 	--counter
@@ -23,8 +24,7 @@ function s.initial_effect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_BATTLE_DESTROYED)
-	e4:SetCondition(s.condition)
+	e4:SetCode(EVENT_BATTLED)
 	e4:SetTarget(s.target)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
@@ -45,9 +45,6 @@ function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		tc:AddCounter(COUNTER_SPELL,1)
 	end
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsLocation(LOCATION_DECK) and e:GetHandler():IsReason(REASON_BATTLE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(2) and c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)

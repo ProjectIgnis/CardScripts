@@ -139,6 +139,12 @@ if not AnimeArchetype then
 	-- Celestial Double Star Shaman/Guiding Light
 	Card.IsCelestial=MakeCheck({0x254a},{69865139,25472513})
 
+	-- Cicada
+	-- 蝉 
+	-- せみ
+	-- Number 3: Cicada King
+	Card.IsCicada=MakeCheck({0x50f},{100266028})
+
 	-- Champion
 	-- 王者
 	-- おうじゃ
@@ -243,7 +249,8 @@ if not AnimeArchetype then
 		59820352,67105242,29934351,60866277,54407825,66788016,53778229,46181000,14258627,67113830,61468779,
 		15545291,60229110,90502999,33970665,35762283,12247206,54109233,9628664,79109599,95993388,54976796,
 		3136426,64681263,97612389,86016245,91020571,58601383,97204936,63465535,4587638,38296564,60627999,
-		79569173,97169186,26381750,70156997,20590784,77428945,54762426,46918794,95220856,2084239,77754944
+		79569173,97169186,26381750,70156997,20590784,77428945,54762426,46918794,95220856,2084239,77754944,
+100266028
 	}
 	Card.IsEarth=MakeCheck({0x51a},AnimeArchetype.OCGEarth,{"IsEarthbound","IsHell"})
 
@@ -478,7 +485,7 @@ if not AnimeArchetype then
 	-- Vennominon the King of Poisonous Snakes/Number 8: Heraldic King Genom-Heritage/Rise to Full Height
 	-- King of the Swamp/Beastking of the Swamps/Imperial Tombs of Necrovalley
 	-- Coach King Giantrainer/Coach Captain Bearman
-	-- Morph King Stygi-Gel
+	-- Morph King Stygi-Gel/Number 3: Cicada King
 
 	-- archtype:Fire King/Supreme King/Monarch (spell/trap)/Dracoverlord
 	AnimeArchetype.OCGKing={
@@ -492,7 +499,7 @@ if not AnimeArchetype then
 		4179849,71411377,5901497,58477767,19254117,33950246,51452091,16509093,93016201,26586849,56058888,72405967,
 		86742443,86327225,61370518,88307361,29762407,80955168,72709014,24857466,52589809,5309481,10613952,84025439,
 		38180759,22858242,
-		85457355
+		85457355,100266028
 	}
 	Card.IsKing=MakeCheck({0x52f,0xf8,0x81,0xda},AnimeArchetype.OCGKing,{"IsChampion"})
 

@@ -10,6 +10,9 @@ function Duel.GoatConfirm(tp,loc)
 	end
 end
 --Utilities to be added to the core
+function Card.IsBattleDestroyed(c)
+	return c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsReason(REASON_BATTLE)
+end
 function Card.IsInMainMZone(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and (not tp or c:IsControler(tp))
 end

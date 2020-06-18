@@ -26,19 +26,16 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.filter1(c,e,tp,sg,exg,dr)
-	local rk=c:GetRank()
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return #pg<=1 and c:IsFaceup() and (rk>0 or c:IsStatus(STATUS_NO_LEVEL)) 
-		and exg:IsExists(s.filter2,1,nil,e,tp,c,rk+dr,pg,sg)
+	return #pg<=1 and exg:IsExists(s.filter2,1,nil,e,tp,c,c:GetRank()+dr,pg,sg)
 end
 function s.filter2(c,e,tp,mc,rk,pg,sg)
-	if c.rum_limit and not c.rum_limit(mc,e) or Duel.GetLocationCountFromEx(tp,tp,sg+mc,c)<=0 then return false end
-	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and mc:IsAttribute(ATTRIBUTE_DARK,c,SUMMON_TYPE_XYZ,tp) and c:IsRank(rk) 
-		and mc:IsCanBeXyzMaterial(c,tp) and (#pg<=0 or pg:IsContains(mc))
+	if (c.rum_limit and not c.rum_limit(mc,e)) or Duel.GetLocationCountFromEx(tp,tp,sg+mc,c)<=0 then return false end
+	return c:IsRank(rk) and mc:IsCanBeXyzMaterial(c,tp) and (#pg==0 or pg:IsContains(mc))
 end
-function s.rescon(exg,fg)
+function s.rescon(exg,fg,maxrel)
 	return function(sg,e,tp,mg)
-		return fg:IsExists(s.filter1,1,sg,e,tp,sg,exg,#sg)
+		return fg:IsExists(s.filter1,1,sg,e,tp,sg,exg,#sg),#sg>maxrel
 	end
 end
 function s.rmfilter(c)
@@ -48,19 +45,22 @@ function s.extrafil(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and (c:IsSetCard(0x10db) or c:IsSetCard(0xba) or c:IsSetCard(0x2073))
 end
 function s.fieldfil(c,e)
-	return c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeEffectTarget(e)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK) and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL)) and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local exg=Duel.GetMatchingGroup(s.extrafil,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.fieldfil(chkc,e) and s.filter1(chkc,e,tp,Group.FromCards(chkc),exg,e:GetLabel()) end
 	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,nil)
 	local fg=Duel.GetMatchingGroup(s.fieldfil,tp,LOCATION_MZONE,0,nil,e)
+	local _,maxrel1=fg:GetMinGroup(Card.GetRank)
+	local _,maxrel2=exg:GetMaxGroup(Card.GetRank)
+	local maxrel=maxrel2-maxrel1
 	if chk==0 then 
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return #fg>0 and #g>0 and #exg>0 and aux.SelectUnselectGroup(g,e,tp,nil,nil,s.rescon(exg,fg),0)
+		return #fg>0 and #g>0 and #exg>0 and aux.SelectUnselectGroup(g,e,tp,nil,nil,s.rescon(exg,fg,maxrel),0)
 	end
-	local rg=aux.SelectUnselectGroup(g,e,tp,nil,nil,s.rescon(exg,fg),1,tp,HINTMSG_REMOVE,s.rescon(exg,fg))
+	local rg=aux.SelectUnselectGroup(g,e,tp,nil,nil,s.rescon(exg,fg,maxrel),1,tp,HINTMSG_REMOVE,s.rescon(exg,fg,maxrel))
 	local dr=#rg
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)

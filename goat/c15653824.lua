@@ -1,7 +1,7 @@
 --スカル・ナイト
 --Skull Knight #2 (GOAT)
 --Triggers on tribute set as well
---Missing proper triggering for the summoning player
+--Triggers for the player that used it
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -24,25 +24,30 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	if r~=REASON_SUMMON then return false end
+	if r~=REASON_SUMMON or
+		e:GetHandler():GetPreviousControler()~=e:GetHandler():GetReasonPlayer() then return false end
+	e:SetLabel(e:GetHandler():GetPreviousControler())
 	local rc=e:GetHandler():GetReasonCard()
 	return rc:IsFaceup() and rc:IsRace(RACE_FIEND)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=eg:GetFirst()
-	if not tc:IsSummonType(SUMMON_TYPE_TRIBUTE) or not tc:GetMaterial():IsContains(c) 
+	if not tc:IsSummonType(SUMMON_TYPE_TRIBUTE) or not tc:GetMaterial():IsContains(c)
+		 or e:GetHandler():GetPreviousControler()~=e:GetHandler():GetReasonPlayer()
 		or not c:IsReason(REASON_SUMMON) then return false end
+	e:SetLabel(e:GetHandler():GetPreviousControler())
 	return tc:IsRace(RACE_FIEND)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,e:GetLabel(),LOCATION_DECK)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	local tp=e:GetLabel()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.GetFirstMatchingCard(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)

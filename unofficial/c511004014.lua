@@ -354,6 +354,6 @@ end
 function s.sacrificeEscapeCon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	local at=Duel.GetAttackTarget()
-	return ph>=PHASE_BATTLE_STEP and ph<PHASE_DAMAGE and at~=nil and not at:IsRelateToBattle()
+	return ph>=PHASE_BATTLE_STEP and ph<PHASE_DAMAGE and at~=nil and eg:IsContains(at)
 		and not at:IsReason(REASON_BATTLE) and at:GetFlagEffect(511004019)==0
 end

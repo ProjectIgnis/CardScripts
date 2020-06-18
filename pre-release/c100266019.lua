@@ -49,7 +49,7 @@ function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.retfilter(c)
-	return c:IsType(TYPE_SYNCHRO) and c:IsLevel(8) and c:IsAbleToExtra()
+	return c:IsType(TYPE_SYNCHRO) and c:IsLevel(8) and c:IsAbleToExtra() and c:IsFaceup()
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.retfilter,tp,LOCATION_REMOVED,0,1,nil) end

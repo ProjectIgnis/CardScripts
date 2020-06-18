@@ -54,6 +54,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local fg=Duel.GetMatchingGroup(s.fieldfil,tp,LOCATION_MZONE,0,nil,e)
 	local _,maxrel1=fg:GetMinGroup(Card.GetRank)
 	local _,maxrel2=exg:GetMaxGroup(Card.GetRank)
+	if not maxrel1 then maxrel1 = 0 end
+	if not maxrel2 then maxrel2 = 0 end
 	local maxrel=maxrel2-maxrel1
 	if chk==0 then 
 		if e:GetLabel()~=100 then return false end

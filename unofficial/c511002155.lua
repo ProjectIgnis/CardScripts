@@ -1,5 +1,5 @@
---ダーク・アリゲーター (Anime)
---Dark Alligator (Anime)
+--ダーク・アリゲーター (Manga)
+--Dark Alligator (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Summon with 4 tribute

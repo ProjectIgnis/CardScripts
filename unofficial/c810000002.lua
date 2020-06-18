@@ -1,8 +1,9 @@
 --暗黒の魔再生 (Anime)
 --Dark Spell Regeneration (Anime)
---scripted by: UnknownGuest
-local s,id=GetID()
+--Scripted by: UnknownGuest
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:Alias()
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -17,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
 end
 function s.filter(c,e,tp)
-	if c:IsHasEffect(EFFECT_CANNOT_TRIGGER) then return false end
+	if c:IsHasEffect(EFFECT_CANNOT_TRIGGER) or c:IsCode(alias) then return false end
 	local pre={Duel.GetPlayerEffect(tp,EFFECT_CANNOT_ACTIVATE)}
 	if pre[1] then
 		for i,eff in ipairs(pre) do
@@ -33,10 +34,6 @@ function s.filter(c,e,tp)
 		and (ft>0 or c:IsType(TYPE_FIELD))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	if e:GetHandler():IsLocation(LOCATION_HAND) then
-		ft=ft-1
-	end
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)

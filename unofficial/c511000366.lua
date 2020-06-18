@@ -1,5 +1,5 @@
---輪廻竜サンサーラ (Anime)
---Samsara Dragon (Anime)
+--輪廻竜サンサーラ (Manga)
+--Samsara Dragon (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon from the Graveyard

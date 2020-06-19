@@ -1,6 +1,6 @@
 --ダブルバイト
 --Double Bite
---Scripted by the Razgriz 
+--Scripted by the Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
 	--skill

@@ -28,7 +28,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	--Check if Skill is negated
 	if aux.CheckSkillNegation(e,tp) then return end
-	--Activate 
+	--Activates
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
@@ -58,5 +58,5 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
+	return rp==1-e:GetHandlerPlayer()
 end

@@ -13,7 +13,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
 	return tc:IsRelateToBattle() and tc:IsStatus(STATUS_OPPO_BATTLE) and tc:IsControler(tp) and tc:IsAttribute(ATTRIBUTE_EARTH)
-		and bc:IsReason(REASON_BATTLE) and bc:GetPreviousControler()~=tp and bc:GetLevel()>0
+		and bc:IsReason(REASON_BATTLE) and bc:GetPreviousControler()==1-tp and bc:GetLevel()>0
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--ask if you want to activate the skill or not

@@ -26,10 +26,9 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_DECK,0,nil,TYPE_MONSTER)
 	local dcount=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	local seq=-1
-	local tc=g:GetFirst()
 	local spcard=nil
 	for tc in aux.Next(g) do
-		if tc:GetSequence()>seq then 
+		if tc:GetSequence()>seq then
 			seq=tc:GetSequence()
 			spcard=tc
 		end
@@ -40,16 +39,16 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		return
 	end
 	Duel.ConfirmDecktop(tp,dcount-seq)
-	if spcard:IsAbleToHand() then 
+	if spcard:IsAbleToHand() then
 		Duel.DisableShuffleCheck()
-		if dcount-seq==1 then 
+		if dcount-seq==1 then
 			Duel.SendtoHand(spcard,tp,REASON_EFFECT)
-			Duel.Recover(tp,spcard:GetAttack(),REASON_EFFECT)   
+			Duel.Recover(tp,spcard:GetAttack(),REASON_EFFECT)
 			Duel.Recover(1-tp,spcard:GetAttack(),REASON_EFFECT)
 		else
 			Duel.SendtoHand(spcard,tp,REASON_EFFECT)
 			Duel.DiscardDeck(tp,dcount-seq-1,REASON_EFFECT)
-			Duel.Recover(tp,spcard:GetAttack(),REASON_EFFECT)   
+			Duel.Recover(tp,spcard:GetAttack(),REASON_EFFECT)
 			Duel.Recover(1-tp,spcard:GetAttack(),REASON_EFFECT)
 		end
 	else

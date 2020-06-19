@@ -26,4 +26,3 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	Duel.Draw(tp,dc,REASON_EFFECT)
 end
-	

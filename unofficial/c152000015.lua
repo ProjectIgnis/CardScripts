@@ -20,7 +20,11 @@ function s.flipop(e,tp,re)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	--check if skill is negated
-	if aux.CheckSkillNegation(e,tp) then return false end
-	if Duel.Draw(tp,2,REASON_EFFECT)==2 then return true end
+	if aux.CheckSkillNegation(e,tp) then
+		return false
+	end
+	if Duel.Draw(tp,2,REASON_EFFECT)==2 then
+		return true
+	end
 	return false
 end

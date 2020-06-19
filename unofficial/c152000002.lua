@@ -50,7 +50,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	if #hg==0 or gyc==0 then return end
 	if #hg<=gyc then
 		Duel.Remove(hg,POS_FACEUP,REASON_EFFECT)
-	else 
+	else
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_REMOVE)
 		local bg=hg:Select(1-tp,gyc,gyc,nil)
 		Duel.Remove(bg,POS_FACEUP,REASON_EFFECT)

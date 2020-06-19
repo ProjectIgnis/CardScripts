@@ -5,7 +5,6 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddVrainsSkillProcedure(c,s.flipcon,s.flipop)
 end
-s.cfilter=aux.FilterFaceupFunction(Card.IsSetCard,0xfb)
 function s.tkfilter(c)
 	return c:IsSetCard(0xfb) and c:IsAbleToHand()
 end
@@ -13,7 +12,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
 	if Duel.GetFlagEffect(tp,id)>0 then return false end
 	--condition
-	local fgc=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)
+	local fgc=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0xfb),tp,LOCATION_MZONE,0,nil)
 	return fgc>0 and Duel.IsPlayerCanDiscardDeck(tp,fgc) and Duel.IsExistingMatchingCard(s.tkfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -26,7 +25,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--Check if Skill is negated
 	if aux.CheckSkillNegation(e,tp) then return end
 	--Deck Des/Add to hand
-	local fgc=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)
+	local fgc=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0xfb),tp,LOCATION_MZONE,0,nil)
 	if fgc>0 and Duel.IsPlayerCanDiscardDeck(tp,fgc) and Duel.DiscardDeck(tp,fgc,REASON_EFFECT)>0
 		and Duel.IsExistingMatchingCard(s.tkfilter,tp,LOCATION_GRAVE,0,1,nil) then
 		Duel.BreakEffect()

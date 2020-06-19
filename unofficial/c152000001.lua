@@ -8,10 +8,10 @@ function s.initial_effect(c)
 end
 function s.gkfilter(c,e,tp,tid)
 	return c:IsReason(REASON_BATTLE) and c:GetTurnID()==tid and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp) and c:IsSetCard(0xfc) 
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp) and c:IsSetCard(0xfc)
 end
 function s.gkfilter(c,tid)
-	return c:IsReason(REASON_BATTLE) and c:GetTurnID()==tid and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSetCard(0xfc) 
+	return c:IsReason(REASON_BATTLE) and c:GetTurnID()==tid and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSetCard(0xfc)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check

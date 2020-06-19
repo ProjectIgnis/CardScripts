@@ -66,7 +66,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local dr=#rg
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_MZONE,0,1,1,nil,e,tp,rg,exg,dr)
+	local g=Duel.SelectTarget(tp,aux.AND(s.fieldfil,s.filter1),tp,LOCATION_MZONE,0,1,1,nil,e,tp,rg,exg,dr)
 	e:SetLabel(dr)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end

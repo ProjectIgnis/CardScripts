@@ -30,24 +30,14 @@ function s.filter(c)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	local lv=0
-	for tc in aux.Next(g) do
-		if tc:IsFaceup() and tc:IsSetCard(0x25) and tc:HasLevel() then
-			lv=tc:GetLevel()+lv
-		end
-	end
+	local lv=g:GetSum(Card.GetLevel)
 	if chk==0 then return lv>0 and Duel.IsPlayerCanDiscardDeck(1-tp,lv) end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,lv)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	local lv=0
-	for tc in aux.Next(g) do
-		if tc:IsFaceup() and tc:IsSetCard(0x25) and tc:HasLevel() then
-			lv=tc:GetLevel()+lv
-		end
-	end
+	local lv=g:GetSum(Card.GetLevel)
 	if lv>0 then
 		Duel.DiscardDeck(1-tp,lv,REASON_EFFECT)
 	end

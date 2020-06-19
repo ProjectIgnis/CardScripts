@@ -1,4 +1,6 @@
 --無敗将軍 フリード
+--Freed the Matchless General (GOAT)
+--If revived by premature burial, not destroyed
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable
@@ -6,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DISABLE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
+	e1:SetTargetRange(0xff,0xff)
 	e1:SetTarget(s.distg)
 	c:RegisterEffect(e1)
 	--disable effect
@@ -37,8 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.distg(e,c)
-	if not c:IsType(TYPE_SPELL) or c:GetCardTargetCount()==0 then return false end
-	return c:GetCardTarget():IsContains(e:GetHandler())
+	return c:IsType(TYPE_SPELL) and c:GetCardTarget():IsContains(e:GetHandler())
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsActiveType(TYPE_SPELL) then return end

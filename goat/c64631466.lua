@@ -83,7 +83,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=c:GetEquipGroup():Filter(s.eqfilter,nil)
 	return #g>0 and ep==tp and r&REASON_BATTLE~=0
-		and (Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler())
+		and Duel.GetAttackTarget()==e:GetHandler()
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,ev,REASON_EFFECT)

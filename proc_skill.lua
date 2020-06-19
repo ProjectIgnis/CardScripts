@@ -6,7 +6,7 @@ HINT_SKILL_REMOVE = 203
 SKILL_COVER =   300000000
 VRAINS_SKILL_COVER  =   300000001
 
-EFFECT_NEGATE_SKILL =   EVENT_CUSTOM+300000000
+EFFECT_NEGATE_SKILL =   152000015
 --c: the card you want the cover (card)
 --coverNum: the number of the cover, for ex, for the second cover, you pass 2 as a parameter (int)
 function Auxiliary.GetCover(c,coverNum)
@@ -193,7 +193,7 @@ function Auxiliary.SetSkillOp(coverNum,drawless,skillcon,skillop,countlimit,efft
 		Duel.SendtoDeck(c,tp,-2,REASON_RULE)
 		--generate the skill in the "skill zone"
 		Duel.Hint(HINT_SKILL_COVER,c:GetControler(),coverid|(coverid<<32))
-		Duel.Hint(HINT_SKILL,c:GetControler(),c:GetCode())		  
+		Duel.Hint(HINT_SKILL,c:GetControler(),c:GetCode())
 		--send to limbo then draw 1 if the skill was in the hand
 		if e:GetHandler():IsPreviousLocation(LOCATION_HAND) then 
 			Duel.Draw(p,1,REASON_RULE)
@@ -264,7 +264,7 @@ function Auxiliary.SetVrainsSkillOp(skillcon,skillop,efftype)
 		Duel.DisableShuffleCheck(true)
 		Duel.SendtoDeck(c,tp,-2,REASON_RULE)
 		Duel.Hint(HINT_SKILL_COVER,c:GetControler(),VRAINS_SKILL_COVER)
-		Duel.Hint(HINT_SKILL,c:GetControler(),c:GetCode())	
+		Duel.Hint(HINT_SKILL,c:GetControler(),c:GetCode())
 		if e:GetHandler():IsPreviousLocation(LOCATION_HAND) then 
 			Duel.Draw(p,1,REASON_RULE)
 		end
@@ -273,11 +273,13 @@ function Auxiliary.SetVrainsSkillOp(skillcon,skillop,efftype)
 end
 
 --Function to check whether the Skill would be negated by Anti Skill
-function Auxiliary.CheckSkillNegation(e,tp,eg,ep,ev,re,r,rp)
+function Auxiliary.CheckSkillNegation(e,tp)
 	if Duel.IsPlayerAffectedByEffect(1-tp,EFFECT_NEGATE_SKILL) then
 		local eff=Duel.GetPlayerEffect(1-tp,EFFECT_NEGATE_SKILL)
-		if eff:GetCondition()(e,1-tp,eg,ep,ev,re,r,rp) then
-			return eff:GetOperation()(e,1-tp,eg,ep,ev,re,r,rp)
+		if eff:GetCondition()(eff,1-tp,e) then
+			local chk=eff:GetOperation()(eff,1-tp,e)
+			if chk then Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(EFFECT_NEGATE_SKILL,1)) end
+			return chk
 		else return false end
 	else return false end
 end

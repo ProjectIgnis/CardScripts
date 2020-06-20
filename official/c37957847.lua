@@ -15,11 +15,15 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
+	e2:SetCondition(s.atkcon)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
 function s.target(e,c)
 	return c:IsRace(RACE_INSECT)
+end
+function s.atkcon(e)
+	return e:GetHandler():GetBattleTarget():IsRace(RACE_INSECT)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -43,6 +43,7 @@ function s.filter(tc,c,tp)
 	local mg=Group.FromCards(c,tc)
 	local res=Duel.IsExistingMatchingCard(s.synfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
 	c:ResetFlagEffect(id)
+	e1:Reset()
 	return res
 end
 function s.synfilter(c,mg)

@@ -39,9 +39,9 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
-		if tc:IsSummonable(true,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		if tc:IsSummonable(true,nil,1) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()
-			Duel.Summon(tp,tc,true,nil)
+			Duel.Summon(tp,tc,true,nil,1)
 		end
 	end
 end

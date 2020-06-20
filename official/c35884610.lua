@@ -1,4 +1,5 @@
 --U.A.パワードギプス
+--U.A. Powered Jersey
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0xb2))
@@ -90,7 +91,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_LOST_TARGET) and c:GetPreviousEquipTarget():IsLocation(LOCATION_HAND)
+	return c:IsReason(REASON_LOST_TARGET) and c:GetPreviousEquipTarget() and c:GetPreviousEquipTarget():IsLocation(LOCATION_HAND)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end

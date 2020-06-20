@@ -86,7 +86,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc1:RegisterEffect(e2)
-		if tc1:IsImmuneToEffect(e1) or tc1:IsImmuneToEffect(e2) or not tc2:IsRelateToEffect(e) then return end
+		if tc1:IsImmuneToEffect(e1) or tc1:IsImmuneToEffect(e2) or not tc2 or not tc2:IsRelateToEffect(e) then return end
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 			Duel.SpecialSummon(tc2,0,tp,tp,false,false,POS_FACEUP)
 		end

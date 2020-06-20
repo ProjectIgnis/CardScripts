@@ -1,4 +1,5 @@
 --生命吸収装置
+--Life Absorbing Machine
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,6 +23,8 @@ function s.initial_effect(c)
 	aux.GlobalCheck(s,function()
 		s[0]={}
 		s[1]={}
+		s[2]={}
+		s[3]={}
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_PAY_LPCOST)

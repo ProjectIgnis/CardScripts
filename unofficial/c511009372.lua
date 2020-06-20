@@ -134,6 +134,6 @@ end
 function s.teop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
 	end
 end

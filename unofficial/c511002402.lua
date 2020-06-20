@@ -1,5 +1,5 @@
---レプティア・エッグ (Anime)
---Reptia Egg (Anime)
+--レプティア・エッグ (Manga)
+--Reptia Egg (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Register

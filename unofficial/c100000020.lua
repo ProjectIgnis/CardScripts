@@ -1,7 +1,8 @@
---アフター・グロー
---Afterglow
-local s,id=GetID()
+--アフター・グロー (VG)
+--Afterglow (VG)
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:Alias()
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -10,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={alias}
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
@@ -41,7 +43,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if #g<=0 then return end
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.ConfirmCards(1-tp,g)
-	if eg:IsExists(Card.IsCode,1,nil,id) then
+	if eg:IsExists(Card.IsCode,1,nil,alias) then
 		Duel.Damage(1-tp,8000,REASON_EFFECT)
 	end
 	Duel.ShuffleHand(tp)

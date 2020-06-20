@@ -30,5 +30,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(g,REASON_COST)
 	--Effect
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-    Duel.Recover(p,d,REASON_EFFECT)
+	Duel.Recover(p,d,REASON_EFFECT)
 end

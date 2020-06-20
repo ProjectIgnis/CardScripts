@@ -2,10 +2,10 @@
 --Number C1: Numeron Chaos Gate Sunya
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,nil,2,4,s.ovfilter,aux.Stringid(id,0),3)
 	c:EnableReviveLimit()
-	--selfdes
+	--Destroy itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -13,8 +13,8 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.descon)
 	c:RegisterEffect(e1)
-	--banish
-	local e2=Effect.CreateEffect(c)
+	--Remove monsters
+	local e2=Effect.CreateEffect(cw)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.bantg)
 	e2:SetOperation(s.banop)
 	c:RegisterEffect(e2)
-	--battle indestructable
+	--Battle indestructable
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -31,13 +31,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x48}
-s.listed_names={100266026}
+s.listed_names={CARD_NUMERON_NETWORK}
 s.xyz_number=1
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,100266022) and Duel.IsEnvironment(100266026)
+	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,15232745) and Duel.IsEnvironment(CARD_NUMERON_NETWORK)
 end
 function s.descon(e)
-	return not Duel.IsEnvironment(100266026)
+	return not Duel.IsEnvironment(CARD_NUMERON_NETWORK)
 end
 function s.bancon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
@@ -52,7 +52,6 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local chk=c:IsRelateToEffect(e)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local atk=0
-	local tc=g:GetFirst()
 	while tc do
 		local a=tc:GetAttack()
 		if a<0 or tc:IsFacedown() then a=0 end

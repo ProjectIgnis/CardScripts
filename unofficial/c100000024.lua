@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={100266006,100266007,100266008}
+s.listed_names={96897184,59531356,86520461}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.PayLPCost(tp,Duel.GetLP(tp)/2)
@@ -24,10 +24,10 @@ function s.filter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,c,e,tp,c)
 end
 function s.spfilter(c,e,tp,rc)
-	if not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,true,false) 
+	if not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,true,false)
 		or Duel.GetLocationCountFromEx(tp,tp,rc,c)<=0 or not c:CheckFusionMaterial() then return false end
-	local res1=c:IsCode(100266007) and rc:IsCode(100266008)
-	local res2=c:IsCode(100266006) and rc:IsCode(100266007)
+	local res1=c:IsCode(59531356) and rc:IsCode(86520461)
+	local res2=c:IsCode(96897184) and rc:IsCode(59531356)
 	return res1 or res2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

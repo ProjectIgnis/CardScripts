@@ -16,7 +16,7 @@ function s.cfilter(c)
 	return c:GetSequence()<5
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=ep and #eg==1 and Duel.GetCurrentChain()==0 and eg:GetFirst():GetSummonType()==SUMMON_TYPE_XYZ 
+	return ep==1-tp and #eg==1 and Duel.GetCurrentChain()==0 and eg:GetFirst():GetSummonType()==SUMMON_TYPE_XYZ
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

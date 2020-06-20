@@ -2,17 +2,17 @@
 --Fossil Warrior Skull Knight (VG)
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion Material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,s.ffilter1,s.ffilter2)
-	--spsummon condition
+	--Special Summon Condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
-	--chain attack
+	--Extra Attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCountLimit(1)
@@ -21,9 +21,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={100266011}
+s.listed_names={CARD_FOSSIL_FUSION}
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsCode(100266011)
+	return se:GetHandler():IsCode(CARD_FOSSIL_FUSION)
 end
 function s.ffilter1(c,fc,sumtype,tp)
 	return c:IsRace(RACE_ROCK,fc,sumtype,tp) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)
@@ -40,7 +40,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_EXTRA_ATTACK) 
+		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetCondition(s.con)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_BATTLE)

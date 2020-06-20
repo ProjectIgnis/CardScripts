@@ -1,6 +1,5 @@
 --インセクト・プリンセス
---Insect Princess (GOAT)
---Activation timing
+--Insect Princess
 local s,id=GetID()
 function s.initial_effect(c)
 	--Pos Change
@@ -15,14 +14,9 @@ function s.initial_effect(c)
 	--atkup
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_BATTLED)
-	e2:SetCondition(s.condition)
+	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local other=e:GetHandler():GetBattleTarget()
-	return other and other:IsBattleDestroyed() and other:IsRace(RACE_INSECT)
 end
 function s.target(e,c)
 	return c:IsRace(RACE_INSECT)

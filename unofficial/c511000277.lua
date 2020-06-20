@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.descon)
 	c:RegisterEffect(e1)
 	--Remove monsters
-	local e2=Effect.CreateEffect(cw)
+	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)

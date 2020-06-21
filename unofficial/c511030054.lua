@@ -35,7 +35,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x14a}
-s.listed_names={c:Alias()}
 function s.thfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x14a) and c:IsAbleToHand() and not c:IsCode(c:Alias())
 end
@@ -73,7 +72,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mvcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.mvfilter(c)
 	return c:GetSequence()<5 and c:IsSetCard(0x14a) and c:IsType(TYPE_LINK) and c:IsLink(1)

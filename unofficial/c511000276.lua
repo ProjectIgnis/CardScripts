@@ -1,8 +1,8 @@
---ヌメロン・ダイレクト
---Numeron Calling
+--ヌメロン・ダイレクト (Anime)
+--Numeron Calling (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -12,13 +12,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x246}
-s.listed_names={100266026}
+s.listed_names={CARD_NUMERON_NETWORK}
+s.listed_series={0x14b}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsEnvironment(100266026)
+	return Duel.IsEnvironment(CARD_NUMERON_NETWORK)
 end
 function s.filter(c,e,tp)
-	return c:IsAttackBelow(1000) and c:IsSetCard(0x246) and c:IsType(TYPE_XYZ)
+	return c:IsAttackBelow(1000) and c:IsSetCard(0x14b) and c:IsType(TYPE_XYZ)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>3
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -41,7 +41,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local fid=e:GetHandler():GetFieldID()
 		for tc in aux.Next(sg) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			tc:RegisterFlagEffect(51100276,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
 		end
 		Duel.SpecialSummonComplete()
 		sg:KeepAlive()
@@ -59,7 +59,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmfilter(c,fid)
-	return c:GetFlagEffectLabel(51100276)==fid
+	return c:GetFlagEffectLabel(id)==fid
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()

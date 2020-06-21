@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,nil,8,2)
 	c:EnableReviveLimit()
-	--atk def
+	--Increase ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e2)
-	--reg
+	--Prevent destruction and Special Summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_IGNITION)

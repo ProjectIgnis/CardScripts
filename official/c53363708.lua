@@ -1,5 +1,5 @@
 --ラプテノスの超魔剣
---Raptinus’ Supreme Magicblade
+--Supermagic Sword of Raptinus
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -52,4 +52,3 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

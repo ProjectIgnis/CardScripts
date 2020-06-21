@@ -56,7 +56,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_FUSION)
-		and c:IsPreviousControler(tp) and and rp==1-tp
+		and c:IsPreviousControler(tp) and rp==1-tp
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_CYBER_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

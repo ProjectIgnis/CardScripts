@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_cards={78447174}
+s.listed_names={78447174}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

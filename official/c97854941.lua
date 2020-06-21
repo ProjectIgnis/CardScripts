@@ -1,5 +1,5 @@
 --ワルキューレ・シグルーン
---Valkyrie Sigrún
+--Valkyrie Sigrun
 --scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()

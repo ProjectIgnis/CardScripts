@@ -28,22 +28,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e2:SetCondition(s.rdcon)
-		e2:SetOperation(s.rdop)
-		e2:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e2,tp)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+		e2:SetValue(aux.ChangeBattleDamage(0,HALF_DAMAGE))
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e2)
 	end
-end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	local at=Duel.GetAttacker()
-	local bt=Duel.GetAttackTarget()
-	return ep==e:GetOwnerPlayer() and 
-		((at and at:GetFlagEffect(id)>0) or 
-		(bt and bt:GetFlagEffect(id)>0))
-end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
 end

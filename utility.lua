@@ -1433,6 +1433,24 @@ function Auxiliary.DoubleSnareValidity(c,range,property)
 	end
 end
 
+function Auxiliary.ChangeBattleDamage(player,value)
+	return function(e,damp)
+				if player==0 then
+					if e:GetOwnerPlayer()==damp then
+						return value
+					else
+						return -1
+					end
+				elseif player==1 then
+					if e:GetOwnerPlayer()==1-damp then
+						return value
+					else
+						return -1
+					end
+				end
+		end
+end
+
 Duel.LoadScript("cards_specific_functions.lua")
 Duel.LoadScript("proc_fusion.lua")
 Duel.LoadScript("proc_ritual.lua")

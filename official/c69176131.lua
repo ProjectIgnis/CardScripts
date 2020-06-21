@@ -1,4 +1,5 @@
 --スペース・サイクロン
+--Space Cyclone
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckRemoveOverlayCard(tp,1,1,1,REASON_EFFECT) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.CheckRemoveOverlayCard,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp,1,REASON_EFFECT) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DEATTACHFROM)

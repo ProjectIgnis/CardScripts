@@ -35,8 +35,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x14a}
+s.listed_names={3875465}
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x14a) and c:IsAbleToHand() and not c:IsCode(c:Alias())
+	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x14a) and c:IsAbleToHand() and not c:IsCode(3875465)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

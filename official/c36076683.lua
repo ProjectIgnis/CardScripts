@@ -1,10 +1,11 @@
 --No.73 激瀧神アビス・スプラッシュ
+--Number 73: Abyss Splash
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER),5,2)
 	c:EnableReviveLimit()
-	--atkup
+	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -37,20 +38,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-		e2:SetRange(LOCATION_MZONE)
-		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e2:SetCondition(s.dcon)
-		e2:SetOperation(s.dop)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+		e2:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e2)
 	end
-end
-function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=eg:GetFirst()
-	return ep~=tp and c==tc
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
 end

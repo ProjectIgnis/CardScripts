@@ -118,8 +118,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_CANNOT_BE_MATERIAL)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e3:SetValue(function(e,c,sumtype,tp)
-						return sumtype&(SUMMON_TYPE_FUSION|SUMMON_TYPE_SYNCHRO|SUMMON_TYPE_XYZ)~=0
-					end)
+					local sum=sumtype&(SUMMON_TYPE_FUSION|SUMMON_TYPE_SYNCHRO|SUMMON_TYPE_XYZ)
+					return (sum==SUMMON_TYPE_FUSION or sum==SUMMON_TYPE_SYNCHRO or sum==SUMMON_TYPE_XYZ) and 1 or 0
+				end)
 		c:RegisterEffect(e3,true)
 		Duel.SpecialSummonComplete()
 	end

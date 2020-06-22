@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--indes
+	--Cannot be destroyed
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	c:RegisterEffect(e3)
-	--banish
+	--Banish monsters
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_REMOVE)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.rmtg)
 	e4:SetOperation(s.rmop)
 	c:RegisterEffect(e4)
-	--special summon
+	--Special summon banished monsters
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -62,22 +62,15 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e1:SetCondition(s.dcon)
-	e1:SetOperation(s.dop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(0,1)
+	e1:SetValue(HALF_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
-function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
-end
 function s.spfilter(c,e,tp)
-	return c:GetFlagEffectLabel(id)==e:GetHandler():GetFieldID()
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
+	return c:GetFlagEffectLabel(id)==e:GetHandler():GetFieldID() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id+1)>0

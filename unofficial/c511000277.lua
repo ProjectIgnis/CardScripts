@@ -1,5 +1,5 @@
 --ＣＮｏ．１ ゲート・オブ・カオス・ヌメロン－シニューニャ
---Number C1: Numeron Chaos Gate Sunya
+--Number C1: Numeron Chaos Gate Sunya (anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz summon
@@ -52,11 +52,10 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local chk=c:IsRelateToEffect(e)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local atk=0
-	while tc do
+	for tc in aux.Next(g) do
 		local a=tc:GetAttack()
 		if a<0 or tc:IsFacedown() then a=0 end
 		atk=atk+a
-		tc=g:GetNext()
 	end
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 and chk then
 		local e3=Effect.CreateEffect(c)
@@ -94,7 +93,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		e1:SetCondition(s.damcon)
-		e1:SetCost(s.damcost)
+		e1:SetCost(aux.NumeronDetachCost(1))
 		e1:SetTarget(s.damtg)
 		e1:SetOperation(s.damop)
 		e1:SetLabel(e:GetLabel())
@@ -102,10 +101,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 		Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL+1)

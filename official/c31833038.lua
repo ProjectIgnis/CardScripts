@@ -83,7 +83,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and tc then
 		local zone=c:GetLinkedZone()&0x1f
-		if Duel.GetControl(tc,tp,0,0,zone)~=0 then
+		if Duel.GetControl(tc,tp,PHASE_END,2,zone)~=0 then
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

@@ -1,4 +1,5 @@
 --融合呪印生物－地
+--The Earth - Hex-Sealed Fusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -31,7 +32,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.fil(c,tp)
-	return c:IsCanBeFusionMaterial() and c:IsHasEffect(59160188)
+	return c:IsCanBeFusionMaterial(nil,MATERIAL_FUSION) and c:IsHasEffect(59160188)
 end
 function s.fcheck(mg)
 	return function(tp,sg,fc)
@@ -44,14 +45,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		local mg=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_MZONE,0,nil)
+		local mg=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_MZONE,0,nil,nil,MATERIAL_FUSION)
 		local mg2=Duel.GetMatchingGroup(s.fil,tp,0,LOCATION_MZONE,nil,tp)
 		Fusion.CheckAdditional=s.fcheck(mg2)
 		local res=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg+mg2,c,chkf)
 		Fusion.CheckAdditional=nil
 		return res
 	end
-	local mg=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_MZONE,0,nil)
+	local mg=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_MZONE,0,nil,nil,MATERIAL_FUSION)
 	local mg2=Duel.GetMatchingGroup(s.fil,tp,0,LOCATION_MZONE,nil,tp)
 	Fusion.CheckAdditional=s.fcheck(mg2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

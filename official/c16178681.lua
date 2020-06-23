@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e3:SetCondition(s.damcon)
-	e4:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
+	e3:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e3)
 end
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)

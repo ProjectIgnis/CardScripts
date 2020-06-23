@@ -133,7 +133,7 @@ function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectEffectYesNo(tp,e:GetHandler()) then
-		Duel.HalfBattleDamage(ep)
+		Duel.ChangeBattleDamage(tp,math.floor(ev/2))
 		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end

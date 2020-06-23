@@ -35,23 +35,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(s.val)
 		e1:SetReset(RESET_PHASE+PHASE_END,1)
 		Duel.RegisterEffect(e1,tp)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e1:SetCondition(s.rdcon)
-		e1:SetOperation(s.rdop)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)
 	end
 end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp
-end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
-end
 function s.val(e,re,dam,r,rp,rc)
-	if (r&REASON_EFFECT)~=0 then
-		return dam/2
-	else return dam end
+	return math.floor(val/2)
 end

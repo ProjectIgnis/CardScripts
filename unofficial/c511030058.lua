@@ -70,6 +70,3 @@ function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
-end

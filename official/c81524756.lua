@@ -74,7 +74,7 @@ end
 function s.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
-function s.damcon(es)
+function s.damcon(e)
 	return e:GetHandler():GetBattleTarget()~=nil
 end
 

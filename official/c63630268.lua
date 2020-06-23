@@ -37,6 +37,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
-function s.val(e,re,dam,r,rp,rc)
+function s.val(e,re,val,r,rp,rc)
 	return math.floor(val/2)
 end

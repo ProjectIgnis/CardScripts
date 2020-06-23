@@ -50,6 +50,6 @@ function s.affected(e,c)
 	return c:GetFlagEffect(id)~=0
 end
 function s.rdcon(e)
-	return eturn Duel.GetAttacker():GetFlagEffect(20858318)~=0 and Duel.GetAttackTarget()==nil
+	return Duel.GetAttacker():GetFlagEffect(id)~=0 and Duel.GetAttackTarget()==nil
 end
 

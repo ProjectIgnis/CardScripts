@@ -24,9 +24,11 @@ function s.initial_effect(c)
 	e3:SetOperation(s.posop)
 	c:RegisterEffect(e3)
 end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
+function s.rdcon(e)
+	local c=e:GetHandler()
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetAttackTarget()==nil and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+	return Duel.GetAttackTarget()==nil
+		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
 function s.rval(e,damp)
 	if damp==1-e:GetHandlerPlayer() then

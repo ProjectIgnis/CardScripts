@@ -21,7 +21,7 @@ s.listed_names={CARD_POLYMERIZATION}
 function s.cfilter(c)
 	return (c:IsCode(CARD_POLYMERIZATION) or c:IsSetCard(0x46)) and c:IsAbleToRemoveAsCost()
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)

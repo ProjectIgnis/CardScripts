@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon itsel
+	--Special Summon itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -41,16 +41,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local dam=Duel.GetBattleDamage(tp)
 		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e1:SetOperation(s.damop)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(1,0)
+		e1:SetValue(HALF_DAMAGE)
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		Duel.RegisterEffect(e1,tp)
-		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,Duel.GetBattleDamage(tp)/2)
 end
 function s.lvfilter(c,lv)
 	return c:IsFaceup() and not c:IsLevel(lv) and c:IsLevelAbove(1)
@@ -65,7 +64,7 @@ end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
-	if tc:IsRelateToEffect(e) and c:IsFaceup() and c:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) and c:IsFaceup() and c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)

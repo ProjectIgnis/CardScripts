@@ -3,10 +3,10 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_INSECT),2,2)
-	--special summon
+	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--battle indestructable
+	--Cannot be destroyed by battle
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -26,27 +26,29 @@ function s.initial_effect(c)
 	e2:SetTarget(s.indtg)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--stats up
+	--Increase ATK
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetValue(300)
 	c:RegisterEffect(e3)
+	--Increase DEF
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
-	--double damage
+	--Double damage
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e5:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e5:SetType(EFFECT_TYPE_FIELD)
+	e5:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetCondition(s.damcon)
-	e5:SetOperation(s.damop)
-	c:RegisterEffect(e5)	
+	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e5:SetTarget(s.damtg)
+	e5:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
+	c:RegisterEffect(e5)
 end
 s.listed_series={0x104}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT)))
+	return (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)))
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
@@ -79,10 +81,6 @@ end
 function s.indtg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0x104)
 end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsSetCard(0x104) and tc:GetBattleTarget()~=nil and e:GetHandler():GetLinkedGroup():IsContains(tc)
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DoubleBattleDamage(ep)
+function s.damtg(e,c)
+	return c:IsSetCard(0x104) and c:GetBattleTarget()~=nil and e:GetHandler():GetLinkedGroup():IsContains(c)
 end

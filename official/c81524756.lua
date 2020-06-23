@@ -52,13 +52,13 @@ end
 function s.dbop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
 		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 		e1:SetCondition(s.damcon)
-		e1:SetOperation(s.damop)
+		e1:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
@@ -74,9 +74,7 @@ end
 function s.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetBattleTarget()~=nil
+function s.damcon(es)
+	return e:GetHandler():GetBattleTarget()~=nil
 end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DoubleBattleDamage(ep)
-end
+

@@ -54,7 +54,7 @@ function s.initial_effect(c)
 		else return chain() end
 	end
 end
-s.listed_series={0x246}
+s.listed_series={0x14b}
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0
 end
@@ -70,14 +70,14 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_COST)~=0 and re:GetHandler():IsType(TYPE_XYZ) and ep==e:GetOwnerPlayer() and re:GetHandler():GetOverlayCount()>=ev-1
-		and re:GetHandler():IsSetCard(0x246)
+		and re:GetHandler():IsSetCard(0x14b)
 end
 function s.numcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)<=1
 end
 function s.tgfilter(c,e,tp,eg,ep,ev,re,r,rp,chain,chk)
 	local te=c:GetActivateEffect()
-	if not c:IsSetCard(0x246) or not c:IsAbleToGrave() or not te then return end
+	if not c:IsSetCard(0x14b) or not c:IsAbleToGrave() or not te then return end
 	local condition=te:GetCondition()
 	local cost=te:GetCost()
 	local target=te:GetTarget()

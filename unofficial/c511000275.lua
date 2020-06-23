@@ -20,11 +20,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--No detach cost
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_OVERLAY_REMOVE_REPLACE)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCondition(s.rcon)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(CARD_NUMERON_NETWORK)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetRange(LOCATION_FZONE)
+	e3:SetTargetRange(1,1)
 	c:RegisterEffect(e3)
 	--Activate in the opponent's turn
 	local e4=Effect.CreateEffect(c)
@@ -67,10 +67,6 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveToField(c,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 		Duel.RaiseEvent(c,EVENT_CHAIN_SOLVED,c:GetActivateEffect(),0,tp,tp,Duel.GetCurrentChain())
 	end
-end
-function s.rcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_COST)~=0 and re:GetHandler():IsType(TYPE_XYZ) and ep==e:GetOwnerPlayer() and re:GetHandler():GetOverlayCount()>=ev-1
-		and re:GetHandler():IsSetCard(0x14b)
 end
 function s.numcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)<=1

@@ -1,5 +1,5 @@
 --時械神祖ヴルガータ
---Timelord Progenitor Vulgate
+--Timelord Progenitor Vorpgate
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -66,6 +66,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
+	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetValue(HALF_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end

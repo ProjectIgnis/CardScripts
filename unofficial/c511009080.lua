@@ -1,4 +1,5 @@
---Ancient Gear Double Imitate
+--古代の機械双造
+--Ancient Gear Double Imitation
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)

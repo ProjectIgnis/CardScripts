@@ -332,7 +332,9 @@ if not SealedDuel then
 				Duel.SendtoDeck(fg:Select(p,0,#fg-20,nil),nil,-2,REASON_RULE)
 				local edg=Duel.GetFieldGroup(p,LOCATION_EXTRA,0)
 				if #edg>0 then Duel.ConfirmCards(p,edg) end
-				if handcnt>0 then Duel.Draw(tp,handcnt,REASON_RULE) end
+				if handcnt>0 then Duel.Draw(p,handcnt,REASON_RULE) end
+				Duel.ShuffleDeck(p)
+				Duel.ShuffleExtra(p)
 				if counts[p]~=1 then
 					Duel.TagSwap(p)
 				end

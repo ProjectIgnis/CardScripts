@@ -244,8 +244,8 @@ if not SealedDuel then
 		end
 		
 		--treat as all monster types
-		if Duel.SelectYesNo(tp,aux.Stringid(4009,0)) then
-			Duel.Hint(HINT_OPSELECTED,tp,aux.Stringid(4009,0)) 
+		if aux.AskEveryone(aux.Stringid(4009,0)) then
+			Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(4009,0)) 
 			local getrc=Card.GetRace
 			Card.GetRace=function(c)
 				if c:IsType(TYPE_MONSTER) then return 0xfffffff end
@@ -268,7 +268,11 @@ if not SealedDuel then
 			end
 		end
 		--anime counterparts select
-		anime=aux.AskAny(aux.Stringid(4006,15))
+		anime=aux.AskEveryone(aux.Stringid(4006,15))
+		if anime then
+			Duel.Hint(HINT_OPSELECTED,tp,aux.Stringid(4006,15))
+			Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(4006,15))
+		end
 			
 		--anime counterparts
 		local groups={}
@@ -284,7 +288,6 @@ if not SealedDuel then
 		for p=z,o do
 			for team=1,counts[p] do
 				for i=1,9 do
-					local g=Group.CreateGroup()
 					local packnum=0
 					--random set among selected sets
 					repeat
@@ -310,7 +313,6 @@ if not SealedDuel then
 							code=pack[packnum][rarity][Duel.GetRandomNumber(1,#pack[packnum][rarity])]
 						end
 						local finalcode=SealedDuel.alternate(code,anime)
-						-- g:AddCard(Duel.CreateToken(p,finalcode))
 						table.insert(groups[p][team],finalcode)
 					end
 				end
@@ -324,17 +326,24 @@ if not SealedDuel then
 				for idx,code in ipairs(groups[p][team]) do
 					local loc=LOCATION_DECK
 					-- if idx<=handcnt then loc=LOCATION_HAND end
-					Debug.AddCard(code,p,p,LOCATION_DECK,1,POS_FACEDOWN)
+					Debug.AddCard(code,p,p,LOCATION_DECK,1,POS_FACEDOWN_DEFENSE)
 				end
 				Debug.ReloadFieldEnd()
 				Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(4002,7))
 				local fg=Duel.GetFieldGroup(p,LOCATION_DECK+LOCATION_HAND,0)
-				Duel.SendtoDeck(fg:Select(p,0,#fg-20,nil),nil,-2,REASON_RULE)
+				local exclude=fg:Select(p,0,#fg-20,nil)
+				if exclude then
+					Duel.SendtoDeck(exclude,nil,-2,REASON_RULE)
+				end
 				local edg=Duel.GetFieldGroup(p,LOCATION_EXTRA,0)
-				if #edg>0 then Duel.ConfirmCards(p,edg) end
 				if handcnt>0 then Duel.Draw(p,handcnt,REASON_RULE) end
 				Duel.ShuffleDeck(p)
 				Duel.ShuffleExtra(p)
+				local dtpg=Duel.GetDecktopGroup(p,Duel.GetStartingHand(p))
+				Duel.ConfirmCards(p,dtpg)
+				if Duel.SelectYesNo(p,aux.Stringid(id,0)) then
+					Duel.MoveToDeckBottom(dtpg)
+				end
 				if counts[p]~=1 then
 					Duel.TagSwap(p)
 				end
@@ -342,4 +351,7 @@ if not SealedDuel then
 		end
 	end
 	finish_setup()
+end
+if not Duel.GetStartingHand then
+	Duel.GetStartingHand=function() return 5 end
 end

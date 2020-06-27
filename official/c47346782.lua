@@ -2,7 +2,7 @@
 --Othello Frog
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot material
+	--Cannot be material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 					return (sum==SUMMON_TYPE_FUSION or sum==SUMMON_TYPE_SYNCHRO or sum==SUMMON_TYPE_XYZ or sum==SUMMON_TYPE_LINK) and 1 or 0
 				end)
 	c:RegisterEffect(e1)
-	--to defense
+	--Change battle position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_POSITION)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--control
+	--Change control
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_CONTROL)
@@ -72,7 +72,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) or not c:IsPosition(POS_FACEUP_DEFENSE) then return end
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) or tc:IsControler(tp) then return end
+	if not tc or not tc:IsRelateToEffect(e) or tc:IsControler(tp) then return end
 	local seq=tc:GetSequence()
 	if seq>4 then return end
 	local zone=0
@@ -91,4 +91,3 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

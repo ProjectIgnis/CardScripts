@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.dmtg)
 	e1:SetOperation(s.dmop)
 	c:RegisterEffect(e1)
-	--Destroy & Damage
+	--Destroy and inflict damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 function s.counterfilter(c)
-	return not c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return not c:IsType(SUMMON_TYPE_PENDULUM)
 end
 function s.dmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
@@ -79,7 +79,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		Duel.Damage(1-tp,300,REASON_EFFECT)
 	end
 end

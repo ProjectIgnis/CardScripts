@@ -45,7 +45,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not (c:IsRelateToEffect(e) and tc:IsRelateToEffect(e)) then return end
+	if not (c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e)) then return end
 	if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
 		--change name
 		local code=tc:GetOriginalCode()

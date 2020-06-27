@@ -26,7 +26,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	if rec~=ev or Duel.GetLocationCount(tp,LOCATION_SZONE)<1 or Duel.IsPlayerAffectedByEffect(tp,EFFECT_CANNOT_SSET) then return end
 	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
-	s.announce_filter={TYPE_TRAP,OPCODE_ISTYPE}
+	s.announce_filter={TYPE_TRAP,OPCODE_ISTYPE,TYPE_SKILL,OPCODE_ISTYPE,OPCODE_NOT,OPCODE_AND,TYPE_ACTION,OPCODE_ISTYPE,OPCODE_NOT,OPCODE_AND}
 	local ac=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
 	local tc=Duel.CreateToken(tp,ac)
 	if tc:IsSSetable() then

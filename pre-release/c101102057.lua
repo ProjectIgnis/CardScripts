@@ -1,5 +1,5 @@
 --双天招来
---c
+--Souten Calling
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

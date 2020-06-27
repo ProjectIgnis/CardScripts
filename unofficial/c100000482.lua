@@ -1,7 +1,7 @@
 --天輪の葬送士
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x211)
+	Duel.AddSetcodesRule(c,0x211)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

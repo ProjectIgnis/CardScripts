@@ -2,7 +2,7 @@
 --White Wing Magician
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x2017)
+	Duel.AddSetcodesRule(c,0x2017)
 	Pendulum.AddProcedure(c)
 	--Negate
 	local e1=Effect.CreateEffect(c)

@@ -2,7 +2,7 @@
 --Raiders' Wing
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x10db,0xba)
+	Duel.AddSetcodesRule(c,0x10db,0xba)
 	--Special summon this card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))

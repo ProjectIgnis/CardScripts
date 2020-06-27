@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x10db,0xba)
+	Duel.AddSetcodesRule(c,0x10db,0xba)
 	--Activate
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_ACTIVATE)

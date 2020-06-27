@@ -3,7 +3,7 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x7c)
+	Duel.AddSetcodesRule(c,0x7c)
 	c:EnableCounterPermit(0x201)
 	--activate
 	local e1=Effect.CreateEffect(c)

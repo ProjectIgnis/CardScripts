@@ -4,7 +4,7 @@
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0xbf)
+	Duel.AddSetcodesRule(c,0xbf)
 	--Discard this + WIND monster; add WIND monster with <= 1500 DEF, locked into WIND effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

@@ -2,7 +2,7 @@
 --Edge Imp Frightfuloid
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0xad)
+	Duel.AddSetcodesRule(c,0xad)
 	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

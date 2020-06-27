@@ -15,7 +15,7 @@ function s.filter1(c,tp)
 		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,0,1,c,c)
 end
 function s.filter2(c,ec)
-	return c:IsFaceup() and ec:CheckEquipTarget(c) and aux.CheckUnionEquip(ec,c)
+	return c:IsFaceup() and ec:CheckUnionTarget(c) and aux.CheckUnionEquip(ec,c)
 end
 function s.filter3(c,e,tp)
 	return c:IsFaceup() and c:IsHasEffect(EFFECT_UNION_STATUS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

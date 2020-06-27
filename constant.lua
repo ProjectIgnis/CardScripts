@@ -391,6 +391,7 @@ EFFECT_DIRECT_ATTACK                = 74
 EFFECT_GEMINI_STATUS                = 75
 EFFECT_EQUIP_LIMIT                  = 76
 EFFECT_GEMINI_SUMMONABLE            = 77
+EFFECT_UNION_LIMIT                  = 78
 EFFECT_REVERSE_DAMAGE               = 80
 EFFECT_REVERSE_RECOVER              = 81
 EFFECT_CHANGE_DAMAGE                = 82

@@ -21,7 +21,7 @@ function s.tgfilter(c,e,tp,chk)
 end
 function s.cfilter(c,ec)
 	return c:IsRace(RACE_MACHINE) and c:IsType(TYPE_UNION) 
-		and c:CheckEquipTarget(ec) and aux.CheckUnionEquip(c,ec)
+		and c:CheckUnionTarget(ec) and aux.CheckUnionEquip(c,ec)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.tgfilter(chkc,e,tp,true) end

@@ -59,7 +59,7 @@ function s.tgfilter(c,e,tp,chk)
 end
 function s.cfilter(c,ec)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)
-		and c:IsType(TYPE_UNION) and c:CheckEquipTarget(ec) and aux.CheckUnionEquip(c,ec) and not c:IsCode(ec:GetCode())
+		and c:IsType(TYPE_UNION) and c:CheckUnionTarget(ec) and aux.CheckUnionEquip(c,ec) and not c:IsCode(ec:GetCode())
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.tgfilter,nil,e,tp,false)

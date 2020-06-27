@@ -61,7 +61,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetValue(s.elimit)
 	Duel.RegisterEffect(e3,tp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
+	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_DECK,0,nil)
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon(tc:GetAttack()),1,tp,HINTMSG_TOGRAVE,nil,nil)
 	if #tg>0 then

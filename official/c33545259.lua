@@ -1,5 +1,5 @@
 --戦華の孟－曹徳
---Senka Chief – Cao De
+--Ancient Warriors - Ambitious Cao De
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -85,8 +85,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-

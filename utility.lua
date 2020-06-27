@@ -4,7 +4,7 @@ aux=Auxiliary
 function GetID()
 	return self_table,self_code
 end
-
+local usedsets={}
 function Duel.AddSetcodesRule(c,...)
 	 if usedsets[c:GetCode()] then return end
     usedsets[c:GetCode()]=true

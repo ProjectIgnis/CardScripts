@@ -1,5 +1,5 @@
 --双天招来
---Souten Calling
+--c
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,6 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_UNRELEASABLE_SUM)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TOKEN))
 	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetValue(1)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	local e3=e2:Clone()

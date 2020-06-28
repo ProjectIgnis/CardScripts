@@ -1,16 +1,17 @@
 --No.23 冥界の霊騎士ランスロット
+--Number 23: Lancelot, Dark Knight of the Underworld
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,nil,8,2)
 	c:EnableReviveLimit()
-	--direct attack
+	--Direct attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
 	e1:SetCondition(s.dacon)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--negate
+	--Negate
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_NEGATE)
 	e3:SetType(EFFECT_TYPE_QUICK_F)
@@ -33,13 +34,14 @@ function s.initial_effect(c)
 	e3:SetTarget(s.distg)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.xyz_number=23
 function s.dacon(e)
 	return e:GetHandler():GetOverlayCount()>0
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
@@ -50,7 +52,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

@@ -1,4 +1,5 @@
 --トラゴエディア
+--Ruklamba The Spirit King
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and tp~=rp and ev>=1000 and (r&REASON_BATTLE)~=0
+	return ep==tp and ev>=1000
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

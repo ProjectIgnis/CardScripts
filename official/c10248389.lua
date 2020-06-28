@@ -1,10 +1,11 @@
 --サイバー・ブレイダー
+--Cyber Blader
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,false,false,97023549,11460577)
-	--indes
+	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetLabel(1)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--atkup
+	--Increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -22,24 +23,16 @@ function s.initial_effect(c)
 	e2:SetCondition(s.con)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--disable effect
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_CHAIN_SOLVING)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetLabel(3)
-	e4:SetCondition(s.con)
-	e4:SetOperation(s.disop)
-	c:RegisterEffect(e4)
-	--Double Snare
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetLabel(3)
-	e5:SetCondition(s.con)
-	e5:SetCode(3682106)
-	c:RegisterEffect(e5)
+	--negate effects
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_CHAIN_SOLVING)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetLabel(3)
+	e3:SetCondition(s.con)
+	e3:SetOperation(s.disop)
+	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.material_setcode=0x93
 function s.con(e)

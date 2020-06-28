@@ -43,7 +43,7 @@ function s.thfilter(c)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local at=Duel.GetAttacker()	
+	local at=Duel.GetAttacker()
 	local p=1-at:GetControler()
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,p,LOCATION_REMOVED)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,p,LOCATION_HAND)
@@ -63,18 +63,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			--double damage
 			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-			e1:SetOperation(s.damop)
+			e1:SetType(EFFECT_TYPE_FIELD)
+			e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+			e1:SetTargetRange(1,0)
+			e1:SetValue(DOUBLE_DAMAGE)
 			e1:SetReset(RESET_PHASE+PHASE_END)
-			e1:SetLabel(p)
 			Duel.RegisterEffect(e1,p)
 		end
 	end
 end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	if ep==e:GetLabel() then
-		Duel.DoubleBattleDamage(ep)
-	end
-end
-

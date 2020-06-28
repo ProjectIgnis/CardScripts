@@ -3,6 +3,7 @@
 --scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x601)
 	--dark synchro summon
 	c:EnableReviveLimit()
 	Synchro.AddDarkSynchroProcedure(c,Synchro.NonTuner(nil),nil,4)
@@ -21,15 +22,8 @@ function s.initial_effect(c)
 	e3:SetTarget(s.tgtg)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
-	--add setcode
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetCode(EFFECT_ADD_SETCODE)
-	e4:SetValue(0x601)
-	c:RegisterEffect(e4)
 end
-function s.tgcon(e,c)
+function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
 	return tc and tc:IsFaceup() and tc:GetAttack()>e:GetHandler():GetBaseAttack() and tc:IsControler(1-tp)
 end

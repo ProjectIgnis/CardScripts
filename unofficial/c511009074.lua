@@ -1,3 +1,4 @@
+--ダーク・レクイエム・エクシーズ・ドラゴン
 --Dark Requiem Xyz Dragon
 --fixed by MLD
 local s,id=GetID()
@@ -7,46 +8,58 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--atk
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(511000675,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCost(s.cost)
-	e1:SetCondition(s.con)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--negate
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(24696097,1))
-	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_CHAINING)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(s.cost)
-	e2:SetCondition(s.discon)
-	e2:SetTarget(s.distg)
-	e2:SetOperation(s.disop)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+	e2:SetRange(LOCATION_ONFIELD)
+	e2:SetTargetRange(LOCATION_ONFIELD,0)
+	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e2:SetCondition(s.efcon)
+	e2:SetTarget(s.eftg)
+	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	--Double Snare
+	--negate
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_DISABLE+CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(3682106)
-	c:RegisterEffect(e3)
+	e3:SetCost(s.cost)
+	e3:SetCondition(s.discon)
+	e3:SetTarget(s.distg)
+	e3:SetOperation(s.disop)
+	local e4=e2:Clone()
+	e4:SetLabelObject(e3)
+	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
+	--Double Snare
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCode(3682106)
+	c:RegisterEffect(e5)
 end
 s.listed_names={16195942}
+function s.efcon(e)
+	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,16195942)
+end
+function s.eftg(e,c)
+	return c==e:GetHandler()
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLevelAbove(5)
-end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,16195942)
+	return aux.nzatk(c) and c:IsLevelAbove(5)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
@@ -81,7 +94,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasCategory(CATEGORY_NEGATE)
 		and Duel.GetChainInfo(ev-1,CHAININFO_TRIGGERING_EFFECT):IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
-	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-#tg>0 and s.con(e,tp,eg,ep,ev,re,r,rp)
+	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-#tg>0
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

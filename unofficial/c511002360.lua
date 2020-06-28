@@ -1,3 +1,4 @@
+--炎の結晶
 --Heat Crystals
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,16 +21,11 @@ function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.spfilter(c,e,tp,sg)
-	if not c:IsAttribute(ATTRIBUTE_FIRE) or not c:IsType(TYPE_FUSION) or not c:IsSetCard(0x3008) 
-		or not c:IsCanBeSpecialSummoned(e,0,tp,true,false) then return false end
-	if c:IsLocation(LOCATION_EXTRA) then
-		return Duel.GetLocationCountFromEx(tp,tp,sg)>0
-	else
-		return aux.ChkfMMZ(1)(sg,e,tp)
-	end
+	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsType(TYPE_FUSION) and c:IsSetCard(0x3008)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
 end
 function s.rescon(sg,e,tp,mg)
-	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,sg,e,tp,sg)
+	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local chkcost=e:GetLabel()==1
@@ -39,19 +35,19 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			e:SetLabel(0)
 			return #cg>1 and aux.SelectUnselectGroup(cg,e,tp,2,2,s.rescon,0)
 		else
-			return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil,e,tp,Group.CreateGroup())
+			return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 		end
 	end
 	if chkcost then
 		local rg=aux.SelectUnselectGroup(cg,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE)
 		Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil,e,tp,Group.CreateGroup())
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

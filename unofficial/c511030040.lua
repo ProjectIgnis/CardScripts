@@ -3,10 +3,10 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.matfilter,1)
-	--cannot link material
+	--Cannot be Link Material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -14,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetCondition(s.lkcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--direct attack
+	--Direct attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DIRECT_ATTACK)
 	e2:SetCondition(s.dacon)
 	c:RegisterEffect(e2)
-	--halve atk while co-linked
+	--Halve ATK while co-linked
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.atkcon)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
-	--halve atk while not co-linked
+	--Halve ATK while not co-linked
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_ATKCHANGE)
@@ -44,11 +44,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x57a,fc,sumtype,tp) and c:IsLevel(1)
+	return c:IsSetCard(0x14a,fc,sumtype,tp) and c:IsLevel(1)
 end
---function s.matcheck(g,lc,tp)
---	return g:IsExists(Card.IsSetCard,1,nil,0x57a,lc,SUMMON_TYPE_LINK,tp)
---end
 function s.lkcon(e)
 	local c=e:GetHandler()
 	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)

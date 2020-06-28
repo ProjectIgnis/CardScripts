@@ -1,8 +1,4 @@
 --Heavy Metal Raiders (Skill)
---Skill activation
---At the start of the Duel, place this card in your Field Zone and flip it over. You draw 1 less card at the beginning of the Duel.
---Effect
---The first time each DARK Machine monster you control would be destroyed by battle each turn, it is not destroyed, and if you took battle damage from the battle, it gains that much ATK after damage calculation, and keeps that ATK gain as long as this card is on the field. Once per turn, if a monster you control that was originally a DARK Machine destroys a card(s) on the field by battle or card effect: You can Special Summon 1 DARK Machine monster from your hand.
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddFieldSkillProcedure(c,2,true)
@@ -11,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--indes
+	--Prevent destruction
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
@@ -20,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.indtg)
 	e2:SetValue(s.indct)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -87,8 +83,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
 	return rc:IsControler(tp) and rc:GetOriginalAttribute()==ATTRIBUTE_DARK
-		and rc:GetOriginalRace()==RACE_MACHINE
-		and eg:IsExists(s.cfilter,1,nil)
+		and rc:GetOriginalRace()==RACE_MACHINE and eg:IsExists(s.cfilter,1,nil)
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

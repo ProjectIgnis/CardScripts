@@ -1,8 +1,10 @@
 --暗黒の魔再生 (Manga)
 --Dark Spell Regeneration (Manga)
---scripted by Larry126
-local s,id=GetID()
+--Scripted by Larry126
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:Alias()
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -10,8 +12,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x95}
 function s.filter(c,e,tp,eg,ep,ev,re,r,rp,b)
+	if c:IsCode(alias) then return false end
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local te=c:CheckActivateEffect(false,false,false)
 	if ((b and ft>1) or (not b and ft>0)) and c:IsType(TYPE_SPELL)
@@ -27,7 +29,7 @@ function s.filter(c,e,tp,eg,ep,ev,re,r,rp,b)
 	return false
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.filter),tp,0,LOCATION_GRAVE,1,e:GetHandler(),e,tp,eg,ep,ev,re,r,rp,e:GetHandler():IsLocation(LOCATION_HAND)) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_GRAVE,1,e:GetHandler(),e,tp,eg,ep,ev,re,r,rp,e:GetHandler():IsLocation(LOCATION_HAND)) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local b=e:GetHandler():IsLocation(LOCATION_HAND)
@@ -42,7 +44,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e:SetCategory(te:GetCategory())
 	e:SetProperty(te:GetProperty())
 	Duel.ClearTargetCard()
-	Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+	local loc=LOCATION_SZONE
+	if tc:IsType(TYPE_FIELD) then
+		loc=LOCATION_FZONE
+	end
+	Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 	if tpe&(TYPE_FIELD|TYPE_CONTINUOUS|TYPE_EQUIP)==0 and not tc:IsHasEffect(EFFECT_REMAIN_FIELD) then
 		tc:CancelToGrave(false)
 	end
@@ -62,7 +68,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			etc:CreateEffectRelation(te)
 		end
 	end
-	if op then 
+	if op then
 		if tc:IsSetCard(0x95) then
 			op(e,tp,eg,ep,ev,re,r,rp)
 		else

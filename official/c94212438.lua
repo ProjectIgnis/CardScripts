@@ -7,7 +7,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--place card
 	local e2=Effect.CreateEffect(c)
@@ -19,7 +18,6 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetLabel(id)
 	e2:SetCondition(s.plcon)
-	e2:SetTarget(s.pltg)
 	e2:SetOperation(s.plop)
 	e2:SetValue(s.extraop)
 	c:RegisterEffect(e2)
@@ -47,25 +45,8 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={0x1c}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if Duel.GetCurrentPhase()==PHASE_END and s.plcon(e,tp,eg,ep,ev,re,r,rp) and Duel.SelectYesNo(tp,94) then
-		e:SetCategory(CATEGORY_TOFIELD)
-		e:SetLabel(id)
-		e:SetOperation(s.plop)
-		e:SetValue(s.extraop)
-		e:GetHandler():RegisterFlagEffect(0,RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,65)
-		e:GetHandler():RegisterFlagEffect(id+1,RESET_PHASE+PHASE_END,0,1)
-	else
-		e:SetLabel(0)
-		e:SetOperation(nil)
-	end
-end
 function s.plcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and e:GetHandler():GetFlagEffect(id)<4
-end
-function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id+1)==0 end
 end
 function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_DARK_SANCTUARY) then return s.extraop(e,tp,eg,ep,ev,re,r,rp) end

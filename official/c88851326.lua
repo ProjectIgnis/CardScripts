@@ -1,4 +1,5 @@
 --熱き決闘者たち
+--Legacy of the Duelist
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-	--prevent set
+	--Prevent set
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
@@ -31,7 +32,7 @@ function s.initial_effect(c)
 	e4:SetTargetRange(0,1)
 	e4:SetCondition(s.setcon2)
 	c:RegisterEffect(e4)
-	--prevent attack
+	--Prevent attack
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
 	e5:SetCode(EFFECT_CANNOT_ATTACK)
@@ -39,7 +40,7 @@ function s.initial_effect(c)
 	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e5:SetTarget(s.attg)
 	c:RegisterEffect(e5)
-	--add tohand
+	--Add tohand
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetCategory(CATEGORY_TOHAND)

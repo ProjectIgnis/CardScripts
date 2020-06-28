@@ -1,9 +1,9 @@
---Kuribott
 --クリボット
+--Kuribott
 --Scripted by André
 local s,id=GetID()
 function s.initial_effect(c)
-	--
+	--Return card to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -33,7 +33,7 @@ function s.operation(e,tp)
 	Duel.PayLPCost(tp,500)
 	--effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local tc = Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	if tc then
 		Duel.SendtoHand(tc,tp,REASON_EFFECT)
 	end

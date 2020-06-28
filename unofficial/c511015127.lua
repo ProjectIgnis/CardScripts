@@ -1,4 +1,4 @@
---地獄詩人ヘルポエマー
+--地獄詩人ヘルポエマー (Manga)
 --Helpoemer (Manga)
 --Updated by Larry126
 local s,id=GetID()
@@ -15,11 +15,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--handes
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(76052811,1))
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_HANDES)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
-	e2:SetProperty(EFFECT_FLAG_BOTH_SIDE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.hdcon)
@@ -39,17 +38,15 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT+REASON_REPLACE,1-tp)
 end
 function s.hdcon(e,tp,eg,ep,ev,re,r,rp)
-	local op=e:GetHandler():GetOwner()
-	return Duel.GetTurnPlayer()~=op and e:GetHandler():GetControler()~=op and tp==op
+	return Duel.GetTurnPlayer()==tp and not e:GetHandler():IsPreviousControler(tp)
 end
 function s.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,0,0,e:GetHandler():GetControler(),1)
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,0,0,tp,1)
 end
 function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		local p=e:GetHandler():GetControler()
-		local g=Duel.GetFieldGroup(p,LOCATION_HAND,0)
+		local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 		if #g==0 then return end
 		local sg=g:RandomSelect(tp,1)
 		Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)

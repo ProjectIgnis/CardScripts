@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and aux.SelectUnselectGroup(g,e,tp,2,nil,s.rescon,0)
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and aux.SelectUnselectGroup(rg,e,tp,2,nil,s.rescon,0)
 	end
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,nil,s.rescon,1,tp,HINTMSG_TOGRAVE)
 	local lv=g:GetSum(Card.GetLevel)

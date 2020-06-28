@@ -1,6 +1,5 @@
 --予言通帳
 --Seer's Passbook
---
 --fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	g:KeepAlive()
 	local c=e:GetHandler()
 	c:SetTurnCounter(0)
-	local fid=c:GetFieldID()
+	local fid=Duel.GetTurnCount()
 	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 	end
@@ -51,13 +50,11 @@ function s.thfilter(c,fid)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ct=c:GetTurnCounter()
-	ct=ct+1
-	if ct==3 then
+	local ct=e:GetLabel()
+	if ct+6==Duel.GetTurnCount() then
 		local g=e:GetLabelObject():Filter(s.thfilter,nil,e:GetLabel())
 		if g and #g==3 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 		end
-	else c:SetTurnCounter(ct) end
+	end
 end
-

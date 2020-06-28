@@ -37,8 +37,11 @@ function s.initial_effect(c)
 end
 s.listed_series={0x574}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800)
-	else Duel.PayLPCost(tp,800)	end
+	if chk==0 then
+		return Duel.CheckLPCost(tp,800)
+	else
+		Duel.PayLPCost(tp,800)
+	end
 end
 function s.filter(c,tp,eg,ep,ev,re,r,rp)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL)
@@ -54,7 +57,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
+	local loc=LOCATION_SZONE
+	if tc:IsType(TYPE_FIELD) then
+		loc=LOCATION_FZONE
+	end
+	if tc and Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true) then
 		--Untargetable
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

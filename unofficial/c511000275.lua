@@ -1,5 +1,5 @@
---Numeron Network
-Duel.LoadScript("c420.lua")
+--ヌメロン・ネットワーク (Anime)
+--Numeron Network (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--activate opponent's turn
+	--Activate in the opponent's turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -18,15 +18,15 @@ function s.initial_effect(c)
 	e2:SetTarget(s.actg)
 	e2:SetOperation(s.acop)
 	c:RegisterEffect(e2)
-	--no remove overlay
+	--No detach cost
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_OVERLAY_REMOVE_REPLACE)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCondition(s.rcon)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(CARD_NUMERON_NETWORK)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetRange(LOCATION_FZONE)
+	e3:SetTargetRange(1,1)
 	c:RegisterEffect(e3)
-	--activate opponent's turn
+	--Activate in the opponent's turn
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(12079734,0))
 	e4:SetType(EFFECT_TYPE_QUICK_O)
@@ -37,16 +37,16 @@ function s.initial_effect(c)
 	e4:SetTarget(s.numtg)
 	e4:SetOperation(s.numop)
 	c:RegisterEffect(e4)
-	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(93016201,0))
-	e6:SetType(EFFECT_TYPE_QUICK_O)
-	e6:SetCode(EVENT_SPSUMMON)
-	e6:SetRange(LOCATION_SZONE)
-	e6:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
-	e6:SetCondition(s.numcon)
-	e6:SetTarget(s.numtg)
-	e6:SetOperation(s.numop)
-	c:RegisterEffect(e6)
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(93016201,0))
+	e5:SetType(EFFECT_TYPE_QUICK_O)
+	e5:SetCode(EVENT_SPSUMMON)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
+	e5:SetCondition(s.numcon)
+	e5:SetTarget(s.numtg)
+	e5:SetOperation(s.numop)
+	c:RegisterEffect(e5)
 	local chain=Duel.GetCurrentChain
 	copychain=0
 	Duel.GetCurrentChain=function()
@@ -54,29 +54,26 @@ function s.initial_effect(c)
 		else return chain() end
 	end
 end
+s.listed_series={0x14b}
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0
+	return ep==1-tp and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0
 end
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end	
+	if chk==0 then return true end
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c then
-		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(c,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 		Duel.RaiseEvent(c,EVENT_CHAIN_SOLVED,c:GetActivateEffect(),0,tp,tp,Duel.GetCurrentChain())
 	end
-end
-function s.rcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_COST)~=0 and re:GetHandler():IsType(TYPE_XYZ) and ep==e:GetOwnerPlayer() and re:GetHandler():GetOverlayCount()>=ev-1
-		and re:GetHandler():IsNumeron()
 end
 function s.numcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)<=1
 end
 function s.tgfilter(c,e,tp,eg,ep,ev,re,r,rp,chain,chk)
 	local te=c:GetActivateEffect()
-	if not c:IsNumeron() or not c:IsAbleToGrave() or not te then return end
+	if not c:IsSetCard(0x14b) or not c:IsAbleToGrave() or not te then return end
 	local condition=te:GetCondition()
 	local cost=te:GetCost()
 	local target=te:GetTarget()

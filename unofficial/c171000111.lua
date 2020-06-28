@@ -37,8 +37,8 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,1,REASON_EFFECT)
-	if d>1 then
+	if d>0 then
 		Duel.BreakEffect()
-		Duel.Draw(tp,d-1,REASON_EFFECT)
+		Duel.Draw(p,d,REASON_EFFECT)
 	end
 end

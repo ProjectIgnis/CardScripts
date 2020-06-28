@@ -72,8 +72,7 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
-		and (Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE))
+	return Duel.GetTurnPlayer()==1-tp and (Duel.IsAbleToEnterBP() or Duel.IsBattlePhase())
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:GetFlagEffect(id)==0 end

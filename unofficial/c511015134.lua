@@ -1,4 +1,6 @@
+--ＲＵＭ－千死蛮巧 (Anime)
 --Rank-Up-Magic Admiration of the Thousands (Anime)
+Duel.LoadScript("rankup_functions.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -105,8 +107,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
-	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_XYZ_LEVEL)
@@ -120,13 +121,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_CHAIN)
 			tc:RegisterEffect(e2)
 		end
-		tc=g:GetNext()
 	end
 	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,g,e,tp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
+		aux.RankUpComplete(xyz,aux.Stringid(id,0))
 		Duel.XyzSummon(tp,xyz,nil,g)
-		xyz:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 	end
 end

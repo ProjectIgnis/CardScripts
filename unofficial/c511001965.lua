@@ -1,4 +1,5 @@
---Arctic Beast - Iceberg Narwhal
+--極氷獣アイスバーグ・ナーワル (Anime)
+--Glacial Beast Iceberg Narwhal (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

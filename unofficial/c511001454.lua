@@ -13,3 +13,4 @@ function s.initial_effect(c)
 	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x10af}

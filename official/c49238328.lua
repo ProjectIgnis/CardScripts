@@ -1,4 +1,5 @@
---Pot of Indulgence
+--強欲で金満な壺
+--Pot of Extravagance
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -55,4 +56,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-

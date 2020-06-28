@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if e==re or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
-	return g:GetFirst():IsControler(tp)
+	return g:GetFirst():IsControler(tp) and g:GetFirst():IsLocation(LOCATION_MZONE)
 end
 function s.filter(c,re,rp,tf,ceg,cep,cev,cre,cr,crp)
 	return tf(re,rp,ceg,cep,cev,cre,cr,crp,0,c)

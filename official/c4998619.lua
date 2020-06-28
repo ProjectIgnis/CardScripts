@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop2)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xe3}
 function s.tgfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xe3) and c:IsAbleToGraveAsCost()
 end
@@ -71,7 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():IsPreviousControler(tp)
+	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xe3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

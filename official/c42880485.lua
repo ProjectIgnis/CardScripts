@@ -2,55 +2,49 @@
 --Superheavy Samurai General Jade
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	c:AddSetcodesRule(0x9a)
+	--Pendulum Attributes
 	Pendulum.AddProcedure(c)
-	--add setcode
+	--Special Summon limit
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_ADD_SETCODE)
-	e1:SetValue(0x9a)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetRange(LOCATION_PZONE)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetTargetRange(1,0)
+	e1:SetCondition(s.splimcon)
+	e1:SetTarget(s.splimit)
 	c:RegisterEffect(e1)
-	--splimit
+	--Change level
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_PZONE)
-	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetTargetRange(1,0)
-	e2:SetCondition(s.splimcon)
-	e2:SetTarget(s.splimit)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCountLimit(1)
+	e2:SetTarget(s.lvtg)
+	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
-	--level
+	--Change position
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetRange(LOCATION_PZONE)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetCountLimit(1)
-	e3:SetTarget(s.lvtg)
-	e3:SetOperation(s.lvop)
+	e3:SetCategory(CATEGORY_POSITION)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_SUMMON_SUCCESS)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e3:SetTarget(s.postg)
+	e3:SetOperation(s.posop)
 	c:RegisterEffect(e3)
-	--pos
-	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_POSITION)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_SUMMON_SUCCESS)
-	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e4:SetTarget(s.postg)
-	e4:SetOperation(s.posop)
+	local e4=e3:Clone()
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
-	local e5=e4:Clone()
-	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e5)
-	--summon with 1 tribute
-	local e6=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
-	local e7=aux.AddNormalSetProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
-	--attack in defense
-	local e8=Effect.CreateEffect(c)
-	e8:SetType(EFFECT_TYPE_SINGLE)
-	e8:SetCode(EFFECT_DEFENSE_ATTACK)
-	e8:SetValue(1)
-	c:RegisterEffect(e8)
+	--Summon with 1 tribute
+	local e5=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
+	local e6=aux.AddNormalSetProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
+	--Attack in defense
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_SINGLE)
+	e7:SetCode(EFFECT_DEFENSE_ATTACK)
+	e7:SetValue(1)
+	c:RegisterEffect(e7)
 end
 s.listed_series={0x9a}
 function s.splimcon(e)
@@ -71,7 +65,7 @@ end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)

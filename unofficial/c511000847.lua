@@ -1,3 +1,4 @@
+--希望のかけら
 --Shard of Hope
 local s,id=GetID()
 function s.initial_effect(c)
@@ -5,6 +6,8 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e1:SetTarget(s.tg)
 	c:RegisterEffect(e1)
 	--draw
 	local e2=Effect.CreateEffect(c)
@@ -19,8 +22,22 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
+function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_BATTLE_DAMAGE,true)
+	if res and s.drcon(e,tp,teg,tep,tev,tre,tr,trp) and s.drtg(e,tp,teg,tep,tev,tre,tr,trp,0) then
+		e:SetOperation(s.drop)
+		s.drtg(e,tp,teg,tep,tev,tre,tr,trp,1)
+		e:SetCategory(CATEGORY_DRAW)
+		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	else
+		e:SetOperation(nil)
+		e:SetCategory(0)
+		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	end
+end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -29,8 +46,8 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	local chain=Duel.GetCurrentChain()-1
 	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local chain=Duel.GetCurrentChain()-1
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	local h=Duel.GetDecktopGroup(tp,1)
 	local tc=h:GetFirst()
@@ -55,9 +72,11 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 			e:SetCategory(te:GetCategory())
 			e:SetProperty(te:GetProperty())
 			Duel.ClearTargetCard()
+			local loc=LOCATION_SZONE
 			if (tpe&TYPE_FIELD)~=0 then
+				loc=LOCATION_FZONE
 				local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-				if Duel.IsDuelType(DUEL_OBSOLETE_RULING) then
+				if Duel.IsDuelType(DUEL_1_FIELD) then
 					if fc then Duel.Destroy(fc,REASON_RULE) end
 					fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 					if fc and Duel.Destroy(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
@@ -66,7 +85,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 					if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 				end
 			end
-			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 			if (tpe&TYPE_TRAP+TYPE_FIELD)==TYPE_TRAP+TYPE_FIELD then
 				Duel.MoveSequence(tc,5)
 			end
@@ -121,7 +140,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Equip(tp,tc,g:GetFirst())
 			end
 			tc:ReleaseEffectRelation(te)
-			if etc then	
+			if etc then
 				etc=g:GetFirst()
 				while etc do
 					etc:ReleaseEffectRelation(te)

@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e:SetProperty(te:GetProperty())
 			if tpe&TYPE_FIELD~=0 then
 				local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-				if Duel.IsDuelType(DUEL_OBSOLETE_RULING) then
+				if Duel.IsDuelType(DUEL_1_FIELD) then
 					if fc then Duel.Destroy(fc,REASON_RULE) end
 					fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 					if fc and Duel.Destroy(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
@@ -79,7 +79,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			if op then op(te,tp,eg,ep,ev,re,r,rp) end
 			tc:ReleaseEffectRelation(te)
-			if etc then	
+			if etc then
 				etc=g:GetFirst()
 				while etc do
 					etc:ReleaseEffectRelation(te)

@@ -83,8 +83,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()~=tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
+	return Duel.GetTurnPlayer()==1-tp and Duel.IsMainPhase()
 end
 function s.sumfilter(c)
 	return c:IsSetCard(0xf9) and c:IsSummonable(true,nil,1)

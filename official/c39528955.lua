@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2,99,s.matcheck)
-	--atk up
+	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	--cannot attack
+	--Prevent attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(s.atklimit)
 	c:RegisterEffect(e2)
-	--move
+	--Move
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -34,11 +34,11 @@ function s.initial_effect(c)
 	e3:SetOperation(s.seqop)
 	c:RegisterEffect(e3)
 end
-function s.matcheck(g,lc,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x116,lc,SUMMON_TYPE_LINK,tp)
+function s.matcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,0x116,lc,sumtype,tp)
 end
 function s.atkval(e,c)
-	local g=e:GetHandler():GetLinkedGroup():Filter(Card.IsFaceup,nil) 
+	local g=e:GetHandler():GetLinkedGroup():Filter(Card.IsFaceup,nil)
 	return g:GetSum(Card.GetBaseAttack)
 end
 function s.atklimit(e,c)
@@ -58,7 +58,7 @@ end
 function s.seqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local ttp=tc:GetControler()
-	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) or Duel.GetLocationCount(ttp,LOCATION_MZONE,ttp,LOCATION_REASON_CONTROL)<=0 then return end
+	if not tc or not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) or Duel.GetLocationCount(ttp,LOCATION_MZONE,ttp,LOCATION_REASON_CONTROL)<=0 then return end
 	local p1,p2,i
 	if tc:IsControler(tp) then
 		i=0

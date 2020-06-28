@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.op)
 	c:RegisterEffect(e3)
 end
+s.roll_dice=true
 function s.sdcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)==0
 end

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={10000000}
 function s.filter(c)
-	return c:IsFaceup() and c:GetFlagEffect(id)>0 and c:GetFlagEffect(id0)==0
+	return c:IsFaceup() and c:GetFlagEffect(id)>0 and c:GetFlagEffect(id+1000)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
@@ -49,6 +49,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetValue(511600030)
 			tc:RegisterEffect(e3)
 		end
-		tc:RegisterFlagEffect(id0,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id+1000,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
 end

@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--search
+	--Search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -23,15 +23,16 @@ function s.initial_effect(c)
 	e2:SetTarget(s.hsptg)
 	e2:SetOperation(s.hspop)
 	c:RegisterEffect(e2)
-	--double damage
+	--Double damage
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.damcon)
-	e3:SetOperation(s.damop)
+	e3:SetTargetRange(LOCATION_MZONE,0)
+	e3:SetTarget(s.damtg)
+	e3:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e3)
-	--special summon
+	--Special Summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -86,12 +87,8 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsType(TYPE_PENDULUM) and tc:GetBattleTarget()~=nil
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DoubleBattleDamage(ep)
+function s.damtg(e,c)
+	return c:IsType(TYPE_PENDULUM) and c:GetBattleTarget()~=nil
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE

@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x48}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x48)
 end
@@ -45,6 +46,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,tc:GetAttack())
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local tc=c:GetFirstCardTarget()
 	local atk=tc:GetAttack()

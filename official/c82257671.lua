@@ -3,7 +3,7 @@
 --Scripted by Eerie Code, anime version by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--ind
+	--indestructable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
@@ -34,21 +34,21 @@ function s.initial_effect(c)
 	e3:SetTarget(s.immtg)
 	e3:SetOperation(s.immop)
 	c:RegisterEffect(e3)
-	end
-	function s.indct(e,re,r,rp)
+end
+function s.indct(e,re,r,rp)
 	if r&REASON_EFFECT==REASON_EFFECT then
 		return 1
 	else return 0 end
-	end
-	function s.disfilter(c)
+end
+function s.disfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsRace(RACE_CYBERSE) and not c:IsDisabled()
-	end
-	function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+end
+function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.disfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.disfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local g=Duel.SelectTarget(tp,s.disfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
@@ -71,20 +71,20 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.AdjustInstantly(tc)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-	end
-	function s.immcon(e,tp,eg,ep,ev,re,r,rp)
+end
+function s.immcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_ONFIELD)
-	end
-	function s.immtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+end
+function s.immtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
-	end
-	function s.immop(e,tp,eg,ep,ev,re,r,rp)
+end
+function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetType(EFFECT_TYPE_SINGLE)

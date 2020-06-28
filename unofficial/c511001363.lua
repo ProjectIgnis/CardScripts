@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,nil,7,3,nil,nil,5)
+	Xyz.AddProcedure(c,nil,7,3,nil,nil,99)
 	c:EnableReviveLimit()
 	local e0=Effect.CreateEffect(c)
 	e0:SetDescription(aux.Stringid(67926903,0))
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1048}
 function s.cfilter(c)
-	return c:IsHasEffect(511002571) and #{c:GetCardEffect(id)}==0
+	return c:IsHasEffect(511002571) and #{c:GetCardEffect(5110013630)}==0
 end
 function s.op(e)
 	local g=Duel.GetMatchingGroup(s.cfilter,0,0xff,0xff,nil)
@@ -49,6 +49,7 @@ function s.op(e)
 		local effs={c:GetCardEffect(511002571)}
 		for _,eff in ipairs(effs) do
 			local te=eff:GetLabelObject()
+			if te:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then te=te:GetLabelObject() end
 			local resetflag,resetcount=te:GetReset()
 			local rm,max,code=te:GetCountLimit()
 			local prop1,prop2=eff:GetProperty()
@@ -57,7 +58,7 @@ function s.op(e)
 				e1:SetDescription(te:GetDescription())
 			end
 			e1:SetLabelObject(te)
-			e1:SetType(EFFECT_TYPE_XMATERIAL+te:GetType())
+			e1:SetType(EFFECT_TYPE_XMATERIAL+te:GetType()&(~EFFECT_TYPE_SINGLE))
 			if te:GetCode() then
 				e1:SetCode(te:GetCode())
 			end
@@ -81,7 +82,7 @@ function s.op(e)
 			c:RegisterEffect(e1,true)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(id)
+			e2:SetCode(5110013630)
 			e2:SetProperty(prop1,prop2)
 			if resetflag and resetcount then
 				e2:SetReset(resetflag,resetcount)
@@ -142,13 +143,12 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og)
 	local mg=Duel.GetMatchingGroup(s.ovfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	og:Merge(mg)
 	local tc=mg:GetFirst()
-	while tc do
+	for tc in aux.Next(mg) do
 		local ov=tc:GetOverlayGroup()
 		if #ov>0 then
 			Duel.Overlay(c,ov)
 			og:Merge(ov)
 		end
-		tc=mg:GetNext()
 	end
 	c:SetMaterial(og)
 	Duel.Overlay(c,og)

@@ -1,4 +1,5 @@
 --打ち出の小槌 (Anime)
+--Magical Mallet (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,7 +22,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-		local g=Duel.SelectMatchingCard(p,Card.IsAbleToDeck,p,LOCATION_HAND,0,0,63,nil)
+		local g=Group.CreateGroup()
+		g=Duel.SelectMatchingCard(p,Card.IsAbleToDeck,p,LOCATION_HAND,0,0,99,nil)
 		c:CancelToGrave()
 		g:AddCard(c)
 		local ct=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)

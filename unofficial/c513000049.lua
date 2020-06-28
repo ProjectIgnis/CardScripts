@@ -49,7 +49,7 @@ function s.initial_effect(c)
 	e9:SetTarget(s.sumlimit)
 	c:RegisterEffect(e9)
 end
-s.listed_names={100000013,100000014}
+s.listed_names={36894320,72883039}
 function s.damcon(e)
 	return e:GetHandler():IsAttackPos()
 end
@@ -77,5 +77,5 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not se:GetHandler():IsCode(100000013) and not se:GetHandler():IsCode(100000014)
+	return not se:GetHandler():IsCode(36894320) and not se:GetHandler():IsCode(72883039)
 end

@@ -1,4 +1,5 @@
 --D・ライトン
+--Morphtronic Lantron
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_REFLECT_DAMAGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCondition(s.cona)
+	e1:SetCondition(s.condition)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.refval)
 	c:RegisterEffect(e1)
@@ -27,11 +28,11 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-function s.cona(e)
+function s.condition(e)
 	return e:GetHandler():IsAttackPos()
 end
 function s.refval(e,re,val,r,rp,rc)
-	return rp~=e:GetHandlerPlayer() and (r&REASON_EFFECT)~=0
+	return (r&REASON_EFFECT)~=0 and rp==1-e:GetHandlerPlayer()
 end
 function s.check(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

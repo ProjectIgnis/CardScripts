@@ -1,4 +1,5 @@
 --ダブル・アップ・チャンス
+--Double or Nothing!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,12 +22,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:GetFlagEffect(id)==0 then
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		--additional attack
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
+		--double ATK
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_BATTLE_START)
@@ -37,9 +40,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+	--double ATK
 	local e1=Effect.CreateEffect(e:GetOwner())
 	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(e:GetHandler():GetAttack()*2)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
 	e:GetHandler():RegisterEffect(e1)

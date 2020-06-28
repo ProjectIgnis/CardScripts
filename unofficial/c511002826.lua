@@ -7,7 +7,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
@@ -34,34 +33,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x93}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local a=Duel.GetAttacker()
-	local b1=Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) and s.descon(e,tp,Group.FromCards(a),ep,ev,re,r,rp) 
-		and s.descost(e,tp,Group.FromCards(a),ep,ev,re,r,rp,0)
-		and s.destg(e,tp,Group.FromCards(a),ep,ev,re,r,rp,0)
-	local b2=s.descost2(e,tp,eg,ep,ev,re,r,rp,0)
-		and s.destg2(e,tp,eg,ep,ev,re,r,rp,0)
-	if (b1 or b2) and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
-		local op=2
-		e:SetCategory(CATEGORY_DESTROY)
-		if b1 and b2 then
-			op=Duel.SelectOption(tp,aux.Stringid(92773018,0),aux.Stringid(21420702,0))
-		end
-		if op==0 or (b1 and not b2) then
-			e:SetOperation(s.desop)
-			s.descost(e,tp,Group.FromCards(a),ep,ev,re,r,rp,1)
-			s.destg(e,tp,Group.FromCards(a),ep,ev,re,r,rp,1)		   
-		else
-			e:SetOperation(s.desop2)
-			s.descost2(e,tp,eg,ep,ev,re,r,rp,1)
-			s.destg2(e,tp,eg,ep,ev,re,r,rp,1)
-		end
-	else
-		e:SetCategory(0)
-		e:SetOperation(nil)
-	end
-end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
@@ -76,7 +47,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
-	if chk==0 then return a:IsOnField() and a:IsDestructable() end
+	if chk==0 then return a:IsOnField() end
 	Duel.SetTargetCard(a)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,a,1,0,0)
 end

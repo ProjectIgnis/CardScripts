@@ -52,6 +52,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.atval)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x580}
 function s.atkfilter(c)
 	return c:IsType(TYPE_FIELD) and c:IsSetCard(0x580)
 end

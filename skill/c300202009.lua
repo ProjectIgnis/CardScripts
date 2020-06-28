@@ -14,7 +14,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.Amafilter(c)
 	return c:IsSetCard(0x4) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
-	and Duel.IsExistingMatchingCard(s.Hapfilter,tp,LOCATION_HAND,0,1,c)
+		and Duel.IsExistingMatchingCard(s.Hapfilter,tp,LOCATION_HAND,0,1,c)
 end
 function s.Hapfilter(c)
 	return c:IsSetCard(0x64) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
@@ -39,11 +39,11 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		g1:Merge(g2)
 		Duel.ConfirmCards(1-tp,g1)
 		Duel.Draw(tp,1,REASON_EFFECT)
-		-- opd register
+		--opd register
 		Duel.RegisterFlagEffect(ep,id,0,0,0)
 	elseif p==1 then
 		Duel.Draw(tp,2,REASON_EFFECT)
-		-- opd register
+		--opd register
 		Duel.RegisterFlagEffect(ep,id+1,0,0,0)
 	else
 		local g1=Duel.SelectMatchingCard(tp,s.Amafilter,tp,LOCATION_HAND,0,1,1,nil)
@@ -52,7 +52,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g1)
 		Duel.Draw(tp,1,REASON_EFFECT)
 		Duel.Draw(tp,2,REASON_EFFECT)
-		-- opd register
+		--opd register
 		Duel.RegisterFlagEffect(ep,id,0,0,0)
 		Duel.RegisterFlagEffect(ep,id+1,0,0,0)
 	end

@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--link summon
 	Link.AddProcedure(c,nil,2,99,s.lcheck)
 	c:EnableReviveLimit()
-	--todeck
+	--shuffle card into the deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1)
-	--draw count
+	--Change draw count
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_DRAW_COUNT)
@@ -28,8 +28,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x112}
-function s.lcheck(g,lc)
-	return g:GetClassCount(Card.GetCode)==#g
+function s.lcheck(g,lc,sumtype,tp)
+	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
@@ -55,8 +55,8 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
-	 		and e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,1)
+	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
+			and e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,1)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		if tc:IsLocation(LOCATION_DECK) and tc:IsControler(tp) then
@@ -73,4 +73,3 @@ function s.drval(e)
 	if #g<=0 then return 1 end
 	return g:GetClassCount(Card.GetCode)
 end
-

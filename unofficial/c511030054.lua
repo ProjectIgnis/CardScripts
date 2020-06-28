@@ -1,6 +1,6 @@
---家電機塊世界エレクトリリカル・ワールド
---Appliancer Electrilyrical World
---scripted by pyrQ
+--家電機塊世界エレクトリリカル・ワールド (Anime)
+--Appliancer Electrilyrical World (Anime)
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,c:Alias(),EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--Return to hand
@@ -34,10 +34,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.mvop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x57a}
-s.listed_names={id}
+s.listed_series={0x14a}
+s.listed_names={3875465}
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x57a) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x14a) and c:IsAbleToHand() and not c:IsCode(3875465)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -50,13 +50,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.confilter(c,tp)
-	return c:IsSetCard(0x57a) and c:IsType(TYPE_LINK) and c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsControler(tp)
+	return c:IsSetCard(0x14a) and c:IsType(TYPE_LINK) and c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsControler(tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.confilter,1,nil,tp)
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x57a) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x14a) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter2(chkc) end
@@ -73,10 +73,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mvcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.mvfilter(c)
-	return c:GetSequence()<5 and c:IsSetCard(0x57a) and c:IsType(TYPE_LINK) and c:IsLink(1)
+	return c:GetSequence()<5 and c:IsSetCard(0x14a) and c:IsType(TYPE_LINK) and c:IsLink(1)
 end
 function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and s.mvfilter(chkc) end

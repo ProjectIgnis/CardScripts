@@ -2,7 +2,7 @@
 --Prima Guitarna of the Colorful Light
 local s,id=GetID()
 function s.initial_effect(c)
-	--atk change
+	--ATK increase
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-if chk==0 then return Duel.CheckLPCost(tp,1000) end
+	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 end
 function s.filter(c)
 	return c:IsCanChangePosition()
@@ -25,12 +25,10 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--requirement
-	Duel.PayLPCost(tp,1000)	
-	
+	Duel.PayLPCost(tp,1000)
 	--effect
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

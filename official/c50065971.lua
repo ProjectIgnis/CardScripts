@@ -1,15 +1,10 @@
 --超重忍者シノビ－Ａ・Ｃ
+--Superheavy Samurai Stealth Ninja
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x9a)
 	c:EnableReviveLimit()
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_MACHINE),1,1,Synchro.NonTunerEx(Card.IsRace,RACE_MACHINE),1,99)
-	--add setcode
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e0:SetCode(EFFECT_ADD_SETCODE)
-	e0:SetValue(0x9a)
-	c:RegisterEffect(e0)
 	--defense attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

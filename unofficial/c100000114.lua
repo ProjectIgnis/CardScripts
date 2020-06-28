@@ -1,12 +1,13 @@
 --愚者の種蒔き
+--Sowing of the Fool
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	c:RegisterEffect(e1)	
-	local e2=Effect.CreateEffect(c)		
+	c:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_COIN+CATEGORY_DECKDES)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetTarget(s.ddtg)
 	e2:SetOperation(s.ddop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x5}
 s.toss_coin=true
@@ -37,7 +38,7 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local res=Duel.TossCoin(tp,1)
 		local p
-		if res==0 then
+		if res==1 then
 			p=tp
 		else
 			p=1-tp

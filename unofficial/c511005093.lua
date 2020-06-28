@@ -158,6 +158,7 @@ if not BoosterDraft then
 					if #tempg==#groups[p][team] then break end
 				end
 				Duel.SendtoDeck(tempg,nil,2,REASON_RULE)
+				Duel.ShuffleDeck(p)
 				if counts[p]~=1 then
 					Duel.TagSwap(p)
 				end

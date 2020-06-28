@@ -1,3 +1,4 @@
+--連撃竜ドラギアス
 --Rush Dragon Dragears
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,9 +25,9 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return con end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	-- requirement
-	Duel.DiscardDeck(tp,1,REASON_COST)
-	-- effect
+	--requirement
+	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
+	--effect
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,0,0)

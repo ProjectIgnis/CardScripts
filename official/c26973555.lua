@@ -3,16 +3,10 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x207f)
 	--xyz summon
 	c:EnableReviveLimit()
 	Xyz.AddProcedure(c,s.xyzfilter,nil,3,aux.FilterFaceupFunction(Card.IsCode,65305468),aux.Stringid(id,0),nil,nil,false,s.xyzcheck)
-	--add setcode
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_ADD_SETCODE)
-	e1:SetValue(0x207f)
-	c:RegisterEffect(e1)
 	--indes
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)

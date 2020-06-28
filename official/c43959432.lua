@@ -1,4 +1,5 @@
 --メタモル・クレイ・フォートレス
+--Metamorphortress
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,7 +17,8 @@ function s.filter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and (Duel.IsDuelType(DUEL_TRAP_MONSTERS_NOT_USE_ZONE) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,1000,1000,4,RACE_ROCK,ATTRIBUTE_EARTH) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
@@ -68,7 +70,7 @@ function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker() and e:GetHandler():IsRelateToBattle()
 end
 function s.equipop(c,e,tp,tc)
-	aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id)		
+	aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -79,7 +81,6 @@ end
 function s.atkval(e,c)
 	local g=e:GetHandler():GetEquipGroup():Filter(s.eqfilter,nil)
 	local atk=0
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local tatk=tc:GetAttack()
 		if tatk>0 then atk=atk+tatk end
@@ -87,5 +88,5 @@ function s.atkval(e,c)
 	return atk
 end
 function s.eqfilter(c)
-	return c:GetFlagEffect(id)~=0 
+	return c:GetFlagEffect(id)~=0
 end

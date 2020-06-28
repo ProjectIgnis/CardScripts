@@ -1,4 +1,5 @@
 --幻影死槍
+--Phantom Knights' Spear
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,13 +26,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x10db}
-function s.filter(c)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x10db)
+function s.filter(c,p)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x10db) and c:IsControler(p)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsExists(s.filter,1,nil) and tp~=rp
+	return g and g:IsExists(s.filter,1,nil,tp) and rp==1-tp
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

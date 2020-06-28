@@ -1,5 +1,5 @@
 --『焔聖剣－ジョワユーズ』
---"Flame Noble Arms - Joyeuse"
+--"Infernoble Arms - Joyeuse"
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,12 +40,15 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
-		Duel.BreakEffect()
-		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+	if tc and tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
+		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_HAND)
+		if #og>0 then
+			Duel.ConfirmCards(1-tp,tc)
+			Duel.BreakEffect()
+			Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+		end
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

@@ -1,7 +1,8 @@
--- 暴虐の報い - Reward of Tyranny
+--暴虐の報い
+--Reward of Tyranny
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE)
-		and bit.band(c:GetPreviousTypeOnField(),TYPE_NORMAL)~=0
+		and c:GetPreviousTypeOnField()&TYPE_NORMAL~=0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and eg:IsExists(s.cfilter,2,nil,tp)

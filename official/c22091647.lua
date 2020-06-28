@@ -1,5 +1,5 @@
 --ゴッドフェニックス・ギア・フリード
---God Phoenix Gearfried
+--Immortal Phoenix Gearfried
 --Scripted by Logical Nonsense and AlphaKretin
 --Substitute ID
 local s,id=GetID()

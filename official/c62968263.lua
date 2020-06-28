@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107b,0x48}
+s.listed_series={0x48,0x107b}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x107b),tp,LOCATION_MZONE,0,1,nil)
@@ -65,7 +65,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,CARD_GALAXYEYES_P_DRAGON)
 	local tc=g:GetFirst()
 	local op=0
-		if #tg>0 and (tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then
+		if tg and #tg>0 and (tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then
 		op=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
 		elseif #tg>0 then op=0
 		else op=1 end
@@ -78,7 +78,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		else 
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
-	if ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE then
+	if Duel.IsBattlePhase() then
 		for sc in aux.Next(sg) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

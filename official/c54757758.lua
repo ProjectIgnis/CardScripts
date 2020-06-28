@@ -5,13 +5,14 @@ function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMixN(c,true,true,s.ffilter,2)
-	--cannot be target
+	--Cannot be targeted
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(aux.tgoval)
+	--Prevent target
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tglimit)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-	--change attribute
+	--Change attribute
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_QUICK_O)

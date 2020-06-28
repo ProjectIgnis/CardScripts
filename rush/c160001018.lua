@@ -1,6 +1,5 @@
 --ささやきの妖精
 --Whispering Fairy
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,7 +20,7 @@ function s.filter(c)
 end
 	--Check for card in hand to send to GY
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end	
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

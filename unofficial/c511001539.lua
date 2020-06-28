@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(Fusion.SummonEffOP)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x7}
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)

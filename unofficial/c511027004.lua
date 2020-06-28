@@ -38,7 +38,8 @@ function s.filter1(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetCode())
 end
 function s.filter2(c,e,tp,code)
-	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK):GetToBeLinkedZone(c,tp,true))
+	return c:IsLinkMonster() and c:IsCode(code)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK):GetToBeLinkedZone(c,tp,true))
 end
 function s.spextg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter1(chkc,e,tp) end

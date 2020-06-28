@@ -139,7 +139,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SpecialSummon(matg,0,tp,tp,false,false,POS_FACEUP) > 0 then
 		for tc in aux.Next(matg) do
 			if tc:IsLocation(LOCATION_MZONE) then
-				s.disop(tc,e:GetHandler())
+				s.disop(e,tp,eg,ep,ev,re,r,rp,tc)
 			end
 		end
 	else
@@ -157,9 +157,9 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp,tc)
 	e1:SetCode(EFFECT_DISABLE)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	tc:RegisterEffect(e1)
-	local e3=Effect.CreateEffect(e:GetHandler())
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_DISABLE_EFFECT)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-	tc:RegisterEffect(e3)
+	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_DISABLE_EFFECT)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	tc:RegisterEffect(e2)
 end

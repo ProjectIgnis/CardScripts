@@ -1,6 +1,8 @@
 --紫毒の魔術師
+--Purple Poison Magician
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x1046)
 	Pendulum.AddProcedure(c)
 	--Increase ATK
 	local e1=Effect.CreateEffect(c)
@@ -25,13 +27,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	--add setcode
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCode(EFFECT_ADD_SETCODE)
-	e2:SetValue(0x1046)
-	c:RegisterEffect(e2)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

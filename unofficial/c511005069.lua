@@ -26,6 +26,7 @@ function s.sel_fil(c)
 	return c==Duel.GetAttacker() or c==Duel.GetAttackTarget()
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local fg=Duel.GetMatchingGroup(s.sel_fil,tp,LOCATION_MZONE,0,nil)
 	local tc
 	if #fg==1 then

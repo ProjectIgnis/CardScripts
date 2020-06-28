@@ -2,10 +2,10 @@
 --Number 38: Hope Harbinger Dragon Titanic Galaxy
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon
 	Xyz.AddProcedure(c,nil,8,2)
 	c:EnableReviveLimit()
-	--negate
+	--Negate a Spell
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	--change battle target
+	--Change attack target
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.cbcost)
 	e2:SetOperation(s.cbop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	--atk up
+	--ATK increase
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
@@ -47,7 +47,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 		and re:IsActiveType(TYPE_SPELL) and Duel.IsChainDisablable(ev) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ)  end
+	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
@@ -95,17 +95,19 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	local g=eg:Filter(s.atkfilter1,nil,tp)
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		if #g>=2 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			g=g:Select(tp,1,1,nil)
 		end
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(g:GetFirst():GetBaseAttack())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
+		if #g==1 then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(g:GetFirst():GetBaseAttack())
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e1)
+		end
 	end
 end

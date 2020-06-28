@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	return c:IsType(TYPE_LINK) and c:GetMutualLinkedGroupCount()>0
+	return c:IsLinkMonster() and c:GetMutualLinkedGroupCount()>0
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

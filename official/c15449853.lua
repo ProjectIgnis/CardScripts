@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--change
+	--name change
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE+LOCATION_GRAVE)
 	e2:SetValue(CARD_SANCTUARY_SKY)
 	c:RegisterEffect(e2)
-	--atk/def
+	--atk/def increase
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e6:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	c:RegisterEffect(e6)
-	--to deck
+	--send cards to deck
 	local e7=Effect.CreateEffect(c)
 	e7:SetCategory(CATEGORY_TODECK)
 	e7:SetType(EFFECT_TYPE_IGNITION)
@@ -67,7 +67,7 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tg=Duel.GetTargetCards(e)
-	if #tg==0 then return end
+	if not tg or #tg==0 then return end
 	if Duel.SendtoDeck(tg,nil,SEQ_DECKTOP,REASON_EFFECT)==0 then return end
 	local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_DECK)
 	if ct>0 then Duel.SortDecktop(tp,tp,ct) end

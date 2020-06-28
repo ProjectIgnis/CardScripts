@@ -14,8 +14,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
 function s.chainfilter(re,tp,cid)
-	local ph=Duel.GetCurrentPhase()
-	return not (re:IsActiveType(TYPE_MONSTER) and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2))
+	return not (re:IsActiveType(TYPE_MONSTER) and Duel.IsMainPhase())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,1-tp,ACTIVITY_CHAIN)~=0

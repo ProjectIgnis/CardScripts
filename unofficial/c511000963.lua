@@ -1,6 +1,6 @@
 --神の束縛ドローミ
 --Dromi the Sacred Shackles
---rescripted by Larry126
+--Rescripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,28 +27,28 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local o=e:GetLabelObject()
-	local s=g:GetFirst()
-	if s==o then s=g:GetNext() end
-	if s.filter(s) and s:IsRelateToEffect(e) and o:IsFaceup() and o:IsControler(1-tp) and o:IsRelateToEffect(e) then
+	local oc=e:GetLabelObject()
+	local sc=g:GetFirst()
+	if sc==oc then sc=g:GetNext() end
+	if s.filter(sc) and sc:IsRelateToEffect(e) and oc:IsFaceup() and oc:IsControler(1-tp) and oc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_LEAVE_FIELD)
-		e1:SetLabel(math.abs(s:GetAttack()-o:GetAttack()))
-		e1:SetLabelObject(o)
+		e1:SetLabel(math.abs(sc:GetAttack()-oc:GetAttack()))
+		e1:SetLabelObject(oc)
 		e1:SetCondition(s.damcon)
 		e1:SetOperation(s.damop)
 		Duel.RegisterEffect(e1,tp)
-		o:CreateEffectRelation(e1)
+		oc:CreateEffectRelation(e1)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local o=e:GetLabelObject()
-	if not o:IsRelateToEffect(e) or e:GetLabel()<=0 then
+	local oc=e:GetLabelObject()
+	if not oc:IsRelateToEffect(e) or e:GetLabel()<=0 then
 		e:Reset()
 		return false
 	else
-		return eg:IsContains(o)
+		return eg:IsContains(oc)
 	end
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)

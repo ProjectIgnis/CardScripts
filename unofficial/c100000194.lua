@@ -28,6 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local d=Duel.TossDice(tp,1)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()

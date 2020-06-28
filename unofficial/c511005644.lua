@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and Duel.GetTurnPlayer()~=tp
+	return Duel.IsBattlePhase() and Duel.GetTurnPlayer()~=tp
 end
 
 function s.filter(c,e,tp,tid)
@@ -42,6 +42,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,PLAYER_ALL,LOCATION_GRAVE)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local loc=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if loc<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end

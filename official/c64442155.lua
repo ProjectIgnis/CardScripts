@@ -58,4 +58,3 @@ end
 function s.splimit(e,c)
 	return not c:IsRitualMonster()
 end
-

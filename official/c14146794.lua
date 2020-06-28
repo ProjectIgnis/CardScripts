@@ -35,13 +35,13 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-    local e1=Effect.CreateEffect(e:GetHandler())
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
-    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-    e1:SetTargetRange(1,0)
-    e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
-    Duel.RegisterEffect(e1,tp)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
+	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	Duel.RegisterEffect(e1,tp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
@@ -52,8 +52,8 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local rd=e1 and not e2
 	local rr=not e1 and e2
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	if ex and (cp==p or p==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(p,EFFECT_NO_EFFECT_DAMAGE) then 
-		return true 
+	if ex and (cp==p or p==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(p,EFFECT_NO_EFFECT_DAMAGE) then
+		return true
 	end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
 	if ex and (p==tp or p==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(p,EFFECT_NO_EFFECT_DAMAGE) then
@@ -80,4 +80,3 @@ function s.damval(e,re,val,r,rp,rc)
 	if cid~=e:GetLabel() then return val end
 	return val*2
 end
-

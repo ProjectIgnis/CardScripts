@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xaf,0x10af}
 function s.filter(c)
 	return c:IsFaceup() and c:GetLevel()>0 and c:IsSetCard(0xaf)
 end

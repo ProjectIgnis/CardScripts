@@ -1,12 +1,14 @@
---Performapal Sky Magician
+--ＥＭスカイ・マジシャン (Anime)
+--Performapal Sky Magician (Anime)
 --fixed by MLD
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--Spell change
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetCountLimit(1)
-	e1:SetDescription(aux.Stringid(81020646,0))
+	e1:SetDescription(aux.Stringid(alias,1))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_CHAINING)
@@ -14,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
+	--ATK increase
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -22,18 +25,18 @@ function s.initial_effect(c)
 	e2:SetOperation(aux.chainreg)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(28201945,0))
+	e3:SetDescription(aux.Stringid(alias,0))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_CHAIN_SOLVING)
+	e3:SetCode(EVENT_CHAIN_SOLVED)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.con)
 	e3:SetOperation(s.op)
 	c:RegisterEffect(e3)
-	--Special Summon
+	--Destroy
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(35952884,1))
+	e5:SetDescription(aux.Stringid(alias,3))
 	e5:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e5:SetCategory(CATEGORY_DESTROY)
@@ -44,9 +47,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	local c=re:GetHandler()
-	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and (c:GetType()&TYPE_SPELL+TYPE_CONTINUOUS)==TYPE_SPELL+TYPE_CONTINUOUS 
-		and e:GetHandler():GetFlagEffect(1)>0
+	return re:IsActiveType(TYPE_SPELL) and re:IsActiveType(TYPE_CONTINUOUS) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+		and rp==tp and e:GetHandler():GetFlagEffect(1)>0
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -103,7 +105,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 				e:SetCategory(te:GetCategory())
 				e:SetProperty(te:GetProperty())
 				local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-				if Duel.IsDuelType(DUEL_OBSOLETE_RULING) then
+				if Duel.IsDuelType(DUEL_1_FIELD) then
 					if fc then Duel.Destroy(fc,REASON_RULE) end
 					fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 					if fc and Duel.Destroy(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
@@ -136,7 +138,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 				end
 				Duel.RaiseEvent(Group.CreateGroup(tc),EVENT_CHAIN_SOLVED,te,0,tp,tp,Duel.GetCurrentChain())
 				tc:ReleaseEffectRelation(te)
-				if etc then	
+				if etc then
 					etc=g:GetFirst()
 					while etc do
 						etc:ReleaseEffectRelation(te)

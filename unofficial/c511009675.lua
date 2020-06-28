@@ -59,6 +59,7 @@ function s.linkfilter(c)
 	return c:IsSpecialSummonable(SUMMON_TYPE_LINK) and c:IsSetCard(0x574)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,511009676,0,TYPES_TOKEN,0,0,1,RACE_PLANT,ATTRIBUTE_EARTH) then return end
 	local token=Duel.CreateToken(tp,511009676)

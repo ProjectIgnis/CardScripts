@@ -1,7 +1,8 @@
 --ヘルポーンデーモン
+--Vilepawn Archfiend
 local s,id=GetID()
 function s.initial_effect(c)
-	--maintain
+	--Maintenance cost
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -28,6 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x45}
+s.roll_dice=true
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end

@@ -1,6 +1,6 @@
---複写機塊コピーボックル
---Appliancer Copybokkle
---scripted by pyrQ
+--複写機塊コピーボックル (Anime)
+--Appliancer Copybokkle (Anime)
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -9,16 +9,16 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,c:Alias())
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x57a}
-s.listed_names={id}
+s.listed_series={0x14a}
+s.listed_names={41830887}
 function s.filter(c,oc)
-	return not c:IsCode(id) and c:IsFaceup() and c:IsSetCard(0x57a)
-		and not (c:IsCode(id) and c:IsRace(oc:GetRace()) and c:IsAttribute(oc:GetAttribute()))
+	return not c:IsCode(41830887) and c:IsFaceup() and c:IsSetCard(0x14a)
+		and not (c:IsCode(41830887) and c:IsRace(oc:GetRace()) and c:IsAttribute(oc:GetAttribute()))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

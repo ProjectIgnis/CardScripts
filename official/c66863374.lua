@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x19}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x19)
+	return g:IsExists(Card.IsSetCard,1,nil,0x19,lc,sumtype,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

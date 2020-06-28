@@ -1,4 +1,5 @@
 --ジャンク・ブレイカー
+--Fiendish Commander Yameruler
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable
@@ -8,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetOperation(s.sumsuc)
 	c:RegisterEffect(e1)
+	--Prevent Tribute Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -28,13 +30,11 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
 end
-
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--cannot tribute summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
@@ -43,6 +43,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,1)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EFFECT_CANNOT_MSET)
 	c:RegisterEffect(e2)
 end

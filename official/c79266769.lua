@@ -17,8 +17,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-function s.spcheck(g,lc,tp)
-	return g:CheckSameProperty(Card.GetRace,lc,SUMMON_TYPE_LINK,tp) and g:CheckSameProperty(Card.GetAttribute,lc,SUMMON_TYPE_LINK,tp)
+function s.spcheck(g,lc,sumtype,tp)
+	return g:CheckSameProperty(Card.GetRace,lc,sumtype,tp) and g:CheckSameProperty(Card.GetAttribute,lc,sumtype,tp)
 end
 function s.filter(c,e,tp,zone)
 	return (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))

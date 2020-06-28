@@ -1,3 +1,4 @@
+--マジカルシルクハット (Anime)
 --Magical Hats (Anime)
 --original script by Shad3
 local s,id=GetID()

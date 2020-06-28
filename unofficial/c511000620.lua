@@ -75,6 +75,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	eq:RegisterEffect(e2)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)

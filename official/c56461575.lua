@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 			if tc:IsCode(CARD_GAIA_CHAMPION) then
 			local c=e:GetHandler()
 			local e1=Effect.CreateEffect(c)
@@ -49,6 +49,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
+	return rp==1-e:GetHandlerPlayer()
 end
-

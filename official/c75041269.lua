@@ -53,7 +53,7 @@ function s.dcon(e)
 	return e:GetHandler():GetCounter(0x1b)>=4
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x1b,1)

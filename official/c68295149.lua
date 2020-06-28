@@ -51,7 +51,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	if tc:IsRelateToEffect(e) and #g>0 then
+	if tc and tc:IsRelateToEffect(e) and #g>0 then
 		local atk=tc:GetAttack()
 		g:ForEach(s.op,e:GetHandler(),atk)
 	end

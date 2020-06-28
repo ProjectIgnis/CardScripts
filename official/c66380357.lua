@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp,c)
 	if #sg<count then count=#sg end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then count=1 end
-	if c:IsFaceup() and c:IsRelateToEffect(e) and zone~=0 then
+	if c and c:IsFaceup() and c:IsRelateToEffect(e) and zone~=0 then
 		for i=0,count,1 do
 			local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c):GetFirst()
 			if tc then

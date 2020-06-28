@@ -1,3 +1,4 @@
+--ＥＭスカイ・リング
 --Performapal Sky Ring
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f) and c:IsRace(RACE_SPELLCASTER) 
+	return c:IsFaceup() and c:IsSetCard(0x9f) and c:IsRace(RACE_SPELLCASTER)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) then return false end

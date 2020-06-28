@@ -76,7 +76,7 @@ end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not (c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e)) or tc:IsFacedown() then return end
+	if not (c:IsRelateToEffect(e) or tc or tc:IsRelateToEffect(e)) or tc:IsFacedown() then return end
 	local zone={}
 	zone[0]=c:GetLinkedZone(0)
 	zone[1]=c:GetLinkedZone(1)

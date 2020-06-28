@@ -1,10 +1,11 @@
 --バハムート・シャーク
+--Bahamut Shark (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,nil,4,2)
 	c:EnableReviveLimit()
-	--spsummon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(440556,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

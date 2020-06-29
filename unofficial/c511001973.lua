@@ -82,10 +82,10 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local mg=tc:GetMaterial()
 	local sumtype=tc:GetSummonType()
 	local sumable=false
+	mg=mg:Filter(Card.IsType,nil,TYPE_SYNCHRO)
 	if op==0 and Duel.SendtoGrave(tc,REASON_EFFECT)>0 then sumable=true end
 	if op==1 and Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)>0 then sumable=true end
-	if sumable and sumtype==SUMMON_TYPE_SYNCHRO and #mg>0 or #mg<=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		and mg:FilterCount(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,tc)==#mg and Duel.SelectYesNo(tp,aux.Stringid(32441317,0)) then
+	if sumable and sumtype==SUMMON_TYPE_SYNCHRO and #mg<=Duel.GetLocationCount(tp,LOCATION_MZONE) and mg:FilterCount(aux.NecroValleyFilter(s.mgfilter),ex,e,tp,tc) and Duel.SelectYesNo(tp,aux.Stringid(32441317,0)) then
 		Duel.BreakEffect()
 		Duel.SpecialSummon(mg,0,tp,tp,false,false,POS_FACEUP)
 	end

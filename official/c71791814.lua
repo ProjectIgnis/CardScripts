@@ -81,6 +81,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 	if not (ct>0 and #g>0 and ft>0) then return end
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,math.min(ct,ft),aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	if #sg>0 then

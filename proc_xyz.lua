@@ -675,8 +675,7 @@ function Xyz.Target2(alterf,op)
 				local cancel=not og and Duel.IsSummonCancelable()
 				Xyz.ProcCancellable=cancel
 				if og and not min then
-					og:KeepAlive()
-					e:SetLabelObject(og)
+					e:SetLabelObject(og:GetFirst())
 					if op then op(e,tp,1,og:GetFirst()) end
 					return true
 				else
@@ -695,6 +694,7 @@ function Xyz.Target2(alterf,op)
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 						oc=mg:Filter(Xyz.AlterFilter,nil,alterf,c,e,tp,op):SelectUnselect(Group.CreateGroup(),tp,false,cancel)
 					end
+					Debug.Message(type(oc))
 					if not oc then return false end
 					local ok=true
 					if op then ok=op(e,tp,1,oc) end

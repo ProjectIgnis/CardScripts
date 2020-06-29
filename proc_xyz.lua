@@ -694,7 +694,6 @@ function Xyz.Target2(alterf,op)
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 						oc=mg:Filter(Xyz.AlterFilter,nil,alterf,c,e,tp,op):SelectUnselect(Group.CreateGroup(),tp,false,cancel)
 					end
-					Debug.Message(type(oc))
 					if not oc then return false end
 					local ok=true
 					if op then ok=op(e,tp,1,oc) end

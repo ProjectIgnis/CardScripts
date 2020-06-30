@@ -48,7 +48,7 @@ end
 function s.ctfilter(c)
 	return c:IsType(TYPES) and c:IsRace(RACE_CYBERSE)
 end
-local function getcount()
+local function getcount(tp)
 	local tottype=0
 	Duel.GetMatchingGroup(s.ctfilter,tp,LOCATION_GRAVE,0,nil):ForEach(function(c) tottype=tottype|c:GetType() end)
 	tottype=tottype&(TYPES)
@@ -60,13 +60,13 @@ local function getcount()
 	return ct
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=getcount()
+	local ct=getcount(tp)
 	if chk==0 then return ct>0 and e:GetHandler():IsCanAddCounter(COUNTER_FW,ct) end
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	c:AddCounter(COUNTER_FW,getcount())
+	c:AddCounter(COUNTER_FW,getcount(tp))
 end
 function s.atkcon(e)
 	local ph=Duel.GetCurrentPhase()

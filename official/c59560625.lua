@@ -64,6 +64,6 @@ end
 function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.ChangeTargetCard(ev,tc)
+		Duel.ChangeTargetCard(ev,Group.FromCards(tc))
 	end
 end

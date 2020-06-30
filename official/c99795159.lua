@@ -60,7 +60,6 @@ function s.rdtg(e,c)
 	return not c:IsSetCard(0x8d)
 end
 function s.damval(e,damp,isres)
-	Debug.Message(isres)
 	if isres then return HALF_DAMAGE
 	else return -1 end
 end

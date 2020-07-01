@@ -1,5 +1,5 @@
 --鎖付き爆弾
---Blast with Chain
+--Blast with Chain (Goat)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -32,18 +32,10 @@ function s.initial_effect(c)
 	e4:SetTargetRange(1,1)
 	e4:SetValue(s.val)
 	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
+	local e5=e4:Clone()
 	e5:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e5:SetValue(s.damval)
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-	e6:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
-	e6:SetRange(LOCATION_FZONE)
-	e6:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e6:SetTarget(s.rdtg)
-	e6:SetLabelObject(e5)
-	c:RegisterEffect(e6)
+	c:RegisterEffect(e5)
 end
 s.listed_series={0x8d}
 function s.dirtg(e,c)
@@ -56,10 +48,7 @@ function s.val(e,re,dam,r,rp,rc)
 		return dam
 	end
 end
-function s.rdtg(e,c)
-	return not c:IsSetCard(0x8d)
-end
-function s.damval(e,damp,isres)
-	if isres then return HALF_DAMAGE
-	else return -1 end
+function s.damval(e,rc)
+	if rc:IsSetCard(0x8d) then return -1 end
+	return HALF_DAMAGE
 end

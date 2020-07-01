@@ -39,7 +39,7 @@ function s.filter(c,typ,lv)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.tgyfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
-	if Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
+	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
 		local typ=Duel.AnnounceRace(tp,1,RACE_ALL)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LEVEL)

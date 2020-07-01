@@ -469,3 +469,11 @@ function Auxiliary.NumeronDetachCost(min,max)
 		e:GetHandler():RemoveOverlayCard(tp,min,max,REASON_COST)
 	end
 end
+function Auxiliary.CheckStealEquip(c,e,tp)
+	if c:IsFacedown() or not c:IsControlerCanBeChanged() or not c:IsControler(1-tp) then return false end
+	if e:GetHandler():IsLocation(LOCATION_SZONE) then return true end --Already handled in the core
+	if not Duel.IsDuelType(DUEL_TRAP_MONSTERS_NOT_USE_ZONE) and c:IsType(TYPE_TRAPMONSTER) then
+		return Duel.GetLocationCount(tp,LOCATION_SZONE,tp,LOCATION_REASON_CONTROL)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE,tp,0)>=2
+	end
+	return true
+end

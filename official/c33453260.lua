@@ -1,7 +1,8 @@
 --コミックハンド
+--Comic Hand
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,1,Card.IsControlerCanBeChanged,s.eqlimit,nil,s.target,nil,s.condition)
+	aux.AddEquipProcedure(c,1,aux.CheckStealEquip,s.eqlimit,nil,s.target)
 	--control
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)

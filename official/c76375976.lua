@@ -1,14 +1,14 @@
 --魔鐘洞
---Spellore Cave
+--Mystic Mine
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--cannot activate effects
+	--Cannot activate effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetTargetRange(0,1)
 	e3:SetCondition(s.conopp)
 	c:RegisterEffect(e3)
-	--cannot attack
+	--Cannot declare attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e5:SetTargetRange(0,1)
 	e5:SetCondition(s.conopp)
 	c:RegisterEffect(e5)
-	--destroy
+	--Destroy itself
 	local e6=Effect.CreateEffect(c)
 	e6:SetCategory(CATEGORY_DESTROY)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -68,6 +68,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then Duel.Destroy(c,REASON_EFFECT) end
+	if c:IsRelateToEffect(e) then
+		Duel.Destroy(c,REASON_EFFECT)
+	end
 end
-

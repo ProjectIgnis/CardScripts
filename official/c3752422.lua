@@ -2,9 +2,9 @@
 --Performapal Lebellman
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum atributes
 	Pendulum.AddProcedure(c)
-	--level up
+	--Increase Level from the pendulum zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.lvtg)
 	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
-	--level change
+	--Increase Level from the monster zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)

@@ -2,8 +2,8 @@
 --Ancient Gear Hunting Hound (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-    --activation limit
-    local e1=Effect.CreateEffect(c)
+	--activation limit
+	local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
     e1:SetCode(EVENT_ATTACK_ANNOUNCE)
     e1:SetOperation(s.atkop)
@@ -63,5 +63,5 @@ function s.confilter(c)
     return c:IsFaceup() and c:IsSetCard(0x7)
 end
 function s.fuscon(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end

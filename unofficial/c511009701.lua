@@ -58,5 +58,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not te or not te:GetHandler():IsRelateToEffect(e) then return end
 	e:SetLabelObject(te:GetLabelObject())
 	local op=te:GetOperation()
-	if op then op(e,tp,table.unpack(s[Duel.GetCurrentChain()],2)) end
+	if op then op(e,tp,table.unpack(s[Duel.GetCurrentChain()])) end
 end

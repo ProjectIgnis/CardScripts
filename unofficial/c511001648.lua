@@ -1,3 +1,4 @@
+--ダイナ・タンク
 --Dyna Tank
 local s,id=GetID()
 function s.initial_effect(c)
@@ -49,7 +50,7 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return eg and g:IsContains(c)
+	return eg and g and g:IsContains(c)
 end
 function s.filter(c,re,rp,tf)
 	return tf(re,rp,nil,nil,nil,nil,nil,nil,0,c)

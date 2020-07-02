@@ -59,7 +59,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and e:GetHandler():GetPreviousControler()==tp
+	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.thfilter(c)
 	return c:IsAbleToHand() and (c:IsRitualMonster() or c:IsRitualSpell())

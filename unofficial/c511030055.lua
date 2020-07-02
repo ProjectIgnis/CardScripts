@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x244}
-s.listed_names={id}
+s.listed_series={0x14a}
+s.listed_names={41830887}
 function s.filter(c,oc)
-	return not c:IsCode(id) and c:IsFaceup() and c:IsSetCard(0x244)
-		and not (c:IsCode(id) and c:IsRace(oc:GetRace()) and c:IsAttribute(oc:GetAttribute()))
+	return not c:IsCode(41830887) and c:IsFaceup() and c:IsSetCard(0x14a)
+		and not (c:IsCode(41830887) and c:IsRace(oc:GetRace()) and c:IsAttribute(oc:GetAttribute()))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

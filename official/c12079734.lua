@@ -1,7 +1,8 @@
 --デルタトライ
+--Delta Tri
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Apply effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter1(c,ec)
-	return c:IsType(TYPE_UNION) and c:CheckEquipTarget(ec) and aux.CheckUnionEquip(c,ec)
+	return c:IsType(TYPE_UNION) and c:CheckUnionTarget(ec) and aux.CheckUnionEquip(c,ec)
 end
 function s.filter2(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToDeck()
@@ -52,13 +53,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if e:GetLabel()==0 then
 		local c=e:GetHandler()
-		if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e)
+		if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsRelateToEffect(e)
 			and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 			and aux.CheckUnionEquip(tc,c) and Duel.Equip(tp,tc,c,false) then
 			aux.SetUnionState(tc)
 		end
 	else
-		if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+		if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
 			if tc:IsLocation(LOCATION_DECK) then Duel.ShuffleDeck(tp) end
 			Duel.BreakEffect()
 			Duel.Draw(tp,1,REASON_EFFECT)

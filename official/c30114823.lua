@@ -1,7 +1,6 @@
 --コード・ジェネレーター
 --Code Generator
---Scripted by AlphaKretin
---extra material only by edo9300
+--Scripted by AlphaKretin, extra material by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
 	--Extra Material
@@ -20,7 +19,7 @@ function s.initial_effect(c)
 	if s.flagmap[c]==nil then
 		s.flagmap[c] = {}
 	end
-	--to grave
+	--Send to grave
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SEARCH+CATEGORY_TOHAND)

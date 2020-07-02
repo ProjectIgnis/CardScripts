@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and (r&REASON_BATTLE)==0 and ev<=500 and re and re:GetHandler():GetCode()~=id
+	return (r&REASON_BATTLE)==0 and ev<=500 and re and re:GetHandler():GetCode()~=id
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) end

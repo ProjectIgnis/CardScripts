@@ -51,15 +51,15 @@ function s.initial_effect(c)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x244}
+s.listed_series={0x14a}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsLevel(1) and c:IsSetCard(0x244,lc,sumtype,tp)
+	return c:IsLevel(1) and c:IsSetCard(0x14a,lc,sumtype,tp)
 end
 function s.imcon(e)
 	return e:GetHandler():IsLinked()
 end
 function s.cfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0x244)
+	return c:IsFacedown() or not c:IsSetCard(0x14a)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
@@ -95,7 +95,7 @@ end
 function s.checkfilter(c,e,tp)
 	local mg=c:GetMutualLinkedGroup()
 	local octg=e:GetHandler():GetMutualLinkedGroup()
-	return c:IsSetCard(0x244) and c:IsControler(tp) and c:IsReason(REASON_DESTROY)
+	return c:IsSetCard(0x14a) and c:IsControler(tp) and c:IsReason(REASON_DESTROY)
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and not (mg:IsContains(e:GetHandler()) and octg:IsContains(c))
 end

@@ -34,9 +34,9 @@ function s.initial_effect(c)
 	e3:SetLabel(0)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x244}
+s.listed_series={0x14a}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x244,fc,sumtype,tp) and c:IsLevel(1)
+	return c:IsSetCard(0x14a,fc,sumtype,tp) and c:IsLevel(1)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()
@@ -50,7 +50,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.spfilter(c,e,tp,colinked)
-	return c:IsSetCard(0x244) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(0x14a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 		and ((c:IsType(TYPE_LINK) and colinked) or (c:IsLevelBelow(4) and not colinked))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

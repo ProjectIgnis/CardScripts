@@ -65,7 +65,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,CARD_GALAXYEYES_P_DRAGON)
 	local tc=g:GetFirst()
 	local op=0
-		if #tg>0 and (tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then
+		if tg and #tg>0 and (tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then
 		op=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
 		elseif #tg>0 then op=0
 		else op=1 end

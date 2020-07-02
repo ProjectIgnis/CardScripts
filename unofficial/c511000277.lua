@@ -1,11 +1,11 @@
 --ＣＮｏ．１ ゲート・オブ・カオス・ヌメロン－シニューニャ
---Number C1: Numeron Chaos Gate Sunya
+--Number C1: Numeron Chaos Gate Sunya (anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,2,4,s.ovfilter,aux.Stringid(id,0),3)
+	--Xyz summon
+	Xyz.AddProcedure(c,nil,2,4,s.ovfilter,aux.Stringid(id,0))
 	c:EnableReviveLimit()
-	--selfdes
+	--Destroy itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.descon)
 	c:RegisterEffect(e1)
-	--banish
+	--Remove monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.bantg)
 	e2:SetOperation(s.banop)
 	c:RegisterEffect(e2)
-	--battle indestructable
+	--Battle indestructable
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -31,13 +31,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x48}
-s.listed_names={100266026}
+s.listed_names={CARD_NUMERON_NETWORK}
 s.xyz_number=1
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,100266022) and Duel.IsEnvironment(100266026)
+	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,15232745) and Duel.IsEnvironment(CARD_NUMERON_NETWORK)
 end
 function s.descon(e)
-	return not Duel.IsEnvironment(100266026)
+	return not Duel.IsEnvironment(CARD_NUMERON_NETWORK)
 end
 function s.bancon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
@@ -52,12 +52,10 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local chk=c:IsRelateToEffect(e)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local atk=0
-	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local a=tc:GetAttack()
 		if a<0 or tc:IsFacedown() then a=0 end
 		atk=atk+a
-		tc=g:GetNext()
 	end
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 and chk then
 		local e3=Effect.CreateEffect(c)
@@ -95,7 +93,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		e1:SetCondition(s.damcon)
-		e1:SetCost(s.damcost)
+		e1:SetCost(aux.NumeronDetachCost(1))
 		e1:SetTarget(s.damtg)
 		e1:SetOperation(s.damop)
 		e1:SetLabel(e:GetLabel())
@@ -103,10 +101,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 		Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL+1)

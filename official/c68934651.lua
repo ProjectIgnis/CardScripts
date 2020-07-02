@@ -3,6 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 local COUNTER_FW=0x14c
+local TYPES=TYPE_FUSION+TYPE_RITUAL+TYPE_SYNCHRO+TYPE_XYZ
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	c:EnableCounterPermit(COUNTER_FW)
@@ -45,20 +46,27 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.ctfilter(c)
-	return c:IsType(TYPE_FUSION+TYPE_RITUAL+TYPE_SYNCHRO+TYPE_XYZ) and c:IsRace(RACE_CYBERSE)
+	return c:IsType(TYPES) and c:IsRace(RACE_CYBERSE)
+end
+local function getcount(tp)
+	local tottype=0
+	Duel.GetMatchingGroup(s.ctfilter,tp,LOCATION_GRAVE,0,nil):ForEach(function(c) tottype=tottype|c:GetType() end)
+	tottype=tottype&(TYPES)
+	local ct=0
+	while tottype~=0 do
+		if tottype&0x1~=0 then ct=ct+1 end
+		tottype=tottype>>1
+	end
+	return ct
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.ctfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	local ct=getcount(tp)
+	if chk==0 then return ct>0 and e:GetHandler():IsCanAddCounter(COUNTER_FW,ct) end
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local g=Duel.GetMatchingGroup(s.ctfilter,tp,LOCATION_GRAVE,0,nil)
-	local ct=0
-	for _,ty in ipairs({TYPE_FUSION,TYPE_RITUAL,TYPE_SYNCHRO,TYPE_XYZ }) do
-		if g:IsExists(Card.IsType,1,nil,ty) then ct=ct+1 end
-	end
-	c:AddCounter(COUNTER_FW,ct)
+	c:AddCounter(COUNTER_FW,getcount(tp))
 end
 function s.atkcon(e)
 	local ph=Duel.GetCurrentPhase()
@@ -81,7 +89,7 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetAttacker()
-	if Duel.NegateActivation(ev) and c==tc and c:CanChainAttack() then
+	if Duel.NegateActivation(ev) and c==tc and c:CanChainAttack(0) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_DAMAGE_STEP_END)

@@ -30,7 +30,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetTargetCards(e)
-	if #g<2 then return end
+	if not g or #g<2 then return end
 	local tc=g:GetFirst()
 	local oc=g:GetNext()
 	if oc==e:GetLabelObject() then tc,oc=oc,tc end

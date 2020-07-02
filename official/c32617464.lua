@@ -5,15 +5,16 @@ function s.initial_effect(c)
 	--link summon
 	Link.AddProcedure(c,s.matfilter,2)
 	c:EnableReviveLimit()
-	--double damage
+	--Double damage
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.damcon)
-	e1:SetOperation(s.damop)
+	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e1:SetTarget(s.damtg)
+	e1:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e1)
-	--remove
+	--Banish card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_REMOVE)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
-	--negate
+	--Negate activation
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
@@ -42,13 +43,9 @@ end
 function s.matfilter(c,lc,sumtype,tp)
 	return not c:IsType(TYPE_TOKEN,lc,sumtype,tp)
 end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
+function s.damtg(e,c)
 	local lg=e:GetHandler():GetMutualLinkedGroup()
-	local tc=eg:GetFirst()
-	return ep~=tp and lg:IsContains(tc) and tc:GetBattleTarget()~=nil
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DoubleBattleDamage(ep)
+	return lg:IsContains(c) and c:GetBattleTarget()~=nil and c:GetBattleTarget():GetControler()==1-e:GetHandlerPlayer()
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>=2
@@ -62,7 +59,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end

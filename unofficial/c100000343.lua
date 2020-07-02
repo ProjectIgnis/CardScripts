@@ -1,4 +1,5 @@
 --森の聖騎士 ワンコ
+--Wonko, Noble Knight of the Forest
 local s,id=GetID()
 function s.initial_effect(c)
 	--target
@@ -39,6 +40,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e1:SetValue(-300)
+	e1:SetValue(-500)
 	bc:RegisterEffect(e1)
 end

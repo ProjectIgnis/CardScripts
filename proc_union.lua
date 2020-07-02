@@ -39,7 +39,7 @@ function Auxiliary.AddUnionProcedure(c,f,oldequip,oldprotect)
 	--eqlimit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_EQUIP_LIMIT)
+	e4:SetCode(EFFECT_UNION_LIMIT)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetValue(Auxiliary.UnionLimit(f))
 	c:RegisterEffect(e4)
@@ -47,6 +47,14 @@ function Auxiliary.AddUnionProcedure(c,f,oldequip,oldprotect)
 	if oldequip then
 		local m=c:GetMetatable()
 		m.old_union=true
+	end
+end
+if not Card.CheckUnionTarget then
+	Card.CheckUnionTarget=function(c,target)
+		local ct1,ct2=c:GetUnionCount()
+		return c:IsHasEffect(EFFECT_UNION_LIMIT) and (((not c:IsHasEffect(EFFECT_OLDUNION_STATUS)) or ct1 == 0)
+			and ((not c:IsHasEffect(EFFECT_UNION_STATUS)) or ct2 == 0))
+	
 	end
 end
 function Auxiliary.UnionFilter(c,f,oldrule)
@@ -130,6 +138,14 @@ function Auxiliary.IsUnionState(effect)
 	return c:IsHasEffect(EFFECT_UNION_STATUS)
 end
 function Auxiliary.SetUnionState(c)
+	local eset={c:GetCardEffect(EFFECT_UNION_LIMIT)}
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_EQUIP_LIMIT)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e0:SetValue(eset[1]:GetValue())
+	e0:SetReset(RESET_EVENT+RESETS_STANDARD)
+	c:RegisterEffect(e0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UNION_STATUS)

@@ -36,7 +36,8 @@ function s.desfilter(c,e,tp)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsReason(REASON_EFFECT) and c:IsSetCard(0x247) and c:IsType(TYPE_FUSION)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsReason(REASON_EFFECT)
+			and not c:IsReason(REASON_REPLACE) and c:IsSetCard(0x247) and c:IsType(TYPE_FUSION)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return #(eg:Filter(s.repfilter,nil,tp))==1

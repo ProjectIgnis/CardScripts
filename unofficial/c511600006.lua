@@ -3,7 +3,7 @@
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--atkup
+	--Chnage ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -43,7 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e1)
 		end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACK)
-		local ag=tg:Select(tp,1,1,nil)
+		local ag=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.tgfilter,nil,e):Select(tp,1,1,nil)
 		tg:Sub(ag)
 		local tc1=ag:GetFirst()
 		local tc2=tg:GetFirst()

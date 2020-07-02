@@ -37,6 +37,11 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_BATTLED)
 	e5:SetOperation(s.desop2)
 	c:RegisterEffect(e5)
+	local e6=e4:Clone()
+	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e6:SetCode(EVENT_BECOME_TARGET)
+	e6:SetOperation(s.register)
+	c:RegisterEffect(e6)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttackTarget()==nil
@@ -54,14 +59,22 @@ end
 function s.sdcon(e)
 	return e:GetHandler():GetOwnerTargetCount()>0
 end
+function s.register(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(id+1,RESET_CHAIN,0,1,ev)
+end
 function s.desop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or not g:IsContains(c) then return false end
-	if (Duel.GetCurrentPhase()&(PHASE_DAMAGE|PHASE_DAMAGE_CAL))~=0 and not Duel.IsDamageCalculated() then
-		c:RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE|RESETS_STANDARD,0,1)
-	elseif not c:IsHasEffect(EFFECT_DISABLE) and not c:IsDisabled() then
-		Duel.Destroy(c,REASON_EFFECT)
+	for _,ch in ipairs({c:GetFlagEffectLabel(id+1)}) do
+		if ch==ev then
+			if (Duel.GetCurrentPhase()&(PHASE_DAMAGE|PHASE_DAMAGE_CAL))~=0 and not Duel.IsDamageCalculated() then
+				c:RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE|RESETS_STANDARD,0,1)
+			elseif not c:IsHasEffect(EFFECT_DISABLE) and not c:IsDisabled() then
+				Duel.Destroy(c,REASON_EFFECT)
+			end
+			return
+		end
 	end
 end
 function s.desop2(e,tp,eg,ep,ev,re,r,rp)

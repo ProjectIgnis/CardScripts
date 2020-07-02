@@ -1,3 +1,4 @@
+--削りゆく命
 --Life Shaver
 local s,id=GetID()
 function s.initial_effect(c)
@@ -47,7 +48,6 @@ function s.regfilter(c)
 	return c:GetFlagEffect(511001124)>0 and c:IsOriginalCode(id) and c:IsFacedown()
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=e:GetOwner():GetOwner() then return end
 	local g=Duel.GetMatchingGroup(s.regfilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
 	local tc=g:GetFirst()
 	while tc do
@@ -56,8 +56,8 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=e:GetHandler():GetFlagEffect(id)
-	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_HAND,ct,e:GetHandler()) end
+	local ct=math.floor(e:GetHandler():GetFlagEffect(id)/2)
+	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,0,LOCATION_HAND,ct,e:GetHandler(),REASON_EFFECT) end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(ct)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,ct)

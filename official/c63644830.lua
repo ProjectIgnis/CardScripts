@@ -1,5 +1,5 @@
 --メルフィーのかくれんぼ
---Merfae Hide-and-Seek
+--Melffy Hide-and-Seek
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --マシンナーズ・リザーブレイク
---Machina Reserbreak
+--Machina Resavenger
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup

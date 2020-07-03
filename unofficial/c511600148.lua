@@ -21,15 +21,22 @@ function s.costfilter(c)
 	return c==Duel.GetAttackTarget()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	e:SetLabel(1)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil) end
 	local g=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil)
+	e:SetLabel(#g)
 	Duel.Release(g,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	if chk==0 then 
+		local res=e:GetLabel()~=0
+		e:SetLabel()=0
+		return res and Duel.IsPlayerCanDraw(tp,1)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if e:GetLabel()==0 then return end
 	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
 	Duel.BreakEffect()
 	if Duel.Draw(tp,1,REASON_EFFECT)>0 then

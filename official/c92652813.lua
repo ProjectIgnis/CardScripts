@@ -1,5 +1,5 @@
---憑依覚醒ー大稲荷火
---Awakened-Possessed - Great Inari Fire
+--憑依覚醒－大稲荷火
+--Awakening of the Possessed - Great Inari Fire
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -78,7 +78,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
 	Duel.SendtoGrave(g,REASON_COST)
-	if e:GetHandler():IsLocation(LOCATION_DECK) then 
+	if e:GetHandler():IsLocation(LOCATION_DECK) then
 		Duel.ShuffleDeck(tp)
 	end
 end

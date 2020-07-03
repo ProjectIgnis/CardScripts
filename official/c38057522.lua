@@ -1,5 +1,5 @@
---大霊術-「一輪」
---Great Spiritual Art - Ichirin
+--大霊術－「一輪」
+--Grand Spiritual Art - Ichirin
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAIN_SOLVING)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.negcon)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
-	--search
+	--Search
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_TODECK)
 	e3:SetType(EFFECT_TYPE_IGNITION)

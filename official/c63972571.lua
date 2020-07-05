@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter(c,tp)
-	return c:IsSetCard(0x13e) and c:IsAbleToRemoveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and aux.SpElimFilter(c,true,true)
+	return c:IsSetCard(0x13e) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end

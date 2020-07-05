@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and aux.SpElimFilter(c,false,true)
-		and c:IsLevelAbove(1) and c:IsAbleToRemoveAsCost() and Duel.GetMZoneCount(tp,c)>0
+		and c:IsLevelAbove(1) and c:IsAbleToRemoveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,0,0,c:GetLevel(),RACE_SPELLCASTER,ATTRIBUTE_LIGHT)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

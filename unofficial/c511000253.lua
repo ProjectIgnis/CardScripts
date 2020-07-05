@@ -74,10 +74,8 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or not c:IsControler(tp) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	local zone=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0)>>16
-	if Duel.GetControl(c,1-tp,0,0,zone) then
+	if not c:IsRelateToEffect(e) then return end
+	if Duel.GetControl(c,1-tp)~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetCategory(CATEGORY_REMOVE)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)

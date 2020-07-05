@@ -1,4 +1,5 @@
 --輝神鳥ヴェーヌ
+--Vennu, Bright Bird of Divinity
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -34,7 +35,7 @@ function s.lvfilter(c,lv)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.lvfilter(chkc,e:GetLabel()) end
-	if chk==0 then return Duel.IsExistingTarget(s.cfilter,tp,LOCATION_HAND,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local cg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
 	Duel.ConfirmCards(1-tp,cg)

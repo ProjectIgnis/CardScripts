@@ -81,12 +81,7 @@ end
 function s.ctop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		if Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)>0 then
-			local zone=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0)>>16
-			Duel.GetControl(c,1-tp,0,0,zone)
-		else
-			Duel.Destroy(c,REASON_RULE)
-		end
+		Duel.GetControl(c,1-tp)
 	end
 end
 function s.desfilter(c)

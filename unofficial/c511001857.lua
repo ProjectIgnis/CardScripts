@@ -24,14 +24,14 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetOwner())
 	e1:SetCode(EVENT_LEAVE_FIELD_P)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCondition(function(e)return e:GetHandler():GetDestination()==LOCATION_GRAVE end)
 	e1:SetOperation(s.repop)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	rc:RegisterEffect(e1)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetDestination()~=LOCATION_GRAVE then return end
 	local p=e:GetOwner():GetOwner()
-	Duel.SendtoHand(e:GetHandler(),p,REASON_EFFECT)
-	Duel.ConfirmCards(1-p,e:GetHandler())
+	Duel.SendtoHand(c,p,REASON_EFFECT)
+	Duel.ConfirmCards(1-p,c)
 end

@@ -88,15 +88,9 @@ function Synchro.Condition(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 				local pg=Auxiliary.GetMustBeMaterialGroup(tp,dg,tp,c,g,REASON_SYNCHRO)
 				if not g:Includes(pg) or pg:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
 				if smat then
-					if smat.KeepAlive then
-						if smat:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
-						pg:Merge(smat)
-						g:Merge(smat)
-					else
-						if not smat:IsCanBeSynchroMaterial(c) then return false end
-						pg:AddCard(smat)
-						g:AddCard(smat)
-					end
+					if smat:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
+					pg:Merge(smat)
+					g:Merge(smat)
 				end
 				if g:IsExists(Synchro.CheckFilterChk,1,nil,f1,f2,sub1,sub2,c,tp) then
 					--if there is a monster with EFFECT_SYNCHRO_CHECK (Genomix Fighter/Mono Synchron)
@@ -531,13 +525,8 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 				end
 				local pg=Auxiliary.GetMustBeMaterialGroup(tp,dg,tp,c,g,REASON_SYNCHRO)
 				if smat then
-					if smat.KeepAlive then
-						pg:Merge(smat)
-						g:Merge(smat)
-					else
-						pg:AddCard(smat)
-						g:AddCard(smat)
-					end
+					pg:Merge(smat)
+					g:Merge(smat)
 				end
 				local tg
 				local ntg
@@ -959,15 +948,9 @@ function Synchro.MajesticCondition(f1,cbt1,f2,cbt2,f3,cbt3,...)
 				local pg=Auxiliary.GetMustBeMaterialGroup(tp,dg,tp,c,g,REASON_SYNCHRO)
 				if not g:Includes(pg) or pg:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
 				if smat then
-					if smat.KeepAlive then
-						if smat:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
-						pg:Merge(smat)
-						g:Merge(smat)
-					else
-						if not smat:IsCanBeSynchroMaterial(c) then return false end
-						pg:AddCard(smat)
-						g:AddCard(smat)
-					end
+					if smat:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
+					pg:Merge(smat)
+					g:Merge(smat)
 				end
 				if not mgchk then
 					local thg=g:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO)
@@ -1006,13 +989,8 @@ function Synchro.MajesticTarget(f1,cbt1,f2,cbt2,f3,cbt3,...)
 				end
 				local pg=Auxiliary.GetMustBeMaterialGroup(tp,dg,tp,c,g,REASON_SYNCHRO)
 				if smat then
-					if smat.KeepAlive then
-						pg:Merge(smat)
-						g:Merge(smat)
-					else
-						pg:AddCard(smat)
-						g:AddCard(smat)
-					end
+					pg:Merge(smat)
+					g:Merge(smat)
 				end
 				if not mgchk then
 					local thg=g:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO)
@@ -1284,15 +1262,9 @@ function Synchro.DarkCondition(f1,f2,plv,nlv,...)
 				local pg=Auxiliary.GetMustBeMaterialGroup(tp,dg,tp,c,g,REASON_SYNCHRO)
 				if not g:Includes(pg) or pg:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
 				if smat then
-					if smat.KeepAlive then
-						if smat:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
-						pg:Merge(smat)
-						g:Merge(smat)
-					else
-						if not smat:IsCanBeSynchroMaterial(c) then return false end
-						pg:AddCard(smat)
-						g:AddCard(smat)
-					end
+					if smat:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
+					pg:Merge(smat)
+					g:Merge(smat)
 				end
 				if not mgchk then
 					local thg=g:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO)
@@ -1338,13 +1310,8 @@ function Synchro.DarkTarget(f1,f2,plv,nlv,...)
 				end
 				local pg=Auxiliary.GetMustBeMaterialGroup(tp,dg,tp,c,g,REASON_SYNCHRO)
 				if smat then
-					if smat.KeepAlive then
-						pg:Merge(smat)
-						g:Merge(smat)
-					else
-						pg:AddCard(smat)
-						g:AddCard(smat)
-					end
+					pg:Merge(smat)
+					g:Merge(smat)
 				end
 				if not mgchk then
 					local thg=g:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO)

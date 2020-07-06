@@ -18,59 +18,36 @@ end
 function Auxiliary.CanActivateSkill(tp)
 	return Duel.GetCurrentChain()==0 and Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
 end
-
-aux.DrawlessToken={}
-aux.DrawlessToken[0]=nil
-aux.DrawlessToken[1]=nil
-
-function Auxiliary.RegisterDrawless(c)
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_STARTUP)
-	e1:SetCountLimit(1)
-	e1:SetRange(0x5f)
-	e1:SetOperation(Auxiliary.drawlessop)
-	c:RegisterEffect(e1)
-	if not aux.DrawlessGlobal then
-		aux.DrawlessGlobal=true
-		local e1=Effect.GlobalEffect()
-		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PREDRAW)
-		e1:SetCountLimit(1)
-		e1:SetOperation(Auxiliary.drawlessreset)
-		Duel.RegisterEffect(e1,0)
+--If the card have an "You draw 1 less card at the beginning of the Duel" condition
+Auxiliary.Drawless={}
+function Auxiliary.AddDrawless(c,drawless)
+	local typ=type(drawless)
+	if typ=="number" or typ=="boolean" then
+		Auxiliary.Drawless[c]=typ=="number" and drawless or 1
 	end
 end
-
-function Auxiliary.drawlessop(e,tp,eg,ep,ev,re,r,rp)
-	if aux.DrawlessToken[e:GetHandlerPlayer()]==nil then
-		aux.DrawlessToken[e:GetHandlerPlayer()]=Duel.CreateToken(e:GetHandlerPlayer(),946)
-		aux.DrawlessToken[e:GetHandlerPlayer()]:Type(0)
-		Duel.SendtoDeck(aux.DrawlessToken[e:GetHandlerPlayer()],nil,0,REASON_RULE)
-	end
+function Auxiliary.drawlessop(e)
 	e:Reset()
-end
-function Auxiliary.drawlessreset(e,tp,eg,ep,ev,re,r,rp)
-	for i=0,1 do
-		if aux.DrawlessToken[i] then
-			local wasinhand=aux.DrawlessToken[i]:IsLocation(LOCATION_HAND)
-			if not wasinhand then
-				Duel.DisableShuffleCheck(true)
-			end
-			Duel.SendtoDeck(aux.DrawlessToken[i],nil,-2,REASON_RULE)
-			if wasinhand then
-				Duel.ShuffleHand(i)
-			end
-		end
+	local t={}
+	t[0]=0
+	t[1]=0
+	for c,val in pairs(aux.Drawless) do
+		t[c:GetControler()]=t[c:GetControler()]+val
 	end
-	e:Reset()
+	for p=0,1 do
+		Debug.SetPlayerInfo(p,Duel.GetLP(p),Duel.GetStartingHand(p)-t[p],Duel.GetDrawCount(p))
+	end
 end
---proc for Field skills
---c: the skill (card)
---coverNum: the cover corresponding to the back (int)
---drawless: if the skill make you draw 1 less card at the start of the duel (bool)
+local drawlesseff=Effect.GlobalEffect()
+drawlesseff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+drawlesseff:SetCode(EVENT_STARTUP)
+drawlesseff:SetOperation(aux.drawlessop)
+Duel.RegisterEffect(drawlesseff,0)
+
+-- proc for Field skills
+-- c: the skill (card)
+-- coverNum: the cover corresponding to the back (int)
+-- drawless: if the player draw 1 less card at the start of the duel (bool) or the amount of cards to draw less (int)
 function Auxiliary.AddFieldSkillProcedure(c,coverNum,drawless)
 	c:Cover(Auxiliary.GetCover(c,coverNum))
 	--place in field zone
@@ -91,11 +68,7 @@ function Auxiliary.AddFieldSkillProcedure(c,coverNum,drawless)
 	e2:SetCode(EFFECT_CANNOT_TO_DECK)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	
-	--If the card have an "You draw 1 less card at the beginning of the Duel" condition
-	if drawless then
-		aux.RegisterDrawless(c)
-	end
+	Auxiliary.AddDrawless(c,drawless)
 end
 function Auxiliary.fieldop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DisableShuffleCheck(true)
@@ -111,7 +84,7 @@ end
 -- proc for continuous Spell/Trap Skill
 -- c: the card (card)
 -- coverNum: the Number of the cover (int)
--- drawless: if the player draw 1 less card at the start of the duel (bool)
+-- drawless: if the player draw 1 less card at the start of the duel (bool) or the amount of cards to draw less (int)
 -- flip: if the continuous card get flipped at the start of the duel (bool)
 function Auxiliary.AddContinuousSkillProcedure(c,coverNum,drawless,flip)
 	c:Cover(Auxiliary.GetCover(c,coverNum))
@@ -133,9 +106,7 @@ function Auxiliary.AddContinuousSkillProcedure(c,coverNum,drawless,flip)
 	e2:SetCode(EFFECT_CANNOT_TO_DECK)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	if drawless then
-		aux.RegisterDrawless(c)
-	end
+	Auxiliary.AddDrawless(c,drawless)
 end
 function Auxiliary.continuousOp(flip)
 	return function(e,tp,eg,ep,ev,re,r,rp)
@@ -155,7 +126,7 @@ end
 -- Proc for basic skill
 -- c: the card (card)
 -- coverNum: the Number of the cover (int)
--- drawless: if the player draw 1 less card at the start of the duel (bool)
+-- drawless: if the player draw 1 less card at the start of the duel (bool) or the amount of cards to draw less (int)
 -- flip con: condition to activate the skill (function)
 -- flipOp: operation related to the skill activation (function)
 function Auxiliary.AddSkillProcedure(c,coverNum,drawless,skillcon,skillop,countlimit)
@@ -165,16 +136,14 @@ function Auxiliary.AddSkillProcedure(c,coverNum,drawless,skillcon,skillop,countl
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_STARTUP)
 	e1:SetRange(0x5f)
-	e1:SetOperation(Auxiliary.SetSkillOp(coverNum,drawless,skillcon,skillop,countlimit,EVENT_FREE_CHAIN))
+	e1:SetOperation(Auxiliary.SetSkillOp(coverNum,skillcon,skillop,countlimit,EVENT_FREE_CHAIN))
 	c:RegisterEffect(e1)
-	if drawless then
-		aux.RegisterDrawless(c)
-	end
+	Auxiliary.AddDrawless(c,drawless)
 end
 
 -- Duel.Hint(HINT_SKILL_COVER,1,coverID|(BackEntryID<<32))
 -- Duel.Hint(HINT_SKILL,1,FrontID)
-function Auxiliary.SetSkillOp(coverNum,drawless,skillcon,skillop,countlimit,efftype)
+function Auxiliary.SetSkillOp(coverNum,skillcon,skillop,countlimit,efftype)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		if skillop~=nil then
@@ -205,7 +174,7 @@ end
 -- Function for the skills that "trigger" at the start of the turn/Before the Draw
 -- c: the card (card)
 -- coverNum: the Number of the cover (int)
--- drawless: if the player draw 1 less card at the start of the duel (bool)
+-- drawless: if the player draw 1 less card at the start of the duel (bool) or the amount of cards to draw less (int)
 -- flip con: condition to activate the skill (function)
 -- flipOp: operation related to the skill activation (function)
 function Auxiliary.AddPreDrawSkillProcedure(c,coverNum,drawless,skillcon,skillop,countlimit)
@@ -214,11 +183,9 @@ function Auxiliary.AddPreDrawSkillProcedure(c,coverNum,drawless,skillcon,skillop
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_STARTUP)
 	e1:SetRange(0x5f)
-	e1:SetOperation(Auxiliary.SetSkillOp(coverNum,drawless,skillcon,skillop,countlimit,EVENT_PREDRAW))
+	e1:SetOperation(Auxiliary.SetSkillOp(coverNum,skillcon,skillop,countlimit,EVENT_PREDRAW))
 	c:RegisterEffect(e1)
-	if drawless then
-		aux.RegisterDrawless(c)
-	end
+	Auxiliary.AddDrawless(c,drawless)
 end
 
 --Proc for Vrains Skills

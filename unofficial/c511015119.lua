@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--Activate a "Junk" card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_BATTLED)
+	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)

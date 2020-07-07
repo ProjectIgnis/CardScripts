@@ -35,7 +35,9 @@ function Auxiliary.drawlessop(e)
 		t[c:GetControler()]=t[c:GetControler()]+val
 	end
 	for p=0,1 do
-		Debug.SetPlayerInfo(p,Duel.GetLP(p),Duel.GetStartingHand(p)-t[p],Duel.GetDrawCount(p))
+		if t[p]>0 then
+			Debug.SetPlayerInfo(p,Duel.GetLP(p),Duel.GetStartingHand(p)-t[p],Duel.GetDrawCount(p))
+		end
 	end
 end
 local drawlesseff=Effect.GlobalEffect()

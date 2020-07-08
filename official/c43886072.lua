@@ -1,5 +1,5 @@
 --プランキッズ・バウワウ
---Prankids Bow Wow
+--Prank-Kids Bow-Wow-Bark
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.thcon)
-	e2:SetCost(s.thcost)
+	e2:SetCost(aux.PrankKidsTributeCost)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
@@ -34,11 +34,7 @@ function s.atktg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0x120)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+	return not Duel.IsTurnPlayer(tp)
 end
 function s.thfilter(c,e)
 	return c:IsSetCard(0x120) and not c:IsLinkMonster()

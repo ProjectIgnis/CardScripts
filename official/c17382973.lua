@@ -1,5 +1,5 @@
 --プランキッズ・ドゥードゥル
---Prankids Doodle
+--Prank-Kids Dodo-Doodle-Doo
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,id+1)
-	e2:SetCost(s.thcost)
+	e2:SetCost(aux.PrankKidsTributeCost)
 	e2:SetTarget(s.thtg2)
 	e2:SetOperation(s.thop2)
 	c:RegisterEffect(e2)
@@ -48,10 +48,6 @@ function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.thfilter2(c,e)
 	return c:IsSetCard(0x120) and not c:IsLinkMonster()	and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()

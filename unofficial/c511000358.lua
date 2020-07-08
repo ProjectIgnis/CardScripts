@@ -1,3 +1,4 @@
+--奇跡の逆鱗
 --Miracle of Draconian Wrath
 local s,id=GetID()
 function s.initial_effect(c)	
@@ -19,13 +20,14 @@ function s.filter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>1
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_DECK,0,2,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	Duel.SelectTarget(tp,s.filter,tp,LOCATION_DECK,0,2,2,nil)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,2,nil) end
+	
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetTargetCards(e)
-	if #g>1 then
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,2,2,nil)
+	if #g>0 then
 		Duel.SSet(tp,g)
 	end
 end

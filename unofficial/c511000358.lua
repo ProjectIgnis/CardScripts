@@ -19,12 +19,12 @@ function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>1
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,2,nil) end
-	
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if e:GetHandler():IsLocation(LOCATION_HAND) then ft= ft-1 end
+	if chk==0 then return ft>1 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,2,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,2,2,nil)
 	if #g>0 then

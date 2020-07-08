@@ -84,7 +84,7 @@ function s.lvrkop(e,tp,eg,ep,ev,re,r,rp)
 		if value>3 then
 			op=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
 		else
-			op=Duel.SelectOption(tp,aux.Stringid(id,2))
+			op=Duel.SelectOption(tp,aux.Stringid(id,3))+1
 		end
 		if tc:IsType(TYPE_XYZ) then
 			if op==0 then

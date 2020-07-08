@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.spcost)
+	e2:SetCost(aux.PrankKidsTributeCost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -35,14 +35,10 @@ function s.actcon(e)
 	return a and a:IsControler(e:GetHandlerPlayer()) and a:IsSetCard(0x120)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+	return not Duel.IsTurnPlayer(tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x120) and not c:IsType(TYPE_FUSION) 
+	return c:IsSetCard(0x120) and not c:IsType(TYPE_FUSION)
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcheck(sg,e,tp)

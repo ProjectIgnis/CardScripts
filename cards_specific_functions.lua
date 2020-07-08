@@ -479,12 +479,12 @@ function Auxiliary.CheckStealEquip(c,e,tp)
 end
 --handle tribute costs for "Prank-Kids" Xyz monsters that can be replaced by the effect of "Prank-Kids Mew"
 function Auxiliary.PrankKidsMewFilter(c)
-	return c:IsHasEffect(CARD_PRANKKIDS_MEW) and c:IsAbleToRemoveAsCost()
+	return c:IsHasEffect(CARD_PRANKKIDS_MEW) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
 end
 function Auxiliary.PrankKidsMewCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsTurnPlayer(tp) and Duel.GetFlagEffect(tp,CARD_PRANKKIDS_MEW)==0
-		and Duel.IsExistingMatchingCard(Auxiliary.PrankKidsMewFilter,tp,LOCATION_GRAVE,0,1,nil) end
-	local g=Duel.SelectMatchingCard(tp,Auxiliary.PrankKidsMewFilter,tp,LOCATION_GRAVE,0,1,1,nil)
+		and Duel.IsExistingMatchingCard(Auxiliary.PrankKidsMewFilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	local g=Duel.SelectMatchingCard(tp,Auxiliary.PrankKidsMewFilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	Duel.RegisterFlagEffect(tp,CARD_PRANKKIDS_MEW,RESET_PHASE+PHASE_END,0,0)
 end

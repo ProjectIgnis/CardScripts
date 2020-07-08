@@ -482,9 +482,11 @@ function Auxiliary.PrankKidsMewFilter(c)
 	return c:IsHasEffect(CARD_PRANKKIDS_MEW) and c:IsAbleToRemoveAsCost()
 end
 function Auxiliary.PrankKidsMewCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.IsTurnPlayer(tp) and Duel.IsExistingMatchingCard(Auxiliary.PrankKidsMewFilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return not Duel.IsTurnPlayer(tp) and Duel.GetFlagEffect(tp,CARD_PRANKKIDS_MEW)==0
+		and Duel.IsExistingMatchingCard(Auxiliary.PrankKidsMewFilter,tp,LOCATION_GRAVE,0,1,nil) end
 	local g=Duel.SelectMatchingCard(tp,Auxiliary.PrankKidsMewFilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	Duel.RegisterFlagEffect(tp,CARD_PRANKKIDS_MEW,RESET_PHASE+PHASE_END,0,0)
 end
 function Auxiliary.PrankKidsTributeCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mew=Auxiliary.PrankKidsMewCost(e,tp,eg,ep,ev,re,r,rp,0)

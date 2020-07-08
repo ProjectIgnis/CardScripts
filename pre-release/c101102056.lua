@@ -34,12 +34,12 @@ function s.initial_effect(c)
 end
 s.listed_series={0x248}
 function s.costfilter(c)
-	return c:IsSetCard(0x248) and c:IsAbleToRemoveAsCost()  and aux.SpElimFilter(c,true)
+	return c:IsSetCard(0x248) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.ngcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.ngtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

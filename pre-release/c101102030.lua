@@ -1,5 +1,5 @@
 --ネフティスの繋ぎ手
---Connector of Nephthys
+--
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -66,8 +66,12 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.descond)
 	e1:SetOperation(s.desop)
-	e1:SetReset(RESET_PHASE+PHASE_STANDBY)
 	Duel.RegisterEffect(e1,tp)
+	if Duel.GetCurrentPhase()==PHASE_STANDBY then
+		e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_STANDBY,EFFECT_FLAG_OATH,2,Duel.GetTurnCount())
+	else
+		e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_STANDBY,EFFECT_FLAG_OATH,1)
+	end
 end
 function s.desfilter(c,e)
 	return c:IsSetCard(0x11f) and c:IsDestructable(e) and not c:IsRitualMonster() and (c:IsFaceup() or not c:IsLocation(LOCATION_ONFIELD))
@@ -80,11 +84,14 @@ function s.descheck(sg,e,tp,mg)
 	return ct1==#sg
 end
 function s.descond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,1,nil,e)
+	local label=e:GetHandler():GetFlagEffectLabel(id)
+	return label and label~=Duel.GetTurnCount() and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,1,nil,e)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,id)
 	local sg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD,0,nil,e)
 	if #sg==0 then return end
 	local rg=aux.SelectUnselectGroup(sg,e,tp,1,3,s.descheck,1,tp,HINTMSG_DESTROY)
 	Duel.Destroy(rg,REASON_EFFECT)
+	e:Reset()
 end

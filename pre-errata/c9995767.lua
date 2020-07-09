@@ -1,5 +1,5 @@
 --宮廷のしきたり
---Imperial Custom (pre-errata), TCG
+--Imperial Custom (pre-errata)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)

@@ -477,6 +477,7 @@ function Auxiliary.CheckStealEquip(c,e,tp)
 	end
 	return true
 end
+--[[
 --handle tribute costs for "Prank-Kids" Xyz monsters that can be replaced by the effect of "Prank-Kids Mew"
 function Auxiliary.PrankKidsMewFilter(c)
 	return c:IsHasEffect(CARD_PRANKKIDS_MEW) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
@@ -497,3 +498,4 @@ function Auxiliary.PrankKidsTributeCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
+--]]

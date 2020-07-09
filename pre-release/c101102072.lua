@@ -88,15 +88,15 @@ function s.lvrkop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if tc:IsType(TYPE_XYZ) then
 			if op==0 then
-				tc:UpdateRank(-3,RESET_PHASE+PHASE_END,e:GetHandler())
+				tc:UpdateRank(-3,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,e:GetHandler())
 			elseif op==1 then
-				tc:UpdateRank(3,RESET_PHASE+PHASE_END,e:GetHandler())
+				tc:UpdateRank(3,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,e:GetHandler())
 			end
 		else
 			if op==0 then
-				tc:UpdateLevel(-3,RESET_PHASE+PHASE_END,e:GetHandler())
+				tc:UpdateLevel(-3,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,e:GetHandler())
 			elseif op==1 then
-				tc:UpdateLevel(3,RESET_PHASE+PHASE_END,e:GetHandler())
+				tc:UpdateLevel(3,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,e:GetHandler())
 			end
 		end
 	end

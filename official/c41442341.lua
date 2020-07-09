@@ -1,7 +1,8 @@
 --死霊操りしパペットマスター
+--Puppet Master
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -41,7 +42,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #fg>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	if #fg>1 and ft==1 then fg=fg:Select(tp,1,1,nil) end
-	local tc=fg:GetFirst()
 	for tc in aux.Next(fg) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())

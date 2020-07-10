@@ -9,20 +9,17 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x249}
-function s.spfilter2(c,fg)
-	return c:IsSetCard(0x249) and c:IsLinkSummonable(nil,fg,c:GetLink(),c:GetLink())
+function s.spfilter2(c,fg,minmat,maxmat)
+	return c:IsSetCard(0x249) and c:IsLinkSummonable(nil,fg,minmat,maxmat)
 end
-function s.spfilter(c,e,tp,fg,minmat,maxmt)
-	return c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and (c:IsLocation(LOCATION_GRAVE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))
-		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,1,nil,fg)
+function s.rescon(sg,e,tp,mg)
+	return Duel.GetMatchingGroupCount(s.spfilter2,tp,LOCATION_EXTRA,0,nil,sg,#sg,#sg)>0
 end
 function s.filtercheck(c,e,tp)
 	return c:IsCanBeLinkMaterial() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
@@ -31,25 +28,20 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local fg=Duel.GetMatchingGroup(s.filtercheck,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)
-	if chk==0 then return ft>0 and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_LINK)>0
-		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,1,nil,fg)
-		and Duel.IsPlayerCanSpecialSummonCount(tp,2)
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
+	if chk==0 then return ft>0 and Duel.IsPlayerCanSpecialSummonCount(tp,2)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_LINK)>0
+		and aux.SelectUnselectGroup(fg,e,tp,1,ft,s.rescon,0)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,nil,tp,LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA)
 end
-function s.testfitler(c,fg)
-	return c:IsSetCard(0x249) and c:IsLinkSummonable(nil,fg,#fg,c:GetLink())
-end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local fg=Duel.GetMatchingGroup(s.filtercheck,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)
-	if ft<1 then return end
-	local linkg=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_EXTRA,0,nil,0x249)
-	local _,maxlnk=Group.GetMaxGroup(linkg,Card.GetLink)
-	local _,minlink=Group.GetMinGroup(linkg,Card.GetLink)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,minlink,math.min(ft,maxlnk),nil,e,tp,fg)
-	if not g or #g==0  then return end
+	local fg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filtercheck),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)
+	if ft<1 or not Duel.IsPlayerCanSpecialSummonCount(tp,2) then return end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
+	local g=aux.SelectUnselectGroup(fg,e,tp,1,99,s.rescon,1,tp,HINTMSG_SPSUMMON,s.rescon,nil,false)
+	if not g or #g==0 then return end
 	local c=e:GetHandler()
 	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
@@ -63,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 	Duel.SpecialSummonComplete()
-	local tg=Duel.GetMatchingGroup(s.testfitler,tp,LOCATION_EXTRA,0,nil,g)
+	local tg=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_EXTRA,0,nil,g,#g,#g)
 	if #tg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=tg:Select(tp,1,1,nil)

@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.limop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x249}
 function s.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsAttribute(RACES_BEAST_BWARRIOR_WINGB )
 end

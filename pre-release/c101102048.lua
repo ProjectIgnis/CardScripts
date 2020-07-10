@@ -1,5 +1,5 @@
 --鉄獣戦線 凶鳥のシュライグ
---Tribrigade - Shrike the Omen
+--Tribrigade Shrike the Wicked Wings
 --Scripted by the Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

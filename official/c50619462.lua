@@ -14,8 +14,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,e,tp)
-	return c:IsFaceup() and c:IsOriginalRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsAbleToGraveAsCost()
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetOriginalRace(),c)
+	local race=c:GetOriginalRace()
+	return c:IsFaceup() and (race==RACE_WINGEDBEAST or race==RACE_BEAST or race==RACE_BEASTWARRIOR) and c:IsAbleToGraveAsCost()
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,race,c)
 end
 function s.spfilter(c,e,tp,race,sc)
 	return c:GetOriginalRace()==race and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,sc,c)>0

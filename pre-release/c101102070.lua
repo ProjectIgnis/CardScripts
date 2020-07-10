@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local fg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filtercheck),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)
 	if ft<1 or not Duel.IsPlayerCanSpecialSummonCount(tp,2) then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	local g=aux.SelectUnselectGroup(fg,e,tp,1,99,s.rescon,1,tp,HINTMSG_SPSUMMON,s.rescon,nil,false)
+	local g=aux.SelectUnselectGroup(fg,e,tp,1,ft,s.rescon,1,tp,HINTMSG_SPSUMMON,s.rescon,nil,false)
 	if not g or #g==0 then return end
 	local c=e:GetHandler()
 	for tc in aux.Next(g) do

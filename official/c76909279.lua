@@ -1,7 +1,8 @@
 --激昂のミノタウルス
+--Enraged Battle Ox
 local s,id=GetID()
 function s.initial_effect(c)
-	--pierce
+	--Piercing
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_PIERCE)
@@ -11,5 +12,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,c)
-	return c:IsRace(RACE_BEASTWARRIOR+RACE_WINGEDBEAST+RACE_BEAST)
+	return c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
 end

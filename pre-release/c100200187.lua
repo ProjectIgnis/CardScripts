@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,ft,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_BEAST+RACE_WINGEDBEAST+RACE_BEASTWARRIOR)
+	return c:IsType(TYPE_MONSTER) and c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -53,7 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.costfilter(c,code,lv,race,att)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
-		and c:IsLevelBelow(4) and c:IsRace(RACE_BEAST+RACE_WINGEDBEAST+RACE_BEASTWARRIOR)
+		and c:IsLevelBelow(4) and c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
 		and (not c:IsCode(code) or not c:IsLevel(lv) or not c:IsRace(race) or not c:IsAttribute(att))
 end
 function s.copycost(e,tp,eg,ep,ev,re,r,rp,chk)

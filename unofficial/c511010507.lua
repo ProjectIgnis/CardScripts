@@ -28,8 +28,8 @@ end
 s.listed_names={13331639,41209827,82044279,16195942,16178681}
 local ZARC_LOC=LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_EXTRA+LOCATION_DECK
 function s.spcfilter(c,e,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsCanBeEffectTarget(e) 
-		and (c:IsLocation(LOCATION_SZONE+LOCATION_EXTRA+LOCATION_GRAVE+LOCATION_HAND) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and 
+	(c:IsCanBeEffectTarget(e) and (c:IsLocation(LOCATION_SZONE+LOCATION_GRAVE+LOCATION_MZONE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))) or (c:IsLocation(LOCATION_HAND+LOCATION_DECK) or (c:IsLocation(LOCATION_EXTRA) and c:IsFaceup()))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -41,15 +41,15 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spcfilterchk(c,e,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsRelateToEffect(e) 
-		and (c:IsLocation(LOCATION_SZONE+LOCATION_EXTRA+LOCATION_GRAVE+LOCATION_HAND) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and 
+	(c:IsRelateToEffect(e) and (c:IsLocation(LOCATION_SZONE+LOCATION_GRAVE+LOCATION_MZONE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))) or (c:IsLocation(LOCATION_HAND+LOCATION_DECK) or (c:IsLocation(LOCATION_EXTRA) and c:IsFaceup()))
 		and not Duel.GetFieldCard(tp,c:GetPreviousLocation(),c:GetPreviousSequence())
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.spcfilterchk,nil,e,tp)
-	if Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)~=0 and #g>0 and Duel.SelectEffectYesNo(tp,c) then
+	local g=Duel.GetTargetCards(e):Filter(s.spcfilterchk,nil,e,tp)
+	if Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)>0 and #g>0 and Duel.SelectEffectYesNo(tp,c) then
 		g:KeepAlive()
 		--spsummon
 		local e1=Effect.CreateEffect(c)
@@ -70,14 +70,14 @@ function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(g)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.spcfilterchk,nil,e,tp)
+	local g=Duel.GetTargetCards(e):Filter(s.spcfilterchk,nil,e,tp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_BECOME_LINKED_ZONE)
 	e1:SetValue(0xffffff)
 	Duel.RegisterEffect(e1,tp)
 	for tc in aux.Next(g) do
-		if tc:IsPreviousLocation(LOCATION_PZONE) then
+		if tc:IsPreviousLocation(LOCATION_PZONE+LOCATION_EXTRA) then
 			local seq=0
 			if tc:GetPreviousSequence()==7 or tc:GetPreviousSequence()==4 then seq=1 end
 			Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,tc:GetPreviousPosition(),true,(1<<seq))
@@ -114,7 +114,7 @@ function s.zarctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=rg:Filter(Card.IsCode,nil,41209827)
 	local g2=rg:Filter(Card.IsCode,nil,82044279)
 	local g3=rg:Filter(Card.IsCode,nil,16195942)
-	local g4=rg:Filter(Card.IsCode,nil,16178681)
+	local g4=rg:Filter(Card.Isode,nil,16178681)
 	local g=g1:Clone()
 	g:Merge(g2)
 	g:Merge(g3)

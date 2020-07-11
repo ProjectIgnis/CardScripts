@@ -43,7 +43,7 @@ function s.op(tc,c)
 	e2:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e2)
-	tc:RegisterFlagEffect(id,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
+	tc:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD|RESET_DISABLE)&~(RESET_LEAVE)|RESET_PHASE|PHASE_END,0,1)
 end
 function s.rdcon(e)
 	local c,tp=e:GetHandler(),e:GetHandlerPlayer()

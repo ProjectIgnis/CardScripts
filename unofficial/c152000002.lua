@@ -6,6 +6,7 @@ function s.initial_effect(c)
 	--skill
 	aux.AddVrainsSkillProcedure(c,s.flipcon,s.flipop)
 end
+s.listed_series={0xfb}
 function s.cfilter(c)
 	return c:IsSetCard(0xfb) and c:IsAbleToGrave()
 end

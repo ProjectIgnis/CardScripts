@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddVrainsSkillProcedure(c,s.flipcon,s.flipop)
 end
+s.listed_names={90173539}
 function s.ffilter(c,tp)
 	return c:IsCode(90173539) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
 end

@@ -40,8 +40,8 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetFlagEffect(51100467)==0 then
-		c:RegisterFlagEffect(51100467,RESET_EVENT+RESETS_STANDARD,0,0)
+	if c:GetFlagEffect(id)==0 then
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 		e:SetLabel(0)
 	end
 	local dam=e:GetLabel()

@@ -1,11 +1,12 @@
 --ＣＸ ズババ最強ジェネラル
 --CXyz Zubaba Saikyo General
+--rescripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon procedure
 	Xyz.AddProcedure(c,nil,5,3)
 	c:EnableReviveLimit()
-	--equip
+	--Equip 1 monster from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 	aux.AddEREquipLimit(c,nil,function(ec,_,tp) return ec:IsControler(tp) end,s.equipop,e1)
-	--special summon
+	--Special summon 1 equipped monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -28,23 +29,9 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-	e2:SetRange(LOCATION_ONFIELD)
-	e2:SetTargetRange(LOCATION_ONFIELD,0)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e2:SetCondition(s.efcon)
-	e2:SetTarget(s.eftg)
-	e2:SetLabelObject(e2)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_names={31563350}
-function s.efcon(e)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,31563350)
-end
-function s.eftg(e,c)
-	return c==e:GetHandler()
-end
 function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -53,21 +40,21 @@ function s.filter(c,tp)
 	return c:CheckUniqueOnField(tp) and c:IsType(TYPE_MONSTER)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_HAND)
 end
 function s.equipop(c,e,tp,tc)
-	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc) then return end
+	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,nil,true) then return end
 	local atk=tc:GetTextAttack()
 	if atk>0 then
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_EQUIP)
-		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
-		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e2:SetValue(atk)
-		tc:RegisterEffect(e2)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_EQUIP)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetValue(atk)
+		tc:RegisterEffect(e1)
 	end
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
@@ -84,6 +71,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	return c:IsRelateToBattle() and bc:IsType(TYPE_MONSTER)
+		and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,31563350)
 end
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and e:GetHandler():GetEquipGroup():IsContains(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

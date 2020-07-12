@@ -27,7 +27,9 @@ function s.initial_effect(c)
 	--Register the control switch
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e3:SetProperty(EFFECT_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE)
 	e3:SetCode(EVENT_CONTROL_CHANGED)
+	e3:SetCountLimit(1)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end

@@ -62,11 +62,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.IsPlayerCanSpecialSummonCount(tp,2) 
 		and (not ect or ect>=2) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.GetUsableMZoneCount(tp)>1 and Duel.IsExistingTarget(s.filter1,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+		and Duel.GetUsableMZoneCount(tp)>1 and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local c1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
+	local c1=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local c2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c1):GetFirst()
+	Duel.SetTargetCard(c1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,Group.FromCards(c1,c2),2,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

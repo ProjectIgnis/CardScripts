@@ -6,14 +6,6 @@ function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--register damage overwrite
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_FIELD)
-	e0:SetCode(id)
-	e0:SetRange(LOCATION_MZONE)
-	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e0:SetTargetRange(1,0)
-	c:RegisterEffect(e0)
 	--damage negation battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

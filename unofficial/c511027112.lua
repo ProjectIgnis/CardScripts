@@ -1,4 +1,5 @@
 --Black-Winged Dragon (Anime)
+--ブラックフェザー・ドラゴン (Anime)
 --script by Rundas
 local s,id=GetID()
 function s.initial_effect(c)

@@ -36,8 +36,8 @@ end
 s.listed_names={62265044}
 s.listed_series={0x29}
 function s.synlimit(e,c)
-    if not c then return false end
-    return not c:IsSetCard(0x29)
+	if not c then return false end
+	return not c:IsSetCard(0x29)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

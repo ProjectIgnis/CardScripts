@@ -1,10 +1,10 @@
 --剣の王 フローディ
---Fraudir, Generaid of the Sword
+--Frodi, Generaider Boss of Swords
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
-	--destroy
+	--Destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
@@ -40,7 +40,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,ct,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetTargetCards(e):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetCards(e)
 	if #tg>0 then
 		Duel.Destroy(tg,REASON_EFFECT)
 		local g=Duel.GetOperatedGroup()

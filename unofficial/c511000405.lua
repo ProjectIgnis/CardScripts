@@ -39,7 +39,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			e2:SetValue(-500)
 			e2:SetLabelObject(g)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-			c:RegisterEffect(e2)
+			sc:RegisterEffect(e2)
 		end
 	end
 end

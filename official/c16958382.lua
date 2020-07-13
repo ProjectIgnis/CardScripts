@@ -74,7 +74,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.retfilter,tp,LOCATION_REMOVED,0,1,1,nil)
 	Duel.HintSelection(g)
-	if #g>0 and Duel.SendtoDeck(g,nil,2,REASON_EFFECT)>0 and Duel.GetLocationCountFromEx(tp,tp,nil,g:GetFirst())>0 then
+	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and Duel.GetLocationCountFromEx(tp,tp,nil,g:GetFirst())>0 then
 		local sc=Duel.GetOperatedGroup():GetFirst()
 		if sc:IsLocation(LOCATION_EXTRA) and sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

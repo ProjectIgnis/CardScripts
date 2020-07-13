@@ -759,7 +759,7 @@ function Synchro.Operation(e,tp,eg,ep,ev,re,r,rp,c,smat,mg)
 	elseif Synchro.Send==4 then
 		Duel.SendtoHand(g,nil,REASON_MATERIAL+REASON_SYNCHRO)
 	elseif Synchro.Send==5 then
-		Duel.SendtoDeck(g,nil,2,REASON_MATERIAL+REASON_SYNCHRO)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_MATERIAL+REASON_SYNCHRO)
 	elseif Synchro.Send==6 then
 		Duel.Destroy(g,REASON_MATERIAL+REASON_SYNCHRO)
 	else

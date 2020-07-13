@@ -130,9 +130,7 @@ function s.zarcop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>3 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=Duel.SelectMatchingCard(tp,s.zarcspfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,g):GetFirst()
-		if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
-			tc:CompleteProcedure()
-		end
+		if tc then Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end
 	end
 	g:DeleteGroup()
 end

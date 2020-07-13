@@ -55,7 +55,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_REMOVED,0,nil)
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,1,tp,HINTMSG_TODECK)
-	if #sg==2 and Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)==2 then
+	if #sg==2 and Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)==2 then
 		local og=Duel.GetOperatedGroup()
 		if og:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)==2 and tc and tc:IsRelateToEffect(e) then
 			Duel.BreakEffect()
@@ -77,7 +77,7 @@ function s.lvrktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.lvrkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local value=0
 		if tc:IsType(TYPE_XYZ) then value=tc:GetRank() else value=tc:GetLevel() end
 		local op=0

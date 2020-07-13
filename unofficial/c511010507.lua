@@ -77,7 +77,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(0xffffff)
 	Duel.RegisterEffect(e1,tp)
 	for tc in aux.Next(g) do
-		if tc:IsPreviousLocation(LOCATION_PZONE+LOCATION_EXTRA) then
+		if tc:IsPreviousLocation(LOCATION_PZONE) then
 			local seq=0
 			if tc:GetPreviousSequence()==7 or tc:GetPreviousSequence()==4 then seq=1 end
 			Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,tc:GetPreviousPosition(),true,(1<<seq))

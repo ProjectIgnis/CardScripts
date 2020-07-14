@@ -106,14 +106,14 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
 				location = location or LOCATION_HAND
 				if chk==0 then
-					local mg=Duel.GetRitualMaterial(tp)
+					local mg=Duel.GetRitualMaterial(tp,not requirementfunc)
 					local mg2=extrafil and extrafil(e,tp,eg,ep,ev,re,r,rp,chk) or Group.CreateGroup()
 					Ritual.CheckMatFilter(matfilter,e,tp,mg,mg2)
 					return Duel.IsExistingMatchingCard(Ritual.Filter,tp,location,0,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,forcedselection,specificmatfilter,lv,requirementfunc)
 				end
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,location)
 			end
-end,"filter","lvtype","lv","extrafil","extraop","matfilter","stage2","location","forcedselection","forcedselection","requirementfunc")
+end,"filter","lvtype","lv","extrafil","extraop","matfilter","stage2","location","forcedselection","forcedselection","specificmatfilter","requirementfunc")
 
 function Ritual.FastCheck(tp,lv,mg,sc,_type,requirementfunc)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
@@ -189,7 +189,7 @@ Ritual.Operation = aux.FunctionWithNamedArgs(
 function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc)
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				location = location or LOCATION_HAND
-				local mg=Duel.GetRitualMaterial(tp)
+				local mg=Duel.GetRitualMaterial(tp,not requirementfunc)
 				local mg2=extrafil and extrafil(e,tp,eg,ep,ev,re,r,rp) or Group.CreateGroup()
 				Ritual.CheckMatFilter(matfilter,e,tp,mg,mg2)
 				local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

@@ -139,7 +139,7 @@ end
 
 function s.op3(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if c:IsFaceup() then
 		for tc in aux.Next(g) do
 			local e1=Effect.CreateEffect(c)

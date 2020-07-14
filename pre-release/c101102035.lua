@@ -1,5 +1,5 @@
 --混沌幻魔アーミタイル－虚無幻影羅生悶
---Armityle the Chaos Phantasm - Phantom of Fury
+--c
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -69,14 +69,14 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,LOCATION_ONFIELD)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(43378048) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsCode(43378048) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,0,nil)
 	if Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)==0 then return end
 	local p=e:GetHandler():GetOwner()
 	local g=Duel.GetMatchingGroup(s.spfilter,p,LOCATION_EXTRA,0,nil,e,p)
-	if #g>0 and Duel.GetLocationCountFromEx(p)>0 and Duel.SelectYesNo(p,aux.Stringid(id,1)) then
+	if #g>0 and Duel.SelectYesNo(p,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(p,1,1,nil)
 		Duel.BreakEffect()

@@ -36,10 +36,10 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local tc=e:GetLabelObject()
 	local g=Duel.GetTargetCards(e)
-	local tc=g:GetFirst()
-	local dc=g:GetNext()
-	if not tc==e:GetLabelObject() then tc,dc=dc,tc end
+	local dc=g:GetFirst()
+	if dc==tc then dc=g:GetNext() end
 	if tc and tc:UpdateAttack(-1000,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,c)==-1000 and dc and dc:IsControler(1-tp) and not dc:IsFacedown() then
 		 Duel.Destroy(dc,REASON_EFFECT)
 	end

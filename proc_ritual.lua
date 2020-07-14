@@ -71,15 +71,15 @@ function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,force
 end,"handler","lvtype","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter","requirementfunc")
 
 Ritual.AddProc = aux.FunctionWithNamedArgs(
-function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
-	local e1=Ritual.CreateProc(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
+function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc)
+	local e1=Ritual.CreateProc(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc)
 	c:RegisterEffect(e1)
 	return e1
-end,"handler","lvtype","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter")
+end,"handler","lvtype","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter","requirementfunc")
 
 function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,specificmatfilter,lv,requirementfunc)
 	if not c:IsRitualMonster() or (filter and not filter(c)) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
-	local lv=(lv and (type(lv)=="function" and lv()) or lv) or c:GetLevel()
+	local lv=(lv and (type(lv)=="function" and lv(c)) or lv) or c:GetLevel()
 	Ritual.SummoningLevel=lv
 	local mg=m:Filter(Card.IsCanBeRitualMaterial,c,c)
 	mg:Merge(m2-c)
@@ -197,7 +197,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 				local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Ritual.Filter),tp,location,0,1,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,forcedselection,specificmatfilter,lv,requirementfunc)
 				if #tg>0 then
 					local tc=tg:GetFirst()
-					local lv=(lv and (type(lv)=="function" and lv()) or lv) or tc:GetLevel()
+					local lv=(lv and (type(lv)=="function" and lv(tc)) or lv) or tc:GetLevel()
 					Ritual.SummoningLevel=lv
 					local mat=nil
 					mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)
@@ -249,9 +249,9 @@ end,"filter","lvtype","lv","extrafil","extraop","matfilter","stage2","location",
 
 --Ritual Summon, geq fixed lv
 Ritual.AddProcGreater = aux.FunctionWithNamedArgs(
-function(c,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
-	return Ritual.AddProc(c,RITPROC_GREATER,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
-end,"handler","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter")
+function(c,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc)
+	return Ritual.AddProc(c,RITPROC_GREATER,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc)
+end,"handler","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter","requirementfunc")
 
 function Ritual.AddProcCode(c,_type,lv,desc,...)
 	if not c:IsStatus(STATUS_COPYING_EFFECT) and c.fit_monster==nil then

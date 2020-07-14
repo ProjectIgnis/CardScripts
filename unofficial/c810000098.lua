@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetOperation(Fusion.SummonEffOP(aux.FilterBoolFunction(Card.IsSetCard,0xad)))
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x46,0xad}
 s.listed_names={CARD_POLYMERIZATION}
 function s.cfilter(c)
 	return (c:IsCode(CARD_POLYMERIZATION) or c:IsSetCard(0x46)) and c:IsAbleToRemoveAsCost()

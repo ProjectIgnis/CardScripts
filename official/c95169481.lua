@@ -1,10 +1,11 @@
 --恐牙狼 ダイヤウルフ
+--Diamond Dire Wolf
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon
 	Xyz.AddProcedure(c,nil,4,2)
 	c:EnableReviveLimit()
-	--destroy
+	--Destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -22,7 +23,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_BEAST+RACE_WINGEDBEAST+RACE_BEASTWARRIOR)
+	return c:IsFaceup() and c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
 		and Duel.IsExistingTarget(aux.TRUE,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

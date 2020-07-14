@@ -49,7 +49,7 @@ function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
-	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsAttribute,c:GetAttribute()),c:GetControler(),0,LOCATION_MZONE,nil)*300

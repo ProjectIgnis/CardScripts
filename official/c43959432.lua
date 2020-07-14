@@ -70,7 +70,7 @@ function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker() and e:GetHandler():IsRelateToBattle()
 end
 function s.equipop(c,e,tp,tc)
-	aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id)		
+	aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -81,7 +81,6 @@ end
 function s.atkval(e,c)
 	local g=e:GetHandler():GetEquipGroup():Filter(s.eqfilter,nil)
 	local atk=0
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local tatk=tc:GetAttack()
 		if tatk>0 then atk=atk+tatk end
@@ -89,5 +88,5 @@ function s.atkval(e,c)
 	return atk
 end
 function s.eqfilter(c)
-	return c:GetFlagEffect(id)~=0 
+	return c:GetFlagEffect(id)~=0
 end

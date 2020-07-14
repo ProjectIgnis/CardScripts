@@ -2,16 +2,17 @@
 --Sylvan Cherubsprout
 local s,id=GetID()
 function s.initial_effect(c)
-	--excavate
+	--Excavate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetCategory(CATEGORY_DECKDES)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--special summon from deck
+	--Special summon from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

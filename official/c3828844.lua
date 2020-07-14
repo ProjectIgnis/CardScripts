@@ -1,7 +1,6 @@
 --六花聖ストレナエ
 --Strenae the Rikka Queen
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

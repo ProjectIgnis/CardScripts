@@ -1,9 +1,9 @@
 --根絶の機皇神
---Cruel Mercy of the Meklord Astro
+--Meklord Astro Extermination
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--add to hand or special summon
+	--Add to hand or special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--destroy monster
+	--Destroy monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
@@ -46,10 +46,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tg=Duel.GetTargetCards(e):Filter(Card.IsRelateToEffect,nil,e)
+	local tg=Duel.GetTargetCards(e)
 	if not tg or #tg==0 then return end
 	aux.ToHandOrElse(tg,tp,s.sploopcond,s.sploopop,aux.Stringid(id,2),e,tp,#tg)
-	--register special summon limitation
+	--register special summon limitation only ifthis card is being activated
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -73,7 +73,7 @@ end
 function s.sploopop(card,e,tp,count)
 	return Duel.SpecialSummon(card,0,tp,tp,true,false,POS_FACEUP)
 end
-function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+function s.splimit(e,c)
 	return not c:IsRace(RACE_MACHINE)
 end
 function s.descond(e,tp,eg,ep,ev,re,r,rp)

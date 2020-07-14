@@ -38,19 +38,9 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-#tg>0
 end
-function s.cfcost(c)
-	return c:IsCode(84012625) and c:IsAbleToRemoveAsCost()
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=e:GetHandler():IsReleasable()
-	local b2=Duel.IsExistingMatchingCard(s.cfcost,tp,LOCATION_GRAVE,0,1,nil)
-	if chk==0 then return b1 or b2 end
-	if b2 and (not b1 or Duel.SelectYesNo(tp,aux.Stringid(84012625,0))) then
-		local tg=Duel.GetFirstMatchingCard(s.cfcost,tp,LOCATION_GRAVE,0,nil)
-		Duel.Remove(tg,POS_FACEUP,REASON_COST)
-	else
-		Duel.Release(e:GetHandler(),REASON_COST)
-	end	
+	if chk==0 then return e:GetHandler():IsReleasable() end
+	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

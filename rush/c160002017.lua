@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.tgfilter(c)
+function s.tgfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and c:HasLevel()
 		and Duel.IsExistingMatchingCard(s.atkfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
 end
@@ -20,12 +20,12 @@ function s.atkfilter(c,att)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsAttribute(att) and (c:IsAttackAbove(0) or c:IsDefenseAbove(0))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil,tp) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--requirement
-	local tc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,1,nil,tp):GetFirst()
 	if Duel.SendtoGrave(tc,REASON_COST)>0 then
 		--effect
 		local og=Duel.GetOperatedGroup():GetFirst()

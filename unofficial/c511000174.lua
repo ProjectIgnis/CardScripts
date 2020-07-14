@@ -63,7 +63,7 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsReason(REASON_BATTLE) and c:IsFaceup() and #g>0 end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
-		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		return true
 	else return false end
 end

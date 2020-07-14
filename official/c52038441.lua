@@ -1,9 +1,9 @@
 --朔夜しぐれ
---Evening Crescent & Autumn Shower
+--Ghost Mourner & Moonlit Chill
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--negate
+	--Negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -33,7 +33,7 @@ end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		if aux.disfilter1(tc) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 			local e1=Effect.CreateEffect(c)

@@ -76,6 +76,6 @@ end
 function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFirstTarget()
 	local a,b=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	if a<1 or not g then return end
+	if a<1 or not g or not g:IsRelateToEffect(e) then return end
 	Duel.MoveToField(g,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 end

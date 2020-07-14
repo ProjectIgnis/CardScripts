@@ -78,7 +78,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 		local g=tdg:Select(tp,lr,lr,mg)
 		if #g<=0 then return end
 		Duel.BreakEffect()
-		if Duel.SendtoDeck(g,nil,2,REASON_EFFECT)==lr then
+		if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==lr then
 			local thg=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsAbleToHand),tp,LOCATION_GRAVE,0,mg)
 			if #thg<=0 then return end
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_RTOHAND)

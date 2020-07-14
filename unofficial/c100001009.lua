@@ -2,6 +2,6 @@
 --Litmus Doom Ritual (VG)
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcGreaterCode(c,72566043)
+	Ritual.AddProcGreaterCode(c,8,nil,72566043)
 end
 s.listed_names={72566043}

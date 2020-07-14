@@ -1,4 +1,5 @@
 --渾身の一撃
+--Full-Force Strike
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -43,12 +44,19 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetOperation(s.desop)
 		e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e4)
+		local e5=e1:Clone()
+		e5:SetDescription(aux.Stringid(id,0))
+		e5:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e5:SetCode(id)
+		tc:RegisterEffect(e5)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetAttackTarget()
 	if c==Duel.GetAttacker() and tc and tc:IsRelateToBattle() then
+		Duel.Hint(HINT_CARD,tp,id)
+		Duel.Hint(HINT_CARD,1-tp,id)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

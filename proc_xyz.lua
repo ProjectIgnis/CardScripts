@@ -675,8 +675,7 @@ function Xyz.Target2(alterf,op)
 				local cancel=not og and Duel.IsSummonCancelable()
 				Xyz.ProcCancellable=cancel
 				if og and not min then
-					og:KeepAlive()
-					e:SetLabelObject(og)
+					e:SetLabelObject(og:GetFirst())
 					if op then op(e,tp,1,og:GetFirst()) end
 					return true
 				else

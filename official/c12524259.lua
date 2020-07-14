@@ -21,7 +21,7 @@ function s.tgfilter(c,e,tp,chk)
 end
 function s.cfilter(c,ec)
 	return c:IsRace(RACE_MACHINE) and c:IsType(TYPE_UNION) 
-		and c:CheckEquipTarget(ec) and aux.CheckUnionEquip(c,ec)
+		and c:CheckUnionTarget(ec) and aux.CheckUnionEquip(c,ec)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.tgfilter(chkc,e,tp,true) end
@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		local sg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,tc)
 		local ec=sg:GetFirst()

@@ -1,5 +1,5 @@
 --覚醒の三幻魔
---Sacred Beast Awakening
+--Awakening of the Sacred Beasts
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--gain LP (extra handling from Ghost Sister & Spooky Dogwood 儚無みずき)
+	--Gain LP (extra handling from Ghost Sister & Spooky Dogwood 儚無みずき)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_DELAY)

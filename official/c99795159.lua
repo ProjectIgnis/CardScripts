@@ -32,13 +32,9 @@ function s.initial_effect(c)
 	e4:SetTargetRange(1,1)
 	e4:SetValue(s.val)
 	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD)
-	e5:SetRange(LOCATION_FZONE)
+	local e5=e4:Clone()
 	e5:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
-	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e5:SetTarget(s.rdtg)
-	e5:SetValue(HALF_DAMAGE)
+	e5:SetValue(s.damval)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0x8d}
@@ -52,6 +48,7 @@ function s.val(e,re,dam,r,rp,rc)
 		return dam
 	end
 end
-function s.rdtg(e,c)
-	return not c:IsSetCard(0x8d)
+function s.damval(e,rc)
+	if rc:IsSetCard(0x8d) then return -1 end
+	return HALF_DAMAGE
 end

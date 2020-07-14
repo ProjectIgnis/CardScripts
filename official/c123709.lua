@@ -2,7 +2,7 @@
 --Laval Lancelord
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon with no tribute
+	--Summon with no tribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.ntcon)
 	e1:SetOperation(s.ntop)
 	c:RegisterEffect(e1)
-	--to grave
+	--Add to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCategory(CATEGORY_TOHAND)

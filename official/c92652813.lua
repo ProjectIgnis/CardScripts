@@ -1,6 +1,6 @@
---憑依覚醒－デーモン・リーパー
---Awakened Possessed - Archfiend Eater
---Scripted by AlphaKretin
+--憑依覚醒－大稲荷火
+--Awakening of the Possessed - Great Inari Fire
+--Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Sumon Procedure
@@ -15,36 +15,36 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(s.spcon2)
-	e2:SetTarget(s.sptg2)
-	e2:SetOperation(s.spop2)
+	e2:SetCondition(s.dmcon)
+	e2:SetTarget(s.dmtg)
+	e2:SetOperation(s.dmop)
 	c:RegisterEffect(e2)
 	--Add to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.thcon)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1245,0xc0}
+s.listed_series={0x214d,0xc0}
 function s.spfilter1(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToGraveAsCost()
 end
 function s.spfilter2(c)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsLevelBelow(4) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsLevelBelow(4) and c:IsAbleToGraveAsCost()
 end
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,tp)
@@ -78,43 +78,34 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
 	Duel.SendtoGrave(g,REASON_COST)
-	if e:GetHandler():IsLocation(LOCATION_DECK) then 
+	if e:GetHandler():IsLocation(LOCATION_DECK) then
 		Duel.ShuffleDeck(tp)
 	end
 end
-function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
+function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
-function s.spfilter3(c,e,sp)
-	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+function s.dmgfilter(c)
+	return c:IsFaceup() and c:GetBaseAttack()>0
 end
-function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter3,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
+function s.dmtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.dmgfilter,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
-function s.spop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,s.spfilter3,tp,LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
-	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e2)
+function s.dmop(e,tp,eg,ep,ev,re,r,rp)
+	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
+	local tc=Duel.SelectMatchingCard(tp,s.dmgfilter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	if tc then
+		Duel.Damage(p,tc:GetBaseAttack(),REASON_EFFECT)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsAbleToHand() and (c:IsSetCard(0x1245) or (c:IsSetCard(0xc0) and c:IsType(TYPE_SPELL+TYPE_TRAP)))
+	return c:IsAbleToHand() and (c:IsSetCard(0x214d) or (c:IsSetCard(0xc0) and c:IsType(TYPE_SPELL+TYPE_TRAP)))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

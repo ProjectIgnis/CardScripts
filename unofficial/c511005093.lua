@@ -124,7 +124,7 @@ if not BoosterDraft then
 			end
 			Debug.ReloadFieldEnd()
 			return retpacks
-		end				
+		end
 		local packs = generate_packs()
 		local graveg=Duel.GetFieldGroup(p,LOCATION_GRAVE,LOCATION_GRAVE)
 		local pack=table.remove(packs, 1)

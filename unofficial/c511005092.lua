@@ -9,7 +9,7 @@ local id=511005092
 if self_code then id=self_code end
 if not SealedDuel then
 	SealedDuel={}
-	local function finish_setup() 
+	local function finish_setup()
 		--Pre-draw
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

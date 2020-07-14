@@ -1,5 +1,5 @@
 --世紀末獣機界ビーストギア・ワールド
---The Post-Apocalyptic Beastgear World
+--Beast Gear World
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_BEASTWARRIOR+RACE_FIEND+RACE_MACHINE))
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
-	--DEF increase
+	--ATK decrease
 	local e3=e2:Clone()
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_DRAGON+RACE_SPELLCASTER+RACE_FAIRY))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_DRAGON+RACE_SPELLCASTER+RACE_FAIRY))
 	e3:SetValue(-300)
 	c:RegisterEffect(e3)
 end

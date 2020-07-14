@@ -74,10 +74,8 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or not c:IsControler(tp) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	local zone=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0)>>16
-	if Duel.GetControl(c,1-tp,0,0,zone) then
+	if not c:IsRelateToEffect(e) then return end
+	if Duel.GetControl(tc,1-tp,PHASE_END,1)~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetCategory(CATEGORY_REMOVE)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -88,17 +86,6 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.furyop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e2:SetCode(EVENT_TURN_END)
-		e2:SetCountLimit(1)
-		e2:SetLabel(c:GetControler())
-		e2:SetLabelObject(e1)
-		e2:SetCondition(s.retcon)
-		e2:SetOperation(s.retop)
-		e2:SetReset(RESET_PHASE+PHASE_END,2)
-		Duel.RegisterEffect(e2,tp)
 	end
 end
 function s.furytg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -109,20 +96,6 @@ end
 function s.furyop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-end
-function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	local te=e:GetLabelObject()
-	local c=e:GetHandler()
-	if c:IsControler(1-e:GetLabel()) then e:Reset() return false end
-	return not te or not te:IsActivatable(c:GetControler())
-end
-function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local p=e:GetLabel()
-	if c:IsControler(p) then
-		Duel.GetControl(c,1-p,0,0)
-		e:Reset()
-	end
 end
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsCode(100000365)

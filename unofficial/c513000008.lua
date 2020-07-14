@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x48,0x50e}
+s.listed_series={0x48}
 function s.filter1(c,e,tp)
 	local m = c:GetMetatable(true)
 	if not m then return false end

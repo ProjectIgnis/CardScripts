@@ -22,7 +22,7 @@ function s.rfilter(c)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
-	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	local c=e:GetHandler()
 	local rt=Duel.GetOperatedGroup():FilterCount(s.rfilter,nil)
 	if rt>0 and c:IsFaceup() and c:IsRelateToEffect(e) then

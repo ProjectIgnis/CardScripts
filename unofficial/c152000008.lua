@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddVrainsSkillProcedure(c,s.flipcon,s.flipop)
 end
+s.listed_series={0x581}
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
 	if Duel.GetFlagEffect(tp,id)>0 then return false end

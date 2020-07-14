@@ -22,6 +22,10 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttacker()
 	if chk==0 then return tc and Duel.IsExistingMatchingCard(s.ctfilter,tp,0,LOCATION_GRAVE,1,nil,tc:GetRace()) end
+	Duel.SetChainLimit(s.chlimit)
+end
+function s.chlimit(e,ep,tp)
+	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()

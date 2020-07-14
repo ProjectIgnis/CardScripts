@@ -39,7 +39,7 @@ function s.immtg(e,c)
 	return c:IsCode(6007213,32491822,69890967,43378048)
 end
 function s.tgvalue(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
+	return rp==1-e:GetHandlerPlayer()
 end
 function s.drcfilter(c)
 	return c:IsFaceup() and c:IsCode(6007213,32491822,69890967,43378048)

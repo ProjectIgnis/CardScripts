@@ -72,5 +72,5 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,loc,loc,e:GetHandler())
-	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

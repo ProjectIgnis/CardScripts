@@ -6,6 +6,7 @@ function s.initial_effect(c)
 	--skill
 	aux.AddVrainsSkillProcedure(c,s.flipcon,s.flipop)
 end
+s.listed_series={0xfc}
 function s.gkfilter(c,e,tp,tid)
 	return c:IsReason(REASON_BATTLE) and c:GetTurnID()==tid and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp) and c:IsSetCard(0xfc)

@@ -79,7 +79,7 @@ function s.cfilter(c,p)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
-	if #g>0 and Duel.SendtoDeck(g,nil,2,REASON_EFFECT)>0 then
+	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 		local ct=Duel.GetOperatedGroup():FilterCount(s.cfilter,nil,1-tp)
 		if ct>0 then
 			Duel.ShuffleDeck(1-tp)

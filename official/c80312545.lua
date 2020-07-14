@@ -1,5 +1,5 @@
 --七精の解門
---The Seven Spirit Gates Unleashed
+--Opening of the Spirit Gates
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

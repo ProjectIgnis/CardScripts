@@ -118,7 +118,7 @@ function s.chkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()==1-tp and Duel.GetFlagEffect(tp,id)==0 then
-		Duel.Win(tp,WIN_REASON_NUMBER_Ci1000)
+		Duel.Win(tp,WIN_REASON_NUMBER_iC1000)
 	end
 end
 function s.nacon(e,tp,eg,ep,ev,re,r,rp)

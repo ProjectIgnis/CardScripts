@@ -71,7 +71,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,0) end
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,1,tp,HINTMSG_SPSUMMON)
 	Duel.SetTargetCard(tg)
-	Duel.HintSelection(tg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tg,#tg,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

@@ -124,7 +124,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 	elseif op==3 then
-		Duel.RegisterFlagEffect(1-tp,id+1,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(1-tp,id+2,RESET_PHASE+PHASE_END,0,1)
 		aux.RegisterClientHint(c,nil,tp,0,1,aux.Stringid(id,4),nil)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD)

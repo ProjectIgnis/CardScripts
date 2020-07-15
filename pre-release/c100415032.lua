@@ -19,7 +19,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x24a}
 function s.filter(c)
-	return c:IsRace(RACE_MACHINE)
+	return c:IsRace(RACE_MACHINE) and c:GetAttack()>0
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x24a) and c:GetAttack()>=1000

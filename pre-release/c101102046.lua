@@ -57,6 +57,10 @@ end
 function s.matlimit(e,c,sumtype,pos)
 	return not c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
 end
+function s.sumlimit(e,c)
+	if not c then return false end
+	return c:IsControler(e:GetHandlerPlayer())
+end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)

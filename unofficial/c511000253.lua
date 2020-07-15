@@ -75,7 +75,7 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.GetControl(tc,1-tp,PHASE_END,1)~=0 then
+	if Duel.GetControl(c,1-tp,PHASE_END,1)~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetCategory(CATEGORY_REMOVE)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)

@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 function s.spfilter(c,e,tp,atk,race)
 	return c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsAttackBelow(atk) and not c:IsRace(race)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.tgtfilter(c,e,tp)
 	return c:IsFaceup() and c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetAttack(),tc:GetRace())
 	local sc=g:GetFirst()
-	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
+	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)

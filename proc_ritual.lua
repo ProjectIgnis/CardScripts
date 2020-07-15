@@ -80,6 +80,7 @@ end,"handler","lvtype","filter","lv","desc","extrafil","extraop","matfilter","st
 function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,specificmatfilter,lv,requirementfunc)
 	if not c:IsRitualMonster() or (filter and not filter(c)) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local lv=(lv and (type(lv)=="function" and lv(c)) or lv) or c:GetLevel()
+	lv=math.max(1,lv)
 	Ritual.SummoningLevel=lv
 	local mg=m:Filter(Card.IsCanBeRitualMaterial,c,c)
 	mg:Merge(m2-c)
@@ -198,6 +199,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 				if #tg>0 then
 					local tc=tg:GetFirst()
 					local lv=(lv and (type(lv)=="function" and lv(tc)) or lv) or tc:GetLevel()
+					lv=math.max(1,lv)
 					Ritual.SummoningLevel=lv
 					local mat=nil
 					mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)

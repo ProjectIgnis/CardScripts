@@ -22,10 +22,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Double battle damage
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e3:SetOperation(s.dop)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e3:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e3)
 	--When destroyed, Special summon
 	local e4=Effect.CreateEffect(c)
@@ -58,9 +57,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	if not g then return end
 	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(1-tp,ev*2)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(810000038) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

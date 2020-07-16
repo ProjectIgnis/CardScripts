@@ -38,11 +38,16 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	return tc:GetSummonType()==SUMMON_TYPE_XYZ and tc:IsControler(1-tp) and tc:IsCode(12533811)
 end
+function s.filter(c,e,tp)
+	return c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
-		return #pg<=0 and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)>0 and Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)>0 
-			and Duel.IsPlayerCanSpecialSummon(tp,SUMMON_TYPE_XYZ,POS_FACEUP,tp) end
+		local sg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_EXTRA,nil,e,tp)
+		return #pg<=0 and #sg>0 and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)>0 and Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)>0 
+			and Duel.IsPlayerCanSpecialSummon(tp,SUMMON_TYPE_XYZ,POS_FACEUP,tp,sg:GetFirst()) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.spfilter(c,e,tp)

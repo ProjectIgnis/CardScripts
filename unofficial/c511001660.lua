@@ -1,3 +1,4 @@
+--カオス・アライアンス
 --Chaos Alliance
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
@@ -22,8 +23,8 @@ function s.filter(c,atk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ag=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack)
-	if chkc then return #ag>0 and chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,ag:GetFirst():GetAttack()) end
-	if chk==0 then return #ag>0 and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,ag:GetFirst():GetAttack()) end
+	if chkc then return ag and #ag>0 and chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,ag:GetFirst():GetAttack()) end
+	if chk==0 then return ag and #ag>0 and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,ag:GetFirst():GetAttack()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,ag:GetFirst():GetAttack())
 end

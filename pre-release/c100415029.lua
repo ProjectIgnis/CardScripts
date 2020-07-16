@@ -57,15 +57,21 @@ function s.atkfilter(e,c)
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp)
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and c:GetAttack()>0 and aux.SpElimFilter(c,true)
 end
-function s.rescon(sg,e,tp,mg)
-	local atk=sg:GetSum(Card.GetAttack)
-	return (atk==2000 or atk==4000),atk>4000
-end
+function s.rescon(ct)
+	return function (sg,e,tp,mg)
+		local atk=sg:GetSum(Card.GetAttack)
+		if ct==1 then
+			return atk==2000,atk>2000
+		else
+			return (atk==2000 or atk==4000),atk>4000
+		end
+	end
+end 
 function s.tgfilter(c)
 	return c:IsFaceup() and c:IsAbleToGrave()
 end
@@ -73,8 +79,8 @@ function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.tgfilter() end
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	local ct=Duel.GetMatchingGroupCount(aux.AND(s.tgfilter,Card.IsCanBeEffectTarget),tp,0,LOCATION_ONFIELD,nil,e)
-	if chk==0 then return ct>0 and aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon,0) end
-	local rg=aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon,nil,false)
+	if chk==0 then return ct>0 and aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon(ct),0) end
+	local rg=aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon(ct),1,tp,HINTMSG_REMOVE,s.rescon(ct),nil,false)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	local gyc=Duel.GetOperatedGroup():GetSum(Card.GetAttack)//2000
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

@@ -31,7 +31,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)==s[0] and c:IsActiveType(TYPE_XYZ) and Duel.IsChainDisablable(ev) 
+	return Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)==s[0] and re:GetHandler():IsType(TYPE_XYZ) and Duel.IsChainDisablable(ev) 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

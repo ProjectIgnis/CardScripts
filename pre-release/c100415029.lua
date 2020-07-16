@@ -57,7 +57,7 @@ function s.atkfilter(e,c)
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp)
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and c:GetAttack()>0 and aux.SpElimFilter(c,true)

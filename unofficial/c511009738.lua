@@ -62,7 +62,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetLabelObject():SetLabel(1)
+	if e:GetLabelObject() then
+		e:GetLabelObject():SetLabel(1)
+	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	if r==REASON_LINK and e:GetLabelObject() then

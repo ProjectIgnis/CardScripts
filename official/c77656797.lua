@@ -1,5 +1,5 @@
 --焔聖騎士帝-シャルル
---Flame Noble Knight Emperor Charle
+--Infernoble Knight Emperor - Charlemagne
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -63,7 +63,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.Equip(tp,tc,c)
-		local tg=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_DECK,0,nil,tc,tp)
+		local tg=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,tc,tp)
 		if #tg>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)

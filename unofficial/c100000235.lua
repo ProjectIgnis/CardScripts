@@ -1,4 +1,5 @@
 --異次元格納庫
+--Different Dimension Hangar
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	local sg=Group.CreateGroup()
 	sg:KeepAlive()
 	e1:SetLabelObject(sg)
-	--SPSUMMON
+	--Special Summon the banished Unions
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -57,8 +58,7 @@ function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsSummonPlayer(tp) and g:IsExists(s.filter2,1,nil,c,e,tp)
 end
 function s.filter2(c,eqc,e,tp)
-	return c:GetFlagEffect(id)~=0 and c:CheckEquipTarget(eqc) and aux.IsCodeListed(c,eqc:GetCode())
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetFlagEffect(id)~=0 and aux.IsCodeListed(c,eqc:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and eg:IsExists(s.filter,1,nil,e,tp) end	

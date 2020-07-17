@@ -1,5 +1,5 @@
 --禁じられた一滴
---Forbidden Droplet
+--Just One Forbidden Drop
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)

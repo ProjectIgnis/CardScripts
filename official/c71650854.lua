@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
-	--indes/target
+	--Prevent effect target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -18,10 +18,11 @@ function s.initial_effect(c)
 	e2:SetCondition(s.indcon)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
+	--Prevent destruction by opponent's effect
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-	e3:SetValue(s.tgvalue)
+	e3:SetValue(aux.indoval)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -57,9 +58,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1
-end
-function s.tgvalue(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end
 function s.tgoval(e,re,rp)
 	return rp~=1-e:GetHandlerPlayer() and not re:GetHandler():IsImmuneToEffect(e)

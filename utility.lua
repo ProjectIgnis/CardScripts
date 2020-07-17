@@ -446,8 +446,8 @@ end
 function Auxiliary.sumreg(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()
 	for tc in aux.Next(eg) do
-		if tc:GetOriginalCode()==code then 
-			tc:RegisterFlagEffect(code,RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1) 
+		if tc:GetOriginalCode()==code then
+			tc:RegisterFlagEffect(code,RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -513,7 +513,6 @@ function Card.MoveAdjacent(c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 	Duel.MoveSequence(c,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag),2))
 end
-
 
 function Card.IsColumn(c,seq,tp,loc)
 	if not c:IsOnField() then return false end

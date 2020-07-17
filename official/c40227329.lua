@@ -103,6 +103,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
 	local op=Duel.SelectOption(tp,table.unpack(dtab))+1
+	if not (b1 and b2) then op=3 end
+	if not (b1 and b3) then op=2 end
+	if (b1 and b3 and not b2 and op==2) then op=3 end
+	if (b2 and b3 and not b1) then op=op+1 end
 	if op==1 then
 		if not c:IsRelateToEffect(e) then return end
 		local e1=Effect.CreateEffect(c)

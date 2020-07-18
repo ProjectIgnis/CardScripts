@@ -38,29 +38,24 @@ function s.spfilter(c,e,tp)
 	return c:IsSummonableCard() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local ct=c:GetCounter(0x1105)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil) 
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=ct and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,ct,nil,e,tp) end
-	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-	Duel.Release(g,REASON_COST)
-	e:SetLabel(ct)
+    local c=e:GetHandler()
+    local ct=c:GetCounter(0x1105)
+    if chk==0 then return c:IsReleasable() and Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil) 
+        and Duel.GetLocationCount(tp,LOCATION_MZONE)>=ct and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,ct,nil,e,tp) end
+    local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
+    g:AddCard(c)
+    Duel.Release(g,REASON_COST)
+    c:RegisterFlagEffect(id,RESET_CHAIN,0,1,ct)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return true end
-	local ct=e:GetLabel()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_HAND,0,ct,ct,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
-	e:SetLabel(0)
+    if chk==0 then return true end
+    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetTargetCards(e)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<#g then return end
-	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-	end
+    local ct=e:GetHandler():GetFlagEffectLabel(id)
+    if not ct then return end
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+    local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,ct,ct,nil,e,tp)
+    if #g<=0 or #g>Duel.GetLocationCount(tp,LOCATION_MZONE) then return end
+    Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 end

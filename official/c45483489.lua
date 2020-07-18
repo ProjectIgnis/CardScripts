@@ -3,7 +3,7 @@
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--banish from opponent's hand
+	--Banish from opponent's hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
-	--recycle from GY
+	--Add from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.rmcond(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_COST) and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_MONSTER)
+	return e:GetHandler():IsReason(REASON_COST) and re:IsActivated() and re:IsActiveType(TYPE_MONSTER)
 		and re:GetHandler():IsAttribute(ATTRIBUTE_WATER)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -93,4 +93,3 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(sg,tp,REASON_EFFECT)
 	end
 end
-

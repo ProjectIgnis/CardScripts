@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--remove overlay replace
+	--Detach cost replacement
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.rcon)
 	e2:SetOperation(s.rop)
 	c:RegisterEffect(e2)
-	--attach
+	--Attach
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -35,7 +35,7 @@ function s.rfilter(c,oc)
 end
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return (r&REASON_COST)~=0 and re:IsHasType(0x7e0)
+	return (r&REASON_COST)~=0 and re:IsActivated()
 		and re:IsActiveType(TYPE_XYZ) and ep==e:GetOwnerPlayer() and rc:IsSetCard(0xf1)
 		and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE,0,1,rc,ev)
 end

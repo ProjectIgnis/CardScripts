@@ -3,7 +3,7 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon from hand
+	--Special summon from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--special summon or attach
+	--Special summon or attach
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_COST) and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_OVERLAY)
+	return c:IsReason(REASON_COST) and re:IsActivated() and re:IsActiveType(TYPE_XYZ) and c:IsPreviousLocation(LOCATION_OVERLAY)
 end
 function s.cfilter3(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x48)

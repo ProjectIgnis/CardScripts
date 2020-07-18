@@ -94,7 +94,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local xyz=g:Select(tp,1,1,nil):GetFirst()
 		Duel.XyzSummon(tp,xyz,nil,sg)
 		if not c:IsRelateToEffect(e) or not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-		xyz:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		xyz:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,0)
 		local e1=Effect.CreateEffect(c)
 		e1:SetCategory(CATEGORY_ATKCHANGE)
 		e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -136,8 +136,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp,tc)
 	end
 end
 function s.atkcon(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()&0x38~=0 
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.costfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToRemoveAsCost()
@@ -147,7 +146,8 @@ function s.atkcost(e,tp,eg,ev,ep,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE,0,1,nil,511015104)
 		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE,0,1,nil,511015105) end
 	local g1=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE,0,1,1,nil,511015104)
-	g1:Merge(Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE,0,1,1,nil,511015105))
+	local g2=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE,0,1,1,nil,511015105)
+	g1:Merge(g2)
 	g1:AddCard(e:GetHandler())
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
 end

@@ -3,7 +3,7 @@
 --scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--Add 1 "Thunder Dragon" card to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_THUNDRA)
-	--special summon
+	--Special summon 1 "Thunder Dragon" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -41,7 +41,7 @@ function s.thfilter(c)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)   
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
@@ -70,16 +70,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 		local fid=c:GetFieldID()
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e3:SetCode(EVENT_PHASE+PHASE_END)
-		e3:SetCountLimit(1)
-		e3:SetLabel(fid)
-		e3:SetLabelObject(tc)
-		e3:SetCondition(s.thcon2)
-		e3:SetOperation(s.thop2)
-		Duel.RegisterEffect(e3,tp)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetCountLimit(1)
+		e1:SetLabel(fid)
+		e1:SetLabelObject(tc)
+		e1:SetCondition(s.thcon2)
+		e1:SetOperation(s.thop2)
+		Duel.RegisterEffect(e1,tp)
 	end
 	Duel.SpecialSummonComplete()
 end
@@ -93,4 +93,3 @@ end
 function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(e:GetLabelObject(),nil,REASON_EFFECT)
 end
-

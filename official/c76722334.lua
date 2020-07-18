@@ -2,7 +2,7 @@
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--draw
+	--Draw 1 card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
@@ -36,7 +36,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.dtchcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_COST) and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_MONSTER)
+	return c:IsReason(REASON_COST) and re:IsActivated() and re:IsActiveType(TYPE_XYZ)
 		and c:IsPreviousLocation(LOCATION_OVERLAY)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)

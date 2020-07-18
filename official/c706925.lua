@@ -2,7 +2,7 @@
 --Atlantean Marksman
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy 1 card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -27,14 +27,14 @@ end
 s.listed_series={0x77}
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function s.spfilter(c,e,tp)
 	return not c:IsCode(id) and c:IsLevelBelow(4) and c:IsSetCard(0x77) and c:IsRace(RACE_SEASERPENT)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_COST) and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_MONSTER)
+	return e:GetHandler():IsReason(REASON_COST) and re:IsActivated() and re:IsActiveType(TYPE_MONSTER)
 		and re:GetHandler():IsAttribute(ATTRIBUTE_WATER)
 end
 function s.desfilter(c)

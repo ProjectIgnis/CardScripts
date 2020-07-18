@@ -29,7 +29,7 @@ s.toss_coin=true
 s.listed_names={73206827}
 s.listed_series={0x5}
 function s.thfilter(c)
-	return c.toss_coin and c:IsAbleToHand()
+	return c.toss_coin and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) and

@@ -1,4 +1,5 @@
---D - Death Match
+--Ｄ－デス・マッチ
+--D-Faceoff
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

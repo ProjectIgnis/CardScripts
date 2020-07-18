@@ -36,7 +36,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 				local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,#g,#g,nil)
 				local opt=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-				Duel.SortDecktop(tp,1-tp,3)
 				if opt==0 then
 					Duel.SendtoDeck(dg,nil,SEQ_DECKTOP,REASON_EFFECT)
 					Duel.SortDecktop(tp,tp,#dg)

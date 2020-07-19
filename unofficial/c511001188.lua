@@ -1,4 +1,5 @@
 --銀河再誕
+--Galaxy Rebirth
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -82,9 +83,8 @@ function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():GetEquipTarget():RegisterFlagEffect(511001187,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end
-
 function s.ccost(e,tp)
-	if tp~=Duel.GetTurnPlayer()  then return end
+	if tp~=Duel.GetTurnPlayer() then return end
 	if e:GetHandler():GetEquipTarget():GetFlagEffect(511001187)==0 then
 		Duel.Destroy(e:GetHandler():GetEquipTarget(),REASON_EFFECT)
 	end

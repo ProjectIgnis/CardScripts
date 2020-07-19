@@ -18,8 +18,7 @@ function s.cfilter(c)
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE  
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil)
+	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil)
 end
 function s.xyzfilter(c)
 	return c:IsXyzSummonable() and c:IsSetCard(0xba)

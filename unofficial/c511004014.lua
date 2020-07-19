@@ -256,7 +256,7 @@ function s.block(e,tp,eg,ep,ev,re,r,rp)
 			atg:GetFirst():RegisterFlagEffect(511004019,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1)
 		else
 			Duel.ChangeAttackTarget(at)
-			if at then at:RegisterFlagEffect(511004019,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1) end   
+			if at then at:RegisterFlagEffect(511004019,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1) end
 		end
 	end
 end

@@ -1,4 +1,5 @@
 --石の心臓
+--Heart of Stone
 local s,id=GetID()
 function s.initial_effect(c)
 	--multi attack
@@ -19,12 +20,12 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local a=Duel.GetAttacker()
 	if chkc then return chkc==a end
-	if chk==0 then return a:IsOnField() and a:IsCanBeEffectTarget(e)  end
+	if chk==0 then return a:IsOnField() and a:IsCanBeEffectTarget(e) end
 	Duel.SetTargetCard(a)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.ChainAttack()
 	end
 end

@@ -8,7 +8,7 @@ function s.initial_effect(c)
 		s.g=g
 	else
 		g=s.g
-	end  
+	end
 	g:KeepAlive()
 	--activate
 	local e1=Effect.CreateEffect(c)

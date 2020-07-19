@@ -1,6 +1,7 @@
 --先史遺産クリスタル・スカル
+--Chronomaly Crystal Skull (Anime)
 local s,id=GetID()
-function s.initial_effect(c)  
+function s.initial_effect(c)
 	c:EnableUnsummonable()
 	--special summon
 	local e1=Effect.CreateEffect(c)

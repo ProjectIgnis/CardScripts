@@ -1,4 +1,4 @@
---超こいこい  (Anime)
+--超こいこい (Anime)
 --Super Koi Koi (Anime)
 --fixed by Larry126
 local s,id=GetID()
@@ -25,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)==3 then
 		local g=Duel.GetOperatedGroup()
 		for tc in aux.Next(g) do
-			if Duel.GetLocationCount(p,LOCATION_MZONE)>0 and tc:IsSetCard(0xe6) 
+			if Duel.GetLocationCount(p,LOCATION_MZONE)>0 and tc:IsSetCard(0xe6)
 				and tc:IsCanBeSpecialSummoned(e,0,p,false,false)
 				and Duel.SpecialSummonStep(tc,0,p,p,false,false,POS_FACEUP) then
 				local e1=Effect.CreateEffect(e:GetHandler())

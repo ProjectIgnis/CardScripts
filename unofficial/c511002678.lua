@@ -38,7 +38,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indtg(e,c)
-	return c:IsAttackPos() and  c~=e:GetHandler() and c:IsSetCard(0x526)
+	return c:IsAttackPos() and c~=e:GetHandler() and c:IsSetCard(0x526)
 end
 function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0

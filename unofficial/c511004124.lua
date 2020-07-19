@@ -23,13 +23,12 @@ function s.cfilter(c,tp)
 	local sum=0
 	local gc=g:GetFirst()
 	while gc do
-	   	local atk=gc:GetAttack()
-	   	if atk<0 then atk=0 end
-	   	sum=sum+atk
-	   	gc=g:GetNext()
+		local atk=gc:GetAttack()
+		if atk<0 then atk=0 end
+		sum=sum+atk
+		gc=g:GetNext()
 	end
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and #g>0 
-		and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,sum)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and #g>0 and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,sum)
 end
 function s.filter(c,sum)
 	return c:GetAttack()<sum
@@ -37,7 +36,8 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
 		local sum=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-		return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc,sum) end
+		return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc,sum)
+	end
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
@@ -65,10 +65,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		local atk=tc:GetAttack()
- 		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
- 			if atk<0 then atk=0 end
+		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
+			if atk<0 then atk=0 end
 			Duel.Damage(1-tp,atk,REASON_EFFECT)
 		end
- 	end
+	end
 end
- 

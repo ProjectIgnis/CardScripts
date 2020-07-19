@@ -29,9 +29,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and #sg>0 and sg:FilterCount(Card.IsReleasable,nil)==#sg 
+		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and #sg>0 and sg:FilterCount(Card.IsReleasable,nil)==#sg
 			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil,e,tp)  end
+			and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil,e,tp)
+		end
 	local ct=Duel.Release(sg,REASON_COST)
 	Duel.SetTargetParam(ct+1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)

@@ -1,4 +1,4 @@
--- アトランティスの威光
+--アトランティスの威光
 --Edict of Atlantis
 --fixed by Larry126
 local s,id=GetID()
@@ -17,13 +17,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.lvop)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)  
+	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	Duel.RegisterEffect(e2,tp)  
+	Duel.RegisterEffect(e2,tp)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	Duel.RegisterEffect(e3,tp)  
+	Duel.RegisterEffect(e3,tp)
 end
 function s.filter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelBelow(2147483647)

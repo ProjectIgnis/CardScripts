@@ -85,7 +85,7 @@ function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_ONFIELD,0,c)   
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_ONFIELD,0,c)
 	if chk==0 then return c:IsAbleToRemoveAsCost() and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 	local g=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE)
 	g:AddCard(c)

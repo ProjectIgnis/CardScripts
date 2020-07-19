@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--cost change
+	--Alter LP cost for "Archfiend" monsters during the Standby Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_LPCOST_REPLACE)
 	e2:SetCondition(s.lrcon)
 	c:RegisterEffect(e2)
-	--search
+	--Search an "Archfiend" monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 	aux.GlobalCheck(s,function()
+		--Global effect since either player can use this effect
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_TO_GRAVE)
@@ -56,7 +57,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	if lv1>0 then Duel.RaiseEvent(g1,EVENT_CUSTOM+id,re,r,rp,0,lv1) end
-	if lv2>0 then Duel.RaiseEvent(g1,EVENT_CUSTOM+id,re,r,rp,1,lv1) end
+	if lv2>0 then Duel.RaiseEvent(g1,EVENT_CUSTOM+id,re,r,rp,1,lv2) end
 end
 function s.filter(c,lv)
 	return c:GetLevel()<lv and c:IsSetCard(0x45) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

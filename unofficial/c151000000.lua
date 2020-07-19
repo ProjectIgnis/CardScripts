@@ -123,7 +123,7 @@ if not ActionDuel then
 			e1:SetOperation(function(e) Duel.SendtoDeck(e:GetHandler(),nil,-2,REASON_RULE) end)
 			tc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(tc)
-			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS) 
+			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e2:SetCode(EVENT_CHAIN_END)
 			e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetLabelObject(tc)
@@ -204,7 +204,7 @@ if not ActionDuel then
 				tokenp=rps
 			end
 			if Duel.GetRandomNumber(0,1)==0 then table.insert(hintp,1-tp) end
-		elseif Duel.TossCoin(tp,1)==1 then  
+		elseif Duel.TossCoin(tp,1)==1 then
 			tokenp=tp
 		end
 		if Duel.GetRandomNumber(0,1)==0 then table.insert(hintp,tp) end
@@ -212,7 +212,7 @@ if not ActionDuel then
 			Duel.Hint(HINT_MESSAGE,p,aux.Stringid(id,2))
 			Duel.RegisterFlagEffect(p,id,RESET_PHASE+PHASE_END,0,1)
 		end
-		if tokenp then 
+		if tokenp then
 			token=Duel.CreateToken(tokenp,e:GetLabel())
 			Duel.SendtoHand(token,nil,REASON_EFFECT)
 			if string.find(originalField.af,'m') then
@@ -235,7 +235,7 @@ if not ActionDuel then
 		else ActionDuel.chktrap(token,tokenp,e) end
 	end
 	function ActionDuel.chktrap(tc,tp,e)
-		if tc and tc:IsType(TYPE_TRAP) and tc:CheckActivateEffect(false,false,false) 
+		if tc and tc:IsType(TYPE_TRAP) and tc:CheckActivateEffect(false,false,false)
 			and Duel.GetLocationCount(tp,LOCATION_SZONE) then
 			Duel.ConfirmCards(1-tp,tc)
 			local tpe=tc:GetType()
@@ -272,7 +272,7 @@ if not ActionDuel then
 	end
 
 	ActionDuelRules()
-	
+
 	COVER_ACTION=301
 	CARD_VANILLA_MODE=511004400
 	CARD_POTENTIAL_YELL=511004399

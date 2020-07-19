@@ -1,5 +1,5 @@
 --猛吹雪
---Driving Snow [Rush]
+--Driving Snow (Rush)
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)
-		and c:GetReasonPlayer()==1-tp  and c:IsType(TYPE_TRAP) 
+		and c:GetReasonPlayer()==1-tp and c:IsType(TYPE_TRAP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

@@ -105,7 +105,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)>0
 	--destroy
 	local g2=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0
-	return Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp and ((e:GetLabelObject():GetLabel()>1 and  g1) or (e:GetLabelObject():GetLabel()>2 and g2))
+	return Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp and ((e:GetLabelObject():GetLabel()>1 and g1) or (e:GetLabelObject():GetLabel()>2 and g2))
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	--discard

@@ -1,12 +1,14 @@
 --NO12 エーテリック・まへす
+--New Orders 12 Etheric Mahes
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,nil,12,2)
 	c:EnableReviveLimit()
-	--addown
+	--Special Summon attached monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -65,7 +67,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetCardTarget()
 	local tc=g:GetFirst()
-	while  tc do
+	while tc do
 		if tc:IsLocation(LOCATION_MZONE) then
 			Duel.Destroy(tc,REASON_EFFECT)
 		end

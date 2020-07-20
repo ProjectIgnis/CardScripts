@@ -1,5 +1,5 @@
--- Thousand Crisscross
--- Scripted by: UnknownGuest
+--Thousand Crisscross
+--Scripted by: UnknownGuest
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover
@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_RECOVER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x20018)
+	e1:SetHintTiming(0,TIMING_DAMAGE+TIMING_BATTLE_END+TIMING_BATTLE_START)
 	e1:SetLabel(3)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,0x20018)
 	e2:SetCondition(s.condition)
 	e2:SetOperation(s.operation)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

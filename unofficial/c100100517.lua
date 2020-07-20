@@ -1,11 +1,12 @@
 --Ｓｐ－禁じられた聖杯
+--Speed Spell - Forbidden Chalice
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+0x1c0)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(s.condition)
@@ -19,9 +20,9 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	if chk==0 then return tc and tc:IsCanRemoveCounter(tp,0x91,1,REASON_COST) end	 
+	if chk==0 then return tc and tc:IsCanRemoveCounter(tp,0x91,1,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	tc:RemoveCounter(tp,0x91,1,REASON_COST)	
+	tc:RemoveCounter(tp,0x91,1,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
@@ -33,7 +34,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

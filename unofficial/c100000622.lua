@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.splimit)
 	c:RegisterEffect(e2)
 end
-s.listed_names={100000025}
+s.listed_names={CARD_FOSSIL_FUSION}
 function s.ffilter1(c,fc,sumtype,tp)
 	return c:IsRace(RACE_ROCK,fc,sumtype,tp) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)
 end
@@ -21,5 +21,5 @@ function s.ffilter2(c,fc,sumtype,tp)
 	return (c:IsLevel(5) or c:IsLevel(6)) and c:IsRace(RACE_MACHINE,fc,sumtype,tp) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(1-tp)
 end
 function s.splimit(e,se,sp,st)
-	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or se:GetHandler():IsCode(100000025)
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or se:GetHandler():IsCode(CARD_FOSSIL_FUSION)
 end

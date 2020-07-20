@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e2:SetValue(s.splimit)
 	c:RegisterEffect(e2)
 end
-s.listed_names={100000025}
+s.listed_names={CARD_FOSSIL_FUSION}
 function s.splimit(e,se,sp,st)
-	return st&SUMMON_TYPE_FUSION~=SUMMON_TYPE_FUSION or se:GetHandler():IsCode(100000025)
+	return st&SUMMON_TYPE_FUSION~=SUMMON_TYPE_FUSION or se:GetHandler():IsCode(CARD_FOSSIL_FUSION)
 end
 function s.ffilter1(c,fc,sumtype,tp)
 	return c:IsRace(RACE_ROCK,fc,sumtype,tp) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)

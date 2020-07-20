@@ -47,7 +47,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,0) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local tg=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,2,0,LOCATION_REMOVED)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,2,tp,LOCATION_REMOVED)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

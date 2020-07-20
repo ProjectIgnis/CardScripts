@@ -49,7 +49,8 @@ function s.rmvcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,e:GetHandler(),tp)
 end
 function s.rmvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,LOCATION_ONFIELD)
 end
 function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
@@ -64,7 +65,7 @@ function s.thfilter(c,lv)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rgc=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACES_BEAST_BWARRIOR_WINGB),tp,LOCATION_REMOVED,0,nil)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,rgc) end
+	if chk==0 then return rgc>0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,rgc) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

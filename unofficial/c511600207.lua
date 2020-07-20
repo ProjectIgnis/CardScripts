@@ -27,14 +27,12 @@ function s.initial_effect(c)
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_CHAINING)
-		e1:SetRange(LOCATION_GRAVE)
 		e1:SetCondition(s.regcon)
 		e1:SetOperation(s.regop1)
 		Duel.RegisterEffect(e1,tp)
 		local e2=Effect.GlobalEffect()
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_CHAIN_NEGATED)
-		e2:SetRange(LOCATION_GRAVE)
 		e2:SetCondition(s.regcon)
 		e2:SetOperation(s.regop2)
 		Duel.RegisterEffect(e2,tp)
@@ -80,17 +78,17 @@ end
 function s.actfilter(c)
 	return c:GetFlagEffect(id)>0
 end
-function s.desfilter(c,e)
-	return c:IsFaceup() and c:IsLevelBelow(Duel.GetMatchingGroupCount(s.actfilter,0,LOCATION_GRAVE,LOCATION_GRAVE,e:GetHandler()))
+function s.desfilter(c,ec)
+	return c:IsFaceup() and c:IsLevelBelow(Duel.GetMatchingGroupCount(s.actfilter,0,LOCATION_GRAVE,LOCATION_GRAVE,ec))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e) end
-	local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e:GetHandler()) end
+	local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,#dg,tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,0,#dg*300)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)
+	local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e:GetHandler())
 	if Duel.Destroy(dg,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		for p=0,1 do

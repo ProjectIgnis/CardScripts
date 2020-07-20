@@ -1,14 +1,15 @@
+--サブテラーマリスの潜伏
 --Subterror Behemoth Burrowing
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--search
+	--Add from Deck to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--change pos
+	--Change battle position
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_POSITION)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetHintTiming(TIMING_BATTLE_PHASE,0x1e0+TIMING_BATTLE_PHASE)
+	e3:SetHintTiming(TIMING_BATTLE_PHASE,TIMINGS_CHECK_MONSTER_E+TIMING_BATTLE_PHASE)
 	e3:SetCost(aux.bfgcost)
 	e3:SetTarget(s.postg)
 	e3:SetOperation(s.posop)

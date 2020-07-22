@@ -22,7 +22,7 @@ end
 Auxiliary.Drawless={}
 function Auxiliary.AddDrawless(c,drawless)
 	local typ=type(drawless)
-	if typ=="number" or typ=="boolean" then
+	if typ=="number" or (typ=="boolean" and drawless) then
 		Auxiliary.Drawless[c]=typ=="number" and drawless or 1
 	end
 end

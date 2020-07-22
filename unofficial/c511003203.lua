@@ -1,4 +1,4 @@
---紋章獣ユニコーン(Anime)
+--紋章獣ユニコーン (Anime)
 --Heraldic Beast Unicorn (Anime)
 --Scripted by the Razgriz
 local s,id=GetID()

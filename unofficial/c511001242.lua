@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition()
-	return Duel.IsBattePhase()
+	return Duel.IsBattlePhase()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

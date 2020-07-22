@@ -1,4 +1,4 @@
---紋もん章しょう獣じゅうバシリスク
+--紋章獣バシリスク (Anime)
 --Heraldic Beast Basilik (Anime)
 --Scripted by the Razgriz
 local s,id=GetID()
@@ -14,18 +14,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return Duel.GetAttackTarget()==c or (Duel.GetAttacker()==c and Duel.GetAttackTarget()~=nil) end
+	if chk==0 then return e:GetHandler():GetBattleTarget() end
 	local g=Group.FromCards(Duel.GetAttacker(),Duel.GetAttackTarget())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Group.CreateGroup()
-	local c=Duel.GetAttacker()
-	if c:IsRelateToBattle() then g:AddCard(c) end
-	c=Duel.GetAttackTarget()
-	if c~=nil and c:IsRelateToBattle() then g:AddCard(c) end
-	if #g>0 then
-		Duel.Destroy(g,nil,REASON_EFFECT)
-	end
+    local c=e:GetHandler()
+    local tc=c:GetBattleTarget()
+    if c:IsRelateToBattle() and tc:IsRelateToBattle() then
+        local g=Group.FromCards(c,tc)
+        Duel.Destroy(g,REASON_EFFECT)
+    end
 end

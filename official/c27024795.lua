@@ -3,7 +3,7 @@
 --Scripted by ahtelel and Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon when banished
+	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special Summon when an "Aesir" leaves the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -33,13 +33,13 @@ end
 s.listed_series={0x42,0x4b}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and eg:IsContains(e:GetHandler()) and re and re:IsActiveType(TYPE_LINK) and re:GetHandler():IsSetCard(0x42)
+	return #eg==1 and eg:IsContains(e:GetHandler()) and re:IsActiveType(TYPE_LINK) and re:GetHandler():IsSetCard(0x42)
 end
 function s.matfilter(c)
 	return c:IsSetCard(0x42) and c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsLocation(LOCATION_DECK)) and c:IsLevelAbove(1)
 end
 function s.spcheck(sg,e,tp,mg)
-	return #sg==3 and sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)==2 and sg:GetSum(Card.GetLevel)==10
+	return #sg==3 and sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)==2 and sg:GetSum(Card.GetLevel)==10 
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg)
 end
 function s.spfilter(c,e,tp,mg)

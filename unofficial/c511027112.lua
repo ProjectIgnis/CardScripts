@@ -1,6 +1,6 @@
---Black-Winged Dragon (Anime)
 --ブラックフェザードラゴン (Anime)
---script by Rundas
+--Black-Winged Dragon (Anime)
+--Scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -42,33 +42,27 @@ function s.initial_effect(c)
 	e4:SetOperation(s.op3)
 	c:RegisterEffect(e4)
 end
-
 --damage negation battle
-
 function s.con1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetBattleDamage(tp)>0
 end
-
 function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local dam=Duel.GetBattleDamage(tp)
-	if chk==0 then return c:GetAttack()>=dam and c:IsFaceup() and not c:IsRelateToBattle() end
+	if chk==0 then return c:GetAttack()>=Duel.GetBattleDamage(tp) and not c:IsRelateToBattle() end
 end
-
 function s.op1(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local dam=Duel.GetBattleDamage(tp)
-	if c:GetFlagEffect(id)==0 then c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0,0) end
 	if Duel.GetFlagEffect(tp,id)~=0 then return end
-	if c:IsFaceup() and Duel.SelectEffectYesNo(tp,c) then
-		Duel.RegisterFlagEffect(tp,id,RESET_EVENT+EVENT_BATTLED,0,1)
-		c:SetFlagEffectLabel(id,c:GetFlagEffectLabel(id)+dam)
+	local c=e:GetHandler()
+	if c:GetFlagEffect(id)==0 then c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,0) end
+	if Duel.SelectEffectYesNo(tp,c) then
+		Duel.HintSelection(Group.FromCards(c))
+		Duel.Hint(HINT_CARD,1-tp,id)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_DAMAGE,0,1)
+		c:SetFlagEffectLabel(id,c:GetFlagEffectLabel(id)+Duel.GetBattleDamage(tp))
 		Duel.ChangeBattleDamage(tp,0)
 	end
 end
-
 --damage negation card effect
-
 function s.con2(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_DAMAGE)
 	local e2=Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_RECOVER)
@@ -88,19 +82,17 @@ function s.con2(e,tp,eg,ep,ev,re,r,rp)
 		return false
 	end
 end
-
 function s.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local dam=e:GetLabel()
-	if chk==0 then return c:GetAttack()>=dam and c:IsFaceup() end
+	if chk==0 then return e:GetHandler():GetAttack()>=e:GetLabel() end
 end
-
 function s.op2(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:GetFlagEffect(id)==0 then c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0,0) end
 	if Duel.GetFlagEffect(tp,id)~=0 then return end
-	if c:IsFaceup() and Duel.SelectEffectYesNo(tp,c) then
-		Duel.RegisterFlagEffect(tp,id,RESET_EVENT+EVENT_CHAIN_SOLVED,0,1)
+	local c=e:GetHandler()
+	if c:GetFlagEffect(id)==0 then c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,0) end
+	if Duel.SelectEffectYesNo(tp,c) then
+		Duel.HintSelection(Group.FromCards(c))
+		Duel.Hint(HINT_CARD,1-tp,id)
+		Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
 		c:SetFlagEffectLabel(id,c:GetFlagEffectLabel(id)+e:GetLabel())
 		local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 		local e1=Effect.CreateEffect(c)
@@ -114,7 +106,6 @@ function s.op2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
-
 function s.refcon(e,re,val,r,rp,rc)
 	local cc=Duel.GetCurrentChain()
 	if cc==0 or r~=REASON_EFFECT then return end
@@ -122,32 +113,23 @@ function s.refcon(e,re,val,r,rp,rc)
 	if cid==e:GetLabel() then return 0
 	else return val end
 end
-
 --attack down
-
 function s.flagval(e,c)
-	if e:GetHandler():GetFlagEffectLabel(id) then return -e:GetHandler():GetFlagEffectLabel(id)
-	else return 0 end
+	return e:GetHandler():GetFlagEffectLabel(id) and -e:GetHandler():GetFlagEffectLabel(id) or 0
 end
-
 --regain atk + atkdown
-
 function s.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsFaceup() and c:GetFlagEffectLabel(id)~=0 end
+	if chk==0 then return e:GetHandler():GetFlagEffectLabel(id)~=0 end
 end
-
 function s.op3(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	if c:IsFaceup() then
-		for tc in aux.Next(g) do
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(-c:GetFlagEffectLabel(id))
-			tc:RegisterEffect(e1)
-		end
+	if not c:IsFaceup() or not c:IsRelateToEffect(e) then return end
+	for tc in aux.Next(Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)) do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(-c:GetFlagEffectLabel(id))
+		tc:RegisterEffect(e1)
 	end
 	c:SetFlagEffectLabel(id,0)
 end

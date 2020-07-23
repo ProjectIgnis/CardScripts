@@ -25,11 +25,11 @@ function s.xyzfilter(c,sg,e,tp)
 	local e1=nil
 	if sg:IsExists(Card.IsCode,1,nil,47198668) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		e1=Effect.CreateEffect(mc)
-		e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 		e1:SetCode(511002116)
 		e1:SetReset(RESET_CHAIN)
-		mc:RegisterEffect(e1)
+		mc:RegisterEffect(e1,true)
 		sg:AddCard(mc)
 	end
 	local res=c:IsXyzSummonable(nil,sg,ct,ct) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
@@ -90,11 +90,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		if c:IsRelateToEffect(e) and e:IsHasType(EFFECT_TYPE_ACTIVATE) and g:IsExists(Card.IsCode,1,nil,47198668) then
 			e1=Effect.CreateEffect(c)
-			e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 			e1:SetCode(511002116)
-			e1:SetReset(RESET_CHAIN)
-			c:RegisterEffect(e1)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			c:RegisterEffect(e1,true)
 			g:AddCard(c)
 		end
 		Duel.XyzSummon(tp,xyz,nil,g)

@@ -1,3 +1,4 @@
+--ガガガヘッド (Manga)
 --Gagaga Head (Manga)
 --fixed by MLD
 --NOTE: Change Draw effect to trigger once implementable
@@ -88,6 +89,7 @@ function s.xyzfilter(c,m,cc)
 	e1:SetTarget(Xyz.Target(f,lv,ct,maxct,mustbemat,exchk))
 	e1:SetOperation(Xyz.Operation(f,lv,ct,maxct,mustbemat,exchk))
 	e1:SetValue(SUMMON_TYPE_XYZ)
+	e1:SetReset(RESET_CHAIN)
 	c:RegisterEffect(e1)
 	local res=c:IsXyzSummonable(nil,m,#m,#m)
 	e1:Reset()
@@ -122,7 +124,7 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(Xyz.Target(f,lv,ct,maxct,mustbemat,exchk))
 		e1:SetOperation(Xyz.Operation(f,lv,ct,maxct,mustbemat,exchk))
 		e1:SetValue(SUMMON_TYPE_XYZ)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_CHAIN)
 		tc:RegisterEffect(e1)
 		Duel.XyzSummon(tp,tc,nil,m)
 	end

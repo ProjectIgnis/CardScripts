@@ -1,3 +1,4 @@
+--来世
 --Next World
 local s,id=GetID()
 function s.initial_effect(c)
@@ -49,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SUMMON_PROC)
 		e1:SetCondition(s.ntcon)
-		e1:SetReset(RESET_CHAIN)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		sc:RegisterEffect(e1)
 		Duel.Summon(tp,sc,true,nil)
 	end

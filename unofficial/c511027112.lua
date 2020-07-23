@@ -119,7 +119,7 @@ function s.flagval(e,c)
 end
 --regain atk + atkdown
 function s.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffectLabel(id)~=0 end
+	if chk==0 then return e:GetHandler():GetFlagEffectLabel(id) and e:GetHandler():GetFlagEffectLabel(id)>0 and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.op3(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

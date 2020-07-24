@@ -42,14 +42,14 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if (a and a:IsType(TYPE_XYZ)) or (d and d:IsType(TYPE_XYZ)) then
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(0,id+100,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function s.xyzfilter(c,tp,xyzc)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp)
 end
 function s.xyzop(e,tp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and Duel.GetFlagEffect(tp,id+100)>0 end
+	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and Duel.GetFlagEffect(0,id+100)>0 end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	return true
 end

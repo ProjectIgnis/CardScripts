@@ -1,9 +1,9 @@
+--クロック・ナイト Ｎｏ．１２
 --Clock Knight No. 12
 local s,id=GetID()
 function s.initial_effect(c)
 	--coin
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(89718302,0))
 	e1:SetCategory(CATEGORY_COIN)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.coinop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1530}
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)

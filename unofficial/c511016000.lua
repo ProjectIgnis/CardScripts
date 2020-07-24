@@ -1,4 +1,5 @@
---アルカナフォースⅦ－THE CHARIOT
+--アルカナフォースⅦ－THE CHARIOT (Anime)
+--Arcana Force VII - The Chariot (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--coin
@@ -46,7 +47,7 @@ function s.arcanareg(c,coin)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_ADJUST)
-	e2:SetRange(LOCATION_MZONE)	
+	e2:SetRange(LOCATION_MZONE) 
 	e2:SetOperation(s.ctop)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)

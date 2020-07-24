@@ -1,3 +1,4 @@
+--ペンタクル・オブ・エース
 --Pentacle of Ace
 local s,id=GetID()
 function s.initial_effect(c)

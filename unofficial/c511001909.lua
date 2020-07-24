@@ -1,9 +1,9 @@
+--ギャンブル天使バニー
 --Gamble Angel Bunny
 local s,id=GetID()
 function s.initial_effect(c)
 	--coin
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(89718302,0))
 	e1:SetCategory(CATEGORY_COIN+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)

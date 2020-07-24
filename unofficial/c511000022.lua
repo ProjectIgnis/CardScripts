@@ -1,3 +1,4 @@
+--スート・オブ・ソード Ｘ
 --Suit of Sword X
 local s,id=GetID()
 function s.initial_effect(c)

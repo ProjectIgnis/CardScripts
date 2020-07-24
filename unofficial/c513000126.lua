@@ -1,5 +1,6 @@
+--アルカナフォースＶＩＩＩ－ＳＴＲＥＮＧＴＨ (Anime)
 --Arcana Force VIII - The Strength (Anime)
---scripted by Keddy
+--Scripted by Keddy
 local s,id=GetID()
 function s.initial_effect(c)
 	--coin
@@ -18,6 +19,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.toss_coin=true
 function s.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)

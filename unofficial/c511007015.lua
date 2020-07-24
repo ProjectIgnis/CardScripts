@@ -1,11 +1,10 @@
---coded by Lyris
+--クロック・ナイト Ｎｏ．３
 --Clock Knight No. 3
---modified by MLD
+--Scripted by Lyris, modified by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(89718302,0))
 	e1:SetCategory(CATEGORY_COIN)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -13,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
-	--Once per turn, if you control another "Clock Knight" monster, you can negate the effects of a card requiring a coin toss and redo the coin toss. [Clock Knight No. 12]
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetRange(LOCATION_MZONE)
@@ -22,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.coinop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1530}
 s.toss_coin=true
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

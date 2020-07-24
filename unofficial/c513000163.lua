@@ -1,5 +1,6 @@
---Arcana Force ＸＩＩ－ＴＨＥ ＨＡＮＧＥＤ ＭＡＮ
---scripted GameMaster(GM)
+--アルカナフォースＸＩＩ－ＴＨＥ ＨＡＮＧＥＤ ＭＡＮ (Anime)
+--Arcana Force XII - The Hangman (Anime)
+--Scripted GameMaster(GM)
 local s,id=GetID()
 function s.initial_effect(c)
 	--coin
@@ -18,6 +19,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.toss_coin=true
 function s.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
@@ -62,44 +64,38 @@ function s.arcanareg(c,coin)
 	c:RegisterEffect(e1)
 	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
-
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
-
-
 function s.filter555(c)
 	return c:IsDestructable() 
 end
-
 function s.destg555(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	--self
-local heads=e:GetHandler():GetFlagEffectLabel(36690018)==1
-if heads then 		
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
-	local c=e:GetHandler()
-	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,s.filter555,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.SetTargetPlayer(tp)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,0)
-	Duel.RegisterFlagEffect(tp,511005634,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
-else
---opponents
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
-	local c=e:GetHandler()
-	if chk==0 then return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0  end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,s.filter555,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetTargetPlayer(1-tp)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
-	Duel.RegisterFlagEffect(tp,511005634,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
+	local heads=e:GetHandler():GetFlagEffectLabel(36690018)==1
+	if heads then	   
+		if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
+		local c=e:GetHandler()
+		if chk==0 then return true end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		local g=Duel.SelectTarget(tp,s.filter555,tp,LOCATION_MZONE,0,1,1,nil)
+		Duel.SetTargetPlayer(tp)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,0)
+		Duel.RegisterFlagEffect(tp,511005634,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
+	else
+	--opponents
+		if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
+		local c=e:GetHandler()
+		if chk==0 then return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0  end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		local g=Duel.SelectTarget(tp,s.filter555,tp,0,LOCATION_MZONE,1,1,nil)
+		Duel.SetTargetPlayer(1-tp)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
+		Duel.RegisterFlagEffect(tp,511005634,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
+	end
 end
-end
-
-
 function s.desop555(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
@@ -107,11 +103,9 @@ function s.desop555(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(p,tc:GetAttack(),REASON_EFFECT)
 	end
 end
-
 function s.descon2(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and  Duel.GetFlagEffect(tp,511005634)==0
 end
-
 function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local heads=e:GetHandler():GetFlagEffectLabel(36690018)==1
 	if chkc then 
@@ -119,7 +113,7 @@ function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if heads then return chkc:IsControler(tp)
 		else return chkc:IsControler(1-tp) end
 	end
-if heads then
+	if heads then
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
 	local c=e:GetHandler()
 	if chk==0 then return true end
@@ -154,5 +148,3 @@ function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
-

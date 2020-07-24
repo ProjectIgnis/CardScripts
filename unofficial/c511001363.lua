@@ -1,6 +1,6 @@
 --CX 冀望皇バリアン (Anime)
 --CXyz Barian Hope (Anime)
---fixed by Larry126
+--Rescripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -52,7 +52,7 @@ function s.op(e)
 			if te:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then te=te:GetLabelObject() end
 			local resetflag,resetcount=te:GetReset()
 			local rm,max,code=te:GetCountLimit()
-			local prop1,prop2=eff:GetProperty()
+			local prop1,prop2=te:GetProperty()
 			local e1=Effect.CreateEffect(c)
 			if te:GetDescription() then
 				e1:SetDescription(te:GetDescription())

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 
---spsummon
+--tribute + special summon
 
 function s.spfilter(c,e,tp)
 	return c:IsLevelAbove(7) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)

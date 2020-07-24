@@ -67,7 +67,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end
 function s.attconfilter(c,tp)
-	return c:IsReason(REASON_BATTLE) or ((c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)) and c:IsPreviousControler(tp)
+	return (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.attcon(e,tp,eg,ep,ev,re,r,rp)

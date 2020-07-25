@@ -1,16 +1,15 @@
 --Rank-Up related functions
 
 FLAG_RANKUP = 511001822
+EFFECT_RANKUP_EFFECT = 511001822
 
 function Auxiliary.EnableCheckRankUp(c,condition,operation,...)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(Auxiliary.ReincarnationCheckCondition(condition,...))
-	if operation then
-		e1:SetOperation(operation)
-	end
+	e1:SetCondition(Auxiliary.RankUpCheckCondition(condition,...))
+	e1:SetOperation(Auxiliary.RankUpCheckOperation(operation,...))
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -40,7 +39,7 @@ function Auxiliary.RankUpCheckValue(...)
 	end
 end
 
-function Auxiliary.ReincarnationCheckCondition(condition,...)
+function Auxiliary.RankUpCheckCondition(condition,...)
 	local monsterFilter={...}
 	local nameFilter={}
 	for _,filter in ipairs(monsterFilter) do
@@ -56,6 +55,17 @@ function Auxiliary.ReincarnationCheckCondition(condition,...)
 		end
 		return e:GetLabel()==1 and e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 			and (not condition or condition(e,tp,eg,ep,ev,re,r,rp))
+	end
+end
+
+function Auxiliary.RankUpCheckOperation(operation,...)
+	return function(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		local rankupEffects={c:GetCardEffect(EFFECT_RANKUP_EFFECT)}
+		for _,rankupEffect in ipairs(rankupEffects) do
+			c:RegisterEffect(rankupEffect:GetLabelObject())
+		end
+		if operation then operation(e,tp,eg,ep,ev,re,r,rp) end
 	end
 end
 

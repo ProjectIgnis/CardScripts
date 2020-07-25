@@ -1,4 +1,5 @@
 --ザ・ヘブンズ・ロード
+--The Sky Lord:
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -40,7 +41,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g1,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(5861892) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsCode(5861892) and c:IsCanBeSpecialSummoned(e,0,tp,true,c:IsOriginalCode(511003201))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,0x13,0,1,nil,e,tp)

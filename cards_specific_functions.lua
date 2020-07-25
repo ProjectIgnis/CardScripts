@@ -279,7 +279,7 @@ function Auxiliary.ReincarnationCheckValue(e,c)
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_XYZ,tp,id)
 	end
 	if rc then
-		c:RegisterFlagEffect(CARD_SALAMANGREAT_SANCTUARY,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE-RESET_TEMP_REMOVE,0,1)
+		c:RegisterFlagEffect(CARD_SALAMANGREAT_SANCTUARY,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
 	end
 end
 --Filter for unique on field Malefic monsters

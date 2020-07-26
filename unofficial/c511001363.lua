@@ -35,21 +35,25 @@ function s.initial_effect(c)
 		local ge1=Effect.GlobalEffect()
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_ADJUST)
+		ge1:SetCondition(s.con)
 		ge1:SetOperation(s.op)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
 s.listed_series={0x1048}
 function s.cfilter(c)
-	return c:IsHasEffect(511002571) and #{c:GetCardEffect(5110013630)}==0
+	return c:IsHasEffect(511002571) and not c:IsHasEffect(5110013630)
+end
+function s.con(e)
+	return Duel.IsExistingMatchingCard(s.cfilter,0,LOCATION_ALL,LOCATION_ALL,1,nil)
 end
 function s.op(e)
-	local g=Duel.GetMatchingGroup(s.cfilter,0,0xff,0xff,nil)
+	local g=Duel.GetMatchingGroup(s.cfilter,0,LOCATION_ALL,LOCATION_ALL,nil)
 	for c in aux.Next(g) do
 		local effs={c:GetCardEffect(511002571)}
 		for _,eff in ipairs(effs) do
 			local te=eff:GetLabelObject()
-			if te:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then te=te:GetLabelObject() end
+			if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
 			local resetflag,resetcount=te:GetReset()
 			local rm,max,code=te:GetCountLimit()
 			local prop1,prop2=te:GetProperty()

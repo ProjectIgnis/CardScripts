@@ -53,7 +53,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local chk=true
 	for _,eff in ipairs(effs) do
 		local temp=eff:GetLabelObject()
-		if temp:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then temp=temp:GetLabelObject() end
+		if temp:GetCode()&511001822==511001822 then temp=temp:GetLabelObject() end
 		if temp==re then
 			chk=false
 		end
@@ -73,7 +73,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if ctcode&EFFECT_COUNT_CODE_SINGLE>0 then
 		for _,eff in ipairs(effs) do
 			local te=eff:GetLabelObject()
-			if te:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then te=te:GetLabelObject() end
+			if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
 			local _,_,ctlcode=te:GetCountLimit()
 			if ctlcode&EFFECT_COUNT_CODE_SINGLE>0 then
 				local chk=true

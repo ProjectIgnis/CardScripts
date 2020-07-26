@@ -39,7 +39,7 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		local ac={}
 		for _,teh in ipairs(effs) do
 			local temp=teh:GetLabelObject()
-			if temp:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then temp=temp:GetLabelObject() end
+			if temp:GetCode()&511001822==511001822 then temp=temp:GetLabelObject() end
 			local con=temp:GetCondition()
 			local cost=temp:GetCost()
 			local tg=temp:GetTarget()
@@ -60,7 +60,7 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		if not te then return end
 		local teh=te
 		te=teh:GetLabelObject()
-		if te:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then te=te:GetLabelObject() end
+		if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
 		local cost=te:GetCost()
 		if cost then cost(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		local tg=te:GetTarget()

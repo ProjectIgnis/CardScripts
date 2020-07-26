@@ -33,7 +33,9 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
-	local sg=aux.SelectUnselectGroup(g,e,tp,1,4,s.check,1,tp,HINTMSG_SPSUMMON)
+	local ct=4
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,s.check,1,tp,HINTMSG_SPSUMMON)
 	if #sg>0 then
 		local fid=c:GetFieldID()
 		for tc in aux.Next(sg) do

@@ -42,7 +42,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1048}
 function s.cfilter(c)
-	return c:IsHasEffect(511002571) and not c:IsHasEffect(5110013630)
+	return c:IsHasEffect(511002571) and c:GetFlagEffect(5110013630)==0
 end
 function s.con(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,0,LOCATION_ALL,LOCATION_ALL,1,nil)
@@ -63,7 +63,7 @@ function s.op(e)
 			end
 			e1:SetLabelObject(te)
 			e1:SetType(EFFECT_TYPE_XMATERIAL+te:GetType()&(~EFFECT_TYPE_SINGLE))
-			if te:GetCode() then
+			if te:GetCode()>0 then
 				e1:SetCode(te:GetCode())
 			end
 			e1:SetProperty(prop1|EFFECT_FLAG_CARD_TARGET,prop2)
@@ -78,22 +78,13 @@ function s.op(e)
 			if te:GetOperation() then
 				e1:SetOperation(te:GetOperation())
 			end
-			if resetflag and resetcount then
+			if resetflag>0 and resetcount>0 then
 				e1:SetReset(resetflag,resetcount)
-			elseif resetflag then
+			elseif resetflag>0 then
 				e1:SetReset(resetflag)
 			end
 			c:RegisterEffect(e1,true)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(5110013630)
-			e2:SetProperty(prop1,prop2)
-			if resetflag and resetcount then
-				e2:SetReset(resetflag,resetcount)
-			elseif resetflag then
-				e2:SetReset(resetflag)
-			end
-			c:RegisterEffect(e2,true)
+			c:RegisterFlagEffect(5110013630,resetflag,prop1,resetcount)
 		end
 	end
 end

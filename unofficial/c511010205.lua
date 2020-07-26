@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,6,3,nil,nil,99)
 	c:EnableReviveLimit()
 	--Rank Up Check
-	aux.EnableCheckRankUp(c,nil,s.rankupregop,90126061)
+	aux.EnableCheckRankUp(c,nil,nil,90126061)
 	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -86,13 +86,10 @@ function s.initial_effect(c)
 	e10:SetCountLimit(1)
 	e10:SetTarget(s.ovtg)
 	e10:SetOperation(s.ovop)
+	e10:SetReset(RESET_EVENT+RESETS_STANDARD)
 	local e11=Effect.CreateEffect(c)
-	e11:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-	e11:SetRange(LOCATION_MZONE)
-	e11:SetTargetRange(LOCATION_MZONE,0)
-	e11:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e11:SetCondition(s.efcon)
-	e11:SetTarget(s.eftg)
+	e11:SetType(EFFECT_TYPE_SINGLE)
+	e11:SetCode(EFFECT_RANKUP_EFFECT)
 	e11:SetLabelObject(e10)
 	c:RegisterEffect(e11)
 end
@@ -202,15 +199,6 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.Overlay(c,g)
 	end
-end
-function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(FLAG_RANKUP+id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
-end
-function s.efcon(e)
-	return e:GetHandler():GetFlagEffect(FLAG_RANKUP+id)>0
-end
-function s.eftg(e,c)
-	return c==e:GetHandler()
 end
 function s.ovtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_HAND,0,1,nil) end

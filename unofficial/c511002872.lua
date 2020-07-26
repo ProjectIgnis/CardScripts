@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,5,4)
 	c:EnableReviveLimit()
 	--Rank Up Check
-	aux.EnableCheckRankUp(c,nil,s.rankupregop,59627393)
+	aux.EnableCheckRankUp(c,nil,nil,59627393)
 	--battle indestructable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -37,28 +37,16 @@ function s.initial_effect(c)
 	e3:SetCost(s.descost)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
+	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e4:SetCondition(s.efcon)
-	e4:SetTarget(s.eftg)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_RANKUP_EFFECT)
 	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_series={0x48}
 s.listed_names={59627393}
 s.xyz_number=105
-function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(FLAG_RANKUP+id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
-end
-function s.efcon(e)
-	return e:GetHandler():GetFlagEffect(FLAG_RANKUP+id)>0
-end
-function s.eftg(e,c)
-	return c==e:GetHandler()
-end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()

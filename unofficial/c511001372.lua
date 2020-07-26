@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,9,4)
 	c:EnableReviveLimit()
 	--Rank Up Check
-	aux.EnableCheckRankUp(c,nil,s.rankupregop,48995978)
+	aux.EnableCheckRankUp(c,nil,nil,48995978)
 	--battle indestructable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetCost(s.cost)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
+	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 	--win
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
@@ -43,13 +44,10 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetCountLimit(1)
 	e4:SetOperation(s.winop)
+	e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetTargetRange(LOCATION_MZONE,0)
-	e5:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e5:SetCondition(s.efcon)
-	e5:SetTarget(s.eftg)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:Setcode(EFFECT_RANKUP_EFFECT)
 	e5:SetLabelObject(e3)
 	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
 	local e6=e5:Clone()
@@ -59,15 +57,6 @@ end
 s.listed_series={0x48}
 s.listed_names={48995978}
 s.xyz_number=88
-function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(FLAG_RANKUP+id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
-end
-function s.efcon(e)
-	return e:GetHandler():GetFlagEffect(FLAG_RANKUP+id)>0
-end
-function s.eftg(e,c)
-	return c==e:GetHandler()
-end
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_MONSTER) and te:GetOwner()~=e:GetOwner()
 end

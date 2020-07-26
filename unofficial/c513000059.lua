@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,5,3)
 	c:EnableReviveLimit()
 	--Rank Up Check
-	aux.EnableCheckRankUp(c,nil,s.rankupregop,48739166)
+	aux.EnableCheckRankUp(c,nil,nil,48739166)
 	--battle indestructable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -46,13 +46,10 @@ function s.initial_effect(c)
 	e4:SetCost(s.spcost)
 	e4:SetTarget(s.sptg2)
 	e4:SetOperation(s.spop2)
+	e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetTargetRange(LOCATION_MZONE,0)
-	e5:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e5:SetCondition(s.efcon)
-	e5:SetTarget(s.eftg)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_RANKUP_EFFECT)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
 end
@@ -97,15 +94,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Recover(p,d,REASON_EFFECT)
 	end
-end
-function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(FLAG_RANKUP+id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
-end
-function s.efcon(e)
-	return e:GetHandler():GetFlagEffect(FLAG_RANKUP+id)>0
-end
-function s.eftg(e,c)
-	return c==e:GetHandler()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

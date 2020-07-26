@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,5,3)
 	c:EnableReviveLimit()
 	--Rank Up Check
-	aux.EnableCheckRankUp(c,nil,s.rankupregop,93568288)
+	aux.EnableCheckRankUp(c,nil,nil,93568288)
 	--battle indestructable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -43,12 +43,14 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCondition(s.discon)
 	e4:SetOperation(s.disop)
+	e4:SetReset(RESET_EVENT+RESETS_REDIRECT)
 	--destroy replace
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_EQUIP)
 	e5:SetCode(EFFECT_DESTROY_REPLACE)
 	e5:SetTarget(s.reptg)
 	e5:SetOperation(s.repop)
+	e5:SetReset(RESET_EVENT+RESETS_REDIRECT)
 	--Negate Damage
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -56,13 +58,11 @@ function s.initial_effect(c)
 	e6:SetRange(LOCATION_SZONE)
 	e6:SetCondition(aux.damcon1)
 	e6:SetOperation(s.repop2)
+	e6:SetReset(RESET_EVENT+RESETS_REDIRECT)
+	--
 	local e7=Effect.CreateEffect(c)
-	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-	e7:SetRange(LOCATION_ONFIELD)
-	e7:SetTargetRange(LOCATION_ONFIELD,0)
-	e7:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e7:SetCondition(s.efcon)
-	e7:SetTarget(s.eftg)
+	e7:SetType(EFFECT_TYPE_SINGLE)
+	e7:SetCode(EFFECT_RANKUP_EFFECT)
 	e7:SetLabelObject(e4)
 	c:RegisterEffect(e7)
 	local e8=e7:Clone()
@@ -75,15 +75,6 @@ end
 s.listed_series={0x48}
 s.listed_names={93568288}
 s.xyz_number=80
-function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(FLAG_RANKUP+id,RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD-RESET_LEAVE,0,1)
-end
-function s.efcon(e)
-	return e:GetHandler():GetFlagEffect(FLAG_RANKUP+id)>0
-end
-function s.eftg(e,c)
-	return c==e:GetHandler()
-end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

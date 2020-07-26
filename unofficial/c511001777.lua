@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),3,4)
 	c:EnableReviveLimit()
 	--Rank Up Check
-	aux.EnableCheckRankUp(c,nil,s.rankupregop,56051086)
+	aux.EnableCheckRankUp(c,nil,nil,56051086)
 	--battle indestructable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsCode,32446631))
 	e2:SetValue(1)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	--Negates Battle Damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -30,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e3:SetCondition(s.rdcon)
 	e3:SetOperation(s.rdop)
+	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 	--atk
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -38,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e4:SetTarget(aux.TargetBoolFunction(Card.IsCode,32446631))
 	e4:SetValue(s.atkval)
+	e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 	--token
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
@@ -49,13 +52,11 @@ function s.initial_effect(c)
 	e5:SetCost(s.spcost)
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
+	e5:SetReset(RESET_EVENT+RESETS_STANDARD)
+	--
 	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetTargetRange(LOCATION_MZONE,0)
-	e6:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e6:SetCondition(s.efcon)
-	e6:SetTarget(s.eftg)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetCode(EFFECT_RANKUP_EFFECT)
 	e6:SetLabelObject(e2)
 	c:RegisterEffect(e6)
 	local e7=e6:Clone()
@@ -71,15 +72,6 @@ end
 s.listed_series={0x48}
 s.listed_names={56051086,32446631}
 s.xyz_number=43
-function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(FLAG_RANKUP+id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
-end
-function s.efcon(e)
-	return e:GetHandler():GetFlagEffect(FLAG_RANKUP+id)>0
-end
-function s.eftg(e,c)
-	return c==e:GetHandler()
-end
 function s.cfilter(c,lp)
 	return c:IsFaceup() and c:GetAttack()>lp
 end

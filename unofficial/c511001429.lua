@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),5,4)
 	c:EnableReviveLimit()
 	--Rank Up Check
-	aux.EnableCheckRankUp(c,nil,s.rankupregop,49678559)
+	aux.EnableCheckRankUp(c,nil,nil,49678559)
 	--battle indestructable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.cost)
 	e2:SetTarget(s.tg)
 	e2:SetOperation(s.op)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	--indes
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
@@ -37,16 +38,14 @@ function s.initial_effect(c)
 	e3:SetCost(s.indescost)
 	e3:SetTarget(s.indestg)
 	e3:SetOperation(s.indesop)
+	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 	local e4=e3:Clone()
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetCondition(s.indescon2)
+	e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetTargetRange(LOCATION_MZONE,0)
-	e5:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e5:SetCondition(s.efcon)
-	e5:SetTarget(s.eftg)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_RANKUP_EFFECT)
 	e5:SetLabelObject(e2)
 	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
 	local e6=e5:Clone()
@@ -59,15 +58,6 @@ end
 s.listed_series={0x48}
 s.xyz_number=102
 s.listed_names={49678559}
-function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(FLAG_RANKUP+id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
-end
-function s.efcon(e)
-	return e:GetHandler():GetFlagEffect(FLAG_RANKUP+id)>0
-end
-function s.eftg(e,c)
-	return c==e:GetHandler()
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)

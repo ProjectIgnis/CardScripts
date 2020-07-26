@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,10,4)
 	c:EnableReviveLimit()
 	--Rank Up Check
-	aux.EnableCheckRankUp(c,nil,s.rankupregop,97403510)
+	aux.EnableCheckRankUp(c,nil,nil,97403510)
 	--battle indestructable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -39,24 +39,13 @@ function s.initial_effect(c)
 	e3:SetCost(s.discost)
 	e3:SetTarget(s.distg)
 	e3:SetOperation(s.disop)
-	--Double Snare
+	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(3682106)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetTargetRange(LOCATION_MZONE,0)
-	e5:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e5:SetCondition(s.efcon)
-	e5:SetTarget(s.eftg)
-	e5:SetLabelObject(e3)
-	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
-	local e6=e5:Clone()
-	e6:SetLabelObject(e4)
-	c:RegisterEffect(e6)
+	e4:SetCode(EFFECT_RANKUP_EFFECT)
+	e4:SetLabelObject(e3)
+	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
@@ -87,15 +76,6 @@ end
 function s.clear(e,tp,eg,ep,ev,re,r,rp)
 	s[0]=0
 	s[1]=0
-end
-function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(FLAG_RANKUP+id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
-end
-function s.efcon(e)
-	return e:GetHandler():GetFlagEffect(FLAG_RANKUP+id)>0
-end
-function s.eftg(e,c)
-	return c==e:GetHandler()
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

@@ -49,6 +49,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:Select(tp,1,1,nil)
+		Duel.DisableShuffleCheck()
 		if sg:GetFirst():IsAbleToHand() then
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)

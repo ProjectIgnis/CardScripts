@@ -63,7 +63,9 @@ function Auxiliary.RankUpCheckOperation(operation,...)
 		local c=e:GetHandler()
 		local rankupEffects={c:GetCardEffect(EFFECT_RANKUP_EFFECT)}
 		for _,rankupEffect in ipairs(rankupEffects) do
-			c:RegisterEffect(rankupEffect:GetLabelObject():Clone())
+			local te=rankupEffect:GetLabelObject():Clone()
+			te:SetReset(te:GetLabel())
+			c:RegisterEffect(te)
 		end
 		if operation then operation(e,tp,eg,ep,ev,re,r,rp) end
 	end

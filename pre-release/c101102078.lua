@@ -55,6 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 						local sum=sumtype&(SUMMON_TYPE_FUSION|SUMMON_TYPE_SYNCHRO|SUMMON_TYPE_XYZ|SUMMON_TYPE_LINK)
 						return (sum==SUMMON_TYPE_FUSION or sum==SUMMON_TYPE_SYNCHRO or sum==SUMMON_TYPE_XYZ or sum==SUMMON_TYPE_LINK) and 1 or 0
 					end)
+		e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e4)
 	end
 end

@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	--Negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_DISABLE) 
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0xff,0xff)
 	e2:SetTarget(s.disable)
-	e2:SetCode(EFFECT_DISABLE) 
 	c:RegisterEffect(e2)
 	--Trap Spell
 	local e3=Effect.CreateEffect(c)
@@ -43,5 +43,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disable(e,c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c~=e:GetHandler()
 end

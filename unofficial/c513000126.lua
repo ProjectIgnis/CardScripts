@@ -37,11 +37,11 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_SUMMON_SUCCESS)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetCondition(s.ctrlcon)
 		e1:SetOperation(s.ctrlop)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -56,17 +56,17 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 		if tc then
 			Duel.HintSelection(g)
 			Duel.GetControl(tc,tp)
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		end
 	end
 end
 function s.ctrlcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPosition(POS_FACEUP) and e:GetHandler():IsLocation(LOCATION_MZONE)
+	return e:GetHandler():IsLocation(LOCATION_MZONE)
 end
 function s.ctrlop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	if ft>0 then
-        	Duel.GetControl(eg,1-tp)
+		Duel.GetControl(eg,1-tp)
 	else 
 		Duel.Destroy(eg,REASON_EFFECT)
 	end

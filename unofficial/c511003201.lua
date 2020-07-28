@@ -69,7 +69,7 @@ function s.arcanareg(c,coin)
 	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffectLabel(36690018)==1 and eg:GetFirst():IsControler(1-tp)
+	return e:GetHandler():GetFlagEffectLabel(36690018)==1 and eg:GetFirst():IsPreviousControler(1-tp)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and chkc:IsAbleToHand() end

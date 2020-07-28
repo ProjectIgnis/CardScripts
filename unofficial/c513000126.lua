@@ -49,14 +49,14 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e1:Clone()
 		e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 		c:RegisterEffect(e3)
-	elseif Duel.GetFlagEffect(tp,id)==0 then
+	elseif c:GetFlagEffect(id)==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 		local g=Duel.SelectMatchingCard(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
 		local tc=g:GetFirst()
 		if tc then
 			Duel.HintSelection(g)
 			Duel.GetControl(tc,tp)
-			Duel.RegisterFlagEffect(tp,id,RESET_EVENT+RESETS_STANDARD,0,0)
+			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
 		end
 	end
 end

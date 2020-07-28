@@ -1,4 +1,4 @@
---女じょ帝ていの冠かんむり
+--女帝の冠
 --Empress's Crown (Anime)
 --Scripted by the Razgriz
 local s,id=GetID()
@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetHintTiming(TIMING_SPSUMMON,TIMING_SPSUMMON+TIMING_END_PHASE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)

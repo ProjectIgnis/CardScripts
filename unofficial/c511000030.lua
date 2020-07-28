@@ -19,12 +19,12 @@ function s.initial_effect(c)
 	e2:SetCondition(s.actcon)
 	c:RegisterEffect(e2)
 end
-s.listed_names={74530899,8967776}
+s.listed_series={0x4a}
 function s.cfilter2(c,tp)
 	return c:IsType(TYPE_SYNCHRO) and c:IsControler(1-tp)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x4a) or c:IsCode(74530899) or c:IsCode(8967776))
+	return c:IsFaceup() and c:IsSetCard(0x4a)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

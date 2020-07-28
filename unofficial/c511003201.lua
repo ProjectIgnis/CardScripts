@@ -35,7 +35,7 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	local res=0
- 	if c:IsHasEffect(73206827) then
+	if c:IsHasEffect(73206827) then
 		res=1-Duel.SelectOption(tp,60,61)
 	else res=Duel.TossCoin(tp,1) end
 	s.arcanareg(c,res)
@@ -47,7 +47,7 @@ function s.arcanareg(c,coin)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCode(EVENT_BATTLE_DESTROYING)
+	e1:SetCode(EVENT_BATTLE_DESTROYED)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.thcon)
 	e1:SetTarget(s.thtg)
@@ -62,14 +62,14 @@ function s.arcanareg(c,coin)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.negcon)
- 	e2:SetTarget(s.negtg)
+	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)
 	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffectLabel(36690018)==1 and eg:GetFirst():GetBattleTarget()
+	return e:GetHandler():GetFlagEffectLabel(36690018)==1 and eg:GetFirst():IsControler(1-tp)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and chkc:IsAbleToHand() end
@@ -87,7 +87,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
 		e1:SetReset(RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)     
+		tc:RegisterEffect(e1)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
@@ -101,10 +101,10 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:GetFlagEffect(id)==0 end
 	if c:IsHasEffect(EFFECT_REVERSE_UPDATE) then
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-    end
-    Duel.SetOperationInfo(0,CATEGORY_DRAW,0,0,1-tp,1)
-    Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-    if re:GetHandler():IsRelateToEffect(re) and re:GetHandler():IsDestructable() then
+	end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,0,0,1-tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
+	if re:GetHandler():IsRelateToEffect(re) and re:GetHandler():IsDestructable() then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 end
@@ -122,13 +122,13 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local rc=re:GetHandler()
 		Duel.NegateRelatedChain(rc,RESET_TURN_SET)
- 		local e2=Effect.CreateEffect(c)
- 		e2:SetType(EFFECT_TYPE_SINGLE)
- 		e2:SetCode(EFFECT_DISABLE)
- 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
- 		rc:RegisterEffect(e2)
- 		local e3=Effect.CreateEffect(c)
- 		e3:SetType(EFFECT_TYPE_SINGLE)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_DISABLE)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		rc:RegisterEffect(e2)
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_DISABLE_EFFECT)
 		e3:SetValue(RESET_TURN_SET)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)

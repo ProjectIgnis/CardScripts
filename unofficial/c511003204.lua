@@ -20,6 +20,9 @@ function s.initial_effect(c)
 	e2:SetCondition(s.actcon)
 	c:RegisterEffect(e2)
 end
+function s.cfilter2(c,tp)
+    return c:IsType(TYPE_SYNCHRO) and c:IsControler(1-tp)
+end
 function s.gfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO)
 end

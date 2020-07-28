@@ -34,13 +34,40 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	if res==0 then
 		local g=Duel.GetMatchingGroup(Card.IsControlerCanBeChanged,tp,LOCATION_MZONE,0,c)
 		Duel.GetControl(g,1-tp)
-	else
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_SUMMON_SUCCESS)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetTargetRange(LOCATION_MZONE,0)
+		e1:SetCondition(s.ctrlcon)
+		e1:SetOperation(s.ctrlop)
+		c:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+		c:RegisterEffect(e2)
+		local e3=e1:Clone()
+		e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
+		c:RegisterEffect(e3)
+	elseif c:GetFlagEffect(id)==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 		local g=Duel.SelectMatchingCard(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
 		local tc=g:GetFirst()
 		if tc then
 			Duel.HintSelection(g)
 			Duel.GetControl(tc,tp)
+			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
 		end
+	end
+end
+function s.ctrlcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsPosition(POS_FACEUP) and e:GetHandler():IsLocation(LOCATION_MZONE)
+end
+function s.ctrlop(e,tp,eg,ep,ev,re,r,rp)
+	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	if ft>0 then
+        	Duel.GetControl(eg,1-tp)
+	else 
+		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end

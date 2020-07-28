@@ -26,14 +26,13 @@ function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetCode)==1 and sg:GetClassCount(Card.GetLevel)==1
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	--opd check
-	if Duel.GetFlagEffect(tp,id)>0 then return false end
 	--condition
 	return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.IsExistingMatchingCard(s.rmvfilter1,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil,e,tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	--ask if you want to activate the skill or not
-	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
+	--opd check and ask if you want to activate the skill or not
+	if Duel.GetFlagEffect(tp,id)>0 or not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
+	--opd register
 	Duel.RegisterFlagEffect(tp,id,0,0,0)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)

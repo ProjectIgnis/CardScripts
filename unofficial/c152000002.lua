@@ -14,16 +14,14 @@ function s.tkfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfb)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	--opd check
-	if Duel.GetFlagEffect(tp,id)>0 then return false end
 	--condition
 	local ct=3-Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
 	return Duel.GetTurnPlayer()~=tp and ct>0 and Duel.IsPlayerCanDraw(1-tp,ct)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	--ask if you want to activate the skill or not
-	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
+	--opd check and ask if you want to activate the skill or not
+	if Duel.GetFlagEffect(tp,id)>0 or not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 	--skill is active flag
 	Duel.RegisterFlagEffect(tp,id,0,0,0)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))

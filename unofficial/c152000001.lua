@@ -15,8 +15,6 @@ function s.gkfilter(c,tid)
 	return c:IsReason(REASON_BATTLE) and c:GetTurnID()==tid and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSetCard(0xfc)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	--opd check
-	if Duel.GetFlagEffect(tp,id)>0 then return false end
 	--condition
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return false end
@@ -25,8 +23,8 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return #g>0 and ft>=#g and g:FilterCount(Card.IsCanBeSpecialSummoned,nil,e,0,tp,false,false,POS_FACEUP,tp)==#g
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	--ask if you want to activate the skill or not
-	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
+	--opd check and ask if you want to activate the skill or not
+	if Duel.GetFlagEffect(tp,id)>0 or not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 	--opd register
 	Duel.RegisterFlagEffect(tp,id,0,0,0)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))

@@ -7,16 +7,14 @@ function s.initial_effect(c)
 end
 s.listed_series={0x581}
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	--opd check
-	if Duel.GetFlagEffect(tp,id)>0 then return false end
 	--condition
 	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,nil,0x581) and Duel.IsExistingMatchingCard(Card.IsFaceup,1-tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x581),tp,LOCATION_MZONE,0,1,nil)
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	--ask if you want to activate the skill or not/opd register
-	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
+	--opd check and ask if you want to activate the skill or not
+	if Duel.GetFlagEffect(tp,id)>0 or not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 	--opd register
 	Duel.RegisterFlagEffect(tp,id,0,0,0)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))

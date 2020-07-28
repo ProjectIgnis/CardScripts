@@ -76,7 +76,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst():GetBattleTarget()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and not tc:IsLocation(LOCATION_MZONE) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		and not tc:IsLocation(LOCATION_MZONE) and tc:IsPreviousControler(1-tp) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tc,1,0,0)
 end

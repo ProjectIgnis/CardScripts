@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost() and c:IsAttackAbove(0) and aux.SpElimFilter(c,true) 
+	return c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost() and c:GetAttack()>0 and aux.SpElimFilter(c,true) 
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

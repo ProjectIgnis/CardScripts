@@ -1,4 +1,5 @@
---暗黒の召喚神
+--暗黒の召喚神 (VG)
+--Dark Summoning Beast (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)	
 end
+s.listed_names={6007213,32491822,69890967}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsReleasable() and Duel.GetActivityCount(tp,ACTIVITY_ATTACK)==0 end

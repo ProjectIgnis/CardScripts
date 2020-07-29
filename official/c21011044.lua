@@ -43,9 +43,10 @@ function s.sstage2(e,tc,tp,sg,chk)
 		local att=tc:GetAttribute()
 		if Duel.IsExistingMatchingCard(s.sameatt,tp,0,LOCATION_MZONE,1,nil,att) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
-			local tgc=Duel.SelectMatchingCard(tp,s.sameatt,tp,0,LOCATION_MZONE,1,1,nil,att):GetFirst()
-			if tgc then
-				Duel.SendtoGrave(tgc,REASON_EFFECT)
+			local tg=Duel.SelectMatchingCard(tp,s.sameatt,tp,0,LOCATION_MZONE,1,1,nil,att)
+			if #tg>0 then
+				Duel.HintSelection(tg)
+				Duel.SendtoGrave(tg,REASON_EFFECT)
 			end
 		end
 	end

@@ -22,17 +22,14 @@ end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_BEAST) and c:IsType(TYPE_XYZ)
 end
-function s.thtgfilter(c)
-	return c:IsFaceup() and c:IsAbleToHand()
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.thtgfilter(chkc) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc:IsAbleToHand() end
 	local dg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	if chk==0 then
 		if e:GetLabel()==100 then
 			e:SetLabel(0)
 			return Duel.CheckRemoveOverlayCard(tp,0,0,1,REASON_COST,dg)
-				and Duel.IsExistingTarget(s.thtgfilter,tp,0,LOCATION_ONFIELD,1,nil)
+				and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil)
 		else return false end
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)
@@ -40,7 +37,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.RemoveOverlayCard(tp,0,0,1,rt,REASON_COST,dg)
 	local count=#Duel.GetOperatedGroup()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,s.thtgfilter,tp,0,LOCATION_ONFIELD,1,count,nil)
+	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,count,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 	e:SetLabel(count)
 end

@@ -1,5 +1,6 @@
 --銀河眼の光子竜 (Anime)
 --Galaxy-Eyes Photon Dragon (Anime)
+--Scripted by the Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

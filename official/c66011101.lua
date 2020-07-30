@@ -103,7 +103,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,0)
 	if Duel.GetTurnPlayer()==tp then
 		e1:SetLabel(Duel.GetTurnCount())
-		e1:SetCondition(s.skipcon)		  
+		e1:SetCondition(s.skipcon)
 		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
 	else
 		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,1)

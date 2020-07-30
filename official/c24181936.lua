@@ -85,7 +85,7 @@ function s.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
 end
 function s.atktg(tc)
-	return  function(e,c)
+	return function(e,c)
 				local a=Duel.GetAttacker()
 				local d=Duel.GetAttackTarget()
 				return (tc==a or tc==d)

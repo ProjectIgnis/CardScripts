@@ -1,13 +1,13 @@
 --守護竜ピスティ
---Pisti the Guardragon
+--Guardragon Pisty
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
-	--link summon
+	--Link summon procedure
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.matfilter,1,1)
-	--cannot special summon
+	--Cannot be special summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.sumlimit)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon 1 Dragon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -48,7 +48,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local zone=Duel.GetZoneWithLinkedCount(2,tp)&0x1f
-	if tc and tc:IsRelateToEffect(e) and zone~=0  then
+	if tc and tc:IsRelateToEffect(e) and zone~=0 then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 end

@@ -32,7 +32,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.costfilter(c,ft)
 	return c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToGraveAsCost()
-		 and (ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
+		and (ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

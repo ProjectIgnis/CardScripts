@@ -1,3 +1,4 @@
+--真闇の世界
 --The World of True Darkness
 local s,id=GetID()
 function s.initial_effect(c)

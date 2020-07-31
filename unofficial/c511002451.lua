@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CHANGE_DAMAGE)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetTargetRange(1,0)
+	e2:SetTargetRange(1,1)
 	e2:SetValue(s.damval)
 	c:RegisterEffect(e2)
 	--no damage

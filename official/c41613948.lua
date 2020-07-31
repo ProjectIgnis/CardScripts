@@ -1,7 +1,8 @@
 --D－HERO デビルガイ
+--Destiny HERO - Doom Lord
 local s,id=GetID()
 function s.initial_effect(c)
-	--remove
+	--Banish itself and a monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -38,7 +39,8 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and c:IsPosition(POS_FACEUP_ATTACK) and tc:IsRelateToEffect(e) and Duel.Remove(tc,tc:GetPosition(),REASON_EFFECT+REASON_TEMPORARY)~=0 then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and c:IsPosition(POS_FACEUP_ATTACK)
+		and tc and tc:IsRelateToEffect(e) and Duel.Remove(tc,tc:GetPosition(),REASON_EFFECT+REASON_TEMPORARY)~=0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
@@ -56,6 +58,9 @@ function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local t=e:GetLabel()
-	if t==1 then e:SetLabel(0)
-	else Duel.ReturnToField(e:GetLabelObject())	end
+	if t==1 then
+		e:SetLabel(0)
+	else
+		Duel.ReturnToField(e:GetLabelObject())
+	end
 end

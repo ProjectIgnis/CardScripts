@@ -33,7 +33,7 @@ s.listed_names={CARD_FOSSIL_FUSION}
 	--Check for "Fossil" fusion monster to tribute
 function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsSetCard(0x14c) and c:IsReleasableByEffect()
-	 and Duel.IsExistingMatchingCard(s.ssfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetLevel(),e,tp)
+	and Duel.IsExistingMatchingCard(s.ssfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetLevel(),e,tp)
 end
 	--Check for "Fossil" fusion monster with 2 levels higher than one in "filter"
 function s.ssfilter(c,lv,e,tp)
@@ -52,7 +52,7 @@ end
 	--Tribute 1 "Fossil" fusion, and if you do, special summon another, 2 levels higher (treated as a fusion summon)
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 		if Duel.Release(tc,REASON_EFFECT)==0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.ssfilter,tp,LOCATION_EXTRA,0,1,1,nil,tc:GetLevel(),e,tp)

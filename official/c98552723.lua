@@ -76,7 +76,9 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsDisabled() then
 		e:SetLabel(1)
-	else e:SetLabel(0) end
+	else
+		e:SetLabel(0)
+	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabelObject():GetLabel()~=0 then return end
@@ -86,6 +88,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,c)
-	 return c:IsType(TYPE_MONSTER)
+	return c:IsType(TYPE_MONSTER)
 end
-

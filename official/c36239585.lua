@@ -3,13 +3,13 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon limit
+	--Summon limit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
 	e1:SetCondition(s.sumcon)
 	c:RegisterEffect(e1)
-	--turn set
+	--Change to facedown
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_POSITION)
@@ -18,8 +18,8 @@ function s.initial_effect(c)
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-	--set
-	local e3=Effect.CreateEffect(c)	
+	--Set card from the GY
+	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -50,9 +50,9 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.setfilter(c,e,tp)
 	if not c:IsSetCard(0x8d) then return end
-	if c:IsType(TYPE_MONSTER) then 
+	if c:IsType(TYPE_MONSTER) then
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
-	elseif c:IsType(TYPE_SPELL+TYPE_TRAP) then 
+	elseif c:IsType(TYPE_SPELL+TYPE_TRAP) then
 		return (c:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) and c:IsSSetable()
 	end
 	return false
@@ -70,7 +70,7 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) then return end
+	if not tc or not tc:IsRelateToEffect(e) then return end
 	local andifyoudo=false
 	if tc:IsType(TYPE_MONSTER) then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)>0 then
@@ -106,4 +106,3 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

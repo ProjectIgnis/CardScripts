@@ -2,11 +2,11 @@
 --Elemental HERO Magma Neos
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Contact Fusion procedure
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,CARD_NEOS,89621922,80344569)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
-	--ATK increase
+	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	--Add to hand
+	--Return all cards on the field to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -42,7 +42,7 @@ function s.atkval(e,c)
 	return Duel.GetFieldGroupCount(0,LOCATION_ONFIELD,LOCATION_ONFIELD)*400
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetLabelObject()==e
+	return type(re:GetLabelObject())=='Effect' and re:GetLabelObject()==e
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

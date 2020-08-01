@@ -37,7 +37,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)):GetFirst()
+	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,ct):GetFirst()
 	if tc then
 		if tc:IsLocation(LOCATION_DECK) then
 			Duel.ShuffleDeck(tp)

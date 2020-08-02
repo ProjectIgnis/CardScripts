@@ -1,14 +1,12 @@
 --ハーピィ・レディ・SC
---Harpie Lady Scratch Clash
+--Cyber Slash Harpie Lady
 --Logical Nonsense
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Must be properly summoned before reviving
+	--Synchro Summon
 	c:EnableReviveLimit()
-	--Synchro summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99,s.matfilter)
-	--Name becomes "Harpie Lady" while on field or in GY
+	--Name becomes "Harpie Lady" while on the field or in the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -16,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e1:SetValue(CARD_HARPIE_LADY)
 	c:RegisterEffect(e1)
-	--Return opponent's monster or player's "Harpie" monster to hand
+	--Return opponent's monster or your "Harpie" monster to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -34,8 +32,7 @@ end
 s.listed_series={0x64}
 	--Specifically lists itself and "Harpie Lady"
 s.listed_names={id,CARD_HARPIE_LADY}
-
-	--Can treat a "Harpie" monster as a tuner
+	--Can treat a "Harpie" monster as a Tuner
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsSetCard(0x64,scard,sumtype,tp)
 end

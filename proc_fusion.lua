@@ -380,7 +380,7 @@ end
 function Fusion.CheckMixRepFilter(c,sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)
 	if fun2(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) then
 		g:AddCard(c)
-		local sub=sub and fun2(c,fc,false,sub2,contact,sumtype,mg,sg,tp)
+		local sub=sub and fun2(c,fc,false,sub2,mg,sg,tp,contact,sumtype)
 		local res=Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,...)
 		g:RemoveCard(c)
 		return res

@@ -480,6 +480,22 @@ end
 function Auxiliary.lnklimit(e,se,sp,st)
 	return aux.sumlimit(SUMMON_TYPE_LINK)(e,se,sp,st)
 end
+--value for EFFECT_CANNOT_BE_MATERIAL
+function Auxiliary.cannotmatfilter(val1,...)
+	local allowed=val1
+	if type(val1)~="table" then allowed={val1,...} end
+	local tot=0
+	for _,val in pairs(allowed) do
+		tot = tot|val
+	end
+	return function(e,c,sumtype,tp)
+		local sum=tot&sumtype
+		for _,val in pairs(allowed) do
+			if sum==val then return 1 end
+		end
+		return 0
+	end
+end
 --effects inflicting damage to tp
 function Auxiliary.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_DAMAGE)

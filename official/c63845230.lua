@@ -46,10 +46,7 @@ function s.initial_effect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
 	e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e7:SetCode(EFFECT_CANNOT_BE_MATERIAL)
-	e7:SetValue(function(e,c,sumtype,tp)
-					local sum=sumtype&(SUMMON_TYPE_FUSION|SUMMON_TYPE_SYNCHRO|SUMMON_TYPE_XYZ)
-					return (sum==SUMMON_TYPE_FUSION or sum==SUMMON_TYPE_SYNCHRO or sum==SUMMON_TYPE_XYZ) and 1 or 0
-				end)
+	e7:SetValue(aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ))
 	c:RegisterEffect(e7)
 	--Banish battling monster
 	local e8=Effect.CreateEffect(c)

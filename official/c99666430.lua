@@ -1,11 +1,11 @@
 --人造人間－サイコ・レイヤー
---Jinzo - Layer
+--Jinzo - Layered
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon
 	Xyz.AddProcedure(c,nil,6,2)
 	c:EnableReviveLimit()
-	--control
+	--Take control of an opponent's monster until the End Phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -17,13 +17,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--destroy
+	--Tribute 1 monster and destroy 1 card on the field
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.descon)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)

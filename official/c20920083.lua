@@ -1,4 +1,5 @@
 --スクラム・フォース
+--Scrum Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--indes
+	--Prevent destruction by opponent's effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -15,9 +16,9 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCondition(s.con)
 	e2:SetTarget(s.tg)
-	e2:SetValue(s.indval)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
-	--cannot be target
+	--Prevent effect target
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.tg)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
-	--destroy replace
+	--Destruction replacement
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_DESTROY_REPLACE)
@@ -43,9 +44,6 @@ function s.con(e)
 end
 function s.tg(e,c)
 	return c:IsDefensePos()
-end
-function s.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end
 function s.repfilter(c,e)
 	return c:GetSequence()<5 and c:IsDestructable(e)

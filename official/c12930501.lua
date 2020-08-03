@@ -53,7 +53,7 @@ function s.costfilter(c)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
-		 and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)

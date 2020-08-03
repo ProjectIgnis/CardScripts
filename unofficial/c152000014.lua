@@ -6,16 +6,14 @@ function s.initial_effect(c)
 	aux.AddVrainsSkillProcedure(c,s.flipcon,s.flipop,EVENT_BATTLE_DAMAGE)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	--opd check
-	if Duel.GetFlagEffect(tp,id)>0 then return false end
 	--condition
 	return ep==tp and not Duel.GetAttackTarget() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_CANNOT_SSET) and (Duel.GetLP(tp)>0 or Duel.IsPlayerAffectedByEffect(tp,EFFECT_CANNOT_LOSE_LP))
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	--ask if you want to activate the skill or not
-	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
-	--opd Register
+	--opd check and ask if you want to activate the skill or not
+	if Duel.GetFlagEffect(tp,id)>0 or not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
+	--opd register
 	Duel.RegisterFlagEffect(tp,id,0,0,0)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)

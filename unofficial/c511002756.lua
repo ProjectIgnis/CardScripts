@@ -1,7 +1,8 @@
 --追走の翼
+--Follow Wing (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,nil,nil,nil,nil,0x1c0,nil,nil,nil,nil,true)
+	aux.AddPersistentProcedure(c,0,nil,nil,nil,nil,TIMINGS_CHECK_MONSTER,nil,nil,nil,nil,true)
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -27,7 +28,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=c:GetFirstCardTarget()
 	if not tc then return false end
 	local bc=tc:GetBattleTarget()
-	return tc and tc:IsLocation(LOCATION_MZONE) and bc and bc:IsFaceup() and bc:IsLocation(LOCATION_MZONE) and bc:IsLevelAbove(5) 
+	return tc and tc:IsLocation(LOCATION_MZONE) and bc and bc:IsFaceup() and bc:IsLocation(LOCATION_MZONE) and bc:IsLevelAbove(5)
 		and bc==Duel.GetAttacker()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)

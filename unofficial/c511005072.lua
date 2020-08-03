@@ -20,8 +20,8 @@ function s.g_slvl(g)
 	while c do
 		local lv=c:GetLevel()
 		if not eg[lv] then
-		  eg[lv]={}
-		  ei[lv]=0
+			eg[lv]={}
+			ei[lv]=0
 		end
 		table.insert(eg[lv],c)
 		ei[lv]=ei[lv]+1

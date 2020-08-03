@@ -1,11 +1,11 @@
 --プランキッズ・ドゥードゥル
---Prankids Doodle
+--Prank-Kids Dodo-Doodle-Doo
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x120),2,2)
-	--search
+	--Add from Deck to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg1)
 	e1:SetOperation(s.thop1)
 	c:RegisterEffect(e1)
-	--to hand
+	--Add from GY to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -54,7 +54,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.thfilter2(c,e)
-	return c:IsSetCard(0x120) and not c:IsLinkMonster()	and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
+	return c:IsSetCard(0x120) and not c:IsLinkMonster() and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function s.thcheck(sg,e,tp)
 	return sg:GetClassCount(Card.GetCode)==2
@@ -73,4 +73,3 @@ function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 end
-

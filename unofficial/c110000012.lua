@@ -1,4 +1,5 @@
 --オシリスの天空竜
+--Slifer the Sky Dragon (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
@@ -87,7 +88,7 @@ function s.filter(c,e,tp)
 	return c:IsControler(1-tp) and c:IsFaceup() and (c:IsDefenseBelow(2000) or c:IsAttackBelow(2000)) and (not e or c:IsRelateToEffect(e))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and eg:IsExists(s.filter,1,nil,nil,tp)  end
+	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and eg:IsExists(s.filter,1,nil,nil,tp) end
 	local g=eg:Filter(s.filter,nil,nil,tp)
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)

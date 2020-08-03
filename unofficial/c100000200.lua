@@ -1,4 +1,5 @@
 --ギミック・パペット－ベビーフェイス
+--Gimmick Puppet Princess
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -19,30 +20,30 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local t=Duel.GetAttackTarget()	
 	--revive 
 	if c==a then 
-	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetType(EFFECT_TYPE_IGNITION)	
-	e2:SetRange(LOCATION_GRAVE)		
-	e2:SetLabelObject(t) 		
-	e2:SetCondition(s.spcon)
-	e2:SetCost(s.cost)	
-	e2:SetOperation(s.opera)
-	e2:SetReset(RESET_EVENT+RESET_TOFIELD+RESET_REMOVE+RESET_TODECK+RESET_TOHAND)
-	c:RegisterEffect(e2)
+		local e2=Effect.CreateEffect(c)
+		e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+		e2:SetType(EFFECT_TYPE_IGNITION)	
+		e2:SetRange(LOCATION_GRAVE)		
+		e2:SetLabelObject(t) 		
+		e2:SetCondition(s.spcon)
+		e2:SetCost(aux.bfgcost)	
+		e2:SetOperation(s.opera)
+		e2:SetReset(RESET_EVENT+RESET_TOFIELD+RESET_REMOVE+RESET_TODECK+RESET_TOHAND)
+		c:RegisterEffect(e2)
 	end 
 	if c==t then 
-	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetType(EFFECT_TYPE_IGNITION)	
-	e2:SetRange(LOCATION_GRAVE)		
-	e2:SetLabelObject(a) 		
-	e2:SetCondition(s.spcon)
-	e2:SetCost(aux.bfgcost)
-	e2:SetOperation(s.opera)
-	e2:SetReset(RESET_EVENT+RESET_TOFIELD+RESET_REMOVE+RESET_TODECK+RESET_TOHAND)
-	c:RegisterEffect(e2)
+		local e2=Effect.CreateEffect(c)
+		e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+		e2:SetType(EFFECT_TYPE_IGNITION)	
+		e2:SetRange(LOCATION_GRAVE)		
+		e2:SetLabelObject(a) 		
+		e2:SetCondition(s.spcon)
+		e2:SetCost(aux.bfgcost)
+		e2:SetOperation(s.opera)
+		e2:SetReset(RESET_EVENT+RESET_TOFIELD+RESET_REMOVE+RESET_TODECK+RESET_TOHAND)
+		c:RegisterEffect(e2)
 	end 	
 end
 function s.filter(c,tc)
@@ -52,14 +53,13 @@ function s.spcon(e,c)
 	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
 	if c==nil then return true end
-	return Duel.GetLocationCount(1-c:GetControler(),LOCATION_MZONE)>0
-		and	Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_GRAVE,1,nil,tc) 
+	return Duel.GetLocationCount(1-c:GetControler(),LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_GRAVE,1,nil,tc) 
 end
 function s.opera(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	if tc:IsLocation(LOCATION_GRAVE) then 
-	Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEUP)
 	end
 end

@@ -1,4 +1,5 @@
 --ラーの翼神竜WCS効果
+--The Winged Dragon of Ra (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
@@ -43,7 +44,7 @@ function s.initial_effect(c)
 	e7:SetCode(EFFECT_MATERIAL_CHECK)
 	e7:SetValue(s.valcheck)
 	c:RegisterEffect(e7)
-	--give atk effect only when  summon
+	--give atk effect only when summon
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE)
 	e8:SetCode(EFFECT_SUMMON_COST)

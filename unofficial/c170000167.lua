@@ -91,7 +91,7 @@ end
 function s.dscon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local crp=c:GetReasonPlayer()
-	return c:IsReason(REASON_DESTROY) and  e:GetHandler():GetPreviousAttackOnField()==0 and Duel.GetLP(tp)>=10000
+	return c:IsReason(REASON_DESTROY) and e:GetHandler():GetPreviousAttackOnField()==0 and Duel.GetLP(tp)>=10000
 end
 function s.filter(c,e,tp)
 	return c:IsCode(82103466) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
@@ -122,8 +122,8 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,id+1) 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,id+1)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,170000169) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK+LOCATION_HAND)
 end

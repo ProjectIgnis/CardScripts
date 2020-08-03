@@ -92,7 +92,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 										function(c)
 											return Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 										end,
-				aux.Stringid(id,3))
+				aux.Stringid(id,0))
 			end
 		else
 			Duel.SendtoGrave(tc,REASON_EFFECT)

@@ -68,7 +68,7 @@ end
 	--Check for rank 5+ plant Xyz monster
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:IsRankAbove(5) and c:IsRace(RACE_PLANT)
-	 and (Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 or not c:IsLocation(LOCATION_EXTRA)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	and (Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 or not c:IsLocation(LOCATION_EXTRA)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

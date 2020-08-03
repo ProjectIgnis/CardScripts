@@ -31,7 +31,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)==s[0] and c:IsActiveType(TYPE_XYZ) and Duel.IsChainDisablable(ev) 
+	return Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)==s[0] and re:GetHandler():IsType(TYPE_XYZ) and Duel.IsChainDisablable(ev) 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -59,7 +59,7 @@ function s.aclimit(e,re)
 	local eff={re:GetHandler():GetCardEffect(511002571)}
 	for _,ree in ipairs(eff) do
 		local te=ree:GetLabelObject()
-		if te:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then te=te:GetLabelObject() end
+		if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
 		if re==te then return true end
 	end
 	return false

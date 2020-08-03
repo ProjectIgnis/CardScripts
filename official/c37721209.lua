@@ -2,7 +2,7 @@
 --Levia-Dragon - Daedalus
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--Destroy all cards on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_UMI}
 function s.cfilter(c,e,tp)
-    return c:IsFaceup() and c:IsCode(CARD_UMI) and c:IsAbleToGraveAsCost() and
+	return c:IsFaceup() and c:IsCode(CARD_UMI) and c:IsAbleToGraveAsCost() and
 		Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,Group.FromCards(c,e:GetHandler()))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

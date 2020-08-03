@@ -1,5 +1,5 @@
 --メルフィー・ポニィ
---Merfae Pony
+--Melffy Pony
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

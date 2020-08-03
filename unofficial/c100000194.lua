@@ -20,7 +20,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetAttacker()
 	if chkc then return chkc==tg end
-	if chk==0 then return tg:IsOnField() and tg:IsCanBeEffectTarget(e) and aux.CheckStealEquip(c,e,tp) end
+	if chk==0 then return tg:IsOnField() and tg:IsCanBeEffectTarget(e) and aux.CheckStealEquip(tg,e,tp) end
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end

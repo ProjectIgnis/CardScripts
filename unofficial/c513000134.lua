@@ -64,7 +64,7 @@ end
 s.listed_names={95286165,10000010,511000987}
 --De-Fusion
 function s.dffilter(c)
-	return c:IsCode(95286165) and not c:IsHasEffect(608286299)
+	return c:IsCode(95286165) and c:GetFlagEffect(608286299)==0
 end
 function s.dfop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.dffilter,tp,0xff,0xff,nil)
@@ -78,11 +78,7 @@ function s.dfop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(s.tg)
 		e1:SetOperation(s.op)
 		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(tc)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(608286299)
-		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		tc:RegisterEffect(e2)
+		tc:RegisterFlagEffect(608286299,0,0,0)
 	end
 end
 function s.dffilter2(c)
@@ -99,32 +95,14 @@ function s.tgfilter(c,tc)
 	return c:IsHasCardTarget(tc)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
 	local atk=tc:GetAttack()
-	tc:ResetEffect(RESET_LEAVE,RESET_EVENT)
 	if tc:RegisterFlagEffect(236,RESET_EVENT+RESETS_STANDARD,0,1) then
 		Duel.Recover(tc:GetControler(),atk,REASON_EFFECT)
-		tc:ClearEffectRelation()
-		local tg=Duel.GetMatchingGroup(s.tgfilter,tp,0xff,0xff,Group.FromCards(tc,c),tc)
-		for ec in aux.Next(tg) do
-			ec:CancelCardTarget(tc)
-		end
-		if c:IsOriginalCode(511000987) then
+		if e:GetHandler():IsOriginalCode(511000987) then
 			Duel.BreakEffect()
 			Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
-		end
-		if Duel.GetCurrentChain()<=1 then return end
-		for i=1,Duel.GetCurrentChain()-1 do
-			local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
-			local g=Duel.GetChainInfo(i,CHAININFO_TARGET_CARDS)
-			if te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and g:IsContains(tc) then
-				local rg=Group.CreateGroup()
-				rg:Merge(g)
-				rg:RemoveCard(tc)
-				Duel.ChangeTargetCard(i,rg)
-			end
 		end
 	end
 end

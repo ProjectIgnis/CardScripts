@@ -3,9 +3,9 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum attributes
 	Pendulum.AddProcedure(c)
-	--control
+	--Change control of targets
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_CONTROL+CATEGORY_DESTROY)
@@ -16,13 +16,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.cttg)
 	e1:SetOperation(s.ctop)
 	c:RegisterEffect(e1)
-	--avoid damage
+	--Avoid damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e3:SetValue(1)
-	c:RegisterEffect(e3)	
-	--control
+	c:RegisterEffect(e3)
+	--Give control to the opponent
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_CONTROL)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.cttg2)
 	e4:SetOperation(s.ctop2)
 	c:RegisterEffect(e4)
-	--destroy
+	--Destroy Spell/Trap
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,2))
 	e5:SetCategory(CATEGORY_DESTROY)
@@ -81,12 +81,7 @@ end
 function s.ctop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		if Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)>0 then
-			local zone=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0)>>16
-			Duel.GetControl(c,1-tp,0,0,zone)
-		else
-			Duel.Destroy(c,REASON_RULE)
-		end
+		Duel.GetControl(c,1-tp)
 	end
 end
 function s.desfilter(c)

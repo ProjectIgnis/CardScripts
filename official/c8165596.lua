@@ -59,12 +59,12 @@ end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) and e:GetLabelObject():IsSetCard(0x7b) then
+	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) and e:GetLabelObject() and e:GetLabelObject():IsSetCard(0x7b) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateEffect(ev) and e:GetLabelObject():IsSetCard(0x7b) then
+	if Duel.NegateEffect(ev) and e:GetLabelObject() and e:GetLabelObject():IsSetCard(0x7b) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end

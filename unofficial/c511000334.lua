@@ -43,7 +43,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	end
 end
-function s.atktarget(e,c)   
+function s.atktarget(e,c)
 	return c:GetAttack()>=1000
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

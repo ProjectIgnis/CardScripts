@@ -1,17 +1,18 @@
---暗黒方界邪神クリムソン・ノヴァ・トリニティ
+--暗黒方界邪神クリムゾン・ノヴァ・トリニティ
+--Crimson Nova Trinity the Dark Cubic Lord
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion summon procedure
 	c:EnableReviveLimit()
 	Fusion.AddProcMixN(c,false,false,30270176,3)
-	--spsummon condition
+	--Special Summon condition
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e0:SetValue(aux.fuslimit)
 	c:RegisterEffect(e0)
-	--Immune
+	--Prevent effect target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -19,9 +20,10 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(aux.tgoval)
 	c:RegisterEffect(e1)
+	--Prevent destruction by opponent's effect
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e2:SetValue(s.tgvalue)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
 	--Halve LP
 	local e3=Effect.CreateEffect(c)
@@ -37,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.atktg)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
-	--damage
+	--Inflict damage
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_DAMAGE)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -50,9 +52,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.material_setcode=0xe3
-function s.tgvalue(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
-end
 function s.hvop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,math.ceil(Duel.GetLP(1-tp)/2))
 end

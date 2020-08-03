@@ -3,12 +3,12 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--limit
+	--Limit
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_CHAINING)
@@ -36,7 +36,8 @@ function s.cfilter(c,e,tp)
 end
 function s.spfilter(c,e,tp,sync)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
-		and (c:GetReason()&0x80008)==0x80008 and c:GetReasonCard()==sync and c:IsCanBeEffectTarget(e)
+		and (c:GetReason()&(REASON_SYNCHRO+REASON_MATERIAL))==(REASON_SYNCHRO+REASON_MATERIAL)
+		and c:GetReasonCard()==sync and c:IsCanBeEffectTarget(e)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -54,7 +55,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
@@ -67,4 +68,3 @@ end
 function s.chainlm(e,rp,tp)
 	return tp==rp
 end
-

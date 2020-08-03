@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e1:SetHintTiming(0,0x1e0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
@@ -81,15 +81,14 @@ function s.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.sgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,0x1e,e:GetHandler())
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,0,0,1-tp,#g*500)
 end
 function s.sgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,0x1e,e:GetHandler())
+	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	local og=Duel.GetOperatedGroup()
 	local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)
 	Duel.Damage(1-tp,ct*500,REASON_EFFECT)
 end
-

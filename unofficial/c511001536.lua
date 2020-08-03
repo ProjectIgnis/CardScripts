@@ -40,10 +40,10 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp)
 	s[1]=false
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetFlagEffect(tp,id)==0
+	return Duel.GetFlagEffect(tp,id)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAdditionalSummon(tp) end
+	if chk==0 then return Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAdditionalSummon(tp) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

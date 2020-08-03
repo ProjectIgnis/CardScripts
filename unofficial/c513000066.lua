@@ -1,6 +1,6 @@
 --ウィジャ盤 (Anime)
 --Destiny Board (Anime)
---updated by Larry126
+--Updated by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,29 +27,19 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetOperation(s.winop)
 	c:RegisterEffect(e3)
-	--trap spell
+	--Trap Spell
 	local e4=Effect.CreateEffect(c)
-	e4:SetCode(EFFECT_ADD_TYPE)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetValue(TYPE_SPELL)
+	e4:SetCode(EFFECT_BECOME_QUICK)
 	c:RegisterEffect(e4)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e5:SetCode(EFFECT_TRAP_ACT_IN_HAND)
-	e5:SetCondition(s.handcon)
+	e5:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
 	c:RegisterEffect(e5)
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e6:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
-	c:RegisterEffect(e6)
 end
 s.listed_names={31829185}
-function s.handcon(e)
-	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsCode,1,nil,31829185)
 end

@@ -1,5 +1,5 @@
 --森のメルフィーズ
---Merfaes of the Forest
+--Melffy of the Forest
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)

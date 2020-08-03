@@ -1,4 +1,5 @@
 --携帯型バッテリー
+--Portable Battery Pack
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,14 +12,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--Destroy
+	--Destroy the Special Summoned monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetOperation(s.desop)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
-	--Destroy2
+	--Destroy this card
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_SZONE)
@@ -78,7 +79,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not sg then return end
 	Duel.Destroy(sg:Filter(s.desfilter1,nil,c),REASON_EFFECT)
 	sg:DeleteGroup()
-	e:SetLabelObject(nil)
+	e:GetLabelObject():SetLabelObject(nil)
 end
 function s.descon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

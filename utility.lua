@@ -446,8 +446,8 @@ end
 function Auxiliary.sumreg(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()
 	for tc in aux.Next(eg) do
-		if tc:GetOriginalCode()==code then 
-			tc:RegisterFlagEffect(code,RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1) 
+		if tc:GetOriginalCode()==code then
+			tc:RegisterFlagEffect(code,RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -479,6 +479,22 @@ end
 --sp_summon condition for link monster
 function Auxiliary.lnklimit(e,se,sp,st)
 	return aux.sumlimit(SUMMON_TYPE_LINK)(e,se,sp,st)
+end
+--value for EFFECT_CANNOT_BE_MATERIAL
+function Auxiliary.cannotmatfilter(val1,...)
+	local allowed=val1
+	if type(val1)~="table" then allowed={val1,...} end
+	local tot=0
+	for _,val in pairs(allowed) do
+		tot = tot|val
+	end
+	return function(e,c,sumtype,tp)
+		local sum=tot&sumtype
+		for _,val in pairs(allowed) do
+			if sum==val then return 1 end
+		end
+		return 0
+	end
 end
 --effects inflicting damage to tp
 function Auxiliary.damcon1(e,tp,eg,ep,ev,re,r,rp)
@@ -513,7 +529,6 @@ function Card.MoveAdjacent(c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 	Duel.MoveSequence(c,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag),2))
 end
-
 
 function Card.IsColumn(c,seq,tp,loc)
 	if not c:IsOnField() then return false end

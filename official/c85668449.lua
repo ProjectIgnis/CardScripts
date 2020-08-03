@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--extra summon
+	--Extra summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_FZONE)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.ctcon)
 	e3:SetOperation(s.ctop)
 	c:RegisterEffect(e3)
-	--lpcost replace
+	--LP Cost replace
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.lrcon)
 	e4:SetOperation(s.lrop)
 	c:RegisterEffect(e4)
-	--damage
+	--Inflict Damage
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EVENT_LEAVE_FIELD_P)
@@ -60,7 +60,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.lrcon(e,tp,eg,ep,ev,re,r,rp)
 	if tp~=ep then return false end
-	if not re or not re:IsHasType(0x7e0) then return false end
+	if not re or not re:IsActivated() then return false end
 	local rc=re:GetHandler()
 	return rc:IsLocation(LOCATION_MZONE) and rc:IsRace(RACE_PSYCHIC)
 end

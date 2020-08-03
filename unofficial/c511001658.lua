@@ -1,4 +1,5 @@
---真閃珖竜 スターダスト・クロニクル
+--真閃珖竜 スターダスト・クロニクル (Manga)
+--Stardust Chronicle Spark Dragon (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -37,22 +38,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	--Special Summon
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(35952884,1))
-	e5:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
-	e5:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e5:SetCode(EVENT_TO_GRAVE)
-	e5:SetCondition(s.sumcon)
-	e5:SetTarget(s.sumtg)
-	e5:SetOperation(s.sumop)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e5:SetCode(EVENT_LEAVE_FIELD)
+	e5:SetCondition(s.spcon)
+	e5:SetTarget(s.sptg)
+	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
-	local e6=e5:Clone()
-	e6:SetCode(EVENT_REMOVE)
-	c:RegisterEffect(e6)
-	local e7=e5:Clone()
-	e7:SetCode(EVENT_TO_DECK)
-	c:RegisterEffect(e7)
 end
+s.listed_series={83994433}
 function s.valcheck(e,c)
 	local ct=c:GetMaterialCount()
 	e:GetLabelObject():SetLabel(ct)
@@ -71,17 +66,21 @@ function s.reset(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:SetTurnCounter(ct)
 	e:GetLabelObject():SetLabel(ct)
 end
-function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
+function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousPosition(POS_FACEUP) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
-function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,nil)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_EXTRA)
 end
-function s.sumop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+function s.spfilter(c,e,tp)
+	return c:IsCode(83994433) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	and ((c:IsLocation(LOCATION_GRAVE) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
+	or (c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0))
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.CreateToken(tp,83994433)
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end

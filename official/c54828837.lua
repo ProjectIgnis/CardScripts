@@ -57,7 +57,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ndfilter(c,tp)
 	local cd=c:GetPreviousCodeOnField()
-	return (cd==6007213 or cd==32491822 or cd==69890967) and c:IsPreviousLocation(LOCATION_ONFIELD) 
+	return (cd==6007213 or cd==32491822 or cd==69890967) and c:IsPreviousLocation(LOCATION_ONFIELD)
 		and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
 end
 function s.ndcon(e,tp,eg,ep,ev,re,r,rp)

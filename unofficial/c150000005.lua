@@ -35,6 +35,6 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.HintSelection(g)
 		Duel.ChangeAttackTarget(g:GetFirst())
-		Duel.GetAttacker():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)  
+		Duel.GetAttacker():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
 end

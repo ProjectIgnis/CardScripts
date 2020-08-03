@@ -279,7 +279,7 @@ function Auxiliary.ReincarnationCheckValue(e,c)
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_XYZ,tp,id)
 	end
 	if rc then
-		c:RegisterFlagEffect(CARD_SALAMANGREAT_SANCTUARY,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE-RESET_TEMP_REMOVE,0,1)
+		c:RegisterFlagEffect(CARD_SALAMANGREAT_SANCTUARY,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
 	end
 end
 --Filter for unique on field Malefic monsters
@@ -461,7 +461,7 @@ function Auxiliary.NumeronDetachCost(min,max)
 	if max==nil then max=min end
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local nn=Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
-		if chk==0 then return nn or e:GetHandler():CheckRemoveOverlayCard(tp,min,REASON_COST) end
+		if chk==0 then return (nn and e:GetHandler():IsLocation(LOCATION_MZONE)) or e:GetHandler():CheckRemoveOverlayCard(tp,min,REASON_COST) end
 		if nn and (not e:GetHandler():CheckRemoveOverlayCard(tp,min,REASON_COST) or Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1))) then
 			Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
 			return
@@ -477,3 +477,25 @@ function Auxiliary.CheckStealEquip(c,e,tp)
 	end
 	return true
 end
+--[[
+--handle tribute costs for "Prank-Kids" Xyz monsters that can be replaced by the effect of "Prank-Kids Mew"
+function Auxiliary.PrankKidsMewFilter(c)
+	return c:IsHasEffect(CARD_PRANKKIDS_MEW) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
+end
+function Auxiliary.PrankKidsMewCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return not Duel.IsTurnPlayer(tp) and Duel.GetFlagEffect(tp,CARD_PRANKKIDS_MEW)==0
+		and Duel.IsExistingMatchingCard(Auxiliary.PrankKidsMewFilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	local g=Duel.SelectMatchingCard(tp,Auxiliary.PrankKidsMewFilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	Duel.RegisterFlagEffect(tp,CARD_PRANKKIDS_MEW,RESET_PHASE+PHASE_END,0,0)
+end
+function Auxiliary.PrankKidsTributeCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local mew=Auxiliary.PrankKidsMewCost(e,tp,eg,ep,ev,re,r,rp,0)
+	if chk==0 then return mew or e:GetHandler():IsReleasable() end
+	if mew and Duel.SelectYesNo(tp,aux.Stringid(CARD_PRANKKIDS_MEW,0)) then
+		Auxiliary.PrankKidsMewCost(e,tp,eg,ep,ev,re,r,rp,1)
+		return
+	end
+	Duel.Release(e:GetHandler(),REASON_COST)
+end
+--]]

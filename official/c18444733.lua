@@ -41,7 +41,7 @@ function s.efilter(e,ct)
 	return te:IsActiveType(TYPE_MONSTER) and tc:IsRace(RACE_THUNDER)
 end
 function s.cncfilter(c,tp)
-	return c:IsFaceup() and  c:IsSetCard(0x11c) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(0x11c) and c:IsControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cncfilter,1,nil,tp)
@@ -74,4 +74,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

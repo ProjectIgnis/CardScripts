@@ -31,6 +31,7 @@ function s.initial_effect(c)
 							end)
 		end)
 end
+s.listed_series={0x578}
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x578) and c:IsAbleToHand()
 end
@@ -115,7 +116,7 @@ if not table.includes then
 		local right=#t
 		while left<=right do
 			local middle=(left+right)//2
-			if t[middle]==val1 then return true
+			if t[middle]==val then return true
 			elseif t[middle]<val then left=middle+1
 			else right=middle-1 end
 		end

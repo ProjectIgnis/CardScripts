@@ -1,7 +1,8 @@
 --闇の侯爵ベリアル
+--Belial - Marquis of Darkness
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot be target
+	--Limit battle target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_MZONE)
@@ -9,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e1:SetValue(s.tg)
 	c:RegisterEffect(e1)
+	--Prevent effect target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -23,5 +25,5 @@ function s.tg(e,c)
 	return c:IsFaceup() and c:GetCode()~=id
 end
 function s.tgval(e,re,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp~=e:GetHandlerPlayer()
+	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp==1-e:GetHandlerPlayer()
 end

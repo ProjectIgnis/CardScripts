@@ -35,6 +35,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
+s.listed_names={id}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(Card.IsCode,nil,id)
 	local tc=g:GetFirst()

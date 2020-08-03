@@ -26,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		g=Duel.SelectMatchingCard(p,Card.IsAbleToDeck,p,LOCATION_HAND,0,0,99,nil)
 		c:CancelToGrave()
 		g:AddCard(c)
-		local ct=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		local ct=Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		if ct>0 then
 			Duel.ShuffleDeck(p)
 			Duel.BreakEffect()

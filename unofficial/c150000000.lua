@@ -69,7 +69,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetChainLimit(s.limit(ep))
 end
 function s.limit(ep)
-	return  function (e,lp,tp)
+	return function (e,lp,tp)
 				return not (e:GetHandler():IsType(TYPE_ACTION) and tp~=1-ep)
 			end
 end

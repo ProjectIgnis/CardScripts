@@ -65,10 +65,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g2=eg:Filter(s.filter,nil,1-tp)
 	local lv1=g1:GetSum(Card.GetLevel)
 	local lv2=g2:GetSum(Card.GetLevel)
-	if #g1>0 and lv1>0  then
+	if #g1>0 and lv1>0 then
 		Duel.DiscardDeck(tp,lv1,REASON_EFFECT)
 	end
-	if #g2>0 and lv2>0  then
+	if #g2>0 and lv2>0 then
 		Duel.DiscardDeck(1-tp,lv2,REASON_EFFECT)
 	end
 end

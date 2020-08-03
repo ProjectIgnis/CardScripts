@@ -1,5 +1,5 @@
 --呪われし竜-カース・オブ・ドラゴン
---Cursed Dragon - Curse of Dragon
+--Curse of Dragon, the Cursed Dragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

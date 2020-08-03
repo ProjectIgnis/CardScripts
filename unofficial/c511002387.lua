@@ -1,4 +1,5 @@
 --ものマネ幻想師
+--Copycat (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -26,10 +27,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_GRAVE,1,1,nil)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
- local c=e:GetHandler()
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not tc or not tc:IsRelateToEffect(e) then return end
-	if c:IsRelateToEffect(e) and not tc:IsType(TYPE_EQUIP+TYPE_CONTINUOUS)  then
+	if c:IsRelateToEffect(e) and not tc:IsType(TYPE_EQUIP+TYPE_CONTINUOUS) then
 		local tpe=tc:GetType()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -45,9 +46,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ClearTargetCard()
 		if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 		Duel.BreakEffect()
-		if op then op(e,tp,eg,ep,ev,re,r,rp) end 
+		if op then op(e,tp,eg,ep,ev,re,r,rp) end
 	end
-	if c:IsRelateToEffect(e) and tc:IsType(TYPE_EQUIP+TYPE_CONTINUOUS)  then
+	if c:IsRelateToEffect(e) and tc:IsType(TYPE_EQUIP+TYPE_CONTINUOUS) then
 		local tpe=tc:GetType()
 		local code=tc:GetOriginalCode()
 		c:CopyEffect(code,nil,1)
@@ -65,7 +66,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ClearTargetCard()
 		if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 		Duel.BreakEffect()
-		if op then op(e,tp,eg,ep,ev,re,r,rp) end 
+		if op then op(e,tp,eg,ep,ev,re,r,rp) end
 		c:CancelToGrave()
 	end
 end

@@ -7,8 +7,6 @@ function s.initial_effect(c)
 	aux.AddVrainsSkillProcedure(c,s.flipcon,s.flipop,EVENT_BATTLE_DESTROYING)
 end 
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
-	--opd check
-	if Duel.GetFlagEffect(tp,id)>0 then return false end
 	--condition
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
@@ -16,8 +14,8 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 		and bc:IsReason(REASON_BATTLE) and bc:GetPreviousControler()==1-tp and bc:GetLevel()>0
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	--ask if you want to activate the skill or not
-	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
+	--opd check and ask if you want to activate the skill or not
+	if Duel.GetFlagEffect(tp,id)>0 or not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 	--opd register
 	Duel.RegisterFlagEffect(tp,id,0,0,0)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))

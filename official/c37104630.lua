@@ -2,7 +2,7 @@
 --Atlantean Heavy Infantry
 local s,id=GetID()
 function s.initial_effect(c)
-	--extra summon
+	--Extra Normal Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetTarget(s.extg)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy 1 card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -27,7 +27,7 @@ function s.extg(e,c)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_SEASERPENT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_COST) and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_MONSTER)
+	return e:GetHandler():IsReason(REASON_COST) and re:IsActivated() and re:IsActiveType(TYPE_MONSTER)
 		and re:GetHandler():IsAttribute(ATTRIBUTE_WATER)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

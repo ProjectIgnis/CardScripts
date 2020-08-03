@@ -1,11 +1,12 @@
 --タイラント・バースト・ドラゴン
+--Tyrant Burst Dragon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-  	--fusion material
+	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,57470761,11082056)
 	--Give Power to a Dragon
-   	local e1=Effect.CreateEffect(c)
+	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -30,7 +31,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-   local tc=Duel.GetFirstTarget()
+	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

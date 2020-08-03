@@ -1,4 +1,5 @@
---ドラゴン・目覚めの旋律
+--ドラゴン・目覚めの旋律 (Manga)
+--The Melody of Awakening Dragon (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,11 +14,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={17985575}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(17985575)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,17985575),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
@@ -30,14 +28,15 @@ function s.filter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,2,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-	if #sg<2 then return end
+	if not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,17985575),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=sg:Select(tp,2,2,nil)
-	Duel.SendtoHand(g,nil,REASON_EFFECT)
-	Duel.ConfirmCards(1-tp,g)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,2,nil)
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+	end
 end

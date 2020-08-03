@@ -67,7 +67,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.des_cd(e,tp,eg,ep,ev,re,r,rp)
 	local rc=e:GetHandler():GetEquipTarget()
-	return rc and eg:IsExists(rc)
+	return rc and eg:IsContains(rc)
 end
 function s.des_op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

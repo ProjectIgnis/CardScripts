@@ -1,3 +1,4 @@
+--ガガガヘッド (Manga)
 --Gagaga Head (Manga)
 --fixed by MLD
 --NOTE: Change Draw effect to trigger once implementable

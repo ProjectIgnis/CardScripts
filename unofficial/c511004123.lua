@@ -1,7 +1,6 @@
 --ライジング・ホープ
 --Utopia Rising
---scripted by:urielkama
---fixed by MLD
+--Scripted by urielkama, fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -93,7 +92,7 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 					end
 					for _,te4 in ipairs(copye) do
 						local teh=te4:GetLabelObject()
-						if teh:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then teh=teh:GetLabelObject() end
+						if teh:GetCode()&511001822==511001822 then teh=teh:GetLabelObject() end
 						local tec2=teh:Clone()
 						c:RegisterEffect(tec2)
 						local tec=te4:Clone()

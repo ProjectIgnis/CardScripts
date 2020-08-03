@@ -1,6 +1,5 @@
 --Mokusatsu
---  By Shad3
---cleaned up by MLD
+--scripted by Shad3, cleaned up by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

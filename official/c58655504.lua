@@ -49,10 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e3:SetCode(EFFECT_CANNOT_BE_MATERIAL)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e3:SetValue(function(e,c,sumtype,tp)
-					local sum=sumtype&(SUMMON_TYPE_FUSION|SUMMON_TYPE_SYNCHRO|SUMMON_TYPE_XYZ|SUMMON_TYPE_LINK)
-					return (sum==SUMMON_TYPE_FUSION or sum==SUMMON_TYPE_SYNCHRO or sum==SUMMON_TYPE_XYZ or sum==SUMMON_TYPE_LINK) and 1 or 0
-				end)
+		e3:SetValue(aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ,SUMMON_TYPE_LINK))
 		tc:RegisterEffect(e3)
 	end
 end

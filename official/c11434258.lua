@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsLinkMonster()  and Duel.IsPlayerCanDraw(tp,c:GetLink())
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsLinkMonster() and Duel.IsPlayerCanDraw(tp,c:GetLink())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.filter(chkc,tp) end

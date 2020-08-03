@@ -2,10 +2,10 @@
 --Battlewasp - Azusa the Ghost Bow
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
+	--Synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--damage
+	--Inflict damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -47,11 +47,11 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,tp)
 	local rc=c:GetReasonCard()
-	return (rc:IsSetCard(0x12f) and rc:IsControler(tp)) 
+	return (rc:IsSetCard(0x12f) and rc:IsControler(tp))
 		or (c:IsSetCard(0x12f) and c:IsControler(tp))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.filter,1,nil,tp)   
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.filter,1,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Fusion.CreateSummonEff(c,nil,Fusion.OnFieldMat)
-	e1:SetHintTiming(0,0x1e0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
 end

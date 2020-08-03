@@ -56,11 +56,11 @@ function s.initial_effect(c)
 	e8:SetCondition(s.movecon)
 	e8:SetOperation(s.moveop)
 	c:RegisterEffect(e8)
-	--copy  
+	--copy
 	local e9=Effect.CreateEffect(c)
 	e9:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e9:SetCode(EVENT_ADJUST)
-	e9:SetRange(LOCATION_FZONE) 
+	e9:SetRange(LOCATION_FZONE)
 	e9:SetOperation(s.activ)
 	c:RegisterEffect(e9)
 	--maintain
@@ -81,7 +81,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return true end
-	if c:IsLocation(LOCATION_FZONE) and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) 
+	if c:IsLocation(LOCATION_FZONE) and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185) and Duel.SelectEffectYesNo(tp,c) then
 		e:SetCategory(CATEGORY_EQUIP)
 		Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
@@ -158,7 +158,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185) 
+	return Duel.GetTurnPlayer()==tp and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185)
 		and e:GetHandler():GetFlagEffect(511000118)==0
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
@@ -263,12 +263,12 @@ function s.activ(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 		tc=g:GetNext()
-	end  
+	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local te=e:GetHandler():GetActivateEffect()
 	local condition=te:GetCondition()
-	return (not condition or condition(e,tp,eg,ep,ev,re,r,rp)) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	return (not condition or condition(e,tp,eg,ep,ev,re,r,rp)) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)<=0
 end
 function s.cos(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -282,8 +282,9 @@ function s.tar(e,tp,eg,ep,ev,re,r,rp,chk)
 	local te=c:GetActivateEffect()
 	local tg=te:GetTarget()
 	local op=te:GetOperation()
-	if chk==0 then return (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)) and Duel.GetTurnPlayer()==tp 
-		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185) end
+	if chk==0 then return (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)) and Duel.GetTurnPlayer()==tp
+		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185)
+	end
 	c:CreateEffectRelation(e)
 	if tg then tg(e,tp,eg,ep,ev,re,r,rp,1,nil) end
 	e:SetOperation(op)

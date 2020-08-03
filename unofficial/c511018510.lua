@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local ac={}
 		for _,teh in ipairs(eff) do
 			local temp=teh:GetLabelObject()
-			if temp:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then temp=temp:GetLabelObject() end
+			if temp:GetCode()&511001822==511001822 then temp=temp:GetLabelObject() end
 			local te=temp:Clone()
 			sc:RegisterEffect(te,true)
 			local con=te:GetCondition()
@@ -87,7 +87,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if not te then return end
 		local teh=te
 		local temp=teh:GetLabelObject()
-		if temp:GetType()&EFFECT_TYPE_GRANT==EFFECT_TYPE_GRANT then temp=temp:GetLabelObject() end
+		if temp:GetCode()&511001822==511001822 then temp=temp:GetLabelObject() end
 		te=temp:Clone()
 		sc:RegisterEffect(te,true)
 		local cost=te:GetCost()

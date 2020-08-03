@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 s.listed_series={0x207a}
 function s.desfilter(c,g)

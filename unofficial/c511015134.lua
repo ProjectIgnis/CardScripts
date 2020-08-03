@@ -15,7 +15,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1048}
 function s.filter(c,e)
-	return c:IsSetCard(0x1048) and c:IsType(TYPE_XYZ) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL)) 
+	return c:IsSetCard(0x1048) and c:IsType(TYPE_XYZ) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+		and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL)) and c:IsCanBeEffectTarget(e)
 end
 function s.xyzfilter(c,sg,e,tp)
 	if not c:IsSetCard(0x1048) or Duel.GetLocationCountFromEx(tp,tp,sg,c)<=0 then return false end
@@ -56,7 +57,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local sg=Group.CreateGroup()
-	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,LOCATION_GRAVE+LOCATION_ONFIELD,nil)
+	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,LOCATION_GRAVE+LOCATION_ONFIELD,nil,e)
 	if chk==0 then return mg:IsExists(s.chkfilter,1,nil,mg,sg,e,tp) end
 	local reset={}
 	local tc
@@ -107,19 +108,23 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
+	local c=e:GetHandler()
+	local reset={}
 	for tc in aux.Next(g) do
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_XYZ_LEVEL)
 		e1:SetValue(tc:GetRank()+1)
-		e1:SetReset(RESET_CHAIN)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
+		table.insert(reset,e1)
 		if tc:IsControler(1-tp) then
-			local e2=Effect.CreateEffect(e:GetHandler())
+			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_XYZ_MATERIAL)
-			e2:SetReset(RESET_CHAIN)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
+			table.insert(reset,e2)
 		end
 	end
 	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,g,e,tp)
@@ -128,5 +133,19 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		aux.RankUpComplete(xyz,aux.Stringid(id,0))
 		Duel.XyzSummon(tp,xyz,nil,g)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SPSUMMON_COST)
+		e1:SetOperation(function()
+			for _,eff in ipairs(reset) do
+				eff:Reset()
+			end
+		end)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		xyz:RegisterEffect(e1,true)
+	else
+		for _,eff in ipairs(reset) do
+			eff:Reset()
+		end
 	end
 end

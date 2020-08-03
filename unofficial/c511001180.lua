@@ -19,7 +19,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and ((a:IsSetCard(0x1048) and a:IsControler(1-tp)) or (d and d:IsSetCard(0x1048) and d:IsControler(1-tp)))
 end
 function s.spfilter(c,code,e,tp)
-	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>1
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -44,7 +44,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		sg1:Merge(sg2)
 		local tc=sg1:GetFirst()
 		for tc in aux.Next(sg1) do
-			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+			Duel.SpecialSummonStep(tc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
@@ -55,6 +55,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2,true)
+			tc:CompleteProcedure()
 		end
 		Duel.SpecialSummonComplete()
 	end

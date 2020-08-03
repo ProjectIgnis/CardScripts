@@ -44,6 +44,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			end
 		else
 			Duel.ShuffleHand(tp)
-		end  
+		end
 	end
 end

@@ -22,7 +22,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
 	if #g>0 then
 		local tc=g:GetFirst()
-		Duel.GetControl(tc,tp)
+		Duel.GetControl(tc,tp,PHASE_END,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

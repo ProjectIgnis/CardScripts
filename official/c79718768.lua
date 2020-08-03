@@ -1,12 +1,13 @@
 --急転直下
+--Out of the Blue
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--destroy
+	--Self destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetCode(EVENT_BECOME_TARGET)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop2)
 	c:RegisterEffect(e3)
 	e3:SetLabelObject(e2)
-	--to deck
+	--Return cards in the GY to the Deck
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_TOHAND)
@@ -43,9 +44,9 @@ function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler()==e:GetHandler()
+	return re and re:GetHandler()==e:GetHandler()
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_GRAVE)
-	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

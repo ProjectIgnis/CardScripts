@@ -66,9 +66,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sumcon(e)
-	if e:GetLabelObject():IsRelateToEffect(e) then return true
-	else e:SetLabelObject(nil) e:Reset() return false end
+	if e:GetLabelObject():IsRelateToEffect(e) then
+		return true
+	else
+		e:SetLabelObject(nil)
+		e:Reset()
+		return false
+	end
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
-   return c==e:GetLabelObject()
+	return c==e:GetLabelObject()
 end

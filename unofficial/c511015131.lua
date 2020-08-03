@@ -1,3 +1,4 @@
+--人形の家
 --Doll House
 local s,id=GetID()
 function s.initial_effect(c)
@@ -56,13 +57,13 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local n=#s_g
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and ft>0 then ft=2 end
-	return n>1 and n<=ft and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,n-1,nil,e,tp,s.g)
+	return n>1 and n<=ft and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,n-1,nil,e,tp,s_g)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local n=#s_g
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and ft>0 then ft=2 end
 	if n>ft then n=ft end
-	local tg=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_DECK,0,n-1,n-1,nil,e,tp,s.g)
+	local tg=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_DECK,0,n-1,n-1,nil,e,tp,s_g)
 	Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
 end

@@ -3,7 +3,7 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x207f)
+	Duel.AddSetcodesRule(c,0x207f)
 	--xyz summon
 	c:EnableReviveLimit()
 	Xyz.AddProcedure(c,s.xyzfilter,nil,3,aux.FilterFaceupFunction(Card.IsCode,65305468),aux.Stringid(id,0),nil,nil,false,s.xyzcheck)

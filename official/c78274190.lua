@@ -2,7 +2,7 @@
 --Superheavy Samurai General Coral
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x9a)
+	Duel.AddSetcodesRule(c,0x9a)
 	--pendulum summon
 	Pendulum.AddProcedure(c)
 	--scale

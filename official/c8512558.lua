@@ -3,7 +3,7 @@
 --Scripted by Logical Nonsense and AlphaKretin, revised handling of archetype check by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x54,0x59,0x82,0x8f)
+	Duel.AddSetcodesRule(c,0x54,0x59,0x82,0x8f)
 	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

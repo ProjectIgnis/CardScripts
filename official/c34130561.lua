@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0xbd)
+	Duel.AddSetcodesRule(c,0xbd)
 	--normal summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

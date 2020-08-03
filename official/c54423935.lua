@@ -2,7 +2,7 @@
 --Raidraptor Replica
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0xba)
+	Duel.AddSetcodesRule(c,0xba)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

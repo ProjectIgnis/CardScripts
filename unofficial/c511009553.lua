@@ -1,7 +1,7 @@
 --Superheavy Samurai Steam Fiend Tetsudo'o
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x9a)
+	Duel.AddSetcodesRule(c,0x9a)
 	--synchro summon
 	c:EnableReviveLimit()
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(Card.IsSetCard,0x9a),1,99)

@@ -2,7 +2,7 @@
 --Purple Poison Magician
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x1046)
+	Duel.AddSetcodesRule(c,0x1046)
 	Pendulum.AddProcedure(c)
 	--Increase ATK
 	local e1=Effect.CreateEffect(c)

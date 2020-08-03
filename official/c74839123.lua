@@ -2,7 +2,7 @@
 --Frightfur Sanctuary
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0xad)
+	Duel.AddSetcodesRule(c,0xad)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

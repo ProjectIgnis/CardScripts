@@ -52,7 +52,7 @@ function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	if c:IsBattleDestroyed() return end
+	if c:IsBattleDestroyed() then return end
 	local ct=e:GetHandler():GetCounter(0x29)
 	e:SetLabel(ct)
 end

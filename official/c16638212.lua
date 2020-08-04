@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	return Duel.IsExistingMatchingCard(aux.AND(Card.IsAbleToRemoveAsCost,Card.IsFaceup),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.AND(Card.IsAbleToRemoveAsCost,Card.IsFaceup),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_MZONE,0,nil):Filter(Card.IsFaceup,nil)

@@ -86,8 +86,9 @@ function s.pubfilter(c)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
-	local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,TYPE_MONSTER)
-	if not Duel.IsExistingMatchingCard(s.pubfilter,tp,LOCATION_HAND,0,1,nil) then
+	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)	
+	if #hg==0 or (hg:FilterCount(Card.IsPublic,nil)==#hg and hg:IsExists(s.pubfilter,1,nil)) then
+		local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,tp,LOCATION_HAND+LOCATION_MZONE)
 	else
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND+LOCATION_MZONE)

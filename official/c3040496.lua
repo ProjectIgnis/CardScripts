@@ -1,5 +1,5 @@
 --混沌魔龍カオス・ルーラー
---Chaos Ruler the Chaotic Demonic Dragon
+--Chaos Ruler, the Chaotic Magical Dragon
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

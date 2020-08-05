@@ -1,5 +1,5 @@
 --黎明の堕天使ルシフェル
---Lucifer, Darklord of the Morningstar
+--The First Darklord
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

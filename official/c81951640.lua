@@ -1,5 +1,5 @@
 --奇動装置メイルファクター
---Unauthorized Device Malefactor
+--Unauthorized Bootup Device
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

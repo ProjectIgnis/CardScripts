@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--summon success
+	--Change level and add target to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x138}
-function s.ritcon(e,tp,eg,ep,ev,re,r,rp)
+function s.ritcon()
 	return Duel.IsMainPhase()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

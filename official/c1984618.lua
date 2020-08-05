@@ -1,5 +1,5 @@
 --天底の使徒
---Disciple of the Nadir
+--Nadir Servant
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,12 +15,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x146}
-s.listed_names={CARD_ALBUS}
+s.listed_names={CARD_ALBAZ}
 function s.tgfilter(c,e,tp)
 	return c:IsAbleToGrave() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetAttack(),e,tp,c)
 end
 function s.thfilter(c,atk)
-	return (c:IsCode(CARD_ALBUS) or (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x146))) and c:GetAttack()<=atk and c:IsAbleToHand()
+	return (c:IsCode(CARD_ALBAZ) or (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x146))) and c:GetAttack()<=atk and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end

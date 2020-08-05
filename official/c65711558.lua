@@ -1,5 +1,5 @@
---戦華盟将-双龍
---Ancient Warriors Allied Generals - Shuanglong
+--戦華盟将－双龍
+--Ancient Warriors Oath - Double Dragon Lords
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

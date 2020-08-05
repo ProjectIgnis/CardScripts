@@ -1,5 +1,5 @@
 --教導の大神祇官
---Maximus Dragma
+--Dogmatika Maximus
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()

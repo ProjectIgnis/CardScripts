@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion summon
+	--Fusion summon from hand
 	local params = {aux.FilterBoolFunction(Card.IsSetCard,0xad),nil,nil,nil,Fusion.ForcedHandler}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e1)
-	--destruction replacement
+	--Destruction replacement effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

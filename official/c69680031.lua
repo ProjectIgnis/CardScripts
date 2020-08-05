@@ -1,5 +1,5 @@
 --教導の騎士フルルドリス
---Fleur-De-Lis, the Knight of Dragma
+--Dogmatika Fleurdelis, the Knighted
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--All "Dragma" monsters gain 500 ATK
+	--All "Dogmatika" monsters gain 500 ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-	--Lists "Dragma" archetype
+	--Lists "Dogmatika" archetype
 s.listed_series={0x146}
 	--Specifically lists itself
 s.listed_names={id}
@@ -48,7 +48,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-	--Special summon this card from hand, then if player controls another "Dragma" monster, negate 1 monster
+	--Special summon this card from hand, then if player controls another "Dogmatika" monster, negate 1 monster
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -72,7 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e2)
 		end
 end
-	--If your "Dragma" monster declares an attack
+	--If your "Dogmatika" monster declares an attack
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	return at:IsControler(tp) and at:IsSetCard(0x146)
@@ -81,7 +81,7 @@ end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x146),tp,LOCATION_MZONE,0,1,nil) end
 end
-	--All "Dragma" monsters gain 500 ATK
+	--All "Dogmatika" monsters gain 500 ATK
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x146),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(g) do

@@ -1,12 +1,12 @@
 --竜魔道騎士ガイア
---Gaia the Magical Dragon Champion
+--Gaia the Magical Knight of Dragons
 --scripted by CyberCatMan
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion
+	--Fusion summon procedure
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xbd),s.matfilter)
-	--change name
+	--Change name
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(CARD_GAIA_CHAMPION)
 	c:RegisterEffect(e1)
-	--decrease ATK and destroy
+	--Decrease ATK and destroy target
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY)
@@ -43,7 +43,7 @@ s.listed_series={0xbd}
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsLevel(5)
 end
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
+function s.descon()
 	return Duel.IsMainPhase()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

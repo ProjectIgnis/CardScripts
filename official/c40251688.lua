@@ -1,5 +1,5 @@
 --焔聖騎士導-ローラン
---Infernoble Knight Vanguard - Roland
+--Infernoble Knight Captain Roland
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro summon

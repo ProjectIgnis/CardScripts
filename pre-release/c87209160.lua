@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x249}
+s.listed_series={0x14f}
 function s.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(3) and c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsAbleToGrave()
 end

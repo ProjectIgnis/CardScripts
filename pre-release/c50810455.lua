@@ -26,7 +26,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x249}
 function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsDiscardable()
 end

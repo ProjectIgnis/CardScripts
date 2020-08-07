@@ -15,14 +15,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x248}
+s.listed_series={0x150}
 s.listed_names={id}
 local key=TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP
 function s.tgtfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x248) and Duel.IsExistingMatchingCard(s.tgvfilter,tp,LOCATION_DECK,0,1,nil,c:GetType()&key)
+	return c:IsFaceup() and c:IsSetCard(0x150) and Duel.IsExistingMatchingCard(s.tgvfilter,tp,LOCATION_DECK,0,1,nil,c:GetType()&key)
 end
 function s.tgvfilter(c,type1)
-	return c:IsAbleToGrave() and c:IsSetCard(0x248) and not c:IsType(type1)
+	return c:IsAbleToGrave() and c:IsSetCard(0x150) and not c:IsType(type1)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) and s.tgtfilter(chkc,tp) end
@@ -66,7 +66,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x248) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(0x150) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)

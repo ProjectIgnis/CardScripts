@@ -1,8 +1,8 @@
---RR-ヒール・イーグル
---Raidraptor – Heel Eagle
+--ＲＲ－ヒール・イーグル
+--Raidraptor - Heel Eagle
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon
+	--Special summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -13,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Add hand
+	--Add 1 "Raidraptor" Spell/Trap from GY to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)

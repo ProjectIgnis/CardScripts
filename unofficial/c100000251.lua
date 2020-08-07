@@ -24,7 +24,7 @@ function s.rmfilter(c,e,tp,ft)
 	local ct=c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and 1 or 0
 	if not c:IsSetCard(0x41) or not c:IsAbleToRemoveAsCost() or not aux.SpElimFilter(c,true) or ct+ft<=0 then return false end
 	local class=c:GetMetatable(true)
-	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,class,e,tp)
+	return class and class.listed_names and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,class,e,tp)
 end
 function s.spfilter(c,class,e,tp)
 	local code=c:GetCode()

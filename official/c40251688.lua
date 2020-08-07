@@ -38,15 +38,10 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.tgcon)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-end
-function s.filter(c,tp)
-	return c:IsType(TYPE_EQUIP) and c:IsAbleToGrave()
-		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,c)
 end
 function s.tgfilter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsAbleToGrave()
@@ -54,21 +49,18 @@ end
 function s.thfilter(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end
-function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp)
-end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0
-		and g:GetFirst():IsLocation(LOCATION_GRAVE) then
+	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 then
+		local og=Duel.GetOperatedGroup()
 		local sg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
-		if #sg>0 then
+		if og:GetFirst():IsLocation(LOCATION_GRAVE) and #sg>0 then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local tg=sg:Select(tp,1,1,nil)

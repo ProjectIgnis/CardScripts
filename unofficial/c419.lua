@@ -82,13 +82,13 @@ if not GenerateEffect then
 				local def=tc:GetDefense()
 				if atk<0 then atk=0 end
 				if def<0 then def=0 end
-				tc:RegisterFlagEffect(285,nil,0,1,atk)
-				tc:RegisterFlagEffect(284,nil,0,1,atk)
-				tc:RegisterFlagEffect(385,nil,0,1,def)
-				tc:RegisterFlagEffect(384,nil,0,1,def)
+				tc:RegisterFlagEffect(285,0,0,1,atk)
+				tc:RegisterFlagEffect(284,0,0,1,atk)
+				tc:RegisterFlagEffect(385,0,0,1,def)
+				tc:RegisterFlagEffect(384,0,0,1,def)
 				local lv=tc:GetLevel()
-				tc:RegisterFlagEffect(585,nil,0,1,lv)
-				tc:RegisterFlagEffect(584,nil,0,1,lv)
+				tc:RegisterFlagEffect(585,0,0,1,lv)
+				tc:RegisterFlagEffect(584,0,0,1,lv)
 			end
 		end
 	end

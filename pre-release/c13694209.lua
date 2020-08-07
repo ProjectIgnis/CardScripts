@@ -1,5 +1,5 @@
 --教導の神徒
---Hashashiyan Dragma
+--Dogmatika Hashashiyan
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,14 +16,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Add to hand
+	--Add 1 "Dogmatika" card from GY to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.thcond)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,id+200)
+	e3:SetCountLimit(1,id+2)
 	e3:SetCondition(s.atkcon)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)

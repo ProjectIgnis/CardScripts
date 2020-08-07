@@ -26,7 +26,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spfilter(c,e,tp,mc,rk,pg)
 	return c:IsType(TYPE_XYZ) and (c:IsSetCard(0xba) or c:IsSetCard(0x2073) or c:IsSetCard(0x10db))
-		and (c:IsRank(rk-1) or c:IsRank(rk+1))  and not c:IsCode(id)
+		and (c:IsRank(rk-1) or c:IsRank(rk+1))
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and (#pg<=0 or pg:IsContains(mc))
 		and mc:IsCanBeXyzMaterial(c,tp)
@@ -49,7 +49,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,c,c:GetRank(),pg)
 		local sc=g:GetFirst()
 		if sc then
-			Duel.BreakEffect()
 			local mg=c:GetOverlayGroup()
 			if #mg~=0 then
 				Duel.Overlay(sc,mg)

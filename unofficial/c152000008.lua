@@ -6,10 +6,14 @@ function s.initial_effect(c)
 	aux.AddVrainsSkillProcedure(c,s.flipcon,s.flipop)
 end
 s.listed_series={0x581}
+function s.filter(c)
+	return c:IsFaceup() and c:IsSetCard(0x581) and c:IsType(TYPE_LINK)
+end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,nil,0x581) and Duel.IsExistingMatchingCard(Card.IsFaceup,1-tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x581),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,nil,0x581)
+		and Duel.IsExistingMatchingCard(Card.IsFaceup,1-tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -36,7 +40,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		if not tc:IsHasEffect(EFFECT_REVERSE_UPDATE) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local sc=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x581),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+			local sc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 			if sc and not sc:IsImmuneToEffect(e) then
 				Duel.BreakEffect()
 				local e2=Effect.CreateEffect(e:GetHandler())

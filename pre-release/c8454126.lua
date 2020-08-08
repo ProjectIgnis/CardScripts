@@ -1,4 +1,4 @@
---ネフティスの繋ぎ手
+--ネネフティスの繋ぎ手
 --Connector of Nephthys
 --Scripted by Naim
 local s,id=GetID()
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_RELEASE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.regcond)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)

@@ -3,10 +3,10 @@
 --Scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion summon procedure
 	c:EnableReviveLimit()
-	Fusion.AddProcFunRep(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x247),2,true)
-	--Destroy
+	Fusion.AddProcFunRep(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x14e),2,true)
+	--Destroy 1 opponent's Attack Position monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -31,8 +31,8 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
-s.material_setcode={0x247}
-s.listed_series={0x247}
+s.material_setcode={0x14e}
+s.listed_series={0x14e}
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsDirectAttacked() end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -56,10 +56,10 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atktg(e,c)
-	return c:IsSetCard(0x247) and c:IsType(TYPE_FUSION)
+	return c:IsSetCard(0x14e) and c:IsType(TYPE_FUSION)
 end
 function s.atkfil(c)
-	return c:IsFaceup() and c:IsSetCard(0x247) and c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_EFFECT)
+	return c:IsFaceup() and c:IsSetCard(0x14e) and c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_EFFECT)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.atkfil,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)

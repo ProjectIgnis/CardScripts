@@ -3,7 +3,7 @@
 --Scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion summon procedure
 	c:EnableReviveLimit()
 	Fusion.AddProcFunRep(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x247),2,true)
 	--Destruction replacement
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.value)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--Negate
+	--Negate effects from monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -29,15 +29,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
-s.material_setcode={0x247}
-s.listed_series={0x247}
+s.material_setcode={0x14e}
+s.listed_series={0x14e}
 function s.desfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x247)
+	return c:IsFaceup() and c:IsSetCard(0x14e)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsReason(REASON_EFFECT)
-			and not c:IsReason(REASON_REPLACE) and c:IsSetCard(0x247) and c:IsType(TYPE_FUSION)
+			and not c:IsReason(REASON_REPLACE) and c:IsSetCard(0x14e) and c:IsType(TYPE_FUSION)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return #(eg:Filter(s.repfilter,nil,tp))==1
@@ -59,7 +59,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(g,REASON_EFFECT+REASON_REPLACE)
 end
 function s.negfil(c)
-	return c:IsFaceup() and c:IsSetCard(0x247) and c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_EFFECT)
+	return c:IsFaceup() and c:IsSetCard(0x14e) and c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_EFFECT)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() and Duel.IsExistingMatchingCard(s.negfil,tp,LOCATION_MZONE,0,1,nil)

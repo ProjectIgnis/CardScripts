@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon procedure
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,101102014,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x247),2)
+	Fusion.AddProcMixN(c,true,true,85360035,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x14e),2)
 	--Activation limit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--Negate
+	--Negate activation of card that targets
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_NEGATE)
@@ -40,8 +40,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
-s.material_setcode={0x247}
-s.listed_series={0x247}
+s.material_setcode={0x14e}
+s.listed_series={0x14e}
 function s.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end

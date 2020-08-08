@@ -3,10 +3,10 @@
 --scripted by Hatter and Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon procedure
 	Xyz.AddProcedure(c,nil,12,2,s.xyzfilter,aux.Stringid(id,0),2,s.xyzop)
 	c:EnableReviveLimit()
-	--Send to gy
+	--Send cards to GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)

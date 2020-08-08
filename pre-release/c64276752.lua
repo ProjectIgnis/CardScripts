@@ -1,9 +1,9 @@
 --アーク・リベリオン・エクシーズ・ドラゴン
---Ark Rebellion Xyz Dragon
+--64276752
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Xyz summon
+	--Xyz summon procedure
 	Xyz.AddProcedure(c,nil,5,3)
 	c:EnableReviveLimit()
 	--Cannot be destroyed
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetValue(1)
 	e1:SetCondition(s.indescon)
 	c:RegisterEffect(e1)
-	--Increase ATK and negate
+	--Increase ATK and negate monsters effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_NEGATE)

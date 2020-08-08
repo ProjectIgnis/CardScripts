@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x147}
 function s.atkcond(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.IsAbleToEnterBP()
+	return Duel.IsAbleToEnterBP()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

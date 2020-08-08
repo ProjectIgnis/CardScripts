@@ -3,7 +3,7 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Xyz Summon
+	--Xyz Summon procedure
 	c:EnableReviveLimit()
 	Xyz.AddProcedure(c,nil,3,2,nil,nil,99)
 	--Prevent destruction by battle

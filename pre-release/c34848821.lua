@@ -77,11 +77,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
 		tc=g:GetFirst()
-		aux.ToHandOrElse(tc,tp,function(c)
-						return tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end,
-						function(c)
-						Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end,
-						aux.Stringid(id,2))
+		aux.ToHandOrElse(tc,tp,
+						function(c) return tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end,
+						function(c) Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end,
+						aux.Stringid(id,2)
+					)
 		end
-	
 end

@@ -1,5 +1,5 @@
 --教導神理
---Dragmatism
+--Dogmatikatism
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

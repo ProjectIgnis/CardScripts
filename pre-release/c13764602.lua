@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -46,7 +46,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,101102157,0x247,TYPES_TOKEN,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,87669905,0x247,TYPES_TOKEN,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
@@ -62,8 +62,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,101102157,0x247,TYPES_TOKEN,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) then return end
-	local token=Duel.CreateToken(tp,101102157)
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,87669905,0x247,TYPES_TOKEN,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) then return end
+	local token=Duel.CreateToken(tp,87669905)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)

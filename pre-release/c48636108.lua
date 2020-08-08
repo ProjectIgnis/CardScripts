@@ -32,15 +32,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (a:IsSetCard(0x107) or a:IsSetCard(0xb2)) and not a:IsStatus(STATUS_BATTLE_DESTROYED)
 		and d:IsStatus(STATUS_BATTLE_DESTROYED)
 end
---[[
-function s.cfilter(c,tp)
-	local rc=c:GetReasonCard()
-	return c:IsReason(REASON_BATTLE) and rc:IsRelateToBattle() and rc:IsControler(tp) and (rc:IsSetCard(0x107) or rc:IsSetCard(0xb2))
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
-end
-]]
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and (c:IsSetCard(0x107) or c:IsSetCard(0xb2))
 end

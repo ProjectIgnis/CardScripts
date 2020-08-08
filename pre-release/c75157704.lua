@@ -21,7 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x247) and not c:IsCode(id) 
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x247) and not c:IsCode(id)
 		and c:IsAbleToRemoveAsCost() and c:CheckActivateEffect(false,true,false)~=nil
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -31,10 +31,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		if tc:HasLevel() and tc:GetOriginalLevel()<5 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,101102157,0x247,TYPES_TOKEN,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT)
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,87669905,0x247,TYPES_TOKEN,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then 
 			Duel.BreakEffect()
-			local token=Duel.CreateToken(tp,101102157)
+			local token=Duel.CreateToken(tp,87669905)
 			Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end

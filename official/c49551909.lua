@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Equip(tp,c,tc)
-		--destroy
+		--Destroy after damage calculation
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 		e1:SetCategory(CATEGORY_DESTROY)
@@ -43,10 +43,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.desop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		--damage
+		--Battle damage is shared
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_ALSO_BATTLE_DAMAGE)
+		c:RegisterEffect(e2)
 		--Equip limit
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)

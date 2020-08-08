@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x249}
+s.listed_series={0x14f}
 function s.cfilter(c,tp)
 	return c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsControler(tp)
 end

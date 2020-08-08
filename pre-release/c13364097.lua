@@ -36,9 +36,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.lvrkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x248}
+s.listed_series={0x150}
 function s.tdfilter(c)
-	return c:IsSetCard(0x248) and c:IsFaceup() and c:IsAbleToDeck()
+	return c:IsSetCard(0x150) and c:IsFaceup() and c:IsAbleToDeck()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsFaceup() end
@@ -67,7 +67,7 @@ function s.lvrkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() and Duel.IsTurnPlayer(tp)
 end
 function s.lvrkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x248) and (c:HasLevel() or c:IsType(TYPE_XYZ))
+	return c:IsFaceup() and c:IsSetCard(0x150) and (c:HasLevel() or c:IsType(TYPE_XYZ))
 end
 function s.lvrktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.lvrkfilter(chkc) end

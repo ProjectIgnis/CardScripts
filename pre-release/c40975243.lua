@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x249}
+s.listed_series={0x14f}
 function s.spfilter2(c,fg,minmat,maxmat)
-	return c:IsSetCard(0x249) and c:IsLinkSummonable(nil,fg,minmat,maxmat)
+	return c:IsSetCard(0x14f) and c:IsLinkSummonable(nil,fg,minmat,maxmat)
 end
 function s.rescon(sg,e,tp,mg)
 	return Duel.GetMatchingGroupCount(s.spfilter2,tp,LOCATION_EXTRA,0,nil,sg,#sg,#sg)>0

@@ -38,12 +38,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.limop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x249}
+s.listed_series={0x14f}
 function s.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
 end
 function s.thfilter(c,typ)
-	return c:IsSetCard(0x249) and c:IsType(TYPE_MONSTER) and c:GetOriginalRace()~=typ and c:IsAbleToHand()
+	return c:IsSetCard(0x14f) and c:IsType(TYPE_MONSTER) and c:GetOriginalRace()~=typ and c:IsAbleToHand()
 end
 function s.cstfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()

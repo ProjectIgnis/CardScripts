@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x249}
+s.listed_series={0x14f}
 s.listed_names={CARD_ALBAZ}
 function s.tgcond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
@@ -64,7 +64,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.filter(c,e,tp)
-	return (c:IsCode(CARD_ALBAZ) or (c:IsSetCard(0x249) and c:IsType(TYPE_MONSTER)))
+	return (c:IsCode(CARD_ALBAZ) or (c:IsSetCard(0x14f) and c:IsType(TYPE_MONSTER)))
 		and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x248}
+s.listed_series={0x150}
 function s.rmvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
@@ -59,7 +59,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsSummonType(SUMMON_TYPE_XYZ) and rp==1-tp
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x248) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(0x150) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetRace)==1 and sg:GetClassCount(Card.GetAttribute)==1

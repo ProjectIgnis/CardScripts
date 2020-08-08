@@ -1,4 +1,4 @@
---ネネフティスの繋ぎ手
+--ネフティスの繋ぎ手
 --Connector of Nephthys
 --Scripted by Naim
 local s,id=GetID()

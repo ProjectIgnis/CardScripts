@@ -30,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	for tc in aux.Next(eg) do
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-		--Negate its effects
+		--Negate the effects of the summoned monster(s)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)

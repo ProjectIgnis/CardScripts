@@ -1,4 +1,4 @@
---Awakening of the Possessed - Gagigobyte
+--憑依覚醒－ガギゴバイト
 --Awakening of the Possessed - Gagigobyte
 --scripted by AlphaKretin
 local s,id=GetID()

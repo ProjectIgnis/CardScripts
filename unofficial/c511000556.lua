@@ -1,5 +1,5 @@
 --エクシーズ・チャージ・アップ
---
+--Xyz Charge Up
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make effect damage become 0

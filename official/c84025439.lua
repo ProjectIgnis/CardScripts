@@ -1,16 +1,17 @@
 --超量機神王グレート・マグナス
+--Super Quantal Mech King Great Magnus
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon procedure
 	Xyz.AddProcedure(c,nil,12,3)
 	c:EnableReviveLimit()
-	--to deck
+	--Shuffle card into the deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.tdcon)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--immune
+	--Unaffected by other effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.imcon)
 	e2:SetValue(s.efilter)
 	c:RegisterEffect(e2)
-	--
+	--Prevents adding cards to the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_TO_HAND)
@@ -43,19 +44,19 @@ function s.initial_effect(c)
 	e4:SetCondition(s.drcon)
 	e4:SetTargetRange(0,1)
 	c:RegisterEffect(e4)
-	--spsummon
-	local e6=Effect.CreateEffect(c)
-	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e6:SetProperty(EFFECT_FLAG_DELAY)
-	e6:SetCode(EVENT_TO_GRAVE)
-	e6:SetTarget(s.sptg)
-	e6:SetOperation(s.spop)
-	c:RegisterEffect(e6)
+	--Special Summon when sent to the GY
+	local e5=Effect.CreateEffect(c)
+	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e5:SetProperty(EFFECT_FLAG_DELAY)
+	e5:SetCode(EVENT_TO_GRAVE)
+	e5:SetTarget(s.sptg)
+	e5:SetOperation(s.spop)
+	c:RegisterEffect(e5)
 end
 s.listed_series={0xdc,0x20dc}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayGroup():GetClassCount(Card.GetCode)>=2 and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return e:GetHandler():GetOverlayGroup():GetClassCount(Card.GetCode)>=2 and Duel.IsMainPhase()
 end
 function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

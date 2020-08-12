@@ -477,25 +477,4 @@ function Auxiliary.CheckStealEquip(c,e,tp)
 	end
 	return true
 end
---[[
---handle tribute costs for "Prank-Kids" Xyz monsters that can be replaced by the effect of "Prank-Kids Mew"
-function Auxiliary.PrankKidsMewFilter(c)
-	return c:IsHasEffect(CARD_PRANKKIDS_MEW) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
-end
-function Auxiliary.PrankKidsMewCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.IsTurnPlayer(tp) and Duel.GetFlagEffect(tp,CARD_PRANKKIDS_MEW)==0
-		and Duel.IsExistingMatchingCard(Auxiliary.PrankKidsMewFilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
-	local g=Duel.SelectMatchingCard(tp,Auxiliary.PrankKidsMewFilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	Duel.RegisterFlagEffect(tp,CARD_PRANKKIDS_MEW,RESET_PHASE+PHASE_END,0,0)
-end
-function Auxiliary.PrankKidsTributeCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local mew=Auxiliary.PrankKidsMewCost(e,tp,eg,ep,ev,re,r,rp,0)
-	if chk==0 then return mew or e:GetHandler():IsReleasable() end
-	if mew and Duel.SelectYesNo(tp,aux.Stringid(CARD_PRANKKIDS_MEW,0)) then
-		Auxiliary.PrankKidsMewCost(e,tp,eg,ep,ev,re,r,rp,1)
-		return
-	end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
---]]
+

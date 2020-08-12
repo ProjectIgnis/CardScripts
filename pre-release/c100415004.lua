@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x24b}
 function s.eqtgfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x24b) and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_EXTRA,0,1,nil,0x24b)
 end

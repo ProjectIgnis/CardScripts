@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_SUMMON_SUCCESS)
 	c:RegisterEffect(e5)
 end
+s.listed_names={id}
 s.listed_series={0x24a}
 function s.thfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x24a) and c:IsAbleToHand() and not c:IsCode(id)

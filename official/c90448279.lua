@@ -89,7 +89,7 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc then
 		local og=tc:GetOverlayGroup()
-		if og:GetCount()>0 then
+		if #og>0 then
 			Duel.SendtoGrave(og,REASON_RULE)
 		end
 		Duel.Overlay(c,Group.FromCards(tc))

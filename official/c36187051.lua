@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_ROCK) and c:IsAbleToHand() and not c:IsCode(id)
 end

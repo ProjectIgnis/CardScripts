@@ -26,6 +26,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetLabelObject() then return end
 	local tc=e:GetLabelObject():GetHandler()
 	Duel.Damage(tc:GetControler(),tc:GetBaseAttack(),REASON_EFFECT)
 end

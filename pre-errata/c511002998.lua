@@ -65,6 +65,7 @@ function s.initial_effect(c)
 	e10:SetOperation(s.disop)
 	c:RegisterEffect(e10)
 end
+s.listed_series={0x2e}
 function s.discon(e,c)
 	return e:GetHandler()~=c
 end

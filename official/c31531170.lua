@@ -1,4 +1,5 @@
 --共鳴する振動
+--Harmonic Oscillation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,7 +20,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=Duel.GetFieldCard(1-tp,LOCATION_PZONE,0)
 	local tc2=Duel.GetFieldCard(1-tp,LOCATION_PZONE,1)
-	if not tc1:IsRelateToEffect(e) or not tc2:IsRelateToEffect(e) then return end
+	if not tc1 or not tc2 or not tc1:IsRelateToEffect(e) or not tc2:IsRelateToEffect(e) then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(1163)
 	e1:SetType(EFFECT_TYPE_FIELD)

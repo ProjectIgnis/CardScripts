@@ -36,11 +36,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_LEAVE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetOperation(s.drop)
-		e1:SetReset(RESET_EVENT+RESETS_CANNOT_ACT)
-		tc:RegisterEffect(e1,true)
+		e1:SetReset(RESET_EVENT+RESET_TOFIELD+RESET_TURN_SET+RESET_OVERLAY)
+		tc:RegisterEffect(e1)
 	end
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,1,REASON_EFFECT)
+	e:Reset()
 end

@@ -63,10 +63,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc or not tc:IsRelateToEffect(e) or not c:IsRelateToEffect(e) then return end
 	if tc:IsType(TYPE_MONSTER) then
+		c:AddMonsterAttribute(tc:GetType())
 		Duel.MoveToField(c,tp,tp,LOCATION_MZONE,POS_FACEUP,true)
 		c:SetStatus(STATUS_PROC_COMPLETE,true)
 		c:SetStatus(STATUS_SPSUMMON_TURN,true)
-		c:AddMonsterAttribute(tc:GetType())
 		c:AddMonsterAttributeComplete()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -107,7 +107,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 				if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 			end
-		end	
+		end 
 		Duel.ClearTargetCard()
 		local tg=te:GetTarget()
 		e:SetCategory(te:GetCategory())

@@ -70,7 +70,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetHandler():GetLinkedZone(tp)
 	if zone==0 then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE,zone&0x1f)
 	end
 end
@@ -89,7 +89,7 @@ function s.attg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

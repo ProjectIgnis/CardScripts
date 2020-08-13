@@ -68,7 +68,7 @@ function s.op(e,tp,eg,ev,ep,re,r,rp)
 		end
 	end
 	Duel.BreakEffect()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_EXTRA_ATTACK)

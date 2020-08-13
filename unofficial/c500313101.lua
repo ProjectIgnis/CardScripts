@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		local e1=Effect.CreateEffect(c)
 		e1:SetCode(EFFECT_CHANGE_TYPE)

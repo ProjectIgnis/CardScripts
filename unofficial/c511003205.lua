@@ -97,8 +97,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(s.retfilter,nil)
 	g:DeleteGroup()
 	for tc in aux.Next(sg) do
-		Duel.SpecialSummon(tc,0,tc:GetControler(),tc:GetControler(),false,false,POS_FACEUP)
-		if tc:IsFaceup() and tc==e:GetOwner() and e:GetLabel()~=0 then
+		if Duel.SpecialSummon(tc,0,tc:GetControler(),tc:GetControler(),false,false,POS_FACEUP)>0 and tc:IsFaceup() and tc==e:GetOwner() and e:GetLabel()~=0 then
 			local e1=Effect.CreateEffect(e:GetOwner())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

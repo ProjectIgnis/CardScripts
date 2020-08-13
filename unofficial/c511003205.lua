@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetHintTiming(TIMING_BATTLE_PHASE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.rmcon)
@@ -36,7 +37,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)
-	return true
+		return true
 	end
 	return false
 end
@@ -53,27 +54,21 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	if chk==0 then return bc and bc:IsOnField() and c:IsAbleToRemove() and bc:IsAbleToRemove() end
+	if chk==0 then return bc and bc:IsOnField() and bc:IsCanBeEffectTarget(e) and c:IsAbleToRemove() and bc:IsAbleToRemove() end
 	Duel.SetTargetCard(bc)
 	local g=Group.FromCards(c,bc)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,2,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=c:GetBattleTarget()
-	local xg=tc:GetOverlayGroup()
+	local tc=Duel.GetFirstTarget()
 	if not c:IsRelateToEffect(e) or not tc:IsRelateToEffect(e) then return end
+	local xg=tc:GetOverlayGroup()
 	local g=Group.FromCards(c,tc)
-	local mcount=0
 	if Duel.Remove(g,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
-		for sc in aux.Next(xg) do
-			if sc:IsPreviousLocation(LOCATION_OVERLAY) and sc:IsLocation(LOCATION_GRAVE) then
-				mcount=mcount+1
-			end
-		end
 		local og=Duel.GetOperatedGroup()
+		local mcount=xg:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
 		if not og:IsContains(tc) then mcount=0 end
-		local oc=og:GetFirst()
 		for oc in aux.Next(og) do
 			oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end

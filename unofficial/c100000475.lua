@@ -3,7 +3,7 @@
 --rescripted by Naim to match the Fusion Summon procedure
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Fusion.CreateSummonEff({handler=c,matfilter=Fusion.InHandMat,s.extrafil,stage2=s.stage2})
+	local e1=Fusion.CreateSummonEff({handler=c,matfilter=Fusion.InHandMat,stage2=s.stage2})
 	c:RegisterEffect(e1)
 end
 function s.stage2(e,tc,tp,sg,chk)

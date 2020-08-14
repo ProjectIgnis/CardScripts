@@ -1,3 +1,4 @@
+--バニッシュ・リアクター
 --Banish Reactor
 local s,id=GetID()
 function s.initial_effect(c)
@@ -6,6 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_REMOVE)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)

@@ -53,6 +53,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_COST)~=0 and ep==e:GetOwnerPlayer() and e:GetHandler():GetCounter(COUNTER_SPELL)>=ev
+		and re:GetHandler()~=e:GetHandler()
 end
 function s.rop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(ep,COUNTER_SPELL,ev,REASON_EFFECT)

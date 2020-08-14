@@ -42,6 +42,11 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
+function s.extrafil(g)
+	return function(tp,sg,fc)
+		return #(g&sg)>0
+	end
+end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_FIEND) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

@@ -35,12 +35,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_BLUEEYES_W_DRAGON,CARD_DARK_MAGICIAN}
-function s.cfilter(c)
+function s.cfilter(c,tp)
 	return (c:IsSummonType(SUMMON_TYPE_RITUAL) or c:IsSummonType(SUMMON_TYPE_FUSION))
-		and c:GetMaterial() and c:GetMaterial():IsExists(Card.IsCode,1,nil,CARD_BLUEEYES_W_DRAGON,CARD_DARK_MAGICIAN)
+		and c:IsSummonPlayer(tp) and c:GetMaterial()
+		and c:GetMaterial():IsExists(Card.IsCode,1,nil,CARD_BLUEEYES_W_DRAGON,CARD_DARK_MAGICIAN)
 end
 function s.rmvcond(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil)
+	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.rmvfilter(c)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c,true,true)

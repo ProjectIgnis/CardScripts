@@ -34,7 +34,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local eq=c:GetEquipTarget()
-	if c:IsRelateToEffect() and eq then
+	if c:IsRelateToEffect(e) and eq then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

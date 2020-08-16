@@ -20,16 +20,18 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	c:CancelToGrave()
 	if c:IsRelateToEffect(e) and c:IsAbleToDeck() then
 		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(p,Card.IsAbleToDeck,p,LOCATION_HAND,0,1,63,nil)
-		if #g==0 then return end
-		c:CancelToGrave()
+		if #g==0 then c:CancelToGrave(false) return end
 		g:AddCard(c)
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		Duel.ShuffleDeck(p)
 		Duel.BreakEffect()
 		Duel.Draw(p,#g,REASON_EFFECT)
+	else
+		c:CancelToGrave(false)
 	end
 end

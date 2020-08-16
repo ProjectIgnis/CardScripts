@@ -2,13 +2,13 @@
 --Artifact Mjolnir
 local s,id=GetID()
 function s.initial_effect(c)
-	--set
+	--Set itself to the S/T zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MONSTER_SSET)
 	e1:SetValue(TYPE_SPELL)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon itsel
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg1)
 	e2:SetOperation(s.spop1)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon a target from the GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -35,7 +35,7 @@ s.listed_series={0x97}
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEDOWN)
-		and c:IsReason(REASON_DESTROY) and Duel.GetTurnPlayer()~=tp
+		and c:IsReason(REASON_DESTROY) and Duel.IsTurnPlayer(1-tp)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -47,7 +47,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x97) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
@@ -61,7 +61,7 @@ function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -82,4 +82,3 @@ end
 function s.splimit(e,c)
 	return not c:IsSetCard(0x97)
 end
-

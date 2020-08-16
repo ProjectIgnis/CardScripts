@@ -107,7 +107,7 @@ function s.btop(e,tp,eg,ep,ev,re,r,rp)
 		d:RegisterEffect(e2)
 	end
 	local tc=a:IsControler(tp) and a or d
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_DAMAGE_STEP_END)

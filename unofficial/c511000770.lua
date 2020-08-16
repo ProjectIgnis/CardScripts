@@ -45,7 +45,7 @@ function s.actg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) then
+	if tc and tc:IsRelateToEffect(e) and (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) then
 		local tpe=tc:GetType()
 		local te=tc:GetActivateEffect()
 		local tg=te:GetTarget()

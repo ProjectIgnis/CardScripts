@@ -70,7 +70,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if heads then
 		local tc=Duel.GetFirstTarget()
 		if tc then
-			if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+			if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 				Duel.Damage(tc:GetPreviousControler(),500,REASON_EFFECT)
 			elseif e:GetHandler():IsRelateToEffect(e) then
 				Duel.Destroy(e:GetHandler(),REASON_EFFECT)

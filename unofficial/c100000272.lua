@@ -64,7 +64,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local atk=tc:GetAttack()
 		if Duel.Destroy(tc,REASON_EFFECT)>0 then
 			Duel.Damage(1-tp,atk/2,REASON_EFFECT)

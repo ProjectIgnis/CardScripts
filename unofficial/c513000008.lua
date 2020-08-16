@@ -41,7 +41,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc then return end
-	if tc:IsRelateToEffect(e) and tc:IsLocation(LOCATION_GRAVE|LOCATION_EXTRA) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsLocation(LOCATION_GRAVE|LOCATION_EXTRA) then
 		if (tc:IsLocation(LOCATION_GRAVE) and Duel.GetLocationCount(tp,LOCATION_MZONE) > 0 and not tc:IsHasEffect(EFFECT_NECRO_VALLEY))
 			or (tc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,tc) > 0)then
 			if Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then

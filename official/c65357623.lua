@@ -40,7 +40,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc,race)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local atk=1000
 		if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then atk=atk*-1 end 
 		local e1=Effect.CreateEffect(e:GetHandler())

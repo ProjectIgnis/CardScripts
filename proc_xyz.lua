@@ -553,7 +553,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 							local sc=Group.SelectUnselect(tg,sg,tp,finish,cancel)
 							if not sc then
-								if #matg<minc or (matg:IsExists(Card.IsHasEffect,1,nil,91110378) and not Xyz.MatNumChkF(matg)) 
+								if ct<minc or (matg:IsExists(Card.IsHasEffect,1,nil,91110378) and not Xyz.MatNumChkF(matg)) 
 									or (lv and matg:IsExists(Card.IsHasEffect,1,nil,86466163) and not Xyz.MatNumChkF2(matg,lv,c)) then return false end
 								if not matg:Includes(mustg) then return false end
 								if c:IsLocation(LOCATION_EXTRA) then
@@ -581,7 +581,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 										local tgf=te:GetOperation()
 										local val=te:GetValue()
 										if val>0 and (not tgf or tgf(te,c)) then
-											if minc>=ct+val 
+											if minc<=ct+val and ct+val<=maxc
 												or mg:IsExists(Xyz.RecursionChk2,1,sg,mg,c,tp,minc,maxc,sg,matg,ct+val,mustbemat,exchk,f,mustg,lv) then
 												table.insert(multi,1+val)
 											end

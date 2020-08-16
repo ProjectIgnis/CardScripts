@@ -133,25 +133,22 @@ end
 function s.cfilter(c,p,zones)
 	return Duel.GetMZoneCount(p,c,p,LOCATION_REASON_TOFIELD,zones)>0
 end
-function s.desfilter(c,hc,tp)
-	local zone=hc:GetLinkedZone(tp)
-	return Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_TOFIELD,zone)>0
-end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc~=e:GetHandler() end
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c,tp) 
+	local zones=c:GetLinkedZone()
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc~=c and s.cfilter(chkc,tp,zones) end
+	if chk==0 then return Duel.IsExistingTarget(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,tp,zones)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,alias+1,0x135,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
+	local g=Duel.SelectTarget(tp,s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c,tp,zones)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0
-		and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,e:GetHandler():GetLinkedZone(tp))>0
+	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0
+		and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,e:GetHandler():GetLinkedZone())>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,alias+1,0x135,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) then
 		local token=Duel.CreateToken(tp,alias+1)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP,e:GetHandler():GetLinkedZone())

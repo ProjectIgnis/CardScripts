@@ -1,5 +1,4 @@
---Illegal Dark Contract with the War God
---fixed by MLD
+--Deceitful Dark Contract with the War Deity
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,20 +6,21 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--unaffected
+	--Change ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(511000809,0))
+	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetCountLimit(1)
-	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetHintTiming(0,TIMING_MAIN_END)
+	e2:SetCountLimit(1)
 	e2:SetCondition(s.atkcon)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-	-- damage
+	--damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(45974017,3))
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -38,7 +38,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xaf)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

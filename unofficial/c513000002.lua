@@ -1,4 +1,5 @@
 --銀幕の鏡壁
+--Mirror Wall (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -38,7 +39,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	e:GetLabelObject():Clear()
+	if e:GetLabelObject() then e:GetLabelObject():Clear() end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

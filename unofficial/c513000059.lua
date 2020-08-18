@@ -61,13 +61,13 @@ function s.filter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) 
-		and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
+		and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	local tc=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 	if tc and not tc:IsImmuneToEffect(e) then
 		local og=tc:GetOverlayGroup()
 		if #og>0 then

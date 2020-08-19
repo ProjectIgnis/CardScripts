@@ -1,3 +1,4 @@
+--深海王の宣告
 --Sea King's Verdict
 local s,id=GetID()
 function s.initial_effect(c)

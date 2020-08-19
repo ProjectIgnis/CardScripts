@@ -72,9 +72,13 @@ function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,tp)
-	local tc=g:GetFirst()
-	if tc then
-		local tpe,te,tg,co,op=tc:GetType(),tc:GetActivateEffect(),te:GetTarget(),te:GetCost(),te:GetOperation()
+	if #g>0 then
+		local tc=g:GetFirst()
+		local tpe=tc:GetType()
+		local te=tc:GetActivateEffect()
+		local tg=te:GetTarget()
+		local co=te:GetCost()
+		local op=te:GetOperation()
 		e:SetCategory(te:GetCategory())
 		e:SetProperty(te:GetProperty())
 		Duel.ClearTargetCard()

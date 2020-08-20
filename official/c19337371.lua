@@ -1,6 +1,8 @@
 --ヒステリック・サイン
+--Hysteric Sign
 local s,id=GetID()
 function s.initial_effect(c)
+	--Search when activated
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -9,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--reg
+	--Register when sent to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -17,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.regcon)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
-	--search
+	--Search up to 3 "Harpie" cards
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -68,18 +70,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 	if #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g1=g:Select(tp,1,1,nil)
-	g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
-	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g2=g:Select(tp,1,1,nil)
-		g:Remove(Card.IsCode,nil,g2:GetFirst():GetCode())
-		g1:Merge(g2)
-		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			g2=g:Select(tp,1,1,nil)
-			g1:Merge(g2)
-		end
+	local tg=aux.SelectUnselectGroup(g,e,tp,1,3,aux.dncheck,1,tp,HINTMSG_ATOHAND)
+	if #tg>0  then
+		Duel.SendtoHand(tg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,tg)
 	end
-	Duel.SendtoHand(g1,nil,REASON_EFFECT)
-	Duel.ConfirmCards(1-tp,g1)
 end

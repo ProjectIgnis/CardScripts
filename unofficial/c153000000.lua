@@ -45,24 +45,14 @@ if not DeckMaster then
 	end
 
 	function DeckMaster.RegisterAbilities(c,...)
+		local id=c:GetOriginalCode()
+		if DeckMaster[id] then return end
+		DeckMaster[id]=true
 		local deckMasterEffects={...}
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_ADJUST)
-		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetRange(LOCATION_ALL)
-		e1:SetCountLimit(1,c:GetOriginalCode(),EFFECT_COUNT_CODE_DUEL)
-		e1:SetOperation(DeckMaster.startAbilities(deckMasterEffects))
-		c:RegisterEffect(e1)
-	end
-	function DeckMaster.startAbilities(effs)
-		return function(e,tp,eg,ep,ev,re,r,rp)
-			for _,eff in ipairs(effs) do
-				Duel.RegisterEffect(eff,0)
-				Duel.RegisterEffect(eff,1)
-			end
-			e:Reset()
-		end 
+		for _,eff in ipairs(deckMasterEffects) do
+			Duel.RegisterEffect(eff,0)
+			Duel.RegisterEffect(eff:Clone(),1)
+		end
 	end
 
 	function DeckMaster.RegisterRules(c)
@@ -89,7 +79,7 @@ if not DeckMaster then
 		end
 		dmGroup:DeleteGroup()
 		--Summon Deck Master
-		local e1=Effect.GlobalEffect()
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_FREE_CHAIN)
 		e1:SetCondition(DeckMaster.spcon)

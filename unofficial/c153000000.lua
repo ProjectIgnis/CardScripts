@@ -1,7 +1,14 @@
+--Deck Master System
+local s,id=GetID()
+
+function s.initial_effect(c)
+	aux.EnableExtraRules(c,s,DeckMaster.RegisterRules)
+end
+
 if not DeckMaster then
 	DeckMaster={}
 	DeckMasterZone={}
-	FLAG_DECK_MASTER = 300
+	FLAG_DECK_MASTER = id
 
 	--function that return the flag that check if a monster is treated as a Deck Master
 	function Card.IsDeckMaster(c)
@@ -14,26 +21,73 @@ if not DeckMaster then
 	-- function that send a card to the DM zone
 	-- add the card to the Skill zone, register the DMzone flag then send the card to limbo
 	function Card.MoveToDeckMasterZone(c,p)
-		Duel.Hint(HINT_SKILL,p,c:GetOriginalCode())
+		Duel.DisableShuffleCheck()
 		Duel.SendtoDeck(c,nil,-2,REASON_RULE)
+		Duel.Hint(HINT_SKILL,p,c:GetOriginalCode())
 		DeckMasterZone[p]=c
 	end
 	--function that remove the card from the DM/Skill zone
-	function Card.RemoveFromDeckMasterZone(c,p)
+	function Duel.ClearDeckMasterZone(p)
+		local c=DeckMasterZone[p]
+		if not c then return end
 		Duel.Hint(HINT_SKILL_REMOVE,p,c:GetOriginalCode())
 		DeckMasterZone[p]=nil
 	end
 	--function that summon the monster from the DMzone
 	--remove from DMzone, remove the DMzone flag, summon the deck master
-	function Card.SummonDeckMaster(c,p)
-		c:RemoveFromDeckMasterZone(p)
-		Duel.SpecialSummon(c,0,p,p,false,false,POS_FACEUP)
-		c:RegisterFlagEffect(FLAG_DECK_MASTER,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_CONTROL,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(153000000,1))
+	function Duel.SummonDeckMaster(p)
+		local c=DeckMasterZone[p]
+		if not c then return false end
+		Duel.ClearDeckMasterZone(p)
+		local res=Duel.SpecialSummon(c,0,p,p,false,false,POS_FACEUP)
+		c:RegisterFlagEffect(FLAG_DECK_MASTER,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_CONTROL,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(FLAG_DECK_MASTER,0))
+		return res
 	end
 
-	function DeckMaster.RegisterRules()
-		if Duel.GetFlagEffect(0,FLAG_DECK_MASTER)>0 then return end
-		Duel.RegisterFlagEffect(0,FLAG_DECK_MASTER,0,0,0)
+	function DeckMaster.RegisterAbilities(c,...)
+		local deckMasterEffects={...}
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_ADJUST)
+		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetRange(LOCATION_ALL)
+		e1:SetCountLimit(1,c:GetOriginalCode(),EFFECT_COUNT_CODE_DUEL)
+		e1:SetOperation(DeckMaster.startAbilities(deckMasterEffects))
+		c:RegisterEffect(e1)
+	end
+	function DeckMaster.startAbilities(effs)
+		return function(e,tp,eg,ep,ev,re,r,rp)
+			for _,eff in ipairs(effs) do
+				Duel.RegisterEffect(eff,0)
+				Duel.RegisterEffect(eff,1)
+			end
+			e:Reset()
+		end 
+	end
+
+	function DeckMaster.RegisterRules(c)
+		local dmGroup=Group.CreateGroup()
+		for _,dm in ipairs(DeckMasterTable) do
+			dmGroup:AddCard(Duel.CreateToken(0,dm))
+		end
+		for p=0,1 do
+			Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(FLAG_DECK_MASTER,1))
+			local dm=dmGroup:Select(p,1,1,nil):GetFirst()
+			local dg=Duel.GetMatchingGroup(Card.IsOriginalCode,p,LOCATION_ALL,0,nil,dm:GetOriginalCodeRule())
+			if #dg==3 then
+				Duel.Hint(HINT_MESSAGE,p,aux.Stringid(FLAG_DECK_MASTER,2))
+				Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(FLAG_DECK_MASTER,4))
+				local burn=dg:Select(p,1,1,nil)
+				Duel.SendtoDeck(burn,nil,-2,REASON_RULE)
+			elseif #dg>0 and Duel.SelectYesNo(p,aux.Stringid(FLAG_DECK_MASTER,3)) then
+				Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(FLAG_DECK_MASTER,4))
+				local burn=dg:Select(p,1,1,nil)
+				Duel.SendtoDeck(burn,nil,-2,REASON_RULE)
+			end
+			local t=Duel.CreateToken(p,dm:GetOriginalCode())
+			t:MoveToDeckMasterZone(p)
+		end
+		dmGroup:DeleteGroup()
 		--Summon Deck Master
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -85,7 +139,14 @@ if not DeckMaster then
 		e12:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 		Duel.RegisterEffect(e12,0)
 	end
-
+	function DeckMaster.spcon(e,tp,eg,ep,ev,re,r,rp)
+		local dm=DeckMasterZone[tp]
+		return Duel.IsMainPhase() and dm and dm:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	end
+	function DeckMaster.spop(e,tp,eg,ep,ev,re,r,rp)
+		if not Duel.SelectYesNo(tp,aux.Stringid(FLAG_DECK_MASTER,5)) then return end
+		Duel.SummonDeckMaster(tp)
+	end
 	function DeckMaster.inheritcon1(e,tp,eg,ep,ev,re,r,rp)
 		return eg:IsExists(Card.IsDeckMaster,1,nil)
 	end
@@ -93,11 +154,10 @@ if not DeckMaster then
 		local g=eg:Filter(Card.IsDeckMaster,nil)
 		for tc in aux.Next(g) do
 			if tc:GetReason()&REASON_BATTLE==0 and tc:GetReasonCard() then
-				tc:GetReasonCard():RegisterFlagEffect(FLAG_DECK_MASTER,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_CONTROL,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(153000000,1))
+				tc:GetReasonCard():RegisterFlagEffect(FLAG_DECK_MASTER,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_CONTROL,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(FLAG_DECK_MASTER,0))
 			end
 		end
 	end
-
 	function DeckMaster.inheritFilter(c)
 		return not Duel.GetDeckMaster(c:GetControler()) and c:GetControler()==c:GetSummonPlayer()
 	end
@@ -109,13 +169,12 @@ if not DeckMaster then
 		for p=0,1 do
 			local dg=g:Filter(Card.IsControler,nil,p)
 			if #dg>0 then
-				Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(153000000,2))
+				Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(FLAG_DECK_MASTER,4))
 				local dm=dg:Select(p,1,1,nil):GetFirst()
-				dm:RegisterFlagEffect(FLAG_DECK_MASTER,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_CONTROL,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(153000000,1))
+				dm:RegisterFlagEffect(FLAG_DECK_MASTER,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_CONTROL,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(FLAG_DECK_MASTER,0))
 			end
 		end
 	end
-
 	function DeckMaster.loss(e,tp,eg,ep,ev,re,r,rp)
 		local dm1=Duel.GetDeckMaster(0)
 		local dm2=Duel.GetDeckMaster(1)
@@ -128,28 +187,6 @@ if not DeckMaster then
 		end
 	end
 
-	function DeckMaster.AddProcedure(c)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_STARTUP)
-		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetRange(LOCATION_ALL)
-		e1:SetCountLimit(1)
-		e1:SetOperation(DeckMaster.startProcedure)
-		c:RegisterEffect(e1)
-	end
-
-	function DeckMaster.startProcedure(e,tp,eg,ep,ev,re,r,rp)
-		e:GetHandler():MoveToDeckMasterZone(tp)
-		DeckMaster.RegisterRules()
-	end
-	function DeckMaster.spcon(e,tp,eg,ep,ev,re,r,rp)
-		local dm=DeckMasterZone[tp]
-		return dm and dm:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	end
-	
-	function DeckMaster.spop(e,tp,eg,ep,ev,re,r,rp)
-		if not Duel.SelectYesNo(tp,aux.Stringid(153000000,0)) then return end
-		DeckMasterZone[tp]:SummonDeckMaster(tp)
-	end
+	DeckMasterTable={153000001,153000002,153000003,153000004,153000005,153000006,153000007,153000008,153000009,153000010,
+		153000011,153000012,153000013,153000014,153000015,153000016,153000017}
 end

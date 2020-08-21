@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={56840427}
-function s.filter()
+function s.filter(c)
 	return c:IsFaceup() and c:IsCode(56840427)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

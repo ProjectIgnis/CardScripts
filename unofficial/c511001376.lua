@@ -117,11 +117,11 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	if #g<=0 or g:IsExists(aux.NOT(s.retcfilter2),1,nil,tp) then return end
 	for tc in aux.Next(g) do
 	if tc:IsPreviousLocation(LOCATION_PZONE) then
-            local seq=0
-            if tc:GetPreviousSequence()==7 or tc:GetPreviousSequence()==4 then seq=1 end
-            Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,tc:GetPreviousPosition(),true,(1<<seq))
-        else
-            Duel.MoveToField(tc,tp,tp,tc:GetPreviousLocation(),tc:GetPreviousPosition(),true,(1<<tc:GetPreviousSequence()))
+		local seq=0
+		if tc:GetPreviousSequence()==7 or tc:GetPreviousSequence()==4 then seq=1 end
+		Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,tc:GetPreviousPosition(),true,(1<<seq))
+	else
+		Duel.MoveToField(tc,tp,tp,tc:GetPreviousLocation(),tc:GetPreviousPosition(),true,(1<<tc:GetPreviousSequence()))
         end
 	end
 end

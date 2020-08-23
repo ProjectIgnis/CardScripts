@@ -17,7 +17,7 @@ function s.filter(c,e,tp)
 	return c:IsLinkBelow(2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsCanBeEffectTarget(e)
 end
 function s.spfilter(c,e,tp)
-	return s.filter(c,e,tp)
+	return s.filter(c,e,tp) and Duel.IsExistingMatchingCard(s.lkfilter,tp,LOCATION_EXTRA,0,1,nil,c,tp)
 end
 function s.lkfilter(c,mc,tp)
 	return c:IsType(TYPE_LINK) and c:IsLink(1)

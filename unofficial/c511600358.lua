@@ -22,7 +22,7 @@ end
 function s.lkfilter(c,mc,tp)
 	return c:IsType(TYPE_LINK) and c:IsLink(1)
 		and (not mc or mc:IsCanBeLinkMaterial(c,tp))
-		and c:IsSpecialSummonable(SUMMON_TYPE_LINK)
+		and c:IsLinkSummonable()
 end
 function s.extramat(chk,summon_type,e,...)
 	local c=e:GetHandler()

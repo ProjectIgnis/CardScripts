@@ -239,8 +239,6 @@ function Card.IsReincarnationSummoned(c)
 	for _,lab in ipairs({c:GetFlagEffectLabel(CARD_SALAMANGREAT_SANCTUARY)}) do
 		label = label|lab
 	end
-	Debug.Message(label)
-	Debug.Message(c:GetSummonPlayer()+1)
 	return (label&(c:GetSummonPlayer()+1))~=0
 end
 local ReincarnationChecked=false

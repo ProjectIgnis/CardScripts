@@ -2,10 +2,10 @@
 --Number 78: Number Archive
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,nil,1,2)
 	c:EnableReviveLimit()
-	--spsummon
+	--Special Summon from the Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -34,14 +34,14 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(e:GetHandler()),tp,nil,nil,REASON_XYZ)
-		return #pg<=1 and Duel.GetLocationCountFromEx(tp,tp,e:GetHandler())>0
+		return #pg<=1 and Duel.GetLocationCountFromEx(tp,tp,e:GetHandler(),TYPE_XYZ)>0
 			and Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_EXTRA,0,nil)
-	if #g>0 and Duel.GetLocationCountFromEx(tp,tp,c)>0
+	if #g>0 and Duel.GetLocationCountFromEx(tp,tp,c,TYPE_XYZ)>0
 		and c:IsFaceup() and c:IsRelateToEffect(e) and c:IsControler(tp) and not c:IsImmuneToEffect(e) then
 		local tg=g:RandomSelect(1-tp,1)
 		Duel.ConfirmCards(1-tp,tg)

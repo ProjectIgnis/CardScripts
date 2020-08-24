@@ -235,15 +235,18 @@ end
 
 --Help functions for the Salamangreats' effects
 function Card.IsReincarnationSummoned(c)
-	return c:GetFlagEffect(CARD_SALAMANGREAT_SANCTUARY)~=0
-end
-function Auxiliary.EnableCheckReincarnation(c)
-	local m=_G["c"..CARD_SALAMANGREAT_SANCTUARY]
-	if not m then
-		m=_G["c"..c:GetCode()]
+	local label=0
+	for _,lab in ipairs({c:GetFlagEffectLabel(CARD_SALAMANGREAT_SANCTUARY)}) do
+		label = label|lab
 	end
-	if m and not m.global_check then
-		m.global_check=true
+	Debug.Message(label)
+	Debug.Message(c:GetSummonPlayer()+1)
+	return (label&(c:GetSummonPlayer()+1))~=0
+end
+local ReincarnationChecked=false
+function Auxiliary.EnableCheckReincarnation(c)
+	if not ReincarnationChecked then
+		ReincarnationChecked=true
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_MATERIAL_CHECK)
@@ -265,21 +268,29 @@ end
 function Auxiliary.ReincarnationCheckValue(e,c)
 	local g=c:GetMaterial()
 	local id=c:GetCode()
-	local tp=c:GetSummonPlayer()
+	local tp=c:GetControler()
 	local rc=false
+	local label=3
 	if c:IsLinkMonster() then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_LINK,tp,id)
 	elseif c:IsType(TYPE_FUSION) then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_FUSION,tp,id)
 	elseif c:IsType(TYPE_RITUAL) then
-		rc=g:IsExists(aux.ReincarnationRitualFilter,1,nil,c,id,tp)
+		label=0
+		if g:IsExists(aux.ReincarnationRitualFilter,1,nil,c,id,0) then
+			label=1
+		end
+		if g:IsExists(aux.ReincarnationRitualFilter,1,nil,c,id,1) then
+			label=label+2
+		end
+		rc=label~=0
 	elseif c:IsType(TYPE_SYNCHRO) then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_SYNCHRO,tp,id)
 	elseif c:IsType(TYPE_XYZ) then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_XYZ,tp,id)
 	end
 	if rc then
-		c:RegisterFlagEffect(CARD_SALAMANGREAT_SANCTUARY,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
+		c:RegisterFlagEffect(CARD_SALAMANGREAT_SANCTUARY,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1,label)
 	end
 end
 --Filter for unique on field Malefic monsters

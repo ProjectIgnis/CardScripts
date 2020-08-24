@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--to extra
+	--Return a monster to the Extra Deck
 	local e0=Effect.CreateEffect(c)
 	e0:SetDescription(aux.Stringid(id,0))
 	e0:SetCategory(CATEGORY_TODECK)
@@ -14,16 +14,18 @@ function s.initial_effect(c)
 	e0:SetTarget(s.tdtg)
 	e0:SetOperation(s.tdop)
 	c:RegisterEffect(e0)
-	--damage
+	--Both players take battle damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_BOTH_BATTLE_DAMAGE)
 	c:RegisterEffect(e1)
+	--Halve battle damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e2:SetValue(HALF_DAMAGE)
-	--Special Summon
+	c:RegisterEffect(e2)
+	--Special Summon 1 "Speedroid" from the Extra Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)

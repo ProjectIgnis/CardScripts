@@ -2,10 +2,10 @@
 --Traptrix Rafflesia
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,nil,4,2)
 	c:EnableReviveLimit()
-	--immune
+	--Unaffected by trap effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.imcon)
 	e1:SetValue(s.efilter)
 	c:RegisterEffect(e1)
-	--indes
+	--Other "Traptrix" monsters cannot be destroyed by battle or card effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -26,19 +26,19 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e3)
-	--cannot be target
+	--Other "Traptrix" monsters cannot be target
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
-	--copy trap
+	--Copy 1 "Hole" trap
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCode(EVENT_FREE_CHAIN)
-	e5:SetHintTiming(TIMING_SUMMON+TIMING_FLIPSUMMON+TIMING_MSET+TIMING_BATTLE_START+TIMING_MAIN_END)
+	e5:SetHintTiming(TIMINGS_CHECK_MONSTER+TIMING_BATTLE_START+TIMING_MAIN_END)
 	e5:SetCountLimit(1)
 	e5:SetCost(s.cost)
 	e5:SetTarget(s.target)
@@ -62,7 +62,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.filter(c)
 	return c:GetType()==TYPE_TRAP and (c:IsSetCard(0x4c) or c:IsSetCard(0x89)) and c:IsAbleToGraveAsCost()
-		and c:CheckActivateEffect(false,true,false)~=nil
+		and c:CheckActivateEffect(false,true,true)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

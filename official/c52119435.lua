@@ -41,7 +41,7 @@ function s.concon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.contg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetLinkedGroup()
-	if chk==0 then return not g:IsExists(aux.NOT(Card.IsControlerCanBeChanged),1,nil) end
+	if chk==0 then return not g:IsExists(aux.NOT(Card.IsAbleToChangeControler),1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,2,0,0)
 end
 function s.conop(e,tp,eg,ep,ev,re,r,rp)

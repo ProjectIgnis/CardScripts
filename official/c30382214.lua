@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_CARDIAN)
-	--Draw 1
+	--Draw 1 and special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_SPECIAL_SUMMON)
@@ -81,7 +81,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.BreakEffect()
-		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
+		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 			local sc=sg:GetFirst()

@@ -55,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,att):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local c=e:GetHandler()
-		if not tg or not tg:IsRelateToEffect(e) then return end
+		if not tg or not tg:IsRelateToEffect(e) or tg:IsFacedown() then return end
 		Duel.Equip(tp,tg,tc,true)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

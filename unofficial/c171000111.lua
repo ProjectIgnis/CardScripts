@@ -1,4 +1,5 @@
 --セブンストア
+--Seven Store
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -31,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=g:GetFirst():GetOverlayCount()
 	Duel.Release(g,REASON_COST)
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(ct)
+	Duel.SetTargetParam(ct+1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

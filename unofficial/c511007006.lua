@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(500)
 		tc:RegisterEffect(e1)
-		tc:RegisterFlagEffect(51107006,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+		tc:RegisterFlagEffect(511007006,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_BATTLE_DAMAGE)
@@ -51,11 +51,11 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==1-tp and Duel.GetAttackTarget()==nil then
 		local c=e:GetHandler()
-		c:SetFlagEffectLabel(51107006,c:GetFlagEffectLabel(51107006)+ev)
+		c:SetFlagEffectLabel(511007006,c:GetFlagEffectLabel(511007006)+ev)
 	end
 end
 function s.desfilter(c,fid)
-	return c:GetFlagEffectLabel(51107006)-fid>0
+	return c:GetFlagEffectLabel(511007006)-fid>0
 end
 function s.desopfilter(c,dam)
 	return c:GetAttack()<dam
@@ -67,7 +67,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if dg and #dg>0 then
 		local dam=0
 		for tc in aux.Next(dg) do
-			dam=dam+(tc:GetFlagEffectLabel(51107006)-fid)
+			dam=dam+(tc:GetFlagEffectLabel(511007006)-fid)
 		end
 		return Duel.IsExistingMatchingCard(s.desopfilter,tp,0,LOCATION_MZONE,1,nil,dam)
 	else

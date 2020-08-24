@@ -1,3 +1,4 @@
+--竜皇の宝札
 --Card of the Dragon King
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,9 +25,9 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	local atk=sg:GetSum(Card.GetAttack)
 	if Duel.Release(sg,REASON_EFFECT)>0 then
 		sg=Duel.GetOperatedGroup()
+		local atk=sg:GetSum(Card.GetPreviousAttackOnField)
 		Duel.Damage(p,atk,REASON_EFFECT)
 		Duel.Draw(p,#sg,REASON_EFFECT)
 	end

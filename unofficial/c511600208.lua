@@ -28,6 +28,7 @@ function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 		or d and d:IsControler(tp) and d:GetSequence()<5 and d:IsFaceup() and d:IsSetCard(0x10b)
 end
 function s.dmop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)

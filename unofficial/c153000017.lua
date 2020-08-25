@@ -31,7 +31,7 @@ function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.repcon)
 	e1:SetTarget(s.reptg)
 	e1:SetValue(s.repval)
---  e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,7)
+	e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,7)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -40,7 +40,7 @@ function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetLabel(1)
 	e2:SetCondition(s.con)
 	e2:SetOperation(s.op)
---  e2:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,7)
+	e2:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,7)
 	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -48,7 +48,7 @@ function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetLabelObject(g)
 	e3:SetCondition(s.defcon)
 	e3:SetOperation(s.defop)
---  e3:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,7)
+	e3:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,7)
 	Duel.RegisterEffect(e3,tp)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -57,7 +57,7 @@ function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetLabelObject(e2)
 	e4:SetCondition(s.checkcon)
 	e4:SetOperation(s.checkop)
---  e4:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,7)
+	e4:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,7)
 	Duel.RegisterEffect(e4,tp)
 end
 function s.repcon(e,tp,eg,ep,ev,re,r,rp)
@@ -88,7 +88,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 			op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 		else
 			op=0
-		end	 
+		end  
 	else
 		if Duel.IsTurnPlayer(tp) and Duel.IsMainPhase() then
 			if #g==g:FilterCount(Card.IsAbleToRemoveAsCost,nil) then
@@ -98,7 +98,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 			end
 		else
 			op=0
-		end	  
+		end   
 	end
 	if op==0 then
 		Duel.ConfirmCards(tp,g)

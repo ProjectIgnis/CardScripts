@@ -13,7 +13,7 @@ They are automatically synchronized with servers.
 
 Please keep all bug reports and questions on Discord; do NOT open an issue or pull request for this purpose.
 
-Reach out to us on Discord to learn how to contribute and start scripting! Before opening a pull request, please speak with a member of staff in `#card-scripting-101` first and read `CONTRIBUTING.md`.
+Reach out to us on Discord to learn how to contribute and start scripting! Before opening a pull request, please speak with a member of staff in `#card-scripting-101` first and read [`CONTRIBUTING.md`](https://github.com/ProjectIgnis/CardScripts/blob/master/CONTRIBUTING.md).
 
 Notes for maintainers: pull requests containing one or very few commits should generally be **squash-merged** to keep history clean
 

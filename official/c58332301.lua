@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--Chnage battle position
+	--Change battle position
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_POSITION)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -30,9 +30,6 @@ function s.initial_effect(c)
 end
 s.dark_calling=true
 s.listed_names={CARD_DARK_FUSION}
-function s.splimit(e,se,sp,st)
-	return st==SUMMON_TYPE_FUSION+0x10
-end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=c:GetMaterial()

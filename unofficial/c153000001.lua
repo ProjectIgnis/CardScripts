@@ -13,6 +13,6 @@ function s.initial_effect(c)
 end
 function s.dmtg(e,c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_FUSION)
-		and (Duel.GetDeckMaster(e:GetOwnerPlayer()) and Duel.GetDeckMaster(e:GetOwnerPlayer()):IsOriginalCode(id)
+		and (Duel.IsDeckMaster(e:GetOwnerPlayer(),id)
 		or c:GetMaterial() and c:GetMaterial():IsContains(e:GetOwner()))
 end

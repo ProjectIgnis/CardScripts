@@ -67,7 +67,7 @@ function s.filter(c)
 end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget() and (Duel.GetAttackTarget():IsControler(tp) or Duel.GetAttacker():IsControler(tp))
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) and Duel.GetDeckMaster(tp) and Duel.GetDeckMaster(tp):IsOriginalCode(id)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) and Duel.IsDeckMaster(tp,id)
 end
 function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end

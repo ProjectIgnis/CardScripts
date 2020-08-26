@@ -28,7 +28,7 @@ function s.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL)
 end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetDeckMaster(tp) and Duel.GetDeckMaster(tp):IsOriginalCode(id) and Duel.GetAttackTarget():IsControler(tp)
+	return Duel.IsDeckMaster(tp,id) and Duel.GetAttackTarget():IsControler(tp)
 		and Duel.CheckReleaseGroupCost(tp,nil,2,false,aux.ReleaseCheckTarget,nil,Group.FromCards(Duel.GetAttacker()))
 end
 function s.dmop(e,tp,eg,ep,ev,re,r,rp)

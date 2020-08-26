@@ -47,7 +47,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsControler(1-tp) and Duel.CheckLPCost(tp,1000) and Duel.GetDeckMaster(tp) and Duel.GetDeckMaster(tp):IsOriginalCode(id)
+	return Duel.GetAttacker():IsControler(1-tp) and Duel.CheckLPCost(tp,1000) and Duel.IsDeckMaster(tp,id)
 end
 function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end

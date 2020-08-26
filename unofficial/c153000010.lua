@@ -26,7 +26,7 @@ end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()
 		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil)
-		and Fusion.SummonEffTG()(e,tp,eg,ep,ev,re,r,rp,0) and Duel.GetDeckMaster(tp) and Duel.GetDeckMaster(tp):IsOriginalCode(id)
+		and Fusion.SummonEffTG()(e,tp,eg,ep,ev,re,r,rp,0) and Duel.IsDeckMaster(tp,id)
 end
 function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) or Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST+REASON_DISCARD)~=1 then return end

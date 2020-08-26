@@ -26,7 +26,7 @@ function s.val(e,c)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
-	return Duel.IsTurnPlayer(tp) and Duel.IsMainPhase() and ct>0 and Duel.IsPlayerCanDraw(tp,ct) and Duel.GetDeckMaster(tp) and Duel.GetDeckMaster(tp):IsOriginalCode(id)
+	return Duel.IsTurnPlayer(tp) and Duel.IsMainPhase() and ct>0 and Duel.IsPlayerCanDraw(tp,ct) and Duel.IsDeckMaster(tp,id)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end

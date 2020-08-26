@@ -34,7 +34,7 @@ function s.filter(c,p)
 	return te and te:IsActivatable(p,true)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp) and Duel.IsMainPhase() and Duel.GetDeckMaster(tp) and Duel.GetDeckMaster(tp):IsOriginalCode(id)
+	return Duel.IsTurnPlayer(tp) and Duel.IsMainPhase() and Duel.IsDeckMaster(tp,id)
 		and Duel.CheckLPCost(tp,1000) and s.usedSpell:IsExists(s.filter,1,nil,tp)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)

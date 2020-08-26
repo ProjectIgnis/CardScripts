@@ -61,7 +61,7 @@ end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,2,nil)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_SZONE,LOCATION_SZONE,1,e:GetHandler(),tp)
-		and Duel.GetDeckMaster(tp) and Duel.GetDeckMaster(tp):IsOriginalCode(id)
+		and Duel.IsDeckMaster(tp,id)
 end
 function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,1)) or Duel.DiscardHand(tp,Card.IsDiscardable,2,2,REASON_COST+REASON_DISCARD)~=2 then return end

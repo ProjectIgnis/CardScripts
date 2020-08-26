@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,nil)
-		and Duel.CheckLPCost(tp,1000) and Duel.GetDeckMaster(tp) and Duel.GetDeckMaster(tp):IsOriginalCode(id)
+		and Duel.CheckLPCost(tp,1000) and Duel.IsDeckMaster(tp,id)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end

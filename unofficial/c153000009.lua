@@ -17,7 +17,7 @@ function s.costfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsDiscardable(REASON_EFFECT)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) and Duel.GetDeckMaster(tp) and Duel.GetDeckMaster(tp):IsOriginalCode(id)
+	return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) and Duel.IsDeckMaster(tp,id)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end

@@ -14,9 +14,13 @@ if not DeckMaster then
 	function Card.IsDeckMaster(c)
 		return c:GetFlagEffect(FLAG_DECK_MASTER)>0
 	end
-	--function that
+	--function that get the Deck Master of player
 	function Duel.GetDeckMaster(p)
 		return DeckMasterZone[p] or Duel.GetMatchingGroup(Card.IsDeckMaster,p,LOCATION_MZONE,0,nil):GetFirst()
+	end
+	--function that return the Deck Master of player
+	function Duel.IsDeckMaster(p,code)
+		return Duel.GetDeckMaster(p) and Duel.GetDeckMaster(p):IsOriginalCode(code)
 	end
 	-- function that send a card to the DM zone
 	-- add the card to the Skill zone, register the DMzone flag then send the card to limbo
@@ -56,6 +60,7 @@ if not DeckMaster then
 	end
 
 	function DeckMaster.RegisterRules(c)
+		Duel.CreateToken(0,153000018)
 		local dmGroup=Group.CreateGroup()
 		for _,dm in ipairs(DeckMasterTable) do
 			dmGroup:AddCard(Duel.CreateToken(0,dm))
@@ -178,5 +183,5 @@ if not DeckMaster then
 	end
 
 	DeckMasterTable={153000001,153000002,153000003,153000004,153000005,153000006,153000007,153000008,153000009,153000010,
-		153000011,153000012,153000013,153000014,153000015,153000016,153000017}
+		153000011,153000012,153000013,153000014,153000015,153000016,153000017,153000018}
 end

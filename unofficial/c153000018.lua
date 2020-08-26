@@ -16,7 +16,6 @@ function s.initial_effect(c)
 	dme2:SetValue(s.repval)
 	dme2:SetOperation(s.repop)
 	DeckMaster.RegisterAbilities(c,dme1,dme2)
---	c:EnableReviveLimit()
 	--damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -47,7 +46,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetDeckMaster(tp) and Duel.GetDeckMaster(tp):IsOriginalCode(id)
+	return ep~=tp and Duel.IsDeckMaster(tp,id)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)

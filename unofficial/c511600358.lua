@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -22,7 +23,7 @@ end
 function s.lkfilter(c,mc,tp)
 	return c:IsType(TYPE_LINK) and c:IsLink(1)
 		and (not mc or mc:IsCanBeLinkMaterial(c,tp))
-		and c:IsLinkSummonable()
+		and c:IsLinkSummonable(mc,nil,1,1)
 end
 function s.extramat(chk,summon_type,e,...)
 	local c=e:GetHandler()
@@ -83,8 +84,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	for _,oe in ipairs(oeff) do
 		oe:Reset()
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tc,1,tp,LOCATION_GRAVE)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tc,1,tp,LOCATION_GRAVE+LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -100,16 +100,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		tc:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
-		local oeff={}
-		Duel.GetMatchingGroup(Card.IsType,tp,0xff,0xff,tc,TYPE_MONSTER):ForEach(function(oc)
-			local e3=Effect.CreateEffect(c)
-			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-			e3:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
-			e3:SetValue(1)
-			oc:RegisterEffect(e3,true)
-			table.insert(oeff,e3)
-		end)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=Duel.SelectMatchingCard(tp,s.lkfilter,tp,LOCATION_EXTRA,0,1,1,nil,tc,tp):GetFirst()
 		if sc==nil then
@@ -135,9 +125,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e5:SetTarget(s.tg)
 			e5:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 			sc:RegisterEffect(e5,true)
-		end
-		for _,oe in ipairs(oeff) do
-			oe:Reset()
 		end
 	end
 end

@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--Ppiercing damage
+	--Piercing damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_PIERCE)

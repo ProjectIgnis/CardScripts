@@ -383,11 +383,14 @@ function Auxiliary.WitchcrafterDiscardCost(f,minc,maxc)
 				end
 			end
 end
---Special Summon limit for the Evil HEROes
+--Special Summon limit for "Evil HERO" Fusionmonsters
 function Auxiliary.EvilHeroLimit(e,se,sp,st)
-	return (Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE)
-		and st&SUMMON_TYPE_FUSION~=0)
+	return (Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE) and st&SUMMON_TYPE_FUSION~=0)
 		or se:GetHandler():IsCode(CARD_DARK_FUSION)
+end
+--Special Summon limit for "Fossil" Fusion monsters
+function Auxiliary.FossilLimit(e,se,sp,st)
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or se:GetHandler():IsCode(CARD_FOSSIL_FUSION)
 end
 function Auxiliary.AddLavaProcedure(c,required,position,filter,value,description)
 	if not required or required < 1 then

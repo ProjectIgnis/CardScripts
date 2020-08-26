@@ -291,6 +291,7 @@ function Auxiliary.ReincarnationCheckValue(e,c)
 		c:RegisterFlagEffect(CARD_SALAMANGREAT_SANCTUARY,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1,label)
 	end
 end
+
 --Filter for unique on field Malefic monsters
 function Auxiliary.MaleficUniqueFilter(cc)
 	local mt=cc:GetMetatable()
@@ -352,6 +353,7 @@ function Auxiliary.MaleficSummonOperation(cd,loc)
 				g:DeleteGroup()
 			end
 end
+
 --Discard cost for Witchcrafter monsters, supports the replacements from the Continuous Spells
 function Auxiliary.WitchcrafterDiscardFilter(c,tp)
 	return c:IsHasEffect(EFFECT_WITCHCRAFTER_REPLACE,tp) and c:IsAbleToGraveAsCost()
@@ -383,7 +385,8 @@ function Auxiliary.WitchcrafterDiscardCost(f,minc,maxc)
 				end
 			end
 end
---Special Summon limit for "Evil HERO" Fusionmonsters
+
+--Special Summon limit for "Evil HERO" Fusion monsters
 function Auxiliary.EvilHeroLimit(e,se,sp,st)
 	return se:GetHandler():IsCode(CARD_DARK_FUSION)
 		or (Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE) and st&SUMMON_TYPE_FUSION==SUMMON_TYPE_FUSION)
@@ -392,6 +395,8 @@ end
 function Auxiliary.FossilLimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or se:GetHandler():IsCode(CARD_FOSSIL_FUSION)
 end
+
+--Kaiju and Lava Golem-like summon procedures
 function Auxiliary.AddLavaProcedure(c,required,position,filter,value,description)
 	if not required or required < 1 then
 		required = 1

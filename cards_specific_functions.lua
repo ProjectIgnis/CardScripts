@@ -385,8 +385,8 @@ function Auxiliary.WitchcrafterDiscardCost(f,minc,maxc)
 end
 --Special Summon limit for "Evil HERO" Fusionmonsters
 function Auxiliary.EvilHeroLimit(e,se,sp,st)
-	return (Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE) and st&SUMMON_TYPE_FUSION~=0)
-		or se:GetHandler():IsCode(CARD_DARK_FUSION)
+	return se:GetHandler():IsCode(CARD_DARK_FUSION)
+		or (Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE) and st&SUMMON_TYPE_FUSION==SUMMON_TYPE_FUSION)
 end
 --Special Summon limit for "Fossil" Fusion monsters
 function Auxiliary.FossilLimit(e,se,sp,st)

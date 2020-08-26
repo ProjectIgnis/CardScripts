@@ -2,8 +2,8 @@
 --Evil HERO Inferno Wing
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--Fusion materials
 	Fusion.AddProcMix(c,true,true,58932615,21844576)
 	--Special Summon condition
 	local e1=Effect.CreateEffect(c)

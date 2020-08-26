@@ -385,11 +385,9 @@ function Auxiliary.WitchcrafterDiscardCost(f,minc,maxc)
 end
 --Special Summon limit for the Evil HEROes
 function Auxiliary.EvilHeroLimit(e,se,sp,st)
-	local chk=SUMMON_TYPE_FUSION+0x10
-	if Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE) then
-		chk=SUMMON_TYPE_FUSION
-	end
-	return st&chk==chk
+	return (Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE)
+		and st&SUMMON_TYPE_FUSION~=0)
+		or se:GetHandler():IsCode(CARD_DARK_FUSION)
 end
 function Auxiliary.AddLavaProcedure(c,required,position,filter,value,description)
 	if not required or required < 1 then

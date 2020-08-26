@@ -2,7 +2,7 @@
 --Dark Calling
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Fusion.CreateSummonEff(c,function(c) return c.dark_calling end,Fusion.InHandMat(Card.IsAbleToRemove),s.fextra,Fusion.BanishMaterial,nil,nil,nil,SUMMON_TYPE_FUSION|0x10)
+	local e1=Fusion.CreateSummonEff(c,function(c) return c.dark_calling end,Fusion.InHandMat(Card.IsAbleToRemove),s.fextra,Fusion.BanishMaterial,nil,nil,nil)
 	c:RegisterEffect(e1)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)

@@ -39,7 +39,7 @@ end
 s.listed_names={id,CARD_FOSSIL_FUSION,85808813}
 	--Handle its special summon condition
 function s.splimit(e,se,sp,st)
-	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or st==SUMMON_TYPE_FUSION+0x20
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or se:GetHandler():IsCode(CARD_FOSSIL_FUSION)
 end
 	--Check for "Time Stream"
 function s.thfilter(c)

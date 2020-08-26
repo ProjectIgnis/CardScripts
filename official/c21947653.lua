@@ -1,5 +1,5 @@
 --E－HERO ライトニング・ゴーレム
---21947653
+--Evil HERO Lightning Golem
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

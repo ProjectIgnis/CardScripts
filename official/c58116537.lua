@@ -1,5 +1,5 @@
 --戦華史略－孫劉同盟
---Senka Legend - The Sun-Liu Alliance
+--Ancient Warriors Saga - Sun-Liu Alliance
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,8 +8,9 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--declare attribute
+	--Declare attribute
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
@@ -17,8 +18,9 @@ function s.initial_effect(c)
 	e2:SetTarget(s.natg)
 	e2:SetOperation(s.naop)
 	c:RegisterEffect(e2)
-	--increase atk
+	--Increase ATK
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
@@ -89,4 +91,3 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:UpdateAttack(#g*300,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
 	end
 end
-

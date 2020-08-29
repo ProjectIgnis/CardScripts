@@ -1,5 +1,5 @@
 --戦華史略－長坂之雄
---Senka Legend - Champion's Bravery at Changban Bridge
+--Ancient Warriors Saga - Defense of Changban
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--actlimit
+	--Prevent activation of Spell/Traps
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -18,14 +18,14 @@ function s.initial_effect(c)
 	e2:SetValue(s.aclimit)
 	e2:SetCondition(s.actcon)
 	c:RegisterEffect(e2)
-	--target lock
+	--Prevent attacks on "Ancient Warriors" monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
 	e3:SetCountLimit(1,id)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCondition(s.atkcon)
+	e3:SetCondition(s.condition)
 	e3:SetCost(s.atkcost)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e4:SetCountLimit(1,id)
-	e4:SetCondition(s.spcon)
+	e4:SetCondition(s.condition)
 	e4:SetCost(aux.bfgcost)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
@@ -58,15 +58,14 @@ function s.actcon(e)
 	local d=Duel.GetAttackTarget()
 	return (a and s.cfilter(a,tp)) or (d and s.cfilter(d,tp))
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,nil,REASON_COST)
 end
-s.atkfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x137)
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
@@ -80,10 +79,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.atlimit(e,c)
-	return s.atkfilter(c)
-end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return c:IsFaceup() and c:IsSetCard(0x137)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x137) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -101,4 +97,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

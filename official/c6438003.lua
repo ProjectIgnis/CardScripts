@@ -1,9 +1,9 @@
 --戦華の詭－賈文
---Senka Schemer - Jia Wen
+--Ancient Warriors - Deceptive Jia Wen
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--to GY + attack decrease
+	--Send a card to the GY and decrease ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_ATKCHANGE)
@@ -14,19 +14,19 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--to hand 
-	local e2=Effect.CreateEffect(c) 
-	e2:SetDescription(aux.Stringid(id,1)) 
-	e2:SetCategory(CATEGORY_TOHAND) 
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O) 
-	e2:SetCode(EVENT_DESTROYED) 
-	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET) 
-	e2:SetRange(LOCATION_MZONE) 
-	e2:SetCountLimit(1,id+1) 
-	e2:SetCondition(s.thcond) 
-	e2:SetTarget(s.thtg) 
-	e2:SetOperation(s.thop) 
-	c:RegisterEffect(e2) 
+	--Add a target from the GY to the hand
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
+	e2:SetCode(EVENT_DESTROYED)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1,id+1)
+	e2:SetCondition(s.thcond)
+	e2:SetTarget(s.thtg)
+	e2:SetOperation(s.thop)
+	c:RegisterEffect(e2)
 end
 s.listed_names={id}
 s.listed_series={0x137}
@@ -63,14 +63,14 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.cfilter(c,tp) 
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==1-tp and c:IsReason(REASON_BATTLE+REASON_EFFECT) 
-end 
-function s.thcond(e,tp,eg,ep,ev,re,r,rp) 
-	return eg:IsExists(s.cfilter,1,nil,tp) 
+function s.cfilter(c,tp)
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==1-tp and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+end
+function s.thcond(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x137) and c:IsAbleToHand() and not c:IsCode(id) 
+	return c:IsSetCard(0x137) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -81,8 +81,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

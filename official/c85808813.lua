@@ -38,7 +38,7 @@ end
 	--Check for "Fossil" fusion monster with 2 levels higher than one in "filter"
 function s.ssfilter(c,lv,e,tp)
 	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x14c) and c:IsLevel(lv+2)
-	and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,true,POS_FACEUP)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,true,POS_FACEUP)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -2,7 +2,7 @@
 --Dark Fusion
 local s,id=GetID()
 function s.initial_effect(c)
-	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsRace,RACE_FIEND),nil,nil,nil,nil,s.stage2,nil,SUMMON_TYPE_FUSION|0x10))
+	c:RegisterEffect(Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_FIEND),stage2=s.stage2}))
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then

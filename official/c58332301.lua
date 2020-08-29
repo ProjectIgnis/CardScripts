@@ -2,51 +2,48 @@
 --Evil HERO Dark Gaia
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--Fusion material
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_FIEND),aux.FilterBoolFunctionEx(Card.IsRace,RACE_ROCK))
-	--spsummon condition
+	--Special Summon condition
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(aux.EvilHeroLimit)
+	c:RegisterEffect(e0)
+	--Change original ATK
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetOperation(s.atkop)
+	c:RegisterEffect(e1)
+	--Change battle position
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e2:SetValue(aux.EvilHeroLimit)
+	e2:SetCategory(CATEGORY_POSITION)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e2:SetTarget(s.postg)
+	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-	--atk
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetOperation(s.atkop)
-	c:RegisterEffect(e3)
-	--Pos Change
-	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_POSITION)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e3:SetTarget(s.postg)
-	e3:SetOperation(s.posop)
-	c:RegisterEffect(e3)
 end
 s.dark_calling=true
 s.listed_names={CARD_DARK_FUSION}
-function s.splimit(e,se,sp,st)
-	return st==SUMMON_TYPE_FUSION+0x10
-end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=c:GetMaterial()
-	local s=0
+	local val=0
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local a=tc:GetAttack()
 		if a<0 then a=0 end
-		s=s+a
+		val=val+a
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
-	e1:SetValue(s)
+	e1:SetValue(val)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 end

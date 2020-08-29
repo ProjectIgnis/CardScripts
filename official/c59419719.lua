@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x14c),matfilter=aux.FALSE,extrafil=s.fextra,
-											stage2=s.stage2,value=0x20,extraop=Fusion.BanishMaterial})
+											stage2=s.stage2,extraop=Fusion.BanishMaterial})
 	c:RegisterEffect(e1)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)

@@ -2,7 +2,7 @@
 --Royal Demon's Death Voice
 local s,id=GetID()
 function s.initial_effect(c)
-	--mat check
+	--Material check
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_MATERIAL_CHECK)
@@ -56,12 +56,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetValue(val)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 				tc:RegisterEffect(e1)
-				local e1=Effect.CreateEffect(c)
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_UPDATE_DEFENSE)
-				e1:SetValue(val)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				tc:RegisterEffect(e1)
+				local e2=e1:Clone()
+				e2:SetCode(EFFECT_UPDATE_DEFENSE)
+				tc:RegisterEffect(e2)
 			end
 		end
 	end

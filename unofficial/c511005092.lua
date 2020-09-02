@@ -223,22 +223,14 @@ if not SealedDuel then
 		if not aux.AskEveryone(aux.Stringid(4006,9)) then
 			return
 		end
+		
 		--pack selection
-		local pack1=Duel.CreateToken(0,511003041)
-		local pack2=Duel.CreateToken(0,511003042)
-		local pack3=Duel.CreateToken(0,511003043)
-		local pack4=Duel.CreateToken(0,511003044)
-		selectpack={}
-
-		-- pack select
-		local sg=Group.FromCards(pack1,pack2,pack3,pack4):Select(tp,1,4,nil)
-		-- Duel.Hint(HINT_MESSAGE,1-tp,1211)
+		local selectpack={}
+		for _,sel in ipairs({Duel.SelectCardsFromCodes(tp,1,4,false,true,511003041,511003042,511003043,511003044)}) do
+			selectpack[sel[2]]=true
+		end
 		
 		--pack checking
-		selectpack[1]=sg:IsContains(pack1)
-		selectpack[2]=sg:IsContains(pack2)
-		selectpack[3]=sg:IsContains(pack3)
-		selectpack[4]=sg:IsContains(pack4)
 		if selectpack[3] and not selectpack[1] and not selectpack[2] and not selectpack[4] then
 			selectpack[2]=true
 		end
@@ -321,22 +313,17 @@ if not SealedDuel then
 		
 		for p=z,o do
 			for team=1,counts[p] do
-				local handcnt=Duel.GetFieldGroupCount(p,LOCATION_HAND,0)
 				Duel.SendtoDeck(Duel.GetFieldGroup(p,0xff,0),nil,-2,REASON_RULE)
 				for idx,code in ipairs(groups[p][team]) do
-					local loc=LOCATION_DECK
-					-- if idx<=handcnt then loc=LOCATION_HAND end
 					Debug.AddCard(code,p,p,LOCATION_DECK,1,POS_FACEDOWN_DEFENSE)
 				end
 				Debug.ReloadFieldEnd()
 				Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(4002,7))
-				local fg=Duel.GetFieldGroup(p,LOCATION_DECK+LOCATION_HAND,0)
+				local fg=Duel.GetFieldGroup(p,0xff,0)
 				local exclude=fg:Select(p,0,#fg-20,nil)
 				if exclude then
 					Duel.SendtoDeck(exclude,nil,-2,REASON_RULE)
 				end
-				local edg=Duel.GetFieldGroup(p,LOCATION_EXTRA,0)
-				if handcnt>0 then Duel.Draw(p,handcnt,REASON_RULE) end
 				Duel.ShuffleDeck(p)
 				Duel.ShuffleExtra(p)
 				local dtpg=Duel.GetDecktopGroup(p,Duel.GetStartingHand(p))

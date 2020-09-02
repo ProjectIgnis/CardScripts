@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	--custom EVENT_PLACED
 	local e2a=Effect.CreateEffect(c)
 	e2a:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e2a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e2a:SetRange(LOCATION_MZONE)
 	e2a:SetCode(EVENT_ADJUST)
 	e2a:SetOperation(s.plchk)

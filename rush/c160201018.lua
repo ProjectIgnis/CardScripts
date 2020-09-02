@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoGrave(g,REASON_COST)~=0 then
 		--Effect
-		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,2)
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+		local dg=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,2)
+		Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)
 	end
 end

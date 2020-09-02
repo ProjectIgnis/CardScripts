@@ -352,28 +352,43 @@ if not c946 then
 	c946.initial_effect=function()end
 end
 
-Duel.SelectCardsFromCodes=(function()
-	local tokenscache={}
-	tokenscache[0]={}
-	tokenscache[1]={}
-	return function(tp,minc,maxc,cancel,...)
-		if tp<0 or tp>1 then return end
-		local cards={...}
-		if #tokenscache[tp]<#cards then
-			for i=1,#cards-#tokenscache[tp] do
-				table.insert(tokenscache[tp],Duel.CreateToken(tp,946))
+if not Duel.SelectCardsFromCodes then
+	Duel.SelectCardsFromCodes=(function()
+		local tokenscache={}
+		tokenscache[0]={}
+		tokenscache[1]={}
+		return function(tp,minc,maxc,cancel,return_index,...)
+			if tp<0 or tp>1 then return end
+			local cards={...}
+			if #tokenscache[tp]<#cards then
+				for i=1,#cards-#tokenscache[tp] do
+					table.insert(tokenscache[tp],Duel.CreateToken(tp,946))
+				end
 			end
+			local offset=#tokenscache[tp]-#cards
+			for i,code in ipairs(cards) do
+				tokenscache[tp][i+offset]:Code(code)
+			end
+			local _g=Group.FromCards(table.unpack(tokenscache[tp],1+offset))
+			local indexes={}
+			if return_index then
+				local i=1
+				for tc in aux.Next(_g) do
+					indexes[tc]=i
+					i=i+1
+				end
+			end
+			local g=_g:Select(tp,minc,maxc,cancel)
+			if not g then return end
+			local res={}
+			for tc in aux.Next(g) do
+				if return_index then
+					table.insert(res,{ tc:Code(), indexes[tc] })
+				else
+					table.insert(res,tc:Code())
+				end
+			end
+			return table.unpack(res)
 		end
-		local offset=#tokenscache[tp]-#cards
-		for i,code in ipairs(cards) do
-			tokenscache[tp][i+offset]:Code(code)
-		end
-		local g=Group.FromCards(table.unpack(tokenscache[tp],1+offset)):Select(tp,minc,maxc,cancel)
-		if not g then return end
-		local res={}
-		for tc in aux.Next(g) do
-			table.insert(res,tc:Code())
-		end
-		return table.unpack(res)
-	end
-end)()
+	end)()
+end

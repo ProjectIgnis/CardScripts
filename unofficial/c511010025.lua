@@ -1,4 +1,5 @@
 --No.25 重装光学撮影機フォーカス・フォース (Anime)
+--Number 25: Force Focus (Anime)
 Duel.LoadCardScript("c64554883.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,9 +28,9 @@ function s.initial_effect(c)
 end
 s.xyz_number=25
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-  local c=e:GetHandler()
-  if ep==tp or c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-  return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	local c=e:GetHandler()
+	if ep==tp or c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
+	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

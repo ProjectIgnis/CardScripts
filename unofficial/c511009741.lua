@@ -46,10 +46,10 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,dam+ev)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<=1 and e:GetHandler():GetBattledGroupCount()>0 and  Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<=1 and e:GetHandler():GetBattledGroupCount()>0 and Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk ==0 then	return true end
+	if chk ==0 then return true end
 	local heal=e:GetHandler():GetFlagEffectLabel(id)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(heal)

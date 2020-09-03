@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if tp==ep or not Duel.IsChainNegatable(ev) then return false end
-	if not re:IsActiveType(TYPE_MONSTER) and not re:IsActiveType(TYPE_TRAP) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)  then return false end
+	if not re:IsActiveType(TYPE_MONSTER) and not re:IsActiveType(TYPE_TRAP) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local tex,ttg,ttc=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
 	if not tex or ttg==nil or ttc+ttg:FilterCount(Card.IsControler,nil,tp)-#ttg<=0 then return false end
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev-1,CATEGORY_DAMAGE)

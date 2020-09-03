@@ -67,7 +67,7 @@ end
 function s.destg555(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	--self
 	local heads=e:GetHandler():GetFlagEffectLabel(36690018)==1
-	if heads then	   
+	if heads then
 		if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
 		local c=e:GetHandler()
 		if chk==0 then return true end
@@ -82,7 +82,7 @@ function s.destg555(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	--opponents
 		if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
 		local c=e:GetHandler()
-		if chk==0 then return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0  end
+		if chk==0 then return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0 end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectTarget(tp,s.filter555,tp,0,LOCATION_MZONE,1,1,nil)
 		local atk=g:GetFirst():GetAttack()

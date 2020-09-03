@@ -1,5 +1,5 @@
 --Sealer Formation
---  By Shad3/ fixed for errors by GameMaster
+--By Shad3/ fixed for errors by GameMaster
 --cleaned up by MLD
 Duel.LoadScript("c420.lua")
 local s,id=GetID()

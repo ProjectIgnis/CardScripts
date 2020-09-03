@@ -27,10 +27,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	return true
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local dg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)	  
+	local dg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local tdg=dg:Select(tp,1,1,nil)
-	local tc=tdg:GetFirst() 
+	local tc=tdg:GetFirst()
 	if tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -42,5 +42,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e)
-	return Duel.GetCurrentPhase() >= PHASE_BATTLE_START and Duel.GetCurrentPhase() <= PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end

@@ -1,5 +1,5 @@
 --Deadman Pirates
---  By Shad3
+--By Shad3
 --cleaned up by MLD
 local s,id=GetID()
 function s.initial_effect(c)

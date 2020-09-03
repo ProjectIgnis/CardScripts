@@ -62,7 +62,7 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,0)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-  	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	local g=e:GetLabelObject()
 	if g then
 		if Duel.SendtoGrave(g,REASON_EFFECT)>0 then

@@ -37,7 +37,7 @@ function s.xyzfilter(c,sg,e,tp)
 	return res
 end
 function s.rescon(mft,exft,ft)
-	return  function(sg,e,tp,mg)
+	return function(sg,e,tp,mg)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				local mct=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 				return exft>=exct and mft>=mct and ft>=#sg 

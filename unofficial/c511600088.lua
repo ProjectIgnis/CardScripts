@@ -3,7 +3,7 @@
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-   --Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -28,13 +28,13 @@ function s.chkfilter(sc,c)
 	return c:IsRace(sc:GetRace()) and c:IsAttribute(sc:GetAttribute()) and c:GetType()&tpe==sc:GetType()&tpe
 end
 function s.rescon1(g)
-	return  function(sg,e,tp,mg)
+	return function(sg,e,tp,mg)
 				local ct=#sg
 				return aux.SelectUnselectGroup(g,e,tp,ct,ct,s.rescon2(sg),0)
 			end
 end
 function s.rescon2(g)
-	return  function(sg,e,tp,mg)
+	return function(sg,e,tp,mg)
 				local gtable={}
 				g:ForEach(function(tc)
 					table.insert(gtable,tc)

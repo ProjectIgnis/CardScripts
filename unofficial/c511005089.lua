@@ -1,6 +1,6 @@
 --Galaxy Shockwave
 --銀河衝撃
---  By Shad3
+--By Shad3
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)

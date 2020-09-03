@@ -13,11 +13,11 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_DISABLE)
 	e1:SetTarget(function(e,c) return c~=e:GetHandler() end)
 	c:RegisterEffect(e1)
-	--copy  
+	--copy
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_ADJUST)
-	e2:SetRange(LOCATION_MZONE) 
+	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 	--indes
@@ -61,7 +61,7 @@ function s.initial_effect(c)
 	e8:SetRange(LOCATION_MZONE)
 	e8:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e8:SetOperation(s.reset)
-	c:RegisterEffect(e8) 
+	c:RegisterEffect(e8)
 end
 s.xyz_number=69
 function s.copfilter(c)
@@ -74,7 +74,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if c:IsFaceup() then
 			local cid=c:CopyEffect(wbc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,1)
 			wbc:RegisterFlagEffect(id,0,0,0,cid)
-		end 
+		end
 	end
 end
 function s.rfilter(c)
@@ -103,7 +103,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

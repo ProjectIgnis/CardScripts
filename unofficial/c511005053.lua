@@ -1,5 +1,5 @@
 --Galaxy Shot
---  By Shad3
+--By Shad3
 --cleaned and updated by MLD
 local s,id=GetID()
 function s.initial_effect(c)

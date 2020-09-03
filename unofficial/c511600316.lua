@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x135}
 function s.chk(e,tp,eg,ep,ev,re,r,rp)
-	if  Duel.IsBattlePhase() and Duel.GetFlagEffect(0,id)==0 then
+	if Duel.IsBattlePhase() and Duel.GetFlagEffect(0,id)==0 then
 		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_BATTLE,0,1)
 		if Duel.GetAttacker():IsType(TYPE_LINK) and Duel.GetAttackTarget() and Duel.GetAttackTarget():IsType(TYPE_LINK) then
 			Duel.RegisterFlagEffect(0,id+1,RESET_PHASE+PHASE_BATTLE,0,1)

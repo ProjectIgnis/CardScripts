@@ -1,6 +1,6 @@
 --Shadow Clone Zone
 --多分影分身
---  By Shad3
+--By Shad3
 --cleaned and updated by MLD
 local s,id=GetID()
 function s.initial_effect(c)

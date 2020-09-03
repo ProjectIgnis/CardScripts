@@ -87,7 +87,7 @@ end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	local _,max=c:GetTributeRequirement()
-	return  max>0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return max>0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 ------------------------------------------------------------------------
 --spirit charge

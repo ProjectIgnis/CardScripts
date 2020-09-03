@@ -49,6 +49,7 @@ function s.conttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.contop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
+	if #g~=2 then return end
 	local a=g:GetFirst()
 	local b=g:GetNext()
 	if a:IsRelateToEffect(e) and b:IsRelateToEffect(e) then

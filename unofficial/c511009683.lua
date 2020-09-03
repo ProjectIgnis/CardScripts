@@ -23,7 +23,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end
 function s.filter(c,e,tp,tid)
-	return c:IsSetCard(0xfc) and c:IsLinkMonster() and c:IsReason(REASON_DESTROY) and c:GetTurnID()==tid 
+	return c:IsSetCard(0xfc) and c:IsLinkMonster() and c:IsReason(REASON_DESTROY) and c:GetTurnID()==tid
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -55,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e2:SetValue(1)
 			e2:SetCondition(s.rcon)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)		
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			c:RegisterEffect(e2)
 		end
 	end

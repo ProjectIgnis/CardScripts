@@ -39,14 +39,14 @@ end
 function s.filter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)	
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
 	if chk==0 then return s.filter(tc) end
 	Duel.SetTargetPlayer(ep)
 	Duel.SetTargetParam(200)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,200)
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)	
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)

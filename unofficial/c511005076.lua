@@ -97,12 +97,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Equip(tp,tc,g:GetFirst())
 		end
 		tc:ReleaseEffectRelation(te)
-		if etc then	
+		if etc then
 			etc=g:GetFirst()
 			while etc do
 				etc:ReleaseEffectRelation(te)
 				etc=g:GetNext()
 			end
 		end
-	end	
+	end
 end

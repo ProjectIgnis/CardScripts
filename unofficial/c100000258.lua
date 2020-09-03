@@ -66,10 +66,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		e4:SetRange(LOCATION_SZONE)
-		e4:SetCode(EVENT_LEAVE_FIELD)	
+		e4:SetCode(EVENT_LEAVE_FIELD)
 		e4:SetCondition(s.descon)
-		e4:SetOperation(s.desop)	
-		e4:SetLabelObject(tc)			
+		e4:SetOperation(s.desop)
+		e4:SetLabelObject(tc)
 		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e4)
 		if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) and tp~=Duel.GetTurnPlayer() then
@@ -110,7 +110,7 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetCard(etc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end	
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local rc=Duel.GetFirstTarget()
 	local tc=e:GetLabelObject()
 	if tc:IsFaceup() then

@@ -21,10 +21,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	return true
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local dg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)		
+	local dg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local tdg=dg:Select(tp,1,1,nil)
-	local tc=tdg:GetFirst()	
+	local tc=tdg:GetFirst()
 	local td=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	if tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())

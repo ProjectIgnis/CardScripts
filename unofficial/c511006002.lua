@@ -29,5 +29,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoHand(tc,nil,REASON_EFFECT)==1 then
 		local c = Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,tc,e,tp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_ATTACK)
-	end		
+	end
 end

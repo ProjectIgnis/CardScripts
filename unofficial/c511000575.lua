@@ -29,4 +29,4 @@ function s.condition(e,c)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsDeckMaster()
-end	
+end

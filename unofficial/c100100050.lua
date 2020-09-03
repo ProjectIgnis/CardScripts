@@ -17,9 +17,9 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	if chk==0 then return Duel.GetCurrentPhase()~=PHASE_MAIN2
-		and tc and tc:IsCanRemoveCounter(tp,0x91,2,REASON_COST) end	 
+		and tc and tc:IsCanRemoveCounter(tp,0x91,2,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	tc:RemoveCounter(tp,0x91,2,REASON_COST)	
+	tc:RemoveCounter(tp,0x91,2,REASON_COST)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BP)

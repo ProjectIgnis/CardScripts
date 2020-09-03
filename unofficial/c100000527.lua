@@ -21,7 +21,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e2:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e2:SetValue(s.value)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e:GetHandler():RegisterEffect(e2)		
+	e:GetHandler():RegisterEffect(e2)
 end
 function s.value(e,c)
 	return c:GetAttack()/2

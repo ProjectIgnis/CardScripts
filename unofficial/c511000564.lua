@@ -31,10 +31,10 @@ end
 s.dm=true
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsLocation(0x400)
-end	
+end
 function s.con2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsDeckMaster()
-end	
+end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end
 	if chk==0 then return true end

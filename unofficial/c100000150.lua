@@ -5,11 +5,11 @@ function s.initial_effect(c)
 	--dark synchro summon
 	c:EnableReviveLimit()
 	Synchro.AddDarkSynchroProcedure(c,Synchro.NonTuner(nil),nil,8)
-	--copy	
+	--copy
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_ADJUST)
-	e2:SetRange(LOCATION_MZONE)	
+	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 	--search

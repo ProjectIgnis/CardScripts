@@ -61,7 +61,7 @@ function s.filter2(c,eqc,e,tp)
 	return c:GetFlagEffect(id)~=0 and aux.IsCodeListed(c,eqc:GetCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and eg:IsExists(s.filter,1,nil,e,tp) end	
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and eg:IsExists(s.filter,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local gc=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=e:GetLabelObject()
@@ -92,7 +92,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e1:SetValue(1)
 			tc:RegisterEffect(e1,true)
-			local e2=Effect.CreateEffect(c)	
+			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)

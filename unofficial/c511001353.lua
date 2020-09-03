@@ -78,5 +78,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(token,0,tp,1-tp,false,false,POS_FACEUP)
 	if not tc:IsType(TYPE_TRAPMONSTER) then
 		token:CopyEffect(tc:GetCode(),RESET_EVENT+RESETS_STANDARD,1)
-	end	
+	end
 end

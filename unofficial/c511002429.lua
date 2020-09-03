@@ -88,7 +88,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if c:IsRelateToEffect(e) then
 		Duel.ReturnToField(tc)
-		Duel.Destroy(c,REASON_EFFECT)		
+		Duel.Destroy(c,REASON_EFFECT)
 		tc:ResetEffect(RESET_MSCHANGE,RESET_EVENT)
 	end
 end

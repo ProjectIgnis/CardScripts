@@ -125,5 +125,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				etc=g:GetNext()
 			end
 		end
-	end	
+	end
 end

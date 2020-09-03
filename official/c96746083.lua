@@ -1,4 +1,5 @@
 --真竜皇アグニマズドV
+--True King Agnimazud, the Vanisher
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -45,10 +46,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return ft>-2 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and #g>=2 and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_FIRE)
 		and (ft~=0 or g:IsExists(s.mzfilter,1,nil,tp)) end
-	if (#g==2 and g:FilterCount(Card.IsLocation,nil,LOCATION_HAND)==1) or not g:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then
+	if #g==2 and g:FilterCount(Card.IsLocation,nil,LOCATION_HAND)<=1 then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
 	else
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,tp,loc)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,tp,LOCATION_MZONE)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end

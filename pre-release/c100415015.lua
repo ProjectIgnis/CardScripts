@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x24c,0x24d}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x24d,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,0x24c,lc,sumtype,tp)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x24d),tp,LOCATION_MZONE,0,1,nil)

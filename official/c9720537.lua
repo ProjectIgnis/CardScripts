@@ -1,4 +1,5 @@
 --所有者の刻印
+--Owner's Seal
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		if not tc:IsImmuneToEffect(e) then
 			tc:ResetEffect(EFFECT_SET_CONTROL,RESET_CODE)

@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e5:SetCountLimit(1)
 	e5:SetTarget(s.cltg)
 	e5:SetOperation(s.clop)
-	c:RegisterEffect(e5)		
+	c:RegisterEffect(e5)
 	--negate
 	local e6=Effect.CreateEffect(c)
 	e6:SetCategory(CATEGORY_DISABLE)
@@ -94,12 +94,12 @@ function s.ngcon(e,tp,eg,ep,ev,re,r,rp)
 		local rd=e1 and not e2
 		local rr=not e1 and e2
 		local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
-		if ex and (cp==p or cp==PLAYER_ALL) and not rr then 
-			return true 
+		if ex and (cp==p or cp==PLAYER_ALL) and not rr then
+			return true
 		end
 		ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-		if ex and (cp==p or cp==PLAYER_ALL) and rd then 
-			return true 
+		if ex and (cp==p or cp==PLAYER_ALL) and rd then
+			return true
 		end
 	end
 	return false

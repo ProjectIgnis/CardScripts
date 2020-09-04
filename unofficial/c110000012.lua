@@ -1,20 +1,10 @@
 --オシリスの天空竜
+--Slifer the Sky Dragon (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-	e1:SetCondition(s.ttcon)
-	e1:SetOperation(s.ttop)
-	e1:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_LIMIT_SET_PROC)
-	e2:SetCondition(s.setcon)
-	c:RegisterEffect(e2)
+	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3)
+	local e2=aux.AddNormalSetProcedure(c)
 	--summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -75,19 +65,6 @@ function s.initial_effect(c)
 	e11:SetValue(1)
 	c:RegisterEffect(e11)
 end
-function s.ttcon(e,c)
-	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-3 and Duel.GetTributeCount(c)>=3
-end
-function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectTribute(tp,c,3,3)
-	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
-end
-function s.setcon(e,c)
-	if not c then return true end
-	return false
-end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(aux.FALSE)
 end
@@ -111,7 +88,7 @@ function s.filter(c,e,tp)
 	return c:IsControler(1-tp) and c:IsFaceup() and (c:IsDefenseBelow(2000) or c:IsAttackBelow(2000)) and (not e or c:IsRelateToEffect(e))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and eg:IsExists(s.filter,1,nil,nil,tp)  end
+	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and eg:IsExists(s.filter,1,nil,nil,tp) end
 	local g=eg:Filter(s.filter,nil,nil,tp)
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)

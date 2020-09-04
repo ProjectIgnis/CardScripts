@@ -1,4 +1,5 @@
---SR fiendmagnet
+--ＳＲアクマグネ (Anime)
+--Speedroid Maliciousmagnet (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro
@@ -48,8 +49,7 @@ function s.synfilter(sc,c,tc)
 	e1:SetCode(EFFECT_SYNCHRO_MATERIAL)
 	e1:SetReset(RESET_CHAIN)
 	tc:RegisterEffect(e1)
-	local g=Group.FromCards(c,tc)
-	local res=sc:IsSynchroSummonable(nil,g)
+	local res=sc:IsSynchroSummonable(nil,Group.FromCards(c,tc))
 	e1:Reset()
 	return res
 end
@@ -65,13 +65,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_SYNCHRO_MATERIAL)
-		e1:SetReset(RESET_CHAIN)
-		tc:RegisterEffect(e1)
 		local g=Duel.GetMatchingGroup(s.synfilter,tp,LOCATION_EXTRA,0,nil,c,tc)
 		if #g>0 then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_SYNCHRO_MATERIAL)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e1)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)
 			Duel.SynchroSummon(tp,sg:GetFirst(),nil,Group.FromCards(c,tc))

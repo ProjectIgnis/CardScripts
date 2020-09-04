@@ -17,23 +17,20 @@ s.roll_dice=true
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
 end
-function s.filter(c,tc)
-	return c:IsControlerCanBeChanged()
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetAttacker()
 	if chkc then return chkc==tg end
-	if chk==0 then return tg:IsOnField() and tg:IsCanBeEffectTarget(e) end
+	if chk==0 then return tg:IsOnField() and tg:IsCanBeEffectTarget(e) and aux.CheckStealEquip(tg,e,tp) end
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local d=Duel.TossDice(tp,1)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if d==6 then
-		if tc:IsFaceup() and tc:IsRelateToEffect(e) and c:IsLocation(LOCATION_SZONE) and not tc:IsImmuneToEffect(e) then
-			Duel.Equip(tp,c,tc)
+		if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and c:IsLocation(LOCATION_SZONE) and not tc:IsImmuneToEffect(e) and aux.CheckStealEquip(tc,e,tp) and Duel.Equip(tp,c,tc) then
 			--Add Equip limit
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

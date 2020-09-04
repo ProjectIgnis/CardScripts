@@ -1,4 +1,5 @@
---Sea Kings Verdict
+--深海王の宣告
+--Sea King's Verdict
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,8 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph>=0x08 and ph<=0x20 and tp~=ep and re:IsActiveType(TYPE_TRAP)
+	return Duel.IsBattlePhase() and ep==1-tp and re:IsActiveType(TYPE_TRAP)
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

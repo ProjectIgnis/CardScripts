@@ -4,9 +4,9 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--must be first link summoned
 	c:EnableReviveLimit()
-	--link summon
+	--Link summon
 	Link.AddProcedure(c,aux.NOT(aux.FilterBoolFunctionEx(Card.IsType,TYPE_TOKEN)),2)
-	--effect
+	--Effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

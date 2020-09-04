@@ -27,20 +27,20 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	if s.counter==nil then
-		s.counter=true 
+		s.counter=true
 		s[0]=0
 		s[1]=0
 		local ec1=Effect.CreateEffect(c)
 		ec1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ec1:SetCode(EVENT_BATTLE_DESTROYED)
-   		ec1:SetOperation(s.operation)
-   		Duel.RegisterEffect(ec1,0)
-   		local ec2=Effect.CreateEffect(c)
+		ec1:SetOperation(s.operation)
+		Duel.RegisterEffect(ec1,0)
+		local ec2=Effect.CreateEffect(c)
 		ec2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		ec2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
 		ec2:SetOperation(s.resetcount)
 		Duel.RegisterEffect(ec2,0)
-   	end
+	end
 end
 s.listed_series={0x580}
 function s.resetcount(e,tp,eg,ep,ev,re,r,rp)
@@ -75,18 +75,15 @@ end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e1:SetOperation(s.dop)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
+	e1:SetValue(HALF_DAMAGE)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
-	Duel.BreakEffect()
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-	local p=Duel.GetTurnPlayer()
-	Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN2 and not Duel.CheckPhaseActivity()

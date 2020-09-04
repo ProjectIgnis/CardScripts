@@ -15,7 +15,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,e:GetHandler())
 end
- function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
@@ -31,5 +31,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local sg=g:Select(p,3,3,nil)
 			Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
 		end
-	end	
+	end
 end

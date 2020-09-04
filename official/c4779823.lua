@@ -53,7 +53,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
@@ -70,7 +70,7 @@ function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
-	local ct=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	local ct=Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	if ct>0 then
 		Duel.Recover(tp,ct*300,REASON_EFFECT)
 	end

@@ -59,7 +59,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsControler(tp) and tc:IsRace(RACE_CYBERSE) and tc~=e:GetHandler()
+	return ep==1-tp and tc:IsControler(tp) and tc:IsRace(RACE_CYBERSE) and tc~=e:GetHandler()
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -92,4 +92,3 @@ end
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
-

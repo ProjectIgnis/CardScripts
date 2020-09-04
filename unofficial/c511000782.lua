@@ -22,9 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
-		and not Duel.GetAttacker() and Duel.GetTurnPlayer()==tp
+	return Duel.IsBattlePhase() and not Duel.GetAttacker() and Duel.GetTurnPlayer()==tp
 end
 function s.filter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:CanAttack()

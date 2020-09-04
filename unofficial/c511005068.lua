@@ -28,15 +28,14 @@ function s.cd(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=Duel.GetAttackTarget()
-	if chk==0 then return bc and bc:IsFaceup() and bc:IsCanBeEffectTarget(e) and bc:IsControlerCanBeChanged() end
+	if chk==0 then return bc and aux.CheckStealEquip(bc,e,tp) end
 	Duel.SetTargetCard(bc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
-		Duel.Equip(tp,c,tc)
+	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) and aux.CheckStealEquip(tc,e,tp) and Duel.Equip(tp,c,tc) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_SET_CONTROL)
@@ -68,7 +67,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.des_cd(e,tp,eg,ep,ev,re,r,rp)
 	local rc=e:GetHandler():GetEquipTarget()
-	return rc and eg:IsExists(rc)
+	return rc and eg:IsContains(rc)
 end
 function s.des_op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

@@ -18,8 +18,7 @@ function s.cfilter(c)
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE  
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil)
+	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil)
 end
 function s.xyzfilter(c)
 	return c:IsXyzSummonable() and c:IsSetCard(0xba)
@@ -34,12 +33,13 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.XyzSummon(tp,tc)
 		if not tc:IsHasEffect(511002571) then return end
-		local eff={tc:GetCardEffect(511002571)}
+		local effs={tc:GetCardEffect(511002571)}
 		local te=nil
 		local acd={}
 		local ac={}
-		for _,teh in ipairs(eff) do
+		for _,teh in ipairs(effs) do
 			local temp=teh:GetLabelObject()
+			if temp:GetCode()&511001822==511001822 then temp=temp:GetLabelObject() end
 			local con=temp:GetCondition()
 			local cost=temp:GetCost()
 			local tg=temp:GetTarget()
@@ -60,7 +60,8 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		if not te then return end
 		local teh=te
 		te=teh:GetLabelObject()
-		local cost=temp:GetCost()
+		if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
+		local cost=te:GetCost()
 		if cost then cost(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		local tg=te:GetTarget()
 		if tg then tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
@@ -68,14 +69,18 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		tc:CreateEffectRelation(te)
 		Duel.BreakEffect()
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-		for etc in aux.Next(g) do
-			etc:CreateEffectRelation(te)
+		if g and #g>0 then
+			for etc in aux.Next(g) do
+				etc:CreateEffectRelation(te)
+			end
 		end
 		local operation=te:GetOperation()
 		if operation then operation(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		tc:ReleaseEffectRelation(te)
-		for etc in aux.Next(g) do
-			etc:ReleaseEffectRelation(te)
+		if g and #g>0 then
+			for etc in aux.Next(g) do
+				etc:ReleaseEffectRelation(te)
+			end
 		end
 	end
 end

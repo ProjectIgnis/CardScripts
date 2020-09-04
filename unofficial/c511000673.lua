@@ -29,7 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local c=e:GetHandler()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetRange(LOCATION_MZONE)
 		e3:SetOperation(s.atkop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3)
 	end
 end
@@ -79,9 +79,9 @@ end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	local bc=tc:GetBattleTarget()
-		local dam=bc:GetAttack()
-		if dam<0 then dam=0 end
-		Duel.Damage(1-tp,dam,REASON_EFFECT)
+	local dam=bc:GetAttack()
+	if dam<0 then dam=0 end
+	Duel.Damage(1-tp,dam,REASON_EFFECT)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

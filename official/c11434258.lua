@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsLinkMonster()  and Duel.IsPlayerCanDraw(tp,c:GetLink())
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsLinkMonster() and Duel.IsPlayerCanDraw(tp,c:GetLink())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.filter(chkc,tp) end
@@ -30,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local tc=Duel.GetFirstTarget()
 	local ct=tc:GetLink()
-	if tc:IsRelateToEffect(e) and Duel.Draw(p,ct,REASON_EFFECT)==ct then 
+	if tc and tc:IsRelateToEffect(e) and Duel.Draw(p,ct,REASON_EFFECT)==ct then
 		local hdct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0) --gets the hand size
 		local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,LOCATION_HAND,0,nil) --gets cards that can be return
 		if hdct<=1 or #g==0 then return end --if fewer than 2 OR cannot return
@@ -45,4 +45,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

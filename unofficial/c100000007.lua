@@ -1,4 +1,5 @@
 --時械神 ザフィオン
+--c100000007.lua
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

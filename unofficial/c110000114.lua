@@ -1,3 +1,4 @@
+--フルアーマー・グラビテーション
 --Full Armor Gravitation
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,7 +19,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_DECK)
 end
 function s.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsType(0x10000000)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsType(TYPE_ARMOR)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,10)
@@ -43,13 +44,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetDecktopGroup(tp,ct)
 	local g2=Duel.GetDecktopGroup(tp,ct+1)
 	g2:Sub(g1)
-	if g1:GetFirst():IsType(0x10000000) and g1:GetFirst():IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0 then
+	if g1:GetFirst():IsType(TYPE_ARMOR) and g1:GetFirst():IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0 then
 		Duel.SpecialSummonStep(g1:GetFirst(),0,tp,tp,false,false,POS_FACEUP)
 		g:RemoveCard(g1:GetFirst())
 		ft=ft-1
 	end
 	local tc=g2:GetFirst()
-	if tc:IsType(0x10000000) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0 then
+	if tc:IsType(TYPE_ARMOR) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0 then
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		g:RemoveCard(tc)
 		ft=ft-1
@@ -60,7 +61,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		g2=Duel.GetDecktopGroup(tp,ct+1)
 		g2:Sub(g1)
 		tc=g2:GetFirst()
-		if tc:IsType(0x10000000) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0 then
+		if tc:IsType(TYPE_ARMOR) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0 then
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			g:RemoveCard(tc)
 			ft=ft-1

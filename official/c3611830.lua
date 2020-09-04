@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1)
 	Pendulum.AddProcedure(c)
-	--special summon from the pendulum zone
+	--Special summon from the pendulum zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY+CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate Spell/Trap
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_COUNTER+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
-	--cannot be targeted
+	--Cannot be targeted
 	local e3=Effect.CreateEffect(c)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -36,18 +36,19 @@ function s.initial_effect(c)
 	e3:SetCondition(s.indcon)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
-	--cannot be destroyed
+	--Cannot be destroyed
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e4:SetValue(s.indval)
 	c:RegisterEffect(e4)
-	--search
+	--Register before leaving
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EVENT_LEAVE_FIELD_P)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e5:SetOperation(s.regop)
 	c:RegisterEffect(e5)
+	--Search
 	local e6=Effect.CreateEffect(c)
 	e6:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -57,6 +58,7 @@ function s.initial_effect(c)
 	e6:SetTarget(s.thtg)
 	e6:SetOperation(s.thop)
 	c:RegisterEffect(e6)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.counter_place_list={COUNTER_SPELL}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -116,7 +118,7 @@ function s.indcon(e)
 	return e:GetHandler():GetCounter(COUNTER_SPELL)>0
 end
 function s.indval(e,re,tp)
-	return tp~=e:GetHandlerPlayer()
+	return tp==1-e:GetHandlerPlayer()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

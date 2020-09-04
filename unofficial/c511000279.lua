@@ -1,3 +1,4 @@
+--Ｚ－ＯＮＥ (Anime)
 --Z-ONE (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,15 +16,11 @@ function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousPosition(POS_FACEDOWN) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) 
 		and e:GetHandler():IsReason(REASON_DESTROY)
 end
-function s.filter(c,e,tp,eg,ep,ev,re,r,rp)
-	local te=c:GetActivateEffect()
-	if not te then return false end
-	local cost=te:GetCost()
-	local target=te:GetTarget()
-	return (not cost or cost(te,tp,eg,ep,ev,re,r,rp,0)) and (not target or target(te,tp,eg,ep,ev,re,r,rp,0)) and c:IsAbleToRemove()
+function s.filter(c)
+	return c:CheckActivateEffect(false,false,false) and c:IsAbleToRemove()
 end
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0x13,0,1,nil,e,tp,eg,ep,ev,re,r,rp) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0x13,0,1,nil) 
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,0x13)
 end
@@ -31,12 +28,12 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0x13,0,1,1,nil,e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0x13,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 then
 		Duel.BreakEffect()
 		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-		local te=tc:GetActivateEffect()
+		local te,teg,tep,tev,tre,tr,trp=tc:CheckActivateEffect(false,false,true)
 		if not te then return end
 		local code=tc:GetOriginalCode()
 		local tpe=tc:GetType()
@@ -74,7 +71,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 		local tg=te:GetTarget()
 		e:SetCategory(te:GetCategory())
 		e:SetProperty(te:GetProperty())
-		if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
+		if tg then tg(e,tp,teg,tep,tev,tre,tr,trp,1) end
 		if (tpe&TYPE_EQUIP+TYPE_CONTINUOUS+TYPE_FIELD)==0 then
 			c:CancelToGrave(false)
 		else
@@ -84,20 +81,16 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 		if g then
-			local etc=g:GetFirst()
-			while etc do
+			for etc in aux.Next(g) do
 				etc:CreateEffectRelation(e)
-				etc=g:GetNext()
 			end
 		end
 		local op=te:GetOperation()
-		if op then op(e,tp,eg,ep,ev,re,r,rp) end
+		if op then op(e,tp,teg,tep,tev,tre,tr,trp) end
 		c:ReleaseEffectRelation(e)
-		if etc then	
-			etc=g:GetFirst()
-			while etc do
+		if g then
+			for etc in aux.Next(g) do
 				etc:ReleaseEffectRelation(e)
-				etc=g:GetNext()
 			end
 		end
 	end

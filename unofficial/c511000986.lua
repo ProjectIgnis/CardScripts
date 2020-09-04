@@ -18,7 +18,7 @@ function s.cfilter(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil)
-	return #g==1 and ep~=tp
+	return #g==1 and ep==1-tp
 end
 function s.filter(c)
 	return c:IsCode(111011002) and c:IsAbleToHand()
@@ -42,6 +42,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(aux.TargetBoolFunction(Card.IsC))
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		e1:SetValue(1)
-		Duel.RegisterEffect(e1,tp)	
+		Duel.RegisterEffect(e1,tp)
 	end
 end

@@ -1,3 +1,4 @@
+--アルカナフォースＥＸ＿ＴＨＥ ＤＡＲＫ ＲＵＬＥＲ (Anime)
 --Arcana Force EX - The Dark Ruler (Anime)
 local s,id=GetID()
 function s.initial_effect(c)

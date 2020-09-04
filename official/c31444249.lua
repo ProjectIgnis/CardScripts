@@ -2,12 +2,12 @@
 --Void Imagination
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--change level
+	--Change level
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CHANGE_LEVEL)
@@ -16,15 +16,16 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	e2:SetTarget(s.lvtg)
 	c:RegisterEffect(e2)
-	--reduce battle damage
+	--Reduce battle damage
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCondition(s.rdcon)
-	e3:SetOperation(s.rdop)
+	e3:SetTarget(s.rdtg)
+	e3:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	c:RegisterEffect(e3)
-	--spsummon
+	--Fusion Summon
 	local params = {aux.FilterBoolFunction(Card.IsSetCard,0xbb),nil,s.fextra}
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -41,12 +42,8 @@ s.listed_series={0xbb}
 function s.lvtg(e,c)
 	return c:IsSetCard(0xbb) and c:GetOriginalLevel()>=2
 end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	local ac=eg:GetFirst()
-	return ep~=tp and ac:IsControler(tp) and ac:IsSetCard(0xbb) and ac:GetOriginalLevel()>=2 and not ac:IsImmuneToEffect(e)
-end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
+function s.rdtg(e,c)
+	return c:IsSetCard(0xbb) and c:GetOriginalLevel()>=2
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

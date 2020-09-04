@@ -1,7 +1,8 @@
 --薔薇の刻印
+--Mark of the Rose
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,1,Card.IsControlerCanBeChanged,s.eqlimit,s.cost,s.target)
+	aux.AddEquipProcedure(c,1,aux.CheckStealEquip,s.eqlimit,s.cost,s.target)
 	--control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

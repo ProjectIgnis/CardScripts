@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.ndcon)
 	e4:SetOperation(s.ndop)
 	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 end
 s.listed_names={6007213,32491822,69890967}
 function s.cfilter(c)
@@ -56,7 +57,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ndfilter(c,tp)
 	local cd=c:GetPreviousCodeOnField()
-	return (cd==6007213 or cd==32491822 or cd==69890967) and c:IsPreviousLocation(LOCATION_ONFIELD) 
+	return (cd==6007213 or cd==32491822 or cd==69890967) and c:IsPreviousLocation(LOCATION_ONFIELD)
 		and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
 end
 function s.ndcon(e,tp,eg,ep,ev,re,r,rp)

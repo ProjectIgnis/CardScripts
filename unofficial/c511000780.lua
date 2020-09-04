@@ -18,8 +18,8 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	if chk==0 then return tc and tc:IsCanRemoveCounter(tp,0x91,tc:GetCounter(0x91),REASON_COST) end	 
-	tc:RemoveCounter(tp,0x91,tc:GetCounter(0x91),REASON_COST)	
+	if chk==0 then return tc and tc:IsCanRemoveCounter(tp,0x91,tc:GetCounter(0x91),REASON_COST) end
+	tc:RemoveCounter(tp,0x91,tc:GetCounter(0x91),REASON_COST)
 end
 function s.monfilter(c)
 	local lv=c:GetLevel()

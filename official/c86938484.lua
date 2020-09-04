@@ -2,9 +2,10 @@
 --Shaddoll Construct
 local s,id=GetID()
 function s.initial_effect(c)
+	--Link Summon procedure
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_FLIP),2,2)
-	--fusion summon
+	--Fusion summon
 	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x9d)}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special summon itself from the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -48,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=nil
 	if ft<=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		g=sg:FilterSelect(tp,s.mzfilter,1,1,nil)		
+		g=sg:FilterSelect(tp,s.mzfilter,1,1,nil)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		g=sg:Select(tp,1,1,nil)
@@ -57,4 +58,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

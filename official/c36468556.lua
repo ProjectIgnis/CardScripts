@@ -1,4 +1,5 @@
 --停戦協定
+--Ceasefire
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.tgfilter(c)
-	return (c:IsFaceup() and c:IsType(TYPE_EFFECT)) or c:IsFacedown()
+	return (c:IsFaceup() and c:IsType(TYPE_EFFECT)) or c:IsPosition(POS_FACEDOWN_DEFENSE)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT)
@@ -24,8 +25,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if dam>0 then Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	Duel.ChangePosition(g,0x1,0x1,0x4,0x4,true)
+	local g=Duel.GetMatchingGroup(Card.IsPosition,tp,LOCATION_MZONE,LOCATION_MZONE,nil,POS_FACEDOWN_DEFENSE)
+	Duel.ChangePosition(g,0,0,0,POS_FACEUP_DEFENSE,true)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local dam=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)*500
 	Duel.Damage(p,dam,REASON_EFFECT)

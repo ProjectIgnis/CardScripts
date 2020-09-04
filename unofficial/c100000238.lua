@@ -30,6 +30,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
-	local c=e:GetHandler()	
+	local c=e:GetHandler()
 	Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 end

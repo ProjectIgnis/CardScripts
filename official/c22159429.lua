@@ -1,5 +1,5 @@
 --トリックスター・マジカローラ
---Trickstar Magicorolla
+--c22159429.lua
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,20 +12,21 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--destroy
+	--Register before leaving the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_LEAVE_FIELD_P)
 	e2:SetOperation(s.checkop)
 	c:RegisterEffect(e2)
+	--Destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetOperation(s.desop)
 	e3:SetLabelObject(e2)
-	c:RegisterEffect(e3)	
-	--special summon from hand
+	c:RegisterEffect(e3)
+	--Special summon from hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -86,11 +87,11 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local cet=e:GetHandler():GetEquipTarget()
-	return ep~=tp and ((eg and eg:GetFirst() == cet) or (re and re:GetHandler() == cet))
+	return ep~=tp and ((eg and eg:GetFirst()==cet) or (re and re:GetHandler()==cet))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)  end
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -101,4 +102,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

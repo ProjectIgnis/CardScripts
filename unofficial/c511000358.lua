@@ -1,6 +1,7 @@
+--奇跡の逆鱗
 --Miracle of Draconian Wrath
 local s,id=GetID()
-function s.initial_effect(c)	
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -18,14 +19,15 @@ function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>1
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_DECK,0,2,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	Duel.SelectTarget(tp,s.filter,tp,LOCATION_DECK,0,2,2,nil)
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if e:GetHandler():IsLocation(LOCATION_HAND) then ft= ft-1 end
+	if chk==0 then return ft>1 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,2,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetTargetCards(e)
-	if #g>1 then
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=1 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,2,2,nil)
+	if #g>0 then
 		Duel.SSet(tp,g)
 	end
 end

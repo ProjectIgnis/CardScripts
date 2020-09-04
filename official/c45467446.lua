@@ -1,6 +1,8 @@
 --白き霊龍
+--Dragon Spirit of White
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0xdd)
 	--Normal monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -37,13 +39,6 @@ function s.initial_effect(c)
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
-	--add setcode
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e6:SetCode(EFFECT_ADD_SETCODE)
-	e6:SetValue(0xdd)
-	c:RegisterEffect(e6)
 end
 s.listed_names={CARD_BLUEEYES_W_DRAGON}
 function s.rmfilter(c)

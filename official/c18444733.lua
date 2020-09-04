@@ -1,5 +1,5 @@
 --雷龍放電
---Thunder Dragon Streamer
+--Thunder Dragon Discharge
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--inactivatable
+	--Prevent negation
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_INACTIVATE)
@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 end
 s.listed_series={0x11c}
 function s.efilter(e,ct)
@@ -40,7 +41,7 @@ function s.efilter(e,ct)
 	return te:IsActiveType(TYPE_MONSTER) and tc:IsRace(RACE_THUNDER)
 end
 function s.cncfilter(c,tp)
-	return c:IsFaceup() and  c:IsSetCard(0x11c) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(0x11c) and c:IsControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cncfilter,1,nil,tp)
@@ -68,9 +69,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rc=g:GetFirst()
 	if rc and Duel.Remove(rc,POS_FACEUP,REASON_EFFECT)~=0 and rc:IsLocation(LOCATION_REMOVED) then
 		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) then
+		if tc and tc:IsRelateToEffect(e) then
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
 	end
 end
-

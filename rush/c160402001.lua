@@ -1,5 +1,5 @@
--- ロード・マジック－エクスプロージョン
--- Road Magic - Explosion
+--ロード・マジック－エクスプロージョン
+--Road Magic - Explosion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -33,10 +33,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	-- requirement
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST)
-	-- effect
-	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local dam=Duel.GetFieldGroupCount(1-tp,LOCATION_ONFIELD,0)*400
-	Duel.Damage(p,dam,REASON_EFFECT)
+	--requirement
+	if Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST)>0 then
+		--effect
+		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+		local dam=Duel.GetFieldGroupCount(1-tp,LOCATION_ONFIELD,0)*400
+		Duel.Damage(p,dam,REASON_EFFECT)
+	end
 end

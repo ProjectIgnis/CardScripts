@@ -1,14 +1,8 @@
---Celtic Guard of Noble Arms
 --エルフの聖剣士
+--Celtic Guard of Noble Arms
 local s,id=GetID()
 function s.initial_effect(c)
-	--add setcode
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e0:SetCode(EFFECT_ADD_SETCODE)
-	e0:SetValue(0xe4)
-	c:RegisterEffect(e0)
+	c:AddSetcodesRule(0xe4)
 	--cannot attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

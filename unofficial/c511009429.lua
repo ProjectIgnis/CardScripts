@@ -46,7 +46,7 @@ function s.atklimit(e,c)
 	return c==e:GetHandler()
 end
 function s.indtg(e,c)
-	return c:GetMutualLinkedGroupCount()>0
+	return c:IsLinkMonster() and c:GetMutualLinkedGroupCount()>0
 end
 function s.efilter(e,te)
 	return e:GetOwnerPlayer()~=te:GetOwnerPlayer() and te:IsActiveType(TYPE_MONSTER) and te:GetOwner():IsOnField()

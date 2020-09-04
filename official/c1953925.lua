@@ -2,7 +2,7 @@
 --Ancient Gear Engineer
 local s,id=GetID()
 function s.initial_effect(c)
-	--disable&destroy
+	--Negate and destroy traps
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DISABLE)
@@ -13,14 +13,14 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SELF_DESTROY)
 	c:RegisterEffect(e2)
-	--disable effect
+	--Negate the effect of traps
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_CHAIN_SOLVING)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
-	--actlimit
+	--Prevent activation
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.aclimit)
 	e4:SetCondition(s.actcon)
 	c:RegisterEffect(e4)
-	--destroy
+	--Destroy Spell/Trap
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetCategory(CATEGORY_DESTROY)
@@ -41,13 +41,7 @@ function s.initial_effect(c)
 	e5:SetTarget(s.destg)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
-	--Double Snare
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetCode(3682106)
-	c:RegisterEffect(e6)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.distg(e,c)
 	if not c:IsType(TYPE_TRAP) or c:GetCardTargetCount()==0 then return false end

@@ -13,8 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x7}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_EFFECT)==REASON_EFFECT and rp~=tp
+	return (r&REASON_EFFECT)==REASON_EFFECT and rp==1-tp
 end
 function s.cfilter(c,fc,e,tp)
 	local fd=c:GetCode()

@@ -3,9 +3,9 @@
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum
+	--Pendulum attributes
 	Pendulum.AddProcedure(c)
-	--modify levels
+	--Change levels
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -44,7 +44,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 			local tc2=g:GetFirst()
 			if tc2==tc then tc2=g:GetNext() end
 			if tc2 and tc2:IsFaceup() and tc2:IsRelateToEffect(e) then
-				 tc2:UpdateLevel(lv,nil,c)
+				tc2:UpdateLevel(lv,nil,c)
 			end
 		end
 	end

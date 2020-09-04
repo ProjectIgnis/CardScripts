@@ -24,6 +24,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleDeck(tp)
 		Duel.BreakEffect()
 		Duel.Draw(tp,2,REASON_EFFECT)
-		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)	
+		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
 	end
 end

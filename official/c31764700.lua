@@ -1,4 +1,5 @@
---ユベル－Das Extremer Traurig Drachen
+--ユベル－Ｄａｓ　Ｅｘｔｒｅｍｅｒ　Ｔｒａｕｒｉｇ　Ｄｒａｃｈｅｎ
+--Yubel - The Ultimate Nightmare
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

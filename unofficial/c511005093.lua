@@ -1,9 +1,8 @@
 --Booster Draft Duel (HIJACK)
 --Scripted by edo9300
 local id=511005093
-local selfs={}
 if self_table then
-	function self_table.initial_effect(c) table.insert(selfs,c) end
+	function self_table.initial_effect(c) end
 end
 
 --define pack
@@ -91,7 +90,7 @@ if not BoosterDraft then
 		
 		for p=z,o do
 			for team=1,counts[p] do
-				Duel.SendtoDeck(Duel.GetFieldGroup(tp,0xff,0xff),0,-2,REASON_RULE)
+				Duel.RemoveCards(Duel.GetFieldGroup(p,0xff,0),0,-2,REASON_RULE)
 				if counts[p]~=1 then
 					Duel.TagSwap(p)
 				end
@@ -112,30 +111,26 @@ if not BoosterDraft then
 			local total=(counts[0]+counts[1])*3
 			local retpacks={}
 			for t=1,total do
-				local g=Group.CreateGroup()
+				local _pack={}
 				for p=1,3 do
 					for i=1,5 do
 						local cpack=pack[i]
 						local c=cpack[Duel.GetRandomNumber(1,#cpack)]
-						g:AddCard(Debug.AddCard(c,t%2,t%2,LOCATION_GRAVE,1,POS_FACEUP))
+						table.insert(_pack,c)
 					end
 				end
-				table.insert(retpacks,g)
+				table.insert(retpacks,_pack)
 			end
-			Debug.ReloadFieldEnd()
 			return retpacks
-		end				
+		end
 		local packs = generate_packs()
-		local graveg=Duel.GetFieldGroup(p,LOCATION_GRAVE,LOCATION_GRAVE)
 		local pack=table.remove(packs, 1)
-		local confirmed=false
 		while pack do
 			for p=z,o do
 				for team=1,counts[p] do
-					if not confirmed then Duel.ConfirmCards(p,graveg) end
-					local tc=pack:Select(p,1,1,nil)
-					table.insert(groups[p][team],tc:GetFirst():GetCode())
-					pack:Sub(tc)
+					local tc=Duel.SelectCardsFromCodes(p,1,1,false,true,table.unpack(pack))
+					table.insert(groups[p][team],tc[1])
+					table.remove(pack, tc[2])
 					if counts[p]~=1 then
 						Duel.TagSwap(p)
 					end
@@ -145,19 +140,22 @@ if not BoosterDraft then
 					end
 				end
 			end
-			confirmed=true
 		end
 		::exit::
 		for p=z,o do
 			for team=1,counts[p] do
-				local graveg=Duel.GetFieldGroup(p,LOCATION_GRAVE,0)
-				local tempg=Group.CreateGroup()
-				for tc in aux.Next(graveg) do
-					tc:Recreate(groups[p][team][#tempg+1],nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,true)
-					tempg:AddCard(tc)
-					if #tempg==#groups[p][team] then break end
+				for _,card in ipairs(groups[p][team]) do
+					Debug.AddCard(card,p,p,LOCATION_DECK,1,POS_FACEDOWN)
 				end
-				Duel.SendtoDeck(tempg,nil,2,REASON_RULE)
+				if counts[p]~=1 then
+					Duel.TagSwap(p)
+				end
+			end
+		end
+		Debug.ReloadFieldEnd()
+		for p=z,o do
+			for team=1,counts[p] do
+				Duel.ShuffleDeck(p)
 				if counts[p]~=1 then
 					Duel.TagSwap(p)
 				end

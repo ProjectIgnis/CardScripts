@@ -1,5 +1,5 @@
 --神鳥の烈戦
---Simorgh Storms Forth
+--Simorgh Sky Battle
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	--Cannot target
+	--Limit battle target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
@@ -17,14 +17,15 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e2:SetValue(s.atlimit)
 	c:RegisterEffect(e2)
+	--Prevent effect target
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetTarget(s.atlimit)
-	e3:SetValue(s.evalue)
+	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
-	--To hand
+	--Return cards to hand and inflict damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_DAMAGE)
@@ -59,14 +60,11 @@ end
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsRace(RACE_WINGEDBEAST) and c:GetAttack()<s.atkval(e:GetHandlerPlayer())
 end
-function s.evalue(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
-end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:IsSetCard(0x12d) and c:IsLevelAbove(7)
 end
-function s.rescon(sg,e,tp,mg) 
-	return sg:GetClassCount(Card.GetOriginalAttribute)==#sg and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,sg+e:GetHandler()) 
+function s.rescon(sg,e,tp,mg)
+	return sg:GetClassCount(Card.GetOriginalAttribute)==#sg and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,sg+e:GetHandler())
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)

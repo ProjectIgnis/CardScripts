@@ -1,7 +1,6 @@
 --魔救の奇縁
 --Adamancipator Friends
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dc=g:Filter(s.thfilter,nil,ct)
 	if #g>0 then
 		Duel.DisableShuffleCheck()
-		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_ATOHAND)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=dc:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)

@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
@@ -65,9 +65,5 @@ end
 function s.ctlop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler()
 	local p=e:GetLabel()
-	if tc:IsControler(1-p) then
-		Duel.Hint(HINT_SELECTMSG,1-p,HINTMSG_TOZONE)
-		local zone=Duel.SelectDisableField(1-p,1,0,LOCATION_MZONE,0)>>16
-		Duel.GetControl(tc,p,0,0,zone)
-	end
+	Duel.GetControl(tc,p)
 end

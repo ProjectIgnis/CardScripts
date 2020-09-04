@@ -40,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(1-tp,s.filter,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
 	if #g>0 then
 		Duel.HintSelection(g)
-		if Duel.SendtoDeck(g,nil,2,REASON_EFFECT) then
+		if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) then
 			local tc=g:GetFirst()
 			local atk=tc:GetTextAttack()
 			if atk<0 then atk=0 end

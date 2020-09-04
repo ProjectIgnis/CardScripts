@@ -1,10 +1,11 @@
 --DDD超死偉王ダークネス・ヘル・アーマゲドン
+--D/D/D Super Doom King Dark Armageddon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Pendulum.AddProcedure(c,false)
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10af),8,2)
-	--spsummon
+	--special summon 1 "D/D/D" from the Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--attach
+	--attach 1 "D/D/D"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.xyztg)
 	e2:SetOperation(s.xyzop)
 	c:RegisterEffect(e2)
-	--indes
+	--cannot be destroyed by effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -33,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_PENDULUM))
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	--destroy
+	--destroy monsters
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_DESTROY)
@@ -45,16 +46,16 @@ function s.initial_effect(c)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
-	--pendulum
-	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(id,3))
-	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e6:SetCode(EVENT_DESTROYED)
-	e6:SetProperty(EFFECT_FLAG_DELAY)
-	e6:SetCondition(s.pencon)
-	e6:SetTarget(s.pentg)
-	e6:SetOperation(s.penop)
-	c:RegisterEffect(e6)
+	--move to the pendulum zone
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(id,3))
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e5:SetCode(EVENT_DESTROYED)
+	e5:SetProperty(EFFECT_FLAG_DELAY)
+	e5:SetCondition(s.pencon)
+	e5:SetTarget(s.pentg)
+	e5:SetOperation(s.penop)
+	c:RegisterEffect(e5)
 end
 s.listed_series={0x10af,0xaf}
 s.listed_names={id}

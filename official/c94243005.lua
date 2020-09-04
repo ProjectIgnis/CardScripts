@@ -8,14 +8,14 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--add counter
+	--Add counter
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -26,17 +26,25 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	--search
+	--Register before leaving
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e4:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
-	e4:SetCode(EVENT_LEAVE_FIELD)
-	e4:SetCondition(s.thcon)
-	e4:SetTarget(s.thtg)
-	e4:SetOperation(s.thop)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e4:SetCode(EVENT_LEAVE_FIELD_P)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4)
+	--Search
+	local e5=Effect.CreateEffect(c)
+	e5:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e5:SetDescription(aux.Stringid(id,1))
+	e5:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e5:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
+	e5:SetCode(EVENT_TO_GRAVE)
+	e5:SetCondition(s.thcon)
+	e5:SetTarget(s.thtg)
+	e5:SetOperation(s.thop)
+	e5:SetLabelObject(e4)
+	c:RegisterEffect(e5)
 end
 s.counter_place_list={0x13}
 function s.ctfilter(c)
@@ -68,12 +76,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local ct=e:GetHandler():GetCounter(0x13)
+	e:SetLabel(ct)
+end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ct=c:GetCounter(0x13)
+	local ct=e:GetLabelObject():GetLabel()
 	e:SetLabel(ct)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp)
-		and ct>0 and rp~=tp and (r&REASON_EFFECT)~=0
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp)
+		and ct>0 and rp==1-tp and (r&REASON_EFFECT)~=0
 end
 function s.thfilter(c,lv)
 	return c:IsLevelBelow(lv) and c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsAbleToHand()

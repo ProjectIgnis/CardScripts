@@ -78,11 +78,7 @@ function s.mvalue(e,fp,rp,r)
 	return 5-Duel.GetFieldGroupCount(fp,LOCATION_SZONE,0)
 end
 function s.svalue(e,fp,rp,r)
-	local ct=5
-	for i=5,7 do
-		if Duel.GetFieldCard(fp,LOCATION_SZONE,i) then ct=ct-1 end
-	end
-	return ct-Duel.GetFieldGroupCount(fp,LOCATION_MZONE,0)
+	return 5-Duel.GetFieldGroupCount(fp,LOCATION_MZONE+LOCATION_FZONE,0)
 end
 function s.aclimit(e,re,tp)
 	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end

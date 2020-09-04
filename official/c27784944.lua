@@ -1,9 +1,9 @@
 --極天気ランブラ
---Polar Weathery Lampla
+--The Weather Painter Aurora
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--place
+	--Place 1 "The Weather" Spell/Trap
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tftg)
 	e1:SetOperation(s.tfop)
 	c:RegisterEffect(e1)
-	--Untargetable
+	--Prevent effect target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -21,18 +21,19 @@ function s.initial_effect(c)
 	e2:SetTarget(s.immtg)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-	--Indes
+	--Prevent destruction by opponent's effect
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e3:SetValue(s.tgvalue)
+	e3:SetValue(aux.indoval)
 	c:RegisterEffect(e3)
-	--spsummon
+	--Register when removed
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetCode(EVENT_REMOVE)
 	e4:SetOperation(s.spreg)
 	c:RegisterEffect(e4)
+	--Special Summon itself
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -63,9 +64,6 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.immtg(e,c)
 	return c:IsSetCard(0x109) and c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
-function s.tgvalue(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end
 function s.spreg(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end

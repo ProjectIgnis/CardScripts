@@ -3,13 +3,13 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--special summon condition
+	--Special Summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon procedure
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--atk/def change
+	--Increase ATK/DEF
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
-	--cannot be tributed
+	--Cannot be Tributed
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -38,43 +38,58 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetValue(1)
 	c:RegisterEffect(e5)
-	--cannot be material
 	local e6=e5:Clone()
 	e6:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 	c:RegisterEffect(e6)
-	local e7=e5:Clone()
-	e7:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
+	--Cannot be used as material for a Fusion/Synchro/Xyz Summon
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_SINGLE)
+	e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e7:SetCode(EFFECT_CANNOT_BE_MATERIAL)
+	e7:SetValue(aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ))
 	c:RegisterEffect(e7)
-	local e8=e5:Clone()
-	e8:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+	--Banish battling monster
+	local e8=Effect.CreateEffect(c)
+	e8:SetDescription(aux.Stringid(id,0))
+	e8:SetCategory(CATEGORY_REMOVE)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e8:SetCode(EVENT_BATTLE_START)
+	e8:SetCountLimit(1)
+	e8:SetTarget(s.rmtg)
+	e8:SetOperation(s.rmop)
 	c:RegisterEffect(e8)
-	local e9=e5:Clone()
-	e9:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-	c:RegisterEffect(e9)
-	--remove
-	local e10=Effect.CreateEffect(c)
-	e10:SetDescription(aux.Stringid(id,0))
-	e10:SetCategory(CATEGORY_REMOVE)
-	e10:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e10:SetCode(EVENT_BATTLE_START)
-	e10:SetCountLimit(1)
-	e10:SetTarget(s.rmtg)
-	e10:SetOperation(s.rmop)
-	c:RegisterEffect(e10)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
 	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-4 and #rg>4 and aux.SelectUnselectGroup(rg,e,tp,5,99,aux.ChkfMMZ(1),0)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-4 and #rg>4 and aux.SelectUnselectGroup(rg,e,tp,5,#rg,aux.ChkfMMZ(1),0)
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,e:GetHandler())
-	local g=aux.SelectUnselectGroup(rg,e,tp,5,99,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,aux.ChkfMMZ(1),nil,true)
-	if #g>0 then
-		g:KeepAlive()
-		e:SetLabelObject(g)
-		return true
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c)
+	local g1=Group.CreateGroup()
+	local g2=Group.CreateGroup()
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	if ft<=0 then
+		g1=Duel.SelectMatchingCard(tp,aux.AND(Card.IsAbleToRemoveAsCost,Card.IsInMainMZone),tp,LOCATION_MZONE,0,1,1,true,c,tp)
+		if g1 and #g1>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+			g2=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,4,#rg,true,Group.FromCards(c,g1:GetFirst()))
+			if g2 and #g2>0 then
+				g1:Merge(g2)
+				g1:KeepAlive()
+				e:SetLabelObject(g1)
+				return true
+			end
+		end
+	else
+		g1=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,5,#rg,true,c)
+		if g1 and #g1>0 then
+			g1:KeepAlive()
+			e:SetLabelObject(g1)
+			return true
+		end
 	end
 	return false
 end

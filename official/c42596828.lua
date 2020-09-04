@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--def up
+	--Increase DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DEFCHANGE)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.defcost)
 	e1:SetOperation(s.defop)
 	c:RegisterEffect(e1)
-	--change stats
+	--Change stats
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -70,4 +70,3 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-

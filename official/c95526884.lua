@@ -23,13 +23,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
+	local c,a,d,def=e:GetHandler(),Duel.GetAttacker(),Duel.GetAttackTarget(),0
 	if not d then return false end
-	local m=a:GetAttack()-d:GetPreviousDefenseOnField()
+	if not d:IsLocation(LOCATION_MZONE) then
+		def=d:GetPreviousDefenseOnField()
+	else
+		def=d:GetDefense()
+	end
+	local m=a:GetAttack()-def
 	e:SetLabel(m)
-	return c==a and d:GetPreviousDefenseOnField()>=0 and m>0 and (d:GetBattlePosition()&POS_DEFENSE)~=0
+	return c==a and def>=0 and m>0 and (d:GetBattlePosition()&POS_DEFENSE)~=0
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

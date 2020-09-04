@@ -1,4 +1,5 @@
 --古生代化石マシン スカルコンボイ
+--Fossil Machine Skull Convoy
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(s.splimit)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -24,14 +25,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_EXTRA_ATTACK)	
+	e3:SetCode(EFFECT_EXTRA_ATTACK)
 	e3:SetCondition(s.con)
 	e3:SetValue(2)
 	c:RegisterEffect(e3)
 end
-s.listed_names={100000025}
+s.listed_names={CARD_FOSSIL_FUSION}
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsCode(100000025)
+	return se:GetHandler():IsCode(CARD_FOSSIL_FUSION)
 end
 function s.ffilter1(c,fc,sumtype,tp)
 	return c:IsRace(RACE_ROCK,fc,sumtype,tp) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)

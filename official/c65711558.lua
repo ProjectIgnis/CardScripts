@@ -1,12 +1,12 @@
---戦華盟将-双龍
---Ancient Warriors Allied Generals - Shuanglong
+--戦華盟将－双龍
+--Ancient Warriors Oath - Double Dragon Lords
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_BEASTWARRIOR),2,2,s.lcheck)
-	--add to hand
+	--Add to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--atk/def change
+	--Increase ATK/DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
-	--return to hand
+	--Return to hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND)
@@ -46,11 +46,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x137}
-function s.lfilter(c,lc)
-	return c:IsSetCard(0x137) and c:IsAttribute(ATTRIBUTE_WIND,lc,SUMMON_TYPE_LINK)
+function s.lfilter(c,lc,sumtype,tp)
+	return c:IsSetCard(0x137,lc,sumtype,tp) and c:IsAttribute(ATTRIBUTE_WIND,lc,sumtype,tp)
 end
-function s.lcheck(g,lc)
-	return g:IsExists(s.lfilter,1,nil,lc)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(s.lfilter,1,nil,lc,sumtype,tp)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x137) and c:IsAbleToHand()
@@ -88,8 +88,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

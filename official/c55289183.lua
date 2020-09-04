@@ -1,7 +1,6 @@
 --享楽の堕天使
---Darklord of Delight
+--Capricious Darklord
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,10 +31,9 @@ function s.initial_effect(c)
 end
 	--Check if current phase is a Main Phase
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
-	--Check for fairy monster to tribute summon
+	--Check for Fairy monster to tribute summon
 function s.sumfilter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsSummonable(true,nil,1)
 end
@@ -75,4 +73,3 @@ function s.statop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
-

@@ -1,4 +1,5 @@
 --好敵手の絆
+--Bonds of Rival
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,20 +7,20 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_CONTROL+CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_DISABLED)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)	
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.filter(c,tc)
+function s.filter(c)
 	return c:IsControlerCanBeChanged()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc==eg:GetFirst() end
-	if chk==0 then return eg:GetFirst():IsFaceup() and eg:GetFirst():IsCanBeEffectTarget(e) 
+	if chk==0 then return eg:GetFirst():IsFaceup() and eg:GetFirst():IsCanBeEffectTarget(e)
 		and eg:GetFirst():GetControler()==e:GetHandler():GetControler() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,Duel.GetAttackTarget())
+	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 end
 function s.eqlimit(e,c)
@@ -43,8 +44,9 @@ function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()	
+	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.GetControl(tc,tp) then
 		if c:IsLocation(LOCATION_SZONE) and not tc:IsImmuneToEffect(e) and tc:IsAbleToChangeControler() then
 			Duel.Equip(tp,c,tc)
@@ -61,9 +63,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 			e2:SetRange(LOCATION_SZONE)
-			e2:SetCode(EVENT_LEAVE_FIELD)	
+			e2:SetCode(EVENT_LEAVE_FIELD)
 			e2:SetCondition(s.descon)
-			e2:SetOperation(s.desop)				
+			e2:SetOperation(s.desop)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			c:RegisterEffect(e2)
 			--Control
@@ -71,14 +73,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 			e3:SetCode(EVENT_LEAVE_FIELD)
 			e3:SetCondition(s.descon2)
-			e3:SetOperation(s.desop2)			
-			e3:SetLabelObject(tc)							
+			e3:SetOperation(s.desop2)
+			e3:SetLabelObject(tc)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			c:RegisterEffect(e3)
 			--cannot attack
 			local e4=Effect.CreateEffect(c)
 			e4:SetType(EFFECT_TYPE_EQUIP)
-			e4:SetCode(EFFECT_CANNOT_ATTACK)			
+			e4:SetCode(EFFECT_CANNOT_ATTACK)
 			e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 			c:RegisterEffect(e4)
 		end

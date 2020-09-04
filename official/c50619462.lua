@@ -1,4 +1,5 @@
 --烏合無象
+--Cattle Call
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,8 +15,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,e,tp)
 	local race=c:GetOriginalRace()
-	return c:IsFaceup() and (race==RACE_WINGEDBEAST or race==RACE_BEAST
-		or race==RACE_BEASTWARRIOR) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and (race==RACE_WINGEDBEAST or race==RACE_BEAST or race==RACE_BEASTWARRIOR) and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,race,c)
 end
 function s.spfilter(c,e,tp,race,sc)
@@ -76,7 +76,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		return true
 	else
 		e:Reset()

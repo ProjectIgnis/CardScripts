@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 		e3:SetTargetRange(LOCATION_ONFIELD,0)
 		e3:SetTarget(s.indtg)
-		e3:SetValue(s.indval)
+		e3:SetValue(aux.indoval)
 		e3:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e3,tp)
 		aux.RegisterClientHint(e:GetHandler(),nil,tp,1,1,aux.Stringid(id,1),nil)
@@ -91,9 +91,6 @@ function s.chainlm(e,rp,tp)
 end
 function s.indtg(e,c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
-function s.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end
 function s.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()

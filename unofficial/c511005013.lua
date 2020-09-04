@@ -1,6 +1,5 @@
 --Otonari Thunder
---  By Shad3
---cleaned up and fixed by MLD
+--scripted by Shad3, cleaned up and fixed by MLD
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)

@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=e:GetLabel() 
 	if c:IsRelateToEffect(e) then
-	   c:AddCounter(COUNTER_BR,ct)
+		c:AddCounter(COUNTER_BR,ct)
 	end
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)

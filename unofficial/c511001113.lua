@@ -1,3 +1,4 @@
+--双弓のケンタウロス
 --Twin-Bow Centaur
 local s,id=GetID()
 function s.initial_effect(c)

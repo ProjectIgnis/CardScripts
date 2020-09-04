@@ -1,13 +1,15 @@
 --エレメンタル・アブソーバー
+--Elemental Absorber
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(s.cost)
+	e1:SetCost(s.target)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--cannot attack
+	--Opponent's monsters with the same Attribute cannot attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
@@ -18,16 +20,22 @@ function s.initial_effect(c)
 	e1:SetLabelObject(e2)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND)
+end
+function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	local att=g:GetFirst():GetAttribute()
-	e:GetLabelObject():SetLabel(att)
-	e:GetHandler():SetHint(CHINT_ATTRIBUTE,att)
+	if #g>0 then
+		Duel.Remove(g,POS_FACEUP,REASON_COST)
+		local att=g:GetFirst():GetAttribute()
+		e:GetLabelObject():SetLabel(att)
+		e:GetHandler():SetHint(CHINT_ATTRIBUTE,att)
+	end
 end
 function s.atktarget(e,c)
 	return c:IsAttribute(e:GetLabel())

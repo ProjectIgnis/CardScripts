@@ -1,6 +1,6 @@
 --Shining Horizon
 --シャイニング・ホライゾン
---  By Shad3
+--By Shad3
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -97,12 +97,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Equip(tp,tc,g:GetFirst())
 		end
 		tc:ReleaseEffectRelation(te)
-		if etc then	
+		if etc then
 			etc=g:GetFirst()
 			while etc do
 				etc:ReleaseEffectRelation(te)
 				etc=g:GetNext()
 			end
 		end
-	end	
+	end
 end

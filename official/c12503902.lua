@@ -1,7 +1,10 @@
 --レアメタル化・魔法反射装甲
+--Rare Metalmorph
 local s,id=GetID()
 function s.initial_effect(c)
+	--Equip procedure
 	aux.AddPersistentProcedure(c,0,s.filter,CATEGORY_ATKCHANGE,EFFECT_FLAG_DAMAGE_STEP,nil,TIMING_DAMAGE_STEP,s.condition,nil,nil,s.operation)
+	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -10,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(aux.PersistentTargetFilter)
 	e1:SetValue(500)
 	c:RegisterEffect(e1)
-	--Destroy
+	--Destroy this card when the monster leaves the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_SZONE)
@@ -68,7 +71,7 @@ function s.discon(e)
 	return e:GetHandler():GetCardTargetCount()>0
 end
 function s.distg(e,c)
-	return c:GetFieldID()<=e:GetLabel() and c:IsHasCardTarget(e:GetHandler():GetFirstCardTarget()) and c:IsType(TYPE_SPELL)
+	return c:GetFieldID()<=e:GetLabel() and e:GetHandler():GetFirstCardTarget() and c:IsHasCardTarget(e:GetHandler():GetFirstCardTarget()) and c:IsType(TYPE_SPELL)
 end
 function s.discon2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()

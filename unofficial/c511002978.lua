@@ -1,4 +1,5 @@
---Earthbound Beginning
+--地縛開闢
+--Earthbound Beginnings
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -16,7 +17,7 @@ end
 function s.filter(c,tp)
 	local te=c:GetActivateEffect()
 	if not te then return false end
-	return c:IsType(TYPE_FIELD) and te:IsActivatable(tp)
+	return c:IsType(TYPE_FIELD) and te:IsActivatable(tp,true,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp) end
@@ -44,13 +45,13 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter2(c)
 	local te=c:GetActivateEffect()
-	return te and not (te:GetProperty()&EFFECT_FLAG_DAMAGE_STEP) and c:IsType(TYPE_FIELD)
+	return c:IsType(TYPE_FIELD) and te and not te:IsHasProperty(EFFECT_FLAG_DAMAGE_STEP)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_DECK,0,nil)
 	for chc in aux.Next(sg) do
 		local te=chc:GetActivateEffect()
-		if te and not te:IsActivatable(tp) then
+		if te and not te:IsActivatable(tp,true,true) then
 			te:SetProperty(te:GetProperty()|EFFECT_FLAG_DAMAGE_STEP)
 		end
 	end
@@ -59,7 +60,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 	for chc in aux.Next(sg) do
 		local te=chc:GetActivateEffect()
-		if te and te:IsActivatable(tp) then
+		if te and te:IsActivatable(tp,true,true) then
 			te:SetProperty(te:GetProperty()&~EFFECT_FLAG_DAMAGE_STEP)
 		end
 	end

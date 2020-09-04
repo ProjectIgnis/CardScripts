@@ -1,4 +1,5 @@
 --アルカナフォースＸＶ－ＴＨＥ　ＤＥＶＩＬ
+--Arcana Force XV - The Fiend
 local s,id=GetID()
 function s.initial_effect(c)
 	--coin
@@ -17,6 +18,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.toss_coin=true
 function s.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
@@ -68,7 +70,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if heads then
 		local tc=Duel.GetFirstTarget()
 		if tc then
-			if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+			if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 				Duel.Damage(tc:GetPreviousControler(),500,REASON_EFFECT)
 			elseif e:GetHandler():IsRelateToEffect(e) then
 				Duel.Destroy(e:GetHandler(),REASON_EFFECT)

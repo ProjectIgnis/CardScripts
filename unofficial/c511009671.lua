@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.desfilter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0x574) and c:IsLinkMonster()  and c:GetLinkedGroup():IsContains(e:GetHandler())
+	return c:IsFaceup() and c:IsSetCard(0x574) and c:IsLinkMonster() and c:GetLinkedGroup():IsContains(e:GetHandler())
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.desfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil,e)

@@ -3,7 +3,7 @@
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -41,7 +41,7 @@ function s.cfilter(c,code)
 	return c:IsFaceup() and c:IsCode(code)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END and s[tp]>=2000 
+	return Duel.GetCurrentPhase()==PHASE_END and s[tp]>=2000
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil,13331639)
 end
 function s.desfilter(c)
@@ -57,10 +57,10 @@ function s.spfilterchk(c,g,sg,code,...)
 	else return true end
 end
 function s.rescon(mft,exft,ft,ect)
-	return  function(sg,e,tp,mg)
+	return function(sg,e,tp,mg)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				local mct=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
-				return (not ect or ect>=exct) and exft>=exct and mft>=mct and ft>=#sg 
+				return (not ect or ect>=exct) and exft>=exct and mft>=mct and ft>=#sg
 					and sg:IsExists(s.spfilterchk,nil,sg,Group.CreateGroup(),43387895,70771599,42160203,96733134)
 			end
 end

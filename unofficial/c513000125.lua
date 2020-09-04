@@ -1,8 +1,11 @@
+--霧の王城 (Anime)
 --Fog Castle (Anime)
---scripted by Keddy
+--Scripted by Keddy, rescripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	c:EnableCounterPermit(0x1110)
+	c:SetCounterLimit(0x1110,5)
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -21,11 +24,12 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_ADJUST)
 	e3:SetRange(LOCATION_SZONE)
+	e3:SetLabelObject(e2)
 	e3:SetOperation(s.chkop)
 	c:RegisterEffect(e3)
-	--salvage
+	--recycle
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(111215001,0))
+	e4:SetDescription(aux.Stringid(c:Alias(),1))
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCategory(CATEGORY_TOHAND)
 	e4:SetType(EFFECT_TYPE_IGNITION)
@@ -42,42 +46,67 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(s.dfilter,nil,tp)
 	if chk==0 then return #g>0 end
-	local tc=g:GetFirst()
-	e:SetLabelObject(tc)
-	return Duel.SelectYesNo(tp,aux.Stringid(40945356,0))
+	g:KeepAlive()
+	e:SetLabelObject(g)
+	return Duel.SelectEffectYesNo(tp,e:GetHandler())
 end
 function s.desval(e,c)
 	return c:IsControler(e:GetHandlerPlayer()) and c:IsReason(REASON_BATTLE)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=e:GetLabelObject()
-	Duel.MoveSequence(tc,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag),2))
-	c:AddCounter(0x1110,1)
-	c:ResetEffect(RESET_DISABLE,RESET_EVENT)
-end
-function s.chkop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
- 	if c:GetCounter(0x1110)>0 and c:GetFlagEffect(id)~=c:GetCounter(0x1110) then
-		if 5-c:GetCounter(0x1110)<Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0) then
-			local ct=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)+c:GetCounter(0x1110)-5
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-			local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_MZONE,0,ct,ct,nil)
-			Duel.SendtoGrave(g,REASON_RULE)
-		end
-		c:ResetEffect(RESET_DISABLE,RESET_EVENT)
-		for i=1,c:GetCounter(0x1110) do
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
-		end
-		local dis=Duel.SelectDisableField(tp,c:GetCounter(0x1110),LOCATION_MZONE,0,0)
+	for tc in aux.Next(e:GetLabelObject()) do
+		local dis=1<<tc:GetSequence()
+		local zone=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
+		if zone then Duel.MoveSequence(tc,math.log(zone,2)) end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetRange(LOCATION_FZONE)
 		e1:SetCode(EFFECT_DISABLE_FIELD)
 		e1:SetOperation(s.disop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		e1:SetLabel(dis)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
+		e:SetLabel(e:GetLabel()+dis)
+		c:AddCounter(0x1110,1)
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
+	end
+end
+function s.chkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tg=5-c:GetCounter(0x1110)<Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
+	local dz=c:GetCounter(0x1110)>0 and c:GetFlagEffect(id)~=c:GetCounter(0x1110)
+	if (tg or dz) and e:GetLabel()==0 then Duel.Hint(HINT_CARD,tp,id) end
+	if tg then
+		local ct=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)+c:GetCounter(0x1110)-5
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+		local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,0,ct,ct,nil)
+		Duel.SendtoGrave(g,REASON_RULE)
+	end
+	if dz then
+		local eff=e:GetLabelObject()
+		local ft=c:GetCounter(0x1110)-c:GetFlagEffect(id)
+		if ft<0 then
+			c:ResetEffect(RESET_DISABLE,RESET_EVENT)
+			e:SetLabel(~eff:GetLabel())
+			eff:SetLabel(0)
+		else
+			for i=1,ft do
+				c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
+			end
+			local dis=Duel.SelectDisableField(tp,ft,LOCATION_MZONE,0,e:GetLabel())
+			eff:SetLabel(eff:GetLabel()+dis)
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_FIELD)
+			e1:SetRange(LOCATION_FZONE)
+			e1:SetCode(EFFECT_DISABLE_FIELD)
+			e1:SetOperation(s.disop)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e1:SetLabel(dis)
+			c:RegisterEffect(e1)
+			e:SetLabel(0)
+			Duel.Readjust()
+		end
 	end
 end
 function s.disop(e,tp)

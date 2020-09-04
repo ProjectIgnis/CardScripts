@@ -1,6 +1,6 @@
 --Reawakening of the Emperor
 --帝王の再覚醒
---  By Shad3
+--By Shad3
 --Edited by MLD
 local s,id=GetID()
 function s.initial_effect(c)

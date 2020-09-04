@@ -50,6 +50,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.setop)
 	c:RegisterEffect(e7)
 end
+s.listed_series={0x19}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x19)
 end
@@ -61,6 +62,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
 	local tc=g:GetFirst()

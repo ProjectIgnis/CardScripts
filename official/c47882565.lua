@@ -1,4 +1,5 @@
 --RUM－光波昇華
+--Rank-Up-Magic Cipher Ascension
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)

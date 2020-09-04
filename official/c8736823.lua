@@ -1,5 +1,5 @@
 --電脳堺姫－娘々
---Cyberspace Princess Niangniang
+--Datascape Princess - Niangniang
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -95,7 +95,7 @@ end
 	--Shuffle 1 other banished card into the deck
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)
+	if tc and tc:IsRelateToEffect(e) then
+		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

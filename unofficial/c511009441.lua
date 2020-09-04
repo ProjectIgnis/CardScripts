@@ -102,7 +102,8 @@ function s.fscon(e,g,gc,chkfnf)
 	return false
 end
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsCode(76794549)
+	local code=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CODE)
+	return se:GetHandler():IsCode(76794549) or code==76794549
 end
 function s.cfilter(c,ft,tp)
 	return c:IsSetCard(0xf8) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())

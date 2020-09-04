@@ -41,7 +41,7 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsDisabled() and not tc:IsImmuneToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -50,19 +50,25 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
+		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-	end
-	if Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil):IsExists(Card.IsLinkAbove,1,nil,2) then
-		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-		for gc in aux.Next(g) do
-			local e3=Effect.CreateEffect(c)
-			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetCode(EFFECT_IMMUNE_EFFECT)
-			e3:SetValue(s.efilter)
-			e3:SetOwnerPlayer(tp)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			gc:RegisterEffect(e3)
+		if (not tc:IsImmuneToEffect(e1) and not tc:IsImmuneToEffect(e2)) then
+			local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
+			if #g>0 and Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil):IsExists(Card.IsLinkAbove,1,nil,2) then
+				Duel.BreakEffect()
+				for gc in aux.Next(g) do
+					local e3=Effect.CreateEffect(c)
+					e3:SetType(EFFECT_TYPE_SINGLE)
+					e3:SetCode(EFFECT_IMMUNE_EFFECT)
+					e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+					e3:SetRange(LOCATION_MZONE)
+					e3:SetValue(s.efilter)
+					e3:SetOwnerPlayer(tp)
+					e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+					gc:RegisterEffect(e3)
+				end
+			end
 		end
 	end
 end

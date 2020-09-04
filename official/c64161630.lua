@@ -1,4 +1,5 @@
 --パージ・レイ
+--Purge Ray
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,7 @@ function s.cfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,rk-1,c:GetRace(),e,tp,c)
 end
 function s.filter(c,rk,rc,e,tp,mc)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and Duel.GetLocationCountFromEx(tp,tp.mc,c)>0
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and c:GetRank()==rk and c:IsRace(rc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

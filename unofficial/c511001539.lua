@@ -1,13 +1,14 @@
+--古代の機械猟犬
 --Ancient Gear Hunting Hound (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--activation limit
+	--Activation limit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--damage
+	--Damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DAMAGE)
@@ -19,18 +20,18 @@ function s.initial_effect(c)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
-	--fusion summon
-	--params = {nil,nil,nil,nil,nil}
+	--Fusion summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.fuscon)
-	e3:SetTarget(Fusion.SummonEffTG)
-	e3:SetOperation(Fusion.SummonEffOP)
+	e3:SetTarget(Fusion.SummonEffTG({}))
+	e3:SetOperation(Fusion.SummonEffOP({}))
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x7}
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)

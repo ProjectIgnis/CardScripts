@@ -47,6 +47,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if tg and tg(e,tp,teg,tep,tev,tre,tr,trp,0) then tg(e,tp,teg,tep,tev,tre,tr,trp,1) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local te=e:GetLabelObject()
 	local code=te:GetHandler():GetOriginalCode()

@@ -5,15 +5,15 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(s.condition1)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	c:RegisterEffect(e1)
-	--Activate (sp summon)
+	--destroy
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_ACTIVATE)
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e2:SetCondition(s.condition2)
-	e2:SetTarget(s.target)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCode(EFFECT_SELF_DESTROY)
+	e2:SetCondition(s.descon)
 	c:RegisterEffect(e2)
 	--trigger
 	local e3=Effect.CreateEffect(c)
@@ -26,14 +26,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	--destroy
-	local e7=Effect.CreateEffect(c)
-	e7:SetType(EFFECT_TYPE_SINGLE)
-	e7:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e7:SetRange(LOCATION_SZONE)
-	e7:SetCode(EFFECT_SELF_DESTROY)
-	e7:SetCondition(s.descon)
-	c:RegisterEffect(e7)
 	--card limit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -59,27 +51,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.listed_series={0x50b}
-function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS,true)
-	return not res or not teg:IsExists(s.tgfilter,1,nil,e,tp)
-end
-function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.tgfilter,1,nil,e,tp)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc,e,tp) end
-	if chk==0 then return true end
-	if s.sptg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(61965407,0)) then
-		e:SetCategory(CATEGORY_POSITION)
-		e:SetOperation(s.spop)
-		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
-		s.sptg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetCategory(0)
-		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-		e:SetOperation(nil)
-	end
-end
 function s.tgfilter(c,e,tp)
 	return c:IsControler(1-tp) and c:IsPreviousLocation(LOCATION_EXTRA) and c:IsCanBeEffectTarget(e)
 end

@@ -55,7 +55,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()==tp and c:GetAttackedCount()==0 then
 		Duel.Damage(tp,800,REASON_EFFECT)
 	end
-end	
+end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsRelateToBattle() and c:GetBattleTarget():IsType(TYPE_MONSTER)

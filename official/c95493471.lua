@@ -1,21 +1,22 @@
 --真超量機神王ブラスター・マグナ
---True Super Quantal Mech King Blaster Magna
+--Neo Super Quantal Mech King Blaster Magna
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2,nil,s.matcheck)
-	--indes
+	--Prevent destruction by opponent's effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.incon)
-	e1:SetValue(s.inval)
+	e1:SetValue(aux.indoval)
 	c:RegisterEffect(e1)
-	--draw
+	--Draw 1 card
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -25,8 +26,9 @@ function s.initial_effect(c)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special Summon 1 "Super Quant" monster
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DESTROYED)
@@ -39,21 +41,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xdc}
-function s.matcheck(g,lc,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0xdc,lc,SUMMON_TYPE_LINK,tp)
+function s.matcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,0xdc,lc,sumtype,tp)
 end
 function s.incon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
-end
-function s.inval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end
 function s.drcfilter(c,tp,lg)
 	return c:IsSetCard(0xdc) and c:IsType(TYPE_XYZ) and c:IsPreviousLocation(LOCATION_EXTRA)
 		and lg:IsContains(c) and not Duel.IsExistingMatchingCard(s.drfilter,tp,LOCATION_MZONE,0,1,c,c:GetCode())
 end
-function s.drfilter(c,cd)
-	return c:IsFaceup() and c:IsCode(cd)
+function s.drfilter(c,code)
+	return c:IsFaceup() and c:IsCode(code)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.drcfilter,1,nil,tp,e:GetHandler():GetLinkedGroup())
@@ -71,7 +70,7 @@ end
 function s.cfilter(c,tp,zone,rp)
 	local seq=c:GetPreviousSequence()
 	if not c:IsPreviousControler(tp) then seq=seq+16 end
-	return ((c:IsReason(REASON_BATTLE)) or (c:IsReason(REASON_EFFECT) and rp~=tp)) and c:IsType(TYPE_XYZ) 
+	return ((c:IsReason(REASON_BATTLE)) or (c:IsReason(REASON_EFFECT) and rp~=tp)) and c:IsType(TYPE_XYZ)
 		and c:IsPreviousLocation(LOCATION_MZONE) and bit.extract(zone,seq)~=0
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -79,14 +78,14 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,zone,rp)
 end
 function s.spfilter(c,e,tp,attr)
-	return c:IsSetCard(0xdc) and c:GetOriginalAttribute() & attr ~=0
+	return c:IsSetCard(0xdc) and c:GetOriginalAttribute()&attr~=0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(s.cfilter,nil,tp,e:GetHandler():GetLinkedZone())
 	local attr=0
 	for tc in aux.Next(g) do
-		attr=attr | tc:GetOriginalAttribute()
+		attr=attr|tc:GetOriginalAttribute()
 	end
 	if chk==0 then
 		return attr~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0

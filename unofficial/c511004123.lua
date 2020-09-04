@@ -1,6 +1,6 @@
+--ライジング・ホープ
 --Utopia Rising
---scripted by:urielkama
---fixed by MLD
+--Scripted by urielkama, fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_ADJUST)
-		e1:SetRange(LOCATION_MZONE)	
+		e1:SetRange(LOCATION_MZONE) 
 		e1:SetOperation(s.copyop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
@@ -71,8 +71,7 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:GetEquipGroup():IsContains(e:GetOwner()) then e:Reset() return end
 	if c:IsDisabled() then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,e:GetHandler())
-	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		local code=tc:GetOriginalCode()
 		if tc:IsHasEffect(511002571) then
 			local teff={tc:GetCardEffect(511002571)}
@@ -92,7 +91,9 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 						end
 					end
 					for _,te4 in ipairs(copye) do
-						local tec2=te4:GetLabelObject():Clone()
+						local teh=te4:GetLabelObject()
+						if teh:GetCode()&511001822==511001822 then teh=teh:GetLabelObject() end
+						local tec2=teh:Clone()
 						c:RegisterEffect(tec2)
 						local tec=te4:Clone()
 						tec:SetLabelObject(tec2)
@@ -108,7 +109,6 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 				end
 			end
 		end
-		tc=g:GetNext()
 	end
 end
 function s.codechk(c,code)
@@ -122,7 +122,7 @@ end
 function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetOwner():GetEquipTarget()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,tc)
-	if not g:IsExists(s.codechk,1,nil,e:GetLabel()) or tc:IsDisabled() or e:GetOwner():IsDisabled() then
+	if not g:IsExists(s.codechk,1,nil,e:GetLabel()) or not tc or tc:IsDisabled() or e:GetOwner():IsDisabled() then
 		local te1=e:GetLabelObject()
 		local te2=te1:GetLabelObject()
 		if te2 then

@@ -13,10 +13,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x578}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	if chk==0 then return a and Duel.GetAttackTarget()~=nil and a:IsLinkMonster()
-		and a:IsSetCard(0x578) and a:IsFaceup() and a:IsControler(tp)
+		and a:IsSetCard(0x578) and a:IsControler(tp)
 		and (e:GetHandler():GetLinkedGroup():IsContains(a) or a:GetLinkedGroup():IsContains(e:GetHandler())) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,Duel.GetAttackTarget(),1,0,0)
 end

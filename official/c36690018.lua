@@ -1,4 +1,5 @@
 --逆転する運命
+--Reversal of Fate
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,8 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x5}
 function s.filter(c)
-	return c:GetFlagEffect(id)~=0
+	return c:IsSetCard(0x5) and c:GetFlagEffect(id)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -21,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and s.filter(tc) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and s.filter(tc) then
 		local val=tc:GetFlagEffectLabel(id)
 		tc:SetFlagEffectLabel(id,1-val)
 	end

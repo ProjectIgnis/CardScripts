@@ -41,7 +41,7 @@ function s.locfilter(c,sp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	Duel.ShuffleDeck(tp)
 	local ct1=Duel.GetOperatedGroup():FilterCount(s.locfilter,nil,tp)
 	local ct2=Duel.GetOperatedGroup():FilterCount(s.locfilter,nil,1-tp)

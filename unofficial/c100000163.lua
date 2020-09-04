@@ -10,15 +10,9 @@ function s.initial_effect(c)
 	e1:SetValue(ATTRIBUTE_DARK)
 	c:RegisterEffect(e1)
 	--summon with 1 tribute
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_SUMMON_PROC)
-	e2:SetCondition(s.otcon)
-	e2:SetOperation(s.otop)
-	e2:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e2)
+	local e2=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),nil,s.otop)
+	local con=e2:GetCondition()
+	e2:SetCondition(function(e,_c,...) if _c==nil then return true end return Duel.GetFieldGroupCount(_c:GetControler(),0,LOCATION_MZONE)>0 and con(e,_c,...) end)
 	--atk
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -28,17 +22,6 @@ function s.initial_effect(c)
 	e3:SetCondition(s.adcon)
 	e3:SetValue(s.adval)
 	c:RegisterEffect(e3)
-end
-function s.otcon(e,c)
-	if c==nil then return true end
-	return c:GetLevel()>6 and Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)~=0 and Duel.GetTributeCount(c)>0
-end
-function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetTributeGroup(c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local sg=g:Select(tp,1,1,nil)
-	c:SetMaterial(sg)
-	Duel.Release(sg, REASON_SUMMON+REASON_MATERIAL)
 end
 function s.filter(c)
 	return not c:IsStatus(STATUS_LEAVE_CONFIRMED)

@@ -1,10 +1,11 @@
---Draw of Fate
+--ドロー・リセット・バトル
+--Draw of Fate (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_DRAW)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
@@ -19,16 +20,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateAttack() and Duel.Draw(1-tp,1,REASON_EFFECT)~=0 then
-		Duel.BreakEffect()
+	if Duel.NegateAttack() then
 		local h1=Duel.GetDecktopGroup(tp,1):GetFirst()
 		Duel.Draw(tp,1,REASON_EFFECT)
-		if h1==0 then return end
 		local h2=Duel.GetDecktopGroup(1-tp,1):GetFirst()
 		Duel.Draw(1-tp,1,REASON_EFFECT)
-		if h2==0 then return end
-		Duel.ConfirmCards(tp,h1)
-		Duel.ConfirmCards(tp,h2)
 		local g=Group.FromCards(h1,h2)
 		g:KeepAlive()
 		local e1=Effect.CreateEffect(e:GetHandler())

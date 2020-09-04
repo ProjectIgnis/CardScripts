@@ -1,91 +1,89 @@
+--ダーク・サンクチュアリ
 --Dark Sanctuary
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e1:SetCode(EVENT_TO_GRAVE)
+	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	--trigger
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(97268402,0))
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetRange(LOCATION_HAND)
-	e2:SetLabel(1)
-	e2:SetCondition(s.accon)
-	e2:SetTarget(s.actg)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_BECOME_QUICK)
 	c:RegisterEffect(e2)
-	--
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetRange(LOCATION_FZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
-	e3:SetCountLimit(1)
-	e3:SetOperation(s.regop)
+	local e3=e2:Clone()
+	e3:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
 	c:RegisterEffect(e3)
-	--trigger2
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(29590752,1))
-	e4:SetCategory(CATEGORY_EQUIP)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e4:SetCode(id)
-	e4:SetCondition(s.eqcon)
-	e4:SetTarget(s.eqtg)
-	e4:SetOperation(s.operation)
+	local e4=e2:Clone()
+	e4:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	c:RegisterEffect(e4)
-	--destroy
+	--
 	local e5=Effect.CreateEffect(c)
-	e5:SetCategory(CATEGORY_DAMAGE+CATEGORY_RECOVER)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e5:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e5:SetRange(LOCATION_SZONE)
-	e5:SetCondition(s.atkcon)
-	e5:SetTarget(s.atktg)
-	e5:SetOperation(s.atkop)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e5:SetRange(LOCATION_FZONE)
+	e5:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+	e5:SetCountLimit(1)
+	e5:SetOperation(s.regop)
 	c:RegisterEffect(e5)
-	--maintain
 	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e6:SetCode(EVENT_PHASE+PHASE_END)
-	e6:SetRange(LOCATION_SZONE)
-	e6:SetCountLimit(1)
-	e6:SetCondition(s.mtcon)
-	e6:SetOperation(s.mtop)
+	e6:SetDescription(aux.Stringid(29590752,1))
+	e6:SetCategory(CATEGORY_EQUIP)
+	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e6:SetCode(id)
+	e6:SetCondition(s.eqcon)
+	e6:SetTarget(s.eqtg)
+	e6:SetOperation(s.operation)
 	c:RegisterEffect(e6)
-	--move
+	--destroy
 	local e7=Effect.CreateEffect(c)
-	e7:SetType(EFFECT_TYPE_FIELD)
-	e7:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e7:SetCode(EFFECT_SPSUMMON_PROC_G)
-	e7:SetRange(LOCATION_SZONE)
-	e7:SetCondition(s.movecon)
-	e7:SetOperation(s.moveop)
+	e7:SetCategory(CATEGORY_DAMAGE+CATEGORY_RECOVER)
+	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e7:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e7:SetRange(LOCATION_FZONE)
+	e7:SetCondition(s.atkcon)
+	e7:SetTarget(s.atktg)
+	e7:SetOperation(s.atkop)
 	c:RegisterEffect(e7)
-	--copy	
+	--move
 	local e8=Effect.CreateEffect(c)
-	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e8:SetCode(EVENT_ADJUST)
-	e8:SetRange(LOCATION_SZONE)	
-	e8:SetOperation(s.activ)
+	e8:SetType(EFFECT_TYPE_FIELD)
+	e8:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e8:SetCode(EFFECT_SPSUMMON_PROC_G)
+	e8:SetRange(LOCATION_FZONE)
+	e8:SetCondition(s.movecon)
+	e8:SetOperation(s.moveop)
 	c:RegisterEffect(e8)
+	--copy
+	local e9=Effect.CreateEffect(c)
+	e9:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e9:SetCode(EVENT_ADJUST)
+	e9:SetRange(LOCATION_FZONE)
+	e9:SetOperation(s.activ)
+	c:RegisterEffect(e9)
+	--maintain
+	local e10=Effect.CreateEffect(c)
+	e10:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e10:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e10:SetCode(EVENT_PHASE+PHASE_END)
+	e10:SetRange(LOCATION_FZONE)
+	e10:SetCountLimit(1)
+	e10:SetCondition(s.mtcon)
+	e10:SetOperation(s.mtop)
+	c:RegisterEffect(e10)
 end
-s.listed_names={94212438,31829185}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+s.listed_names={CARD_DESTINY_BOARD,31829185}
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(Card.IsCode,1,nil,31829185)
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
 	if chk==0 then return true end
-	if c:IsLocation(LOCATION_SZONE) and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) 
-		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185) 
-		and Duel.SelectYesNo(tp,aux.Stringid(61965407,0)) then
+	if c:IsLocation(LOCATION_FZONE) and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185) and Duel.SelectEffectYesNo(tp,c) then
 		e:SetCategory(CATEGORY_EQUIP)
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 		e:SetOperation(s.operation)
 	else
@@ -96,51 +94,37 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		Duel.Equip(tp,c,tc)
-		--equip limit
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e1)
-		--end
-		local e2=Effect.CreateEffect(c)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IMMEDIATELY_APPLY)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetRange(LOCATION_FZONE)
-		e2:SetCountLimit(1)
-		e2:SetCode(EVENT_PHASE+PHASE_END)
-		e2:SetOperation(s.op)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e2)
-		c:RegisterFlagEffect(511000118,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	if c:IsRelateToEffect(e) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+		local tc=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+		if tc then
+			Duel.Equip(tp,c,tc)
+			--equip limit
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_EQUIP_LIMIT)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetValue(1)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			c:RegisterEffect(e1)
+			--end
+			local e2=Effect.CreateEffect(c)
+			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IMMEDIATELY_APPLY)
+			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+			e2:SetRange(LOCATION_FZONE)
+			e2:SetCountLimit(1)
+			e2:SetCode(EVENT_PHASE+PHASE_END)
+			e2:SetOperation(s.op)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			c:RegisterEffect(e2)
+			c:RegisterFlagEffect(511000118,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		end
 	end
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.SendtoDeck(c,nil,-2,REASON_EFFECT)
-	Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-end
-function s.accon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsCode,1,nil,31829185)
-end
-function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local te=c:GetActivateEffect()
-	if chk==0 then return te and te:IsActivatable(tp) end
-	e:SetType(EFFECT_TYPE_ACTIVATE)
-	local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	if fc then
-		Duel.SendtoGrave(fc,REASON_RULE)
-		Duel.BreakEffect()
-	end
-	Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-	c:CreateEffectRelation(e)
-	s.target(e,tp,eg,ep,ev,re,r,rp,1,nil)
+	Duel.MoveToField(c,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseSingleEvent(e:GetHandler(),id,e,0,tp,tp,0)
@@ -149,12 +133,7 @@ function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) 
-		and c:IsLocation(LOCATION_SZONE) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -179,7 +158,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185) 
+	return Duel.GetTurnPlayer()==tp and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185)
 		and e:GetHandler():GetFlagEffect(511000118)==0
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
@@ -250,7 +229,7 @@ function s.moveop(e,tp,eg,ep,ev,re,r,rp,c,og)
 end
 function s.efilter(e,te)
 	local tc=te:GetOwner()
-	return tc~=e:GetOwner() and not tc:IsCode(94212438)
+	return tc~=e:GetOwner() and not tc:IsCode(CARD_DESTINY_BOARD)
 end
 function s.dirtg(e,c)
 	return not Duel.IsExistingMatchingCard(aux.FilterEqualFunction(Card.GetFlagEffect,0,id),c:GetControler(),0,LOCATION_MZONE,1,nil)
@@ -284,12 +263,12 @@ function s.activ(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 		tc=g:GetNext()
-	end		
+	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local te=e:GetHandler():GetActivateEffect()
 	local condition=te:GetCondition()
-	return (not condition or condition(e,tp,eg,ep,ev,re,r,rp)) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	return (not condition or condition(e,tp,eg,ep,ev,re,r,rp)) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)<=0
 end
 function s.cos(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -303,8 +282,9 @@ function s.tar(e,tp,eg,ep,ev,re,r,rp,chk)
 	local te=c:GetActivateEffect()
 	local tg=te:GetTarget()
 	local op=te:GetOperation()
-	if chk==0 then return (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)) and Duel.GetTurnPlayer()==tp 
-		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185) end
+	if chk==0 then return (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)) and Duel.GetTurnPlayer()==tp
+		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185)
+	end
 	c:CreateEffectRelation(e)
 	if tg then tg(e,tp,eg,ep,ev,re,r,rp,1,nil) end
 	e:SetOperation(op)

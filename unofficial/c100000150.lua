@@ -1,14 +1,15 @@
 --ワンハンドレッド·アイ·ドラゴン
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x601)
 	--dark synchro summon
 	c:EnableReviveLimit()
 	Synchro.AddDarkSynchroProcedure(c,Synchro.NonTuner(nil),nil,8)
-	--copy	
+	--copy
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_ADJUST)
-	e2:SetRange(LOCATION_MZONE)	
+	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 	--search
@@ -27,13 +28,6 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
-	--add setcode
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e5:SetCode(EFFECT_ADD_SETCODE)
-	e5:SetValue(0x601)
-	c:RegisterEffect(e5)
 	--Randomizer
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(13582837,0))
@@ -74,6 +68,7 @@ function s.initial_effect(c)
 	e8:SetOperation(s.ddop)
 	c:RegisterEffect(e8)
 end
+s.listed_series={0xb}
 function s.filter(c)
 	return c:IsSetCard(0xb) and c:IsType(TYPE_MONSTER)
 end

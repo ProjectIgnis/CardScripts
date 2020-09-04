@@ -1,9 +1,9 @@
 --朔夜しぐれ
---Evening Crescent & Autumn Shower
+--Ghost Mourner & Moonlit Chill
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--negate
+	--Negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -26,14 +26,14 @@ end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.negfilter(chkc,1-tp,eg) end
 	if chk==0 then return Duel.IsExistingTarget(s.negfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,1-tp,eg) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local g=Duel.SelectTarget(tp,s.negfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,1-tp,eg)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		if aux.disfilter1(tc) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 			local e1=Effect.CreateEffect(c)
@@ -53,7 +53,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 			e3:SetCode(EVENT_LEAVE_FIELD)
 			e3:SetOperation(s.leaveop)
-			e3:SetReset(RESET_EVENT+0xc020000+RESET_PHASE+PHASE_END)
+			e3:SetReset(RESET_EVENT+RESET_MSCHANGE+RESET_OVERLAY+RESET_TURN_SET+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e3,true)
 		end
 	end

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.fstcond)
 	e1:SetOperation(s.op)
 	Duel.RegisterEffect(e1,0)
-	--add counter
+	--Add counter
 	local e3=Effect.CreateEffect(c)
 	e3:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_PHASE_START+PHASE_STANDBY)
 	e3:SetOperation(s.ctop)
 	c:RegisterEffect(e3)
-	--activation
+	--Activation
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_PLAYER_TARGET)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e4:SetTargetRange(1,1)
 	e4:SetValue(s.aclimit)
 	Duel.RegisterEffect(e4,tp)
-	--unaffectable
+	--Unaffectable
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_IMMUNE_EFFECT)
 	e6:SetValue(s.ctcon2)
 	c:RegisterEffect(e6)
-	--cannot set
+	--Cannot set
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_FIELD)
 	e7:SetCode(EFFECT_CANNOT_SSET)
@@ -53,7 +53,7 @@ function s.initial_effect(c)
 	e7:SetTargetRange(1,1)
 	e7:SetTarget(s.aclimit2)
 	c:RegisterEffect(e7)
-	--DAMAGE
+	--Inflict damage
 	local e8=Effect.CreateEffect(c)
 	e8:SetCategory(CATEGORY_DAMAGE)
 	e8:SetDescription(aux.Stringid(id,0))
@@ -64,7 +64,7 @@ function s.initial_effect(c)
 	e8:SetTarget(s.tg1)
 	e8:SetOperation(s.op1)
 	c:RegisterEffect(e8)
-	--DRAW
+	--Draw
 	local e9=Effect.CreateEffect(c)
 	e9:SetCategory(CATEGORY_DRAW)
 	e9:SetDescription(aux.Stringid(id,1))
@@ -75,7 +75,7 @@ function s.initial_effect(c)
 	e9:SetTarget(s.tg2)
 	e9:SetOperation(s.op2)
 	c:RegisterEffect(e9)
-	--DESTROY
+	--Destroy card
 	local ea=Effect.CreateEffect(c)
 	ea:SetCategory(CATEGORY_DESTROY)
 	ea:SetDescription(aux.Stringid(id,2))
@@ -104,6 +104,7 @@ function s.initial_effect(c)
 	ee:SetCode(EFFECT_CANNOT_REMOVE)
 	c:RegisterEffect(ee)
 end
+s.listed_series={0x500}
 function s.ctcon2(e,re)
 	return re:GetOwner()~=e:GetOwner() and e:GetHandler():GetFlagEffect(id)==0
 end
@@ -114,7 +115,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	local tc2=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
 	if tc==nil then
-		Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 		if tc2==nil then
 			local token=Duel.CreateToken(tp,id,nil,nil,nil,nil,nil,nil)
 			local e1=Effect.CreateEffect(e:GetHandler())
@@ -124,7 +125,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp,chk)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 			e1:SetValue(TYPE_SPELL+TYPE_FIELD)
 			token:RegisterEffect(e1)
-			Duel.MoveToField(token,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true)
+			Duel.MoveToField(token,tp,1-tp,LOCATION_FZONE,POS_FACEUP,true)
 		end
 	else
 		Duel.SendtoDeck(e:GetHandler(),nil,-2,REASON_EFFECT)

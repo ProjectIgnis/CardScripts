@@ -1,3 +1,4 @@
+--モディファイ・ディープブルー
 --Modify Deep Blue
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,7 +17,7 @@ function s.filter(c,rk)
 	return c:GetLevel()==rk
 end
 function s.xyzfilter(c,mg)
-	return c:IsXyzSummonable(nil,mg,1,#mg)
+	return c:IsXyzSummonable(nil,mg,1,99)
 end
 function s.cfilter(c,e,tp)
 	local rk=c:GetRank()
@@ -32,7 +33,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
 			and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,e,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
@@ -49,6 +50,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,nil,mg,1,#mg)
+		Duel.XyzSummon(tp,xyz,nil,mg,1,99)
 	end
 end

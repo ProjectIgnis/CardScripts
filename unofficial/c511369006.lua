@@ -52,6 +52,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.atval)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x580}
 function s.atkfilter(c)
 	return c:IsType(TYPE_FIELD) and c:IsSetCard(0x580)
 end
@@ -68,7 +69,9 @@ function s.tgcon(e,c)
 	return Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)==1
 end
 function s.tgval(e,re,rp)
-	return rp~=e:GetHandlerPlayer() and not re:GetHandler():IsOnField()
+	local eff=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_EFFECT)
+	local rc=re:GetHandler()
+	return rp~=e:GetHandlerPlayer() and not (rc:IsOnField() or (eff and rc==eff:GetHandler()))
 end
 function s.distg(e,c)
 	local tp=e:GetHandlerPlayer()

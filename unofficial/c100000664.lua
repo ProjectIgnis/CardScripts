@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
-		local dc=og:FilterCount(s.filter1,nil)		 
+		local dc=og:FilterCount(s.filter1,nil)
 		if dc>0 then
 			Duel.Draw(p,dc*2,REASON_EFFECT)
 		end

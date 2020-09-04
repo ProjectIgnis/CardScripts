@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,800)
-	else Duel.PayLPCost(tp,800)	end
+	else Duel.PayLPCost(tp,800) end
 end
 function s.filter(c,e,tp)
 	return c:IsRitualMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

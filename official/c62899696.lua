@@ -39,13 +39,11 @@ function s.filter(tc,c,tp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SYNCHRO_MATERIAL)
-	local reg = tc:RegisterEffect(e1,true)
+	tc:RegisterEffect(e1,true)
 	local mg=Group.FromCards(c,tc)
 	local res=Duel.IsExistingMatchingCard(s.synfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
 	c:ResetFlagEffect(id)
-	if reg then
-		e1:Reset()
-	end
+	e1:Reset()
 	return res
 end
 function s.synfilter(c,mg)
@@ -66,17 +64,33 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SYNCHRO_MATERIAL)
-		local reg = tc:RegisterEffect(e1)
+		tc:RegisterEffect(e1,true)
 		local mg=Group.FromCards(c,tc)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.synfilter,tp,LOCATION_EXTRA,0,1,1,nil,mg)
 		local sc=g:GetFirst()
 		if sc then
+			local e3=Effect.CreateEffect(c)
+			e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+			e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+			e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+			e3:SetOperation(s.regop)
+			e3:SetLabelObject(e1)
+			sc:RegisterEffect(e3,true)
+			local e4=e3:Clone()
+			e4:SetCode(EVENT_SPSUMMON_NEGATED)
+			sc:RegisterEffect(e4,true)
 			Duel.SynchroSummon(tp,sc,nil,mg)
-		end
-		c:ResetFlagEffect(id)
-		if reg then
+		else
+			c:ResetFlagEffect(id)
 			e1:Reset()
 		end
 	end
+end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local rc=e:GetOwner()
+	local c=e:GetHandler()
+	rc:ResetFlagEffect(id)
+	e:GetLabelObject():Reset()
+	e:Reset()
 end

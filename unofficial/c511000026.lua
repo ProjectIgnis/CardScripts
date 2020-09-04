@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.stfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()  
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
 end
 function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

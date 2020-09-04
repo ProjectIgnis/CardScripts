@@ -1,4 +1,5 @@
---Ｓｉｎ レインボー・ドラゴン
+--Ｓｉｎ レインボー・ドラゴン (Anime)
+--Malefic Rainbow Dragon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	--atkup
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE)
-	e3:SetDescription(aux.Stringid(79856792,0))
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -42,7 +43,7 @@ function s.initial_effect(c)
 	--todeck
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_TODECK)
-	e4:SetDescription(aux.Stringid(79856792,1))
+	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCost(s.tdcost)
@@ -50,12 +51,14 @@ function s.initial_effect(c)
 	e4:SetOperation(s.tdop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x23}
 s.listed_names={79856792,27564031}
-function s.spfilter(c,tp)
+function s.spfilter(c)
 	return c:IsCode(79856792) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
+	local tp=c:GetControler()
 	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil)
 	return aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),0)
 end
@@ -117,5 +120,5 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

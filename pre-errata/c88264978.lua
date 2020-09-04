@@ -1,28 +1,30 @@
 --レッドアイズ・ダークネスメタルドラゴン
---Red-Eyes Darkness Metal Dragon, pre-errata, TCG
+--Red-Eyes Darkness Metal Dragon, errata, OCG
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon procedure
+	--Special summon procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spcon1)
 	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
-	--special summon a dragon
+	--Special summon a dragon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetCountLimit(1)
+	e2:SetCountLimit(1,id+1)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.spfilter(c,ft)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsAbleToRemoveAsCost() and (ft>0 or c:GetSequence()<5)
 end

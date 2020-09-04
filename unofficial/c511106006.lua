@@ -60,8 +60,9 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local sg=Duel.SelectTarget(tp,s.posfilter,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 	if Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)~=0 then
 		e:GetHandler():CreateRelation(tc,RESET_EVENT+RESETS_STANDARD)
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -93,12 +94,14 @@ function s.relcon(e)
 	return e:GetOwner():IsRelateToCard(e:GetHandler())
 end
 function s.deschk(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst() local des=0
-	while tc do
-	if tc:GetFlagEffect(id)~=0 then des=des+1 end
-	tc=eg:GetNext()
+	local des=0
+	if eg then
+		for tc in aux.Next(eg) do
+			if tc:GetFlagEffect(id)~=0 then des=des+1 end
+		end
 	end
-	if des>0 then e:GetHandler():RegisterFlagEffect(id+100,RESET_EVENT+RESETS_STANDARD,0,1)
+	if des>0 then
+		e:GetHandler():RegisterFlagEffect(id+100,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -109,7 +112,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():ResetFlagEffect(id+100)
 end
 function s.costfilter(c)
-	return c:IsRace(RACE_INSECT) 
+	return c:IsRace(RACE_INSECT)
 end
 function s.cos(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,false,nil) end
@@ -125,6 +128,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,tk,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,511009659,(0x3e|0x537),TYPES_TOKEN,0,0,1,RACE_INSECT,ATTRIBUTE_LIGHT,POS_FACEUP_DEFENSE,1-tp) then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end

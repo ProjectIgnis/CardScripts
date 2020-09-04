@@ -1,5 +1,5 @@
 --リターナブル瓶
---Reusable Jar
+--Redeemable Jar
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,6 +31,7 @@ function s.rmfilter(c,tp)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local tg=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
 	Duel.Remove(tg,POS_FACEUP,REASON_COST)
 	e:SetLabel(tg:GetOriginalCode())

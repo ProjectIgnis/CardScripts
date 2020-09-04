@@ -9,8 +9,9 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Effect
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(65)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -112,4 +113,3 @@ end
 function s.eqlimit2(e,c)
 	return c==e:GetLabelObject()
 end
-

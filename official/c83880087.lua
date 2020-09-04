@@ -1,4 +1,5 @@
 --ムーンバリア
+--Light Wing Shield
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,15 +8,15 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_ATTACK_DISABLED)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	--remove overlay replace
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,2))
-	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_OVERLAY_REMOVE_REPLACE)
-	e1:SetRange(LOCATION_GRAVE)
-	e1:SetCondition(s.rcon)
-	e1:SetOperation(s.rop)
-	c:RegisterEffect(e1)
+	--Detach cost change
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,2))
+	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_OVERLAY_REMOVE_REPLACE)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCondition(s.rcon)
+	e2:SetOperation(s.rop)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x107f}
 function s.filter(c)
@@ -67,11 +68,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_COST)~=0 and re:IsHasType(0x7e0)
+	return (r&REASON_COST)~=0 and re:IsActivated()
 		and re:IsActiveType(TYPE_XYZ) and re:GetHandler():IsSetCard(0x107f)
 		and e:GetHandler():IsAbleToRemoveAsCost()
 		and ep==e:GetOwnerPlayer() and ev==1
 end
 function s.rop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+	return Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end

@@ -1,6 +1,6 @@
 --次元领域决斗
 --Dimension Duel
---scripted by Larry126
+--Scripted by Larry126
 --note: Please contact with me if wanting to edit this script
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,14 +14,14 @@ function s.op(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCondition(s.limitcon)
 	e1:SetOperation(s.limitop)
-	Duel.RegisterEffect(e1,tp)
+	Duel.RegisterEffect(e1,0)
 	--Damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetOperation(s.damop)
-	Duel.RegisterEffect(e2,tp)
+	Duel.RegisterEffect(e2,0)
 	--no battle damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -29,7 +29,7 @@ function s.op(c)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetTargetRange(1,1)
 	e3:SetCondition(s.bcon)
-	Duel.RegisterEffect(e3,tp)
+	Duel.RegisterEffect(e3,0)
 	--Dimension Summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(4010,0))
@@ -40,12 +40,12 @@ function s.op(c)
 	e4:SetTarget(aux.FieldSummonProcTg(s.nttg))
 	e4:SetCondition(s.ntcon)
 	e4:SetValue(6)
-	Duel.RegisterEffect(e4,tp)
+	Duel.RegisterEffect(e4,0)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_LIMIT_SUMMON_PROC)
 	e5:SetTarget(aux.FieldSummonProcTg(s.nttg2))
 	e5:SetValue(6)
-	Duel.RegisterEffect(e5,tp)
+	Duel.RegisterEffect(e5,0)
 	--spirit
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -53,13 +53,13 @@ function s.op(c)
 	e6:SetTarget(s.spttg)
 	e6:SetOperation(s.sptop)
 	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	Duel.RegisterEffect(e6,tp)
+	Duel.RegisterEffect(e6,0)
 	local e7=e6:Clone()
 	e7:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	Duel.RegisterEffect(e7,tp)
+	Duel.RegisterEffect(e7,0)
 	local e8=e6:Clone()
 	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
-	Duel.RegisterEffect(e8,tp)
+	Duel.RegisterEffect(e8,0)
 end
 function s.limitfilter(c)
 	return c:IsHasEffect(EFFECT_LIMIT_SUMMON_PROC) and c:GetFlagEffect(51160002)<=0
@@ -87,7 +87,7 @@ end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	local _,max=c:GetTributeRequirement()
-	return  max>0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return max>0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 ------------------------------------------------------------------------
 --spirit charge

@@ -43,7 +43,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x135}
 function s.cfilter(c)
-	return c:GetPreviousTypeOnField()&TYPE_LINK==TYPE_LINK
+	return c:GetPreviousTypeOnField()&TYPE_LINK==TYPE_LINK and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
@@ -60,7 +60,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:IsType(TYPE_LINK) and tc:GetLinkedGroup():IsContains(e:GetHandler())
+	return tc:IsLinkMonster() and tc:GetLinkedGroup():IsContains(e:GetHandler())
 		and tc:IsRelateToBattle() and tc:IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -73,7 +73,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 		local dam=eg:GetFirst():GetAttack()
 		if dam<0 then dam=0 end
@@ -86,7 +86,7 @@ function s.bttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if not at then return false end
 		if not a:IsControler(tp) then a,at=at,a end
-		return a:IsType(TYPE_LINK) and a:IsSetCard(0x135)
+		return a:IsLinkMonster() and a:IsSetCard(0x135)
 			and a:IsControler(tp) and not a:IsAttack(3000)
 			and not at:IsControler(tp) and not at:IsAttack(3000)
 	end
@@ -95,8 +95,7 @@ function s.bttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
+	local a,d=Duel.GetAttacker(),Duel.GetAttackTarget()
 	if a:IsFaceup() and a:IsRelateToBattle() and d:IsFaceup() and d:IsRelateToBattle() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -108,7 +107,7 @@ function s.btop(e,tp,eg,ep,ev,re,r,rp)
 		d:RegisterEffect(e2)
 	end
 	local tc=a:IsControler(tp) and a or d
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_DAMAGE_STEP_END)
@@ -119,7 +118,7 @@ function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp,lk)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x135) and c:GetLink()<lk
+	return c:IsLinkMonster() and c:IsSetCard(0x135) and c:GetLink()<lk
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -127,6 +126,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,0,1,nil,e,tp,e:GetLabel())
 	if #g>0 then
-	   Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) 
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) 
 	end
 end

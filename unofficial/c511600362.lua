@@ -40,7 +40,7 @@ function s.lptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	local at=Duel.GetAttacker()
 	if at and g:IsContains(at) and at:IsFaceup() then
 		Duel.Recover(tp,at:GetAttack(),REASON_EFFECT)

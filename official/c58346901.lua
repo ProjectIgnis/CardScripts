@@ -1,5 +1,5 @@
 --焔聖騎士-オリヴィエ
---Flame Noble Knight Olivier
+--Infernoble Knight Oliver
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()

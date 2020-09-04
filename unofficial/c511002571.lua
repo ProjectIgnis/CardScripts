@@ -1,3 +1,4 @@
+--オーバー・タキオン・ユニット
 --Tachyon Unit
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
@@ -22,8 +23,12 @@ function s.filter(c,e,tp)
 	local eff={c:GetCardEffect(id)}
 	for _,teh in ipairs(eff) do
 		local te=teh:GetLabelObject()
+		if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
+		local con=te:GetCondition()
 		local tg=te:GetTarget()
-		if not tg or tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0) then return true end
+		if (not con or con(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE))
+			and (not tg or tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0)) then return true
+		end
 	end
 	return false
 end
@@ -42,8 +47,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local ac={}
 		for _,teh in ipairs(eff) do
 			local temp=teh:GetLabelObject()
+			if temp:GetCode()&511001822==511001822 then temp=temp:GetLabelObject() end
+			local con=temp:GetCondition()
 			local tg=temp:GetTarget()
-			if not tg or tg(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0) then
+			if (not con or con(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE))
+				and (not tg or tg(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0)) then
 				table.insert(ac,teh)
 				table.insert(acd,temp:GetDescription())
 			end
@@ -57,28 +65,21 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if not te then return end
 		local teh=te
 		te=teh:GetLabelObject()
+		if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
 		local tg=te:GetTarget()
-		local op=te:GetOperation()
 		if tg then tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		Duel.BreakEffect()
 		tc:CreateEffectRelation(te)
 		Duel.BreakEffect()
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-		if g then
-			local etc=g:GetFirst()
-			while etc do
-				etc:CreateEffectRelation(te)
-				etc=g:GetNext()
-			end
+		for etc in aux.Next(g) do
+			etc:CreateEffectRelation(te)
 		end
-		if op then op(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
+		local operation=te:GetOperation()
+		if operation then operation(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		tc:ReleaseEffectRelation(te)
-		if etc then	
-			etc=g:GetFirst()
-			while etc do
-				etc:ReleaseEffectRelation(te)
-				etc=g:GetNext()
-			end
+		for etc in aux.Next(g) do
+			etc:ReleaseEffectRelation(te)
 		end
 	end
 end

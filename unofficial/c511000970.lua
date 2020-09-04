@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	--accumulate
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(0x10000000+51100970)
+	e2:SetCode(51100970)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(0,1)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 function s.atcost(e,c,tp)
 	if c:IsRace(RACE_MACHINE+RACE_ZOMBIE) or c:IsImmuneToEffect(e) then return true end
-	local ct=Duel.GetFlagEffect(tp,51100970)
+	local ct=#{Duel.GetPlayerEffect(tp,51100970)}
 	return Duel.CheckReleaseGroup(tp,Card.IsRace,ct,c,c:GetRace())
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)

@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--lock
+	--Limit material
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -33,7 +33,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
@@ -43,19 +43,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 		tc:RegisterEffect(e2)
-		local e3=e1:Clone()
-		e3:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetDescription(aux.Stringid(id,1))
+		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e3:SetCode(EFFECT_CANNOT_BE_MATERIAL)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetValue(aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ,SUMMON_TYPE_LINK))
 		tc:RegisterEffect(e3)
-		local e4=e1:Clone()
-		e4:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
-		tc:RegisterEffect(e4)
-		local e5=e1:Clone()
-		e5:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-		tc:RegisterEffect(e5)
-		local e6=e1:Clone()
-		e6:SetDescription(aux.Stringid(id,1))
-		e6:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
-		e6:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		tc:RegisterEffect(e6)
 	end
 end

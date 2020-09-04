@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -30,36 +30,24 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.op(tc,c)
 	--direct attack
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_DIRECT_ATTACK)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	tc:RegisterEffect(e1)
+	--Reduce damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_DIRECT_ATTACK)
+	e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e2:SetCondition(s.rdcon)
+	e2:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e2)
-	--damage reduce
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e3:SetLabel(c:GetCode())
-	e3:SetCondition(s.rdcon)
-	e3:SetOperation(s.rdop)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	tc:RegisterEffect(e3)
+	tc:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD|RESET_DISABLE)&~(RESET_LEAVE)|RESET_PHASE|PHASE_END,0,1)
 end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetAttackTarget()==nil
-		and e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
-		and Duel.IsExistingMatchingCard(aux.NOT(Card.IsHasEffect),tp,0,LOCATION_MZONE,1,nil,EFFECT_IGNORE_BATTLE_TARGET)
+function s.rdcon(e)
+	local c,tp=e:GetHandler(),e:GetHandlerPlayer()
+	return Duel.GetAttackTarget()==nil and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and c:GetFlagEffect(id)>0
 end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local effs={c:GetCardEffect(EFFECT_DIRECT_ATTACK)}
-	local eg=Group.CreateGroup()
-	for _,eff in ipairs(effs) do
-		eg:AddCard(eff:GetOwner())
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	local ec = #eg==1 and eg:GetFirst() or eg:Select(tp,1,1,nil):GetFirst()
-	if e:GetLabel()==ec:GetOriginalCode() then
-		Duel.HalfBattleDamage(ep)
-	end
-end
+

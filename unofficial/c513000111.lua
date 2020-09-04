@@ -32,6 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,send,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g1=Duel.GetFieldGroup(tp,LOCATION_DECK,0)
 	local g2=Duel.GetFieldGroup(tp,0,LOCATION_DECK)
 	local send=Group.CreateGroup()

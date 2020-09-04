@@ -24,8 +24,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x11f}
-function s.lcheck(g,lc)
-	return g:IsExists(Card.IsType,1,nil,TYPE_RITUAL)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsType,1,nil,TYPE_RITUAL,lc,sumtype,tp)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
@@ -39,8 +39,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
 		c:RegisterEffect(e1)
-		if ct==1 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0)) end
+		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	end
 	if ct>=2 then
 		local e2=Effect.CreateEffect(c)
@@ -55,8 +54,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e3:SetValue(1)
 		c:RegisterEffect(e3)
-		if ct==2 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1)) end
+		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 	end
 	if ct==3 then
 		local e4=Effect.CreateEffect(c)
@@ -82,4 +80,3 @@ end
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x11f) and c:GetSequence()<5
 end
-

@@ -27,7 +27,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttackTarget() and Duel.GetTurnPlayer()~=tp and Duel.GetFlagEffect(tp,id)>0
+	return Duel.GetAttackTarget() and Duel.GetTurnPlayer()==1-tp and Duel.GetFlagEffect(tp,id)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttackTarget():GetAttack()~=Duel.GetAttacker():GetAttack() end

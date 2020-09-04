@@ -1,5 +1,5 @@
---ドンヨリボー＠イグニスター
---Donyoribo @Ignister
+--ドンヨリボー＠イグニスター (Anime)
+--Donyoribo @Ignister (Anime)
 --Scripted by Larry126
 local s,id,alias=GetID()
 function s.initial_effect(c)
@@ -58,8 +58,8 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 		local rd=e1 and not e2
 		local rr=not e1 and e2
 		local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-		if ex and (cp==p or p==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(p,EFFECT_NO_EFFECT_DAMAGE) then 
-			return true 
+		if ex and (cp==p or p==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(p,EFFECT_NO_EFFECT_DAMAGE) then
+			return true
 		end
 		ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
 		if ex and (p==tp or p==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(p,EFFECT_NO_EFFECT_DAMAGE) then
@@ -70,7 +70,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	e:SetLabel(Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3)))
+	e:SetLabel(Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1)))
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
@@ -94,7 +94,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabel(cid)
 		e2:SetValue(s.damval2)
 		e2:SetReset(RESET_CHAIN)
-		Duel.RegisterEffect(e2,tp)  
+		Duel.RegisterEffect(e2,tp)
 	end
 end
 function s.damval(e,re,val,r,rp,rc)

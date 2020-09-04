@@ -12,11 +12,11 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
-	return d and d:IsFaceup() and d:IsControler(tp) and d:IsSetCard(0xba) and  d:IsLevelBelow(4)
+	return d and d:IsFaceup() and d:IsControler(tp) and d:IsSetCard(0xba) and d:IsLevelBelow(4)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local d=Duel.GetAttackTarget()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,d:GetOriginalCode(),0xba,d:GetType(),d:GetAttack(),d:GetDefense(),
 		d:GetLevel(),d:GetRace(),d:GetAttribute()) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)

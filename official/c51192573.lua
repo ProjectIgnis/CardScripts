@@ -31,7 +31,7 @@ end
 s.listed_series={0xc}
 s.counter_place_list={0x100e}
 function s.otfilter(c,tp)
-	return c:GetOwner()==tp
+	return c:GetOwner()==1-tp
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end 

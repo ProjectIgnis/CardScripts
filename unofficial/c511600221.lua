@@ -3,7 +3,7 @@
 --scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-   --Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN+CATEGORY_DEFCHANGE+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -16,8 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={511009428}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end
 function s.filter(c,tid)
 	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsType(TYPE_LINK)
@@ -80,7 +79,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atklimit(e,c)
-    return c:IsCode(511009428)
+	return c:IsCode(511009428)
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject() and e:GetLabelObject():IsRelateToCard(e:GetHandler())

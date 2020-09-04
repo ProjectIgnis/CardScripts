@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop1)
 	c:RegisterEffect(e3)
 	aux.GlobalCheck(s,function()
-		local e4=Effect.CreateEffect(c)	
+		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 		e4:SetOperation(s.spop)
@@ -91,7 +91,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if rc:IsSetCard(0x95) then
 		local tc=eg:GetFirst()
 		while tc do
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)  
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 			tc=eg:GetNext()
 		end
 	end

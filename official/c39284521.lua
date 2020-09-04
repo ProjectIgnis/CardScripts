@@ -20,7 +20,7 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local rg=Duel.GetMatchingGroup(s.spfilter,c:GetControler(),LOCATION_HAND,0,e:GetHandler())
-	return aux.SelectUnselectGroup(rg,e,tp,1,#rg,aux.ChkfMMZ(1),0)
+	return aux.SelectUnselectGroup(rg,e,c:GetControler(),1,#rg,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,e:GetHandler())

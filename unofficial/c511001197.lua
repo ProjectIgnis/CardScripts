@@ -1,7 +1,7 @@
 --ジェリー・バインド
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,1,aux.FilterBoolFunction(Card.IsFaceup),CATEGORY_DISABLE,nil,nil,0x1c0,s.condition,nil,s.target)
+	aux.AddPersistentProcedure(c,1,aux.FilterBoolFunction(Card.IsFaceup),CATEGORY_DISABLE,nil,nil,TIMINGS_CHECK_MONSTER,s.condition,nil,s.target)
 	--disable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

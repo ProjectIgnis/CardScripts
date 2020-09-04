@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	e2:SetLabelObject(e1)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_ZOMBIE) and c:IsDiscardable()

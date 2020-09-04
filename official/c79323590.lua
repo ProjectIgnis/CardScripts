@@ -1,4 +1,5 @@
 --魔力の枷
+--Chain Energy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -39,7 +40,7 @@ function s.initial_effect(c)
 	--accumulate
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_FIELD)
-	e7:SetCode(0x10000000+id)
+	e7:SetCode(id)
 	e7:SetRange(LOCATION_SZONE)
 	e7:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e7:SetTargetRange(1,1)
@@ -49,7 +50,7 @@ function s.actarget(e,te,tp)
 	return te:GetHandler():IsLocation(LOCATION_HAND)
 end
 function s.costchk(e,te_or_c,tp)
-	local ct=Duel.GetFlagEffect(tp,id)
+	local ct=#{Duel.GetPlayerEffect(tp,id)}
 	return Duel.CheckLPCost(tp,ct*500)
 end
 function s.costop(e,tp,eg,ep,ev,re,r,rp)

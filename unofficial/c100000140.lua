@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 end
 function s.synlimit(e,c)
 	if not c then return false end

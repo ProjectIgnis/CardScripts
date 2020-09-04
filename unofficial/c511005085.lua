@@ -1,6 +1,6 @@
 --クロス・カウンター・トラップ
 --Cross Counter Trap
---original script by Shad3
+--Original script by Shad3
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

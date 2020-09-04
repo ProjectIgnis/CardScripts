@@ -97,7 +97,7 @@ function s.doperation(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		tc:RegisterEffect(e2)		 
+		tc:RegisterEffect(e2)
 	end
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)
@@ -109,6 +109,6 @@ function s.doperation(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
 		e2:SetValue(tc:GetBaseDefense())
-		tc:RegisterEffect(e2)		 
-	end	   
+		tc:RegisterEffect(e2)
+	end
 end

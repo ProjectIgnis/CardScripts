@@ -1,4 +1,4 @@
--- 静冠の呪眼
+--静冠の呪眼
 --Evil Eye Repose
 local s,id=GetID()
 function s.initial_effect(c)
@@ -84,8 +84,8 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local bc=e:GetLabelObject()
-	if bc:IsRelateToBattle() and bc:IsControler(1-tp) then 
-		Duel.Remove(bc,POS_FACEUP,REASON_EFFECT)		
+	if bc:IsRelateToBattle() and bc:IsControler(1-tp) then
+		Duel.Remove(bc,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -103,10 +103,8 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local sg=tg:Filter(Card.IsRelateToEffect,nil,e)
+	local sg=Duel.GetTargetCards(e)
 	if #sg>0 then
 		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_RETURN)
 	end
 end
-

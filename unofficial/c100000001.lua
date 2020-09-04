@@ -1,4 +1,5 @@
 --手をつなぐ魔人
+--Hand-Holding Genie (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--target
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e1:SetValue(s.atlimit)
 	c:RegisterEffect(e1)
-	--defup
+	--Increase DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -24,11 +25,11 @@ end
 function s.val(e,c)
 	local def=0
 	local g=Duel.GetMatchingGroup(Card.IsPosition,c:GetControler(),LOCATION_MZONE,0,c,POS_FACEUP_DEFENSE)
-	local tc=g:GetFirst()
-	while tc do
-		local cdef=tc:GetBaseDefense()
-		def=def+(cdef>=0 and cdef or 0)
-		tc=g:GetNext()
+	if g then
+		for tc in aux.Next(g) do
+			local cdef=tc:GetBaseDefense()
+			def=def+(cdef>=0 and cdef or 0)
+		end
 	end
 	return def
 end

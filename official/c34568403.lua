@@ -2,7 +2,7 @@
 --Arcana Force VII - The Chariot
 local s,id=GetID()
 function s.initial_effect(c)
-	--coin
+	--Toss a coin when this card is Summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_COIN)
@@ -33,7 +33,7 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	s.arcanareg(c,res)
 end
 function s.arcanareg(c,coin)
-	--coin effect
+	--Coin effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -73,15 +73,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--heads
+	--Heads
 	if c:GetFlagEffectLabel(36690018)==1 and c:GetFlagEffectLabel(id)==1 then
 		c:SetFlagEffectLabel(id,0)
 	end
-	--tails
+	--Tails
 	if c:GetFlagEffectLabel(36690018)==0 and c:GetFlagEffectLabel(id)==0 then
 		c:SetFlagEffectLabel(id,1)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-		local zone=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0)>>16
-		Duel.GetControl(c,1-tp,0,0,zone)
+		Duel.GetControl(c,1-tp,0,0)
 	end
 end

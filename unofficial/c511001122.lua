@@ -1,5 +1,5 @@
---墓荒らし (Anime)
---Graverobber (Anime)
+--墓荒らし (Manga)
+--Graverobber (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,26 +16,17 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(511001408)
 	c:RegisterEffect(e2)
+	--Trap Spell
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EFFECT_TRAP_ACT_IN_HAND)
-	e3:SetCondition(s.handcon)
+	e3:SetCode(EFFECT_BECOME_QUICK)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
+	e4:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
 	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e5:SetCode(EFFECT_ADD_TYPE)
-	e5:SetValue(TYPE_SPELL)
-	c:RegisterEffect(e5)
-end
-function s.handcon(e)
-	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function s.cfilter(c,e,tp,eg,ep,ev,re,r,rp,chain)
 	if not c:IsType(TYPE_MONSTER) and c:GetActivateEffect() and (c:IsHasEffect(511001283) or c:IsHasEffect(511001408)) then return false end
@@ -116,9 +107,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e:SetCategory(te:GetCategory())
 			e:SetProperty(te:GetProperty())
 			Duel.ClearTargetCard()
+			local loc=LOCATION_SZONE
 			if (tpe&TYPE_FIELD)~=0 then
+				loc=LOCATION_FZONE
 				local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-				if Duel.IsDuelType(DUEL_OBSOLETE_RULING) then
+				if Duel.IsDuelType(DUEL_1_FIELD) then
 					if fc then Duel.Destroy(fc,REASON_RULE) end
 					fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 					if fc and Duel.Destroy(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
@@ -127,7 +120,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 					if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 				end
 			end
-			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 			if tc:IsType(TYPE_FIELD) and tc:GetSequence()~=5 then
 				Duel.MoveSequence(tc,5)
 			end

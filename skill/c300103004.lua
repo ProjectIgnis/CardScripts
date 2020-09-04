@@ -5,7 +5,7 @@ function s.initial_effect(c)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
-	return aux.CanActivateSkill(tp) 
+	return aux.CanActivateSkill(tp)
 	and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)

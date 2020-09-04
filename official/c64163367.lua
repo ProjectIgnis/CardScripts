@@ -10,27 +10,39 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCode(EVENT_REMOVE_COUNTER+0x100e)
+	e2:SetCode(EVENT_REMOVE_COUNTER+COUNTER_A)
 	e2:SetOperation(s.ctop1)
 	c:RegisterEffect(e2)
-	--counter2
+	--register before leaving
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_COUNTER)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_LEAVE_FIELD)
-	e3:SetCondition(s.ctcon2)
-	e3:SetOperation(s.ctop2)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_LEAVE_FIELD_P)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
+	--place counters when leaving
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,0))
+	e4:SetCategory(CATEGORY_COUNTER)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e4:SetCode(EVENT_LEAVE_FIELD)
+	e4:SetCondition(s.ctcon2)
+	e4:SetLabelObject(e3)
+	e4:SetOperation(s.ctop2)
+	c:RegisterEffect(e4)
 end
-s.counter_place_list={0x100e}
+s.counter_place_list={COUNTER_A}
 function s.ctop1(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+0x100e,1)
+	e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+COUNTER_A,1)
+end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local ct=e:GetHandler():GetCounter(COUNTER_A)
+	e:SetLabel(ct)
 end
 function s.ctcon2(e,tp,eg,ep,ev,re,r,rp)
-	local ct=e:GetHandler():GetCounter(0x100e)
+	local ct=e:GetLabelObject():GetLabel()
 	e:SetLabel(ct)
-	return e:GetHandler():IsReason(REASON_DESTROY) and ct>0
+	return ct>0
 end
 function s.ctop2(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
@@ -39,6 +51,6 @@ function s.ctop2(e,tp,eg,ep,ev,re,r,rp)
 	for i=1,ct do
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 		local sg=g:Select(tp,1,1,nil)
-		sg:GetFirst():AddCounter(0x100e,1)
+		sg:GetFirst():AddCounter(COUNTER_A,1)
 	end
 end

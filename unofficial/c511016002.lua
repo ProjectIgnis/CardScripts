@@ -1,4 +1,5 @@
---アルカナフォース０－THE FOOL
+--アルカナフォース０－THE FOOL (Anime)
+--Arcana Force 0 - The Fool (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle indestructable

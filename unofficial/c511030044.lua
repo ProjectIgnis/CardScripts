@@ -1,6 +1,6 @@
---充電機塊セルトパス
---Appliancer Celtopus
---scripted by pyrQ
+--充電機塊セルトパス (Anime)
+--Appliancer Celtopus (Anime)
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link Summon
@@ -44,22 +44,22 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_DESTROYED)
 	e5:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetCountLimit(1,id)
+	e5:SetCountLimit(1,c:Alias())
 	e5:SetCondition(s.drcon)
 	e5:SetTarget(s.drtg)
 	e5:SetOperation(s.drop)
 	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x57a}
+s.listed_series={0x14a}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsLevel(1) and c:IsSetCard(0x57a,lc,sumtype,tp)
+	return c:IsLevel(1) and c:IsSetCard(0x14a,lc,sumtype,tp)
 end
 function s.imcon(e)
 	return e:GetHandler():IsLinked()
 end
 function s.cfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0x57a)
+	return c:IsFacedown() or not c:IsSetCard(0x14a)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
@@ -79,7 +79,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local atkct=e:GetHandler():GetMutualLinkedGroupCount()
 	local a=Duel.GetAttacker()
 	local b=Duel.GetAttackTarget()
-	if a:IsControler(1-tp) then 
+	if a:IsControler(1-tp) then
 		a=Duel.GetAttackTarget()
 		b=Duel.GetAttacker()
 	end
@@ -95,7 +95,7 @@ end
 function s.checkfilter(c,e,tp)
 	local mg=c:GetMutualLinkedGroup()
 	local octg=e:GetHandler():GetMutualLinkedGroup()
-	return c:IsSetCard(0x57a) and c:IsControler(tp) and c:IsReason(REASON_DESTROY)
+	return c:IsSetCard(0x14a) and c:IsControler(tp) and c:IsReason(REASON_DESTROY)
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and not (mg:IsContains(e:GetHandler()) and octg:IsContains(c))
 end

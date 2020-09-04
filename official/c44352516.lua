@@ -1,4 +1,5 @@
 --サイバーダーク・インフェルノ
+--c44352516.lua
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,21 +7,22 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--cannot be target
+	--Prevent destruction by opponent's effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(s.indestg)
-	e2:SetValue(s.indesval)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
+	--Prevent effect target
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
-	--return to hand
+	--Return to hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
@@ -30,7 +32,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.target)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
-	--search
+	--Add from 
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -44,9 +46,6 @@ end
 s.listed_series={0x4093,0x46}
 function s.indestg(e,c)
 	return c:IsSetCard(0x4093) and c:IsType(TYPE_EFFECT) and c:GetEquipCount()>0
-end
-function s.indesval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end
 function s.filter(c)
 	return c:IsSetCard(0x4093) and c:IsFaceup() and c:IsAbleToHand()
@@ -76,7 +75,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:IsReason(REASON_DESTROY)
+	return rp==1-tp and c:IsReason(REASON_DESTROY)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)

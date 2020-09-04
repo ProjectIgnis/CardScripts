@@ -2,45 +2,36 @@
 --Othello Frog
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot material
+	--Cannot be material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
-	e1:SetValue(1)
+	e1:SetCode(EFFECT_CANNOT_BE_MATERIAL)
+	e1:SetValue(aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ,SUMMON_TYPE_LINK))
 	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+	--Change battle position
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_POSITION)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCode(EVENT_SUMMON_SUCCESS)
+	e2:SetTarget(s.postg)
+	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-	local e3=e1:Clone()
-	e3:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
+	local e3=e2:Clone()
+	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	local e4=e1:Clone()
-	e4:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+	--Change control
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_CONTROL)
+	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(1)
+	e4:SetTarget(s.cttg)
+	e4:SetOperation(s.ctop)
 	c:RegisterEffect(e4)
-	--to defense
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,0))
-	e5:SetCategory(CATEGORY_POSITION)
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e5:SetCode(EVENT_SUMMON_SUCCESS)
-	e5:SetTarget(s.postg)
-	e5:SetOperation(s.posop)
-	c:RegisterEffect(e5)
-	local e6=e5:Clone()
-	e6:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	c:RegisterEffect(e6)
-	--control
-	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(id,1))
-	e7:SetCategory(CATEGORY_CONTROL)
-	e7:SetType(EFFECT_TYPE_IGNITION)
-	e7:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e7:SetRange(LOCATION_MZONE)
-	e7:SetCountLimit(1)
-	e7:SetTarget(s.cttg)
-	e7:SetOperation(s.ctop)
-	c:RegisterEffect(e7)
 end
 s.listed_names={id}
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -78,7 +69,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) or not c:IsPosition(POS_FACEUP_DEFENSE) then return end
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) or tc:IsControler(tp) then return end
+	if not tc or not tc:IsRelateToEffect(e) or tc:IsControler(tp) then return end
 	local seq=tc:GetSequence()
 	if seq>4 then return end
 	local zone=0
@@ -97,4 +88,3 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

@@ -235,15 +235,16 @@ end
 
 --Help functions for the Salamangreats' effects
 function Card.IsReincarnationSummoned(c)
-	return c:GetFlagEffect(CARD_SALAMANGREAT_SANCTUARY)~=0
-end
-function Auxiliary.EnableCheckReincarnation(c)
-	local m=_G["c"..CARD_SALAMANGREAT_SANCTUARY]
-	if not m then
-		m=_G["c"..c:GetCode()]
+	local label=0
+	for _,lab in ipairs({c:GetFlagEffectLabel(CARD_SALAMANGREAT_SANCTUARY)}) do
+		label = label|lab
 	end
-	if m and not m.global_check then
-		m.global_check=true
+	return (label&(c:GetSummonPlayer()+1))~=0
+end
+local ReincarnationChecked=false
+function Auxiliary.EnableCheckReincarnation(c)
+	if not ReincarnationChecked then
+		ReincarnationChecked=true
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_MATERIAL_CHECK)
@@ -265,23 +266,32 @@ end
 function Auxiliary.ReincarnationCheckValue(e,c)
 	local g=c:GetMaterial()
 	local id=c:GetCode()
-	local tp=c:GetSummonPlayer()
+	local tp=c:GetControler()
 	local rc=false
+	local label=3
 	if c:IsLinkMonster() then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_LINK,tp,id)
 	elseif c:IsType(TYPE_FUSION) then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_FUSION,tp,id)
 	elseif c:IsType(TYPE_RITUAL) then
-		rc=g:IsExists(aux.ReincarnationRitualFilter,1,nil,c,id,tp)
+		label=0
+		if g:IsExists(aux.ReincarnationRitualFilter,1,nil,c,id,0) then
+			label=1
+		end
+		if g:IsExists(aux.ReincarnationRitualFilter,1,nil,c,id,1) then
+			label=label+2
+		end
+		rc=label~=0
 	elseif c:IsType(TYPE_SYNCHRO) then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_SYNCHRO,tp,id)
 	elseif c:IsType(TYPE_XYZ) then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_XYZ,tp,id)
 	end
 	if rc then
-		c:RegisterFlagEffect(CARD_SALAMANGREAT_SANCTUARY,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE-RESET_TEMP_REMOVE,0,1)
+		c:RegisterFlagEffect(CARD_SALAMANGREAT_SANCTUARY,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1,label)
 	end
 end
+
 --Filter for unique on field Malefic monsters
 function Auxiliary.MaleficUniqueFilter(cc)
 	local mt=cc:GetMetatable()
@@ -293,41 +303,57 @@ function Auxiliary.MaleficUniqueFilter(cc)
 			end
 end
 --Procedure for Malefic monsters' Special Summon (includes handling of Malefic Paradox Gear)
-function Auxiliary.AddMaleficSummonProcedure(c,code,loc)
+function Auxiliary.AddMaleficSummonProcedure(c,code,loc,excon)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(Auxiliary.MaleficSummonCondition(code,loc))
+	e1:SetCondition(Auxiliary.MaleficSummonCondition(code,loc,excon))
+	e1:SetTarget(Auxiliary.MaleficSummonTarget(code,loc))
 	e1:SetOperation(Auxiliary.MaleficSummonOperation(code,loc))
 	c:RegisterEffect(e1)
 end
 function Auxiliary.MaleficSummonFilter(c,cd)
-	return c:IsCode(cd) and c:IsAbleToRemoveAsCost()
+	return ((cd and c:IsCode(cd)) or (not cd and c:IsSetCard(0x23))) and c:IsAbleToRemoveAsCost()
 end
 function Auxiliary.MaleficSummonSubstitute(c,cd,tp)
 	return c:IsHasEffect(48829461,tp) and c:IsAbleToRemoveAsCost()
 end
-function Auxiliary.MaleficSummonCondition(cd,loc)
+function Auxiliary.MaleficSummonCondition(cd,loc,excon)
 	return 	function(e,c)
+				if excon and not excon(e,c) then return false end
 				if c==nil then return true end
 				return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 					and (Duel.IsExistingMatchingCard(Auxiliary.MaleficSummonFilter,c:GetControler(),loc,0,1,nil,cd)
 					or Duel.IsExistingMatchingCard(Auxiliary.MaleficSummonSubstitute,c:GetControler(),LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,cd,c:GetControler()))
 			end
 end
-function Auxiliary.MaleficSummonOperation(cd,loc)
-	return	function(e,tp,eg,ep,ev,re,r,rp,c)
+function Auxiliary.MaleficSummonTarget(cd,loc)
+	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c)
 				local g=Duel.GetMatchingGroup(Auxiliary.MaleficSummonFilter,tp,loc,0,nil,cd)
 				g:Merge(Duel.GetMatchingGroup(Auxiliary.MaleficSummonSubstitute,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,c:GetControler()))
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-				local tc=g:Select(tp,1,1,nil):GetFirst()
-				if tc:IsHasEffect(48829461,tp) then tc:IsHasEffect(48829461,tp):UseCountLimit(tp) end
-				Duel.Remove(tc,POS_FACEUP,REASON_COST)
+				local sg=aux.SelectUnselectGroup(g,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
+				if #sg>0 then
+					sg:KeepAlive()
+					e:SetLabelObject(sg)
+					return true
+				end
+				return false
 			end
 end
+function Auxiliary.MaleficSummonOperation(cd,loc)
+	return	function(e,tp,eg,ep,ev,re,r,rp,c)
+				local g=e:GetLabelObject()
+				if not g then return end
+				local tc=g:GetFirst()
+				if tc:IsHasEffect(48829461,tp) then tc:IsHasEffect(48829461,tp):UseCountLimit(tp) end
+				Duel.Remove(tc,POS_FACEUP,REASON_COST)
+				g:DeleteGroup()
+			end
+end
+
 --Discard cost for Witchcrafter monsters, supports the replacements from the Continuous Spells
 function Auxiliary.WitchcrafterDiscardFilter(c,tp)
 	return c:IsHasEffect(EFFECT_WITCHCRAFTER_REPLACE,tp) and c:IsAbleToGraveAsCost()
@@ -359,14 +385,18 @@ function Auxiliary.WitchcrafterDiscardCost(f,minc,maxc)
 				end
 			end
 end
---Special Summon limit for the Evil HEROes
+
+--Special Summon limit for "Evil HERO" Fusion monsters
 function Auxiliary.EvilHeroLimit(e,se,sp,st)
-	local chk=SUMMON_TYPE_FUSION+0x10
-	if Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE) then
-		chk=SUMMON_TYPE_FUSION
-	end
-	return st&chk==chk
+	return se:GetHandler():IsCode(CARD_DARK_FUSION)
+		or (Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE) and st&SUMMON_TYPE_FUSION==SUMMON_TYPE_FUSION)
 end
+--Special Summon limit for "Fossil" Fusion monsters
+function Auxiliary.FossilLimit(e,se,sp,st)
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or se:GetHandler():IsCode(CARD_FOSSIL_FUSION)
+end
+
+--Kaiju and Lava Golem-like summon procedures
 function Auxiliary.AddLavaProcedure(c,required,position,filter,value,description)
 	if not required or required < 1 then
 		required = 1
@@ -441,3 +471,25 @@ function Auxiliary.KaijuCondition(e,c)
 											return c:IsFaceup() and c:IsSetCard(0xd3)
 										end,tp,0,LOCATION_MZONE,1,nil)
 end
+--handle detach costs for "Numeron" Xyz monsters that ignore costs due to the effect of "Numeron Network"
+function Auxiliary.NumeronDetachCost(min,max)
+	if max==nil then max=min end
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		local nn=Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
+		if chk==0 then return (nn and e:GetHandler():IsLocation(LOCATION_MZONE)) or e:GetHandler():CheckRemoveOverlayCard(tp,min,REASON_COST) end
+		if nn and (not e:GetHandler():CheckRemoveOverlayCard(tp,min,REASON_COST) or Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1))) then
+			Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
+			return
+		end
+		e:GetHandler():RemoveOverlayCard(tp,min,max,REASON_COST)
+	end
+end
+function Auxiliary.CheckStealEquip(c,e,tp)
+	if c:IsFacedown() or not c:IsControlerCanBeChanged() or not c:IsControler(1-tp) then return false end
+	if e:GetHandler():IsLocation(LOCATION_SZONE) then return true end --Already handled in the core
+	if not Duel.IsDuelType(DUEL_TRAP_MONSTERS_NOT_USE_ZONE) and c:IsType(TYPE_TRAPMONSTER) then
+		return Duel.GetLocationCount(tp,LOCATION_SZONE,tp,LOCATION_REASON_CONTROL)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE,tp,0)>=2
+	end
+	return true
+end
+

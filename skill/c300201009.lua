@@ -19,10 +19,12 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,g)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+			Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 			Duel.ShuffleDeck(g:GetFirst():GetControler())
 			Duel.BreakEffect()
 			Duel.Draw(g:GetFirst():GetControler(),#g,REASON_EFFECT)
+		else
+			Duel.ShuffleHand(g:GetFirst():GetControler())
 		end
 	end
 end

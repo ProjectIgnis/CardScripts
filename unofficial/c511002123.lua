@@ -1,10 +1,12 @@
+--オーバーレイ・ウィーカー
 --Weaker Overlay
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -12,17 +14,12 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if not d then return false end
-	if a:IsControler(1-tp) then
-		a,d=d,a
-	end
-	return d and a:IsType(TYPE_XYZ) and a:IsFaceup() and d:IsType(TYPE_XYZ) and d:IsFaceup() and a:IsControler(tp) 
-		and d:IsControler(1-tp) and a:GetOverlayCount()~=d:GetOverlayCount()
+	return d and a:IsType(TYPE_XYZ) and a:IsFaceup() and d:IsType(TYPE_XYZ) and d:IsFaceup() and a:GetOverlayCount()~=d:GetOverlayCount()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if not d or not a:IsRelateToBattle() or not d:IsRelateToBattle() then return end
+	if not (d and a:IsRelateToBattle() and d:IsRelateToBattle() and a:IsType(TYPE_XYZ) and a:IsFaceup() and d:IsType(TYPE_XYZ) and d:IsFaceup()) then return end
 	local act=a:GetOverlayCount()
 	local dct=d:GetOverlayCount()
 	if act==dct then return end

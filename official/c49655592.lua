@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	--accumulate
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(0x10000000+id)
+	e3:SetCode(id)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(0,1)
@@ -88,7 +88,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.costchk(e,te_or_c,tp)
-	local ct=Duel.GetFlagEffect(tp,id)
+	local ct=#{Duel.GetPlayerEffect(tp,id)}
 	return Duel.CheckLPCost(tp,ct*300)
 end
 function s.costtg(e,te,tp)

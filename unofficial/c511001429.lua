@@ -1,90 +1,65 @@
 --CNo.102 光堕天使ノーブル・デーモン (Anime)
 --Number C102: Archfiend Seraph (Anime)
---fixed by Larry126
+--Fixed by Larry126
+Duel.LoadScript("rankup_functions.lua")
+Duel.LoadCardScript("c67173574.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),5,4)
 	c:EnableReviveLimit()
-	--atk
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(49678559,0))
-	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.cost)
-	e1:SetTarget(s.tg)
-	e1:SetOperation(s.op)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--indes
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(49678559,1))
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
-	e2:SetCondition(s.indescon)
-	e2:SetCost(s.indescost)
-	e2:SetTarget(s.indestg)
-	e2:SetOperation(s.indesop)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_CHAINING)
-	e3:SetCondition(s.indescon2)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
-	--battle indestructable
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e4:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
-	c:RegisterEffect(e4)
 	--Rank Up Check
+	aux.EnableCheckRankUp(c,nil,nil,49678559)
+	--battle indestructable
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	c:RegisterEffect(e1)
+	--atk
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCost(s.cost)
+	e2:SetTarget(s.tg)
+	e2:SetOperation(s.op)
+	e2:SetLabel(RESET_EVENT+RESETS_STANDARD)
+	--indes
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_DAMAGE)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
+	e3:SetCondition(s.indescon)
+	e3:SetCost(s.indescost)
+	e3:SetTarget(s.indestg)
+	e3:SetOperation(s.indesop)
+	e3:SetLabel(RESET_EVENT+RESETS_STANDARD)
+	local e4=e3:Clone()
+	e4:SetCode(EVENT_CHAINING)
+	e4:SetCondition(s.indescon2)
+	e4:SetLabel(RESET_EVENT+RESETS_STANDARD)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetCode(EFFECT_MATERIAL_CHECK)
-	e5:SetValue(s.valcheck)
-	c:RegisterEffect(e5)
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e6:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e6:SetLabelObject(e5)
-	e6:SetOperation(s.rankupregop)
-	c:RegisterEffect(e6)
-	e1:SetLabelObject(e6)
-	e2:SetLabelObject(e6)
-	e3:SetLabelObject(e6)
+	e5:SetCode(EFFECT_RANKUP_EFFECT)
+	e5:SetLabelObject(e2)
+	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
+	local e6=e5:Clone()
+	e6:SetLabelObject(e3)
+	c:RegisterEffect(e6,false,REGISTER_FLAG_DETACH_XMAT)
+	local e7=e5:Clone()
+	e7:SetLabelObject(e4)
+	c:RegisterEffect(e7,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x95,0x48}
+s.listed_series={0x48}
 s.xyz_number=102
-s.listed_names={49678559,100000581,111011002,511000580,511002068,511002164,93238626}
-function s.rumfilter(c)
-	return c:IsCode(49678559) and not c:IsPreviousLocation(LOCATION_OVERLAY)
-end
-function s.valcheck(e,c)
-	local mg=c:GetMaterial()
-	if mg:IsExists(s.rumfilter,1,nil) then
-		e:SetLabel(1)
-	else
-		e:SetLabel(0)
-	end
-end
-function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	local rc=re:GetHandler()
-	if e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and (rc:IsSetCard(0x95)
-		or rc:IsCode(100000581) or rc:IsCode(111011002) or rc:IsCode(511000580)
-		or rc:IsCode(511002068) or rc:IsCode(511002164) or rc:IsCode(93238626))
-		and e:GetLabelObject():GetLabel()==1 then
-		e:SetLabel(1)
-	else
-		e:SetLabel(0)
-	end
-end
-function s.rankupcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetLabelObject():GetLabel()==1
-end
+s.listed_names={49678559}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST)
-		and e:GetLabelObject():GetLabel()==1 end
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c)
@@ -163,8 +138,7 @@ function s.indescon2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.indescost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,c:GetOverlayCount(),REASON_COST)
-		and e:GetLabelObject():GetLabel()==1 end
+	if chk==0 then return c:CheckRemoveOverlayCard(tp,c:GetOverlayCount(),REASON_COST) end
 	c:RemoveOverlayCard(tp,c:GetOverlayCount(),c:GetOverlayCount(),REASON_COST)
 end
 function s.indestg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,4 +1,5 @@
---Legend of Heart
+--レジェンド・オブ・ハート (Anime)
+--Legend of Heart (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,17 +7,21 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={110000101}
+s.listed_names={1784686,46232525,11082056,80019195,85800949,84565800,48179391,110000100,110000101}
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentChain()==0 and Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp
+end
 function s.costfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToRemoveAsCost()
 end
 function s.rescon(ct)
-	return  function(sg,e,tp,mg)
+	return function(sg,e,tp,mg)
 				return aux.ChkfMMZ(3-ct)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),1784686,46232525,11082056)
 			end
 end
@@ -47,7 +52,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=g1:Clone()
 	g:Merge(g2)
 	g:Merge(g3)
-	if chk==0 then return ft>-4 and Duel.CheckLPCost(tp,1000) and #g1>0 and #g2>0 and #g3>0 
+	if chk==0 then return ft>-4 and Duel.CheckLPCost(tp,1000) and #g1>0 and #g2>0 and #g3>0
 		and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,ft,e,tp,g) end
 	Duel.PayLPCost(tp,1000)
 	local rg=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,ft,e,tp,g)
@@ -65,7 +70,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=2 then return false end
 		e:SetLabel(0)
-		return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
+		return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 			and Duel.IsExistingMatchingCard(s.spfilter,tp,0x33,0,1,nil,e,tp,80019195)
 			and Duel.IsExistingMatchingCard(s.spfilter,tp,0x33,0,1,nil,e,tp,85800949)
 			and Duel.IsExistingMatchingCard(s.spfilter,tp,0x33,0,1,nil,e,tp,84565800)
@@ -95,7 +100,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.BreakEffect()
 	local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,48179391,110000100,110000101)
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

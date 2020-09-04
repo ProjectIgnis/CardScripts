@@ -1,14 +1,15 @@
 --カオス・ソルジャー －宵闇の使者－
+--Black Luster Soldier - Envoy of the Evening Twilight
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--cannot special summon
+	--Special summon limitat
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--attribute light
+	--Add Light attribute
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(ATTRIBUTE_LIGHT)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon procedure
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -31,7 +32,7 @@ function s.initial_effect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetLabel(ATTRIBUTE_DARK)
 	c:RegisterEffect(e4)
-	--remove
+	--Banish a remove
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,2))
 	e5:SetCategory(CATEGORY_REMOVE)
@@ -93,7 +94,7 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==ATTRIBUTE_LIGHT then
 		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) then
+		if tc and tc:IsRelateToEffect(e) then
 			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 		end
 	else

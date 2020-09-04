@@ -27,7 +27,7 @@ function s.con(e,tp,eg,ev,ep,re,r,rp)
 end
 function s.tg(e,tp,eg,ev,ep,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	local tc=e:GetLabelObject()
 	Duel.SetTargetCard(tc)
@@ -55,7 +55,7 @@ function s.op(e,tp,eg,ev,ep,re,r,rp)
 	e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	bc:RegisterEffect(e2)
 	if not bc:IsImmuneToEffect(e1) and not bc:IsImmuneToEffect(e2) and c:IsRelateToEffect(e)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0  and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) then
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) then
 		Duel.BreakEffect()
 		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_ATTACK)>0 then
 			local e4=Effect.CreateEffect(c)
@@ -68,12 +68,12 @@ function s.op(e,tp,eg,ev,ep,re,r,rp)
 		end
 	end
 	Duel.BreakEffect()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_EXTRA_ATTACK)
 		e3:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3)
 	end
 end

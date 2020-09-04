@@ -24,6 +24,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local d=math.floor(ev/300)
 	local tc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
 	if not tc then return end
-	if tc:GetCounter(0x91)<d then tc:RemoveCounter(tp,0x91,tc:GetCounter(0x91),REASON_RULE)	
-	else tc:RemoveCounter(tp,0x91,d,REASON_RULE) end	
+	if tc:GetCounter(0x91)<d then
+		tc:RemoveCounter(tp,0x91,tc:GetCounter(0x91),REASON_RULE)
+	else
+		tc:RemoveCounter(tp,0x91,d,REASON_RULE)
+	end
 end

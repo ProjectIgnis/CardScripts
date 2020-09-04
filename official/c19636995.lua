@@ -1,3 +1,4 @@
+--急き兎馬
 --Rapid Red Hared Mare
 --scripted by Edo9300
 local s,id=GetID()
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
 	e1:SetTargetRange(POS_FACEUP_ATTACK,0)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.hspcon)
 	e1:SetValue(s.hspval)
 	c:RegisterEffect(e1)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	--custom EVENT_PLACED
 	local e2a=Effect.CreateEffect(c)
 	e2a:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e2a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e2a:SetRange(LOCATION_MZONE)
 	e2a:SetCode(EVENT_ADJUST)
 	e2a:SetOperation(s.plchk)

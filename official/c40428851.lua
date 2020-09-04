@@ -1,9 +1,9 @@
 --戦華の徳－劉玄
---Senka Noble - Liu Xuan
+--Ancient Warriors - Virtuous Liu Xuan
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot be attack target
+	--Cannot be attack target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atcon)
 	e1:SetValue(aux.imval1)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon 1 "Ancient Warriors"  from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--draw
+	--Draw 1 card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DRAW)
@@ -85,4 +85,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-

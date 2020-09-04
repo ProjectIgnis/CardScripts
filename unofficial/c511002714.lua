@@ -1,4 +1,5 @@
---Earthbound Demon Seal
+--地縛魔封
+--Earthbound Spell Sealer
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

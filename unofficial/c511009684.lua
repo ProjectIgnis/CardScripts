@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-
 function s.filter(c)
 	return c:IsSetCard(0xfc) and c:IsLinkMonster() and c:IsAbleToExtra()
 end
@@ -34,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetOperatedGroup()
 	local g2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_GRAVE,0,nil)
 	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
-	if ct==1 and  #g2>0 then
+	if ct==1 and #g2>0 then
 		Duel.BreakEffect()
 		local tg2=g2:Select(tp,1,1,nil)
 		Duel.SendtoHand(tg2,nil,REASON_EFFECT)

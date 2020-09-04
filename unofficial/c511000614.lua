@@ -73,7 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.eqfilter(c)
-	return c:GetFlagEffect(id)~=0 
+	return c:GetFlagEffect(id)~=0
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetEquipGroup():Filter(s.eqfilter,nil)
@@ -147,7 +147,7 @@ function s.dfilter(c,tp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local dc=Duel.GetDecktopGroup(tp,1):GetFirst()
-	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)	
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return dc and dc:IsCode(100000270) and dc:IsFaceup()
 		and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp~=tp
 		and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and g and g:IsExists(s.dfilter,1,nil,tp)

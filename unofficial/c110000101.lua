@@ -1,5 +1,5 @@
---Orichalcos Tritos
 --オレイカルコス・トリトス
+--Orichalcos Tritos
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,13 +32,13 @@ end
 function s.sdcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)==0
 end
-function s.sdop(e,tp,eg,ep,ev,re,r,rp)	
+function s.sdop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():CopyEffect(48179391,RESET_EVENT+RESETS_STANDARD)
 	e:GetHandler():CopyEffect(110000100,RESET_EVENT+RESETS_STANDARD)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 end
 function s.atcon(e)
-	local tc=Duel.GetFieldCard(e:GetHandler():GetControler(),LOCATION_SZONE,5)	
+	local tc=Duel.GetFieldCard(e:GetHandler():GetControler(),LOCATION_SZONE,5)
 	return tc~=nil and tc:IsFaceup() and tc:GetCode()==110000100
 end
 function s.cfilter(c,tp)

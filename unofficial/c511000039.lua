@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCondition(s.sumcon)
 	e3:SetOperation(s.sumsuc)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 end
 function s.limfilter(c)
 	return c:GetSummonType()==SUMMON_TYPE_SYNCHRO

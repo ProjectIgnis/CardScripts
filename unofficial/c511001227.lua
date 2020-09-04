@@ -22,6 +22,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.HintSelection(g)
 		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
-		Duel.Draw(tp,1,REASON_EFFECT)	
+		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

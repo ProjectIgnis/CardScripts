@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1)	
+	e2:SetCountLimit(1)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
@@ -42,7 +42,7 @@ s.listed_names={48179391}
 function s.sdcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)==0
 end
-function s.sdop(e,tp,eg,ep,ev,re,r,rp)	
+function s.sdop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():CopyEffect(48179391,RESET_EVENT+RESETS_STANDARD)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 end
@@ -68,7 +68,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetAttacker()
@@ -79,7 +79,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc:IsRelateToEffect(e) and tc:CanAttack() and Duel.NegateAttack() then
+	if tc and tc:IsRelateToEffect(e) and tc:CanAttack() and Duel.NegateAttack() then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

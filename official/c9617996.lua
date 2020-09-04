@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetCondition(aux.zptcon(aux.FilterBoolFunction(Card.IsType,TYPE_EFFECT)))
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 end
 s.listed_series={0x116}
 function s.lcheck(g,lc,sumtype,tp)

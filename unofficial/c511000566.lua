@@ -68,7 +68,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if re:GetHandler():GetCode()~=38834303 then return end
 	if re:GetHandler():IsCode(38834303) then
-		local e0=Effect.CreateEffect(c)	
+		local e0=Effect.CreateEffect(c)
 		e0:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 		e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		e0:SetCode(EVENT_CHAIN_SOLVED)
@@ -109,7 +109,7 @@ function s.trcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(51100567,7))
 	local announce=Duel.AnnounceNumber(tp,table.unpack(t))
-	e:SetLabel(announce)	
+	e:SetLabel(announce)
 	local e1=Effect.CreateEffect(c)
 		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)

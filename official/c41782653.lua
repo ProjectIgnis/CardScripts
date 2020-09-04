@@ -79,14 +79,14 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DINOSAUR) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) 
+	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DINOSAUR) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function s.pubfilter(c)
 	return c:IsPublic() and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DINOSAUR)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
-	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)	
+	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	if #hg==0 or (hg:FilterCount(Card.IsPublic,nil)==#hg and hg:IsExists(s.pubfilter,1,nil)) then
 		local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,tp,LOCATION_HAND+LOCATION_MZONE)

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.eqcost)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -79,4 +79,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 	end
 end
-

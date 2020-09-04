@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--gain atk
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -60,9 +60,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()	
+	local c=e:GetHandler()
 	if Duel.GetTurnPlayer()==tp and Duel.GetActivityCount(tp,ACTIVITY_SUMMON)==0
-		and Duel.GetActivityCount(tp,ACTIVITY_FLIPSUMMON)==0 and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 
+		and Duel.GetActivityCount(tp,ACTIVITY_FLIPSUMMON)==0 and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0
 		and Duel.GetActivityCount(tp,ACTIVITY_ATTACK)==0 then
 		Duel.RaiseEvent(e:GetHandler(),id,e,0,0,tp,0)
 	end

@@ -58,7 +58,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Group.CreateGroup()
 	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(mg) do
-		g:Merge(tc:GetOverlayGroup())   
+		g:Merge(tc:GetOverlayGroup())
 	end
 	if chk==0 then return #g>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)

@@ -27,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(300)
 		if tc:RegisterEffect(e1) then
 			if Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(61965407,0)) then
-				local e2=Effect.CreateEffect(e:GetHandler())	
+				local e2=Effect.CreateEffect(e:GetHandler())
 				e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 				e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 				e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -50,7 +50,7 @@ function s.redtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.redop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

@@ -33,6 +33,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc1 or not tc2 then return end
 	if tc2:GetCounter(0x91)>tc1:GetCounter(0x91) then
 		tc1:RegisterFlagEffect(110000000,RESET_CHAIN,0,1)
-		tc1:AddCounter(0x91,tc2:GetCounter(0x91)-tc1:GetCounter(0x91))	
+		tc1:AddCounter(0x91,tc2:GetCounter(0x91)-tc1:GetCounter(0x91))
 	end
 end

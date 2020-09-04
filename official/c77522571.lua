@@ -1,4 +1,4 @@
---v
+--デストーイ・マイスター
 --Frightfur Meister
 --Scripted by Eerie Code
 local s,id=GetID()
@@ -111,7 +111,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.excfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_FIEND)
+	return c:IsFaceup() and c:IsRace(RACE_FIEND) and c:HasLevel()
 end
 function s.exfilter(c,e,tp,chk)
 	return c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and (not chk or Duel.GetLocationCountFromEx(tp,tp,nil,c)>0) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)

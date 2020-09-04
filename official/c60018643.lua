@@ -59,7 +59,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.thcfilter,nil,e,tp)
 	if #tg>0 then
 		local g=e:GetLabelObject():GetLabelObject()
-		if Duel.GetCurrentChain()==0 then g:Clear() end
+		if Duel.GetCurrentChain()>0 then g:Clear() end
 		g:Merge(tg)
 		e:GetLabelObject():SetLabelObject(g)
 		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)

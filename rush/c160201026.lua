@@ -8,6 +8,7 @@ function s.initial_effect(c)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
     e1:SetCode(EVENT_ATTACK_ANNOUNCE)
     e1:SetCondition(s.condition)
+	e1:SetTarget(s.target)
     e1:SetCost(s.cost)
     e1:SetOperation(s.activate)
     c:RegisterEffect(e1)
@@ -20,6 +21,9 @@ function s.filter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	Duel.SetChainLimit(s.chlimit)
 end
 function s.chlimit(e,ep,tp)
 	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)

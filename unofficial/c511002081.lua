@@ -143,7 +143,7 @@ function s.synchk(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.reqm(reqm)
-	return  function(g,sc,tp)
+	return function(g,sc,tp)
 				return g:IsExists(Card.IsHasEffect,1,nil,id) and (not reqm or reqm(g,sc,tp))
 			end
 end

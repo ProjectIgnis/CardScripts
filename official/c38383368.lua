@@ -26,11 +26,11 @@ function s.initial_effect(c)
 	e2:SetCondition(s.drcon)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
 	local rc=c:GetReasonCard()
-	return c:IsReason(REASON_BATTLE) and c:GetPreviousSequence()>4 
+	return c:IsReason(REASON_BATTLE) and c:GetPreviousSequence()>4
 		and rc and ((rc:IsLocation(LOCATION_MZONE) and rc:GetSequence()<5) or (not rc:IsLocation(LOCATION_MZONE) and rc:GetPreviousSequence()<5))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

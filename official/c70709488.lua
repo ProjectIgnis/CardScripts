@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function s.lcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
@@ -36,8 +36,8 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,tp,zone)
 	local seq=c:GetPreviousSequence()
-	if c:GetPreviousControler()~=tp then seq=seq+16 end
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) 
+	if c:GetPreviousControler()==1-tp then seq=seq+16 end
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_MZONE) and bit.extract(zone,seq)~=0
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

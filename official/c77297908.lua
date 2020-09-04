@@ -34,7 +34,7 @@ function s.cfilter(c)
 end
 function s.cfilter2(c,tp)
 	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL) and not c:IsPublic()
-		and Duel.IsExistingMatchingCard(s.cfilter3,tp,LOCATION_DECK,0,1,nil,c:GetCode())		
+		and Duel.IsExistingMatchingCard(s.cfilter3,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.cfilter3(c,code)
 	return c:IsSetCard(0x20ec) and c:IsType(TYPE_SPELL) and not c:IsCode(code) and c:IsAbleToHand()
@@ -63,7 +63,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chcon1(e,tp,eg,ep,ev,re,r,rp)
-	return	ep~=tp
+	return ep~=tp
 	and Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil)
 	and re:IsActiveType(TYPE_MONSTER)
 end
@@ -87,4 +87,3 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-

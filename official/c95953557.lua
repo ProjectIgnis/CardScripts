@@ -48,7 +48,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local lc=e:GetLabelObject()
-	local lv=(lc and lc:IsLocation(LOCATION_REMOVED) and lc:IsFaceup())	and lc:GetLevel() or 0
+	local lv=(lc and lc:IsLocation(LOCATION_REMOVED) and lc:IsFaceup()) and lc:GetLevel() or 0
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and lv>0 and not c:IsLevel(lv) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		local e1=Effect.CreateEffect(c)

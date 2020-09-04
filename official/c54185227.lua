@@ -2,7 +2,7 @@
 --Vision HERO Gravito
 --Scripted by AlphaKretin
 local s,id=GetID()
-function s.initial_effect(c)   
+function s.initial_effect(c)
 	--Add to hand 1 banished "HERO" to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

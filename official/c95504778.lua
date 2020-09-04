@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_REMOVE)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_LINK and re:GetHandler():IsAttribute(ATTRIBUTE_DARK)

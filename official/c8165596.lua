@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.negcost)
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)	
+	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 	--search or attach
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

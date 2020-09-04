@@ -1,4 +1,5 @@
 --帝王の開岩
+--Return of the Monarch
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,6 +28,14 @@ function s.initial_effect(c)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
+	--Lizard lock
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetCode(CARD_CLOCK_LIZARD)
+	e4:SetTargetRange(0xff,0)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetValue(1)
+	c:RegisterEffect(e4)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA)

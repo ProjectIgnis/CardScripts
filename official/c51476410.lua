@@ -1,4 +1,5 @@
 --クロック・リザード
+-- Clock Lizard
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2)
 	--fusion summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(51476410,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOEXTRA+CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--remove
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(51476410,1))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -37,9 +38,11 @@ function s.spfilter1(c,e)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove() and not c:IsImmuneToEffect(e)
 end
 function s.spfilter2(c,e,tp,m,f,chkf)
+	Debug.Message(c:GetOriginalCode())
+	Debug.Message(c:IsHasEffect(CARD_CLOCK_LIZARD))
 	return (not f or f(c))  and c:CheckFusionMaterial(m,nil,chkf)
-	and not c:IsHasEffect(51476410)
-	--and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true)
+	and not c:IsHasEffect(CARD_CLOCK_LIZARD)
+	and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true)
 end
 function s.spfilter3(c,e,tp,chkf,rc)
 	if not c:IsType(TYPE_FUSION) or not c:IsAbleToExtra() then return false end

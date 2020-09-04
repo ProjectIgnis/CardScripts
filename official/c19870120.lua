@@ -1,4 +1,5 @@
 --進撃の帝王
+--March of the Monarchs
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,6 +35,14 @@ function s.initial_effect(c)
 	e4:SetTarget(s.target)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
+	--Lizard lock
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_FIELD)
+	e5:SetCode(CARD_CLOCK_LIZARD)
+	e5:SetTargetRange(0xff,0)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetValue(1)
+	c:RegisterEffect(e5)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA)

@@ -2,35 +2,35 @@
 --Scroll of Simultaneous Salutations
 local s,id=GetID()
 function s.initial_effect(c)
-    --Activate
-    local e1=Effect.CreateEffect(c)
-    e1:SetCategory(CATEGORY_POSITION)
-    e1:SetType(EFFECT_TYPE_ACTIVATE)
-    e1:SetCode(EVENT_SUMMON_SUCCESS)
-    e1:SetCondition(s.condition)
-    e1:SetTarget(s.target)
-    e1:SetOperation(s.operation)
-    c:RegisterEffect(e1)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_POSITION)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetCondition(s.condition)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.operation)
+	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-    if #eg~=1 then return false end
-    local tc=eg:GetFirst()
-    local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,LOCATION_MZONE,0,nil)
-    return tc:IsFaceup() and tc:IsSummonPlayer(1-tp) and #g>1
+	if #eg~=1 then return false end
+	local tc=eg:GetFirst()
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,LOCATION_MZONE,0,nil)
+	return tc:IsFaceup() and tc:IsSummonPlayer(1-tp) and #g>1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
-    Duel.SetChainLimit(s.chlimit)
+	Duel.SetChainLimit(s.chlimit)
 end
 function s.chlimit(e,ep,tp)
-    return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-    --Effect
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g)

@@ -1,20 +1,20 @@
--- キングス・ディグニティ
--- King's Dignity
+--キングス・ディグニティ
+--King's Dignity
 local s,id=GetID()
 function s.initial_effect(c)
-    --Activate
-    local e1=Effect.CreateEffect(c)
-    e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-    e1:SetType(EFFECT_TYPE_ACTIVATE)
-    e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-    e1:SetCondition(s.condition)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
-    e1:SetCost(s.cost)
-    e1:SetOperation(s.activate)
-    c:RegisterEffect(e1)
+	e1:SetCost(s.cost)
+	e1:SetOperation(s.activate)
+	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.filter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FIEND) and c:IsLevel(1) and c:IsAbleToDeckAsCost()
@@ -25,7 +25,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetChainLimit(s.chlimit)
-	end
+end
 function s.chlimit(e,ep,tp)
 	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end

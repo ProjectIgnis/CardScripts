@@ -68,5 +68,5 @@ function s.rmtarget(e,c)
 	return not c:IsSetCard(0xe0)
 end
 function s.lizfilter(e,c)
-	return not c:IsSetCard(0xe0)
+	return not c:IsOriginalSetCard(0xe0)
 end

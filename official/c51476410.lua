@@ -38,11 +38,10 @@ function s.spfilter1(c,e)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove() and not c:IsImmuneToEffect(e)
 end
 function s.spfilter2(c,e,tp,m,f,chkf)
-	Debug.Message(c:GetOriginalCode())
-	Debug.Message(c:IsHasEffect(CARD_CLOCK_LIZARD))
+	-- Debug.Message(c:GetOriginalCode())
+	-- Debug.Message(c:IsHasEffect(CARD_CLOCK_LIZARD))
 	return (not f or f(c))  and c:CheckFusionMaterial(m,nil,chkf)
 	and not c:IsHasEffect(CARD_CLOCK_LIZARD)
-	and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true)
 end
 function s.spfilter3(c,e,tp,chkf,rc)
 	if not c:IsType(TYPE_FUSION) or not c:IsAbleToExtra() then return false end

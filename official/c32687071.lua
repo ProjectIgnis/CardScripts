@@ -62,5 +62,5 @@ function s.limcon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xe0),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.lizfilter(e,c)
-	return not c:IsSetCard(0xe0)
+	return not c:IsOriginalSetCard(0xe0)
 end

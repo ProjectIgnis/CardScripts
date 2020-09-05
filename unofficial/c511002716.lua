@@ -1,6 +1,7 @@
 --レッド・ウルフ
 --Red Warg (Anime)
 local s,id=GetID()
+Duel.LoadScript("c420.lua")
 function s.initial_effect(c)
 	--summon success
 	local e1=Effect.CreateEffect(c)

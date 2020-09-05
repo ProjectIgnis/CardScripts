@@ -57,6 +57,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 			e1:SetTargetRange(1,0)
 			e1:SetTarget(s.splimit)
 			Duel.RegisterEffect(e1,tp)
+			--lizard check
+			Auxiliary.addTempLizardCheck(e:GetHandler(),aux.TRUE(),0xff,0,RESET_PHASE+PHASE_END)
 		end
 	end
 end

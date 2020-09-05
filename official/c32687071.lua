@@ -31,11 +31,11 @@ function s.initial_effect(c)
 	e3:SetCondition(s.limcon)
 	e3:SetTargetRange(LOCATION_DECK,LOCATION_DECK)
 	c:RegisterEffect(e3)
-	
+	--Lizard check
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(CARD_CLOCK_LIZARD)
-	e4:SetTargetRange(0xff,0)
+	e4:SetTargetRange(0xff,0xff)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetTarget(s.lizfilter)
 	e4:SetValue(1)

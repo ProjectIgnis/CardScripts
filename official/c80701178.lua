@@ -1,5 +1,5 @@
 -- 魔神儀-タリスマンドラ
---Deviritual Talismandra
+--Impcantation Talismandra
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -34,6 +34,14 @@ function s.initial_effect(c)
 	e3:SetTargetRange(1,0)
 	e3:SetTarget(s.sumlimit)
 	c:RegisterEffect(e3)
+	--clock lizard
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD)
+	e6:SetCode(CARD_CLOCK_LIZARD)
+	e6:SetTargetRange(0xff,0)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetValue(1)
+	c:RegisterEffect(e6)
 end
 s.listed_series={0x117}
 function s.filter(c,e,tp)

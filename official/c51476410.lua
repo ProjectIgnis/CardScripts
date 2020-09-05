@@ -42,6 +42,7 @@ function s.spfilter2(c,e,tp,m,f,chkf)
 	-- Debug.Message(c:IsHasEffect(CARD_CLOCK_LIZARD))
 	return (not f or f(c))  and c:CheckFusionMaterial(m,nil,chkf)
 	and not c:IsHasEffect(CARD_CLOCK_LIZARD)
+	and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetOriginalCode(),c:GetOriginalSetCard(),c:GetOriginalType(),c:GetBaseAttack(),c:GetBaseDefense(),c:GetOriginalLevel(),c:GetOriginalRace(),c:GetOriginalAttribute())
 end
 function s.spfilter3(c,e,tp,chkf,rc)
 	if not c:IsType(TYPE_FUSION) or not c:IsAbleToExtra() then return false end

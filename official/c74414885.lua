@@ -59,6 +59,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetTarget(s.splimit)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e3,true)
+			--Lizard check
+			local e6=Effect.CreateEffect(c)
+			e6:SetType(EFFECT_TYPE_FIELD)
+			e6:SetCode(CARD_CLOCK_LIZARD)
+			e6:SetTargetRange(0xff,0)
+			e6:SetRange(LOCATION_MZONE)
+			e6:SetTarget(s.lizfilter)
+			e6:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e6:SetValue(1)
+			tc:RegisterEffect(e6,true)
 		end
 	end
 end
@@ -67,5 +77,8 @@ function s.splimit(e,c)
 end
 function s.handcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_ONFIELD,0)==0
+end
+function s.splimit(e,c)
+	return not c:IsOriginalType(TYPE_FUSION)
 end
 

@@ -61,8 +61,10 @@ function s.spfilter3(c,e,tp,chkf,rc)
 	return res
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
+	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	local chkf=PLAYER_NONE
-	if chk==0 then return Duel.IsPlayerCanRemove(tp)
+	if chk==0 then return Duel.IsPlayerCanRemove(tp) and (not ect or ect>0))
 		and Duel.IsExistingMatchingCard(s.spfilter3,tp,LOCATION_GRAVE,0,1,nil,e,tp,chkf,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)

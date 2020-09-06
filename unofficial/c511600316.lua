@@ -87,10 +87,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetOperation(s.retop)
 			Duel.RegisterEffect(e1,tp)
 			if og:GetClassCount(Card.GetPreviousLocation)==2 and exc:IsRelateToEffect(e) then
-				local zone=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
-				if zone>0 then
-					Duel.MoveSequence(exc,math.log(2,zone))
-				end
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+				Duel.MoveSequence(exc,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0,false),2))
 			end
 		end
 	end

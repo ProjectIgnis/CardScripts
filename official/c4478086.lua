@@ -90,5 +90,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetTarget(s.splimit)
 	ge1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
+	--lizard check
+	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter,0xff,0,RESET_PHASE+PHASE_END)
 end
-
+function s.lizfilter(e,c)
+	return not c:IsOriginalType(TYPE_FUSION)
+end

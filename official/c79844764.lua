@@ -27,7 +27,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
-	Auxiliary.addTempLizardCheck(e:GetHandler(),aux.TRUE(),0xff,0,RESET_PHASE+PHASE_END)
+	Auxiliary.addTempLizardCheck(e:GetHandler(),aux.TRUE,0xff,0,RESET_PHASE+PHASE_END)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
 	e2:SetDescription(aux.Stringid(id,1))

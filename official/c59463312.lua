@@ -69,7 +69,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
-	Auxiliary.addTempLizardCheck(e:GetHandler(),aux.TRUE(),0xff,0,RESET_PHASE+PHASE_END)
+	Auxiliary.addTempLizardCheck(e:GetHandler(),aux.TRUE,0xff,0,RESET_PHASE+PHASE_END)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA)

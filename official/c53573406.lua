@@ -45,6 +45,8 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTarget(s.sumlimit)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
+	--lizard check
+	Auxiliary.addTempLizardCheck(e:GetHandler(),aux.TRUE(),0xff,0,RESET_PHASE+PHASE_END)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return e:GetLabel()~=se:GetLabel() and not c:IsLocation(LOCATION_EXTRA)

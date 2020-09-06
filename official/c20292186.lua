@@ -54,6 +54,9 @@ function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0,1)
 	e1:SetTarget(s.sumlimit)
 	Duel.RegisterEffect(e1,tp)
+	--lizard check
+	Auxiliary.addTempLizardCheck(e:GetHandler(),aux.TRUE(),0,0xff,RESET_PHASE+PHASE_END)
+
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA)

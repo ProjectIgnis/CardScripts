@@ -32,9 +32,14 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
+	--lizard check
+	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter,0xff,0,RESET_PHASE+PHASE_END)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalSetCard(0x121)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x121) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -57,4 +62,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
-

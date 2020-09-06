@@ -105,7 +105,12 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
+	--lizard check
+	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter,0xff,0,RESET_PHASE+PHASE_END)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsRace(RACE_CYBERSE) and c:IsLocation(LOCATION_EXTRA)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalRace(RACE_CYBERSE)
 end

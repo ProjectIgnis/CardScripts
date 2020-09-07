@@ -30,7 +30,7 @@ function s.fusfilter(c,code,fc,tp)
 	return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,tp,code) and not c:IsHasEffect(511002961)
 end
 function s.matfilter(c,fc,sub,sub2,mg,sg,tp,contact,sumtype)
-	if sumtype==SUMMON_TYPE_FUSION and fc:IsLocation(LOCATION_EXTRA) and not contact then
+	if sumtype&SUMMON_TYPE_FUSION~=0 and fc:IsLocation(LOCATION_EXTRA) and not contact then
 		return c:IsLocation(LOCATION_ONFIELD+LOCATION_HAND) and c:IsControler(tp)
 	end
 	return true

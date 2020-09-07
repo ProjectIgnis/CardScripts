@@ -1,4 +1,4 @@
-local CARD_CLOCK_LIZARD = 51476410
+CARD_CLOCK_LIZARD = 51476410
 function Auxiliary.addLizardCheck(c)
 	--lizard check
 	local e1=Effect.CreateEffect(c)
@@ -69,7 +69,7 @@ function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBe
 		c:RegisterEffect(e2)
 	end
 	--lizard check
-	if not cannotBeLizard then
+	if cannotBeLizard~=false then
 		Auxiliary.addLizardCheck(c)
 	end
 end

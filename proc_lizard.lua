@@ -7,21 +7,26 @@ function Auxiliary.addLizardCheck(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
+	return e1
 end
-function Auxiliary.addTempLizardCheck(c,filter,reset,tRange,tRange2)
-	--lizard check with a reset
+--lizard check with a reset
+function Auxiliary.createTempLizardCheck(c,filter,reset,tRange,tRange2,resetcount)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(CARD_CLOCK_LIZARD)
 	e1:SetTargetRange(tRange or 0xff,tRange2 or 0)
-	e1:SetReset(reset or (RESET_PHASE|PHASE_END))
+	e1:SetReset(reset or (RESET_PHASE|PHASE_END),resetcount)
 	e1:SetTarget(filter or aux.TRUE)
 	e1:SetValue(1)
-	Duel.RegisterEffect(e1,tp)
+	return e1
 end
---it was a prototype that never wanted to work for an unknown reason
-function Auxiliary.addContinuousLizardCheck(c,filter,location,tRange,tRange2)
-	--lizard check for cards like Yang Zing Creation
+function Auxiliary.addTempLizardCheck(c,filter,reset,tRange,tRange2,resetcount)
+	local e1=aux.createTempLizardCheck(c,filter,reset,tRange,tRange2,resetcount)
+	Duel.RegisterEffect(e1,tp)
+	return e1
+end
+--lizard check for cards like Yang Zing Creation
+function Auxiliary.createContinuousLizardCheck(c,location,filter,tRange,tRange2)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(CARD_CLOCK_LIZARD)
@@ -29,8 +34,12 @@ function Auxiliary.addContinuousLizardCheck(c,filter,location,tRange,tRange2)
 	e1:SetRange(location)
 	e1:SetTarget(filter or aux.TRUE)
 	e1:SetValue(1)
+	return e1
+end
+function Auxiliary.addContinuousLizardCheck(c,location,filter,tRange,tRange2)
+	local e1=aux.createContinuousLizardCheck(c,location,filter,tRange,tRange2)
 	c:RegisterEffect(e1)
-	
+	return e1
 end
 function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard)
 	local mt=c.__index

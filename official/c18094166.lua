@@ -78,7 +78,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
-	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter,0xff,0,RESET_PHASE+PHASE_END)
+	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsSetCard(0x8) and c:IsLocation(LOCATION_EXTRA)

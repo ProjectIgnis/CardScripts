@@ -79,7 +79,7 @@ function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
-	Auxiliary.addTempLizardCheck(e:GetHandler(),aux.TRUE,0,0xff,RESET_PHASE+PHASE_END)
+	Auxiliary.addTempLizardCheck(e:GetHandler(),aux.TRUE,RESET_PHASE+PHASE_END,0,0xff)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SUMMON)
 	Duel.RegisterEffect(e2,tp)

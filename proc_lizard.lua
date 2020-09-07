@@ -8,26 +8,26 @@ function Auxiliary.addLizardCheck(c)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 end
-function Auxiliary.addTempLizardCheck(c,filter,tRange,tRange2,reset)
+function Auxiliary.addTempLizardCheck(c,filter,reset,tRange,tRange2)
 	--lizard check with a reset
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(CARD_CLOCK_LIZARD)
-	e1:SetTargetRange(tRange,tRange2)
-	e1:SetReset(reset)
-	e1:SetTarget(filter)
+	e1:SetTargetRange(tRange or 0xff,tRange2 or 0)
+	e1:SetReset(reset or (RESET_PHASE|PHASE_END))
+	e1:SetTarget(filter or aux.TRUE)
 	e1:SetValue(1)
 	Duel.RegisterEffect(e1,tp)
 end
 --it was a prototype that never wanted to work for an unknown reason
-function Auxiliary.addContinuousLizardCheck(c,filter,tRange,tRange2,location)
+function Auxiliary.addContinuousLizardCheck(c,filter,location,tRange,tRange2)
 	--lizard check for cards like Yang Zing Creation
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(CARD_CLOCK_LIZARD)
-	e1:SetTargetRange(tRange,tRange2)
+	e1:SetTargetRange(tRange or 0xff,tRange2 or 0)
 	e1:SetRange(location)
-	e1:SetTarget(filter)
+	e1:SetTarget(filter or aux.TRUE)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	

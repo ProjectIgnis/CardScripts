@@ -83,7 +83,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(ge1,tp)
 	aux.RegisterClientHint(e:GetHandler(),EFFECT_FLAG_OATH,tp,1,0,aux.Stringid(id,2),nil)
 	--lizard check
-	Auxiliary.addTempLizardCheck(e:GetHandler(),aux.TRUE,0xff,0,RESET_PHASE+PHASE_END)
+	Auxiliary.addTempLizardCheck(e:GetHandler())
 end
 	--Cannot special summon from extra deck
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)

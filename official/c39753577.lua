@@ -33,7 +33,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 	--lizard check
-	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter,0xff,0,RESET_PHASE+PHASE_END)
+	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)

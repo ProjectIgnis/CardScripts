@@ -51,7 +51,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(ge1,tp)
 	aux.RegisterClientHint(e:GetHandler(),EFFECT_FLAG_OATH,tp,1,0,aux.Stringid(id,5),nil)
 	--lizard check
-	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter,0xff,0,RESET_PHASE+PHASE_END)
+	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_XYZ) and c:IsLocation(LOCATION_EXTRA)

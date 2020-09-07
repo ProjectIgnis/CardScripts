@@ -64,7 +64,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTarget(s.splimit)
 	Duel.RegisterEffect(e2,tp)
 	--lizard check
-	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter,0xff,0,RESET_PHASE+PHASE_END)
+	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter)
 end
 function s.splimit(e,c)
 	return not c:IsType(TYPE_SYNCHRO) and c:IsLocation(LOCATION_EXTRA)

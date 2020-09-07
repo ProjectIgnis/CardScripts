@@ -72,7 +72,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetTarget(s.splimit)
 	Duel.RegisterEffect(e0,tp)
 	--lizard check
-	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter,0xff,0,RESET_PHASE+PHASE_END)
+	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetType(EFFECT_TYPE_FIELD)

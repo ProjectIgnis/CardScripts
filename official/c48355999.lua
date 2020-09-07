@@ -64,7 +64,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e4,tp)
 	--lizard check
-	Auxiliary.addTempLizardCheck(e:GetHandler(),s.lizfilter)
+	Auxiliary.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

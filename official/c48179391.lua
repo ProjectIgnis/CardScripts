@@ -47,13 +47,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.atlimit)
 	c:RegisterEffect(e5)
 	--clock lizard
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_FIELD)
-	e6:SetCode(CARD_CLOCK_LIZARD)
-	e6:SetTargetRange(0xff,0)
-	e6:SetRange(LOCATION_FZONE)
-	e6:SetValue(1)
-	c:RegisterEffect(e6)
+	aux.addContinuousLizardCheck(c,LOCATION_FZONE)
 end
 function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end

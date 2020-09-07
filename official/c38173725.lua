@@ -35,15 +35,7 @@ function s.initial_effect(c)
 	e4:SetTargetRange(1,0)
 	e4:SetTarget(s.sumlimit)
 	c:RegisterEffect(e4)
-	
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD)
-	e5:SetCode(CARD_CLOCK_LIZARD)
-	e5:SetTargetRange(0xff,0)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetTarget(s.lizfilter)
-	e5:SetValue(1)
-	c:RegisterEffect(e5)
+	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
 end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end

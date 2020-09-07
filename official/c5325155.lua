@@ -19,14 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 	--Lizard check
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_FIELD)
-	e6:SetCode(CARD_CLOCK_LIZARD)
-	e6:SetTargetRange(0xff,0)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetTarget(s.lizfilter)
-	e6:SetValue(1)
-	c:RegisterEffect(e6)
+	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
 end
 s.listed_series={0x121}
 function s.counterfilter(c)

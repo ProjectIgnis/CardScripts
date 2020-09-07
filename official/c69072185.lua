@@ -34,15 +34,7 @@ function s.initial_effect(c)
 	e3:SetTargetRange(0xff,0xff)
 	e3:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e3)
-	
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(CARD_CLOCK_LIZARD)
-	e4:SetTargetRange(0xff,0xff)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetTarget(s.lizfilter)
-	e4:SetValue(1)
-	c:RegisterEffect(e4)
+	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter,0xff,0xff)
 end
 s.listed_series={0xe0}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

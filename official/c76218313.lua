@@ -32,14 +32,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 	--clock lizard
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_FIELD)
-	e6:SetCode(CARD_CLOCK_LIZARD)
-	e6:SetTargetRange(0,0xff)
-	e2:SetCondition(s.effcon)
-	e6:SetRange(LOCATION_SZONE)
-	e6:SetValue(1)
-	c:RegisterEffect(e6)
+	local e4=aux.addContinuousLizardCheck(c,LOCATION_SZONE,nil,0,0xff)
+	e4:SetCondition(s.effcon)
+	c:RegisterEffect(e4)
 end
 s.listed_names={78193831}
 function s.filter(c)

@@ -32,14 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	
 	--ClockLizard check
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(CARD_CLOCK_LIZARD)
-	e4:SetTargetRange(0xff,0)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetTarget(s.lizfilter)
-	e4:SetValue(1)
-	c:RegisterEffect(e4)
+	aux.addContinuousLizardCheck(c,LOCATION_SZONE,s.lizfilter)
 end
 s.listed_series={0x9e}
 function s.cfilter(c,tp)

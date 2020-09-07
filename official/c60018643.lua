@@ -58,11 +58,18 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.thcfilter,nil,e,tp)
 	if #tg>0 then
+		for tc in aux.Next(tg) do
+			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
+		end
 		local g=e:GetLabelObject():GetLabelObject()
 		if Duel.GetCurrentChain()==0 then g:Clear() end
 		g:Merge(tg)
+		g:Remove(function(c) return c:GetFlagEffect(id)==0 end,nil)
 		e:GetLabelObject():SetLabelObject(g)
-		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
+		if Duel.GetFlagEffect(tp,id)==0 then
+			Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
+			Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
+		end
 	end
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

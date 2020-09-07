@@ -6,14 +6,12 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_CYBERSE),2)
 	--fusion summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
+	local e1=Fusion.CreateSummonEff({handler=c,location=LOCATION_GRAVE,fusfilter=s.lizardcheck,matfilter=aux.FALSE,
+									extrafil=s.extrafil,preselect=s.preop,desc=aux.Stringid(id,0)})
 	e1:SetCategory(CATEGORY_TOEXTRA+CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCost(s.spcost)
-	e1:SetTarget(s.sptg)
-	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--remove
 	local e2=Effect.CreateEffect(c)
@@ -31,77 +29,11 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
-function s.spfilter0(c)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove()
+function s.lizardcheck(c)
+	return c:IsAbleToExtra() and not c:IsHasEffect(CARD_CLOCK_LIZARD)
 end
-function s.spfilter1(c,e)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove() and not c:IsImmuneToEffect(e)
-end
-function s.spfilter2(c,e,tp,m,f,chkf)
-	-- Debug.Message(c:GetOriginalCode())
-	-- Debug.Message(c:IsHasEffect(CARD_CLOCK_LIZARD))
-	return (not f or f(c))  and c:CheckFusionMaterial(m,nil,chkf)
-	and not c:IsHasEffect(CARD_CLOCK_LIZARD)
-	and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetOriginalCode(),c:GetOriginalSetCard(),c:GetOriginalType(),c:GetBaseAttack(),c:GetBaseDefense(),c:GetOriginalLevel(),c:GetOriginalRace(),c:GetOriginalAttribute())
-end
-function s.spfilter3(c,e,tp,chkf,rc)
-	if not c:IsType(TYPE_FUSION) or not c:IsAbleToExtra() then return false end
-	if Duel.GetLocationCountFromEx(tp,tp,rc,c)<=0 then return false end
-	local mg=Duel.GetMatchingGroup(s.spfilter0,tp,LOCATION_GRAVE,0,c)
-	local res=s.spfilter2(c,e,tp,mg,nil,chkf)
-	if not res then
-		local ce=Duel.GetChainMaterial(tp)
-		if ce~=nil then
-			local fgroup=ce:GetTarget()
-			local mg2=fgroup(ce,e,tp)
-			local mf=ce:GetValue()
-			res=s.spfilter2(c,e,tp,mg,mf,chkf)
-		end
-	end
-	return res
-end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	local chkf=PLAYER_NONE
-	if chk==0 then return Duel.IsPlayerCanRemove(tp) and (not ect or ect>0)
-		and Duel.IsExistingMatchingCard(s.spfilter3,tp,LOCATION_GRAVE,0,1,nil,e,tp,chkf,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_GRAVE)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
-end
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerCanRemove(tp) then return end
-	local chkf=tp
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter3),tp,LOCATION_GRAVE,0,1,1,nil,e,tp,chkf,nil)
-	local tc=g:GetFirst()
-	if tc and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_EXTRA) then
-		local mg1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_GRAVE,0,nil,e)
-		local mgchk1=s.spfilter2(tc,e,tp,mg1,nil,chkf)
-		local mg2=nil
-		local mgchk2=false
-		local ce=Duel.GetChainMaterial(tp)
-		if ce~=nil then
-			local fgroup=ce:GetTarget()
-			mg2=fgroup(ce,e,tp)
-			local mf=ce:GetValue()
-			mgchk2=s.spfilter2(tc,e,tp,mg2,mf,chkf)
-		end
-		if mgchk1 or mgchk2 then
-			if mgchk1 and (not mgchk2 or not Duel.SelectYesNo(tp,ce:GetDescription())) then
-				local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
-				tc:SetMaterial(mat1)
-				Duel.Remove(mat1,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-				Duel.BreakEffect()
-				Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
-			else
-				local mat2=Duel.SelectFusionMaterial(tp,tc,mg2,nil,chkf)
-				local fop=ce:GetOperation()
-				fop(ce,e,tp,tc,mat2)
-			end
-			tc:CompleteProcedure()
-		end
-	end
+function s.extrafil(e,tp,mg)
+	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,Duel.IsPlayerAffectedByEffect(tp,69832741) and LOCATION_MZONE or LOCATION_GRAVE,0,nil)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

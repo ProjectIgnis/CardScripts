@@ -11,7 +11,7 @@
 --chkf			FUSPROC flags for the fusion summon
 --desc			summon effect description
 Fusion.CreateSummonEff = aux.FunctionWithNamedArgs(
-function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,desc)
+function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,desc,preselect)
 	local e1=Effect.CreateEffect(c)
 	if desc then
 		e1:SetDescription(desc)
@@ -21,10 +21,10 @@ function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locat
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(Fusion.SummonEffTG(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf))
-	e1:SetOperation(Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf))
+	e1:SetTarget(Fusion.SummonEffTG(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,preselect))
+	e1:SetOperation(Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,preselect))
 	return e1
-end,"handler","fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","desc")
+end,"handler","fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","desc","preselect")
 function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit)
 	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c)) and c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false)
 			and c:CheckFusionMaterial(mg,gc,chkf)
@@ -38,7 +38,7 @@ Fusion.ForcedMatValidity=function(c,e)
 end
 
 Fusion.SummonEffTG = aux.FunctionWithNamedArgs(
-function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf)
+function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf,preselect)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
 				location=location or LOCATION_EXTRA
 				chkf=chkf and chkf|tp or tp
@@ -94,7 +94,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 				end
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,location)
 			end
-end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf")
+end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","preselect")
 function aux.GrouptoCardid(g)
 	local res={}
 	for card in aux.Next(g) do
@@ -117,7 +117,7 @@ function Fusion.ChainMaterialPrompt(effswithgroup,cardID,tp,e)
 	return effs[Duel.SelectOption(tp,false,table.unpack(desctable)) + 1]
 end
 Fusion.SummonEffOP = aux.FunctionWithNamedArgs(
-function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf)
+function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf,preselect)
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				location=location or LOCATION_EXTRA
 				chkf = chkf and chkf|tp or tp
@@ -176,6 +176,9 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 					local sg=sg1:Clone()
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 					local tc=sg:Select(tp,1,1,nil):GetFirst()
+					if preselect and preselect(e,tc)==false then
+						return
+					end
 					local sel=effswithgroup[Fusion.ChainMaterialPrompt(effswithgroup,tc:GetCardID(),tp,e)]
 					local backupmat=nil
 					if sel[1]==e then
@@ -215,7 +218,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				Fusion.CheckExact=nil
 				Fusion.CheckAdditional=nil
 			end
-end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf")
+end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","preselect")
 function Fusion.BanishMaterial(e,tc,tp,sg)
 	Duel.Remove(sg,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 	sg:Clear()

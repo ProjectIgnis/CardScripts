@@ -23,14 +23,13 @@ function s.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetOperation(s.bpop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 		e1:SetOperation(s.chk)
 		Duel.RegisterEffect(e1,0)
-	end
+	end)
 end
 s.listed_series={0x135}
 function s.chk(e,tp,eg,ep,ev,re,r,rp)

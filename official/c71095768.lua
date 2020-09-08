@@ -46,8 +46,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=nil
 		s[1]=nil
 		s[2]=nil
@@ -56,7 +55,7 @@ function s.initial_effect(c)
 		ge1:SetCode(EVENT_DETACH_MATERIAL)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.mfilter(c)
 	return c:HasLevel() and not c:IsLevel(0)

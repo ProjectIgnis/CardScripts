@@ -16,7 +16,6 @@ function s.initial_effect(c)
 		ge1:SetCode(EVENT_CHAINING)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-		s.global_check=true
 		local ge2=Effect.CreateEffect(c)
 		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge2:SetCode(EVENT_ADJUST)

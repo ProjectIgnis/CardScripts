@@ -12,6 +12,17 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCost(s.spcost)
+	e1:SetTarget((function(tg)
+		return function(e,tp,eg,ep,ev,re,r,rp,chk)
+			local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
+			local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
+			if chk==0 then
+				return Duel.IsPlayerCanRemove(tp) and ect~=0 and tg(e,tp,eg,ep,ev,re,r,rp,chk)
+			end
+			Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_GRAVE)
+			Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+		end
+	end)(e1:GetTarget()))
 	c:RegisterEffect(e1)
 	--remove
 	local e2=Effect.CreateEffect(c)
@@ -34,6 +45,9 @@ function s.lizardcheck(c)
 end
 function s.extrafil(e,tp,mg)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,Duel.IsPlayerAffectedByEffect(tp,69832741) and LOCATION_MZONE or LOCATION_GRAVE,0,nil)
+end
+function s.preop(e,tc)
+	return Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 		ge1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge1:SetOperation(s.checkop)
-		Duel.RegisterEffect(ge1)
+		Duel.RegisterEffect(ge1,0)
 		aux.AddValuesReset(function()
 			s[0]=3
 			s[1]=3

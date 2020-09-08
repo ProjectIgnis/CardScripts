@@ -1,3 +1,4 @@
+--絶対運命決定力
 --Decisive Power of Absolute Destiny
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,6 +28,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(1-tp,s.filter,1-tp,LOCATION_DECK,0,1,1,nil,ac,e,tp)
 	if #g>0 then
-		Duel.SpecialSummon(g,0,1-tp,1-tp,false,false,POS_FACEUP_ATTACK)
+		Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_FACEUP_ATTACK)
 	end
 end

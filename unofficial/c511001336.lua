@@ -75,12 +75,10 @@ function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousPosition(POS_FACEUP) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.rescon(sg,e,tp,mg)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	return Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)>=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA) 
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 		and Duel.GetUsableMZoneCount(tp)>=#sg
-		and (not ect or sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)<=ect) 
+		and aux.CheckSummonGate(tp,sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA))
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject()

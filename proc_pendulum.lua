@@ -89,7 +89,7 @@ function Pendulum.Operation()
 				end
 				ft1=math.min(ft1,tg:FilterCount(Card.IsLocation,nil,LOCATION_HAND))
 				ft2=math.min(ft2,tg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA))
-				ft2=min(ft2,aux.CheckSummonGate(tp) or ft2)
+				ft2=math.min(ft2,aux.CheckSummonGate(tp) or ft2)
 				while true do
 					local ct1=tg:FilterCount(Card.IsLocation,nil,LOCATION_HAND)
 					local ct2=tg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)

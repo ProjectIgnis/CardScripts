@@ -494,7 +494,7 @@ function Auxiliary.CheckStealEquip(c,e,tp)
 end
 function Auxiliary.CheckSummonGate(tp,count)
 	local tot=nil
-	for _,eff in ipairs ({Duel.GetPlayerEffect(CARD_SUMMON_GATE)}) do
+	for _,eff in ipairs ({Duel.GetPlayerEffect(tp,CARD_SUMMON_GATE)}) do
 		local val=eff:GetValue()
 		if val then
 			if type(val)=="function" then
@@ -503,7 +503,7 @@ function Auxiliary.CheckSummonGate(tp,count)
 			if not tot then
 				tot=val
 			else
-				tot=min(tot,val)
+				tot=math.min(tot,val)
 			end
 		end
 	end

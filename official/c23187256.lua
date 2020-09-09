@@ -58,7 +58,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ft=nil
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	ft=min(ft,aux.CheckSummonGate(tp) or ft)
+	ft=math.min(ft,aux.CheckSummonGate(tp) or ft)
 	local c=e:GetHandler()
 	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp,rp)
 	local ct=c:GetOverlayGroup():GetClassCount(Card.GetCode)

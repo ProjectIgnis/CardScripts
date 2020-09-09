@@ -56,13 +56,11 @@ function s.freezoneschk(c,tp,rp)
 	return Duel.GetLocationCountFromEx(tp,rp,nil,c)>0
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local ft=nil
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	ft=math.min(ft,aux.CheckSummonGate(tp) or ft)
 	local c=e:GetHandler()
-	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp,rp)
 	local ct=c:GetOverlayGroup():GetClassCount(Card.GetCode)
-	if ft and ct>ft then ct=ft end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
+	ct=math.min(ct,aux.CheckSummonGate(tp) or ct)
+	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp,rp)
 	if #g1>0 and ct>0 then
 		repeat
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

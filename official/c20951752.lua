@@ -55,9 +55,8 @@ function s.cfilter(c,tp)
 	return c:GetSequence()<5 and c:IsControler(tp)
 end
 function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetReleaseGroup(tp)
+	local g,exg=Duel.GetReleaseGroup(tp):Split(aux.ReleaseCostFilter,nil,tp)
 	if chk==0 then return #g>0 and g:FilterCount(s.cfilter,nil,tp)+Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
-	local exg=Duel.GetMatchingGroup(aux.ReleaseCostFilter,tp,0,LOCATION_MZONE,nil)
 	if #(exg-g)>0 and Duel.SelectYesNo(tp,aux.Stringid(59160188,2)) then
 		g=g+(exg-g)
 	end

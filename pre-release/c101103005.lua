@@ -50,7 +50,9 @@ s.listed_names={49306994}
 s.LVnum=10
 s.LVset=0x111
 function s.rescon(sg,tp)
-	return aux.ChkfMMZ(1)(sg,nil,tp) and sg:GetSum(Card.GetLevel)==10
+	if not aux.ChkfMMZ(1)(sg,nil,tp) then return false end
+	local sum=sg:GetSum(Card.GetLevel)
+	return sum==10,sum>10
 end
 function s.cfilter(c)
 	return c:IsAbleToRemoveAsCost() and c:HasLevel() and c:IsSetCard(0x111) and aux.SpElimFilter(c,true,true)

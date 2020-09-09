@@ -563,7 +563,7 @@ function Card.IsColumn(c,seq,tp,loc)
 		if seq==5 then seq=1 end
 		if seq==6 then seq=3 end
 	else
-		if cseq==6 then cseq=5 end
+		if seq==6 then seq=5 end
 	end
 	if c:IsControler(tp) then
 		return cseq==seq

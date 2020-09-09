@@ -38,8 +38,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	Duel.Hint(HINT_SELECTMSG,tp,0)
-	local g=Duel.SelectMatchingCard(tp,s.opfilter,tp,LOCATION_DECK,0,1,1,nil,tc:GetCode(),ft,e,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
+	local g=Duel.SelectMatchingCard(tp,s.opfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tc:GetCode(),ft,e,tp)
 	if #g>0 then
 		local sc=g:GetFirst()
 		aux.ToHandOrElse(sc,tp,function(c)

@@ -52,13 +52,15 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g1=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	Duel.ConfirmCards(1-tp,g1)
-	e:SetLabel(g1:GetFirst():GetAttribute())
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g2=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
-	if #g1>0 and #g2>0 then
-		Duel.SendtoHand(g2,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g2)
-		Duel.SendtoDeck(g1,tp,2,REASON_EFFECT)
+	if #g1>0 then
+		Duel.ConfirmCards(1-tp,g1)
+		e:SetLabel(g1:GetFirst():GetAttribute())
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g2=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
+		if #g1>0 and #g2>0 then
+			Duel.SendtoHand(g2,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g2)
+			Duel.SendtoDeck(g1,tp,2,REASON_EFFECT)
+		end
 	end
 end

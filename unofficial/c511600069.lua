@@ -119,7 +119,9 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.op(e,tp,eg,ev,ep,re,r,rp)
-	e:GetLabelObject():SetLabel(e:GetHandler():GetTurnCounter())
+	if e:GetLabelObject() then
+		e:GetLabelObject():SetLabel(e:GetHandler():GetTurnCounter())
+	end
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

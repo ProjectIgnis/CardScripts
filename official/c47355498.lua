@@ -98,6 +98,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not res and s.discheck(ev,CATEGORY_REMOVE,re,im0,im1) then res=true end
 	if not res and s.discheck(ev,CATEGORY_TOHAND,re,im0,im1) then res=true end
 	if not res and s.discheck(ev,CATEGORY_TODECK,re,im0,im1) then res=true end
+	if not res and s.discheck(ev,CATEGORY_TOEXTRA,re,im0,im1) then res=true end
 	if not res and s.discheck(ev,CATEGORY_LEAVE_GRAVE,re,im0,im1) then res=true end
 	if res then Duel.NegateEffect(ev) end
 end

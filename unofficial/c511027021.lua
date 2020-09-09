@@ -29,8 +29,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s.diceEffects={}
 		s.diceEffects[0]={}
 		s.diceEffects[1]={}
@@ -46,7 +45,7 @@ function s.initial_effect(c)
 		ge2:SetCountLimit(1)
 		ge2:SetOperation(s.resetop)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 s.roll_dice=true
 s.listed_series={0x577}

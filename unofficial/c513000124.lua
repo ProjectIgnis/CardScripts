@@ -61,16 +61,15 @@ function s.initial_effect(c)
 	e7:SetCode(EFFECT_SELF_DESTROY)
 	e7:SetCondition(s.descon)
 	c:RegisterEffect(e7)
-	if not s.global_check then
+	aux.GlobalCheck(s,function()
 		--Check for Raise
-		s.global_check=true
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 		ge1:SetCode(EVENT_DAMAGE)
 		ge1:SetOperation(s.zeroop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.econ(e,tp)
 	return e:GetLabelObject() and e:GetLabelObject():IsActivatable(e:GetLabel())

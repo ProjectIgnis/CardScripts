@@ -37,7 +37,7 @@ function s.thfilter(c,lvl)
 end
 function s.opttarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.optfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.optfiler,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.optfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tc=Duel.SelectTarget(tp,s.optfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	local op=0

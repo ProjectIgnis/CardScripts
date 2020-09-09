@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e1000:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1000:SetRange(LOCATION_MZONE)
 	e1000:SetCountLimit(1)
-	e1000:SetCondition(s.descon)
+	--e1000:SetCondition(s.descon)
 	e1000:SetCost(s.descost)
 	e1000:SetTarget(s.destg)
 	e1000:SetOperation(s.desop)
@@ -98,7 +98,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		e:GetHandler():UpdateAttack(1000)
 	end
 end

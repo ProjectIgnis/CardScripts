@@ -16,9 +16,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.attg)
 	c:RegisterEffect(e2)
 end
-function s.filter(c,atk)
-	return c:IsFacedown() or c:GetAttack()<=atk
-end
 function s.attg(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,e:GetHandlerPlayer(),0,LOCATION_MZONE,nil)
 	local _,atk=Group.GetMinGroup(g,Card.GetAttack)

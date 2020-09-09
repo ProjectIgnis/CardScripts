@@ -38,10 +38,17 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(s.splimit)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		token:RegisterEffect(e1,true)
+		--Lizard check
+		local e2=aux.createContinuousLizardCheck(e:GetHandler(),LOCATION_MZONE,s.lizfilter)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		token:RegisterEffect(e2,true)		
 	end
 	Duel.SpecialSummonComplete()
 end
-	--Restricted to insect monsters for extra deck
+--Restricted to insect monsters for extra deck
 function s.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsRace(RACE_INSECT)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalRace(RACE_INSECT)
 end

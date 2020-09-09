@@ -84,8 +84,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if ft4>0 then ft4=1 end
 		ft=1
 	end
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
+	local ect=aux.CheckSummonGate(tp)
 	if ect then
 		ft1 = math.min(ect, ft1)
 		ft2 = math.min(ect, ft2)

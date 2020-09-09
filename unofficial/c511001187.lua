@@ -39,18 +39,14 @@ function s.spfilter(c,e,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=s and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and s[tp]
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,3,nil,e,tp)
-		and (not ect or ect>=3) end
+		and aux.CheckSummonGate(tp,3) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=s and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and s[tp]
-	if ect~=nil and ect<3 then return end
+	if not aux.CheckSummonGate(tp,3) then return end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if #g<3 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

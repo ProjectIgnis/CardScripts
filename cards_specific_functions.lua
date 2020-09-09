@@ -492,4 +492,20 @@ function Auxiliary.CheckStealEquip(c,e,tp)
 	end
 	return true
 end
+function Auxiliary.CheckSummonGate(tp,count)
+	local tot=nil
+	for _,eff in ipairs ({Duel.GetPlayerEffect(tp,CARD_SUMMON_GATE)}) do
+		local val=eff:GetValue()
+		if val then
+			if type(val)=="function" then
+				val=val(tp)
+			end
+			tot=tot and math.min(tot,val) or val
+		end
+	end
+	if count then
+		return not tot or tot>=count
+	end
+	return tot
+end
 

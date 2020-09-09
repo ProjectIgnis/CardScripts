@@ -54,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #hg>0 and Duel.SendtoHand(hg,nil,REASON_EFFECT)~=0 then
 		local sct=Duel.GetOperatedGroup():FilterCount(Card.IsControler,nil,tp)
 		local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
-		local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE))
+		local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),sct)
 		if sct>0 and ft>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.BreakEffect()
 			if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end

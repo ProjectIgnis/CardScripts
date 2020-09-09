@@ -500,11 +500,7 @@ function Auxiliary.CheckSummonGate(tp,count)
 			if type(val)=="function" then
 				val=val(tp)
 			end
-			if not tot then
-				tot=val
-			else
-				tot=math.min(tot,val)
-			end
+			tot=tot and math.min(tot,val) or val
 		end
 	end
 	if count then

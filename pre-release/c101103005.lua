@@ -83,6 +83,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
+function s.damval(e,re,val,r,rp,rc)
+	if (r&REASON_EFFECT)~=0 then return 0 end
+	return val
+end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==e:GetHandler()
 end

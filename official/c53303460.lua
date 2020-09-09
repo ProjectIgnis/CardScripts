@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sumlimit)
 	c:RegisterEffect(e3)
 	--clock lizard
-	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
+	aux.addContinuousLizardCheck(c,LOCATION_MZONE)
 end
 s.listed_series={0x117}
 s.listed_names={id}

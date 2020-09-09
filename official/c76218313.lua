@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 	--clock lizard
-	local e4=aux.addContinuousLizardCheck(c,LOCATION_SZONE,nil,0,0xff)
+	local e4=aux.createContinuousLizardCheck(c,LOCATION_SZONE,nil,0,0xff)
 	e4:SetCondition(s.effcon)
 	c:RegisterEffect(e4)
 end

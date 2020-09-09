@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.lvop)
 	c:RegisterEffect(e5)
 	--clock lizard
-	local e6=aux.addContinuousLizardCheck(c,LOCATION_FZONE,nil,0xff,0xff)
+	local e6=aux.createContinuousLizardCheck(c,LOCATION_FZONE,nil,0xff,0xff)
 	e6:SetCondition(s.discon)
 	c:RegisterEffect(e6)
 end

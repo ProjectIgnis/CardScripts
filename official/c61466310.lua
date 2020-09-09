@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 	--Lizard lock
-	aux.addContinuousLizardCheck(c,LOCATION_SZONE,s.lizfilter)
+	aux.addContinuousLizardCheck(c,LOCATION_SZONE)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA)

@@ -20,7 +20,7 @@ function Auxiliary.createTempLizardCheck(c,filter,reset,tRange,tRange2,resetcoun
 	e1:SetValue(1)
 	return e1
 end
-function Auxiliary.addTempLizardCheck(c,filter,reset,tRange,tRange2,resetcount)
+function Auxiliary.addTempLizardCheck(c,tp,filter,reset,tRange,tRange2,resetcount)
 	local e1=aux.createTempLizardCheck(c,filter,reset,tRange,tRange2,resetcount)
 	Duel.RegisterEffect(e1,tp)
 	return e1

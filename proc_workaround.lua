@@ -174,7 +174,7 @@ function Duel.CheckReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 	end
 	if not ex then ex=Group.CreateGroup() end
 	local g,exg=Duel.GetReleaseGroup(tp,use_hand):Filter(f and f or aux.TRUE,ex,table.unpack(params)):Split(Auxiliary.ReleaseCostFilter,nil,tp)
-	local specialchk=Auxiliary.MakeSpecialCheck(check,tp,exg,...)
+	local specialchk=Auxiliary.MakeSpecialCheck(check,tp,exg,table.unpack(params))
 	local mustg=g:Filter(function(c,tp)return c:IsHasEffect(EFFECT_EXTRA_RELEASE) and c:IsControler(1-tp)end,nil,tp)
 	local mg=g+exg
 	local sg=Group.CreateGroup()

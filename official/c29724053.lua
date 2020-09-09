@@ -42,7 +42,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and s[sump]<=0
 end
 function s.remainval(sump)
-	return s[sump]
+	return math.max(s[sump],0)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

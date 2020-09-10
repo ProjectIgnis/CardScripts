@@ -22,7 +22,8 @@ end
 function s.spfilter(c,class,e,tp)
 	local code=c:GetCode()
 	for i=1,#class.listed_names do
-		if code==class.listed_names[i] then	return c:IsCanBeSpecialSummoned(e,0,tp,true,true) end
+		if code==class.listed_names[i] then
+			return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,true) end
 	end
 	return false
 end

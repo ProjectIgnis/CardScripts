@@ -26,20 +26,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
-end
-function s.ffilter(c)
-	return c:IsSetCard(0x35) and not c:IsCode(id)
+	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,e:GetHandler()):IsExists(s.ffilter,1,nil) end
+		and Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,e:GetHandler()):IsExists(Card.IsSetCard,1,nil,0x35) end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(s.ffilter,1,nil)
+	return sg:IsExists(Card.IsSetCard,1,nil,0x35) 
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,4 +1,5 @@
 --魔轟神オルトロ
+--Fabled Oltro
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x35}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x35) and c:GetLevel()==3 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x35) and c:IsType(TYPE_MONSTER) and c:GetLevel()==3 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

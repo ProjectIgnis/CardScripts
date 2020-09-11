@@ -80,7 +80,7 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,tc,1,0,0)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHander()
+	local c=e:GetHandler()
 	local tc=Duel.GetAttackTarget()
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()

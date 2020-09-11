@@ -24,9 +24,9 @@ function s.filter(c,ft,e,tp)
 		and Duel.IsExistingMatchingCard(s.opfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetCode(),ft,e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,ft,e,tp) end
 	if chk==0 then
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,ft,e,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -36,7 +36,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
+	if not tc or not tc:IsRelateToEffect(e) then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 	local g=Duel.SelectMatchingCard(tp,s.opfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tc:GetCode(),ft,e,tp)

@@ -26,7 +26,7 @@ function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locat
 	return e1
 end,"handler","fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","desc","preselect","nosummoncheck")
 function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck)
-	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c)) and (not nosummoncheck or c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false))
+	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c,tp)) and (not nosummoncheck or c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false))
 			and c:CheckFusionMaterial(mg,gc,chkf)
 end
 

@@ -29,12 +29,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local tc=Duel.SelectMatchingCard(tp,Card.IsAttackPos,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 			if tc then
 				Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
-				local e2=Effect.CreateEffect(c)
-				e2:SetType(EFFECT_TYPE_SINGLE)
-				e2:SetCode(EFFECT_UPDATE_DEFENSE)
-				e2:SetValue(-600)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				tc:RegisterEffect(e2)
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_UPDATE_DEFENSE)
+				e1:SetValue(-600)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				tc:RegisterEffect(e1)
 			end
 		end
 	end

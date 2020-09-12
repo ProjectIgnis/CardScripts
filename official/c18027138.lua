@@ -1,4 +1,5 @@
 --カバーカーニバル
+--Hippo Carnival
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -45,6 +46,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetTarget(aux.TargetBoolFunction(Card.IsLocation,LOCATION_EXTRA))
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			token:RegisterEffect(e3)
+			--Lizard check
+			local e4=aux.createContinuousLizardCheck(e:GetHandler(),LOCATION_MZONE)
+			e4:SetReset(RESET_EVENT+RESETS_STANDARD)
+			token:RegisterEffect(e4,true)
 		end
 		Duel.SpecialSummonComplete()
 	end

@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	--fusion summon
 	local e1=Fusion.CreateSummonEff({handler=c,location=LOCATION_GRAVE,fusfilter=s.lizardcheck,matfilter=aux.FALSE,
 									extrafil=s.extrafil,preselect=s.preop,desc=aux.Stringid(id,0),
-									extraop=Fusion.BanishMaterial})
+									extraop=Fusion.BanishMaterial,nosummoncheck=true})
 	e1:SetCategory(CATEGORY_TOEXTRA+CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)

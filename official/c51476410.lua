@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	--fusion summon
 	local e1=Fusion.CreateSummonEff({handler=c,location=LOCATION_GRAVE,fusfilter=s.lizardcheck,matfilter=aux.FALSE,
 									extrafil=s.extrafil,preselect=s.preop,desc=aux.Stringid(id,0),
-									extraop=Fusion.BanishMaterial})
+									extraop=Fusion.BanishMaterial,nosummoncheck=true})
 	e1:SetCategory(CATEGORY_TOEXTRA+CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -41,8 +41,9 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
-function s.lizardcheck(c)
+function s.lizardcheck(c,tp)
 	return c:IsAbleToExtra() and not c:IsHasEffect(CARD_CLOCK_LIZARD)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetOriginalCode(),{c:GetOriginalSetCard()},c:GetOriginalType(),c:GetBaseAttack(),c:GetBaseDefense(),c:GetOriginalLevel(),c:GetOriginalRace(),c:GetOriginalAttribute())
 end
 function s.extrafil(e,tp,mg)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,Duel.IsPlayerAffectedByEffect(tp,69832741) and LOCATION_MZONE or LOCATION_GRAVE,0,nil)

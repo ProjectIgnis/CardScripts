@@ -21,7 +21,9 @@ function s.initial_effect(c)
 	--Register effect to handle variable count limit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCondition(s.regcon)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 	--Material check
@@ -65,11 +67,14 @@ function s.valcheck(e,c)
 		e:GetLabelObject():SetLabel(1)
 	end
 end
+function s.regcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=e:GetLabel()
 	if ct==2 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 	--Destroy a card when damage is inflicted
 	local e1=Effect.CreateEffect(c)

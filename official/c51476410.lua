@@ -47,7 +47,7 @@ function s.lizardcheck(c,tp)
 end
 function s.checkextra(c)
 	return function(tp,sg,fc)
-		return (fc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,fc) or Duel.GetLocationCountFromEx(tp,tp,c,TYPE_FUSION))>0
+		return (fc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,fc) or Duel.GetLocationCountFromEx(tp,tp,sg+c,TYPE_FUSION))>0
 	end
 end
 function s.extrafil(e,tp,mg)

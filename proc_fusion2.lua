@@ -41,7 +41,9 @@ Fusion.SummonEffTG = aux.FunctionWithNamedArgs(
 function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf,preselect,nosummoncheck)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
 				location=location or LOCATION_EXTRA
-				chkf=chkf and chkf|tp or tp
+				if (chkf&PLAYER_NONE)~=PLAYER_NONE then
+					chkf=chkf and chkf|tp or tp
+				end
 				local sumlimit=(chkf&FUSPROC_NOTFUSION)~=0
 				if not value then value=0 end
 				value = value|MATERIAL_FUSION

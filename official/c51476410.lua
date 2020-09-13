@@ -45,8 +45,13 @@ function s.lizardcheck(c,tp)
 	return c:IsAbleToExtra() and not c:IsHasEffect(CARD_CLOCK_LIZARD)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetOriginalCode(),{c:GetOriginalSetCard()},c:GetOriginalType(),c:GetBaseAttack(),c:GetBaseDefense(),c:GetOriginalLevel(),c:GetOriginalRace(),c:GetOriginalAttribute())
 end
+function s.checkextra(c)
+	return function(tp,sg,fc)
+		return (fc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,fc) or Duel.GetLocationCountFromEx(tp,tp,c,TYPE_FUSION))>0
+	end
+end
 function s.extrafil(e,tp,mg)
-	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,Duel.IsPlayerAffectedByEffect(tp,69832741) and LOCATION_MZONE or LOCATION_GRAVE,0,nil)
+	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,Duel.IsPlayerAffectedByEffect(tp,69832741) and LOCATION_MZONE or LOCATION_GRAVE,0,nil),s.checkextra(e:GetHandler())
 end
 function s.preop(e,tc)
 	return Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0

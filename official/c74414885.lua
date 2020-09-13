@@ -72,7 +72,7 @@ end
 function s.handcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_ONFIELD,0)==0
 end
-function s.splimit(e,c)
+function s.lizfilter(e,c)
 	return not c:IsOriginalType(TYPE_FUSION)
 end
 

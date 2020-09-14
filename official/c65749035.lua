@@ -1,4 +1,5 @@
 --氷結界の龍 グングニール
+--Gungnir, Dragon of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -18,16 +19,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:IsDiscardable() and c:IsAbleToGraveAsCost()
+	return c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	local rt=Duel.GetTargetCount(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
-	if rt>2 then rt=2 end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local cg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,rt,nil)
-	Duel.SendtoGrave(cg,REASON_COST+REASON_DISCARD)
-	e:SetLabel(#cg)
+	if rt>2 then rt=2 end	
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	if chk==0 then return aux.IceBarrierDiscardCost(s.costfilter,true,1,rt)(e,tp,eg,ep,ev,re,r,rp,0) end
+	local cg=aux.IceBarrierDiscardCost(s.costfilter,true,1,rt)(e,tp,eg,ep,ev,re,r,rp,1)
+	e:SetLabel(cg)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end

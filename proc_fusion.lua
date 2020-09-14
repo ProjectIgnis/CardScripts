@@ -813,8 +813,8 @@ function Fusion.SelectMixRepUnfix(c,tp,mg,sg,mustg,fc,sub,sub2,minc,maxc,chkf,..
 end
 
 
-function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc)
-	if c:IsStatus(STATUS_COPYING_EFFECT) then return end
+
+function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard)
 	local mt=c.__index
 	local t={}
 	if mt.contactfus then
@@ -849,6 +849,10 @@ function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc)
 			e2:SetValue(sumcon)
 		end
 		c:RegisterEffect(e2)
+	end
+	--lizard check
+	if cannotBeLizard~=false then
+		Auxiliary.addLizardCheck(c)
 	end
 end
 function Fusion.ContactCon(f,fcon)

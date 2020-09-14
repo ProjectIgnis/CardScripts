@@ -93,4 +93,7 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.Overlay(c,Group.FromCards(tc))
 	end
+	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 then
+		Duel.ShuffleDeck(tp)
+	end
 end

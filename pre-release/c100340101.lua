@@ -18,13 +18,14 @@ function s.initial_effect(c)
 	--Change Level
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetCategory(CATEGORY_TOGRAVE+CATEGORY_LVCHANGE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetCountLimit(1,id)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.condition)
-	e3:SetCost(s.cost)
+	e3:SetCountLimit(1,id)
+	--e3:SetCondition(s.condition)
+	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
-	c:RegisterEffect(e3) 
+	c:RegisterEffect(e3)
 end
 s.listed_series={0x2f}
 function s.atkfilter(c)
@@ -33,29 +34,32 @@ end
 function s.atkcon(e,tp,ev,ep,eg,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
-function s.filter(c)
-	return c:IsLevelBelow(3) and c:IsSetCard(0x2f) and c:IsAbleToGraveAsCost()
+function s.tgfilter(c,lv)
+	return c:IsLevelBelow(3) and c:IsSetCard(0x2f) and c:IsAbleToGrave() and not c:IsLevel(lv)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_COST)
-	e:SetLabelObject(g:GetFirst())
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil,c:GetLevel()) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_LVCHANGE,c,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=e:GetLabelObject()
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		local lv=tc:GetLevel()
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CHANGE_LEVEL)
-		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e1)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil,c:GetLevel())
+	if #g>0 then
+		local tc=g:GetFirst()
+		if Duel.SendtoGrave(g,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) and c:IsRelateToEffect(e) and c:IsFaceup() then
+			local lv=tc:GetLevel()
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_CHANGE_LEVEL)
+			e1:SetValue(lv)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			c:RegisterEffect(e1)
+		end
 	end
 end

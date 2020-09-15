@@ -19,9 +19,10 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(id)
+	e3:SetCode(CARD_SUMMON_GATE)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(1,1)
+	e3:SetValue(s.remainval)
 	c:RegisterEffect(e3)
 	aux.GlobalCheck(s,function()
 		s[0]=3
@@ -39,6 +40,9 @@ function s.initial_effect(c)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and s[sump]<=0
+end
+function s.remainval(sump)
+	return math.max(s[sump],0)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()

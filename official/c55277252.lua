@@ -1,7 +1,8 @@
 --魔轟神獣ノズチ
+--The Fabled Nozoochee
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -22,15 +23,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x35}
+function s.disfilter(c)
+	return c:IsSetCard(0x35) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_HAND,0,1,e:GetHandler(),0x35)
+		and Duel.IsExistingMatchingCard(s.disfilter,tp,LOCATION_HAND,0,1,e:GetHandler())
 		and e:GetHandler():IsCanBeSpecialSummoned(e,1,tp,false,false)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_HAND,0,nil,0x35)
+	local g=Duel.GetMatchingGroup(s.disfilter,tp,LOCATION_HAND,0,nil)
 	if #g==0 then return end
 	if #g==1 then
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
@@ -47,7 +51,7 @@ function s.con2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function s.filter2(c,e,tp)
-	return c:IsLevelBelow(2) and c:IsSetCard(0x35) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(2) and c:IsSetCard(0x35) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

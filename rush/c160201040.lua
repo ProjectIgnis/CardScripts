@@ -39,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SendtoDeck(g,nil,1,REASON_COST)>0 then
 		--Effect
 		local tc=Duel.GetAttackTarget()
-		if tc:IsRelateToBattle() and tc:IsFaceup() then
+		if tc and tc:IsRelateToBattle() and tc:IsFaceup() then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

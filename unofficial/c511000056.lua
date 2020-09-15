@@ -36,19 +36,15 @@ function s.spfilter(c,e,tp,code,sg)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local nt=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_MZONE,0,nil)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-		and (not ect or ect>=2) and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil,nt,tp,e) 
+		and aux.CheckSummonGate(tp,2) and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil,nt,tp,e) 
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	if ect~=nil and ect<2 then return end
+	if not aux.CheckSummonGate(tp,2) then return end
 	local nt=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_MZONE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_MZONE,0,1,1,nil,nt,tp,e):GetFirst()

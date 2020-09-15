@@ -47,11 +47,9 @@ function s.tlimit(e,c)
 	return not c:IsType(TYPE_TOKEN) or not c:IsSetCard(0x48)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetReleaseGroup(tp)
-	g:RemoveCard(e:GetHandler())
+	local g,exg=Duel.GetReleaseGroup(tp):Split(aux.ReleaseCostFilter,e:GetHandler(),tp)
+	exg:RemoveCard(e:GetHandler())
 	if chk==0 then return #g>0 and g:FilterCount(aux.MZFilter,nil,tp)+Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
-	local exg=Duel.GetMatchingGroup(aux.ReleaseCostFilter,tp,0,LOCATION_MZONE,e:GetHandler())
-	exg:Sub(g)
 	if #exg>0 and Duel.SelectYesNo(tp,aux.Stringid(59160188,2)) then
 		g:Merge(exg)
 	end

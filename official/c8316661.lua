@@ -1,4 +1,5 @@
 --魔轟神ミーズトージ
+--Fabled Miztoji
 local s,id=GetID()
 function s.initial_effect(c)
 	--change type
@@ -17,7 +18,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x35) and not c:IsType(TYPE_TUNER)
+	return c:IsFaceup() and c:IsSetCard(0x35) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TUNER)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -27,7 +28,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ADD_TYPE)

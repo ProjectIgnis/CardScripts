@@ -50,9 +50,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ftex=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ftt=Duel.GetUsableMZoneCount(tp)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp] - 1
-	if ect then ftex=math.min(ftex,ect) end
+	ftex=math.min(ftex,aux.CheckSummonGate(tp) or ftex)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ftt=math.min(ftt,1) ftex=math.min(ftex,1) ft=math.min(ft,1) end
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2) and ftt>0 and (ft>0 or ftex>0)
 		and aux.SelectUnselectGroup(mg,e,tp,nil,ftt,s.rescon(ft,ftex,ftt),0) end
@@ -66,9 +64,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and #g>1 then return end
 	local ftex=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM)
 	local ftt=Duel.GetUsableMZoneCount(tp)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	if ect then ftex=math.min(ftex,ect) end
+	ftex=math.min(ftex,aux.CheckSummonGate(tp) or ftex)
 	if ftt<#g or g:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)>ftex then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local sg=aux.SelectUnselectGroup(g,e,tp,nil,ftt,s.rescon(ft,ftex,ftt),1,tp,HINTMSG_SPSUMMON,s.rescon(ft,ftex,ftt))

@@ -1,7 +1,8 @@
 --魔轟神獣ルビィラーダ
+--The Fabled Rudyruda
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Negate attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x35}
 function s.cfilter(c)
-	return c:IsSetCard(0x35) and c:IsDiscardable()
+	return c:IsSetCard(0x35) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

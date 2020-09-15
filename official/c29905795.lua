@@ -1,26 +1,30 @@
 --魔轟神獣チャワ
+--The Fabled Chawa
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetTarget(s.tg)
-	e1:SetOperation(s.op)
+	e1:SetTarget(s.sptg)
+	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x35}
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.disfilter(c)
+	return c:IsSetCard(0x35) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_HAND,0,1,e:GetHandler(),0x35)
+		and Duel.IsExistingMatchingCard(s.disfilter,tp,LOCATION_HAND,0,1,e:GetHandler())
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_HAND,0,nil,0x35)
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(s.disfilter,tp,LOCATION_HAND,0,nil)
 	if #g==0 then return end
 	if #g==1 then
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)

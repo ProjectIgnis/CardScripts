@@ -109,7 +109,9 @@ function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
 end
 function s.thfilter2(c,e,tp,ft,rk)
-	return c:IsLevelBelow(rk) and c:IsType(TYPE_TUNER) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	return c:IsLevelBelow(rk) and c:IsType(TYPE_TUNER)
+		and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -118,9 +120,9 @@ function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id+2)~=0 or eg:GetFirst():IsFacedown() then return end
-	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
-	local g=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,e:GetLabel())
+	local g=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp,ft,eg:GetFirst():GetRank())
 	if #g>0 then
 		tc=g:GetFirst()
 		aux.ToHandOrElse(tc,tp,

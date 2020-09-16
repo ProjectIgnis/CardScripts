@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x20cd}
-function s.fupfilter()
+function s.fupfilter(c)
 	return c:IsFaceup() and (c:IsCode(CARD_UMI) or c:IsCode(160003050))
 end
 function s.thcond(e,tp,eg,ep,ev,re,r,rp)

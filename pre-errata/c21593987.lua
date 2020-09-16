@@ -1,5 +1,5 @@
 --処刑人－マキュラ
---Makyura the Destructor, pre-errata, TCG
+--Makyura the Destructor, pre-errata
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate trap in hand

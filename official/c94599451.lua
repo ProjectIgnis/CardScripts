@@ -4,12 +4,12 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(COUNTER_SPELL)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--place counter
+	--Place Spell counters
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_COUNTER)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.ctcon)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
-	--to hand
+	--Add 1 monster to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
-	--Destroy replace
+	--Destruction replacement
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_DESTROY_REPLACE)

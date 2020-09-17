@@ -30,9 +30,6 @@ function s.initial_effect(c)
 	e3:SetTargetRange(1,0)
 	e3:SetTarget(s.sumlimit)
 	c:RegisterEffect(e3)
-	
-	--ClockLizard check
-	aux.addContinuousLizardCheck(c,LOCATION_SZONE,s.lizfilter)
 end
 s.listed_series={0x9e}
 function s.cfilter(c,tp)
@@ -61,7 +58,4 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_SYNCHRO)
-end
-function s.lizfilter(e,c)
-	return not c:IsOriginalType(TYPE_SYNCHRO)
 end

@@ -40,8 +40,6 @@ function s.initial_effect(c)
 	e4:SetCondition(s.limcon)
 	e4:SetValue(s.limval)
 	c:RegisterEffect(e4)
-	--Lizard check
-	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter,0xff,0xff)
 end
 s.listed_series={0xe0}
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -70,7 +68,4 @@ end
 function s.limval(e,re,rp)
 	local rc=re:GetHandler()
 	return re:IsActiveType(TYPE_TRAP) and not rc:IsSetCard(0xe0) and not rc:IsImmuneToEffect(e)
-end
-function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0xe0)
 end

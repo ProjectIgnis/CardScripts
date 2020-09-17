@@ -1,5 +1,6 @@
 --魔神儀－ブックストーン
---Impcantation Bookstone
+--Deviritual Bookstone
+--
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -34,8 +35,6 @@ function s.initial_effect(c)
 	e3:SetTargetRange(1,0)
 	e3:SetTarget(s.sumlimit)
 	c:RegisterEffect(e3)
-	--clock lizard
-	aux.addContinuousLizardCheck(c,LOCATION_MZONE)
 end
 s.listed_series={0x117}
 s.listed_names={18474999}

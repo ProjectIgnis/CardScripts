@@ -1,5 +1,4 @@
 --帝王の開岩
---Return of the Monarch
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,8 +27,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
-	--Lizard lock
-	aux.addContinuousLizardCheck(c,LOCATION_SZONE)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA)

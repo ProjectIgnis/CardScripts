@@ -36,8 +36,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetTargetRange(1,0)
 	e0:SetTarget(s.splimit)
 	Duel.RegisterEffect(e0,tp)
-	--lizard check
-	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.BreakEffect()
@@ -57,7 +55,4 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsRace(RACE_CYBERSE)
-end
-function s.lizfilter(e,c)
-	return not c:IsOriginalRace(RACE_CYBERSE)
 end

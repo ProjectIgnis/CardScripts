@@ -16,8 +16,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
-	--Lizard check
-	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
 end
 s.listed_series={0x121}
 function s.counterfilter(c)
@@ -55,6 +53,4 @@ end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
 end
-function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0x121)
-end
+

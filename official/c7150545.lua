@@ -62,8 +62,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetTarget(s.splimit)
 	ge1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
-	--lizard check
-	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.xyzlv(e,c,rc)
 	if rc:IsAttribute(ATTRIBUTE_WATER) then
@@ -75,6 +73,4 @@ end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_XYZ) and c:IsLocation(LOCATION_EXTRA)
 end
-function s.lizfilter(e,c)
-	return not c:IsOriginalType(TYPE_XYZ)
-end
+

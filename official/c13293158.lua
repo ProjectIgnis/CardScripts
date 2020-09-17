@@ -5,14 +5,6 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion material
 	Fusion.AddProcMix(c,true,true,21844576,86188410)
-	--lizard check
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetCode(CARD_CLOCK_LIZARD)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e0:SetCondition(s.lizcon)
-	e0:SetValue(1)
-	c:RegisterEffect(e0)
 	--Special Summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -44,10 +36,6 @@ end
 s.material_setcode={0x8,0x3008}
 s.dark_calling=true
 s.listed_names={CARD_DARK_FUSION,21844576,86188410}
-function s.lizcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE)
-end
 function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end

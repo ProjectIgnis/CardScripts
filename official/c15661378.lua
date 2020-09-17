@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	if not c:IsStatus(STATUS_COPYING_EFFECT) then
 		eff[1]:SetValue(s.matfilter)
 	end
-	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit,nil,nil,nil,false)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--Banish 1 card each from your Deck, the top of the opponent's deck, and the opponent's Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

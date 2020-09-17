@@ -43,8 +43,6 @@ function s.initial_effect(c)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 	c:RegisterEffect(e5)
-	--Lizard check
-	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter,0xff,0xff)
 end
 s.listed_series={0xe0}
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -71,7 +69,4 @@ end
 function s.damval(e,re,val,r,rp,rc)
 	if (r&REASON_EFFECT)~=0 then return 0 end
 	return val
-end
-function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0xe0)
 end

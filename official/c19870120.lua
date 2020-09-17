@@ -1,5 +1,4 @@
 --進撃の帝王
---March of the Monarchs
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,8 +34,6 @@ function s.initial_effect(c)
 	e4:SetTarget(s.target)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
-	--Lizard lock
-	aux.addContinuousLizardCheck(c,LOCATION_SZONE)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA)

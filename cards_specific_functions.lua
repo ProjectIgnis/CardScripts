@@ -588,6 +588,8 @@ function Auxiliary.IceBarrierDiscardCost(f,discard,minc,maxc)
 			else
 				return Duel.SendtoGrave(sg,REASON_COST) + rm
 			end
+		else
+			return rm
 		end
 	end
 end

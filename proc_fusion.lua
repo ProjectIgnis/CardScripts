@@ -194,7 +194,8 @@ Fusion.CheckAdditional=nil
 --if sg1 is subset of sg2 then not Fusion.CheckAdditional(tp,sg1,fc) -> not Fusion.CheckAdditional(tp,sg2,fc)
 function Fusion.CheckMixGoal(tp,sg,fc,sub,sub2,contact,sumtype,chkf,...)
 	local g=Group.CreateGroup()
-	return sg:IsExists(Fusion.CheckMix,1,nil,sg,g,fc,sub,sub2,contact,sumtype,tp,...) and (chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(tp,tp,sg,fc)>0)
+	return sg:IsExists(Fusion.CheckMix,1,nil,sg,g,fc,sub,sub2,contact,sumtype,tp,...) and
+		(chkf==PLAYER_NONE or (fc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,fc) or Duel.GetMZoneCount(tp,sg,tp))>0)
 		and (not Fusion.CheckAdditional or Fusion.CheckAdditional(tp,sg,fc))
 end
 function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,...)
@@ -812,7 +813,8 @@ function Fusion.SelectMixRepUnfix(c,tp,mg,sg,mustg,fc,sub,sub2,minc,maxc,chkf,..
 end
 
 
-function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc)
+
+function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard)
 	if c:IsStatus(STATUS_COPYING_EFFECT) then return end
 	local mt=c.__index
 	local t={}
@@ -848,6 +850,10 @@ function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc)
 			e2:SetValue(sumcon)
 		end
 		c:RegisterEffect(e2)
+	end
+	--lizard check
+	if cannotBeLizard~=false then
+		Auxiliary.addLizardCheck(c)
 	end
 end
 function Fusion.ContactCon(f,fcon)

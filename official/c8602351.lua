@@ -74,6 +74,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,0,LOCATION_MZONE,nil)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 	if not (ct>0 and #g>0) then return end
@@ -86,4 +88,6 @@ end
 function s.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsRace(RACE_REPTILE)
 end
-
+function s.lizfilter(e,c)
+	return not c:IsOriginalRace(RACE_REPTILE)
+end

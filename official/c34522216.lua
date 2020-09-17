@@ -40,6 +40,8 @@ function s.initial_effect(c)
 	e4:SetCondition(s.limcon)
 	e4:SetValue(s.limval)
 	c:RegisterEffect(e4)
+	--Lizard check
+	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter,0xff,0xff)
 end
 s.listed_series={0xe0}
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -68,4 +70,7 @@ end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0xe0)
 		and (e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM) or e:GetHandler():GetFlagEffect(id)~=0)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalSetCard(0xe0)
 end

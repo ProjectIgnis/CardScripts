@@ -47,6 +47,8 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
 	e2:SetDescription(aux.Stringid(id,3))
@@ -56,6 +58,9 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not (c:IsLevelAbove(5) and c:IsAttribute(ATTRIBUTE_WIND)) and c:IsLocation(LOCATION_EXTRA)
+end
+function s.lizfilter(e,c)
+	return not (c:GetOriginalLevel()>4 and c:IsOriginalAttribute(ATTRIBUTE_WIND))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

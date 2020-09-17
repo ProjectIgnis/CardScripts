@@ -59,6 +59,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetTarget(s.splimit)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e3,true)
+			--Lizard check
+			local e6=aux.createContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
+			e6:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e6,true)
 		end
 	end
 end
@@ -67,5 +71,8 @@ function s.splimit(e,c)
 end
 function s.handcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_ONFIELD,0)==0
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalType(TYPE_FUSION)
 end
 

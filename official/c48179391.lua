@@ -1,4 +1,5 @@
 --オレイカルコスの結界
+--The Seal of Orichalcos
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -45,6 +46,8 @@ function s.initial_effect(c)
 	e5:SetCondition(s.atkcon)
 	e5:SetValue(s.atlimit)
 	c:RegisterEffect(e5)
+	--clock lizard
+	aux.addContinuousLizardCheck(c,LOCATION_FZONE)
 end
 function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end

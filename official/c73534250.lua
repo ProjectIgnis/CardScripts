@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 	--lizard check
-	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
+	aux.addTempLizardCheck(e:GetHandler(),s.lizfilter)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsSetCard(0x33) and c:IsLocation(LOCATION_EXTRA)

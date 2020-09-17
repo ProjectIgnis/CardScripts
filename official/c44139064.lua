@@ -102,7 +102,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 	--lizard check
-	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
+	aux.addTempLizardCheck(e:GetHandler(),s.lizfilter)
 end
 function s.lizfilter(e,c)
 	return not c:IsOriginalType(TYPE_FUSION)

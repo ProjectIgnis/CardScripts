@@ -80,7 +80,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
-	aux.addTempLizardCheck(e:GetHandler(),tp)
+	addTempLizardCheck(e:GetHandler())
 end
 function s.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA)

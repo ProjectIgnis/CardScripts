@@ -55,7 +55,7 @@ function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.sumlimit)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
-	aux.addTempLizardCheck(e:GetHandler(),tp,aux.TRUE,RESET_PHASE+PHASE_END,0,0xff)
+	aux.addTempLizardCheck(e:GetHandler(),aux.TRUE,RESET_PHASE+PHASE_END,0,0xff)
 
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)

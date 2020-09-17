@@ -31,6 +31,8 @@ function s.initial_effect(c)
 	e3:SetCondition(s.limcon)
 	e3:SetTargetRange(LOCATION_DECK,LOCATION_DECK)
 	c:RegisterEffect(e3)
+	--Lizard check
+	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter,0xff,0xff)
 end
 s.listed_series={0xe0}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -51,4 +53,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 end
 function s.limcon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xe0),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalSetCard(0xe0)
 end

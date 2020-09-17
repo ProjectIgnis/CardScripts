@@ -65,12 +65,17 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTarget(s.splimit)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function s.splimit(e,c)
 	return not c:IsRace(RACE_DRAGON) and c:IsLocation(LOCATION_EXTRA)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalRace(RACE_DRAGON)
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(0x29)

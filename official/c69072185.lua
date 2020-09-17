@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetTargetRange(0xff,0xff)
 	e3:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e3)
+	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter,0xff,0xff)
 end
 s.listed_series={0xe0}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -57,4 +58,7 @@ function s.rmcon(e)
 end
 function s.rmtarget(e,c)
 	return not c:IsSetCard(0xe0)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalSetCard(0xe0)
 end

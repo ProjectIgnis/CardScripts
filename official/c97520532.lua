@@ -55,6 +55,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetTarget(s.splimit)
 	ge1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	local ge2=Effect.CreateEffect(e:GetHandler())
 	ge2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
 	ge2:SetDescription(aux.Stringid(id,3))
@@ -64,4 +66,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not (c:IsType(TYPE_XYZ) and c:IsRace(RACE_MACHINE)) and c:IsLocation(LOCATION_EXTRA)
+end
+function s.lizfilter(e,c)
+	return not (c:IsOriginalType(TYPE_XYZ) and c:IsOriginalRace(RACE_MACHINE))
 end

@@ -22,6 +22,8 @@ function s.initial_effect(c)
 	e2:SetTargetRange(1,0)
 	e2:SetTarget(s.sslimit)
 	c:RegisterEffect(e2)
+	--Lizard check
+	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
 end
 s.listed_names={id}
 s.listed_series={0x121}
@@ -58,4 +60,7 @@ function s.tgfilter(c)
 end
 function s.sslimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalSetCard(0x121)
 end

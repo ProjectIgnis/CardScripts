@@ -1,5 +1,5 @@
 --骸魔妖ー夜叉 
---Skeleton Mayakashi - Yasha
+--Yasha,the Skeletal Mayakashi
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,6 +23,8 @@ function s.initial_effect(c)
 	e2:SetTargetRange(1,0)
 	e2:SetTarget(s.sslimit)
 	c:RegisterEffect(e2)
+	--Lizard check
+	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
 end
 s.listed_series={0x121}
 function s.cfilter(c)
@@ -45,4 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sslimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalSetCard(0x121)
 end

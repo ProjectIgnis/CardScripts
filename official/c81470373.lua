@@ -48,7 +48,7 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e0,tp)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,3),nil)
 	--lizard check
-	aux.addTempLizardCheck(e:GetHandler(),s.lizfilter)
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.GetFirstMatchingCard(s.tffilter,tp,LOCATION_DECK,0,nil)

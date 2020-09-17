@@ -56,7 +56,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	--lizard check
-	aux.addTempLizardCheck(e:GetHandler(),s.lizfilter)
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	local ge2=Effect.CreateEffect(e:GetHandler())
 	ge2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
 	ge2:SetDescription(aux.Stringid(id,3))

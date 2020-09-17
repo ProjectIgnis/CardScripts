@@ -63,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	--lizard check
-	aux.addTempLizardCheck(e:GetHandler(),s.lizfilter)
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.xyzlv(e,c,rc)
 	if rc:IsAttribute(ATTRIBUTE_WATER) then

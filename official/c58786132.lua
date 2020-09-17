@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
-	addTempLizardCheck(e:GetHandler())
+	aux.addTempLizardCheck(e:GetHandler(),tp)
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end

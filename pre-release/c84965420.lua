@@ -1,4 +1,4 @@
---竜輝巧流星群
+--ドライトロン流星群
 --Draitron Meteor Shower
 --Scripted by Naim
 local s,id=GetID()

@@ -1,9 +1,11 @@
 --トゥーン・仮面魔道士
+--Toon Masked Sorcerer
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot attack
+	--Cannot attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetOperation(s.atklimit)
 	c:RegisterEffect(e1)
@@ -13,7 +15,7 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--destroy
+	--Destroy
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetRange(LOCATION_MZONE)
@@ -21,13 +23,13 @@ function s.initial_effect(c)
 	e4:SetCondition(s.sdescon)
 	e4:SetOperation(s.sdesop)
 	c:RegisterEffect(e4)
-	--direct attack
+	--Direct attack
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_DIRECT_ATTACK)
 	e5:SetCondition(s.dircon)
 	c:RegisterEffect(e5)
-	--draw
+	--Draw
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,0))
 	e6:SetCategory(CATEGORY_DRAW)

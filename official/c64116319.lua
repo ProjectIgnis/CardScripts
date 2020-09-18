@@ -6,6 +6,7 @@ function s.initial_effect(c)
 	--Cannot attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetOperation(s.atklimit)
 	c:RegisterEffect(e1)

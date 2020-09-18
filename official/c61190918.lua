@@ -1,9 +1,11 @@
 --トゥーン・バスター・ブレイダー
+--Toon Buster Blader
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot attack
+	--Cannot attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetOperation(s.atklimit)
 	c:RegisterEffect(e1)
@@ -13,7 +15,7 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--atkup
+	--Increase ATK
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -21,7 +23,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetValue(s.val)
 	c:RegisterEffect(e4)
-	--direct attack
+	--Direct attack
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_DIRECT_ATTACK)

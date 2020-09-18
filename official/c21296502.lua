@@ -1,9 +1,11 @@
 --トゥーン・ブラック・マジシャン
+--Toon Dark Magician
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot attack
+	--Cannot attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetOperation(s.atklimit)
 	c:RegisterEffect(e1)
@@ -13,13 +15,13 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--direct attack
+	--Direct attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_DIRECT_ATTACK)
 	e4:SetCondition(s.dircon)
 	c:RegisterEffect(e4)
-	--special summon
+	--Special summon
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,7 +32,7 @@ function s.initial_effect(c)
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
-	--search
+	--Add to hand
 	local e6=e5:Clone()
 	e6:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e6:SetDescription(aux.Stringid(id,1))

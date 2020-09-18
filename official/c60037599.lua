@@ -1,4 +1,4 @@
---竜儀巧－エルγ
+--竜輝巧－エルγ
 --Draitron El-Gamma
 --scripted by pyrQ
 local s,id=GetID()

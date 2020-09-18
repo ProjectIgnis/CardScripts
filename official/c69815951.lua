@@ -1,4 +1,4 @@
---竜儀巧－メテオニス=DRA
+--竜儀巧－メテオニス＝ＤＲＡ
 --Draitron Meteornis=DRA
 --Scripted by Eerie Code
 local s,id=GetID()

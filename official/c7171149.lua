@@ -1,9 +1,11 @@
 --トゥーン・アンティーク・ギアゴーレム
+--Toon Ancient Gear Golem
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot attack
+	--Cannot attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetOperation(s.atklimit)
 	c:RegisterEffect(e1)
@@ -13,13 +15,13 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--direct attack
+	--Direct attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_DIRECT_ATTACK)
 	e4:SetCondition(s.dircon)
 	c:RegisterEffect(e4)
-	--actlimit
+	--Prevent actvations when battling
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
 	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -29,7 +31,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.aclimit)
 	e5:SetCondition(s.actcon)
 	c:RegisterEffect(e5)
-	--pierce
+	--Piercing damage
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
 	e6:SetCode(EFFECT_PIERCE)

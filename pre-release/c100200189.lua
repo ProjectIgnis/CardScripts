@@ -37,7 +37,7 @@ end
 	--Discard 1 LIGHT/DARK as cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil,tp) end
-	Duel.DiscardHand(tp,s.tgfilter,1,1,REASON_COST,nil,tp)
+	Duel.DiscardHand(tp,s.tgfilter,1,1,REASON_COST+REASON_DISCARD,nil,tp)
 	e:SetLabel(Duel.GetOperatedGroup():GetFirst():GetAttribute())
 end
 	--GY filter

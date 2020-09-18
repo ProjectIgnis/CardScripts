@@ -17,16 +17,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 	--Lists “Kisikil” and "Lilla" archetype
-s.listed_series={0x24c,0x24d}
+s.listed_series={0x153,0x154}
 	--Specifically lists itself
 s.listed_names={id}
 	--Check “Kisikil” or “Lilla” monster
 function s.filter(c,e,tp)
-	return (c:IsSetCard(0x24c) or c:IsSetCard(0x24d)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return (c:IsSetCard(0x153) or c:IsSetCard(0x154)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 	--Check for "Evil★Twin" link monster
 function s.lkfilter(c)
-	return c:IsSetCard(0x24e) and c:IsLinkMonster() and c:IsSpecialSummonable(SUMMON_TYPE_LINK)
+	return c:IsSetCard(0x155) and c:IsLinkMonster() and c:IsSpecialSummonable(SUMMON_TYPE_LINK)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

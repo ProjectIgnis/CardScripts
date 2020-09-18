@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetCode(EVENT_DESTROYED)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
@@ -75,7 +75,7 @@ function s.rescon(sg,e,tp,mg)
 	return sg:GetSum(Card.GetAttack)==4000
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x24a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
+	return c:IsSetCard(0x151) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

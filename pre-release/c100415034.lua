@@ -21,16 +21,16 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(aux.exccon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x24a}
+s.listed_series={0x151}
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x24a) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x151) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end
@@ -45,9 +45,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-s.atkfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x24a)
+s.atkfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x151)
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsSetCard(0x24a) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsSetCard(0x151) end
 	if chk==0 then return Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	Duel.SelectTarget(tp,s.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)

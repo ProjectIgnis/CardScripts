@@ -29,18 +29,18 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.thcon)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x24b}
+s.listed_series={0x152}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_SPELLCASTER,lc,sumtype,tp)
 end
 function s.eqfilter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0x24b) and c:IsCanBeEffectTarget(e)
+	return c:IsFaceup() and c:IsSetCard(0x152) and c:IsCanBeEffectTarget(e)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.eqfilter,1,e:GetHandler(),e) and not eg:IsContains(e:GetHandler())
@@ -76,7 +76,7 @@ function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x24b) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x152) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipTarget()

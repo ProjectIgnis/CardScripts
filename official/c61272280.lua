@@ -1,4 +1,4 @@
---絶火の竜神ヴァフラム結晶の女神ニンアルル
+--絶火の竜神ヴァフラム
 --Magistus Dragon Vafram
 --Scripted by Naim
 local s,id=GetID()
@@ -31,12 +31,12 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_START)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.descon2)
 	e3:SetOperation(s.desop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x24b}
+s.listed_series={0x152}
 function s.indesvalue(e,re,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp==1-e:GetHandlerPlayer()
 end

@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion Material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x24b),aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x152),aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER))
 	--Equip to other monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x24b}
+s.listed_series={0x152}
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
 end

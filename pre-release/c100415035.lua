@@ -16,12 +16,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x24a}
+s.listed_series={0x151}
 function s.descond()
 	return Duel.IsMainPhase()
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:GetAttack()>=1000 and (c:IsSetCard(0x24a) or c:IsRitualMonster())
+	return c:IsFaceup() and c:GetAttack()>=1000 and (c:IsSetCard(0x151) or c:IsRitualMonster())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

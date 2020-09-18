@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.sumfilter)
 end
-s.listed_series={0x24a}
+s.listed_series={0x151}
 function s.sumfilter(c)
 	return not c:IsSummonableCard()
 end
@@ -36,7 +36,7 @@ function s.splimit(e,c)
 	return c:IsSummonableCard()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x24a) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x151) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,6 +1,6 @@
 --大いなる魔導
 --Theologia Magistus
---scripted by Naim
+--Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,16 +15,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x24b}
+s.listed_series={0x152}
 function s.tgfilter(c,tp,check)
-	return c:IsFaceup() and c:IsSetCard(0x24b) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_EXTRA+LOCATION_MZONE+LOCATION_GRAVE,0,1,c,check)
+	return c:IsFaceup() and c:IsSetCard(0x152) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_EXTRA+LOCATION_MZONE+LOCATION_GRAVE,0,1,c,check)
 end
 function s.eqfilter(c,check)
 	return not c:IsForbidden() and c:IsType(TYPE_MONSTER)
-		and ((check and c:IsLocation(LOCATION_EXTRA) and c:IsType(TYPE_EXTRA)) or (c:IsSetCard(0x24b) and not c:IsLevel(4)))
+		and ((check and c:IsLocation(LOCATION_EXTRA) and c:IsType(TYPE_EXTRA)) or (c:IsSetCard(0x152) and not c:IsLevel(4)))
 end
 function s.chkfilter(c,typ)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x24b) and c:IsType(typ)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x152) and c:IsType(typ)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local check=Duel.IsExistingMatchingCard(s.chkfilter,tp,LOCATION_GRAVE,0,1,nil,TYPE_FUSION)

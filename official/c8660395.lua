@@ -31,13 +31,13 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.descon)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x24b}
+s.listed_series={0x152}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -61,7 +61,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipTarget()
 end
-s.desfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x24b)
+s.desfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x152)
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_SZONE,0,1,nil)

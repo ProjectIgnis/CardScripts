@@ -25,16 +25,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.sumfilter)
 end
-s.listed_series={0x24a}
+s.listed_series={0x151}
 s.listed_names={id}
 function s.spconlimit(e,se,sp,st)
-	return se:IsHasType(EFFECT_TYPE_ACTIONS) and se:GetHandler():IsSetCard(0x24a)
+	return se:IsHasType(EFFECT_TYPE_ACTIONS) and se:GetHandler():IsSetCard(0x151)
 end
 function s.sumfilter(c)
 	return not c:IsSummonableCard()
 end
 function s.costfilter(c,tp)
-	return ((c:IsSetCard(0x24a) and c:IsType(TYPE_MONSTER)) or c:IsRitualMonster()) and (c:IsControler(tp) or c:IsFaceup())
+	return ((c:IsSetCard(0x151) and c:IsType(TYPE_MONSTER)) or c:IsRitualMonster()) and (c:IsControler(tp) or c:IsFaceup())
 		and (c:IsInMainMZone(tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -63,7 +63,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,c:GetLocation())
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x24a) and c:IsType(TYPE_MONSTER) and c:IsAttack(2000)
+	return c:IsSetCard(0x151) and c:IsType(TYPE_MONSTER) and c:IsAttack(2000)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

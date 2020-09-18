@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x24c,0x24d}
+s.listed_series={0x153,0x154}
 function s.rfilter(c,tp)
 	return c:IsType(TYPE_LINK) and (c:IsControler(tp) or c:IsFaceup())
 end
@@ -86,5 +86,5 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e)
 	local g=Duel.GetFieldGroup(e:GetHandler():GetControler(),LOCATION_GRAVE,0)
-	return g:IsExists(Card.IsSetCard,1,nil,0x24c) and g:IsExists(Card.IsSetCard,1,nil,0x24d)
+	return g:IsExists(Card.IsSetCard,1,nil,0x153) and g:IsExists(Card.IsSetCard,1,nil,0x154)
 end

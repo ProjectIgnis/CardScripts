@@ -28,14 +28,14 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_FZONE)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1,id+1)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x24c,0x24d}
+s.listed_series={0x153,0x154}
 function s.costfilter(c,tp)
-	return (c:IsSetCard(0x24c) or c:IsSetCard(0x24d)) and c:IsType(TYPE_MONSTER)
+	return (c:IsSetCard(0x153) or c:IsSetCard(0x154)) and c:IsType(TYPE_MONSTER)
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil) end
@@ -47,7 +47,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()
 end
 function s.cfilter(c,check)
-	return (c:IsSetCard(0x24c) or c:IsSetCard(0x24d)) and c:IsType(TYPE_MONSTER)
+	return (c:IsSetCard(0x153) or c:IsSetCard(0x154)) and c:IsType(TYPE_MONSTER)
 		and (c:IsAbleToDeck() or (check and c:IsAbleToHand()))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

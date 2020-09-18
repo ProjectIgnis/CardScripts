@@ -25,19 +25,19 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetHintTiming(0,TIMING_MAIN_END)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x24c,0x24d}
+s.listed_series={0x153,0x154}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x24c,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,0x153,lc,sumtype,tp)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x24d),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x154),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -50,10 +50,10 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase() and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x24d),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsMainPhase() and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x154),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x24d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x154) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -20,14 +20,14 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x24b}
+s.listed_series={0x152}
 function s.eqtgfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x24b) and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_EXTRA,0,1,nil,0x24b)
+	return c:IsFaceup() and c:IsSetCard(0x152) and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_EXTRA,0,1,nil,0x152)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -42,7 +42,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0) then return end
-	local ec=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_EXTRA,0,1,1,nil,0x24b):GetFirst()
+	local ec=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_EXTRA,0,1,1,nil,0x152):GetFirst()
 	if ec then
 		Duel.Equip(tp,ec,tc,true)
 		local e1=Effect.CreateEffect(e:GetHandler())

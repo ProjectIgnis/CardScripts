@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 	--Lists “Kisikil” and "Lilla" archetype
-s.listed_series={0x24c,0x24d}
+s.listed_series={0x153,0x154}
 	--Specifically lists itself
 s.listed_names={id}
 	--Discard 1 card as cost
@@ -29,7 +29,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check “Kisikil” or “Lilla” monster
 function s.filter(c,e,tp)
-	return (c:IsSetCard(0x24c) or c:IsSetCard(0x24d)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return (c:IsSetCard(0x153) or c:IsSetCard(0x154)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -57,5 +57,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Locked into "Evil★Twin" monsters for extra deck
 function s.splimit(e,c)
-	return not c:IsSetCard(0x24e) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsSetCard(0x155) and c:IsLocation(LOCATION_EXTRA)
 end

@@ -41,9 +41,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={id}
-s.listed_series={0x24a}
+s.listed_series={0x151}
 function s.thfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x24a) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x151) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -60,7 +60,7 @@ function s.effectfilter(e,ct)
 	return te:GetHandler():IsRitualSpell()
 end
 function s.lvcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x24a),tp,LOCATION_MZONE,0,1,nil) 
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x151),tp,LOCATION_MZONE,0,1,nil) 
 end
 function s.lvfilter(c)
 	return c:IsFaceup() and c:HasLevel() and c:IsLevelAbove(2) and c:IsAttackAbove(1000)

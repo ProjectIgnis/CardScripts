@@ -17,12 +17,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x24a}
+s.listed_series={0x151}
 function s.filter(c)
 	return c:IsRace(RACE_MACHINE) and c:GetAttack()>0
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x24a) and c:GetAttack()>=1000
+	return c:IsFaceup() and c:IsSetCard(0x151) and c:GetAttack()>=1000
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.atkfilter(chkc) end

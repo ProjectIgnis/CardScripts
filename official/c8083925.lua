@@ -1,4 +1,4 @@
---Live☆Twin エントランス
+--Ｌｉｖｅ☆Ｔｗｉｎ エントランス
 --Live☆Twin Entrance
 --Logical Nonsense
 

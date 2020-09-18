@@ -1,4 +1,4 @@
---Evil★Twin プレゼント
+--Evil★Twin Present
 --Evil★Twin Present
 --Scripted by Naim
 local s,id=GetID()

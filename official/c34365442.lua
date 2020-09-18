@@ -1,4 +1,4 @@
---Evil★Twin イージーゲーム
+--Ｅｖｉｌ★Ｔｗｉｎ イージーゲーム
 --Evil★Twin Easy Game
 --Scripted by Naim
 local s,id=GetID()

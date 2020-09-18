@@ -1,4 +1,4 @@
---M聖なる法典
+--聖なる法典
 --Magistus Invocation
 --scripted by Naim
 local s,id=GetID()

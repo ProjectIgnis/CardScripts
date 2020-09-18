@@ -1,4 +1,4 @@
---Evil★Twins キスキル・リィラ
+--Ｅｖｉｌ★Ｔｗｉｎｓ キスキル・リィラ
 --Evil★Twins Kisikil-Lilla
 --Scripted by AlphaKretin
 local s,id=GetID()

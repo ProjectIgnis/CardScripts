@@ -1,4 +1,4 @@
---Live☆Twin チャンネル
+--Ｌｉｖｅ☆Ｔｗｉｎ チャンネル
 --Live☆Twin Channel
 --Scripted by Naim
 local s,id=GetID()

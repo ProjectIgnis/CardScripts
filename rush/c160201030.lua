@@ -1,6 +1,5 @@
 --エージェント・テレパス
 --Agent Telepath
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--This turn, this card can attack directly
@@ -36,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	if #g>0 and Duel.SendtoDeck(g,nil,1,REASON_COST)>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
+	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
 	--Effect
 	local e1=Effect.CreateEffect(c)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

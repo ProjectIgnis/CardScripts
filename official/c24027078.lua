@@ -3,6 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
+	--Destroy Equip Spell and negate activation
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -22,7 +23,7 @@ function s.filter2(c)
 	return c:IsFaceup() and c:IsSetCard(0x207a) and c:IsType(TYPE_EQUIP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x107a),tp,LOCATION_MZONE,0,1,nil)
+	return ep==1-tp and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x107a),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -39,8 +40,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_ONFIELD,0,1,1,nil)
 	if #g>0 and Duel.Destroy(g,REASON_EFFECT)~=0 then
-		if Duel.NegateActivation(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
-			Duel.SendtoGrave(eg,REASON_EFFECT)
-		end
+		Duel.NegateActivation(ev)
 	end
 end

@@ -2,7 +2,7 @@
 --Prediction Princess Coinorma
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
@@ -29,6 +29,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

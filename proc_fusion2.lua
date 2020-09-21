@@ -189,7 +189,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 						backupmat=mat1:Clone()
 						tc:SetMaterial(mat1)
 						if extraop then
-							extraop(e,tc,tp,mat1)
+							if extraop(e,tc,tp,mat1)==false then return end
 						end
 						if #mat1>0 then
 							Duel.SendtoGrave(mat1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)

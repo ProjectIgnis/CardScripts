@@ -1,7 +1,8 @@
 --ビッグ・シールド・ガードナー
+--Big Shield Gardna
 local s,id=GetID()
 function s.initial_effect(c)
-	--to attack
+	--Change itselft to attack and negate activation
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_DAMAGE_STEP_END)
@@ -26,14 +27,12 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
 		local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 		return #tg==1 and tg:GetFirst()==e:GetHandler() and e:GetHandler():IsFacedown()
-	else 
-		return false 
+	else
+		return false
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE) then
-		if Duel.NegateActivation(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
-			Duel.SendtoGrave(eg,REASON_EFFECT)
-		end
+	if e:GetHandler():IsRelateToEffect(e) and Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE) then
+		Duel.NegateActivation(ev)
 	end
 end

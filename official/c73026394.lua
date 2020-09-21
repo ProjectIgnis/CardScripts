@@ -1,4 +1,5 @@
 --フュージョン・ガード
+--Fusion Guard
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,9 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SendtoGrave(eg,REASON_EFFECT)
-	end
+	Duel.NegateActivation(ev)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil):RandomSelect(tp,1)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end

@@ -1,4 +1,4 @@
---絶火の竜神ヴァフラム結晶の女神ニンアルル
+--絶火の竜神ヴァフラム
 --Magistus Dragon Vafram
 --Scripted by Naim
 local s,id=GetID()
@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,id+100)
 	e3:SetCondition(s.descon2)
+	e3:SetTarget(s.destg2)
 	e3:SetOperation(s.desop2)
 	c:RegisterEffect(e3)
 end
@@ -55,8 +56,13 @@ function s.desop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon2(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
+	return ec and ec:GetBattleTarget()
+end
+function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local ec=e:GetHandler():GetEquipTarget()
 	local bc=ec:GetBattleTarget()
-	return ec and bc
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,bc,1,0,0)
 end
 function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return false end

@@ -25,20 +25,12 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	--counter
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e0:SetCode(EVENT_CHAINING)
-	e0:SetRange(LOCATION_MZONE)
-	e0:SetOperation(aux.chainreg)
-	c:RegisterEffect(e0)
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_COUNTER)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e4:SetCode(EVENT_CHAIN_SOLVING)
+	e4:SetCode(EVENT_CHAINING)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCondition(s.ctcon)
 	e4:SetTarget(s.cttg)
@@ -69,7 +61,7 @@ function s.atkval(e,c)
 	return lg:GetSum(Card.GetLevel)*300
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x107) and e:GetHandler():GetFlagEffect(1)>0
+	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x107)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

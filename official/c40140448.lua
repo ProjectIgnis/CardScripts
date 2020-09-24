@@ -22,21 +22,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--Register
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetCode(EVENT_CHAINING)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetOperation(aux.chainreg)
-	c:RegisterEffect(e3)
 	--Return 1 monster to the hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e4:SetCode(EVENT_CHAIN_SOLVED)
+	e4:SetCode(EVENT_CHAINING)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,id+1)
 	e4:SetCondition(s.thcon2)
@@ -76,7 +68,7 @@ end
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc~=c and rc:IsSetCard(0x137) and rc:IsControler(tp) and c:GetFlagEffect(1)>0
+	return re:IsActiveType(TYPE_MONSTER) and rc~=c and rc:IsSetCard(0x137) and rc:IsControler(tp)
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end

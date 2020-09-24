@@ -1,4 +1,5 @@
---Polar Star Angel Valkyria
+--極星天ヴァルキュリア (Anime)
+--Valkyrie of the Nordic Ascendant (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Summon Token
@@ -26,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCount(tp,LOCATION_MZONE)<2 
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,40844553,0,TYPES_TOKEN,100,1000,4,RACE_WARRIOR,ATTRIBUTE_EARTH) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,40844553,0,TYPES_TOKEN,1000,1000,4,RACE_WARRIOR,ATTRIBUTE_EARTH) then return end
 	for i=1,2 do
 		local token=Duel.CreateToken(tp,40844553)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
@@ -35,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(100)
+		e1:SetValue(1000)
 		token:RegisterEffect(e1,true)
 	end
 	Duel.SpecialSummonComplete()

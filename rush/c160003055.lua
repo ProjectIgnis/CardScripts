@@ -31,6 +31,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) 
 		and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,0,0,LOCATION_MZONE)
+	Duel.SetChainLimit(s.chlimit)
+end
+function s.chlimit(e,ep,tp)
+	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 	--All opponent's monsters loses ATK
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

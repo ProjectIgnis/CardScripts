@@ -31,15 +31,8 @@ function s.initial_effect(c)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_CHAINING)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetOperation(aux.chainreg)
-	c:RegisterEffect(e4)
 	local e5=e3:Clone()
-	e5:SetCode(EVENT_CHAIN_SOLVED)
+	e5:SetCode(EVENT_CHAINING)
 	e5:SetCondition(s.atkcon2)
 	c:RegisterEffect(e5)
 end
@@ -78,7 +71,7 @@ function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp
 end
 function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and e:GetHandler():GetFlagEffect(1)>0 and re:GetHandler():IsSetCard(0x137) and re:GetHandler():IsType(TYPE_MONSTER)
+	return rp==tp and re:GetHandler():IsSetCard(0x137) and re:GetHandler():IsType(TYPE_MONSTER)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,1,nil) end

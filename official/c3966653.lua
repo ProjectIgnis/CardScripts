@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTarget(s.sumlimit)
 	e2:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 	Duel.RegisterEffect(e2,tp)
-	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
+	aux.RegisterClientHint(e:GetHandler(),nil,tp,0,1,aux.Stringid(id,1),nil)
 end
 function s.aclimit(e,re,tp)
 	return re:GetActivateLocation()==LOCATION_GRAVE

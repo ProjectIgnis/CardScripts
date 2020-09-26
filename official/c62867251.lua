@@ -34,5 +34,7 @@ function s.initial_effect(c)
 end
 --Earthbound Tundra check
 function s.fieldcon(e,tp,eg,ep,ev,re,r,rp)
+	local fc=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_FZONE,LOCATION_FZONE,nil,150000000):GetFirst()
+	if fc:IsStatus(STATUS_DISABLED) then return true end
 	return not Duel.IsEnvironment(150000000)
 end

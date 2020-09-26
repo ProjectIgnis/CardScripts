@@ -50,7 +50,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Send 1 LIGHT/DARK monster to the GY
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel()):GetFirst()
 	if tc and Duel.SendtoGrave(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
 		--Cannot special summon monsters with the same name

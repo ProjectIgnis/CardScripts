@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_LIGHT_OF_INTERVENTION)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(1,1)
+	e3:SetCondition(s.fieldcon)
 	c:RegisterEffect(e3)
 	--cannot turn set
 	local e4=Effect.CreateEffect(c)
@@ -30,4 +31,8 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	c:RegisterEffect(e4)
+end
+--Earthbound Tundra Check
+function s.fieldcon(e,tp,eg,ep,ev,re,r,rp)
+	return not Duel.IsPlayerAffectedByEffect(tp,150000000)
 end

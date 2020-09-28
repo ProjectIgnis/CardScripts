@@ -27,7 +27,7 @@ function s.initial_effect(c)
 							s.activity[0]=Duel.GetActivityCount(0,ACTIVITY_SUMMON)+Duel.GetActivityCount(0,ACTIVITY_FLIPSUMMON)+Duel.GetActivityCount(0,ACTIVITY_SPSUMMON)
 							s.activity[1]=Duel.GetActivityCount(1,ACTIVITY_SUMMON)+Duel.GetActivityCount(1,ACTIVITY_FLIPSUMMON)+Duel.GetActivityCount(1,ACTIVITY_SPSUMMON)
 						 end)
-		Duel.RegisterEffect(ge1,tp)
+		Duel.RegisterEffect(ge1,0)
 		aux.AddValuesReset(function()
 			s.activity[0]=0
 			s.activity[1]=0

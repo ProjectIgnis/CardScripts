@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon2)
 	c:RegisterEffect(e2)
 end
-s.listed_names={id}
+s.listed_names={15653824}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if r~=REASON_SUMMON or
 		e:GetHandler():GetPreviousControler()~=e:GetHandler():GetReasonPlayer() then return false end
@@ -44,7 +44,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,e:GetLabel(),LOCATION_DECK)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(15653824) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tp=e:GetLabel()

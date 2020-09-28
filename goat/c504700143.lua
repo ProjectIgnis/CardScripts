@@ -1,7 +1,7 @@
 --王虎ワンフー
 --King Tiger Wanghu (GOAT)
 --Triggers on its own summon
-local s,id = GetID()
+local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
 	local e1=Effect.CreateEffect(c)

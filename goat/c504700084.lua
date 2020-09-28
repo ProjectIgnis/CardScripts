@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={id}
+s.listed_names={52624755}
 function s.filter(c,e,sp)
-	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+	return c:IsCode(52624755) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end

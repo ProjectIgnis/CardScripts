@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.checkop2)
 	c:RegisterEffect(e3)
 end
-s.listed_names={58192742,id}
+s.listed_names={58192742,40240595}
 function s.checkcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetCardTarget()
 	return Duel.GetTurnPlayer()==tp and g and g:IsExists(Card.IsCode,1,nil,58192742)

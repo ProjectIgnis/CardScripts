@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Summon with 1 tribute
 	local e0=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
-	--destroy
+	--Destroy opponent's monsters with ATK less than or equal to inflicted battle damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)

@@ -1,10 +1,11 @@
 --流星輝巧群
 --Meteornis Draitron
 --Scripted by Eerie Code and edo9300
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Ritual Summon
-	Ritual.AddProcGreater({handler=c,lv=Card.GetAttack,matfilter=s.filter,location=LOCATION_HAND|LOCATION_GRAVE,requirementfunc=Card.GetAttack,desc=aux.Stringid(id,0)})
+	Ritual.AddProcGreater({handler=c,filter=s.ritualfil,lv=Card.GetAttack,matfilter=s.filter,location=LOCATION_HAND|LOCATION_GRAVE,requirementfunc=Card.GetAttack,desc=aux.Stringid(id,0)})
 	--Add itself to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -18,6 +19,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x151}
+function s.ritualfil(c)
+	return c:GetAttack()>0 and c:IsRitualMonster()
+end
 function s.filter(c)
 	return c:IsRace(RACE_MACHINE) and c:GetAttack()>0
 end

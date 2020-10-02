@@ -15,7 +15,7 @@ function s.xyzfilter(c,mg)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_GRAVE,0,nil,0x76)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #mg>1
+	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and #mg>1
 		and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,mg) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end

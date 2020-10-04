@@ -719,6 +719,15 @@ function Auxiliary.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end
 
+--Cost for detaching exactly x Xyz materials
+function Auxiliary.doccost(x)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		if chk==0 then return c:CheckRemoveOverlayCard(tp,x,REASON_COST) end
+		c:RemoveOverlayCard(tp,x,x,REASON_COST)
+	end
+end
+
 function Auxiliary.EquipByEffectLimit(e,c)
 	if e:GetOwner()~=c then return false end
 	local eff={c:GetCardEffect(89785779+EFFECT_EQUIP_LIMIT)}

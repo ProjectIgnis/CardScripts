@@ -1,9 +1,11 @@
 --調弦の魔術師
+--Harmonizing Magician
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Enable pendulum summon
 	Pendulum.AddProcedure(c)
-	--atk&def
+	--All your monsters gain 100 ATK/DEF for each "Magician" pendulum monster in your face-up extra deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -14,7 +16,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e2)
-	--cannot special summon
+	--Cannot be special summoned from face-up extra deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -22,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e3:SetValue(aux.FALSE)
 	c:RegisterEffect(e3)
-	--fusion, synchro and xyz material limitations
+	--Fusion, synchro, and Xyz material limitations
 	local e4=Effect.CreateEffect(c)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e4:SetType(EFFECT_TYPE_SINGLE)
@@ -35,7 +37,7 @@ function s.initial_effect(c)
 	local e6=e4:Clone()
 	e6:SetCode(EFFECT_XYZ_MAT_RESTRICTION)
 	c:RegisterEffect(e6)
-	--spsummon success
+	--When pendulum summoned from hand, special summon 1 "Magician" pendulum monster from deck
 	local e7=Effect.CreateEffect(c)
 	e7:SetDescription(aux.Stringid(id,0))
 	e7:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -49,6 +51,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={0x98}
+
 function s.filter(e,c)
 	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)
 end
@@ -79,6 +82,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 		local c=e:GetHandler()
+		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -89,10 +93,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
+		--Banish it if it leaves the field
 		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(3300)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e3:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e3:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e3,true)

@@ -1,9 +1,10 @@
 --百雷のサンダー・ドラゴン
---The Hundred Thunder Dragons
---scripted by Naim
+--Thunder Dragons' Hundred Thunders
+--Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 thunder monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 function s.spfilter(c,e,tp)
@@ -62,9 +64,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			for dg in aux.Next(g) do
 				Duel.SpecialSummonStep(dg,0,tp,tp,false,false,POS_FACEUP)
 				local e3=Effect.CreateEffect(e:GetHandler())
+				e3:SetDescription(3300)
 				e3:SetType(EFFECT_TYPE_SINGLE)
 				e3:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-				e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+				e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 				e3:SetValue(LOCATION_REMOVED)
 				e3:SetReset(RESET_EVENT+RESETS_REDIRECT)
 				dg:RegisterEffect(e3,true)

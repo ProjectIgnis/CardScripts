@@ -1,6 +1,7 @@
 --電脳堺嫦－兎々
 --Datascape Rabbit - Tutu
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Summon with no tribute
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.ntcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--Special summon
+	--Special summon itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -56,11 +57,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(TYPE_TUNER)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e1)
-		--Banish if it leaves the field
+		--Banish it if it leaves the field
 		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(3300)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e2:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e2,true)

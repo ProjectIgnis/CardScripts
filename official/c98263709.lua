@@ -1,7 +1,9 @@
 --銀河魔鏡士
+--Galaxy Mirror Sage
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--recover
+	--Gain 500 LP per "Galaxy" monster in your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_RECOVER)
@@ -10,13 +12,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rectg)
 	e1:SetOperation(s.recop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Register the fact it was flipped face-up
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_FLIP)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetOperation(s.flipop)
 	c:RegisterEffect(e2)
+	--Special summon 1 level 4 or lower "Galaxy" monster from deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -29,6 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x7b}
+
 function s.filter(c)
 	return c:IsSetCard(0x7b) and c:IsType(TYPE_MONSTER)
 end

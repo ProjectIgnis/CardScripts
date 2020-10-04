@@ -719,12 +719,19 @@ function Auxiliary.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end
 
---Cost for detaching exactly x Xyz materials
-function Auxiliary.doccost(x)
+--Cost for detaching a minimum of "min" and a maximum of "max" Xyz materials. When called with "nil" or an empty parameter list, it will detach all Xyz materials.
+--Will also check for a suitable data type and set the number of detached materials as a label due to the potential need of said number in the operation.
+function Auxiliary.doccost(min,max)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
-		if chk==0 then return c:CheckRemoveOverlayCard(tp,x,REASON_COST) end
-		c:RemoveOverlayCard(tp,x,x,REASON_COST)
+		local min=min or c:GetOverlayCount()
+		local max=max or min
+		if type(min)~='number' or type(max)~='number' then
+			error("Parameter "..((type(min)~='number' and '1') or (type(max)~='number' and '2')).." expected to be an integer.")
+		end
+		if chk==0 then return c:CheckRemoveOverlayCard(tp,min,REASON_COST) end
+		c:RemoveOverlayCard(tp,min,max,REASON_COST)
+		e:SetLabel(#Duel.GetOperatedGroup())
 	end
 end
 

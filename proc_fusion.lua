@@ -82,13 +82,13 @@ function Fusion.ConditionMix(insf,sub,...)
 	local funs={...}
 	return	function(e,g,gc,chkfnf)
 				local mustg=nil
+				local c=e:GetHandler()
+				local tp=c:GetControler()
 				if g==nil then
 					mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,nil,REASON_FUSION)
 					return insf and #mustg==0
 				end
 				local chkf=chkfnf&0xff
-				local c=e:GetHandler()
-				local tp=c:GetControler()
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0

@@ -719,19 +719,32 @@ function Auxiliary.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end
 
---Cost for detaching a minimum of "min" and a maximum of "max" Xyz materials. When called with "nil" or an empty parameter list, it will detach all Xyz materials.
---Will also check for a suitable data type and set the number of detached materials as a label due to the potential need of said number in the operation.
-function Auxiliary.doccost(min,max)
+--Cost for detaching a minimum of "min" and a maximum of "max" Xyz materials. When called with "nil", it will detach all Xyz materials.
+--Will also check for a suitable data type and set the number of detached materials as a label if supplied with true as parameter 2 if
+--no second integer is supplied or as parameter 3 if a second integer is supplied due to the potential need of said number in the operation.
+function Auxiliary.doccost(min,...)
+	local params={...}
+	local max,label
+	if type(params[1])=='boolean' then
+		label=params[1]
+		elseif type(params[1])=='number' and type(params[2])=='boolean' then 
+			max,label=params[1],params[2]
+			elseif type(params[1])=='number' and not params[2] then
+				max=params[1]
+	end
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
-		local min=min or c:GetOverlayCount()
-		local max=max or min
+		min=min or c:GetOverlayCount()
+		max=max or min
+		label=label or false
 		if type(min)~='number' or type(max)~='number' then
 			error("Parameter "..((type(min)~='number' and '1') or (type(max)~='number' and '2')).." expected to be an integer.")
 		end
 		if chk==0 then return c:CheckRemoveOverlayCard(tp,min,REASON_COST) end
 		c:RemoveOverlayCard(tp,min,max,REASON_COST)
-		e:SetLabel(#Duel.GetOperatedGroup())
+		if label==true then 
+			e:SetLabel(#Duel.GetOperatedGroup())
+		end
 	end
 end
 

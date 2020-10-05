@@ -1,9 +1,10 @@
 --ドラゴンメイド・ルフト
---Dragonmaid Luft
+--Dragonmaid Lorpar
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--inactivate
+	--Targeted monster cannot activate its effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--indes
+	--Cannot be destroyed by card effects while you control a fusion monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.incon)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--summon
+	--Special summon 1 level 3 "Dragonmaid" monster from hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -34,6 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x133}
+
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
@@ -49,9 +51,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
+		--Cannot activate its effects this turn
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3302)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)

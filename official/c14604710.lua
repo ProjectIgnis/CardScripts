@@ -1,9 +1,10 @@
 --星遺物の胎導
---World Legacy Burgeoning
+--World Legacy Monstrosity
 --Scripted by ahtelel and Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Special summon 2 level 9 monsters from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -80,7 +81,10 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		local fid=c:GetFieldID()
 		for sc in aux.Next(sg) do
 			Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
+			--Cannot attack
 			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3206)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
@@ -89,6 +93,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.SpecialSummonComplete()
 		sg:KeepAlive()
+		--Destroy them during end phase
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
@@ -117,4 +122,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=g:Filter(s.desfilter,nil,e:GetLabel())
 	Duel.Destroy(tg,REASON_EFFECT)
 end
-

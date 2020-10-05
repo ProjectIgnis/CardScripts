@@ -1,10 +1,13 @@
 --ドラグニティナイト - ロムルス
 --Dragunity Knight - Romulus
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,s.matfilter,2,2)
-	--search
+	--Add 1 "Dragunity" spell/trap or 1 "Dragon Ravine" from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -16,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- special summon
+	--Special summon 1 dragon or winged beast monster from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -32,6 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x29}
 s.listed_names={62265044}
+
 function s.matfilter(c,sc,st,tp)
 	return c:IsRace(RACE_DRAGON+RACE_WINGEDBEAST,sc,st,tp) and not c:IsType(TYPE_TOKEN,sc,st,tp)
 end
@@ -74,6 +78,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
+		--Negate its effects
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -84,14 +89,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2,true)
+		--Cannot be used as link material
 		local e3=Effect.CreateEffect(e:GetHandler())
+		e3:SetDescription(3312)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
-		e3:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+		e3:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CLIENT_HINT)
 		e3:SetValue(1)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3,true)
 	end
 	Duel.SpecialSummonComplete()
 end
-

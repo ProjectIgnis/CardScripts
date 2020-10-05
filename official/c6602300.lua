@@ -1,10 +1,13 @@
 --重爆撃禽 ボム・フェネクス
+--Blaze Fenix, the Burning Bombardment Bird
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Fusion summon procedure
 	Fusion.AddProcFun2(c,aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE),aux.FilterBoolFunction(Card.IsRace,RACE_PYRO),true)
-	--damage
+	--Inflict damage equal to number of cards on the field x 300
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DAMAGE)
@@ -19,10 +22,12 @@ function s.initial_effect(c)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
+	--Cannot attack this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3206)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1,true)
 end

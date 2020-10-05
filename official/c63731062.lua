@@ -1,12 +1,14 @@
 --白闘気一角
 --White Aura Monokeros
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER),1,1,Synchro.NonTuner(nil),1,99)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--special summon fish
+	--Synchro summon procedure
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER),1,1,Synchro.NonTuner(nil),1,99)
+	--When synchro summoned, special summon 1 fish from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -18,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--special summon self
+	--Special summon itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -48,9 +50,11 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+		--Cannot attack
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3206)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
@@ -87,4 +91,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-

@@ -1,9 +1,11 @@
 --月光虎
+--Lunalight Tiger
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Enable pendulum summon
 	Pendulum.AddProcedure(c)
-	--spsummon
+	--Special summon 1 "Lunalight" monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -13,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--If destroyed by battle or card effect, special summon 1 "Lunalight" monster from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -26,6 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xdf}
+
 function s.filter(c,e,tp)
 	return c:IsSetCard(0xdf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -43,6 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local fid=c:GetFieldID()
+		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -55,13 +59,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
+		--Cannot attack
 		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(3206)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CANNOT_ATTACK)
-		e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		--Destroy it during end phase
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e4:SetCode(EVENT_PHASE+PHASE_END)

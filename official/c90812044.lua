@@ -1,4 +1,6 @@
 --連鎖召喚
+--Chain Summon
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -37,13 +39,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,rk)
 	local sc=g:GetFirst()
 	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		--Cannot attack directly
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3207)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		sc:RegisterEffect(e1,true)
 		sc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		--Return it to extra deck during end phase
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PHASE+PHASE_END)

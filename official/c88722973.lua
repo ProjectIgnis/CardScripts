@@ -1,10 +1,13 @@
---昇竜剣士マジェスターP
+--昇竜剣士マジェスターＰ
+--Majester Paladin, the Ascending Dracoslayer
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_PENDULUM),4,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--search
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_PENDULUM),4,2)
+	--Add 1 pendulum monster during end phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -13,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.regtg)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special summon 1 "Dracoslayer" pendulum monster from face-up extra deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,6 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_series={0xc7}
+
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
 end
@@ -74,7 +78,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		--Cannot be used as Xyz material
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3311)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
 		e1:SetValue(1)

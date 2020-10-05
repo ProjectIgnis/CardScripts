@@ -1,9 +1,11 @@
 --魔界劇団－ファンキー・コメディアン
+--Abyss Actor - Funky Comedian
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Enable pendulum summon
 	Pendulum.AddProcedure(c)
-	--atk up (p zone)
+	--ATK up (pendulum zone)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -15,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg1)
 	e1:SetOperation(s.atkop1)
 	c:RegisterEffect(e1)
-	--atk up (summon)
+	--ATK up (if normal or special summoned)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -27,7 +29,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--atk up (m zone)
+	--ATK up (ignition effect)
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_ATKCHANGE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -40,6 +42,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x10ec}
+
 function s.atkfilter1(c,tp)
 	return c:IsSetCard(0x10ec) and Duel.IsExistingTarget(s.atkfilter2,tp,LOCATION_MZONE,0,1,c)
 end
@@ -88,9 +91,11 @@ end
 function s.atkcost3(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetAttackAnnouncedCount()==0 end
+	--Cannot attack
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3206)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1,true)

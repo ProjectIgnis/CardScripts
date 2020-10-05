@@ -1,7 +1,9 @@
 --ストーンヘンジ・メソッド
+--Stonehenge Methods
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 "Chronomaly" monster from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -13,6 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x70}
+
 function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsSetCard(0x70) and c:IsType(TYPE_MONSTER)
@@ -34,7 +37,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
+		--Cannot change its battle position
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3313)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)

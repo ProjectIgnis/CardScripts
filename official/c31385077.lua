@@ -1,10 +1,13 @@
 --カオス・ゴッデス－混沌の女神－
+--Chaos Goddess
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),1,1,Synchro.NonTunerEx(Card.IsAttribute,ATTRIBUTE_DARK),2,99)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--special summon
+	--Synchro summon procedure
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),1,1,Synchro.NonTunerEx(Card.IsAttribute,ATTRIBUTE_DARK),2,99)	
+	--Special summon 1 level 5+ DARK monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -40,9 +43,11 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		--Cannot be used as synchro material
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3310)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(1)

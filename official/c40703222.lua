@@ -1,7 +1,9 @@
 --増殖
+--Multiply
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon as many tokens as possible to your field
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -9,9 +11,11 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_names={40640057}
+
 function s.cfilter(c,ft,tp)
 	return c:IsFaceup() and c:IsCode(40640057) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
 end
@@ -40,10 +44,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	for i=1,ft do
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		--Cannot be tributed for a tribute summon
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3304)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		token:RegisterEffect(e1,true)

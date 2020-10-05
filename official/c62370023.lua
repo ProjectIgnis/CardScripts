@@ -1,9 +1,10 @@
 --スノーマン・エフェクト
 --Snowman Effect
 --Scripted by ahtelel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -54,6 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		for bc in aux.Next(g) do
 			atk=atk+math.max(bc:GetBaseAttack(),0)
 		end
+		--Gain ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -61,12 +63,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(atk)
 		tc:RegisterEffect(e1)
+		--Cannot attack directly
 		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(3207)
 		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end
-

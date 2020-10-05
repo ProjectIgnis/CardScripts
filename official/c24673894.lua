@@ -1,5 +1,6 @@
 --チェンジ・デステニー
 --Changing Destiny
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,7 +26,10 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc and tc:IsRelateToEffect(e) and Duel.NegateAttack() and Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)~=0 then
+		--Cannot change its battle position
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3313)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)

@@ -1,10 +1,13 @@
 --聖刻龍王－アトゥムス
+--Hieratic Dragon King of Atum
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),6,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--spsummon
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),6,2)
+	--Special summon 1 dragon monster from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -19,10 +22,12 @@ end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0
 		and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+	--Cannot attack this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3206)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -41,6 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(g:GetFirst(),0,tp,tp,false,false,POS_FACEUP) then
+		--ATK/DEF becomes 0
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK)

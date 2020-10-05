@@ -1,10 +1,13 @@
 --十二獣ライカ
+--Zoodiac Chakanine
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,4,2,s.ovfilter,aux.Stringid(id,0),99,s.xyzop)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--atk
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,4,2,s.ovfilter,aux.Stringid(id,0),99,s.xyzop)
+	--Gains ATK/DEF equal to the total ATK/DEF of the "Zoodiac" monsters attached
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -16,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	e2:SetValue(s.defval)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special summon 1 "Zoodiac" monster from GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,6 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_series={0xf1}
+
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSetCard(0xf1,lc,SUMMON_TYPE_XYZ,tp) and not c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,id)
 end
@@ -71,6 +75,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -79,7 +84,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		tc:RegisterEffect(e2)
+		--Cannot be used as Xyz material
 		local e3=e1:Clone()
+		e3:SetDescription(3311)
+		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e3:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
 		e3:SetValue(1)
 		tc:RegisterEffect(e3)

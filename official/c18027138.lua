@@ -1,8 +1,9 @@
 --カバーカーニバル
 --Hippo Carnival
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 3 tokens to your field
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={11050416}
+
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>2
@@ -27,16 +29,19 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		for i=1,3 do
 			local token=Duel.CreateToken(tp,id+i)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+			--Cannot be tributed
 			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3303)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetValue(1)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			token:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 			token:RegisterEffect(e2)
+			--Cannot special summon from extra deck while you control the token
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_FIELD)
 			e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -46,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetTarget(aux.TargetBoolFunction(Card.IsLocation,LOCATION_EXTRA))
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			token:RegisterEffect(e3)
-			--Lizard check
+			--Clock Lizard check
 			local e4=aux.createContinuousLizardCheck(e:GetHandler(),LOCATION_MZONE)
 			e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 			token:RegisterEffect(e4,true)

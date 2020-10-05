@@ -1,8 +1,9 @@
 --おもちゃ箱
 --Box of Friends
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon 2 normal monsters, with 0 ATK or DEF and different names, from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -42,7 +43,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonStep(tc2,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		tc1:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		tc2:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		--Cannot be used as synchro material
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3310)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 		e1:SetValue(1)
@@ -52,6 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc2:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
 		sg:KeepAlive()
+		--Destroyed during next end phase
 		local de=Effect.CreateEffect(e:GetHandler())
 		de:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		de:SetCode(EVENT_PHASE+PHASE_END)

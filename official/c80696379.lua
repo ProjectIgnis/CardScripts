@@ -1,11 +1,13 @@
 --オッドアイズ・メテオバースト・ドラゴン
 --Odd-Eyes Meteorburst Dragon
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--special summon
+	--Synchro summon procedure
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--Special summon 1 monster from pendulum zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--activate limit
+	--Opponent's monsters cannot activate their effects during battle phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -45,9 +47,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 	if c:IsRelateToEffect(e) then
+		--Cannot attack
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3206)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)

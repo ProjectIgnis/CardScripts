@@ -1,14 +1,15 @@
 --プランキッズ・プランク
---Prankids Prank
+--Prank-Kids Pranks
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--token
+	--Special summon 1 token to your field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tktg)
 	e2:SetOperation(s.tkop)
 	c:RegisterEffect(e2)
-	--shuffle & draw
+	--Shuffle 3 "Prank-Kids" cards into deck, then draw 1
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
@@ -35,6 +36,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x120}
 s.listed_names={id}
+
 function s.cfilter(c)
 	return c:IsSetCard(0x120) and c:IsDiscardable()
 end
@@ -55,10 +57,12 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x120,TYPES_TOKEN,0,0,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP) then return end
 	local token=Duel.CreateToken(tp,id+1)
 	Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+	--Cannot be tributed
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3303)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UNRELEASABLE_SUM)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetValue(1)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	token:RegisterEffect(e1,true)
@@ -95,4 +99,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
-

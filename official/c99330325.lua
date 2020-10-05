@@ -1,7 +1,9 @@
 --妨げられた壊獣の眠り
+--Interrupted Kaiju Slumber
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Destroy all monsters on field, then special summon 2 "Kaiju" monsters to each field, from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
@@ -11,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--to hand
+	--Add 1 "Kaiju" monster from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -24,6 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xd3}
+
 function s.chkfilter1(c,e,tp)
 	return c:IsSetCard(0xd3) and c:IsType(TYPE_MONSTER) and 
 		not c:IsHasEffect(EFFECT_REVIVE_LIMIT) and Duel.IsPlayerCanSpecialSummon(tp,0,POS_FACEUP,tp,c)
@@ -66,14 +69,19 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tc2=g2:GetFirst()
 		Duel.SpecialSummonStep(tc1,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 		Duel.SpecialSummonStep(tc2,0,tp,1-tp,false,false,POS_FACEUP_ATTACK)
+		--Cannot change their battle positions
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3313)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc1:RegisterEffect(e1)
 		local e2=e1:Clone()
 		tc2:RegisterEffect(e2)
+		--Must attack, if able to
 		local e3=e1:Clone()
+		e3:SetDescription(3200)
 		e3:SetCode(EFFECT_MUST_ATTACK)
 		tc1:RegisterEffect(e3)
 		local e4=e3:Clone()

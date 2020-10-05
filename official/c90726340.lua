@@ -1,10 +1,13 @@
 --竜魔人 クィーンドラグーン
+--Queen Dragun Djinn
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,4,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,4,2)
+	--Your dragon monsters, except "Queen Dragun Djinn", cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_MZONE)
@@ -13,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.indtg)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special summon 1 level 5+ dragon monster from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -47,6 +50,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+		--Negate its effects
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -57,7 +61,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
+		--Cannot attack this turn
 		local e3=Effect.CreateEffect(e:GetHandler())
+		e3:SetDescription(3206)
+		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CANNOT_ATTACK)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

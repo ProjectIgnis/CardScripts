@@ -1,9 +1,11 @@
---DDイービル
+--ＤＤイービル
 --D/D Evil
 --Credit to Lyris
+
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
+	--Enable pendulum summon
 	Pendulum.AddProcedure(c)
 	--When your opponent Pendulum Summons monsters: You can negate the effects of those monsters, also they cannot attack.
 	local e1=Effect.CreateEffect(c)
@@ -59,8 +61,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e0:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e0)
 		local e1=e0:Clone()
+		e1:SetDescription(3206)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		tc:RegisterEffect(e1)
 		local e2=e0:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)

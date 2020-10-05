@@ -1,12 +1,14 @@
 --エルフェーズ
 --Elphase
---original script by Larry126/OCG changes by Naim
+--Original script by Larry126/OCG changes by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,s.matfilter,2,2)
-	--atk up
+	--Gains 300 ATK for each monster it points to
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -14,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special summon 1 level 4 or lower cyberse monster from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -51,13 +53,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) then
+		--Cannot be used as link material
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3312)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
+		--Negate its effects
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE)

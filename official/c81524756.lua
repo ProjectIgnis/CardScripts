@@ -1,9 +1,10 @@
 --天穹のパラディオン
 --Crusadia Maximus
 --Scripted by ahtelel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	e1:SetValue(s.spval)
 	c:RegisterEffect(e1)
-	--double damage
+	--Make 1 "Crusadia" link monster deal double battle damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -28,6 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x116}
+
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
@@ -54,13 +56,17 @@ function s.dbop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+		--Deal double battle damage
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3209)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 		e1:SetCondition(s.damcon)
 		e1:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
+		--Your other monsters cannot attack
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
 		e2:SetCode(EFFECT_CANNOT_ATTACK)
@@ -77,4 +83,3 @@ end
 function s.damcon(e)
 	return e:GetHandler():GetBattleTarget()~=nil
 end
-

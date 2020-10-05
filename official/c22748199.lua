@@ -47,6 +47,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
+		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -58,7 +59,10 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
+		--Cannot attack
 		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(3206)
+		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CANNOT_ATTACK)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)

@@ -1,7 +1,9 @@
 --占術姫ペタルエルフ
+--Prediction Princess Petalelf
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--position
+	--Change opponent's attack position monsters to defense position
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
@@ -24,7 +26,10 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 		local og=Duel.GetOperatedGroup()
 		local oc=og:GetFirst()
 		for oc in aux.Next(og) do
+			--Cannot change their battle positions
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3313)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)

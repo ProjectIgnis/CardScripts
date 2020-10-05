@@ -1,7 +1,9 @@
 --シード・オブ・フレイム
+--Seed of Flame
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon 1 level 4 or lower plant monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -38,9 +40,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_PLANT,ATTRIBUTE_EARTH,POS_FACEUP_DEFENSE,1-tp) then
 			local token=Duel.CreateToken(tp,id+1)
 			Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE)
+			--Cannot be tributed for a tribute summon
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3304)
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
+			e1:SetCode(EFFECT_UNRELEASABLE_SUM+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e1:SetValue(1)
 			token:RegisterEffect(e1,true)

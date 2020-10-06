@@ -9,11 +9,12 @@ end
 function Fusion.ParseMaterialTable(tab,mat)
 	local named_mats={}
 	local tmp_extramat_func=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return (sub2 and c:IsHasEffect(511002961)) end
-	local name_func=function(tab) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,sumtype,fc:GetControler(),table.unpack(tab)) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end end
+	local name_func=function(_tab) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,sumtype,fc:GetControler(),table.unpack(_tab)) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end end
+	local function_func=function(func) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return func(c,fc,sumtype,tp,sub,mg,sg,contact) end end
 	local func=aux.FALSE
 	for _,fmat in ipairs(tab) do
 		if type(fmat)=="function" then
-			func=aux.OR(func,aux.OR(fmat,tmp_extramat_func))
+			func=aux.OR(func,aux.OR(function_func(fmat),tmp_extramat_func))
 		else
 			table.insert(named_mats,fmat)
 			local addmat=true

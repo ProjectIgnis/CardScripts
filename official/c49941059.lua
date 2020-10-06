@@ -1,9 +1,10 @@
 --奇跡のマジック・ゲート
 --Magic Gate of Miracles
---updated by Larry126
+--Updated by Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Change 1 of opponent's attack positions to defense position, then take control of it
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_CONTROL+CATEGORY_POSITION)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -30,10 +31,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE)>0 then
 		Duel.BreakEffect()
 		if Duel.GetControl(g,tp) then
-			--indes
+			--Cannot be destroyed by battle
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3000)
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e1:SetValue(1)

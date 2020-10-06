@@ -1,16 +1,18 @@
 --青眼の混沌龍 
 --Blue-Eyes Chaos Dragon
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--spsummon condition
+	--Must be ritual summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.ritlimit)
 	c:RegisterEffect(e1)
-	--cannot target
+	--Cannot be targeted by opponent's card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -18,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-	--indes
+	--Cannot be destroyed by opponent's card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -26,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(s.indval)
 	c:RegisterEffect(e3)
-	--pos
+	--Change all of opponent's monsters' battle positions
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_POSITION+CATEGORY_ATKCHANGE)
@@ -36,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.postg)
 	e4:SetOperation(s.posop)
 	c:RegisterEffect(e4)
-	--check material
+	--Check if it was ritual summoned with "Blue-Eyes White Dragon"
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_MATERIAL_CHECK)
@@ -44,6 +46,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={CARD_BLUEEYES_W_DRAGON}
+
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end
@@ -77,10 +80,12 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	if c:IsRelateToEffect(e) then
+		--Inflict piercing damage
 		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(3208)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_PIERCE)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e3)
 	end

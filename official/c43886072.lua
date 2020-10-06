@@ -1,11 +1,14 @@
 --プランキッズ・バウワウ
 --Prank-Kids Bow-Wow-Bark
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x120),2,2)
-	--ATK/DEF change
+	--A "Prank-Kids" pointed by this card gains 1000 ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -14,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetValue(1000)
 	c:RegisterEffect(e1)
-	--Add to hand
+	--Add 2 "Prank-Kids" cards from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -27,9 +30,11 @@ function s.initial_effect(c)
 	e2:SetCost(s.thcost)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
+	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_END_PHASE)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x120}
+
 function s.atktg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0x120)
 end

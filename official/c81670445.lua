@@ -1,6 +1,7 @@
 --クロノダイバー・ハック
 --Time Thief Hack
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,7 +9,8 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Prevent destruction by opponent's effect
+	--(The turn they were special summoned, your Xyz monsters)
+	--Cannot be destroyed by opponent's card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -17,7 +19,8 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
-	--Prevent effect target
+	--(The turn they were special summoned, your Xyz monsters)
+	--Cannot be targeted by opponent's card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -27,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
-	--ATK increase
+	--Targeted Xyz monster gains 300 ATK for each of its materials
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetType(EFFECT_TYPE_IGNITION)
@@ -59,7 +62,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or not tc then return end
 	local value=tc:GetOverlayCount()*300
 	if tc:UpdateAttack(value,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)==value and tc:GetOverlayGroup():IsExists(s.ownerfil,1,nil,e) then
+		--Can attack directly
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3205)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

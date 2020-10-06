@@ -1,9 +1,10 @@
 --ワルキューレ・ヴリュンヒルデ
 --Valkyrie Brunhilde
---scripted by Naim and AlphaKretin
+--Scripted by Naim and AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--immune spell
+	--Unaffected by opponent's spells
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.efilter)
 	c:RegisterEffect(e1)
-	--gain ATK
+	--Gains 500 ATK per opponent's monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--protect battle
+	--Lose 1000 DEF, and if you do, your "Valkyrie" monsters cannot be destroyed by battle
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -32,6 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x122}
+
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
@@ -49,7 +51,10 @@ end
 function s.ptop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() and c:UpdateDefense(-1000)==-1000 then
+		--Your "Valkyrie" monsters cannot be destroyed by battle
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3000)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetTargetRange(LOCATION_MZONE,0)
@@ -62,4 +67,3 @@ end
 function s.ptfilter(e,c)
 	return c:IsSetCard(0x122)
 end
-

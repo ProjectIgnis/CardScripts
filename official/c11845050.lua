@@ -84,8 +84,9 @@ end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
+	--Xyz monster using this card cannot be destroyed by battle
 	local e1=Effect.CreateEffect(rc)
-	e1:SetDescription(aux.Stringid(id,2))
+	e1:SetDescription(3000)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

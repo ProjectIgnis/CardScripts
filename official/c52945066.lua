@@ -1,9 +1,10 @@
 --海晶乙女波動
 --Marincess Wave
---scripted by Larry126
+--Scripted by Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Negate 1 of opponent's monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE)
@@ -13,8 +14,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.discon)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	c:RegisterEffect(e1)
-	--act in hand
+	--Activate it from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
@@ -22,6 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x12b}
+
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkMonster()
 end
@@ -58,10 +61,12 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			if #g>0 and Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil):IsExists(Card.IsLinkAbove,1,nil,2) then
 				Duel.BreakEffect()
 				for gc in aux.Next(g) do
+					--Your monsters are unaffected by opponent's card effects
 					local e3=Effect.CreateEffect(c)
+					e3:SetDescription(3110)
 					e3:SetType(EFFECT_TYPE_SINGLE)
 					e3:SetCode(EFFECT_IMMUNE_EFFECT)
-					e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+					e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 					e3:SetRange(LOCATION_MZONE)
 					e3:SetValue(s.efilter)
 					e3:SetOwnerPlayer(tp)

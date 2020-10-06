@@ -1,13 +1,15 @@
 --ゴーストリック・イエティ
+--Ghostrick Yeti
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon limit
+	--Cannot be normal summoned if player controls no "Ghostrick" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
 	e1:SetCondition(s.sumcon)
 	c:RegisterEffect(e1)
-	--turn set
+	--Change itself to face-down defense position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_POSITION)
@@ -16,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-	--indes
+	--Targeted "Ghostrick" monster cannot be destroyed by battle or card effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_REMOVE)
@@ -28,6 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x8d}
+
 function s.sfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x8d)
 end
@@ -55,7 +58,10 @@ end
 function s.indesop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
+		--Cannot be destroyed by battle or card effects
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3008)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

@@ -99,12 +99,12 @@ function s.efcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetReasonCard()
 	return not ec:GetMaterial():IsExists(s.ffilter,1,nil) and r==REASON_XYZ
 end
-	--Grants protection from card destruction
+	--A Xyz monster using this card cannot be destroyed by card effects
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
 	local e1=Effect.CreateEffect(rc)
-	e1:SetDescription(aux.Stringid(id,2))
+	e1:SetDescription(3001)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

@@ -1,5 +1,7 @@
+--聖光の夢魔鏡
 --Dream Mirror of Joy
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--activate
+	--Activate 1 "Dream Mirror of Terror" from hand or deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -18,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tftg)
 	e2:SetOperation(s.tfop)
 	c:RegisterEffect(e2)
-	--cannot be target
+	--Opponent can only target your "Dream Mirror" monsters with highest level for attacks or card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
@@ -36,6 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_DREAM_MIRROR_TERROR}
 s.listed_series={0x131}
+
 function s.filter(c,tp)
 	return c:IsCode(CARD_DREAM_MIRROR_TERROR) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end

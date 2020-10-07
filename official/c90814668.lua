@@ -1,7 +1,10 @@
+--タイラント・プランテーション
 --Tyrant Farm
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Special summon 1 non-effect monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -52,4 +55,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

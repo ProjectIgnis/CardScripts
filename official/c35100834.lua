@@ -1,18 +1,21 @@
---
+--機動砲塁 パワー・ホールド
 --Powerhold the Moving Battery
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon this card as a monster, then equip 1 "Gadget" monster from hand or deck to it
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
+	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x51}
+
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,0,2000,4,RACE_MACHINE,ATTRIBUTE_EARTH) end
@@ -70,4 +73,3 @@ function s.atkval(e,c)
 	local tc=c:GetEquipGroup():Filter(s.idfilter,nil):GetFirst()
 	if tc then return tc:GetAttack()*2 else return 0 end
 end
-

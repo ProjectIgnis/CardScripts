@@ -1,9 +1,10 @@
---
+--トゥーン・テラー
 --Toon Terror
 --Scripted by Hel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Negate the activation of a monster effect or spell/trap card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -16,6 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={15259703}
+
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(15259703)
 end

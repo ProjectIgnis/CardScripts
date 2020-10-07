@@ -1,8 +1,10 @@
+--魁炎星－シーブ
 --Brotherhood of the Fire Fist - Ram
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--set
+	--When normal summoned, set 1 "Fire Formation" spell/trap from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOFIELD)
@@ -14,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.settg)
 	e1:SetOperation(s.setop)
 	c:RegisterEffect(e1)
-	--set
+	--If special summoned by effect of a "Fire Fist" monster, set 1 "Fire Formation" spell/trap from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -27,6 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x7c,0x79}
+
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)

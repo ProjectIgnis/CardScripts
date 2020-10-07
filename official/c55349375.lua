@@ -1,9 +1,10 @@
---
+--海造賊－青髭の海技士
 --Bluebeard, the Plunder Patroll Shipwright
---Scripter by Hel
+--Scripted by Hel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--discard to draw
+	--Discard 1, draw 1
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DRAW)
@@ -30,6 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13f}
 s.listed_names={id}
+
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x13f) and not c:IsCode(id)
 end
@@ -61,4 +63,3 @@ end
 function s.drawop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,1,REASON_EFFECT)
 end
-

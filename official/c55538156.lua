@@ -1,8 +1,10 @@
+--極炎舞－「辰斗」
 --Ultimate Fire Formation - Sinto
 --Scripted by Hel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--negate
+	--Negate the activation of opponent's spell/trap card
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -14,6 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x79,0x7c}
+
 function s.filter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x79) and c:IsType(TYPE_MONSTER)
 end
@@ -37,4 +40,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-

@@ -1,8 +1,10 @@
---Start-up Order - Gear Force
+--起動指令 ギア・フォース
+--Boot-Up Order - Gear Force
 --Scripted by Hel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Destroy opponent's monsters, up to the number of your machine monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -29,4 +31,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-

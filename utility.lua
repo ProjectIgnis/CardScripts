@@ -721,7 +721,7 @@ end
 
 --Cost for detaching a minimum of "min" and a maximum of "max" Xyz materials. When called with min="nil", it will detach all Xyz materials.
 --Will also set the number of detached materials as a label if called with label=true true due to the potential need of said number in the operation.
-ffunction Auxiliary.doccost(min,max,label)
+function Auxiliary.doccost(min,max,label)
     return function(e,tp,eg,ep,ev,re,r,rp,chk)
         local c=e:GetHandler()
         local min=min or c:GetOverlayCount()

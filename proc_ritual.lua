@@ -98,7 +98,7 @@ function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,specificmatfilte
 		func=aux.tableAND(c.ritual_custom_check,forcedselection or aux.TRUE)
 	end
 	local sg=Group.CreateGroup()
-	local res=Ritual.Check(nil,sg,mg,tp,c,lv,forcedselection,e,_type,requirementfunc)
+	local res=Ritual.Check(nil,sg,mg,tp,c,lv,func,e,_type,requirementfunc)
 	Ritual.SummoningLevel=nil
 	return res
 end
@@ -212,8 +212,9 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 						tc:ritual_custom_operation(mg,forcedselection,_type)
 						mat=tc:GetMaterial()
 					else
+						local func=function(...)return {forcedselection(...)} end
 						if tc.ritual_custom_check then
-							forcedselection=aux.tableAND(tc.ritual_custom_check,forcedselection or aux.TRUE)
+							func=aux.tableAND(tc.ritual_custom_check,forcedselection or aux.TRUE)
 						end
 						if tc.mat_filter then
 							mg=mg:Filter(tc.mat_filter,tc,tp)
@@ -226,7 +227,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 								mat=mg:SelectWithSumGreater(tp,requirementfunc or Card.GetRitualLevel,lv,tc)
 							end
 						else
-							mat=Ritual.SelectMaterials(tc,mg,forcedselection,lv,tp,e,_type,requirementfunc)
+							mat=Ritual.SelectMaterials(tc,mg,func,lv,tp,e,_type,requirementfunc)
 						end
 					end
 					if not customoperation then

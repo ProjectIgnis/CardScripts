@@ -93,8 +93,9 @@ function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,specificmatfilte
 	if specificmatfilter then
 		mg=mg:Filter(specificmatfilter,nil,c,mg,tp)
 	end
+	local func=function(...)return {forcedselection(...)} end
 	if c.ritual_custom_check then
-		forcedselection=aux.tableAND(c.ritual_custom_check,forcedselection or aux.TRUE)
+		func=aux.tableAND(c.ritual_custom_check,forcedselection or aux.TRUE)
 	end
 	local sg=Group.CreateGroup()
 	local res=Ritual.Check(nil,sg,mg,tp,c,lv,forcedselection,e,_type,requirementfunc)

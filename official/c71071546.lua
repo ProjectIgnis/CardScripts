@@ -1,9 +1,11 @@
---オービタル 7
+--オービタル７
 --Orbital 7
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Can hold You Got It Boss! counters
 	c:EnableCounterPermit(0x2c)
-	--counter
+	--Place 1 You Got It Boss! counter on itselef
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_COUNTER)
@@ -11,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FLIP)
 	e1:SetOperation(s.ctop)
 	c:RegisterEffect(e1)
-	--atkchange
+	--Make its ATK become 2000
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -21,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-	--salvage
+	--Add 1 "Photon" or "Galaxy" monster from GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -35,6 +37,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x55,0x7b}
 s.counter_place_list={0x2c}
+
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
@@ -52,6 +55,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		--ATK becomes 2000
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
@@ -59,11 +63,15 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(2000)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
+		--Cannot attack directly
 		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(3207)
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e2)
+		--Send itself to GY
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetRange(LOCATION_MZONE)

@@ -1,7 +1,9 @@
 --エキセントリック・ボーイ
+--Eccentric Boy
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--be material
+	--A synchro monster using this card cannot activate its effects, has its effects negated, and is banished
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_BE_MATERIAL)
@@ -9,7 +11,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.ccon)
 	e2:SetOperation(s.cop)
 	c:RegisterEffect(e2)
-	--hand synchro
+	--Other synchro material is 1 monster in hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -39,20 +41,24 @@ end
 function s.cop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
-	--leave redirect
+	--Banish it if it leaves the field
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3300)
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 	e1:SetValue(LOCATION_REMOVED)
 	e1:SetReset(RESET_EVENT+0x7e0000)
 	rc:RegisterEffect(e1)
-	--cannot trigger
+	--Cannot activate its effects
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(3302)
+	e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_TRIGGER)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e2)
-	--disable
+	--Negate its effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_DISABLE)

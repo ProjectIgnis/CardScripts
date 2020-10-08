@@ -1,7 +1,9 @@
 --イグザリオン・ユニバース
+--Exarion Universe
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--pierce
+	--Loses 400 ATK, and if it does, inflict piercing damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -27,6 +29,8 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
+		e2:SetDescription(3208)
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetCode(EFFECT_PIERCE)
 		c:RegisterEffect(e2)
 	end

@@ -1,7 +1,9 @@
 --マドルチェ・ピョコレート
+--Madolche Chickolates
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--to deck
+	--When sent to GY, shuffle itself into deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)
@@ -11,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rettg)
 	e1:SetOperation(s.retop)
 	c:RegisterEffect(e1)
-	--pos
+	--Change 1 monster on the field to defense position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -62,11 +64,15 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and not tc:IsPosition(POS_FACEUP_DEFENSE) then
 		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
 		if not tc:IsSetCard(0x71) then
+			--Cannot attack
 			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3206)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
+			--Negate its effects
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE)

@@ -1,9 +1,11 @@
 --ダイナミスト・スピノス
+--Dinomist Spino
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Enable pendulum summon
 	Pendulum.AddProcedure(c)
-	--destroy replace
+	--Substitute destruction for a "Dinomist" card(s)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DESTROY_REPLACE)
@@ -12,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.repval)
 	e1:SetOperation(s.repop)
 	c:RegisterEffect(e1)
-	--Attack
+	--Activate 1 of 2 effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
@@ -23,6 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xd8}
+
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(0xd8)
 		and not c:IsReason(REASON_REPLACE) and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp))
@@ -69,8 +72,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if op==0 then
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
 			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,0,0)
+			--Can attack directly
 			local e1=Effect.CreateEffect(c)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetDescription(3205)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DIRECT_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
@@ -79,10 +84,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	elseif op==1 then
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
 			c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,0,0)
+			--Can make a second attack
 			local e2=Effect.CreateEffect(c)
+			e2:SetDescription(3201)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_EXTRA_ATTACK)
-			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e2:SetValue(1)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			c:RegisterEffect(e2)

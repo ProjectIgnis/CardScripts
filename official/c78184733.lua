@@ -1,7 +1,9 @@
 --エンタメ・フラッシュ
+--Command Performance
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Change opponent's attack position monsters to defense position
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -9,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_BATTLE_START)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x9f}
@@ -33,7 +36,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
 		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
+			--Cannot change their battle positions
 			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3313)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)

@@ -1,8 +1,10 @@
+--一曲集中
 --Star Power!!
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--atk change
+	--Targeted link monster gains ATK, equal to total levels/ranks of monsters it points to x 400
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

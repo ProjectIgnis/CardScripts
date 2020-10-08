@@ -1,8 +1,10 @@
+--夢魔鏡の聖獣－パンタス
 --Phantasos, the Dream Mirror Foe
 --Scripted by Hel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--direct
+	--Can attack directly
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -12,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.acon)
 	e1:SetOperation(s.aop)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special summon 1 "Phantasos, the Dream Mirror Friend" from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -29,15 +31,18 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_DREAM_MIRROR_JOY,62393472}
 s.listed_series={0x131}
+
 function s.acon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x131)
 end
 function s.aop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	--Can attack directly
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3205)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
@@ -71,4 +76,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

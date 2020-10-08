@@ -1,9 +1,10 @@
 --シノビネクロ
 --Shinobi Necro
---scripted by andré
+--Scripted by andré
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--draw
+	--Draw 1, then discard 1
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.dtarget)
 	e1:SetOperation(s.doperation)
 	c:RegisterEffect(e1)
-	--banished
+	--If banished from GY, special summon itself 
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -61,10 +62,12 @@ end
 function s.spoperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)

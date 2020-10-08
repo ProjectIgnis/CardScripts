@@ -1,10 +1,13 @@
---No.105 BK 流星のセスタス
+--Ｎｏ．１０５ ＢＫ 流星のセスタス
+--Number 105: Battlin' Boxer Star Cestus
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,4,3)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--attack up
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,4,3)
+	--Make your battling "Battlin' Boxer" monster unable to be destroyed by battle and opponent takes the damage instead
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -19,6 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x84}
 s.xyz_number=105
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
@@ -40,18 +44,25 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
 	if at:IsControler(tp) then a,at=at,a end
 	if a:IsFacedown() or not a:IsRelateToEffect(e) or not at:IsRelateToEffect(e) then return end
+	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3000)
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	a:RegisterEffect(e1,true)
+	--Opponent takes the battle damage instead
 	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetDescription(3112)
+	e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
 	e2:SetValue(1)
 	e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	a:RegisterEffect(e2,true)
+	--Negate opponent's battling monster
 	if at:IsType(TYPE_EFFECT) then
 		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetType(EFFECT_TYPE_SINGLE)

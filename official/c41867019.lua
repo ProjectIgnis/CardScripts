@@ -1,4 +1,4 @@
---[JP name]
+--魔妖遊行
 --Mayakashi Mayhem
 --Logical Nonsense
 
@@ -33,6 +33,7 @@ end
 s.listed_names={}
 	--Lists "Mayakashi" archetype
 s.listed_series={0x121}
+
 	--Zombie synchro monster special summoned anywhere but extra deck
 function s.cfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and c:IsType(TYPE_SYNCHRO) 

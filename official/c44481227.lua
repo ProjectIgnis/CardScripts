@@ -1,9 +1,11 @@
---EMラクダウン
+--ＥＭラクダウン
+--Performapal Camelump
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Enable pendulum summon
 	Pendulum.AddProcedure(c)
-	--
+	--All your opponent's monsters loses 800 DEF, 1 of your monsters inflicts piercing damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -14,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	--atk down
+	--If destroyed by battle, the monster that destroyed it loses 800 ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -44,6 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	local gc=g:GetFirst()
 	for gc in aux.Next(g) do
+		--Loses 800 DEF
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -52,7 +55,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		gc:RegisterEffect(e1)
 	end
 	if tc:IsRelateToEffect(e) then
+		--Inflict piercing damage
 		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetDescription(3208)
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_PIERCE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

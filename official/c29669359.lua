@@ -1,10 +1,13 @@
---No.61 ヴォルカザウルス
+--Ｎｏ．６１ ヴォルカザウルス
+--Number 61: Volcasaurus
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,5,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--destroy&damage
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,5,2)
+	--Destroy 1 of opponent's monsters, and if you do, inflict damage equal to its original ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -18,13 +21,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.xyz_number=61
+
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST)
 		and not e:GetHandler():IsDirectAttacked() end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	--Cannot attack directly
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3207)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)

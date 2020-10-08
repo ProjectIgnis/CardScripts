@@ -47,8 +47,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 						return sc:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end,
 						function(c)
 							if Duel.SpecialSummonStep(sc,0,tp,tp,true,false,POS_FACEUP)~=0 then
+								--Cannot attack directly
 								local e1=Effect.CreateEffect(c)
-								e1:SetDescription(aux.Stringid(id,2))
+								e1:SetDescription(3207)
 								e1:SetType(EFFECT_TYPE_SINGLE)
 								e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 								e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
@@ -58,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 							end
 						end,aux.Stringid(id,1))
 		end
-	--Cannot ss non-dragon monsters
+	--Cannot special summon monsters this turn, except dragon monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)

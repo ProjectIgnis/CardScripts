@@ -1,8 +1,11 @@
+--カプシェル
 --Capshell
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Draw 1 card
+	--Draw 1 card if...
+	--It was tributed
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
@@ -13,14 +16,17 @@ function s.initial_effect(c)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
+	--Used as material for a fusion, synchro, or link summon
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_BE_MATERIAL)
 	e2:SetCondition(s.drcon)
 	c:RegisterEffect(e2)
+	--Detached and ended up in GY to activate an Xyz monster's effect
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCondition(s.dtchcon)
 	c:RegisterEffect(e3)
+	--Detached and ended up banished to activate an Xyz monster's effect
 	local e4=e3:Clone()
 	e4:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e4)

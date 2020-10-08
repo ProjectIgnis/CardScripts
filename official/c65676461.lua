@@ -1,10 +1,13 @@
---No.32 海咬龍シャーク・ドレイク
+--Ｎｏ．３２ 海咬龍シャーク・ドレイク
+--Number 32: Shark Drake
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,4,3)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--chain attack
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,4,3)
+	--Make itself be able to make a second attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -18,6 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.xyz_number=32
+
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
@@ -39,6 +43,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
 	if not bc:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummonStep(bc,0,tp,1-tp,false,false,POS_FACEUP_ATTACK) then
+		--Special summoned monster loses 1000 ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -48,9 +53,11 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
 			Duel.BreakEffect()
+			--Can make a second attack
 			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3201)
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetCode(EFFECT_EXTRA_ATTACK)
 			e1:SetValue(1)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

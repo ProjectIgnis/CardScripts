@@ -1,7 +1,9 @@
 --超重武者装留ファイヤー・アーマー
+--Superheavy Samurai Soulfire Suit
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip
+	--Equip this card to 1 "Superheavy Samurai" from hand or field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -11,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
-	--level
+	--Equip monster's level becomes 5
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_CHANGE_LEVEL)
 	e2:SetValue(5)
 	c:RegisterEffect(e2)
-	--indes
+	--Targeted "Superheavy Samurai" monster loses 800 DEF, also cannot be destroyed by battle or card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DEFCHANGE)
@@ -33,6 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x9a}
+
 function s.eqfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x9a)
 end
@@ -82,15 +85,18 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		--Loses 800 DEF
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_DEFENSE)
 		e1:SetValue(-800)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
+		--Cannot be destroyed by battle or card effects
 		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetDescription(3008)
 		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e2:SetValue(1)

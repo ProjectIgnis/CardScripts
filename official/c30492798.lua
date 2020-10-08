@@ -1,14 +1,16 @@
 --儀式魔人ディザーズ
+--Djinn Disserere of Rituals
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--ritual material
+	--Extra ritual material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_RITUAL_MATERIAL)
 	e1:SetCondition(s.con)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--become material
+	--A ritual monster using this card is unaffected by traps
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -27,10 +29,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rc=eg:GetFirst()
 	for rc in aux.Next(eg) do
 		if rc:GetFlagEffect(id)==0 then
-			--immune
+			--Unaffected by traps
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetDescription(aux.Stringid(id,0))
+			e1:SetDescription(3103)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetCode(EFFECT_IMMUNE_EFFECT)

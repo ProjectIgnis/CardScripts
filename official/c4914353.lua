@@ -1,12 +1,13 @@
 --スペース・インシュレイター
 --Space Insulator
---
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,nil,2,2)
-	--atk/def
+	--Monsters this card points to loses 800 ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon itself from GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -57,16 +58,20 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		zone=(zone|tc:GetLinkedZone())
 	end
 	if c:IsRelateToEffect(e) and zone~=0 and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP,zone) then
+		--Cannot be used as link material
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3312)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1,true)
+		--Banish it if it leaves the field
 		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(3300)
 		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e2:SetValue(LOCATION_REMOVED)
 		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
@@ -74,4 +79,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-

@@ -1,9 +1,10 @@
 --不朽の特殊合金
---Special Dititanium Metal
---scripted by André
+--Everlasting Alloy
+--Scripted by andré
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--effect 1
+	--Your machine monsters cannot be destroyed by opponent's card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,8 +12,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition1)
 	e1:SetTarget(s.target1)
 	e1:SetOperation(s.operation1)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--effect 2
+	--Negate card/effect that targets your machine monster(s)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
@@ -23,6 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_JINZO}
+
 function s.condition1(e,tp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_JINZO),tp,LOCATION_ONFIELD,0,1,nil)
 end
@@ -33,7 +36,10 @@ function s.operation1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_MACHINE),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(g) do
+		--Cannot be destroyed by opponent's card effects
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3060)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

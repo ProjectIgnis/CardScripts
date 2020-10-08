@@ -1,11 +1,13 @@
 --人造人間－サイコ・レイヤー
 --Jinzo - Layered
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Xyz Summon
-	Xyz.AddProcedure(c,nil,6,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Take control of an opponent's monster until the End Phase
+	--Xyz summon prcoedure
+	Xyz.AddProcedure(c,nil,6,2)
+	--Take control of an opponent's monster until end phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -47,13 +49,18 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.GetControl(tc,tp,PHASE_END,1)~=0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
+		--Cannot attack
 		local reset=RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END
+		e1:SetDescription(3206)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(reset)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
+		--Cannot activate its effects
 		local e2=e1:Clone()
+		e2:SetDescription(3302)
 		e2:SetCode(EFFECT_CANNOT_TRIGGER)
 		tc:RegisterEffect(e2)
 	end

@@ -1,7 +1,9 @@
---RR－ラダー・ストリクス
+--ＲＲ－ラダー・ストリクス
+--Raidraptor - Rudder Strix
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--damage
+	--If normal summoned, inflict 600 damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -11,11 +13,12 @@ function s.initial_effect(c)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
+	--Same as above, but if special summoned from hand by effect of "Raidraptor" card
 	local e2=e1:Clone()
 	e2:SetCondition(s.damcon)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon up to 2 "Raidraptor" monsters from hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -58,7 +61,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+			--Cannot be targeted for attacks
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3007)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
 			e1:SetValue(aux.imval1)

@@ -1,12 +1,14 @@
 --撃滅龍 ダーク・アームド
---Dark Armed, the Annihilator Dragon
+--Dark Armed, the Dragon of Annihilation
 --Scripted by ahtelel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,7,2,s.ovfilter,aux.Stringid(id,0),99,s.xyzop)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--destroy
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,7,2,s.ovfilter,aux.Stringid(id,0),99,s.xyzop)
+	--Destroy 1 of opponent's cards, then banish 1 card from your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE)
 	e1:SetDescription(aux.Stringid(id,1))
@@ -53,10 +55,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 			end
 		end
+		--Cannot attack
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3206)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e:GetHandler():RegisterEffect(e1)
 	end

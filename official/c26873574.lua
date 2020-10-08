@@ -1,11 +1,12 @@
---
+--カオス・ダイダロス
 --Chaos Daedalus
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Special Summon Procedure
+	--Special summon procedure (from hand)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Prevent target
+	--Opponent cannot target your LIGHT/DARK monsters with card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_LIGHT+ATTRIBUTE_DARK))
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-	--Banish cards
+	--Banish cards on the field, up to the numbers of face-up field spells
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_IGNITION)

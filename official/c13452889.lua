@@ -1,11 +1,13 @@
 --ベクター・スケア・デーモン
---Vector Square Archfiend
+--Vector Scare Archfiend
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_CYBERSE),2)
-	--special summon
+	--Special summon back a monster this card destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -51,7 +53,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			if Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEUP,zone2)~=0
 				and c:IsRelateToBattle() then
+				--Can make a second attack
 				local e1=Effect.CreateEffect(c)
+				e1:SetDescription(3201)
+				e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_EXTRA_ATTACK)
 				e1:SetValue(1)

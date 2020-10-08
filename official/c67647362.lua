@@ -1,11 +1,14 @@
---
+--海造賊－キャプテン黒髭
 --Blackbeard, the Plunder Patroll Captain
 --Scripted by ahtelel
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,nil,2,2,s.lcheck)
-	--sp summon
+	--Special summon 1 "Plunder Patroll" monster from extra deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -20,6 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x13f}
+
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x13f,lc,sumtype,tp)
 end

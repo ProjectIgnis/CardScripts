@@ -1,7 +1,9 @@
 --地獄の傀儡魔人
+--Perditious Puppeteer
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Take control all of opponent's level 3 or lower monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -32,7 +34,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local og=Duel.GetOperatedGroup()
 	local tc=og:GetFirst()
 	for tc in aux.Next(og) do
+		--Cannot be tributed
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3303)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END)
@@ -41,10 +46,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 		tc:RegisterEffect(e2)
+		--Cannot activate their effects
 		local e3=e1:Clone()
+		e3:SetDescription(3302)
 		e3:SetCode(EFFECT_CANNOT_TRIGGER)
 		tc:RegisterEffect(e3)
+		--Cannot be used as synchro material
 		local e4=e1:Clone()
+		e4:SetDescription(3310)
 		e4:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 		tc:RegisterEffect(e4)
 	end

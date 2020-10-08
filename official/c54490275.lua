@@ -1,13 +1,15 @@
 --ゴーストリックの雪女
+--Ghostrick Yuki-onna
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon limit
+	--Cannot be normal summoned if player controls no "Ghostrick" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
 	e1:SetCondition(s.sumcon)
 	c:RegisterEffect(e1)
-	--turn set
+	--Change itself to face-down defense position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_POSITION)
@@ -16,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-	--change pos
+	--Monster that destroyed this card in battle is changed to face-down defense position
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_POSITION)
@@ -28,6 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x8d}
+
 function s.sfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x8d)
 end
@@ -60,7 +63,10 @@ function s.posop2(e,tp,eg,ep,ev,re,r,rp)
 	local rc=Duel.GetFirstTarget()
 	if rc:IsFaceup() and rc:IsRelateToEffect(e) then
 		Duel.ChangePosition(rc,POS_FACEDOWN_DEFENSE)
+		--Cannot change its battle position
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3313)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)

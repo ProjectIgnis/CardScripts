@@ -1,12 +1,15 @@
+--慧炎星－コサンジャク
 --Brotherhood of the Fire Fist - Peacock
---scripted by Logical Nonsense
+--Logical Nonsense
+
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x79),2,2)
-	--Cannot be attack target
+	--Cannot be targeted for attack while pointing to a "Fire Fist" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
@@ -15,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.tgcon)
 	e1:SetValue(aux.imval1)
 	c:RegisterEffect(e1)
-	--Take control until end phase
+	--Take control 1 of opponent's monsters until end phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_CONTROL)
@@ -27,9 +30,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
 end
-	--Part of "Fire Fist" archetype
+	--Lists "Fire Fist" archetype
 s.listed_series={0x7c,0x79}
-s.listed_names={20265095}
+
 	--If this card is pointing to "Fire Fist"
 function s.lkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x79) and c:IsType(TYPE_MONSTER)
@@ -62,7 +65,7 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g2=Duel.SelectTarget(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil,false,zone)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g2,1,0,0)
 end
-	--Take control of monster until end phase, it cannot attack
+	--Take control of opponent's monster until end phase, it cannot attack
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
@@ -70,7 +73,10 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		local zone=c:GetLinkedZone()&0x1f
 		if Duel.GetControl(tc,tp,PHASE_END,1,zone)~=0 then
 			local reset=RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END
+			--Cannot attack
 			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3206)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
 			e1:SetReset(reset)

@@ -1,13 +1,15 @@
+--炎舞－「隠元」
 --Fire Formation - Ingen
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--When activated, fusion summon 1 beast-warrior fusion monster
 	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsRace,RACE_BEASTWARRIOR))
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target(e1:GetTarget(),e1:GetOperation()))
 	c:RegisterEffect(e1)
-	--to hand
+	--If this face-up card is sent to GY, add 1 "Fire Fist" monster from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -21,6 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x79}
+
 function s.target(sptg,spop)
 	return function (e,tp,eg,ep,ev,re,r,rp,chk)
 			if chk==0 then return true end
@@ -54,4 +57,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

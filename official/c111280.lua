@@ -1,8 +1,9 @@
 --黒魔導強化
 --Dark Magic Expanded
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Apply various effects, depending on the number of "Dark Magicians" and "Dark Magician Girls" in GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -15,6 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL}
+
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL)
 end
@@ -71,7 +73,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
+			--Your DARK spellcasters monsters are unaffected by opponent's card effects
 			local e4=Effect.CreateEffect(e:GetHandler())
+			e4:SetDescription(3110)
+			e4:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e4:SetType(EFFECT_TYPE_SINGLE)
 			e4:SetCode(EFFECT_IMMUNE_EFFECT)
 			e4:SetValue(s.efilter)

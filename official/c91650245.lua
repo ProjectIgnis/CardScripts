@@ -1,16 +1,20 @@
 --森羅の恵み
+--Sylvan Blessing
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 "Sylvan" monster from hand or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x90}
+
 function s.filter(c,e,tp)
 	return c:IsAbleToDeck() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,c,e,tp)
 end
@@ -36,6 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local sc=sg:GetFirst()
 		if sc then
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+			--Place it either on top or bottom of deck during end phase
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetRange(LOCATION_MZONE)
@@ -44,9 +49,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetOperation(s.tdop)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			sc:RegisterEffect(e1)
+			--Unaffected by other card effects
 			local e2=Effect.CreateEffect(e:GetHandler())
+			e2:SetDescription(3100)
 			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+			e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 			e2:SetRange(LOCATION_MZONE)
 			e2:SetCode(EFFECT_IMMUNE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

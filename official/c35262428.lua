@@ -1,8 +1,9 @@
 --賢者の聖杯
 --Wiseman's Chalice
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 monster from opponent's GY to your field
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -32,7 +33,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		--Cannot be tributed
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3303)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
@@ -44,12 +48,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e2:SetValue(1)
 		tc:RegisterEffect(e2,true)
+		--Cannot be used as synchro material
 		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(3310)
+		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e3:SetValue(1)
 		tc:RegisterEffect(e3,true)
+		--Give control of it to your opponent
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

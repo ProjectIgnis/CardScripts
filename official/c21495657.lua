@@ -1,9 +1,11 @@
 --宝竜星－セフィラフウシ
+--Zefraxi, Treasure of the Yang Zing
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Enable pendulum summon
 	Pendulum.AddProcedure(c)
-	--splimit
+	--Cannot pendulum summon monsters, except "Zefra" and "Yang Zing" monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_PZONE)
@@ -12,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(1,0)
 	e2:SetTarget(s.splimit)
 	c:RegisterEffect(e2)
-	--spsummon success
+	--Treat 1 "Zefra" or "Yang Zing" monster as a tuner
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
@@ -25,6 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9e,0xc4}
 s.listed_names={id}
+
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	if c:IsSetCard(0x9e) or c:IsSetCard(0xc4) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
@@ -53,10 +56,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 	if c:IsRelateToEffect(e) then
+		--Return it to deck if it leaves the field
 		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(3301)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e2:SetValue(LOCATION_DECKBOT)
 		c:RegisterEffect(e2)

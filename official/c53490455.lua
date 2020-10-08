@@ -1,9 +1,10 @@
 --転生炎獣ラクーン
---Salamangreat Racoon
+--Salamangreat Raccoon
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--gain LP
+	--Gain LP equal to opponent's attacking monster's ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.lptg)
 	e1:SetOperation(s.lpop)
 	c:RegisterEffect(e1)
-	--recover
+	--Add this card from GY to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -29,6 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x119}
+
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return d and d:IsControler(tp) and d:IsFaceup() and d:IsSetCard(0x119)
@@ -58,7 +60,10 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local tg=g:Filter(Card.IsControler,nil,tp):GetFirst()
 	if tg and tg:IsFaceup() then
+		--Cannot be destroyed by battle
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3000)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetRange(LOCATION_MZONE)
@@ -86,4 +91,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,c)
 	end
 end
-

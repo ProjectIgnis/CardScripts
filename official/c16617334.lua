@@ -1,7 +1,9 @@
---EMレインゴート
+--ＥＭレインゴート
+--Performapal Rain Goat
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--no damage
+	--Reduce effect damage to 0
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -12,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.effcost)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--indes
+	--Targeted "Odd-Eyes" or "Performapal" monster cannot be destroyed by battle or card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -23,9 +25,11 @@ function s.initial_effect(c)
 	e2:SetCost(s.effcost)
 	e2:SetTarget(s.target2)
 	e2:SetOperation(s.operation2)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x9f,0x99}
+
 function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
@@ -64,7 +68,10 @@ end
 function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		--Cannot be destroyed by battle or card effects
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3008)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)

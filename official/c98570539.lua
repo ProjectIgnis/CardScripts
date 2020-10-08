@@ -1,7 +1,13 @@
+--混沌の夢魔鏡
 --Dream Mirror of Chaos
 --Scripted by edo9300
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Fusion summon 1 "Dream Mirror" fusion monster
+	--Using monsters from your field as material
+	--If "Dream Mirror of Joy" is on the field, include from hand as well
+	--If "Dream Mirror of Terror" is on the field, banish from GY as well
 	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x131),matfilter=Fusion.OnFieldMat,extrafil=s.fextra,extraop=s.extraop})
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
@@ -10,6 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x131}
 s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
+
 function s.fextra(e,tp,mg)
 	local joy=Duel.IsEnvironment(CARD_DREAM_MIRROR_JOY,PLAYER_ALL,LOCATION_FZONE)
 	local terror=Duel.IsEnvironment(CARD_DREAM_MIRROR_TERROR,PLAYER_ALL,LOCATION_FZONE) and not Duel.IsPlayerAffectedByEffect(tp,69832741)

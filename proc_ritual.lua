@@ -93,7 +93,7 @@ function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,specificmatfilte
 	if specificmatfilter then
 		mg=mg:Filter(specificmatfilter,nil,c,mg,tp)
 	end
-	local func=function(...)return {forcedselection(...)} end
+	local func=forcedselection and function(...)return {forcedselection(...)} end or nil
 	if c.ritual_custom_check then
 		func=aux.tableAND(c.ritual_custom_check,forcedselection or aux.TRUE)
 	end
@@ -212,7 +212,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 						tc:ritual_custom_operation(mg,forcedselection,_type)
 						mat=tc:GetMaterial()
 					else
-						local func=function(...)return {forcedselection(...)} end
+						local func=forcedselection and function(...)return {forcedselection(...)} end or nil
 						if tc.ritual_custom_check then
 							func=aux.tableAND(tc.ritual_custom_check,forcedselection or aux.TRUE)
 						end

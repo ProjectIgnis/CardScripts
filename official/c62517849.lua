@@ -82,7 +82,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 					sc:CompleteProcedure()
 					--Cannot attack directly
 					local e1=Effect.CreateEffect(c)
-					e1:SetDescription(3206)
+					e1:SetDescription(3207)
 					e1:SetType(EFFECT_TYPE_SINGLE)
 					e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 					e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)

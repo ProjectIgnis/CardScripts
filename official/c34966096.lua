@@ -28,7 +28,7 @@ end
 s.listed_names={id}
 
 function s.ssfilter(c)
-	return c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and not c:IsCode(id) and aux.SpElimFilter(c,true,false)
+	return c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and not c:IsCode(id) and aux.SpElimFilter(c,true,false) and c:IsAbleToRemoveAsCost()
 end
 function s.ssfilter1(c,sg)
 	return c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and sg:IsExists(s.ssfilter2,1,c,(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK)&~c:GetAttribute())

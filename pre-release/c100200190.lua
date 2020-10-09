@@ -99,7 +99,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	if not (b1 and b3) then opt=2 end
 	if (b1 and b3 and not b2 and opt==2) then opt=3 end
 	if (b2 and b3 and not b1) then opt=opt+1 end
-	if opt==0 then
+	if opt==1 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3000) --Cannot be destroyed by battle
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
@@ -109,7 +109,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(1)
 		c:RegisterEffect(e1)
-	elseif opt==1 then --Cannot be destroyed by opponent's card effects
+	elseif opt==2 then --Cannot be destroyed by opponent's card effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3060)
 		e1:SetType(EFFECT_TYPE_SINGLE)

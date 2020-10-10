@@ -77,7 +77,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xad) and c:IsType(TYPE_MONSTER)
 end
 function s.atkcon(e)
-	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end
 function s.cfilter(c,code)
 	return c:IsFaceup() and c:IsCode(code)

@@ -42,12 +42,20 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-		e2:SetCode(EVENT_LEAVE_FIELD)
-		e2:SetOperation(s.damop)
+		e2:SetCode(EVENT_LEAVE_FIELD_P)
+		e2:SetOperation(s.regop)
 		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		tc:RegisterEffect(e2,true)
 	end
 end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e1:SetCode(EVENT_LEAVE_FIELD)
+	e1:SetOperation(s.damop)
+	e:GetHandler():RegisterEffect(e1,true)
+end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(tp,1000,REASON_EFFECT)
+	e:Reset()
 end

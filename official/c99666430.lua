@@ -1,6 +1,5 @@
 --人造人間－サイコ・レイヤー
 --Jinzo - Layered
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -69,14 +68,14 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_TRAP),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupEx(tp,Card.IsReleasableByEffect,1,nil)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsReleasableByEffect,1,nil)
 		and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ct1=Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-	local rg=Duel.SelectReleaseGroupEx(tp,Card.IsReleasableByEffect,1,1,nil)
+	local rg=Duel.SelectReleaseGroup(tp,Card.IsReleasableByEffect,1,1,nil)
 	local ct2=Duel.Release(rg,REASON_EFFECT)
 	if ct2==0 then return end
 	Duel.BreakEffect()

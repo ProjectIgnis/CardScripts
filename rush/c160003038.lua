@@ -1,10 +1,9 @@
--- 哨艇エルダイン
--- Sentry Boat Eldrain
+--哨艇エルダイン
+--Sentry Boat Eldrain
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add to hand
+	--Reveal 1 of opponent's set cards
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -24,11 +23,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	--Requirement
 	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)~0 then
-		g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,1,nil)
-		if #g>0 then
-			if tc:IsFacedown() then Duel.ConfirmCards(tp,tc) end
+		--Effect
+		local g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,1,nil):GetFirst()
+		if g and g:IsFacedown() then 
+			Duel.ConfirmCards(tp,g)
 		end
 	end
 end

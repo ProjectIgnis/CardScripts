@@ -1,5 +1,5 @@
---デストーイ・マイスター (Anime)
---Frightfur Meister (Anime)
+--デストーイ・マイスター (Manga)
+--Frightfur Meister (Manga)
 --scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

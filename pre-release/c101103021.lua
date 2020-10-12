@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
 	Pendulum.AddProcedure(c)
-	--pendulum
+	--to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1,id+200)
 	e3:SetCondition(s.rmcon)
 	e3:SetTarget(s.rmtg)

@@ -44,7 +44,7 @@ end
 s.listed_series={0xe1}
 --to hand
 function s.cfilter(c,tp)
-  return c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -68,13 +68,21 @@ end
 function s.rescon(sg,e,tp,mg)
 	return sg:IsExists(Card.IsSetCard,1,nil,0xe1)
 end
-function s.filter(c,e)
-	return c:IsFaceup() and c:IsCanBeEffectTarget(e)
+function s.mzfilter(c)
+	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5
+end
+function s.rescon2(sg,e,tp,mg)
+	return sg:IsExists(Card.IsSetCard,1,nil,0xe1) and sg:IsExists(s.mzfilter,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,nil,e)
-	if chk==0 then return g:IsExists(Card.IsSetCard,1,nil,0xe1) end
-	local tg=aux.SelectUnselectGroup(g,1,tp,2,2,s.rescon,chk,tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCanBeEffectTarget,e),tp,LOCATION_ONFIELD,0,nil,e)
+	local filter=s.rescon
+	if ft==0 or (ft==1 and Duel.GetMatchingGroupCount(s.mzfilter,tp,LOCATION_MZONE,0,nil)>4) then
+		filter=s.rescon2
+	end
+	if chk==0 then return aux.SelectUnselectGroup(g,1,tp,2,2,filter,chk,tp) end
+	local tg=aux.SelectUnselectGroup(g,1,tp,2,2,filter,chk,tp)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)

@@ -69,7 +69,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FIEND) and c:IsPreviousLocation(LOCATION_HAND)
+	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FIEND) and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_HAND)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

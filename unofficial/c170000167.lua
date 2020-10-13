@@ -84,7 +84,7 @@ function s.statop2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.splimit(e,se,sp,st)
 	local code=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CODE)
-	return se:GetHandler():IsCode(170000166) or code==170000166)
+	return se:GetHandler():IsCode(170000166) or code==170000166
 end
 function s.dscon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

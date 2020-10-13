@@ -44,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		--Cannot attack directly
 		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetDescription(3206)
+		e2:SetDescription(3207)
 		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)

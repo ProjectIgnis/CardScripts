@@ -31,9 +31,9 @@ s.material_setcode={0xa9,0xc3}
 
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsDirectAttacked() end
-	--Cannot attack
+	--Cannot attack directly
 	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetDescription(3206)
+	e1:SetDescription(3207)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)

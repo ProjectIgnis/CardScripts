@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
-	e1:SetCondition(s.condition)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	--Battle indestructible
@@ -36,12 +35,6 @@ function s.initial_effect(c)
 	e4:SetTargetRange(1,0)
 	e4:SetValue(10)
 	c:RegisterEffect(e4)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local at=Duel.GetAttackTarget()
-	if not at or at:IsControler(e:GetHandlerPlayer()) then return false end
-	return a and a==e:GetHandler() and at:IsControler(1-e:GetHandlerPlayer())
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local at=e:GetHandler():GetBattleTarget()

@@ -15,8 +15,8 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetOperation(s.tgop)
+	e2:SetCode(EVENT_DESTROYED)
+	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
@@ -33,10 +33,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_MZONE,0,e:GetHandler())
 	Duel.Destroy(g,REASON_EFFECT)
 end
-function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsReason(REASON_DESTROY) then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-	end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0

@@ -31,7 +31,7 @@ end
 s.listed_series={0x10e5}
 
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsSetCard(0x10e5,lc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,lc,SUMMON_TYPE_XYZ,tp)
+	return c:IsFaceup() and c:IsSetCard(0x10e5,lc,SUMMON_TYPE_XYZ,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end

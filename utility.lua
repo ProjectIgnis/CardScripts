@@ -727,10 +727,12 @@ function Auxiliary.doccost(min,max,label)
 		local min=min or c:GetOverlayCount()
 		local max=max or min
 		local label=label or false
-		if chk==0 then return c:CheckRemoveOverlayCard(tp,min,REASON_COST) or (Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK) and c:IsSetCard(0x14b)) end
-		if Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK) and c:IsSetCard(0x14b) and Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1)) then
+		local eff=Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
+		local set=c:IsSetCard(0x14b)
+		if chk==0 then return c:CheckRemoveOverlayCard(tp,min,REASON_COST) or (eff and set) end
+		if (eff and set) and (c:GetOverlayCount()==0 or (c:GetOverlayCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1)))) then
 			return true
-			else c:RemoveOverlayCard(tp,min,max,REASON_COST)
+				else c:RemoveOverlayCard(tp,min,max,REASON_COST)
 		end
 		if label==true then 
 			e:SetLabel(#Duel.GetOperatedGroup())

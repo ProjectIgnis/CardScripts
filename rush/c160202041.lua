@@ -45,5 +45,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 		Duel.BreakEffect()
 		Duel.DiscardDeck(tp,#g,REASON_EFFECT)
+		Duel.DiscardDeck(1-tp,#g,REASON_EFFECT)
 	end
 end

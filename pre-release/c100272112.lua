@@ -68,6 +68,6 @@ function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToBattle() and Duel.NegateAttack() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,nil)
 		local nseq=math.log(s,2)
-		Duel.MoveSequence(at,nseq)
+		Duel.MoveSequence(tc,nseq)
 	end
 end

@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c)
-	return tc:IsRace(RACE_PLANT) and tc:IsType(TYPE_LINK) and tc:GetLinkedGroup():GetSum(Card.GetAttack)>0
+	return c:IsRace(RACE_PLANT) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():GetSum(Card.GetAttack)>0
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()

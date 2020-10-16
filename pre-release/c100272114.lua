@@ -74,12 +74,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EVENT_DAMAGE_STEP_END)
+	e2:SetCode(EVENT_ADJUST)
 	e2:SetOperation(s.skop)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.skop(e,tp,eg,ep,ev,re,r,rp)
-	local p=Duel.GetTurnPlayer()
-	Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_END,1)
+	if Duel.GetCurrentPhase()~=PHASE_DAMAGE then
+		local p=Duel.GetTurnPlayer()
+		Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_END,1)
+		e:Reset()
+	end
 end

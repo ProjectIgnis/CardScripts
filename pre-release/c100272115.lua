@@ -2,6 +2,9 @@
 --Sunvine Healer
 local s,id=GetID()
 function s.initial_effect(c)
+	--link summon
+	c:EnableReviveLimit()
+	Link.AddProcedure(c,s.matfilter,1,1)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -38,6 +41,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x1257}
+function s.matfilter(c)
+	return c:IsRace(RACE_PLANT) and c:IsType(TYPE_NORMAL) and c:IsLevelBelow(4)
+end
 function s.cfilter(c,tp,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(0x1257) and c:IsType(TYPE_LINK) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
 end

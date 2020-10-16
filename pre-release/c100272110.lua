@@ -9,12 +9,13 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,id+1)
 	e1:SetCondition(s.thcon)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
+	e1:SetLabel(0)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -50,11 +51,14 @@ end
 function s.valcheck(e,c)
 	local g=c:GetMaterial():Filter(Card.IsCode,nil,100272106)
 	if #g>0 then 
-		e:GetLabelObject():SetLabel(1) 
+		e:GetLabelObject():SetLabel(1)
+	else
+		e:GetLabelObject():SetLabel(0)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSequence()>4 and e:GetLabel()==1
+	return e:GetHandler():GetSequence()>4 and e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+		and e:GetLabel()==1
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x2257) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()

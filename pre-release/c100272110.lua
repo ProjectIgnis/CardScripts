@@ -2,6 +2,9 @@
 --Sunavalon Dryas
 local s,id=GetID()
 function s.initial_effect(c)
+	--link summon
+	c:EnableReviveLimit()
+	Link.AddProcedure(c,s.matfilter,1,1)
 	-- search	
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -41,6 +44,9 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2257}
 
+function s.matfilter(c)
+	return c:IsRace(RACE_PLANT) and c:IsLevelBelow(4)
+end
 function s.valcheck(e,c)
 	local g=c:GetMaterial():Filter(Card.IsCode,nil,100272106)
 	if #g>0 then 

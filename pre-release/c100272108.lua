@@ -42,7 +42,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.filter1(c,e,tp)
-	return c:IsLinkMonster() and c:IsLinkBelow(2) and c:IsLinkState() and (c:IsSetCard(0x1257) or c:IsSetCard(0x2257))
+	return c:IsLinkMonster() and c:IsLinkBelow(2) and c:IsLinked() and (c:IsSetCard(0x1257) or c:IsSetCard(0x2257))
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetCode())
 end
 function s.filter2(c,e,tp,code)
@@ -63,8 +63,18 @@ function s.spexop(e,tp,eg,ep,ev,re,r,rp)
 		local code=tc:GetCode()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,code):GetFirst()
-		if sc then
-			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
+		if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_DISABLE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			sc:RegisterEffect(e1)
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_DISABLE_EFFECT)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			sc:RegisterEffect(e2)
+			Duel.SpecialSummonComplete()
 		end
 	end
 	local e1=Effect.CreateEffect(c)

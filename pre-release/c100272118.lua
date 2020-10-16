@@ -49,11 +49,10 @@ function s.atkfilter(c)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
-	if not bc then return false end
 	local tc=Duel.GetAttacker()
 	if not tc:IsControler(tp) then tc,bc=bc,tc end
 	e:SetLabelObject(tc)
-	return tc:IsControler(tp) and s.atkfilter(tc) and not bc:IsControler(tp)
+	return tc:IsControler(tp) and s.atkfilter(tc) and (not bc or bc:IsControler(1-tp))
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

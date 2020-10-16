@@ -72,7 +72,7 @@ end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:GetAttack()>0 then
-		Duel.Recover(tp,tc:GetLink(),REASON_EFFECT)
+		Duel.Recover(tp,tc:GetLink()*300,REASON_EFFECT)
 	end
 end
 function s.reccon2(e,tp,eg,ep,ev,re,r,rp)

@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCountLimit(1)
+	e4:SetCondition(s.setcon)
 	e4:SetCost(s.setcost)
 	e4:SetTarget(s.settg)
 	e4:SetOperation(s.setop)
@@ -80,6 +81,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --set
+function s.setcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()~=tp
+end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)

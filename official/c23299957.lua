@@ -12,9 +12,9 @@ s.listed_series={0x1016}
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then
 		local c=e:GetHandler()
-		--Cannot be destroyed by battle
+		--Cannot be destroyed by card effects
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(3000)
+		e1:SetDescription(3001)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

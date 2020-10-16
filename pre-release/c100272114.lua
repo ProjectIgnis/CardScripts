@@ -52,12 +52,13 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
-function s.dmgfilter(c)
-	return c:IsSetCard(0x1257) and c:IsType(TYPE_LINK)
+function s.dmgfilter(c,cc)
+	return c:IsSetCard(0x1257) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(cc)
 end
 function s.dmgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ((c==Duel.GetAttacker() and Duel.GetAttackTarget()) or c==Duel.GetAttackTarget()) and c:GetLinkedGroup():IsExists(s.dmgfilter,1,nil)
+	return c:IsFaceup() and c:IsRelateToBattle()
+		and Duel.IsExistingMatchingCard(s.dmgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c)
 end
 function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

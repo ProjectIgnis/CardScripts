@@ -72,7 +72,7 @@ end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:GetAttack()>0 then
-		Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT)
+		Duel.Recover(tp,tc:GetLink(),REASON_EFFECT)
 	end
 end
 function s.reccon2(e,tp,eg,ep,ev,re,r,rp)
@@ -87,5 +87,5 @@ end
 function s.recop2(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Recover(p,600,REASON_EFFECT)
+	Duel.Recover(p,d,REASON_EFFECT)
 end

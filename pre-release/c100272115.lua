@@ -75,8 +75,10 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Recover(tp,tc:GetLink()*300,REASON_EFFECT)
 	end
 end
+function s.filter(c,tp)
+	return c:IsControler(tp) and c:IsType(TYPE_LINK) and c:IsRace(RACE_PLANT)
 function s.reccon2(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst():IsControler(tp) and eg:GetFirst():IsRace(RACE_PLANT)
+	return ep~=tp and eg:IsExists(s.filter,1,nil,tp)
 end
 function s.rectg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

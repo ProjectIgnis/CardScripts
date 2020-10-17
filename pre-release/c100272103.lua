@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Xyz summon procedure
-	Xyz.AddProcedure(c,nil,10,2,s.ovfilter,aux.Stringid(id,0))
+	Xyz.AddProcedure(c,nil,10,2,s.ovfilter,aux.Stringid(id,0),2,s.xyzop)
 	--Your LIGHT monsters cannot be targeted by opponent's card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
@@ -32,6 +32,11 @@ s.listed_series={0x10e5}
 
 function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSetCard(0x10e5,lc,SUMMON_TYPE_XYZ,tp)
+end
+function s.xyzop(e,tp,chk)
+	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	return true
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end

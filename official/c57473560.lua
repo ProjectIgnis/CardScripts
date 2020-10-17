@@ -1,15 +1,17 @@
 --ワイトプリンス
+--Wightprince
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--change code
+	--Name becomes "Skull Servant" while in GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetValue(32274490)
+	e1:SetValue(CARD_SKULL_SERVANT)
 	c:RegisterEffect(e1)
-	--to grave
+	--Send 1 "Skull Servant" and 1 "The Lady in Wight" from hand/deck to GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)
@@ -19,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special summon 1 "King of the Skull Servants" from deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,17 +32,18 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={32274490,36021814}
+s.listed_names={CARD_SKULL_SERVANT,36021814,40991587}
+
 function s.tgfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,32274490)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,CARD_SKULL_SERVANT)
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,40991587) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g1=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,32274490)
+	local g1=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,CARD_SKULL_SERVANT)
 	local g2=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,40991587)
 	if #g1>0 and #g2>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -52,7 +55,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsCode(32274490) and c:IsAbleToRemoveAsCost()
+	return c:IsCode(CARD_SKULL_SERVANT) and c:IsAbleToRemoveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)

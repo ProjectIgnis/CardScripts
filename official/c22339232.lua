@@ -1,15 +1,17 @@
 --ワイトメア
+--Wightmare
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--change code
+	--Name becomes "Skull Servant" while in GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetValue(32274490)
+	e1:SetValue(CARD_SKULL_SERVANT)
 	c:RegisterEffect(e1)
-	--to grave
+	--Return 1 of your banished "Skull Servants" or "Wightmares" to GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)
@@ -20,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon 1 of your banished "The Lady in Wight" or "King of the Skull Servants"
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -32,12 +34,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_SKULL_SERVANT,36021814,40991587,id}
+
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsCode(32274490,id)
+	return c:IsFaceup() and c:IsCode(CARD_SKULL_SERVANT,id)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.tgfilter(chkc) end

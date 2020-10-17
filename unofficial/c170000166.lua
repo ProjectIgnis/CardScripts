@@ -47,7 +47,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
 end
 function s.filter(c,e,tp)
-	return c:IsCode(7634581) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:Alias()==7634581 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end

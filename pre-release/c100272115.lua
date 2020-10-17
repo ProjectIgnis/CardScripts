@@ -77,6 +77,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,tp)
 	return c:IsControler(tp) and c:IsType(TYPE_LINK) and c:IsRace(RACE_PLANT)
+end
 function s.reccon2(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:IsExists(s.filter,1,nil,tp)
 end

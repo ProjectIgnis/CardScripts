@@ -25,7 +25,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsRace(RACE_PLANT) and c:IsLinkAbove(4)
 end
 function s.filter(c)
-	return c:IsType(TYPE_EFFECT) and not c:IsDisabled()
+	return c:IsType(TYPE_EFFECT) and not c:IsDisabled() and c:IsFaceup()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

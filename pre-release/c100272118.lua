@@ -62,7 +62,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		and tc:IsControler(tp) and s.atkfilter(tc) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(tc:GetLinkedGroup():GetSum(Card.GetAttack))
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)

@@ -38,6 +38,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(e2,tp)
 	end)
 end
+s.listed_series={0x1257}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
@@ -48,7 +49,7 @@ function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	re:GetHandler():ResetFlagEffect(id)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x574)
+	return c:IsFaceup() and c:IsSetCard(0x1257)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

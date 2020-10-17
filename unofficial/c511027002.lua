@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x575,0x574}
+s.listed_series={0x2257,0x1257}
 function s.matcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsType,1,nil,TYPE_LINK,lc,sumtype,tp)
 end
@@ -78,7 +78,7 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.atfilter(c,lg)
-	return c:IsSetCard(0x575) and c:IsLinkMonster() and lg and lg:IsContains(c)
+	return c:IsSetCard(0x2257) and c:IsLinkMonster() and lg and lg:IsContains(c)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.atfilter(chkc,e:GetHandler():GetLinkedGroup()) end
@@ -100,7 +100,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.valfilter(c)
-	return c:IsSetCard(0x574) and c:IsLinkMonster()
+	return c:IsSetCard(0x1257) and c:IsLinkMonster()
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.valfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)-1

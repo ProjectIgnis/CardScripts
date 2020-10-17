@@ -46,7 +46,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_SYNCHRO)
 		and (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)))
-		and c:IsPreviousPosition(POS_FACEUP)
+		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(52687916) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

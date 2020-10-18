@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Plus sign destroy
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_ONFIELD)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 	--Banish itself
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -31,12 +31,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.banop)
 	c:RegisterEffect(e2)
 end
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return e:GetHandler():GetOverlayCount()>0 and Duel.GetMatchingGroupCount(aux.NOT(Card.IsLocation),tp,0,LOCATION_ONFIELD,nil,LOCATION_FZONE|LOCATION_PZONE)>0 end
-end
 --Get the bits of place denoted by loc and seq as well as its vertically and
 --horizontally adjancent zones.
-function s.adjzone(loc,seq)
+local function adjzone(loc,seq)
 	if loc==LOCATION_MZONE then
 		if seq<5 then
 			--Own zone and horizontally adjancent | Vertical adjancent zone
@@ -52,7 +49,7 @@ function s.adjzone(loc,seq)
 end
 --Get a group of cards from a location and sequence (and its adjancent zones)
 --that is fetched from a set bit of a zone bitfield integer.
-function s.groupfrombit(bit,p)
+local function groupfrombit(bit,p)
 	local loc=(bit&0x7F>0) and LOCATION_MZONE or LOCATION_SZONE
 	local seq=(loc==LOCATION_MZONE) and bit or bit>>8
 	seq = math.floor(math.log(seq,2))
@@ -81,16 +78,29 @@ function s.groupfrombit(bit,p)
 	end
 	return g
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
+function s.filter(c)
+	return not c:IsLocation(LOCATION_FZONE) and not (not Duel.IsDuelType(DUEL_SEPARATE_PZONE) and c:IsLocation(LOCATION_PZONE))
+end
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
+	if chk==0 then return e:GetHandler():GetOverlayCount()>0 and #g>0 end
 	local filter=0
-	for oc in aux.Next(Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)) do
-		filter=filter|s.adjzone(oc:GetLocation(),oc:GetSequence())
+	for oc in aux.Next(g) do
+		filter=filter|adjzone(oc:GetLocation(),oc:GetSequence())
 	end
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 	local zone=Duel.SelectFieldZone(tp,1,0,LOCATION_ONFIELD,~filter<<16)
 	Duel.Hint(HINT_ZONE,tp,zone)
 	Duel.Hint(HINT_ZONE,1-tp,zone>>16)
-	local sg=s.groupfrombit(zone>>16,1-tp):Select(tp,1,c:GetOverlayCount(),false)
+	e:SetLabel(zone)
+	local sg=groupfrombit(zone>>16,1-tp)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,math.min(#sg,e:GetHandler():GetOverlayCount()),0,0)
+end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local g=groupfrombit(e:GetLabel()>>16,1-tp)
+	if #g==0 then return end
+	local sg=g:Select(tp,1,c:GetOverlayCount(),false)
 	local sgc=#sg
 	if c:RemoveOverlayCard(tp,sgc,sgc,REASON_EFFECT) then
 		Duel.Destroy(sg,REASON_EFFECT|REASON_DESTROY)

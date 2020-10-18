@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
-	e1:SetCode(4179255)
+	e2:SetCode(4179255)
 	c:RegisterEffect(e2)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)

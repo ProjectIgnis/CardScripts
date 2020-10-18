@@ -33,7 +33,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return tg and #tg==1 and tg:IsExists(s.tfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
+	return tg and tg:IsExists(s.tfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end

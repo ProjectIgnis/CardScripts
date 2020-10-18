@@ -1,16 +1,17 @@
 --聖天樹の開花
 --Sunavalon Bloom
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--atk up
+	--Gains ATK equal to the total ATK of the monster the link monster points to
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -37,10 +38,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1,true)
+			tc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			tc:RegisterEffect(e2,true)
+			tc:RegisterEffect(e2)
 		end
 	end
 end

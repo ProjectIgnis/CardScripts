@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1257}
 function s.matfilter(c)
-	return c:IsRace(RACE_PLANT) and c:IsType(TYPE_NORMAL) and c:IsLevelBelow(4)
+	return c:IsRace(RACE_PLANT) and c:IsType(TYPE_NORMAL)
 end
 function s.cfilter(c,tp,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(0x1257) and c:IsType(TYPE_LINK) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)

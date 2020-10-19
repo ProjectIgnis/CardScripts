@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e) end
 	if chk==0 then
 		--retain applicable targets in case cost makes an indirect change to ATK
-		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)
+		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil,e)
 		if #g==0 or not Duel.IsPlayerCanDraw(tp,1) then return end
 		g:KeepAlive()
 		e:SetLabelObject(g)

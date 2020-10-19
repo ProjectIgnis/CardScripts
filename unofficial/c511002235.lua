@@ -2,7 +2,7 @@
 --Missile Roid
 local s,id=GetID()
 function s.initial_effect(c)
-	--atk change
+	--ATK/DEF Change
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(43426903,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)

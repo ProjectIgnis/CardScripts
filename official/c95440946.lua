@@ -1,9 +1,10 @@
 --黄金卿エルドリッチ
 --Eldlich the Golden Lord
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--send a target to the GY
+	--Send 1 card from the field to GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
-	--to hand and special summon
+	--Add this card from GY to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
@@ -86,7 +87,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 					sg:RegisterEffect(e2)
 					local e3=e1:Clone()
 					e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-					e3:SetDescription(aux.Stringid(id,3))
+					e3:SetDescription(3001)
 					e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 					e3:SetRange(LOCATION_MZONE)
 					e3:SetValue(1)

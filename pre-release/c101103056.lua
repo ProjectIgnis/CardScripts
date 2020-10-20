@@ -1,23 +1,26 @@
 --鉄獣の邂逅
---Tri-brigade Rendezvous
---scripted by Hatter
+--Tri-Brigade Rendezvous
+--Scripted by Hatter
+
 local s,id=GetID()
 function s.initial_effect(c)
-	-- atk up
+	--ATK up
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--destruction replace
+	--Substitute destruction for a linked beast/beast-warrior/winged-beast monster(s)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCountLimit(1,id+100)
 	e2:SetTarget(s.reptg)
 	e2:SetValue(s.repval)
 	e2:SetOperation(s.repop)

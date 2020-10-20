@@ -1,4 +1,5 @@
 --Ｓｐ－ラピッド・ショットウィング
+--Spell Speed - Rapid Shotwing
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local td=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	return tc and td:GetCounter(0x91)>2
+	return td and td:GetCounter(0x91)>2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end

@@ -116,14 +116,18 @@ function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.Remove(c,c:GetPosition(),REASON_EFFECT+REASON_TEMPORARY) then
+	if c:IsFaceup() and c:IsRelateToEffect(e) then
+		Duel.Remove(c,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		e1:SetLabelObject(c)
 		e1:SetCountLimit(1)
-		e1:SetOperation(function(e)Duel.ReturnToField(e:GetLabelObject())end)
+		e1:SetOperation(s.retop)
 		Duel.RegisterEffect(e1,tp)
 	end
+end
+function s.retop(e,tp,eg,ep,ev,re,r,rp)
+    Duel.ReturnToField(e:GetLabelObject())
 end

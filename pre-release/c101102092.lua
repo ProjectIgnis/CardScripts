@@ -46,6 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x259)
+end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_REMOVED,0,nil)
 	return g:GetClassCount(Card.GetCode)*100

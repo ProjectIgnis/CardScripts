@@ -1,4 +1,4 @@
---JP name
+--
 --Myutant Ultimus
 --Logical Nonsense
 
@@ -86,8 +86,11 @@ end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x259) and c:IsAbleToHand()
 end
+function s.classf(c)
+	return c:GetType()&0x7
+end
 function s.ctcheck(sg,e,tp)
-	return sg:GetClassCount(Card.GetType)==#sg
+	return sg:GetClassCount(s.classf)==#sg
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

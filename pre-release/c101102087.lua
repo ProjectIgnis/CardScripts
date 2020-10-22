@@ -1,3 +1,4 @@
+--
 --Myutant Beast
 --Scripted by Hel
 local s,id=GetID()
@@ -24,6 +25,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_CHAINING)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCountLimit(1,id+100)
 	e3:SetCondition(s.condition)
 	e3:SetCost(s.cost)

@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x259}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x259) and c:GetLevel()<5
+	return c:IsSetCard(0x259) and c:GetLevel()<5 and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -44,8 +44,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+function s.atkfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x259)
 function s.atkval(e,c)
-	local g=Duel.GetMatchingGroup(aux.TRUE,e:GetHandlerPlayer(),LOCATION_REMOVED,0,nil)
+	local g=Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_REMOVED,0,nil)
 	return g:GetClassCount(Card.GetCode)*100
 end
 function s.drfilter(c)

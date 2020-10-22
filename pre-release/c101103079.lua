@@ -1,5 +1,5 @@
 --碑像の天使－アズルーン
---Angel Statue
+--Angel Statue - Azurune
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -57,9 +57,9 @@ function s.ngfilter(c)
 	return c:IsSummonLocation(LOCATION_SZONE) and c:IsType(TYPE_TRAP+TYPE_CONTINUOUS) and c:IsAbleToGraveAsCost()
 end
 function s.ngcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.ngfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.ngfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.ngfilter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,s.ngfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.ngtg(e,tp,eg,ep,ev,re,r,rp,chk)

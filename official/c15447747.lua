@@ -96,7 +96,7 @@ function s.lkop(e,tp,eg,ep,ev,re,r,rp)
 	local xg=Duel.SelectMatchingCard(tp,s.lkfilter,tp,LOCATION_EXTRA,0,1,1,nil)
 	local tc=xg:GetFirst()
 	if tc then
-		Duel.SpecialSummonRule(tp,tc,SUMMON_TYPE_LINK)
+		Duel.LinkSummon(tp,tc)
 	end
 	for _,e in ipairs(el) do
 		e:Reset()

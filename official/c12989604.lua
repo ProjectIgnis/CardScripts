@@ -23,7 +23,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc then
-		Duel.SpecialSummonRule(tp,tc,SUMMON_TYPE_LINK)
+		Duel.LinkSummon(tp,tc)
 	end
 end
 

@@ -50,6 +50,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(9523599,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
-		Duel.SpecialSummonRule(tp,sg:GetFirst(),SUMMON_TYPE_LINK)
+		Duel.LinkSummon(tp,sg:GetFirst())
 	end
 end

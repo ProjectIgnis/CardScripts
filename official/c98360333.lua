@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)
-			Duel.LinkSummon(tp,sg:GetFirst(),nil)
+			Duel.LinkSummon(tp,sg:GetFirst())
 		end
 	end
 end

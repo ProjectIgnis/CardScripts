@@ -68,7 +68,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)~=0 
 		and Duel.IsExistingMatchingCard(s.linkfilter,tp,LOCATION_EXTRA,0,1,nil) then
 		local tc=Duel.SelectMatchingCard(tp,s.linkfilter,tp,LOCATION_EXTRA,0,1,1,nil):GetFirst()
-		Duel.SpecialSummonRule(tp,tc,SUMMON_TYPE_LINK)
+		Duel.LinkSummon(tp,tc)
 		Duel.BreakEffect()
 		Duel.Recover(tp,ev,REASON_EFFECT)
 	end

@@ -116,4 +116,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e1)
 		end
 	end
+	g:DeleteGroup()
 end

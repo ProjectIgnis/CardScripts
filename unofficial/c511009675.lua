@@ -56,7 +56,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function s.linkfilter(c)
-	return c:IsSpecialSummonable(SUMMON_TYPE_LINK) and c:IsSetCard(0x1257)
+	return c:IsLinkSummonable() and c:IsSetCard(0x1257)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

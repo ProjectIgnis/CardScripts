@@ -11,11 +11,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:GetSequence()>=5
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsControler(1-tp) and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetAttacker():IsControler(1-tp) and not Duel.IsExistingMatchingCard(Card.IsInExtraMZone,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -39,7 +36,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(tp,ev/2)
 end
 function s.spfilter(c)
-	return c:IsSpecialSummonable(SUMMON_TYPE_LINK) and c:IsLinkMonster() and c:IsRace(RACE_CYBERSE)
+	return c:IsLinkSummonable() and c:IsRace(RACE_CYBERSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil) end

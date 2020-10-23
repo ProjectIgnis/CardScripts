@@ -27,7 +27,7 @@ function s.filter(c,e,tp)
 end
 	--Check for "Evil★Twin" link monster
 function s.lkfilter(c)
-	return c:IsSetCard(0x155) and c:IsLinkMonster() and c:IsSpecialSummonable(SUMMON_TYPE_LINK)
+	return c:IsSetCard(0x155) and c:IsLinkSummonable()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ADJUST)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCondition(s.descon)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 	--Special Summon itself after destruction
@@ -18,6 +19,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)  
+end
+function s.descon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_MZONE,0,e:GetHandler())

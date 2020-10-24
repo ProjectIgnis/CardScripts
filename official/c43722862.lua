@@ -1,8 +1,9 @@
---WW－アイス・ベル
+--ＷＷ－アイス・ベル
 --Windwitch - Ice Bell
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--damage
+	--If normal or special summoned, inflict 500 damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCategory(CATEGORY_DAMAGE)
@@ -31,6 +32,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_series={0xf0}
+
 function s.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA) or (c:IsLevelAbove(5) and c:IsAttribute(ATTRIBUTE_WIND))
 end
@@ -47,7 +49,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	--lizard check
+	--Clock Lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
@@ -84,7 +86,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local tc=sg:GetFirst()
 			if tc then
 				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+				--Cannot be tributed
 				local e1=Effect.CreateEffect(c)
+				e1:SetDescription(3303)
+				e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 				e1:SetValue(1)

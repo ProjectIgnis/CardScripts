@@ -1,6 +1,7 @@
 --ゴッド・ブレイズ・キャノン
 --Blaze Cannon
 --Logical Nonsense
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Grant multiple effects to 1 "The Winged Dragon of Ra"
@@ -15,6 +16,7 @@ function s.initial_effect(c)
 end
 	--Specifically lists "The Winged Dragon of Ra"
 s.listed_names={CARD_RA}
+
 	--Check for "The Winged Dragon of Ra"
 function s.selfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_RA) and c:GetFlagEffect(id)==0
@@ -34,9 +36,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 		--Unaffected by opponent's card effects
 		local e1=Effect.CreateEffect(tc)
+		e1:SetDescription(3110)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
-		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(s.efilter)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

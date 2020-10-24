@@ -1,9 +1,10 @@
 --ガッチリ＠イグニスター
 --Gatchiri @Ignister
 --Scripted by Eerie Code, anime version by Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--indestructable
+	--Each cyberse monster get protected once, each turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_CYBERSE))
 	e1:SetValue(s.indct)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon itself from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_SPECIAL_SUMMON)
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	--immune
+	--If sent to GY, make 1 of your monsters unaffected by opponent's card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -86,7 +87,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(aux.Stringid(id,2))
+		e1:SetDescription(3110)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
@@ -99,4 +100,3 @@ end
 function s.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
-

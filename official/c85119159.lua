@@ -1,5 +1,5 @@
 --オノマト選択
---Onomatopick
+--Onomatopickup
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lvfilter1(c,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x54) or c:IsSetCard(0x59) or c:IsSetCard(0x82) or c:IsSetCard(0x8f))
+	return c:IsFaceup() and c:HasLevel() and (c:IsSetCard(0x54) or c:IsSetCard(0x59) or c:IsSetCard(0x82) or c:IsSetCard(0x8f))
 		and Duel.IsExistingMatchingCard(s.lvfilter2,tp,LOCATION_MZONE,0,1,c,c:GetLevel())
 end
 function s.lvfilter2(c,lv)

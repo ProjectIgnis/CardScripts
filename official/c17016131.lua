@@ -1,14 +1,16 @@
---
+--海造賊－誇示
 --Pride of the Plunder Patroll
---scripted by Naim
+--Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--draw
+	--If your "Plunder Patroll" monster destroys a monster by battle, draw 1
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DRAW)
@@ -21,7 +23,8 @@ function s.initial_effect(c)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
-	--send this card to the GY, opponent draw then you discard from his hand
+	--Send this face-up card to GY to activate 1 of these effects
+	--Opponent draws 1, then you send 1 monster from their hand to GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_HANDES+CATEGORY_DRAW)
@@ -34,7 +37,9 @@ function s.initial_effect(c)
 	e3:SetCost(s.handcost)
 	e3:SetTarget(s.handtg)
 	e3:SetOperation(s.handop)
+	e3:SetHintTiming(TIMING_STANDBY_PHASE+TIMING_END_PHASE)
 	c:RegisterEffect(e3)
+	--Look at opponent's extra deck and send 1 monster from it to GY
 	local e4=e3:Clone()
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_TOGRAVE)
@@ -43,6 +48,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x13f}
+
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not eg then return end

@@ -1,9 +1,10 @@
---
+--混沌領域
 --Chaos Space
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add to hand
+	--Add 1 level 4 to 8 LIGHT/DARK monster, that cannot be normal summoned/set
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -14,14 +15,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Return to deck
+	--Return 1 banished LIGHT/DARK monster to deck, draw 1
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)

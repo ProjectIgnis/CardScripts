@@ -1,9 +1,10 @@
 --ＷＷ－フリーズ・ベル
 --Windwitch - Freeze Bell
 --Scripted by ahtelel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.sprcon)
 	c:RegisterEffect(e1)
-	--Level up
+	--Increase its level by 1
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
-	--Battle indestructable
+	--A WIND synchro monster using this card cannot be destroyed by battle
 	local e3=Effect.CreateEffect(c)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -30,6 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xf0}
+
 function s.cfilter(c)
 	return c:IsFacedown() or not c:IsSetCard(0xf0)
 end
@@ -57,8 +59,9 @@ end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
+	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetDescription(3000)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

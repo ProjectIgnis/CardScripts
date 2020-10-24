@@ -1,9 +1,10 @@
---
+--寿炎星－リシュンマオ
 --Brotherhood of the Fire Fist - Panda
 --Scripted by Hel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon itself from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--destroy replace
+	--Substitute destruction for a "Fire Fist" monster(s)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
@@ -28,6 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={0x7c,0x79}
+
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x7c)
 end
@@ -86,4 +88,3 @@ end
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
-

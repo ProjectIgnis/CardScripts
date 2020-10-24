@@ -1,5 +1,6 @@
---SPYRAL MISSION－奪還
+--ＳＰＹＲＡＬ ＭＩＳＳＩＯＮ－奪還
 --SPYRAL MISSION - Recapture
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	e0:SetTarget(s.target)
 	c:RegisterEffect(e0)
-	--Activate(control)
+	--Take control 1 of opponent's monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_CONTROL)
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTarget(s.cntg2)
 	c:RegisterEffect(e2)
-	--Destruction replacement
+	--Substitute destruction for 1 "SPYRAL" monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
@@ -39,10 +40,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xee}
+
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local c=e:GetHandler()
-	--destroy itself
+	--Destroy itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -84,7 +86,7 @@ function s.cntg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 	local c=e:GetHandler()
-	--destroy itself
+	--Destroy itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -108,9 +110,11 @@ function s.cnop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.GetControl(tc,tp,PHASE_END,1) then
+		--Cannot attack directly
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3207)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)

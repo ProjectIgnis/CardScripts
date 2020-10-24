@@ -1,5 +1,6 @@
 --ヴァレル・レフリジェレーション
 --Borrel Cooling
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x102,0x10f}
+
 function s.cfilter(c)
 	return c:IsSetCard(0x102) and Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,c)
 end
@@ -86,8 +88,9 @@ end
 function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		--Cannot be destroyed by battle or card effect
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(aux.Stringid(id,1))
+		e1:SetDescription(3008)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)

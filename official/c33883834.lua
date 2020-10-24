@@ -1,7 +1,9 @@
 --紫炎の寄子
+--Shien's Squire
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--indestructable
+	--Your battling "Six Samurai" monster cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -14,6 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x3d}
+
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
@@ -29,7 +32,10 @@ function s.op(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if not a:IsRelateToBattle() or not d:IsRelateToBattle() then return end
+	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3000)
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetOwnerPlayer(tp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

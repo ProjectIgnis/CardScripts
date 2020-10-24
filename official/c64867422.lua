@@ -1,10 +1,11 @@
---『焔聖剣－オートクレール』
---"Flame Noble Arms - Hauteclere"
+--焔聖剣－オートクレール
+--"Infernoble Arms - Hauteclere"
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
-	--Allow second attack
+	--Make the equipped be able to make a second attack, then destroy this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--Destroy a target
+	--Destroy 1 face-up monster on the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -46,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) then
-		--other monsters cannot attack
+		--Other monsters cannot attack
 		local e1=Effect.CreateEffect(c)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_FIELD)
@@ -56,15 +57,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(s.atktg)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
-		--grant second attack
+		--Can make a second attack
 		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(3201)
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetCode(EFFECT_EXTRA_ATTACK)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e2:SetValue(1)
 		tc:RegisterEffect(e2)
-		--register a hint to the player
+		--Register a hint to the player
 		aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,2),nil)
 		Duel.BreakEffect()
 		Duel.Destroy(c,REASON_EFFECT)

@@ -14,9 +14,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 
+function s.costfilter(c)
+	return c:IsAttribute(ATTRIBUTE_WATER)
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsAttribute,1,false,nil,nil,ATTRIBUTE_WATER) end
-	local g=Duel.SelectReleaseGroup(tp,Card.IsAttribute,1,1,false,nil,nil,ATTRIBUTE_WATER)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil)
 	Duel.Release(g,REASON_COST)
 end
 

@@ -1,39 +1,42 @@
---DDD死偉王ヘル・アーマゲドン
+--ＤＤＤ死偉王ヘル・アーマゲドン
+--D/D/D Doom King Armageddon
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Enable pendulum summon
 	Pendulum.AddProcedure(c)
-	--atk up
+	--Targeted "D/D" monster gains 800 ATK
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_PZONE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCountLimit(1)
+	e1:SetTarget(s.atktg1)
+	e1:SetOperation(s.atkop1)
+	c:RegisterEffect(e1)
+	--Gain ATK equal 1 of your destroyed monsters
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_PZONE)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCategory(CATEGORY_ATKCHANGE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_DESTROYED)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCountLimit(1)
-	e2:SetTarget(s.atktg1)
-	e2:SetOperation(s.atkop1)
+	e2:SetCost(s.atkcost)
+	e2:SetTarget(s.atktg2)
+	e2:SetOperation(s.atkop2)
 	c:RegisterEffect(e2)
-	--atk up
+	--Cannot be destroyed by spells/traps effects that do not target
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_ATKCHANGE)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_DESTROYED)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e3:SetCountLimit(1)
-	e3:SetCost(s.atkcost)
-	e3:SetTarget(s.atktg2)
-	e3:SetOperation(s.atkop2)
+	e3:SetValue(s.efilter)
 	c:RegisterEffect(e3)
-	--indes
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetValue(s.efilter)
-	c:RegisterEffect(e4)
 end
 s.listed_series={0xaf}
+
 function s.filter1(c)
 	return c:IsFaceup() and c:IsSetCard(0xaf)
 end
@@ -63,9 +66,11 @@ function s.filter2(c,e,tp)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsDirectAttacked() end
+	--Cannot attack directly
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3207)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)

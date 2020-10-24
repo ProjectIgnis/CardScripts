@@ -26,5 +26,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	Duel.ChangeAttacker(tc)
+	if Duel.NegateAttack() and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		if tc:IsDefensePos() then
+			Duel.ChangePosition(tc,POS_FACEUP_ATTACK)
+		end
+		if tc:CanAttack() and not tc:IsImmuneToEffect(e) then
+			Duel.BreakEffect()
+			Duel.CalculateDamage(tc,Duel.GetAttackTarget())
+		end
+	end
 end

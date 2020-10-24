@@ -1,6 +1,7 @@
---JP name
+--海造賊－拠点
 --Plunder Patroll Shipyarrrd
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Increase ATK
+	--Your "Plunder Patroll" monsters gain 500 ATK per "Plunder Patroll" card in your S/T zones
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x13f))
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--Search
+	--Add 1 "Plunder Patroll" card from deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
-	--Set itself to the hand
+	--Set itself from GY, return 1 "Plunder Patroll" card from S/T zones to hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND)
@@ -41,6 +42,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x13f}
+
 function s.atkfil(c)
 	return c:IsFaceup() and c:IsSetCard(0x13f) and c:GetSequence()<5
 end
@@ -89,4 +91,3 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

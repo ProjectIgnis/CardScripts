@@ -1,7 +1,9 @@
---超重武者ココロガマ－A
+--超重武者ココロガマ－Ａ
+--Superheavy Samurai Prepped Defense
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon limit
+	--Cannot be normal or flip summoned while you have a spell/trap in GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
@@ -10,7 +12,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon itself from hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -41,7 +43,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		--Cannot be destroyed by battle or card effects
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3008)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)

@@ -1,10 +1,13 @@
---No.50 ブラック・コーン号
+--Ｎｏ．５０ ブラック・コーン号
+--Number 50: Blackship of Corn
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,4,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--send to grave
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,4,2)
+	--Send 1 of opponent's monsters to GY, and if you do, inflict 1000 damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DAMAGE)
@@ -18,14 +21,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.xyz_number=50
+
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0
 		and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	--Cannot attack this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3206)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end

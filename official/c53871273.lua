@@ -1,17 +1,19 @@
---
+--混沌のヴァルキリア
 --Chaos Valkyria
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Cannot be normal summoned/set
 	c:EnableUnsummonable()
-	--Must be special summoned
+	--Must be special summoned by card effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
-	--Special summon itself
+	--Special summon itself from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -22,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--Send to grave
+	--Send 1 LIGHT/DARK monster from deck to GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOGRAVE)

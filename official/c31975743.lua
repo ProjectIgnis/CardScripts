@@ -1,13 +1,15 @@
 --マジシャンズ・エイプ
+--Ape Magician
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot special summon
+	--Cannot be special summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--control
+	--Take control 1 of opponent's defense position monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_CONTROL)
@@ -47,7 +49,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		if Duel.GetControl(tc,tp,PHASE_END,1)~=0 then
+			--Cannot change its battle position
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3313)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 			e1:SetReset(RESET_PHASE+PHASE_END)

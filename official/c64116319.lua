@@ -1,9 +1,10 @@
---
+--トゥーン・ハーピィ・レディ
 --Toon Harpie Lady
 --Scripted by Hel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Cannot attack
+	--Cannot attack the turn it was summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -16,13 +17,13 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--Direct attack
+	--Can attack directly
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_DIRECT_ATTACK)
 	e4:SetCondition(s.dircon)
 	c:RegisterEffect(e4)
-	--Special Summon and destroy a Spell/Trap
+	--Special summon itself from hand
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -35,6 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={15259703}
+
 function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

@@ -1,10 +1,13 @@
---No.82 ハートランドラコ
+--Ｎｏ．８２ ハートランドラコ
+--Number 82: Heartlandraco
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,4,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--cannot be battle target
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,4,2)
+	--Cannot be targeted for attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -13,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atkcon)
 	e1:SetValue(aux.imval1)
 	c:RegisterEffect(e1)
-	--direct
+	--Make itself be able to attack directly
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -53,8 +56,10 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
+		--Attack directly this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetDescription(3205)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

@@ -93,11 +93,12 @@ function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,specificmatfilte
 	if specificmatfilter then
 		mg=mg:Filter(specificmatfilter,nil,c,mg,tp)
 	end
+	local func=forcedselection and function(...)return {forcedselection(...)} end or nil
 	if c.ritual_custom_check then
-		forcedselection=aux.tableAND(c.ritual_custom_check,forcedselection or aux.TRUE)
+		func=aux.tableAND(c.ritual_custom_check,forcedselection or aux.TRUE)
 	end
 	local sg=Group.CreateGroup()
-	local res=Ritual.Check(nil,sg,mg,tp,c,lv,forcedselection,e,_type,requirementfunc)
+	local res=Ritual.Check(nil,sg,mg,tp,c,lv,func,e,_type,requirementfunc)
 	Ritual.SummoningLevel=nil
 	return res
 end
@@ -158,7 +159,7 @@ function Ritual.Check(c,sg,mg,tp,sc,lv,forcedselection,e,_type,requirementfunc)
 	end
 	res=res and Duel.GetMZoneCount(tp,sg,tp)>0
 	if res and forcedselection then
-		res,stop=forcedselection(e,tp,sg,sc)
+		res,stop=table.unpack(forcedselection(e,tp,sg,sc))
 	end
 	if not res and not stop then
 		res=mg:IsExists(Ritual.Check,1,sg,sg,mg,tp,sc,lv,forcedselection,e,_type,requirementfunc)
@@ -211,8 +212,9 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 						tc:ritual_custom_operation(mg,forcedselection,_type)
 						mat=tc:GetMaterial()
 					else
+						local func=forcedselection and function(...)return {forcedselection(...)} end or nil
 						if tc.ritual_custom_check then
-							forcedselection=aux.tableAND(tc.ritual_custom_check,forcedselection or aux.TRUE)
+							func=aux.tableAND(tc.ritual_custom_check,forcedselection or aux.TRUE)
 						end
 						if tc.mat_filter then
 							mg=mg:Filter(tc.mat_filter,tc,tp)
@@ -225,7 +227,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 								mat=mg:SelectWithSumGreater(tp,requirementfunc or Card.GetRitualLevel,lv,tc)
 							end
 						else
-							mat=Ritual.SelectMaterials(tc,mg,forcedselection,lv,tp,e,_type,requirementfunc)
+							mat=Ritual.SelectMaterials(tc,mg,func,lv,tp,e,_type,requirementfunc)
 						end
 					end
 					if not customoperation then

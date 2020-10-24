@@ -1,10 +1,11 @@
 --レフトハンド・シャーク
 --Left Hand Shark
 --Logical Nonsense
+
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon from hand or GY while you control "Right Hand Shark"
+	--Special summon itself from hand or GY while you control "Right Hand Shark"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -35,8 +36,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.efop)
 	c:RegisterEffect(e3)
 end
-	--Lists "Right Hand Shark"
+	--Specifically lists "Right Hand Shark"
 s.listed_names={11845050}
+
 	--Check for "Right Hand Shark"
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsCode(11845050)
@@ -53,13 +55,14 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
-	--Special summon from hand, banish it if it leaves the field
+	--Special summon itself from hand, banish it if it leaves the field
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
@@ -96,12 +99,12 @@ function s.efcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetReasonCard()
 	return not ec:GetMaterial():IsExists(s.ffilter,1,nil) and r==REASON_XYZ
 end
-	--Grants protection from card destruction
+	--A Xyz monster using this card cannot be destroyed by card effects
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
 	local e1=Effect.CreateEffect(rc)
-	e1:SetDescription(aux.Stringid(id,2))
+	e1:SetDescription(3001)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

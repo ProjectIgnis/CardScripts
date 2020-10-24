@@ -1,11 +1,13 @@
 --ジェムナイト・ファントムルーツ
 --Gem-Knight Phantom Quartz
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x47),2,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--special summon
+	--Link summon procedure
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x47),2,2)
+	--Add 1 "Gem-Knight" card from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -17,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--fusion summon
+	--Fusion summon "Gem-Knight" fusion monster
 	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x1047),aux.FALSE,s.fextra,Fusion.ShuffleMaterial,nil,s.stage2}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -33,6 +35,7 @@ function s.initial_effect(c)
 	table.insert(GhostBelleTable,e2)
 end
 s.listed_series={0x1047,0x47}
+
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
@@ -60,9 +63,11 @@ function s.fextra(e,tp,mg)
 end
 function s.stage2(e,tc,tp,mg,chk)
 	if chk==1 then
+		--Cannot attack directly this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3207)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)

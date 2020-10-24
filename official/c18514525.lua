@@ -1,11 +1,14 @@
 --プランキッズ・ロケット
 --Prank-Kids Rocket Ride
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Fusion summon procedure
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x120),2)
-	--Direct attack
+	--If fusion summoned, lose 1000 ATK, also can attack directly
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -16,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atkcon)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special summon non-fusion "Prank-Kids" monsters with different names from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -30,6 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x120}
+
 function s.atkcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
@@ -44,7 +48,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
 	if c:GetAttack()-atk==-1000 then
+		--Can attack directly this turn
 		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(3205)
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DIRECT_ATTACK)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
@@ -78,7 +85,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<#g or (#g>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) then return end
 	for tc in aux.Next(g) do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+			--Cannot attack this turn
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3206)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

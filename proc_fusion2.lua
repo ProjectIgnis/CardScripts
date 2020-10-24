@@ -11,7 +11,7 @@
 --chkf			FUSPROC flags for the fusion summon
 --desc			summon effect description
 Fusion.CreateSummonEff = aux.FunctionWithNamedArgs(
-function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,desc,preselect,nosummoncheck)
+function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,desc,preselect,nosummoncheck,extratg)
 	local e1=Effect.CreateEffect(c)
 	if desc then
 		e1:SetDescription(desc)
@@ -21,10 +21,10 @@ function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locat
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(Fusion.SummonEffTG(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,preselect,nosummoncheck))
+	e1:SetTarget(Fusion.SummonEffTG(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,extratg))
 	e1:SetOperation(Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,preselect,nosummoncheck))
 	return e1
-end,"handler","fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","desc","preselect","nosummoncheck")
+end,"handler","fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","desc","preselect","nosummoncheck","extratg")
 function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck)
 	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c,tp)) and (nosummoncheck or c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false))
 			and c:CheckFusionMaterial(mg,gc,chkf)
@@ -38,7 +38,7 @@ Fusion.ForcedMatValidity=function(c,e)
 end
 
 Fusion.SummonEffTG = aux.FunctionWithNamedArgs(
-function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf,preselect,nosummoncheck)
+function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,extratg)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
 				location=location or LOCATION_EXTRA
 				if not chkf or ((chkf&PLAYER_NONE)~=PLAYER_NONE) then
@@ -95,8 +95,9 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					return res
 				end
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,location)
+				if extratg then extratg(e,tp,eg,ep,ev,re,r,rp,chk) end
 			end
-end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","preselect","nosummoncheck")
+end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","preselect","nosummoncheck","extratg")
 function aux.GrouptoCardid(g)
 	local res={}
 	for card in aux.Next(g) do

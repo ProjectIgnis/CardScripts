@@ -1,8 +1,9 @@
 --水竜星－ビシキ
 --Bixi, Water of the Yang Zing
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special summon 1 "Yang Zing" monster from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--synchro effect
+	--Synchro summon by effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sctg)
 	e2:SetOperation(s.scop)
 	c:RegisterEffect(e2)
-	--effect gain
+	--A synchro monster using this card is unaffected by traps
 	local e3=Effect.CreateEffect(c)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -37,6 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={0x9e}
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
@@ -83,8 +85,9 @@ end
 function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
+	--Unaffected by traps
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetDescription(3103)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)

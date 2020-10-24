@@ -1,18 +1,20 @@
 --真閃珖竜 スターダスト・クロニクル
 --Stardust Chronicle Spark Dragon
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,Synchro.NonTunerEx(Card.IsType,TYPE_SYNCHRO),1,99)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--special summon condition
+	--Synchro summon procedure
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,Synchro.NonTunerEx(Card.IsType,TYPE_SYNCHRO),1,99)
+	--Must be synchro summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetValue(aux.synlimit)
 	c:RegisterEffect(e1)
-	--immune
+	--Make itself become unaffected by other card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -22,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.immcost)
 	e2:SetOperation(s.immop)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special summon 1 of your banished dragon synchro monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -36,6 +38,7 @@ function s.initial_effect(c)
 end
 s.synchro_tuner_required=1
 s.synchro_nt_required=1
+
 function s.cfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
@@ -48,7 +51,10 @@ end
 function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		--Unaffected by other card effects
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3100)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.efilter)

@@ -1,10 +1,12 @@
---DDドッグ
+--ＤＤドッグ
 --D/D Dog
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Enable pendulum summon
 	Pendulum.AddProcedure(c)
-	--negate
+	--Negate 1 of opponent's fusion, synchro, or Xyz monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -14,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg1)
 	e1:SetOperation(s.disop1)
 	c:RegisterEffect(e1)
-	--negate on summon
+	--If opponent special summons a fusion, synchro, or Xyz monster(s), negate its effect, also cannot attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DISABLE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -116,17 +118,20 @@ function s.disop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
+		--Negate their effects
 		local e0=Effect.CreateEffect(c)
 		e0:SetType(EFFECT_TYPE_SINGLE)
 		e0:SetCode(EFFECT_DISABLE)
 		e0:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e0)
 		local e1=e0:Clone()
-		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EFFECT_DISABLE_EFFECT)
 		tc:RegisterEffect(e1)
+		--Cannot attack this turn
 		local e2=e0:Clone()
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
+		e2:SetDescription(3206)
+		e2:SetCode(EFFECT_CANNOT_ATTACK)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		tc:RegisterEffect(e2)
 	end
 end

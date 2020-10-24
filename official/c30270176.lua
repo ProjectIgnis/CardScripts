@@ -1,16 +1,18 @@
 --暗黒方界神クリムゾン・ノヴァ
 --Crimson Nova the Dark Cubic Lord
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Special Summon condition
+	--Must be special Summon by its own method
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	--Special Summon procedure
+	--Special summon procedure (from hand)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -20,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--Unaffected
+	--Unaffected by activated monster effects, whose original ATK is 3000 or less
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_IMMUNE_EFFECT)
@@ -28,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(s.immval)
 	c:RegisterEffect(e3)
-	--Extra Attack
+	--Make it be able to make a second attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -37,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.atktg)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
-	--Damage
+	--Inflict 3000 damage to both players
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_DAMAGE)
@@ -51,6 +53,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0xe3}
+
 function s.spcfilter(c)
 	return c:IsSetCard(0xe3) and not c:IsPublic()
 end
@@ -95,9 +98,11 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToBattle() then return end
+	--Can make a second attack
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3201)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(1)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)

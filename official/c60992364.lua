@@ -1,15 +1,18 @@
---ZW－獣王獅子武装
+--ＺＷ－獣王獅子武装
+--ZW - Leo Arms
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,5,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,5,2)
+	--Cannot attack directly
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	c:RegisterEffect(e1)
-	--search
+	--Add 1 "ZW -" monster from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -20,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	--equip
+	--Equip this card on the field to 1 "Utopia" monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -30,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.eqtg)
 	e3:SetOperation(s.eqop)
 	c:RegisterEffect(e3)
-	--
+	--Send this equip card to GY, the monster it was equipped to can make a second attack on monsters
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetType(EFFECT_TYPE_QUICK_O)
@@ -43,6 +46,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x7e,0x107f}
+
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -116,7 +120,10 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		--Can make a second attack on monsters
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3202)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)

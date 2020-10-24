@@ -1,12 +1,14 @@
---
+--海造賊－豪速のブレンネ号
 --Plunder Patrollship Brann
---scripted by pyrQ
+--Scripted by pyrQ
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Synchro Summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--ATK up
+	--Synchro summon procedure
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--Your other fiend monsters gain 500 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -15,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetValue(500)
 	c:RegisterEffect(e1)
-	--banish Spell/Trap
+	--Banish 1 of opponent's spells/traps
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -37,6 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x13f}
+
 function s.atktg(e,c)
 	return c:IsRace(RACE_FIEND) and c~=e:GetHandler()
 end

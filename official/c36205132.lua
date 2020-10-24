@@ -1,9 +1,10 @@
 --空牙団の伝令 フィロ
---Philo, Messenger Fur Hire
+--Filo, Messenger Fur Hire
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon 1 "Fur Hire" monster from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--recover from gy
+	--Special summon 1 "Fur Hire" monster from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -29,6 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x114}
 s.listed_names={id}
+
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x114) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -66,13 +68,14 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0 then
+		--Return it to deck if it leaves the field
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3301)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_DECKBOT)
 		tc:RegisterEffect(e1,true)
 	end
 end
-

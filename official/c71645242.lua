@@ -121,9 +121,14 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsRace,RACE_PLANT),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	dg:AddCard(c)
 	Duel.Destroy(dg,REASON_EFFECT)
-	Duel.BreakEffect()
 	local og=Duel.GetOperatedGroup()
-	if not og:IsContains(c) then return end
+	if #dg~=#og then return end
+	local ct=0
+	for oc in aux.Next(og) do
+		if dg:IsContains(oc) then ct=ct+1 end
+	end
+	if ct~=#og then return end
+	Duel.BreakEffect()
 	og:RemoveCard(c)
 	local atk=og:GetSum(Card.GetPreviousAttackOnField)
 	local tc=Duel.GetFirstTarget()

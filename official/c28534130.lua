@@ -1,9 +1,10 @@
 --転生炎獣の炎虞
 --Salamangreat Burning Shell
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Special summon 1 "Salamangreat" monster from hand, then link summon 1 "Salamangreat" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--to extra deck
+	--Return 1 "Salamangreat" link monster to extra deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -24,6 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x119}
+
 function s.spfilter2(c,mc,fg)
 	return c:IsSetCard(0x119) and c:IsLinkSummonable(mc,fg+mc)
 end
@@ -73,12 +75,17 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=e:GetOwner()
 	local c=e:GetHandler()
+	--Cannot attack
 	local e1=Effect.CreateEffect(rc)
+	e1:SetDescription(3206)
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
+	--Cannot activate its effects
 	local e2=e1:Clone()
+	e2:SetDescription(3302)
 	e2:SetCode(EFFECT_CANNOT_TRIGGER)
 	c:RegisterEffect(e2)
 	e:Reset()

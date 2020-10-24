@@ -71,9 +71,10 @@ end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=c:GetCardTarget()
-	local ct=#g
-	if chk==0 then return c:IsAbleToGraveAsCost() and ct>0 and g:FilterCount(Card.IsAbleToGraveAsCost,nil)==ct end
 	g:AddCard(c)
+	local ct=#g
+	if chk==0 then return ct>=2 and g:FilterCount(Card.IsAbleToGraveAsCost,nil)==ct end
+	Duel.SendtoGrave(g,REASON_COST)
 	local dam=0
 	if ct==2 then dam=500
 	elseif ct==3 then dam=1500

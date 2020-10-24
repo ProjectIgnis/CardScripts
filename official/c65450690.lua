@@ -1,7 +1,9 @@
 --限定解除
+--Ritual Foregone
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 ritual monster from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -31,13 +33,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,false,true,POS_FACEUP)
+		--Cannot attack
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3206)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		--Destroy it during end phase
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PHASE+PHASE_END)

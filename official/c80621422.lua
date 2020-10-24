@@ -1,24 +1,25 @@
---
+--海造賊－象徴
 --Emblem of the Plunder Patroll
---scripted by Naim
+--Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x13f))
-	--increase ATK
+	--Equipped monster gains 500 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(500)
 	c:RegisterEffect(e1)
-	--cannot be target
+	--Cannot be targeted by opponent's card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-	--Special Summon and equip
+	--Special summon 1 "Plunder Patroll" monster from extra deck, equip this card to it
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
 	e3:SetDescription(aux.Stringid(id,0))
@@ -31,6 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x13f}
+
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() end
@@ -71,7 +73,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.equipop(c,e,tp,tc)
 	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,nil,true) then return end
-	--atkup
+	--Gains 500 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)

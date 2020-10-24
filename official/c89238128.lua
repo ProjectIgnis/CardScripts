@@ -1,11 +1,14 @@
 --サイバース・アクセラレーター
 --Cyberse Accelerator
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,aux.NOT(aux.FilterBoolFunctionEx(Card.IsType,TYPE_TOKEN)),2)
-	--atkup
+	--Targeted monster gains 2000 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -18,7 +21,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--extra attack
+	--Targeted monster can make a second attack on monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -83,9 +86,11 @@ end
 function s.exop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
+	--Can make a second attack on monsters
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3202)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 	e1:SetValue(1)

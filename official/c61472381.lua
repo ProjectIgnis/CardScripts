@@ -1,9 +1,12 @@
+--巧炎星－エランセイ
 --Brotherhood of the Fire Fist - Eland
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--set
+	--Set 1 "Fire Formation" spell/trap from deck or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOFIELD)
@@ -14,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.settg)
 	e1:SetOperation(s.setop)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate the effect of opponent's activated monster effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -30,6 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={0x7c,0x79}
+
 function s.setcfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
 end

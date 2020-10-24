@@ -1,18 +1,21 @@
---
+--夢現の夢魔鏡
 --Dream Mirror Hypnagogia
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Place 1 "Dream Mirror of Joy" and 1 "Dream Mirror of Terror" from hand/deck to the field zones
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_DREAM_MIRROR_JOY, CARD_DREAM_MIRROR_TERROR }
+s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
+
 function s.filter(c,tp)
 	return c:IsType(TYPE_FIELD) and c:IsCode(CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR)
 end

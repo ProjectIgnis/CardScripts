@@ -1,9 +1,10 @@
 --天馬の翼
 --Pegasus Wing
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Your "Valkyrie" monsters can attack directly, halve their battle damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -29,13 +30,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then g:ForEach(s.op,e:GetHandler()) end
 end
 function s.op(tc,c)
-	--direct attack
+	--Can attack directly
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3205)
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e1)
-	--Reduce damage
+	--Halve battle damage inflicted
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
@@ -50,4 +53,3 @@ function s.rdcon(e)
 	return Duel.GetAttackTarget()==nil and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and c:GetFlagEffect(id)>0
 end
-

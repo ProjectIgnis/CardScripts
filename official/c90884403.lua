@@ -1,15 +1,17 @@
 --究極幻神 アルティミトル・ビシバールキン
 --Phantasmal Lord Ultimitl Bishbaalkin
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--special summon condition
+	--Must be special summoned by its own method
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--special summon procedure
+	--Special summon procedure (from extra deck)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -19,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sprtg)
 	e2:SetOperation(s.sprop)
 	c:RegisterEffect(e2)
-	--battle indestructable
+	--Cannot be destroyed by card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -27,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	--increase ATK
+	--Gains 1000 ATK per monster on the field
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_UPDATE_ATTACK)
@@ -35,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetValue(s.atkval)
 	c:RegisterEffect(e4)
-	--special summon tokens
+	--Special summon tokens to each player's field
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -124,9 +126,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 	end
 	if c:IsRelateToEffect(e) then
+		--Cannot attack
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3206)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)

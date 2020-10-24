@@ -318,7 +318,9 @@ end
 --for additional registers
 local regeff=Card.RegisterEffect
 function Card.RegisterEffect(c,e,forced,...)
-	if c:IsStatus(STATUS_INITIALIZING) and not e then Debug.Message("missing (Effect e) in c"..c:GetOriginalCode()..".lua") return end
+	if c:IsStatus(STATUS_INITIALIZING) and not e then
+		error("Parameter 2 expected to be Effect, got nil instead.",2)
+	end
 	--1 == 511002571 - access to effects that activate that detach an Xyz Material as cost
 	--2 == 511001692 - access to Cardian Summoning conditions/effects
 	--4 ==  12081875 - access to Thunder Dragon effects that activate by discarding
@@ -520,8 +522,8 @@ function Auxiliary.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	local rd=e1 and not e2
 	local rr=not e1 and e2
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	if ex and (cp==tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then 
-		return true 
+	if ex and (cp==tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then
+		return true
 	end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
 	return ex and (cp==tp or cp==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE)
@@ -861,7 +863,7 @@ function Auxiliary.ResetEffects(g,eff)
 	end
 end
 function Auxiliary.CallToken(code)
-	Debug.Message(code.." called Auxiliary.CallToken, use Duel.LoadCardScript or Duel.LoadScript instead!!!")
+	error("This function is deleted, use Duel.LoadCardScript or Duel.LoadScript instead.",2)
 end
 --utility entry for SelectUnselect loops
 --returns bool if chk==0, returns Group if chk==1
@@ -871,7 +873,7 @@ function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)
 	sg:AddCard(c)
 	if rescon then
 		local _,stop=rescon(sg,e,tp,mg)
-		if stop then 
+		if stop then
 			sg:RemoveCard(c)
 			return false
 		end
@@ -1018,7 +1020,7 @@ function Auxiliary.MainAndExtraGetSummonZones(c,mmz,emz,e,sumtype,sump,targetp,n
 	if c:IsLocation(LOCATION_EXTRA) then
 		for i=0,6 do
 			local zone=0x1<<i
-			if emz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone) 
+			if emz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone)
 				and Auxiliary.MainAndExtraZoneCheckBool(nc,mmz&~zone,emz&~zone,e,sumtype,sump,targetp,nocheck,nolimit,pos,...) then
 				zones=zones|zone
 			end
@@ -1026,7 +1028,7 @@ function Auxiliary.MainAndExtraGetSummonZones(c,mmz,emz,e,sumtype,sump,targetp,n
 	else
 		for i=0,4 do
 			local zone=0x1<<i
-			if mmz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone) 
+			if mmz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone)
 				and Auxiliary.MainAndExtraZoneCheckBool(nc,mmz&~zone,emz&~zone,e,sumtype,sump,targetp,nocheck,nolimit,pos,...) then
 				zones=zones|zone
 			end
@@ -1039,7 +1041,7 @@ function Auxiliary.MainAndExtraZoneCheckBool(c,mmz,emz,e,sumtype,sump,targetp,no
 	if c:IsLocation(LOCATION_EXTRA) then
 		for i=0,6 do
 			local zone=0x1<<i
-			if emz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone) 
+			if emz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone)
 				and Auxiliary.MainAndExtraZoneCheckBool(nc,mmz&~zone,emz&~zone,e,sumtype,sump,targetp,nocheck,nolimit,pos,...) then
 				return true
 			end
@@ -1047,7 +1049,7 @@ function Auxiliary.MainAndExtraZoneCheckBool(c,mmz,emz,e,sumtype,sump,targetp,no
 	else
 		for i=0,4 do
 			local zone=0x1<<i
-			if mmz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone) 
+			if mmz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone)
 				and Auxiliary.MainAndExtraZoneCheckBool(nc,mmz&~zone,emz&~zone,e,sumtype,sump,targetp,nocheck,nolimit,pos,...) then
 				return true
 			end

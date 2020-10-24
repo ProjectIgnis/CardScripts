@@ -1,11 +1,14 @@
+--砂漠の飛蝗賊
 --Desert Locusts
 --Scripted by Cybercatman
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
+	--Must be properly summoned before reviving
+	c:EnableReviveLimit()	
+	--Synchro summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
-	c:EnableReviveLimit()
-	--spsummon
+	--If synchro summoned, the turn player discards 1
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_HANDES)
@@ -16,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
-	--synchro effect
+	--Synchro summon by effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -65,4 +68,3 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SynchroSummon(tp,sg:GetFirst(),c)
 	end
 end
-

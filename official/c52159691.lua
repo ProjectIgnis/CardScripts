@@ -1,9 +1,11 @@
 --レイダーズ・ウィング
 --Raiders' Wing
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Always treated as a "The Phantom Knights" and "Raidraptor" card
 	c:AddSetcodesRule(0x10db,0xba)
-	--Special summon itself from the hand or GY
+	--Special summon itself from hand or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -25,6 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x10db,0xba}
+
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK)
 end
@@ -48,9 +51,11 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)

@@ -1,11 +1,13 @@
---No.38 希望魁竜タイタニック・ギャラクシー
+--Ｎｏ．３８ 希望魁竜タイタニック・ギャラクシー
 --Number 38: Hope Harbinger Dragon Titanic Galaxy
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Xyz Summon
-	Xyz.AddProcedure(c,nil,8,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Negate a Spell
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,8,2)
+	--Negate the effect of a spell card/effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE)
@@ -17,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	--Change attack target
+	--Change attack target to this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -27,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.cbcost)
 	e2:SetOperation(s.cbop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	--ATK increase
+	--Make 1 of your Xyz monsters gain ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
@@ -41,6 +43,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.xyz_number=38
+
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return (loc&LOCATION_SZONE)~=0
@@ -88,13 +91,16 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter2(chkc) end
 	if chk==0 then return eg:IsExists(s.atkfilter1,1,nil,tp)
 		and Duel.IsExistingTarget(s.atkfilter2,tp,LOCATION_MZONE,0,1,nil) end
+	local g=eg:Filter(s.atkfilter1,nil,tp)
+	g:KeepAlive()
+	e:SetLabelObject(g)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.atkfilter2,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	local g=eg:Filter(s.atkfilter1,nil,tp)
+	local g=e:GetLabelObject()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		if #g>=2 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -110,4 +116,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e1)
 		end
 	end
+	g:DeleteGroup()
 end

@@ -1,12 +1,14 @@
 --双天拳 鎧阿
 --Gaia of the Souten Fists
 --Scripted by edo9300
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Fusion summon procedure
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Fusion summon procedure
 	Fusion.AddProcFunRep(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x14e),2,true)
-	--Destroy 1 opponent's Attack Position monster
+	--Destroy 1 of opponent's attack position monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -17,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--Increase ATK/DEF
+	--All your "Souten" fusion monsters gain 300 ATK/DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -33,11 +35,14 @@ function s.initial_effect(c)
 end
 s.material_setcode={0x14e}
 s.listed_series={0x14e}
+
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsDirectAttacked() end
 	local e1=Effect.CreateEffect(e:GetHandler())
+	--Cannot attack directly this turn
+	e1:SetDescription(3207)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)

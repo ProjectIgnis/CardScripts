@@ -1,7 +1,9 @@
 --強制転移
+--Creature Swap
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Each player changes control of 1 of their monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -32,7 +34,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c1=g1:GetFirst()
 	local c2=g2:GetFirst()
 	if Duel.SwapControl(c1,c2,0,0) then
+		--Cannot change their battle positions
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3313)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 		e1:SetReset(RESET_PHASE+PHASE_END)

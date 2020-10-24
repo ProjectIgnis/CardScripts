@@ -1,8 +1,9 @@
 --スケープ・ゴート
 --Scapegoat
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 4 tokens
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -58,10 +59,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		for i=1,4 do
 			local token=Duel.CreateToken(tp,id+i)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+			--Cannot be tributed for a tribute summon
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3304)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetValue(1)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			token:RegisterEffect(e1,true)

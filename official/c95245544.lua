@@ -3,7 +3,7 @@
 --scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon 1 "Witchcrafter" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--draw
+	--Draw 1 card and discard
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
@@ -32,7 +32,7 @@ end
 s.listed_names={id}
 s.listed_series={0x128}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() and aux.WitchcrafterDiscardCost(aux.FilterBoolFunction(Card.IsType,TYPE_SPELL))(e,tp,eg,ep,ev,re,r,rp,0) end
@@ -71,7 +71,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,1,nil)
 		if #g>0 then
-			Duel.SendtoGrave(g,nil,REASON_EFFECT)
+			Duel.SendtoGrave(g,REASON_EFFECT)
 		else
 			local g2=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 			Duel.Remove(g2,POS_FACEUP,REASON_EFFECT)

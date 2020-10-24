@@ -1,4 +1,6 @@
 --実力伯仲
+--Stand-Off
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -62,7 +64,10 @@ function s.reg(c,tc1,tc2)
 	e1:SetOperation(s.posop)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	tc1:RegisterEffect(e1)
+	--Cannot be destroyed by battle
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(3000)
+	e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetCondition(s.effcon)
@@ -70,13 +75,19 @@ function s.reg(c,tc1,tc2)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e2:SetLabelObject(tc2)
 	tc1:RegisterEffect(e2)
+	--Cannot change their battle positions
 	local e3=e2:Clone()
+	e3:SetDescription(3313)
 	e3:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	tc1:RegisterEffect(e3)
+	--Cannot attack
 	local e4=e2:Clone()
+	e4:SetDescription(3206)
 	e4:SetCode(EFFECT_CANNOT_ATTACK)
 	tc1:RegisterEffect(e4)
+	--Unaffected by other card effects
 	local e5=e2:Clone()
+	e5:SetDescription(3100)
 	e5:SetCode(EFFECT_IMMUNE_EFFECT)
 	e5:SetValue(s.efilter)
 	tc1:RegisterEffect(e5)

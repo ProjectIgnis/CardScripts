@@ -1,12 +1,14 @@
 --デリンジャラス・ドラゴン
 --Dillingerous Dragon
---scripted by pyrQ
+--Scripted by pyrQ
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	Link.AddProcedure(c,s.matfilter,2,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--burn
+	--Link summon procedure
+	Link.AddProcedure(c,s.matfilter,2,2)
+	--Destroy of 1 opponent's monsters, inflict damage equal to its original ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -18,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.dmgtg)
 	e1:SetOperation(s.dmgop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special summon itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -33,6 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x102}
+
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_DARK,scard,sumtype,tp)
 end
@@ -76,10 +79,12 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)

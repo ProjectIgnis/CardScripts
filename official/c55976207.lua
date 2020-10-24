@@ -1,10 +1,11 @@
---
+--契約の遂行
 --Execution of the Contract
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
-	--change level
+	--Change equipped monster's level
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.lvtg)
 	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy 1 of opponent's monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -73,4 +74,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-

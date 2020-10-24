@@ -1,8 +1,9 @@
+--トラップリン
 --Traplin
 --By Shad3
 local s,id=GetID()
 function s.initial_effect(c)
-	--SpSummon proc
+	--Special Summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -14,16 +15,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spfilter(c,tp)
-	return c:GetType()&(TYPE_TRAP+TYPE_CONTINUOUS)==(TYPE_TRAP+TYPE_CONTINUOUS) and c:IsFaceup() and c:IsReleasable() 
+	return (c:IsType(TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS)) and c:IsReleasable() 
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),s.spfilter,1,false,1,true,c,c:GetControler(),nil,false,nil)
+	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),EFFECT_CANNOT_RELEASE) and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,s.spfilter,1,1,false,true,true,c,nil,nil,false,nil)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_SZONE,0,1,1,nil):GetFirst()
+    	if g:IsFacedown() then
+		Duel.ConfirmCards(1-tp,g)
+	end
 	if g then
-		g:KeepAlive()
 		e:SetLabelObject(g)
 	return true
 	end
@@ -32,6 +35,5 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
-	Duel.Release(g,REASON_COST)
-	g:DeleteGroup()
+	Duel.Release(g,REASON_COST+REASON_RELEASE)
 end

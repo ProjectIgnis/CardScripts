@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	--Set 1 "Rank-Up-Magic" spell from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_FIELD)
-	e2:SetCode(EVENT_CHAIN_SOLVING)
+	e2:SetCode(EVENT_CHAINING)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id+1)
@@ -78,8 +78,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
+	local rc=re:GetHandler()
+	return re:IsActiveType(TYPE_XYZ) and rc:IsSetCard(0xba) and rc:IsControler(tp)
+	--[[
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) 
 		and re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(0xba) and rc:IsType(TYPE_XYZ) and rc:GetControler()==tp
+	]]
 end
 function s.setfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x95) and c:IsSSetable()

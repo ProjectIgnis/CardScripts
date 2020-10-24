@@ -1,4 +1,5 @@
 --燃え竹光
+--Burning Bamboo Sword
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -7,17 +8,10 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--set
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EVENT_CHAINING)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetOperation(aux.chainreg)
-	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_CHAIN_SOLVING)
+	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCondition(s.skipcon)
@@ -27,7 +21,7 @@ end
 s.listed_series={0x60}
 function s.skipcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and re:GetHandler():IsSetCard(0x60) and e:GetHandler():GetFlagEffect(1)>0
+		and re:GetHandler():IsSetCard(0x60)
 end
 function s.skipop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

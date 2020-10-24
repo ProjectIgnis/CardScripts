@@ -37,12 +37,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,2,2,nil)
 	if Duel.SendtoGrave(tg,nil,REASON_COST)==2 then
-		local g=Duel.GetMatchingGroup(s.atkfilter,tp,0,LOCATION_MZONE,nil)
+		local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelBelow,7),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		if #g>0 then
-			local g2=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelBelow,7),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-			if #g2>0 then
-				Duel.Destroy(g,REASON_EFFECT)
-			end
+			Duel.Destroy(g,REASON_EFFECT)
 		end
 	end
 end

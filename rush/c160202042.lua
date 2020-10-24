@@ -43,5 +43,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			if #g2>0 then
 				Duel.Destroy(g,REASON_EFFECT)
 			end
+		end
 	end
 end

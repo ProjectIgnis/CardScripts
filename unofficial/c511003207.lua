@@ -17,11 +17,8 @@ end
 function s.otfilter(c,tp)
     return c:IsAttribute(ATTRIBUTE_WATER) and (c:IsControler(tp) or c:IsFaceup())
 end
-function s.desfilter(c,ev)
-    return c:IsDestructable() and c:IsAttackBelow(ev)
-end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil,ev)
+    local g=Duel.GetMatchingGroup(Card.IsAttackBelow,tp,0,LOCATION_MZONE,nil,ev)
     if ep~=tp and Duel.SelectEffectYesNo(tp,e:GetHandler()) and Duel.Destroy(g,REASON_EFFECT+REASON_REPLACE) then
         Duel.ChangeBattleDamage(1-tp,0)
     end

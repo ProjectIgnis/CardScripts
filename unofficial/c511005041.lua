@@ -19,16 +19,21 @@ function s.spfilter(c,tp)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),EFFECT_CANNOT_RELEASE) and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	local g=Duel.GetMatchingGroup(s.spfilter,c:GetControler(),LOCATION_ONFIELD,0,nil)
+	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),EFFECT_CANNOT_RELEASE) and #g>0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-1 
+	and aux.SelectUnselectGroup(g,e,c:GetControler(),1,1,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_SZONE,0,1,1,nil):GetFirst()
-    	if g:IsFacedown() then
-		Duel.ConfirmCards(1-tp,g)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil)
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+	local dg=sg:Filter(Card.IsFacedown,nil)
+    	if #dg>0 then
+		Duel.ConfirmCards(1-tp,dg)
 	end
 	if g then
-		e:SetLabelObject(g)
-	return true
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+		return true
 	end
 	return false
 end

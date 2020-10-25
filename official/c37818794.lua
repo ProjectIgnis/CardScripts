@@ -1,6 +1,6 @@
 --超魔導竜騎士－ドラグーン・オブ・レッドアイズ
---Dragun of Red-Eyes
---scripted by Naim
+--Red-Eyes Dark Dragoon
+--Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

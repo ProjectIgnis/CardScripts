@@ -55,7 +55,7 @@ function s.op(c)
 	Duel.RegisterEffect(e6,0)
 	local e7=e1:Clone()
 	e7:SetCode(EFFECT_CANNOT_DISEFFECT)
---	Duel.RegisterEffect(e7,0)
+--  Duel.RegisterEffect(e7,0)
 	--Cannot Activate/Set
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_FIELD)
@@ -73,13 +73,21 @@ function s.op(c)
 		Duel.IsExistingMatchingCard=function(f,tp,int_s,int_o,count,ex,...)
 		local arg={...}
 		local fg=Group.FromCards(Duel.GetFieldCard(0,LOCATION_SZONE,5),Duel.GetFieldCard(1,LOCATION_SZONE,5))
-		return isexist(f,tp,int_s,int_o,count,ex and fg+ex or fg,arg~=nil and table.unpack(arg) or nil)
+		if arg~=nil then
+			return isexist(f,tp,int_s,int_o,count,ex and fg+ex or fg,table.unpack(arg))
+		else
+			return isexist(f,tp,int_s,int_o,count,ex and fg+ex or fg)
+		end
 	end
 	local getmatchg=Duel.GetMatchingGroup
 		Duel.GetMatchingGroup=function(f,tp,int_s,int_o,ex,...)
 		local arg={...}
 		local fg=Group.FromCards(Duel.GetFieldCard(0,LOCATION_SZONE,5),Duel.GetFieldCard(1,LOCATION_SZONE,5))
-		return getmatchg(f,tp,int_s,int_o,ex and fg+ex or fg,arg~=nil and table.unpack(arg) or nil)
+		if arg~=nil then
+			return getmatchg(f,tp,int_s,int_o,ex and fg+ex or fg,table.unpack(arg))
+		else
+			return getmatchg(f,tp,int_s,int_o,ex and fg+ex or fg)
+		end
 	end
 	local getfg=Duel.GetFieldGroup
 		Duel.GetFieldGroup=function(tp,int_s,int_o)
@@ -103,7 +111,11 @@ function s.op(c)
 		Duel.SelectMatchingCard=function(sp,f,tp,int_s,int_o,min,max,ex, ...)
 		local arg={...}
 		local fg=Group.FromCards(Duel.GetFieldCard(0,LOCATION_SZONE,5),Duel.GetFieldCard(1,LOCATION_SZONE,5))
-		return selmatchc(sp,f,tp,int_s,int_o,min,max,ex and fg+ex or fg,arg~=nil and table.unpack(arg) or nil)
+		if arg~=nil then
+			return selmatchc(sp,f,tp,int_s,int_o,min,max,ex and fg+ex or fg,table.unpack(arg))
+		else
+			return selmatchc(sp,f,tp,int_s,int_o,min,max,ex and fg+ex or fg)
+		end
 	end
 
 end

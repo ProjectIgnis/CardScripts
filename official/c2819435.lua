@@ -28,8 +28,10 @@ function s.initial_effect(c)
 	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e6:SetProperty(EFFECT_FLAG_DELAY)
 	e6:SetCode(EVENT_CHAINING)
 	e6:SetRange(LOCATION_FZONE)
+	e6:SetCondition(s.spcon)
 	e6:SetCost(s.cost)
 	e6:SetTarget(s.sptg)
 	e6:SetOperation(s.spop)
@@ -81,6 +83,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
+end
+function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return rp==1-tp
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,5 +1,5 @@
 --ＥＭリターンタンタン (Anime)
---Performapal Handstandacoon (Anime)
+--Performapal Handstandaccoon (Anime)
 local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:Alias()

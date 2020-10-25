@@ -15,13 +15,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spfilter(c,tp)
-	return (c:IsType(TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS)) and c:IsReleasable() 
+	return (c:IsType(TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS)) and c:IsReleasable() and (not tp or Duel.GetMZoneCount(tp,c)>0)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	local g=Duel.GetMatchingGroup(s.spfilter,c:GetControler(),LOCATION_ONFIELD,0,nil)
-	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),EFFECT_CANNOT_RELEASE) and #g>0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-1 
-	and aux.SelectUnselectGroup(g,e,c:GetControler(),1,1,aux.ChkfMMZ(1),0)
+	local g=Duel.GetMatchingGroup(s.spfilter,c:GetControler(),LOCATION_ONFIELD,0,nil,tp)
+	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),EFFECT_CANNOT_RELEASE) and #g>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil)
@@ -30,7 +29,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
     	if #dg>0 then
 		Duel.ConfirmCards(1-tp,dg)
 	end
-	if g then
+	if sg then
 		sg:KeepAlive()
 		e:SetLabelObject(sg)
 		return true
@@ -40,6 +39,6 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
-	Duel.Release(g,REASON_COST+REASON_RELEASE)
+	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
 end

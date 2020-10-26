@@ -122,6 +122,18 @@ function Duel.SelectReleaseGroupSummon(c,tp,e,fil,minc,maxc,last,...)
 	local res=count>=minc and aux.SelectUnselectGroup(rg,e,tp,minc,maxc,aux.CheckZonesReleaseSummonCheckSelection(must,extraoneof,checkfunc),1,tp,500,function(sg,e,tp,g) return sg:Includes(must) and Duel.GetMZoneCount(tp,sg,zone)>0 end,nil,cancelable)
 	return #res>0 and res or nil
 end
+	--remove counter from only 1 card if it is the only card with counter
+local p_rem=Duel.RemoveCounter
+function Duel.RemoveCounter(tp,s,o,counter,...)
+	local ex_params={...}
+	local s,o=s>0 and LOCATION_ONFIELD or 0,o>0 and LOCATION_ONFIELD or 0
+	local cg=Duel.GetFieldGroup(tp,s,o):Filter(function(c) return c:GetCounter(counter)>0 end,nil)
+	if #cg==1 then
+		return cg:GetFirst():RemoveCounter(tp,counter,table.unpack(ex_params))
+	end
+	return p_rem(tp,s,o,counter,table.unpack(ex_params))
+end
+
 --Lair of Darkness
 function Auxiliary.ReleaseCheckSingleUse(sg,tp,exg)
 	local ct=#sg-#(sg-exg)

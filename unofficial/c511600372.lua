@@ -71,14 +71,14 @@ function s.costfilter(c)
 end
 function s.ctcost(ct)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x91,ct,REASON_COST)
+		if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x91,ct,REASON_COST)
 			and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 		local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
 		Duel.ConfirmCards(1-tp,g)
 		Duel.ShuffleHand(tp)
 		Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-		Duel.RemoveCounter(tp,1,0,0x91,ct,REASON_COST)
+		e:GetHandler():RemoveCounter(tp,0x91,ct,REASON_COST)
 	end
 end
 function s.dmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

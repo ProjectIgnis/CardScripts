@@ -84,9 +84,9 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ctcost(ct)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x91,ct,REASON_COST) end
+		if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x91,ct,REASON_COST) end
 		Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-		Duel.RemoveCounter(tp,1,0,0x91,ct,REASON_COST)
+		e:GetHandler():RemoveCounter(tp,0x91,ct,REASON_COST)
 	end
 end
 function s.dmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

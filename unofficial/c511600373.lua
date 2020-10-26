@@ -62,7 +62,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x91,1)
 end
 function s.ctxcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetCounter(0x91)>=1 and ep~=1-tp
+	return e:GetHandler():GetCounter(0x91)>=1 and ep~=1-tp
 end
 function s.ctopx(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -71,7 +71,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(te:GetCode())
 			e1:SetRange(LOCATION_GRAVE)
 			if te:GetCountLimit() then
-				te:SetCountLimit(te:GetCountLimit())
+				e1:SetCountLimit(te:GetCountLimit())
 			end
 			if te:GetCondition() then
 				e1:SetCondition(te:GetCondition())

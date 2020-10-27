@@ -62,7 +62,7 @@ end
 	--Check for a level 8+ "Myutant" monster
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x259) and c:IsLocation(LOCATION_MZONE) and c:IsLevelAbove(8)
-		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
+		and c:IsControler(tp) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 	--Activtion legality
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

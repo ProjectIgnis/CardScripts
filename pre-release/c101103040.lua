@@ -78,7 +78,6 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		tc:RegisterEffect(e1)
 		e1:SetReset(reset)
 		tc:RegisterEffect(e1)		
 		--Cannot activate its effect

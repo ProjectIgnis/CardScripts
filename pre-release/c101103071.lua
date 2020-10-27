@@ -29,7 +29,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
 function s.filter(c,e,tp,zone)
-	return c:IsSetCard(0x25a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsSetCard(0x25a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) and c:IsFaceup()
 end
 function s.cfilter(c,tp)
 	return c:IsFaceup() and not c:GetColumnGroup():IsExists(function(c)return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) end,1,nil)

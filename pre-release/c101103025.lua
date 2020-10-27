@@ -1,16 +1,18 @@
 --戦華の叛－呂奉
 --Ancient Warriors – Rebellious Lu Feng
 --Scripted by Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--spsummon condition
+	--Special summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon procedure (from hand)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(1152)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -20,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.spcon)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy opponent's monster with highest ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DESTROY)
@@ -28,14 +30,13 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
-	e3:SetCountLimit(1)
 	e3:SetCondition(s.descon)
 	e3:SetCost(s.descost)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
-	--give control
+	--Give control of this card to opponent
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_CONTROL)
@@ -49,6 +50,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x137}
+
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -62,7 +64,8 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)==0 end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)==0 and c:GetFlagEffect(id)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
@@ -72,12 +75,13 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetValue(s.aclimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	c:RegisterFlagEffect(id,RESET_PHASE+PHASE_MAIN1+PHASE_END,0,0)
 end
 function s.aclimit(e,re,tp)
-	return not re:GetHandler():IsSetCard(0x137)
+	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsSetCard(0x137)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and Duel.GetFlagEffect(tp,id)==0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_MZONE)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

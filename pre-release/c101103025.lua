@@ -58,7 +58,7 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g and g:IsExists(Card.IsControler,1,nil,tp)
 end
 function s.chainfilter(re,tp,cid)
-	return not re:IsActiveType(TYPE_MONSTER) or re:GetHandler():IsSetCard(0x137)
+	return not (re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsSetCard(0x137))
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()

@@ -52,7 +52,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 	--Check for "Myutant" monster to banish
 function s.rmfilter(c)
-	return c:IsAbleToRemove() and c:IsSetCard(0x259)
+	return c:IsAbleToRemove() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x259)
 end
 	--Banish 1 "Myutant" monster from GY, and if you do, negate targeted monster's effects
 function s.disop(e,tp,eg,ep,ev,re,r,rp)

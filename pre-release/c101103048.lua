@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_START)
+	e3:SetCondition(s.rmcon)
 	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
@@ -86,6 +87,10 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
+end
+	--If this card attacks
+function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetAttacker()==e:GetHandler()
 end
 	--Activation legality
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)

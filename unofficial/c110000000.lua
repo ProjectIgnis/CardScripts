@@ -72,7 +72,13 @@ function s.op(c)
 	local isexist=Duel.IsExistingMatchingCard
 		Duel.IsExistingMatchingCard=function(f,tp,int_s,int_o,count,ex,...)
 		local arg={...}
-		local fg=Group.FromCards(Duel.GetFieldCard(0,LOCATION_SZONE,5),Duel.GetFieldCard(1,LOCATION_SZONE,5))
+		local fg=Group.CreateGroup()
+		if int_s~=LOCATION_FZONE and Duel.GetFieldCard(tp,LOCATION_SZONE,5) then
+			fg:AddCard(Duel.GetFieldCard(tp,LOCATION_SZONE,5))
+		end
+		if int_o~=LOCATION_FZONE and Duel.GetFieldCard(1-tp,LOCATION_SZONE,5) then
+			fg:AddCard(Duel.GetFieldCard(1-tp,LOCATION_SZONE,5))
+		end
 		if arg~=nil then
 			return isexist(f,tp,int_s,int_o,count,ex and fg+ex or fg,table.unpack(arg))
 		else
@@ -82,7 +88,13 @@ function s.op(c)
 	local getmatchg=Duel.GetMatchingGroup
 		Duel.GetMatchingGroup=function(f,tp,int_s,int_o,ex,...)
 		local arg={...}
-		local fg=Group.FromCards(Duel.GetFieldCard(0,LOCATION_SZONE,5),Duel.GetFieldCard(1,LOCATION_SZONE,5))
+		local fg=Group.CreateGroup()
+		if int_s~=LOCATION_FZONE and Duel.GetFieldCard(tp,LOCATION_SZONE,5) then
+			fg:AddCard(Duel.GetFieldCard(tp,LOCATION_SZONE,5))
+		end
+		if int_o~=LOCATION_FZONE and Duel.GetFieldCard(1-tp,LOCATION_SZONE,5) then
+			fg:AddCard(Duel.GetFieldCard(1-tp,LOCATION_SZONE,5))
+		end
 		if arg~=nil then
 			return getmatchg(f,tp,int_s,int_o,ex and fg+ex or fg,table.unpack(arg))
 		else
@@ -91,7 +103,14 @@ function s.op(c)
 	end
 	local getfg=Duel.GetFieldGroup
 		Duel.GetFieldGroup=function(tp,int_s,int_o)
-		return getfg(tp,int_s,int_o)-Group.FromCards(Duel.GetFieldCard(0,LOCATION_SZONE,5),Duel.GetFieldCard(1,LOCATION_SZONE,5))
+		local fg=Group.CreateGroup()
+		if int_s~=LOCATION_FZONE and Duel.GetFieldCard(tp,LOCATION_SZONE,5) then
+			fg:AddCard(Duel.GetFieldCard(tp,LOCATION_SZONE,5))
+		end
+		if int_o~=LOCATION_FZONE and Duel.GetFieldCard(1-tp,LOCATION_SZONE,5) then
+			fg:AddCard(Duel.GetFieldCard(1-tp,LOCATION_SZONE,5))
+		end
+		return getfg(tp,int_s,int_o)-fg
 	end
 	local getfgc=Duel.GetFieldGroupCount
 		Duel.GetFieldGroupCount=function(tp,int_s,int_o)
@@ -110,7 +129,13 @@ function s.op(c)
 	local selmatchc=Duel.SelectMatchingCard
 		Duel.SelectMatchingCard=function(sp,f,tp,int_s,int_o,min,max,ex, ...)
 		local arg={...}
-		local fg=Group.FromCards(Duel.GetFieldCard(0,LOCATION_SZONE,5),Duel.GetFieldCard(1,LOCATION_SZONE,5))
+		local fg=Group.CreateGroup()
+		if int_s~=LOCATION_FZONE and Duel.GetFieldCard(tp,LOCATION_SZONE,5) then
+			fg:AddCard(Duel.GetFieldCard(tp,LOCATION_SZONE,5))
+		end
+		if int_o~=LOCATION_FZONE and Duel.GetFieldCard(1-tp,LOCATION_SZONE,5) then
+			fg:AddCard(Duel.GetFieldCard(1-tp,LOCATION_SZONE,5))
+		end
 		if arg~=nil then
 			return selmatchc(sp,f,tp,int_s,int_o,min,max,ex and fg+ex or fg,table.unpack(arg))
 		else

@@ -64,7 +64,7 @@ end
 function s.ctxcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetCounter(0x91)>=1 and ep~=1-tp
 end
-function s.ctopx(e,tp,eg,ep,ev,re,r,rp)
+function s.ctxop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if ep==1-tp then return end
 	local ct=math.floor(ev/1000)

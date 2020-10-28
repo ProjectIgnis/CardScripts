@@ -15,9 +15,8 @@ end
 s.listed_series={0x10af}
 s.listed_names={47198668}
 function s.filter(c,e,tp)
-	return c:IsCanBeEffectTarget(e) and c:IsSetCard(0x10af)
-		and c:IsType(TYPE_PENDULUM) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10af) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and (c:IsLocation(LOCATION_GRAVE) and c:IsCanBeEffectTarget(e) or (c:IsFaceup() and not c:IsHasEffect(EFFECT_CANNOT_BE_EFFECT_TARGET)))
 end
 function s.xyzfilter(c,sg,e,tp)
 	local ct=#sg
@@ -40,7 +39,7 @@ function s.rescon(mft,exft,ft)
 	return function(sg,e,tp,mg)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				local mct=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
-				return exft>=exct and mft>=mct and ft>=#sg 
+				return exft>=exct and mft>=mct and ft>=#sg
 					and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,sg,sg,e,tp)
 			end
 end

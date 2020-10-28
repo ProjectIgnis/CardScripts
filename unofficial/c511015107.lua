@@ -1,3 +1,4 @@
+--ＤＤＤ シンクロ
 --D/D/D Synchro
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,17 +13,18 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10af}
 s.listed_names={47198668}
-function s.filter(c,e,tp)
+function s.filter(c,e,tp,rel)
 	if not c:IsType(TYPE_SYNCHRO) then return false end
-	if not c:IsSetCard(0x10af) then return c:IsSynchroSummonable(nil)
+	if not c:IsSetCard(0x10af) then
+		return c:IsSynchroSummonable(nil)
 	else
-		local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,nil,c)
+		local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,c)
 		if c:IsSynchroSummonable(nil,mg) then return true end
-		if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 		local mc=e:GetHandler()
+		if not (e:IsHasType(EFFECT_TYPE_ACTIVATE) and (not rel or mc:IsRelateToEffect(e))) then return false end
 		local e1=Effect.CreateEffect(mc)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SET_AVAILABLE)
 		e1:SetCode(EFFECT_ADD_TYPE)
 		e1:SetValue(TYPE_MONSTER+TYPE_TUNER)
 		e1:SetReset(RESET_CHAIN)
@@ -46,31 +48,32 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp,true)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
 		if not tc:IsSetCard(0x10af) then
 			Duel.SynchroSummon(tp,tc,nil)
 		else
-			local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,nil,tc)
+			local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,tc)
 			local c=e:GetHandler()
-			if e:IsHasType(EFFECT_TYPE_ACTIVATE) and c:IsRelateToEffect(e) and (not tc:IsSynchroSummonable(nil,mg) or Duel.SelectYesNo(tp,93)) then
-				mg:AddCard(c)
+			if e:IsHasType(EFFECT_TYPE_ACTIVATE) and c:IsRelateToEffect(e) and (not tc:IsSynchroSummonable(nil,mg) or mg:IsExists(s.ddfilter,1,nil,tc,mg) and Duel.SelectYesNo(tp,aux.Stringid(id,0))) then
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SET_AVAILABLE)
 				e1:SetCode(EFFECT_ADD_TYPE)
 				e1:SetValue(TYPE_MONSTER+TYPE_TUNER)
-				e1:SetReset(RESET_CHAIN)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				c:RegisterEffect(e1)
 				local e2=e1:Clone()
 				e2:SetCode(EFFECT_SYNCHRO_LEVEL)
 				e2:SetValue(2)
 				c:RegisterEffect(e2)
+				c:CancelToGrave()
+				mg:AddCard(c)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
-				local smat=mg:FilterSelect(tp,s.ddfilter,1,1,nil,tc,mg):GetFirst()
-				Duel.SynchroSummon(tp,tc,smat,mg)
+				local smat=mg:FilterSelect(tp,s.ddfilter,1,1,nil,tc,mg)
+				Duel.SynchroSummon(tp,tc,smat+c,mg)
 			else
 				Duel.SynchroSummon(tp,tc,nil,mg)
 			end

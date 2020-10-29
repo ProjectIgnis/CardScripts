@@ -3,7 +3,7 @@
 Duel.LoadCardScript("c29669359.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon
 	Xyz.AddProcedure(c,nil,5,2)
 	c:EnableReviveLimit()
 	--Destroy and inflict damage to opponent
@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,Card.IsDestructable,tp,0,LOCATION_MZONE,1,1,nil)
 	local tc=g:GetFirst()
-	local atk=tc:GetAttack
+	local atk=tc:GetAttack()
 	if tc then
 		Duel.HintSelection(g)
 		if Duel.Destroy(tc,REASON_EFFECT)>0 then

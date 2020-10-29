@@ -1,3 +1,4 @@
+--ナンバーズ６１ ヴォルカザウルス (anime)
 --Number 61: Volcasaurus (anime)
 Duel.LoadCardScript("c29669359.lua")
 local s,id=GetID()
@@ -5,7 +6,7 @@ function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,nil,5,2)
 	c:EnableReviveLimit()
-	--destroy&damage
+	--Destroy and inflict damage to opponent
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetDescription(aux.Stringid(29669359,0))
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--battle indestructable
+	--Cannot be destroyed by battle by non-"Number" monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -37,10 +38,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,Card.IsDestructable,tp,0,LOCATION_MZONE,1,1,nil)
 	local tc=g:GetFirst()
+	local atk=tc:GetAttack
 	if tc then
 		Duel.HintSelection(g)
 		if Duel.Destroy(tc,REASON_EFFECT)>0 then
-			Duel.Damage(1-tp,tc:GetAttack(),REASON_EFFECT)
+			Duel.Damage(1-tp,atk,REASON_EFFECT)
 		end
 	end
 end

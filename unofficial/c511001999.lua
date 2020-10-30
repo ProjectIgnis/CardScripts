@@ -1,3 +1,4 @@
+--Ｎｏ．１５ ギミック・パペット－ジャイアントキラー (Anime)
 --Number 15: Gimmick Puppet Giant Grinder (Anime)
 Duel.LoadCardScript("c88120966.lua")
 local s,id=GetID()
@@ -27,13 +28,13 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c)
-	return (c:IsFaceup() and c:IsType(TYPE_XYZ)) or (c:IsFacedown() and c:GetOverlayCount()>0)
+	return c:IsType(TYPE_XYZ) and (c:IsFaceup() or c:GetOverlayCount()>0)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,PLAYER_ALL,0)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,PLAYER_ALL,sg:GetSum(Card.GetAttack))
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
@@ -41,10 +42,11 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local dg=Duel.GetOperatedGroup()
 		local g1=dg:Filter(Card.IsPreviousControler,nil,tp)
 		local g2=dg:Filter(Card.IsPreviousControler,nil,1-tp)
-		local sum1=g1:GetSum(Card.GetAttack)
-		local sum2=g2:GetSum(Card.GetAttack)
-		Duel.Damage(tp,sum1,REASON_EFFECT)
-		Duel.Damage(1-tp,sum2,REASON_EFFECT)
+		local sum1=g1:GetSum(Card.GetPreviousAttackOnField)
+		local sum2=g2:GetSum(Card.GetPreviousAttackOnField)
+		Duel.Damage(tp,sum1,REASON_EFFECT,true)
+		Duel.Damage(1-tp,sum2,REASON_EFFECT,true)
+		Duel.RDComplete()
 	end
 end
 function s.indes(e,c)

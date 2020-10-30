@@ -115,7 +115,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 				end
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,location)
 			end
-end,"filter","lvtype","lv","extrafil","extraop","matfilter","stage2","location","forcedselection","forcedselection","specificmatfilter","requirementfunc")
+end,"filter","lvtype","lv","extrafil","extraop","matfilter","stage2","location","forcedselection","specificmatfilter","requirementfunc")
 
 function Ritual.FastCheck(tp,lv,mg,sc,_type,requirementfunc)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then

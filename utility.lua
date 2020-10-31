@@ -724,12 +724,9 @@ end
 function Auxiliary.doccost(min,max,label)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
-		local ct=c:GetOverlayCount()
-		local min=min or count
+		local ct,eff,set,label=c:GetOverlayCount(),Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK),c:IsSetCard(0x14b),label or false
+		local min=min or ct
 		local max=max or min
-		local label=label or false
-		local eff=Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
-		local set=c:IsSetCard(0x14b)
 		if chk==0 then return c:CheckRemoveOverlayCard(tp,min,REASON_COST) or (eff and set) end
 		if (eff and set) and (ct==0 or (ct>0 and Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1)))) then
 			return true

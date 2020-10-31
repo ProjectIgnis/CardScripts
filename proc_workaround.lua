@@ -11,6 +11,11 @@ end
 function Card.IsMonster(c)
 	return c:IsType(TYPE_MONSTER)
 end
+--
+function Card.AnnounceAnotherAttribute(c,tp)
+	local att=c:GetAttribute()
+	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or 0xff)
+end
 function Auxiliary.ReleaseNonSumCheck(c,tp,e)
 	if c:IsControler(tp) then return false end
 	local chk=false

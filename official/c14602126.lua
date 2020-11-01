@@ -20,7 +20,7 @@ function s.atchfilter(c,atk)
 	return c:IsFaceup() and c:IsAttackBelow(atk)
 end
 function s.xyzfilter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER+TYPE_XYZ) and
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_XYZ) and
 	       Duel.IsExistingTarget(s.atchfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack())
 end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -36,7 +36,7 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	local xyzc,tgc=(function()
 		local c1=g:GetFirst()
-		local c2=g:TakeatPos(1)
+		local c2=g:GetNext()
 		if c1==e:GetLabelObject() then return c1,c2 else return c2,c1 end
 	end)()
 	if xyzc:IsRelateToEffect(e) and tgc:IsRelateToEffect(e) and

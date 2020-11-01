@@ -33,7 +33,7 @@ end
 	--Lists "Sprigguns" archetype
 s.listed_series={0x158}
 	--Specifically lists "Vast Desert – Gold Golgonda" and itself
-s.listed_names={101103055,id}
+s.listed_names={60884672,id}
 
 	--Check for "Sprigguns" Xyz monster
 function s.matfilter(c)
@@ -56,7 +56,7 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Spriggun" monster or "Vast Desert – Gold Golgonda"
 function s.thfilter(c)
-	return ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x158)) or c:IsCode(101103055)) and not c:IsCode(id) and c:IsAbleToHand()
+	return ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x158)) or c:IsCode(60884672)) and not c:IsCode(id) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

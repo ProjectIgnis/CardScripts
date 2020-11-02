@@ -1,4 +1,5 @@
---Ｓｉｎ Ｃｒｏｓｓ
+--Ｓｉｎ Ｃｒｏｓｓ (Anime)
+--Malefic Divide (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x23}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x23) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
@@ -24,30 +26,28 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)>0 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)>0 then
+		local fid=e:GetHandler():GetFieldID()
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetCategory(CATEGORY_REMOVE)
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetLabelObject(tc)
-		e1:SetCountLimit(1)
-		e1:SetTarget(s.rmtg)
-		e1:SetOperation(s.rmop)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetCountLimit(1)
+		e1:SetLabel(fid)
+		e1:SetLabelObject(tc)
+		e1:SetCondition(s.rmcon)
+		e1:SetOperation(s.rmop)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
-function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if chk==0 then return tc and tc:GetFlagEffect(id)~=0 end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetHandler(),1,0,0)
+	return tc:GetFlagEffectLabel(id)==e:GetLabel()
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc and tc:GetFlagEffect(id)~=0 then
-		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
-	end
+	Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 end

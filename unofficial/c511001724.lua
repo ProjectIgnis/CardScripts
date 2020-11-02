@@ -1,8 +1,9 @@
---Cardian - Botan ni Cho
+--花札衛－牡丹に蝶－ (Anime)
+--Flower Cardian Peony with Butterfly (Anime)
 Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableReviveLimit()
+	c:EnableUnsummonable()
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -20,6 +21,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.synop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0xe6}
 function s.filter(c,ft,tp)
 	local re=c:GetReasonEffect()
 	return (ft>0 or c:GetSequence()<5) and c:GetLevel()==6 and c:IsSetCard(0xe6)

@@ -54,7 +54,7 @@ end
 function s.extraval(chk,summon_type,e,...)
 	if chk==0 then
 		local tp,sc=...
-		if not summon_type==SUMMON_TYPE_LINK or sc~=e:GetHandler() then
+		if summon_type~=SUMMON_TYPE_LINK or sc~=e:GetHandler() then
 			return Group.CreateGroup()
 		else
 			s.curgroup=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)

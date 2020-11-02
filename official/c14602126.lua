@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.atchfilter(c,atk)
-	return c:IsFaceup() and c:IsAttackBelow(atk)
+	return c:IsFaceup() and not c:IsType(TYPE_TOKEN) and c:IsAttackBelow(atk)
 end
 function s.xyzfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_XYZ) and

@@ -60,7 +60,7 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsDisabled() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsDisabled() and not tc:IsImmuneToEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		--Negate its effects
 		local e1=Effect.CreateEffect(c)

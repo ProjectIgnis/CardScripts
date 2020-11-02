@@ -16,10 +16,8 @@ function s.initial_effect(c)
 	e1:SetCost(s.spcost)
 	e1:SetTarget((function(tg)
 		return function(e,tp,eg,ep,ev,re,r,rp,chk)
-			local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-			local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 			if chk==0 then
-				return Duel.IsPlayerCanRemove(tp) and ect~=0 and tg(e,tp,eg,ep,ev,re,r,rp,chk)
+				return Duel.IsPlayerCanRemove(tp) and aux.CheckSummonGate(tp,2) and tg(e,tp,eg,ep,ev,re,r,rp,chk)
 			end
 			Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_GRAVE)
 			Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)

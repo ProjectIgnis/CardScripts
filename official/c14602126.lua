@@ -34,6 +34,7 @@ function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
+	if #g<=1 then return end
 	local xyzc,tgc=(function()
 		local c1=g:GetFirst()
 		local c2=g:GetNext()

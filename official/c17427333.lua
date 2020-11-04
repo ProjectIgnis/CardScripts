@@ -30,13 +30,13 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
 		if e:GetLabel()~=DIDNT_SKIP_COST then return false end
 		return Duel.CheckReleaseGroup(tp,s.costfilter,1,nil) and
-		       Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil)
+		       Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler())
 	end
 	local tg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil)
 	local mtgc=tg:GetFirst():GetBaseAttack()//1000
 	Duel.Release(tg,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_ONFIELD,1,mtgc,nil)
+	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,mtgc,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desact(e,tp,eg,ep,ev,re,r,rp)

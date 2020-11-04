@@ -135,6 +135,7 @@ function Auxiliary.Next(g)
 				else return g:GetNext() end
 			end
 end
+Group.Iter=Auxiliary.Next
 
 function Auxiliary.NULL()
 end

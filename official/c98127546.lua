@@ -91,9 +91,8 @@ function s.immval(e,re)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
 end
 function s.spdiscon(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) then return false end
-	if not re:IsActiveType(TYPE_MONSTER) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
-	if not re:IsHasCategory(CATEGORY_SPECIAL_SUMMON) or re:GetHandlerPlayer()==tp then return false end
+	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or re:GetHandlerPlayer()==tp or
+	   not Duel.IsChainNegatable(ev) then return false end
 	local ex,tg,ct,p,l=Duel.GetOperationInfo(ev,CATEGORY_SPECIAL_SUMMON)
 	return ex and (l&LOCATION_GRAVE)~=0 or (tg and tg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE))
 end

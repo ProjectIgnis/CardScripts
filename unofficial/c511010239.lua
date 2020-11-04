@@ -61,7 +61,7 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return bc and bc:IsFaceup() and bc:IsControler(1-tp) and not e:GetHandler():IsStatus(STATUS_CHAINING) and not bc:IsDisabled() 
+	return bc and bc:IsFaceup() and bc:IsControler(1-tp) and not e:GetHandler():IsStatus(STATUS_CHAINING)
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -75,7 +75,8 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsRelateToBattle() and tc:IsFaceup() then
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -87,7 +88,8 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		if c:IsFaceup() and c:IsRelateToEffect(e) and tc:IsControler(1-tp) then
+		Duel.AdjustInstantly(c)
+		if c:IsFaceup() and c:IsRelateToEffect(e) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

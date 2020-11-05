@@ -1,6 +1,5 @@
 --Ｄ－ＨＥＲＯ ドローガイ
 --Destiny HERO - Drawguy
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Both players draw 1
@@ -64,7 +63,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():GetLabel()~=Duel.GetTurnCount() and e:GetHandler():GetFlagEffect(id)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	local c=e:GetHandler()
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 	c:ResetFlagEffect(id)

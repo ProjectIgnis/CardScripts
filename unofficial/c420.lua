@@ -918,7 +918,7 @@ if not AnimeArchetype then
 	Card.IsToy=MakeCheck({0x559},AnimeArchetype.OCGToy)
 
 	-- Toy (ARC-V archetype) トーイ
-	Card.IsToyArcV=MakeCheck({0x55a,0xad})
+	Card.IsToyArcV=MakeCheck({0x558,0xad})
 
 	--V (GX Archetype)
 	AnimeArchetype.OCGV={

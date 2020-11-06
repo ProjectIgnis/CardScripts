@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x259),
+	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x159),
 										matfilter=Card.IsAbleToRemove,extrafil=s.extrafil,extraop=Fusion.BanishMaterial})
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
@@ -12,7 +12,8 @@ function s.initial_effect(c)
 	table.insert(GhostBelleTable,e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,aux.FALSE)
 end
-s.listed_series={0x259}
+s.listed_series={0x159}
+
 function s.check(g1,g2)
 	return function(tp,sg,fc)
 		local c1=#(sg&g1)

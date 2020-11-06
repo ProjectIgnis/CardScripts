@@ -31,18 +31,18 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
 	--Lists "Myutant" archetype
-s.listed_series={0x259}
+s.listed_series={0x159}
 
 	--3 level 8+ "Myutant" monsters
 function s.ffilter(c,fc,sumtype,tp)
-	return c:IsLevelAbove(8) and c:IsSetCard(0x259,fc,sumtype,tp)
+	return c:IsLevelAbove(8) and c:IsSetCard(0x159,fc,sumtype,tp)
 end
 	--Card/effect activated
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
@@ -50,7 +50,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Myutant" card
 function s.cfilter(c,rtype)
-	return c:IsSetCard(0x259) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(rtype) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x159) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(rtype) and c:IsAbleToRemoveAsCost()
 end
 	--Banish 1 "Myutant" card from hand/face-up field/GY with same card type as activated card/effect as cost
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -83,7 +83,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a face-up banished "Myutant" card
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x259) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x159) and c:IsAbleToHand()
 end
 function s.classf(c)
 	return c:GetType()&0x7

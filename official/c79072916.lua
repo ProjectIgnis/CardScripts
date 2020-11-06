@@ -1,10 +1,11 @@
 --
 --Myutant Blast
---scripted by senpaizuri
+--Scripted by senpaizuri
+
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,0,s.filter)
-	--remove
+	--Banish
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.bantg)
 	e1:SetOperation(s.banop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon 1 level 8 "Myutant" monster from hand or deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
@@ -28,8 +29,10 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,id)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x159}
+
 function s.filter(c)
-	return c:IsSetCard(0x259) and c:IsLevelAbove(8)
+	return c:IsSetCard(0x159) and c:IsLevelAbove(8)
 end
 function s.bancon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler():GetEquipTarget()
@@ -56,7 +59,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.spfilter(c,e,tp,att)
-	return c:IsSetCard(0x259) and c:IsLevel(8) and not c:IsOriginalAttribute(att)
+	return c:IsSetCard(0x159) and c:IsLevel(8) and not c:IsOriginalAttribute(att)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

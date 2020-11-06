@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCondition(s.drcon)
 	e2:SetTarget(s.drtg)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Myutant" archetype
-s.listed_series={0x259}
+s.listed_series={0x159}
 
 	--Activation legality
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -52,7 +52,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 	--Check for "Myutant" monster to banish
 function s.rmfilter(c)
-	return c:IsAbleToRemove() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x259)
+	return c:IsAbleToRemove() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x159)
 end
 	--Banish 1 "Myutant" monster from GY, and if you do, negate targeted monster's effects
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
@@ -86,9 +86,9 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	for rc in aux.Next(eg) do
 		if rc:IsStatus(STATUS_OPPO_BATTLE) then
 			if rc:IsRelateToBattle() then
-				if rc:IsControler(tp) and rc:IsSetCard(0x259) and rc:IsLevelAbove(8) then return true end
+				if rc:IsControler(tp) and rc:IsSetCard(0x159) and rc:IsLevelAbove(8) then return true end
 			else
-				if rc:IsPreviousControler(tp) and rc:IsPreviousSetCard(0x259) then return true end
+				if rc:IsPreviousControler(tp) and rc:IsPreviousSetCard(0x159) then return true end
 			end
 		end
 	end

@@ -1,25 +1,26 @@
 --
 --Myutant Evolution Lab
 --Scripted by ahtelel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--atk up
+	--Your "Myutant" monsters gains ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x259))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x159))
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--draw
+	--Place 1 card from hand to deck, draw 1
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -29,9 +30,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x259}
+s.listed_series={0x159}
+
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x259) and c:GetLevel()<5 and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
+	return c:IsSetCard(0x159) and c:GetLevel()<5 and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -45,14 +47,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x259)
+	return c:IsFaceup() and c:IsSetCard(0x159)
 end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_REMOVED,0,nil)
 	return g:GetClassCount(Card.GetCode)*100
 end
 function s.drfilter(c)
-	return c:IsSetCard(0x259) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsSetCard(0x159) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) 

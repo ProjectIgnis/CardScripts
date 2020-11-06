@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.immcon)
 	--e2:SetTarget(s.immtg)
 	e2:SetOperation(s.immop)
@@ -39,18 +39,18 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DESTROYED)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetCountLimit(1,id+200)
+	e3:SetCountLimit(1,id+2)
 	e3:SetCondition(s.thcon)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
 	--Lists "Myutant" archetype
-s.listed_series={0x259}
+s.listed_series={0x159}
 
 	--2 "Myutant" monsters with different attributes
 function s.ffilter(c,fc,sumtype,sp,sub,mg,sg)
-	return c:IsSetCard(0x259,fc,sumtype,sp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
+	return c:IsSetCard(0x159,fc,sumtype,sp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
 end
 	--If fusion summoned
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -132,7 +132,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for face-up banished "Myutant" card
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x259) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x159) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

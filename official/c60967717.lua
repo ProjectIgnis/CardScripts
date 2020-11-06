@@ -24,11 +24,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Myutant" archetype
-s.listed_series={0x259}
+s.listed_series={0x159}
 
 	--Check for level 4 or lower "Myutant" monster
 function s.thfilter(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x259) and c:IsLevelBelow(4)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x159) and c:IsLevelBelow(4)
 		and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 	--Activation legality
@@ -61,7 +61,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a level 8+ "Myutant" monster
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x259) and c:IsLocation(LOCATION_MZONE) and c:IsLevelAbove(8)
+	return c:IsFaceup() and c:IsSetCard(0x159) and c:IsLocation(LOCATION_MZONE) and c:IsLevelAbove(8)
 		and c:IsControler(tp) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 	--Activtion legality

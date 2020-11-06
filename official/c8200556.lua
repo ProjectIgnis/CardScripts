@@ -1,9 +1,10 @@
 --
 --Myutant ST-46
---scripted by Hatter
+--Scripted by Hatter
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--If normal or special summoned, add 1 "Myutant" spell/trap
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -17,22 +18,23 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--special summon
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+100)
-	e2:SetCost(s.spcost)
-	e2:SetTarget(s.sptg)
-	e2:SetOperation(s.spop)
-	c:RegisterEffect(e2)
+	--Special summon 1 monster from hand or deck
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1,id+1)
+	e3:SetCost(s.spcost)
+	e3:SetTarget(s.sptg)
+	e3:SetOperation(s.spop)
+	c:RegisterEffect(e3)
 end
-s.listed_series={0x259}
-s.listed_names={101102087,101102088,101102089}
+s.listed_series={0x159}
+s.listed_names={34695290,61089209,7574904}
+
 function s.thfilter(c)
-	return c:IsSetCard(0x259) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsAbleToHand()
+	return c:IsSetCard(0x159) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -51,9 +53,9 @@ function s.smnfilter(c,e,tp,...)
 end
 function s.spcfilter(c,e,tp)
 	return ((c:IsLocation(LOCATION_ONFIELD) and c:IsFaceup()) or c:IsLocation(LOCATION_HAND)) and c:IsAbleToRemoveAsCost()
-		and ((c:IsType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(s.smnfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,c,e,tp,101102087))
-			or (c:IsType(TYPE_SPELL) and Duel.IsExistingMatchingCard(s.smnfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,c,e,tp,101102088))
-			or (c:IsType(TYPE_TRAP) and Duel.IsExistingMatchingCard(s.smnfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,c,e,tp,101102089)))
+		and ((c:IsType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(s.smnfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,c,e,tp,34695290))
+			or (c:IsType(TYPE_SPELL) and Duel.IsExistingMatchingCard(s.smnfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,c,e,tp,61089209))
+			or (c:IsType(TYPE_TRAP) and Duel.IsExistingMatchingCard(s.smnfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,c,e,tp,7574904)))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=LOCATION_MZONE
@@ -73,9 +75,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local type=e:GetLabel()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 and type then return end
 	local ids={}
-	if type&TYPE_MONSTER==TYPE_MONSTER then ids[#ids+1]=101102087 end
-	if type&TYPE_SPELL==TYPE_SPELL then ids[#ids+1]=101102088 end
-	if type&TYPE_TRAP==TYPE_TRAP then ids[#ids+1]=101102089 end
+	if type&TYPE_MONSTER==TYPE_MONSTER then ids[#ids+1]=34695290 end --Myutant Beast
+	if type&TYPE_SPELL==TYPE_SPELL then ids[#ids+1]=61089209 end --Myutant Mist
+	if type&TYPE_TRAP==TYPE_TRAP then ids[#ids+1]=7574904 end --Myutant Arsenal
 	if #ids>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.smnfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,e,tp,table.unpack(ids))

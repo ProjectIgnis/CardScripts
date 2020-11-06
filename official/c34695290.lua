@@ -1,16 +1,17 @@
 --
 --Myutant Beast
 --Scripted by Hel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot be special summoned
+	--Must special summoned by a "Myutant" effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
-	--cannot be targeted
+	--Cannot be targeted by opponent's monster effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(s.tgval)
 	c:RegisterEffect(e2)
-	--negate spell
+	--Negate the activation of opponent's spell card/effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -26,27 +27,29 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.condition)
 	e3:SetCost(s.cost)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.activate)
 	c:RegisterEffect(e3)
-	--Bannish zone to hand
+	--Add 1 of your banished "Myutant" traps
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_DESTROYED)
-	e4:SetCountLimit(1,id+200)
+	e4:SetCountLimit(1,id+2)
 	e4:SetCondition(s.thcon)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0x159}
+
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsSetCard(0x259)
+	return se:GetHandler():IsSetCard(0x159)
 end
 function s.tgval(e,re,rp)
 	return aux.tgoval(e,r,rp) and re:IsActiveType(TYPE_MONSTER)
@@ -76,7 +79,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_TRAP) and c:IsAbleToHand() and c:IsFaceup() and c:IsSetCard(0x259)
+	return c:IsType(TYPE_TRAP) and c:IsAbleToHand() and c:IsFaceup() and c:IsSetCard(0x159)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and e:GetHandler():IsPreviousControler(tp)
@@ -94,4 +97,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

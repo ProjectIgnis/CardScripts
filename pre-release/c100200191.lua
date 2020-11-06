@@ -77,8 +77,8 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetValue(-2)
 	tc:RegisterEffect(e1)
-	if not tc:IsImmuneToEffect(e1) and c:IsRelateToEffect(e) then
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+	if not tc:IsImmuneToEffect(e1) and c:IsRelateToEffect(e)~=0
+		and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(3300)
 		e2:SetType(EFFECT_TYPE_SINGLE)

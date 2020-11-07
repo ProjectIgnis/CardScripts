@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	--Unnafected except when targeted
+	--Unaffected except when targeted
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_IMMUNE_EFFECT)
@@ -89,7 +89,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.immval(e,re)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and e:GetOwnerPlayer()~=re:GetOwnerPlayer() and not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
 end
 function s.spdiscon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or re:GetHandlerPlayer()==tp or

@@ -72,8 +72,10 @@ function s.efcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_XYZ
 end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
-	local n = e:GetHandler():GetReasonCard():GetOverlayGroup():FilterCount(Card.IsSetCard,nil,0x54)
-	Duel.Draw(tp,n,REASON_EFFECT)
+	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_CARD,1,id)
+	local n = e:GetHandler():GetReasonCard():GetMaterial():FilterCount(Card.IsSetCard,nil,0x54)
+	Duel.Draw(rp,n,REASON_EFFECT)
 end
 function s.xyzfilter(c,m,cc)
 	if not c:IsType(TYPE_XYZ) or not c:IsSetCard(0x48) or not c.xyz_filter then return false end

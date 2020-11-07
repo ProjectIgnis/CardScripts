@@ -1,4 +1,4 @@
---E－HERO ヘル・スナイパー
+--Ｅ－ＨＥＲＯ ヘル・スナイパー
 --Evil HERO Infernal Sniper
 local s,id=GetID()
 function s.initial_effect(c)

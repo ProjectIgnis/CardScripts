@@ -1,16 +1,25 @@
---Ｅ－ＨＥＲＯ ヘル・スナイパー
+--Ｅ－ＨＥＲＯ ヘル・スナイパー (Anime)
+--Evil HERO Infernal Sniper (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,84327329,58932615)
-	--spsummon condition
+	--lizard check
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(CARD_CLOCK_LIZARD)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCondition(s.lizcon)
+	e0:SetValue(1)
+	c:RegisterEffect(e0)
+	--Special Summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(s.splimit)
+	e1:SetValue(aux.EvilHeroLimit)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
@@ -45,8 +54,9 @@ function s.initial_effect(c)
 end
 s.material_setcode={0x8,0x3008}
 s.dark_calling=true
-function s.splimit(e,se,sp,st)
-	return st==SUMMON_TYPE_FUSION+0x10
+s.listed_names={CARD_DARK_FUSION,58932615,84327329}
+function s.lizcon(e,tp,eg,ep,ev,re,r,rp)
+	return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)

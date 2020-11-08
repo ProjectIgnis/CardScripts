@@ -1,6 +1,6 @@
 --ジェルゴンヌの終焉
 --Gergonne's End
---
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,8 +12,9 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
@@ -27,6 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x10b}
+
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local c=e:GetHandler()
@@ -80,7 +82,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
-		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e2:SetValue(1)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
@@ -90,6 +91,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e3)
 		local e4=e2:Clone()
 		e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e4:SetValue(aux.tgoval)
 		c:RegisterEffect(e4)
 	else
@@ -123,4 +125,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

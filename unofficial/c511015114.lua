@@ -76,21 +76,24 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	local n = e:GetHandler():GetReasonCard():GetMaterial():FilterCount(Card.IsSetCard,nil,0x54)
 	Duel.Draw(rp,n,REASON_EFFECT)
 end
+function s.filter(c,xyz,tp)
+	return c:IsFaceup() and c:IsSetCard(0x54,xyz,SUMMON_TYPE_XYZ) and c:IsCanBeXyzMaterial(xyz,tp)
+end
 function s.xyzfilter(c,e,tp)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,true)
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x54,c,SUMMON_TYPE_XYZ),tp,LOCATION_MZONE,0,1,nil)
+	if not (c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,true)) then return false end
+	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,c,tp)
+	return mg:GetFirst() and Duel.GetMZoneCount(tp,mg)>0
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
-		local mg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x54,tc,SUMMON_TYPE_XYZ),tp,LOCATION_MZONE,0,nil)
+		local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,tc,tp)
 		tc:SetMaterial(mg)
 		Duel.Overlay(tc,mg)
 		Duel.SpecialSummon(tc,SUMMON_TYPE_XYZ,tp,tp,false,true,POS_FACEUP)

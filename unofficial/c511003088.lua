@@ -14,10 +14,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return r~=REASON_REPLACE and Duel.GetAttackTarget()==e:GetHandler()  and chkc~=e:GetHandler()
-		and e:GetHandler():GetBattlePosition()==POS_FACEDOWN_DEFENSE
+	return r~=REASON_REPLACE and Duel.GetAttackTarget()==e:GetHandler()
+		and e:GetHandler():GetBattlePosition()&POS_FACEDOWN_DEFENSE==POS_FACEDOWN_DEFENSE
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,e:GetHandler())

@@ -67,7 +67,7 @@ end
 function s.damval2(e,re,val,r,rp,rc)
 	local c=e:GetHandler()
 	if r&REASON_EFFECT>0 and Duel.GetFlagEffect(tp,id)~=0 then return val end
-	if r&REASON_BATTLE+REASON_EFFECT~=0 and c:GetFlagEffect(id)==0 then
+	if r&(REASON_BATTLE|REASON_EFFECT)~=0 and c:GetFlagEffect(id)==0 then
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		return 0
 	end

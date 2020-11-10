@@ -1,9 +1,10 @@
 --Ｓ－Ｆｏｒｃｅ スペシメン
 --Security Force Specimen
 --Scripted by edo9300
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon
+	--Special summon 1 "Security Force" monster, that is banished or in your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -13,18 +14,23 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
-	--Switch zone
+	--Move 1 "Security Force" to another of your MMZ
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,id)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.seqtg)
 	e2:SetOperation(s.seqop)
+	e2:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x15a}
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end

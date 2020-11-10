@@ -1,25 +1,26 @@
 --セキュア・ガードナー
 --Secure Gardna
+
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
 	--Link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.matfilter,1,1)
-	--Cannot link material
+	--Cannot be used as Link Material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--Change damage
+	--After summoning, take no damage for the turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
-	--Damage reduce
+	--Each turn, reduce battle or effect damage to 0 the first time.
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -30,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	e4:SetCondition(s.damcon)
+	e4:SetCondition(function(e)return e:GetHandler():GetFlagEffect(id)==0 end)
 	c:RegisterEffect(e4)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
@@ -66,13 +67,10 @@ function s.damval1(e,re,val,r,rp,rc)
 end
 function s.damval2(e,re,val,r,rp,rc)
 	local c=e:GetHandler()
-	if r&REASON_EFFECT>0 and Duel.GetFlagEffect(tp,id)~=0 then return val end
 	if r&(REASON_BATTLE|REASON_EFFECT)~=0 and c:GetFlagEffect(id)==0 then
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		Duel.Hint(HINT_CARD,0,id)
 		return 0
 	end
 	return val
-end
-function s.damcon(e)
-	return e:GetHandler():GetFlagEffect(id)==0
 end

@@ -1,9 +1,10 @@
 --聖蔓の乙女
 --Sunvine Maiden
 --Scripted by Eerie Code, anime script by MLD
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DISABLE)
@@ -11,11 +12,12 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--cannot be target
+	--Your "Sunavalon" and "Sunvine" S/T cannot be targeted by opponent's card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -27,6 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x1257,0x2257}
+
 function s.tfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_PLANT) and c:IsControler(tp) and c:IsSummonLocation(LOCATION_EXTRA)
 end

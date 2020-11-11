@@ -1,7 +1,9 @@
 --バブル・シャッフル
+--Bubble Shuffle
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--pos
+	--Tribute "Elemental HERO Bubbleman", then special summon 1 "Elemental HERO" monster from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_POSITION+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -9,10 +11,12 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.postg)
 	e1:SetOperation(s.posop)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x3008}
 s.listed_names={79979666}
+
 function s.filter1(c,ft)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition() and c:IsCode(79979666) 
 		and (ft>0 or c:GetSequence()<5)
@@ -46,10 +50,12 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==2 then
 		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
 		local tc=e:GetLabelObject()
-		if not tc:IsImmuneToEffect(e) and tc:IsReleasable() and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or c:GetSequence()<5) then
+		if not tc:IsImmuneToEffect(e) and tc:IsReleasable() and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or tc:GetSequence()<5) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+			Duel.BreakEffect()
 			Duel.Release(tc,REASON_EFFECT)
+			Duel.BreakEffect()
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end

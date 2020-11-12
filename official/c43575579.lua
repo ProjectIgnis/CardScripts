@@ -1,6 +1,6 @@
 --アフター・グロー
 --Afterglow
---scripted by Naim
+--Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,10 +25,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g1=Group.FromCards(c)
-	local g2=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_DECK+LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE,0,nil)
-	g1:Merge(g2)
-	if c:IsRelateToEffect(e) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT)>0 and Duel.Remove(g1,POS_FACEUP,REASON_EFFECT) then
+	if c:IsRelateToEffect(e) and Duel.Remove(c,POS_FACEUP,REASON_EFFECT)>0 then
+		local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_DECK+LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE,0,nil)
+		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		if Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_REMOVED,0,1,nil) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_REMOVED,0,1,1,nil)

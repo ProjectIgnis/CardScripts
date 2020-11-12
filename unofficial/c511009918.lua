@@ -1,5 +1,5 @@
---転生炎獣 ミーア
---Salamangreat Meer
+--転生炎獣 ミーア (Anime)
+--Salamangreat Meer (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -51,9 +51,9 @@ function s.spcfilter(c)
 end
 function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_HAND,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.spcfilter,tp,LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.spcfilter,tp,LOCATION_HAND,0,1,1,c)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

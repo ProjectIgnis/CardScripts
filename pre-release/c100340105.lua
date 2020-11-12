@@ -37,7 +37,7 @@ function s.bancheck(tp,loc)
 end
 function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.smfilter,tp,LOCATION_MZONE,0,nil)
-	local dnc=g:GetClassCount(Card.GetCode)
+	local dnc=math.min(g:GetClassCount(Card.GetCode),3)
 	if chk==0 then
 		if dnc==0 then return false end
 		local afc=0

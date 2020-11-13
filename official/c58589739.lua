@@ -1,11 +1,12 @@
 --Ｓ－Ｆｏｒｃｅ プロフェッサーϜ
 --Security Force Professor Digamma
 --Scripted by edo9300
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--If normal or special summoned, change targeted monster's positions
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--cannot change position
+	--An opponent's monster facing a "Security Force" monster cannot change its positions
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_MZONE)
@@ -27,6 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x15a}
+
 function s.filter(c)
 	return c:IsFaceup() and c:IsCanChangePosition()
 end

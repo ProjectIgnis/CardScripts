@@ -1,6 +1,7 @@
 --夢魔鏡の使徒－ネイロイ
 --Oneiroi, the Dream Mirror Emissary
---scripted by Naim
+--Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from the hand
@@ -29,6 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x131}
 s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
+
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x131),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
@@ -67,16 +69,16 @@ function s.thfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function s.op2(e,tp,eg,ep,ev,re,r,rp)
-	local op1=Duel.IsExistingMatchingCard(s.ffilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,CARD_DREAM_MIRROR_JOY)
-	local op2=Duel.IsExistingMatchingCard(s.ffilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,CARD_DREAM_MIRROR_TERROR)
-	if op1 and Duel.IsExistingMatchingCard(s.thfilter,tp,0,LOCATION_ONFIELD,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+	if Duel.IsExistingMatchingCard(s.ffilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,CARD_DREAM_MIRROR_JOY)
+			and Duel.IsExistingMatchingCard(s.thfilter,tp,0,LOCATION_ONFIELD,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 		if #g>0 then
+			Duel.HintSelection(g)
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 		end
 	end
-	if op2 and Duel.IsPlayerCanDraw(tp,1) then
+	if Duel.IsExistingMatchingCard(s.ffilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,CARD_DREAM_MIRROR_TERROR) and Duel.IsPlayerCanDraw(tp,1) then
 		local ct=Duel.Draw(tp,1,REASON_EFFECT)
 		if ct~=0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

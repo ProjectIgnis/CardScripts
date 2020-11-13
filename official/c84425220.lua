@@ -1,6 +1,7 @@
 --アームド・ドラゴン LV10-ホワイト
 --Armed Dragon LV10 - White
 --Scripted by ahtelel
+
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
@@ -37,7 +38,7 @@ function s.initial_effect(c)
 	--Destroy card at start of Damage Step
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_EQUIP)
+	e4:SetCategory(CATEGORY_DESTROY)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_BATTLE_START)
 	e4:SetCountLimit(1,id+1)
@@ -49,6 +50,7 @@ end
 s.listed_names={49306994}
 s.LVnum=10
 s.LVset=0x111
+
 function s.rescon(sg,tp)
 	local sum=sg:GetSum(Card.GetLevel)
 	return aux.ChkfMMZ(1)(sg,nil,tp) and sum==10,sum>10

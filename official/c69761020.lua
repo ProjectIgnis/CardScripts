@@ -14,9 +14,9 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.thtg(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
-	--Special Summon
+	--Special Summon 1 "Security Force" monster from hand
 	local b1=s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
-	--Add from GY
+	--Add 1 "Security Force" monster from GY to hand
 	local b2=s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
 	if chk==0 then return b1 or b2 end
 	local op=0
@@ -65,7 +65,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

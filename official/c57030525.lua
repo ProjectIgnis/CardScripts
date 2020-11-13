@@ -1,6 +1,7 @@
 --アームド・ドラゴン・サンダー LV3
 --Armed Dragon Thunder LV3
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Treat name as "Armed Dragon LV3"
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e1:SetValue(980973)
 	c:RegisterEffect(e1)
-	--Level up
+	--Special summon 1 level 5 or lower "Armed Dragon" monster from hand or deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.drcon)
 	e3:SetTarget(s.drtg)
@@ -38,6 +39,7 @@ end
 s.listed_names={980973}
 s.LVnum=3
 s.LVset=0x111
+
 function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end

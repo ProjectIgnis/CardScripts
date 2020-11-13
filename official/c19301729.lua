@@ -1,5 +1,5 @@
 --電子光虫－レジストライダー
---Digital Bug Registrider
+--Digital Bug Resistrider
 
 --Substitute ID
 local s,id=GetID()
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_LVCHANGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-	--A Xyz monster using this card as material gains 1000 ATK/DEF
+	--An Xyz monster using this card as material gains 1000 ATK/DEF
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_BE_MATERIAL)
@@ -49,12 +49,12 @@ end
 	--When you normal summon a level 3 insect monster
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return ep==tp and ec:GetLevel()==3 and ec:IsRace(RACE_INSECT)
+	return ep==tp and ec:IsLevel(3) and ec:IsRace(RACE_INSECT)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 	--Special summon itself from hand
@@ -62,10 +62,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)~=0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and (tc:IsFaceup() and c:IsFaceup()) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		local g=Group.FromCards(c,tc):Filter(Card.IsFaceup,nil,nil)
 		--This card and the normal summoned monster becomes level 5 or 7
 		local lv=Duel.AnnounceLevel(tp,5,7,6)
+		Duel.BreakEffect()
 		for oc in aux.Next(g) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
@@ -92,8 +93,10 @@ end
 	--Change battle position of 1 of your insect monsters
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACK)
-	local tc=Duel.SelectMatchingCard(tp,s.posfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
-	if tc then
+	local g=Duel.SelectMatchingCard(tp,s.posfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	if #g>0 then
+		Duel.HintSelection(g)
+		local tc=g:GetFirst()
 		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 	end
 end
@@ -116,11 +119,11 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	rc:RegisterEffect(e2,true)
 	if not rc:IsType(TYPE_EFFECT) then
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_ADD_TYPE)
-		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		rc:RegisterEffect(e2,true)
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_ADD_TYPE)
+		e3:SetValue(TYPE_EFFECT)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		rc:RegisterEffect(e3,true)
 	end
 end

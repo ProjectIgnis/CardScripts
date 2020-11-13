@@ -1,6 +1,7 @@
 --大砂海ゴールド・ゴルゴンダ
 --Vast Desert Gold Golgonda
---scripted by Hatter
+--Scripted by Hatter
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--atkup
+	--All "Sprigguns" Xyz monsters gain 1000 ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.attg)
 	e2:SetValue(1000)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon 1 "Sprigguns" Xyz monster from extra deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	--cannot attack
+	--Make 1 of opponent's monsters unable to attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -43,6 +44,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x158}
+
 function s.attg(e,c)
 	return c:IsSetCard(0x158) and c:IsType(TYPE_XYZ)
 end
@@ -89,7 +91,7 @@ end
 function s.caop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		--Cannot attack this turn
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3206)

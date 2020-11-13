@@ -31,12 +31,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.matop)
 	c:RegisterEffect(e2)
 end
-	--Lists "Spriggun" archetype
+	--Lists "Sprigguns" archetype
 s.listed_series={0x158}
 	--Specifically lists "Fallen of Albaz"
 s.listed_names={id}
 
-	--Check for "Spriggun" monster or "Fallen of Albaz"
+	--Check for "Sprigguns" monster or "Fallen of Albaz"
 function s.filter(c,e,tp)
 	return ((c:IsType(TYPE_MONSTER) and c:IsSetCard(0x158)) or c:IsCode(CARD_ALBAZ)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -49,7 +49,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
-	--Special summon 1 "Spriggun" monster or "Fallen of Albaz" from GY
+	--Special summon 1 "Sprigguns" monster or "Fallen of Albaz" from GY
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
@@ -60,9 +60,9 @@ end
 function s.matfilter(c)
 	return c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_ALBAZ)
 end
-	--Check for "Spriggun" Xyz monster
+	--Check for "Sprigguns" Xyz monster
 function s.xyzfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)-- and c:IsSetCard(0x158)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x158)
 end
 	--Banish itself and 1 fusion monster from GY as cost
 function s.cfilter(c)
@@ -71,9 +71,9 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,c) end
+		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,c)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	g:AddCard(c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end

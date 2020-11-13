@@ -1,6 +1,7 @@
 --アームド・ドラゴン・サンダー LV7
 --Armed Dragon Thunder LV7
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Treat name as "Armed Dragon LV7"
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e1:SetValue(73879377)
 	c:RegisterEffect(e1)
-	--Level up
+	--Special summon 1 level 10 or lower "Armed Dragon" monster from hand or deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
@@ -22,13 +23,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--Add from deck to hand
+	--Add 1 "Armed Dragon" card from deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.thcon)
 	e3:SetTarget(s.thtg)
@@ -39,6 +40,7 @@ s.listed_names={73879377}
 s.listed_series={0x111}
 s.LVnum=7
 s.LVset=0x111
+
 function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end

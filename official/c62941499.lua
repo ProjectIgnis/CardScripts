@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	--Banish itself
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
@@ -103,7 +103,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Select(tp,1,c:GetOverlayCount(),false)
 	local sgc=#sg
 	if c:RemoveOverlayCard(tp,sgc,sgc,REASON_EFFECT) then
-		Duel.Destroy(sg,REASON_EFFECT|REASON_DESTROY)
+		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end
 function s.bancon(e,tp,eg,ep,ev,re,r,rp)

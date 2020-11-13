@@ -7,6 +7,16 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
 	Pendulum.AddProcedure(c)
+	--Change battle position of 1 monster from each side
+	local e0=Effect.CreateEffect(c)
+	e0:SetCategory(CATEGORY_POSITION)
+	e0:SetType(EFFECT_TYPE_IGNITION)
+	e0:SetRange(LOCATION_PZONE)
+	e0:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e0:SetCountLimit(1)
+	e0:SetTarget(s.pentg)
+	e0:SetOperation(s.penop)
+	c:RegisterEffect(e0)
 	--Banish itself if used as synchro material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -47,6 +57,29 @@ function s.initial_effect(c)
 	e4:SetTarget(s.sendtg)
 	e4:SetOperation(s.sendop)
 	c:RegisterEffect(e4)
+end
+	--Check for pendulum monster
+function s.penfilter(c)
+	return c:IsFaceup() and c:IsCanChangePosition() and c:IsType(TYPE_PENDULUM)
+end
+	--Activation legality
+function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return false end
+	if chk==0 then return Duel.IsExistingTarget(s.penfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsCanChangePosition),tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+	local g1=Duel.SelectTarget(tp,s.penfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+	local g2=Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsCanChangePosition),tp,0,LOCATION_MZONE,1,1,nil)
+	g1:Merge(g2)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g1,2,0,0)
+end
+	--Change battle positions of the targeted monsters
+function s.penop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetTargetCards(e)
+	if #g>0 then
+		Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+	end
 end
 	--Check if special summoned from extra deck
 function s.rmcon(e)

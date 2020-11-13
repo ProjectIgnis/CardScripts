@@ -1,12 +1,14 @@
 --神樹獣ハイペリュトン
 --Divine Treebeast High Peryton
---scripted by Hatter
+--Scripted by Hatter
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon procedure
 	Xyz.AddProcedure(c,nil,9,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--attach
+	--Attach 1 card from your GY to this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_LEAVE_GRAVE)
@@ -14,12 +16,12 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCondition(s.attcon)
 	e1:SetTarget(s.atttg)
 	e1:SetOperation(s.attop)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate activation of a card/effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)

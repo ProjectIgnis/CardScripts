@@ -1,16 +1,20 @@
--- Parametalfoes Azothles 
--- パラメタルフォーゼ・アゾートレス
+--Parametalfoes Azothles 
+--パラメタルフォーゼ・アゾートレス
+
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableReviveLimit()
-	Pendulum.AddProcedure(c,false)
+	--Fusion summon procedure
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xe1),aux.FilterBoolFunctionEx(Card.IsType,TYPE_FUSION))
-	--destroy
+	--Must be properly summoned before reviving
+	c:EnableReviveLimit()
+	--Enable pendulum summon
+	Pendulum.AddProcedure(c,false)
+	--Destroy 1 card on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_DESTROYED)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCountLimit(1,id)
@@ -18,7 +22,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	-- shuffle and destroy
+	--Shuffle 2 pendulum monsters, destroy 1 card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_TODECK)
@@ -30,7 +34,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg2)
 	e2:SetOperation(s.desop2)
 	c:RegisterEffect(e2)
-	--pendulum
+	--Place itself into pendulum zone
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -43,7 +47,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xe1}
 s.material_setcode={0xe1}
---destroy
+
 function s.cfilter(c,tp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousSetCard(0xe1)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
@@ -64,7 +68,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
--- shuffle and destroy
 function s.descon2(e)
 	return e:GetHandler():GetSummonLocation()&LOCATION_EXTRA==LOCATION_EXTRA
 end
@@ -89,10 +92,9 @@ function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(dc,REASON_EFFECT)
 	end
 end
---pendulum
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFaceup()
+	return c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end

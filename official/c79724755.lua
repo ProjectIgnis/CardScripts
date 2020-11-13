@@ -1,9 +1,10 @@
 --黄紡鮄デュオニギス
 --Yellow Gurnard Duonigis
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--banish topdeck
+	--Banish cards from the top of opponent's deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -13,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
-	--increase lv
+	--Increase targeted monster's levels
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_UPDATE_LEVEL)
+	e2:SetCategory(CATEGORY_LVCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.lvtg)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
-	--increase atk
+	--Increase targeted monster's ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_IGNITION)

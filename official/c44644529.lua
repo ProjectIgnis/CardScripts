@@ -56,7 +56,7 @@ function s.spfilter(c,e,tp,tc,is_emz,has_mmz)
 end
 	--Compound filter for proper target selection
 function s.tgfilter(c,e,tp)
-	local is_emz=c:GetSequence()>4
+	local is_emz=c:IsInExtraMZone(tp)
 	local has_mmz=Duel.GetLocationCount(tp, LOCATION_MZONE)>0
 	return s.desfilter(c) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil,e,tp,c,is_emz,has_mmz)
 end
@@ -73,7 +73,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		local is_emz=tc:GetSequence()>4
+		local is_emz=c:IsInExtraMZone(tp)
 		local has_mmz=Duel.GetLocationCount(tp, LOCATION_MZONE)>0
 		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

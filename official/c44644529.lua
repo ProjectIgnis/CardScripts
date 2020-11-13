@@ -34,38 +34,51 @@ function s.initial_effect(c)
 end
 	--Lists "Dual Avatar" archetype
 s.listed_series={0x14e}
-
+	--Can special summon ED monsters outside EMZ? Cache the result
+s.fsx_anywhere=Duel.IsDuelType(DUEL_FSX_MMZONE)
 	--Check "Dual Avatar" monster to destroy
-function s.filter(c,e,tp)
+function s.desfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x14e) and c:IsLevelAbove(1)
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 	--Check "Dual Avatar" monster to special summon
-function s.spfilter(c,e,tp,tc)
-	return c:IsSetCard(0x14e) and c:IsLevelAbove(1)
-		and math.abs(c:GetOriginalLevel()-tc:GetLevel())==1
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and ((c:IsLocation(LOCATION_DECK) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
-		or (c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0))
+function s.spfilter(c,e,tp,tc,is_emz,has_mmz)
+	if (not c:IsSetCard(0x14e)) or (not c:IsLevelAbove(1)) or
+	   (not math.abs(c:GetOriginalLevel()-tc:GetLevel())==1) or
+	   (not c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)) then
+		return false
+	end
+	if c:IsLocation(LOCATION_DECK) then
+		return (not is_emz) or (is_emz and has_mmz)
+	else --c:IsLocation(LOCATION_EXTRA)
+		if s.fsx_anywhere then return true end
+		return Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
+	end
+end
+	--Compound filter for proper target selection
+function s.tgfilter(c,e,tp)
+	local is_emz=c:GetSequence()>4
+	local has_mmz=Duel.GetLocationCount(tp, LOCATION_MZONE)>0
+	return s.desfilter(c) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil,e,tp,c,is_emz,has_mmz)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,c,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,c,e,tp)
+	local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_EXTRA)
 end
 	--Destroy targeted monster, and if you do, special summon 1 "Dual Avatar" monster from deck or extra deck
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.Destroy(tc,REASON_EFFECT)~=0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,e,tp,tc)
-		if #g>0 then
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	if tc and tc:IsRelateToEffect(e) then
+		local is_emz=tc:GetSequence()>4
+		local has_mmz=Duel.GetLocationCount(tp, LOCATION_MZONE)>0
+		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil,e,tp,tc,is_emz,has_mmz)
+			if #g>0 then Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) end
 		end
 	end
 end

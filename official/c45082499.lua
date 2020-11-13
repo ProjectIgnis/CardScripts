@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_ONFIELD,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x7e))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x107e))
 	e2:SetValue(s.indval)
 	c:RegisterEffect(e2)
 	--destroy sub
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.repval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107f,0x7e}
+s.listed_series={0x107f,0x107e}
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():CheckUniqueOnField(tp)
 end

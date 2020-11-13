@@ -943,7 +943,7 @@ if not AnimeArchetype then
 		84243274,65687442
 		--Windwitch/ ZW
 	}
-	Card.IsW=MakeCheck({0x56b,0xf0,0x7e},AnimeArchetype.OCGW)
+	Card.IsW=MakeCheck({0x56b,0xf0,0x107e},AnimeArchetype.OCGW)
 
 	-- White ホワイト
 	-- Great White/Cyberse Whitehat/Malefic Blue-Eyes White Dragon

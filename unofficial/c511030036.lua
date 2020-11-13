@@ -1,6 +1,6 @@
 --フューリー・オブ・ファイア (Anime)
 --Fury of Fire (Anime)
---scripted by pyrQ
+--Scripted by pyrQ
 local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()
@@ -18,13 +18,15 @@ end
 s.listed_series={0x119}
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x119) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+		and (c:IsCanBeEffectTarget(e) or c:IsLocation(LOCATION_HAND) and not c:IsHasEffect(EFFECT_CANNOT_BE_EFFECT_TARGET))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_HAND) and s.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,2,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,2,nil,e,tp)
+	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,#g,0,LOCATION_GRAVE+LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

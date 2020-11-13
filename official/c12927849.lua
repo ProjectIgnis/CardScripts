@@ -1,4 +1,5 @@
 --SZW－天聖輝狼剣
+--SZW - Fenrir Sword
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

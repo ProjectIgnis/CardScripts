@@ -73,7 +73,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		local is_emz=c:IsInExtraMZone(tp)
+		local is_emz=tc:IsInExtraMZone(tp)
 		local has_mmz=Duel.GetLocationCount(tp, LOCATION_MZONE)>0
 		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

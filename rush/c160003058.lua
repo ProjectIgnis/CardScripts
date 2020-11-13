@@ -15,7 +15,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return ep==1-tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	 if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	 if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)

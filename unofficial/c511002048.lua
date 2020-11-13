@@ -1,6 +1,8 @@
---Call of the Living Dead
-	--Scripted by Edo9300
-	local s,id=GetID()function s.initial_effect(c)
+--リビングデッドの呼び声 (Anime)
+--Call of the Haunted (Anime)
+--Scripted by Edo9300
+local s,id=GetID()
+function s.initial_effect(c)
 	--activate
  	local e1=Effect.CreateEffect(c)
  	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -9,7 +11,7 @@
  	e1:SetTarget(s.tg)
  	e1:SetOperation(s.op)
  	c:RegisterEffect(e1)
- 	--draw
+ 	--Draw if Destroyed
  	local e2=Effect.CreateEffect(c)
  	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
  	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -19,7 +21,7 @@
  	e2:SetTarget(s.target)
  	e2:SetOperation(s.operation)
  	c:RegisterEffect(e2)
- 	--remain field
+ 	--Remains on field
  	local e3=Effect.CreateEffect(c)
  	e3:SetType(EFFECT_TYPE_SINGLE)
  	e3:SetCode(EFFECT_REMAIN_FIELD)
@@ -51,7 +53,7 @@
  			tc:RegisterEffect(e1)
  			local e2=Effect.CreateEffect(e:GetHandler())
  			e2:SetType(EFFECT_TYPE_SINGLE)
- 			e2:SetCode(EFFECT_SET_DEFENCE)
+ 			e2:SetCode(EFFECT_SET_DEFENSE)
  			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
  			e2:SetValue(0)
  			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
@@ -82,7 +84,7 @@
  		tc:RegisterEffect(e1)
  		local e2=Effect.CreateEffect(e:GetHandler())
  		e2:SetType(EFFECT_TYPE_SINGLE)
- 		e2:SetCode(EFFECT_SET_DEFENCE)
+ 		e2:SetCode(EFFECT_SET_DEFENSE)
  		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
  		e2:SetValue(0)
  		e2:SetReset(RESET_EVENT+RESETS_STANDARD)

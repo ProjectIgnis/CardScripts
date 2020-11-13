@@ -1,6 +1,5 @@
 --獣機界覇者キングコンボイ・ライガオン
 --King Convoy Ligeon, Conqueror of the Beast Gear World
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Gain ATK
@@ -22,7 +21,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,2,2,e:GetHandler())
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	if ct>1 then
@@ -50,10 +49,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_FIELD)
 		e4:SetCode(EFFECT_CANNOT_ATTACK)
-		e4:SetProperty(EFFECT_FLAG_OATH)
 		e4:SetTargetRange(LOCATION_MZONE,0)
 		e4:SetTarget(s.ftarget)
-		e4:SetLabelObject(c)
+		e4:SetLabel(c:GetFieldID())
 		e4:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e4,tp)
 		--Attack all
@@ -65,6 +63,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e5)
 	end
 end
+function s.bttg(e,c)
+	return not c:IsAttackPos()
+end
 function s.ftarget(e,c)
-	return not c==e:GetLabelObject()
+	return c:GetFieldID()~=e:GetLabel()
 end

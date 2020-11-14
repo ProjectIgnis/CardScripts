@@ -16,6 +16,9 @@ function s.initial_effect(c)
 end
 s.listed_names={160202046}
 
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,160202046),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end

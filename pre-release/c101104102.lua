@@ -5,8 +5,6 @@
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--Can only control one
-	c:SetUniqueOnField(1,0,id)
 	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -33,7 +31,9 @@ s.listed_series={0x107f,0x107e}
 	--Check for exactly 1 level 4 monster
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return #g==1 and Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsLevel,4),tp,LOCATION_MZONE,0,nil)==1
+	if #g~=1 then return false end
+	local c=g:GetFirst()
+	return c:IsFaceup() and c:IsLevel(4) and (not c:IsCode(id))
 end
 	--If an "Utopia" Xyz used this card as material
 function s.efcon(e,tp,eg,ep,ev,re,r,rp)

@@ -1,6 +1,6 @@
 --サイバース・プライド
 --Cyberse Pride
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,7 +17,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if not a:IsControler(tp) then a=Duel.GetAttackTarget() d=Duel.GetAttacker() end
-	if chkc then return chkc==a end
+	if chkc then return chkc==Duel.GetAttacker() end
 	if chk==0 then return a and d and a:IsRace(RACE_CYBERSE) end
 	Duel.SetTargetCard(a)
 end

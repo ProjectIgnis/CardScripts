@@ -29,8 +29,8 @@ end
 s.listed_series={0x107f,0x107e}
 
 	--Check for exactly 1 level 4 monster
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
+function s.spcon(e)
+	local g=Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_MZONE,0)
 	if #g~=1 then return false end
 	local c=g:GetFirst()
 	return c:IsFaceup() and c:IsLevel(4) and (not c:IsCode(id))

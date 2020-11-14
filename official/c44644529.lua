@@ -43,7 +43,7 @@ end
 	--Check "Dual Avatar" monster to special summon
 function s.spfilter(c,e,tp,tc,is_emz,has_mmz)
 	if (not c:IsSetCard(0x14e)) or (not c:IsLevelAbove(1)) or
-	   (not math.abs(c:GetOriginalLevel()-tc:GetLevel())==1) or
+	   (not (math.abs(c:GetOriginalLevel()-tc:GetLevel())==1)) or
 	   (not c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)) then
 		return false
 	end

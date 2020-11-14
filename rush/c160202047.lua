@@ -1,7 +1,9 @@
 --チャーシューティング・スター
 --Charshooting Star
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Gain LP equal to targeted monster's level x 200, then return it to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_RECOVER+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -26,12 +28,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.recfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,0)
 end
-	--Make 1 fish monster you control gain ATK
+	--Gain LP equal to targeted monster's level x 200, then return it to hand
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	--Effect
-	local g=Duel.SelectMatchingCard(tp,s.recfilter,tp,LOCATION_MZONE,0,1,2,nil)
+	local g=Duel.SelectMatchingCard(tp,s.recfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g)
 		local tc=g:GetFirst()

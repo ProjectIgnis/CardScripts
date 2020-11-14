@@ -1,8 +1,9 @@
+--ギャラクシー・ナルトローラ
 --Galaxy Narutorolla
--- ギャラクシー・ナルトローラ
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--ATK increase
+	--Make itself gain 600 ATK until end of this turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -14,20 +15,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={160202046}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
-end
-function s.fupfilter(c)
-	return c:IsFaceup() and c:IsCode(160202046)
-end
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.fupfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,160202046),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--requirement
+	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
-		--effect
+		--Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

@@ -1,6 +1,5 @@
 --ジャンク・バーサーカー (アニメ)
 --Junk Berserker (Anime)
---Scripted By Sever666
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

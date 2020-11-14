@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 		e2:SetOperation(s.checkop)
 		e2:SetLabelObject(e1)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 	end
 end

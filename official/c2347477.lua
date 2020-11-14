@@ -36,7 +36,7 @@ function s.extrafilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function s.extracon(c,e,tp,sg,mg,lc,og,chk)
-	return (sg+mg):Filter(s.extrafilter,nil,e:GetHandlerPlayer()):IsExists(Card.IsRace,og,1,RACE_CYBERSE) and
+	return (sg+mg):Filter(s.extrafilter,nil,e:GetHandlerPlayer()):IsExists(Card.IsRace,1,og,RACE_CYBERSE) and
 	sg:FilterCount(s.flagcheck,nil)<2
 end
 function s.flagcheck(c)

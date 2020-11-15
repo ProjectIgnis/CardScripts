@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_names={10000020}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsOriginalCode,10000020),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsOriginalCodeRule,10000020),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end

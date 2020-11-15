@@ -34,10 +34,10 @@ function s.initial_effect(c)
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
-	e5:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+	e5:SetCode(EVENT_BATTLE_START)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCountLimit(1)
-	e5:SetCondition(s.bancon)
+	e5:SetTarget(s.bantg)
 	e5:SetOperation(s.banop)
 	c:RegisterEffect(e5)
 end
@@ -57,14 +57,14 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-function s.bancon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local d=c:GetBattleTarget()
-	return c==Duel.GetAttacker() and d and d:IsFaceup() and not d:IsControler(tp) and d:IsAbleToRemove()
+function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local tc=e:GetHandler():GetBattleTarget()
+	if chk==0 then return tc and tc:IsControler(1-tp) and tc:IsAbleToRemove(tp) end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,0,0)
 end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttacker():GetBattleTarget()
-	if not d or not d:IsRelateToBattle() or not d:IsFaceup() then return end
+	if not d or not d:IsRelateToBattle() then return end
 	if Duel.Remove(d,0,REASON_EFFECT+REASON_TEMPORARY)==0 then return end
 	local c=e:GetHandler()
 	d:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)

@@ -609,7 +609,7 @@ end
 
 -- Description: Checks for whether the equip card still has the equip effect once it reaches SZONE
 -- This is used to correct the interaction between Phantom of Chaos (or alike) and any monsters that equip themselves to another
-function Auxiliary.EquipLimit(tc,te)
+function Auxiliary.ZWEquipLimit(tc,te)
     return function(e,c)
         if c~=tc then return false end
         local effs={e:GetHandler():GetCardEffect(101104104+EFFECT_EQUIP_LIMIT)}
@@ -636,7 +636,7 @@ function Auxiliary.EquipAndLimitRegister(c,e,tp,tc,code,previousPos)
     e1:SetType(EFFECT_TYPE_SINGLE)
     e1:SetCode(EFFECT_EQUIP_LIMIT)
     e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-    e1:SetValue(Auxiliary.EquipLimit(tc,e:GetLabelObject()))
+    e1:SetValue(Auxiliary.ZWEquipLimit(tc,e:GetLabelObject()))
     c:RegisterEffect(e1)
     return true
 end

@@ -37,7 +37,7 @@ function s.releasefilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsReleasableByEffect()
 end
 function s.spfilter(c,e,tp)
-	return s.ldlv7filter(c) and c:IsCanBeSpecialSummoned(e,0,tp,true,true,POS_FACEUP)
+	return s.ldlv7filter(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.releasefilter(chkc) end

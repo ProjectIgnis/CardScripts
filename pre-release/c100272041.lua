@@ -58,8 +58,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tc=e:GetHandler():GetBattleTarget()
-	if chk==0 then return tc and tc:IsControler(1-tp) and tc:IsAbleToRemove(tp) end
+	local c=e:GetHandler()
+	local tc=c:GetBattleTarget()
+	if chk==0 then return c==Duel.GetAttacker() and tc and tc:IsControler(1-tp) and tc:IsAbleToRemove(tp) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,0,0)
 end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)

@@ -96,7 +96,7 @@ function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.accon(e)
-	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)>0
+	return Duel.GetCustomActivityCount(id,e:GetHandlerPlayer(),ACTIVITY_CHAIN)>0
 end
 function s.aclimit(e,re,tp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) or not re:GetHandler():IsRace(RACE_DIVINE)

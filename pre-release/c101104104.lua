@@ -2,7 +2,7 @@
 --Dragonic Utopia Ray
 --Scripted by Larry126
 
-Duel.LoadCardScript("56840427.lua")
+Duel.LoadCardScript("c56840427.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz summon

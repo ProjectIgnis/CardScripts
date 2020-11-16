@@ -58,7 +58,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	local rc=re:GetHandler()
-	if rc:IsOnField() and rc:IsRelateToEffect(re) and rc:IsAbleToChangeControler() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if rc:IsOnField() and rc:IsRelateToEffect(re) and rc:IsAbleToChangeControler() then
 		Duel.SetOperationInfo(0,CATEGORY_CONTROL,eg,1,0,0)
 	end
 end
@@ -66,10 +66,6 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if Duel.NegateActivation(ev) and rc:IsOnField() and rc:IsRelateToEffect(re) and rc:IsAbleToChangeControler() then
 		Duel.BreakEffect()
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-			Duel.GetControl(rc,tp)
-		elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then
-			Duel.Destroy(rc,REASON_RULE)
-		end
+		Duel.GetControl(rc,tp)
 	end
 end

@@ -594,17 +594,12 @@ function Auxiliary.IceBarrierDiscardCost(f,discard,minc,maxc)
 	end
 end
 
---Shortcut for facing mechanic introduced with "Security Force" archetype
-	--Facing: 2 monsters in the same column, with no card inbetween (EMZ)
-function Auxiliary.SecurityTarget(e,c)
-	local tp=e:GetHandlerPlayer()
-	local sg,og=(c:GetColumnGroup()+c):Filter(Card.IsLocation,nil,LOCATION_MZONE):Split(Card.IsControler,nil,tp)
-	local g1=sg:GetMaxGroup(Card.GetSequence)
-	if not g1 then return false end
-	local g2=og:GetMaxGroup(Card.GetSequence)
-	local c1=g1:GetFirst()
-	local c2=g2:GetFirst()
-	return c1 and c2==c and c1:IsFaceup() and c1:IsSetCard(0x15a)
+--Shortcut for "Security Force" archetype's "facing"
+--(card in the same column as a security force)
+function Auxiliary.SecurityTarget(e,_c)
+    return _c:GetColumnGroup():IsExists(function(c,tp)
+											return c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x15a)
+										 end,1,_c,e:GetHandlerPlayer())
 end
 
 -- Description: Checks for whether the equip card still has the equip effect once it reaches SZONE

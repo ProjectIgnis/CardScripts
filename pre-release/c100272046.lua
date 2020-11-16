@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_HAND)
 	e3:SetRange(LOCATION_FZONE)
-	e2:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.dcon)
 	e3:SetTarget(s.dtg)
@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x259}
+
 function s.ldlv7filter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsLevel(7)
 end

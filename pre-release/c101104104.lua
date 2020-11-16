@@ -1,12 +1,15 @@
 --竜装合体 ドラゴニック・ホープレイ
 --Dragonic Utopia Ray
 --Scripted by Larry126
+
+Duel.LoadCardScript("c56840427.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,nil,5,3)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Equip
+	--Equip 1 "ZW -" monster from hand or deck to this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -28,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
-	--destroy
+	--Negate opponent's cards, up to number of "ZW -" monsters equipped
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -42,6 +45,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_series={0x107e}
+s.xyz_number=39
+
 function s.filter(c,tc,tp)
 	if not (c:IsSetCard(0x107e) and not c:IsForbidden()) then return false end
 	local effs={c:GetCardEffect(id)}

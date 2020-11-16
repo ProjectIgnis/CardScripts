@@ -1,13 +1,16 @@
---FNo.0 未来龍皇ホープ
+--ＦＮｏ．０ 未来龍皇ホープ
 --Number F0: Utopic Future Dragon
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Always treated as a "Utopic Future" card
 	c:AddSetcodesRule(0x207f)
-	--xyz summon
-	c:EnableReviveLimit()
+	--Xyz summon procedure
 	Xyz.AddProcedure(c,s.xyzfilter,nil,3,aux.FilterFaceupFunction(Card.IsCode,65305468),aux.Stringid(id,0),nil,nil,false,s.xyzcheck)
-	--indes
+	--Must be properly summoned before reviving
+	c:EnableReviveLimit()
+	--Cannot be destroyed by battle or card effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -18,7 +21,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e3)
-	--Negate
+	--Negate the activation of monster effect, take control of the monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_NEGATE+CATEGORY_CONTROL)
@@ -36,6 +39,7 @@ end
 s.listed_series={0x48}
 s.xyz_number=0
 s.listed_names={65305468}
+
 function s.xyzfilter(c,xyz,sumtype,tp)
 	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and not c:IsSetCard(0x48)
 end
@@ -60,7 +64,12 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if Duel.NegateActivation(ev) and rc:IsOnField() and rc:IsRelateToEffect(re) and rc:IsAbleToChangeControler() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-		Duel.GetControl(rc,tp)
+	if Duel.NegateActivation(ev) and rc:IsOnField() and rc:IsRelateToEffect(re) and rc:IsAbleToChangeControler() then
+		Duel.BreakEffect()
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+			Duel.GetControl(rc,tp)
+		elseif Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then
+			Duel.Destroy(rc,REASON_RULE)
+		end
 	end
 end

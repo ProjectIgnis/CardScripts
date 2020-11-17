@@ -1,3 +1,4 @@
+--地獄蟲地雷
 --Hell Vermin Mine
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsHell() and c:IsAbleToGrave()
+	return c:IsHell() and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 function s.desfilter(c)
 	return c:IsAttackPos() and c:IsDestructable()

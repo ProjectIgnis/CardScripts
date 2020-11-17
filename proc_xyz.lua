@@ -89,8 +89,8 @@ function Xyz.MatFilter2(c,f,lv,xyz,tp)
 	return Xyz.MatFilter(c,f,lv,xyz,tp)
 end
 function Xyz.MatFilter(c,f,lv,xyz,tp)
-	return (not f or f(c,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or c:IsXyzLevel(xyz,lv)) and c:IsCanBeXyzMaterial(xyz,tp) 
-		and (c:IsControler(tp) or c:IsHasEffect(EFFECT_XYZ_MATERIAL))
+	return ((not f or f(c,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or c:IsXyzLevel(xyz,lv)) and c:IsCanBeXyzMaterial(xyz,tp) 
+		and (c:IsControler(tp) or c:IsHasEffect(EFFECT_XYZ_MATERIAL))) or c:IsHasEffect(511002116)
 end
 function Xyz.SubMatFilter(c,fil,lv,xg,xyz,tp)
 	if not lv then return false end

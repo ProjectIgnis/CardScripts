@@ -22,7 +22,7 @@ function s.xyzfilter(c,sg,e,tp)
 	local ct=#sg
 	local mc=e:GetHandler()
 	local e1=nil
-	if sg:IsExists(Card.IsCode,1,nil,47198668) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if sg:IsExists(Card.IsCode,1,nil,47198668) then
 		e1=Effect.CreateEffect(mc)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
@@ -70,7 +70,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #sg<=0 then return false end
 		g=sg
 	end
-	if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) > 0 then
+	if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then
 		for tc in aux.Next(g) do
 			if tc:IsLocation(LOCATION_MZONE) then
 				s.disop(tc,e:GetHandler())
@@ -79,20 +79,30 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	else
 		return
 	end
+	Duel.AdjustInstantly(c)
 	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,g,g,e,tp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		if c:IsRelateToEffect(e) and e:IsHasType(EFFECT_TYPE_ACTIVATE) and g:IsExists(Card.IsCode,1,nil,47198668) then
+		local e1
+		if g:IsExists(Card.IsCode,1,nil,47198668) then
 			e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 			e1:SetCode(511002116)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			c:RegisterEffect(e1,true)
-			g:AddCard(c)
 		end
 		Duel.XyzSummon(tp,xyz,nil,g)
+		if e1 then
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_SPSUMMON_COST)
+			e2:SetOperation(function()
+				e1:Reset()
+			end)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			xyz:RegisterEffect(e2,true)
+		end
 	end
 end
 function s.disop(tc,c)

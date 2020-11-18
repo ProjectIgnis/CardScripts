@@ -29,15 +29,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	if Duel.DiscardDeck(tp,1,REASON_EFFECT)>0 then
-		if e:GetLabel()==0 and tc:IsType(TYPE_MONSTER) then 
+		if op==0 and tc:IsType(TYPE_MONSTER) then 
 			--Effect
 			Duel.NegateAttack()
 			Duel.Damage(1-tp,300,REASON_EFFECT)
-		elseif e:GetLabel()==1 and tc:IsType(TYPE_SPELL) then
+		elseif op==1 and tc:IsType(TYPE_SPELL) then
 			--Effect
 			Duel.NegateAttack()
 			Duel.Damage(1-tp,300,REASON_EFFECT)
-		elseif e:GetLabel()==2 and tc:IsType(TYPE_TRAP) then
+		elseif op==2 and tc:IsType(TYPE_TRAP) then
 			--Effect
 			Duel.NegateAttack()
 			Duel.Damage(1-tp,300,REASON_EFFECT)

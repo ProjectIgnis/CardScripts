@@ -18,7 +18,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	if Duel.DiscardDeck(tp,1,REASON_EFFECT)>0 then
-		if (e:GetLabel()==0 and tc:IsType(TYPE_MONSTER)) or (e:GetLabel()==1 and tc:IsType(TYPE_SPELL)) or (e:GetLabel()==2 and tc:IsType(TYPE_TRAP)) then 
+		if (op==0 and tc:IsType(TYPE_MONSTER)) or (op==1 and tc:IsType(TYPE_SPELL)) or (op==2 and tc:IsType(TYPE_TRAP)) then 
 			local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 			local tc=g:GetFirst()
 			for tc in aux.Next(g) do

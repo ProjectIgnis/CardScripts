@@ -29,7 +29,6 @@ function s.xyzfilter(c,sg,e,tp)
 		e1:SetCode(511002116)
 		e1:SetReset(RESET_CHAIN)
 		mc:RegisterEffect(e1,true)
-		sg:AddCard(mc)
 	end
 	local res=c:IsXyzSummonable(nil,sg,ct,ct) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
 	if e1 then e1:Reset() sg:RemoveCard(mc) end

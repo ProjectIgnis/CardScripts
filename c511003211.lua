@@ -16,15 +16,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and (c:GetPreviousLocation()&LOCATION_ONFIELD)~=0
+	return e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-		return #g>0 and g:FilterCount(Card.IsDiscardable,nil)==#g
-	end
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+	if chk==0 then return #g>0 and g:FilterCount(Card.IsDiscardable,nil)==#g end
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

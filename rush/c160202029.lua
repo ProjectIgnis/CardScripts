@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -27,18 +27,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
-	local tc=Duel.GetOperatedGroup():GetFirst()
-	if Duel.DiscardDeck(tp,1,REASON_EFFECT)>0 then
-		if op==0 and tc:IsType(TYPE_MONSTER) then 
-			--Effect
-			Duel.NegateAttack()
-			Duel.Damage(1-tp,300,REASON_EFFECT)
-		elseif op==1 and tc:IsType(TYPE_SPELL) then
-			--Effect
-			Duel.NegateAttack()
-			Duel.Damage(1-tp,300,REASON_EFFECT)
-		elseif op==2 and tc:IsType(TYPE_TRAP) then
-			--Effect
+	if Duel.DiscardDeck(1-tp,1,REASON_EFFECT)>0 then
+		local tc=Duel.GetOperatedGroup():GetFirst()
+		if tc and tc:IsLocation(LOCATION_GRAVE) and
+			((op==0 and tc:IsType(TYPE_MONSTER)) or (op==1 and tc:IsType(TYPE_SPELL)) or (op==2 and tc:IsType(TYPE_TRAP))) then
 			Duel.NegateAttack()
 			Duel.Damage(1-tp,300,REASON_EFFECT)
 		end

@@ -26,7 +26,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
+	local op=Duel.SelectOption(1-tp,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
 	if Duel.DiscardDeck(1-tp,1,REASON_EFFECT)>0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		if tc and tc:IsLocation(LOCATION_GRAVE) and

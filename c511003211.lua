@@ -20,7 +20,10 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_DESTROY) and (c:GetPreviousLocation()&LOCATION_ONFIELD)~=0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 end
+	if chk==0 then
+		local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+		return #g>0 and g:FilterCount(Card.IsDiscardable,nil)==#g
+	end
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 end

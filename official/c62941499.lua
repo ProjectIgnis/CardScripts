@@ -79,7 +79,7 @@ local function groupfrombit(bit,p)
 	return g
 end
 function s.filter(c)
-	return not c:IsLocation(LOCATION_FZONE) and not (not Duel.IsDuelType(DUEL_SEPARATE_PZONE) and c:IsLocation(LOCATION_PZONE))
+	return not c:IsLocation(LOCATION_FZONE) and not (Duel.IsDuelType(DUEL_SEPARATE_PZONE) and c:IsLocation(LOCATION_PZONE))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)

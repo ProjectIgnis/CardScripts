@@ -1,9 +1,10 @@
 --聖杯の継承
 --Heritage of the Chalice
 --Scripted by ahtelel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Add 1 "Noble Knight" monster or "Noble Arms" card from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--to hand
+	--Add this card from GY to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -32,6 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x107a,0x207a}
+
 function s.filter(c)
 	return ((c:IsSetCard(0x107a) and c:IsType(TYPE_MONSTER)) or c:IsSetCard(0x207a)) and c:IsAbleToHand()
 end
@@ -47,19 +49,20 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.checkfilter(c)
-	return c:IsSetCard(0x107a) and c:IsReason(REASON_BATTLE) and c:GetEquipCount()>0 and c:GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x207a)
+function s.checkfilter(c,tp)
+	return c:IsSetCard(0x107a) and c:IsReason(REASON_BATTLE) and c:GetEquipCount()>0 and c:GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x207a) and c:IsControler(tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if eg:IsExists(s.checkfilter,1,nil) then Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,nil,0,rp,ep,ev) end
+	if eg:IsExists(s.checkfilter,1,nil,tp) then Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,nil,0,rp,ep,ev) end
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) then
+		Duel.SendtoHand(c,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,c)
 	end
 end
-

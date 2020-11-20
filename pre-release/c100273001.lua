@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-		e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetCondition(s.atkcon)
 		e1:SetTarget(s.atktg)
 		e1:SetReset(RESET_PHASE+PHASE_END)
@@ -53,14 +53,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkcon(e)
-	return Duel.GetFlagEffect(tp,id)>0
+	return Duel.GetFlagEffect(e:GetHandlerPlayer(),id)>0
 end
 function s.atktg(e,c)
 	return c:GetFieldID()~=e:GetLabel()
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,id)>0 then return end
+	local a=eg:GetFirst()
+	if Duel.GetFlagEffect(tp,id)>0 or not a:IsControler(tp) then return end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-	local fid=eg:GetFirst():GetFieldID()
-	e:GetLabelObject():SetLabel(fid)
+	e:GetLabelObject():SetLabel(a:GetFieldID())
 end

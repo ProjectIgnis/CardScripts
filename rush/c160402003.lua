@@ -38,7 +38,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
 		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsAbleToHand),tp,0,LOCATION_MZONE,1,1,nil)
 		if #g>0 then
-			g=g:CreateMaximumGroup()
+			g=g:AddMaximumCheck()
 			Duel.HintSelection(g)
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 		end

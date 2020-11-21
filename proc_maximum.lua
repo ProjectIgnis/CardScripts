@@ -331,7 +331,8 @@ end
 function Auxiliary.FilterMaximumSideFunctionEx(f,...)
 	local params={...}
 	return 	function(target)
-				 return (not (target:IsMaximumMode() and not target:IsMaximumModeCenter())) 
+				 return 
+				 ((not target:IsMaximumMode()) or (not (target:IsMaximumMode() and not target:IsMaximumModeCenter()))) 
 				 and f(target,table.unpack(params))
 			end
 end

@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter2),tp,0,LOCATION_MZONE,1,1,nil,e)
 	g1:Merge(g2)
 	if #g1==3 then
-		g1=g1:CreateMaximumGroup()
+		g1=g1:AddMaximumCheck()
 		Duel.Destroy(g1,REASON_EFFECT)
 	end
 end

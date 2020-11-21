@@ -33,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsAbleToHand),tp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
-		g=g:CreateMaximumGroup()
+		g=g:AddMaximumCheck()
 		Duel.HintSelection(g)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		local g=Duel.GetMatchingGroup(s.posfilter,tp,LOCATION_MZONE,0,nil)

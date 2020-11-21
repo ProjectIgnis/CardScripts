@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local dg=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,e:GetHandler())
 		if #dg>0 then
 			local sg=dg:Select(tp,1,1,nil)
-			sg=sg:CreateMaximumGroup()
+			sg=sg:AddMaximumCheck()
 			Duel.HintSelection(sg)
 			if Duel.Destroy(sg,REASON_EFFECT)>0 then
 				Duel.Draw(1-tp,1,REASON_EFFECT)

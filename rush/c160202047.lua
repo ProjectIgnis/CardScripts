@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.recfilter),tp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
-		g=g:CreateMaximumGroup()
+		g=g:AddMaximumCheck()
 		Duel.HintSelection(g)
 		local tc=g:GetFirst()
 		local rec=tc:GetLevel()*200

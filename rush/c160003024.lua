@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.SendtoDeck(cg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==2 and #sg2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			local tg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,1,nil)
 			if #tg>0 then 
-				tg=tg:CreateMaximumGroup()
+				tg=tg:AddMaximumCheck()
 				Duel.Destroy(tg,REASON_EFFECT) end
 		end
 	end

@@ -28,7 +28,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=g:Select(tp,1,2,nil)
-		sg=sg:CreateMaximumGroup()
+		sg=sg:AddMaximumCheck()
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end

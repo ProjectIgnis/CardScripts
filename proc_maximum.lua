@@ -331,7 +331,8 @@ end
 function Auxiliary.FilterMaximumSideFunctionEx(f,...)
 	local params={...}
 	return 	function(target)
-				 return (not target:IsMaximumModeSide()) and f(target,table.unpack(params))
+				 return (not (target:IsMaximumMode() and not target:IsMaximumModeCenter())) 
+				 and f(target,table.unpack(params))
 			end
 end
 -- function that return the count of a location P1 et P2 minus the Maximum Side

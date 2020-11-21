@@ -11,8 +11,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+function s.filter(c)
+	return c:IsFaceup() and c:IsLevelAbove(7)	
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(aux.FilterFaceupFunction(Card.IsLevelAbove,7)),tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(500)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
@@ -21,7 +24,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	--Effect
-	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(aux.FilterFaceupFunction(Card.IsLevelAbove,7)),tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g)
 		local tc=g:GetFirst()

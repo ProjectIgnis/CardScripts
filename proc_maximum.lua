@@ -355,15 +355,14 @@ end
 function Card.RegisterEffectRush(c,eff)
 	if c:IsMaximumMode() then
 		local g=Duel.GetMatchingGroup(Card.IsMaximumMode,c:GetControler(),LOCATION_MZONE,0,nil)
-		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
 			tc:RegisterEffect(eff)
 		end
 	else
-		c:RegisterEffect(e1)
+		c:RegisterEffect(eff)
 	end
 end
---maximum summon only in attack
+-- summon only in attack
 local function initial_effect()
     local e1=Effect.GlobalEffect()
     e1:SetType(EFFECT_TYPE_FIELD)

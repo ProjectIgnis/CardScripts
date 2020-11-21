@@ -37,6 +37,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct*(-400))
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		g:GetFirst():RegisterEffect(e1)
+		g:GetFirst():RegisterEffectRush(e1)
 	end
 end

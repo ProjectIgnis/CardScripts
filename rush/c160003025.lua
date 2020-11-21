@@ -24,16 +24,16 @@ function s.atkfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:GetAttack()>0 and c:IsLevelBelow(7)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,0,LOCATION_MZONE,1,e:GetHandler()) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoGrave(tg,nil,REASON_COST)==1 then
-		local g=Duel.GetMatchingGroup(s.atkfilter,tp,0,LOCATION_MZONE,nil)
+		local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,0,LOCATION_MZONE,nil)
 		if #g>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local g2=Duel.SelectMatchingCard(tp,s.atkfilter,tp,0,LOCATION_MZONE,1,2,nil)
+			local g2=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,0,LOCATION_MZONE,1,2,nil)
 			if #g2>0 then
 				for tc in aux.Next(g2) do
 					local e1=Effect.CreateEffect(c)
@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 					e1:SetCode(EFFECT_UPDATE_ATTACK)
 					e1:SetValue(-1500)
 					e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-					tc:RegisterEffect(e1)
+					tc:RegisterEffectRush(e1)
 				end
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)

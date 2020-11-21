@@ -28,7 +28,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsAbleToHand),tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -36,8 +36,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST)>0 then
 		--effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
-		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsAbleToHand),tp,0,LOCATION_MZONE,1,1,nil)
 		if #g>0 then
+			g=g:CreateMaximumGroup()
 			Duel.HintSelection(g)
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 		end

@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.desfilter(chkc) and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,0,LOCATION_ONFIELD,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_ONFIELD,e:GetHandler())
+	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_ONFIELD,e:GetHandler())
 	if #g>0 then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	end
@@ -38,8 +38,10 @@ function s.chlimit(e,ep,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--effect
-	local tc=Duel.SelectMatchingCard(tp,s.desfilter,tp,0,LOCATION_ONFIELD,1,1,nil):GetFirst()
-	if tc then
+	local dg=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,nil)
+	local sg=dg:Select(tp,1,1,nil)
+	if #sg>0 then
+		sg=sg:CreateMaximumGroup()
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

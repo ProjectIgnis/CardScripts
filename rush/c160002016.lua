@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			e1:SetValue(-400)
-			tc:RegisterEffect(e1)
+			tc:RegisterEffectRush(e1)
 			local ct=Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_GRAVE,0,nil,RACE_SPELLCASTER)
 			if ct>0 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,160301001),tp,LOCATION_MZONE,0,1,nil) then
 				local e2=Effect.CreateEffect(c)
@@ -40,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e2:SetCode(EFFECT_UPDATE_ATTACK)
 				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 				e2:SetValue(-100*ct)
-				tc:RegisterEffect(e2)
+				tc:RegisterEffectRush(e2)
 			end
 		end
 	end

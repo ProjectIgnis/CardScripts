@@ -17,7 +17,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
-function s.sfilter(c,id)
+function s.sfilter(c)
 	return c:IsCode(160003022,160003023) and c:IsAbleToDeck()
 end
 function s.rescon(sg,e,tp,mg)
@@ -38,9 +38,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,0,nil)
 	if aux.SelectUnselectGroup(sg,1,tp,2,2,s.rescon,0,tp) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		local cg=aux.SelectUnselectGroup(sg,1,tp,2,2,s.rescon,1,tp)
-		if Duel.SendtoDeck(cg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==2 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-			local tg=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsDefenseBelow,1500),tp,0,LOCATION_MZONE,1,1,nil)
-			if #tg>0 then Duel.Destroy(tg,REASON_EFFECT) end
+		local sg2=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
+		if Duel.SendtoDeck(cg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==2 and #sg2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+			local tg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,1,nil)
+			if #tg>0 then 
+				tg=tg:CreateMaximumGroup()
+				Duel.Destroy(tg,REASON_EFFECT) end
 		end
 	end
+end
+function s.desfilter(c)
+	return c:IsDefenseBelow(1500) and c:IsFaceup()
 end

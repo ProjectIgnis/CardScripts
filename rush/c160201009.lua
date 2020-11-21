@@ -14,12 +14,12 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.HasDefense),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.HasDefense),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetTargetCard(g)
 end
 function s.filter(c,e)
-	return c:IsFaceup() and c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e)
+	return c:IsFaceup() and c:IsRelateToEffect(e) and c:HasDefense() and not c:IsImmuneToEffect(e)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)

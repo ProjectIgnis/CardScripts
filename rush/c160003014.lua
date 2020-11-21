@@ -22,7 +22,13 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,1),tp,0,LOCATION_MZONE,1,nil) end
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	local sg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,0,nil)
+	if chk==0 then return 
+		Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,1),tp,0,LOCATION_MZONE,1,nil) 
+		or
+		(ft>0 and #sg>0)
+	end
 end
 function s.sfilter(c)
 	return c:IsCode(76103675,160301014) and c:IsSSetable()
@@ -46,15 +52,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetCode(EFFECT_UPDATE_ATTACK)
 				e1:SetValue(-500)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				g:GetFirst():RegisterEffect(e1)
-				--set cards
-				local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-				local sg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,0,nil)
-				if ft>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-					Duel.BreakEffect()
-					local tg=aux.SelectUnselectGroup(sg,1,tp,1,ft,s.rescon,1,tp)
-					Duel.SSet(tp,tg)
-				end
+				g:GetFirst():RegisterEffectRush(e1)
+			end
+			--set cards
+			local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+			local sg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,0,nil)
+			if ft>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+				Duel.BreakEffect()
+				local tg=aux.SelectUnselectGroup(sg,1,tp,1,ft,s.rescon,1,tp)
+				Duel.SSet(tp,tg)
 			end
 		end
 	end

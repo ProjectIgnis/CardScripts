@@ -25,7 +25,7 @@ function s.recfilter(c)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.recfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.recfilter),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,0)
 end
 	--Gain LP equal to targeted monster's level x 200, then return it to hand
@@ -33,14 +33,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	--Effect
-	local g=Duel.SelectMatchingCard(tp,s.recfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.recfilter),tp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
+		g=g:CreateMaximumGroup()
 		Duel.HintSelection(g)
 		local tc=g:GetFirst()
 		local rec=tc:GetLevel()*200
 		if Duel.Recover(tp,rec,REASON_EFFECT)>0 then
 			Duel.BreakEffect()
-            Duel.SendtoHand(tc,nil,REASON_EFFECT)
+            Duel.SendtoHand(g,nil,REASON_EFFECT)
             Duel.ConfirmCards(1-tp,e:GetHandler())
 		end
 	end

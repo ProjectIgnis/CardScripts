@@ -21,18 +21,18 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
-	if chk==0 then return #g>0 and Duel.IsPlayerCanDraw(tp,#g) end
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,#g)
+	local ct=Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)
+	if chk==0 then return ct>0 and Duel.IsPlayerCanDraw(tp,ct) end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
 		--Effect
-		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
-		if #g>0 then
-			if Duel.Draw(tp,#g,REASON_EFFECT)>0 then
+		local ct=Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)
+		if ct>0 then
+			if Duel.Draw(tp,ct,REASON_EFFECT)>0 then
 				Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 				local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,#g,#g,nil)
 				local opt=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))

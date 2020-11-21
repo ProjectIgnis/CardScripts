@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 			e1:SetValue(ATTRIBUTE_LIGHT)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e1,true)
+			tc:RegisterEffectRush(e1,true)
 		end
 	end
 end

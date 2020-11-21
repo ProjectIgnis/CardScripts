@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter1(c,e)
-	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsDestructable(e)
+	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsNotMaximumSide() and c:IsDestructable(e)
 end
 function s.filter2(c,e)
-	return c:IsFaceup() and c:HasLevel() and c:IsLevelBelow(8) and c:IsDestructable(e)
+	return c:IsFaceup() and c:HasLevel() and c:IsLevelBelow(8) and c:IsNotMaximumSide() and c:IsDestructable(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_MZONE,0,nil,e)
@@ -27,11 +27,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_MZONE,0,2,2,nil,e)
+	local g1=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter1),tp,LOCATION_MZONE,0,2,2,nil,e)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g2=Duel.SelectMatchingCard(tp,s.filter2,tp,0,LOCATION_MZONE,1,1,nil,e)
+	local g2=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter2),tp,0,LOCATION_MZONE,1,1,nil,e)
 	g1:Merge(g2)
 	if #g1==3 then
+		g1=g1:CreateMaximumGroup()
 		Duel.Destroy(g1,REASON_EFFECT)
 	end
 end

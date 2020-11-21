@@ -46,13 +46,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-200)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			g:GetFirst():RegisterEffect(e1)
+			g:GetFirst():RegisterEffectRush(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)
 			e2:SetValue(-200)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			g:GetFirst():RegisterEffect(e2)
+			g:GetFirst():RegisterEffectRush(e2)
 		end
 	end
 end

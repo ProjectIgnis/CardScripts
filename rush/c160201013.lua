@@ -19,8 +19,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tc:IsFaceup() and tc:IsSummonPlayer(1-tp) and #g>1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil) end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsAbleToHand),tp,0,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsAbleToHand),tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 	Duel.SetChainLimit(s.chlimit)
 end
@@ -31,8 +31,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsAbleToHand),tp,LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
+		g=g:CreateMaximumGroup()
 		Duel.HintSelection(g)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		local g=Duel.GetMatchingGroup(s.posfilter,tp,LOCATION_MZONE,0,nil)

@@ -34,15 +34,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(g,REASON_COST)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc1=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
+	local tc1=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter1),tp,LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc2=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,tc1,tc1:GetLevel()):GetFirst()
+	local tc2=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter2),tp,LOCATION_MZONE,0,1,1,tc1,tc1:GetLevel()):GetFirst()
 	local g=Group.FromCards(tc1,tc2)
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_PIERCE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)
+		tc:RegisterEffectRush(e1)
 	end
 end

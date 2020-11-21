@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.rvfilter(c)
 	return c:IsType(TYPE_MONSTER) and not c:IsPublic()
-		and Duel.IsExistingMatchingCard(s.attfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
+		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.attfilter),tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
 end
 function s.attfilter(c,att)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and not c:IsAttribute(att)
@@ -26,8 +26,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tg then
 		Duel.ConfirmCards(1-tp,tg)
 		Duel.ShuffleHand(tp)
-		if Duel.GetMatchingGroupCount(s.attfilter,tp,0,LOCATION_MZONE,nil,tg:GetAttribute())>0 then
-			local g=Duel.SelectMatchingCard(tp,s.attfilter,tp,0,LOCATION_MZONE,1,3,nil,tg:GetAttribute())
+		if Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.attfilter),tp,0,LOCATION_MZONE,nil,tg:GetAttribute())>0 then
+			local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.attfilter),tp,0,LOCATION_MZONE,1,3,nil,tg:GetAttribute())
 			if g and #g>0 then
 				for tc in aux.Next(g) do
 					local e1=Effect.CreateEffect(e:GetHandler())
@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 					e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 					e1:SetValue(tg:GetAttribute())
 					e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-					tc:RegisterEffect(e1)
+					tc:RegisterEffectRush(e1)
 				end
 			end
 		end

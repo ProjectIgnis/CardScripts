@@ -17,7 +17,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_NORMAL) and c:IsStatus(STATUS_SUMMON_TURN)
-		and  Duel.GetMatchingGroupCount(aux.TRUE,tp,0,LOCATION_MZONE,nil)==3
+		and Duel.GetFieldGroupCountRush(tp,0,LOCATION_SZONE)
 end
 function s.filter(c,e,sp)
 	return c:IsRace(RACE_BEASTWARRIOR) and c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,sp,false,false,POS_FACEUP)

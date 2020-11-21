@@ -17,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_DARK_MAGICIAN),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local dg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
+	local dg=Duel.GetMatchingGroup(Card.IsNotMaximumSide,tp,0,LOCATION_MZONE,nil)
 	if chkc then return chkc:IsOnField() and chkc~=e:GetHandler() end
 	if chk==0 then return #dg>0 end
 end
@@ -25,9 +25,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	-- requirement
 	
 	-- effect
-	local dg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
+	local dg=Duel.GetMatchingGroup(Card.IsNotMaximumSide,tp,0,LOCATION_MZONE,nil)
 	if dg and #dg>0 then
 		local sg=dg:Select(tp,1,1,nil)
+		sg=sg:CreateMaximumGroup()
 		Duel.HintSelection(sg)
 		Duel.Destroy(sg,REASON_EFFECT)
 	end

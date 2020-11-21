@@ -4,6 +4,7 @@ function s.initial_effect(c)
 	--ATK increase
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.maxCon(e)
 	--maximum mode check to do
-	return e:GetHandler():IsMaximumModeCenter() and not e:GetHandler():HasUsedIgnition(id)
+	return e:GetHandler():IsMaximumModeCenter()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end

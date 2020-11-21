@@ -1,6 +1,7 @@
---「氷結界の霜精」」
+--氷結界の霜精
 --Frost Spirit of the Ice Barrier
 --Scripted by The Razgriz
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--ATK/DEF down

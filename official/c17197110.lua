@@ -1,6 +1,8 @@
 --緊急発進
 --The Calm After the Ice Barrier’s Storm
---scripted by Logical Nonsense
+--Logical Nonsense
+
+--Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon level 4 or lower "Ice Barrier" monsters from deck
@@ -19,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(aux.exccon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.thtg)

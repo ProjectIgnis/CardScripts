@@ -1,9 +1,10 @@
 --アルカナリーディング
 --Arcana Reading
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Flip a coin, apply appropriate effect base on result
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_COIN)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Normal Summon 1 "Arcan Force" monster
+	--Normal summon 1 "Arcana Force" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SUMMON)
@@ -28,11 +29,12 @@ end
 s.toss_coin=true
 s.listed_names={73206827}
 s.listed_series={0x5}
+
 function s.thfilter(c)
 	return c.toss_coin and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) and
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) or
 		Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_DECK,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,nil,LOCATION_DECK)

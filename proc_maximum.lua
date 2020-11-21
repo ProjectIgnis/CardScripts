@@ -356,7 +356,8 @@ function Card.RegisterEffectRush(c,eff)
 	if c:IsMaximumMode() then
 		local g=Duel.GetMatchingGroup(Card.IsMaximumMode,c:GetControler(),LOCATION_MZONE,0,nil)
 		for tc in aux.Next(g) do
-			tc:RegisterEffect(eff)
+			local eff2=eff:Clone()
+			tc:RegisterEffect(eff2)
 		end
 	else
 		c:RegisterEffect(eff)

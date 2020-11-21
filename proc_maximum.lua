@@ -387,7 +387,7 @@ function Maximum.tribcon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(Maximum.cfilter,1,nil,tp)
 end
 function Maximum.tribop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,eg:GetFirst():GetControler(),LOCATION_MZONE,0,nil)
 	Duel.Sendto(g,eg:GetFirst():GetDestination(),nil)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
@@ -400,7 +400,7 @@ function Maximum.battlecon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_BATTLE)
 end
 function Maximum.battleop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,eg:GetFirst():GetControler(),LOCATION_MZONE,0,nil)
 	Duel.Sendto(g,eg:GetFirst():GetDestination(),nil)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do

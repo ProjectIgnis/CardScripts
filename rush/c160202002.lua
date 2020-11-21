@@ -18,7 +18,7 @@ function s.filter1(c)
 	return c:IsCode(160202001)
 end
 function s.filter2(c)
-	return c:IsCode(170000003)
+	return c:IsCode(160202003)
 end
 function s.indcon(e)
 	--maximum mode check to do

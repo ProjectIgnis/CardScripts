@@ -125,10 +125,10 @@ function Card.IsMaximumMode(c)
 	return c:IsMaximumModeCenter() or c:IsMaximumModeSide()
 end
 function Card.IsMaximumModeCenter(c)
-	return c:GetFlagEffect(FLAG_MAXIMUM_CENTER)>0
+	return c:IsLocation(LOCATION_MZONE) and c:GetFlagEffect(FLAG_MAXIMUM_CENTER)>0
 end
 function Card.IsMaximumModeSide(c)
-	return c:GetFlagEffect(FLAG_MAXIMUM_SIDE)>0
+	return c:IsLocation(LOCATION_MZONE) and c:GetFlagEffect(FLAG_MAXIMUM_SIDE)>0
 end
 --I used Gemini as a reference for that function, while waiting for more information
 function Auxiliary.IsMaximumMode(effect)

@@ -360,7 +360,7 @@ function Card.RegisterEffectRush(c,eff)
 			tc:RegisterEffect(eff)
 		end
 	else
-		tc:RegisterEffect(e1)
+		c:RegisterEffect(e1)
 	end
 end
 --maximum summon only in attack

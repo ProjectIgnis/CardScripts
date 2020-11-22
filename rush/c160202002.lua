@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.indcon)
 	e1:SetValue(s.indval)
 	c:RegisterEffect(e1)
+	c:AddCenterToSideEffectHandler(e1)
 	c:AddMaximumAtkHandler()
 end
 s.MaximumAttack=3500

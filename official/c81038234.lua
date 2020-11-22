@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetCountLimit(1,id)
-	e3:SetCondition(s.condition)
+	e3:SetCondition(Duel.IsMainPhase)
 	e3:SetCost(s.cost)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
@@ -43,10 +43,6 @@ s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
 	--Check if a "Dream Mirror" is tributing itself as cost
 function s.reptg(e,c)
 	return c:IsSetCard(0x131) and c:IsReason(REASON_COST) and c:GetReasonEffect():GetHandler()==c
-end
-	--Check if it's during the Main Phase
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 	--Send this face-up card to GY as cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

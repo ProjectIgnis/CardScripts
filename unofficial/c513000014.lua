@@ -1,5 +1,5 @@
---TG ハルバード・キャノン
---T.G. Halberd Cannon anime
+--TG ハルバード・キャノン (Anime)
+--T.G. Halberd Cannon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -72,9 +72,10 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_DESTROY)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_SUMMON)
-	e1:SetCountLimit(ct,id)
+	e1:SetCountLimit(ct,0,EFFECT_COUNT_CODE_SINGLE)
 	e1:SetCondition(s.discon)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)

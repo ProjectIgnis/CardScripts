@@ -526,7 +526,7 @@ if not GenerateEffect then
 			if r&REASON_BATTLE==REASON_BATTLE then
 				return tg(e,tp,eg:Filter(GenerateEffect.replaceFilter,nil,e),ep,ev,re,r,rp,chk)
 			else
-				return tg(e,tp,e,ep,ev,re,r,rp,chk)
+				return tg(e,tp,eg,ep,ev,re,r,rp,chk)
 			end
 		end
 	end

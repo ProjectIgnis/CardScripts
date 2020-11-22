@@ -1,8 +1,9 @@
 --背誤射撃
 --Rear Misfire
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Destroy 1 of opponent's level 6 or lower effect monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -37,11 +38,11 @@ function s.chlimit(e,ep,tp)
 	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	--effect
+	--Effect
 	local dg=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,nil)
 	local sg=dg:Select(tp,1,1,nil)
 	if #sg>0 then
 		sg=sg:AddMaximumCheck()
-		Duel.Destroy(tc,REASON_EFFECT)
+		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end

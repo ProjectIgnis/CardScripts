@@ -1,6 +1,7 @@
 --エレキック・アンプル
 --Elechic Ampoule
 --scripted by pyrQ
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,8 +25,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.recfilter),tp,LOCATION_MZONE,0,1,2,nil)
 	local atk=0
-	local tc=tg:GetFirst()
-	for tc in aux.Next(tg) do
+	local tc=g:GetFirst()
+	for tc in aux.Next(g) do
 		atk=atk+tc:GetAttack()
 	end
 	Duel.Recover(tp,atk,REASON_EFFECT)

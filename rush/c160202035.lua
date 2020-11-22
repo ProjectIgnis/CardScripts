@@ -1,7 +1,9 @@
 --サンダービート・ゲイン
 --Thunderbeat Gain
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Gain LP equal to 1 of opponent's monster's ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_RECOVER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -15,7 +17,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_THUNDER)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
+	return Duel.GetAttacker():IsControler(1-tp)
 		and Duel.GetAttacker():IsAttackAbove(Duel.GetLP(tp))
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
@@ -36,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	--Effect
-	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.recfilter),tp,0,recfilter,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.recfilter),tp,0,LOCATION_MZONE,1,1,nil)
 	if #g>0 then
 		g=g:AddMaximumCheck()
 		Duel.HintSelection(g)

@@ -1,4 +1,6 @@
+--猫の目
 --Cat's Eyes
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +16,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local op=Duel.SelectOption(1-tp,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
+	local op=Duel.SelectOption(1-tp,aux.Stringid(id,0),aux.Stringid(id,1),aux.Stringid(id,2))
 	if Duel.DiscardDeck(1-tp,1,REASON_EFFECT)>0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		if tc and tc:IsLocation(LOCATION_GRAVE) and

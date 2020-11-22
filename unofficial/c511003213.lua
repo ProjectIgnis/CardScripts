@@ -44,7 +44,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		tc:RegisterEffect(e2)
 	end
-	
 end
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	 local c=e:GetLabelObject()

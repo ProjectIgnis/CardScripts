@@ -338,8 +338,11 @@ function Auxiliary.FilterMaximumSideFunctionEx(f,...)
 end
 -- function that return the count of a location P1 et P2 minus the Maximum Side
 function Duel.GetFieldGroupCountRush(player, p1, p2)
-	local maxi=Duel.GetMatchingGroupCount(Card.IsMaximumModeSide,player,p1,p2,nil)
-	return Duel.GetFieldGroupCount(player,p1,p2)-maxi
+	return Duel.GetMatchingGroupCount(Maximum.GroupCountFunction,player,p1,p2,nil)
+end
+--function used only in Duel.GetFieldGroupCountRush because the old implementation did not wanted to work
+function Maximum.GroupCountFunction(c)
+	return ((not c:IsMaximumMode()) or (not (c:IsMaximumMode() and not c:IsMaximumModeCenter()))) 
 end
 --function that add every parts of the Maximum Mode monster to the group
 function Group.AddMaximumCheck(group)

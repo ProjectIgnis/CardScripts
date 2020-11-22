@@ -351,7 +351,7 @@ function Group.AddMaximumCheck(group)
 	local tc=g:GetFirst()
 	for tc in aux.Next(group) do
 		if tc:IsMaximumMode() then
-			local g2=Duel.GetMatchingGroup(Card.IsMaximumMode,c:GetControler(),LOCATION_MZONE,0,tc)
+			local g2=Duel.GetMatchingGroup(Card.IsMaximumMode,tc:GetControler(),LOCATION_MZONE,0,tc)
 			g:Merge(g2)
 		end
 	end

@@ -83,14 +83,17 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,true,POS_FACEUP)
 	end
 end
+function s.filter(c,tp)
+	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and not c:IsControler(tp)
+end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainDisablable(ev)
 		or Duel.GetCurrentPhase()==PHASE_DAMAGE and Duel.IsDamageCalculated() then return false end
 	for i=0,5 do --Loop through CATEGORY_DESTROY/RELEASE/REMOVE/TOHAND/TODECK/TOGRAVE
 		local cate=2^i
 		local ex,tg,tc=Duel.GetOperationInfo(ev,cate)
-		if ex and tg~=nil and tc+tg:FilterCount(aux.FilterFaceupFunction(Card.IsLocation,LOCATION_MZONE),nil)-#tg>0 then
-			local g=tg:Filter(aux.FilterFaceupFunction(Card.IsLocation,LOCATION_MZONE),nil)
+		if ex and tg~=nil and tc+tg:FilterCount(s.filter,nil,tp)-#tg>0 then
+			local g=tg:Filter(s.filter,nil,tp)
 			g:KeepAlive()
 			e:SetLabelObject(g)
 			return true

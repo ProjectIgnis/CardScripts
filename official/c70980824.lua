@@ -1,11 +1,13 @@
 --氷結界の還零龍 トリシューラ
 --Trishula, Subzero Dragon of the Ice Barrier
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Synchro summon
+	--Synchro summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),2,99)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Remove
+	--When synchro summoned, banish up to 3 of opponent's cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -15,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
-	--Special summon
+	--Special summon "Trishula, Dragon of the Ice Barrier" from extra deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -46,7 +48,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_SYNCHRO)
 		and (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)))
-		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
+		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(52687916) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -81,18 +81,20 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.BreakEffect()
-		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-			local sc=sg:GetFirst()
-			if sc then
-				aux.ToHandOrElse(sc,tp,function(c)
-											return sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-										end,
-										function(c)
-											return Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
-										end,
-				aux.Stringid(id,0))
+		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
+			if Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+				local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+				local sc=sg:GetFirst()
+				if sc then
+					aux.ToHandOrElse(sc,tp,function(c)
+												return sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+											end,
+											function(c)
+												return Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
+											end,
+					aux.Stringid(id,0))
+				end
 			end
 		else
 			Duel.SendtoGrave(tc,REASON_EFFECT)

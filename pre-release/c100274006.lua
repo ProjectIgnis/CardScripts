@@ -1,6 +1,7 @@
 --シェル・ナイト
 --Shell Knight
 --Scripted by The Razgriz
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--To Defense on Normal Summon/Damage
@@ -29,7 +30,8 @@ function s.initial_effect(c)
 	e3:SetCondition(s.thcon)
 	c:RegisterEffect(e3)
 end
-s.listed_names={id,CARD_FOSSIL_FUSION}
+s.listed_names={CARD_FOSSIL_FUSION}
+
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return e:GetHandler():IsAttackPos() end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
@@ -42,7 +44,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,e,tp,chk)
-	return c:IsLevel(8) and c:IsRace(RACE_ROCK) and (c:IsAbleToHand() or (chk and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return c:IsLevel(8) and c:IsRace(RACE_ROCK) and (c:IsAbleToHand() or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
@@ -51,19 +53,16 @@ function s.gycon(c)
 	return c:IsCode(CARD_FOSSIL_FUSION)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	if chk==0 then
-		local ck=Duel.IsExistingMatchingCard(s.gycon,tp,LOCATION_GRAVE,0,1,nil)
-		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,ck)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if Duel.IsExistingMatchingCard(s.gycon,tp,LOCATION_GRAVE,0,1,nil) then
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local ck=Duel.IsExistingMatchingCard(s.gycon,tp,LOCATION_GRAVE,0,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,ck):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc then
 		if ck and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 		and (not tc:IsAbleToHand() or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then

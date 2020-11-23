@@ -20,7 +20,7 @@ end
 function s.filter(c,e,tp,g,ft)
 	return (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp))
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
-		and c:IsCanBeEffectTarget(e) and c:HasLevel()
+		and c:IsCanBeEffectTarget(e) and c:HasLevel() and not c:IsType(TYPE_TOKEN)
 end
 	--Check for a monster to special summon
 function s.spfilter(c,e,tp)

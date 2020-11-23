@@ -85,7 +85,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 			if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local sc=sg:Select(tp,1,1,nil)
+				local sc=sg:Select(tp,1,1,nil):GetFirst()
 				aux.ToHandOrElse(sc,tp,function(c)
 											return sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 										end,

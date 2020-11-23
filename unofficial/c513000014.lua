@@ -75,7 +75,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_SUMMON)
-	e1:SetCountLimit(ct,0,EFFECT_COUNT_CODE_SINGLE)
 	e1:SetCondition(s.discon)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
@@ -90,7 +89,8 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterFlagEffect(label,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0
+	local c=e:GetHandler()
+	return Duel.GetCurrentChain()==0 and c:GetFlagEffect(id)<=c:GetMaterialCount()-1
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -103,6 +103,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	Duel.NegateSummon(eg)
 	Duel.Destroy(eg,REASON_EFFECT)
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,0)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousPosition(POS_FACEUP) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

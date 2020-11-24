@@ -35,7 +35,7 @@ function s.filter(c,tp)
 	return c:IsFaceup() and c:IsLevelBelow(8) and not Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil,lvl)
 end
 function s.cfilter(c,lvl)
-	return c:IsFaceup() and c:GetLevel()<lvl 
+	return c:IsFaceup() and c:GetLevel()<lvl and not c:IsMaximumMode()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil,tp)
@@ -58,7 +58,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(tc:GetAttack())
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			c:RegisterEffect(e1)
-			Duel.Destroy(tc,REASON_EFFECT)
+			Duel.Destroy(g,REASON_EFFECT)
 		end
 	end
 end

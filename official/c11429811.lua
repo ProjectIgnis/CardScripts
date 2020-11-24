@@ -26,8 +26,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not eg or #eg<1 then return end
+	local g=eg:Filter(Card.IsLocation,nil,LOCATION_MZONE):Filter(Card.IsFaceup,nil)
 	local c=e:GetHandler()
-	for tc in aux.Next(eg) do
+	for tc in aux.Next(g) do
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		--Negate the effects of the summoned monster(s)
 		local e1=Effect.CreateEffect(c)
@@ -47,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e3)
 		--Cannot be used as material for a Fusion/Synchro/Xyz/Link Summon
 		local e4=Effect.CreateEffect(c)
-		e1:SetDescription(aux.Stringid(id,0))
+		e4:SetDescription(aux.Stringid(id,1))
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CLIENT_HINT)
 		e4:SetCode(EFFECT_CANNOT_BE_MATERIAL)

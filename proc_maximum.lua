@@ -74,7 +74,7 @@ function Maximum.Condition(mats)
 		else
 			g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 		end
-		return aux.SelectUnselectGroup(g,e,tp,ct,ct,Maximum.spcheck(mats),0)
+		return Duel.GetMZoneCount(tp,Duel.GetFieldGroup(tp,LOCATION_MZONE,0))>=3 and aux.SelectUnselectGroup(g,e,tp,ct,ct,Maximum.spcheck(mats),0)
 	end
 end
 function Maximum.spcheck(filters)

@@ -2,7 +2,7 @@
 --Kuribottriple
 local s,id=GetID()
 function s.initial_effect(c)
-	--Shuffle 3 spellcasters into the deck to draw 1
+	--Shuffle 3 "Kuribotts" into the deck to draw 2
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_DRAW)
@@ -23,7 +23,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(1)
+	Duel.SetTargetParam(2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

@@ -244,25 +244,24 @@ function Card.AddSideMaximumHandler(c,eff)
 	baseeff:Reset()
 end
 function Maximum.GetMaximumCenter(tp)
-	local tc=Duel.GetMatchingGroup(Card.IsMaximumModeCenter,tp,LOCATION_MZONE,0,nil):GetFirst()
-	return tc
+	return Duel.GetMatchingGroup(Card.IsMaximumModeCenter,tp,LOCATION_MZONE,0,nil):GetFirst()
 end
 function Maximum.maxCenterVal(f)
 	return function(e,c)
 		local tc=Maximum.GetMaximumCenter(e:GetHandlerPlayer())
-		return f(tc)
+		return tc and f(tc)
 	end
 end
 function Maximum.eftgMax(e,c)
 	return c:IsType(TYPE_EFFECT) and c:IsMaximumMode() and c~=e:GetHandler()
 end
 function Maximum.sideCon(e)
-	local tc=Duel.GetMatchingGroup(Card.IsMaximumModeCenter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil):GetFirst()
-	return e:GetHandler():IsMaximumModeSide() and tc~=nil
+	local tc=Maximum.GetMaximumCenter(e:GetHandlerPlayer())
+	return tc and e:GetHandler():IsMaximumModeSide()
 end
 function Maximum.sideConGrant(e)
-	local tc=Duel.GetMatchingGroup(Card.IsMaximumModeCenter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil):GetFirst()
-	return e:GetHandler():IsMaximumModeSide() and tc~=nil
+	local tc=Maximum.GetMaximumCenter(e:GetHandlerPlayer())
+	return tc and e:GetHandler():IsMaximumModeSide()
 end
 --function that return if the max monster used an effect 
 function Card.HasUsedIgnition(c,effID)
@@ -276,7 +275,6 @@ end
 -- function that add the flag to says "I used that effect once this turn"
 function Duel.RegisterMaxIgnition(tp,effid)
 	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,tp,LOCATION_MZONE,0,nil)
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(effid,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
@@ -314,7 +312,6 @@ end
 --function that add every parts of the Maximum Mode monster to the group
 function Group.AddMaximumCheck(group)
 	local g=group:Clone()
-	local tc=g:GetFirst()
 	for tc in aux.Next(group) do
 		if tc:IsMaximumMode() then
 			local g2=Duel.GetMatchingGroup(Card.IsMaximumMode,tc:GetControler(),LOCATION_MZONE,0,tc)
@@ -370,11 +367,11 @@ function Maximum.tribcon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(Maximum.cfilter,1,nil,tp)
 end
 function Maximum.tribop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,eg:GetFirst():GetControler(),LOCATION_MZONE,0,nil)
-	Duel.Sendto(g,eg:GetFirst():GetDestination(),nil)
-	local tc=g:GetFirst()
+	local c=eg:GetFirst()
+	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,c:GetControler(),LOCATION_MZONE,0,nil)
+	Duel.Sendto(g,c:GetDestination(),nil)
 	for tc in aux.Next(g) do
-		tc:SetReason(eg:GetFirst():GetReason())
+		tc:SetReason(c:GetReason())
 	end
 end
 --handling for battle destruction
@@ -385,7 +382,6 @@ end
 function Maximum.battleop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)
 	Duel.Sendto(g,e:GetHandler():GetDestination(),nil)
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		tc:SetReason(eg:GetFirst():GetReason())
 	end

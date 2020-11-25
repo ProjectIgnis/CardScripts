@@ -90,7 +90,7 @@ function Maximum.spcheck(...)
 	end
 end
 --operation that do the maximum summon
-function Maximum.Operation(...)
+function Maximum.Operation()
 	return  function(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 		if c==nil then return true end
 		local filters=c.MaximumSet
@@ -103,7 +103,8 @@ function Maximum.Operation(...)
 			g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 		end
 		--select side monsters
-		local tg=aux.SelectUnselectGroup(g,e,tp,ct,ct,Maximum.spcheck(table.unpack(filters)),1,tp,HINTMSG_SPSUMMON)
+		local tg=aux.SelectUnselectGroup(g,e,tp,ct,ct,Maximum.spcheck(table.unpack(filters)),1,tp,HINTMSG_SPSUMMON,nil,nil,true)
+		if #tg==0 then return end
 		--adding the "maximum mode" flag
 		--center
 		c:RegisterFlagEffect(FLAG_MAXIMUM_CENTER,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)

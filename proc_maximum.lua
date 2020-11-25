@@ -127,10 +127,10 @@ function Card.IsMaximumMode(c)
 	return c:IsMaximumModeCenter() or c:IsMaximumModeSide()
 end
 function Card.IsMaximumModeCenter(c)
-	return c:IsLocation(LOCATION_MZONE) and c:GetFlagEffect(FLAG_MAXIMUM_CENTER)>0
+	return c:GetFlagEffect(FLAG_MAXIMUM_CENTER)>0
 end
 function Card.IsMaximumModeSide(c)
-	return c:IsLocation(LOCATION_MZONE) and c:GetFlagEffect(FLAG_MAXIMUM_SIDE)>0
+	return c:GetFlagEffect(FLAG_MAXIMUM_SIDE)>0
 end
 --I used Gemini as a reference for that function, while waiting for more information
 function Auxiliary.IsMaximumMode(effect)
@@ -377,9 +377,21 @@ local function initial_effect()
     e1:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
     e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
     e1:SetTargetRange(1,1)
-    e1:SetTarget(function(e,c) return c:IsSummonType(SUMMON_TYPE_MAXIMUM) end)
+    e1:SetTarget(aux.TargetBoolFunction(Card.IsSummonType,SUMMON_TYPE_MAXIMUM))
     e1:SetValue(POS_FACEUP_ATTACK)
     Duel.RegisterEffect(e1,0)
+    local e2=Effect.GlobalEffect()
+    e2:SetType(EFFECT_TYPE_FIELD)
+    e2:SetCode(EFFECT_FORCE_MZONE)
+    e2:SetTargetRange(0xff,0xff)
+    e2:SetTarget(aux.TargetBoolFunction(Card.IsSummonType,SUMMON_TYPE_MAXIMUM))
+    e2:SetValue(function(e,c)
+					if c:IsMaximumModeCenter() then
+						return 0x4
+					end
+					return 0xa
+				end)
+    Duel.RegisterEffect(e2,0)
 end
 initial_effect()
 

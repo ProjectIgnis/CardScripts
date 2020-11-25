@@ -40,12 +40,11 @@ s.listed_names={46384672}
 s.LVnum=5
 s.LVset=0x111
 
-function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+function s.cfilter(c,e,tp)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,c,e,tp,e:GetLabel())
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST)
+	return true
 end
 function s.spfilter(c,e,tp,label)
 	return c:IsSetCard(0x111) and c:IsLevelBelow(7)
@@ -56,11 +55,15 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
 		if c:IsCode(46384672) then
 			e:SetLabel(1)
+			return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 		else
 			e:SetLabel(0)
 		end
 		return c:IsAbleToGrave() and
 		Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,e:GetLabel()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+	Duel.SendtoGrave(g,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,c,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end

@@ -1,4 +1,4 @@
---氷の壁のミコ船
+--氷結界の依巫
 --Vessel Miko of the Ice Barrier
 --LUA by Kohana Sonogami
 
@@ -78,6 +78,6 @@ function s.tokenop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_AQUA,ATTRIBUTE_WATER,POS_FACEUP) then
 		local token=Duel.CreateToken(tp,id+1)
-		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

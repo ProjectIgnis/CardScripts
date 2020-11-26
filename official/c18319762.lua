@@ -13,6 +13,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.sumcon)
 	e1:SetTarget(s.tblimit)
 	c:RegisterEffect(e1)
+	local e11=e1:Clone()
+	e11:SetCode(EFFECT_CANNOT_MSET)
+	c:RegisterEffect(e11)
 	--Special Summon a tuner
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -34,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.sumcon(e)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler(),0x2f)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2f),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.tblimit(e,c,tp,sumtp)
 	return (sumtp&SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE 

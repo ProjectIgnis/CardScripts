@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	--Negate effect that targets "Ice Barrier" Synchro Monster(s)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
+	e2:SetCategory(CATEGORY_DISABLE)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id+1)
@@ -28,15 +28,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x2f}
-function s.smfilter(c)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and
-	       c:IsSetCard(0x2f) and c:IsType(TYPE_SYNCHRO)
+function s.smfilter(c,tp)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
+	       and c:IsSetCard(0x2f) and c:IsType(TYPE_SYNCHRO)
 end
 function s.bancheck(tp,loc)
 	return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,loc,1,nil)
 end
 function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.smfilter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(s.smfilter,tp,LOCATION_MZONE,0,nil,tp)
 	local dnc=math.min(g:GetClassCount(Card.GetCode),3)
 	if chk==0 then
 		if dnc==0 then return false end
@@ -61,7 +61,7 @@ function s.banlocop(tp,loc,gf)
 	end
 end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.smfilter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(s.smfilter,tp,LOCATION_MZONE,0,nil,tp)
 	local dnc=g:GetClassCount(Card.GetCode)
 	if dnc>0 then s.banlocop(tp,LOCATION_ONFIELD,Group.Select) end
 	if dnc>1 then s.banlocop(tp,LOCATION_GRAVE,Group.Select) end

@@ -66,14 +66,9 @@ function s.repfilter(c,tp)
 end
 	--Activtion legality
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and e:GetHandler():IsAbleToRemove()
+	if chk==0 then return e:GetHandler():IsAbleToRemove()
 		and not e:GetHandler():IsStatus(STATUS_DESTROY_CONFIRMED) and eg:IsExists(s.repfilter,1,nil,tp) end
-	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-		return true
-	else
-		return false
-	end
+	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())

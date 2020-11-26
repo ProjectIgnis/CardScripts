@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	--Negate the activation of opponent's spell card/effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_CHAINING)
@@ -52,7 +52,7 @@ function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsSetCard(0x159)
 end
 function s.tgval(e,re,rp)
-	return aux.tgoval(e,r,rp) and re:IsActiveType(TYPE_MONSTER)
+	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_MONSTER)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp~=tp
@@ -85,7 +85,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.thfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_REMOVED,0,1,1,nil)

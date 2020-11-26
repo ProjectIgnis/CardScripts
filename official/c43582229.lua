@@ -59,5 +59,6 @@ function s.unacon(e)
 end
 function s.unaval(e,te)
 	local tc=te:GetOwner()
-	return tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:GetSummonLocation()==LOCATION_EXTRA and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:GetSummonLocation()==LOCATION_EXTRA
+		and te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActivated()
 end

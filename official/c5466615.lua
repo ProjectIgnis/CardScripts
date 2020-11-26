@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
@@ -42,12 +42,13 @@ s.listed_series={0x159}
 
 	--Activation legality
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return aux.disfilter1(chkc) and chkc:IsLocation(LOCATION_MZONE) end
+	if chkc then return aux.disfilter1(chkc) and chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	if Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil,e,tp) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 		local g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE)
 	end
 end
 	--Check for "Myutant" monster to banish
@@ -61,7 +62,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if #rc>0 and Duel.Remove(rc,POS_FACEUP,REASON_EFFECT)>0 then
 		local c=e:GetHandler()
 		local tc=Duel.GetFirstTarget()
-		if tc:IsFaceup() and not tc:IsDisabled() then
+		if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
 			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

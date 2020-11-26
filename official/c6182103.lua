@@ -50,7 +50,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Myutant" card
 function s.cfilter(c,rtype)
-	return c:IsSetCard(0x159) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(rtype) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x159) and (not c:IsOnField() or c:IsFaceup()) and c:IsType(rtype) and c:IsAbleToRemoveAsCost()
 end
 	--Banish 1 "Myutant" card from hand/face-up field/GY with same card type as activated card/effect as cost
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)

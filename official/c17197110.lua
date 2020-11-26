@@ -1,4 +1,4 @@
---緊急発進
+--氷結界に至る晴嵐
 --The Calm After the Ice Barrier’s Storm
 --Logical Nonsense
 

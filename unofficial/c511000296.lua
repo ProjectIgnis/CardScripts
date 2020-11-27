@@ -79,14 +79,14 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={0x48}
-s.listed_names={511000294}
+s.listed_names={100275101}
 s.xyz_number=1000
 function s.check(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()==tp or Duel.GetFlagEffect(tp,id)~=0 then return end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.cfilter(c,e,tp,xyz)
-	return c:IsCode(511000294) and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY)
+	return c:IsCode(100275101) and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY)
 		and c:IsCanBeXyzMaterial(xyz,tp) and (not e or c:IsRelateToEffect(e))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

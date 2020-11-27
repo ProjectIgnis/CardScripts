@@ -32,31 +32,16 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
-	aux.GlobalCheck(s,function()
-		s[0]=0
-		s[1]=0
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_DESTROY)
-		ge1:SetOperation(s.checkop)
-		Duel.RegisterEffect(ge1,0)
-		aux.AddValuesReset(function()
-			s[0]=0
-			s[1]=0
-		end)
-	end)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_DESTROYED)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetRange(LOCATION_GRAVE)
+	e3:SetCondition(aux.NOT(s.tdcon))
+	e3:SetOperation(s.checkop)
+	c:RegisterEffect(e3)
 end
 s.listed_series={0x135}
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	if not e:GetHandler():IsLocation(LOCATION_GRAVE) then return end
-	while tc do
-		if tc:IsType(TYPE_SPELL+TYPE_TRAP) and tc:GetReasonPlayer()~=tp then
-			s[tc:GetControler()]=s[tc:GetControler()]+1
-		end
-		tc=eg:GetNext()
-	end
-end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x135)
 end
@@ -76,7 +61,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(g,REASON_EFFECT)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return s[e:GetHandler():GetControler()]>=1
+	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToDeck() end
@@ -89,5 +74,13 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+	end
+end
+function s.cfilter(c,p)
+	return c:GetPreviousTypeOnField()&(TYPE_SPELL|TYPE_TRAP)>0 and c:GetReasonPlayer()~=p
+end
+function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+	if eg:IsExists(s.cfilter,1,nil,tp) then
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end

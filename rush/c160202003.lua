@@ -30,17 +30,19 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,c)
-		if #g>0 then
+	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
+		if c:IsRelateToEffect(e) and c:IsFaceup() then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+			local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,c)
+			if #g>0 then
 			Duel.HintSelection(g)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(g:GetFirst():GetLevel()*200)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			c:RegisterEffectRush(e1)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				c:RegisterEffectRush(e1)
+			end
 		end
 	end
 end

@@ -1,8 +1,9 @@
 --サベージ・クロー・タイガー
 --Savage Claw Tiger
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--ATK increase
+	--Gain 400 ATK per level 7+ monster you control
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -21,11 +22,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--requirement
+	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
-		--effect
+		--Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsLevel,7),tp,LOCATION_MZONE,0,nil)
+			local atk=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsLevelAbove,7),tp,LOCATION_MZONE,0,nil)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

@@ -1,4 +1,5 @@
---BF－隠れ蓑のスチーム
+--BF－隠れ蓑のスチーム (Anime)
+--Blackwing - Steam the Cloaked (Anime)
 Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,11 +8,16 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(9047460,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_LEAVE_FIELD)
+	e1:SetCondition(s.tkcon)
 	e1:SetTarget(s.tktg)
 	e1:SetOperation(s.tkop)
 	c:RegisterEffect(e1)
+end
+function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetLocation()~=LOCATION_DECK
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 

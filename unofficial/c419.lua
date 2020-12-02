@@ -474,7 +474,7 @@ if not GenerateEffect then
 		return function(e)
 			if not e then return false end
 			local c=e:GetHandler()
-			if c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE then
+			if c:IsHasEffect(511010508) and (c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
 				local effs={c:GetCardEffect(511010508)}
 				for _,eff in ipairs(effs) do
 					local val=eff:GetValue()
@@ -490,7 +490,7 @@ if not GenerateEffect then
 			local c=e:GetHandler()
 			local ec=c:GetEquipTarget()
 			if not ec then return false end
-			if ec:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE then
+			if ec:IsHasEffect(511010508) and (ec:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
 				local effs={ec:GetCardEffect(511010508)}
 				for _,eff in ipairs(effs) do
 					local val=eff:GetValue()
@@ -503,7 +503,7 @@ if not GenerateEffect then
 	function GenerateEffect.newBatTg(tg)
 		return function(e,c)
 			if not e or not c then return false end
-			if c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE then
+			if c:IsHasEffect(511010508) and (c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
 				local effs={c:GetCardEffect(511010508)}
 				for _,eff in ipairs(effs) do
 					local val=eff:GetValue()
@@ -514,11 +514,13 @@ if not GenerateEffect then
 		end
 	end
 	function GenerateEffect.replaceFilter(c,e)
-		local effs={c:GetCardEffect(511010508)}
-		for _,eff in ipairs(effs) do
-		local val=eff:GetValue()
-			if val==1 or val(eff,e,c) then return false end
-		end   
+		if c:IsHasEffect(511010508) then
+			local effs={c:GetCardEffect(511010508)}
+			for _,eff in ipairs(effs) do
+				local val=eff:GetValue()
+				if val==1 or val(eff,e,c) then return false end
+			end
+		end
 		return true
 	end
 	function GenerateEffect.newBatTgReplaceField(tg)

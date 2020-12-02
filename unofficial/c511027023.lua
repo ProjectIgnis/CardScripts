@@ -20,9 +20,10 @@ s.listed_series={0x577}
 function s.counterfilter(c)
 	return c:IsSetCard(0x577)
 end
-function s.relfilter(tp)
+function s.relfilter(e,tp)
 	return function(c)
 		return c:IsSetCard(0x577) and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,c)
+			and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetAttribute())
 	end
 end
 function s.filter(c)
@@ -34,8 +35,8 @@ function s.spfilter(c,e,tp,att)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 
-		and Duel.CheckReleaseGroupCost(tp,s.relfilter(tp),1,false) end
-	local rc=Duel.SelectReleaseGroupCost(tp,s.relfilter(tp),1,1,false):GetFirst()
+		and Duel.CheckReleaseGroupCost(tp,s.relfilter(e,tp),1,false) end
+	local rc=Duel.SelectReleaseGroupCost(tp,s.relfilter(e,tp),1,1,false):GetFirst()
 	local att=rc:GetAttribute()
 	e:SetLabel(att)
 	Duel.Release(rc,REASON_COST)

@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--Summon with no tribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SUMMON_PROC)
 	e1:SetCondition(s.ntcon)
@@ -24,8 +24,9 @@ function s.initial_effect(c)
 end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
-	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)==0
+	return minc==0 and c:GetLevel()>4
 		and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,LOCATION_MZONE)==0
+		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.atklimit(e,c)
 	return c==e:GetHandler()

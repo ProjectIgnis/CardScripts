@@ -4,7 +4,7 @@
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--Increase ATK
+	--Make 1 of opponent's monsters lose 400 ATK per pyro monster you control
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -23,11 +23,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)
 	end
 end
-	--Make 1 fish monster you control gain ATK
+	--Make 1 of opponent's monsters lose 400 ATK per pyro monster you control
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local ct=Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,0,nil,RACE_PYRO)
+	local ct=Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_PYRO),c:GetControler(),LOCATION_MZONE,0,nil)
 	--Effect
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	if #g>0 then

@@ -1,12 +1,14 @@
 --シューティングコード・トーカー
 --Shootingcode Talker
---scripted by Larry126
+--Scripted by Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_CYBERSE),2)
-	--attack
+	--Must be properly summoned before reviving
+	c:EnableReviveLimit()
+	--Make multiple attacks this turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -17,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--draw
+	--Draw cards equal to number of monsters this card destroyed
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DRAW)
@@ -65,6 +67,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e)
 	local c=e:GetHandler()
+	if Duel.GetAttackTarget()==nil then return end
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_MZONE)==1
 end
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)
@@ -89,4 +92,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-

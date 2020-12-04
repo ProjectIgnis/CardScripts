@@ -48,5 +48,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter(c)
-	return c:IsDefenseBelow(1500) and c:IsFaceup()
+	return c:IsDefenseBelow(1500) and c:HasDefense() and c:IsFaceup()
 end

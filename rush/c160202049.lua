@@ -22,13 +22,14 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(aux.nzatk,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,2,nil)
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	if ct>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local dg=Duel.SelectMatchingCard(tp,aux.nzatk,tp,0,LOCATION_MZONE,1,1,nil)
-		if #dg>1 then
+		if #dg>0 then
 			Duel.HintSelection(dg)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

@@ -38,12 +38,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1257}
+s.listed_series={0x1157}
 function s.matfilter(c,lc,st,tp)
 	return c:IsRace(RACE_PLANT,lc,st,tp) and c:IsType(TYPE_NORMAL,lc,st,tp)
 end
 function s.cfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(0x1257) and c:IsType(TYPE_LINK) 
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(0x1157) and c:IsType(TYPE_LINK) 
 		and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -57,7 +57,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1257) and c:IsType(TYPE_LINK) and c:GetLink()>0
+	return c:IsFaceup() and c:IsSetCard(0x1157) and c:IsType(TYPE_LINK) and c:GetLink()>0
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -92,7 +92,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	local zone=Duel.GetLinkedZone(tp)&0x1f
-	if zone~=0 and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)~=0 then
+	if zone~=0 and tc and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)

@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.negcon)
 	e3:SetCost(s.negcost)
 	e3:SetTarget(s.negtg)
@@ -93,10 +93,12 @@ function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Activation legality
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return re:GetHandler():IsAbleToRemove() end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsAbleToRemove() and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
+	if re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetLocation())
+	else
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetPreviousLocation())
 	end
 end
 	--Negate the activation of monster effect, and if you do, banish that card

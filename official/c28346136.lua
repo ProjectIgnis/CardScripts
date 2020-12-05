@@ -1,6 +1,7 @@
 --銀河眼の極光波竜
 --Galaxy-Eyes Cipher Ex Dragon
 --Scripted by Cybercatman
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving

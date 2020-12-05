@@ -34,12 +34,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1257}
+s.listed_series={0x1157}
 function s.matfilter(c,lc,st,tp)
 	return c:IsRace(RACE_PLANT,lc,st,tp) and c:IsType(TYPE_NORMAL,lc,st,tp)
 end
 function s.cfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(0x1257) and c:IsType(TYPE_LINK) 
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(0x1157) and c:IsType(TYPE_LINK) 
 		and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -53,7 +53,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function s.dmgfilter(c,cc)
-	return c:IsSetCard(0x1257) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(cc)
+	return c:IsSetCard(0x1157) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(cc)
 end
 function s.dmgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,6 +1,6 @@
 --妖精の伝姫
 --Fairy Tail
---Scripted by Logical Nonsense and DyXel
+--Logical Nonsense and DyXel
 
 --Substitute ID
 local s,id=GetID()

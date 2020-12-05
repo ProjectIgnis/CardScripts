@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	--Banish 1 of opponent's monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_TOGRAVE+CATEGORY_REMOVE)
+	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,id)
@@ -46,7 +46,7 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,tc:GetAttribute())
-	if tc:IsRelateToEffect(e) and #g>0 then
+	if tc and tc:IsRelateToEffect(e) and #g>0 then
 		local rg=g:Select(tp,1,1,nil)
 		Duel.SendtoGrave(rg,REASON_EFFECT)
 		if rg:GetFirst():IsLocation(LOCATION_GRAVE) then

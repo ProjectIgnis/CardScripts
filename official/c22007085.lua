@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x259}
+s.listed_series={0x15b}
 function s.ldlv7filter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsLevel(7)
 end
 function s.thfilter(c)
-	return ((c:IsSetCard(0x259) and c:IsType(TYPE_MONSTER)) or s.ldlv7filter(c)) and c:IsAbleToHand()
+	return ((c:IsSetCard(0x15b) and c:IsType(TYPE_MONSTER)) or s.ldlv7filter(c)) and c:IsAbleToHand()
 end
 function s.spconfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK)

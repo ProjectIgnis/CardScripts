@@ -1,6 +1,6 @@
 --煌めく聖夜
 --Holy Night Sky
---Scritped by The Razgriz
+--Scripted by The Razgriz
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,13 +31,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.dop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x259}
+s.listed_series={0x15b}
 
 function s.ldlv7filter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsLevel(7)
 end
 function s.extg(e,c)
-	return (c:IsSetCard(0x259) and c:IsType(TYPE_MONSTER)) or s.ldlv7filter(c)
+	return (c:IsSetCard(0x15b) and c:IsType(TYPE_MONSTER)) or s.ldlv7filter(c)
 end
 function s.filter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and s.ldlv7filter(c)

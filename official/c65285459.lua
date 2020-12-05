@@ -1,11 +1,11 @@
---聖天樹の精霊
---Sunavalon Dryades
+--聖天樹の大精霊
+--Sunavalon Dryanome
 --Scripted by Eerie Code, partially based on the anime script
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_PLANT),2,2,s.matcheck)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_PLANT),2)
 	--attack target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -20,24 +20,27 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_DAMAGE)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(2)
+	e2:SetCountLimit(3)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
+	--negate attack	
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_BE_BATTLE_TARGET)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1)
+	e3:SetCondition(s.mvcon)
+	e3:SetOperation(s.mvop)
+	c:RegisterEffect(e3)
 end
-s.listed_series={0x1257,0x2257}
-function s.mfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x1257,lc,sumtype,tp) and c:IsType(TYPE_LINK,lc,sumtype,tp)
-end
-function s.matcheck(g,lc,sumtype,tp)
-	return g:IsExists(s.mfilter,1,nil,lc,sumtype,tp)
-end
+s.listed_series={0x2157}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and (r&REASON_BATTLE+REASON_EFFECT)~=0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x2257) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x2157) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
@@ -52,5 +55,19 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
+	end
+end
+function s.mvcon(e)
+	local tp=e:GetHandler():GetControler()
+	local lg=e:GetHandler():GetLinkedGroup()
+	local d=Duel.GetAttackTarget()
+	return d and lg:IsContains(d) and d:IsControler(tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+end
+function s.mvop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetAttackTarget()
+	if tc and tc:IsRelateToBattle() and Duel.NegateAttack() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,nil)
+		local nseq=math.log(s,2)
+		Duel.MoveSequence(tc,nseq)
 	end
 end

@@ -8,9 +8,8 @@ function s.initial_effect(c)
 	--Gain an extra normal summon for "Laval" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
+	e1:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.sumcon)
 	e1:SetTarget(s.sumtg)
 	e1:SetOperation(s.sumop)
@@ -21,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCategory(EFFECT_FLAG_CARD_TARGET+CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -29,14 +28,6 @@ end
 	--Lists "Laval" archetype
 s.listed_series={0x39}
 
-	--If player can make an addition normal summon/set
-function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsPlayerCanAdditionalSummon(tp)
-end
-	--Activation legality
-function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanSummon(tp) end
-end
 	--Gain an extra normal summon for "Laval" monsters
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -94,7 +85,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,3),nil)
 end
-	--Restricted to FIRe monsters
+	--Restricted to FIRE monsters
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return not c:IsAttribute(ATTRIBUTE_FIRE)
 end

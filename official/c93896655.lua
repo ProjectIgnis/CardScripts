@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.matfilter,1,1)
-	-- search	
+	--search	
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2257}
+s.listed_series={0x2157}
 
 function s.matfilter(c)
 	return c:IsRace(RACE_PLANT) and c:IsLevelBelow(4)
@@ -60,7 +60,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetLabel()==1
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x2257) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x2157) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -78,7 +78,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and (r&REASON_BATTLE+REASON_EFFECT)~=0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x2257) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x2157) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0

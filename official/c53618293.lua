@@ -11,24 +11,23 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--Your "Sunavalon" and "Sunvine" S/T cannot be targeted by opponent's card effects
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e3:SetTargetRange(LOCATION_SZONE,0)
-	e3:SetTarget(s.tgtg)
-	e3:SetValue(aux.tgoval)
-	c:RegisterEffect(e3)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e2:SetTargetRange(LOCATION_SZONE,0)
+	e2:SetTarget(s.tgtg)
+	e2:SetValue(aux.tgoval)
+	c:RegisterEffect(e2)
 end
-s.listed_series={0x1257,0x2257}
+s.listed_series={0x1157,0x2157}
 
 function s.tfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_PLANT) and c:IsControler(tp) and c:IsSummonLocation(LOCATION_EXTRA)
@@ -49,5 +48,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgtg(e,c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and (c:IsSetCard(0x1257) or c:IsSetCard(0x2257))
+	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and (c:IsSetCard(0x1157) or c:IsSetCard(0x2157))
 end

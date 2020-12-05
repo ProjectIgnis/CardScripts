@@ -84,8 +84,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,nil,e,tp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,1,tp,HINTMSG_SPSUMMON)
 	if #sg~=2 then return end
-	local tc=sg:GetFirst()
-	while tc do
+	for tc in sg:Iter() do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -95,16 +94,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		tc:RegisterEffect(e2)
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetType(EFFECT_TYPE_FIELD)
-		e3:SetRange(LOCATION_MZONE)
-		e3:SetCode(EFFECT_EXTRA_MATERIAL)
-		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e3:SetTargetRange(1,0)
-		e3:SetValue(s.extram)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e3,true)
-		tc=sg:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 	Duel.BreakEffect()
@@ -113,17 +102,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		Duel.XyzSummon(tp,xyz,sg,sg)
-	end
-end
-function s.extram(chk,summon_type,e,...)
-	local c=e:GetHandler()
-	if chk==0 then
-		local tp,sc=...
-		if summon_type==SUMMON_TYPE_XYZ then
-			return Group.FromCards(c)
-		else
-			return Group.CreateGroup()
-		end
 	end
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)

@@ -95,7 +95,7 @@ function s.op(oc)
 	e7a:SetTarget(function(e,c) return c:IsType(TYPE_SPELL) and not c:IsType(TYPE_QUICKPLAY) and c:IsFacedown() and Duel.GetTurnPlayer()~=c:GetControler() end)
 	Duel.RegisterEffect(e7a,0)
 	local e7b=e7a:Clone()
-	e7b:SetCode(EFFECT_QP_ACT_SET_TURN)
+	e7b:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
 	e7b:SetTarget(function(e,c) return c:IsType(TYPE_SPELL) and not c:IsType(TYPE_QUICKPLAY) and c:IsHasEffect(EFFECT_BECOME_QUICK) and (Duel.IsBattlePhase() or Duel.GetTurnPlayer()~=c:GetControler()) end)
 	Duel.RegisterEffect(e7b,0)
 	--Negate

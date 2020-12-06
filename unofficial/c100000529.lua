@@ -31,7 +31,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ex1,tg1=Duel.GetOperationInfo(0,CATEGORY_POSITION)
 	local ex2,tg2=Duel.GetOperationInfo(0,CATEGORY_REMOVE)
-	if tg1:GetFirst() and tg1:GetFirst():IsRelateToEffect(e) and Duel.ChangePosition(c,POS_FACEUP_DEFENSE)~=0
+	if tg1:GetFirst() and tg1:GetFirst():IsRelateToEffect(e) and Duel.ChangePosition(tg1,POS_FACEUP_DEFENSE)~=0
 		and tg2:GetFirst() and tg2:GetFirst():IsRelateToEffect(e) then
 		Duel.Remove(tg2,POS_FACEUP,REASON_EFFECT)
 	end

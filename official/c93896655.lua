@@ -48,7 +48,7 @@ function s.matfilter(c)
 	return c:IsRace(RACE_PLANT) and c:IsLevelBelow(4)
 end
 function s.valcheck(e,c)
-	local g=c:GetMaterial():Filter(Card.IsCode,nil,100272106)
+	local g=c:GetMaterial():Filter(Card.IsCode,nil,27520594)
 	if #g>0 then 
 		e:GetLabelObject():SetLabel(1)
 	else

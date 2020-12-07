@@ -1,6 +1,7 @@
 --カオス・グレファー
 --Chaos Grepher
 --Logical Nonsense
+
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -52,7 +53,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel()):GetFirst()
-	if tc and Duel.SendtoGrave(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
+	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
 		--Cannot special summon monsters with the same name
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(id,1))

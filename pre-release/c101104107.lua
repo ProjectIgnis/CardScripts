@@ -23,7 +23,7 @@ function s.thfilter(c)
 	return c:IsAbleToHand() and ((c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x107e) or c:IsSetCard(0x207e))) or (c:IsType(TYPE_SPELL) and (c:IsSetCard(0x7e) or c:IsSetCard(0x95) or c:IsSetCard(0x258))) or c:IsType(TYPE_TRAP) and c:IsSetCard(0x7e))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,e:GetHandler())
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)

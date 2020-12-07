@@ -78,7 +78,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		--Cannot activate its effects this turn
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3302)

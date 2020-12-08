@@ -1,22 +1,21 @@
 --ブロックマン
 --Blockman
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Register when it was placed on the field
 	local e0=Effect.CreateEffect(c)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
 	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e0:SetRange(LOCATION_MZONE)
 	e0:SetCode(EVENT_ADJUST)
-	e0:SetCondition(s.regcon)
+	e0:SetCountLimit(1)
 	e0:SetOperation(s.op)
 	c:RegisterEffect(e0)
 	--Check for how long it has been on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EVENT_PHASE_START+PHASE_DRAW)
+	e1:SetCode(EVENT_TURN_END)
 	e1:SetCondition(s.regcon)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
@@ -31,12 +30,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
-end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,0)
+	if Duel.IsTurnPlayer(tp) then
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,0)
+	end
+end
+function s.regcon(e,tp,eg,ep,ev,re,r,rp)
+	return not Duel.IsTurnPlayer(tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

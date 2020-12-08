@@ -1,9 +1,10 @@
 --属性変更弾
 --Attribute Change Blast
---scripted by Naim
+--Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Change the attribute for up to 3 of opponent's monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -28,6 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleHand(tp)
 		if Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.attfilter),tp,0,LOCATION_MZONE,nil,tg:GetAttribute())>0 then
 			local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.attfilter),tp,0,LOCATION_MZONE,1,3,nil,tg:GetAttribute())
+			Duel.HintSelection(g)
 			if g and #g>0 then
 				for tc in aux.Next(g) do
 					local e1=Effect.CreateEffect(e:GetHandler())

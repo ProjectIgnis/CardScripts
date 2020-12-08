@@ -1,8 +1,9 @@
 --セブンスロード・メイジ
 --Sevens Road Mage
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--ATK decrease
+	--Make 1 of opponent's monsters lose 400 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={160301001}
+
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
@@ -26,6 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
 		--Effect
 		local tc=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsLevelAbove,7),tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+		Duel.HintSelection(Group.FromCards(tc))
 		if tc then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

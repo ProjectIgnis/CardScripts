@@ -1,5 +1,6 @@
 --ドラゴンズ・ストライカー
 --Dragon's Striker
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase ATK and grant piercing
@@ -15,6 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={160002001}
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,160002001),tp,LOCATION_ONFIELD,0,1,nil)
 end
@@ -45,6 +47,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		--Piercing
 		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(3208)
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_PIERCE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

@@ -1,8 +1,9 @@
 --断絶のサイコウォール
 --Dividing Psychic Wall
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Opponent's attacking monster loses 500 ATK
+	--Your attacked monster gains 500 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE)
@@ -36,6 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.HintSelection(g)
 	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		--Effect
 		local tc=Duel.GetAttackTarget()

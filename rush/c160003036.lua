@@ -1,8 +1,9 @@
 --ルミナス・パロット 
 --Luminous Parrot
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--change to light
+	--Change selected monster's attribute to LIGHT
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -26,11 +27,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.attfilter,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	--requirement
+	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)==1 then
-		--effect
+		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 		local g=Duel.SelectMatchingCard(tp,s.attfilter,tp,0,LOCATION_MZONE,1,1,e:GetHandler())
+		Duel.HintSelection(g)
 		if #g>0 then
 			local tc=g:GetFirst()
 			local e1=Effect.CreateEffect(e:GetHandler())

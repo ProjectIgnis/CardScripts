@@ -1,10 +1,10 @@
 --エレキック・アンプル
 --Elechic Ampoule
---scripted by pyrQ
+--Scripted by pyrQ
 
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Gain LP equal to sum of the targeted monsters' ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_RECOVER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -25,6 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.recfilter),tp,LOCATION_MZONE,0,1,2,nil)
 	local atk=0
+	Duel.HintSelection(g)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		atk=atk+tc:GetAttack()

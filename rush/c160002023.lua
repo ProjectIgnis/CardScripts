@@ -1,8 +1,9 @@
 --ロマンス・ピック
 --Romance Pick
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Mill
+	--Send the top 3 cards of deck to GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_DECKDES)
@@ -40,6 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,1,1,nil)
+		Duel.HintSelection(g)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)

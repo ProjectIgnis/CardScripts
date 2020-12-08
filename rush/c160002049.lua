@@ -1,5 +1,6 @@
 --２ブロック
 --2-Block
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -39,6 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g2=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,1,2,nil)
 		if #g2>0 then
+			Duel.HintSelection(g2)
 			for tc in aux.Next(g2) do
 				Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
 			end

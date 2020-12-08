@@ -1,8 +1,9 @@
--- 聖剣士の鞘払いシース 
--- Sheath the Scabbard of the Holy Swordsman
+--聖剣士の鞘払いシース 
+--Sheath the Scabbard of the Holy Swordsman
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon
+	--Special summon 1 level 7 warrior monster from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -32,6 +33,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
     local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,4,4,nil)
+	Duel.HintSelection(g)
 	Duel.SendtoDeck(g,nil,4,REASON_EFFECT)
 	--Effect
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp) then

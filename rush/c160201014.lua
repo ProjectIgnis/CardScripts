@@ -1,8 +1,9 @@
 --仙人の神髄
 --Essence of the Hermit
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Opponent's attacking monster loses 500 ATK
+	--Change opponent's attacking monster to defense position
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_POSITION+CATEGORY_SPECIAL_SUMMON)
@@ -30,8 +31,6 @@ function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_NORMAL) and c:GetAttack()==0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	--Requirement
-	
 	--Effect
 	local at=Duel.GetAttacker()
 	if at and at:IsAttackPos() and at:IsRelateToBattle() then
@@ -42,6 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local sc=g:Select(tp,1,1,nil):GetFirst()
 				if sc then
+					Duel.HintSelection(Group.FromCards(sc))
 					Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 				end
 			end

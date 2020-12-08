@@ -1,8 +1,9 @@
 --ゆるしま仙女
 --Forgiving Immortal
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Position change
+	--Change 1 of opponent's attack position monsters to defense position
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -21,12 +22,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--requirement
+	--Requirement
 	if Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)~=0 then
-		--effect
+		--Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			local tc=Duel.SelectMatchingCard(tp,Card.IsAttackPos,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+			Duel.HintSelection(Group.FromCards(tc))
 			if tc then
 				Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
 				local e1=Effect.CreateEffect(c)

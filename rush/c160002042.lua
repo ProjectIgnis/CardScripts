@@ -32,6 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g2=Duel.SelectMatchingCard(tp,s.filter2,tp,0,LOCATION_MZONE,1,1,nil,e)
 	g1:Merge(g2)
+	Duel.HintSelection(g1)
 	if #g1==3 then
 		g1=g1:AddMaximumCheck()
 		Duel.Destroy(g1,REASON_EFFECT)

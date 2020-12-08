@@ -1,5 +1,6 @@
 --カウンター・シールド
 --Counter Shield
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Opponent's attacking monster loses 1000 ATK
@@ -36,6 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.HintSelection(g)
 	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		--Effect
 		local tc=Duel.GetAttacker()
@@ -46,7 +48,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(-1000)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffectRush(e1)
-		
 		end
 	end
 end

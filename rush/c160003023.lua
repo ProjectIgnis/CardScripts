@@ -1,9 +1,10 @@
 --バーニング・ブレイズ・ドラゴン
 --Burning Blaze Dragon
---scripted by Hatter
+--Scripted by Hatter
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--shuffle
+	--Destroy opponent's face-up field spell
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -25,11 +26,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_FZONE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	--requirement
+	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local tg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.HintSelection(tg)
 	if Duel.SendtoDeck(tg,nil,SEQ_DECKBOTTOM,REASON_COST)==1 then
-		--effect
+		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_FZONE,nil)
 		if #g>0 then

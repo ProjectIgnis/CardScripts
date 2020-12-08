@@ -1,5 +1,6 @@
 --波導砲ビッグ・マグロム
 --Hydrocannon Big Magurom
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Direct attack
@@ -29,9 +30,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g2=Duel.SelectMatchingCard(tp,s.dirfilter,tp,LOCATION_MZONE,0,1,2,nil)
+		Duel.HintSelection(g2)
 		if #g2>0 then
 			for tc in aux.Next(g2) do
 				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetDescription(3205)
+				e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_DIRECT_ATTACK)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

@@ -41,13 +41,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	local g=Duel.GetMatchingGroup(s.ctfilter,tp,LOCATION_GRAVE,0,nil)
 	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.ctcheck,1,tp,HINTMSG_TODECK)
+	Duel.HintSelection(sg)
 	Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_COST)
 	Duel.SortDeckbottom(tp,tp,3)
 	local c=e:GetHandler()
 	--Effect
 	if Duel.SendtoGrave(c,REASON_EFFECT)>0 then
 		if Duel.Draw(tp,3,REASON_EFFECT)>0 then
-			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
+			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TOGRAVE)
 			local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,3,3,nil)
 			Duel.SendtoGrave(dg,REASON_EFFECT)
 		end

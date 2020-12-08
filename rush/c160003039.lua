@@ -39,12 +39,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Make up to 2 fish monsters gain 500 ATK
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	--Requirement
 	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.HintSelection(td)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)~0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		local sg=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_FISH),tp,LOCATION_MZONE,0,1,2,nil)
+		Duel.HintSelection(sg)
 		local tc=sg:GetFirst()
 		for tc in aux.Next(sg) do
 			local e1=Effect.CreateEffect(e:GetHandler())

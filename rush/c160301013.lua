@@ -1,8 +1,9 @@
 --ダーク・リベレイション
 --Dark Liberation
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy monsters
+	--Destroy all of opponent's attack position monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -36,6 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,4,4,nil)
+	Duel.HintSelection(g)
 	if g and Duel.SendtoDeck(g,nil,4,REASON_COST)>0 then
 		--Effect
 		local g=Duel.GetMatchingGroup(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)

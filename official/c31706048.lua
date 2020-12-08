@@ -63,5 +63,5 @@ function s.splimit(e,c)
 	return not c:IsLinkMonster() and c:IsLocation(LOCATION_EXTRA)
 end
 function s.lizfilter(e,c)
-	return not (c:IsOriginalType(TYPE_LINK) and c:IsOriginalType(TYPE_MONSTER))
+	return not c:IsOriginalType(TYPE_LINK)
 end

@@ -246,21 +246,37 @@ function Card.IsLinkSpell(c)
 	local tp=TYPE_LINK+TYPE_SPELL
 	return c:GetType() & tp == tp
 end
-function Card.IsOriginalCode(c,cd)
-	return c:GetOriginalCode()==cd
+function Card.IsOriginalCode(c,...)
+	local args={...}
+	if #args==0 then
+		Debug.Message("Card.IsOriginalCode requires at least 2 params")
+		return false
+	end
+	for _,cd in ipairs(args) do
+		if c:GetOriginalCode()==cd then return true end
+	end
+	return false
 end
-function Card.IsOriginalCodeRule(c,cd)
+function Card.IsOriginalCodeRule(c,...)
+	local args={...}
+	if #args==0 then
+		Debug.Message("Card.IsOriginalCodeRule requires at least 2 params")
+		return false
+	end
 	local c1,c2=c:GetOriginalCodeRule()
-	return c1==cd or c2==cd
+	for _,cd in ipairs(args) do
+		if c1==cd or c2==cd then return true end
+	end
+	return false
 end
 function Card.IsOriginalType(c,val)
-	return c:GetOriginalType() & val == val
+	return c:GetOriginalType() & val > 0
 end
 function Card.IsOriginalAttribute(c,val)
-	return c:GetOriginalAttribute() & val == val
+	return c:GetOriginalAttribute() & val > 0
 end
 function Card.IsOriginalRace(c,val)
-	return c:GetOriginalRace() & val == val
+	return c:GetOriginalRace() & val > 0
 end
 function Card.IsSummonPlayer(c,tp)
 	return c:GetSummonPlayer()==tp

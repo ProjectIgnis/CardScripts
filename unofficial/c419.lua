@@ -478,6 +478,10 @@ if not GenerateEffect then
 				local effs={c:GetCardEffect(511010508)}
 				for _,eff in ipairs(effs) do
 					local val=eff:GetValue()
+					if not val then
+						Debug.Message("val in 511010508 cannot be nil")
+						break
+					end
 					if val==1 or (type(val)=='function' and val(eff,e,c)) then return false end
 				end
 			end
@@ -494,6 +498,10 @@ if not GenerateEffect then
 				local effs={ec:GetCardEffect(511010508)}
 				for _,eff in ipairs(effs) do
 					local val=eff:GetValue()
+					if not val then
+						Debug.Message("val in 511010508 cannot be nil")
+						break
+					end
 					if val==1 or (type(val)=='function' and val(eff,e,ec)) then return false end
 				end
 			end
@@ -507,6 +515,10 @@ if not GenerateEffect then
 				local effs={c:GetCardEffect(511010508)}
 				for _,eff in ipairs(effs) do
 					local val=eff:GetValue()
+					if not val then
+						Debug.Message("val in 511010508 cannot be nil")
+						break
+					end
 					if val==1 or val(eff,e,c) then return false end
 				end
 			end
@@ -518,6 +530,10 @@ if not GenerateEffect then
 			local effs={c:GetCardEffect(511010508)}
 			for _,eff in ipairs(effs) do
 				local val=eff:GetValue()
+				if not val then
+					Debug.Message("val in 511010508 cannot be nil")
+					break
+				end
 				if val==1 or val(eff,e,c) then return false end
 			end
 		end

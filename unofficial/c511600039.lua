@@ -67,13 +67,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and c:GetFlagEffect(id)<Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_PZONE,0,nil) end
 	Duel.SetTargetCard(e:GetLabelObject())
 end
-function s.cfilter(c,tp)
-	return c:IsOnField() and c:IsType(TYPE_MONSTER) and c:IsRelateToEffect(e) and c:IsRelateToBattle()
-end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-	local g=Duel.GetTargetCards(e):Filter(s.cfilter,nil,tp)
+	local g=Duel.GetTargetCards(e)
 	g:KeepAlive()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)

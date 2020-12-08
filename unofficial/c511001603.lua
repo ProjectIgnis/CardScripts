@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetCode(511010508)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e3:SetValue(1)
 	c:RegisterEffect(e3)
 	--double tuner
 	local e4=Effect.CreateEffect(c)

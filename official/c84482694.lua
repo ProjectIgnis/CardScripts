@@ -1,5 +1,5 @@
 --顕現する紋章
---Heraldry Charge
+--Charged-Up Heraldry
 --Logical Nonsense
 
 --Substitute ID

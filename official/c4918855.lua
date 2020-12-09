@@ -98,7 +98,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check if a monster was special summoned from opponent's GY
 function s.cfilter(c,tp)
-	return c:IsSummonLocation(LOCATION_GRAVE) and c:IsPreviousControler(1-tp)
+	return c:IsSummonLocation(LOCATION_GRAVE) and c:IsPreviousControler(1-tp) and c:IsOriginalType(TYPE_MONSTER)
 end
 	--If it ever happened
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)

@@ -1,4 +1,6 @@
+--No.48 シャドー・リッチ (Manga)
 --Number 48: Shadow Lich (Manga)
+Duel.LoadCardScript("c21521304.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -31,6 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x48}
 s.listed_names={1426715}
+s.xyz_number=48
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)==0
 end

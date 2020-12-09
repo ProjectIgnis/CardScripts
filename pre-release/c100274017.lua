@@ -64,9 +64,9 @@ end
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil,75574498)
 end
-
+	--Check if the monster has 0 ATK or DEF
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and (c:IsAttack(0) or c:IsDefense(0))
+	return c:IsFaceup() and (c:IsAttack(0) or c:IsDefense(0))
 end
 	--Check for a "Doll Monster" card
 function s.tgfilter(c)

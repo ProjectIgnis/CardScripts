@@ -119,11 +119,10 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		s[1]:KeepAlive()
 	end
 end
-	
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)==s[0]
 		and re:GetHandler():IsCanBeEffectTarget(e) and re:GetHandler():IsControler(tp)
-		and re:IsActiveType(TYPE_XYZ) and s[1] and s[1]:IsExists(Card.IsType,1,nil,TYPE_NORMAL)
+		and re:IsActiveType(TYPE_XYZ) and s[1] and s[1]:IsExists(Card.IsOriginalType,1,nil,TYPE_NORMAL)
 end
 	--Activation legality
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

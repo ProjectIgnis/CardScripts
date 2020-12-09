@@ -39,11 +39,11 @@ end
 	--Lists "Doll Monster" archetype
 s.listed_series={0x25c}
 	--Specifically lists "Princess Cologne", "Box of Friends", and "Grandpa Demetto"
-s.listed_names={75574498,81587028,100274017}
+s.listed_names={75574498,81587028,100274016}
 
 	--Check for "Box of Friends" or "Grandpa Demetto"
 function s.filter(c)
-	return c:IsCode(81587028,100274017) and c:IsAbleToHand()
+	return c:IsCode(81587028,100274016) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

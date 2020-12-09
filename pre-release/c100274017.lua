@@ -86,7 +86,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Destroy 1 monster from hand/field, send 1 "Doll Monster" card from deck to GY
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g1=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,TYPE_MONSTER)
 	if #g1>0 and Duel.Destroy(g1,REASON_EFFECT)~=0 then
@@ -105,7 +106,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Clock Lizard check
-	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
+	aux.addTempLizardCheck(c,tp,s.lizfilter)
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
 	e2:SetDescription(aux.Stringid(id,3))

@@ -64,7 +64,7 @@ end
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil,75574498)
 end
-	
+
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and (c:IsAttack(0) or c:IsDefense(0))
 end

@@ -1,22 +1,24 @@
 --聖天樹の月桂精
 --Sunavalon Daphne
 --Scripted by Eerie Code, based on the anime version
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_PLANT),2)
-	--atk
+	--Must be properly summoned before reviving
+	c:EnableReviveLimit()
+	--Cannot be targeted for attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	c:RegisterEffect(e1)
-	--recover
+	--Return 2 plant link monsters from GY to extra deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)

@@ -34,9 +34,12 @@ function s.initial_effect(c)
 	aux.GlobalCheck(s,function()
 		s[0]=nil
 		s[1]=Group.CreateGroup()
+		local tempG=Group.CreateGroup()
+		tempG:KeepAlive()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DETACH_MATERIAL)
+		ge1:SetLabelObject(tempG)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
 		local ge2=Effect.CreateEffect(c)
@@ -108,15 +111,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
-	e:GetLabelObject():SetLabelObject(re:GetHandler():GetOverlayGroup())
+	e:GetLabelObject():GetLabelObject():Merge(re:GetHandler():GetOverlayGroup())
 	return false
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetCurrentChain()
-	if cid>0 and e:GetLabelObject() then 
+	if cid>0 and #e:GetLabelObject()>0 then 
 		s[0]=Duel.GetChainInfo(cid,CHAININFO_CHAIN_ID)
 		s[1]=e:GetLabelObject()-eg:GetFirst():GetOverlayGroup()
 		s[1]:KeepAlive()
+		e:GetLabelObject():Clear()
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

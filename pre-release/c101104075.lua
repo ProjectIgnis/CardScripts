@@ -29,7 +29,7 @@ function s.filter(c,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,tp) end
-	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE) 
+	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
@@ -60,16 +60,17 @@ function s.cond(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local et=e:GetHandler():GetEquipTarget()
-	local yours=et and et:GetControler()==tp
+	if not et then return false end
+	local yours=et:GetControler()==tp
 	if chkc then return s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 	if chk==0 then
-		if et then
+		if yours then
 			return s.distg(e,tp,eg,ep,ev,re,r,rp,0)
 		else
 			return s.postg(e,tp,eg,ep,ev,re,r,rp,0)
 		end
 	end
-	if et then
+	if yours then
 		e:SetCategory(CATEGORY_DISABLE)
 		e:SetOperation(s.disop)
 		s.distg(e,tp,eg,ep,ev,re,r,rp,1)

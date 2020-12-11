@@ -60,15 +60,16 @@ function s.cond(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local et=e:GetHandler():GetEquipTarget()
-	local yours=et and et:GetControler()==tp
+	if not et then return false end
+	local yours=et:GetControler()==tp
 	if chk==0 then
-		if et then
+		if yours then
 			return s.drtg(e,tp,eg,ep,ev,re,r,rp,0)
 		else
 			return true
 		end
 	end
-	if et then
+	if yours then
 		e:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 		e:SetOperation(s.drop)
 		s.drtg(e,tp,eg,ep,ev,re,r,rp,1)

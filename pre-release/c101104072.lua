@@ -21,7 +21,6 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.cond)
 	e2:SetTarget(s.tg)
-	e
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x25d}

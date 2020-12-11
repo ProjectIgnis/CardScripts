@@ -1,6 +1,7 @@
 --神の進化
 --Divine Evolution
 --Scripted by Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,6 +33,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetDescription(aux.Stringid(id,0))
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -57,6 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetOperation(s.tgop)
 		e5:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e5)
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
 end
 function s.efilter(e,ct)

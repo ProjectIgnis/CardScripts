@@ -7,8 +7,9 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_CHAINING)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_CHAIN_SOLVED)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.spcon)
@@ -44,7 +45,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x25e}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsType(TYPE_TRAP)
+	return re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -57,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and not c:IsControler(tp) 
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and not c:IsControler(tp)
 		and c:IsCanBeEffectTarget(e) and not c:IsSummonPlayer(tp)
 		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK,0,1,nil,c)
 end

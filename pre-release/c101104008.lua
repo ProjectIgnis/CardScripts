@@ -1,6 +1,7 @@
 --驚楽園の案内人 <Comica>
 --Amazement Attendant <Comica>
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--set
@@ -42,7 +43,7 @@ function s.eqfilter1(c)
 		and Duel.IsExistingTarget(s.eqfilter2,0,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),c,tp)
 end
 function s.eqfilter2(c,ec,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x25d) or not c:IsControler(tp)) and ec:CheckEquipTarget(c)
+	return c:IsFaceup() and (c:IsSetCard(0x25d) or (not c:IsControler(tp))) and ec:CheckEquipTarget(c)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

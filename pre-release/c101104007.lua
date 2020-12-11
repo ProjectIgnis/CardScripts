@@ -1,6 +1,7 @@
 --驚楽園の大使 <Bufo>
 --Amazement Ambassador <Bufo>
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -34,7 +35,7 @@ function s.eqfilter2(c,ec)
 end
 function s.eqtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(s.eqfilter1,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g1=Duel.SelectTarget(tp,s.eqfilter1,tp,LOCATION_GRAVE,0,1,1,nil)
@@ -58,7 +59,7 @@ function s.eqfilter3(c)
 		and Duel.IsExistingTarget(s.eqfilter4,0,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),c,tp)
 end
 function s.eqfilter4(c,ec,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x25d) or not c:IsControler(tp)) and ec:CheckEquipTarget(c)
+	return c:IsFaceup() and (c:IsSetCard(0x25d) or (not c:IsControler(tp))) and ec:CheckEquipTarget(c)
 end
 function s.eqtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

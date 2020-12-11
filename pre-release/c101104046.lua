@@ -69,7 +69,7 @@ end
 	--Set 1 activated "Hole" normal trap instead of sending it to GY
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if not rc:IsFaceup() or not rc:IsRelateToEffect(e) then return end
+	if not rc:IsOnField() then return end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		rc:CancelToGrave()

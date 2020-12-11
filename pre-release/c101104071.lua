@@ -1,9 +1,10 @@
 --Ａ・Ɐ・ＣＣ
 --Amaze Attraction Cyclone Coaster
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip
+	--Equip this card to 1 monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,8 +13,9 @@ function s.initial_effect(c)
 	e1:SetCost(aux.RemainFieldCost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
-	--action
+	--Activate 1 of 2 effects, depending on equipped monster's controller
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -24,6 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x25d}
+
 function s.filter(c,tp)
 	return c:IsFaceup() and (c:IsSetCard(0x25d) or not c:IsControler(tp))
 end
@@ -61,24 +64,27 @@ end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.gytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 	local et=e:GetHandler():GetEquipTarget()
-	local yours=et and et:GetControler()==tp
+	if not et then return false end
+	local yours=et:GetControler()==tp
 	if chk==0 then
-		if et then
+		if yours then
 			return s.gytg(e,tp,eg,ep,ev,re,r,rp,0)
 		else
 			return s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
 		end
 	end
-	if et then
+	if yours then
 		e:SetCategory(CATEGORY_TOGRAVE)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		e:SetOperation(s.gyop)
 		s.gytg(e,tp,eg,ep,ev,re,r,rp,1)
+		e:SetHintTiming(0,TIMING_END_PHASE)
 	else
 		e:SetCategory(CATEGORY_TOGRAVE+CATEGORY_TOHAND+CATEGORY_SEARCH)
 		e:SetProperty(0)
 		e:SetOperation(s.thop)
 		s.thtg(e,tp,eg,ep,ev,re,r,rp,1)
+		e:SetHintTiming(0,TIMING_END_PHASE)
 	end
 end
 function s.gyfilter(c)
@@ -97,7 +103,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if tc and tc:IsRelateToEffect(e) and c:IsRelateToEffect(e) then
 		local g=Group.FromCards(c,tc)
-		Duel.SendtoGrave(tc,REASON_EFFECT)
+		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
 function s.thfilter(c)

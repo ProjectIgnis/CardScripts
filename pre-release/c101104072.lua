@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.cond)
 	e2:SetTarget(s.tg)
+	e
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x25d}
@@ -29,7 +30,7 @@ function s.filter(c,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,tp) end
-	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE) 
+	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
@@ -84,12 +85,13 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(p,aux.TRUE,p,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
-	Duel.BreakEffect()
-	Duel.Draw(p,d,REASON_EFFECT)
+	if Duel.SendtoDeck(g,nil,1,REASON_EFFECT)~=0 then
+		Duel.BreakEffect()
+		Duel.Draw(p,1,REASON_EFFECT)
+	end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

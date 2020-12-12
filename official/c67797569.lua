@@ -53,7 +53,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local cg=Duel.GetFieldGroup(p,LOCATION_HAND,0)
 	local og=aux.SelectUnselectGroup(cg,e,tp,2,2,s.rescon,1,tp,HINTMSG_DISCARD,s.rescon)
 	if og and #og>=2 then
-		local ct=Duel.SendtoGrave(og,REASON_EFFECT+REASON_DISCARD)
+		local ct=Duel.SendtoGrave(og,REASON_EFFECT)
 	else
 		Duel.ConfirmCards(1-p,cg)
 		Duel.SendtoDeck(cg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)

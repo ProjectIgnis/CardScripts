@@ -1,9 +1,10 @@
 --Ａ・Ɐ・ＷＷ
 --Amaze Attraction Wonder Wheel
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip
+	--Equip this card to 1 monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--action
+	--Activate 1 of 2 effects, depending on equipped monster's controller
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -24,6 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x25d}
+
 function s.filter(c,tp)
 	return c:IsFaceup() and (c:IsSetCard(0x25d) or not c:IsControler(tp))
 end
@@ -64,7 +66,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local yours=et:GetControler()==tp
 	if chk==0 then
 		if yours then
-			return s.drtg(e,tp,eg,ep,ev,re,r,rp,0)
+			return s.drcon(e,tp,eg,ep,ev,re,r,rp) and s.drtg(e,tp,eg,ep,ev,re,r,rp,0)
 		else
 			return true
 		end
@@ -77,6 +79,9 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 		e:SetOperation(s.atkop)
 	end
+end
+function s.drcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsMainPhase()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 and Duel.IsPlayerCanDraw(tp,1) end

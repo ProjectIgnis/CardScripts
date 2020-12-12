@@ -1,6 +1,7 @@
 --驚楽園の支配人 <Ɐrlechino>
 --Amazement Administrator - Arlechino
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -58,12 +59,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and not c:IsControler(tp)
-		and c:IsCanBeEffectTarget(e) and not c:IsSummonPlayer(tp)
-		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK,0,1,nil,c)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and (not c:IsControler(tp))
+		and c:IsCanBeEffectTarget(e) and (not c:IsSummonPlayer(tp))
+		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK,0,1,nil)
 end
-function s.eqfilter(c,ec)
-	return c:IsSetCard(0x25e) and c:IsType(TYPE_TRAP) and c:CheckEquipTarget(ec)
+function s.eqfilter(c)
+	return c:IsSetCard(0x25e) and c:IsType(TYPE_TRAP)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,tp) end
@@ -72,13 +73,23 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=eg:FilterSelect(tp,s.filter,1,1,nil,e,tp)
 	Duel.SetTargetCard(g)
 end
+function s.eqlimit(e,c)
+	return c:GetControler()==e:GetHandlerPlayer() or e:GetHandler():GetEquipTarget()==c
+end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local ec=Duel.SelectMatchingCard(tp,s.eqfilter,tp,LOCATION_DECK,0,1,1,nil,tc):GetFirst()
+		local ec=Duel.SelectMatchingCard(tp,s.eqfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 		if ec then
 			Duel.Equip(tp,ec,tc,true)
+			local e1=Effect.CreateEffect(ec)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_EQUIP_LIMIT)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetValue(s.eqlimit)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			ec:RegisterEffect(e1)
 		end
 	end
 end

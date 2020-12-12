@@ -44,6 +44,9 @@ function s.eqtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g2=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tc,1,0,0)
 end
+function s.eqlimit(e,c)
+	return c:GetControler()==e:GetHandlerPlayer() or e:GetHandler():GetEquipTarget()==c
+end
 function s.eqop1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local ec=e:GetLabelObject()
@@ -53,6 +56,13 @@ function s.eqop1(e,tp,eg,ep,ev,re,r,rp)
 	if tc==ec then tc=g:GetNext() end
 	if ec:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Equip(tp,ec,tc)
+		local e1=Effect.CreateEffect(ec)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_EQUIP_LIMIT)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetValue(s.eqlimit)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		ec:RegisterEffect(e1)
 	end
 end
 function s.eqsfilter(c)

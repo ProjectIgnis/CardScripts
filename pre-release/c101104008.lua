@@ -53,7 +53,8 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetTargetCards(e):GetFirst()
-	if not tc then return end
+	if (not tc) or
+	   (not Duel.IsExistingMatchingCard(s.eqmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,tc:GetEquipTarget(),tp)) then return end
 	local mc=Duel.SelectMatchingCard(tp,s.eqmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,tc:GetEquipTarget(),tp):GetFirst()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and
 	   mc:IsFaceup() then Duel.Equip(tp,tc,mc) end

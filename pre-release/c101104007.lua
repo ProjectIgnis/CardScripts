@@ -27,56 +27,51 @@ function s.initial_effect(c)
 end
 s.listed_series={0x25e,0x25d}
 function s.eqfilter1(c)
-	return c:IsSetCard(0x25e) and c:IsType(TYPE_TRAP) and c:GetEquipTarget()
-		and Duel.IsExistingTarget(s.eqfilter2,0,0,LOCATION_MZONE,1,c:GetEquipTarget(),c)
-end
-function s.eqfilter2(c,ec)
-	return c:IsFaceup() and ec:CheckEquipTarget(c)
+	return c:IsSetCard(0x25e) and c:IsType(TYPE_TRAP)
 end
 function s.eqtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(s.eqfilter1,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then
+		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and
+		       Duel.IsExistingTarget(s.eqfilter1,tp,LOCATION_GRAVE,0,1,nil) and
+		       Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
+	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g1=Duel.SelectTarget(tp,s.eqfilter1,tp,LOCATION_GRAVE,0,1,1,nil)
 	local tc=g1:GetFirst()
 	e:SetLabelObject(tc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g2=Duel.SelectTarget(tp,s.eqfilter2,tp,0,LOCATION_MZONE,1,1,tc:GetEquipTarget(),tc)
+	local g2=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tc,1,0,0)
 end
 function s.eqop1(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local ec=e:GetLabelObject()
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local g=Duel.GetTargetCards(e)
+	if #g<2 then return end
 	local tc=g:GetFirst()
 	if tc==ec then tc=g:GetNext() end
-	if ec:IsRelateToEffect(e) and ec:CheckEquipTarget(tc) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if ec:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Equip(tp,ec,tc)
 	end
 end
-function s.eqfilter3(c)
-	return c:IsSetCard(0x25e) and c:IsType(TYPE_TRAP) and c:GetEquipTarget()
-		and Duel.IsExistingTarget(s.eqfilter4,0,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),c,tp)
+function s.eqsfilter(c)
+	return c:IsSetCard(0x25e) and c:IsType(TYPE_TRAP) and c:GetEquipTarget() and
+	       Duel.IsExistingTarget(s.eqmfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
 end
-function s.eqfilter4(c,ec,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x25d) or (not c:IsControler(tp))) and ec:CheckEquipTarget(c)
+function s.eqmfilter(c,tp)
+	return c:IsFaceup() and (c:IsSetCard(0x25d) or (not c:IsControler(tp)))
 end
 function s.eqtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.eqfilter3,tp,LOCATION_SZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.eqsfilter,tp,LOCATION_SZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g1=Duel.SelectTarget(tp,s.eqfilter3,tp,LOCATION_SZONE,0,1,1,nil)
-	local tc=g1:GetFirst()
-	e:SetLabelObject(tc)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g2=Duel.SelectTarget(tp,s.eqfilter4,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,tc:GetEquipTarget(),tc,tp)
+	Duel.SelectTarget(tp,s.eqsfilter,tp,LOCATION_SZONE,0,1,1,nil)
 end
 function s.eqop2(e,tp,eg,ep,ev,re,r,rp)
-	local ec=e:GetLabelObject()
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tc=g:GetFirst()
-	if tc==ec then tc=g:GetNext() end
-	if ec:IsFaceup() and ec:IsRelateToEffect(e) and ec:CheckEquipTarget(tc) and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		Duel.Equip(tp,ec,tc)
-	end
+	local tc=Duel.GetTargetCards(e):GetFirst()
+	if not tc then return end
+	local mc=Duel.SelectMatchingCard(tp,s.eqmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,tc:GetEquipTarget(),tp):GetFirst()
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and
+	   mc:IsFaceup() then Duel.Equip(tp,tc,mc) end
 end

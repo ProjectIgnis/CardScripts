@@ -26,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
  Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function s.damfilter(c)
-	return c:IsFaceup() and c:GetAttack()>0
+	return c:IsFaceup() and c:GetAttack()>0 and c:IsLevelBelow(8)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

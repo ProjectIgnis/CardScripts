@@ -101,7 +101,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetEquipTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsFaceup() then
 		local atk=tc:GetAttack()
 		local def=tc:GetDefense()
 		local e1=Effect.CreateEffect(c)

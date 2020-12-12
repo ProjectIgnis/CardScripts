@@ -1,6 +1,7 @@
 --シークレット・パスフレーズ
---Secret Passphrase
+--Secret Password
 --Scripted by AlphaKretin and Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x153,0x154,0x155,0x156}
+
 function s.thfilter(c,add)
 	local c1=(c:IsSetCard(0x155) or c:IsSetCard(0x156)) and c:IsType(TYPE_SPELL+TYPE_TRAP)
 	local c2=c:IsSetCard(0x155) and c:IsType(TYPE_MONSTER)
@@ -23,7 +25,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 		local add=g:IsExists(Card.IsSetCard,1,nil,0x153) and g:IsExists(Card.IsSetCard,1,nil,0x154)
-		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,add)
+		return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,add)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
@@ -37,4 +39,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

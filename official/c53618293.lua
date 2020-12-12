@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e2:SetTargetRange(LOCATION_SZONE,0)
+	e2:SetTargetRange(LOCATION_ONFIELD,0)
 	e2:SetTarget(s.tgtg)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
@@ -30,7 +30,7 @@ end
 s.listed_series={0x1157,0x2157}
 
 function s.tfilter(c,tp)
-	return c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_PLANT) and c:IsControler(tp) and c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsControler(tp) and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

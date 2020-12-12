@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c)
-	return c:IsRace(RACE_PLANT) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():GetSum(Card.GetAttack)>0
+	return c:IsRace(RACE_PLANT) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():Filter(Card.IsFaceup,nil):GetSum(Card.GetAttack)>0
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
@@ -61,10 +61,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if c:IsRelateToEffect(e) and tc:IsRelateToBattle() and not tc:IsImmuneToEffect(e)
 		and tc:IsControler(tp) and s.atkfilter(tc) then
+		local lg=tc:GetLinkedGroup():Filter(Card.IsFaceup,nil)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(tc:GetLinkedGroup():GetSum(Card.GetAttack))
+		e1:SetValue(lg:GetSum(Card.GetAttack))
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end

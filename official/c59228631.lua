@@ -1,4 +1,4 @@
---聖なる夜アステル
+--ホーリーナイツ・アステル
 --Holy Knight Astel
 --LUA by Kohana Sonogami
 
@@ -34,7 +34,7 @@ function s.ldlv7filter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsLevel(7)
 end
 function s.releasefilter(c)
-	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsReleasableByEffect()
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsReleasableByEffect()
 end
 function s.spfilter(c,e,tp)
 	return s.ldlv7filter(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
@@ -56,11 +56,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) end
 	end
 end
+function s.atkfilter(c)
+	return c:IsFaceup() and s.ldlv7filter(c)
+end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.ldlv7filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.ldlv7filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,s.ldlv7filter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,s.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

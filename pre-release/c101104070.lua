@@ -1,6 +1,7 @@
 --アメイズメント・ファミリーフェイス
 --Amazement Family Face
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
 	local e0=aux.AddEquipProcedure(c,1,s.eqfilter,s.eqlimit,nil,s.target)
@@ -25,13 +26,19 @@ function s.initial_effect(c)
 	e3:SetValue(0x25d)
 	e3:SetCondition(s.condition)
 	c:RegisterEffect(e3)
+	--control
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_EQUIP)
+	e4:SetCode(EFFECT_SET_CONTROL)
+	e4:SetValue(function(e)return e:GetHandlerPlayer()end)
+	c:RegisterEffect(e4)
 end
 s.listed_series={0x25d,0x25e}
-function s.eqfilter(c,e,tp)
-	return aux.CheckStealEquip(c) and c:GetEquipGroup():IsExists(s.eqcfilter,1,nil,tp)
-end
 function s.eqcfilter(c,tp)
 	return c:IsSetCard(0x25e) and c:IsType(TYPE_TRAP) and c:IsControler(tp)
+end
+function s.eqfilter(c,e,tp)
+	return aux.CheckStealEquip(c,e,tp) and c:GetEquipGroup():IsExists(s.eqcfilter,1,nil,tp)
 end
 function s.eqlimit(e,c)
 	return e:GetHandlerPlayer()~=c:GetControler() or e:GetHandler():GetEquipTarget()==c
@@ -41,6 +48,5 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,tc)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,tc,1,0,0)
 end
 function s.condition(e)
-	local c=e:GetHandler()
-	return c:GetControler()==e:GetHandlerPlayer()
+	return e:GetHandler():GetControler()==e:GetHandlerPlayer()
 end

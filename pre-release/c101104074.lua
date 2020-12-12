@@ -108,8 +108,17 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,tc,1,0,0)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
-	local ec=e:GetHandler():GetEquipTarget()
-	if ec and ec:IsFaceup() and ec:UpdateLevel(1,RESET_PHASE+PHASE_END)~=0 then
-		Duel.ChangePosition(ec,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
+	local c=e:GetHandler()
+	local ec=c:GetEquipTarget()
+	if ec and ec:IsFaceup() then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_LEVEL)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetValue(1)
+		ec:RegisterEffect(e1)
+		if not ec:IsImmuneToEffect(e1) then
+			Duel.ChangePosition(ec,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
+		end
 	end
 end

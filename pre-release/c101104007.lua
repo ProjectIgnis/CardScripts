@@ -65,18 +65,18 @@ function s.eqop1(e,tp,eg,ep,ev,re,r,rp)
 		ec:RegisterEffect(e1)
 	end
 end
-function s.eqsfilter(c)
+function s.eqsfilter(c,tp)
 	return c:IsSetCard(0x25e) and c:IsType(TYPE_TRAP) and c:GetEquipTarget() and
-	       Duel.IsExistingTarget(s.eqmfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
+	       Duel.IsExistingMatchingCard(s.eqmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
 end
 function s.eqmfilter(c,tp)
 	return c:IsFaceup() and (c:IsSetCard(0x25d) or (not c:IsControler(tp)))
 end
 function s.eqtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.eqsfilter,tp,LOCATION_SZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.eqsfilter,tp,LOCATION_SZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.eqsfilter,tp,LOCATION_SZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,s.eqsfilter,tp,LOCATION_SZONE,0,1,1,nil,tp)
 end
 function s.eqop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetTargetCards(e):GetFirst()

@@ -40,7 +40,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.eqsfilter(c,tp)
 	return c:IsSetCard(0x25e) and c:IsType(TYPE_TRAP) and c:GetEquipTarget() and
-	       Duel.IsExistingTarget(s.eqmfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
+	       Duel.IsExistingMatchingCard(s.eqmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
 end
 function s.eqmfilter(c,tp)
 	return c:IsFaceup() and (c:IsSetCard(0x25d) or (not c:IsControler(tp)))

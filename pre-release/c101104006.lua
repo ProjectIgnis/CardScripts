@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Equip 1 "Attraction" trap to 1 of opponent's monsters 
+	--Equip 1 "Attraction" trap to 1 of opponent's monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_EQUIP)
@@ -99,10 +99,9 @@ function s.descfilter(c)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	local rt=Duel.GetTargetCount(nil,tp,0,LOCATION_ONFIELD,nil)
-	if rt>2 then rt=2 end
+	local maxtc=Duel.GetTargetCount(nil,tp,0,LOCATION_ONFIELD,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.descfilter,tp,LOCATION_GRAVE,0,1,99,nil)
+	local g=Duel.SelectMatchingCard(tp,s.descfilter,tp,LOCATION_GRAVE,0,1,maxtc,nil)
 	local cg=Duel.Remove(g,POS_FACEUP,REASON_COST)
 	e:SetLabel(cg)
 end
@@ -117,7 +116,5 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local rg=tg:Filter(Card.IsRelateToEffect,nil,e)
-	if #rg>0 then
-		Duel.Destroy(rg,REASON_EFFECT)
-	end
+	if #rg>0 then Duel.Destroy(rg,REASON_EFFECT) end
 end

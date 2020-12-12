@@ -1,4 +1,5 @@
 --シャイニング・ボンバー
+--Shining Destoryer
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle destroyed
@@ -20,7 +21,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,PLAYER_ALL,800)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Damage(tp,800,REASON_EFFECT,true)
-	Duel.Damage(1-tp,800,REASON_EFFECT,true)
+	Duel.Damage(tp,600,REASON_EFFECT,true)
+	Duel.Damage(1-tp,600,REASON_EFFECT,true)
 	Duel.RDComplete()
 end

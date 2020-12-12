@@ -1,9 +1,10 @@
 --Ａ・Ɐ・ＲＲ
 --Amaze Attraction Rapid Racing
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip
+	--Equip this card to 1 monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--action
+	--Activate 1 of 2 effects, depending on equipped monster's controller
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -24,6 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x25d}
+
 function s.filter(c,tp)
 	return c:IsFaceup() and (c:IsSetCard(0x25d) or not c:IsControler(tp))
 end
@@ -95,7 +97,7 @@ end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local ec=e:GetHandler():GetEquipTarget()
-	if ec and ec:IsRelateToEffect(e) and Duel.ChangePosition(ec,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)~=0
+	if ec and Duel.ChangePosition(ec,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)~=0
 		and tc:IsRelateToEffect(e) then
 		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
 	end

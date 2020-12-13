@@ -104,7 +104,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetEquipTarget()
-	if chk==0 then return tc and tc:IsCanChangePosition() end
+	if chk==0 then return tc and tc:HasLevel() and tc:IsCanChangePosition() end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,tc,1,0,0)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)

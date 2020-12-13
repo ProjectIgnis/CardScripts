@@ -58,14 +58,14 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if Duel.GetFlagEffect(ep,id+1)>0 then return end
 	return ep~=tp and tc:IsControler(tp) and tc:IsCode(3643300)
-	and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
+	and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 end
 function s.afilter(c,tp)
 	return c:IsControler(tp) and c:IsCode(3643300)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp,chk)
 	return eg:IsExists(s.afilter,1,nil,tp)
-	and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
+	and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:GetLevel()<=4 and c:IsCanBeSpecialSummoned(e,0,sp,false,false)

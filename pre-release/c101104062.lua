@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCondition(function(e)return not Duel.IsBattlePhase() end)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x88))
+	e2:SetTarget(s.target)
 	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
 	--Negate 1 of opponent's face-up cards
@@ -51,9 +51,8 @@ end
 	--Lists "Bujin" archetype
 s.listed_series={0x88}
 
-function s.tgcon(e)
-	local ph=Duel.GetCurrentPhase()
-	return ph<=PHASE_MAIN1 or ph>=PHASE_MAIN2
+function s.target(e,c)
+    return c:IsSetCard(0x88) and c:IsRace(RACE_BEASTWARRIOR)
 end
 	--Define cost
 function s.tgfilter(c)

@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.sdesop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x1257,0x2257}
+s.listed_series={0x1157,0x2157}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp 
 end
@@ -56,7 +56,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function s.linkfilter(c)
-	return c:IsLinkSummonable() and c:IsSetCard(0x1257)
+	return c:IsLinkSummonable() and c:IsSetCard(0x1157)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -120,11 +120,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atlimit(e,c)
-	return c:GetControler(e:GetOwnerPlayer()) and (not c:IsSetCard(0x2257) or c:IsFacedown())
+	return c:GetControler(e:GetOwnerPlayer()) and (not c:IsSetCard(0x2157) or c:IsFacedown())
 end
 --------------------------------------
 function s.sfilter(c,p)
-	return c:GetPreviousControler()==p and c:IsPreviousSetCard(0x1257)
+	return c:GetPreviousControler()==p and c:IsPreviousSetCard(0x1157)
 		and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousTypeOnField()&TYPE_MONSTER==TYPE_MONSTER
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end

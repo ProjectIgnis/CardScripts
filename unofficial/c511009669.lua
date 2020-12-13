@@ -1,5 +1,6 @@
---Sunvine Thrasher
---cleaned up by MLD
+--聖蔓の剣士 (Anime)
+--Sunvine Thrasher (Anime)
+--Cleaned up by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link summon
@@ -33,12 +34,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1257}
+s.listed_series={0x1157}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsType(TYPE_NORMAL,lc,sumtype,tp) and c:IsRace(RACE_PLANT,lc,sumtype,tp)
 end
 function s.filter(c,sc,atk)
-	return c:IsFaceup() and c:IsSetCard(0x1257) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(sc) and (not atk or c:GetLink()>0)
+	return c:IsFaceup() and c:IsSetCard(0x1157) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(sc) and (not atk or c:GetLink()>0)
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil,e:GetHandler())
@@ -85,7 +86,7 @@ function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return tc and eg:IsContains(tc)
 end
 function s.lkfilter(c)
-	return c:IsSetCard(0x1257) and c:IsFaceup() and c:IsLinkMonster()
+	return c:IsSetCard(0x1157) and c:IsFaceup() and c:IsLinkMonster()
 end
 function s.zonefilter(tp)
 	local lg=Duel.GetMatchingGroup(s.lkfilter,tp,LOCATION_MZONE,0,nil)

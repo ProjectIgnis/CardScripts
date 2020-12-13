@@ -50,13 +50,13 @@ function s.initial_effect(c)
 	e4:SetOperation(s.mvop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2257,0x1257}
+s.listed_series={0x2157,0x1157}
 function s.matcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_LINK) and c:GetTurnID()==Duel.GetTurnCount()
 end
 function s.matfilter(c)
-	return c:IsOriginalSetCard(0x1257)
+	return c:IsOriginalSetCard(0x1157)
 end
 function s.valcheck(e,c)
 	if c:GetMaterial():IsExists(s.matfilter,1,nil,tp) then
@@ -69,10 +69,10 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and r&REASON_BATTLE+REASON_EFFECT~=0 and e:GetLabelObject():GetLabel()==1
 end
 function s.filter(c,e,tp,zone)
-	return c:IsSetCard(0x2257) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsSetCard(0x2157) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.lkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1257) and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsSetCard(0x1157) and c:IsLinkMonster()
 end
 function s.zonefilter(tp)
 	local lg=Duel.GetMatchingGroup(s.lkfilter,tp,LOCATION_MZONE,0,nil)

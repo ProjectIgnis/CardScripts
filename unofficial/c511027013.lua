@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetLabelObject(e1)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x1257}
+s.listed_series={0x1157}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,800) end
 	Duel.PayLPCost(tp,800)
@@ -106,7 +106,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x1257) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
+	return c:IsSetCard(0x1157) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function s.tgocon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

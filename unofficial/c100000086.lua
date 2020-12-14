@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
-	e1:SetValue(id)
+	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	--lv
 	local e2=Effect.CreateEffect(c)
@@ -30,7 +30,7 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(s.filter,c:GetControler(),0,LOCATION_MZONE,1,nil)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL+id)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL+1)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end

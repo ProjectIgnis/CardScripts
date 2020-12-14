@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCode(EVENT_PHASE_START+PHASE_STANDBY)
+	e3:SetCondition(s.ctcon)
 	e3:SetOperation(s.ctop)
 	c:RegisterEffect(e3)
 	--DAMAGE
@@ -62,6 +63,9 @@ end
 s.listed_series={0x500}
 function s.aclimit(e,re)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and not re:GetHandler():IsSetCard(0x500)
+end
+function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
+	return not Duel.IsPlayerAffectedByEffect(tp,100100090)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x91,1)

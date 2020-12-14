@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_PHASE_START+PHASE_STANDBY)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1)
-	e3:SetCondition(function() return Duel.GetTurnCount()~=1 end)
+	e3:SetCondition(s.ctcon)
 	e3:SetOperation(s.ctop)
 	c:RegisterEffect(e3)
 	--DAMAGE
@@ -78,6 +78,9 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	Duel.Hint(HINT_CARD,1-tp,id)
 	Duel.Damage(rp,2000,REASON_EFFECT)
+end
+function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
+	return not Duel.IsPlayerAffectedByEffect(tp,100100090) and Duel.GetTurnCount()~=1
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x91,1)

@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(100100090)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(s.con)
 	e2:SetTargetRange(0,1)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
@@ -41,4 +42,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	if not g then return end
 	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
+end
+function s.con(e)
+	return Duel.IsEnvironment(511600371,1-e:GetHandlerPlayer())
 end

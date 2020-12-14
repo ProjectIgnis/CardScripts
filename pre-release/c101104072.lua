@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCondition(s.cond)
 	e2:SetTarget(s.tg)
 	c:RegisterEffect(e2)
@@ -68,7 +69,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 		if yours then
 			return s.drcon(e,tp,eg,ep,ev,re,r,rp) and s.drtg(e,tp,eg,ep,ev,re,r,rp,0)
 		else
-			return true
+			return s.atktg(e,tp,eg,ep,ev,re,r,rp,0)
 		end
 	end
 	if yours then
@@ -97,6 +98,10 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Draw(p,1,REASON_EFFECT)
 	end
+end
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local tc=e:GetHandler():GetEquipTarget()
+	if chk==0 then return tc and tc:HasDefense() end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

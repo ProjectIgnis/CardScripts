@@ -553,7 +553,7 @@ function Auxiliary.addContinuousLizardCheck(c,location,filter,tRange,tRange2)
 	return e1
 end
 
---Discard and/or send to GY cost for Ice Barrier Monsters, support for Mirror Master of the Ice Barrier 
+--Discard and/or send to GY cost for Ice Barrier Monsters, support for Mirror Master of the Ice Barrier
 function Auxiliary.IceBarrierDiscardFilter(c,tp)
 	return c:IsHasEffect(EFFECT_ICEBARRIER_REPLACE,tp) and c:IsAbleToRemoveAsCost()
 end
@@ -675,4 +675,56 @@ function Auxiliary.AddZWEquipLimit(c,con,equipval,equipop,linkedeff,prop,resetfl
     end
     c:RegisterEffect(e2)
     linkedeff:SetLabelObject(e2)
+end
+
+-- Amazement and Ɐttraction helper functions
+AA = {}
+function AA.eqtgfilter(c,tp)
+	return c:IsFaceup() and (c:IsSetCard(0x25d) or (not c:IsControler(tp)))
+end
+function AA.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and AA.eqtgfilter(chkc,tp) end
+	if chk==0 then
+		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and
+		       Duel.IsExistingTarget(AA.eqtgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp)
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+	Duel.SelectTarget(tp,AA.eqtgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
+end
+function AA.eqlim(e,c)
+	return c:GetControler()==e:GetHandlerPlayer() or e:GetHandler():GetEquipTarget()==c
+end
+function AA.eqop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if (not c:IsLocation(LOCATION_SZONE)) or (not c:IsRelateToEffect(e)) or c:IsStatus(STATUS_LEAVE_CONFIRMED) then return end
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		Duel.Equip(tp,c,tc)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_EQUIP_LIMIT)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetValue(AA.eqlim)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+		c:RegisterEffect(e1)
+	else
+		c:CancelToGrave(false)
+	end
+end
+-- Description: Add equip effect that "Ɐttraction" traps share to a card, effect text being:
+-- Target 1 "Amazement" monster you control or 1 face-up monster your opponent controls; equip this card to it.
+-- Parameter:
+-- c - The card to add the effect to.
+function Auxiliary.AddAttractionEquipProc(c)
+	--Equip this card to 1 monster
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_EQUIP)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCost(aux.RemainFieldCost)
+	e1:SetTarget(AA.eqtg)
+	e1:SetOperation(AA.eqop)
+	c:RegisterEffect(e1)
 end

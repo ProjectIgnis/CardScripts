@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		tc:RegisterEffect(e2)
 		Duel.AdjustInstantly(c)
-		if not tc:IsImmuneToEffect(e1) and not tc:IsImmuneToEffect(e2) and Duel.Destroy(tc,REASON_EFFECT)>0 then
+		if not tc:IsImmuneToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 then
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_FIELD)
 			e3:SetCode(EFFECT_DISABLE)

@@ -6,46 +6,15 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--From cards_specific_functions.lua
 	aux.AddAttractionEquipProc(c)
-	--Activate 1 of 2 effects, depending on equipped monster's controller.
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1,id)
-	e2:SetCondition(s.cond)
-	e2:SetTarget(s.tg)
+	--You: Target 1 Spell/Trap your opponent controls; send both it and this card to the GY.
+	--Your opponent: Add 1 "Amazement" monster from your Deck to your hand, and if you do, send this card to the GY.
+	local e2=aux.MakeAttractionBinaryEquipChkOp(c,id,
+		{CATEGORY_TOGRAVE,EFFECT_FLAG_CARD_TARGET,s.gytg,s.gyop,{0,TIMING_END_PHASE}},
+		{CATEGORY_TOGRAVE+CATEGORY_TOHAND+CATEGORY_SEARCH,nil,s.thtg,s.thop,{0,TIMING_END_PHASE}},
+		s.gytg)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x25d}
-function s.cond(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget()
-end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.gytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
-	local et=e:GetHandler():GetEquipTarget()
-	if not et then return false end
-	local yours=et:GetControler()==tp
-	if chk==0 then
-		if yours then
-			return s.gytg(e,tp,eg,ep,ev,re,r,rp,0)
-		else
-			return s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
-		end
-	end
-	if yours then
-		e:SetCategory(CATEGORY_TOGRAVE)
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e:SetOperation(s.gyop)
-		s.gytg(e,tp,eg,ep,ev,re,r,rp,1)
-		e:SetHintTiming(0,TIMING_END_PHASE)
-	else
-		e:SetCategory(CATEGORY_TOGRAVE+CATEGORY_TOHAND+CATEGORY_SEARCH)
-		e:SetProperty(0)
-		e:SetOperation(s.thop)
-		s.thtg(e,tp,eg,ep,ev,re,r,rp,1)
-		e:SetHintTiming(0,TIMING_END_PHASE)
-	end
-end
 function s.gyfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGrave()
 end

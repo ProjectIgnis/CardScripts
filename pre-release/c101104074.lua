@@ -6,44 +6,15 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--From cards_specific_functions.lua
 	aux.AddAttractionEquipProc(c)
-	--Activate 1 of 2 effects, depending on equipped monster's controller.
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1,id)
-	e2:SetCondition(s.cond)
-	e2:SetTarget(s.tg)
+	--You: Target 1 card in your opponent's GY; change the equipped monster's battle position, and if you do, shuffle that target into the Deck.
+	--Your opponent: Increase the equipped monster's Level by 1 (until the end of this turn), and if you do, change its battle position.
+	local e2=aux.MakeAttractionBinaryEquipChkOp(c,id,
+		{CATEGORY_POSITION+CATEGORY_TODECK,EFFECT_FLAG_CARD_TARGET,s.postg,s.posop,{0,0}},
+		{CATEGORY_POSITION+CATEGORY_LVCHANGE,nil,s.lvtg,s.lvop,{0,0}},
+		s.postg)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x25d}
-function s.cond(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget()
-end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local et=e:GetHandler():GetEquipTarget()
-	if not et then return false end
-	local yours=et:GetControler()==tp
-	if chkc then return s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
-	if chk==0 then
-		if yours then
-			return s.postg(e,tp,eg,ep,ev,re,r,rp,0)
-		else
-			return s.lvtg(e,tp,eg,ep,ev,re,r,rp,0)
-		end
-	end
-	if yours then
-		e:SetCategory(CATEGORY_POSITION+CATEGORY_TODECK)
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e:SetOperation(s.posop)
-		s.postg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetCategory(CATEGORY_POSITION+CATEGORY_LVCHANGE)
-		e:SetProperty(0)
-		e:SetOperation(s.lvop)
-		s.lvtg(e,tp,eg,ep,ev,re,r,rp,1)
-	end
-end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return not chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsAbleToDeck() end
 	local tc=e:GetHandler():GetEquipTarget()

@@ -6,46 +6,18 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--From cards_specific_functions.lua
 	aux.AddAttractionEquipProc(c)
-	--Activate 1 of 2 effects, depending on equipped monster's controller.
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1,id)
+	--You: During the Main Phase: Place 1 card from your hand on the bottom of the Deck, then draw 1 card.
+	--Your opponent: Switch the equipped monster's current ATK and DEF, until the end of this turn.
+	local e2=aux.MakeAttractionBinaryEquipChkOp(c,id,
+		{CATEGORY_TODECK+CATEGORY_DRAW,nil,s.drtg,s.drop,{TIMING_MAIN_END}},
+		{CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE,EFFECT_FLAG_DAMAGE_STEP,s.atktg,s.atkop,{TIMINGS_CHECK_MONSTER}},
+		nil)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetCondition(s.cond)
-	e2:SetTarget(s.tg)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x25d}
-function s.cond(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget()
-end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local et=e:GetHandler():GetEquipTarget()
-	if not et then return false end
-	local yours=et:GetControler()==tp
-	if chk==0 then
-		if yours then
-			return s.drcon(e,tp,eg,ep,ev,re,r,rp) and s.drtg(e,tp,eg,ep,ev,re,r,rp,0)
-		else
-			return s.atktg(e,tp,eg,ep,ev,re,r,rp,0)
-		end
-	end
-	if yours then
-		e:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
-		e:SetOperation(s.drop)
-		s.drtg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
-		e:SetOperation(s.atkop)
-	end
-end
-function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase()
-end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 and Duel.IsPlayerCanDraw(tp,1) end
+	if chk==0 then return Duel.IsMainPhase() and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)

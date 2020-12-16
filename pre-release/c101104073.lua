@@ -6,13 +6,13 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--From cards_specific_functions.lua
 	aux.AddAttractionEquipProc(c)
-	--atkup
+	--You: The equipped monster gains 500 ATK, also if it would be destroyed by battle or card effect, you can send this card to the GY instead.
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--destroy sub
+	--Your opponent: The equipped monster loses 500 ATK for each of your "Ɐttraction" Traps that are equipped to a monster.
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP+EFFECT_TYPE_CONTINUOUS)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

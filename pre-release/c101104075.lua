@@ -6,42 +6,15 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--From cards_specific_functions.lua
 	aux.AddAttractionEquipProc(c)
-	--Activate 1 of 2 effects, depending on equipped monster's controller.
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1,id)
-	e2:SetCondition(s.cond)
-	e2:SetTarget(s.tg)
+	--You: Target 1 Effect Monster your opponent controls; negate its effects until the end of this turn.
+	--Your opponent: Change the equipped monster to face-down Defense Position.
+	local e2=aux.MakeAttractionBinaryEquipChkOp(c,id,
+		{CATEGORY_DISABLE,EFFECT_FLAG_CARD_TARGET,s.distg,s.disop,{0,0}},
+		{CATEGORY_POSITION,nil,s.postg,s.posop,{0,0}},
+		s.distg)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x25d}
-function s.cond(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget()
-end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local et=e:GetHandler():GetEquipTarget()
-	if not et then return false end
-	local yours=et:GetControler()==tp
-	if chkc then return s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
-	if chk==0 then
-		if yours then
-			return s.distg(e,tp,eg,ep,ev,re,r,rp,0)
-		else
-			return s.postg(e,tp,eg,ep,ev,re,r,rp,0)
-		end
-	end
-	if yours then
-		e:SetCategory(CATEGORY_DISABLE)
-		e:SetOperation(s.disop)
-		s.distg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetCategory(CATEGORY_POSITION)
-		e:SetOperation(s.posop)
-		s.postg(e,tp,eg,ep,ev,re,r,rp,1)
-	end
-end
 function s.disfilter(c)
 	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_EFFECT)
 end

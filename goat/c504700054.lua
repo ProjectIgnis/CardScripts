@@ -1,5 +1,6 @@
 --サンダー・ドラゴン
 --Thunder Dragon
+--"“Thunder Dragon” may be discarded to search for 0 “Thunder Dragons” in the player’s deck." netrep ruling
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -24,15 +25,13 @@ function s.filter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,0,tp,LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,2,nil)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,0,2,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
-	else
-		Duel.GoatConfirm(tp,LOCATION_DECK)
 	end
 end

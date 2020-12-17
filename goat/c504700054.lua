@@ -34,6 +34,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	else
-		Duel.GoatConfirm(tp,LOCATION_DECK)
+		if not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) then Duel.GoatConfirm(tp,LOCATION_DECK) end
 	end
 end

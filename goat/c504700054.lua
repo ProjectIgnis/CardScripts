@@ -35,6 +35,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.ConfirmCards(1-tp,g)
 	else
 		Duel.GoatConfirm(tp,LOCATION_DECK)
-		Duel.ShuffleDeck(tp)
 	end
 end

@@ -2,7 +2,7 @@
 *             @kevinlul
 
 # Default card script reviewers
-*.lua         @NaimSantos @pyrQ
+*.lua         @pyrQ
 
 /unofficial/  @larry126
 /rush/        @ClementLouis

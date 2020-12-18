@@ -49,8 +49,8 @@ function s.seqop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local seq=e:GetLabel()
 	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) or not Duel.CheckLocation(tp,LOCATION_MZONE,seq) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	local dg=c:GetColumnGroup():Filter(Card.IsFaceup,c,nil) --Check for face-up cards in its current column, except itself
 	Duel.MoveSequence(c,seq)
+	local dg=c:GetColumnGroup():Filter(Card.IsFaceup,c,nil) --Check for face-up cards in its current column, except itself
 	if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		Duel.Destroy(dg,REASON_EFFECT)

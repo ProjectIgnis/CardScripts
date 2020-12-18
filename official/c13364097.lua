@@ -57,6 +57,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_REMOVED,0,nil)
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,1,tp,HINTMSG_TODECK)
+	Duel.HintSelection(sg)
 	if #sg==2 and Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)==2 then
 		local og=Duel.GetOperatedGroup()
 		if og:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)==2 and tc and tc:IsRelateToEffect(e) then

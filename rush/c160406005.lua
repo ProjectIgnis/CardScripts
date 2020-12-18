@@ -1,7 +1,9 @@
 --アキュア・ショット
 --Acure Shot
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Gain LP and inflict damage, equal to targeted monster's level x 100
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -30,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local tc=Duel.SelectMatchingCard(tp,s.gyfilter,tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	Duel.HintSelection(Group.FromCards(tc))
-	if tc and c:IsFaceup() then
+	if tc and tc:IsFaceup() then
 		local val=tc:GetLevel()*100
 		Duel.Damage(1-tp,val,REASON_EFFECT)
 		Duel.Recover(tp,val,REASON_EFFECT)

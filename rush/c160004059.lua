@@ -1,7 +1,8 @@
--- ジュエリーの落とし穴
+--ジュエリーの落とし穴
 --Jewelry Trap Hole
 local s,id=GetID()
 function s.initial_effect(c)
+	--When your opponent normal/special summons a monster, destroy 1 of opponent's face-up level 8 or lower monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Same as above, but for special summons
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
@@ -23,7 +23,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter1,1,nil,e,tp) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_AQUA),tp,LOCATION_MZONE,0,3,nil)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(8) and not c:IsMaximumModeSide()
+	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(8) and not c:IsMaximumModeSide() and c:IsFaceup()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

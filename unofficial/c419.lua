@@ -422,10 +422,14 @@ if not GenerateEffect then
 	function GenerateEffect.batregop(e,tp,eg,ep,ev,re,r,rp)
 		local tg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
 		for tc in aux.Next(tg) do
+			local indes={tc:GetCardEffect(EFFECT_INDESTRUCTABLE)}
 			local indesBattle={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}
 			local indesCount={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_COUNT)}
 			local desSubstitude={tc:GetCardEffect(EFFECT_DESTROY_SUBSTITUTE)}
 			local desReplace={tc:GetCardEffect(EFFECT_DESTROY_REPLACE+511010508)}
+			for _,eff in ipairs(indes) do
+				GenerateEffect.newBatNotRepReg(eff)
+			end
 			for _,eff in ipairs(indesBattle) do
 				GenerateEffect.newBatNotRepReg(eff)
 			end

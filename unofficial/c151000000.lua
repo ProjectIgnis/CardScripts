@@ -1,5 +1,6 @@
 --Action Field Functions
 local id=151000000
+
 if not ActionDuel then
 
 	function Card.IsActionCard(c)
@@ -27,7 +28,7 @@ if not ActionDuel then
 
 	ActionDuel={}
 
-	local function ActionDuelRules()
+	function ActionDuel.Start()
 		local e1=Effect.GlobalEffect()
 		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_NO_TURN_RESET)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -76,7 +77,8 @@ if not ActionDuel then
 		e9:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e9:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
 		e9:SetCode(EVENT_ADJUST)
-		e9:SetOperation(ActionDuel.cover)
+		e9:SetCondition(ActionDuel.covercon)
+		e9:SetOperation(ActionDuel.coverop)
 		Duel.RegisterEffect(e9,0)
 	end
 
@@ -84,7 +86,11 @@ if not ActionDuel then
 		return c:IsType(TYPE_ACTION) and c:GetFlagEffect(COVER_ACTION)==0
 	end
 
-	function ActionDuel.cover(e,tp,eg,ep,ev,re,r,rp)
+	function ActionDuel.covercon(e,tp,eg,ep,ev,re,r,rp)
+		return Duel.IsExistingMatchingCard(ActionDuel.cfilter,0,0xff,0xff,1,nil)
+	end
+
+	function ActionDuel.coverop(e,tp,eg,ep,ev,re,r,rp)
 		for c in aux.Next(Duel.GetMatchingGroup(ActionDuel.cfilter,0,0xff,0xff,nil)) do
 			c:Cover(COVER_ACTION)
 			c:RegisterFlagEffect(COVER_ACTION,0,0,0)
@@ -97,7 +103,7 @@ if not ActionDuel then
 		while #actionFieldToBeUsed==0 do
 			for p=0,1 do
 				if Duel.SelectYesNo(p,aux.Stringid(id,3)) then
-					Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,4))
+					Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(id,4))
 					local af=Duel.AnnounceCard(p,table.unpack(announceFilter))
 					table.insert(actionFieldToBeUsed,af)
 				end
@@ -270,8 +276,6 @@ if not ActionDuel then
 			Duel.SendtoGrave(tc,REASON_RULE)
 		end
 	end
-
-	ActionDuelRules()
 
 	COVER_ACTION=301
 	CARD_VANILLA_MODE=511004400

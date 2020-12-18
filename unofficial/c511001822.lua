@@ -1,5 +1,7 @@
---RUM－バリアンズ・フォース
+--RUM－バリアンズ・フォース (Anime)
+--Rank-Up-Magic Barian's Force (Anime)
 Duel.LoadScript("c420.lua")
+Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -48,14 +50,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(sc,Group.FromCards(tc))
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
-		local e1=Effect.CreateEffect(sc)
+		--Negate battle indestruction
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(511010508)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-		e1:SetCode(EFFECT_DISABLE)
+		e1:SetValue(s.batval)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetTarget(s.distg)
-		sc:RegisterEffect(e1)
+		c:RegisterEffect(e1)
+		--Detach
 		local e2=Effect.CreateEffect(c)
 		e2:SetCategory(CATEGORY_ATKCHANGE)
 		e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -67,6 +71,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_CHAIN)
 		c:RegisterEffect(e2)
 	end
+end
+function s.batval(e,re,c)
+	return (re:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE or re:GetCode()==EFFECT_INDESTRUCTABLE_COUNT)
+		and (not re:IsHasType(EFFECT_TYPE_SINGLE) or re:GetOwner()==c)
+		and (not re:IsHasType(EFFECT_TYPE_FIELD) or re:GetActivateLocation()>0)
+		and not re:GetHandler():IsHasEffect(EFFECT_CANNOT_DISABLE)
 end
 function s.distg(e,c)
 	return c~=e:GetHandler() and c:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE)

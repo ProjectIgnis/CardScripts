@@ -1275,16 +1275,14 @@ function Auxiliary.EnableExtraRules(c,card,init,...)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ADJUST)
-	e1:SetCountLimit(1)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
-	e1:SetRange(0xff)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetOperation(Auxiliary.EnableExtraRulesOperation(card,init,...))
 	Duel.RegisterEffect(e1,0)
 end
 function Auxiliary.EnableExtraRulesOperation(card,init,...)
 	local arg = {...}
 	return function(e,tp,eg,ep,ev,re,r,rp)
-		local c = e:GetHandler()
+		local c = e:GetOwner()
 		local p = c:GetControler()
 		Duel.DisableShuffleCheck()
 		Duel.SendtoDeck(c,nil,-2,REASON_RULE)
@@ -1306,6 +1304,7 @@ function Auxiliary.EnableExtraRulesOperation(card,init,...)
 			end
 			card.global_active_check = true
 		end
+		e:Reset()
 	end
 end
 --[[

@@ -97,7 +97,10 @@ function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,specificmatfilte
 	if c.ritual_custom_check then
 		func=aux.tableAND(c.ritual_custom_check,forcedselection or aux.TRUE)
 	end
-	return aux.SelectUnselectGroup(mg,e,tp,1,lv,Ritual.Check(c,lv,func,_type,requirementfunc),0)
+	local sg=Group.CreateGroup()
+	local res=Ritual.Check(nil,sg,mg,tp,c,lv,func,e,_type,requirementfunc)
+	Ritual.SummoningLevel=nil
+	return res
 end
 
 Ritual.Target = aux.FunctionWithNamedArgs(
@@ -114,54 +117,74 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 			end
 end,"filter","lvtype","lv","extrafil","extraop","matfilter","stage2","location","forcedselection","specificmatfilter","requirementfunc")
 
-function Auxiliary.RitualCheckAdditionalLevel(c,rc)
-	local raw_level=c:GetRitualLevel(rc)
-	local lv1=raw_level&0xffff
-	local lv2=raw_level>>16
-	if lv2>0 then
-		return math.min(lv1,lv2)
-	else
-		return lv1
-	end
-end
-function Ritual.Check(sc,lv,forcedselection,_type,requirementfunc)
-	local chk
-	if _type==RITPROC_EQUAL then
-		chk=function(g) return g:GetSum(requirementfunc or Auxiliary.RitualCheckAdditionalLevel,sc)<=lv end
-	else
-		chk=function(g,c) return g:GetSum(requirementfunc or Auxiliary.RitualCheckAdditionalLevel,sc) - (requirementfunc or Auxiliary.RitualCheckAdditionalLevel)(c,sc)<=lv end
-	end
-	return function(sg,e,tp,mg,c)
-		local res=chk(sg,c)
-		if not res then return false,true end
-		local stop=false
-		if forcedselection then
-			local ret=forcedselection(e,tp,sg,sc)
-			res=ret[1]
-			stop=ret[2] or stop
-		end
-		if res and not stop then
-			if _type==RITPROC_EQUAL then
-				res=sg:CheckWithSumEqual(requirementfunc or Card.GetRitualLevel,lv,#sg,#sg,sc)
-			else
-				Duel.SetSelectedCard(sg)
-				res=sg:CheckWithSumGreater(requirementfunc or Card.GetRitualLevel,lv,sc)
-			end
-			local stop=false
-			res=res and Duel.GetMZoneCount(tp,sg,tp)>0
-		end
-		return res,stop
-	end
-end
-function Ritual.Finishcon(sc,lv,requirementfunc,_type)
-	return function(sg,e,tp,mg)
+function Ritual.FastCheck(tp,lv,mg,sc,_type,requirementfunc)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		if _type==RITPROC_EQUAL then
-			return sg:CheckWithSumEqual(requirementfunc or Card.GetRitualLevel,lv,#sg,#sg,sc)
+			return mg:CheckWithSumEqual(requirementfunc or Card.GetRitualLevel,lv,0,#mg,sc)
 		else
-			Duel.SetSelectedCard(sg)
-			return sg:CheckWithSumGreater(requirementfunc or Card.GetRitualLevel,lv,sc)
+			return mg:CheckWithSumGreater(requirementfunc or Card.GetRitualLevel,lv,sc)
+		end
+	else
+		return mg:IsExists(Ritual.FilterF,1,nil,tp,mg,sc,lv,_type,requirementfunc)
+	end
+end
+function Ritual.FilterF(c,tp,mg,sc,lv,_type,requirementfunc)
+	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then
+		Duel.SetSelectedCard(c)
+		if _type==RITPROC_EQUAL then
+			return mg:CheckWithSumEqual(requirementfunc or Card.GetRitualLevel,lv,0,#mg,sc)
+		else
+			return mg:CheckWithSumGreater(requirementfunc or Card.GetRitualLevel,lv,sc)
+		end
+	else return false end
+end
+function Ritual.Check(c,sg,mg,tp,sc,lv,forcedselection,e,_type,requirementfunc)
+	if not c and not forcedselection and #sg==0 then
+		return Ritual.FastCheck(e:GetHandlerPlayer(),lv,mg,sc,_type,requirementfunc)
+	end
+	if c then
+		sg:AddCard(c)
+	end
+	local res=false
+	local stop=false
+	if _type==RITPROC_EQUAL then
+		local cont=true
+		res,cont=sg:CheckWithSumEqual(requirementfunc or Card.GetRitualLevel,lv,#sg,#sg,sc)
+		stop=not cont
+	else
+		Duel.SetSelectedCard(sg)
+		local cont=true
+		res,cont=sg:CheckWithSumGreater(requirementfunc or Card.GetRitualLevel,lv,sc)
+		stop=not cont
+	end
+	res=res and Duel.GetMZoneCount(tp,sg,tp)>0
+	if res and forcedselection then
+		res,stop=table.unpack(forcedselection(e,tp,sg,sc))
+	end
+	if not res and not stop then
+		res=mg:IsExists(Ritual.Check,1,sg,sg,mg,tp,sc,lv,forcedselection,e,_type,requirementfunc)
+	end
+	if c then
+		sg:RemoveCard(c)
+	end
+	return res
+end
+function Ritual.SelectMaterials(sc,mg,forcedselection,lv,tp,e,_type,requirementfunc)
+	local sg=Group.CreateGroup()
+	while true do
+		local cg=mg:Filter(Ritual.Check,sg,sg,mg,tp,sc,lv,forcedselection,e,_type,requirementfunc)
+		if #cg==0 then break end
+		local finish=Ritual.Check(nil,sg,sg,tp,sc,lv,forcedselection,e,_type,requirementfunc)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+		local tc=cg:SelectUnselect(sg,tp,finish,finish,lv)
+		if not tc then break end
+		if not sg:IsContains(tc) then
+			sg:AddCard(tc)
+		else
+			sg:RemoveCard(tc)
 		end
 	end
+	return sg
 end
 
 Ritual.Operation = aux.FunctionWithNamedArgs(
@@ -196,7 +219,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 						if tc.mat_filter then
 							mg=mg:Filter(tc.mat_filter,tc,tp)
 						end
-						if ft>0 and not forcedselection then
+						if ft>0 and not forcedselection and not Auxiliary.RitualExtraCheck then
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 							if _type==RITPROC_EQUAL then
 								mat=mg:SelectWithSumEqual(tp,requirementfunc or Card.GetRitualLevel,lv,1,#mg,tc)
@@ -204,7 +227,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 								mat=mg:SelectWithSumGreater(tp,requirementfunc or Card.GetRitualLevel,lv,tc)
 							end
 						else
-							mat=aux.SelectUnselectGroup(mg,e,tp,1,lv,Ritual.Check(tc,lv,func,_type,requirementfunc),1,tp,nil,Ritual.Finishcon(tc,lv,requirementfunc,_type))
+							mat=Ritual.SelectMaterials(tc,mg,func,lv,tp,e,_type,requirementfunc)
 						end
 					end
 					if not customoperation then

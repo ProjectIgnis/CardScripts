@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 end
 function s.filter(c,p)
-	return c:IsControler(p) and c:IsLocation(LOCATION_GRAVE)
+	return c:IsControler(p) and c:IsLocation(LOCATION_GRAVE) and c:IsType(TYPE_MONSTER)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)

@@ -869,11 +869,12 @@ end
 --utility entry for SelectUnselect loops
 --returns bool if chk==0, returns Group if chk==1
 function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)
-	local res
+	local res=false
 	if #sg>=maxc then return false end
 	sg:AddCard(c)
 	if rescon then
-		local _,stop=rescon(sg,e,tp,mg)
+		local stop
+		res,stop=rescon(sg,e,tp,mg,c)
 		if stop then
 			sg:RemoveCard(c)
 			return false
@@ -882,9 +883,7 @@ function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)
 	if #sg<minc then
 		res=mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
 	elseif #sg<maxc then
-		res=(not rescon or rescon(sg,e,tp,mg)) or mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
-	else
-		res=(not rescon or rescon(sg,e,tp,mg))
+		res=res or mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
 	end
 	sg:RemoveCard(c)
 	return res

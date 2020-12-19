@@ -16,7 +16,7 @@ end
 function s.cfilter(c,tp)
 	local ct=c:GetOverlayCount()
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsAbleToGraveAsCost() 
-		and Duel.IsPlayerCanDraw(tp,ct+1)
+		and Duel.IsPlayerCanDraw(tp,ct)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=g:GetFirst():GetOverlayCount()
 	Duel.Release(g,REASON_COST)
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(ct+1)
+	Duel.SetTargetParam(ct)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

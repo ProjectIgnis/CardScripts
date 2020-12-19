@@ -1,8 +1,9 @@
 --獣機界覇者キングコンボイ・ライガオン
 --King Convoy Ligeon, Conqueror of the Beast Gear World
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Gain ATK
+	--Gain ATK equal to the sum of the sent monsters' levels x 100
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -17,7 +18,7 @@ function s.costfilter(c)
 	return c:IsRace(RACE_BEASTWARRIOR) and c:IsLevelBelow(4) and c:IsFaceup() and c:IsAbleToGraveAsCost()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,2,e:GetHandler()) end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

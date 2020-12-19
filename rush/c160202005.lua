@@ -1,8 +1,9 @@
 --クリボットリプル
 --Kuribottriple
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Shuffle 3 "Kuribotts" into the deck to draw 2
+	--Shuffle 3 "Kuribotts" into the deck, draw 2
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_DRAW)
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={160001017}
+
 function s.filter(c)
 	return c:IsCode(160001017) and c:IsAbleToDeckAsCost()
 end
@@ -30,6 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	--Requirement
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,3,3,nil)
+	Duel.HintSelection(g)
 	if Duel.SendtoDeck(g,nil,3,REASON_COST)>0 then
 		Duel.ShuffleDeck(tp)
 		--Effect

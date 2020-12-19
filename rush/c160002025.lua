@@ -1,8 +1,9 @@
 --砕光のエスパレイド
 --Esperaid of the Smashing Light
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy 2 monsters
+	--Destroy 2 of opponent's monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -28,6 +29,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=g:Select(tp,1,2,nil)
+		Duel.HintSelection(sg)
 		sg=sg:AddMaximumCheck()
 		Duel.Destroy(sg,REASON_EFFECT)
 	end

@@ -1,8 +1,9 @@
 --特上寿司天使ガリブエル
 --Garibel the Extra Premium Sushi Angel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--ATK/DEF decrease
+	--Inflict damage equal to targeted monster's ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -21,7 +22,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,2,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.recfilter),tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.damfilter),tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetTargetPlayer(1-tp)
  Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
@@ -30,27 +31,26 @@ function s.damfilter(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--requirement
+	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,2,2,nil)
 	Duel.SendtoGrave(g,REASON_COST)
-	--effect
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.damfilter),tp,0,LOCATION_MZONE,1,nil) end
-		if #g>0 then
-			local dam=g:GetFirst():GetAttack()
-			Duel.Damage(1-tp,dam,REASON_EFFECT)
-			--Other monsters cannot attack
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_FIELD)
-			e1:SetCode(EFFECT_CANNOT_ATTACK)
-			e1:SetTargetRange(LOCATION_MZONE,0)
-			e1:SetTarget(s.ftarget)
-			e1:SetLabel(c:GetFieldID())
-			e1:SetReset(RESET_PHASE+PHASE_END)
-			Duel.RegisterEffect(e1,tp)
-		end
+	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local sg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.damfilter),tp,0,LOCATION_MZONE,0,1,1,nil)
+	if #sg>0 then
+		Duel.HintSelection(sg)
+		local dam=sg:GetFirst():GetAttack()
+		Duel.Damage(1-tp,dam,REASON_EFFECT)
+		--Other monsters cannot attack
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_ATTACK)
+		e1:SetTargetRange(LOCATION_MZONE,0)
+		e1:SetTarget(s.ftarget)
+		e1:SetLabel(c:GetFieldID())
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.ftarget(e,c)

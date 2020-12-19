@@ -1,6 +1,7 @@
 --巌帯の美技－ゼノギタム
---Rockband Groove Xenoguitam
+--Rock Band Xenoguitar
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 Rock monster to hand and place 1 card on the top of the deck
@@ -28,6 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
+
 function s.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_ROCK) and c:IsAbleToHand() and not c:IsCode(id)
 end
@@ -41,11 +43,14 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
-		Duel.ConfirmCards(1-tp,tc)
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
-		Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
+		local og=Group.Filter(Duel.GetOperatedGroup(),Card.IsLocation,nil,LOCATION_HAND)
+		if #og>0 then
+			Duel.ConfirmCards(1-tp,tc)
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
+			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
+			Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
+		end
 	end
 end
 function s.tgcond(e,tp,eg,ep,ev,re,r,rp)

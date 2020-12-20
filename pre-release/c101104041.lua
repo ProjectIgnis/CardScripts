@@ -76,7 +76,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.retop)
 		Duel.RegisterEffect(e1,tp)
 		--Send 1 fusion monster that lists "Fallen of Albaz" from extra deck to GY
-		if ct>=2 and Duel.Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		if ct>=2 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			local g=Duel.SelectMatchingCard(tp,s.edfilter,tp,LOCATION_EXTRA,0,1,1,nil)
 			if #g>0 then
 				Duel.SendtoGrave(g,REASON_EFFECT)

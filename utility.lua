@@ -882,9 +882,9 @@ function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)
 	if #sg<minc then
 		res=mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
 	elseif #sg<maxc then
-		res=(not rescon or rescon(sg,e,tp,mg)) or mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
+		res=(not rescon or rescon(sg,e,tp,mg,c)) or mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
 	else
-		res=(not rescon or rescon(sg,e,tp,mg))
+		res=(not rescon or rescon(sg,e,tp,mg,c))
 	end
 	sg:RemoveCard(c)
 	return res

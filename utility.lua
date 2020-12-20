@@ -873,7 +873,7 @@ function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)
 	if #sg>=maxc then return false end
 	sg:AddCard(c)
 	if rescon then
-		local _,stop=rescon(sg,e,tp,mg)
+		local _,stop=rescon(sg,e,tp,mg,c)
 		if stop then
 			sg:RemoveCard(c)
 			return false

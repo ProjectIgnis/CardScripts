@@ -55,9 +55,9 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-	--Check if current phase is opponent's main phase or any player's battle phase
+	--Check if current phase is opponent's main phase or battle phase
 function s.bancon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_CHAINING) and ((Duel.IsMainPhase() and Duel.GetTurnPlayer()~=tp) or Duel.IsBattlePhase())
+	return not e:GetHandler():IsStatus(STATUS_CHAINING) and ((Duel.IsMainPhase() or Duel.IsBattlePhase()) and Duel.GetTurnPlayer()~=tp)
 end
 function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() end

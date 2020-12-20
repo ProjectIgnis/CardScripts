@@ -38,5 +38,5 @@ end
 function s.ritcheck(e,tp,g,sc)
 	local extrac=g:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 	local gc=#g
-	return extrac==0 or extrac==1 and gc>1,extrac>1 or extrac==1 and gc>1
+	return extrac==0 or extrac==1 and gc==1,extrac>1 or extrac==1 and gc>1
 end

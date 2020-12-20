@@ -5,6 +5,10 @@
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,4,2)
+	--Must be properly summoned before reviving
+	c:EnableReviveLimit()
 	--Send 1 "Sprigguns" monster from deck to GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

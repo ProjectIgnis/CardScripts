@@ -47,7 +47,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return #g>0
-		and Duel.IsExistingMatchingCard(c84869738.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil,e,tp,g) end
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil,e,tp,g) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA)
 end
@@ -59,8 +59,8 @@ function s.exfilter2(c)
 end
 function s.rescon(ft1,ft2,ft3,ft4,ft)
 	return	function(sg,e,tp,mg)
-				local exnpct=sg:FilterCount(c84869738.exfilter1,nil,LOCATION_EXTRA)
-				local expct=sg:FilterCount(c84869738.exfilter2,nil,LOCATION_EXTRA)
+				local exnpct=sg:FilterCount(s.exfilter1,nil,LOCATION_EXTRA)
+				local expct=sg:FilterCount(s.exfilter2,nil,LOCATION_EXTRA)
 				local mct=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				local groupcount=#sg

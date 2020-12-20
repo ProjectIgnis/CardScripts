@@ -204,7 +204,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 								mat=mg:SelectWithSumGreater(tp,requirementfunc or Card.GetRitualLevel,lv,tc)
 							end
 						else
-							mat=aux.SelectUnselectGroup(mg,e,tp,1,lv,Ritual.Check(tc,lv,func,_type,requirementfunc),1,tp,nil,Ritual.Finishcon(tc,lv,requirementfunc,_type))
+							mat=aux.SelectUnselectGroup(mg,e,tp,1,lv,Ritual.Check(tc,lv,func,_type,requirementfunc),1,tp,500,Ritual.Finishcon(tc,lv,requirementfunc,_type))
 						end
 					end
 					if not customoperation then

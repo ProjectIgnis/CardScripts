@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a non ? ATK monster to special summon
 function s.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsAttackAbove(0)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetTextAttack()>=0
 end
 	--Activation legality
 function s.vartg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -61,7 +61,7 @@ function s.vartg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 	--Check for a non ? ATK monster to compare
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsAttackAbove(0)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:GetTextAttack()>=0
 end
 	--Special summon 1 monster from opponent's GY, or opponent adds 1 monster from deck
 function s.varop(e,tp,eg,ep,ev,re,r,rp)
@@ -77,7 +77,7 @@ function s.varop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ShuffleDeck(1-tp)
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		else
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.SendtoHand(sc,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sc)
 			Duel.ShuffleHand(1-tp)
 		end

@@ -1,3 +1,4 @@
+--ナンバーズ・エヴァイユ
 --Numbers Evaille
 --Rescripted by edo9300
 local s,id=GetID()
@@ -25,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
 		local mg=Duel.GetMatchingGroup(function(c) return type(c.xyz_number)=="number" end,tp,LOCATION_EXTRA,0,nil)
 		if #(pg-mg)>0 then return false end
-		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,mg)
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,mg)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_EXTRA)
 end

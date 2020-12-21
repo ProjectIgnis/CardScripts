@@ -55,7 +55,7 @@ function s.caop(e,tp,eg,ep,ev,re,r,rp)
 		--Cannot activate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3302)
-		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

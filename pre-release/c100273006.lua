@@ -1,4 +1,4 @@
---
+--千年の血族
 --Millennium Seeker
 --Logical Nonsense
 
@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id+100)
 	e2:SetTarget(s.vartg)
@@ -67,17 +68,17 @@ function s.varop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local vc=tc:GetTextAttack()
 	if not tc:IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(s.thfilter,1-tp,0,LOCATION_DECK,nil)
+	local g=Duel.GetMatchingGroup(s.thfilter,tp,0,LOCATION_DECK,nil)
 	if #g>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_CONFIRM)
-		local sg=Duel.SelectMatchingCard(1-tp,s.thfilter,tp,0,LOCATION_DECK,1,1,nil)
-		Duel.ConfirmCards(1-tp,sg)
-		if sg:GetFirst():GetTextAttack()<vc then
+		local sc=g:Select(1-tp,1,1,nil):GetFirst()
+		Duel.ConfirmCards(1-tp,sc)
+		if sc:GetTextAttack()<vc then
 			Duel.ShuffleDeck(1-tp)
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		else
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,sg)
+			Duel.ConfirmCards(1-tp,sc)
 			Duel.ShuffleHand(1-tp)
 		end
 	else

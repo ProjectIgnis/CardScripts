@@ -1,5 +1,6 @@
+--ダイナドメイン
 --Dino Domain
---scripted by Naim
+--Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -83,6 +84,6 @@ end
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end
-function s.tgcond(e,tp)
-	return Duel.IsExistingMatchingCard(s.exmfilter,tp,LOCATION_MZONE,0,1,nil)
+function s.tgcond(e)
+	return Duel.IsExistingMatchingCard(s.exmfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end

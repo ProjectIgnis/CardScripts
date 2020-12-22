@@ -16,7 +16,7 @@ jobs:
     env:
       REMOTE: ProjectIgnis/DeltaUtopia.git
       DESTINATION: DeltaUtopia/script
-      BASE_SHA: 20200403
+      BASE_SHA: 20201222
     steps:
     - uses: actions/checkout@v1
     - name: Clone destination repository

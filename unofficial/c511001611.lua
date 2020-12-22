@@ -13,11 +13,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x48}
-function s.spfilter(c,p,mg)
+function s.spfilter(c,e,p,mg)
 	return Duel.GetLocationCountFromEx(p,p,mg,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,p,false,false)
 end
-function s.filter(c,mg,p)
-	if not c:IsSetCard(0x48) or not c:IsType(TYPE_XYZ) or type(c.xyz_number)~="number" or not s.spfilter(c,p,mg-c) then return false end
+function s.filter(c,mg,p,e)
+	if not c:IsSetCard(0x48) or not c:IsType(TYPE_XYZ) or type(c.xyz_number)~="number" or not s.spfilter(c,e,p,mg-c) then return false end
 	if c.xyz_number==0 then 
 		return mg:IsExists(function(c)return c.xyz_number==0 end,1,c)
 	else
@@ -29,16 +29,16 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
 		local mg=Duel.GetMatchingGroup(function(c) return type(c.xyz_number)=="number" end,tp,LOCATION_EXTRA,0,nil)
 		if #(pg-mg)>0 then return false end
-		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,mg,tp)
+		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,mg,tp,e)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_EXTRA)
 end
-function s.checkvalid(c,mg,sg,mg0,cc,p)
+function s.checkvalid(c,mg,sg,mg0,cc,p,e)
 	Duel.SetSelectedCard((sg+cc)-mg0)
-	return s.spfilter(c,p,mg-c) and (mg-c):CheckWithSumEqual(function(c)return c.xyz_number end,c.xyz_number,0,99999)
+	return s.spfilter(c,e,p,mg-c) and (mg-c):CheckWithSumEqual(function(c)return c.xyz_number end,c.xyz_number,0,99999)
 end
 function s.rescon(sg,e,tp,mg)
-	return mg:IsExists(s.spfilter,1,nil,tp,sg)
+	return mg:IsExists(s.spfilter,1,nil,e,tp,sg)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
@@ -50,7 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	else
 		while true do
 			local cg=mg:Filter(function(c,mg,sg)
-				return mg:IsExists(s.checkvalid,1,c+sg,mg,sg,mg0,c,tp)
+				return mg:IsExists(s.checkvalid,1,c+sg,mg,sg,mg0,c,tp,e)
 			end,mat,mg,mat)+(mg0-mat)
 			if #cg==0 then break end
 			local cancel = ((mg0:Includes(mat) and #(mg0-mat)>0) or mg:IsExists(function(c,mg,sg)
@@ -73,7 +73,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	else
 		spc=mg:FilterSelect(tp,function(c,mat)
 			Duel.SetSelectedCard(mat-mg0)
-			return s.spfilter(c,tp,mat) and Group.CreateGroup():CheckWithSumEqual(function(c)return c.xyz_number end,c.xyz_number,0,0)
+			return s.spfilter(c,e,tp,mat) and Group.CreateGroup():CheckWithSumEqual(function(c)return c.xyz_number end,c.xyz_number,0,0)
 		end,1,1,mat,mat):GetFirst()
 	end
 	if spc and Duel.SpecialSummon(spc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)>0 then

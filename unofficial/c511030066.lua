@@ -36,8 +36,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--overwriting functions to handle effects that Special Summon while treating it as a Link Summon
 		local iscan=Card.IsCanBeSpecialSummoned
 		Card.IsCanBeSpecialSummoned=function(c,e,sumtype,tp,con,limit,sump,sumptp,zone,...)
@@ -57,7 +56,7 @@ function s.initial_effect(c)
 			end
 			return spstep(c,sumtype,tp,sumtp,con,check,sump,zone,...)
 		end
-	end
+	end)
 end
 s.listed_names={id}
 s.matfilter=aux.FilterBoolFunctionEx(Card.IsType,TYPE_NORMAL)

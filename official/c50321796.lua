@@ -1,4 +1,5 @@
 --氷結界の龍 ブリューナク
+--Brionac, Dragon of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -18,15 +19,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:IsDiscardable() and c:IsAbleToGraveAsCost()
+	return c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	local rt=Duel.GetTargetCount(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local cg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,rt,nil)
-	Duel.SendtoGrave(cg,REASON_COST+REASON_DISCARD)
-	e:SetLabel(#cg)
+	if chk==0 then return aux.IceBarrierDiscardCost(s.costfilter,true,1,rt)(e,tp,eg,ep,ev,re,r,rp,0) end
+	local cg=aux.IceBarrierDiscardCost(s.costfilter,true,1,rt)(e,tp,eg,ep,ev,re,r,rp,1)
+	e:SetLabel(cg)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsAbleToHand() end

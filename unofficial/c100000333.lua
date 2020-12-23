@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--unnegatable
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -31,13 +31,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={100000330}
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if (r&REASON_RULE)~=0 and Duel.GetTurnCount()==1 then
-		--obsolete
-		Duel.RegisterFlagEffect(tp,62765383,0,0,1)
-		Duel.RegisterFlagEffect(1-tp,62765383,0,0,1)
-	end
-end
 function s.posfilter(c,e)
 	return (c:GetPreviousPosition()&POS_DEFENSE)~=0 and c:IsPosition(POS_FACEUP_ATTACK) 
 		and (not e or c:IsRelateToEffect(e))

@@ -82,13 +82,13 @@ if not GenerateEffect then
 				local def=tc:GetDefense()
 				if atk<0 then atk=0 end
 				if def<0 then def=0 end
-				tc:RegisterFlagEffect(285,nil,0,1,atk)
-				tc:RegisterFlagEffect(284,nil,0,1,atk)
-				tc:RegisterFlagEffect(385,nil,0,1,def)
-				tc:RegisterFlagEffect(384,nil,0,1,def)
+				tc:RegisterFlagEffect(285,0,0,1,atk)
+				tc:RegisterFlagEffect(284,0,0,1,atk)
+				tc:RegisterFlagEffect(385,0,0,1,def)
+				tc:RegisterFlagEffect(384,0,0,1,def)
 				local lv=tc:GetLevel()
-				tc:RegisterFlagEffect(585,nil,0,1,lv)
-				tc:RegisterFlagEffect(584,nil,0,1,lv)
+				tc:RegisterFlagEffect(585,0,0,1,lv)
+				tc:RegisterFlagEffect(584,0,0,1,lv)
 			end
 		end
 	end
@@ -396,37 +396,118 @@ if not GenerateEffect then
 	end
 	
 	IndesTable={}
+
+	local regeff=Card.RegisterEffect
+	function Card.RegisterEffect(c,e,forced,...)
+		if e:GetCode()==EFFECT_DESTROY_REPLACE then
+			local resetflag,resetcount=e:GetReset()
+			local prop=EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE
+			if e:IsHasProperty(EFFECT_FLAG_UNCOPYABLE) then prop=prop|EFFECT_FLAG_UNCOPYABLE end
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetProperty(prop,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
+			e2:SetCode(EFFECT_DESTROY_REPLACE+511010508)
+			e2:SetLabelObject(e)
+			e2:SetLabel(c:GetOriginalCode())
+			if resetflag and resetcount then
+				e2:SetReset(resetflag,resetcount)
+			elseif resetflag then
+				e2:SetReset(resetflag)
+			end
+			c:RegisterEffect(e2)
+		end
+		return regeff(c,e,forced,table.unpack({...}))
+	end
+
 	function GenerateEffect.batregop(e,tp,eg,ep,ev,re,r,rp)
-		local tg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		local tg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
 		for tc in aux.Next(tg) do
-			local effs={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE),tc:GetCardEffect(EFFECT_INDESTRUCTABLE_COUNT),tc:GetCardEffect(EFFECT_DESTROY_REPLACE)}
-			for _,eff in ipairs(effs) do
+			local indes={tc:GetCardEffect(EFFECT_INDESTRUCTABLE)}
+			local indesBattle={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}
+			local indesCount={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_COUNT)}
+			local desSubstitude={tc:GetCardEffect(EFFECT_DESTROY_SUBSTITUTE)}
+			local desReplace={tc:GetCardEffect(EFFECT_DESTROY_REPLACE+511010508)}
+			for _,eff in ipairs(indes) do
+				GenerateEffect.newBatNotRepReg(eff)
+			end
+			for _,eff in ipairs(indesBattle) do
+				GenerateEffect.newBatNotRepReg(eff)
+			end
+			for _,eff in ipairs(indesCount) do
+				GenerateEffect.newBatNotRepReg(eff)
+			end
+			for _,eff in ipairs(desSubstitude) do
+				GenerateEffect.newBatNotRepReg(eff)
+			end
+			for _,tempe in ipairs(desReplace) do
+				local eff=tempe:GetLabelObject()
 				if not IndesTable[eff] then
 					IndesTable[eff]=true
-					if eff:GetCode()==EFFECT_DESTROY_REPLACE then
+					if eff:IsHasType(EFFECT_TYPE_SINGLE) then
 						local tg=eff:GetTarget()
-						eff:SetTarget(GenerateEffect.newBatTgReplace(tg))
-					else
-						if eff:IsHasType(EFFECT_TYPE_SINGLE) then
-							local con=eff:GetCondition()
-							eff:SetCondition(GenerateEffect.newBatCon(con))
-						elseif eff:IsHasType(EFFECT_TYPE_FIELD) then
-							local tg=eff:GetTarget()
-							eff:SetTarget(GenerateEffect.newBatTg(tg))
-						end
+						eff:SetTarget(GenerateEffect.newBatTgReplaceSingle(tg))
+					elseif eff:IsHasType(EFFECT_TYPE_EQUIP) then
+						local tg=eff:GetTarget()
+						eff:SetTarget(GenerateEffect.newBatTgReplaceEquip(tg))
+					elseif eff:IsHasType(EFFECT_TYPE_FIELD) then
+						local tg=eff:GetTarget()
+						local val=eff:GetValue()
+						eff:SetTarget(GenerateEffect.newBatTgReplaceField(tg))
+						eff:SetValue(GenerateEffect.newBatTgReplaceFieldVal(val))
 					end
 				end
 			end
 		end
 	end
-	function GenerateEffect.newBatCon(con)
+	function GenerateEffect.newBatNotRepReg(eff)
+		if not IndesTable[eff] then
+			IndesTable[eff]=true
+			if eff:IsHasType(EFFECT_TYPE_SINGLE) then
+				local con=eff:GetCondition()
+				eff:SetCondition(GenerateEffect.newBatConSingle(con))
+			elseif eff:IsHasType(EFFECT_TYPE_EQUIP) then
+				local con=eff:GetCondition()
+				eff:SetCondition(GenerateEffect.newBatConEquip(con))
+			elseif eff:IsHasType(EFFECT_TYPE_FIELD) then
+				local tg=eff:GetTarget()
+				eff:SetTarget(GenerateEffect.newBatTg(tg))
+			end
+		end
+	end
+	function GenerateEffect.newBatConSingle(con)
 		return function(e)
 			if not e then return false end
 			local c=e:GetHandler()
-			local effs={c:GetCardEffect(511010508)}
-			for _,eff in ipairs(effs) do
-				local val=eff:GetValue()
-				if val==1 or (type(val)=='function' and val(eff,e,c)) then return false end
+			if c:IsHasEffect(511010508) and (c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
+				local effs={c:GetCardEffect(511010508)}
+				for _,eff in ipairs(effs) do
+					local val=eff:GetValue()
+					if not val then
+						Debug.Message("val in 511010508 cannot be nil")
+						break
+					end
+					if val==1 or (type(val)=='function' and val(eff,e,c)) then return false end
+				end
+			end
+			return not con or con(e)
+		end
+	end
+	function GenerateEffect.newBatConEquip(con)
+		return function(e,c)
+			if not e then return false end
+			local c=e:GetHandler()
+			local ec=c:GetEquipTarget()
+			if not ec then return false end
+			if ec:IsHasEffect(511010508) and (ec:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
+				local effs={ec:GetCardEffect(511010508)}
+				for _,eff in ipairs(effs) do
+					local val=eff:GetValue()
+					if not val then
+						Debug.Message("val in 511010508 cannot be nil")
+						break
+					end
+					if val==1 or (type(val)=='function' and val(eff,e,ec)) then return false end
+				end
 			end
 			return not con or con(e)
 		end
@@ -434,25 +515,59 @@ if not GenerateEffect then
 	function GenerateEffect.newBatTg(tg)
 		return function(e,c)
 			if not e or not c then return false end
-			local effs={c:GetCardEffect(511010508)}
-			for _,eff in ipairs(effs) do
-				local val=eff:GetValue()
-				if val==1 or val(eff,e,c) then return false end
+			if c:IsHasEffect(511010508) and (c:IsReason(REASON_BATTLE) or e:GetCode()==EFFECT_INDESTRUCTABLE_BATTLE) then
+				local effs={c:GetCardEffect(511010508)}
+				for _,eff in ipairs(effs) do
+					local val=eff:GetValue()
+					if not val then
+						Debug.Message("val in 511010508 cannot be nil")
+						break
+					end
+					if val==1 or val(eff,e,c) then return false end
+				end
 			end
 			return not tg or tg(e,c)
 		end
 	end
 	function GenerateEffect.replaceFilter(c,e)
-		local effs={c:GetCardEffect(511010508)}
-		for _,eff in ipairs(effs) do
-		local val=eff:GetValue()
-			if val==1 or val(eff,e,c) then return false end
-		end   
+		if c:IsHasEffect(511010508) then
+			local effs={c:GetCardEffect(511010508)}
+			for _,eff in ipairs(effs) do
+				local val=eff:GetValue()
+				if not val then
+					Debug.Message("val in 511010508 cannot be nil")
+					break
+				end
+				if val==1 or val(eff,e,c) then return false end
+			end
+		end
 		return true
 	end
-	function GenerateEffect.newBatTgReplace(tg)
+	function GenerateEffect.newBatTgReplaceField(tg)
 		return function(e,tp,eg,ep,ev,re,r,rp,chk)
-			return tg(e,tp,eg:Filter(GenerateEffect.replaceFilter,nil,e),ep,ev,re,r,rp,chk)
+			if r&REASON_BATTLE==REASON_BATTLE then
+				return tg(e,tp,eg:Filter(GenerateEffect.replaceFilter,nil,e),ep,ev,re,r,rp,chk)
+			else
+				return tg(e,tp,eg,ep,ev,re,r,rp,chk)
+			end
+		end
+	end
+	function GenerateEffect.newBatTgReplaceFieldVal(val)
+		return function(e,c)
+			return (not c:IsReason(REASON_BATTLE) or GenerateEffect.replaceFilter(c,e)) and val(e,c)
+		end
+	end
+	function GenerateEffect.newBatTgReplaceSingle(tg)
+		return function(e,tp,eg,ep,ev,re,r,rp,chk)
+			return (not e:GetHandler():IsReason(REASON_BATTLE) or GenerateEffect.replaceFilter(e:GetHandler(),e))
+				and tg(e,tp,eg,ep,ev,re,r,rp,chk)
+		end
+	end
+	function GenerateEffect.newBatTgReplaceEquip(tg)
+		return function(e,tp,eg,ep,ev,re,r,rp,chk)
+			return (not e:GetHandler():GetEquipTarget():IsReason(REASON_BATTLE)
+				or GenerateEffect.replaceFilter(e:GetHandler():GetEquipTarget(),e))
+				and tg(e,tp,eg,ep,ev,re,r,rp,chk)
 		end
 	end
 

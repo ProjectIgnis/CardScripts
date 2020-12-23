@@ -30,6 +30,7 @@ if not s.gl_chk then
 	end
 end
 function s.initial_effect(c)
+	c:Type(TYPE_TOKEN)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

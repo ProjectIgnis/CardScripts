@@ -1,4 +1,5 @@
---ＴＧ　メタル・スケルトン
+--ＴＧ　メタル・スケルトン (VG)
+--T.G. Metal Skeleton (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -7,14 +8,14 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCode(EVENT_DESTROYED)
+	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and not c:IsPreviousControler(tp)
+	return c:IsPreviousLocation(LOCATION_MZONE) and not c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

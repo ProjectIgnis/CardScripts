@@ -1,8 +1,10 @@
+--トゥーンのしおり
 --Toon Bookmark
 --Scripted by Hel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--search 
+	--Add 1 "Toon World" or 1 card that specifically lists "Toon World" from deck 
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -12,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--destroy replace
+	--Substitute destruction for your "Toon World"(s)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -23,7 +25,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={15259703}
+s.listed_names={15259703,id}
+
 function s.filter(c)
 	return (aux.IsCodeListed(c,15259703) or c:IsCode(15259703)) and not c:IsCode(id) and c:IsAbleToHand() 
 end

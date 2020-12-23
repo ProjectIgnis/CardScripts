@@ -1,5 +1,5 @@
 --EMポップアップ
---Performapal Pop-Up
+--Performapal Popperup
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,7 +23,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,e:GetHandler())
 	if chk==0 then 
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)

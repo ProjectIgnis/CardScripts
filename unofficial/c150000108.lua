@@ -12,14 +12,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		e1:SetCode(EVENT_CHAINING)
 		e1:SetOperation(s.op)
 		Duel.RegisterEffect(e1,0)
-	end
+	end)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()

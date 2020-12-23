@@ -9,11 +9,12 @@ end
 function Fusion.ParseMaterialTable(tab,mat)
 	local named_mats={}
 	local tmp_extramat_func=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return (sub2 and c:IsHasEffect(511002961)) end
-	local name_func=function(tab) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,sumtype,fc:GetControler(),table.unpack(tab)) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end end
+	local name_func=function(_tab) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,sumtype,fc:GetControler(),table.unpack(_tab)) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end end
+	local function_func=function(func) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return func(c,fc,sumtype,tp,sub,mg,sg,contact) end end
 	local func=aux.FALSE
 	for _,fmat in ipairs(tab) do
 		if type(fmat)=="function" then
-			func=aux.OR(func,aux.OR(fmat,tmp_extramat_func))
+			func=aux.OR(func,aux.OR(function_func(fmat),tmp_extramat_func))
 		else
 			table.insert(named_mats,fmat)
 			local addmat=true
@@ -82,13 +83,13 @@ function Fusion.ConditionMix(insf,sub,...)
 	local funs={...}
 	return	function(e,g,gc,chkfnf)
 				local mustg=nil
+				local c=e:GetHandler()
+				local tp=c:GetControler()
 				if g==nil then
 					mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,nil,REASON_FUSION)
 					return insf and #mustg==0
 				end
 				local chkf=chkfnf&0xff
-				local c=e:GetHandler()
-				local tp=c:GetControler()
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
@@ -194,7 +195,8 @@ Fusion.CheckAdditional=nil
 --if sg1 is subset of sg2 then not Fusion.CheckAdditional(tp,sg1,fc) -> not Fusion.CheckAdditional(tp,sg2,fc)
 function Fusion.CheckMixGoal(tp,sg,fc,sub,sub2,contact,sumtype,chkf,...)
 	local g=Group.CreateGroup()
-	return sg:IsExists(Fusion.CheckMix,1,nil,sg,g,fc,sub,sub2,contact,sumtype,tp,...) and (chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(tp,tp,sg,fc)>0)
+	return sg:IsExists(Fusion.CheckMix,1,nil,sg,g,fc,sub,sub2,contact,sumtype,tp,...) and
+		(chkf==PLAYER_NONE or (fc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,fc) or Duel.GetMZoneCount(tp,sg,tp))>0)
 		and (not Fusion.CheckAdditional or Fusion.CheckAdditional(tp,sg,fc))
 end
 function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,...)
@@ -812,7 +814,8 @@ function Fusion.SelectMixRepUnfix(c,tp,mg,sg,mustg,fc,sub,sub2,minc,maxc,chkf,..
 end
 
 
-function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc)
+
+function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard)
 	if c:IsStatus(STATUS_COPYING_EFFECT) then return end
 	local mt=c.__index
 	local t={}
@@ -848,6 +851,10 @@ function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc)
 			e2:SetValue(sumcon)
 		end
 		c:RegisterEffect(e2)
+	end
+	--lizard check
+	if cannotBeLizard~=false then
+		Auxiliary.addLizardCheck(c)
 	end
 end
 function Fusion.ContactCon(f,fcon)

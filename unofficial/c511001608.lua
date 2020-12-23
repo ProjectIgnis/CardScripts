@@ -71,7 +71,7 @@ function s.initial_effect(c)
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE)
 	e8:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e8:SetValue(s.indes)
+	e8:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e8)
 	aux.GlobalCheck(s,function()
 		s[0]=0
@@ -111,9 +111,7 @@ function s.filter(c,e,tp,ct)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ct=e:GetHandler():GetOverlayCount()
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	if chk==0 then return (not ect or ect>=ct) and ct>0 and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) 
+	if chk==0 then return aux.CheckSummonGate(tp,ct) and ct>0 and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) 
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,ct,nil,e,tp,ct) 
 		and (not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or ct<2) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,ct,tp,LOCATION_EXTRA)
@@ -122,9 +120,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=c:GetOverlayCount()
 	if ct>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	if ect~=nil and ct>ect then return end
+	if not aux.CheckSummonGate(tp,ct) then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp,ct)
 	if #g<ct then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -177,12 +173,12 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT) and rp==1-tp and c:IsPreviousControler(tp) and re and re:GetHandler():IsType(TYPE_MONSTER)
+	return rp==1-tp and c:IsPreviousControler(tp) and (c:GetReasonCard() or c:IsReason(REASON_EFFECT) and re and re:IsActiveType(TYPE_MONSTER))
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local tc=re:GetHandler()
-	if re and tc:IsLocation(LOCATION_MZONE) and tc:IsControlerCanBeChanged() then
+	local tc=c:GetReasonCard() or re:GetHandler()
+	if tc:IsLocation(LOCATION_MZONE) and not tc:IsControler(tp) and tc:IsControlerCanBeChanged() then
 		Duel.SetTargetCard(tc)
 		Duel.SetOperationInfo(0,CATEGORY_CONTROL,tc,1,0,0)
 	end
@@ -192,7 +188,4 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.GetControl(tc,tp)
 	end
-end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
 end

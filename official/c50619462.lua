@@ -1,5 +1,6 @@
 --烏合無象
 --Cattle Call
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,e,tp)
@@ -45,6 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,race)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -55,6 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
+		--Destroy it during end phase
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_PHASE+PHASE_END)
@@ -65,7 +69,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetOperation(s.desop)
 		Duel.RegisterEffect(e3,tp)
 		tc:CreateEffectRelation(e3)
+		--Cannot attack
 		local e4=Effect.CreateEffect(c)
+		e4:SetDescription(3206)
+		e4:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetCode(EFFECT_CANNOT_ATTACK)
 		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -76,7 +83,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		return true
 	else
 		e:Reset()

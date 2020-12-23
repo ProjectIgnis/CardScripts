@@ -414,7 +414,7 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 				if must then mustg:Merge(must) end
 				if not mg:Includes(mustg) then return false end
 				if not mustbemat then
-					mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
+					mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
 				end
 				if min and min~=99 then
 					return mg:IsExists(Xyz.RecursionChk1,1,nil,mg,c,tp,min,max,minc,maxc,Group.CreateGroup(),Group.CreateGroup(),0,0,mustbemat,exchk,f,mustg,lv)
@@ -437,7 +437,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 						local matg=Group.CreateGroup()
 						local sg=Group.CreateGroup()
 						local mg=og:Clone()
-						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
+						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
 						local finish=false
 						while ct<max and matct<maxc do
 							local selg=mg:Filter(Xyz.RecursionChk1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv)
@@ -539,7 +539,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 					local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_XYZ)
 					if must then mustg:Merge(must) end
 					if not mustbemat then
-						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
+						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
 					end
 					local finish=false
 					if not og or max==99 then
@@ -553,7 +553,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 							local sc=Group.SelectUnselect(tg,sg,tp,finish,cancel)
 							if not sc then
-								if #matg<minc or (matg:IsExists(Card.IsHasEffect,1,nil,91110378) and not Xyz.MatNumChkF(matg)) 
+								if ct<minc or (matg:IsExists(Card.IsHasEffect,1,nil,91110378) and not Xyz.MatNumChkF(matg)) 
 									or (lv and matg:IsExists(Card.IsHasEffect,1,nil,86466163) and not Xyz.MatNumChkF2(matg,lv,c)) then return false end
 								if not matg:Includes(mustg) then return false end
 								if c:IsLocation(LOCATION_EXTRA) then
@@ -581,7 +581,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 										local tgf=te:GetOperation()
 										local val=te:GetValue()
 										if val>0 and (not tgf or tgf(te,c)) then
-											if minc>=ct+val 
+											if minc<=ct+val and ct+val<=maxc
 												or mg:IsExists(Xyz.RecursionChk2,1,sg,mg,c,tp,minc,maxc,sg,matg,ct+val,mustbemat,exchk,f,mustg,lv) then
 												table.insert(multi,1+val)
 											end

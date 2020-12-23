@@ -1,8 +1,9 @@
 --プチトマボー
 --Cherry Inmato
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon 2 "Inmato" monsters from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x5b}
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
@@ -36,9 +38,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local t1=g:GetFirst()
 		local t2=g:GetNext()
 		Duel.SpecialSummonStep(t1,0,tp,tp,false,false,POS_FACEUP)
+		--Cannot be used as synchro material
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3310)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+		e1:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

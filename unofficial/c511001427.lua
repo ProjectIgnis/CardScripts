@@ -31,10 +31,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tid=Duel.GetTurnCount()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,tp,tid)
 	local ct=#g
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if chk==0 then return ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=ct
-		and g:IsExists(Card.IsCanBeSpecialSummoned,ct,nil,e,0,tp,false,false) and (not ect or ect>=ct)
+		and g:IsExists(Card.IsCanBeSpecialSummoned,ct,nil,e,0,tp,false,false) and aux.CheckSummonGate(tp,ct)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,ct,nil,e,tp,ct)
 		and (not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or ct<2) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,ct,0,0)
@@ -47,9 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,ct,nil,e,tp,ct) then return end
 	if not g:IsExists(Card.IsCanBeSpecialSummoned,ct,nil,e,0,tp,false,false) then return end
 	if ct>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	if ect~=nil and ct>ect then return end
+	if not aux.CheckSummonGate(tp,ct) then return end
 	if ct>0 then
 		for tc in aux.Next(g) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)

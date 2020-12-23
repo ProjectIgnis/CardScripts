@@ -1,9 +1,12 @@
 --プランキッズ・ウェザー
 --Prank-Kids Weather Washer
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Fusion summon procedure
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x120),2)
 	--Activation Limit
 	local e1=Effect.CreateEffect(c)
@@ -15,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetValue(1)
 	e1:SetCondition(s.actcon)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special summon 2 non-fusion "Prank-Kids" monsters with different names from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -27,9 +30,11 @@ function s.initial_effect(c)
 	e2:SetCost(s.spcost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x120}
+
 function s.actcon(e)
 	local a=Duel.GetAttacker()
 	return a and a:IsControler(e:GetHandlerPlayer()) and a:IsSetCard(0x120)
@@ -64,7 +69,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<#g or (#g>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) then return end
 	for tc in aux.Next(g) do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+			--Cannot be destroyed by battle
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3000)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e1:SetValue(1)

@@ -77,7 +77,7 @@ function s.pcop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=e:GetHandler():GetOverlayCount()
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,ct,REASON_COST) end
+	if chk==0 then return ct>0 and e:GetHandler():CheckRemoveOverlayCard(tp,ct,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,ct,ct,REASON_COST)
 end
 function s.negfilter(c)

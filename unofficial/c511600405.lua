@@ -1,4 +1,4 @@
---ワイゼルＣ  (TF5)
+--ワイゼルＣ (TF5)
 --Wisel Carrier (TF5)
 Duel.LoadScript("c420.lua")
 local s,id=GetID()

@@ -26,7 +26,7 @@ function s.rescon(sg,e,tp,mg)
 	if sg:GetClassCount(Card.GetOriginalRace)~=1 or not sg:CheckDifferentPropertyBinary(function(c)return c:GetType()&(TYPES)end) then
 		return false,true
 	end
-	return Duel.IsExistingMatchingCard(s.spfilter,tp,loc,0,1,nil,e,tp,sg:GetFirst():GetOriginalRace())
+	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,e,tp,sg:GetFirst():GetOriginalRace())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 

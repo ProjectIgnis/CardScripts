@@ -54,17 +54,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #hg>0 and Duel.SendtoHand(hg,nil,REASON_EFFECT)~=0 then
 		local sct=Duel.GetOperatedGroup():FilterCount(Card.IsControler,nil,tp)
 		local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
-		local ft=math.min(Duel.GetUsableMZoneCount(tp),#sg)
-		if sct>0 and ft>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),sct)
+		if sct>0 and ft>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.BreakEffect()
 			if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-			local g=Group.CreateGroup()
-			repeat
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local tc=sg:Select(tp,1,1,nil):GetFirst()
-				g:AddCard(tc)
-				sg:Remove(Card.IsCode,nil,tc:GetCode())
-			until sct==#g or ft==#g or not Duel.SelectYesNo(tp,210)
+			local g=aux.SelectUnselectGroup(sg,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON,false)
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end

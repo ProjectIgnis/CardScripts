@@ -1,8 +1,9 @@
 --魔天使ローズ・ソーサラー
 --Fallen Angel of Roses
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
+
 function s.spfilter(c,ft)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT) and not c:IsCode(id) and c:IsAbleToHandAsCost()
 end
@@ -38,10 +40,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
 	Duel.SendtoHand(g,nil,REASON_COST)
+	--Banish it if it leaves the field
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3300)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 	e1:SetValue(LOCATION_REMOVED)
 	e:GetHandler():RegisterEffect(e1,true)

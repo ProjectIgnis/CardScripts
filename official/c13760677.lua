@@ -1,9 +1,11 @@
---P・M・キャプチャー
+--Ｐ・Ｍ・キャプチャー
+--P.M. Captor
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Enable pendulum summon
 	Pendulum.AddProcedure(c)
-	--indes
+	--When a zombie monster(s) is pendulum summoned, make it unable to be destroyed by battle or card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -13,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.indtg)
 	e2:SetOperation(s.indop)
 	c:RegisterEffect(e2)
-	--tohand
+	--Add 1 pendulum monster from GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -42,7 +44,10 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,e,tp)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
+		--Cannot be destroyed by battle or card effects
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3008)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)

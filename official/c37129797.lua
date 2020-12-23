@@ -74,7 +74,7 @@ function s.drfilter(c)
 		and c:IsSummonLocation(LOCATION_GRAVE)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.drfilter,1,nil) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(s.drfilter,1,e:GetHandler())
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

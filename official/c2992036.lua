@@ -88,7 +88,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local tc=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsType,TYPE_SYNCHRO),tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
-	if Duel.Destroy(tc,REASON_EFFECT)~=0 then
+	if tc and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		local value=tc:GetBaseAttack()
 		if value>0 then
 			Duel.Damage(1-tp,value,REASON_EFFECT)

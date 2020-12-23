@@ -3,7 +3,7 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon from hand
+	--Special Summon this card from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Special summon or attach
+	--Special Summon or attach a "Galaxy-Eyes Photon Dragon"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x48,0x107b}
+s.listed_series={0x107b,0x48}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x107b),tp,LOCATION_MZONE,0,1,nil)
@@ -50,42 +50,59 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_COST) and re:IsActivated() and re:IsActiveType(TYPE_XYZ) and c:IsPreviousLocation(LOCATION_OVERLAY)
 end
-function s.cfilter3(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x48)
+function s.gepdfilter(c,e,tp,ft)
+	return c:IsCode(CARD_GALAXYEYES_P_DRAGON) and ((ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+		or Duel.IsExistingMatchingCard(s.attfilter,tp,LOCATION_MZONE,0,1,nil,e))
+end
+function s.attfilter(c,e)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and not c:IsImmuneToEffect(e)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,CARD_GALAXYEYES_P_DRAGON) end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.gepdfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,ft) end
+end
+function s.numbfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x48)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local ph=Duel.GetCurrentPhase()
-	local tg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,nil,e)
-	local sg=Duel.GetMatchingGroup(s.cfilter3,tp,LOCATION_MZONE,0,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,CARD_GALAXYEYES_P_DRAGON)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
+	local g=Duel.SelectMatchingCard(tp,s.gepdfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp,ft)
 	local tc=g:GetFirst()
-	local op=0
-		if tg and #tg>0 and (tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then
-		op=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
-		elseif #tg>0 then op=0
-		else op=1 end
-		if op==0 then
-			local oc=tg:Select(tp,1,1,nil,e):GetFirst()
-			if oc:IsImmuneToEffect(e) then Duel.SendtoGrave(tc,REASON_RULE) end
-			if oc and oc:IsFaceup() then
+	if tc then
+		local spchk=ft>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		local attchk=Duel.IsExistingMatchingCard(s.attfilter,tp,LOCATION_MZONE,0,1,nil,e)
+		local op=0
+		if spchk and attchk then
+			op=Duel.SelectOption(tp,aux.Stringid(id,3),aux.Stringid(id,4))
+		elseif spchk then
+			op=0
+		elseif attchk then
+			op=1
+		end
+		local success_chk=0
+		if op==0 and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
+			success_chk=1
+		else
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+			local oc=Duel.SelectMatchingCard(tp,s.attfilter,tp,LOCATION_MZONE,0,1,1,nil,e):GetFirst()
+			if oc then
+				success_chk=1
+				Duel.HintSelection(Group.FromCards(oc))
 				Duel.Overlay(oc,tc)
 			end
-		else 
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
-	if Duel.IsBattlePhase() then
-		for sc in aux.Next(sg) do
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e1:SetValue(sc:GetAttack()*2)
-			sc:RegisterEffect(e1)
+		local ng=Duel.GetMatchingGroup(s.numbfilter,tp,LOCATION_MZONE,0,1,nil)
+		if success_chk==1 and Duel.IsBattlePhase() and #ng>0 then
+			Duel.BreakEffect()
+			for sc in aux.Next(ng) do
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetValue(sc:GetAttack()*2)
+				sc:RegisterEffect(e1)
+			end
 		end
 	end
 end

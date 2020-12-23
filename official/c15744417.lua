@@ -1,8 +1,9 @@
 --ゴッドオーガス
 --Orgoth the Relentless
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--Apply appropriate effect, depending on dice results
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DICE+CATEGORY_ATKCHANGE+CATEGORY_DRAW)
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.roll_dice=true
+
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,3)
@@ -39,7 +41,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e2)
 	if res[1+6] or res[10] then
+		--Cannot be destroyed by battle or card effects
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3008)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
@@ -53,8 +58,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,2,REASON_EFFECT)
 	end
 	if res[3+6] or res[10] then
+		--Can attack directly
 		local e3=Effect.CreateEffect(c)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e3:SetDescription(3205)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_DIRECT_ATTACK)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

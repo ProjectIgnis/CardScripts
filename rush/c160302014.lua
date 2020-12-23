@@ -31,9 +31,9 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoGrave(tg,REASON_COST)~=0 then
-		local tc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
-		if tc then
-			Duel.Destroy(tc,REASON_EFFECT)
+		local g=Duel.SelectMatchingCard(tp,Card.IsNotMaximumSide,tp,0,LOCATION_MZONE,1,1,nil)
+		if #g>0 then
+			Duel.Destroy(g,REASON_EFFECT)
 		end
 	end
 end

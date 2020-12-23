@@ -1,7 +1,6 @@
 --古代の機械混沌融合
 --Chaos Ancient Gear Fusion
---Scripted by Eerie Code
---fixed by MLD
+--Scripted by Eerie Code, fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.matfilter(c,e,tp,fc,se)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial(fc) and (not se or not c:IsImmuneToEffect(se)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) 
+	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial(fc) and (not se or not c:IsImmuneToEffect(se)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.spfilter(c,e,tp,rg,se)
 	if not c:IsType(TYPE_FUSION) or not c:IsSetCard(0x7) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) then return false end
@@ -43,22 +42,21 @@ function s.spfilter(c,e,tp,rg,se)
 		local ft=Duel.GetUsableMZoneCount(tp)
 		local mft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local exft=Duel.GetLocationCountFromEx(tp)
-		local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-		local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (gate[tp] - 1)
-		if ect then exft=math.min(exft,ect) end
+		local ect=aux.CheckSummonGate(tp)
+		if ect then exft=math.min(exft,ect-1) end
 		maxc=math.min(maxc,ft)
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=math.min(ft,1) mft=math.min(mft,1) exft=math.min(exft,1) end
 		return minc>0 and maxc>=minc and aux.SelectUnselectGroup(rg,e,tp,minc,maxc,s.rescon1(c,mft,exft,ft,mg2,se),0)
 	end
 end
 function s.rescon1(fc,mft,exft,ft,mg2,se)
-	return  function(sg,e,tp,mg)
+	return function(sg,e,tp,mg)
 				local mg3=mg2:Filter(aux.TRUE,sg)
 				return ft>=#sg and aux.SelectUnselectGroup(mg3,e,tp,#sg,#sg,s.rescon2(fc,mft,exft),0)
 			end
 end
 function s.rescon2(fc,mft,exft)
-	return  function(sg,e,tp,mg)
+	return function(sg,e,tp,mg)
 				Fusion.CheckExact=#sg
 				local res=exft>=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA) and mft>=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 					and fc:CheckFusionMaterial(sg,nil,tp)
@@ -67,18 +65,17 @@ function s.rescon2(fc,mft,exft)
 			end
 end
 function s.resconse1(fc,mft,mg2,se)
-	return  function(sg,e,tp,mg)
+	return function(sg,e,tp,mg)
 				local mg3=mg2:Filter(aux.TRUE,sg)
 				return aux.SelectUnselectGroup(mg3,e,tp,#sg,#sg,s.resconse2(fc,sg,mft),0)
 			end
 end
 function s.resconse2(fc,rg,mft)
-	return  function(sg,e,tp,mg)
-				local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-				local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (gate[tp] - 1)
-				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA) 
+	return function(sg,e,tp,mg)
+				local ect=aux.CheckSummonGate(tp)
+				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				Fusion.CheckExact=#sg
-				local res=Duel.GetLocationCountFromEx(tp,tp,rg)>=exct and (not ect or exct<ect) 
+				local res=Duel.GetLocationCountFromEx(tp,tp,rg)>=exct and (not ect or exct<(ect-1))
 					and rg:FilterCount(aux.MZFilter,nil,tp)+mft>=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 					and fc:CheckFusionMaterial(sg,nil,tp)
 				Fusion.CheckExact=nil
@@ -90,7 +87,7 @@ function s.rmfilter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	if chk==0 then return Duel.GetUsableMZoneCount(tp)>-1 and Duel.IsPlayerCanSpecialSummonCount(tp,2) 
+	if chk==0 then return Duel.GetUsableMZoneCount(tp)>-1 and Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,rg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local fg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,rg)
@@ -117,9 +114,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local ft=Duel.GetUsableMZoneCount(tp)
 		local mft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local exft=Duel.GetLocationCountFromEx(tp)
-		local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-		local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (gate[tp] - 1)
-		if ect then exft=math.min(exft,ect) end
+		local ect=aux.CheckSummonGate(tp)
+		if ect then exft=math.min(exft,ect-1) end
 		maxc=math.min(maxc,ft)
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=math.min(ft,1) mft=math.min(mft,1) exft=math.min(exft,1) end
 		if minc<=0 or maxc<minc then return end
@@ -130,9 +126,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ct<#rsg then return end
 	local mft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local exft=Duel.GetLocationCountFromEx(tp)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and (gate[tp] - 1)
-	if ect then exft=math.min(exft,ect) end
+	local ect=aux.CheckSummonGate(tp)
+	if ect then exft=math.min(exft,ect-1) end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then mft=math.min(mft,1) exft=math.min(exft,1) end
 	mg:Sub(rsg)
 	local matg=aux.SelectUnselectGroup(mg,e,tp,ct,ct,s.rescon2(fc,mft,exft),1,tp,HINTMSG_SPSUMMON)

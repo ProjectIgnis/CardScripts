@@ -1,14 +1,17 @@
+--海造賊－大航海
 --Plunder Patroll Booty
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--change attr
+	--Change the attribute of 1 of opponent's monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -18,8 +21,9 @@ function s.initial_effect(c)
 	e2:SetCost(s.cost)
 	e2:SetTarget(s.costg)
 	e2:SetOperation(s.cosop)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e2)
-	--to grave
+	--Send itself to GY if you control no "Plunder Patroll" monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOGRAVE)
@@ -33,6 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x13f}
+
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if s.cost(e,tp,eg,ep,ev,re,r,rp,0) and s.costg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,94) then
@@ -95,4 +100,3 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 	end
 end
-

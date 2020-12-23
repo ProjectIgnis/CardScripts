@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if tp==ep or not Duel.IsChainNegatable(ev) then return false end
-	if not re:IsActiveType(TYPE_MONSTER) and not re:IsActiveType(TYPE_TRAP) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)  then return false end
+	if not re:IsActiveType(TYPE_MONSTER) and not re:IsActiveType(TYPE_TRAP) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local tex,ttg,ttc=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
 	if not tex or ttg==nil or ttc+ttg:FilterCount(Card.IsControler,nil,tp)-#ttg<=0 then return false end
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev-1,CATEGORY_DAMAGE)
@@ -28,7 +28,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	if tp==ep or not Duel.IsChainNegatable(ev) then return false end
-	if not re:IsActiveType(TYPE_MONSTER) and not re:IsActiveType(TYPE_TRAP) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)  then return false end
+	if not re:IsActiveType(TYPE_MONSTER) and not re:IsActiveType(TYPE_TRAP) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local tex,ttg,ttc=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
 	if not tex or ttg==nil or ttc+ttg:FilterCount(Card.IsControler,nil,tp)-#ttg<=0 then return false end
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev-1,CATEGORY_DAMAGE)
@@ -46,14 +46,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
 	if re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(re:GetHandler(),REASON_EFFECT)~=0 then
 		--Duel.BreakEffect()
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(EFFECT_CHANGE_DAMAGE)
-		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e2:SetTargetRange(0,1)
-		e2:SetValue(s.damop)
-		e2:SetReset(RESET_CHAIN)
-		Duel.RegisterEffect(e2,tp)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CHANGE_DAMAGE)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(0,1)
+		e1:SetValue(s.damop)
+		e1:SetReset(RESET_CHAIN)
+		Duel.RegisterEffect(e1,tp)
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	end
 end

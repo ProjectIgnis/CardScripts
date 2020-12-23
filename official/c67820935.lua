@@ -1,7 +1,9 @@
 --肥大化
+--Massivemorph
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Opponent's monster's ATK/DEF becomes doubled, but cannot attack directly
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -25,6 +27,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		--ATK/DEF becomes doubled of current ATK/DEF
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -35,7 +38,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
 		e2:SetValue(tc:GetDefense()*2)
 		tc:RegisterEffect(e2)
+		--Cannot attack directly
 		local e3=Effect.CreateEffect(e:GetHandler())
+		e3:SetDescription(3207)
+		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)

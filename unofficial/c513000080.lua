@@ -57,34 +57,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(g) do
 		local te=tc:GetActivateEffect()
 		if te then
-			local e1=Effect.CreateEffect(tc)
-			if te:GetCategory() then
-				e1:SetCategory(te:GetCategory())
-			end
-			if te:GetProperty() then
-				e1:SetProperty(te:GetProperty())
-			end
-			if te:GetDescription() then
-				e1:SetDescription(te:GetDescription())
-			end
-			e1:SetType(EFFECT_TYPE_ACTIVATE)
-			e1:SetCode(te:GetCode())
+			local e1=te:Clone()
 			e1:SetRange(LOCATION_GRAVE)
-			if te:GetCountLimit() then
-				te:SetCountLimit(te:GetCountLimit())
-			end
-			if te:GetCondition() then
-				e1:SetCondition(te:GetCondition())
-			end
-			if te:GetCost() then
-				e1:SetCost(te:GetCost())
-			end
-			if te:GetTarget() then
-				e1:SetTarget(te:GetTarget())
-			end
-			if te:GetOperation() then
-				e1:SetOperation(te:GetOperation())
-			end
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)
 		end

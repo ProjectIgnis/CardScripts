@@ -1,5 +1,6 @@
 --ささやきの妖精
 --Whispering Fairy
+
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,6 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(g,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,0,LOCATION_GRAVE,1,2,nil)
+	Duel.HintSelection(g)
 	if #g>0 then
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end

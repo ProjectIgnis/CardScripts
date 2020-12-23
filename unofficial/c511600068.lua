@@ -77,7 +77,9 @@ end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if chk==0 then return re and rc:IsReason(REASON_EFFECT) and r&REASON_EFFECT~=0 and (rc:IsHasCardTarget(c) or re:IsHasType(EFFECT_TYPE_ACTIONS) and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and c:IsRelateToEffect(re)) end
+	if chk==0 then return re and rc:IsReason(REASON_EFFECT) and r&REASON_EFFECT~=0
+		and (rc:IsHasCardTarget(c) or re:IsHasType(EFFECT_TYPE_ACTIONS)
+		and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and c:IsRelateToEffect(re)) end
 	return true
 end
 function s.adval(e,c)
@@ -93,7 +95,7 @@ function s.turncon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()-e:GetHandler():GetTurnID()<=2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end 
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)

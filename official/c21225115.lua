@@ -5,13 +5,15 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_ROCK),s.matfilter)
+	--lizard check
+	Auxiliary.addLizardCheck(c)
 	--Special Summon Condition
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e0:SetRange(LOCATION_EXTRA)
-	e0:SetValue(s.splimit)
+	e0:SetValue(aux.FossilLimit)
 	c:RegisterEffect(e0)
 	--Increase ATK
 	local e1=Effect.CreateEffect(c)
@@ -38,9 +40,6 @@ end
 s.listed_names={CARD_FOSSIL_FUSION}
 function s.matfilter(c,sc,st,tp)
 	return c:IsLevelAbove(7) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(1-tp)
-end
-function s.splimit(e,se,sp,st)
-	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or st==SUMMON_TYPE_FUSION+0x20
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

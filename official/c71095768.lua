@@ -25,29 +25,20 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--Flag check
+	--Destroy
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetCategory(CATEGORY_DESTROY)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetOperation(aux.chainreg)
+	e3:SetCountLimit(1,id+1)
+	e3:SetCondition(s.descon)
+	e3:SetTarget(s.destg)
+	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	--Destroy
-	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_DESTROY)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e4:SetCode(EVENT_CHAIN_SOLVING)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCountLimit(1,id+1)
-	e4:SetCondition(s.descon)
-	e4:SetTarget(s.destg)
-	e4:SetOperation(s.desop)
-	c:RegisterEffect(e4)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=nil
 		s[1]=nil
 		s[2]=nil
@@ -56,10 +47,10 @@ function s.initial_effect(c)
 		ge1:SetCode(EVENT_DETACH_MATERIAL)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.mfilter(c)
-	return c:HasLevel() and not c:IsLevel(0)
+	return c:IsLevelAbove(1)
 end
 function s.matcheck(g,lc,sumtype,tp)
 	return g:GetClassCount(Card.GetLevel)==1
@@ -93,8 +84,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,nil,e,tp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,1,tp,HINTMSG_SPSUMMON)
 	if #sg~=2 then return end
-	local tc=sg:GetFirst()
-	while tc do
+	for tc in sg:Iter() do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -104,16 +94,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		tc:RegisterEffect(e2)
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetType(EFFECT_TYPE_FIELD)
-		e3:SetRange(LOCATION_MZONE)
-		e3:SetCode(EFFECT_EXTRA_MATERIAL)
-		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e3:SetTargetRange(1,0)
-		e3:SetValue(s.extram)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e3,true)
-		tc=sg:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 	Duel.BreakEffect()
@@ -122,17 +102,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		Duel.XyzSummon(tp,xyz,sg,sg)
-	end
-end
-function s.extram(chk,summon_type,e,...)
-	local c=e:GetHandler()
-	if chk==0 then
-		local tp,sc=...
-		if summon_type==SUMMON_TYPE_XYZ then
-			return Group.FromCards(c)
-		else
-			return Group.CreateGroup()
-		end
 	end
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)

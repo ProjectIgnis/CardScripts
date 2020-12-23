@@ -1,4 +1,5 @@
---BK リベージ・ガードナー
+--BK リベージ・ガードナー (Anime)
+--Battlin' Boxer Rib Gardna (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--change target
@@ -13,22 +14,21 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return r~=REASON_REPLACE and Duel.GetAttackTarget()==e:GetHandler() 
-		and e:GetHandler():GetBattlePosition()==POS_FACEDOWN_DEFENSE
+	return r~=REASON_REPLACE and Duel.GetAttackTarget()==e:GetHandler()
+		and e:GetHandler():GetBattlePosition()&POS_FACEDOWN_DEFENSE==POS_FACEDOWN_DEFENSE
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,1,Duel.GetAttacker())
+	Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
 	local a=Duel.GetAttacker()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
-	if #g>0 then
-		Duel.HintSelection(g)
-		Duel.ChangeAttackTarget(g:GetFirst())
-		if a and a:IsRelateToBattle() and a:IsType(TYPE_XYZ) then
+	if tc and tc:IsRelateToEffect(e) and a and a:CanAttack() and not a:IsImmuneToEffect(e) then
+		Duel.CalculateDamage(a,tc)
+		if a:IsControler(1-tp) and a:IsType(TYPE_XYZ) then
 			local og=a:GetOverlayGroup()
 			if #og>0 and Duel.SelectYesNo(tp,aux.Stringid(81330115,1)) then
 				Duel.SendtoGrave(og,REASON_EFFECT)

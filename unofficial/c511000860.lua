@@ -53,7 +53,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_DAMAGE)
 		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e:SetOperation(s.damop)
-		s.damtg(e,tp,eg,ep,ev,re,r,rp,1)
+		s.damtg(e,tp,teg,tep,tev,tre,tr,trp,1)
 	else
 		e:SetCategory(0)
 		e:SetProperty(0)

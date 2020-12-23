@@ -29,7 +29,7 @@ function s.etarget(e,c)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsDeckMaster()
-end	
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end
 	Duel.PayLPCost(tp,500)

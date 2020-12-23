@@ -1,14 +1,15 @@
 --ロイヤルデモンズ・ヘヴィメタル
 --Royal Demon’s Heavymetal
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--mat check
+	--Check if it tributed a level 5+ monster for its tribute summon
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_MATERIAL_CHECK)
 	e0:SetValue(s.valcheck)
 	c:RegisterEffect(e0)
-	--Destroy
+	--Gain ATK equal to 1 of opponent's monster and destroy it
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY)
@@ -31,11 +32,7 @@ function s.descond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and e:GetLabelObject():GetLabel()~=0
 end
 function s.filter(c,tp)
-	local lvl=c:GetLevel()
-	return c:IsFaceup() and c:IsLevelBelow(8) and not Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil,lvl)
-end
-function s.cfilter(c,lvl)
-	return c:IsFaceup() and c:GetLevel()<lvl
+	return c:IsFaceup() and c:IsLevelBelow(8) and not c:IsMaximumModeSide()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil,tp)
@@ -46,18 +43,23 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,tp)
-		if #g>0 then
-			Duel.HintSelection(g)
-			local tc=g:GetFirst()
+		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
+		local sg=g:GetMinGroup(Card.GetLevel)
+		if #sg>1 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			sg=sg:Select(tp,1,1,nil)
+		end
+		sg=sg:AddMaximumCheck()
+		if #sg>0 then
+			Duel.HintSelection(sg)
+			local tc=sg:GetFirst()
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(tc:GetAttack())
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			c:RegisterEffect(e1)
-			Duel.Destroy(tc,REASON_EFFECT)
+			Duel.Destroy(sg,REASON_EFFECT)
 		end
 	end
 end

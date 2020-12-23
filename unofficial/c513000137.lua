@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 -------------------------------------------------------------------
 function s.atktg(e,c)
-	return c~=e:GetHandler() and not c:IsAttribute(ATTRIBUTE_DIVINE)
+	return c~=e:GetHandler() and not c:IsRace(RACE_DIVINE)
 end
 function s.atkval(e,c)
 	return c:GetAttack()/2

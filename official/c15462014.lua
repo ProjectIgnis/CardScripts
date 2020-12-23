@@ -1,14 +1,16 @@
+--龍馬躓図
 --Hollow Giants
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
-	--disable
+	--Negate all monsters that were special summoned from extra deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
@@ -16,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.disable)
 	e2:SetCode(EFFECT_DISABLE)
 	c:RegisterEffect(e2)
-	--damage
+	--Inflict 1000 damage to a player(s)
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)

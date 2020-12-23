@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
@@ -57,7 +57,7 @@ function s.damop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.damfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
-	if #g>0 and	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		Duel.BreakEffect()
 		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 		local d=Duel.GetFieldGroupCount(p,LOCATION_ONFIELD,0)*200

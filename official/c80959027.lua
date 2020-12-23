@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={id}
 s.counter_place_list={COUNTER_SPELL}
 s.listed_series={0x10d}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)

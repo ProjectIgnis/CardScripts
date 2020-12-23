@@ -1,16 +1,17 @@
---PSYフレームギア・ε
+--ＰＳＹフレームギア・ε
 --PSY-Framegear Epsilon
+
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableUnsummonable()
-	--Special summon limit
+	--Must be special summoned by a card effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
-	--Negate Destroy and Special Summon
+	--Special summon itself and "PSY-Frame Driver", negate the activation of a trap card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -25,6 +26,7 @@ function s.initial_effect(c)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_names={CARD_PSYFRAME_DRIVER}
+
 function s.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS)
 end
@@ -66,6 +68,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCountLimit(1)
 	e1:SetLabel(fid)
 	e1:SetLabelObject(g)

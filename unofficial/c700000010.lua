@@ -60,5 +60,5 @@ end
 function s.atkval(e,c)
 	if s.atkfilter(c) then
 		return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_MZONE,0,nil)*100
-	else return 0 end   
+	else return 0 end
 end

@@ -1,7 +1,9 @@
 --聖刻龍－トフェニドラゴン
+--Hieratic Dragon of Tefnuit
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon from hand
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -10,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.hspcon)
 	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--If tributed, special summon 1 dragon normal monster from hand, deck, or GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -27,9 +29,11 @@ function s.hspcon(e,c)
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)~=0
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
+	--Cannot attack this turn
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3206)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)

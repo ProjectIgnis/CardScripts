@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCountLimit(1)
+	e1:SetCondition(s.fuscond)
 	e1:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e1)
@@ -26,6 +27,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x46}
+function s.fuscond(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsTurnPlayer(tp) and (Duel.IsMainPhase() or Duel.IsBattlePhase())
+end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)

@@ -1,9 +1,10 @@
 --昇華騎士－エクスパラディン
 --Sublimation Knight
 --Scripted by Hel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Equip
+	--Equip 1 FIRE warrior or gemini monster from hand or deck to this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_LEAVE_FIELD_P)
 	e3:SetOperation(s.eqcheck)
 	c:RegisterEffect(e3)
-	--Special Summon
+	--Special summon all gemini monsters that were equipped to this card
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -83,7 +84,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=e:GetLabelObject():GetLabelObject()
-	return c:IsReason(REASON_BATTLE) or (rp==1-tp and c:IsReason(REASON_EFFECT)) and c:IsPreviousLocation(LOCATION_MZONE)
+	return (c:IsReason(REASON_BATTLE) or rp==1-tp) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.spfilter(c)
 	return c:GetOriginalType()&TYPE_GEMINI==TYPE_GEMINI

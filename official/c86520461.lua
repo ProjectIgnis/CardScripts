@@ -7,13 +7,15 @@ function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_ROCK),aux.FilterBoolFunctionEx(Card.IsLevelBelow,4))
+	--lizard check
+	Auxiliary.addLizardCheck(c)
 	--Must first be special summoned with "Fossil Fusion"
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e0:SetRange(LOCATION_EXTRA)
-	e0:SetValue(s.splimit)
+	e0:SetValue(aux.FossilLimit)
 	c:RegisterEffect(e0)
 	--Can make 2 attacks on monsters
 	local e1=Effect.CreateEffect(c)
@@ -37,10 +39,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists itself, "Fossil Fusion", and "Time Stream"
 s.listed_names={id,CARD_FOSSIL_FUSION,85808813}
-	--Handle its special summon condition
-function s.splimit(e,se,sp,st)
-	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or st==SUMMON_TYPE_FUSION+0x20
-end
 	--Check for "Time Stream"
 function s.thfilter(c)
 	return c:IsCode(85808813) and c:IsAbleToHand()

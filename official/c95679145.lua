@@ -1,5 +1,5 @@
 --教導の大神祇官
---Maximus Dragma
+--Dogmatika Maximus
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -82,6 +82,8 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	aux.RegisterClientHint(e:GetHandler(),EFFECT_FLAG_OATH,tp,1,0,aux.Stringid(id,2),nil)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp)
 end
 	--Cannot special summon from extra deck
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)

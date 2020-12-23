@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) then
+		if tc and tc:IsRelateToEffect(e) then
 			local lv=tc:GetLevel()-tc:GetOriginalLevel()
 			if lv<=0 then return end
 			local e1=Effect.CreateEffect(c)

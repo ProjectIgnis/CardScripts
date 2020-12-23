@@ -42,11 +42,14 @@ if not AnimeArchetype then
 	-- Graceful Tear/Graceful Charity/Numinous Healer
 	-- Cherubini, Black Angel of the Burning Abyss
 	-- Fallen Angel of Roses/Muse-A/Queen Angel of Roses
+
+	-- Tellus the Little Angel
 	AnimeArchetype.OCGAngel={
 		79575620,39996157,15914410,53334641,16972957,42216237,
 		42418084,18378582,59509952,81146288,85399281,47852924,
 		74137509,17653779,9032529,79571449,2130625,49674183,
-		69992868,96470883,11398951
+		69992868,96470883,11398951,
+		100274002
 	}
 	Card.IsAngel=MakeCheck({0x154a,0xef},AnimeArchetype.OCGAngel)
 
@@ -118,7 +121,11 @@ if not AnimeArchetype then
 	-- Ｃ
 	-- カオス
 	-- is "C" or Cxyz or Cnumber
-	Card.IsC=MakeCheck({0x1048,0x1073,0x568})
+	-- Number iC1000: Numeronius Numeronia
+	AnimeArchetype.OCGC={
+		100275102
+	}
+	Card.IsC=MakeCheck({0x1048,0x1073,0x568},AnimeArchetype.OCGC)
 
 	-- Cat キャット (list to update)
 	-- Cat Shark/Nekogal #2/Mimicat
@@ -537,6 +544,9 @@ if not AnimeArchetype then
 	-- Dragon Master Knight/Mermaid Knight/Midnight Fiend
 	-- Super Roboyarou/Red-Eyes Metal Knight Gearfried/Fossil Warrior Skull Knight
 
+
+	-- Shell Knight
+
 	-- TellarKnight/Igknight/Gem-Knight
 	AnimeArchetype.OCGKnight={
 		24435369,83678433,1412158,85651167,89494469,39303359,36151751,14553285,95291684,35052053,
@@ -548,7 +558,7 @@ if not AnimeArchetype then
 		42956963,59290628,78402798,6150044,31924889,359563,72926163,40391316,12744567,97204936,
 		21249921,34116027,900787,80159717,25682811,2191144,85684223,48739166,2986553,31320433,
 		99348756,66661678,52575195,35429292,89731911,68670547,50725996,39507162,36039163,81306586,
-		6740720,69514125,100266007
+		6740720,69514125,59531356,100274006
 	}
 	Card.IsKnight=MakeCheck({0x530,0x1047,0x9c,0xc8},AnimeArchetype.OCGKnight)
 
@@ -655,6 +665,14 @@ if not AnimeArchetype then
 		52653092,56832966,86532744
 	}
 	Card.IsNumberS=MakeCheck({0x2048},AnimeArchetype.OCGNumberS)
+
+	-- Numeronius
+	-- ヌメロニアス
+	-- Number C1000: Numeronius/Number iC1000: Numeronius Numeronia
+	AnimeArchetype.OCGNumeronius={
+		100275101,100275102
+	}
+	Card.IsNumeronius=MakeCheck({0x53b},AnimeArchetype.OCGNumeronius)
 
 	-- Papillon パピヨン
 	-- Moonlit Papillon
@@ -918,7 +936,7 @@ if not AnimeArchetype then
 	Card.IsToy=MakeCheck({0x559},AnimeArchetype.OCGToy)
 
 	-- Toy (ARC-V archetype) トーイ
-	Card.IsToyArcV=MakeCheck({0x55a,0xad})
+	Card.IsToyArcV=MakeCheck({0x558,0xad})
 
 	--V (GX Archetype)
 	AnimeArchetype.OCGV={
@@ -943,7 +961,7 @@ if not AnimeArchetype then
 		84243274,65687442
 		--Windwitch/ ZW
 	}
-	Card.IsW=MakeCheck({0x56b,0xf0,0x7e},AnimeArchetype.OCGW)
+	Card.IsW=MakeCheck({0x56b,0xf0,0x107e},AnimeArchetype.OCGW)
 
 	-- White ホワイト
 	-- Great White/Cyberse Whitehat/Malefic Blue-Eyes White Dragon

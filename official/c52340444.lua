@@ -1,8 +1,9 @@
 --閃刀機－ホーネットビット
---Brandish Mecha Hornet Bit
+--Sky Striker Mecha - Hornet Drones
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 token to your field
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -10,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
@@ -37,16 +39,19 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x1115,TYPES_TOKEN,atk,atk,1,RACE_WARRIOR,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE) then return end
 	local token=Duel.CreateToken(tp,id+1)
 	if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
+		--Cannot be tributed
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3303)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		token:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 		token:RegisterEffect(e2)
+		--Gains 1500 ATK/DEF if 3+ spells are in the GY when resolving
 		if Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL)>=3 then
 			local e3=Effect.CreateEffect(e:GetHandler())
 			e3:SetType(EFFECT_TYPE_SINGLE)

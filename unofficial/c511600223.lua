@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--link summon
 	Link.AddProcedure(c,s.matfilter,1,1)
 	c:EnableReviveLimit()
-	-- cannot link
+	--cannot link
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsSetCard(0x577,scard,sumtype,tp) 
+	return c:IsSetCard(0x577,scard,sumtype,tp)
 end
 function s.lnklimit(e,c)
 	if not c then return false end
@@ -42,7 +42,7 @@ function s.spfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH)
 end
 function s.dacon(e)
-	return  Duel.IsExistingMatchingCard(s.spfilter,tp,0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(s.spfilter,tp,0,LOCATION_MZONE,1,nil)
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0

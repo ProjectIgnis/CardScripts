@@ -1,9 +1,9 @@
 --揺海魚デッドリーフ
---Deadreef the Ephemeral Fish
+--Lifeless Leaffish
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--send to grave
+	--Send to grave
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_GRAVE)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--draw
+	--Shuffle Fish monsters into the Deck and draw 1 card
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)

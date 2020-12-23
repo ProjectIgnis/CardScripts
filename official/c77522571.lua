@@ -1,4 +1,4 @@
---v
+--デストーイ・マイスター
 --Frightfur Meister
 --Scripted by Eerie Code
 local s,id=GetID()
@@ -100,6 +100,8 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp)
@@ -110,8 +112,11 @@ end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_EXTRA)
 end
+function s.lizfilter(e,c)
+	return not c:IsOriginalType(TYPE_FUSION)
+end
 function s.excfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_FIEND)
+	return c:IsFaceup() and c:IsRace(RACE_FIEND) and c:HasLevel()
 end
 function s.exfilter(c,e,tp,chk)
 	return c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and (not chk or Duel.GetLocationCountFromEx(tp,tp,nil,c)>0) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)

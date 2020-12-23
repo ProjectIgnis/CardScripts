@@ -65,6 +65,7 @@ function s.initial_effect(c)
 	e10:SetOperation(s.disop)
 	c:RegisterEffect(e10)
 end
+s.listed_series={0x2e}
 function s.discon(e,c)
 	return e:GetHandler()~=c
 end
@@ -110,6 +111,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not res and s.discheck(ev,CATEGORY_REMOVE,re,im0,im1,targets) then res=true end
 	if not res and s.discheck(ev,CATEGORY_TOHAND,re,im0,im1,targets) then res=true end
 	if not res and s.discheck(ev,CATEGORY_TODECK,re,im0,im1,targets) then res=true end
+	if not res and s.discheck(ev,CATEGORY_TOEXTRA,re,im0,im1,targets) then res=true end
 	if not res and s.discheck(ev,CATEGORY_LEAVE_GRAVE,re,im0,im1,targets) then res=true end
 	if res then Duel.NegateEffect(ev) end
 end

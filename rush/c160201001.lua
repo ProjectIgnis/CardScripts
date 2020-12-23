@@ -1,8 +1,9 @@
 --魔将キメルーラ
 --Fiendish Commander Kimeruler
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Direct Attack
+	--Can attack directly
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -23,12 +24,14 @@ function s.dirtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--requirement
+	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
-		--effect
+		--Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			--Direct attack
 			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3205)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DIRECT_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

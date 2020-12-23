@@ -21,26 +21,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-	--Add 1 spell/trap card from GY to hand
-function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_PHASE+PHASE_END)
-	e1:SetRange(LOCATION_GRAVE)
-	e1:SetCountLimit(1)
-	e1:SetTarget(s.addtg)
-	e1:SetOperation(s.addop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	c:RegisterEffect(e1)
-end
 	--Lists the "Flower Cardian" archetype
 s.listed_series={0xe6}
 	--Check for synchro monster
-function s.exfilter(c)
+function s.exfilter(c,tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsAbleToHand()
+		and ((c:GetSequence()<5 and ft>2) or ft>3)
 end
 	--Check for "Flower Cardian" monsters that can be special summoned
 function s.spfilter(c,e,tp)
@@ -48,10 +35,9 @@ function s.spfilter(c,e,tp)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.exfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>2
+	if chk==0 then return Duel.IsExistingMatchingCard(s.exfilter,tp,LOCATION_MZONE,0,1,nil,tp)
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,3,nil,e,tp)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,4,nil,e,tp)
 		and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
@@ -62,7 +48,7 @@ end
 	--Return synchro to extra deck, special summon 4 "Flower Cardian" monsters from GY, draw 1
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.exfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.exfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	local td=g:GetFirst()
 	if td and Duel.SendtoHand(td,nil,REASON_EFFECT)~=0 and td:IsLocation(LOCATION_EXTRA) then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<4 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
@@ -98,6 +84,21 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
 	return e:GetHandler():IsReason(REASON_EFFECT) and rc:IsSetCard(0xe6) and rc:IsType(TYPE_MONSTER)
+end
+	--Add 1 spell/trap card from GY to hand
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetRange(LOCATION_GRAVE)
+	e1:SetCountLimit(1)
+	e1:SetTarget(s.addtg)
+	e1:SetOperation(s.addop)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	c:RegisterEffect(e1)
 end
 	--Activation legality
 function s.addtg(e,tp,eg,ep,ev,re,r,rp,chk)

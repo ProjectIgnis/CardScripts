@@ -40,12 +40,11 @@ function s.initial_effect(c)
 end
 s.listed_names={511310101,511310102,511310103,511310104,511310105}
 function s.filter(c)
-	return c:IsCode(511310101,511310102,511310103,511310104,511310105) and c:IsSSetable()
+	return c:IsCode(511310101,511310102,511310103,511310104,511310105) and c:IsSSetable(true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil):GetClassCount(Card.GetCode)==5 end
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,0,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
+	if chk==0 then return Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil):GetClassCount(Card.GetCode)==5 end
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_SZONE,0,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.rescon(sg,e,tp,mg)

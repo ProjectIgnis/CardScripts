@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={160002001}
 function s.pfilter(c)
 	return c:IsCode(160002001) and c:IsFaceup() and c:IsAttackPos() and c:IsCanChangePosition()
 end

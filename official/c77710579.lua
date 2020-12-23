@@ -1,6 +1,6 @@
 --機皇枢インフィニティ・コア
 --Meklord Nucleus Infinity Core
---scripted by Naim
+--Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot be destroyed by battle
@@ -82,7 +82,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetCondition(s.atkcon)
 	e1:SetTarget(s.atktg)
 	e1:SetReset(RESET_PHASE+PHASE_END)

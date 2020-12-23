@@ -1,5 +1,5 @@
 --教導国家ドラグマ
---Dragma, the Country of Conviction
+--Dogmatika Nation
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

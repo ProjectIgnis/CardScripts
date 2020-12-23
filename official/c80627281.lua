@@ -1,6 +1,7 @@
 --海晶乙女雪花
 --Marincess Snow
 --Credit to Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,6 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x12b}
+
 function s.filter(c,e,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousSetCard(0x12b) and c:GetPreviousTypeOnField()&TYPE_LINK==TYPE_LINK
@@ -40,8 +42,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc:GetLink()):GetFirst()
 		if sc and Duel.SpecialSummonStep(sc,SUMMON_TYPE_LINK,tp,tp,false,false,POS_FACEUP) then
+			--Unaffected by opponent's card effects
 			local e1=Effect.CreateEffect(c)
-			e1:SetDescription(aux.Stringid(id,0))
+			e1:SetDescription(3110)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_IMMUNE_EFFECT)
 			e1:SetRange(LOCATION_MZONE)

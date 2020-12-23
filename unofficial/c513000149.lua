@@ -17,18 +17,21 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFieldCard(e:GetHandler():GetControler(),LOCATION_SZONE,5)
 	return tc and tc:GetCounter(0x91)>4
 end
+function s.spfilter(c,tp)
+	local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_GRAVE,0,nil,c)
+	return c:IsSynchroSummonable(nil,mg) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_GRAVE,0,nil)
-	if chkc then return chkc:IsLocation(LOCATION_EXTRA) and chkc:IsSynchroSummonable(nil,mg) end
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,nil,mg) end
+	if chkc then return chkc:IsLocation(LOCATION_EXTRA) and s.spfilter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,1,nil,nil,mg)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,tp)
 	Duel.SetTargetCard(g:GetFirst())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g:GetFirst(),1,tp,LOCATION_EXTRA)
 end
 function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_GRAVE,0,nil)
+	local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_GRAVE,0,nil,tc)
 	Synchro.Send=2
 	if not tc then return end
 	local e1=Effect.CreateEffect(e:GetHandler())

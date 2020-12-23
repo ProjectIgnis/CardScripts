@@ -1,9 +1,9 @@
---呪われし竜-カース・オブ・ドラゴン
+--呪われし竜－カース・オブ・ドラゴン
 --Curse of Dragon, the Cursed Dragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Search
+	--Add 1 Spell/Trap from the Deck to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--Negate
+	--Negate the effects of monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DISABLE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)

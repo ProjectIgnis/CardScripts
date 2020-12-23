@@ -1,4 +1,5 @@
--- Astral Magician
+--アストラル・マジシャン
+--Astral Magician
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,12 +27,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		local resets=c==tc and RESETS_STANDARD_DISABLE or RESETS_STANDARD
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(tc:GetLevel()*2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT+resets+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

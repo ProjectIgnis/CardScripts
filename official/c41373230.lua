@@ -1,17 +1,18 @@
 --灰燼竜バスタード
---Bastard the Ash Dragon
+--Titaniklad the Ash Dragon
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion summon procedure
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,CARD_ALBUS,aux.FilterBoolFunctionEx(Card.IsAttackAbove,2500))
-	--atk
+	Fusion.AddProcMix(c,true,true,CARD_ALBAZ,aux.FilterBoolFunctionEx(Card.IsAttackAbove,2500))
+	--Verify materials
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
 	e1:SetValue(s.valcheck)
 	c:RegisterEffect(e1)
+	--Change ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
-	--to hand
+	--Add to hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -33,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.regop2)
 	c:RegisterEffect(e4)
 end
-s.listed_names={CARD_ALBUS}
+s.listed_names={CARD_ALBAZ}
 s.listed_series={0x146}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
@@ -91,7 +92,7 @@ function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c,e,tp,ft)
-	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x146) or c:IsCode(CARD_ALBUS))
+	return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x146) or c:IsCode(CARD_ALBAZ))
 		and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

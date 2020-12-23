@@ -1,7 +1,6 @@
 --教導の天啓アディン
---Adin the Dragma Oracle
+--Dogmatika Adin, the Enlightened
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetValue(s.indval)
 	c:RegisterEffect(e2)
-	--Special summon 1 "Dragma" monster from deck
+	--Special summon 1 "Dogmatika" monster from deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -35,11 +34,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-	--Lists "Dragma" archetype
+	--Lists "Dogmatika" archetype
 s.listed_series={0x146}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--If special summoned from extra deck
 function s.cfilter(c)
 	return c:IsSummonLocation(LOCATION_EXTRA)
@@ -65,7 +63,7 @@ end
 function s.indval(e,c)
 	return c:IsSummonLocation(LOCATION_EXTRA)
 end
-	--Check for "Dragma" monster (except for this card's name)
+	--Check for "Dogmatika" monster (except for this card's name)
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x146) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -79,7 +77,7 @@ function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-	--If this card is destroyed by battle or card effect, special summon 1 "Dragma" monster from deck
+	--If this card is destroyed by battle or card effect, special summon 1 "Dogmatika" monster from deck
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

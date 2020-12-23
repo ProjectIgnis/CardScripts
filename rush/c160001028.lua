@@ -16,11 +16,8 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 end
-function s.filter(c)
-	return c:IsCanChangePosition()
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
+	if chk==0 then return Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)>0 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -28,7 +25,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.PayLPCost(tp,1000)
 	--effect
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
+	local ct=Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

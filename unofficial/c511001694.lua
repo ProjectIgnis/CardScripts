@@ -1,8 +1,9 @@
---Cardian - Kiri ni Houou
+--花札衛－桐に鳳凰－ (Anime)
+--Flower Cardian Paulownia with Phoenix (Anime)
 Duel.LoadScript("c419.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableReviveLimit()
+	c:EnableUnsummonable()
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

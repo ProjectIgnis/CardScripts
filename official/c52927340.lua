@@ -1,5 +1,6 @@
 --オルターガイスト・クンティエリ
 --Altergeist Kunquery
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate attack
@@ -60,6 +61,14 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.rcon)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
+		if tc:IsType(TYPE_TRAPMONSTER) then
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e2:SetCode(EFFECT_DISABLE_TRAPMONSTER)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e2)
+		end
 	end
 end
 function s.rcon(e)

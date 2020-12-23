@@ -33,7 +33,6 @@ end
 s.listed_series={0x4}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local lv=0
-	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
 		if tc:IsReason(REASON_DESTROY) and tc:IsSetCard(0x4) and not tc:IsPreviousLocation(LOCATION_SZONE) then
 			local tlv=tc:GetLevel()

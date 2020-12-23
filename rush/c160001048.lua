@@ -1,8 +1,9 @@
 --突風
---Gust (rush)
+--Gust (Rush Duel)
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Destroy 1 spell/trap on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -31,11 +32,16 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if #g>0 then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	end
+	Duel.SetChainLimit(s.chlimit)
+end
+function s.chlimit(e,ep,tp)
+	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	--effect
+	--Effect
 	local tc=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil):GetFirst()
 	if tc then
+		Duel.HintSelection(Group.FromCards(tc))
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

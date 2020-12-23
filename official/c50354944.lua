@@ -1,7 +1,6 @@
 --暗黒騎士ガイアオリジン
---Origin Gaia the Fierce Knight
+--Gaia the Fierce Knight Origin
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,7 +25,8 @@ function s.initial_effect(c)
 	--Banish from GY; reset a monster's ATK to its original ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(EFFECT_FLAG_CARD_TARGET+CATEGORY_ATKCHANGE)
+	e3:SetCategory(CATEGORY_ATKCHANGE)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_GRAVE)
@@ -91,4 +91,3 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 end
-

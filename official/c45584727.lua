@@ -1,9 +1,10 @@
---ワルキューレの抱ほう擁
+--ワルキューレの抱擁
 --Valkyrie's Embrace
---scripted by Naim
+--Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Change 1 of your "Valkyrie" monsters to defense position, banish 1 of opponent's monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_POSITION+CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -18,6 +19,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_series={0x122}
+
 function s.counterfilter(c)
 	return c:IsSetCard(0x122)
 end
@@ -61,11 +63,8 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ex1,tg1=Duel.GetOperationInfo(0,CATEGORY_POSITION)
 	local ex2,tg2=Duel.GetOperationInfo(0,CATEGORY_REMOVE)
-	if tg1:GetFirst() and tg1:GetFirst():IsRelateToEffect(e) and
-		Duel.ChangePosition(tg1,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)~=0 then
-			if tg2:GetFirst() and tg2:GetFirst():IsRelateToEffect(e) then
-				Duel.Remove(tg2,POS_FACEUP,REASON_EFFECT)
-			end
+	if tg1:GetFirst() and tg1:GetFirst():IsRelateToEffect(e) and Duel.ChangePosition(tg1,POS_FACEUP_DEFENSE)~=0
+		and tg2:GetFirst() and tg2:GetFirst():IsRelateToEffect(e) then
+		Duel.Remove(tg2,POS_FACEUP,REASON_EFFECT)
 	end
 end
-

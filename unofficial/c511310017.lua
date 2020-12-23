@@ -1,6 +1,7 @@
+--異次元トンネル－ミラーゲート－ (Anime)
 --Mirror Gate (Anime)
---AlphaKretin
---fixed by MLD
+--Scripted by AlphaKretin
+--Fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,10 +16,8 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
-	local bc=a:GetBattleTarget()
-	if not bc then return false end
-	if a:IsControler(tp) then a,bc=bc,a end
-	return a:IsControler(1-tp) and bc:IsControler(tp)
+	local at=Duel.GetAttackTarget()
+	return a:IsControler(1-tp) and at and at:IsControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
@@ -33,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
 	if a:IsRelateToEffect(e) and a:CanAttack() and at:IsRelateToEffect(e) then
-		if Duel.SwapControl(a,at,RESET_PHASE+PHASE_END,1) then
+		if Duel.SwapControl(a,at) then
 			Duel.CalculateDamage(a,at)
 		end
 	end

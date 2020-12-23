@@ -1,10 +1,14 @@
+--富炎星－ハクテンオウ
 --Brotherhood of the Fire Fist - Swan
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Fusion summon procedure
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_BEASTWARRIOR),2)
-	--damage
+	--If special summoned, inflict 200 damage per "Fire Formation" spell/trap 
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -15,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	--destroy
+	--During battle phase, destroy 1 of opponent's cards
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -28,9 +32,11 @@ function s.initial_effect(c)
 	e2:SetCost(s.descost)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
+	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x7c}
+
 function s.damfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x7c)
 end
@@ -78,4 +84,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-

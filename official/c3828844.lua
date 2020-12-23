@@ -1,5 +1,5 @@
 --六花聖ストレナエ
---Strenae the Rikka Queen
+--Rikka Queen Strenna
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()

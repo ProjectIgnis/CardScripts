@@ -1,9 +1,9 @@
 --焔聖騎士-アストルフォ
---Flame Noble Knight Astolfo
+--Infernoble Knight Astolfo
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon from hand
+	--Special Summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--special summon after banished
+	--Special summon monsters after banished
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -48,7 +48,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local lc=e:GetLabelObject()
-	local lv=(lc and lc:IsLocation(LOCATION_REMOVED) and lc:IsFaceup())	and lc:GetLevel() or 0
+	local lv=(lc and lc:IsLocation(LOCATION_REMOVED) and lc:IsFaceup()) and lc:GetLevel() or 0
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and lv>0 and not c:IsLevel(lv) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		local e1=Effect.CreateEffect(c)

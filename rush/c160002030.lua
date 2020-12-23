@@ -1,5 +1,6 @@
 --邪影ダーク・ルーカー
 --Wicked Shadow - Dark Rooker
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 1 Spell/Trap and deal 1000 damage
@@ -26,6 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local tc=Duel.SelectMatchingCard(tp,Card.IsType,tp,0,LOCATION_ONFIELD,1,1,nil,TYPE_SPELL+TYPE_TRAP):GetFirst()
+		Duel.HintSelection(Group.FromCards(tc))
 		if tc and Duel.Destroy(tc,REASON_EFFECT)>0 and Duel.Damage(1-tp,1000,REASON_EFFECT)>0 then
 			Duel.BreakEffect()
 			Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)

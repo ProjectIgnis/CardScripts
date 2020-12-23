@@ -26,12 +26,12 @@ end
 function s.filter(c)
 	return c:IsFaceup() and c:IsDestructable() and c:IsAttribute(ATTRIBUTE_WATER)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)	
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCurrentChain()==0 and eg:IsExists(s.filter,1,nil) end
 	local g=eg:Filter(s.filter,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)	
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter,nil)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)

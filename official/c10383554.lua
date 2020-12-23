@@ -1,17 +1,20 @@
 --デストーイ・ホイールソウ・ライオ
+--Frightfur Leo
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Fusion summon procedure
 	Fusion.AddProcMix(c,true,true,34688023,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9))
-	--spsummon condition
+	--Must be fusion summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.fuslimit)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy 1 of opponent's monsters, and if you do, inflict damage equal to its ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,11 +28,14 @@ function s.initial_effect(c)
 end
 s.listed_series={0xa9}
 s.material_setcode={0xa9,0xc3}
+
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsDirectAttacked() end
+	--Cannot attack directly
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3207)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)

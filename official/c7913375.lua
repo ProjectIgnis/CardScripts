@@ -1,5 +1,5 @@
 --砲撃のカタパルト・タートル
---Howitzer Catapult Turtle
+--Artillery Catapult Turtle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon

@@ -1,4 +1,5 @@
---Number C1000: Numerronius
+--ＣＮｏ．１０００ 夢幻虚神ヌメロニアス
+--Number C1000: Numeronius
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -52,11 +53,11 @@ function s.initial_effect(c)
 	e5:SetTarget(s.bptg)
 	e5:SetOperation(s.bpop)
 	c:RegisterEffect(e5)
-	--Battle indestructable
+	--number generic effect
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
 	e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e6:SetValue(s.indes)
+	e6:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e6)
 end
 s.listed_series={0x48}
@@ -142,7 +143,4 @@ function s.bpop(e,tp,eg,ep,ev,re,r,rp)
 		g=g:Select(tp,ft,ft,nil)
 	end
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
 end

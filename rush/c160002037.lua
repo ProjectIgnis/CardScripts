@@ -1,8 +1,9 @@
 --ララバインド
 --Lullabind
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Change 1 of opponent's monsters to face-down defense
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -20,6 +21,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local tc=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	Duel.HintSelection(Group.FromCards(tc))
 	if tc and tc:IsFaceup() then
 		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
 	end

@@ -15,4 +15,4 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()
-end	
+end

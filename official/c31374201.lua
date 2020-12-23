@@ -1,9 +1,10 @@
---
+--海造賊－白髭の機関士
 --Whitebeard, the Plunder Patroll Helm
 --Scripted by Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon from extra
+	--Special summon 1 "Plunder Patroll" monster from extra deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--special summon from deck
+	--Special summon 1 "Plunder Patroll" monster from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -31,6 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13f}
 s.listed_names={id}
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end

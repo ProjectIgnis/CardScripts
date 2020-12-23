@@ -21,8 +21,9 @@ function s.matfil(c,e,tp,chk)
 	return c:IsOnField() and c:IsDestructable(e) and not c:IsImmuneToEffect(e)
 end
 function s.extraop(e,tc,tp,sg)
-	Duel.Destroy(sg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+	local res=Duel.Destroy(sg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)==#sg
 	sg:Clear()
+	return res
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then

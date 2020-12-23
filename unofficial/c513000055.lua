@@ -26,7 +26,7 @@ function s.filter(c,e,tp,eg,ep,ev,re,r,rp,tid)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tid=Duel.GetTurnCount()
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp)  and s.filter(chkc,e,tp,eg,ep,ev,re,r,rp,tid) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.filter(chkc,e,tp,eg,ep,ev,re,r,rp,tid) end
 	if chk==0 then
 		local b=e:GetHandler():IsLocation(LOCATION_HAND)
 		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)

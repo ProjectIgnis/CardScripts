@@ -1,11 +1,13 @@
---
+--海造賊－進水式
 --Plunder Patroll Shipshape Ships Shipping
---scripted by Naim
+--Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Fusion summon 1 fiend fusion monster
+	--Using monsters from hand or field as material
 	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsRace,RACE_FIEND)))
-	--equip
+	--Equip 1 "Plunder Patroll" monster or "Emblem of the Plunder Patroll" from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_EQUIP)
@@ -20,6 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13f}
 s.listed_names={80621422}
+
 function s.efilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x13f) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
@@ -53,4 +56,3 @@ end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-

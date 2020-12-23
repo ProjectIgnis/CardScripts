@@ -49,6 +49,7 @@ function s.initial_effect(c)
 	e8:SetOperation(s.damop)
 	c:RegisterEffect(e8)
 end
+s.listed_series={0xaf}
 function s.condition(e)
 	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,2,nil,0xaf)
 end

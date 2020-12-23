@@ -1,19 +1,19 @@
 --教導枢機テトラドラグマ
---Cardinal of Dogma Tetradragmatton
+--Dogmatika Nexus
 --Scripted by Eerie Code
 local s,id=GetID()
 local TYPE_FULL=TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_LINK
 local TYPE_ARRAY={TYPE_FUSION,TYPE_SYNCHRO,TYPE_XYZ,TYPE_LINK }
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--special summon condition
+	--Special Summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(0)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon itsef from the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_REMOVE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy monsters and inflict damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)

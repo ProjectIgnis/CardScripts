@@ -19,10 +19,10 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    local tc=c:GetBattleTarget()
-    if c:IsRelateToBattle() and tc:IsRelateToBattle() then
-        local g=Group.FromCards(c,tc)
-        Duel.Destroy(g,REASON_EFFECT)
-    end
+	local c=e:GetHandler()
+	local tc=c:GetBattleTarget()
+	if c:IsRelateToBattle() and tc:IsRelateToBattle() then
+		local g=Group.FromCards(c,tc)
+		Duel.Destroy(g,REASON_EFFECT)
+	end
 end

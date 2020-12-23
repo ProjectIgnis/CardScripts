@@ -20,11 +20,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	if #g>0 then
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		g:GetFirst():RegisterEffect(e2)	
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		g:GetFirst():RegisterEffect(e1)
 	end
 end

@@ -2,7 +2,7 @@
 --Ancient Warriors - Masterful Sun Mou
 local s,id=GetID()
 function s.initial_effect(c)
-	--no attack
+	--Prvent attack target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atcon)
 	e1:SetValue(aux.imval1)
 	c:RegisterEffect(e1)
-	--search
+	--Add 1 "Ancient Warriors" monster from Deck to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -22,26 +22,19 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--bounce
+	--Return 1 monster to the hand
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_TOHAND)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetOperation(aux.chainreg)
+	e3:SetCountLimit(1,id+1)
+	e3:SetCondition(s.thcon2)
+	e3:SetTarget(s.thtg2)
+	e3:SetOperation(s.thop2)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_TOHAND)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e4:SetCode(EVENT_CHAIN_SOLVED)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCountLimit(1,id+1)
-	e4:SetCondition(s.thcon2)
-	e4:SetTarget(s.thtg2)
-	e4:SetOperation(s.thop2)
-	c:RegisterEffect(e4)
 end
 s.listed_names={40140448}
 s.listed_series={0x137}
@@ -75,8 +68,7 @@ end
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc~=c
-		and rc:IsSetCard(0x137) and rc:IsControler(tp) and c:GetFlagEffect(1)>0
+	return re:IsActiveType(TYPE_MONSTER) and rc~=c and rc:IsSetCard(0x137) and rc:IsControler(tp)
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end
@@ -87,8 +79,7 @@ function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

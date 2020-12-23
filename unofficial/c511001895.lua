@@ -1,3 +1,4 @@
+--ジャンク・ディーラー
 --Junk Dealer
 local s,id=GetID()
 function s.initial_effect(c)
@@ -47,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_UNRELEASABLE_SUM)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e3:SetValue(1)
-		tc:RegisterEffect(e1)
+		tc:RegisterEffect(e3)
 	end
 	Duel.SpecialSummonComplete()
 end

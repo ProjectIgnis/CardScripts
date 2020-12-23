@@ -93,7 +93,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
-end	
+end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end

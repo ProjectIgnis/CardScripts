@@ -50,20 +50,20 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetDescription(aux.Stringid(id,1))
 			e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 			e1:SetTargetRange(1,0)
-			e1:SetLabelObject(tc)
-			e1:SetCondition(s.limitcon)
 			e1:SetTarget(s.splimit)
 			Duel.RegisterEffect(e1,tp)
+			local e2=Effect.CreateEffect(e:GetHandler())
+			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+			e2:SetCode(EVENT_ADJUST)
+			e2:SetOperation(function(e)
+				if tc:GetFlagEffect(id)==0 then
+					e:Reset()
+					e1:Reset()
+				end
+			end)
+			Duel.RegisterEffect(e2,tp)
 			Duel.SpecialSummonComplete()
 		end
-	end
-end
-function s.limitcon(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabelObject():GetFlagEffect(id)>0 then
-		return true
-	else
-		e:Reset()
-		return false
 	end
 end
 function s.splimit(e,c,tp,sumtp,sumpos)

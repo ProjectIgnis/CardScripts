@@ -1,8 +1,9 @@
 --ヴァンパイア・スカージレット
 --Vampire Scarlet Scourge
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon
+	--If normal or special summoned, special summon 1 "Vampire" monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_BATTLE_DESTROYING)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
-	--Special summon monsters
+	--Special summon the monsters this card destroyed by battle
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -39,6 +40,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={0x8e}
+
 function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
@@ -57,7 +59,10 @@ end
 function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+		--Cannot attack this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3206)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

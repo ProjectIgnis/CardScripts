@@ -1,9 +1,10 @@
---
+--優麗なる霊鏡
 --Necroquip Prism
---scripted by Naim
+--Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special 1 monster from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP+CATEGORY_SPECIAL_SUMMON)
@@ -54,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(s.eqlimit)
 			e1:SetLabelObject(tc)
 			tg:RegisterEffect(e1)
-			--increase atk
+			--Gains ATK equal to half its original ATK
 			local atk=tg:GetTextAttack()/2
 			if atk<0 then atk=0 end
 			local e2=Effect.CreateEffect(c)
@@ -63,7 +64,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e2:SetValue(atk)
 			tg:RegisterEffect(e2)
-			--limit activation
+			--Cannot activate cards/effects with the same name
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_FIELD)
 			e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -83,4 +84,3 @@ function s.aclimit(e,re,tp)
 	local tc=e:GetLabelObject()
 	return re:GetHandler():IsCode(tc:GetCode())
 end
-

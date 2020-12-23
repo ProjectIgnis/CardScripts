@@ -25,6 +25,11 @@ end
 function Card.IsMonster(c)
 	return c:IsType(TYPE_MONSTER)
 end
+--
+function Card.AnnounceAnotherAttribute(c,tp)
+	local att=c:GetAttribute()
+	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or 0xff)
+end
 function Auxiliary.ReleaseNonSumCheck(c,tp,e)
 	if c:IsControler(tp) then return false end
 	local chk=false
@@ -136,13 +141,22 @@ function Duel.SelectReleaseGroupSummon(c,tp,e,fil,minc,maxc,last,...)
 	local res=count>=minc and aux.SelectUnselectGroup(rg,e,tp,minc,maxc,aux.CheckZonesReleaseSummonCheckSelection(must,extraoneof,checkfunc),1,tp,500,function(sg,e,tp,g) return sg:Includes(must) and Duel.GetMZoneCount(tp,sg,zone)>0 end,nil,cancelable)
 	return #res>0 and res or nil
 end
---Lair of Darkness
-function Auxiliary.ReleaseCostFilter(c,f,...)
-	return c:IsFaceup() and c:IsReleasable() and c:IsHasEffect(59160188) 
-		and (not f or f(c,table.unpack({...})))
+	--remove counter from only 1 card if it is the only card with counter
+local p_rem=Duel.RemoveCounter
+function Duel.RemoveCounter(tp,s,o,counter,...)
+	local ex_params={...}
+	local s,o=s>0 and LOCATION_ONFIELD or 0,o>0 and LOCATION_ONFIELD or 0
+	local cg=Duel.GetFieldGroup(tp,s,o):Filter(function(c) return c:GetCounter(counter)>0 end,nil)
+	if #cg==1 then
+		return cg:GetFirst():RemoveCounter(tp,counter,table.unpack(ex_params))
+	end
+	return p_rem(tp,s,o,counter,table.unpack(ex_params))
 end
+
+--Lair of Darkness
 function Auxiliary.ReleaseCheckSingleUse(sg,tp,exg)
-	return #sg-#(sg-exg)<=1
+	local ct=#sg-#(sg-exg)
+	return ct<=1,ct>1
 end
 function Auxiliary.ReleaseCheckMMZ(sg,tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -151,54 +165,65 @@ end
 function Auxiliary.ReleaseCheckTarget(sg,tp,exg,dg)
 	return dg:IsExists(aux.TRUE,1,sg)
 end
-function Auxiliary.RelCheckRecursive(c,tp,sg,mg,exg,mustg,ct,minc,specialchk,...)
+function Auxiliary.RelCheckRecursive(c,tp,sg,mg,exg,mustg,ct,minc,maxc,specialchk)
 	sg:AddCard(c)
 	ct=ct+1
-	local res=Auxiliary.RelCheckGoal(tp,sg,exg,mustg,ct,minc,specialchk,table.unpack({...})) 
-		or (ct<minc and mg:IsExists(Auxiliary.RelCheckRecursive,1,sg,tp,sg,mg,exg,mustg,ct,minc,specialchk,table.unpack({...})))
+	local res,stop=Auxiliary.RelCheckGoal(tp,sg,exg,mustg,ct,minc,maxc,specialchk)
+	if not res and not stop then
+		res=(ct<maxc and mg:IsExists(Auxiliary.RelCheckRecursive,1,sg,tp,sg,mg,exg,mustg,ct,minc,maxc,specialchk))
+	end
 	sg:RemoveCard(c)
-	ct=ct-1
 	return res
 end
-function Auxiliary.RelCheckGoal(tp,sg,exg,mustg,ct,minc,specialchk,...)
-	return ct>=minc and (not specialchk or specialchk(sg,tp,exg,table.unpack({...}))) and sg:Includes(mustg)
+function Auxiliary.RelCheckGoal(tp,sg,exg,mustg,ct,minc,maxc,specialchk)
+	if ct<minc or ct>maxc then return false,ct>maxc end
+	local res,stop=specialchk(sg)
+	return (res and sg:Includes(mustg)),stop
 end
-function Duel.CheckReleaseGroupCost(tp,f,ct,use_hand,specialchk,ex,...)
+function Auxiliary.ReleaseCostFilter(c,tp)
+	local eff=c:IsHasEffect(EFFECT_EXTRA_RELEASE_NONSUM)
+	return not (c:IsControler(1-tp) and eff and (eff:GetCountLimit())>0) and not c:IsHasEffect(EFFECT_EXTRA_RELEASE)
+end
+function Auxiliary.MakeSpecialCheck(check,tp,exg,...)
 	local params={...}
-	if not ex then ex=Group.CreateGroup() end
-	if not specialchk then specialchk=Auxiliary.ReleaseCheckSingleUse else specialchk=Auxiliary.AND(specialchk,Auxiliary.ReleaseCheckSingleUse) end
-	local g=Duel.GetReleaseGroup(tp,use_hand)
-	if f then
-		g=g:Filter(f,ex,table.unpack(params))
-	else
-		g=g-ex
+	if not check then return
+		function(sg)
+			return Auxiliary.ReleaseCheckSingleUse(sg,tp,exg)
+		end
 	end
-	local exg=Duel.GetMatchingGroup(Auxiliary.ReleaseCostFilter,tp,0,LOCATION_MZONE,g+ex,f,table.unpack(params))
+	return function(sg)
+		local res,stop=check(sg,tp,exg,table.unpack(params))
+		local res2,stop2=Auxiliary.ReleaseCheckSingleUse(sg,tp,exg)
+		return res and res2,stop or stop2
+	end
+end
+function Duel.CheckReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
+	local params={...}
+	if type(maxc)~="number" then
+		table.insert(params,1,ex)
+		maxc,use_hand,check,ex=minc,maxc,use_hand,check
+	end
+	if not ex then ex=Group.CreateGroup() end
+	local g,exg=Duel.GetReleaseGroup(tp,use_hand):Filter(f and f or aux.TRUE,ex,table.unpack(params)):Split(Auxiliary.ReleaseCostFilter,nil,tp)
+	local specialchk=Auxiliary.MakeSpecialCheck(check,tp,exg,table.unpack(params))
 	local mustg=g:Filter(function(c,tp)return c:IsHasEffect(EFFECT_EXTRA_RELEASE) and c:IsControler(1-tp)end,nil,tp)
 	local mg=g+exg
 	local sg=Group.CreateGroup()
-	return mg:Includes(mustg) and mg:IsExists(Auxiliary.RelCheckRecursive,1,nil,tp,sg,mg,exg,mustg,0,ct,specialchk,table.unpack({...}))
+	return mg:Includes(mustg) and mg:IsExists(Auxiliary.RelCheckRecursive,1,nil,tp,sg,mg,exg,mustg,0,minc,maxc,specialchk)
 end
-function Duel.SelectReleaseGroupCost(tp,f,minc,maxc,use_hand,specialchk,ex,...)
-	local params={...}
+function Duel.SelectReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 	if not ex then ex=Group.CreateGroup() end
-	if not specialchk then specialchk=Auxiliary.ReleaseCheckSingleUse else specialchk=Auxiliary.AND(specialchk,Auxiliary.ReleaseCheckSingleUse) end
-	local g=Duel.GetReleaseGroup(tp,use_hand)
-	if f then
-		g=g:Filter(f,ex,table.unpack(params))
-	else
-		g=g-ex
-	end
-	local exg=Duel.GetMatchingGroup(Auxiliary.ReleaseCostFilter,tp,0,LOCATION_MZONE,g+ex,f,table.unpack(params))
+	local g,exg=Duel.GetReleaseGroup(tp,use_hand):Filter(f and f or aux.TRUE,ex,...):Split(Auxiliary.ReleaseCostFilter,nil,tp)
+	local specialchk=Auxiliary.MakeSpecialCheck(check,tp,exg,...)
 	local mg=g+exg
 	local mustg=g:Filter(function(c,tp)return c:IsHasEffect(EFFECT_EXTRA_RELEASE) and c:IsControler(1-tp)end,nil,tp)
 	local sg=Group.CreateGroup()
 	local cancel=false
 	sg:Merge(mustg)
 	while #sg<maxc do
-		local cg=mg:Filter(Auxiliary.RelCheckRecursive,sg,tp,sg,mg,exg,mustg,#sg,minc,specialchk,table.unpack({...}))
+		local cg=mg:Filter(Auxiliary.RelCheckRecursive,sg,tp,sg,mg,exg,mustg,#sg,minc,maxc,specialchk)
 		if #cg==0 then break end
-		cancel=#sg>=minc and #sg<=maxc and Auxiliary.RelCheckGoal(tp,sg,exg,mustg,#sg,minc,specialchk,table.unpack({...}))
+		cancel=Auxiliary.RelCheckGoal(tp,sg,exg,mustg,#sg,minc,maxc,specialchk)
 		local tc=Group.SelectUnselect(cg,sg,tp,cancel,cancel,1,1)
 		if not tc then break end
 		if #mustg==0 or not mustg:IsContains(tc) then
@@ -210,11 +235,12 @@ function Duel.SelectReleaseGroupCost(tp,f,minc,maxc,use_hand,specialchk,ex,...)
 		end
 	end
 	if #sg==0 then return sg end
-	if #sg~=#(sg-exg) then
-		--LoD is reset for the rest of the turn
-		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-		Duel.Hint(HINT_CARD,0,fc:GetCode())
-		fc:RegisterFlagEffect(59160188,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+	if  #(sg&exg)>0 then
+		local eff=(sg&exg):GetFirst():IsHasEffect(EFFECT_EXTRA_RELEASE_NONSUM)
+		if eff then
+			eff:UseCountLimit(tp,1)
+			Duel.Hint(HINT_CARD,0,eff:GetHandler():GetCode())
+		end
 	end
 	return sg
 end
@@ -234,21 +260,37 @@ function Card.IsLinkSpell(c)
 	local tp=TYPE_LINK+TYPE_SPELL
 	return c:GetType() & tp == tp
 end
-function Card.IsOriginalCode(c,cd)
-	return c:GetOriginalCode()==cd
+function Card.IsOriginalCode(c,...)
+	local args={...}
+	if #args==0 then
+		Debug.Message("Card.IsOriginalCode requires at least 2 params")
+		return false
+	end
+	for _,cd in ipairs(args) do
+		if c:GetOriginalCode()==cd then return true end
+	end
+	return false
 end
-function Card.IsOriginalCodeRule(c,cd)
+function Card.IsOriginalCodeRule(c,...)
+	local args={...}
+	if #args==0 then
+		Debug.Message("Card.IsOriginalCodeRule requires at least 2 params")
+		return false
+	end
 	local c1,c2=c:GetOriginalCodeRule()
-	return c1==cd or c2==cd
+	for _,cd in ipairs(args) do
+		if c1==cd or c2==cd then return true end
+	end
+	return false
 end
 function Card.IsOriginalType(c,val)
-	return c:GetOriginalType() & val == val
+	return c:GetOriginalType() & val > 0
 end
 function Card.IsOriginalAttribute(c,val)
-	return c:GetOriginalAttribute() & val == val
+	return c:GetOriginalAttribute() & val > 0
 end
 function Card.IsOriginalRace(c,val)
-	return c:GetOriginalRace() & val == val
+	return c:GetOriginalRace() & val > 0
 end
 function Card.IsSummonPlayer(c,tp)
 	return c:GetSummonPlayer()==tp
@@ -364,4 +406,45 @@ if not c946 then
 	setmetatable(c946, Card)
 	rawset(c946,"__index",c946)
 	c946.initial_effect=function()end
+end
+
+if not Duel.SelectCardsFromCodes then
+	Duel.SelectCardsFromCodes=(function()
+		local tokenscache={}
+		tokenscache[0]={}
+		tokenscache[1]={}
+		return function(tp,minc,maxc,cancel,return_index,...)
+			if tp<0 or tp>1 then return end
+			local cards={...}
+			if #tokenscache[tp]<#cards then
+				for i=1,#cards-#tokenscache[tp] do
+					table.insert(tokenscache[tp],Duel.CreateToken(tp,946))
+				end
+			end
+			local offset=#tokenscache[tp]-#cards
+			for i,code in ipairs(cards) do
+				tokenscache[tp][i+offset]:Code(code)
+			end
+			local _g=Group.FromCards(table.unpack(tokenscache[tp],1+offset))
+			local indexes={}
+			if return_index then
+				local i=1
+				for tc in aux.Next(_g) do
+					indexes[tc]=i
+					i=i+1
+				end
+			end
+			local g=_g:Select(tp,minc,maxc,cancel)
+			if not g then return end
+			local res={}
+			for tc in aux.Next(g) do
+				if return_index then
+					table.insert(res,{ tc:Code(), indexes[tc] })
+				else
+					table.insert(res,tc:Code())
+				end
+			end
+			return table.unpack(res)
+		end
+	end)()
 end

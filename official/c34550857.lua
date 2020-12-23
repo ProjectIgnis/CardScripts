@@ -1,7 +1,9 @@
---LL－コバルト・スパロー
+--ＬＬ－コバルト・スパロー
+--Lyrilusc - Cobalt Sparrow
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Search
+	--If special summon, add 1 level 1 winged beast monster from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -12,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--effect gain
+	--Grant effect to a WIND Xyz monster using this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_BE_MATERIAL)
@@ -43,8 +45,9 @@ end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
+	--Cannot be targeted by opponent's card effects
 	local e1=Effect.CreateEffect(rc)
-	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetDescription(3061)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_SINGLE_RANGE)

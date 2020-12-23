@@ -1,5 +1,5 @@
 --悦楽の堕天使
---Darklord of Pleasure
+--Indulged Darklord
 --Scripted by ahtelel7
 local s,id=GetID()
 function s.initial_effect(c)
@@ -54,7 +54,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g2,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g2)
 	end
-
 end
 function s.actlimit(e,re,tp)
 	local rc=re:GetHandler()

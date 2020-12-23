@@ -1,5 +1,6 @@
 --ドラゴニック・プレッシャー
 --Dragonic Pressure
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy all monsters on the field, special summon 1 dragon from GY in defense position
@@ -37,6 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)
+			Duel.HintSelection(sg)
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		end
 	end

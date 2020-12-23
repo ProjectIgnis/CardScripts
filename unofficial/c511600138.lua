@@ -32,14 +32,14 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
 	local ct=math.floor((tc:GetAttack()-c:GetBaseAttack())/100)
-	tc:CreateEffectRelation(e) 
+	tc:CreateEffectRelation(e)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,ct)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
 	if tc:GetAttack()>c:GetBaseAttack() then
-		local ct=math.floor((tc:GetAttack()-c:GetBaseAttack())/100)  
+		local ct=math.floor((tc:GetAttack()-c:GetBaseAttack())/100)
 		if Duel.DiscardDeck(1-tp,ct,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsFaceup()
 			and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 			local e1=Effect.CreateEffect(c)

@@ -22,7 +22,8 @@ end
 function s.spfilter(c,class,e,tp)
 	local code=c:GetCode()
 	for i=1,#class.listed_names do
-		if code==class.listed_names[i] then	return c:IsCanBeSpecialSummoned(e,0,tp,true,true) end
+		if code==class.listed_names[i] then
+			return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,true) end
 	end
 	return false
 end
@@ -39,7 +40,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.SendtoGrave(g,REASON_COST)
-	local code=g:GetFirst():GetCode()
+	local code=g:GetFirst():GetOriginalCode()
 	Duel.SetTargetParam(code)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end

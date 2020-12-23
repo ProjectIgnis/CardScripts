@@ -28,25 +28,27 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
+	
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--cannot tribute summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EFFECT_CANNOT_SUMMON)
-	e1:SetTarget(s.sumlimit)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
-	e1:SetTargetRange(1,1)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCode(EFFECT_CANNOT_MSET)
-	c:RegisterEffect(e2)
+	if Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)~=0 then
+		--cannot tribute summon
+		local e1=Effect.CreateEffect(c)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetCode(EFFECT_CANNOT_SUMMON)
+		e1:SetTarget(s.sumlimit)
+		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+		e1:SetTargetRange(1,1)
+		c:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetDescription(aux.Stringid(id,1))
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_PLAYER_TARGET)
+		e2:SetCode(EFFECT_CANNOT_MSET)
+		c:RegisterEffect(e2)
+	end
 end
 function s.sumlimit(e,c,tp,sumtp)
 	return sumtp&SUMMON_TYPE_TRIBUTE==SUMMON_TYPE_TRIBUTE and c:IsLevelAbove(7)

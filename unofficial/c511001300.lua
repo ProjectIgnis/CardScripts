@@ -28,8 +28,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c,e,tp,r,rp)
-	return c:IsType(TYPE_SYNCHRO) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(1-tp) and (r&REASON_EFFECT)~=0 
-		and rp~=tp and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
+	return c:IsType(TYPE_SYNCHRO) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(1-tp) and (r&REASON_EFFECT)~=0
+		and rp==1-tp and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,e,tp,r,rp)
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP)
-		c:SetCardTarget(tc)		
+		c:SetCardTarget(tc)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

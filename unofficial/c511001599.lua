@@ -20,5 +20,5 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetValue(600)
-	e:GetHandler():RegisterEffect(e1)	
+	e:GetHandler():RegisterEffect(e1)
 end

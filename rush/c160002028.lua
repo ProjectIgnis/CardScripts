@@ -1,9 +1,10 @@
 --獣機界王カタパルト・デビルコング
 --Catapult Devilkong, King of the Beast Gear World
---scripted by Naim
+--Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy
+	--Destroy up to 2 of opponent's defense position monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -31,6 +32,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if ct>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local dg=Duel.SelectMatchingCard(tp,Card.IsDefensePos,tp,0,LOCATION_MZONE,ct,ct,nil)
+		Duel.HintSelection(dg)
 		if #dg>0 then
 			Duel.Destroy(dg,REASON_EFFECT)
 		end

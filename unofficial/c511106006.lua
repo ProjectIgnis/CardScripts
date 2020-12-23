@@ -62,7 +62,7 @@ end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 	if Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)~=0 then
 		e:GetHandler():CreateRelation(tc,RESET_EVENT+RESETS_STANDARD)
 		local e1=Effect.CreateEffect(e:GetHandler())

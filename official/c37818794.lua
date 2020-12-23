@@ -1,6 +1,6 @@
 --超魔導竜騎士－ドラグーン・オブ・レッドアイズ
---Dragun of Red-Eyes
---scripted by Naim
+--Red-Eyes Dark Dragoon
+--Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetCondition(s.regcon)
-	e0:SetOperation(s.regop) 
+	e0:SetOperation(s.regop)
 	c:RegisterEffect(e0)
 	--material count check
 	local e1=Effect.CreateEffect(c)
@@ -68,22 +68,16 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=e:GetLabel()
-	local label=id
-	while Duel.IsExistingMatchingCard(s.chkfilter,tp,LOCATION_MZONE,0,1,nil,label) do
-		label=label+1
-	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT+(RESETS_STANDARD&~RESET_TURN_SET))
 	e1:SetCountLimit(ct)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	c:RegisterFlagEffect(label,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_MZONE,nil)

@@ -32,11 +32,11 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.fil(c,tp)
-	return c:IsCanBeFusionMaterial(nil,MATERIAL_FUSION) and c:IsHasEffect(59160188)
+	return c:IsCanBeFusionMaterial(nil,MATERIAL_FUSION) and c:IsHasEffect(EFFECT_EXTRA_RELEASE_NONSUM)
 end
 function s.fcheck(mg)
 	return function(tp,sg,fc)
-		return #sg-#(sg-mg)<2
+		return #(sg&mg)<2
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -59,10 +59,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,mg+mg2,c,chkf)
 	local mat=Duel.SelectFusionMaterial(tp,g:GetFirst(),mg+mg2,c,chkf)
 	Fusion.CheckAdditional=nil
-	if #(mat-mg2)~=#mat then
-		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-		Duel.Hint(HINT_CARD,0,fc:GetCode())
-		fc:RegisterFlagEffect(59160188,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+	if #(mat&mg2)>0 then
+		local eff=(mat&mg2):GetFirst():IsHasEffect(EFFECT_EXTRA_RELEASE_NONSUM)
+		if eff then
+			eff:UseCountLimit(tp,1)
+			Duel.Hint(HINT_CARD,0,eff:GetHandler():GetCode())
+		end
 	end
 	Duel.Release(mat,REASON_COST)
 	e:SetLabel(g:GetFirst():GetCode())

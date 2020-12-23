@@ -1,3 +1,4 @@
+--魔力の布施
 --Magical Alms
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,6 +32,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Recover(p,d,REASON_EFFECT)
+	if Duel.GetCurrentPhase()>PHASE_STANDBY then
+		s.gop(e,tp,eg,ep,ev,re,r,rp)
+	end
 end
 function s.gop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

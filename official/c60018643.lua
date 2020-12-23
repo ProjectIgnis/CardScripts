@@ -58,9 +58,13 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.thcfilter,nil,e,tp)
 	if #tg>0 then
+		for tc in aux.Next(tg) do
+			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
+		end
 		local g=e:GetLabelObject():GetLabelObject()
 		if Duel.GetCurrentChain()==0 then g:Clear() end
 		g:Merge(tg)
+		g:Remove(function(c) return c:GetFlagEffect(id)==0 end,nil)
 		e:GetLabelObject():SetLabelObject(g)
 		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
 	end
@@ -105,7 +109,12 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsRace(RACE_CYBERSE) and c:IsLocation(LOCATION_EXTRA)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalRace(RACE_CYBERSE)
 end

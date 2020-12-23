@@ -63,9 +63,14 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	e2:SetTarget(s.splimit)
 	Duel.RegisterEffect(e2,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.splimit(e,c)
 	return not c:IsType(TYPE_SYNCHRO) and c:IsLocation(LOCATION_EXTRA)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalType(TYPE_SYNCHRO)
 end
 function s.spfilter(c,e,tp,lv)
 	return c:IsRace(RACE_FIEND) and c:HasLevel() and c:IsLevelBelow(lv-1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

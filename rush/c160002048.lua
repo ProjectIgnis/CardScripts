@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsControler(1-tp) --and Duel.GetTurnPlayer()==1-tp
+	return Duel.GetAttacker():IsControler(1-tp)
 end
 function s.ctfilter(c,race)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(race)
@@ -32,11 +32,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not tc or not tc:IsRelateToBattle() then return end
 	local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,0,LOCATION_GRAVE,nil,tc:GetRace())
 	if ct>0 and tc:IsFaceup() then
+		
+		
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(-ct*100)
-		tc:RegisterEffect(e1)
+		tc:RegisterEffectRush(e1)
+		
 	end
 end

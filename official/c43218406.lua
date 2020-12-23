@@ -1,5 +1,5 @@
 --機巧辰－高闇御津羽靇
---Gizmek Kuramitsuha, the Draconic Deluge Divinity
+--Gizmek Okami, the Dreaded Deluge Dragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

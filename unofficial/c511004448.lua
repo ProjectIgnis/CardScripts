@@ -39,5 +39,5 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 		e1:SetValue(0)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
-	end  
+	end
 end

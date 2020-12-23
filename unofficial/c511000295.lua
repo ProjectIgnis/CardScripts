@@ -12,41 +12,26 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	aux.GlobalCheck(s,function()
-		s[0]=false
-		s[1]=false
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 		ge1:SetCode(EVENT_DESTROYED)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetOperation(s.clear)
-		Duel.RegisterEffect(ge2,0)
 	end)
 end
 s.listed_series={0x48}
 s.listed_names={CARD_NUMERON_NETWORK}
 function s.cfilter(c)
-	return c:GetPreviousCodeOnField()==79747096
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==79747096
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil)
-	local tc=g:GetFirst()
-	while tc do
-		s[tc:GetPreviousControler()]=true
-		tc=g:GetNext()
+	for tc in aux.Next(g) do
+		Duel.RegisterFlagEffect(tc:GetPreviousControler(),id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
-function s.clear(e,tp,eg,ep,ev,re,r,rp)
-	s[0]=false
-	s[1]=false
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return s[tp]
+	return Duel.GetFlagEffect(tp,id)>0
 end
 function s.filterchk1(c,mg,matg,tp)
 	local g=mg:Clone()
@@ -87,15 +72,15 @@ function s.filterchk2(c,mg,matg,ct,tp)
 	e1:SetReset(RESET_CHAIN)
 	c:RegisterEffect(e1)
 	if ctc==4 then
-		res=Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,tg)
+		res=Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,tg,tp)
 	else
 		res=g:IsExists(s.filterchk2,1,nil,g,tg,ctc,tp)
 	end
 	e1:Reset()
 	return res
 end
-function s.xyzfilter(c,mg)
-	return c:IsXyzSummonable(nil,mg,5,5)
+function s.xyzfilter(c,mg,tp)
+	return c:IsXyzSummonable(nil,mg,5,5) and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0
 end
 function s.matfilter(c)
 	return c:IsSetCard(0x48) and c:IsType(TYPE_MONSTER)
@@ -103,7 +88,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg1=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,CARD_NUMERON_NETWORK)
 	local mg2=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and mg1:IsExists(s.filterchk1,1,nil,mg2,Group.CreateGroup(),tp) end
+	if chk==0 then return mg1:IsExists(s.filterchk1,1,nil,mg2,Group.CreateGroup(),tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -146,7 +131,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		mg2:RemoveCard(tc2)
 		table.insert(reset,e2)
 	end
-	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,matg)
+	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,matg,tp)
 	if #xyzg>0 then
 		Duel.HintSelection(matg)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

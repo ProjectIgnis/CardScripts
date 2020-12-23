@@ -1,8 +1,8 @@
 --借カラクリ旅籠蔵
---Karakuri Cash Lodge
+--Karakuri Cash Inn
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Change position and negate effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_POSITION+CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--position
+	--Target 1 monster to change position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_POSITION)
@@ -40,7 +40,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g1=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g1,1,0,0)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local g2=Duel.SelectTarget(tp,s.disfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g2,1,0,0)
 end
@@ -49,8 +49,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=tg1:GetFirst()
 	local ex2,tg2=Duel.GetOperationInfo(0,CATEGORY_DISABLE)
 	local tc2=tg2:GetFirst()
-	if tc1 and tc1:IsRelateToEffect(e) and tc1:IsFaceup() 
-		and Duel.ChangePosition(tc1,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0 
+	if tc1 and tc1:IsRelateToEffect(e) and tc1:IsFaceup()
+		and Duel.ChangePosition(tc1,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0
 		and tc2 and tc2:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

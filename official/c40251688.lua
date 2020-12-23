@@ -1,11 +1,13 @@
 --焔聖騎士導-ローラン
---Infernoble Knight Vanguard - Roland
+--Infernoble Knight Captain Roland
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Synchro summon
+	--Synchro summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Add to hand
+	--Add 1 warrior monster from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -16,15 +18,16 @@ function s.initial_effect(c)
 	e1:SetCondition(s.regcon)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
-	--Equip itself from grave (Quick)
+	--Equip itself from GY to 1 warrior monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_EQUIP)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id+1)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetCondition(s.eqcon)
 	e2:SetTarget(s.equiptg)
 	e2:SetOperation(s.equipop)
@@ -38,15 +41,10 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.tgcon)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-end
-function s.filter(c,tp)
-	return c:IsType(TYPE_EQUIP) and c:IsAbleToGrave()
-		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,c)
 end
 function s.tgfilter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsAbleToGrave()
@@ -54,21 +52,18 @@ end
 function s.thfilter(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
 end
-function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp)
-end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0
-		and g:GetFirst():IsLocation(LOCATION_GRAVE) then
+	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 then
+		local og=Duel.GetOperatedGroup()
 		local sg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
-		if #sg>0 then
+		if og:GetFirst():IsLocation(LOCATION_GRAVE) and #sg>0 then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local tg=sg:Select(tp,1,1,nil)

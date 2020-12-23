@@ -1,9 +1,10 @@
---
+--海造賊－金髪の訓練生
 --Goldenhair, the Newest Plunder Patroll
---scripted by pyrQ
+--Scripted by pyrQ
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon from hand
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
-	--Special Summon from GY
+	--Special summon itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -27,6 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x13f}
+
 function s.spcfilter(c,tp)
 	return c:IsSetCard(0x13f) and c:IsOriginalType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and Duel.GetMZoneCount(tp,c)>0
@@ -72,4 +74,3 @@ end
 function s.splimit(e,c)
 	return not c:IsSetCard(0x13f)
 end
-

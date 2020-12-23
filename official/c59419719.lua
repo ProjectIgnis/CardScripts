@@ -1,15 +1,17 @@
 --化石融合－フォッシル・フュージョン
 --Fossil Fusion
 --Scripted by Eerie Code and edo9300
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Fusion summon 1 "Fossil" fusion monster
+	--By banishing appropriate monsters from either GY as material
 	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x14c),matfilter=aux.FALSE,extrafil=s.fextra,
-											stage2=s.stage2,value=0x20,extraop=Fusion.BanishMaterial})
+											stage2=s.stage2,extraop=Fusion.BanishMaterial})
 	c:RegisterEffect(e1)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
-	--Add to hand
+	--Add this card from GY to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -24,6 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x14c}
+
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
@@ -37,7 +40,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		local mats=sg:Filter(Card.IsPreviousLocation,nil,LOCATION_GRAVE)
 		if mats:IsExists(Card.IsPreviousControler,1,nil,tp) and mats:IsExists(Card.IsPreviousControler,1,nil,1-tp) then
 			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetDescription(aux.Stringid(id,0))
+			e1:SetDescription(3003)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)

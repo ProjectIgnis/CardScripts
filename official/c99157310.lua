@@ -1,9 +1,10 @@
 --ティンダングル・ドロネー
 --Tindangle Delaunay
---
+--Script by nekrozar
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Destroy attacking monster, special summon 1 "Tindangle Acute Cerberus" from extra deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon 3 "Tindangle" monsters with different names from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -29,6 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10b}
 s.listed_names={75119040}
+
 function s.cfilter1(c)
 	return c:IsSetCard(0x10b) and c:IsType(TYPE_MONSTER)
 end
@@ -41,7 +43,8 @@ function s.filter(c,e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetAttacker()
-	if chk==0 then return tg:IsOnField()
+	local g=Duel.GetMatchingGroup(s.cfilter1,tp,LOCATION_GRAVE,0,nil,e,tp)
+	if chk==0 then return tg:IsOnField() and g:GetClassCount(Card.GetCode)>2
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)

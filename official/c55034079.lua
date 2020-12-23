@@ -1,18 +1,20 @@
 --リンク・デス・ターレット
 --Link Turret
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x48)
-	--activate
+	--When activated, place 4 counters on itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--counter
+	--Each time you take battle damage, place 1 counter on itself
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_COUNTER)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -21,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.ctcon)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special summon 1 "Rokket" monster from GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
@@ -36,6 +38,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_series={0x102}
+
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 	local c=e:GetHandler()
@@ -111,12 +114,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		tc:RegisterEffect(e2,true)
 		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(3300)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e3:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e3:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e3,true)
 	end
 end
-

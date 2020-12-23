@@ -26,12 +26,12 @@ function s.tgcon(e,c)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local ct=math.floor((Duel.GetAttackTarget():GetAttack()-e:GetHandler():GetBaseAttack())/100)	
+	local ct=math.floor((Duel.GetAttackTarget():GetAttack()-e:GetHandler():GetBaseAttack())/100)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,ct)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetAttackTarget():GetAttack()>e:GetHandler():GetBaseAttack() then
-		local ct=math.floor((Duel.GetAttackTarget():GetAttack()-e:GetHandler():GetBaseAttack())/100)	
+		local ct=math.floor((Duel.GetAttackTarget():GetAttack()-e:GetHandler():GetBaseAttack())/100)
 		Duel.DiscardDeck(1-tp,ct,REASON_EFFECT)
 	end
 end

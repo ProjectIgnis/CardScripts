@@ -1,9 +1,10 @@
 --ハイレート・ドロー
 --High Rate Draw
---scripted by Naim
+--Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy and draw
+	--Destroy 2+ of your monsters, and if you do, for every 2 destroyed, draw 1
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
@@ -11,8 +12,9 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--destroy and set itself
+	--Set itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -62,10 +64,12 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		if c:IsRelateToEffect(e) and c:IsSSetable() then
 			Duel.SSet(tp,c)
+			--Banish it if it leaves the field
 			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3300)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 			e1:SetValue(LOCATION_REMOVED)
 			c:RegisterEffect(e1)

@@ -17,8 +17,9 @@ function s.initial_effect(c)
 	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	-- e2:SetCode(EVENT_PHASE_START+PHASE_MAIN2)
+	e2:SetCode(EVENT_CUSTOM+id)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.spcon)
@@ -82,12 +83,27 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(HALF_DAMAGE)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+	--start of main2 event trigger
+	local m2=Effect.CreateEffect(c)
+	m2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	m2:SetCode(EVENT_ADJUST)
+	m2:SetRange(LOCATION_GRAVE)
+	m2:SetCondition(s.adjcon)
+	m2:SetOperation(s.adjop)
+	m2:SetCountLimit(1)
+	m2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	c:RegisterEffect(m2)
+end
+function s.adjcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()==PHASE_MAIN2 and not Duel.CheckPhaseActivity()
+end
+function s.adjop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,nil,0,0,0,0)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN2 and not Duel.CheckPhaseActivity()
-		and Duel.GetFlagEffect(tp,id)>0
+	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.spfilter(c,e,tp,rate)
 	return c:IsSetCard(0x580) and c:IsLinkMonster() and c:GetLink()<=rate and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -33,7 +33,7 @@ function s.spcon(e,c)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local rg=Duel.GetMatchingGroup(Card.IsDiscardable,tp,LOCATION_HAND,0,e:GetHandler())
+	local rg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,e:GetHandler())
 	local g=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_DISCARD,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()

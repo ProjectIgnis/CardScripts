@@ -1,8 +1,10 @@
 --死魂融合
 --Necro Fusion
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Fusion summon 1 fusion monster
+	--Banish monsters from GY, face-down, as material
 	local e1=Fusion.CreateSummonEff(c,nil,s.matfilter,s.fextra,s.extraop,nil,s.stage2)
 	c:RegisterEffect(e1)
 	if not GhostBelleTable then GhostBelleTable={} end
@@ -23,7 +25,10 @@ function s.extraop(e,tc,tp,sg)
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then
+		--Cannot attack this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3206)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

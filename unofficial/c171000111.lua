@@ -1,4 +1,5 @@
 --セブンストア
+--Seven Store
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,7 +16,7 @@ end
 function s.cfilter(c,tp)
 	local ct=c:GetOverlayCount()
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsAbleToGraveAsCost() 
-		and Duel.IsPlayerCanDraw(tp,ct+1)
+		and Duel.IsPlayerCanDraw(tp,ct)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

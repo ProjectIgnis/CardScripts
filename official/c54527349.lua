@@ -1,5 +1,5 @@
 --叛逆の堕天使
---Rebellious Darklord
+--Darklord Uprising
 --Scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
@@ -74,4 +74,3 @@ function s.stage2(e,tc,tp,sg,chk)
 		e:SetLabelObject(nil)
 	end
 end
-

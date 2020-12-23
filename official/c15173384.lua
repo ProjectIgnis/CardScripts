@@ -1,5 +1,5 @@
 --幻想魔術師・ノー・フェイス
---Magical Illusionist Faceless Mage
+--Illusionist Faceless Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -26,11 +26,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x110}
+s.listed_series={0x1110}
 s.listed_names={64631466}
 function s.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
-		and ((c:IsPreviousSetCard(0x110) and c:GetPreviousTypeOnField()&TYPE_FUSION~=0)
+		and ((c:IsPreviousSetCard(0x1110) and c:GetPreviousTypeOnField()&TYPE_FUSION~=0)
 			or c:GetPreviousCodeOnField()==64631466)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
@@ -52,7 +52,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c,e,tp)
-	return ((c:IsSetCard(0x110) and c:IsType(TYPE_FUSION)) or c:IsCode(64631466))
+	return ((c:IsSetCard(0x1110) and c:IsType(TYPE_FUSION)) or c:IsCode(64631466))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -1,7 +1,9 @@
---Re－BUSTER
+--Ｒｅ－ＢＵＳＴＥＲ
+--Assault Revival
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Destroy all your monsters, special summon 1 "/Assault Mode" monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -10,10 +12,12 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x104f}
 s.listed_names={CARD_ASSAULT_MODE}
+
 function s.cfilter(c)
 	return c:IsCode(CARD_ASSAULT_MODE) and c:IsAbleToRemoveAsCost()
 end
@@ -45,6 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.BreakEffect()
 		if Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)==0 then return end
+		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -55,7 +60,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
+		--Cannot be tributed
 		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(3303)
+		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_UNRELEASABLE_SUM)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
@@ -67,10 +75,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e4:SetValue(1)
 		tc:RegisterEffect(e4,true)
+		--Banish it if it leaves the field
 		local e5=Effect.CreateEffect(c)
+		e5:SetDescription(3300)
 		e5:SetType(EFFECT_TYPE_SINGLE)
 		e5:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e5:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e5:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e5,true)

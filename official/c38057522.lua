@@ -1,6 +1,7 @@
 --大霊術－「一輪」
 --Grand Spiritual Art - Ichirin
 --Scripted by ahtelel
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Negate
+	--Negate 1 of opponent's activated monster effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAIN_SOLVING)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.negcon)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
-	--Search
+	--Add 1 monster with 1500 ATK and 200 DEF from deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_TODECK)
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -36,6 +37,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
+	Duel.Hint(HINT_CARD,0,id)
 	Duel.NegateEffect(ev)
 end
 function s.thfilter(c,e,tp)
@@ -52,13 +54,15 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g1=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	Duel.ConfirmCards(1-tp,g1)
-	e:SetLabel(g1:GetFirst():GetAttribute())
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g2=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
-	if #g1>0 and #g2>0 then
-		Duel.SendtoHand(g2,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g2)
-		Duel.SendtoDeck(g1,tp,2,REASON_EFFECT)
+	if #g1>0 then
+		Duel.ConfirmCards(1-tp,g1)
+		e:SetLabel(g1:GetFirst():GetAttribute())
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g2=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
+		if #g1>0 and #g2>0 then
+			Duel.SendtoHand(g2,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,g2)
+			Duel.SendtoDeck(g1,tp,2,REASON_EFFECT)
+		end
 	end
 end

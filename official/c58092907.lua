@@ -1,10 +1,11 @@
---EM天空の魔術師
+--ＥＭ天空の魔術師
 --Performapal Celestial Magician
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--Special Summon
+	--Special summon back your destroyed monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -25,8 +26,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.con)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 		ge2:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge2:SetLabel(id)
 		Duel.RegisterEffect(ge2,0)
-	end
+	end)
 end
 function s.spcfilter(c,e,tp)
 	return c:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and c:GetSummonLocation()==LOCATION_EXTRA and c:GetPreviousControler()==tp
@@ -69,6 +69,8 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if g:IsExists(Card.IsType,1,nil,TYPE_FUSION) then
 		--This card can attack directly
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3205)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		e1:SetValue(1)

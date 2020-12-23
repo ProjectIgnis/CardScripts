@@ -27,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(atk)
-		tc:RegisterEffect(e1)		
+		tc:RegisterEffect(e1)
 		tc=g:GetNext()
 	end
 end

@@ -1,6 +1,7 @@
 --憑依覚醒
 --Awakening of the Posssessed
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Increase ATK
+	--Your monsters gain 300 ATK per different attribute you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--Prevent destruction
+	--Your "Charmer" and "Familiar-Possessed" monsters cannot be destroyed by card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.indtg)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	--Draw
+	--Draw 1 card
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_DRAW)
@@ -42,6 +43,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0xbf,0x10c0}
+
 function s.atkval(e,c)
 	local tp=e:GetHandlerPlayer()
 	local att=0
@@ -60,7 +62,7 @@ function s.indtg(e,c)
 	return c:IsFaceup() and (c:IsSetCard(0xbf) or c:IsSetCard(0x10c0))
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:GetBaseAttack()==1850
+	return c:IsFaceup() and c:IsControler(tp) and c:GetBaseAttack()==1850 and c:IsRace(RACE_SPELLCASTER)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

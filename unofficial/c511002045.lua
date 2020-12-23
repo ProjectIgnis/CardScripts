@@ -1,5 +1,5 @@
---ＲＲ－ペイン・レイニアス
---Raidraptor - Pain Lanius
+--ＲＲ－ペイン・レイニアス (Anime)
+--Raidraptor - Pain Lanius (Anime)
 local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0xba}
-function s.filter(c)
+function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xba) and c:HasLevel()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

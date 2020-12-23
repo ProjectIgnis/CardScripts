@@ -12,6 +12,8 @@ External contributions: please speak with a member of staff in `#card-scripting-
 
 ## New additions to the unofficial script project
 - A pull request should contain only one card, except in the case of very closely coupled cards
+- The card script is named correctly and in the right folder, `unofficial/`
+- The corresponding database entry is submitted to [BabelCDB](https://github.com/ProjectIgnis/BabelCDB/blob/master/README.md) according to its guidelines
 - The title should be of the form `Add "Card name"`
 - The description should contain a link to Yugipedia to confirm the script behaviour matches the card text
 - The supervising staff members should be requested for review or tagged in the pull request

@@ -23,18 +23,17 @@ function s.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetOperation(s.bpop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 		e1:SetOperation(s.chk)
 		Duel.RegisterEffect(e1,0)
-	end
+	end)
 end
 s.listed_series={0x135}
 function s.chk(e,tp,eg,ep,ev,re,r,rp)
-	if  Duel.IsBattlePhase() and Duel.GetFlagEffect(0,id)==0 then
+	if Duel.IsBattlePhase() and Duel.GetFlagEffect(0,id)==0 then
 		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_BATTLE,0,1)
 		if Duel.GetAttacker():IsType(TYPE_LINK) and Duel.GetAttackTarget() and Duel.GetAttackTarget():IsType(TYPE_LINK) then
 			Duel.RegisterFlagEffect(0,id+1,RESET_PHASE+PHASE_BATTLE,0,1)
@@ -87,10 +86,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetOperation(s.retop)
 			Duel.RegisterEffect(e1,tp)
 			if og:GetClassCount(Card.GetPreviousLocation)==2 and exc:IsRelateToEffect(e) then
-				local zone=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
-				if zone>0 then
-					Duel.MoveSequence(exc,math.log(2,zone))
-				end
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+				Duel.MoveSequence(exc,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0,false),2))
 			end
 		end
 	end

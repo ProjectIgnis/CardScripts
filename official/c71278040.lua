@@ -59,7 +59,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local zones=s.getLinkedZones(eg,tp)
-	if c:IsRelateToEffect(e) and zones~=0 then
+	if c:IsRelateToEffect(e) and zones~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zones) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zones)
 	end
 end

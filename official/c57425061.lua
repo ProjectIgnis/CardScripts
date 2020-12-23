@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x8),nil,s.fextra)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x8),nil,s.fextra,s.extraop)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
@@ -26,4 +26,11 @@ function s.fextra(e,tp,mg)
 		return sg,s.fcheck
 	end
 	return nil
+end
+function s.extraop(e,tc,tp,sg)
+    local rg=sg:Filter(Card.IsLocation,nil,LOCATION_SZONE)
+    if #rg>0 then
+        Duel.Remove(rg,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+        sg:Sub(rg)
+    end
 end

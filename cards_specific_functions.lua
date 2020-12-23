@@ -235,15 +235,16 @@ end
 
 --Help functions for the Salamangreats' effects
 function Card.IsReincarnationSummoned(c)
-	return c:GetFlagEffect(CARD_SALAMANGREAT_SANCTUARY)~=0
-end
-function Auxiliary.EnableCheckReincarnation(c)
-	local m=_G["c"..CARD_SALAMANGREAT_SANCTUARY]
-	if not m then
-		m=_G["c"..c:GetCode()]
+	local label=0
+	for _,lab in ipairs({c:GetFlagEffectLabel(CARD_SALAMANGREAT_SANCTUARY)}) do
+		label = label|lab
 	end
-	if m and not m.global_check then
-		m.global_check=true
+	return (label&(c:GetSummonPlayer()+1))~=0
+end
+local ReincarnationChecked=false
+function Auxiliary.EnableCheckReincarnation(c)
+	if not ReincarnationChecked then
+		ReincarnationChecked=true
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_MATERIAL_CHECK)
@@ -265,23 +266,32 @@ end
 function Auxiliary.ReincarnationCheckValue(e,c)
 	local g=c:GetMaterial()
 	local id=c:GetCode()
-	local tp=c:GetSummonPlayer()
+	local tp=c:GetControler()
 	local rc=false
+	local label=3
 	if c:IsLinkMonster() then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_LINK,tp,id)
 	elseif c:IsType(TYPE_FUSION) then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_FUSION,tp,id)
 	elseif c:IsType(TYPE_RITUAL) then
-		rc=g:IsExists(aux.ReincarnationRitualFilter,1,nil,c,id,tp)
+		label=0
+		if g:IsExists(aux.ReincarnationRitualFilter,1,nil,c,id,0) then
+			label=1
+		end
+		if g:IsExists(aux.ReincarnationRitualFilter,1,nil,c,id,1) then
+			label=label+2
+		end
+		rc=label~=0
 	elseif c:IsType(TYPE_SYNCHRO) then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_SYNCHRO,tp,id)
 	elseif c:IsType(TYPE_XYZ) then
 		rc=g:IsExists(Card.IsSummonCode,1,nil,c,SUMMON_TYPE_XYZ,tp,id)
 	end
 	if rc then
-		c:RegisterFlagEffect(CARD_SALAMANGREAT_SANCTUARY,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
+		c:RegisterFlagEffect(CARD_SALAMANGREAT_SANCTUARY,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1,label)
 	end
 end
+
 --Filter for unique on field Malefic monsters
 function Auxiliary.MaleficUniqueFilter(cc)
 	local mt=cc:GetMetatable()
@@ -343,6 +353,7 @@ function Auxiliary.MaleficSummonOperation(cd,loc)
 				g:DeleteGroup()
 			end
 end
+
 --Discard cost for Witchcrafter monsters, supports the replacements from the Continuous Spells
 function Auxiliary.WitchcrafterDiscardFilter(c,tp)
 	return c:IsHasEffect(EFFECT_WITCHCRAFTER_REPLACE,tp) and c:IsAbleToGraveAsCost()
@@ -374,14 +385,18 @@ function Auxiliary.WitchcrafterDiscardCost(f,minc,maxc)
 				end
 			end
 end
---Special Summon limit for the Evil HEROes
+
+--Special Summon limit for "Evil HERO" Fusion monsters
 function Auxiliary.EvilHeroLimit(e,se,sp,st)
-	local chk=SUMMON_TYPE_FUSION+0x10
-	if Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE) then
-		chk=SUMMON_TYPE_FUSION
-	end
-	return st&chk==chk
+	return se:GetHandler():IsCode(CARD_DARK_FUSION)
+		or (Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE) and st&SUMMON_TYPE_FUSION==SUMMON_TYPE_FUSION)
 end
+--Special Summon limit for "Fossil" Fusion monsters
+function Auxiliary.FossilLimit(e,se,sp,st)
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or se:GetHandler():IsCode(CARD_FOSSIL_FUSION)
+end
+
+--Kaiju and Lava Golem-like summon procedures
 function Auxiliary.AddLavaProcedure(c,required,position,filter,value,description)
 	if not required or required < 1 then
 		required = 1
@@ -477,25 +492,335 @@ function Auxiliary.CheckStealEquip(c,e,tp)
 	end
 	return true
 end
---[[
---handle tribute costs for "Prank-Kids" Xyz monsters that can be replaced by the effect of "Prank-Kids Mew"
-function Auxiliary.PrankKidsMewFilter(c)
-	return c:IsHasEffect(CARD_PRANKKIDS_MEW) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
-end
-function Auxiliary.PrankKidsMewCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.IsTurnPlayer(tp) and Duel.GetFlagEffect(tp,CARD_PRANKKIDS_MEW)==0
-		and Duel.IsExistingMatchingCard(Auxiliary.PrankKidsMewFilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
-	local g=Duel.SelectMatchingCard(tp,Auxiliary.PrankKidsMewFilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	Duel.RegisterFlagEffect(tp,CARD_PRANKKIDS_MEW,RESET_PHASE+PHASE_END,0,0)
-end
-function Auxiliary.PrankKidsTributeCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local mew=Auxiliary.PrankKidsMewCost(e,tp,eg,ep,ev,re,r,rp,0)
-	if chk==0 then return mew or e:GetHandler():IsReleasable() end
-	if mew and Duel.SelectYesNo(tp,aux.Stringid(CARD_PRANKKIDS_MEW,0)) then
-		Auxiliary.PrankKidsMewCost(e,tp,eg,ep,ev,re,r,rp,1)
-		return
+function Auxiliary.CheckSummonGate(tp,count)
+	local tot=nil
+	for _,eff in ipairs ({Duel.GetPlayerEffect(tp,CARD_SUMMON_GATE)}) do
+		local val=eff:GetValue()
+		if val then
+			if type(val)=="function" then
+				val=val(tp)
+			end
+			tot=tot and math.min(tot,val) or val
+		end
 	end
-	Duel.Release(e:GetHandler(),REASON_COST)
+	if count then
+		return not tot or tot>=count
+	end
+	return tot
 end
---]]
+
+--function related to Clock Lizard
+function Auxiliary.addLizardCheck(c)
+	--lizard check
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(CARD_CLOCK_LIZARD)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetValue(1)
+	c:RegisterEffect(e1)
+	return e1
+end
+--lizard check with a reset
+function Auxiliary.createTempLizardCheck(c,filter,reset,tRange,tRange2,resetcount)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(CARD_CLOCK_LIZARD)
+	e1:SetTargetRange(tRange or 0xff,tRange2 or 0)
+	e1:SetReset(reset or (RESET_PHASE|PHASE_END),resetcount)
+	e1:SetTarget(filter or aux.TRUE)
+	e1:SetValue(1)
+	return e1
+end
+function Auxiliary.addTempLizardCheck(c,tp,filter,reset,tRange,tRange2,resetcount)
+	local e1=aux.createTempLizardCheck(c,filter,reset,tRange,tRange2,resetcount)
+	Duel.RegisterEffect(e1,tp)
+	return e1
+end
+--lizard check for cards like Yang Zing Creation
+function Auxiliary.createContinuousLizardCheck(c,location,filter,tRange,tRange2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(CARD_CLOCK_LIZARD)
+	e1:SetTargetRange(tRange or 0xff,tRange2 or 0)
+	e1:SetRange(location)
+	e1:SetTarget(filter or aux.TRUE)
+	e1:SetValue(1)
+	return e1
+end
+function Auxiliary.addContinuousLizardCheck(c,location,filter,tRange,tRange2)
+	local e1=aux.createContinuousLizardCheck(c,location,filter,tRange,tRange2)
+	c:RegisterEffect(e1)
+	return e1
+end
+
+--Discard and/or send to GY cost for Ice Barrier Monsters, support for Mirror Master of the Ice Barrier
+function Auxiliary.IceBarrierDiscardFilter(c,tp)
+	return c:IsHasEffect(EFFECT_ICEBARRIER_REPLACE,tp) and c:IsAbleToRemoveAsCost()
+end
+function Auxiliary.IceBarrierDiscardGroup(minc)
+	return function(sg,e,tp,mg)
+		return sg:FilterCount(Auxiliary.IceBarrierDiscardFilter,nil,tp)<=1 and #sg>=minc
+	end
+end
+function Auxiliary.IceBarrierDiscardCost(f,discard,minc,maxc)
+	if discard then
+		if f then aux.AND(f,Card.IsDiscardable) else f=Card.IsDiscardable end
+	else
+		if f then aux.AND(f,Card.IsAbleToGraveAsCost) else f=Card.IsAbleToGraveAsCost end
+	end
+	if not minc then minc=1 end
+	if not maxc then maxc=1 end
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return Duel.IsExistingMatchingCard(f,tp,LOCATION_HAND,0,minc,nil) or Duel.IsExistingMatchingCard(Auxiliary.IceBarrierDiscardFilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
+		local g=Duel.GetMatchingGroup(f,tp,LOCATION_HAND,0,nil)
+		g:Merge(Duel.GetMatchingGroup(Auxiliary.IceBarrierDiscardFilter,tp,LOCATION_GRAVE,0,nil,tp))
+		local sg=Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,Auxiliary.IceBarrierDiscardGroup(minc),1,tp,Auxiliary.Stringid(CARD_MIRRORMASTER_ICEBARRIER,1))
+		local rm=0
+		if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_ICEBARRIER_REPLACE,tp) then
+			local te=sg:Filter(Card.IsHasEffect,nil,EFFECT_ICEBARRIER_REPLACE)
+			te:GetFirst():GetCardEffect(EFFECT_ICEBARRIER_REPLACE):UseCountLimit(tp)
+			rm=Duel.Remove(te,POS_FACEUP,REASON_COST)
+			sg:Sub(te)
+		end
+		if #sg>0 then
+			if discard then
+				return Duel.SendtoGrave(sg,REASON_COST+REASON_DISCARD) + rm
+			else
+				return Duel.SendtoGrave(sg,REASON_COST) + rm
+			end
+		else
+			return rm
+		end
+	end
+end
+
+--Shortcut for "Security Force" archetype's "facing"
+--(card in the same column as a security force)
+function Auxiliary.SecurityTarget(e,_c)
+    return _c:GetColumnGroup():IsExists(function(c,tp)
+											return c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x15a)
+										 end,1,_c,e:GetHandlerPlayer())
+end
+
+-- Description: Checks for whether the equip card still has the equip effect once it reaches SZONE
+-- This is used to correct the interaction between Phantom of Chaos (or alike) and any monsters that equip themselves to another
+function Auxiliary.ZWEquipLimit(tc,te)
+    return function(e,c)
+        if c~=tc then return false end
+        local effs={e:GetHandler():GetCardEffect(101104104+EFFECT_EQUIP_LIMIT)}
+        for _,eff in ipairs(effs) do
+            if eff==te then return true end
+        end
+        return false
+    end
+end
+-- Description: Operation of equipping a card to another by its own effect and registering equip limit, used with aux.AddZWEquipLimit
+-- c - equip card
+-- e - usually linkedeffect
+-- tp - trigger player
+-- tc - equip target
+-- code - used if a flag effect needs to be registered
+-- previousPos - boolean, determine whether the equip card will use its Position from the previous location, default to true
+function Auxiliary.EquipAndLimitRegister(c,e,tp,tc,code,previousPos)
+    if not Duel.Equip(tp,c,tc,previousPos==nil and true or previousPos) then return false end
+    --Add Equip limit
+    if code then
+        tc:RegisterFlagEffect(code,RESET_EVENT+RESETS_STANDARD,0,0)
+    end
+    local e1=Effect.CreateEffect(c)
+    e1:SetType(EFFECT_TYPE_SINGLE)
+    e1:SetCode(EFFECT_EQUIP_LIMIT)
+    e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+    e1:SetValue(Auxiliary.ZWEquipLimit(tc,e:GetLabelObject()))
+    c:RegisterEffect(e1)
+    return true
+end
+-- Description: Equip Limit Proc for cards that equip themselves to another card
+-- con - condition for when the card can equip to another
+-- equipval - filter for the equip target
+-- equipop - what happens when the card is equipped to the target
+-- (tc is equip target, c is equip card)
+-- linkedeffect - usually the effect of Card c that equips, this ensures Phantom of Chaos handling
+-- prop - extra effect properties
+-- resetflag/resetcount - resets
+function Auxiliary.AddZWEquipLimit(c,con,equipval,equipop,linkedeff,prop,resetflag,resetcount)
+    local finalprop=EFFECT_FLAG_CANNOT_DISABLE
+    if prop~=nil then
+        finalprop=finalprop|prop
+    end
+    local e1=Effect.CreateEffect(c)
+    if con then
+        e1:SetCondition(con)
+    end
+    e1:SetType(EFFECT_TYPE_SINGLE)
+    e1:SetProperty(finalprop,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
+    e1:SetCode(101104104)
+    e1:SetLabelObject(linkedeff)
+    if resetflag and resetcount then
+        e1:SetReset(resetflag,resetcount)
+    elseif resetflag then
+        e1:SetReset(resetflag)
+    end
+    e1:SetValue(function(tc,c,tp) return equipval(tc,c,tp) end)
+    e1:SetOperation(function(c,e,tp,tc) equipop(c,e,tp,tc) end)
+    c:RegisterEffect(e1)
+    local e2=Effect.CreateEffect(c)
+    e2:SetType(EFFECT_TYPE_SINGLE)
+    e2:SetProperty(finalprop&~EFFECT_FLAG_CANNOT_DISABLE,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
+    e2:SetCode(101104104+EFFECT_EQUIP_LIMIT)
+    if resetflag and resetcount then
+        e2:SetReset(resetflag,resetcount)
+    elseif resetflag then
+        e2:SetReset(resetflag)
+    end
+    c:RegisterEffect(e2)
+    linkedeff:SetLabelObject(e2)
+end
+
+-- Amazement and Ɐttraction helper functions
+AA = {}
+function AA.eqtgfilter(c,tp)
+	return c:IsFaceup() and (c:IsSetCard(0x25d) or (not c:IsControler(tp)))
+end
+function AA.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and AA.eqtgfilter(chkc,tp) end
+	if chk==0 then
+		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and
+		       Duel.IsExistingTarget(AA.eqtgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp)
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+	Duel.SelectTarget(tp,AA.eqtgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
+end
+function AA.eqlim(e,c)
+	return c:GetControler()==e:GetHandlerPlayer() or e:GetHandler():GetEquipTarget()==c
+end
+function AA.eqop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if (not c:IsLocation(LOCATION_SZONE)) or (not c:IsRelateToEffect(e)) or c:IsStatus(STATUS_LEAVE_CONFIRMED) then return end
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		Duel.Equip(tp,c,tc)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_EQUIP_LIMIT)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetValue(AA.eqlim)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+		c:RegisterEffect(e1)
+	else
+		c:CancelToGrave(false)
+	end
+end
+-- Description: Add equip effect that "Ɐttraction" traps share to a card, effect text being:
+-- Target 1 "Amazement" monster you control or 1 face-up monster your opponent controls; equip this card to it.
+-- Parameter:
+-- c - The card to add the effect to.
+function Auxiliary.AddAttractionEquipProc(c)
+	--Equip this card to 1 monster
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_EQUIP)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCost(aux.RemainFieldCost)
+	e1:SetTarget(AA.eqtg)
+	e1:SetOperation(AA.eqop)
+	c:RegisterEffect(e1)
+end
+function AA.bincond(e)
+	return e:GetHandler():GetEquipTarget()
+end
+-- Description: Makes an effect that will perform different check+operation depending on whether or not the currently equipped monster is controlled by tp.
+-- Parameters:
+-- c - The card to make the effect from.
+-- id - The id of the card used for the HOPT clause.
+-- the next two parameters are tables, one for each possible controller. They require the following 5 sequential parameters:
+-- -- 1 - effect category (SetCategory), integer or nil (in which case defaults to 0).
+-- -- 2 - effect property (SetProperty), integer or nil (in which case defaults to 0).
+-- -- 3 - condition/target (check) function to be called.
+-- -- 4 - operation function to be called.
+-- -- 5 - a table that will be unpacked to call Effect.SetHintTiming.
+-- chkcf - The chckc function to be called, nil otherwise (used if one of the effect targets).
+function Auxiliary.MakeAttractionBinaryEquipChkOp(c,id,you,opp,chkcf)
+	local tg=function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+		if chkc then
+			if chkcf then
+				return chkcf(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+			else
+				return false
+			end
+		end
+		local et=e:GetHandler():GetEquipTarget()
+		if not et then return false end
+		local yours=et:GetControler()==tp
+		if chk==0 then
+			if yours then
+				return you[3](e,tp,eg,ep,ev,re,r,rp,0)
+			else
+				return opp[3](e,tp,eg,ep,ev,re,r,rp,0)
+			end
+		end
+		if yours then
+			e:SetCategory(you[1] and you[1] or 0)
+			e:SetProperty(you[2] and you[2] or 0)
+			e:SetOperation(you[4])
+			e:SetHintTiming(table.unpack(opp[5]))
+			you[3](e,tp,eg,ep,ev,re,r,rp,1)
+		else
+			e:SetCategory(opp[1] and opp[1] or 0)
+			e:SetProperty(opp[2] and opp[2] or 0)
+			e:SetOperation(opp[4])
+			e:SetHintTiming(table.unpack(opp[5]))
+			opp[3](e,tp,eg,ep,ev,re,r,rp,1)
+		end
+	end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCategory(0)
+	e1:SetProperty(0)
+	e1:SetCountLimit(1,id)
+	e1:SetCondition(AA.bincond)
+	e1:SetTarget(tg)
+	return e1
+end
+function AA.eqsfilter(c,tp)
+	return c:IsSetCard(0x25e) and c:IsType(TYPE_TRAP) and c:GetEquipTarget() and
+	       Duel.IsExistingMatchingCard(AA.eqmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
+end
+function AA.eqmfilter(c,tp)
+	return c:IsFaceup() and (c:IsSetCard(0x25d) or (not c:IsControler(tp)))
+end
+function AA.qeqetg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return false end
+	if chk==0 then return Duel.IsExistingTarget(AA.eqsfilter,tp,LOCATION_SZONE,0,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.SelectTarget(tp,AA.eqsfilter,tp,LOCATION_SZONE,0,1,1,nil,tp)
+end
+function AA.qeqeop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetTargetCards(e):GetFirst()
+	if not tc then return end
+	local mg=Duel.GetMatchingGroup(AA.eqmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,tc:GetEquipTarget(),tp)
+	if #mg==0 then return end
+	local mc=mg:Select(tp,1,1,nil):GetFirst()
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and
+	   mc:IsFaceup() then Duel.Equip(tp,tc,mc) end
+end
+-- Description: adds the following effect to a card:
+--(Quick Effect): You can target 1 of your "Ɐttraction" Traps that is equipped to a monster; equip it to 1 "Amazement" monster you control or 1 face-up monster your opponent controls.
+-- c - The card to add the effect to.
+-- id - The id of the card used for the HOPT clause.
+function Auxiliary.AddAmazementQuickEquipEffect(c,id)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCountLimit(1,id)
+	e2:SetTarget(AA.qeqetg)
+	e2:SetOperation(AA.qeqeop)
+	c:RegisterEffect(e2)
+end

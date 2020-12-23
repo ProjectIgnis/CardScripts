@@ -1,6 +1,23 @@
 Auxiliary={}
 aux=Auxiliary
 
+local oldload=Duel.LoadScript
+Duel.LoadScript = (function()
+	local scriptcache={}
+	return function(script,cache)
+		if cache or cache==nil then
+			if scriptcache[script]==nil then
+				scriptcache[script]=oldload(script)
+			end
+			return scriptcache[script]
+		end
+		local res=oldload(script)
+		local exports=edopro_exports
+		edopro_exports=nil
+		return res,exports
+	end
+end)()
+
 function GetID()
 	return self_table,self_code
 end
@@ -118,6 +135,7 @@ function Auxiliary.Next(g)
 				else return g:GetNext() end
 			end
 end
+Group.Iter=Auxiliary.Next
 
 function Auxiliary.NULL()
 end
@@ -301,7 +319,9 @@ end
 --for additional registers
 local regeff=Card.RegisterEffect
 function Card.RegisterEffect(c,e,forced,...)
-	if c:IsStatus(STATUS_INITIALIZING) and not e then Debug.Message("missing (Effect e) in c"..c:GetOriginalCode()..".lua") return end
+	if c:IsStatus(STATUS_INITIALIZING) and not e then
+		error("Parameter 2 expected to be Effect, got nil instead.",2)
+	end
 	--1 == 511002571 - access to effects that activate that detach an Xyz Material as cost
 	--2 == 511001692 - access to Cardian Summoning conditions/effects
 	--4 ==  12081875 - access to Thunder Dragon effects that activate by discarding
@@ -503,8 +523,8 @@ function Auxiliary.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	local rd=e1 and not e2
 	local rr=not e1 and e2
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	if ex and (cp==tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then 
-		return true 
+	if ex and (cp==tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then
+		return true
 	end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
 	return ex and (cp==tp or cp==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE)
@@ -546,7 +566,7 @@ function Card.IsColumn(c,seq,tp,loc)
 		if seq==5 then seq=1 end
 		if seq==6 then seq=3 end
 	else
-		if cseq==6 then cseq=5 end
+		if seq==6 then seq=5 end
 	end
 	if c:IsControler(tp) then
 		return cseq==seq
@@ -844,27 +864,26 @@ function Auxiliary.ResetEffects(g,eff)
 	end
 end
 function Auxiliary.CallToken(code)
-	Debug.Message(code.." called Auxiliary.CallToken, use Duel.LoadCardScript or Duel.LoadScript instead!!!")
+	error("This function is deleted, use Duel.LoadCardScript or Duel.LoadScript instead.",2)
 end
 --utility entry for SelectUnselect loops
 --returns bool if chk==0, returns Group if chk==1
 function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)
-	local res
+	local res=not rescon
 	if #sg>=maxc then return false end
 	sg:AddCard(c)
 	if rescon then
-		local _,stop=rescon(sg,e,tp,mg)
-		if stop then 
+		local stop
+		res,stop=rescon(sg,e,tp,mg,c)
+		if stop then
 			sg:RemoveCard(c)
 			return false
 		end
 	end
 	if #sg<minc then
 		res=mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
-	elseif #sg<maxc then
-		res=(not rescon or rescon(sg,e,tp,mg)) or mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
-	else
-		res=(not rescon or rescon(sg,e,tp,mg))
+	elseif #sg<maxc and not res then
+		res=mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
 	end
 	sg:RemoveCard(c)
 	return res
@@ -872,7 +891,7 @@ end
 function Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,rescon,chk,seltp,hintmsg,finishcon,breakcon,cancelable)
 	local minc=minc or 1
 	local maxc=maxc or #g
-	if chk==0 then return g:IsExists(Auxiliary.SelectUnselectLoop,1,nil,Group.CreateGroup(),g,e,tp,minc,maxc,rescon) end
+	if chk==0 then return #g>=minc and g:IsExists(Auxiliary.SelectUnselectLoop,1,nil,Group.CreateGroup(),g,e,tp,minc,maxc,rescon) end
 	local hintmsg=hintmsg and hintmsg or 0
 	local sg=Group.CreateGroup()
 	while true do
@@ -1001,7 +1020,7 @@ function Auxiliary.MainAndExtraGetSummonZones(c,mmz,emz,e,sumtype,sump,targetp,n
 	if c:IsLocation(LOCATION_EXTRA) then
 		for i=0,6 do
 			local zone=0x1<<i
-			if emz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone) 
+			if emz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone)
 				and Auxiliary.MainAndExtraZoneCheckBool(nc,mmz&~zone,emz&~zone,e,sumtype,sump,targetp,nocheck,nolimit,pos,...) then
 				zones=zones|zone
 			end
@@ -1009,7 +1028,7 @@ function Auxiliary.MainAndExtraGetSummonZones(c,mmz,emz,e,sumtype,sump,targetp,n
 	else
 		for i=0,4 do
 			local zone=0x1<<i
-			if mmz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone) 
+			if mmz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone)
 				and Auxiliary.MainAndExtraZoneCheckBool(nc,mmz&~zone,emz&~zone,e,sumtype,sump,targetp,nocheck,nolimit,pos,...) then
 				zones=zones|zone
 			end
@@ -1022,7 +1041,7 @@ function Auxiliary.MainAndExtraZoneCheckBool(c,mmz,emz,e,sumtype,sump,targetp,no
 	if c:IsLocation(LOCATION_EXTRA) then
 		for i=0,6 do
 			local zone=0x1<<i
-			if emz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone) 
+			if emz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone)
 				and Auxiliary.MainAndExtraZoneCheckBool(nc,mmz&~zone,emz&~zone,e,sumtype,sump,targetp,nocheck,nolimit,pos,...) then
 				return true
 			end
@@ -1030,7 +1049,7 @@ function Auxiliary.MainAndExtraZoneCheckBool(c,mmz,emz,e,sumtype,sump,targetp,no
 	else
 		for i=0,4 do
 			local zone=0x1<<i
-			if mmz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone) 
+			if mmz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone)
 				and Auxiliary.MainAndExtraZoneCheckBool(nc,mmz&~zone,emz&~zone,e,sumtype,sump,targetp,nocheck,nolimit,pos,...) then
 				return true
 			end
@@ -1255,16 +1274,14 @@ function Auxiliary.EnableExtraRules(c,card,init,...)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ADJUST)
-	e1:SetCountLimit(1)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
-	e1:SetRange(0xff)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetOperation(Auxiliary.EnableExtraRulesOperation(card,init,...))
 	Duel.RegisterEffect(e1,0)
 end
 function Auxiliary.EnableExtraRulesOperation(card,init,...)
 	local arg = {...}
 	return function(e,tp,eg,ep,ev,re,r,rp)
-		local c = e:GetHandler()
+		local c = e:GetOwner()
 		local p = c:GetControler()
 		Duel.DisableShuffleCheck()
 		Duel.SendtoDeck(c,nil,-2,REASON_RULE)
@@ -1286,6 +1303,7 @@ function Auxiliary.EnableExtraRulesOperation(card,init,...)
 			end
 			card.global_active_check = true
 		end
+		e:Reset()
 	end
 end
 --[[
@@ -1479,4 +1497,5 @@ Duel.LoadScript("proc_persistent.lua")
 Duel.LoadScript("proc_workaround.lua")
 Duel.LoadScript("proc_normal.lua")
 Duel.LoadScript("proc_skill.lua")
+Duel.LoadScript("proc_maximum.lua")
 pcall(dofile,"init.lua")

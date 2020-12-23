@@ -1,48 +1,51 @@
---地縛神 Chacu Challhua
+--地縛神 Ｃｈａｃｕ Ｃｈａｌｌｈｕａ
+--Earthbound Immortal Chacu Challhua
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Can only be 1 "Earthbound Immortal" on the field
 	c:SetUniqueOnField(1,1,aux.FilterBoolFunction(Card.IsSetCard,0x21),LOCATION_MZONE)
-	--
+	--Destroy itself if there is no face-up field spell
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EFFECT_SELF_DESTROY)
+	e1:SetCondition(s.sdcon)
+	c:RegisterEffect(e1)
+	--Opponent cannot target this card for attacks
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetValue(aux.imval2)
+	c:RegisterEffect(e2)
+	--Can attack directly
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_DIRECT_ATTACK)
+	c:RegisterEffect(e3)
+	--Inflict damage equal to half of this card's DEF
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetDescription(aux.Stringid(id,0))
+	e4:SetCategory(CATEGORY_DAMAGE)
+	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(EFFECT_SELF_DESTROY)
-	e4:SetCondition(s.sdcon)
+	e4:SetCountLimit(1)
+	e4:SetCost(s.damcost)
+	e4:SetTarget(s.damtg)
+	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
-	--battle target
+	--Opponent cannot conduct their battle phase while this card is in defense position
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
-	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e5:SetType(EFFECT_TYPE_FIELD)
+	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e5:SetCode(EFFECT_CANNOT_BP)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetValue(aux.imval2)
+	e5:SetTargetRange(0,1)
+	e5:SetCondition(s.bpcon)
 	c:RegisterEffect(e5)
-	--direct atk
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetCode(EFFECT_DIRECT_ATTACK)
-	c:RegisterEffect(e6)
-	--damage
-	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(id,0))
-	e7:SetCategory(CATEGORY_DAMAGE)
-	e7:SetType(EFFECT_TYPE_IGNITION)
-	e7:SetRange(LOCATION_MZONE)
-	e7:SetCountLimit(1)
-	e7:SetCost(s.damcost)
-	e7:SetTarget(s.damtg)
-	e7:SetOperation(s.damop)
-	c:RegisterEffect(e7)
-	--bp
-	local e8=Effect.CreateEffect(c)
-	e8:SetType(EFFECT_TYPE_FIELD)
-	e8:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e8:SetCode(EFFECT_CANNOT_BP)
-	e8:SetRange(LOCATION_MZONE)
-	e8:SetTargetRange(0,1)
-	e8:SetCondition(s.bpcon)
-	c:RegisterEffect(e8)
 end
 s.listed_series={0x21}
 function s.sdcon(e)
@@ -54,10 +57,12 @@ function s.sdcon(e)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
+	--Cannot attack this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3206)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end

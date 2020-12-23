@@ -7,7 +7,7 @@ function s.initial_effect(c)
 end
 function s.rmvfilter1(c,e,tp)
 	return c:IsLevelBelow(2) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
-		and Duel.IsExistingMatchingCard(s.rmvfilter2,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil,e,tp,c)
+		and Duel.IsExistingMatchingCard(s.rmvfilter2,tp,LOCATION_GRAVE+LOCATION_MZONE,0,2,nil,e,tp,c)
 end
 function s.rmvfilter2(c,e,tp,tc)
 	local lv=tc:GetLevel()
@@ -27,7 +27,7 @@ function s.rescon(sg,e,tp,mg)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
-	return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.IsExistingMatchingCard(s.rmvfilter1,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil,e,tp)
+	return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.IsExistingMatchingCard(s.rmvfilter1,tp,LOCATION_GRAVE+LOCATION_MZONE,0,2,nil,e,tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--opd check and ask if you want to activate the skill or not

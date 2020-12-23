@@ -1,11 +1,11 @@
 --焔聖騎士帝-シャルル
---Infernoble Knight Emperor - Charlemagne
+--Infernoble Knight Emperor Charles
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
+	--Synchro summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--destroy
+	--Destroy card when equipped
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--equip
+	--Equip from hand or Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_EQUIP)

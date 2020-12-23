@@ -1,11 +1,14 @@
 --スレイブパンサー
 --Test Panther
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,nil,2,2,s.lcheck)
-	--search
+	--Must be properly summoned before reviving
+	c:EnableReviveLimit()
+	--Add 1 "Gladiator Beast" card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -17,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Return 1 "Gladiator Beast" monster to deck, special summon 1 with a different name from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
@@ -30,6 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x19}
+
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,0x19,lc,sumtype,tp)
 end
@@ -70,8 +74,8 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=Duel.GetFirstTarget()
 	if not rc or not rc:IsFaceup() or not rc:IsRelateToEffect(e) then return end
-	local rt=Duel.SendtoDeck(rc,nil,2,REASON_EFFECT)
-	if rt==0 then return end
+	Duel.SendtoDeck(rc,nil,2,REASON_EFFECT)
+	if not rc:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,rc:GetOriginalCodeRule()):GetFirst()
 	if tc and Duel.SpecialSummon(tc,130,tp,tp,false,false,POS_FACEUP)>0 then

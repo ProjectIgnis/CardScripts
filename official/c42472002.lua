@@ -71,6 +71,8 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetTargetRange(1,0)
 	e0:SetTarget(s.splimit)
 	Duel.RegisterEffect(e0,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -83,4 +85,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x107a)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalSetCard(0x107a)
 end

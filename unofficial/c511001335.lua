@@ -47,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTargetRange(1,0)
 		e2:SetValue(s.refcon)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		c:RegisterEffect(e2)	
+		c:RegisterEffect(e2)
 	else
 		c:CancelToGrave(false)
 	end

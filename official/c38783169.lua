@@ -1,5 +1,5 @@
 --チューン・ナイト
---Tune Knight
+--Squeaknight
 local s,id=GetID()
 function s.initial_effect(c)
 	--tuner
@@ -25,6 +25,9 @@ function s.tuneop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 	local c=e:GetHandler()
+	local e0=aux.createTempLizardCheck(c)
+	e0:SetCondition(s.spcon)
+	Duel.RegisterEffect(e0,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -36,6 +39,7 @@ function s.tuneop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(1,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsLocation,LOCATION_EXTRA))
 	Duel.RegisterEffect(e2,tp)
+	--lizard check with a reset
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)

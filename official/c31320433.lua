@@ -1,10 +1,13 @@
---No.47 ナイトメア・シャーク
+--Ｎｏ．４７ ナイトメア・シャーク
+--Number 47: Nightmare Shark
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,3,2)
+	--Must first be properly summoned before reviving
 	c:EnableReviveLimit()
-	--charge
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,3,2)
+	--When special summoned, attach 1 level 3 WATER monster from hand or field to this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -13,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.mattg)
 	e1:SetOperation(s.matop)
 	c:RegisterEffect(e1)
+	--Targeted monster can attack directly
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -26,6 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.xyz_number=47
+
 function s.matfilter(c)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsType(TYPE_TOKEN) and c:GetLevel()==3 and c:IsAttribute(ATTRIBUTE_WATER)
 end
@@ -68,7 +73,10 @@ end
 function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
+		--Can attack directly this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3205)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

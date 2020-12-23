@@ -127,7 +127,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
-			Duel.ShuffleDeck(tp)
 		end
 	end
 end

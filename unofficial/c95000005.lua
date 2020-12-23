@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then
 		tc:RegisterFlagEffect(id,RESET_PHASE+PHASE_END+RESET_EVENT+RESETS_STANDARD,0,1)
 		if tc:IsCode(95000004) then
 		local te=tc:GetActivateEffect()

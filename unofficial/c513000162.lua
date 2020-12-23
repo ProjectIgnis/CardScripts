@@ -1,6 +1,6 @@
+--眠れる巨人ズシン (Anime)
 --Zushin the Sleeping Giant (Anime)
---眠れる巨人ズシン 
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -20,12 +20,13 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon3)
 	e2:SetOperation(s.spop3)
 	c:RegisterEffect(e2)
-	--atk/def up
+	--atk up
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_SET_ATTACK_FINAL)
+	e3:SetCode(EFFECT_SET_ATTACK)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetValue(s.value)
+	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 	--negate
 	local e4=Effect.CreateEffect(c)
@@ -53,27 +54,6 @@ function s.initial_effect(c)
 		e2:SetOperation(s.spop)
 		Duel.RegisterEffect(e2,0)
 	end)
-end
-function s.distg(e,c)
-	local uc=e:GetHandler()
-	if Duel.GetAttacker()==uc then
-		return Duel.GetAttackTarget()==c
-	elseif Duel.GetAttackTarget()==uc then
-		return Duel.GetAttacker()==c
-	else return false end
-end
-function s.value(e,c)
-	local g=Duel.GetMatchingGroup(aux.TRUE,e:GetHandlerPlayer(),0,LOCATION_MZONE,nil)
-	local uc=g:GetFirst()
-	while uc do
-		if Duel.GetAttacker()==uc and Duel.GetAttackTarget()==c then
-			return uc:GetAttack()+1000
-		elseif Duel.GetAttackTarget()==uc and Duel.GetAttacker()==c then
-			return uc:GetAttack()+1000
-		else return 0 
-		end
-		uc=g:GetNext()
-	end
 end
 function s.spfilter1(c)
 	return c:IsFaceup() and c:GetLevel()==1 and c:IsType(TYPE_NORMAL)
@@ -127,4 +107,11 @@ function s.spop3(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
+end
+function s.atkval(e,c)
+	local bc=c:GetBattleTarget()
+	return bc and bc:GetAttack()+1000
+end
+function s.distg(e,c)
+	return e:GetHandler():GetBattleTarget()==c
 end

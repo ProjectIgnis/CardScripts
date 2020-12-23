@@ -1,7 +1,6 @@
 --享楽の堕天使
---Darklord of Delight
+--Capricious Darklord
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +33,7 @@ end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
 end
-	--Check for fairy monster to tribute summon
+	--Check for Fairy monster to tribute summon
 function s.sumfilter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsSummonable(true,nil,1)
 end

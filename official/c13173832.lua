@@ -1,19 +1,18 @@
 --転生炎獣ウルヴィー
 --Salamangreat Wolvie
---scripted by Logical Nonsense
+--Logical Nonsense
 
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
-	--Used as material
+	--A link monster using this card cannot be destroyed by battle or card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_BE_MATERIAL)
 	e1:SetCondition(s.lkcon)
 	e1:SetOperation(s.lkop)
 	c:RegisterEffect(e1)
-	--GY recycle, if special summoned
+	--Add 1 FIRE monster from GY, if this card is special summoned
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -25,20 +24,24 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--GY recycle, if added to hand
+	--Add 1 FIRE monster from GY, if this card is added from GY
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_TO_HAND)
 	e3:SetCondition(s.thcon2)
 	e3:SetCost(s.thcost)
 	c:RegisterEffect(e3)
 end
+	--If sent as link material
 function s.lkcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_LINK
 end
+	--A link monster using this card cannot be destroyed by battle or card effects this turn
 function s.lkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3008)
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
@@ -73,11 +76,10 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
-	--Performing the recycle effect
+	--Add 1 FIRE monster from GY
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

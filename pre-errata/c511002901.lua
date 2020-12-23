@@ -1,4 +1,5 @@
 --W－ウィング・カタパルト
+--W-Wing Catapult (Pre-Errata)
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip

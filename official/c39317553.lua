@@ -1,12 +1,12 @@
 --旋壊のヴェスペネイト
---Vespenate of the Revolution
+--Drill Driver Vespenato
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon procedure
 	Xyz.AddProcedure(c,nil,5,2,aux.FilterFaceupFunction(Card.IsRank,4),aux.Stringid(id,0))
 	c:EnableReviveLimit()
-	--can not be xyz material
+	--Cannot be xyz material
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x574}
+s.listed_series={0x1157}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_BATTLED,true)
@@ -87,11 +87,11 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,dam,REASON_EFFECT)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x574)
+	return c:IsFaceup() and c:IsSetCard(0x1157)
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.desfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.tgtg(e,c)
-	return c:IsSetCard(0x574) and c:IsLinkMonster()
+	return c:IsSetCard(0x1157) and c:IsLinkMonster()
 end

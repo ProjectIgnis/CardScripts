@@ -1,9 +1,10 @@
 --カッター・シャーク
 --Buzzsaw Shark
---Scripted by Eerie Code and Edo9300
+--Scripted by Eerie Code and edo9300
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon 1 fish monster from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--xyzlv
+	--Can be treated as a level 3 or 5 for the Xyz summon of a WATER monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_XYZ_LEVEL)
@@ -41,11 +42,14 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc):GetFirst()
 		if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
+			--Cannot activate its effects
 			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3302)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_TRIGGER)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
@@ -53,6 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.SpecialSummonComplete()
 	end
+	--Cannot special summon from the extra deck for rest of turn, except Xyz monsters
 	local ge1=Effect.CreateEffect(c)
 	ge1:SetType(EFFECT_TYPE_FIELD)
 	ge1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
@@ -62,6 +67,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetTarget(s.splimit)
 	ge1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
+	--Clock Lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.xyzlv(e,c,rc)
 	if rc:IsAttribute(ATTRIBUTE_WATER) then
@@ -73,4 +80,6 @@ end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_XYZ) and c:IsLocation(LOCATION_EXTRA)
 end
-
+function s.lizfilter(e,c)
+	return not c:IsOriginalType(TYPE_XYZ)
+end

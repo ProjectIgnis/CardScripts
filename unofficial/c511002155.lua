@@ -30,7 +30,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if ft<2 then return end
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,100200285,0,TYPES_TOKEN,2000,0,1,RACE_REPTILE,ATTRIBUTE_DARK) then return end
 	for i=1,2 do
-		local token=Duel.CreateToken(tp,id+1)
+		local token=Duel.CreateToken(tp,100200285)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 	end
 	Duel.SpecialSummonComplete()

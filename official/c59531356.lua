@@ -7,13 +7,15 @@ function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_ROCK),s.matfilter)
+	--lizard check
+	Auxiliary.addLizardCheck(c)
 	--Must first be special summoned with "Fossil Fusion"
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e0:SetRange(LOCATION_EXTRA)
-	e0:SetValue(s.splimit)
+	e0:SetValue(aux.FossilLimit)
 	c:RegisterEffect(e0)
 	--Inflict piercing battle damage
 	local e1=Effect.CreateEffect(c)
@@ -46,10 +48,6 @@ s.listed_names={id,CARD_FOSSIL_FUSION}
 function s.matfilter(c)
 	local lv=c:GetLevel()
 	return c:HasLevel() and (lv==5 or lv==6)
-end
-	--Handle its special summon condition
-function s.splimit(e,se,sp,st)
-	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or st==SUMMON_TYPE_FUSION+0x20
 end
 	--If able to make a second attack
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)

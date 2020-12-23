@@ -1,8 +1,10 @@
+--ヴェンデット・デイブレイク
 --Vendread Daybreak
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--Destroy all cards on the field, except the targeted "Vendread" ritual monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,9 +13,11 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x106}
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
 end
@@ -40,4 +44,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	g:GetFirst():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	g:GetFirst():RegisterEffect(e1)
 end
-

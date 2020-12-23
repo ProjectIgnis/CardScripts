@@ -1,5 +1,6 @@
+--ダイナドメイン
 --Dino Domain
---scripted by Naim
+--Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -54,7 +55,7 @@ end
 function s.rthop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		local og=Duel.GetOperatedGroup()
 		local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_HAND)
@@ -83,6 +84,6 @@ end
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end
-function s.tgcond(e,tp)
-	return Duel.IsExistingMatchingCard(s.exmfilter,tp,LOCATION_MZONE,0,1,nil)
+function s.tgcond(e)
+	return Duel.IsExistingMatchingCard(s.exmfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end

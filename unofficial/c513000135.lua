@@ -140,12 +140,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE+PHASE_BATTLE+PHASE_END+RESET_CHAIN)
 		c:RegisterEffect(e2)
 		if c:IsImmuneToEffect(e1) or c:IsImmuneToEffect(e2) then return end
-		local ag,direct=c:GetAttackableTarget()
-		if direct and (#ag<=0 or (#ag>0 and Duel.SelectYesNo(tp,31))) then
+		local g=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
+		if #g==0 or ((c:IsHasEffect(EFFECT_DIRECT_ATTACK) or not g:IsExists(aux.NOT(Card.IsHasEffect),1,nil,EFFECT_IGNORE_BATTLE_TARGET)) and Duel.SelectYesNo(tp,31)) then
 			Duel.CalculateDamage(c,nil)
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACKTARGET)
-			Duel.CalculateDamage(c,ag:Select(tp,1,1,nil):GetFirst())
+			Duel.CalculateDamage(c,g:Select(tp,1,1,nil):GetFirst())
 		end
 	end
 end

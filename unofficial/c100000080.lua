@@ -5,18 +5,18 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--SpSummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetCountLimit(1)
-	e2:SetRange(LOCATION_SZONE)		
+	e2:SetRange(LOCATION_SZONE)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--destroy
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_DESTROYED)
 	e4:SetCondition(s.descon)
 	e4:SetOperation(s.desop)
-	c:RegisterEffect(e4)	
+	c:RegisterEffect(e4)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,id+1),Duel.GetTurnPlayer(),LOCATION_MZONE,0,1,nil)
@@ -44,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetLocationCount(p,LOCATION_MZONE,p,LOCATION_REASON_COUNT)
 	local ft=Duel.GetLocationCount(p,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(p,CARD_BLUEEYES_SPIRIT) then ft=math.min(ft,1) end
-	if ft~=ct or ct<=0 
+	if ft~=ct or ct<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(p,100000082,0,TYPES_TOKEN,3000,1000,10,RACE_FIEND,ATTRIBUTE_DARK) then return end
 	for i=1,ft do
 		local token=Duel.CreateToken(p,100000082)

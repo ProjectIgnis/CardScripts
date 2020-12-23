@@ -20,7 +20,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil)
 		and tc and tc:IsCanRemoveCounter(tp,0x91,2,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	tc:RemoveCounter(tp,0x91,2,REASON_COST)	
+	tc:RemoveCounter(tp,0x91,2,REASON_COST)
 	Duel.DiscardHand(tp,s.filter,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,7 +1,9 @@
 --水物語－ウラシマ
+--Aqua Story - Urashima
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Targeted monster has its effects negate, its ATK/DEF becomes 100, and is unaffected by opponent's card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -33,6 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
+		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -44,6 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
+		--ATK/DEF becomes 100
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -53,9 +57,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e4=e3:Clone()
 		e4:SetCode(EFFECT_SET_DEFENSE_FINAL)
 		tc:RegisterEffect(e4)
+		--Unaffected by opponent's card effects
 		local e5=Effect.CreateEffect(c)
+		e5:SetDescription(3110)
 		e5:SetType(EFFECT_TYPE_SINGLE)
-		e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e5:SetRange(LOCATION_MZONE)
 		e5:SetCode(EFFECT_IMMUNE_EFFECT)
 		e5:SetValue(s.efilter)

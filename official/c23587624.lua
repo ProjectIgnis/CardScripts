@@ -1,8 +1,9 @@
 --青天の霹靂
 --A Wild Monster Appears!
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 level 10 or lower monster, that cannot be normal summoned/set, from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -31,15 +32,18 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
+		--Unaffected by your card effects
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3105)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(s.efilter)
 		e1:SetOwnerPlayer(tp)
 		tc:RegisterEffect(e1,true)
+		--Shuffle it into deck during opponent's next end phase
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
@@ -53,6 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	end
 	Duel.SpecialSummonComplete()
+	--You cannot normal summon/set or special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
@@ -66,6 +71,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e3=e1:Clone()
 	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	Duel.RegisterEffect(e3,tp)
+	--Opponent takes no damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_CHANGE_DAMAGE)

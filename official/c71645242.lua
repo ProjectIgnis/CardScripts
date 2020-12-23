@@ -71,18 +71,19 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=eg:Filter(Card.IsRelateToEffect,nil,e)
-	local tc=g:GetFirst()
+	local g=eg:Filter(aux.FilterFaceupFunction(Card.IsRelateToEffect,e),nil)
+	local change=false
 	for tc in aux.Next(g) do
-		if tc:IsFaceup() then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e1:SetValue(math.ceil(tc:GetAttack()/2))
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
-		end
+		local preatk=tc:GetAttack()
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetValue(math.ceil(tc:GetAttack()/2))
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1)
+		if math.ceil(preatk/2)==tc:GetAttack() then change=true end
 	end
+	if not change then return end
 	if bit.extract(ev,tp)~=0 and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x123,TYPES_TOKEN,800,800,2,RACE_PLANT,ATTRIBUTE_DARK,POS_FACEUP_ATTACK,1-tp) then
 		local token=Duel.CreateToken(tp,id+1)

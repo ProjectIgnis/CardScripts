@@ -81,7 +81,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(math.ceil(tc:GetAttack()/2))
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		if math.ceil(preatk/2)==tc:GetAttack() then change=true end
+		if not tc:IsImmuneToEffect(e1) and math.ceil(preatk/2)==tc:GetAttack() then change=true end
 	end
 	if not change then return end
 	if bit.extract(ev,tp)~=0 and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0

@@ -1,12 +1,13 @@
 --XY－ドラゴン・キャノン
 --XY-Dragon Cannon (GOAT)
 --Only mosnters in the mzone allowed as material
+--nomi monster instead of seminomi + "Cannot be SS from GY"
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,62651957,65622692)
-	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,true)
 	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
@@ -24,9 +25,6 @@ function s.contactfil(tp)
 end
 function s.contactop(g)
 	Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_MATERIAL)
-end
-function s.splimit(e,se,sp,st)
-	return not e:GetHandler():IsLocation(LOCATION_EXTRA+LOCATION_GRAVE)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

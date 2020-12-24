@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function s.tdfilter(c)
-	return c:IsLevelAbove(7) and c:IsAbleToDeck()
+	return c:IsLevel(7) and c:IsAbleToDeck()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

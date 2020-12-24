@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2f}
 function s.rmtg(e,c)
-	return c:GetOwner()~=e:GetHandlerPlayer() and c:IsType(TYPE_SPELL+TYPE_TRAP) and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
+	return c:GetOwner()~=e:GetHandlerPlayer() and c:IsOriginalType(TYPE_SPELL+TYPE_TRAP) and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
 end
 function s.spfilter(c)
 	return c:IsSetCard(0x2f) and c:IsFaceup()

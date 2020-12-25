@@ -18,7 +18,7 @@ function s.filter(c)
 	return c:IsCode(27911549) and c:GetPosition()~=POS_FACEUP_DEFENSE
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstMatchingCard(s.filter,tp,LOCATION_DECK,0,nil)
+	local tc=Duel.GetFirstMatchingCardGoat(s.filter,tp,LOCATION_DECK,0,nil)
 	if tc then
 		Duel.ShuffleDeck(tp)
 		Duel.MoveSequence(tc,0)

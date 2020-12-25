@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCode(EVENT_SPSUMMON)
-	e2:SetCondition(s.condition2)
+	e2:SetCondition(s.condition1)
 	e2:SetCost(s.cost2)
 	e2:SetTarget(s.target2)
 	e2:SetOperation(s.activate2)
@@ -41,6 +41,9 @@ function s.initial_effect(c)
 	e4:SetTarget(s.target3)
 	e4:SetOperation(s.activate3)
 	c:RegisterEffect(e4)
+end
+function s.condition1(...)
+	return not Duel.IsDuelType(DUEL_USE_TRAPS_IN_NEW_CHAIN) and s.condition2(...)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain()==0

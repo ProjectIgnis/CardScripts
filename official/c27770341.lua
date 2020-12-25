@@ -30,7 +30,6 @@ function s.initial_effect(c)
 	end)
 end
 function s.addcount(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
 		local pl=tc:GetPreviousLocation()
 		if pl==LOCATION_MZONE and tc:GetPreviousRaceOnField()==RACE_DRAGON then

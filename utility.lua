@@ -1,23 +1,6 @@
 Auxiliary={}
 aux=Auxiliary
 
-local oldload=Duel.LoadScript
-Duel.LoadScript = (function()
-	local scriptcache={}
-	return function(script,cache)
-		if cache or cache==nil then
-			if scriptcache[script]==nil then
-				scriptcache[script]=oldload(script)
-			end
-			return scriptcache[script]
-		end
-		local res=oldload(script)
-		local exports=edopro_exports
-		edopro_exports=nil
-		return res,exports
-	end
-end)()
-
 function GetID()
 	return self_table,self_code
 end

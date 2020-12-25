@@ -53,7 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) and not tc:IsFacedown() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local tg=Duel.SelectMatchingCard(tp,s.tgvfilter,tp,LOCATION_DECK,0,1,1,nil,tc:GetType()&key)
-		if #tg>0 and Duel.SendtoGrave(tg,nil,REASON_EFFECT)>0 then
+		if #tg>0 and Duel.SendtoGrave(tg,REASON_EFFECT)>0 then
 			local ogc=Duel.GetOperatedGroup():GetFirst()
 			if ogc:IsLocation(LOCATION_GRAVE) and c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 				local tg1=tg:GetFirst()
@@ -62,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 					local tg2=Duel.SelectMatchingCard(tp,s.tgvfilter2,tp,LOCATION_DECK,0,1,1,nil,tc:GetType()&key,tg1:GetType()&key)
 					if #tg2>0 then
 						Duel.BreakEffect()
-						Duel.SendtoGrave(tg2,nil,REASON_EFFECT)
+						Duel.SendtoGrave(tg2,REASON_EFFECT)
 					end
 				end
 			end

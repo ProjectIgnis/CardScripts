@@ -53,8 +53,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.ShuffleHand(tp)
 	g:DeleteGroup()
 end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase() and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and Duel.GetFlagEffect(tp,id+1)==0
+function s.con(e)
+	return Duel.IsMainPhase() and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and Duel.GetFlagEffect(e:GetHandlerPlayer(),id+1)==0
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)

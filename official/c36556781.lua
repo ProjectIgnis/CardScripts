@@ -65,9 +65,9 @@ function s.eqcheck(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabelObject(g)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetEquipGroup():IsExists(Card.IsAbleToGraveAsCost,1,nil) end
+	if chk==0 then return e:GetHandler():GetEquipGroup():Filter(Card.IsControler,nil,tp):IsExists(Card.IsAbleToGraveAsCost,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=e:GetHandler():GetEquipGroup():FilterSelect(tp,Card.IsAbleToGraveAsCost,1,1,nil)
+	local g=e:GetHandler():GetEquipGroup():Filter(Card.IsControler,nil,tp):FilterSelect(tp,Card.IsAbleToGraveAsCost,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.rmfilter(c)

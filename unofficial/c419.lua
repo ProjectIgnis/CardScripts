@@ -190,8 +190,8 @@ if not GenerateEffect then
 			local prevlv=lvc:GetFlagEffectLabel(585)
 			lvc:ResetFlagEffect(584)
 			lvc:ResetFlagEffect(585)
-			lvc:RegisterFlagEffect(584,nil,0,1,prevlv)
-			lvc:RegisterFlagEffect(585,nil,0,1,lvc:GetLevel())
+			lvc:RegisterFlagEffect(584,0,0,1,prevlv)
+			lvc:RegisterFlagEffect(585,0,0,1,lvc:GetLevel())
 			lvc=lvg:GetNext()
 		end
 		Duel.RaiseEvent(lvg,511002524,re,REASON_EFFECT,rp,ep,0)

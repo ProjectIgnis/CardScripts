@@ -1,6 +1,6 @@
 --抹殺の使徒
 --Nobleman of Crossout (GOAT)
---Even if the target is flipped, it is still banished
+--view your own deck for verification
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc and tc:IsFacedown() and tc:IsRelateToEffect(e) then
 		if Duel.Destroy(tc,REASON_EFFECT,LOCATION_REMOVED)~=0 and tc:IsType(TYPE_FLIP) then
 			local code=tc:GetCode()
 			local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_DECK,LOCATION_DECK,nil,code)

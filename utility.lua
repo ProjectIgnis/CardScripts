@@ -1269,7 +1269,7 @@ function Auxiliary.EnableExtraRulesOperation(card,init,...)
 		Duel.DisableShuffleCheck()
 		Duel.SendtoDeck(c,nil,-2,REASON_RULE)
 		local ct = Duel.GetMatchingGroupCount(nil,p,LOCATION_HAND+LOCATION_DECK,0,c)
-		if (Duel.IsDuelType(SPEED_DUEL) and ct < 20 or ct < 40) and Duel.SelectYesNo(1-p, aux.Stringid(4014,5)) then
+		if (Duel.IsDuelType(DUEL_MODE_SPEED) and ct < 20 or ct < 40) and Duel.SelectYesNo(1-p, aux.Stringid(4014,5)) then
 			Duel.Win(1-p,0x55)
 		end
 		if c:IsPreviousLocation(LOCATION_HAND) then Duel.Draw(p, 1, REASON_RULE) end

@@ -135,14 +135,14 @@ if not GenerateEffect then
 			tc:ResetFlagEffect(284)
 			tc:ResetFlagEffect(285)
 			if prevatk>0 then
-				tc:RegisterFlagEffect(284,nil,0,1,prevatk)
+				tc:RegisterFlagEffect(284,0,0,1,prevatk)
 			else
-				tc:RegisterFlagEffect(284,nil,0,1,0)
+				tc:RegisterFlagEffect(284,0,0,1,0)
 			end
 			if tc:GetAttack()>0 then
-				tc:RegisterFlagEffect(285,nil,0,1,tc:GetAttack())
+				tc:RegisterFlagEffect(285,0,0,1,tc:GetAttack())
 			else
-				tc:RegisterFlagEffect(285,nil,0,1,0)
+				tc:RegisterFlagEffect(285,0,0,1,0)
 			end
 		end
 		
@@ -161,14 +161,14 @@ if not GenerateEffect then
 			dc:ResetFlagEffect(384)
 			dc:ResetFlagEffect(385)
 			if prevdef>0 then
-				dc:RegisterFlagEffect(384,nil,0,1,prevdef)
+				dc:RegisterFlagEffect(384,0,0,1,prevdef)
 			else
-				dc:RegisterFlagEffect(384,nil,0,1,0)
+				dc:RegisterFlagEffect(384,0,0,1,0)
 			end
 			if dc:GetDefense()>0 then
-				dc:RegisterFlagEffect(385,nil,0,1,dc:GetDefense())
+				dc:RegisterFlagEffect(385,0,0,1,dc:GetDefense())
 			else
-				dc:RegisterFlagEffect(385,nil,0,1,0)
+				dc:RegisterFlagEffect(385,0,0,1,0)
 			end
 		end
 		
@@ -231,14 +231,14 @@ if not GenerateEffect then
 			tc:ResetFlagEffect(284)
 			tc:ResetFlagEffect(285)
 			if prevatk>0 then
-				tc:RegisterFlagEffect(284,nil,0,1,prevatk)
+				tc:RegisterFlagEffect(284,0,0,1,prevatk)
 			else
-				tc:RegisterFlagEffect(284,nil,0,1,0)
+				tc:RegisterFlagEffect(284,0,0,1,0)
 			end
 			if tc:GetAttack()>0 then
-				tc:RegisterFlagEffect(285,nil,0,1,tc:GetAttack())
+				tc:RegisterFlagEffect(285,0,0,1,tc:GetAttack())
 			else
-				tc:RegisterFlagEffect(285,nil,0,1,0)
+				tc:RegisterFlagEffect(285,0,0,1,0)
 			end
 		end
 		
@@ -257,14 +257,14 @@ if not GenerateEffect then
 			dc:ResetFlagEffect(284)
 			dc:ResetFlagEffect(285)
 			if prevdef>0 then
-				dc:RegisterFlagEffect(284,nil,0,1,prevdef)
+				dc:RegisterFlagEffect(284,0,0,1,prevdef)
 			else
-				dc:RegisterFlagEffect(284,nil,0,1,0)
+				dc:RegisterFlagEffect(284,0,0,1,0)
 			end
 			if dc:GetAttack()>0 then
-				dc:RegisterFlagEffect(285,nil,0,1,dc:GetAttack())
+				dc:RegisterFlagEffect(285,0,0,1,dc:GetAttack())
 			else
-				dc:RegisterFlagEffect(285,nil,0,1,0)
+				dc:RegisterFlagEffect(285,0,0,1,0)
 			end
 		end
 		
@@ -280,8 +280,8 @@ if not GenerateEffect then
 			local prevlv=lvc:GetFlagEffectLabel(585)
 			lvc:ResetFlagEffect(584)
 			lvc:ResetFlagEffect(585)
-			lvc:RegisterFlagEffect(584,nil,0,1,prevlv)
-			lvc:RegisterFlagEffect(585,nil,0,1,lvc:GetLevel())
+			lvc:RegisterFlagEffect(584,0,0,1,prevlv)
+			lvc:RegisterFlagEffect(585,0,0,1,lvc:GetLevel())
 		end
 		Duel.RaiseEvent(lvg,511002524,e,REASON_EFFECT,rp,ep,0)
 	end

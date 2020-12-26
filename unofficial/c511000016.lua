@@ -56,6 +56,6 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		Duel.Destroy(c,nil,REASON_EFFECT)
+		Duel.Destroy(c,REASON_EFFECT)
 	end
 end

@@ -89,7 +89,7 @@ function s.act(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:GetLabel()==10 then
 		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,nil)
-		Duel.Remove(g,nil,REASON_EFFECT+REASON_TEMPORARY)
+		Duel.Remove(g,REASON_EFFECT+REASON_TEMPORARY)
 		local maxct=0
 		for tc in aux.Next(g) do
 			if tc:GetFlagEffect(id)>0 then

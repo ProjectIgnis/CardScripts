@@ -47,7 +47,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		if #og>0 then
 			Duel.ConfirmCards(1-tp,tc)
 			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 			Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 		end

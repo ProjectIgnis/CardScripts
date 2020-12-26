@@ -48,7 +48,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
-	Duel.SendtoGrave(g,nil,REASON_COST)
+	Duel.SendtoGrave(g,REASON_COST)
 	e:SetLabel(g:GetFirst():GetLevel())
 	g:DeleteGroup()
 end

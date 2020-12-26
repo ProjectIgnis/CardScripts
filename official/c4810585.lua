@@ -64,7 +64,7 @@ end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,nil,REASON_COST)
+	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

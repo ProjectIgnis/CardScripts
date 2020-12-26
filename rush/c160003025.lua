@@ -29,7 +29,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
-	if Duel.SendtoGrave(tg,nil,REASON_COST)==1 then
+	if Duel.SendtoGrave(tg,REASON_COST)==1 then
 		local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,0,LOCATION_MZONE,nil)
 		if #g>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)

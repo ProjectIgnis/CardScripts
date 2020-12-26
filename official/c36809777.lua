@@ -60,7 +60,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if #g>0 then
 			local tg=aux.SelectUnselectGroup(g,e,tp,1,99,s.cancelcon,1,tp,HINTMSG_TOGRAVE,s.cancelcon)
-			if Duel.SendtoGrave(tg,nil,REASON_EFFECT)>0 then
+			if Duel.SendtoGrave(tg,REASON_EFFECT)>0 then
 				draw[p]=true
 			end
 		end

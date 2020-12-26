@@ -33,7 +33,7 @@ function s.chlimit(e,ep,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,2,2,nil)
-	if Duel.SendtoGrave(tg,nil,REASON_COST)==2 then
+	if Duel.SendtoGrave(tg,REASON_COST)==2 then
 		local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		if #g>0 then
 			Duel.Destroy(g,REASON_EFFECT)

@@ -18,12 +18,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetOperation(s.checkop)
-	e1:SetLabel(0)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetLabelObject(e1)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCode(EVENT_CUSTOM+id)
 	e2:SetCountLimit(1)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	e2:SetCondition(s.checkcon)
@@ -36,16 +34,16 @@ function s.spfilter(c,e,tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil,tp) then
-		e:SetLabel(1)
+		Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,0,0,0)
+		e:Reset()
 	end
 end
 function s.checkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetLabelObject():GetLabel()==1
+	return re:GetHandler()==e:GetHandler()
 end
 function s.checkop2(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
-	e:GetLabelObject():Reset()
-	if Duel.SelectYesNo(tp,1) then
+	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)

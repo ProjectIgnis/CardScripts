@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(aux.imval1)
+	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	--Return 2 plant link monsters from GY to extra deck
 	local e2=Effect.CreateEffect(c)

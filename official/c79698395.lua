@@ -56,7 +56,7 @@ function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
-	e2:SetValue(aux.imval1)
+	e2:SetValue(1)
 	tc:RegisterEffect(e2)
 end
 function s.rcon(e)

@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCondition(aux.NOT(s.nofieldcon))
-	e5:SetValue(aux.imval1)
+	e5:SetValue(1)
 	c:RegisterEffect(e5)
 	--Destroy all Monsters and Inflict 800 Damage for Each Monster
 	local e6=Effect.CreateEffect(c)

@@ -473,7 +473,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e1:Clone()
 		e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
-		e3:SetValue(aux.imval1)
+		e3:SetValue(1)
 		e3:SetRange(LOCATION_MZONE)
 		c:RegisterEffect(e3)
 	end

@@ -39,7 +39,7 @@ function s.chlimit(e,ep,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
-	local tc=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler()):GetFirst()
 	if tc then
 		Duel.HintSelection(Group.FromCards(tc))
 		Duel.Destroy(tc,REASON_EFFECT)

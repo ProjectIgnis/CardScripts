@@ -27,8 +27,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tg then
 		Duel.ConfirmCards(1-tp,tg)
 		Duel.ShuffleHand(tp)
-		if Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.attfilter),tp,0,LOCATION_MZONE,nil,tg:GetAttribute())>0 then
-			local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.attfilter),tp,0,LOCATION_MZONE,1,3,nil,tg:GetAttribute())
+		if Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.attfilter,tg:GetAttribute()),tp,0,LOCATION_MZONE,nil,tg:GetAttribute())>0 then
+			local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.attfilter,tg:GetAttribute()),tp,0,LOCATION_MZONE,1,3,nil,tg:GetAttribute())
 			Duel.HintSelection(g)
 			if g and #g>0 then
 				for tc in aux.Next(g) do

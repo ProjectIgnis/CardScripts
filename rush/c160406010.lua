@@ -11,17 +11,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>4 end
 	Duel.SetTargetPlayer(tp)
 end
 function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local ct=math.min(5,Duel.GetFieldGroupCount(p,0,LOCATION_DECK))
-	if ct==0 then return end
-	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_CONFIRM)
-	local ac=Duel.AnnounceLevel(p,1,ct)
-	local g=Duel.GetDecktopGroup(1-p,ac)
-	if #g>0 then
-		Duel.ConfirmCards(p,g)
-	end
+	Duel.ConfirmDecktop(1-tp,5)
 end

@@ -35,7 +35,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local tg=Duel.GetFieldGroup(tp,LOCATION_GRAVE,0):Filter(s.grv_fil,nil)
 	if tc:IsRelateToEffect(e) and #tg>0 then
-		if not Duel.Remove(tg,REASON_EFFECT) then return end
+		if not Duel.Remove(tg,nil,REASON_EFFECT) then return end
 		local i=tg:Filter(Card.IsLocation,nil,LOCATION_REMOVED):GetSum(s.grv_lvl_sum)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

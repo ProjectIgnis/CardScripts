@@ -14,7 +14,7 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(Card.IsRace,e:GetHandler():GetControler(),LOCATION_GRAVE,0,nil,RACE_PSYCHIC)
 	local cost=ct*100
-	if chk==0 then return Duel.CheckLPCost(tp,cost)
+	if chk==0 then return Duel.CheckLPCost(tp,cost) and cost>0
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_PSYCHIC),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

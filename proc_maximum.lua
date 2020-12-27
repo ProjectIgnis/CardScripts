@@ -369,7 +369,7 @@ end
 function Maximum.tribop(e,tp,eg,ep,ev,re,r,rp)
 	local c=eg:GetFirst()
 	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,c:GetControler(),LOCATION_MZONE,0,nil)
-	Duel.Sendto(g,c:GetDestination(),nil)
+	Duel.Sendto(g,c:GetDestination(),0)
 	for tc in aux.Next(g) do
 		tc:SetReason(c:GetReason())
 	end

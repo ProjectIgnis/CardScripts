@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetValue(aux.imval1)
 	c:RegisterEffect(e3)
 	--spsummon
 	local e4=Effect.CreateEffect(c)

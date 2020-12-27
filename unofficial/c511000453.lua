@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 	local e7=e1:Clone()
 	e7:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+	e7:SetValue(1)
 	c:RegisterEffect(e7)
 	--Destroy
 	local e8=Effect.CreateEffect(c)

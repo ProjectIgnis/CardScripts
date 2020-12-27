@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCondition(s.havefieldcon)
+	e5:SetValue(aux.imval1)
 	c:RegisterEffect(e5)
 	--Damage Equal to the Monster's ATK
 	local e6=Effect.CreateEffect(c)

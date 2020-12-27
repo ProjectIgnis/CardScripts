@@ -170,6 +170,7 @@ if not DeckMasters then
 		Duel.RegisterEffect(e2,0)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+		e3:SetValue(1)
 		Duel.RegisterEffect(e3,0)
 		local e4=e2:Clone()
 		e4:SetCode(EFFECT_UNRELEASABLE_SUM)

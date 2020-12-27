@@ -48,6 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+		e2:SetValue(aux.imval1)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		--negate

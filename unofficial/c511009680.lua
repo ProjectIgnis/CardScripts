@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetValue(aux.imval1)
 	c:RegisterEffect(e2)
 	--destroy
 	local e3=Effect.CreateEffect(c)

@@ -1,4 +1,15 @@
 --Utilities to be added to the core
+function Duel.GoatConfirm(tp,loc)
+	local dg,hg=Duel.GetFieldGroup(tp,loc&(LOCATION_HAND|LOCATION_DECK),0):Split(Card.IsLocation,nil,LOCATION_DECK)
+	Duel.ConfirmCards(tp,dg)
+	Duel.ConfirmCards(1-tp,hg)
+	if #hg>1 then
+		Duel.ShuffleHand(tp)
+	end
+	if #dg>1 then
+		Duel.ShuffleDeck(tp)
+	end
+end
 function Card.IsBattleDestroyed(c)
 	return c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsReason(REASON_BATTLE)
 end

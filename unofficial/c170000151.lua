@@ -29,9 +29,9 @@ end
 function s.spfilter(c,e,tp)
 	local code=c.material_trap
 	if not code or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,true,false) or not c:CheckFusionMaterial() then return false end
-	return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_ONFIELD,0,1,nil,code,c)
+	return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_ONFIELD,0,1,nil,code,c,tp)
 end
-function s.tgfilter(c,code,sc)
+function s.tgfilter(c,code,sc,tp)
 	return c:IsType(TYPE_TRAP) and c:IsAbleToGrave() and code==c:GetCode() and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if sc then
 		local code=sc.material_trap
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_ONFIELD,0,1,1,nil,code,sc)
+		local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_ONFIELD,0,1,1,nil,code,sc,tp)
 		tg:AddCard(e:GetHandler())
 		Duel.SendtoGrave(tg,REASON_EFFECT)
 		Duel.BreakEffect()

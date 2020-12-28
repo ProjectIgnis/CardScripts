@@ -81,7 +81,7 @@ function s.rmop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(e:GetLabelObject(),POS_FACEUP,REASON_EFFECT)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc:IsAbleToHand() end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc:IsAbleToDeck() end
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
 		and Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.rvfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and not c:IsPublic()
-		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.attfilter),tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
+		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.attfilter,c:GetAttribute()),tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
 end
 function s.attfilter(c,att)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and not c:IsAttribute(att)

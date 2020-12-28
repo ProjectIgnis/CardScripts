@@ -38,9 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_names={44508094}
 function s.descon(e)
-	local f1=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	local f2=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	return (f1==nil or f1:IsFacedown()) and (f2==nil or f2:IsFacedown())
+	return not Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.antarget(e,c)
 	return c~=e:GetHandler()

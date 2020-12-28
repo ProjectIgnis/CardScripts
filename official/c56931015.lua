@@ -40,20 +40,12 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c1=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	local c2=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	if chk==0 then return c1 or c2 end
-	local g=Group.CreateGroup()
-	if c1 then g:AddCard(c1) end
-	if c2 then g:AddCard(c2) end
+	local g=Duel.GetMatchingGroup(aux.TRUE,0,LOCATION_FZONE,LOCATION_FZONE,nil)
+	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local c1=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	local c2=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	local g=Group.CreateGroup()
-	if c1 then g:AddCard(c1) end
-	if c2 then g:AddCard(c2) end
+	local g=Duel.GetMatchingGroup(aux.TRUE,0,LOCATION_FZONE,LOCATION_FZONE,nil)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end

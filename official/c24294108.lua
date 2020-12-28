@@ -24,15 +24,11 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local c1=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	local c2=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	local g=Group.FromCards(c1,c2)
+	local g=Duel.GetMatchingGroup(aux.TRUE,0,LOCATION_FZONE,LOCATION_FZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c1=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	local c2=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	local g=Group.FromCards(c1,c2)
+	local g=Duel.GetMatchingGroup(aux.TRUE,0,LOCATION_FZONE,LOCATION_FZONE,nil)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end

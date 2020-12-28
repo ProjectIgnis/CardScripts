@@ -33,8 +33,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x107f,0x107e}
-function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():CheckUniqueOnField(tp)
+function s.eqcon(e)
+	return e:GetHandler():CheckUniqueOnField(e:GetHandlerPlayer())
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x107f)

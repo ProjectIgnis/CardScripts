@@ -26,7 +26,6 @@ function s.filter(c,e,tp)
 	return c:IsCode(95178994) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.Damage(1-tp,500,REASON_EFFECT)>0 then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if ft<=0 then return end

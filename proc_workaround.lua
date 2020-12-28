@@ -26,14 +26,6 @@ function Card.IsMonster(c)
 	return c:IsType(TYPE_MONSTER)
 end
 --
---In the core pos=0 means current position, temp map that to nil as well
-Duel.Remove=(function()
-	local remove=Duel.Remove
-	return function(obj,pos,...)
-		if pos==nil then pos=0 end
-		return remove(obj,pos,...)
-	end
-end)()
 function Card.AnnounceAnotherAttribute(c,tp)
 	local att=c:GetAttribute()
 	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or 0xff)

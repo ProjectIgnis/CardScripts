@@ -48,8 +48,8 @@ function s.spcon(e,c)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 	--Unique on field check
-function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():CheckUniqueOnField(tp)
+function s.eqcon(e)
+	return e:GetHandler():CheckUniqueOnField(e:GetHandlerPlayer())
 end
 	--Check for a "Utopia" monster
 function s.filter(c)

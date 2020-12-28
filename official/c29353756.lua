@@ -41,8 +41,8 @@ function s.spcon(e,c)
 	return Duel.GetLP(tp)<=Duel.GetLP(1-tp)-2000
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
-function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():CheckUniqueOnField(tp)
+function s.eqcon(e)
+	return e:GetHandler():CheckUniqueOnField(e:GetHandlerPlayer())
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x107f)

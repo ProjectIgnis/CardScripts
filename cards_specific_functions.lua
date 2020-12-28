@@ -636,7 +636,7 @@ function Auxiliary.EquipAndLimitRegister(c,e,tp,tc,code,previousPos)
     return true
 end
 -- Description: Equip Limit Proc for cards that equip themselves to another card
--- con - condition for when the card can equip to another
+-- con - condition for when the card can equip to another 'f(e)'
 -- equipval - filter for the equip target
 -- equipop - what happens when the card is equipped to the target
 -- (tc is equip target, c is equip card)
@@ -644,10 +644,7 @@ end
 -- prop - extra effect properties
 -- resetflag/resetcount - resets
 function Auxiliary.AddZWEquipLimit(c,con,equipval,equipop,linkedeff,prop,resetflag,resetcount)
-    local finalprop=EFFECT_FLAG_CANNOT_DISABLE
-    if prop~=nil then
-        finalprop=finalprop|prop
-    end
+    local finalprop=prop and prop|EFFECT_FLAG_CANNOT_DISABLE or EFFECT_FLAG_CANNOT_DISABLE
     local e1=Effect.CreateEffect(c)
     if con then
         e1:SetCondition(con)

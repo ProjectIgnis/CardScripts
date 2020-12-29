@@ -20,7 +20,7 @@ function s.cfilter2(c,att)
 	return c:IsFaceup() and c:IsAttribute(att) and not c:IsMaximumMode()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.cfilter),tp,LOCATION_MZONE,0,1,nil,tp)
+	return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.cfilter,tp),tp,LOCATION_MZONE,0,1,nil,tp)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetAttack()>0

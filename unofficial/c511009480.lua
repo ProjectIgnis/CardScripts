@@ -70,6 +70,7 @@ end
 function s.xyzcon(e,c)
 	if c==nil then return true end
 	if og then return false end
+	local tp=c:GetControler()
 	local mg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local mustg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,c,mg,REASON_XYZ)
 	if #mustg>0 or (min and min>1) then return false end

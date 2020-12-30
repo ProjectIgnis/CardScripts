@@ -38,7 +38,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if Duel.Draw(tp,2,REASON_EFFECT)>0 then
-		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,2,2,nil)
 		Duel.SendtoDeck(dg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		Duel.SortDeckbottom(tp,tp,#dg)

@@ -48,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if Duel.SendtoGrave(c,REASON_EFFECT)>0 then
 		if Duel.Draw(tp,3,REASON_EFFECT)>0 then
-			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TOGRAVE)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,3,3,nil)
 			Duel.SendtoGrave(dg,REASON_EFFECT)
 		end

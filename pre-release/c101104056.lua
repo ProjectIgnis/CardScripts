@@ -29,7 +29,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetOperation(s.thop)
 		s.thtg(e,tp,eg,ep,ev,re,r,rp,1)
 	else
-		e:SetCategory(CATEGORY_TOFIELD)
 		e:SetOperation(s.setop)
 		s.settg(e,tp,eg,ep,ev,re,r,rp,1)
 	end

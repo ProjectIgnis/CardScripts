@@ -39,17 +39,17 @@ function s.rescon2(g)
 				g:ForEach(function(tc)
 					table.insert(gtable,tc)
 				end)
-				return sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),table.unpack(gtable))
+				return sg:IsExists(s.chk,1,nil,tp,sg,Group.CreateGroup(),table.unpack(gtable))
 			end
 end
-function s.chk(c,sg,g,sc,...)
+function s.chk(c,tp,sg,g,sc,...)
 	local tpe=TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ
 	if not c:IsRace(sc:GetRace()) or not c:IsAttribute(sc:GetAttribute())
 		or c:GetType()&tpe~=sc:GetType()&tpe or Duel.GetLocationCountFromEx(tp,tp,g,tpe)<#sg then return false end
 	local res
 	if ... then
 		g:AddCard(c)
-		res=sg:IsExists(s.chk,1,g,sg,g,...)
+		res=sg:IsExists(s.chk,1,g,tp,sg,g,...)
 		g:RemoveCard(c)
 	else
 		res=true

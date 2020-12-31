@@ -55,6 +55,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition(cid)
 	return function(e,c)
-				return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,cid),e:GetHandler(),LOCATION_FZONE,LOCATION_FZONE,1,nil)
+				return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,cid),0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 			end
 end

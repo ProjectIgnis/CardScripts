@@ -59,7 +59,7 @@ end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=eg:FilterCount(s.repfilter,nil,tp)
 	local g=Duel.GetDecktopGroup(tp,ct)
-	if chk==0 then return g:IsExists(Card.IsAbleToRemove,ct,nil,tp,POS_FACEDOWN) end
+	if chk==0 then return ct>0 and g:IsExists(Card.IsAbleToRemove,ct,nil,tp,POS_FACEDOWN) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.DisableShuffleCheck()
 		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)

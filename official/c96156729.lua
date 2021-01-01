@@ -32,7 +32,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:GetAttribute()~=ATTRIBUTE_WIND
+	return not c:IsAttribute(ATTRIBUTE_WIND)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0xf0) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetOriginalCode())

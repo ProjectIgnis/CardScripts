@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10e}
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) and c:IsAbleToDeckAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

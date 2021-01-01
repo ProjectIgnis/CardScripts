@@ -50,7 +50,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		if g:IsExists(Card.IsSetCard,1,nil,0x115) then
 			if g1:IsExists(Card.IsAbleToHand,1,nil) then
 				if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-					Duel.Hint(HINT_SELECTMSG,p,HINTMSG_ATOHAND)
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 					local sg=g1:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)
 					Duel.SendtoHand(sg,nil,REASON_EFFECT)
 					Duel.ConfirmCards(1-tp,sg)

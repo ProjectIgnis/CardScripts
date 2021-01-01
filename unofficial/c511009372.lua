@@ -6,7 +6,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c,false)
 	--fusion material
-	Fusion.AddProcMix(c,true,true,511009366,aux.FilterBoolFunctionEx(Card.IsSpirit))
+	Fusion.AddProcMix(c,true,true,511009366,aux.FilterBoolFunctionEx2(Card.IsSpirit))
 	c:EnableReviveLimit()
 	--disable
 	local e1=Effect.CreateEffect(c)

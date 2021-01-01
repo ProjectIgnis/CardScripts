@@ -6,7 +6,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsDrone),1)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx2(Card.IsDrone),1)
 	c:EnableReviveLimit()
 	--direct attack
 	local e1=Effect.CreateEffect(c)

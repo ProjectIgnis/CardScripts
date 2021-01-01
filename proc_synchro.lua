@@ -15,6 +15,12 @@ function Synchro.NonTunerEx(f,val)
 				return target:IsNotTuner(scard,tp) and f(target,val,scard,sumtype,tp)
 			end
 end
+function Synchro.NonTunerEx2(f,...)
+	local params={...}
+	return	function(target,scard,sumtype,tp)
+				return target:IsNotTuner(scard,tp) and f(target,scard,sumtype,tp,table.unpack(params))
+			end
+end
 function Synchro.NonTunerCode(...)
 	local params={...}
 	return	function(target,scard,sumtype,tp)

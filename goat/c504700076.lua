@@ -3,7 +3,7 @@
 --Activation timing
 local s,id=GetID()
 function s.initial_effect(c)
-	--draw
+	--Draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW+CATEGORY_TODECK)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local other=c:GetBattleTarget()
+	local other=e:GetHandler():GetBattleTarget()
 	return other and other:IsControler(1-tp) and other:IsBattleDestroyed()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

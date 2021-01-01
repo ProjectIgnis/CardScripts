@@ -40,16 +40,16 @@ function s.dtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	local ec=c:GetEquipTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND) then
-		Duel.ConfirmCards(1-tp,tc)
-		if ec==tc then return end
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		ec:RegisterEffect(e1)
-	end
+        Duel.ConfirmCards(1-tp,tc)
+        local ec=c:GetEquipTarget()
+        if not ec then return end
+        local e1=Effect.CreateEffect(c)
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetCode(EFFECT_DIRECT_ATTACK)
+        e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+        ec:RegisterEffect(e1)
+    end
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x60) and not c:IsCode(id) and c:IsAbleToHand()

@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if ct>0 then
 			local drawn=Duel.Draw(tp,ct,REASON_EFFECT)
 			if drawn>0 then
-				Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 				local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,drawn,drawn,nil)
 				local opt=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
 				if opt==0 then

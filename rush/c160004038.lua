@@ -14,14 +14,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e)
-	Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_PSYCHIC),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+end
+function s.filter(c)
+	return c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 end
-	--Send 1 card from hand to GY to shuffle 2 monsters from opponent's GY to deck
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	

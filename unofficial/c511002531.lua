@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if oc~=nil then
 		sg:AddCard(oc)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,#sg,PLAYER_ALL,sc:GetOwner())
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,#sg,#sg==1 and tp or PLAYER_ALL,sc:GetOwner())
 	e:SetLabelObject(sc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

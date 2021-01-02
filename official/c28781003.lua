@@ -66,14 +66,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetCondition(s.descon)
 				e1:SetOperation(s.desop)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
-				sc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
+				sc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 				Duel.RegisterEffect(e1,tp)
 			end
 		end
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp)
+	return Duel.IsTurnPlayer(1-tp) and e:GetLabelObject():GetFlagEffect(id)>0
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local sc=e:GetLabelObject()

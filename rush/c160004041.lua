@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x8,0x3008}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsPosition(POS_FACEUP_ATTACK)
 end
@@ -40,11 +39,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=g1:GetFirst()
 	if not tc1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_GRAVE,0,1,1,tc1,e,tp,6-tc1:GetLevel())
+	local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_GRAVE,0,1,1,tc1,e,tp,10-tc1:GetLevel())
 	g1:Merge(g2)
 	Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 	--Prevent non-Fiend from attacking
-	local e2=Effect.CreateEffect(c)
+	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
 	e2:SetProperty(EFFECT_FLAG_OATH)

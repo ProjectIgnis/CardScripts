@@ -22,6 +22,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,Duel.GetFieldGroup(tp,LOCATION_HAND,0),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and

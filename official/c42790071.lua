@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCode(EVENT_CHAIN_SOLVED)
+	e1:SetCode(EVENT_CHAINING)
 	e1:SetCountLimit(1,id)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCondition(s.spcon1)
@@ -35,7 +35,7 @@ function s.counterfilter(c)
 	return c:IsSetCard(0x103)
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP)
 		and rp==tp 
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

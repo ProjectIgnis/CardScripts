@@ -30,7 +30,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	--requirement
 	
 	--effect
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.rthfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g)

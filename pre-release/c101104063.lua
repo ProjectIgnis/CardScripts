@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.rmfilter1(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsDefense(200) and c:IsAbleToRemove() 
+	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsDefense(200) and not c:IsType(TYPE_TUNER) and c:IsAbleToRemove() 
 		and Duel.IsExistingMatchingCard(s.rmfilter2,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil,e,tp,c:GetOriginalLevel()) and aux.SpElimFilter(c,true)
 end
 function s.rmfilter2(c,e,tp,lv)

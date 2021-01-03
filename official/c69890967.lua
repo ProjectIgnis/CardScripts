@@ -48,11 +48,11 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil)
+	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil,tp)
 	return aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil)
+	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil,tp)
 	local mg=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
 	if #mg==3 then
 		mg:KeepAlive()

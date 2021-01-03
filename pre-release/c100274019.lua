@@ -58,7 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsAbleToEnterBP()
 end
 function s.atfilter(c,lg)
 	return c:IsSetCard(0x2157) and c:IsLinkMonster() and lg and lg:IsContains(c)

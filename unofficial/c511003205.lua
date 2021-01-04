@@ -66,18 +66,17 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local xg=tc:GetOverlayGroup()
 	local g=Group.FromCards(c,tc)
 	if Duel.Remove(g,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
-		local og=Duel.GetOperatedGroup()
+		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_REMOVED)
+		if #og==0 then return end
 		local mcount=xg:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
-		if not og:IsContains(tc) then mcount=0 end
 		for oc in aux.Next(og) do
-			oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			oc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
 		end
 		og:KeepAlive()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
 		e1:SetReset(RESET_PHASE+PHASE_BATTLE)
-		e1:SetLabel(mcount)
 		e1:SetCountLimit(1)
 		e1:SetLabelObject(og)
 		e1:SetOperation(s.retop)
@@ -91,8 +90,8 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local sg=g:Filter(s.retfilter,nil)
 	g:DeleteGroup()
-	for tc in aux.Next(sg) do
-		if Duel.SpecialSummon(tc,0,tc:GetControler(),tc:GetControler(),false,false,POS_FACEUP)>0 and tc:IsFaceup() and tc==e:GetOwner() and e:GetLabel()~=0 then
+	for tc in sg:Iter() do
+		if Duel.SpecialSummon(tc,0,tc:GetControler(),tc:GetControler(),false,false,POS_FACEUP)>0 and tc:IsFaceup() and tc==e:GetOwner() then
 			local e1=Effect.CreateEffect(e:GetOwner())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

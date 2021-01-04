@@ -28,9 +28,9 @@ end
 function s.mfilter(c,e,tp,mc)
 	local mg=Group.FromCards(c,mc)
 	return c:IsSetCard(0x43) and not c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
+		and Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_EXTRA,0,1,nil,mg,tp)
 end
-function s.scfilter(c,mg)
+function s.scfilter(c,mg,tp)
 	return aux.IsMaterialListSetCard(c,0x1017) and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0 and c:IsSynchroSummonable(nil,mg)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

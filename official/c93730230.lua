@@ -38,20 +38,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		c:RegisterEffect(e2)
 		--Opponent takes the battle damage instead
-		local e3=Effect.CreateEffect(c)
-		e3:SetDescription(3212)
-		e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e3:SetOperation(s.damop)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		local e3=e1:Clone()
+		e3:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
 		c:RegisterEffect(e3)
-	end
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local dam=Duel.GetBattleDamage(tp)
-	if dam>0 then
-		Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(1-tp)+dam,false)
-		Duel.ChangeBattleDamage(tp,0)
 	end
 end

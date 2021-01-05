@@ -24,9 +24,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Reflect battle damage
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e3:SetOperation(s.damop)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
+	e3:SetCondition(s.refcon)
+	e3:SetValue(1)
 	c:RegisterEffect(e3)
 	--Special Summon
 	local e4=Effect.CreateEffect(c)
@@ -50,13 +51,8 @@ end
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(s.ffilter,e:GetHandlerPlayer(),LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.GetAttackTarget() or not (Duel.GetAttackTarget()==e:GetHandler()) then return end
-	local dam=Duel.GetBattleDamage(tp)
-	if dam>0 then
-		Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(1-tp)+dam,false)
-		Duel.ChangeBattleDamage(tp,0)
-	end
+function s.refcon(e)
+	return Duel.GetAttackTarget()==e:GetHandler()
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0xf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsLinkMonster()

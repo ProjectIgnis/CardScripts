@@ -30,7 +30,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12}
 function s.costfilter(c,ft)
-	return c:IsSetCard(0x12) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) and (ft>0 or aux.MZFilter(c,c:GetControler()))
+	return c:IsSetCard(0x12) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+		and (ft>0 or aux.MZFilter(c,c:GetControler()))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

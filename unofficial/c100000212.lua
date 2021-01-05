@@ -25,9 +25,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x1,-2,0,8,RACE_MACHINE,ATTRIBUTE_DARK) then return end
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e1:SetOperation(s.damop)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 	c:AddMonsterAttribute(TYPE_MONSTER+TYPE_TRAP)
@@ -39,7 +40,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetValue(Duel.GetBattleDamage(tp))
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 	c:RegisterEffect(e2)
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,0)
 end

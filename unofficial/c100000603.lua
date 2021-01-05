@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=0x08 and ph<=0x20 and ep~=tp and re:GetHandler():IsType(TYPE_COUNTER)
+	return ph>=PHASE_BATTLE_START and ph<=PHASE_DAMAGE and ep~=tp and re:GetHandler():IsType(TYPE_COUNTER)
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -29,15 +29,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
-	--damage reduce
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e1:SetOperation(s.rdop)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,1)
+	e1:SetValue(DOUBLE_DAMAGE)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
-end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,ev*2)
-	Duel.ChangeBattleDamage(1-tp,ev*2)
 end

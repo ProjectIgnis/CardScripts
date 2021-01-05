@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e4:SetCondition(s.rdcon)
-	e4:SetOperation(s.rdop)
+	e4:SetValue(s.rval)
 	c:RegisterEffect(e4)
 end
 function s.spcon(e,c)
@@ -51,21 +51,17 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
 end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetAttackTarget()==nil
-		and e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
+function s.rdcon(e)
+	local c=e:GetHandler()
+	local tp=e:GetHandlerPlayer()
+	return Duel.GetAttackTarget()==nil
+		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2
 		and Duel.IsExistingMatchingCard(aux.NOT(Card.IsHasEffect),tp,0,LOCATION_MZONE,1,nil,EFFECT_IGNORE_BATTLE_TARGET)
 end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local effs={c:GetCardEffect(EFFECT_DIRECT_ATTACK)}
-	local eg=Group.CreateGroup()
-	for _,eff in ipairs(effs) do
-		eg:AddCard(eff:GetOwner())
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	local ec = #eg==1 and eg:GetFirst() or eg:Select(tp,1,1,nil):GetFirst()
-	if c==ec then
-		Duel.ChangeBattleDamage(ep,Duel.GetBattleDamage(ep)/2)
+function s.rval(e,damp)
+	if damp==1-e:GetHandlerPlayer() then
+		return e:GetHandler():GetBaseAttack()
+	else
+		return -1
 	end
 end

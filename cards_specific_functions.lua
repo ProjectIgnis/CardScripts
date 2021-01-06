@@ -821,3 +821,24 @@ function Auxiliary.AddAmazementQuickEquipEffect(c,id)
 	e2:SetOperation(AA.qeqeop)
 	c:RegisterEffect(e2)
 end
+-- Description: cost for "Security Force" cards that banish a card from the hand, needed for "Security Force Chase" from LIOV
+function Auxiliary.SecurityForceCostFilter(c)
+    return c:IsSetCard(0x15a) and c:IsAbleToRemoveAsCost()
+end
+function Auxiliary.SecurityForceCostReplacement(c)
+    return c:IsHasEffect(EFFECT_SECURITYFORCE_REPLACE) and c:IsAbleToRemoveAsCost()
+end
+function Auxiliary.SecurityForceCost(e,tp,eg,ep,ev,re,r,rp,chk)
+    local g1=Duel.GetMatchingGroup(Auxiliary.SecurityForceCostFilter,tp,LOCATION_HAND,0,1,nil)
+    local g2=Duel.GetMatchingGroup(Auxiliary.SecurityForceCostReplacement,tp,LOCATION_GRAVE,0,1,nil)
+    if chk==0 then return #g1>0 or #g2>0 end
+    local rg=nil
+    if #g2>0 and (#g1==0 or Duel.SelectYesNo(tp,aux.Stringid(CARD_SECURITYFORCE_CHASE,1))) then
+        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+        rg=g2:Select(tp,1,1,nil)
+    else
+        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+        rg=g1:Select(tp,1,1,nil)
+    end
+    Duel.Remove(rg,POS_FACEUP,REASON_COST)
+end

@@ -44,12 +44,13 @@ function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if e:GetHandler():AddCounter(0x59,1)~=0
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and ft>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_BEAST,ATTRIBUTE_EARTH) then
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-		if ct>ft then ct=ft end
 		local ct=c:GetCounter(0x59)
+		if ct>ft then ct=ft end
 		while ct>0 do
 			local token=Duel.CreateToken(tp,id+1)
 			local e1=Effect.CreateEffect(c)

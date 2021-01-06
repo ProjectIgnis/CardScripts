@@ -55,8 +55,11 @@ function s.valcheck(e,c)
 		c:RegisterFlagEffect(id,RESET_EVENT+0x4fe0000+RESET_PHASE+PHASE_END,0,1)
 	end
 end
+function s.cfilter(c,e,tp)
+	return c:IsFaceup() and c:IsType(e:GetLabel()) and c:GetFlagEffect(id)~=0 and c:IsSummonPlayer(tp)
+end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
-	return #eg==1 and eg:GetFirst():IsFaceup() and eg:GetFirst():IsType(e:GetLabel()) and eg:GetFirst():GetFlagEffect(id)~=0
+	return #eg==1 and s.cfilter(eg:GetFirst(),e,tp)
 end
 function s.spfilter(c,e,tp,lv)
 	local lvl=c:GetOriginalLevel()

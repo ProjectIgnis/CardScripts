@@ -47,12 +47,12 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if e:GetHandler():AddCounter(0x59,1)~=0
 		and ft>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_BEAST,ATTRIBUTE_EARTH) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,0,0,1,RACE_BEAST,ATTRIBUTE_EARTH) then
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 		local ct=c:GetCounter(0x59)
 		if ct>ft then ct=ft end
 		while ct>0 do
-			local token=Duel.CreateToken(tp,id+1)
+			local token=Duel.CreateToken(tp,id+100)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_LEVEL)

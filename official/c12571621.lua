@@ -1,5 +1,5 @@
 --電脳堺豸－豸々
---Datascape Zhi - Zhizhi
+--Virtual World Xiezhi - Jiji
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,6 +14,8 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
+	GhostBelleTable=GhostBelleTable or {}
+	table.insert(GhostBelleTable,e1)
 end
 s.listed_series={0x150}
 s.listed_names={id}

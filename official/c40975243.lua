@@ -1,5 +1,5 @@
 --鉄獣の抗戦
---Tribrigade Revolt
+--Tri-Brigade Revolt
 --Scripted by Naim and pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_LINK)>0
 		and aux.SelectUnselectGroup(fg,e,tp,1,ft,s.rescon,0)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,nil,tp,LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

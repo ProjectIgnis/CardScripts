@@ -874,7 +874,15 @@ end
 function Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,rescon,chk,seltp,hintmsg,finishcon,breakcon,cancelable)
 	local minc=minc or 1
 	local maxc=maxc or #g
-	if chk==0 then return #g>=minc and g:IsExists(Auxiliary.SelectUnselectLoop,1,nil,Group.CreateGroup(),g,e,tp,minc,maxc,rescon) end
+	if chk==0 then
+		if #g<minc then return false end
+		local eg=g:Clone()
+		for c in g:Iter() do
+			if Auxiliary.SelectUnselectLoop(c,Group.CreateGroup(),eg,e,tp,minc,maxc,rescon) then return true end
+			eg:RemoveCard(c)
+		end
+		return false
+	end
 	local hintmsg=hintmsg and hintmsg or 0
 	local sg=Group.CreateGroup()
 	while true do

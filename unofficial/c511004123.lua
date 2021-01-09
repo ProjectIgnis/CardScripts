@@ -63,58 +63,38 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)
-end
 function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:GetEquipGroup():IsContains(e:GetOwner()) then e:Reset() return end
 	if c:IsDisabled() then return end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,e:GetHandler())
-	for tc in aux.Next(g) do
+	local map={}
+	for _,eff in ipairs({c:GetCardEffect(511002571)}) do
+		map[eff:GetLabel()]=true
+	end
+	for tc in Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,e:GetHandler()):Iter() do
 		local code=tc:GetOriginalCode()
-		if tc:IsHasEffect(511002571) then
-			local teff={tc:GetCardEffect(511002571)}
-			for _,te in ipairs(teff) do
-				local code=te:GetLabel()
-				local ceff={c:GetCardEffect(511002571)}
-				local ok=true
-				for _,te2 in ipairs(ceff) do
-					if code==te2:GetLabel() then ok=false end
-					if ok then break end
-				end
-				if ok then
-					local copye={}
-					for k,te3 in ipairs(teff) do
-						if te3:GetLabel()==code then
-							table.insert(copye,teff[k])
-						end
-					end
-					for _,te4 in ipairs(copye) do
-						local teh=te4:GetLabelObject()
-						if teh:GetCode()&511001822==511001822 then teh=teh:GetLabelObject() end
-						local tec2=teh:Clone()
-						c:RegisterEffect(tec2)
-						local tec=te4:Clone()
-						tec:SetLabelObject(tec2)
-						c:RegisterEffect(tec)
-						local rste=Effect.CreateEffect(e:GetOwner())
-						rste:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-						rste:SetCode(EVENT_ADJUST)
-						rste:SetLabelObject(tec)
-						rste:SetLabel(code)
-						rste:SetOperation(s.resetop)
-						Duel.RegisterEffect(rste,tp)
-					end
-				end
+		for _,te in ipairs({tc:GetCardEffect(511002571)}) do
+			local code=te:GetLabel()
+			if not map[code] and te:GetLabel()==code then
+				local teh=te:GetLabelObject()
+				if teh:GetCode()&511001822==511001822 then teh=teh:GetLabelObject() end
+				local tec2=teh:Clone()
+				c:RegisterEffect(tec2)
+				local tec=te:Clone()
+				c:RegisterEffect(tec)
+				local rste=Effect.CreateEffect(e:GetOwner())
+				rste:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+				rste:SetCode(EVENT_ADJUST)
+				rste:SetLabelObject({tec2,tec})
+				rste:SetLabel(code)
+				rste:SetOperation(s.resetop)
+				Duel.RegisterEffect(rste,tp)
 			end
 		end
 	end
 end
 function s.codechk(c,code)
-	if not c:IsHasEffect(511002571) then return false end
-	local eff={c:GetCardEffect(511002571)}
-	for _,te in ipairs(eff) do
+	for _,te in ipairs({c:GetCardEffect(511002571)}) do
 		if te:GetLabel()==code then return true end
 	end
 	return false
@@ -123,13 +103,10 @@ function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetOwner():GetEquipTarget()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,tc)
 	if not g:IsExists(s.codechk,1,nil,e:GetLabel()) or not tc or tc:IsDisabled() or e:GetOwner():IsDisabled() then
-		local te1=e:GetLabelObject()
-		local te2=te1:GetLabelObject()
-		if te2 then
-			te2:Reset()
-		end
-		if te1 then
-			te1:Reset()
+		for _,eff in ipairs(e:GetLabelObject()) do
+			if eff then
+				eff:Reset()
+			end
 		end
 		e:Reset()
 	end

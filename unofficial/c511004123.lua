@@ -73,27 +73,29 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	for tc in Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,e:GetHandler()):Iter() do
 		local code=tc:GetOriginalCode()
-		for _,te in ipairs({tc:GetCardEffect(511002571)}) do
-			local code=te:GetLabel()
-			if not map[code] and te:GetLabel()==code then
-				local teh=te:GetLabelObject()
-				if teh:GetCode()&511001822==511001822 then teh=teh:GetLabelObject() end
-				local tec2=teh:Clone()
-				c:RegisterEffect(tec2)
-				local tec=te:Clone()
-				c:RegisterEffect(tec)
-				local rste=Effect.CreateEffect(e:GetOwner())
-				rste:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-				rste:SetCode(EVENT_ADJUST)
-				rste:SetLabelObject({tec2,tec})
-				rste:SetLabel(code)
-				rste:SetOperation(s.resetop)
-				Duel.RegisterEffect(rste,tp)
+		if not map[code] then
+			for _,te in ipairs({tc:GetCardEffect(511002571)}) do
+				if te:GetLabel()==code then
+					local teh=te:GetLabelObject()
+					if teh:GetCode()&511001822==511001822 then teh=teh:GetLabelObject() end
+					local tec2=teh:Clone()
+					c:RegisterEffect(tec2)
+					local tec=te:Clone()
+					c:RegisterEffect(tec)
+					local rste=Effect.CreateEffect(e:GetOwner())
+					rste:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+					rste:SetCode(EVENT_ADJUST)
+					rste:SetLabelObject({tec2,tec})
+					rste:SetLabel(code)
+					rste:SetOperation(s.resetop)
+					Duel.RegisterEffect(rste,tp)
+				end
 			end
 		end
 	end
 end
 function s.codechk(c,code)
+	if not c:IsFaceup() or not c:IsType(TYPE_XYZ) then return false end
 	for _,te in ipairs({c:GetCardEffect(511002571)}) do
 		if te:GetLabel()==code then return true end
 	end
@@ -101,8 +103,8 @@ function s.codechk(c,code)
 end
 function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetOwner():GetEquipTarget()
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,tc)
-	if not g:IsExists(s.codechk,1,nil,e:GetLabel()) or not tc or tc:IsDisabled() or e:GetOwner():IsDisabled() then
+	if not tc or tc:IsDisabled() or e:GetOwner():IsDisabled()
+		or not Duel.IsExistingMatchingCard(s.codechk,tp,LOCATION_MZONE,0,1,tc,e:GetLabel()) then
 		for _,eff in ipairs(e:GetLabelObject()) do
 			if eff then
 				eff:Reset()

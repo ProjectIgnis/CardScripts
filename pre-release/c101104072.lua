@@ -7,12 +7,25 @@ function s.initial_effect(c)
 	--From cards_specific_functions.lua
 	aux.AddAttractionEquipProc(c)
 	--You: During the Main Phase: Place 1 card from your hand on the bottom of the Deck, then draw 1 card.
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
+	e1:SetHintTiming(TIMING_MAIN_END)
+	e1:SetCountLimit(1,id)
+	e1:SetCondition(aux.AttractionEquipCon(true))
+	e1:SetTarget(s.drtg)
+	e1:SetOperation(s.drop)
+	c:RegisterEffect(e1)
 	--Your opponent: Switch the equipped monster's current ATK and DEF, until the end of this turn.
-	local e2=aux.MakeAttractionBinaryEquipChkOp(c,id,
-		{CATEGORY_TODECK+CATEGORY_DRAW,nil,s.drtg,s.drop,{TIMING_MAIN_END}},
-		{CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE,EFFECT_FLAG_DAMAGE_STEP,s.atktg,s.atkop,{TIMINGS_CHECK_MONSTER}},
-		nil)
+	local e2=e1:Clone()
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
+	e1:SetHintTiming(TIMINGS_CHECK_MONSTER)
+	e2:SetCondition(aux.AttractionEquipCon(false))
+	e2:SetTarget(s.atktg)
+	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x25d}

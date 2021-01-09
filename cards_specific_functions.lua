@@ -725,63 +725,12 @@ function Auxiliary.AddAttractionEquipProc(c)
 	e1:SetOperation(AA.eqop)
 	c:RegisterEffect(e1)
 end
-function AA.bincond(e)
-	return e:GetHandler():GetEquipTarget()
-end
--- Description: Makes an effect that will perform different check+operation depending on whether or not the currently equipped monster is controlled by tp.
--- Parameters:
--- c - The card to make the effect from.
--- id - The id of the card used for the HOPT clause.
--- the next two parameters are tables, one for each possible controller. They require the following 5 sequential parameters:
--- -- 1 - effect category (SetCategory), integer or nil (in which case defaults to 0).
--- -- 2 - effect property (SetProperty), integer or nil (in which case defaults to 0).
--- -- 3 - condition/target (check) function to be called.
--- -- 4 - operation function to be called.
--- -- 5 - a table that will be unpacked to call Effect.SetHintTiming.
--- chkcf - The chckc function to be called, nil otherwise (used if one of the effect targets).
-function Auxiliary.MakeAttractionBinaryEquipChkOp(c,id,you,opp,chkcf)
-	local tg=function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-		if chkc then
-			if chkcf then
-				return chkcf(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-			else
-				return false
-			end
-		end
+--Returns if the card is equipped and if the equipped monster is controlled by the player (self=true) or by the opponent (self=false)
+function Auxiliary.AttractionEquipCon(self)
+	return function(e)
 		local et=e:GetHandler():GetEquipTarget()
-		if not et then return false end
-		local yours=et:GetControler()==tp
-		if chk==0 then
-			if yours then
-				return you[3](e,tp,eg,ep,ev,re,r,rp,0)
-			else
-				return opp[3](e,tp,eg,ep,ev,re,r,rp,0)
-			end
-		end
-		if yours then
-			e:SetCategory(you[1] and you[1] or 0)
-			e:SetProperty(you[2] and you[2] or 0)
-			e:SetOperation(you[4])
-			e:SetHintTiming(table.unpack(opp[5]))
-			you[3](e,tp,eg,ep,ev,re,r,rp,1)
-		else
-			e:SetCategory(opp[1] and opp[1] or 0)
-			e:SetProperty(opp[2] and opp[2] or 0)
-			e:SetOperation(opp[4])
-			e:SetHintTiming(table.unpack(opp[5]))
-			opp[3](e,tp,eg,ep,ev,re,r,rp,1)
-		end
+		return et and (et:GetControler()==e:GetHandlerPlayer())==self
 	end
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetRange(LOCATION_SZONE)
-	e1:SetCategory(0)
-	e1:SetProperty(0)
-	e1:SetCountLimit(1,id)
-	e1:SetCondition(AA.bincond)
-	e1:SetTarget(tg)
-	return e1
 end
 function AA.eqsfilter(c,tp)
 	return c:IsSetCard(0x25e) and c:IsType(TYPE_TRAP) and c:GetEquipTarget() and

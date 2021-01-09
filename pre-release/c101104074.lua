@@ -7,11 +7,24 @@ function s.initial_effect(c)
 	--From cards_specific_functions.lua
 	aux.AddAttractionEquipProc(c)
 	--You: Target 1 card in your opponent's GY; change the equipped monster's battle position, and if you do, shuffle that target into the Deck.
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCategory(CATEGORY_POSITION+CATEGORY_TODECK)
+	e1:SetCountLimit(1,id)
+	e1:SetCondition(aux.AttractionEquipCon(true))
+	e1:SetTarget(s.postg)
+	e1:SetOperation(s.posop)
+	c:RegisterEffect(e1)
 	--Your opponent: Increase the equipped monster's Level by 1 (until the end of this turn), and if you do, change its battle position.
-	local e2=aux.MakeAttractionBinaryEquipChkOp(c,id,
-		{CATEGORY_POSITION+CATEGORY_TODECK,EFFECT_FLAG_CARD_TARGET,s.postg,s.posop,{0,0}},
-		{CATEGORY_POSITION+CATEGORY_LVCHANGE,nil,s.lvtg,s.lvop,{0,0}},
-		s.postg)
+	local e2=e1:Clone()
+	e2:SetProperty(0)
+	e2:SetCategory(CATEGORY_POSITION+CATEGORY_LVCHANGE)
+	e2:SetCondition(aux.AttractionEquipCon(false))
+	e2:SetTarget(s.lvtg)
+	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x25d}

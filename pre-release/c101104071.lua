@@ -7,11 +7,25 @@ function s.initial_effect(c)
 	--From cards_specific_functions.lua
 	aux.AddAttractionEquipProc(c)
 	--You: Target 1 Spell/Trap your opponent controls; send both it and this card to the GY.
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCategory(CATEGORY_TOGRAVE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetCountLimit(1,id)
+	e1:SetCondition(aux.AttractionEquipCon(true))
+	e1:SetTarget(s.gytg)
+	e1:SetOperation(s.gyop)
+	c:RegisterEffect(e1)
 	--Your opponent: Add 1 "Amazement" monster from your Deck to your hand, and if you do, send this card to the GY.
-	local e2=aux.MakeAttractionBinaryEquipChkOp(c,id,
-		{CATEGORY_TOGRAVE,EFFECT_FLAG_CARD_TARGET,s.gytg,s.gyop,{0,TIMING_END_PHASE}},
-		{CATEGORY_TOGRAVE+CATEGORY_TOHAND+CATEGORY_SEARCH,nil,s.thtg,s.thop,{0,TIMING_END_PHASE}},
-		s.gytg)
+	local e2=e1:Clone()
+	e2:SetProperty(0)
+	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e2:SetTarget(s.thtg)
+	e2:SetOperation(s.thop)
+	e2:SetCondition(aux.AttractionEquipCon(false))
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x25d}

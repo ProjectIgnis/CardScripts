@@ -7,11 +7,24 @@ function s.initial_effect(c)
 	--From cards_specific_functions.lua
 	aux.AddAttractionEquipProc(c)
 	--You: Target 1 Effect Monster your opponent controls; negate its effects until the end of this turn.
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCategory(CATEGORY_DISABLE)
+	e1:SetCountLimit(1,id)
+	e1:SetCondition(aux.AttractionEquipCon(true))
+	e1:SetTarget(s.distg)
+	e1:SetOperation(s.disop)
+	c:RegisterEffect(e1)
 	--Your opponent: Change the equipped monster to face-down Defense Position.
-	local e2=aux.MakeAttractionBinaryEquipChkOp(c,id,
-		{CATEGORY_DISABLE,EFFECT_FLAG_CARD_TARGET,s.distg,s.disop,{0,0}},
-		{CATEGORY_POSITION,nil,s.postg,s.posop,{0,0}},
-		s.distg)
+	local e2=e1:Clone()
+	e2:SetProperty(0)
+	e2:SetCategory(CATEGORY_POSITION)
+	e2:SetCondition(aux.AttractionEquipCon(false))
+	e2:SetTarget(s.postg)
+	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x25d}

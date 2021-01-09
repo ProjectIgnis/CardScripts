@@ -1,7 +1,6 @@
 --警衛バリケイドベルグ
 --Barricadeborg Blocker
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -21,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
 	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable.e1)
+	table.insert(GhostBelleTable,e1)
 	--Your face-up spells cannot be destroyed by opponent's card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)

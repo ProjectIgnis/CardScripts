@@ -8,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e1:SetCondition(s.ndmcon)
 	e1:SetOperation(s.ndmop)
 	c:RegisterEffect(e1)
 	--set
@@ -22,13 +21,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sstg)
 	e1:SetOperation(s.ssop)
 	c:RegisterEffect(e1)
-end
-function s.ndmcon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	if (a:IsControler(1-tp) or a:IsControler(tp)) then
-		a=Duel.GetAttackTarget()
-	end
-	return a
 end
 function s.ndmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

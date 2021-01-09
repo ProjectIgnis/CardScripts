@@ -43,8 +43,8 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(1-tp,500,REASON_EFFECT)
 	end
 end
-function s.filter(c,e,tp,chk)
-	return c:IsLevel(8) and c:IsRace(RACE_ROCK) and (c:IsAbleToHand() or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+function s.filter(c,e,tp,ck)
+	return c:IsLevel(8) and c:IsRace(RACE_ROCK) and (c:IsAbleToHand() or (ck and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
@@ -53,18 +53,21 @@ function s.gycon(c)
 	return c:IsCode(CARD_FOSSIL_FUSION)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
-	if Duel.IsExistingMatchingCard(s.gycon,tp,LOCATION_GRAVE,0,1,nil) then
+	local ck=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.gycon,tp,LOCATION_GRAVE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,ck) end
+	if ck then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local ck=Duel.IsExistingMatchingCard(s.gycon,tp,LOCATION_GRAVE,0,1,nil)
+	local ck=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.gycon,tp,LOCATION_GRAVE,0,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,ck):GetFirst()
 	if tc then
-		if ck and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+		if ck and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 		and (not tc:IsAbleToHand() or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		else

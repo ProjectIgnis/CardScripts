@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Princess Cologne"
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil,75574498)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,75574498),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 	--Check if the monster has 0 ATK or DEF
 function s.atlimit(e,c)

@@ -83,13 +83,14 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Special summon 2 tokens, cannot special summon except from hand
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCount(tp,LOCATION_MZONE)<2
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,0,0,1,RACE_FAIRY,ATTRIBUTE_LIGHT) then return end
-	for i=1,2 do
-		local token=Duel.CreateToken(tp,id+100)
-		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+	if not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>=2
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,0,0,1,RACE_FAIRY,ATTRIBUTE_LIGHT) then
+		for i=1,2 do
+			local token=Duel.CreateToken(tp,id+100)
+			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+		end
+		Duel.SpecialSummonComplete()
 	end
-	Duel.SpecialSummonComplete()
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

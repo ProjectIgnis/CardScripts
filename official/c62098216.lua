@@ -54,11 +54,11 @@ function s.rfilter(c,tp)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),s.rfilter,2,false,2,true,c,c:GetControler(),nil,false,nil)
+	return Duel.CheckReleaseGroup(c:GetControler(),s.rfilter,2,false,2,true,c,nil,nil,nil,c:GetControler())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=Duel.SelectReleaseGroup(tp,s.rfilter,2,2,false,true,true,c,nil,nil,false,nil)
+	local g=Duel.SelectReleaseGroup(tp,s.rfilter,2,2,false,true,true,c,nil,nil,false,nil,tp)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)

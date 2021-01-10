@@ -73,7 +73,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 --To Extra Deck
 function s.tedfilter(c,tp)
-	return (c:IsCode(73580471) or c:IsCode(101104035)) and c:IsAbleToExtra()
+	return (c:IsCode(CARD_BLACK_ROSE_DRAGON) or c:IsCode(101104035)) and c:IsAbleToExtra()
 end
 function s.tedtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tedfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,tp) end

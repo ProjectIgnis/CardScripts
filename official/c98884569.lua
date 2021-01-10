@@ -13,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={73580471}
+s.listed_names={CARD_BLACK_ROSE_DRAGON}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.filter(c,e,tp)
-	return (c:IsRace(RACE_PLANT) or c:IsCode(73580471)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsRace(RACE_PLANT) or c:IsCode(CARD_BLACK_ROSE_DRAGON)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

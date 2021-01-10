@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.condition(e)
-	return Duel.GetMatchingGroupCount(aux.NOT(Card.IsCode,id),e:GetHandlerPlayer(),LOCATION_EXTRA,0,nil)==0
+	return Duel.GetMatchingGroupCount(aux.NOT(Card.IsCode),e:GetHandlerPlayer(),LOCATION_EXTRA,0,nil,id)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

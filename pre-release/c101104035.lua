@@ -17,13 +17,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
-	--Material check
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_MATERIAL_CHECK)
-	e2:SetValue(s.valcheck)
-	e2:SetLabelObject(e1)
-	c:RegisterEffect(e2)
 	--Negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -61,14 +54,14 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		local g2=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
-		if g2>0 and c:GetMaterial():IsExists(s.filter,1,nil,c) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		if #g2>0 and c:GetMaterial():IsExists(s.filter,1,nil,c) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.Destroy(g2,REASON_EFFECT)
 		end
 	end
 end
 --negate then revive BRD
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) then return false end
+	if tp==ep or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) then return false end
 	if re:IsHasCategory(CATEGORY_NEGATE)
 		and Duel.GetChainInfo(ev-1,CHAININFO_TRIGGERING_EFFECT):IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)

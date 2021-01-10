@@ -25,10 +25,10 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e2:SetCountLimit(1,id+100)
-	e2:SetCondition(s.negcon)
+	e2:SetCondition(s.negcon2)
 	e2:SetCost(aux.bfgcost)
-	e2:SetTarget(s.negtg)
-	e2:SetOperation(s.negop)
+	e2:SetTarget(s.negtg2)
+	e2:SetOperation(s.negop2)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x135}
@@ -48,16 +48,16 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.NegateAttack()
 	end
 end
-function s.negcon(e,tp,eg,ep,ev,re,r,rp)
+function s.negcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLink,6),tp,LOCATION_MZONE,0,1,nil)
 end
-function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.negtg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and aux.disfilter1(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_ONFIELD,1,1,nil)
 end
-function s.negop(e,tp,eg,ep,ev,re,r,rp)
+function s.negop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsDisabled() then

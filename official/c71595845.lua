@@ -37,13 +37,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Doll Monster" archetype
-s.listed_series={0x25c}
+s.listed_series={0x15c}
 	--Specifically lists "Princess Cologne", "Box of Friends", and "Grandpa Demetto"
-s.listed_names={75574498,81587028,100274016}
+s.listed_names={75574498,81587028,44190146}
 
 	--Check for "Box of Friends" or "Grandpa Demetto"
 function s.filter(c)
-	return c:IsCode(81587028,100274016) and c:IsAbleToHand()
+	return c:IsCode(81587028,44190146) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -70,7 +70,7 @@ function s.atlimit(e,c)
 end
 	--Check for a "Doll Monster" card
 function s.tgfilter(c)
-	return c:IsSetCard(0x25c) and c:IsAbleToGrave()
+	return c:IsSetCard(0x15c) and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

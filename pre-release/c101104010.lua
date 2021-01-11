@@ -62,7 +62,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		else Duel.ConfirmCards(1-tp,g)
 		end
 	end
-	local g2=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_HAND,0,nil,e,tp)
+	local g2=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_HAND,0,nil)
 	if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
 		local tc=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()

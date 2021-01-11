@@ -58,13 +58,13 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=e:GetHandler():GetLinkedZone()&0x1f
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,zone)>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,nil,nil,zone)>0 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local zone=c:GetLinkedZone()&0x1f
-	if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE,zone)>0 then
-		Duel.MoveSequence(c,math.log(2,zone))
+	if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE,nil,nil,zone)>0 then
+		Duel.MoveSequence(c,math.log(zone,2))
 		if c:IsFaceup() and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			local att=Duel.AnnounceAttribute(tp,1,0xff&~c:GetAttribute())
 			local e1=Effect.CreateEffect(c)

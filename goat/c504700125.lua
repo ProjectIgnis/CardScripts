@@ -20,7 +20,7 @@ function s.filter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return true end
 	local op=0
 	if Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil) then
 		op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))

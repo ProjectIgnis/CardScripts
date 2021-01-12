@@ -54,7 +54,7 @@ function s.rfilter(c,tp)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),s.rfilter,2,false,2,true,c,nil,nil,nil,c:GetControler())
+	return Duel.CheckReleaseGroup(c:GetControler(),s.rfilter,2,false,2,true,c,nil,nil.nil,nil,c:GetControler())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

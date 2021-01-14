@@ -39,7 +39,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local rc=re:GetHandler()
 	if chkc then return eg:IsContains(chkc) and s.cfilter(chkc,e,rc) end
-	if chk==0 then return re&REASON_EFFECT~=0 and rc and eg:IsExists(s.cfilter,1,nil,e,rc) end
+	if chk==0 then return REASON_EFFECT~=0 and rc and eg:IsExists(s.cfilter,1,nil,e,rc) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=eg:FilterSelect(tp,s.cfilter,1,1,nil,e,rc)
 	Duel.SetTargetCard(g)

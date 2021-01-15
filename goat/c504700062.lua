@@ -4,18 +4,17 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--sum limit
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_CANNOT_SUMMON)
-	e1:SetCondition(s.sumlimit)
-	c:RegisterEffect(e1)
-	local e1a=e1:Clone()
-	e1a:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
-	c:RegisterEffect(e1a)
-	local e1b=e1:Clone()
-	e1b:SetCode(EFFECT_SPSUMMON_CONDITION)
-	c:RegisterEffect(e1b)
+	c:EnableReviveLimit()
+	--special summon
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_SPSUMMON_PROC)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e2:SetRange(LOCATION_HAND)
+	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
+	e2:SetOperation(s.spop)
+	c:RegisterEffect(e2)
 	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -59,8 +58,32 @@ s.listed_names={15259703}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(15259703)
 end
-function s.sumlimit(e)
-	return not Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
+function s.spcon(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil) then return false end
+	local lv=c:GetLevel()
+	local amt=(lv>6 and 2) or (lv>4 and 1) or 0
+	Debug.Message(amt)
+	return amt==0 or Duel.CheckReleaseGroup(tp,nil,amt,false,amt,true,c,nil,nil,false,nil)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
+	local lv=c:GetLevel()
+	local amt=(lv>6 and 2) or (lv>5 and 1) or 0
+	if amt==0 then return true end
+	local g=Duel.SelectReleaseGroup(c:GetControler(),nil,amt,amt,false,true,true,c,nil,nil,false,nil)
+	if not g then return false end
+	g:KeepAlive()
+	e:SetLabelObject(g)
+	return true
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=e:GetLabelObject()
+	if g then
+		Duel.Release(g,REASON_COST)
+		g:DeleteGroup()
+	end
 end
 function s.sfilter(c)
 	return c:IsReason(REASON_DESTROY) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousCodeOnField()==15259703 and c:IsPreviousLocation(LOCATION_ONFIELD)

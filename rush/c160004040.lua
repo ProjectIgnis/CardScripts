@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.tdfilter(c,tp)
-	local race=c:GetLevel()
+	local race=c:GetRace()
 	return c:IsAbleToDeckAsCost()
 		and Duel.IsExistingMatchingCard(s.tdfilter2,tp,LOCATION_GRAVE,0,1,c,race)
 end

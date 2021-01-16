@@ -19,11 +19,11 @@ function s.tdfilter2(c,race)
 	return c:IsRace(race) and c:IsAbleToDeckAsCost()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLevelBelow(8)
+	return c:IsFaceup() and c:IsLevelBelow(8) and not c:IsMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil,tp)
-		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -39,8 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoDeck(g1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,2,nil)
-		local atk=0
+		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,2,nil)
 		Duel.HintSelection(g)
 		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
@@ -49,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 				e2:SetValue(s.efilter)
 				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				g:GetFirst():RegisterEffect(e2)
+				tc:RegisterEffectRush(e2)
 		end
 	end
 end

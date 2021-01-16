@@ -88,6 +88,11 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		local zone=c:GetLinkedZone()&0x1f
 		if Duel.GetControl(tc,tp,0,0,zone)~=0 then
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
+			for _,eff in ipairs({tc:GetCardEffect(EFFECT_SET_CONTROL)}) do
+				if eff:GetOwner()==c then
+					eff:SetReset((eff:GetReset())|RESET_TEMP_REMOVE)
+				end
+			end
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

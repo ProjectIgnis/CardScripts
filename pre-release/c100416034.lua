@@ -43,7 +43,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x25b}
 function s.sprfilter(c)
-	return c:IsFaceup() and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:HasLevel()
 end
 function s.sprfilter1(c,tp,g,sc)
 	local lv=c:GetLevel()

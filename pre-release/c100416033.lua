@@ -44,7 +44,7 @@ end
 s.listed_series={0x25b}
 s.listed_names={100416038}
 function s.sprfilter(c)
-	return c:IsFaceup() and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:HasLevel()
 end
 function s.sprfilter1(c,tp,g,sc)
 	local lv=c:GetLevel()

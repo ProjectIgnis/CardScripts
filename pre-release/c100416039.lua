@@ -95,7 +95,7 @@ function s.spcheck(sg,e,tp,mg)
 	return #sg==2 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg)
 end
 function s.spcfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x25b) and c:IsHasLevel() and c:IsReleasableByEffect()
+	return c:IsFaceup() and c:IsSetCard(0x25b) and c:HasLevel() and c:IsReleasableByEffect()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)	
 	if chk==0 then 

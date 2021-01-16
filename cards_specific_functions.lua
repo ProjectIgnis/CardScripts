@@ -598,7 +598,7 @@ end
 --(card in the same column as a security force)
 function Auxiliary.SecurityTarget(e,_c)
     return _c:GetColumnGroup():IsExists(function(c,tp)
-											return c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x15a)
+											return c:IsControler(tp) and c:IsFaceup() and c:IsMonster() and c:IsSetCard(0x15a)
 										 end,1,_c,e:GetHandlerPlayer())
 end
 

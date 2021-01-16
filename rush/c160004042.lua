@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_WYRM))
 	e2:SetValue(400)
 	c:RegisterEffect(e2)
-	--Decrease DEF
+	--Def down
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
-	e2:SetValue(-400)
+	e3:SetValue(-400)
 	c:RegisterEffect(e3)
 end

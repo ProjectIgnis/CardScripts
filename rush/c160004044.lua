@@ -27,7 +27,6 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	--requirement
-	Duel.PayLPCost(tp,500)
 	--effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.rtdfilter,tp,0,LOCATION_ONFIELD,1,1,nil)

@@ -32,20 +32,26 @@ function s.chlimit(e,ep,tp)
 	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	--Effect
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
-	Duel.HintSelection(g)
-	if #g>0 then
-		--cannot attack
-		local ge2=Effect.CreateEffect(e:GetHandler())
-		ge2:SetType(EFFECT_TYPE_FIELD)
-		ge2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-		ge2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		ge2:SetTargetRange(LOCATION_MZONE,0)
-		ge2:SetTarget(s.atktg)
-		ge2:SetLabel(g:GetFirst():GetRace())
-		ge2:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(ge2,tp)
+	-- requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local ct=Duel.SendtoGrave(g,REASON_COST)
+	if ct>0 then
+		--Effect
+		local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
+		Duel.HintSelection(g)
+		if #g>0 then
+			--cannot attack
+			local ge2=Effect.CreateEffect(e:GetHandler())
+			ge2:SetType(EFFECT_TYPE_FIELD)
+			ge2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
+			ge2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+			ge2:SetTargetRange(0,LOCATION_MZONE)
+			ge2:SetTarget(s.atktg)
+			ge2:SetLabel(g:GetFirst():GetRace())
+			ge2:SetReset(RESET_PHASE+PHASE_END)
+			Duel.RegisterEffect(ge2,tp)
+		end
 	end
 end
 function s.atktg(e,c)

@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(g)
 	if #g>0 then
 		--cannot attack
-		local ge2=Effect.CreateEffect(c)
+		local ge2=Effect.CreateEffect(e:GetHandler())
 		ge2:SetType(EFFECT_TYPE_FIELD)
 		ge2:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 		ge2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

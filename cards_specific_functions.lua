@@ -785,7 +785,7 @@ function Auxiliary.SecurityForceCost(e,tp,eg,ep,ev,re,r,rp,chk)
     if #g2>0 and (#g1==0 or Duel.SelectYesNo(tp,aux.Stringid(CARD_SECURITYFORCE_CHASE,1))) then
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
         rg=g2:Select(tp,1,1,nil)
-	rg:GetFirst():GetCardEffect(EFFECT_SECURITYFORCE_REPLACE):UseCountLimit(tp)
+		rg:GetFirst():GetCardEffect(EFFECT_SECURITYFORCE_REPLACE):UseCountLimit(tp)
     else
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
         rg=g1:Select(tp,1,1,nil)

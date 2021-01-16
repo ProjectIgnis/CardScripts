@@ -49,7 +49,7 @@ end
 function s.sstarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,1,c,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,Group.FromCards(c),1,tp,0)
 end
 function s.ssoperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

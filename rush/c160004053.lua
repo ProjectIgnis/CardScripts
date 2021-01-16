@@ -13,7 +13,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp)
+	local tc=Duel.GetAttackTarget()
+	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRace(RACE_WYRM)
 end
 function s.tgfilter(c)
 	return c:IsRace(RACE_WYRM) and c:IsLevelBelow(6) and c:IsAbleToGraveAsCost() and c:IsAttackAbove(1)

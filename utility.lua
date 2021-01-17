@@ -42,7 +42,7 @@ function Auxiliary.CostWithReplace(base,replacecode)
 			return false
 		end
 		local effs=getvalideffs(e,tp,eg,ep,ev,re,r,rp,chk)
-		if not cond or (cond and #effs>0 and Duel.SelectYesNo(tp,1)) then
+		if not cond or (cond and #effs>0 and Duel.SelectYesNo(tp,98)) then
 			local eff=effs[1]
 			if #effs>1 then
 				local desctable={}

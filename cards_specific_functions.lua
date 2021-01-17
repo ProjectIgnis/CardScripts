@@ -792,3 +792,55 @@ function Auxiliary.SecurityForceCost(e,tp,eg,ep,ev,re,r,rp,chk)
     end
     Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
+Ursarctic={}
+function Ursarctic.spcfilter(c)
+	return c:IsLocation(LOCATION_HAND) and c:IsLevelAbove(7)
+end
+function Ursarctic.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Ursarctic.spcfilter,1,true,nil,c) end
+	local g=Duel.SelectReleaseGroupCost(tp,Ursarctic.spcfilter,1,1,true,nil,c)
+	Duel.Release(g,REASON_COST)
+end
+function Ursarctic.summontarget(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+end
+function Ursarctic.summonoperation(id)
+	return function(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		if c:IsRelateToEffect(e) then 
+			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+		end
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+		e1:SetTargetRange(1,0)
+		e1:SetTarget(function(e,c,sump,sumtype,sumpos,targetp,se)
+						return not c:HasLevel()
+					end)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+		local e2=Effect.CreateEffect(c)
+		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+		e2:SetDescription(aux.Stringid(id,1))
+		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetTargetRange(1,0)
+		Duel.RegisterEffect(e2,tp)
+	end
+end
+function Auxiliary.CreateUrsarcticSpsummon(c,id)
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetCountLimit(1,id)
+	e1:SetCondition(Duel.IsMainPhase)
+	e1:SetCost(Auxiliary.CostWithReplace(Ursarctic.spcost,100416038))
+	e1:SetTarget(Ursarctic.summontarget)
+	e1:SetOperation(Ursarctic.summonoperation(id))
+	return e1
+end

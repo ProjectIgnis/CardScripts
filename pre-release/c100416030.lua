@@ -29,7 +29,7 @@ function s.pfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
 end
 function s.popcon(e,tp,eg,ep,ev,re,r,rp)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.poptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.pfilter(chkc) and chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(1-tp) end

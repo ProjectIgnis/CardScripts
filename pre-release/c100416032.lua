@@ -29,7 +29,7 @@ function s.bfilter(c)
 	return c:IsAbleToRemove()
 end
 function s.bancon(e,tp,eg,ep,ev,re,r,rp)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.bfilter(chkc) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) end

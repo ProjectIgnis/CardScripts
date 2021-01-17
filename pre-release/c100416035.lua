@@ -20,7 +20,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sprtg)
 	e2:SetOperation(s.sprop)
 	c:RegisterEffect(e2)
-	
 	--Destroy when flipped
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
@@ -31,19 +30,20 @@ function s.initial_effect(c)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	--negate
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_CHAINING)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(s.discon)
-	e2:SetCost(s.discost)
-	e2:SetTarget(s.distg)
-	e2:SetOperation(s.disop)
-	c:RegisterEffect(e2)
+	--Negate when effect targets your Ursarctic cards
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(id,0))
+	e4:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_CHAINING)
+	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(1)
+	e4:SetCondition(s.discon)
+	e4:SetCost(s.discost)
+	e4:SetTarget(s.distg)
+	e4:SetOperation(s.disop)
+	c:RegisterEffect(e4)
 end
 s.listed_series={0x25b}
 function s.sprfilter(c)
@@ -104,20 +104,19 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --negate
+function s.disfilter(c,tp)
+	return c:IsFaceup() and c:IsLocation(LOCATION_ONFIELD) and c:IsControler(tp) and c:IsSetCard(0x25b)
+end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return tg and tg:IsExists(Card.IsOnField,1,nil) and Duel.IsChainNegatable(ev)
-end
-function s.costfilter(c)
-	return (c:IsSetCard(0x25b) and c:IsType(TYPE_MONSTER)) and (c:IsControler(tp) or c:IsFaceup()) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return tg and tg:IsExists(s.disfilter,1,nil,tp) and Duel.IsChainNegatable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,true,nil,c) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,true,nil,c)
-	Duel.Release(g,REASON_COST)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,true,nil,nil) end
+	local sg=Duel.SelectReleaseGroupCost(tp,nil,1,1,true,nil,nil)
+	Duel.Release(sg,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

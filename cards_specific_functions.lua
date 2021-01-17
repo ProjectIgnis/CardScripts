@@ -675,7 +675,7 @@ function Auxiliary.AddZWEquipLimit(c,con,equipval,equipop,linkedeff,prop,resetfl
 end
 
 -- Amazement and Ɐttraction helper functions
-AA = {}
+local AA = {}
 function AA.eqtgfilter(c,tp)
 	return c:IsFaceup() and (c:IsSetCard(0x25d) or (not c:IsControler(tp)))
 end
@@ -792,7 +792,7 @@ function Auxiliary.SecurityForceCost(e,tp,eg,ep,ev,re,r,rp,chk)
     end
     Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
-Ursarctic={}
+local Ursarctic={}
 function Ursarctic.spcfilter(c)
 	return c:IsLocation(LOCATION_HAND) and c:IsLevelAbove(7)
 end
@@ -844,3 +844,9 @@ function Auxiliary.CreateUrsarcticSpsummon(c,id)
 	e1:SetOperation(Ursarctic.summonoperation(id))
 	return e1
 end
+local Stardust={}
+function Stardust.ReleaseSelfCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsReleasable() end
+	Duel.Release(e:GetHandler(),REASON_COST)
+end
+Auxiliary.StardustCost=Auxiliary.CostWithReplace(Stardust.ReleaseSelfCost,84012625)

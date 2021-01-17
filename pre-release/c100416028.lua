@@ -69,7 +69,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:HasLevel()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x25b) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(0x25b) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER) and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

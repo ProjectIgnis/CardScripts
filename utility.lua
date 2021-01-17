@@ -9,6 +9,56 @@ local function setcodecondition(e)
 	return e:GetHandler():IsCode(e:GetHandler():GetOriginalCodeRule())
 end
 
+function Auxiliary.CostWithReplace(base,replacecode)
+	local getvalideffs=function(e,tp,eg,ep,ev,re,r,rp,chk)
+		local t={}
+		for _,eff in ipairs({Duel.GetPlayerEffect(tp,replacecode)}) do
+			if eff:CheckCountLimit(tp) then
+				local val=eff:GetValue()
+				if type(val)=="number" then
+					if val==1 then
+						table.insert(t,eff)
+					end
+				elseif type(val)=="function" then
+					if val(eff,e,tp,eg,ep,ev,re,r,rp,chk) then
+						table.insert(t,eff)
+					end
+				end
+			end
+		end
+		return t
+	end
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		local cond=base(e,tp,eg,ep,ev,re,r,rp,0)
+		if chk==0 then
+			if cond then return true end
+			for _,eff in ipairs({Duel.GetPlayerEffect(tp,replacecode)}) do
+				if eff:CheckCountLimit(tp) then
+					local val=eff:GetValue()
+					if type(val)=="number" and val==1 then return true end
+					if type(val)=="function" and val(eff,e,tp,eg,ep,ev,re,r,rp,chk) then return true end
+				end
+			end
+			return false
+		end
+		local effs=getvalideffs(e,tp,eg,ep,ev,re,r,rp,chk)
+		if not cond or (cond and #effs>0 and Duel.SelectYesNo(tp,98)) then
+			local eff=effs[1]
+			if #effs>1 then
+				local desctable={}
+				for _,_eff in ipairs(effs) do
+					table.insert(desctable,_eff:GetDescription())
+				end
+				eff=effs[Duel.SelectOption(tp,false,table.unpack(desctable)) + 1]
+			end
+			local res={eff:GetOperation()(e,tp,eg,ep,ev,re,r,rp,chk)}
+			eff:UseCountLimit(tp)
+			return table.unpack(res)
+		end
+		return base(e,tp,eg,ep,ev,re,r,rp,1)
+	end
+end
+
 function Card.AddSetcodesRule(c,...)
 	local t={}
 	for _,setcode in pairs({...}) do

@@ -677,7 +677,7 @@ end
 -- Amazement and Ɐttraction helper functions
 local AA = {}
 function AA.eqtgfilter(c,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x25d) or (not c:IsControler(tp)))
+	return c:IsFaceup() and (c:IsSetCard(0x15e) or (not c:IsControler(tp)))
 end
 function AA.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and AA.eqtgfilter(chkc,tp) end

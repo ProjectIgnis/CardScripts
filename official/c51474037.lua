@@ -63,11 +63,9 @@ function s.bop(e,tp,eg,ep,ev,re,r,rp)
 	if #g~=2 then return end
 	local choice=e:GetLabel()
 	if choice==0 then
-		if g:FilterCount(Card.IsCanChangePosition,nil)~=2 then return end
 		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 	elseif choice==1 then
 		local g1,g2=g:Split(Card.IsControler,nil,tp)
-		if not g1:GetFirst():IsDestructable() or not g2:GetFirst():IsAttackAbove(1) then return end
 		if Duel.Destroy(g1,REASON_EFFECT)>0 then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

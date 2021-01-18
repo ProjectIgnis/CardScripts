@@ -9,7 +9,7 @@ local function setcodecondition(e)
 	return e:GetHandler():IsCode(e:GetHandler():GetOriginalCodeRule())
 end
 
-function Auxiliary.CostWithReplace(base,replacecode)
+function Auxiliary.CostWithReplace(base,replacecode,extracon)
 	local getvalideffs=function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local t={}
 		for _,eff in ipairs({Duel.GetPlayerEffect(tp,replacecode)}) do
@@ -20,7 +20,7 @@ function Auxiliary.CostWithReplace(base,replacecode)
 						table.insert(t,eff)
 					end
 				elseif type(val)=="function" then
-					if val(eff,e,tp,eg,ep,ev,re,r,rp,chk) then
+					if val(eff,e,tp,eg,ep,ev,re,r,rp,chk,extracon) then
 						table.insert(t,eff)
 					end
 				end
@@ -36,7 +36,7 @@ function Auxiliary.CostWithReplace(base,replacecode)
 				if eff:CheckCountLimit(tp) then
 					local val=eff:GetValue()
 					if type(val)=="number" and val==1 then return true end
-					if type(val)=="function" and val(eff,e,tp,eg,ep,ev,re,r,rp,chk) then return true end
+					if type(val)=="function" and val(eff,e,tp,eg,ep,ev,re,r,rp,chk,extracon) then return true end
 				end
 			end
 			return false

@@ -839,7 +839,7 @@ function Auxiliary.CreateUrsarcticSpsummon(c,id)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(Duel.IsMainPhase)
-	e1:SetCost(Auxiliary.CostWithReplace(Ursarctic.spcost,100416038))
+	e1:SetCost(Auxiliary.CostWithReplace(Ursarctic.spcost,CARD_URSARCTIC_BIG_DIPPER))
 	e1:SetTarget(Ursarctic.summontarget)
 	e1:SetOperation(Ursarctic.summonoperation(id))
 	return e1

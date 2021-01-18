@@ -45,15 +45,16 @@ function s.initial_effect(c)
 end
 s.listed_series={0x25b}
 s.counter_place_list={0x204}
-function s.repcfilter(c)
-	return c:IsSetCard(0x25b) and c:IsLevelAbove(7) and c:IsAbleToRemoveAsCost()
+function s.repcfilter(c,extracon,base,params)
+	return c:IsSetCard(0x25b) and c:IsLevelAbove(7) and c:IsAbleToRemoveAsCost() and (not extracon or extracon(base,c,table.unpack(params)))
 end
 function s.repcon(e)
 	return Duel.IsExistingMatchingCard(s.repcfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
 end
-function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk)
+function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
 	local c=e:GetHandler()
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x25b) 
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x25b) and
+		(not extracon or Duel.IsExistingMatchingCard(s.repcfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,extracon,base,{e,tp,eg,ep,ev,re,r,rp,chk}))
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

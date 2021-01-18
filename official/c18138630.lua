@@ -1,7 +1,6 @@
 --デストーイ・ポット
 --Frightfur Vendor
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -79,6 +78,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
 		end
 	end
+	Duel.ShuffleHand(tp)
 end
 	--Activation legality
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

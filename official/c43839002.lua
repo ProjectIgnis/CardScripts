@@ -1,7 +1,9 @@
 --サイバネット・バックドア
+--Cynet Backdoor
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Banish 1 of your cyberse monsters, add 1 cyberse monster whose ATK is lower than banished monster's ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -60,9 +62,10 @@ end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if tc and Duel.ReturnToField(tc) then
+		--Can attack directly
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetDescription(aux.Stringid(id,0))
+		e1:SetDescription(3205)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		e1:SetValue(1)

@@ -1,68 +1,93 @@
+--アクセル・シンクロ
 --Accel Synchro
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro effect
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.sctg)
-	e1:SetOperation(s.scop)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.matfilter(c,e,tp)
-	if not c:IsType(TYPE_SYNCHRO) then return false end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SYNCHRO_MATERIAL)
-	e1:SetReset(RESET_CHAIN)
-	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_CHANGE_LEVEL)
-	e2:SetValue(c:GetLevel()/2)
-	e2:SetReset(RESET_CHAIN)
-	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(e:GetHandler())
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EFFECT_MUST_BE_MATERIAL)
-	e3:SetValue(REASON_SYNCHRO)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE)
-	if c:IsControler(tp) then
-		e3:SetTargetRange(1,0)
-	else
-		e3:SetTargetRange(0,1)
-	end
-	e3:SetReset(RESET_CHAIN)
-	c:RegisterEffect(e3)
-	table.insert(s.Reset,e1)
-	table.insert(s.Reset,e2)
-	table.insert(s.Reset,e3)
-	return true
+function s.matfilter(c)
+	return c:IsType(TYPE_SYNCHRO) and c:IsFaceup() and c:IsCanBeSynchroMaterial()
 end
-s.Reset={}
-function s.filter(c,e,tp)
-	if not c:IsType(TYPE_SYNCHRO) then return false end
-	s.Reset={}
-	local g=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e,tp)
-	local res=c:IsSynchroSummonable(nil,g)
-	for i,eff in ipairs(s.Reset) do
-		eff:Reset()
-	end
-	s.Reset={}
-	return res
+function s.spfilter(c,tp,mg)
+	return c:IsType(TYPE_SYNCHRO) and c:IsSynchroSummonable(nil,mg) and Duel.GetLocationCountFromEx(tp,tp,mg,c)
 end
-function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then
+		local c=e:GetHandler()
+		local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		local reset={}
+		for tc in aux.Next(mg) do
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_SYNCHRO_MATERIAL_CUSTOM)
+			e1:SetReset(RESET_CHAIN)
+			e1:SetOperation(s.synop)
+			tc:RegisterEffect(e1,true)
+			table.insert(reset,e1)
+			if tc:IsControler(1-tp) then
+				local e2=Effect.CreateEffect(c)
+				e2:SetType(EFFECT_TYPE_SINGLE)
+				e2:SetCode(EFFECT_SYNCHRO_MATERIAL)
+				e2:SetReset(RESET_CHAIN)
+				tc:RegisterEffect(e2)
+				table.insert(reset,e2)
+			end
+		end
+		local res=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,tp,mg)
+		for _,eff in ipairs(reset) do
+			eff:Reset()
+		end
+		return res
+	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function s.scop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
-	if #g>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tc=g:Select(tp,1,1,nil):GetFirst()
-		local sg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e,tp)
-		Duel.SynchroSummon(tp,tc,nil,sg)
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local reset={}
+	for tc in aux.Next(mg) do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SYNCHRO_MATERIAL_CUSTOM)
+		e1:SetOperation(s.synop)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1,true)
+		table.insert(reset,e1)
+		if tc:IsControler(1-tp) then
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_SYNCHRO_MATERIAL)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e2)
+			table.insert(reset,e2)
+		end
 	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local sync=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,tp,mg):GetFirst()
+	if sync then
+		Duel.SynchroSummon(tp,sync,nil,mg)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SPSUMMON_COST)
+		e1:SetOperation(function()
+			for _,eff in ipairs(reset) do
+				eff:Reset()
+			end
+		end)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		sync:RegisterEffect(e1,true)
+	else
+		for _,eff in ipairs(reset) do
+			eff:Reset()
+		end
+	end
+end
+function s.synop(e,tg,ntg,sg,lv,sc,tp)
+	return sg:GetSum(Card.GetLevel)/2==lv,true
 end

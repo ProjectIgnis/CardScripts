@@ -1,3 +1,4 @@
+--ペンデュラム・カード・バースト
 --Pendulum Card Burst
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +18,7 @@ function s.filter(c,e)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,2,nil,e) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,2,2,nil,e)
 	Duel.Destroy(g,REASON_COST)
 end

@@ -1,5 +1,5 @@
 --焔聖騎士-オジエ
---Flame Noble Knight Ogier
+--Infernoble Knight Ogier
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()

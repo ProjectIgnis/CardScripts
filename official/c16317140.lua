@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(1,0)
 	e2:SetRange(LOCATION_SZONE)
 	c:RegisterEffect(e2)
-	--atkup
+	--Increase ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetDescription(aux.Stringid(id,0))
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
-	--to hand or special summon from GY
+	--Add to hand or special summon a monster from GY
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
@@ -77,7 +77,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsRelateToBattle() then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsRelateToBattle() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -117,12 +117,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcheck(e,tp)
-	return	function(c)
+	return function(c)
 				return c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			end
 end
 function s.spop2(tp)
-	return	function(c)
+	return function(c)
 				return Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)
 			end
 end

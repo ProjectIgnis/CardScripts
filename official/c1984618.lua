@@ -1,5 +1,5 @@
 --天底の使徒
---Disciple of the Nadir
+--Nadir Servant
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,28 +15,32 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x146}
-s.listed_names={CARD_ALBUS}
-function s.tgfilter(c,e,tp)
-	return c:IsAbleToGrave() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetAttack(),e,tp,c)
+s.listed_names={CARD_ALBAZ}
+function s.tgfilter(c,tp)
+	return c:IsAbleToGrave() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetAttack())
 end
 function s.thfilter(c,atk)
-	return (c:IsCode(CARD_ALBUS) or (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x146))) and c:GetAttack()<=atk and c:IsAbleToHand()
+	return (c:IsCode(CARD_ALBAZ) or (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x146))) and c:GetAttack()<=atk and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g1=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
-	if #g1==0 then return end
-	Duel.SendtoGrave(g1,REASON_EFFECT)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,g1:GetFirst():GetAttack())
-	if #g2>0 then
-		Duel.SendtoHand(g2,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g2)
+	local g1=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_EXTRA,0,1,1,nil,tp)
+	if #g1>0 and Duel.SendtoGrave(g1,REASON_EFFECT)>0 then
+		local og=Duel.GetOperatedGroup()
+		if og:GetFirst():IsLocation(LOCATION_GRAVE) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,g1:GetFirst():GetAttack())
+			if #g2>0 then
+				Duel.BreakEffect()
+				Duel.SendtoHand(g2,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,g2)
+			end
+		end
 	end
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	local e1=Effect.CreateEffect(e:GetHandler())

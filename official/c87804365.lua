@@ -3,7 +3,7 @@
 --scripted by AlphaKretin and edo9300
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
+	--Synchro summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -52,6 +52,7 @@ function s.target(montype,chkfun)
 		local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 		local min=math.min(math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and 1 or 99),1)
 		if chk==0 then return min>0 and Duel.IsPlayerCanSpecialSummonCount(tp,2)
+			and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 			and aux.SelectUnselectGroup(mg,e,tp,1,3,cancelcon,0) end
 		local sg=aux.SelectUnselectGroup(mg,e,tp,1,3,cancelcon,chk,tp,HINTMSG_SPSUMMON,cancelcon)
 		Duel.SetTargetCard(sg)

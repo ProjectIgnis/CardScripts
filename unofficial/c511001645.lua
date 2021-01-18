@@ -23,10 +23,10 @@ function s.contactfil(tp)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
-	Duel.SendtoDeck(g,nil,2,REASON_COST+REASON_MATERIAL)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)
 end
 function s.ffilter(c,fc,sub,sub2,mg,sg)
-	return c:IsSetCard(0x1f,fc,SUMMON_TYPE_FUSION,fc:GetControler()) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:IsCode(CARD_NEOS),fc,fc:GetControler()))
+	return c:IsSetCard(0x1f,fc,SUMMON_TYPE_FUSION,fc:GetControler()) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(),fc,fc:GetControler()))
 end
 function s.fusfilter(c,code,fc,tp)
 	return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,tp,code) and not c:IsHasEffect(511002961)

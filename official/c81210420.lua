@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.GetTurnPlayer()==1-tp and Duel.IsBattlePhase()
 end
 function s.filter(c)
 	return c:GetSequence()<5 and not c:IsType(TYPE_TOKEN+TYPE_LINK)

@@ -50,16 +50,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 		sg1=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 		tc=sg1:GetFirst()
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 		sg2=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 		tc=sg2:GetFirst()
-		Duel.SpecialSummonStep(tc,0,tp,1-tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEUP)
 		g1=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
 		g2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
 	until not (Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
 		and #g1>0 and #g2>0
 		and Duel.SelectYesNo(tp,aux.Stringid(id,3)))
-	Duel.SpecialSummonComplete()
 end

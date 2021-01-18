@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.HintSelection(dg)
 			if Duel.Destroy(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) and aux.nvfilter(tc) then
 				Duel.BreakEffect()
-				Duel.SpecialSummon(dc,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 			end
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)

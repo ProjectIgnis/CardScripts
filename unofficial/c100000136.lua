@@ -1,4 +1,5 @@
 --ディフェンス・メイデン
+--Defense Maiden
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -6,7 +7,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_BATTLE_START)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--change target
 	local e2=Effect.CreateEffect(c)
@@ -23,19 +23,6 @@ end
 s.listed_names={100000139}
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(100000139)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
-	if chk==0 then return true end
-	if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) and s.atkcon(e,tp,eg,ep,ev,re,r,rp) 
-		and s.atktg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,94) then
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e:SetOperation(s.atkop)
-		s.atktg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()

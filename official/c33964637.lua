@@ -3,17 +3,17 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion procedure
-  c:EnableReviveLimit()
+	c:EnableReviveLimit()
 	Fusion.AddProcMixN(c,true,true,s.ffilter,3)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
-	--fusion limit
+	--Fusion summon limit
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	--remove
+	--Remove
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(100419006,0))
 	e4:SetCategory(CATEGORY_REMOVE)
@@ -24,8 +24,8 @@ function s.initial_effect(c)
 	e4:SetCost(s.rmcost)
 	e4:SetTarget(s.rmtg)
 	e4:SetOperation(s.rmop)
-	c:RegisterEffect(e4)	
-	--destroy replace
+	c:RegisterEffect(e4)
+	--Destruction replacement effect
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EFFECT_DESTROY_REPLACE)
@@ -80,7 +80,7 @@ function s.repfilter(c,tp)
 		and c:IsOnField() and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741) and e:GetHandler():IsAbleToRemove() 
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),69832741) and e:GetHandler():IsAbleToRemove()
 		and eg:IsExists(s.repfilter,1,nil,tp) end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end

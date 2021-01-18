@@ -1,8 +1,11 @@
+--獣烈な争い
 --Brutal Beast Battle
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
+	--Activate
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,6 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.types={TYPE_RITUAL,TYPE_FUSION,TYPE_SYNCHRO,TYPE_XYZ,TYPE_LINK}
+
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		for p=0,1 do
@@ -56,7 +60,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if #g>0 then
 			local tg=aux.SelectUnselectGroup(g,e,tp,1,99,s.cancelcon,1,tp,HINTMSG_TOGRAVE,s.cancelcon)
-			if Duel.SendtoGrave(tg,nil,REASON_EFFECT)>0 then
+			if Duel.SendtoGrave(tg,REASON_EFFECT)>0 then
 				draw[p]=true
 			end
 		end
@@ -71,4 +75,3 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

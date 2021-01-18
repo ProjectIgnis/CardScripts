@@ -1,8 +1,6 @@
 --光の結界 (Anime)
 --Light Barrier (Anime)
---scripted by GameMaster(GM)
---cleaned up by MLD
---fixed by Larry126
+--scripted by GameMaster(GM), fixed by MLD and Larry126
 local s,id,alias=GetID()
 function s.initial_effect(c)
 	local alias=c:GetOriginalCodeRule()
@@ -87,7 +85,7 @@ end
 --e4
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=eg:GetFirst()
-	return rc:IsRelateToBattle()  and rc:IsFaceup() and s.effectcon(e) and not rc:GetBattleTarget():IsControler(rc:GetControler())
+	return rc:IsRelateToBattle() and rc:IsFaceup() and s.effectcon(e) and not rc:GetBattleTarget():IsControler(rc:GetControler())
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

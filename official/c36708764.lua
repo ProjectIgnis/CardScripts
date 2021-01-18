@@ -57,13 +57,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		return
 	elseif dc==5 then
 		local at=Duel.GetFirstTarget()
-		if at:IsRelateToEffect(e) and Duel.NegateAttack() and at:GetAttack()>0 then
+		if at and at:IsRelateToEffect(e) and Duel.NegateAttack() and at:GetAttack()>0 then
 			Duel.Damage(1-tp,at:GetAttack(),REASON_EFFECT)
 		end
 		return
 	else
 		local at=Duel.GetFirstTarget()
-		if at:IsRelateToEffect(e) and at:IsControler(1-tp) and at:IsType(TYPE_MONSTER) then
+		if at and at:IsRelateToEffect(e) and at:IsControler(1-tp) and at:IsType(TYPE_MONSTER) then
 			Duel.Destroy(at,REASON_EFFECT)
 		end
 	end

@@ -1,4 +1,5 @@
 --剛鬼ライジングスコーピオ
+--Gouki Riscorpio
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with no tribute
@@ -28,10 +29,10 @@ s.listed_names={id}
 function s.cfilter(c)
 	return c:IsFacedown() or not c:IsSetCard(0xfc)
 end
-function s.ntcon(e,c,minc)
+function s.ntcon(e,c,minc,zone)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 		and (Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 or not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil))
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

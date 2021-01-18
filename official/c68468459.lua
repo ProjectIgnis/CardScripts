@@ -1,9 +1,9 @@
 --アルバスの落胤
---Albus's Nullius Filius
+--Fallen of Albaz
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion summon
+	--Fusion summon
 	local params = {nil,Fusion.CheckWithHandler(aux.FALSE),s.fextra,nil,Fusion.ForcedHandler}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

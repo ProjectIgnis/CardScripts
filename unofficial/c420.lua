@@ -42,11 +42,14 @@ if not AnimeArchetype then
 	-- Graceful Tear/Graceful Charity/Numinous Healer
 	-- Cherubini, Black Angel of the Burning Abyss
 	-- Fallen Angel of Roses/Muse-A/Queen Angel of Roses
+
+	-- Tellus the Little Angel
 	AnimeArchetype.OCGAngel={
 		79575620,39996157,15914410,53334641,16972957,42216237,
 		42418084,18378582,59509952,81146288,85399281,47852924,
 		74137509,17653779,9032529,79571449,2130625,49674183,
-		69992868,96470883,11398951
+		69992868,96470883,11398951,
+		100274002
 	}
 	Card.IsAngel=MakeCheck({0x154a,0xef},AnimeArchetype.OCGAngel)
 
@@ -118,7 +121,11 @@ if not AnimeArchetype then
 	-- Ｃ
 	-- カオス
 	-- is "C" or Cxyz or Cnumber
-	Card.IsC=MakeCheck({0x1048,0x1073,0x568})
+	-- Number iC1000: Numeronius Numeronia
+	AnimeArchetype.OCGC={
+		100275102
+	}
+	Card.IsC=MakeCheck({0x1048,0x1073,0x568},AnimeArchetype.OCGC)
 
 	-- Cat キャット (list to update)
 	-- Cat Shark/Nekogal #2/Mimicat
@@ -138,6 +145,12 @@ if not AnimeArchetype then
 	-- てんりん
 	-- Celestial Double Star Shaman/Guiding Light
 	Card.IsCelestial=MakeCheck({0x254a},{69865139,25472513})
+
+	-- Cicada
+	-- 蝉 
+	-- せみ
+	-- Number 3: Cicada King
+	Card.IsCicada=MakeCheck({0x50f},{100266028})
 
 	-- Champion
 	-- 王者
@@ -163,7 +176,7 @@ if not AnimeArchetype then
 
 	-- Dart ダーツ
 	-- Fire Darts
-	Card.IsCubicSeed=MakeCheck({0x513},{43061293})
+	Card.IsDart=MakeCheck({0x513},{43061293})
 
 	-- Dice (archetype)
 	-- ダイス
@@ -176,7 +189,7 @@ if not AnimeArchetype then
 	}
 	Card.IsDice=MakeCheck({0x514},AnimeArchetype.OCGDice)
 
-	-- Darkness  (Last updated by 23rd Apr 2020)
+	-- Darkness  (Last updated on 23rd Apr 2020)
 	-- ダークネス
 	-- Cyberdarkness Dragon/Darkness Metal, the Dragon of Dark Steel/Malevolent Mech - Goku En/Simorgh of Darkness
 	-- Umbral Soul/Darkness Destroyer/Darkness Neosphere/Hunter of Black Feathers
@@ -243,7 +256,8 @@ if not AnimeArchetype then
 		59820352,67105242,29934351,60866277,54407825,66788016,53778229,46181000,14258627,67113830,61468779,
 		15545291,60229110,90502999,33970665,35762283,12247206,54109233,9628664,79109599,95993388,54976796,
 		3136426,64681263,97612389,86016245,91020571,58601383,97204936,63465535,4587638,38296564,60627999,
-		79569173,97169186,26381750,70156997,20590784,77428945,54762426,46918794,95220856,2084239,77754944
+		79569173,97169186,26381750,70156997,20590784,77428945,54762426,46918794,95220856,2084239,77754944,
+		7443908,4997565
 	}
 	Card.IsEarth=MakeCheck({0x51a},AnimeArchetype.OCGEarth,{"IsEarthbound","IsHell"})
 
@@ -302,14 +316,9 @@ if not AnimeArchetype then
 	}
 	Card.IsForest=MakeCheck({0x51f},AnimeArchetype.OCGForest)
 
-	-- Fossil (not finished)
-	-- 化石
-	-- かせき
-	-- Release from Stone/Fossil Dig/Fossil Excavation
-	AnimeArchetype.OCGFossil={
-
-	}
-	Card.IsFossil=MakeCheck({0x512},AnimeArchetype.OCGFossil)
+	-- Gaia the Dragon Champion
+	-- Gaia the Dragon Champion/Sky Galloping Gaia the Dragon Champion
+	Card.IsGaiatheDragonChampion=MakeCheck({0x521},{66889139,2519690})
 
 	-- Gem-Knight Lady ジェムナイトレディ
 	-- Gem-Knight Lady Brilliant Diamond/Gem-Knight Lady Lapis Lazuli
@@ -483,7 +492,7 @@ if not AnimeArchetype then
 	-- Vennominon the King of Poisonous Snakes/Number 8: Heraldic King Genom-Heritage/Rise to Full Height
 	-- King of the Swamp/Beastking of the Swamps/Imperial Tombs of Necrovalley
 	-- Coach King Giantrainer/Coach Captain Bearman
-	-- Morph King Stygi-Gel
+	-- Morph King Stygi-Gel/Number 3: Cicada King
 
 	-- archtype:Fire King/Supreme King/Monarch (spell/trap)/Dracoverlord
 	AnimeArchetype.OCGKing={
@@ -497,7 +506,7 @@ if not AnimeArchetype then
 		4179849,71411377,5901497,58477767,19254117,33950246,51452091,16509093,93016201,26586849,56058888,72405967,
 		86742443,86327225,61370518,88307361,29762407,80955168,72709014,24857466,52589809,5309481,10613952,84025439,
 		38180759,22858242,
-		85457355
+		85457355,100266028
 	}
 	Card.IsKing=MakeCheck({0x52f,0xf8,0x81,0xda},AnimeArchetype.OCGKing,{"IsChampion"})
 
@@ -533,7 +542,10 @@ if not AnimeArchetype then
 	-- Paladin of the Cursed Dragon/Dark Magician Knight/Blade Knight
 	-- Penguin Knight/Nightmare Penguin/Seiyaryu/Avenging Knight Parshath
 	-- Dragon Master Knight/Mermaid Knight/Midnight Fiend
-	-- Super Roboyarou,Red-Eyes Metal Knight Gearfried
+	-- Super Roboyarou/Red-Eyes Metal Knight Gearfried/Fossil Warrior Skull Knight
+
+
+	-- Shell Knight
 
 	-- TellarKnight/Igknight/Gem-Knight
 	AnimeArchetype.OCGKnight={
@@ -546,7 +558,7 @@ if not AnimeArchetype then
 		42956963,59290628,78402798,6150044,31924889,359563,72926163,40391316,12744567,97204936,
 		21249921,34116027,900787,80159717,25682811,2191144,85684223,48739166,2986553,31320433,
 		99348756,66661678,52575195,35429292,89731911,68670547,50725996,39507162,36039163,81306586,
-		6740720,69514125
+		6740720,69514125,59531356,100274006
 	}
 	Card.IsKnight=MakeCheck({0x530,0x1047,0x9c,0xc8},AnimeArchetype.OCGKnight)
 
@@ -590,7 +602,7 @@ if not AnimeArchetype then
 	}
 	Card.IsMantis=MakeCheck({0x535},AnimeArchetype.OCGMantis)
 
-	-- Mask  (Last updated by 23rd Apr 2020)
+	-- Mask  (Last updated on 23rd Apr 2020)
 	-- 仮面 (base)
 	-- かめん (ruby)
 	-- Mask of Restrict/Grand Tiki Elder/Masked Clown
@@ -644,6 +656,7 @@ if not AnimeArchetype then
 		56840427,87911394,66970002
 	}
 	Card.IsCN39UtopiaRay=MakeCheck({0x1539},AnimeArchetype.OCGCN39UtopiaRay)
+
 	-- Number S
 	-- ＳＮｏ.
 	-- シャイニングナンバーズ
@@ -653,14 +666,13 @@ if not AnimeArchetype then
 	}
 	Card.IsNumberS=MakeCheck({0x2048},AnimeArchetype.OCGNumberS)
 
-	-- Numeron ヌメロン
-	-- Number 100: Numeron Dragon
-	-- Rank-Up-Magic Numeron Force
-	-- Rank-Down-Magic Numeron Fall
-	AnimeArchetype.OCGNumeron={
-		57314798,48333324,71345905
+	-- Numeronius
+	-- ヌメロニアス
+	-- Number C1000: Numeronius/Number iC1000: Numeronius Numeronia
+	AnimeArchetype.OCGNumeronius={
+		100275101,100275102
 	}
-	Card.IsNumeron=MakeCheck({0x53a},AnimeArchetype.OCGNumeron)
+	Card.IsNumeronius=MakeCheck({0x53b},AnimeArchetype.OCGNumeronius)
 
 	-- Papillon パピヨン
 	-- Moonlit Papillon
@@ -714,7 +726,7 @@ if not AnimeArchetype then
 	}
 	Card.IsRaccoon=MakeCheck({0x542},AnimeArchetype.OCGRacoon)
 
-	-- Red (archetype) レッド   Last updated by 16th Apr 2020
+	-- Red (archetype) レッド   (Last updated on 16th Apr 2020)
 	-- Sub-archetype: Red-Eyes/Red Dragon Archfiend
 	-- U.A. Dreadnought Dunker/Vampire Red Baron/Xtra HERO Dread Decimator/Eternal Dread
 	-- Ojama Red/Number C106: Giant Red Hand/Construction Train Signal Red/The Wicked Dreadroot
@@ -820,15 +832,16 @@ if not AnimeArchetype then
 	-- Sky Scourge Enrise/Sky Scourge Norleras/Tenmataitei
 	-- Noble Arms of Destiny/Card of Sanctity/Celestial Wolf Lord, Blue Sirius
 	-- Number 9: Dyson Sphere/Number 44: Sky Pegasus/Blustering Winds
-	-- Blackwing - Jetstream the Blue Sky/Blackwing - Hillen the Tengu-wind/
+	-- Blackwing - Jetstream the Blue Sky/Blackwing - Hillen the Tengu-wind
 	-- Ancient Brain/World of Prophecy/Reborn Tengu/Rose Bell of Revelation
+	-- Nordic Ascendant/Skyscraper/Tenma the Sky Star
 
-	-- Nordic Ascendant/Skyscraper
 	AnimeArchetype.OCGSky={
 		49771608,42431843,67443336,32360466,50323155,3072808,87390067,22346472,42664989,54977057,62966332,77998771,
 		77235086,3629090,49010598,54407825,95457011,96570609,92223641,4149689,1637760,39238953,38411870,7452945,
 		97795930,10028593,86327225,27813661,11458071,48453776,74841885,10000020,41589166,90122655,95352218,23587624,
-		29146185,37910722,32995007,75326861,58601383,1992816,80764541,23085002,32559361,2519690,12171659,80196387
+		29146185,37910722,32995007,75326861,58601383,1992816,80764541,23085002,32559361,2519690,12171659,80196387,
+		33837653
 	}
 	Card.IsSky=MakeCheck({0x54a,0xf6,0x3042},AnimeArchetype.OCGSky,{"IsCelestial","IsAngel"})
 
@@ -867,6 +880,11 @@ if not AnimeArchetype then
 	-- Starship Spy Plane
 	-- Number 42: Galaxy Tomahawk
 	Card.IsStarship=MakeCheck({0x54f},{15458892,10389142})
+
+	-- Starving Venemy  (Last updated on 7th May 2020)
+	-- スターヴ・ヴェネミー
+	-- Starving Venemy Lethal Dose Dragon
+	Card.IsStarvingVenemy=MakeCheck({0x576},{22070401})
 
 	-- Statue スタチュー
 	-- Tiki Curse/Guardian Statue/Tiki Soul
@@ -918,7 +936,7 @@ if not AnimeArchetype then
 	Card.IsToy=MakeCheck({0x559},AnimeArchetype.OCGToy)
 
 	-- Toy (ARC-V archetype) トーイ
-	Card.IsToyArcV=MakeCheck({0x55a,0xad})
+	Card.IsToyArcV=MakeCheck({0x558,0xad})
 
 	--V (GX Archetype)
 	AnimeArchetype.OCGV={
@@ -931,8 +949,8 @@ if not AnimeArchetype then
 	-- V
 	-- ブイ
 
-	-- Number C39: Utopia Ray V/V Salamander/V－LAN Hydra/V-LAN Token
-	Card.Is_V_=MakeCheck({0x155a},{33725002,66970002,13536606,13536607})
+	-- Number C39: Utopia Ray V/V Salamander/V－LAN Hydra/V-LAN Token/Vain Betrayer
+	Card.Is_V_=MakeCheck({0x155a},{33725002,66970002,13536606,13536607,94933468})
 
 	--W
 	-- Arcana Force XXI - The World/VW-Tiger Catapult/VWXYZ-Dragon Catapult Cannon
@@ -943,7 +961,7 @@ if not AnimeArchetype then
 		84243274,65687442
 		--Windwitch/ ZW
 	}
-	Card.IsW=MakeCheck({0x56b,0xf0,0x7e},AnimeArchetype.OCGW)
+	Card.IsW=MakeCheck({0x56b,0xf0,0x107e},AnimeArchetype.OCGW)
 
 	-- White ホワイト
 	-- Great White/Cyberse Whitehat/Malefic Blue-Eyes White Dragon

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
-	--restrict attack
+	--Limit attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_EQUIP)
 	e4:SetCode(EFFECT_CANNOT_ATTACK)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
 	e5:SetValue(aux.imval1)
 	c:RegisterEffect(e5)
-	--tohand
+	--Change control
 	local e6=Effect.CreateEffect(c)
 	e6:SetCategory(CATEGORY_CONTROL)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -61,7 +61,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e)
+	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e)
 		and Duel.SpecialSummonStep(tc,0,tp,1-tp,false,false,POS_FACEUP) then
 		Duel.Equip(tp,c,tc)
 		--Add Equip limit
@@ -101,7 +101,7 @@ end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=c:GetPreviousEquipTarget()
-	if c:IsReason(REASON_LOST_TARGET) and ec:IsReason(REASON_SYNCHRO+REASON_FUSION+REASON_XYZ+REASON_LINK) then
+	if c:IsReason(REASON_LOST_TARGET) and ec and ec:IsReason(REASON_SYNCHRO+REASON_FUSION+REASON_XYZ+REASON_LINK) then
 		e:SetLabelObject(ec:GetReasonCard())
 		return true
 	else

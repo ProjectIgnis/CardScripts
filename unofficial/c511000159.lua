@@ -24,5 +24,6 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return d and a:IsControler(tp) and a~=e:GetHandler() and a:IsType(TYPE_SYNCHRO)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Damage(1-tp,500,REASON_EFFECT)
 end

@@ -1,4 +1,5 @@
 --剣闘獣ヘラクレイノス
+--Gladiator Beast Heraklinos
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -6,18 +7,19 @@ function s.initial_effect(c)
 	Fusion.AddProcMixN(c,true,true,78868776,1,aux.FilterBoolFunctionEx(Card.IsSetCard,0x19),2)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--negate
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
-	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e3:SetCode(EVENT_CHAINING)
-	e3:SetCondition(s.discon)
-	e3:SetCost(s.discost)
-	e3:SetTarget(s.distg)
-	e3:SetOperation(s.disop)
-	c:RegisterEffect(e3)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e1:SetCode(EVENT_CHAINING)
+	e1:SetCondition(s.discon)
+	e1:SetCost(s.discost)
+	e1:SetTarget(s.distg)
+	e1:SetOperation(s.disop)
+	c:RegisterEffect(e1)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_series={0x19}
 s.material_setcode={0x19}
@@ -26,7 +28,7 @@ function s.contactfil(tp)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
-	Duel.SendtoDeck(g,nil,2,REASON_COST+REASON_MATERIAL)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)
 end
 function s.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA

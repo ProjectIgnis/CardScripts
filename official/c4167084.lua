@@ -1,5 +1,5 @@
 --黎明の堕天使ルシフェル
---Lucifer, Darklord of the Morningstar
+--The First Darklord
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetProperty(EFFECT_FLAG_DELAY)
 	e0:SetCountLimit(1,id)
+	e0:SetLabel(0)
 	e0:SetCondition(s.descon)
 	e0:SetTarget(s.destg)
 	e0:SetOperation(s.desop)
@@ -64,6 +65,7 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 	if chk==0 then return #g>0 end
+	e:SetLabel(0)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -71,8 +73,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then Duel.Destroy(g,REASON_EFFECT) end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_FAIRY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

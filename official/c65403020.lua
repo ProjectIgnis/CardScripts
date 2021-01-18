@@ -1,4 +1,5 @@
 --エンド・オブ・アヌビス
+--The End of Anubis
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate
@@ -9,13 +10,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--Double Snare
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(3682106)
-	c:RegisterEffect(e2)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.gfilter(c)
 	return c:IsLocation(LOCATION_GRAVE)

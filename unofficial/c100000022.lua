@@ -1,4 +1,5 @@
 --サテライト・レーザー　Ｘ－０６Ｓ　バルサム
+--Satellite Laser Balsam
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

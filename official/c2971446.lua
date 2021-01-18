@@ -1,8 +1,8 @@
 --キャッチ・コピー
---Catch Copy
+--Sales Pitch
 --Scripted by Eerie Code
 local s,id=GetID()
-function s.initial_effect(c)	
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -52,4 +52,3 @@ function s.aclimit(e,re,tp)
 	local tc=e:GetLabelObject()
 	return re:GetHandler():IsCode(tc:GetCode())
 end
-

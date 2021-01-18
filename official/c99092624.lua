@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={73580471}
+s.listed_names={CARD_BLACK_ROSE_DRAGON}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
 		local ct=Duel.GetMatchingGroupCount(Card.IsSequence,tp,LOCATION_SZONE,LOCATION_SZONE,nil,5)
@@ -64,7 +64,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmfilter(c)
 	return c:IsFaceup() and c:IsAbleToRemove()
-		and (c:IsCode(73580471) or c:IsRace(RACE_PLANT))
+		and (c:IsCode(CARD_BLACK_ROSE_DRAGON) or c:IsRace(RACE_PLANT))
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.rmfilter(chkc) end

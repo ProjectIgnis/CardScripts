@@ -1,4 +1,5 @@
---ディープアイズ・ホワイト・ドラゴン
+--ディープアイズ・ホワイト・ドラゴン (Anime)
+--Deep-Eyes White Dragon (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,7 +38,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.spfilter(c,tp)
-	return c:IsRace(RACE_DRAGON) and c:IsLevelAbove(8) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsRace(RACE_DRAGON) and c:IsLevelAbove(8)
+		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spfilter,1,nil,tp)

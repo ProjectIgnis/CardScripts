@@ -1,4 +1,5 @@
---Blackwing - Gofu the Hazy Shadow
+--BF－朧影のゴウフウ (Anime)
+--Blackwing - Gofu the Vague Shadow (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -55,7 +56,7 @@ function s.spcon(e,c)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_WINGEDBEAST,ATTRIBUTE_DARK) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,9929399,0,TYPES_TOKEN,0,0,1,RACE_WINGEDBEAST,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,0)
 end
@@ -63,9 +64,9 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	if ft<2 then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_WINGEDBEAST,ATTRIBUTE_DARK) then return end
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,9929399,0,TYPES_TOKEN,0,0,1,RACE_WINGEDBEAST,ATTRIBUTE_DARK) then return end
 	for i=1,2 do
-		local token=Duel.CreateToken(tp,id+1)
+		local token=Duel.CreateToken(tp,9929399)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 	end
 	Duel.SpecialSummonComplete()
@@ -142,7 +143,7 @@ function s.synchk(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.reqm(reqm)
-	return	function(g,sc,tp)
+	return function(g,sc,tp)
 				return g:IsExists(Card.IsHasEffect,1,nil,id) and (not reqm or reqm(g,sc,tp))
 			end
 end

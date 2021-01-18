@@ -6,7 +6,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsDrone),1)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx2(Card.IsDrone),1)
 	c:EnableReviveLimit()
 	--direct attack
 	local e1=Effect.CreateEffect(c)
@@ -18,8 +18,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst():IsControler(tp) and eg:GetFirst():IsDrone() and Duel.GetAttackTarget()==nil
+	return ep==1-tp and eg:GetFirst():IsControler(tp) and eg:GetFirst():IsDrone() and Duel.GetAttackTarget()==nil
 		and not eg:GetFirst():IsCode(id) and not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

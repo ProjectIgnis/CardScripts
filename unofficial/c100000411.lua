@@ -1,6 +1,5 @@
 --天啓の薔薇の鐘 (Manga)
 --Rose Bell of Revelation (Manga)
-Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x123}
+s.listed_names={96470883,49674183}
 function s.filter(c)
-	return c:IsSetCard(0x123) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsCode(96470883,49674183) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

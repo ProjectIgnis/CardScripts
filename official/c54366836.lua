@@ -1,10 +1,11 @@
 --No.54 反骨の闘士ライオンハート
+--Number 54: Lion Heart
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,nil,1,3)
 	c:EnableReviveLimit()
-	--ind
+	--cannot be destroyed
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.indcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
+	--inflict damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DAMAGE)
@@ -23,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
-	--damage
+	--change battle damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_QUICK_O)
@@ -60,19 +62,13 @@ function s.damcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.damop2(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e1:SetOperation(s.damop3)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.indcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
-end
-function s.damop3(e,tp,eg,ep,ev,re,r,rp)
-	local dam=Duel.GetBattleDamage(tp)
-	if dam>0 then
-		Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(1-tp)+dam,false)
-		Duel.ChangeBattleDamage(tp,0)
-	end
 end

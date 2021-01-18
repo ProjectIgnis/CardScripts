@@ -16,7 +16,7 @@ function s.cfilter(c,e,tp)
 	return c:IsType(TYPE_SYNCHRO) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,c:GetLevel(),e,tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,e,tp) and ep~=tp
+	return eg:IsExists(s.cfilter,1,nil,e,tp) and ep==1-tp
 end
 function s.filter(c,lv,e,tp)
 	return c:IsType(TYPE_SYNCHRO) and c:GetLevel()==lv+1

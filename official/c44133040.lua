@@ -4,44 +4,37 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x129))
-	--battle indestructable
+	--Prevent destruction by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--Untargetable
+	--Prevent effect target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-	--effect indestructable
+	--Prevent destruction by effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e3:SetValue(aux.indoval)
 	c:RegisterEffect(e3)
-	--attack up
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e4:SetCode(EVENT_CHAINING)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetOperation(aux.chainreg)
-	c:RegisterEffect(e4)
+	--Increase ATK
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetCategory(CATEGORY_ATKCHANGE)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e5:SetCode(EVENT_CHAIN_SOLVING)
+	e5:SetCode(EVENT_CHAINING)
 	e5:SetRange(LOCATION_SZONE)
 	e5:SetCondition(s.atkupcond)
 	e5:SetOperation(s.atkupop)
 	c:RegisterEffect(e5)
-	--set
+	--Set itself from the GY
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetType(EFFECT_TYPE_IGNITION)
@@ -50,7 +43,7 @@ function s.initial_effect(c)
 	e6:SetCost(s.setcost)
 	e6:SetTarget(s.settg)
 	e6:SetOperation(s.setop)
-	c:RegisterEffect(e6)	
+	c:RegisterEffect(e6)
 end
 s.listed_series={0x129}
 s.listed_names={id}
@@ -70,7 +63,7 @@ end
 function s.rfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x129) and c:IsAbleToRemoveAsCost() and not c:IsCode(id)
 end
-function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)	
+function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_GRAVE,0,1,1,nil)

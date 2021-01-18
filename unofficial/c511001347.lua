@@ -41,7 +41,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)	
+	Duel.PayLPCost(tp,800)
 end
 function s.filter(c,atk,def)
 	return c:IsFaceup() and c:GetAttack()<atk and c:GetAttack()<def

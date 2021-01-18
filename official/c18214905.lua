@@ -1,8 +1,8 @@
 --エレメントセイバー・ラパウィラ
---Elementsaber Rapawira
+--Elementsaber Lapauila
 local s,id=GetID()
 function s.initial_effect(c)
-	--search
+	--Negate activation
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
-	--att change
+	--Attribute change
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.atttg)
 	e2:SetOperation(s.attop)
 	c:RegisterEffect(e2)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_series={0x400d}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
@@ -97,4 +98,3 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-

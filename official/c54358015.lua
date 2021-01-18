@@ -1,10 +1,11 @@
 --銀河影竜
+--Galaxy Stealth Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon procedure
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),4,2)
 	c:EnableReviveLimit()
-	--spsummon
+	--Special Summon 1 Dragon from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--cannot be target
+	--Prevent effect target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -25,14 +26,14 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tgtg)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-	--indes
+	--Prevent destruction by opponent's effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_ONFIELD,0)
 	e3:SetTarget(s.tgtg)
-	e3:SetValue(s.indval)
+	e3:SetValue(aux.indoval)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x7b}
@@ -58,7 +59,4 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tgtg(e,c)
 	return c:IsSetCard(0x7b) and c~=e:GetHandler()
-end
-function s.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end

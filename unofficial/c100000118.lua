@@ -1,4 +1,5 @@
 --おジャマ・ゲットライド！
+--Ojama Ride
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,20 +12,21 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={12482652,42941100,79335209}
 function s.costfilter(c,code)
-	return c:IsAbleToGraveAsCost() and c:IsCode(code)
+	return c:IsDiscardable() and c:IsCode(code)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,12482652)
 		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,42941100)
 		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,79335209) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g1=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil,12482652)	
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	local g1=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil,12482652)
 	local g2=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil,42941100)
 	g1:Merge(g2)
 	local g3=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil,79335209)
 	g1:Merge(g3)
-	Duel.SendtoGrave(g1,REASON_COST)
+	Duel.SendtoGrave(g1,REASON_COST+REASON_DISCARD)
 end
 function s.filter(c,e,tp)
 	return c:GetLevel()<=4 and c:IsRace(RACE_MACHINE) and c:IsType(TYPE_UNION) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -39,11 +41,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ft>3 then ft=3 end
 	if ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
+	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,ft,nil,e,tp)
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()
 end

@@ -1,4 +1,6 @@
---CNo.39 希望皇ホープレイ・ヴィクトリー (Anime)
+--ＣＮｏ.３９ 希望皇ホープレイ・ヴィクトリー (Anime)
+--Number C39: Utopia Ray Victory (Anime)
+Duel.LoadScript("rankup_functions.lua")
 Duel.LoadCardScript("c87911394.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -6,59 +8,50 @@ function s.initial_effect(c)
 	Xyz.AddProcedure(c,nil,5,3)
 	c:EnableReviveLimit()
 	--Rank Up Check
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(s.rankupregcon)
-	e1:SetOperation(s.rankupregop)
-	c:RegisterEffect(e1)
+	aux.EnableCheckRankUp(c,nil,nil,84013237)
 	--battle indestructable
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e3:SetValue(s.indes)
-	c:RegisterEffect(e3)
-end
-s.listed_names={84013237,100000581,111011002,511000580,511002068,511002164,93238626}
-s.xyz_number=39
-function s.rumfilter(c)
-	return c:IsCode(84013237) and not c:IsPreviousLocation(LOCATION_OVERLAY)
-end
-function s.rankupregcon(e,tp,eg,ep,ev,re,r,rp)
-	if not re then return false end
-	local rc=re:GetHandler()
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and rc 
-		and (rc:IsSetCard(0x95) or rc:IsCode(100000581) or rc:IsCode(111011002) or rc:IsCode(511000580) or rc:IsCode(511002068) or rc:IsCode(511002164) or rc:IsCode(93238626)) 
-		and e:GetHandler():GetMaterial():IsExists(s.rumfilter,1,nil)
-end
-function s.rankupregop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	--actlimit
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(0,1)
-	e1:SetValue(s.aclimit)
-	e1:SetCondition(s.actcon)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e1)
-	--
+	--actlimit
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(52085072,0))
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetHintTiming(TIMING_DAMAGE_STEP)
-	e2:SetCondition(s.atkcon)
-	e2:SetCost(s.atkcost)
-	e2:SetTarget(s.atktg)
-	e2:SetOperation(s.atkop)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	e2:SetTargetRange(0,1)
+	e2:SetValue(s.aclimit)
+	e2:SetCondition(s.actcon)
+	e2:SetLabel(RESET_EVENT+RESETS_STANDARD)
+	--negate
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetCategory(CATEGORY_DISABLE)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e3:SetHintTiming(TIMING_DAMAGE_STEP)
+	e3:SetCondition(s.atkcon)
+	e3:SetCost(s.atkcost)
+	e3:SetTarget(s.atktg)
+	e3:SetOperation(s.atkop)
+	e3:SetLabel(RESET_EVENT+RESETS_STANDARD)
+	--
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_RANKUP_EFFECT)
+	e4:SetLabelObject(e2)
+	c:RegisterEffect(e4)
+	local e5=e4:Clone()
+	e5:SetLabelObject(e3)
+	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_series={0x48}
+s.listed_names={84013237}
+s.xyz_number=39
 function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
@@ -68,7 +61,7 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return bc and bc:IsFaceup() and bc:IsControler(1-tp) and not e:GetHandler():IsStatus(STATUS_CHAINING) and not bc:IsDisabled() 
+	return bc and bc:IsFaceup() and bc:IsControler(1-tp) and not e:GetHandler():IsStatus(STATUS_CHAINING)
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -82,7 +75,8 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsRelateToBattle() and tc:IsFaceup() then
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -94,7 +88,8 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		if c:IsFaceup() and c:IsRelateToEffect(e) and tc:IsControler(1-tp) then
+		Duel.AdjustInstantly(c)
+		if c:IsFaceup() and c:IsRelateToEffect(e) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -104,7 +99,4 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			c:RegisterEffect(e1)
 		end
 	end
-end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
 end

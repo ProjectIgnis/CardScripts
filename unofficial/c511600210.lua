@@ -44,7 +44,7 @@ function s.con(e)
 	return Duel.GetFlagEffect(e:GetHandlerPlayer(),e:GetHandler():GetFieldID())==0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and (aux.damcon1(e,0,eg,ep,ev,re,r,rp) or aux.damcon1(e,1,eg,ep,ev,re,r,rp))
+	return ep==1-tp and (aux.damcon1(e,0,eg,ep,ev,re,r,rp) or aux.damcon1(e,1,eg,ep,ev,re,r,rp))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -68,8 +68,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_CHAIN)
 		Duel.RegisterEffect(e1,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g2=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,0,1,e:GetHandler())
-		if Duel.SendtoGrave(g2,REASON_EFFECT)>0 then
+		local g2=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,0,1,true,e:GetHandler())
+		if g2 and Duel.SendtoGrave(g2,REASON_EFFECT)>0 then
 			Duel.RegisterFlagEffect(tp,c:GetFieldID(),RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,2)
 		end
 	end
@@ -79,7 +79,7 @@ function s.damval(e,re,val,r,rp,rc)
 	if cc==0 or r&REASON_EFFECT==0 then return val end
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
 	if cid~=e:GetLabel() then return val end
-	return val/math.pow(2,Duel.GetFlagEffect(e:GetHandlerPlayer(),e:GetOwner():GetFieldID()))
+	return val/(1<<Duel.GetFlagEffect(e:GetHandlerPlayer(),e:GetOwner():GetFieldID()))
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -99,18 +99,20 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.negfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local dg=Group.CreateGroup()
-	for tc in aux.Next(g) do
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e2)
-		if not tc:IsImmuneToEffect(e1) and not tc:IsImmuneToEffect(e2) then dg=dg+tc end
+	if g and #g>0 then
+		for tc in aux.Next(g) do
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_DISABLE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e1)
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_DISABLE_EFFECT)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e2)
+			if not tc:IsImmuneToEffect(e1) and not tc:IsImmuneToEffect(e2) then dg=dg+tc end
+		end
 	end
 	Duel.AdjustInstantly(c)
 	if #dg>0 then

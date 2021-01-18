@@ -2,12 +2,13 @@
 --Sea Stealth Attack
 local s,id=GetID()
 function s.initial_effect(c)
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--remove
+	--Prevent destruction
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.remcost)
 	e2:SetOperation(s.remop)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy battling monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DESTROY)
@@ -75,12 +76,9 @@ function s.remop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetTargetRange(LOCATION_ONFIELD,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_SPELL+TYPE_TRAP))
-	e1:SetValue(s.indval)
+	e1:SetValue(aux.indoval)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-end
-function s.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if not s.econ(e,tp,eg,ep,ev,re,r,rp) then return false end

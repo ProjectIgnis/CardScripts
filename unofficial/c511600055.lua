@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.dirfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_CYBERSE)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsRace(RACE_CYBERSE)
 end
 function s.dircon(e)
 	return e:GetHandler():GetMutualLinkedGroup():IsExists(s.dirfilter,1,nil)

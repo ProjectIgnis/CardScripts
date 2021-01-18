@@ -51,7 +51,7 @@ function s.aop(e,tp,eg,ev,ep,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.condition()
-   return Duel.GetFlagEffect(0,id+1)==0
+	return Duel.GetFlagEffect(0,id+1)==0
 end
 function s.aclimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetFlagEffect(511004399)==0

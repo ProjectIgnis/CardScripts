@@ -22,7 +22,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--place on the field
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_TOFIELD)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -62,7 +61,7 @@ function s.smfilter(c)
 	return c:IsCode(table.unpack(CARDS_SPIRIT_MESSAGE)) and not c:IsForbidden()
 end
 function s.plcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
+	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and not e:GetHandler():IsStatus(STATUS_CHAINING) end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -104,6 +103,7 @@ function s.extraop(e,tp,eg,ep,ev,re,r,rp)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+			e2:SetValue(1)
 			e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
 			tc:RegisterEffect(e2)
 			Duel.SpecialSummonComplete()

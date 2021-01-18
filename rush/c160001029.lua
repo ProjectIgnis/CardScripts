@@ -1,4 +1,5 @@
 --ジャンク・ブレイカー
+--Fiendish Commander Yameruler
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable
@@ -8,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetOperation(s.sumsuc)
 	c:RegisterEffect(e1)
+	--Prevent Tribute Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -19,32 +21,34 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+0x1ec0000+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
+	
 end
-
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--cannot tribute summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EFFECT_CANNOT_SUMMON)
-	e1:SetTarget(s.sumlimit)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
-	e1:SetTargetRange(1,1)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_CANNOT_MSET)
-	c:RegisterEffect(e2)
+	if Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)~=0 then
+		--cannot tribute summon
+		local e1=Effect.CreateEffect(c)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetCode(EFFECT_CANNOT_SUMMON)
+		e1:SetTarget(s.sumlimit)
+		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+		e1:SetTargetRange(1,1)
+		c:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetDescription(aux.Stringid(id,1))
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_PLAYER_TARGET)
+		e2:SetCode(EFFECT_CANNOT_MSET)
+		c:RegisterEffect(e2)
+	end
 end
 function s.sumlimit(e,c,tp,sumtp)
 	return sumtp&SUMMON_TYPE_TRIBUTE==SUMMON_TYPE_TRIBUTE and c:IsLevelAbove(7)

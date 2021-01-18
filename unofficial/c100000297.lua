@@ -1,37 +1,43 @@
 --エアロの爪
+--Aero Nail
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsCode,CARD_HARPIE_LADY))
-	--Atk up
+	--Increase ATK
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(300)
+	c:RegisterEffect(e1)
+	--Equip
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetValue(300)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_EQUIP)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCondition(s.eqcon)
+	e2:SetTarget(s.eqtg)
+	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
-	--tograve replace
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(EFFECT_SEND_REPLACE)
-	e4:SetTarget(s.reptg)
-	e4:SetOperation(s.repop)
-	c:RegisterEffect(e4)
 end
-function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+s.listed_names={CARD_HARPIE_LADY}
+function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():CheckUniqueOnField(tp)
+end
+s.eqfilter=aux.FilterFaceupFunction(Card.IsCode,CARD_HARPIE_LADY)
+function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) end
+	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+	Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
+end
+function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local eq=e:GetHandler():GetEquipTarget()
-	if chk==0 then return eq and c:GetDestination()==LOCATION_GRAVE 
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,eq) end
-	if Duel.SelectEffectYesNo(tp,c) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,eq)
-		e:SetLabelObject(g:GetFirst())
-		Duel.HintSelection(g)
-		return true
-	else return false end
-end
-function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	Duel.Equip(tp,e:GetHandler(),tc)
+	local tc=Duel.GetFirstTarget()
+	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and c:CheckUniqueOnField(tp) then
+		Duel.Equip(tp,c,tc)
+	end
 end

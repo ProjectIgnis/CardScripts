@@ -24,6 +24,5 @@ function s.spfilter(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetMaterial()
-	return 
-	g:IsExists(s.spfilter,1,nil)		
+	return g:IsExists(s.spfilter,1,nil)
 end

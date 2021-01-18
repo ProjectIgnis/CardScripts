@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	local e1=Fusion.CreateSummonEff({handler=c,extraop=s.extraop,stage2=s.stage2,matfilter=s.matfil})
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_DESTROY)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetHintTiming(0,0x1e0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	local tg=e1:GetTarget()
 	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 					if chk==0 then
@@ -21,29 +21,27 @@ function s.matfil(c,e,tp,chk)
 	return c:IsOnField() and c:IsDestructable(e) and not c:IsImmuneToEffect(e)
 end
 function s.extraop(e,tc,tp,sg)
-	Duel.Destroy(sg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+	local res=Duel.Destroy(sg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)==#sg
 	sg:Clear()
+	return res
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then
-		--cannot be battle target
+		--Limits the battle targets
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetRange(LOCATION_MZONE)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetTargetRange(0,LOCATION_MZONE)
-		e1:SetTarget(s.attg)
 		e1:SetValue(s.atlimit)
-		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e2)
-		--immune
+		tc:RegisterEffect(e1,true)
+		--Prevent direct attacks
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1,true)
+		--Immune
 		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetDescription(aux.Stringid(id,0))
 		e3:SetType(EFFECT_TYPE_SINGLE)
@@ -52,14 +50,11 @@ function s.stage2(e,tc,tp,sg,chk)
 		e3:SetRange(LOCATION_MZONE)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e3:SetValue(s.efilter)
-		tc:RegisterEffect(e3)
+		tc:RegisterEffect(e3,true)
 	end
 end
-function s.attg(e,c)
-	return not (c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetSummonLocation()==LOCATION_EXTRA)
-end
 function s.atlimit(e,c)
-	return c==e:GetHandler()
+	return not (c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetSummonLocation()==LOCATION_EXTRA)
 end
 function s.efilter(e,te)
 	local tc=te:GetOwner()

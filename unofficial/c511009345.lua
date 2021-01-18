@@ -13,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={6205579}
 function s.filter(c,ft1,ft2,tp)
 	local p=c:GetControler()
 	if c:IsFacedown() then return false end
@@ -92,7 +93,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
-end	
+end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end

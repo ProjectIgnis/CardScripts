@@ -1,4 +1,4 @@
---アストログラフ・マジシャン
+--アストログラフ・マジシャン (Anime)
 --Astrograph Sorcerer (Anime)
 --rescripted by Naim
 local s,id=GetID()
@@ -28,28 +28,26 @@ end
 s.listed_names={13331639,41209827,82044279,16195942,16178681}
 local ZARC_LOC=LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_EXTRA+LOCATION_DECK
 function s.spcfilter(c,e,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsCanBeEffectTarget(e) 
-		and (c:IsLocation(LOCATION_SZONE+LOCATION_EXTRA+LOCATION_GRAVE+LOCATION_HAND) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
+		and (c:IsCanBeEffectTarget(e) and (c:IsLocation(LOCATION_SZONE+LOCATION_GRAVE+LOCATION_MZONE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))) or (c:IsLocation(LOCATION_HAND+LOCATION_DECK) or (c:IsLocation(LOCATION_EXTRA) and c:IsFaceup()))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return eg:IsExists(s.spcfilter,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and c:IsCanBeSpecialSummoned(e,1,tp,false,false) end
+	if chk==0 then return eg:IsExists(s.spcfilter,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,1,tp,false,false) end
 	local g=eg:Filter(s.spcfilter,nil,e,tp)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
-function s.spcfilterchk(c,e,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsRelateToEffect(e) 
-		and (c:IsLocation(LOCATION_SZONE+LOCATION_EXTRA+LOCATION_GRAVE+LOCATION_HAND) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))
-		and not Duel.GetFieldCard(tp,c:GetPreviousLocation(),c:GetPreviousSequence())
+function s.spcfilterchk(c,tp)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
+		and (c:IsLocation(LOCATION_SZONE+LOCATION_GRAVE+LOCATION_MZONE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup())) or (c:IsLocation(LOCATION_HAND+LOCATION_DECK) or (c:IsLocation(LOCATION_EXTRA) and c:IsFaceup())) and not Duel.GetFieldCard(tp,c:GetPreviousLocation(),c:GetPreviousSequence())
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.spcfilterchk,nil,e,tp)
-	if Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)~=0 and #g>0 and Duel.SelectEffectYesNo(tp,c) then
+	local g=Duel.GetTargetCards(e)
+	if Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)>0 and #g>0 and Duel.SelectEffectYesNo(tp,c) then
 		g:KeepAlive()
 		--spsummon
 		local e1=Effect.CreateEffect(c)
@@ -66,11 +64,11 @@ end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=e:GetLabelObject()
-	g:DeleteGroup()
 	Duel.SetTargetCard(g)
+	g:DeleteGroup()
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.spcfilterchk,nil,e,tp)
+	local g=Duel.GetTargetCards(e):Filter(s.spcfilterchk,nil,tp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_BECOME_LINKED_ZONE)
@@ -130,7 +128,7 @@ function s.zarcop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>3 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=Duel.SelectMatchingCard(tp,s.zarcspfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,g):GetFirst()
-		if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
+		if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 and tc:IsOriginalCode(511009441) then
 			tc:CompleteProcedure()
 		end
 	end

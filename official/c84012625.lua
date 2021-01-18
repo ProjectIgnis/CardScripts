@@ -1,4 +1,5 @@
 --シューティング・ソニック
+--Cosmic Flare
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -10,6 +11,17 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCode(id)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetTargetRange(1,0)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCondition(s.repcon)
+	e2:SetValue(s.repval)
+	e2:SetOperation(s.repop)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0xa3}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -45,4 +57,16 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
 	Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+end
+function s.repcon(e)
+	return e:GetHandler():IsAbleToRemoveAsCost()
+end
+function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+		and c:IsSetCard(0xa3) and c:IsType(TYPE_SYNCHRO)
+end
+function s.repop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,id)
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST+REASON_REPLACE)
 end

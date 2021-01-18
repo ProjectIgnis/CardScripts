@@ -1,7 +1,6 @@
 --Sacrifice's Blast
---  By Shad3
+--original script by Shad3
 local s,id=GetID()
-
 function s.initial_effect(c)
 	--Globals
 	aux.GlobalCheck(s,function()
@@ -32,13 +31,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-
 function s.gtg_cd(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsOriginalCode,1,nil,id)
 end
-
 function s.gtg_op(e,tp,eg,ep,ev,re,r,rp)
-  local g=eg:Filter(Card.IsOriginalCode,nil,id)
+	local g=eg:Filter(Card.IsOriginalCode,nil,id)
 	local c=g:GetFirst()
 	while c do
 		local p=c:GetControler()
@@ -51,11 +48,9 @@ function s.gtg_op(e,tp,eg,ep,ev,re,r,rp)
 		c=g:GetNext()
 	end
 end
-
 function s.fid_chk(c,id)
 	return c:GetFieldID()==id
 end
-
 function s.sum_op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if (tc:GetSummonType()&SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE then
@@ -84,14 +79,12 @@ function s.sum_op(e,tp,eg,ep,ev,re,r,rp)
 		end)
 	end
 end
-
 function s.des_op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.Destroy(c,REASON_EFFECT)~=0 then
 		Duel.Damage(c:GetPreviousControler(),c:GetPreviousAttackOnField(),REASON_EFFECT)
 	end
 end
-
 function s.reflag_op(e,tp,eg,ep,ev,re,r,rp)
 	local c=eg:GetFirst()
 	while c do
@@ -103,7 +96,6 @@ function s.reflag_op(e,tp,eg,ep,ev,re,r,rp)
 		c=eg:GetNext()
 	end
 end
-
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ac=Duel.GetAttacker()
 	if chk==0 then 
@@ -111,7 +103,6 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	e:GetHandler():SetCardTarget(ac)
 end
-
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local ac=e:GetHandler():GetFirstCardTarget()
 	if ac then

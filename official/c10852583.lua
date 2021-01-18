@@ -1,10 +1,9 @@
 --ヤジロベーダー
 --Yajiro Invader
---
 --Some parts remade by Edo9300
 local s,id=GetID()
 function s.initial_effect(c)
-	--self destroy
+	--Destroy itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -14,7 +13,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--move
+	--Move itself to another monster zone
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -23,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetCondition(aux.seqmovcon)
 	e3:SetOperation(aux.seqmovop)
 	c:RegisterEffect(e3)
-	--move
+	--Destroy cards after moved
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_DESTROY)
@@ -56,7 +55,7 @@ function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=eg:GetFirst()
 	if not c:IsRelateToEffect(e) or c:IsControler(1-tp)
-	 	or not tc:IsRelateToEffect(e) or tc:IsControler(tp) then return end
+		or not tc:IsRelateToEffect(e) or tc:IsControler(tp) then return end
 	local seq1=c:GetSequence()
 	local seq2=tc:GetSequence()
 	if seq1>4 then return end

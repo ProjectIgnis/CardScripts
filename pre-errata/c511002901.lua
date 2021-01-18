@@ -1,4 +1,5 @@
 --W－ウィング・カタパルト
+--W-Wing Catapult (Pre-Errata)
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	--Def up
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_EQUIP)
-	e4:SetCode(EFFECT_UPDATE_DEFENCE)
+	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	e4:SetValue(400)
 	e4:SetCondition(aux.IsUnionState)
 	c:RegisterEffect(e4)

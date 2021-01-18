@@ -1,4 +1,5 @@
---究極進化薬
+--究極進化薬 (Anime)
+--Double Evolution Pill (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,e,tp,rc)
+function s.cfilter(c,rc)
 	return c:IsRace(rc) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.filter(c,e,tp)

@@ -1,4 +1,5 @@
 --ゼンマイマジシャン
+--Wind-Up Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EVENT_CHAIN_SOLVING)
+	e1:SetCode(EVENT_CHAINING)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)

@@ -22,7 +22,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetOperation(s.negop)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)	
+	Duel.RegisterEffect(e1,tp)
 end
 function s.cfilter2(c,tp)
 	return c:IsOnField() and c:IsControler(tp)

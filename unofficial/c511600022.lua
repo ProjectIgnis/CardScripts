@@ -1,6 +1,6 @@
 --天火の牢獄
 --Fire Prison (Anime)
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -79,6 +79,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e3=e1:Clone()
 	e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 	e3:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e3:SetValue(1)
 	c:RegisterEffect(e3)
 	local e4=e1:Clone()
 	e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -126,10 +127,10 @@ function s.cyberse(c)
 end
 ------------------------------------
 function s.sumlimit(e,c,tp,sumtp,sumpos)
-	sumtp=sumtp or 0
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local tg,link=g:GetMaxGroup(Card.GetLink)
-	return (sumtp&SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK and c:GetLink()<link
+	if #g<=0 then return false end
+	local mg,lk=g:GetMaxGroup(Card.GetLink)
+	return (sumtp&SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK and lk and lk>c:GetLink()
 end
 ------------------------------------
 function s.attg(e,c)

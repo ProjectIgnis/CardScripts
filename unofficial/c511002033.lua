@@ -1,3 +1,4 @@
+--幻影忍法－朧ガマ
 --Illusion Ninjitsu Art of Hazy Toad
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,9 +29,8 @@ function s.initial_effect(c)
 	e3:SetCondition(s.descon)
 	c:RegisterEffect(e3)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2b)
-end
+s.listed_series={0x2b}
+s.cfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x2b)
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
@@ -38,8 +38,7 @@ function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()~=tp and ph>=0x08 and ph<=0x20 
+	return Duel.GetTurnPlayer()~=tp and Duel.IsBattlePhase()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) 

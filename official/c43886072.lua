@@ -1,11 +1,14 @@
 --プランキッズ・バウワウ
---Prankids Bow Wow
+--Prank-Kids Bow-Wow-Bark
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x120),2,2)
-	--atk/def
+	--A "Prank-Kids" pointed by this card gains 1000 ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -14,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetValue(1000)
 	c:RegisterEffect(e1)
-	--to hand
+	--Add 2 "Prank-Kids" cards from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -27,22 +30,23 @@ function s.initial_effect(c)
 	e2:SetCost(s.thcost)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
+	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_END_PHASE)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x120}
+
 function s.atktg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0x120)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return not Duel.IsTurnPlayer(tp)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.thfilter(c,e)
-	return c:IsSetCard(0x120) and not c:IsLinkMonster()
-		and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
+	return c:IsSetCard(0x120) and not c:IsLinkMonster() and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function s.thcheck(sg,e,tp)
 	return sg:GetClassCount(Card.GetCode)==2
@@ -60,19 +64,18 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetReset(RESET_PHASE+PHASE_END)
-	e2:SetTarget(s.indtg)
-	e2:SetValue(s.indval)
-	Duel.RegisterEffect(e2,tp)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTarget(s.indtg)
+	e1:SetValue(s.indval)
+	Duel.RegisterEffect(e1,tp)
 end
 function s.indtg(e,c)
 	return c:IsSetCard(0x120)
 end
 function s.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
+	return rp==1-e:GetHandlerPlayer()
 end
-

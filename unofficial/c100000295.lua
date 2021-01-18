@@ -7,15 +7,14 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_HARPIE_LADY}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_HARPIE_LADY)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,2,nil) 
-		and tp~=Duel.GetTurnPlayer()
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,2,nil) and Duel.GetTurnPlayer()==1-tp
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then

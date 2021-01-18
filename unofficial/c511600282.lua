@@ -48,6 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.operation)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x119}
 s.listed_names={CARD_SALAMANGREAT_SANCTUARY}
 function s.lmfilter(c,lc,tp)
 	return c:IsFaceup() and c:IsLinkMonster()
@@ -111,7 +112,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local g=Duel.GetFieldGroup(p,LOCATION_HAND,0)
 	if #g==0 then return end
-	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	Duel.ShuffleDeck(p)
 	Duel.BreakEffect()
 	Duel.Draw(p,#g,REASON_EFFECT)

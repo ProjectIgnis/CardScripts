@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x57a}
+s.listed_series={0x14a}
 function s.filter(c)
-	return c:IsType(TYPE_LINK) and c:IsLink(1) and c:IsSetCard(0x57a)
+	return c:IsType(TYPE_LINK) and c:IsLink(1) and c:IsSetCard(0x14a)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil):Filter(Card.IsAbleToRemove,nil):Filter(Card.IsSequence,nil,0,1,2,3,4)
@@ -54,7 +54,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x57a) and c:IsAbleToRemoveAsCost() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSetCard(0x14a) and c:IsAbleToRemoveAsCost() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),tp) end

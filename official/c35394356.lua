@@ -1,5 +1,5 @@
 --達磨落師
---Daruma Otoshi
+--Daruma Dropper
 --scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -54,7 +54,7 @@ end
 	--Except turn was sent, and would detach
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.exccon(e)
-		and (r&REASON_COST)~=0 and re:IsHasType(0x7e0)
+		and (r&REASON_COST)~=0 and re:IsActivated()
 		and re:IsActiveType(TYPE_XYZ)
 		and e:GetHandler():IsAbleToRemoveAsCost()
 		and ep==e:GetOwnerPlayer() and ev>=1

@@ -1,12 +1,16 @@
---E・HERO グロー・ネオス
+--Ｅ・ＨＥＲＯ グロー・ネオス
+--Elemental HERO Glow Neos
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Contact fusion procedure
 	Fusion.AddProcMix(c,true,true,CARD_NEOS,17732278)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
+	--Return itself to extra deck during end phase
 	aux.EnableNeosReturn(c)
-	--destroy
+	--Destroy 1 of opponent's cards, then apply appropriate effect, based on the card type
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_DESTROY)
@@ -21,12 +25,13 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_NEOS}
 s.material_setcode={0x8,0x3008,0x9,0x1f}
+
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
-	Duel.SendtoDeck(g,nil,2,REASON_COST+REASON_MATERIAL)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)
 end
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
@@ -47,20 +52,25 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 		local c=e:GetHandler()
 		if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
+		--Cannot attack this turn
 		if tc:IsType(TYPE_MONSTER) then
 			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3206)
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			c:RegisterEffect(e1)
+		--Can attack directly this turn
 		elseif tc:IsType(TYPE_SPELL) then
 			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3205)
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetCode(EFFECT_DIRECT_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			c:RegisterEffect(e1)
+		--Change itself to defense position
 		else
 			Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 		end

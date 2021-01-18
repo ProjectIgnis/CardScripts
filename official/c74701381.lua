@@ -1,4 +1,5 @@
 --DNA改造手術
+--DNA Surgery
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
 	local rc=Duel.AnnounceRace(tp,1,RACE_ALL)
-	e:GetLabelObject():SetLabel(rc)
+	if e:GetLabelObject() then e:GetLabelObject():SetLabel(rc) end
 	e:GetHandler():SetHint(CHINT_RACE,rc)
 end
 function s.value(e,c)

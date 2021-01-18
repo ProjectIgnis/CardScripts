@@ -1,6 +1,5 @@
---coded by Lyris
+--コモン・サクリファイス
 --Common Sacrifice
---fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,15 +14,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>=3
+	return Duel.GetTurnPlayer()==tp and Duel.IsMainPhase() and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>=3
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_MZONE):GetMinGroup(Card.GetAttack)
-	if chk==0 then return g:IsExists(Card.IsAbleToGraveAsCost,2,nil) end
-	if #g>2 then
+	local g1=Duel.GetFieldGroup(tp,0,LOCATION_MZONE):GetMinGroup(Card.GetAttack)
+	local g2
+	if #g1==1 then g2=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,g1:GetFirst()):GetMinGroup(Card.GetAttack) end
+	if chk==0 then return g1 and ((#g1>1 and g1:IsExists(Card.IsAbleToGraveAsCost,2,nil))
+		or (#g1==1 and g2 and g1:GetFirst():IsAbleToGraveAsCost() and g2:GetFirst():IsAbleToGraveAsCost())) end
+	local g=g1
+	if #g1>2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		g=g:Select(tp,2,2,nil)
+		g=g1:Select(tp,2,2,nil)
+	elseif #g1==1 then
+		g:Merge(g2)
 	end
 	Duel.SendtoGrave(g,REASON_COST)
 end

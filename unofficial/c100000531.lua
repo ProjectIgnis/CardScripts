@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(1-tp,s.filter,1-tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,rc,lv)
 	local tc=g:GetFirst()
 	if tc then
-		Duel.SendtoGrave(tc,nil,REASON_EFFECT)
+		Duel.SendtoGrave(tc,REASON_EFFECT)
 		Duel.ConfirmCards(tp,tc)
 	else
 		local dg=Duel.GetFieldGroup(tp,0,LOCATION_DECK+LOCATION_HAND)

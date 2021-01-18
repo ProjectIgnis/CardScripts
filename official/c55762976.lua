@@ -1,9 +1,10 @@
 --グッサリ＠イグニスター
 --Gussari @Ignister
 --Scripted by Eerie Code, anime version scripted by Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--damage
+	--Inflict damage equal to half of destroyed monster's ATK to opponent
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DAMAGE)
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
-	--atk
+	--Make your link monster's and opponent's monster's ATK become 3000
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -58,7 +59,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:IsType(TYPE_LINK) and tc:IsRelateToBattle() and tc:IsStatus(STATUS_OPPO_BATTLE)
+	return tc:IsType(TYPE_LINK) and tc:IsRelateToBattle() and tc:IsStatus(STATUS_OPPO_BATTLE) and tc:IsControler(tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dam=eg:GetFirst():GetBattleTarget():GetBaseAttack()

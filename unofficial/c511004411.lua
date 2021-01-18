@@ -37,6 +37,7 @@ function s.target(e,tp,eg,ev,ep,re,r,rp,chk)
 	if tg and tg(e,tp,eg,ep,ev,re,r,rp,0) then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 end
 function s.operation(e,tp,eg,ev,ep,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local te=e:GetLabelObject()
 	local code=te:GetHandler():GetOriginalCode()

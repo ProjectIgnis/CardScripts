@@ -1,8 +1,8 @@
--- サターン・キング・ビートル
+--サターン・キング・ビートル
 --Saturn King Beetle
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--ATK increase
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetRange(LOCATION_MZONE)
@@ -17,19 +17,15 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 	Duel.DiscardDeck(tp,1,REASON_COST)
 end
-function s.filter(c)
-	return c:IsFaceup()
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
-	and Duel.GetMatchingGroupCount(Card.IsLevel,tp,LOCATION_GRAVE,0,nil,1)>0
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.GetMatchingGroupCount(Card.IsLevel,tp,LOCATION_GRAVE,0,nil,1)>0 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
 		if #g>0 then
 			Duel.HintSelection(g)
 			local e1=Effect.CreateEffect(c)

@@ -43,14 +43,14 @@ function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,0)
 end
 function s.getflag(g,tp)
-    local flag = 0
-    for c in aux.Next(g) do
-        flag = flag|((1<<c:GetSequence())<<(8+(16*c:GetControler())))
-    end
-    if tp~=0 then
-        flag=((flag<<16)&0xffff)|((flag>>16)&0xffff)
-    end
-    return ~flag
+	local flag = 0
+	for c in aux.Next(g) do
+		flag = flag|((1<<c:GetSequence())<<(8+(16*c:GetControler())))
+	end
+	if tp~=0 then
+		flag=((flag<<16)&0xffff)|((flag>>16)&0xffff)
+	end
+	return ~flag
 end
 function s.SelectCardByZone(g,tp,hint)
 	if hint then Duel.Hint(HINT_SELECTMSG,tp,hint) end

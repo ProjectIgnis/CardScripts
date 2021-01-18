@@ -1,6 +1,5 @@
 --ランカの蟲惑魔
 --Traptrix Mantis
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Unaffected by "Hole" normal trap cards
@@ -66,7 +65,7 @@ function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFacedown() and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFacedown() and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND) then
 		local g=Duel.GetMatchingGroup(Card.IsSSetable,tp,LOCATION_HAND,0,nil)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.ShuffleHand(tp)

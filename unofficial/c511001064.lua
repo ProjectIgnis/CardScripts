@@ -42,7 +42,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
 		return #pg<=0 and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)>0 and Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)>0 
-			and Duel.IsPlayerCanSpecialSummon(tp,SUMMON_TYPE_XYZ,POS_FACEUP,tp) end
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,nil,nil,nil,nil,nil,nil,nil,nil,POS_FACEUP,tp,SUMMON_TYPE_XYZ) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.spfilter(c,e,tp)

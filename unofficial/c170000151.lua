@@ -1,4 +1,5 @@
---Fang of Critias
+--クリティウスの牙 (Anime)
+--Fang of Critias (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,6 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -16,6 +18,9 @@ function s.initial_effect(c)
 	e2:SetValue(s.monval)
 	c:RegisterEffect(e2)
 end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentChain()==0 and Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_ONFIELD)
@@ -24,9 +29,9 @@ end
 function s.spfilter(c,e,tp)
 	local code=c.material_trap
 	if not code or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,true,false) or not c:CheckFusionMaterial() then return false end
-	return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_ONFIELD,0,1,nil,code,c)
+	return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_ONFIELD,0,1,nil,code,c,tp)
 end
-function s.tgfilter(c,code,sc)
+function s.tgfilter(c,code,sc,tp)
 	return c:IsType(TYPE_TRAP) and c:IsAbleToGrave() and code==c:GetCode() and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -36,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if sc then
 		local code=sc.material_trap
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_ONFIELD,0,1,1,nil,code,sc)
+		local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_ONFIELD,0,1,1,nil,code,sc,tp)
 		tg:AddCard(e:GetHandler())
 		Duel.SendtoGrave(tg,REASON_EFFECT)
 		Duel.BreakEffect()

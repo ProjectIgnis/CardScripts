@@ -1,4 +1,4 @@
---シューティング・スター・ドラゴン
+--シューティング・スター・ドラゴン (Anime)
 --Shooting Star Dragon (Anime)
 --fixed by Larry126
 local s,id=GetID()
@@ -138,8 +138,9 @@ function s.bancost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
-	if Duel.GetAttacker() and Duel.SelectYesNo(tp,94) then Duel.NegateAttack()
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	if Duel.GetAttacker() and Duel.SelectYesNo(tp,94) then
+		Duel.NegateAttack()
 	else
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)

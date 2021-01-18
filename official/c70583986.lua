@@ -1,15 +1,18 @@
 --氷結界の虎王ドゥローレン
+--Dewloren, Tiger King of the Ice Barrier
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
+	--Synchro summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsAttribute,ATTRIBUTE_WATER),1,99)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--to hand, atkup
+	--Return cards you control to hand, gain 500 ATK/returned card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCountLimit(1)
+	e1:SetCountLimit(1,id)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(s.target)

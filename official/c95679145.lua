@@ -1,7 +1,6 @@
 --教導の大神祇官
---Maximus Dragma
+--Dogmatika Maximus
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -57,7 +56,7 @@ end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_EXTRA,0,nil)
 	local g2=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_EXTRA,nil)
-	if chk==0 then return g:GetClassCount(Card.GetCode)>=2 and g2:GetCount()>=2 end
+	if chk==0 then return g:GetClassCount(Card.GetCode)>=2 and #g2>=2 end
 	--Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,tp,LOCATION_EXTRA)
 end
 	--Send 2 monsters with different names from extra deck to GY, opponent also sends 2
@@ -83,6 +82,8 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	aux.RegisterClientHint(e:GetHandler(),EFFECT_FLAG_OATH,tp,1,0,aux.Stringid(id,2),nil)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp)
 end
 	--Cannot special summon from extra deck
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)

@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spfilter(c)
-	return c:GetLevel()>=5 and c:IsAttribute(ATTRIBUTE_DARK)
+	return c:IsLevelAbove(5) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -69,7 +69,7 @@ end
 function s.sgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 then 
+	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end

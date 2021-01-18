@@ -1,5 +1,6 @@
 --ルミナス・シャーマン
 --Luminous Shaman
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Let a level 4 or lower spellcaster attack directly
@@ -15,7 +16,6 @@ end
 	--Check if this card can be sent to GY
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-
 end
 	--Check for level 4 or lower spellcaster
 function s.filter(c)
@@ -33,8 +33,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 	--Effect
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,e:GetHandler()):GetFirst()
+	Duel.HintSelection(Group.FromCards(tc))
 	if tc and tc:IsFaceup() then
+		--Can attack directly
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3205)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

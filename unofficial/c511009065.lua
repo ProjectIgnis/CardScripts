@@ -1,38 +1,30 @@
 --Superheavy Samurai Ninja Sarutobi
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x9a)
 	--synchro summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_MACHINE),1,1,Synchro.NonTunerEx(Card.IsSetCard,0x9a),1,99)
 	c:EnableReviveLimit()
-	--add setcode
+	--Destroy
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_ADD_SETCODE)
-	e1:SetValue(0x9a)
+	e1:SetDescription(aux.Stringid(96029574,0))
+	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
+	e1:SetTarget(s.destg)
+	e1:SetCondition(s.descon)
+	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	
-	--destroy
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(96029574,0))
-	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1)
-	e2:SetTarget(s.destg)
-	e2:SetCondition(s.descon)
-	e2:SetOperation(s.desop)
-	c:RegisterEffect(e2)
-	
 	--defence attack
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_DEFENSE_ATTACK)
-	e3:SetValue(1)
-	c:RegisterEffect(e3)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_DEFENSE_ATTACK)
+	e2:SetValue(1)
+	c:RegisterEffect(e2)
 end
-
+s.listed_series={0x9a}
 function s.cfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end

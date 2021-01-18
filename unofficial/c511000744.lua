@@ -1,6 +1,14 @@
+--ハーモニック・ジオグリフ
 --Harmonic Geoglyph
 local s,id=GetID()
 function s.initial_effect(c)
+	--synchro custom
+	local e1=Effect.CreateEffect(c)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_SYNCHRO_MATERIAL_CUSTOM)
+	e1:SetOperation(s.synop)
+	c:RegisterEffect(e1)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -10,78 +18,106 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter(c,e,tp)
-	if not c:IsType(TYPE_SYNCHRO) or c:GetLevel()%2~=0 then return false end
-	s.Reset={}
-	return Duel.IsExistingMatchingCard(s.tmatfilter,tp,LOCATION_MZONE,0,1,nil,e,tp,c)
+function s.synop(e,tg,ntg,sg,lv,sc,tp)
+	return #sg-1+e:GetHandler():GetLevel()==lv,true
 end
-function s.tmatfilter(c,e,tp,syncard)
-	if not c:IsType(TYPE_TUNER) or not c:IsCanBeSynchroMaterial(syncard) or c:IsFacedown() then return false end
-	local e2
-	if c:IsHasEffect(EFFECT_SYNCHRO_LEVEL) then
-		e2=c:GetCardEffect(EFFECT_SYNCHRO_LEVEL)
-		local eff=e2:Clone()
-		c:RegisterEffect(eff)
-		e2:SetValue(2)
-	else
-		e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_SYNCHRO_LEVEL)
-		e2:SetValue(2)
-		e2:SetReset(RESET_CHAIN)
-		c:RegisterEffect(e2)
-	end
-	table.insert(s.Reset,e2)
-	local g=Duel.GetMatchingGroup(s.matfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil,e,syncard)
-	g:AddCard(c)
-	local res=syncard:IsSynchroSummonable(c,g)
-	for i,eff in ipairs(s.Reset) do
-		eff:Reset()
-	end
-	s.Reset={}
-	return res
+function s.tunerfilter(c)
+	return c:IsType(TYPE_TUNER) and c:IsCanBeSynchroMaterial() and c:IsFaceup()
 end
-function s.matfilter(c,e,syncard)
-	if not c:IsType(TYPE_SYNCHRO) or not c:IsCanBeSynchroMaterial(syncard) or not c:IsLevelAbove(6) or (c:IsLocation(LOCATION_MZONE) and c:IsFacedown())then return false end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SYNCHRO_MATERIAL)
-	e1:SetReset(RESET_CHAIN)
-	c:RegisterEffect(e1)
-	local e2
-	if c:IsHasEffect(EFFECT_SYNCHRO_LEVEL) then
-		e2=c:GetCardEffect(EFFECT_SYNCHRO_LEVEL)
-		local eff=e2:Clone()
-		c:RegisterEffect(eff)
-		e2:SetValue(2)
-	else
-		e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_SYNCHRO_LEVEL)
-		e2:SetValue(2)
-		e2:SetReset(RESET_CHAIN)
-		c:RegisterEffect(e2)
-	end
-	table.insert(s.Reset,e1)
-	table.insert(s.Reset,e2)
-	return true
+function s.matfilter(c)
+	return c:IsType(TYPE_SYNCHRO) and c:IsCanBeSynchroMaterial() and c:IsLevelAbove(6) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
-s.Reset={}
+function s.spfilter(c,tp,tuners,nontuners)
+	return c:IsType(TYPE_SYNCHRO) and c:HasLevel() and c:GetLevel()%2==0 and c:IsSynchroSummonable(nil,tuners+nontuners) and Duel.GetLocationCountFromEx(tp,tp,tuners,c)
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then
+		local c=e:GetHandler()
+		local tuners=Duel.GetMatchingGroup(s.tunerfilter,tp,LOCATION_MZONE,0,nil)
+		local nontuners=Duel.GetMatchingGroup(s.matfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)
+		local reset={}
+		for tc in aux.Next(tuners) do
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_SYNCHRO_CHECK)
+			e1:SetValue(s.syncheck)
+			e1:SetReset(RESET_CHAIN)
+			tc:RegisterEffect(e1,true)
+			table.insert(reset,e1)
+		end
+		for tc in aux.Next(nontuners) do
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_SYNCHRO_CHECK)
+			e1:SetValue(s.syncheck)
+			e1:SetReset(RESET_CHAIN)
+			tc:RegisterEffect(e1,true)
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_SYNCHRO_MATERIAL)
+			e2:SetReset(RESET_CHAIN)
+			tc:RegisterEffect(e2)
+			table.insert(reset,e1)
+			table.insert(reset,e2)
+		end
+		local res=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,tp,tuners,nontuners)
+		for _,eff in ipairs(reset) do
+			eff:Reset()
+		end
+		return res
+	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=-1 then return end
-	local g=Duel.GetMatchingGroup(c511001640.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
-	if #g>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tc=g:Select(tp,1,1,nil):GetFirst()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
-		local mc=Duel.SelectMatchingCard(tp,s.tmatfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,tc):GetFirst()
-		local sg=Duel.GetMatchingGroup(s.matfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil,e,tc)
-		sg:AddCard(mc)
-		Duel.SynchroSummon(tp,tc,mc,sg)
+	local c=e:GetHandler()
+	local tuners=Duel.GetMatchingGroup(s.tunerfilter,tp,LOCATION_MZONE,0,nil)
+	local nontuners=Duel.GetMatchingGroup(s.matfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)
+	local reset={}
+	for tc in aux.Next(tuners) do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SYNCHRO_CHECK)
+		e1:SetValue(s.syncheck)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1,true)
+		table.insert(reset,e1)
 	end
+	for tc in aux.Next(nontuners) do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SYNCHRO_CHECK)
+		e1:SetValue(s.syncheck)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1,true)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_SYNCHRO_MATERIAL)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e2)
+		table.insert(reset,e1)
+		table.insert(reset,e2)
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local sync=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,tp,tuners,nontuners):GetFirst()
+	if sync then
+		Duel.SynchroSummon(tp,sync,nil,tuners+nontuners)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SPSUMMON_COST)
+		e1:SetOperation(function()
+			for _,eff in ipairs(reset) do
+				eff:Reset()
+			end
+		end)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		sync:RegisterEffect(e1,true)
+	else
+		for _,eff in ipairs(reset) do
+			eff:Reset()
+		end
+	end
+end
+function s.syncheck(e,c)
+	c:AssumeProperty(ASSUME_LEVEL,2)
+	return true
 end

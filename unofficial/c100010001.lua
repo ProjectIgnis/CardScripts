@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e3:SetValue(1)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 	--attack up
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
@@ -65,7 +65,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local dr=e:GetHandler():GetRank()-tc:GetRank()
 		if Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)<=dr then
 			dr=Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)

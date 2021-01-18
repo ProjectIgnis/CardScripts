@@ -28,7 +28,7 @@ end
 s.listed_names={id}
 s.listed_series={0x12b}
 function s.mfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x12b) and c:IsLevelBelow(4)
+	return c:IsSetCard(0x12b,lc,sumtype,tp) and c:IsLevelBelow(4)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

@@ -1,13 +1,14 @@
+--死霊導師デスクレジットメイジ
 --Disgraced Mage
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e1:SetCode(EVENT_BATTLED)
-	e1:SetCondition(s.condition)
-	e1:SetOperation(s.operation)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EFFECT_BATTLE_DESTROY_REDIRECT)
+	e1:SetValue(LOCATION_DECKSHF)
 	c:RegisterEffect(e1)
 	--no damage
 	local e2=Effect.CreateEffect(c)
@@ -27,33 +28,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.desreptg)
 	c:RegisterEffect(e3)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	local bc=c:GetBattleTarget()
-	return bc and bc:IsStatus(STATUS_BATTLE_DESTROYED) and not bc:IsType(TYPE_TOKEN) and bc:GetLeaveFieldDest()==0
-end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
-	if bc:IsRelateToBattle() then
-		local e1=Effect.CreateEffect(c)
-		e1:SetCode(EFFECT_SEND_REPLACE)
-		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e1:SetTarget(s.reptg)
-		e1:SetOperation(s.repop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
-		bc:RegisterEffect(e1)
-	end
-end
-function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:GetDestination()==LOCATION_GRAVE and c:IsReason(REASON_BATTLE) end
-	return true
-end
-function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_EFFECT)
-end
 function s.damcon(e)
 	return e:GetHandler()==Duel.GetAttackTarget()
 end
@@ -63,7 +37,7 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsReason(REASON_BATTLE) and c:IsFaceup() and #g>0 end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
-		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		return true
 	else return false end
 end

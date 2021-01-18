@@ -1,6 +1,7 @@
 --天輪の葬送士
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x211)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,13 +17,6 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--add setcode
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetCode(EFFECT_ADD_SETCODE)
-	e4:SetValue(0x211)
-	c:RegisterEffect(e4)
 end
 function s.filter(c,e,tp)
 	return c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

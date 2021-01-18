@@ -1,6 +1,7 @@
 --禁じられた一滴
 --Forbidden Droplet
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
@@ -52,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
 	local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_EFFECT),tp,0,LOCATION_MZONE,nil)
 	if #sg<ct then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local g=sg:Select(tp,ct,ct,nil)
 	for tc in aux.Next(g) do
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)

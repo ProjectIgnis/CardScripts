@@ -1,4 +1,5 @@
 --ドラグニティナイト－バルーチャ
+--Dragunity Knight - Barcha
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
 	aux.AddEREquipLimit(c,nil,s.eqval,aux.EquipByEffectAndLimitRegister,e1)
-	--atkup
+	--increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -58,13 +59,11 @@ function s.equipop(c,e,tp,tc,chk)
 	tc:RegisterEffect(e1)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+	local sg=Duel.GetTargetCards(e)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<#sg then return end
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-	local tc=sg:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in aux.Next(sg) do
 		aux.EquipByEffectAndLimitRegister(c,e,tp,tc)
 	end
 end

@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 s.listed_series={0x207f}
 function s.filter(c)
@@ -26,7 +26,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		--attack all
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -68,7 +68,6 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if dam<0 then dam=0 end
 	if dam>0 then
 		Duel.Hint(HINT_CARD,0,id)
-		Duel.Damage(1-tp,dam,REASON_EFFECT) 
+		Duel.Damage(1-tp,dam,REASON_EFFECT)
 	end
 end
-

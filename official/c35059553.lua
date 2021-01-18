@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.value(e,fp,rp,r)
-	if rp==e:GetHandlerPlayer() or r~=LOCATION_REASON_TOFIELD then return 7 end
 	local limit=Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)
-	return limit>0 and limit or 7
+	if rp==e:GetHandlerPlayer() or r~=LOCATION_REASON_TOFIELD or limit==0 then return 99 end
+	return limit
 end
 function s.sumlimit(e,c)
 	local tp=e:GetHandlerPlayer()

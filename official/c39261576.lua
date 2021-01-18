@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--Activate
 	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047),Fusion.OnFieldMat,nil,nil,nil,s.stage2)
 	c:RegisterEffect(e1)
-	--atk up
+	--Increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -52,7 +52,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sc=e:GetLabelObject():GetLabelObject()
 	if not sc:IsRelateToEffect(e) or sc:IsFacedown() then return end
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) then return end
+	if not tc or not tc:IsRelateToEffect(e) then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)

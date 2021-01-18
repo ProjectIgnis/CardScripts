@@ -70,5 +70,5 @@ function s.atktg(e,c)
 	return c:IsAttackPos()
 end
 function s.atklimit(e,c)
-    return c==e:GetHandler()
+	return c==e:GetHandler()
 end

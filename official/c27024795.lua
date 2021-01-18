@@ -3,7 +3,7 @@
 --Scripted by ahtelel and Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
@@ -14,8 +14,8 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
-	c:RegisterEffect(e1)	
-	--
+	c:RegisterEffect(e1)
+	--Special Summon when an "Aesir" leaves the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -33,7 +33,7 @@ end
 s.listed_series={0x42,0x4b}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and eg:IsContains(e:GetHandler()) and re:IsActiveType(TYPE_LINK) and re:GetHandler():IsSetCard(0x42)
+	return #eg==1 and eg:IsContains(e:GetHandler()) and re and re:IsActiveType(TYPE_LINK) and re:GetHandler():IsSetCard(0x42)
 end
 function s.matfilter(c)
 	return c:IsSetCard(0x42) and c:IsType(TYPE_MONSTER) and (c:IsFaceup() or c:IsLocation(LOCATION_DECK)) and c:IsLevelAbove(1)
@@ -64,10 +64,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousSetCard(0x4b) and c:IsPreviousControler(tp) 
+	return c:IsPreviousSetCard(0x4b) and c:IsPreviousControler(tp)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and eg:IsExists(s.cfilter,1,nil,tp)
+	return rp==1-tp and eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter2(c,e,tp,rp)
 	return c:IsSetCard(0x4b) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -83,4 +83,4 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
-end 
+end

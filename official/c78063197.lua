@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x110),Card.IsAbleToRemove,s.fextra,Fusion.BanishMaterial)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1110),Card.IsAbleToRemove,s.fextra,Fusion.BanishMaterial)
 	e1:SetCountLimit(1,id)
 	c:RegisterEffect(e1)
 	if not GhostBelleTable then GhostBelleTable={} end
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x110}
+s.listed_series={0x1110}
 s.listed_names={64631466}
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
@@ -35,7 +35,7 @@ function s.filter(c,tp)
 end
 function s.eqfilter(c,ec,tp)
 	local eff={c:GetCardEffect(89785779)}
-	if c:IsFacedown() or ((not c:IsSetCard(0x110) or not c:IsType(TYPE_FUSION)) and not c:IsCode(64631466)) then return false end
+	if c:IsFacedown() or ((not c:IsSetCard(0x1110) or not c:IsType(TYPE_FUSION)) and not c:IsCode(64631466)) then return false end
 	for _,te in ipairs(eff) do
 		if te:GetValue()(ec,c,tp) then return true end
 	end

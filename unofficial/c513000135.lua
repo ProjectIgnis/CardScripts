@@ -5,17 +5,8 @@ Duel.LoadScript("c421.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Summon with 3 Tribute
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-	e1:SetCondition(s.sumoncon)
-	e1:SetOperation(s.sumonop)
-	e1:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_LIMIT_SET_PROC)
-	c:RegisterEffect(e2)
+	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3)
+	local e2=aux.AddNormalSetProcedure(c,true,false,3,3)
 	--destory
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(4012,1))
@@ -104,16 +95,6 @@ function s.avaval(e,c)
 		end
 	end
 end
--------------------------------------------------------------------
-function s.sumoncon(e,c)
-	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-3 and Duel.GetTributeCount(c)>=3
-end
-function s.sumonop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectTribute(tp,c,3,3)
-	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
-end
 -----------------------------------------------------------------
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -137,8 +118,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil),REASON_EFFECT)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
-		and e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
+	return Duel.IsBattlePhase() and e:GetHandler():IsPosition(POS_FACEUP_ATTACK)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -160,12 +140,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE+PHASE_BATTLE+PHASE_END+RESET_CHAIN)
 		c:RegisterEffect(e2)
 		if c:IsImmuneToEffect(e1) or c:IsImmuneToEffect(e2) then return end
-		local ag,direct=c:GetAttackableTarget()
-		if direct and (#ag<=0 or (#ag>0 and Duel.SelectYesNo(tp,31))) then
+		local g=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
+		if #g==0 or ((c:IsHasEffect(EFFECT_DIRECT_ATTACK) or not g:IsExists(aux.NOT(Card.IsHasEffect),1,nil,EFFECT_IGNORE_BATTLE_TARGET)) and Duel.SelectYesNo(tp,31)) then
 			Duel.CalculateDamage(c,nil)
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACKTARGET)
-			Duel.CalculateDamage(c,ag:Select(tp,1,1,nil):GetFirst())
+			Duel.CalculateDamage(c,g:Select(tp,1,1,nil):GetFirst())
 		end
 	end
 end

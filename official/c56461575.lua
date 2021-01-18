@@ -1,9 +1,10 @@
 --螺旋蘇生
 --Spiral Reborn
---scripted by Naim
+--Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 level 7+ dragon monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,11 +31,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 			if tc:IsCode(CARD_GAIA_CHAMPION) then
 			local c=e:GetHandler()
+			--Cannot be targeted or destroyed by opponent's card effects
 			local e1=Effect.CreateEffect(c)
-			e1:SetDescription(aux.Stringid(id,1))
+			e1:SetDescription(3067)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -42,13 +44,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			local e2=e1:Clone()
-			e2:SetDescription(aux.Stringid(id,2))
 			e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 			tc:RegisterEffect(e2)
 		end
 	end
 end
 function s.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
+	return rp==1-e:GetHandlerPlayer()
 end
-

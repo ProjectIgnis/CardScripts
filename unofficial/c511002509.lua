@@ -1,3 +1,4 @@
+--スフィア・ボム球体時限爆弾 (Anime)
 --Blast Sphere (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -55,8 +56,6 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetOperation(s.desop)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e2)
-	else
-		Duel.SendtoGrave(c,REASON_EFFECT)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

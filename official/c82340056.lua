@@ -1,7 +1,9 @@
 --栄誉の贄
+--Offering to the Immortals
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Negate attack, special summon 2 tokens to your field
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,6 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x21}
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=3000 and Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()==nil
 end
@@ -38,7 +41,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	for i=1,2 do
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+		--Cannot be tributed
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3303)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
@@ -50,7 +56,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e2:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x21)))
 		token:RegisterEffect(e2,true)
+		--Cannot be used as synchro material
 		local e3=Effect.CreateEffect(e:GetHandler())
+		e3:SetDescription(3310)
+		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)

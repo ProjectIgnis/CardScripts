@@ -35,4 +35,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 		Duel.ChangeAttackTarget(tc,true)
 	end
-end	
+end

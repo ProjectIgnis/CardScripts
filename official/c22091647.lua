@@ -1,5 +1,5 @@
 --ゴッドフェニックス・ギア・フリード
---God Phoenix Gearfried
+--Immortal Phoenix Gearfried
 --Scripted by Logical Nonsense and AlphaKretin
 --Substitute ID
 local s,id=GetID()
@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 	--Check for equip spell to banish
 function s.spfilter(c,tp)
-	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_EQUIP) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_EQUIP) and c:IsType(TYPE_SPELL) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 	--Cost of banishing from field/GY
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

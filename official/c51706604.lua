@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		--redirect
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
+		e2:SetCode(EFFECT_TO_GRAVE_REDIRECT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD_EXC_GRAVE+RESET_PHASE+PHASE_END)
 		e2:SetCondition(s.recon)
@@ -62,4 +62,3 @@ function s.recon(e)
 	local c=e:GetHandler()
 	return c:IsFaceup() and c:GetDestination()==LOCATION_GRAVE
 end
-

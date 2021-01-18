@@ -50,6 +50,7 @@ end
 s.listed_series={0xc9}
 function s.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PLANT) and c:IsAbleToGraveAsCost()
+		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.rccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil) end

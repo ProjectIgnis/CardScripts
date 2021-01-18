@@ -1,3 +1,4 @@
+--ペガサス／魔法Ｂ
 --Pegasus/Spell B (Doppleganger)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -53,13 +54,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e:SetCategory(te:GetCategory())
 		e:SetProperty(te:GetProperty())
 		Duel.ClearTargetCard()
+		local loc=LOCATION_SZONE
 		if (tpe&TYPE_FIELD)~=0 then
+			loc=LOCATION_FZONE
 			local of=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
 			if of then Duel.Destroy(of,REASON_RULE) end
 			of=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 			if of and Duel.Destroy(of,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 		end
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 		Duel.Hint(HINT_CARD,0,tc:GetCode())
 		tc:CreateEffectRelation(te)
 		if (tpe&TYPE_EQUIP+TYPE_CONTINUOUS+TYPE_FIELD)==0 and not tc:IsHasEffect(EFFECT_REMAIN_FIELD) then

@@ -1,5 +1,7 @@
+--闇黒の夢魔鏡
 --Dream Mirror of Terror
 --Scripted by ahtelel
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--activate
+	--Activate 1 "Dream Mirror of Joy" from hand or deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -18,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tftg)
 	e2:SetOperation(s.tfop)
 	c:RegisterEffect(e2)
-	--damage
+	--Inflict 300 damage each time opponent special summons a monster(s)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetRange(LOCATION_FZONE)
@@ -29,6 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_DREAM_MIRROR_JOY}
 s.listed_series={0x131}
+
 function s.filter(c,tp)
 	return c:IsCode(CARD_DREAM_MIRROR_JOY) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetCost(s.spcost)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 end
 s.listed_series={0x134}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -65,4 +65,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

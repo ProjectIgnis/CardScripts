@@ -13,11 +13,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e)
-	return c:IsType(TYPE_XYZ) and c:IsAbleToRemove() and (not e or not c:IsCanBeEffectTarget(e)) and aux.SpElimFilter(c,true)
+	return c:IsType(TYPE_XYZ) and c:IsAbleToRemove() and (not e or c:IsCanBeEffectTarget(e)) and aux.SpElimFilter(c,true)
 end
 function s.spfilter(c,e,tp,sg)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsType(TYPE_XYZ)
-		and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsType(TYPE_XYZ) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
 end
 function s.rescon(sg,e,tp,mg)
 	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg)

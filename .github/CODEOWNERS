@@ -1,0 +1,9 @@
+# Repository documentation, configuration, and continuous integration
+*             @kevinlul
+
+# Default card script reviewers
+*.lua         @pyrQ
+
+/unofficial/  @larry126
+/rush/        @ClementLouis
+/skill/       @ClementLouis

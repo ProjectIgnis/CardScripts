@@ -1,5 +1,6 @@
 --レイジ・リシンクロ
 --Rage Resynchro
+--Updated by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,25 +13,44 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.mfilter(c,sc)
-	return Duel.CheckTunerMaterial(sc,c,aux.TRUE,aux.TRUE,1,99)
-end
-function s.filter(c,e)
+function s.filter(c,e,tp,mg)
 	if not c.synchro_type or not c:IsType(TYPE_SYNCHRO) or not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return false end
-	return Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_MZONE,0):IsExists(s.mfilter,1,nil,c)
+	local proceff={c:GetCardEffect(EFFECT_SPSUMMON_PROC)}
+	for _,eff in ipairs(proceff) do
+		if (eff:GetValue()&SUMMON_TYPE_SYNCHRO)~=0 then
+			if eff:GetCondition()(eff,c,nil,mg) then return true end
+		end
+	end
+	return false
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e) end
+	local mg=Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_MZONE,0)
+	if chkc then return #mg>0 and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp,mg) end
+	if chk==0 then return #mg>0 and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,mg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e)
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,mg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and s.filter(tc,e,tp) then
-		local sg=Duel.SelectSynchroMaterial(tp,tc,aux.TRUE,aux.TRUE,1,99)
-		if Duel.SendtoGrave(sg,REASON_EFFECT+REASON_MATERIAL+REASON_SYNCHRO)>0 and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	local mg=Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_MZONE,0)
+	if tc and tc:IsRelateToEffect(e) and #mg>0 and s.filter(tc,e,tp,mg) then
+		local proceff={tc:GetCardEffect(EFFECT_SPSUMMON_PROC)}
+		local effs={}
+		for _,eff in ipairs(proceff) do
+			if (eff:GetValue()&SUMMON_TYPE_SYNCHRO)~=0 then
+				if eff:GetCondition()(eff,tc,nil,mg) then table.insert(effs,eff) end
+			end
+		end
+		local eff=effs[1]
+		if #effs>1 then
+			local desctable = {}
+			for _,index in ipairs(effs) do
+				table.insert(desctable,index:GetDescription())
+			end
+			eff=effs[Duel.SelectOption(tp,false,table.unpack(desctable)) + 1]
+		end
+		if eff:GetTarget()(eff,tp,nil,nil,nil,e,nil,nil,nil,tc,nil,mg) and Duel.SendtoGrave(eff:GetLabelObject(),REASON_EFFECT+REASON_MATERIAL+REASON_SYNCHRO)>0 and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -46,7 +66,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetLabel(0)
 			e2:SetCountLimit(1)
 			tc:RegisterEffect(e2,true)
-			end
+		end
+		eff:SetLabelObject(nil)
 		Duel.SpecialSummonComplete()
 	end
 end

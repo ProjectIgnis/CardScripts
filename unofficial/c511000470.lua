@@ -1,16 +1,16 @@
 --Drawler
 local s,id=GetID()
 function s.initial_effect(c)
-	--return
+	--Return to the deck and increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TODECK)
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(s.hdtg)
 	e1:SetOperation(s.hdop)
 	c:RegisterEffect(e1)
-	--return to deck
+	--Send destroyed monster to deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -21,21 +21,20 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-function s.hdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsAbleToDeck() end
-	if chk==0 then return true end
+function s.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,nil) end
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.hdop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if not g then return end
-	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+	local hd=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+	if hd<1 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,hd,nil)
 	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
 	local ct=sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)
-	if ct==0 then return end
 	local c=e:GetHandler()
 	if ct~=0 and c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
@@ -48,7 +47,7 @@ function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
-		c:RegisterEffect(e2)		
+		c:RegisterEffect(e2)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

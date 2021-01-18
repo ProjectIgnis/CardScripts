@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
@@ -34,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x575,0x574}
+s.listed_series={0x2157,0x1157}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsType(TYPE_NORMAL,lc,sumtype,tp) and c:IsRace(RACE_PLANT,lc,sumtype,tp)
 end
@@ -46,10 +47,10 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and r&REASON_BATTLE+REASON_EFFECT~=0
 end
 function s.filter(c,e,tp,zone)
-	return c:IsSetCard(0x575) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsSetCard(0x2157) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.lkfilter(c)
-	return c:IsSetCard(0x574) and c:IsFaceup() and c:IsLinkMonster()
+	return c:IsSetCard(0x1157) and c:IsFaceup() and c:IsLinkMonster()
 end
 function s.zonefilter(tp)
 	local lg=Duel.GetMatchingGroup(s.lkfilter,tp,LOCATION_MZONE,0,nil)

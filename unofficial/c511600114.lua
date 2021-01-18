@@ -24,13 +24,13 @@ function s.initial_effect(c)
 end
 s.listed_series={0x579}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetEquipTarget():GetFlagEffect(id0)>0 end
+	if chk==0 then return e:GetHandler():GetEquipTarget():GetFlagEffect(id+1000)>0 end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	Duel.Damage(p,e:GetHandler():GetEquipTarget():GetFlagEffect(id0)*800,REASON_EFFECT)
+	Duel.Damage(p,e:GetHandler():GetEquipTarget():GetFlagEffect(id+1000)*800,REASON_EFFECT)
 end
 function s.mvchk(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
@@ -39,7 +39,7 @@ function s.mvchk(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,tc:GetSequence())
 		elseif tc:GetSequence()~=tc:GetFlagEffectLabel(id) or tc:GetControler()~=tc:GetPreviousControler() then
 			tc:SetFlagEffectLabel(id,tc:GetSequence())
-			tc:RegisterFlagEffect(id0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			tc:RegisterFlagEffect(id+1000,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 	end
 end

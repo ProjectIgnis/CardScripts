@@ -1,7 +1,6 @@
 --堕天使ネルガル
 --Darklord Nergal
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

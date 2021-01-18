@@ -11,7 +11,7 @@
 --chkf			FUSPROC flags for the fusion summon
 --desc			summon effect description
 Fusion.CreateSummonEff = aux.FunctionWithNamedArgs(
-function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,desc)
+function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,desc,preselect,nosummoncheck,extratg)
 	local e1=Effect.CreateEffect(c)
 	if desc then
 		e1:SetDescription(desc)
@@ -21,12 +21,12 @@ function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locat
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(Fusion.SummonEffTG(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf))
-	e1:SetOperation(Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf))
+	e1:SetTarget(Fusion.SummonEffTG(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,extratg))
+	e1:SetOperation(Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,preselect,nosummoncheck))
 	return e1
-end,"handler","fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","desc")
-function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit)
-	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c)) and c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false)
+end,"handler","fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","desc","preselect","nosummoncheck","extratg")
+function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck)
+	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c,tp)) and (nosummoncheck or c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false))
 			and c:CheckFusionMaterial(mg,gc,chkf)
 end
 
@@ -38,12 +38,15 @@ Fusion.ForcedMatValidity=function(c,e)
 end
 
 Fusion.SummonEffTG = aux.FunctionWithNamedArgs(
-function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf)
+function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,extratg)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
-				location = location or LOCATION_EXTRA
-				chkf = chkf and chkf|tp or tp
-				local sumlimit = (chkf&FUSPROC_NOTFUSION~=0)
+				location=location or LOCATION_EXTRA
+				if not chkf or ((chkf&PLAYER_NONE)~=PLAYER_NONE) then
+					chkf=chkf and chkf|tp or tp
+				end
+				local sumlimit=(chkf&FUSPROC_NOTFUSION)~=0
 				if not value then value=0 end
+				value = value|MATERIAL_FUSION
 				if not sumlimit then
 					value = value|SUMMON_TYPE_FUSION
 				end
@@ -64,11 +67,11 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					end
 					if gc and not mg1:Includes(gc) then return false end
 					Fusion.CheckAdditional=checkAddition
-					mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil)
+					mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
 					Fusion.CheckExact=exactcount
-					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value,sumlimit)
+					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck)
 					Fusion.CheckAdditional=nil
-					if not res then
+					if not res and not sumlimit then
 						for _,ce in ipairs({Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)}) do
 							local fgroup=ce:GetTarget()
 							local mg=fgroup(ce,e,tp,value)
@@ -79,7 +82,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 								if fcheck then
 									if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
 								end
-								if Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg,gc,chkf,value,sumlimit) then
+								if Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck) then
 									res=true
 									Fusion.CheckAdditional=nil
 									break
@@ -92,8 +95,9 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					return res
 				end
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,location)
+				if extratg then extratg(e,tp,eg,ep,ev,re,r,rp,chk) end
 			end
-end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf")
+end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","preselect","nosummoncheck","extratg")
 function aux.GrouptoCardid(g)
 	local res={}
 	for card in aux.Next(g) do
@@ -116,14 +120,14 @@ function Fusion.ChainMaterialPrompt(effswithgroup,cardID,tp,e)
 	return effs[Duel.SelectOption(tp,false,table.unpack(desctable)) + 1]
 end
 Fusion.SummonEffOP = aux.FunctionWithNamedArgs(
-function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf)
+function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf,preselect,nosummoncheck)
 	return	function(e,tp,eg,ep,ev,re,r,rp)
-				location = location or LOCATION_EXTRA
+				location=location or LOCATION_EXTRA
 				chkf = chkf and chkf|tp or tp
-				local sumlimit = (chkf&FUSPROC_NOTFUSION ~= 0)
+				local sumlimit=(chkf&FUSPROC_NOTFUSION)~=0
 				if not value then value=0 end
 				if not sumlimit then
-					value = value|SUMMON_TYPE_FUSION
+					value = value|SUMMON_TYPE_FUSION|MATERIAL_FUSION
 				end
 				local gc=gc2
 				gc=type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc
@@ -139,40 +143,45 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 					end
 					checkAddition=ret[2]
 				end
-				mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil)
+				mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil,nil,value)
 				mg1=mg1:Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
 				if gc and (not mg1:Includes(gc) or gc:IsExists(Fusion.ForcedMatValidity,1,nil,e)) then return false end
 				Fusion.CheckExact=exactcount
 				Fusion.CheckAdditional=checkAddition
 				local effswithgroup={}
-				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value,sumlimit)
+				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck)
 				if #sg1 > 0 then
 					table.insert(effswithgroup,{e,aux.GrouptoCardid(sg1)})
 				end
 				Fusion.CheckAdditional=nil
-				local extraeffs = {Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)}
-				for _,ce in ipairs(extraeffs) do
-					local fgroup=ce:GetTarget()
-					local mg2=fgroup(ce,e,tp,value)
-					if #mg2>0 and (not Fusion.CheckExact or #mg2==Fusion.CheckExact) then
-						local mf=ce:GetValue()
-						local fcheck=nil
-						if ce:GetLabelObject() then fcheck=ce:GetLabelObject():GetOperation() end
-						if fcheck then
-							if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
+				if not sumlimit then
+					local extraeffs = {Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)}
+					for _,ce in ipairs(extraeffs) do
+						local fgroup=ce:GetTarget()
+						local mg2=fgroup(ce,e,tp,value)
+						if #mg2>0 and (not Fusion.CheckExact or #mg2==Fusion.CheckExact) then
+							local mf=ce:GetValue()
+							local fcheck=nil
+							if ce:GetLabelObject() then fcheck=ce:GetLabelObject():GetOperation() end
+							if fcheck then
+								if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
+							end
+							local sg2=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg2,gc,chkf,value,sumlimit,nosummoncheck)
+							if #sg2 > 0 then
+								table.insert(effswithgroup,{ce,aux.GrouptoCardid(sg2)})
+								sg1:Merge(sg2)
+							end
+							Fusion.CheckAdditional=nil
 						end
-						local sg2=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg2,gc,chkf,value,sumlimit)
-						if #sg2 > 0 then
-							table.insert(effswithgroup,{ce,aux.GrouptoCardid(sg2)})
-							sg1:Merge(sg2)
-						end
-						Fusion.CheckAdditional=nil
 					end
 				end
 				if #sg1>0 then
 					local sg=sg1:Clone()
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 					local tc=sg:Select(tp,1,1,nil):GetFirst()
+					if preselect and preselect(e,tc)==false then
+						return
+					end
 					local sel=effswithgroup[Fusion.ChainMaterialPrompt(effswithgroup,tc:GetCardID(),tp,e)]
 					local backupmat=nil
 					if sel[1]==e then
@@ -181,7 +190,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 						backupmat=mat1:Clone()
 						tc:SetMaterial(mat1)
 						if extraop then
-							extraop(e,tc,tp,mat1)
+							if extraop(e,tc,tp,mat1)==false then return end
 						end
 						if #mat1>0 then
 							Duel.SendtoGrave(mat1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
@@ -212,7 +221,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				Fusion.CheckExact=nil
 				Fusion.CheckAdditional=nil
 			end
-end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf")
+end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","preselect","nosummoncheck")
 function Fusion.BanishMaterial(e,tc,tp,sg)
 	Duel.Remove(sg,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 	sg:Clear()

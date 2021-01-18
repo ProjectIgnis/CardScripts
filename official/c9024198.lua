@@ -1,6 +1,6 @@
 --DDD深淵王ビルガメス
 --D/D/D Abyss King Gilgamesh
---scripted by Logical Nonsense
+--Scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link summon
@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	local g=Duel.GetMatchingGroup(s.pcfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.GetMatchingGroup(s.pcfilter,tp,LOCATION_DECK,0,nil)
 	if g:GetClassCount(Card.GetCode)>=2 and Duel.CheckLocation(tp,LOCATION_PZONE,0) and Duel.CheckLocation(tp,LOCATION_PZONE,1) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc1=g:Select(tp,1,1,nil):GetFirst()
@@ -76,7 +76,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and (c:IsReason(REASON_EFFECT) or (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp)))
-		and c:IsSummonType(SUMMON_TYPE_LINK) and rp~=tp
+		and c:IsSummonType(SUMMON_TYPE_LINK) and rp==1-tp
 end
 	--Check for "D/D" monster in GY or face-up extra deck
 function s.spfilter(c,e,tp,rp)
@@ -87,7 +87,7 @@ end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil,e,tp,rp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,loc)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_EXTRA)
 end
 	--Performing the effect of special summoning a "D/D" monster from face-up extra deck or GY
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

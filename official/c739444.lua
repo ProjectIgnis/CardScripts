@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.matfilter,3,3)
-	--draw
+	--Draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
-	--disable monster zones
+	--Disable monster zones
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_DISABLE_FIELD)
@@ -47,4 +47,3 @@ function s.disop(e,tp)
 	local flag=(c:GetLinkedZone(tp)&0xff0000ff)
 	return flag
 end
-

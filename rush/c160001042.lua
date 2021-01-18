@@ -1,8 +1,8 @@
 --火の粉
--- Sparks (Rush)
+--Sparks (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
-	--damage
+	--Damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_DAMAGE)

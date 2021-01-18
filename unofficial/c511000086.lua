@@ -1,3 +1,4 @@
+--魔法移し
 --Bounce Spell
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,8 +23,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)
 end
-function s.filter(c)
-	return c:IsType(TYPE_SPELL) and c:IsFaceup() and c:IsAbleToChangeControler()
+function s.filter(c,tp)
+	local bool_a=c:IsType(TYPE_PENDULUM) and Duel.GetLocationCount(tp,LOCATION_PZONE)>0
+	local bool_b=c:IsType(TYPE_FIELD)
+	local bool_c=not c:IsType(TYPE_PENDULUM) and not c:IsType(TYPE_FIELD) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	return c:IsType(TYPE_SPELL) and (bool_a or bool_b or bool_c) and c:IsFaceup() and c:IsAbleToChangeControler()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end
@@ -37,8 +41,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		if tc:IsType(TYPE_PENDULUM) then
-			local token=Duel.CreateToken(tc:GetOwner(),tc:GetOriginalCode())
-			Duel.MoveToField(token,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			local token=Duel.CreateToken(tc:GetOwner(),tc:GetCode())
+			Duel.MoveToField(token,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 			Duel.SendtoDeck(tc,nil,-2,REASON_EFFECT)
 		else
 			local tpe=tc:GetType()
@@ -70,8 +74,8 @@ function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		if tc:IsType(TYPE_PENDULUM) then
-			local token=Duel.CreateToken(tc:GetOwner(),tc:GetOriginalCode())
-			Duel.MoveToField(token,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			local token=Duel.CreateToken(tc:GetOwner(),tc:GetCode())
+			Duel.MoveToField(token,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 			Duel.SendtoDeck(tc,nil,-2,REASON_EFFECT)
 		else
 			local tpe=tc:GetType()

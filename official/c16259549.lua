@@ -90,7 +90,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if not g then return end
 	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if #tg~=2 then return end
-	Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)

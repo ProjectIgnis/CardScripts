@@ -83,4 +83,3 @@ function s.hdop2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(1-tp,3000,REASON_EFFECT)
 	end
 end
-

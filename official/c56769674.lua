@@ -1,11 +1,12 @@
 --DNA移植手術
+--DNA Transplant
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1c1)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_DRAW_PHASE)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--race

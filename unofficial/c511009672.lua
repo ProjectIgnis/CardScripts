@@ -42,9 +42,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.setop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x574}
+s.listed_series={0x1157}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x574)
+	return c:IsFaceup() and c:IsSetCard(0x1157)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

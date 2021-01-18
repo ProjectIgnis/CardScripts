@@ -31,7 +31,6 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
 	if Duel.GetFlagEffect(ep,id)>0 then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.ffilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,tp)
-
 	--condition
 	return aux.CanActivateSkill(tp) 
 	and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -59,14 +58,14 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if Duel.GetFlagEffect(ep,id+1)>0 then return end
 	return ep~=tp and tc:IsControler(tp) and tc:IsCode(3643300)
-	and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
+	and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 end
 function s.afilter(c,tp)
 	return c:IsControler(tp) and c:IsCode(3643300)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp,chk)
 	return eg:IsExists(s.afilter,1,nil,tp)
-	and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
+	and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:GetLevel()<=4 and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
@@ -75,13 +74,19 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-	-- opt register
+	--opt register
 	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,0)
 	
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+		e1:SetOperation(function () Duel.SetChainLimitTillChainEnd(aux.FALSE) end)
+		g:GetFirst():RegisterEffect(e1)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		e1:Reset()
 	end
 end

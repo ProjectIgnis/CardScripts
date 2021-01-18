@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.thcon)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xdf,0x46}
+s.listed_series={0x46,0xdf}
 function s.thfilter(c)
 	return c:IsSetCard(0x46) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 end

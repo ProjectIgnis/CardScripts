@@ -1,5 +1,5 @@
 --メルフィータイム
---Merfae Time
+--Melffy Time
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
 		if e:GetLabel()==100 then
 			e:SetLabel(0)
-			return Duel.CheckRemoveOverlayCard(tp,0,0,1,REASON_COST,dg) 
+			return Duel.CheckRemoveOverlayCard(tp,0,0,1,REASON_COST,dg)
 				and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil)
 		else return false end
 	end

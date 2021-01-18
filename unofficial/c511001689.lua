@@ -1,4 +1,5 @@
--- Abyss Kid
+--黄泉の餓鬼
+--Yomi Kid
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -13,12 +14,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-	e2:SetCode(EFFECT_SELF_DESTROY)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_ADJUST)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCondition(s.descon)
+	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
@@ -36,5 +36,12 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==e:GetHandlerPlayer()
+	local ct=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
+	return c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==e:GetHandlerPlayer() and ct>0
+end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,tp,id)
+	Duel.Hint(HINT_CARD,1-tp,id)
+	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
+	Duel.Destroy(g,REASON_EFFECT)
 end

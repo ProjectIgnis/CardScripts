@@ -1,4 +1,5 @@
---Phantom Des Spear
+--幻影死槍 (Anime)
+--Phantom Knights' Spear (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

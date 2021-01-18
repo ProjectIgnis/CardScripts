@@ -12,10 +12,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x1048}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return ep==tp and ev>=2000 and (a:IsSetCard(0x1048) or (d and d:IsSetCard(0x1048)))
+	return ep==tp and ev>=2000 and (a:IsSetCard(0x1048) and a:IsControler(1-tp) or (d and d:IsSetCard(0x1048) and d:IsControler(1-tp)))
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x1048) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

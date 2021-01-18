@@ -1,6 +1,6 @@
+--ライジング・ホープ
 --Utopia Rising
---scripted by:urielkama
---fixed by MLD
+--Scripted by urielkama, fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_ADJUST)
-		e1:SetRange(LOCATION_MZONE)	
+		e1:SetRange(LOCATION_MZONE) 
 		e1:SetOperation(s.copyop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
@@ -63,73 +63,52 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)
-end
 function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:GetEquipGroup():IsContains(e:GetOwner()) then e:Reset() return end
 	if c:IsDisabled() then return end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,e:GetHandler())
-	local tc=g:GetFirst()
-	while tc do
+	local map={}
+	for _,eff in ipairs({c:GetCardEffect(511002571)}) do
+		map[eff:GetLabel()]=true
+	end
+	for tc in Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,e:GetHandler()):Iter() do
 		local code=tc:GetOriginalCode()
-		if tc:IsHasEffect(511002571) then
-			local teff={tc:GetCardEffect(511002571)}
-			for _,te in ipairs(teff) do
-				local code=te:GetLabel()
-				local ceff={c:GetCardEffect(511002571)}
-				local ok=true
-				for _,te2 in ipairs(ceff) do
-					if code==te2:GetLabel() then ok=false end
-					if ok then break end
-				end
-				if ok then
-					local copye={}
-					for k,te3 in ipairs(teff) do
-						if te3:GetLabel()==code then
-							table.insert(copye,teff[k])
-						end
-					end
-					for _,te4 in ipairs(copye) do
-						local tec2=te4:GetLabelObject():Clone()
-						c:RegisterEffect(tec2)
-						local tec=te4:Clone()
-						tec:SetLabelObject(tec2)
-						c:RegisterEffect(tec)
-						local rste=Effect.CreateEffect(e:GetOwner())
-						rste:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-						rste:SetCode(EVENT_ADJUST)
-						rste:SetLabelObject(tec)
-						rste:SetLabel(code)
-						rste:SetOperation(s.resetop)
-						Duel.RegisterEffect(rste,tp)
-					end
+		if not map[code] then
+			for _,te in ipairs({tc:GetCardEffect(511002571)}) do
+				if te:GetLabel()==code then
+					local teh=te:GetLabelObject()
+					if teh:GetCode()&511001822==511001822 then teh=teh:GetLabelObject() end
+					local tec2=teh:Clone()
+					c:RegisterEffect(tec2)
+					local tec=te:Clone()
+					c:RegisterEffect(tec)
+					local rste=Effect.CreateEffect(e:GetOwner())
+					rste:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+					rste:SetCode(EVENT_ADJUST)
+					rste:SetLabelObject({tec2,tec})
+					rste:SetLabel(code)
+					rste:SetOperation(s.resetop)
+					Duel.RegisterEffect(rste,tp)
 				end
 			end
 		end
-		tc=g:GetNext()
 	end
 end
 function s.codechk(c,code)
-	if not c:IsHasEffect(511002571) then return false end
-	local eff={c:GetCardEffect(511002571)}
-	for _,te in ipairs(eff) do
+	if not c:IsFaceup() or not c:IsType(TYPE_XYZ) then return false end
+	for _,te in ipairs({c:GetCardEffect(511002571)}) do
 		if te:GetLabel()==code then return true end
 	end
 	return false
 end
 function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetOwner():GetEquipTarget()
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,tc)
-	if not g:IsExists(s.codechk,1,nil,e:GetLabel()) or tc:IsDisabled() or e:GetOwner():IsDisabled() then
-		local te1=e:GetLabelObject()
-		local te2=te1:GetLabelObject()
-		if te2 then
-			te2:Reset()
-		end
-		if te1 then
-			te1:Reset()
+	if not tc or tc:IsDisabled() or e:GetOwner():IsDisabled()
+		or not Duel.IsExistingMatchingCard(s.codechk,tp,LOCATION_MZONE,0,1,tc,e:GetLabel()) then
+		for _,eff in ipairs(e:GetLabelObject()) do
+			if eff then
+				eff:Reset()
+			end
 		end
 		e:Reset()
 	end

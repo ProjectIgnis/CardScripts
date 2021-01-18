@@ -170,6 +170,7 @@ if not DeckMasters then
 		Duel.RegisterEffect(e2,0)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+		e3:SetValue(1)
 		Duel.RegisterEffect(e3,0)
 		local e4=e2:Clone()
 		e4:SetCode(EFFECT_UNRELEASABLE_SUM)
@@ -303,7 +304,7 @@ if not DeckMasters then
 		local f2=Duel.GetFlagEffect(1-tp,300+1)+Duel.GetFlagEffect(1-tp,302)
 		if c1==0 and c2>0 and f1==0 then
 			Duel.Win(1-tp,WIN_REASON_DECK_MASTER)
-		elseif c1==0 and c2==0 and f2==0 and f1==0  then
+		elseif c1==0 and c2==0 and f2==0 and f1==0 then
 			Duel.Win(PLAYER_NONE,WIN_REASON_DECK_MASTER)
 		elseif c1>0 and c2==0 and f2==0 then
 			Duel.Win(tp,WIN_REASON_DECK_MASTER)

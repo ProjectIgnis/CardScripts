@@ -1,89 +1,61 @@
---Moonlight Panther Dancer
+--月光舞豹姫 (Anime)
+--Lunalight Panther Dancer (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fustion material
 	Fusion.AddProcMix(c,true,true,51777272,aux.FilterBoolFunction(Card.IsSetCard,0xdf))
 	c:EnableReviveLimit()
-	--attack
+	--indestructable
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_EXTRA_ATTACK)
-	e1:SetValue(9999)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e1:SetValue(s.indval)
 	c:RegisterEffect(e1)
+	--attack
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_DAMAGE_STEP_END)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetOperation(s.unop)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_ATTACK_ALL)
+	e2:SetValue(2)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
+	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e3:SetTargetRange(0,LOCATION_MZONE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EVENT_DAMAGE_CALCULATING)
-	e3:SetCondition(s.indescon)
-	e3:SetOperation(s.indesop)
+	e3:SetTarget(s.indtg)
+	e3:SetValue(s.indct)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetTargetRange(0,LOCATION_MZONE)
-	e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE)
-	e4:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
-	e4:SetTarget(s.valtg)
-	e4:SetValue(s.vala)
-	c:RegisterEffect(e4)
 	--atk up
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e5:SetCategory(CATEGORY_ATKCHANGE)
-	e5:SetCode(EVENT_BATTLE_DESTROYING)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetCondition(s.atkcon)
-	e5:SetOperation(s.atkop)
-	c:RegisterEffect(e5)
-	--indestructable
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e6:SetValue(s.indval)
-	c:RegisterEffect(e6)
+	local e4=Effect.CreateEffect(c)
+	e4:SetCategory(CATEGORY_ATKCHANGE)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e4:SetCode(EVENT_BATTLED)
+	e4:SetCondition(s.atkcon)
+	e4:SetOperation(s.atkop)
+	c:RegisterEffect(e4)
 end
+s.listed_series={0xdf}
 s.material_setcode=0xdf
-function s.unop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
-	if c:GetFlagEffect(id)==0 then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
-		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
-	end
-	if bc then
-		if bc:GetFlagEffect(511002007)>0 then
-			bc:RegisterFlagEffect(511002008,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
-		else
-			bc:RegisterFlagEffect(511002007,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
-		end
-	end
+function s.indval(e,re,tp)
+	return tp~=e:GetHandlerPlayer()
 end
-function s.valtg(e,c)
-	return c:GetFlagEffect(511002008)>0
+function s.indtg(e,c)
+	return c:GetReasonCard()==e:GetHandler()
 end
-function s.vala(e,c)
-	return c==e:GetHandler()
-end
-function s.indescon(e,tp,eg,ep,ev,re,r,rp)
-	local bc=e:GetHandler():GetBattleTarget()
-	return bc and bc:GetFlagEffect(511002007)==0
+function s.indct(e,re,r,rp,c)
+	if (r&REASON_BATTLE)~=0 then
+		return 1
+	else return 0 end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsRelateToBattle() and e:GetHandler():IsFaceup()
+	local c=e:GetHandler()
+	local bc=c:GetBattleTarget()
+	return bc and bc:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -95,16 +67,4 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 		c:RegisterEffect(e1)
 	end
-end
-function s.indesop(e,tp,eg,ep,ev,re,r,rp)
-	local bc=e:GetHandler():GetBattleTarget()
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
-	bc:RegisterEffect(e1,true)
-end
-function s.indval(e,re,tp)
-	return tp~=e:GetHandlerPlayer()
 end

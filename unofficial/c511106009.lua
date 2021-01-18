@@ -3,9 +3,14 @@
 --original script by Hatter, rescripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0xc008),Fusion.OnFieldMat,nil,nil,nil,s.stage2))
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0xc008),Fusion.OnFieldMat,nil,nil,nil,s.stage2)
+	e1:SetCondition(s.condition)
+	c:RegisterEffect(e1)
 end
 s.listed_series={0xc008}
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return not Duel.IsTurnPlayer(tp)
+end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==0 then
 		local e1=Effect.CreateEffect(e:GetHandler())

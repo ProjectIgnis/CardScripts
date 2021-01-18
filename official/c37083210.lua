@@ -1,4 +1,5 @@
 --クロスカウンター
+--Cross Counter
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,11 +22,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
 	if at:IsFaceup() and at:IsRelateToBattle() then
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-		e1:SetRange(LOCATION_MZONE)
-		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 		e1:SetCondition(s.dcon)
-		e1:SetOperation(s.dop)
+		e1:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		at:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
@@ -36,12 +36,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e2,tp)
 	end
 end
-function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return ep~=tp and Duel.GetAttackTarget()==c
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DoubleBattleDamage(ep)
+function s.dcon(e)
+	return Duel.GetAttackTarget()==e:GetHandler()
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetAttacker():IsRelateToBattle() then

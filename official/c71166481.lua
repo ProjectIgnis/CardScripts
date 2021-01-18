@@ -1,11 +1,11 @@
 --No.75 惑乱のゴシップ・シャドー
---Number 75: Gossip Shadow of Confusion
+--Number 75: Bamboozling Gossip Shadow
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Xyz.AddProcedure(c,nil,3,2,nil,nil,7)
-	--change effect
+	--Change effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.chtg)
 	e1:SetOperation(s.chop)
 	c:RegisterEffect(e1)
-	--attach
+	--Attach a card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -31,15 +31,14 @@ end
 s.listed_series={0x48}
 s.xyz_number=75
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and rp~=tp
+	return re:IsActiveType(TYPE_MONSTER) and rp==1-tp
 end
 function s.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and Duel.IsPlayerCanDraw(1-tp,1) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end
 end
 function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()
@@ -63,10 +62,9 @@ end
 function s.xop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsFaceup()  and not tc:IsImmuneToEffect(e) then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsImmuneToEffect(e) then
 		local mg=c:GetOverlayGroup()
 		if #mg>0 then Duel.Overlay(tc,mg) end
 		Duel.Overlay(tc,Group.FromCards(c))
 	end
 end
-

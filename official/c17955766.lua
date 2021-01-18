@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tc=tg:GetFirst()
 		if tc then
 			local atk=tc:GetAttack()
-			if atk>=0 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,atk),tp,LOCATION_MZONE,0,1,nil) then
+			if tc:IsAttackAbove(0) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,atk),tp,LOCATION_MZONE,0,1,nil) then
 				Duel.Destroy(tc,REASON_EFFECT)
 				Duel.Damage(1-tp,500,REASON_EFFECT)
 			else

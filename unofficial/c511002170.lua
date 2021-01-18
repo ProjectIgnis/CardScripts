@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END and Duel.GetTurnPlayer()~=tp  
+	return Duel.GetCurrentPhase()==PHASE_END and Duel.GetTurnPlayer()~=tp
 end
 function s.filter(c,tid)
 	return c:GetTurnID()==tid and c:IsAbleToRemove()
@@ -23,7 +23,7 @@ function s.filter2(c,tid)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tid=Duel.GetTurnCount()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tid) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tid)
 		or (Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,tid)) end
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tid)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,sg,#sg,0,0)

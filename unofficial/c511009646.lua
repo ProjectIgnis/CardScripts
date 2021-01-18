@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCondition(s.sumcon)
 	e2:SetTarget(s.sptg)
-	e2:SetOperation(s.sumop)
+	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x572}

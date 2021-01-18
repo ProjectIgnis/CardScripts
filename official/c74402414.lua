@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e0:SetOperation(s.activate)
 	e0:SetLabelObject(g)
 	c:RegisterEffect(e0)
-	--add counter
+	--Add counters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
-	--salvage
+	--Add cards back to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	e3:SetLabelObject(g)
 	c:RegisterEffect(e3)
-	--register before leaving
+	--Register before leaving
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_LEAVE_FIELD_P)
@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.checkop)
 	e4:SetLabelObject(g)
 	c:RegisterEffect(e4)
-	--inflict damage
+	--Inflict damage
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EVENT_LEAVE_FIELD)
@@ -83,7 +83,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():Merge(rg)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	if rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
+	if rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(0x25,1)
 	end
 end

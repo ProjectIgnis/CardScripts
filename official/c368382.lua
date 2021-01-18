@@ -2,25 +2,25 @@
 --Dinomist Brachion
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum attributes
 	Pendulum.AddProcedure(c)
-	--disable
+	--Negate effect that targets a "Dinomist" card
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_DISABLE)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_CHAIN_SOLVING)
+	e1:SetRange(LOCATION_PZONE)
+	e1:SetCondition(s.negcon)
+	e1:SetOperation(s.negop)
+	c:RegisterEffect(e1)
+	--Special summon itsekf from hand
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_DISABLE)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_CHAIN_SOLVING)
-	e2:SetRange(LOCATION_PZONE)
-	e2:SetCondition(s.negcon)
-	e2:SetOperation(s.negop)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_SPSUMMON_PROC)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e2:SetRange(LOCATION_HAND)
+	e2:SetCondition(s.spcon)
 	c:RegisterEffect(e2)
-	--special summon
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_SPSUMMON_PROC)
-	e3:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e3:SetRange(LOCATION_HAND)
-	e3:SetCondition(s.spcon)
-	c:RegisterEffect(e3)
 end
 s.listed_series={0xd8}
 s.listed_names={id}
@@ -28,8 +28,8 @@ function s.tfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0xd8) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)	
-	return e:GetHandler():GetFlagEffect(id)==0 and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) 
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	return e:GetHandler():GetFlagEffect(id)==0 and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
 		and g and g:IsExists(s.tfilter,1,e:GetHandler(),tp) and Duel.IsChainDisablable(ev)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)

@@ -7,12 +7,14 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_MAIN_END)
 	c:RegisterEffect(e1)
 	--fusion
 	local e2=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x9d),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
 									extrafil=s.fextra,extraop=Fusion.BanishMaterial,stage2=s.sstage2,desc=aux.Stringid(id,0)})
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetHintTiming(0,TIMING_MAIN_END)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
 	e2:SetRange(LOCATION_SZONE)
@@ -22,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9d}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
@@ -41,9 +43,10 @@ function s.sstage2(e,tc,tp,sg,chk)
 		local att=tc:GetAttribute()
 		if Duel.IsExistingMatchingCard(s.sameatt,tp,0,LOCATION_MZONE,1,nil,att) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
-			local tgc=Duel.SelectMatchingCard(tp,s.sameatt,tp,0,LOCATION_MZONE,1,1,nil,att):GetFirst()
-			if tgc then
-				Duel.SendtoGrave(tgc,REASON_EFFECT)
+			local tg=Duel.SelectMatchingCard(tp,s.sameatt,tp,0,LOCATION_MZONE,1,1,nil,att)
+			if #tg>0 then
+				Duel.HintSelection(tg)
+				Duel.SendtoGrave(tg,REASON_EFFECT)
 			end
 		end
 	end

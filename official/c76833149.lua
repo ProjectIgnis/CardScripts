@@ -1,5 +1,5 @@
 --メルフィー・マミィ
---Merfae Mammy
+--Melffy Mammy
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

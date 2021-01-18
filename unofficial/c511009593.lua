@@ -90,7 +90,7 @@ end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=e:GetLabelObject()
 	if chkc then return chkc==tc end
-	if chk==0 then return tc and tc:IsOnField() and tc:IsCanBeEffectTarget(e) and tc:GetAttack()~=tc:GetBaseAttack()  end
+	if chk==0 then return tc and tc:IsOnField() and tc:IsCanBeEffectTarget(e) and tc:GetAttack()~=tc:GetBaseAttack() end
 	Duel.SetTargetCard(tc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

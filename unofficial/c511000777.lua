@@ -1,15 +1,20 @@
+--黒翼再戦
 --Black Revenge
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCode(EVENT_DAMAGE_STEP_END)
+	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetAttacker():IsControler(tp) and Duel.GetAttacker():IsRelateToBattle()
+		and Duel.GetAttacker():IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.costfilter(c)
 	return c:IsSetCard(0x33) and c:IsAbleToGraveAsCost()
@@ -20,29 +25,36 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:GetAttackedCount()>0
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.GetAttacker():CanChainAttack(0,true) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g1=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	local g2=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
-	if #g1>0 and #g2>0 then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
-		g2:GetFirst():RegisterEffect(e1,true)
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
-		g2:GetFirst():RegisterEffect(e2,true)
-		Duel.CalculateDamage(g1:GetFirst(),g2:GetFirst())
-	end
+	local tc=Duel.GetAttacker()
+	if not tc:IsRelateToBattle() then return end
+	Duel.ChainAttack()
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE+PHASE_DAMAGE_CAL)
+	tc:RegisterEffect(e1,true)
+	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_DISABLE)
+	e2:SetTargetRange(0,LOCATION_MZONE)
+	e2:SetCondition(s.discon)
+	e2:SetTarget(s.distg)
+	e2:SetLabel(tc:GetAttackAnnouncedCount())
+	e2:SetLabelObject(tc)
+	e2:SetReset(RESET_PHASE+PHASE_BATTLE+PHASE_DAMAGE,2)
+	tc:CreateEffectRelation(e2)
+	Duel.RegisterEffect(e2,tp)
+end
+function s.discon(e)
+	local tc=e:GetLabelObject()
+	if not tc:IsRelateToEffect(e) then e:SetLabel(0) e:SetLabelObject(nil) e:Reset() end
+	return tc:GetAttackAnnouncedCount()>e:GetLabel()
+end
+function s.distg(e,c)
+	return c==e:GetLabelObject():GetBattleTarget()
 end

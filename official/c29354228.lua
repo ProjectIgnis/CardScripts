@@ -1,12 +1,12 @@
 --ドラグマ・エンカウンター
---Dragma Encounter
+--Dogmatika Encounter
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate (special summon from hand)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPSUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x146}
-s.listed_names={CARD_ALBUS}
+s.listed_names={CARD_ALBAZ}
 function s.filter(c,e,tp)
-	return (c:IsCode(CARD_ALBUS) or (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x146)))
+	return (c:IsCode(CARD_ALBAZ) or (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x146)))
 end
 function s.spfilter(c,e,tp)
 	return s.filter(c,e,tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
@@ -69,4 +69,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		aux.Stringid(id,2))
 	end
 end
-

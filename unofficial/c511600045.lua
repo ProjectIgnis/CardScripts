@@ -1,7 +1,6 @@
 --トリックスター・トリート (Anime)
 --Trickstar Treat (Anime)
---scripted by Larry126
---fixed by MLD
+--scripted by Larry126, fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0xfb)
@@ -13,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--set
+	--Set
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -23,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.setcost)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
@@ -111,7 +110,7 @@ end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and s.setcon(e,tp,eg,ep,ev,re,r,rp) and tc and tc:IsSSetable() 
+	if c:IsRelateToEffect(e) and s.setcon(e,tp,eg,ep,ev,re,r,rp) and tc and tc:IsSSetable()
 		and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil) then
 		Duel.SSet(tp,tc)
 		local fid=c:GetFieldID()
@@ -138,13 +137,14 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc:GetFlagEffectLabel(id)~=e:GetLabel() then
+	if tc and tc:GetFlagEffectLabel(id)==e:GetLabel() then
+		return true
+	else
 		e:Reset()
 		return false
-	else return true end
+	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.Destroy(e:GetLabelObject(),REASON_EFFECT)
-	end
+	local tc=e:GetLabelObject()
+	Duel.Destroy(tc,REASON_EFFECT)
 end

@@ -17,12 +17,14 @@ end
 function s.filter(c,e,tp)
 	return c:IsFaceup() and c:GetLevel()>0 and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.spfilter(c,mg,lv)
-	mg:ForEach(function(mc)
-		mc:AssumeProperty(ASSUME_TYPE,mc:GetOriginalType())
-		mc:AssumeProperty(ASSUME_LEVEL,lv)
-	end)
-	return c:IsXyzSummonable(nil,mg,2,2)
+local function reglevel(c,tc,lv)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_XYZ_LEVEL)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetValue(lv)
+	tc:RegisterEffect(e1,true)
+	return e1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -33,11 +35,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			and Duel.GetLocationCount(tp,LOCATION_MZONE)>1) then return false end
 		local tc1=g:GetFirst()
 		local tc2=g:GetNext()
-		local r1=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,g,tc1:GetLevel())
-		Duel.AssumeReset()
-		local r2=Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,g,tc2:GetLevel())
-		Duel.AssumeReset()
-		return r1 or r2
+		local e1=reglevel(e:GetHandler(),tc1,tc2:GetLevel())
+		local e2=reglevel(e:GetHandler(),tc2,tc1:GetLevel())
+		local res=Duel.IsExistingMatchingCard(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,1,nil,g,g)
+		if e1 then e1:Reset() end
+		if e2 then e2:Reset() end
+		return res
 	end
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,2,0,0)
@@ -50,7 +53,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.filter2,nil,e,tp)
 	if #g<2 then return end
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -64,15 +66,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 	Duel.BreakEffect()
-	local lv1=g:GetFirst():GetLevel()
-	local lv2=g:GetNext():GetLevel()
-	local g1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,g,lv1)
-	local g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,g,lv2)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local xyz=(g1+g2):Select(tp,1,1,nil):GetFirst()
-	if xyz then
-		if not s.spfilter(xyz,g,lv1) then s.spfilter(xyz,g,lv2) end
-		Duel.XyzSummon(tp,xyz,nil,g)
-		Duel.AssumeReset()
+	local tc1=g:GetFirst()
+	local tc2=g:GetNext()
+	local e1=reglevel(e:GetHandler(),tc1,tc2:GetLevel())
+	local e2=reglevel(e:GetHandler(),tc2,tc1:GetLevel())
+	local xyzg=Duel.GetMatchingGroup(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,nil,g,g)
+	if xyzg and #xyzg>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
+		Duel.XyzSummon(tp,xyz,g,g)
+	else
+		if e1 then e1:Reset() end
+		if e2 then e2:Reset() end
 	end
 end

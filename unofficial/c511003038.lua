@@ -1,3 +1,4 @@
+--アルティメット・フルバースト
 --Ultimate Full Burst
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x95}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE 
 		and re and re:GetHandler():IsSetCard(0x95)
@@ -25,9 +27,16 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if not tc or not tc:IsHasEffect(511002571) or #g~=1 or not tc:IsCanBeEffectTarget(e) then return false end
 		local eff={tc:GetCardEffect(511002571)}
 		for _,teh in ipairs(eff) do
-			local te=teh:GetLabelObject()
-			local tg=te:GetTarget()
-			if not tg or tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0) then return true end
+			local temp=teh:GetLabelObject()
+			if temp:GetCode()&511001822==511001822 then temp=temp:GetLabelObject() end
+			local con=temp:GetCondition()
+			local cost=temp:GetCost()
+			local tg=temp:GetTarget()
+			if (not con or con(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE))
+				and (not cost or cost(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0))
+				and (not tg or tg(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0)) then
+				return true
+			end
 		end
 		return false
 	end
@@ -42,8 +51,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local ac={}
 		for _,teh in ipairs(eff) do
 			local temp=teh:GetLabelObject()
+			if temp:GetCode()&511001822==511001822 then temp=temp:GetLabelObject() end
+			local con=temp:GetCondition()
+			local cost=temp:GetCost()
 			local tg=temp:GetTarget()
-			if not tg or tg(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0) then
+			if (not con or con(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE))
+				and (not cost or cost(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0))
+				and (not tg or tg(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0)) then
 				table.insert(ac,teh)
 				table.insert(acd,temp:GetDescription())
 			end
@@ -57,28 +71,23 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if not te then return end
 		local teh=te
 		te=teh:GetLabelObject()
+		if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
+		local cost=te:GetCost()
+		if cost then cost(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		local tg=te:GetTarget()
-		local op=te:GetOperation()
 		if tg then tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		Duel.BreakEffect()
 		tc:CreateEffectRelation(te)
 		Duel.BreakEffect()
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-		if g then
-			local etc=g:GetFirst()
-			while etc do
-				etc:CreateEffectRelation(te)
-				etc=g:GetNext()
-			end
+		for etc in aux.Next(g) do
+			etc:CreateEffectRelation(te)
 		end
-		if op then op(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
+		local operation=te:GetOperation()
+		if operation then operation(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		tc:ReleaseEffectRelation(te)
-		if etc then	
-			etc=g:GetFirst()
-			while etc do
-				etc:ReleaseEffectRelation(te)
-				etc=g:GetNext()
-			end
+		for etc in aux.Next(g) do
+			etc:ReleaseEffectRelation(te)
 		end
 		Duel.BreakEffect()
 		local e1=Effect.CreateEffect(e:GetHandler())

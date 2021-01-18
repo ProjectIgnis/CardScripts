@@ -1,11 +1,13 @@
+--警衛バリケイドベルグ
 --Barricadeborg Blocker
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	Link.AddProcedure(c,nil,2,2,s.lcheck)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--search at End Phase
+	--Link summon procedure
+	Link.AddProcedure(c,nil,2,2,s.lcheck)
+	--Add 1 continuous or field spell from GY during end phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -17,7 +19,9 @@ function s.initial_effect(c)
 	e1:SetCost(s.regcost)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
-	--indes
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e1)
+	--Your face-up spells cannot be destroyed by opponent's card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

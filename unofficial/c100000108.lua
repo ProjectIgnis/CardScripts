@@ -1,4 +1,5 @@
 --ザ・スピリチアル・ロード
+--The Spiritual Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
-	--tohand
+	--Add to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -20,9 +21,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x5}
 s.listed_names={id+1}
 function s.cfilter(c)
-	return c:IsSetCard(0x5) and (c:GetLevel()==5 or c:GetLevel()==6) 
+	return c:IsSetCard(0x5) and (c:GetLevel()==5 or c:GetLevel()==6)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)
@@ -44,10 +46,10 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end   
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local dg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
-	if #dg>0 then   
+	if #dg>0 then
 		Duel.SendtoHand(dg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,dg)
 	end

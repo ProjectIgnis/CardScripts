@@ -1,4 +1,4 @@
---[JP name]
+--リセの蟲惑魔
 --Traptrix Genlisea
 --Logical Nonsense
 
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetValue(s.efilter)
 	c:RegisterEffect(e1)
-	--Tribute this card; set 2 "Hole" traps (deck and GY) with different names
+	--Set 2 "Hole" normal traps (from deck and GY) with different names
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -26,6 +26,7 @@ function s.initial_effect(c)
 end
 	--Lists "Hole" archetype
 s.listed_series={0x4c,0x89}
+
 	--Unaffected by "Hole" normal trap cards
 function s.efilter(e,te)
 	local c=te:GetHandler()

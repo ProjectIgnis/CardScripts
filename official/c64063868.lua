@@ -1,4 +1,5 @@
 --Kozmo－ダークエクリプサー
+--Kozmo Dark Eclipse
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be targeted
@@ -34,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_series={0xd2}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

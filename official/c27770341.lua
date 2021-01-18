@@ -1,4 +1,5 @@
 --超再生能力
+--Super Rejuvenation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -9,15 +10,13 @@ function s.initial_effect(c)
 	e1:SetHintTiming(TIMING_END_PHASE)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if s.counter==nil then
-		s.counter=true
+	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-		e2:SetCode(EVENT_PHASE_START+PHASE_DRAW)
-		e2:SetOperation(s.resetcount)
-		Duel.RegisterEffect(e2,0)
+		aux.AddValuesReset(function()
+			s[0]=0
+			s[1]=0
+		end)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		e3:SetCode(EVENT_RELEASE)
@@ -28,14 +27,9 @@ function s.initial_effect(c)
 		e4:SetCode(EVENT_DISCARD)
 		e4:SetOperation(s.addcount)
 		Duel.RegisterEffect(e4,0)
-	end
-end
-function s.resetcount(e,tp,eg,ep,ev,re,r,rp)
-	s[0]=0
-	s[1]=0
+	end)
 end
 function s.addcount(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
 		local pl=tc:GetPreviousLocation()
 		if pl==LOCATION_MZONE and tc:GetPreviousRaceOnField()==RACE_DRAGON then

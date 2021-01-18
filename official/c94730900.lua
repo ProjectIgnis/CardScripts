@@ -1,8 +1,8 @@
 --焔聖騎士-モージ
---Flame Noble Knight Maugis
+--Infernoble Knight Maugis
 local s,id=GetID()
 function s.initial_effect(c)
-	--draw
+	--Shuflle cards into the deck and draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
-	--equip
+	--Equip itself to a Warrior monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
-	--cannot be destroyed by battle
+	--Prevent destruction by battle
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

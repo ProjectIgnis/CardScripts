@@ -1,8 +1,10 @@
+--夢魔鏡の乙女－イケロス
 --Ikelos, the Dream Mirror Sprite
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--search
+	--Add 1 "Dream Mirror" card from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -14,13 +16,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special summon 1 "Ikelos, the Dream Mirror Mara" from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END+TIMING_BATTLE_START+TIMING_BATTLE_END)
 	e2:SetCountLimit(1,id+1)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.dspcon)
@@ -29,8 +31,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.dspop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={75888208,CARD_DREAM_MIRROR_TERROR}
+s.listed_names={75888208,CARD_DREAM_MIRROR_TERROR,id}
 s.listed_series={0x131}
+
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x131)

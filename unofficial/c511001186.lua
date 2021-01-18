@@ -41,7 +41,7 @@ function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,cg)
 		Duel.ShuffleHand(tp)
 	elseif ep == (1-tp) then
- 		Duel.ConfirmCards(tp,cg)
+		Duel.ConfirmCards(tp,cg)
 		Duel.ShuffleHand(1-tp)
 	end
 	local tc=cg:GetFirst()
@@ -59,7 +59,7 @@ function s.cfop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 			e2:SetReset(RESET_PHASE+PHASE_END)
 			e2:SetTargetRange(1,0)
-			Duel.RegisterEffect(e2,tc:GetControler())			
+			Duel.RegisterEffect(e2,tc:GetControler())
 		end
 		tc=cg:GetNext()
 	end

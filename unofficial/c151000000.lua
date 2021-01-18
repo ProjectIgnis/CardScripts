@@ -1,4 +1,6 @@
 --Action Field Functions
+local id=151000000
+
 if not ActionDuel then
 
 	function Card.IsActionCard(c)
@@ -26,7 +28,7 @@ if not ActionDuel then
 
 	ActionDuel={}
 
-	local function ActionDuelRules()
+	function ActionDuel.Start()
 		local e1=Effect.GlobalEffect()
 		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_NO_TURN_RESET)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -36,7 +38,7 @@ if not ActionDuel then
 		Duel.RegisterEffect(e1,0)
 		-- Add Action Card
 		local e2=Effect.GlobalEffect()
-		e2:SetDescription(aux.Stringid(151000000,0))
+		e2:SetDescription(aux.Stringid(id,0))
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetRange(LOCATION_FZONE)
 		e2:SetCode(EVENT_FREE_CHAIN)
@@ -75,7 +77,8 @@ if not ActionDuel then
 		e9:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e9:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
 		e9:SetCode(EVENT_ADJUST)
-		e9:SetOperation(ActionDuel.cover)
+		e9:SetCondition(ActionDuel.covercon)
+		e9:SetOperation(ActionDuel.coverop)
 		Duel.RegisterEffect(e9,0)
 	end
 
@@ -83,7 +86,11 @@ if not ActionDuel then
 		return c:IsType(TYPE_ACTION) and c:GetFlagEffect(COVER_ACTION)==0
 	end
 
-	function ActionDuel.cover(e,tp,eg,ep,ev,re,r,rp)
+	function ActionDuel.covercon(e,tp,eg,ep,ev,re,r,rp)
+		return Duel.IsExistingMatchingCard(ActionDuel.cfilter,0,0xff,0xff,1,nil)
+	end
+
+	function ActionDuel.coverop(e,tp,eg,ep,ev,re,r,rp)
 		for c in aux.Next(Duel.GetMatchingGroup(ActionDuel.cfilter,0,0xff,0xff,nil)) do
 			c:Cover(COVER_ACTION)
 			c:RegisterFlagEffect(COVER_ACTION,0,0,0)
@@ -95,18 +102,18 @@ if not ActionDuel then
 		local announceFilter={TYPE_ACTION,OPCODE_ISTYPE,TYPE_FIELD,OPCODE_ISTYPE,OPCODE_AND}
 		while #actionFieldToBeUsed==0 do
 			for p=0,1 do
-				if Duel.SelectYesNo(p,aux.Stringid(151000000,3)) then
-					Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(151000000,4))
+				if Duel.SelectYesNo(p,aux.Stringid(id,3)) then
+					Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(id,4))
 					local af=Duel.AnnounceCard(p,table.unpack(announceFilter))
 					table.insert(actionFieldToBeUsed,af)
 				end
 			end
 			if #actionFieldToBeUsed>0 then break
-			else Duel.Hint(HINT_MESSAGE,0,aux.Stringid(151000000,5)) Duel.Hint(HINT_MESSAGE,1,aux.Stringid(151000000,5)) end
+			else Duel.Hint(HINT_MESSAGE,0,aux.Stringid(id,5)) Duel.Hint(HINT_MESSAGE,1,aux.Stringid(id,5)) end
 		end
 		if #actionFieldToBeUsed>1 then
-			Duel.Hint(HINT_MESSAGE,0,aux.Stringid(151000000,6))
-			Duel.Hint(HINT_MESSAGE,1,aux.Stringid(151000000,6))
+			Duel.Hint(HINT_MESSAGE,0,aux.Stringid(id,6))
+			Duel.Hint(HINT_MESSAGE,1,aux.Stringid(id,6))
 			local coin=Duel.TossCoin(0,1)
 			table.remove(actionFieldToBeUsed,coin+1)
 		end
@@ -122,7 +129,7 @@ if not ActionDuel then
 			e1:SetOperation(function(e) Duel.SendtoDeck(e:GetHandler(),nil,-2,REASON_RULE) end)
 			tc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(tc)
-			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS) 
+			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e2:SetCode(EVENT_CHAIN_END)
 			e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetLabelObject(tc)
@@ -155,7 +162,7 @@ if not ActionDuel then
 			end
 			-- move to field
 			if Duel.CheckLocation(tc:GetOwner(),LOCATION_FZONE,0) then
-				Duel.MoveToField(tc,tc:GetOwner(),tc:GetOwner(),LOCATION_SZONE,POS_FACEUP,true)
+				Duel.MoveToField(tc,tc:GetOwner(),tc:GetOwner(),LOCATION_FZONE,POS_FACEUP,true)
 			else
 				Duel.SendtoDeck(tc,nil,-2,REASON_RULE)
 			end
@@ -165,7 +172,7 @@ if not ActionDuel then
 		local c=e:GetLabelObject()
 		local tp=c:GetControler()
 		if Duel.CheckLocation(tp,LOCATION_FZONE,0) then
-			Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			Duel.MoveToField(c,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 		end
 	end
 	------------------------------------------------------------------------------
@@ -180,7 +187,7 @@ if not ActionDuel then
 	function ActionDuel.condition(e,tp,eg,ep,ev,re,r,rp)
 		return (not ActionDuel.handcheck(tp) or string.find(e:GetLabelObject():GetLabelObject().af,'m'))
 			and Duel.GetFlagEffect(e:GetHandlerPlayer(),320)==0
-			and Duel.GetFlagEffect(e:GetHandlerPlayer(),151000000)==0
+			and Duel.GetFlagEffect(e:GetHandlerPlayer(),id)==0
 			and not e:GetHandler():IsStatus(STATUS_CHAINING)
 	end
 	function ActionDuel.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -192,26 +199,26 @@ if not ActionDuel then
 		e:SetLabel(t[ac])
 	end
 	function ActionDuel.operation(e,tp,eg,ep,ev,re,r,rp)
-		if Duel.GetCurrentChain()>0 and not Duel.SelectYesNo(tp,aux.Stringid(151000000,0)) then return end
+		if Duel.GetCurrentChain()>0 and not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 		local originalField=e:GetLabelObject():GetLabelObject()
 		if ActionDuel.handcheck(tp) and not string.find(originalField.af,'m') then return end
 		local hintp,token,tokenp={}
 		if not ActionDuel.handcheck(1-tp) and not (string.find(originalField.af,'t') and Duel.GetLP(tp)>Duel.GetLP(1-tp))
-			and Duel.SelectYesNo(1-tp,aux.Stringid(151000000,1)) then
+			and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 			local rps=Duel.RockPaperScissors(false)
 			if rps<2 then
 				tokenp=rps
 			end
 			if Duel.GetRandomNumber(0,1)==0 then table.insert(hintp,1-tp) end
-		elseif Duel.TossCoin(tp,1)==1 then  
+		elseif Duel.TossCoin(tp,1)==1 then
 			tokenp=tp
 		end
 		if Duel.GetRandomNumber(0,1)==0 then table.insert(hintp,tp) end
 		for _,p in ipairs(hintp) do
-			Duel.Hint(HINT_MESSAGE,p,aux.Stringid(151000000,2))
-			Duel.RegisterFlagEffect(p,151000000,RESET_PHASE+PHASE_END,0,1)
+			Duel.Hint(HINT_MESSAGE,p,aux.Stringid(id,2))
+			Duel.RegisterFlagEffect(p,id,RESET_PHASE+PHASE_END,0,1)
 		end
-		if tokenp then 
+		if tokenp then
 			token=Duel.CreateToken(tokenp,e:GetLabel())
 			Duel.SendtoHand(token,nil,REASON_EFFECT)
 			if string.find(originalField.af,'m') then
@@ -220,7 +227,7 @@ if not ActionDuel then
 				Duel.RegisterFlagEffect(1-tp,320,RESET_PHASE+PHASE_END,0,1)
 			end
 		end
-		if Duel.IsExistingMatchingCard(Card.IsActionCard,tokenp,LOCATION_HAND,0,2,nil)
+		if token and Duel.IsExistingMatchingCard(Card.IsActionCard,tokenp,LOCATION_HAND,0,2,nil)
 			and Duel.Remove(token,POS_FACEUP,REASON_EFFECT) then
 			local g=Duel.SelectMatchingCard(tokenp,Card.IsFaceup,tokenp,0,LOCATION_MZONE,1,1,nil)
 			local e1=Effect.CreateEffect(e:GetHandler())
@@ -228,13 +235,13 @@ if not ActionDuel then
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-300)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			if g:GetCount()>0 and g:GetFirst():RegisterEffect(e1) then
+			if #g>0 and g:GetFirst():RegisterEffect(e1) then
 				Duel.Damage(1-tokenp,300,REASON_EFFECT)
 			end
 		else ActionDuel.chktrap(token,tokenp,e) end
 	end
 	function ActionDuel.chktrap(tc,tp,e)
-		if tc and tc:IsType(TYPE_TRAP) and tc:CheckActivateEffect(false,false,false) 
+		if tc and tc:IsType(TYPE_TRAP) and tc:CheckActivateEffect(false,false,false)
 			and Duel.GetLocationCount(tp,LOCATION_SZONE) then
 			Duel.ConfirmCards(1-tp,tc)
 			local tpe=tc:GetType()
@@ -270,8 +277,6 @@ if not ActionDuel then
 		end
 	end
 
-	ActionDuelRules()
-	
 	COVER_ACTION=301
 	CARD_VANILLA_MODE=511004400
 	CARD_POTENTIAL_YELL=511004399
@@ -295,7 +300,7 @@ if not ActionDuel then
 	23424603,
 	62188962,
 	82999629,
-	22702055,
+	CARD_UMI,
 	86318356,
 	4215636,
 	32391631,
@@ -306,7 +311,7 @@ if not ActionDuel then
 	56074358,
 	80921533,
 	14001430,
-	22702055,
+	CARD_UMI,
 	22751868,
 	75782277,
 	10080320,

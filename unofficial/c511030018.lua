@@ -63,6 +63,6 @@ function s.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
 end
 function s.atktg(e,c)
-	return c:IsLinkMonster() and c:IsSetCard(0x578) and c:IsFaceup()
+	return c:IsLinkMonster() and c:IsSetCard(0x578)
 		and (e:GetHandler():GetLinkedGroup():IsContains(c) or c:GetLinkedGroup():IsContains(e:GetHandler()))
 end

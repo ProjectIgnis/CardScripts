@@ -1,5 +1,5 @@
 --魔弾の射手 スター
---Magibullet Shooter Star
+--Magical Musketeer Starfire
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate from hand
@@ -14,17 +14,10 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
 	c:RegisterEffect(e2)
 	--search
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e0:SetCode(EVENT_CHAINING)
-	e0:SetRange(LOCATION_MZONE)
-	e0:SetOperation(aux.chainreg)
-	c:RegisterEffect(e0)
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_CHAIN_SOLVING)
+	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id)
@@ -36,6 +29,8 @@ end
 s.listed_series={0x108}
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetHandler():GetColumnGroup():IsContains(re:GetHandler())
+	--[[
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	if Duel.GetCurrentPhase()&PHASE_DAMAGE+PHASE_DAMAGE_CAL~=0 or not re:IsHasType(EFFECT_TYPE_ACTIVATE) or c:GetFlagEffect(1)<=0 then return false end
@@ -48,6 +43,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	return c:IsColumn(seq,p,LOCATION_SZONE)
+	]]
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x108) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
-	--indestructable
+	--Prevent destruction
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xbf))
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--atk
+	--Increase ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.atkcon)
 	e3:SetValue(800)
 	c:RegisterEffect(e3)
-	--spsummon
+	--Special Summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -42,12 +42,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xc0,0xbf}
+s.listed_series={0x10c0,0xbf}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atktg(e,c)
-	return c:IsSetCard(0xc0) and Duel.GetAttacker()==c
+	return c:IsSetCard(0x10c0) and Duel.GetAttacker()==c
 end
 function s.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()~=nil
@@ -68,7 +68,6 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
 		local g=eg:Filter(s.cfilter,nil,tp)
 		local att=0x7f
-		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
 			att=(att&tc:GetOriginalAttribute())
 		end

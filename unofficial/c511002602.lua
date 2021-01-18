@@ -1,17 +1,19 @@
---BF－極光のアウロラ
+--ＢＦ－極光のアウロラ (Anime)
+--Blackwing - Aurora the Northern Lights (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--special summon
+	--Special Summon proc
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
+	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--special summon
+	--copy effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(4068622,0))
 	e2:SetCategory(CATEGORY_REMOVE)
@@ -21,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	--special summon limit
+	--Special Summon limit
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -33,10 +35,10 @@ s.listed_series={0x33}
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.spfilter1,1,nil,sg) and sg:IsExists(s.spfilter2,1,nil,sg)
 end
-function s.spfilter1(c,tp)
+function s.spfilter1(c)
 	return not c:IsType(TYPE_TUNER)
 end
-function s.spfilter2(c,tp)
+function s.spfilter2(c)
 	return c:IsSetCard(0x33) and c:IsType(TYPE_TUNER)
 end
 function s.spcon(e,c)
@@ -66,7 +68,16 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
+	local lvl=g:GetFirst():GetLevel()+g:GetNext():GetLevel()
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	--change Level
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_CHANGE_LEVEL)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetValue(lvl)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+	c:RegisterEffect(e1)
 	g:DeleteGroup()
 end
 function s.filter(c,lv)
@@ -84,12 +95,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local code=tc:GetOriginalCode()
 		local ba=tc:GetBaseAttack()
 		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN, 1)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
-		e2:SetCode(EFFECT_SET_BASE_ATTACK)
-		e2:SetValue(ba)
-		c:RegisterEffect(e2)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+		e1:SetCode(EFFECT_SET_BASE_ATTACK)
+		e1:SetValue(ba)
+		c:RegisterEffect(e1)
 	end
 end

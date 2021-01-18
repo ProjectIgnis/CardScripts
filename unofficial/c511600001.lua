@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
-	c:RegisterEffect(e3)  
+	c:RegisterEffect(e3)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_PENDULUM) and e:GetHandler()~=re:GetHandler()

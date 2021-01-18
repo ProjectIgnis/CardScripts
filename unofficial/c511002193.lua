@@ -1,7 +1,7 @@
 --RR Target Flag
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,1,nil,CATEGORY_DRAW,nil,TIMING_STANDBY_PHASE,0x1c0,nil,nil,s.target,s.operation,true)
+	aux.AddPersistentProcedure(c,1,nil,CATEGORY_DRAW,nil,TIMING_STANDBY_PHASE,TIMINGS_CHECK_MONSTER,nil,nil,s.target,s.operation,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,tc,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -28,19 +28,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				desc=72
 			end
 			Duel.ShuffleHand(tp)
-			local e2=Effect.CreateEffect(c)
-			e2:SetDescription(desc)
-			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-			e2:SetRange(LOCATION_SZONE)
-			e2:SetCategory(CATEGORY_DESTROY)
-			e2:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_DELAY)
-			e2:SetCode(EVENT_LEAVE_FIELD)
-			e2:SetCondition(s.descon)
-			e2:SetTarget(s.destg)
-			e2:SetOperation(s.desop)
-			e2:SetLabel(label)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-			c:RegisterEffect(e2)
+			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(desc)
+			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+			e1:SetRange(LOCATION_SZONE)
+			e1:SetCategory(CATEGORY_DESTROY)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_DELAY)
+			e1:SetCode(EVENT_LEAVE_FIELD)
+			e1:SetCondition(s.descon)
+			e1:SetTarget(s.destg)
+			e1:SetOperation(s.desop)
+			e1:SetLabel(label)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			c:RegisterEffect(e1)
 		end
 	end
 end

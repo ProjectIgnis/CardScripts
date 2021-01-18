@@ -1,3 +1,4 @@
+--カオス・アライアンス
 --Chaos Alliance
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
@@ -21,14 +22,16 @@ function s.filter(c,atk)
 	return c:IsC() and c:IsFaceup() and c:GetAttack()<atk
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local atk=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack):GetFirst():GetAttack()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,atk) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,atk) end
+	local ag=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack)
+	if chkc then return ag and #ag>0 and chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,ag:GetFirst():GetAttack()) end
+	if chk==0 then return ag and #ag>0 and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,ag:GetFirst():GetAttack()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,atk)
+	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,ag:GetFirst():GetAttack())
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local atk=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack):GetFirst():GetAttack()
+	local ag=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil):GetMaxGroup(Card.GetAttack)
+	if #ag==0 then return end
+	local atk=ag:GetFirst():GetAttack()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:GetAttack()<atk then
 		local e1=Effect.CreateEffect(e:GetHandler())

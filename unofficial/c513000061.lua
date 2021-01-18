@@ -1,4 +1,5 @@
---No.99 希望皇龍ホープドラグーン
+--Ｎｏ.９９ 希望皇龍ホープドラグーン (Anime)
+--Number 99: Utopic Dragon (Anime)
 Duel.LoadCardScript("c51543904.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	--negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY+CATEGORY_DAMAGE)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP,EFFECT_FLAG2_XMDETACH)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_MZONE)
@@ -27,14 +28,15 @@ function s.initial_effect(c)
 	e2:SetCondition(s.negcon)
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
-	c:RegisterEffect(e2)
+	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 	--battle indestructable
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e3:SetValue(s.indes)
+	e3:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x48}
 s.xyz_number=99
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x48) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -99,7 +101,4 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		local sum=dg:GetSum(Card.GetAttack)
 		Duel.Damage(1-tp,sum,REASON_EFFECT)
 	end
-end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
 end

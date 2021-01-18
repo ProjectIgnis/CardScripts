@@ -1,11 +1,12 @@
 --ガガガマンサー
 --Gagaga Mancer
 --fixed by MLD
-local s,id=GetID()
+local s,id,alias=GetID()
 function s.initial_effect(c)
-	--SpecialSummon
+	alias=c:Alias()
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
@@ -14,14 +15,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--atkup
+	--increase ATK
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
-	e2:SetDescription(aux.Stringid(75214390,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCost(aux.bfgcost)
-	e2:SetOperation(s.atkop)
+	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x54}
@@ -43,31 +44,29 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e1:SetCountLimit(1)
-	e1:SetCondition(s.atkcon)
+	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetOperation(s.atkop)
+	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsSetCard(0x54) and Duel.GetAttackTarget() and Duel.GetAttackTarget():IsControler(1-tp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc then
+	if tc and tc:IsSetCard(0x54) and tc:IsControler(tp) and Duel.GetAttackTarget() and not Duel.GetAttackTarget():IsControler(tp)
+		and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetCondition(s.atkcon2)
+		e1:SetCondition(s.atkcon)
 		e1:SetValue(500)
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		tc:RegisterEffect(e1)
+		e:Reset()
 	end
 end
-function s.atkcon2(e)
+function s.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
-		and Duel.GetAttackTarget():IsControler(1-tp)
+		and not Duel.GetAttackTarget():IsControler(e:GetHandlerPlayer())
 end

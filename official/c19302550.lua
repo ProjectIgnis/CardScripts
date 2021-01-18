@@ -1,4 +1,5 @@
 --DD魔導賢者ニュートン
+--D/D Savant Newton
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -32,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_PZONE+LOCATION_MZONE)
 end
 s.listed_series={0xaf,0xae}
 s.listed_names={id}
@@ -64,7 +66,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

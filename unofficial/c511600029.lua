@@ -45,7 +45,7 @@ function s.lfop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.atkcon)
 		e1:SetTarget(s.atktg)
 		e1:SetOperation(s.atkop)
-		tc:RegisterEffect(e1)		
+		tc:RegisterEffect(e1)
 	end
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)

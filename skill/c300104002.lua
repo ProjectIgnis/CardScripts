@@ -48,7 +48,7 @@ function s.efilter(e,te)
 	return te:IsActiveType(TYPE_TRAP)
 end
 function s.etarget(e,c)
-	return c:IsAttribute(ATTRIBUTE_WATER) 
+	return c:IsAttribute(ATTRIBUTE_WATER)
 end
 function s.cfilter(c,tp,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsCode(76634149) and c:GetPreviousControler()==tp

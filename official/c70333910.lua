@@ -1,9 +1,10 @@
 --ノクトビジョン・ドラゴン
 --Noctovision Dragon
 --Adapted from anime version by Messoras
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Protect set card
+	--Negate opponent's card/effect that targets your set card(s)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	--Draw 1
+	--If sent to GY as link material, draw 1
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DRAW)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.drawtg)
 	e2:SetOperation(s.drawop)
 	c:RegisterEffect(e2)
-	--Special summon
+	--Special summon itself from hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -57,10 +58,12 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):Filter(s.tfilter,nil,tp)
 	for tc in aux.Next(tg) do
+		--Cannot be targeted by opponent's card effects
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3061)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(aux.tgoval)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
@@ -96,4 +99,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

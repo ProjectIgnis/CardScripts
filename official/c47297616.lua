@@ -1,15 +1,17 @@
 --光と闇の竜
+--Light and Darkness Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot special summon
+	--Special Summon limitation
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	--Attribute Dark
+	--Add DARK attribute
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_ADD_ATTRIBUTE)
@@ -39,6 +41,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.tgspsum)
 	e4:SetOperation(s.opspsum)
 	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.codisable(e,tp,eg,ep,ev,re,r,rp)
 	return (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsActiveType(TYPE_MONSTER))
@@ -58,6 +61,9 @@ function s.opdisable(e,tp,eg,ep,ev,re,r,rp)
 		return
 	end
 	if Duel.NegateActivation(ev) then
+		if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
+			Duel.SendtoGrave(eg,REASON_EFFECT)
+		end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)

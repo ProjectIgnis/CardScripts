@@ -1,7 +1,8 @@
 --混沌の使者
+--Envoy of Chaos
 local s,id=GetID()
 function s.initial_effect(c)
-	--atkup
+	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg1)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--to hand
+	--Add itself to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)

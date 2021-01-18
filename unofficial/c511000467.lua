@@ -14,34 +14,25 @@ function s.initial_effect(c)
 	e2:SetCondition(s.atkcon)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
+	--Trap Spell
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EFFECT_TRAP_ACT_IN_HAND)
-	e3:SetCondition(s.handcon)
+	e3:SetCode(EFFECT_BECOME_QUICK)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
+	e4:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
 	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e5:SetCode(EFFECT_ADD_TYPE)
-	e5:SetValue(TYPE_SPELL)
-	c:RegisterEffect(e5)
-end
-function s.handcon(e)
-	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()==nil and ep==tp
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetFlagEffect(51100467)==0 then
-		c:RegisterFlagEffect(51100467,RESET_EVENT+RESETS_STANDARD,0,0)
+	if c:GetFlagEffect(id)==0 then
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 		e:SetLabel(0)
 	end
 	local dam=e:GetLabel()

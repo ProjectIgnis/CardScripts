@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
+	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 	aux.GlobalCheck(s,function()
 		--activatable if set by Altergeist
 		local e3=Effect.CreateEffect(c)

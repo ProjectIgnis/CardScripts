@@ -1,7 +1,8 @@
+--ナイト・オブ・ペンタクルス
 --Knight of Pentacles
 local s,id=GetID()
 function s.initial_effect(c)
-	--coin
+	--Toss a coin on Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(97574404,0))
 	e1:SetCategory(CATEGORY_COIN)
@@ -32,7 +33,7 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	s.arcanareg(c,res)
 end
 function s.arcanareg(c,coin)
-	--coin effect
+	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -40,13 +41,13 @@ function s.arcanareg(c,coin)
 	e1:SetValue(1)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
-	--
+	--Cannot attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
 	e2:SetCondition(s.atcon)
 	c:RegisterEffect(e2)
-	--
+	--destroy if attacked
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)

@@ -1,4 +1,5 @@
---ハイレート・ドロー
+--ハイレート・ドロー (VG)
+--High Rate Draw (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	if Duel.Destroy(g,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
-		local dc=og:FilterCount(s.filter1,nil)			
+		local dc=og:FilterCount(s.filter1,nil)
 		if dc>0	then
 			Duel.BreakEffect()
 			Duel.Draw(p,dc,REASON_EFFECT)

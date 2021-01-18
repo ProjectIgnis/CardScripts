@@ -1,13 +1,13 @@
--- ナーゲルの守護天
---Protected Sky of Nagel
+--ナーゲルの守護天
+--Nagel's Protection
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--indes
+	--Prevent battle destruction
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -16,19 +16,22 @@ function s.initial_effect(c)
 	e2:SetTarget(s.indtg)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
+	--Prevent effect destruction
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e3:SetValue(s.indval)
 	c:RegisterEffect(e3)
-	--damage double
+	--Double damage
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e4:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e4:SetTargetRange(LOCATION_MZONE,0)
 	e4:SetCondition(s.damcon)
-	e4:SetOperation(s.damop)
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x10b))
+	e4:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e4)
-	--search
+	--Add a copy of itself to the hand
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e5:SetType(EFFECT_TYPE_IGNITION)
@@ -38,6 +41,14 @@ function s.initial_effect(c)
 	e5:SetTarget(s.thtg)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
+	--Register
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e6:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e6:SetRange(LOCATION_SZONE)
+	e6:SetCondition(s.regcon)
+	e6:SetOperation(s.regop)
+	c:RegisterEffect(e6)
 end
 s.listed_series={0x10b}
 s.listed_names={id}
@@ -47,13 +58,14 @@ end
 function s.indval(e,re,rp)
 	return rp==1-e:GetHandlerPlayer()
 end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local c,tc=e:GetHandler(),eg:GetFirst()
-	return ep~=tp and tc:IsSetCard(0x10b) and c:GetFlagEffect(id)==0
+function s.regcon(e,tp,eg,ep,ev,re,r,rp)
+	return ep==1-tp and eg:GetFirst():IsSetCard(0x10b)
 end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DoubleBattleDamage(ep)
-	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+end
+function s.damcon(e)
+	return e:GetHandler():GetFlagEffect(id)==0
 end
 function s.cfilter(c)
 	return c:IsSetCard(0x10b) and c:IsDiscardable()

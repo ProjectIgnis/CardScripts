@@ -3,16 +3,16 @@ local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x83))
 	--to grave
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)	
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1)
-	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e3:SetCost(s.atcost)
-	e3:SetCondition(s.atcon)
-	e3:SetTarget(s.attg)
-	e3:SetOperation(s.atop)
-	c:RegisterEffect(e3)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCountLimit(1)
+	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e1:SetCost(s.atcost)
+	e1:SetCondition(s.atcon)
+	e1:SetTarget(s.attg)
+	e1:SetOperation(s.atop)
+	c:RegisterEffect(e1)
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
@@ -57,7 +57,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.NegateAttack() then
 			Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
 		end
-	end	
+	end
 end
 function s.indescon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetHandler():GetEquipTarget():GetBattleTarget()

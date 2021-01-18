@@ -1,4 +1,5 @@
 --ポールポジション
+--Pole Position
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local g=Group.CreateGroup()
 	g:KeepAlive()
-	--adjust
+	--Adjust
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -26,13 +27,14 @@ function s.initial_effect(c)
 	e3:SetValue(s.efilter)
 	e3:SetLabelObject(g)
 	c:RegisterEffect(e3)
-	--destroy
+	--Register before leaving
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetCode(EVENT_LEAVE_FIELD_P)
 	e4:SetOperation(s.checkop)
 	c:RegisterEffect(e4)
+	--Destroy highest ATK monster
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EVENT_LEAVE_FIELD)
@@ -67,7 +69,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	else e:SetLabel(0) end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabelObject():GetLabel()==0 and e:GetHandler():IsStatus(STATUS_ACTIVATED) then
+	if e:GetLabelObject():GetLabel()==0 then
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		if #g>0 then
 			local ag=g:GetMaxGroup(Card.GetAttack)

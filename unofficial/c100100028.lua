@@ -16,7 +16,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) and tc and tc:IsCanRemoveCounter(tp,0x91,8,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	tc:RemoveCounter(tp,0x91,8,REASON_COST)	
+	tc:RemoveCounter(tp,0x91,8,REASON_COST)
 	Duel.PayLPCost(tp,1000)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

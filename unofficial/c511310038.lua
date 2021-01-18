@@ -84,7 +84,7 @@ if not table.includes then
 		local right=#t
 		while left<=right do
 			local middle=(left+right)//2
-			if t[middle]==val1 then return true
+			if t[middle]==val then return true
 			elseif t[middle]<val then left=middle+1
 			else right=middle-1 end
 		end

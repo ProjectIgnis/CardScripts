@@ -1,3 +1,4 @@
+--シャイニング・スライ
 --Shining Sly
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,44 +16,44 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(s.con)
 	e2:SetCost(s.cost)
-	e2:SetOperation(s.op)
+	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)
-end
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
-	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	e:SetLabel(cp)
-	if ex and (cp==tp or cp==1-tp) then return true end
-	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
-	e:SetLabel(cp)
-	return ex and ((cp==tp and Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_RECOVER)) 
-		or (cp==1-tp and Duel.IsPlayerAffectedByEffect(1-tp,EFFECT_REVERSE_RECOVER)))
+function s.specialchk(sg,tp,exg,opG)
+	return not opG or #(opG-sg)>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local cp=e:GetLabel()
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsControler,1,false,nil,nil,cp) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsControler,1,1,false,nil,nil,cp)
-	Duel.Release(g,REASON_COST)
+	if chk==0 then 
+		local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
+		if not ex or not cp or Duel.IsPlayerAffectedByEffect(cp,EFFECT_REVERSE_DAMAGE) then
+			ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
+			if not ex or not cp or not Duel.IsPlayerAffectedByEffect(cp,EFFECT_REVERSE_RECOVER) then return false end
+		end
+		local opTribute=Duel.GetMatchingGroup(Card.IsReleasable,tp,0,LOCATION_MZONE,nil)
+		local tpTribute=Duel.CheckReleaseGroupCost(tp,nil,1,false,s.specialchk,nil,cp==PLAYER_ALL and opTribute)
+		return cp==tp and tpTribute or cp==1-tp and #opTribute>0 or tpTribute and #opTribute>0
+	end
+	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
+	if not ex or not cp or Duel.IsPlayerAffectedByEffect(cp,EFFECT_REVERSE_DAMAGE) then
+		ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
+	end
+	Duel.SetTargetPlayer(cp)
+	local opG=(cp==1-tp or cp==PLAYER_ALL) and Duel.SelectMatchingCard(tp,Card.IsReleasable,tp,0,LOCATION_MZONE,1,1,nil) or Group.CreateGroup()
+	local tpG=(cp==tp or cp==PLAYER_ALL) and Duel.SelectReleaseGroupCost(tp,nil,1,1,false,s.specialchk,nil,cp==PLAYER_ALL and opG) or Group.CreateGroup()
+	Duel.Release(tpG+opG,REASON_COST)
 end
-function s.op(e,tp,eg,ep,ev,re,r,rp,val,r,rc)
-	local cp=e:GetLabel()
-	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
+function s.operation(e,tp,eg,ep,ev,re,r,rp,val,r,rc)
+	local cid,cp=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID,CHAININFO_TARGET_PLAYER)
+	if not cp then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	if cp==tp then
-		e1:SetTargetRange(1,0)
-	else
-		e1:SetTargetRange(0,1)
-	end
+	e1:SetTargetRange((cp==tp or cp==PLAYER_ALL) and 1 or 0,(cp==1-tp or cp==PLAYER_ALL) and 1 or 0)
 	e1:SetLabel(cid)
 	e1:SetValue(s.refcon)
 	e1:SetReset(RESET_CHAIN)
@@ -60,8 +61,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp,val,r,rc)
 end
 function s.refcon(e,re,val,r,rp,rc)
 	local cc=Duel.GetCurrentChain()
-	if cc==0 or r&REASON_EFFECT==0 then return end
+	if cc==0 or (r&REASON_EFFECT)==0 then return val end
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
-	if cid==e:GetLabel() then e:SetLabel(val) return 0
-	else return val end
+	if cid==e:GetLabel() then return 0 else return val end
 end

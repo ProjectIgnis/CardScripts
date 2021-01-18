@@ -70,7 +70,7 @@ end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	if tg==nil then return false end
-	local g=tg:Filter(s.cfilter)
+	local g=tg:Filter(s.cfilter,nil)
 	if ex and #g==1 then
 		e:SetLabelObject(g:GetFirst())
 		return true

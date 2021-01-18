@@ -1,4 +1,5 @@
---Coingnoma the Sibyl
+--占術姫コインノーマ (Anime)
+--Prediction Princess Coinorma (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

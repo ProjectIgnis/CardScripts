@@ -1,13 +1,15 @@
 --矮星竜 プラネター
+--Dwarf Star Dragon Planeter
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--Register
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetOperation(s.sumsuc)
 	c:RegisterEffect(e1)
+	--Add to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)

@@ -22,7 +22,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
 end
 function s.spfilter(c,e,tp,lv)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()==lv

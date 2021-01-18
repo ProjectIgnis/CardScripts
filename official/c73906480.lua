@@ -1,4 +1,5 @@
 --武神降臨
+--Bujincarnation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -57,5 +58,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.xyzlimit(e,c)
 	if not c then return false end
-	return not c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR+RACE_WINGEDBEAST)
+	return not c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
 end

@@ -1,4 +1,5 @@
---Legendary Knight Critias
+--でんせつのきし クリティウス (Anime)
+--Legendary Knight Critias (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	--Absorb Traps
+	--Make this card's effect the effect of banished Trap
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -20,9 +21,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingTarget(s.filter1,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil)
 	and e:GetLabel()~=1 and e:GetHandler()==Duel.GetAttacker() and e:GetHandler():GetBattleTarget()~=nil
-	or Duel.IsExistingTarget(s.filter1,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil)
+	or Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil)
 	and e:GetLabel()~=1 and e:GetHandler()==Duel.GetAttackTarget() and e:GetHandler():GetBattleTarget()~=nil
 end
 function s.filter1(c,e,tp,eg,ep,ev,re,r,rp)

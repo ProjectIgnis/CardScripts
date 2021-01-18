@@ -31,13 +31,9 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 end
-	--Check for monster that can change positions
-function s.posfilter(c)
-	return c:IsCanChangePosition()
-end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.posfilter,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanChangePosition,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
 end
 	--Send 1 WIND monster from hand to GY to change the positions of up to 3 opponent's monsters
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -49,7 +45,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,s.posfilter,tp,0,LOCATION_MZONE,1,3,nil)
+		local g=Duel.SelectMatchingCard(tp,Card.IsCanChangePosition,tp,0,LOCATION_MZONE,1,3,nil)
+		Duel.HintSelection(g)
 		if #g>0 then
 			Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 		end

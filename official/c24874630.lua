@@ -28,10 +28,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	token:RegisterEffect(e1,true)
 	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetOperation(s.damop)
+	e2:SetValue(1)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	token:RegisterEffect(e2,true)
 	local e3=Effect.CreateEffect(e:GetHandler())
@@ -53,12 +53,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.PayLPCost(tp,1000)
 	else
 		Duel.Destroy(e:GetHandler(),REASON_COST)
-	end
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local dam=Duel.GetBattleDamage(tp)
-	if dam>0 then
-		Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(1-tp)+dam,false)
-		Duel.ChangeBattleDamage(tp,0)
 	end
 end

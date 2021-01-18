@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsGoyo),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx2(Card.IsGoyo),2)
 	--
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -110,8 +110,7 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	local tc=g:GetFirst()
-	while tc do
+	for tc in aux.Next(g) do
 		if not tc:IsImmuneToEffect(e) then
 			tc:ResetEffect(EFFECT_SET_CONTROL,RESET_CODE)
 			local e1=Effect.CreateEffect(e:GetHandler())
@@ -121,6 +120,5 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TEMP_REMOVE+RESET_TURN_SET))
 			tc:RegisterEffect(e1)
 		end
-		tc=g:GetNext()
 	end
 end

@@ -21,8 +21,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local a=Duel.GetAttacker()
-	if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) and s.tg(e,tp,Group.FromCards(a),ep,ev,re,r,rp,0) 
-		and Duel.SelectYesNo(tp,aux.Stringid(61965407,1)) then
+	if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) and s.tg(e,tp,Group.FromCards(a),ep,ev,re,r,rp,0) then
 		e:SetOperation(s.op)
 		s.tg(e,tp,Group.FromCards(a),ep,ev,re,r,rp,1)
 	else

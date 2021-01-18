@@ -1,10 +1,13 @@
---Emトラピーズ・マジシャン
+--Ｅｍトラピーズ・マジシャン
+--Performage Trapeze Magician
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER),4,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--avoid damage
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER),4,2)
+	--Take no effect damage, if the amount is less than this card's ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
@@ -13,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.damval)
 	c:RegisterEffect(e1)
-	--multi attack
+	--Targeted monster can make a second attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -26,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.mttg)
 	e2:SetOperation(s.mtop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	--spsummon
+	--Special summon "Performage" monster from deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -38,6 +41,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xc6}
+
 function s.damval(e,re,val,r,rp,rc)
 	local atk=e:GetHandler():GetAttack()
 	if val<=atk then return 0 else return val end
@@ -64,15 +68,17 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local fid=c:GetFieldID()
 	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
+		--Can make a second attack
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3201)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
-		--destroy
+		--Destroy it at end of battle phase
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PHASE+PHASE_BATTLE)

@@ -59,6 +59,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
 		end
 		Duel.RegisterEffect(e1,tp)
+		
+		--lizard check
+		aux.addTempLizardCheck(e:GetHandler(),tp,aux.TRUE,RESET_PHASE+PHASE_END+RESET_SELF_TURN,0xff,0,Duel.GetTurnPlayer()==tp and 2 or 1)
 	end
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)

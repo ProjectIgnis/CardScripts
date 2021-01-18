@@ -57,6 +57,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 			e1:SetTargetRange(1,0)
 			e1:SetTarget(s.splimit)
 			Duel.RegisterEffect(e1,tp)
+			--lizard check
+			aux.addTempLizardCheck(e:GetHandler(),tp)
 		end
 	end
 end
@@ -70,5 +72,5 @@ function s.value(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_MZONE,0,nil)*1000
 end
 function s.condition(e)
-	return Duel.IsExistingMatchingCard(s.fieldcond,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
+	return Duel.IsExistingMatchingCard(s.fieldcond,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end

@@ -1,5 +1,5 @@
 --メルフィー・フェニィ
---Merfae Fenny
+--Melffy Fenny
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

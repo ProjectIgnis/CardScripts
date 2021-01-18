@@ -1,8 +1,8 @@
--- Psychic Wave
--- scripted by: UnknownGuest
+--Psychic Wave
+--scripted by: UnknownGuest
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={77585513,9418534}
+s.listed_names={CARD_JINZO,9418534}
 function s.costfilter(c)
-	return c:IsCode(77585513) and c:IsAbleToGraveAsCost()
+	return c:IsCode(CARD_JINZO) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end

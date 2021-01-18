@@ -1,7 +1,6 @@
 --六花聖ストレナエ
---Strenae the Rikka Queen
+--Rikka Queen Strenna
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,6 +33,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x141}
 	--Specifically lists itself
 s.listed_names={id}
 	--Check for plant monster/"Rikka" card
@@ -56,7 +56,7 @@ end
 	--Add 1 plant monster/"Rikka" card from GY to hand
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
@@ -68,7 +68,7 @@ end
 	--Check for rank 5+ plant Xyz monster
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:IsRankAbove(5) and c:IsRace(RACE_PLANT)
-	 and (Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 or not c:IsLocation(LOCATION_EXTRA)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	and (Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 or not c:IsLocation(LOCATION_EXTRA)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

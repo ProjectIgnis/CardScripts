@@ -1,9 +1,9 @@
 --教導の鉄槌テオ
---Theo, the Dragma Hammer
+--Dogmatika Theo, the Iron Punch
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--cannot be destroyed by battle
+	--Cannot be destroyed by battle
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetValue(s.indes)
 	c:RegisterEffect(e2)
-	--gain ATK
+	--Change ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
@@ -61,7 +61,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and c:IsFaceup() and
 		c:UpdateAttack(600,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)==600 then
 		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 			tc:UpdateAttack(-600,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,c)
 		end
 	end

@@ -5,6 +5,7 @@ end
 if not Xyz then
 	Xyz = aux.XyzProcedure
 end
+Xyz.ProcCancellable=false
 function Xyz.AlterFilter(c,alterf,xyzc,e,tp,op)
 	if not alterf(c,tp,xyzc) or not c:IsCanBeXyzMaterial(xyzc,tp) or (c:IsControler(1-tp) and not c:IsHasEffect(EFFECT_XYZ_MATERIAL)) 
 		or (op and not op(e,tp,0,c)) then return false end
@@ -61,7 +62,6 @@ function Xyz.AddProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk)
 		e2:SetOperation(Xyz.Operation2(alterf,op))
 		c:RegisterEffect(e2)
 	end
-	
 	if not xyztemp then
 		xyztemp=true
 		xyztempg0=Group.CreateGroup()
@@ -70,9 +70,7 @@ function Xyz.AddProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk)
 		xyztempg1:KeepAlive()
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-		e3:SetCode(EVENT_ADJUST)
-		e3:SetCountLimit(1)
+		e3:SetCode(EVENT_STARTUP)
 		e3:SetOperation(Xyz.MatGenerate)
 		Duel.RegisterEffect(e3,0)
 	end
@@ -82,6 +80,7 @@ function Xyz.MatGenerate(e,tp,eg,ep,ev,re,r,rp)
 	xyztempg0:AddCard(tck0)
 	local tck1=Duel.CreateToken(1,946)
 	xyztempg1:AddCard(tck1)
+	e:Reset()
 end
 --Xyz Summon(normal)
 function Xyz.MatFilter2(c,f,lv,xyz,tp)
@@ -415,7 +414,7 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 				if must then mustg:Merge(must) end
 				if not mg:Includes(mustg) then return false end
 				if not mustbemat then
-					mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
+					mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
 				end
 				if min and min~=99 then
 					return mg:IsExists(Xyz.RecursionChk1,1,nil,mg,c,tp,min,max,minc,maxc,Group.CreateGroup(),Group.CreateGroup(),0,0,mustbemat,exchk,f,mustg,lv)
@@ -438,7 +437,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 						local matg=Group.CreateGroup()
 						local sg=Group.CreateGroup()
 						local mg=og:Clone()
-						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
+						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
 						local finish=false
 						while ct<max and matct<maxc do
 							local selg=mg:Filter(Xyz.RecursionChk1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbemat,exchk,f,mustg,lv)
@@ -511,7 +510,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 					end
 					--end of part 1
 				else
-					local cancel=not og and Duel.GetCurrentChain()<=0
+					local cancel=not og and Duel.IsSummonCancelable()
 					local xg=nil
 					if tp==0 then
 						xg=xyztempg0
@@ -540,7 +539,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 					local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_XYZ)
 					if must then mustg:Merge(must) end
 					if not mustbemat then
-						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
+						mg:Merge(Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED,0,nil,511002116))
 					end
 					local finish=false
 					if not og or max==99 then
@@ -554,7 +553,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 							local sc=Group.SelectUnselect(tg,sg,tp,finish,cancel)
 							if not sc then
-								if #matg<minc or (matg:IsExists(Card.IsHasEffect,1,nil,91110378) and not Xyz.MatNumChkF(matg)) 
+								if ct<minc or (matg:IsExists(Card.IsHasEffect,1,nil,91110378) and not Xyz.MatNumChkF(matg)) 
 									or (lv and matg:IsExists(Card.IsHasEffect,1,nil,86466163) and not Xyz.MatNumChkF2(matg,lv,c)) then return false end
 								if not matg:Includes(mustg) then return false end
 								if c:IsLocation(LOCATION_EXTRA) then
@@ -582,7 +581,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 										local tgf=te:GetOperation()
 										local val=te:GetValue()
 										if val>0 and (not tgf or tgf(te,c)) then
-											if minc>=ct+val 
+											if minc<=ct+val and ct+val<=maxc
 												or mg:IsExists(Xyz.RecursionChk2,1,sg,mg,c,tp,minc,maxc,sg,matg,ct+val,mustbemat,exchk,f,mustg,lv) then
 												table.insert(multi,1+val)
 											end
@@ -618,7 +617,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 								and (not lv or not matg:IsExists(Card.IsHasEffect,1,nil,86466163) or Xyz.MatNumChkF2(matg,lv,c)) and matg:Includes(mustg) then
 								finish=true
 							end
-							cancel=not og and Duel.GetCurrentChain()<=0 and #sg==0
+							cancel=not og and Duel.IsSummonCancelable() and #sg==0
 						end
 						sg:KeepAlive()
 						e:SetLabelObject(sg)
@@ -673,11 +672,10 @@ function Xyz.Condition2(alterf,op)
 end
 function Xyz.Target2(alterf,op)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
-				local cancel=not og and Duel.GetCurrentChain()<=0
-				Auxiliary.ProcCancellable=cancel
+				local cancel=not og and Duel.IsSummonCancelable()
+				Xyz.ProcCancellable=cancel
 				if og and not min then
-					og:KeepAlive()
-					e:SetLabelObject(og)
+					e:SetLabelObject(og:GetFirst())
 					if op then op(e,tp,1,og:GetFirst()) end
 					return true
 				else

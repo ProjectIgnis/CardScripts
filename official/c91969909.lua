@@ -8,15 +8,16 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--cannot be target
+	---Prevent destruction by opponent's effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x122))
-	e2:SetValue(s.indesval)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
+	--Prevent effect target
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -34,9 +35,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x122}
-function s.indesval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
-end
 function s.rmfilter(c)
 	return c:IsFacedown() and c:IsAbleToRemove()
 end
@@ -52,7 +50,7 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local tc=Duel.GetFirstTarget()
-	if not (e:GetHandler():IsRelateToEffect(e) and tc:IsRelateToEffect(e)) then return end
+	if not (e:GetHandler():IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFacedown()) then return end
 	Duel.ConfirmCards(tp,tc)
 	if tc:IsCode(ac) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
@@ -64,4 +62,3 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

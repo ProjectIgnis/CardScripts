@@ -1,16 +1,18 @@
 --おジャマデュオ
 --Ojama Duo
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 2 tokens to opponent's field
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon 2 "Ojama" monsters from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -21,9 +23,11 @@ function s.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
+	e2:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xf}
+
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>1
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0xf,TYPES_TOKEN,0,1000,2,RACE_BEAST,ATTRIBUTE_LIGHT,POS_FACEUP_DEFENSE,1-tp) end
@@ -36,13 +40,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	for i=1,2 do
 		local token=Duel.CreateToken(tp,id+i)
 		if Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE) then
+			--Cannot be tributed for a tribute summon
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3304)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e1:SetValue(1)
 			token:RegisterEffect(e1,true)
+			--Inflict 300 damage when destroyed
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 			e2:SetCode(EVENT_LEAVE_FIELD)

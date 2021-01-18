@@ -1,24 +1,12 @@
---The Wicked Eraser (Anime)
---邪神イレイザー
---マイケル・ローレンス・ディーによってスクリプト
---scripted by MLD
---credit to TPD & Cybercatman
---updated by Larry126
+--邪神イレイザー (Manga)
+--The Wicked Eraser (Manga)
+--Scripted by MLD & Larry126, credit to TPD & Cybercatman
 Duel.LoadScript("c421.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-	e1:SetCondition(s.ttcon)
-	e1:SetOperation(s.ttop)
-	e1:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_LIMIT_SET_PROC)
-	c:RegisterEffect(e2)
+	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3)
+	local e2=aux.AddNormalSetProcedure(c,true,false,3,3)
 	--atk
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -32,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	--Eraser
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(57793869,0))
+	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EVENT_TO_GRAVE)
 	e5:SetTarget(s.erastg)
@@ -42,22 +30,10 @@ function s.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e6:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e6:SetCode(EVENT_ADJUST)
-	e6:SetRange(0xff&~LOCATION_GRAVE)
+	e6:SetRange(LOCATION_ALL&~LOCATION_GRAVE)
 	e6:SetLabelObject(e5)
 	e6:SetOperation(s.op)
 	c:RegisterEffect(e6)
-end
-function s.op(e,tp,eg,ev,ep,re,r,rp)
-	e:GetLabelObject():SetLabel(e:GetHandler():GetFlagEffectLabel(513000065))
-end
-function s.ttcon(e,c)
-	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-3 and Duel.GetTributeCount(c)>=3
-end
-function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectTribute(tp,c,3,3)
-	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
 end
 function s.adval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_ONFIELD)*1000
@@ -68,6 +44,8 @@ function s.erastg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 end
 function s.erasop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,tp,id)
+	Duel.Hint(HINT_CARD,1-tp,id)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local c=e:GetHandler()
 	local phr=e:GetLabel()
@@ -91,4 +69,7 @@ function s.erasop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
+end
+function s.op(e,tp,eg,ev,ep,re,r,rp)
+	e:GetLabelObject():SetLabel(e:GetHandler():GetFlagEffectLabel(513000065))
 end

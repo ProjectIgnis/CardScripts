@@ -1,4 +1,5 @@
---Secret Passage
+--隠し通路
+--Hidden Passage
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,10 +16,9 @@ function s.initial_effect(c)
 	e2:SetTarget(s.attg)
 	c:RegisterEffect(e2)
 end
-function s.filter(c,atk)
-	return c:IsFacedown() or c:GetAttack()<=atk
-end
-function s.attg(e,c,tp,eg,ep,ev,re,r,rp)
+function s.attg(e,c)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,e:GetHandlerPlayer(),0,LOCATION_MZONE,nil)
+	local _,atk=Group.GetMinGroup(g,Card.GetAttack)
 	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsLevelBelow(2) and c:IsRace(RACE_SPELLCASTER)
-		and not c:IsHasEffect(EFFECT_CANNOT_ATTACK) and not not Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil,e:GetHandler():GetAttack())
+		and not c:IsHasEffect(EFFECT_CANNOT_ATTACK) and c:GetAttack()<atk
 end

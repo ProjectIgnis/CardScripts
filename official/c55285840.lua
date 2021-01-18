@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Xyz.AddProcedure(c,nil,4,2)
-	--attach
+	--Attach top deck card during the Standby Phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.xyztg)
 	e1:SetOperation(s.xyzop)
 	c:RegisterEffect(e1)
-	--detach
+	--Detach and apply multiple effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_REMOVE+CATEGORY_DRAW)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return #(Duel.GetDecktopGroup(1-tp,1))==1 end
+	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) and Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)>0 end
 end
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -72,8 +72,8 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseSingleEvent(c,EVENT_DETACH_MATERIAL,e,0,0,0,0)
 	Duel.BreakEffect()
 	if lb & TYPE_MONSTER ~=0 then
-		if c:IsFaceup() and c:IsRelateToEffect(e) then
-			Duel.Remove(c,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)
+		if c:IsRelateToEffect(e) then
+			Duel.Remove(c,c:GetPosition(),REASON_EFFECT+REASON_TEMPORARY)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetCode(EVENT_PHASE+PHASE_END)

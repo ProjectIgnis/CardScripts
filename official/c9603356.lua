@@ -1,7 +1,8 @@
 --シャドウナイトデーモン
+--Shadowknight Archfiend
 local s,id=GetID()
 function s.initial_effect(c)
-	--maintain
+	--Maintenance cost
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -11,22 +12,21 @@ function s.initial_effect(c)
 	e1:SetCondition(s.mtcon)
 	e1:SetOperation(s.mtop)
 	c:RegisterEffect(e1)
-	--disable and destroy
+	--Negate and destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAIN_SOLVING)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	--damage reduce
+	--Reduce damage
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e3:SetCondition(s.rdcon)
-	e3:SetOperation(s.rdop)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e3:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	c:RegisterEffect(e3)
 end
+s.roll_dice=true
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
@@ -48,10 +48,4 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) then
 		Duel.Destroy(rc,REASON_EFFECT)
 	end
-end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler()==Duel.GetAttacker()
-end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
 end

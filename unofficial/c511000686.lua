@@ -16,7 +16,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
-	return #eg==1 and tc:IsControler(tp) and bc:IsReason(REASON_BATTLE)
+	return #eg==1 and tc:IsControler(tp) and bc and bc:IsReason(REASON_BATTLE)
 end
 function s.filter2(c,rk,e,tp,mc,ft)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end

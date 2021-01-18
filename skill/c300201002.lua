@@ -3,8 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--skill
 	aux.AddPreDrawSkillProcedure(c,1,false,s.flipcon,s.flipop)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		s[0]=nil
 		s[1]=nil
 		s[2]=0
@@ -14,7 +13,7 @@ function s.initial_effect(c)
 		ge1:SetCode(EVENT_ADJUST)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if not s[tp] then s[tp]=Duel.GetLP(tp) end

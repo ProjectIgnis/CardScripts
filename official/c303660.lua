@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetValue(s.eqlimit)
 	c:RegisterEffect(e2)
-	--immune
+	--Immune
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_IMMUNE_EFFECT)
@@ -27,13 +27,13 @@ function s.initial_effect(c)
 	e3:SetTarget(s.etarget)
 	e3:SetValue(s.efilter)
 	c:RegisterEffect(e3)
-	--leave
+	--Destroy
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e4:SetCode(EVENT_LEAVE_FIELD)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
-	--cannot disable
+	--Cannot disable
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_CANNOT_DISABLE)

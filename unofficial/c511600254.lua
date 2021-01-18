@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.negcon)
 	e2:SetCost(s.negcost)
 	e2:SetOperation(s.negop)
-	c:RegisterEffect(e2)   
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x12b}
 function s.thfilter(c)

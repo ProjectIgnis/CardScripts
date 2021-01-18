@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	--"Right Arm of the Forbidden One": Whenever this card battles an opponent's monster, it gains 1000 ATK at the end of the Damage Step.
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,0))
-	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)	
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e6:SetCategory(CATEGORY_ATKCHANGE)
 	e6:SetCode(EVENT_DAMAGE_STEP_END)
 	e6:SetRange(LOCATION_MZONE)
@@ -52,10 +52,10 @@ function s.initial_effect(c)
 end
 function s.battlecon(e)
 	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,33396948)
-end	
+end
 function s.spellcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,44519536)
-end	
+end
 function s.spellval(e,re,rp)
 	return re:IsActiveType(TYPE_SPELL)
 end
@@ -72,18 +72,18 @@ function s.monsterval(e,re,rp)
 	return re:IsActiveType(TYPE_MONSTER)
 end
 function s.atkcon(e)
-	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,70903634) and Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget()~=nil 
-	or Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,70903634) and Duel.GetAttackTarget()==e:GetHandler() and Duel.GetAttackTarget()~=nil
+	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,70903634) and Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget()~=nil
+		or Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,70903634) and Duel.GetAttackTarget()==e:GetHandler() and Duel.GetAttackTarget()~=nil
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-	e1:SetValue(1000)
-	c:RegisterEffect(e1)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetValue(1000)
+		c:RegisterEffect(e1)
 	end
 end

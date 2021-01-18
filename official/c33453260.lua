@@ -1,26 +1,27 @@
 --コミックハンド
+--Comic Hand
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,1,Card.IsControlerCanBeChanged,s.eqlimit,nil,s.target,nil,s.condition)
-	--control
+	aux.AddEquipProcedure(c,1,aux.CheckStealEquip,s.eqlimit,nil,s.target,nil,s.condition)
+	--Take control
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_SET_CONTROL)
 	e3:SetValue(s.cval)
 	c:RegisterEffect(e3)
-	--change type
+	--Equipped monster is treated as a Toon
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_EQUIP)
 	e4:SetCode(EFFECT_ADD_TYPE)
 	e4:SetValue(TYPE_TOON)
 	c:RegisterEffect(e4)
-	--direct attack
+	--Can attack directly if the opponent controls no Toons
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_EQUIP)
 	e5:SetCode(EFFECT_DIRECT_ATTACK)
 	e5:SetCondition(s.dircon)
 	c:RegisterEffect(e5)
-	--self destroy
+	--Self destruction
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
 	e6:SetCode(EFFECT_SELF_DESTROY)

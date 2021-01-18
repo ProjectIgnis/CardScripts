@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
--- [Toon]=original 
+--[Toon]=original
 s.list={
 [53183600]=CARD_BLUEEYES_W_DRAGON,
 [38369349]=2964201,
@@ -42,15 +42,15 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.toonfilter(c,code,e,tp)
-	return (c.toonVersion==code or s.list[c:GetCode()]==code ) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return (c.toonVersion==code or s.list[c:GetCode()]==code) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=ep and #eg==1 and Duel.GetCurrentChain()==0	
+	return tp~=ep and #eg==1 and Duel.GetCurrentChain()==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #eg==1 
-		and Duel.IsExistingTarget(s.toonfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,tc:GetCode(),e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #eg==1
+		and Duel.IsExistingMatchingCard(s.toonfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,tc:GetCode(),e,tp) end
 	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end

@@ -20,7 +20,9 @@ function Auxiliary.AddUnionProcedure(c,f,oldequip,oldprotect)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCondition(Auxiliary.UnionSumCondition)
+	if oldequip then
+		e2:SetCondition(Auxiliary.IsUnionState)
+	end
 	e2:SetTarget(Auxiliary.UnionSumTarget(oldequip))
 	e2:SetOperation(Auxiliary.UnionSumOperation(oldequip))
 	c:RegisterEffect(e2)
@@ -29,12 +31,15 @@ function Auxiliary.AddUnionProcedure(c,f,oldequip,oldprotect)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetCode(EFFECT_DESTROY_SUBSTITUTE)
+	if oldprotect then
+		e3:SetCondition(Auxiliary.IsUnionState)
+	end
 	e3:SetValue(Auxiliary.UnionReplace(oldprotect))
 	c:RegisterEffect(e3)
 	--eqlimit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_EQUIP_LIMIT)
+	e4:SetCode(EFFECT_UNION_LIMIT)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetValue(Auxiliary.UnionLimit(f))
 	c:RegisterEffect(e4)
@@ -42,6 +47,14 @@ function Auxiliary.AddUnionProcedure(c,f,oldequip,oldprotect)
 	if oldequip then
 		local m=c:GetMetatable()
 		m.old_union=true
+	end
+end
+if not Card.CheckUnionTarget then
+	Card.CheckUnionTarget=function(c,target)
+		local ct1,ct2=c:GetUnionCount()
+		return c:IsHasEffect(EFFECT_UNION_LIMIT) and (((not c:IsHasEffect(EFFECT_OLDUNION_STATUS)) or ct1 == 0)
+			and ((not c:IsHasEffect(EFFECT_UNION_STATUS)) or ct2 == 0))
+	
 	end
 end
 function Auxiliary.UnionFilter(c,f,oldrule)
@@ -66,7 +79,7 @@ function Auxiliary.UnionTarget(f,oldrule)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 		local g=Duel.SelectTarget(tp,Auxiliary.UnionFilter,tp,LOCATION_MZONE,0,1,1,c,f,oldrule)
 		Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
-		c:RegisterFlagEffect(code,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(code,RESET_EVENT+(RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE)+RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function Auxiliary.UnionOperation(f)
@@ -82,11 +95,6 @@ function Auxiliary.UnionOperation(f)
 		aux.SetUnionState(c)
 	end
 end
-function Auxiliary.UnionSumCondition()
-	return function (e,tp,eg,ep,ev,re,r,rp)
-		return e:GetHandler():GetFlagEffect(11743119)==0
-	end
-end
 function Auxiliary.UnionSumTarget(oldrule)
 	return function (e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
@@ -96,7 +104,7 @@ function Auxiliary.UnionSumTarget(oldrule)
 		if chk==0 then return c:GetFlagEffect(code)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false,pos) end
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
-		c:RegisterFlagEffect(code,(RESET_EVENT|RESETS_STANDARD|RESET_DISABLE|RESET_PHASE|PHASE_END)&~RESET_LEAVE,0,1)
+		c:RegisterFlagEffect(code,RESET_EVENT+(RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE)+RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function Auxiliary.UnionSumOperation(oldrule)
@@ -122,7 +130,7 @@ function Auxiliary.UnionReplace(oldrule)
 end
 function Auxiliary.UnionLimit(f)
 	return function (e,c)
-		return (not f or f(c)) or e:GetHandler():GetEquipTarget()==c 
+		return (not f or f(c)) or e:GetHandler():GetEquipTarget()==c
 	end
 end
 function Auxiliary.IsUnionState(effect)
@@ -130,6 +138,14 @@ function Auxiliary.IsUnionState(effect)
 	return c:IsHasEffect(EFFECT_UNION_STATUS)
 end
 function Auxiliary.SetUnionState(c)
+	local eset={c:GetCardEffect(EFFECT_UNION_LIMIT)}
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_EQUIP_LIMIT)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e0:SetValue(eset[1]:GetValue())
+	e0:SetReset(RESET_EVENT+RESETS_STANDARD)
+	c:RegisterEffect(e0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UNION_STATUS)

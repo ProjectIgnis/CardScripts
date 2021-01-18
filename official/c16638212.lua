@@ -14,8 +14,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spcon(e,c)
-    if c==nil then return true end
-    return Duel.IsExistingMatchingCard(aux.AND(Card.IsAbleToRemoveAsCost,Card.IsFaceup),tp,LOCATION_MZONE,0,1,nil)
+	if c==nil then return true end
+	return Duel.IsExistingMatchingCard(aux.AND(Card.IsAbleToRemoveAsCost,Card.IsFaceup),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_MZONE,0,nil):Filter(Card.IsFaceup,nil)
@@ -38,7 +38,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetCountLimit(1)
-	e1:SetReset((RESET_EVENT|RESETS_STANDARD_DISABLE)&~RESET_TOFIELD+RESET_PHASE+PHASE_STANDBY)
+	e1:SetReset((RESET_EVENT|RESETS_STANDARD_DISABLE)&~RESET_TOFIELD|RESET_PHASE|PHASE_STANDBY)
 	e1:SetOperation(s.retop)
 	e1:SetLabelObject(g:GetFirst())
 	c:RegisterEffect(e1)

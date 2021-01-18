@@ -1,8 +1,9 @@
 --クロノグラフ・マジシャン
+--Chronograph Sorcerer
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--pendulum set/spsummon
+	--Place card in the pendulum zone/special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	if not AshBlossomTable then AshBlossomTable={} end
 	table.insert(AshBlossomTable,e1)
-	--Special Summon
+	--Special Summon itself
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,3))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special Summon Z-Arc
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,5))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -97,41 +98,22 @@ function s.cfilter(c)
 	return (c:IsSetCard(0x10f2) or c:IsSetCard(0x2073) or c:IsSetCard(0x2017) or c:IsSetCard(0x1046)) and c:IsType(TYPE_MONSTER) 
 		and c:IsAbleToRemoveAsCost() and (not c:IsLocation(LOCATION_MZONE) or c:IsFaceup()) and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true,true))
 end
-function s.fcheck(c,sg,g,code,...)
-	if not c:IsSetCard(code) then return false end
-	if ... then
-		g:AddCard(c)
-		local res=sg:IsExists(s.fcheck,1,g,sg,g,...)
-		g:RemoveCard(c)
-		return res
-	else return true end
-end
-function s.fselect(c,e,tp,mg,sg,mc,...)
-	sg:AddCard(c)
-	local res=false
-	if #sg<5 then
-		res=mg:IsExists(s.fselect,1,sg,e,tp,mg,sg,mc,...)
-	elseif Duel.IsExistingMatchingCard(s.hnfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg) then
-		local g=Group.FromCards(mc)
-		res=sg:IsExists(s.fcheck,1,g,sg,g,...)
+function s.rescon(checkfunc)
+	return function(sg,e,tp,mg)
+		if not sg:CheckDifferentProperty(checkfunc) then return false,true end
+		return Duel.IsExistingMatchingCard(s.hnfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg)
 	end
-	sg:RemoveCard(c)
-	return res
 end
 function s.hnfilter(c,e,tp,sg)
-	return c:IsCode(13331639) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial() and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
+	return c:IsCode(13331639) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
+			and Duel.GetLocationCountFromEx(tp,tp,sg and (sg+e:GetHandler()) or nil,c)>0
 end
 function s.hncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	local sg=Group.FromCards(c)
-	if chk==0 then return c:IsAbleToRemoveAsCost()
-		and mg:IsExists(s.fselect,1,sg,e,tp,mg,sg,c,0x10f2,0x2073,0x2017,0x1046) end
-	while #sg<5 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=mg:FilterSelect(tp,s.fselect,1,1,sg,e,tp,mg,sg,c,0x10f2,0x2073,0x2017,0x1046)
-		sg:Merge(g)
-	end
+	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,c)
+	local checkfunc=aux.PropertyTableFilter(Card.GetSetCard,0x10f2,0x2073,0x2017,0x1046)
+	if chk==0 then return c:IsAbleToRemoveAsCost() and aux.SelectUnselectGroup(mg,e,tp,4,4,s.rescon(checkfunc),0) end
+	local sg=aux.SelectUnselectGroup(mg,e,tp,4,4,s.rescon(checkfunc),1,tp,HINTMSG_REMOVE,s.rescon(checkfunc))+c
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)
 end
 function s.hntg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -10,6 +10,7 @@ function Duel.GoatConfirm(tp,loc)
 		Duel.ShuffleDeck(tp)
 	end
 end
+Duel.AnnounceNumberRange=Duel.AnnounceLevel
 function Card.IsBattleDestroyed(c)
 	return c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsReason(REASON_BATTLE)
 end

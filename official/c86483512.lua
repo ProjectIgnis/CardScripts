@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(e1,GhostBelleTable)
+	table.insert(GhostBelleTable,e1)
 end
 s.listed_series={0x150}
 local key=TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP

@@ -81,7 +81,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			sg:RegisterEffect(e3)
 		end
 		--Choose a card to place on top of deck
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 		local sc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 		if sc then
 			Duel.ShuffleDeck(tp)

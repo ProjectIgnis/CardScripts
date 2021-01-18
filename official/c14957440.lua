@@ -48,32 +48,35 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():AddCounter(0x59,1)~=0
 		and ft>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_BEAST,ATTRIBUTE_EARTH) then
+		Duel.BreakEffect()
 		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 		local ct=c:GetCounter(0x59)
 		if ct>ft then ct=ft end
-		while ct>0 do
+		if ct>1 then
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
+			ct=Duel.AnnounceNumberRange(tp,1,ct)
+		end
+		for i=1,ct do
 			local token=Duel.CreateToken(tp,id+1)
+			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_LEVEL)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 			e1:SetValue(c:GetCounter(0x59))
-			token:RegisterEffect(e1)
+			token:RegisterEffect(e1,true)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_SET_ATTACK)
 			e2:SetValue(c:GetCounter(0x59)*500)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
-			token:RegisterEffect(e2)
+			token:RegisterEffect(e2,true)
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_SET_DEFENSE)
 			e3:SetValue(c:GetCounter(0x59)*500)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
-			token:RegisterEffect(e3)
-			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
-			ct=ct-1
-			if ct>0 and not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then ct=0 end
+			token:RegisterEffect(e3,true)
 		end
 		Duel.SpecialSummonComplete()
 	end

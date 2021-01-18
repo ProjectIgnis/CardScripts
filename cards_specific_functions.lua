@@ -607,7 +607,7 @@ end
 function Auxiliary.ZWEquipLimit(tc,te)
     return function(e,c)
         if c~=tc then return false end
-        local effs={e:GetHandler():GetCardEffect(101104104+EFFECT_EQUIP_LIMIT)}
+        local effs={e:GetHandler():GetCardEffect(75402014+EFFECT_EQUIP_LIMIT)}
         for _,eff in ipairs(effs) do
             if eff==te then return true end
         end
@@ -651,7 +651,7 @@ function Auxiliary.AddZWEquipLimit(c,con,equipval,equipop,linkedeff,prop,resetfl
     end
     e1:SetType(EFFECT_TYPE_SINGLE)
     e1:SetProperty(finalprop,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
-    e1:SetCode(101104104)
+    e1:SetCode(75402014)
     e1:SetLabelObject(linkedeff)
     if resetflag and resetcount then
         e1:SetReset(resetflag,resetcount)
@@ -664,7 +664,7 @@ function Auxiliary.AddZWEquipLimit(c,con,equipval,equipop,linkedeff,prop,resetfl
     local e2=Effect.CreateEffect(c)
     e2:SetType(EFFECT_TYPE_SINGLE)
     e2:SetProperty(finalprop&~EFFECT_FLAG_CANNOT_DISABLE,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
-    e2:SetCode(101104104+EFFECT_EQUIP_LIMIT)
+    e2:SetCode(75402014+EFFECT_EQUIP_LIMIT)
     if resetflag and resetcount then
         e2:SetReset(resetflag,resetcount)
     elseif resetflag then

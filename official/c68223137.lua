@@ -32,8 +32,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		local p=tc:GetOwner()
-		if Duel.GetLocationCount(p,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,p)
-			and (not c:IsAbleToDeck() or Duel.SelectYesNo(tp,aux.Stringid(id,0))) then
+		if Duel.GetLocationCount(p,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,p)
+			and (not tc:IsAbleToDeck() or Duel.SelectYesNo(tp,aux.Stringid(id,0))) then
 			Duel.SpecialSummon(tc,0,tp,p,false,false,POS_FACEUP)
 		else
 			Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)

@@ -44,7 +44,7 @@ s.listed_series={0x25b}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
-	return tc:IsPreviousControler(tp) and tc:IsPreviousSetCard(0x25b) and tc:IsType(TYPE_SYNCHRO)
+	return tc:IsPreviousControler(tp) and tc:IsPreviousSetCard(0x25b) and tc:IsType(TYPE_MONSTER)
 		and (tc:GetBattlePosition()&POS_FACEUP)~=0
 		and bc:IsRelateToBattle() and bc:IsControler(1-tp) and bc==Duel.GetAttacker()
 end

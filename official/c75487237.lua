@@ -1,7 +1,8 @@
 --ミドル・シールド・ガードナー
+--Mid Shield Gardna
 local s,id=GetID()
 function s.initial_effect(c)
-	--turn set
+	--Negate activation and flip itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_POSITION)
@@ -35,13 +36,14 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
 		local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 		return #tg==1 and tg:GetFirst()==e:GetHandler() and e:GetHandler():IsFacedown()
-	else 
-		return false 
+	else
+		return false
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SendtoGrave(eg,REASON_EFFECT)
+	Duel.NegateActivation(ev)
+	local c=e:GetHandler()
+	if e:GetHandler():IsRelateToEffect(e) then
+		Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE)
 	end
-	Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE)
 end

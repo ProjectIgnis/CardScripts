@@ -1,7 +1,8 @@
 --月光紅狐
+--Lunalight Crimsom Fox
 local s,id=GetID()
 function s.initial_effect(c)
-	--ATK to 0
+	--Change the ATK of a target to 0
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--Negate
+	--Negate effect that targets 1 "lunalight" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_RECOVER)
@@ -53,8 +54,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsExists(s.filter,1,nil,tp)
-		and Duel.IsChainNegatable(ev)
+	return g and g:IsExists(s.filter,1,nil,tp) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -62,9 +62,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) then
-		if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
-			Duel.SendtoGrave(eg,REASON_EFFECT)
-		end
 		Duel.Recover(tp,1000,REASON_EFFECT)
 		Duel.Recover(1-tp,1000,REASON_EFFECT)
 	end

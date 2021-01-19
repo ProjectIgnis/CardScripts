@@ -5,10 +5,6 @@ function GetID()
 	return self_table,self_code
 end
 
-local function setcodecondition(e)
-	return e:GetHandler():IsCode(e:GetHandler():GetOriginalCodeRule())
-end
-
 function Auxiliary.CostWithReplace(base,replacecode,extracon)
 	local getvalideffs=function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local t={}
@@ -59,6 +55,9 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon)
 	end
 end
 
+local function setcodecondition(e)
+	return e:GetHandler():IsCode(e:GetHandler():GetOriginalCodeRule())
+end
 function Card.AddSetcodesRule(c,...)
 	local t={}
 	for _,setcode in pairs({...}) do

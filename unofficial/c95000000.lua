@@ -284,7 +284,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterFlagEffect(1-tp,953,nil,0,1)
 		local opt=Duel.SelectOption(1-tp,aux.Stringid(id,4),aux.Stringid(id,5))
 		local p=(opt==0 and 1-tp or tp)
-		Duel.Recover(p,4000,REASON_RULE)
+		Duel.Recover(p,startlps//2,REASON_RULE)
 	end
 end
 function s.atkval(e,c)

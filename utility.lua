@@ -155,12 +155,6 @@ function Auxiliary.Stringid(code,id)
 	return (id&0xfffff)|code<<20
 end
 
-function Group.ForEach(g,f,...)
-	for tc in aux.Next(g) do
-		f(tc,...)
-	end
-end
-
 function Auxiliary.Next(g)
 	local first=true
 	return	function()

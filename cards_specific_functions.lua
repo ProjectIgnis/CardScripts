@@ -675,7 +675,7 @@ function Auxiliary.AddZWEquipLimit(c,con,equipval,equipop,linkedeff,prop,resetfl
 end
 
 -- Amazement and Ɐttraction helper functions
-local AA = {}
+AA = {}
 function AA.eqtgfilter(c,tp)
 	return c:IsFaceup() and (c:IsSetCard(0x15e) or (not c:IsControler(tp)))
 end

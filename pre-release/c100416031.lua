@@ -1,5 +1,5 @@
 --ベアルクティ－メガタナス
---Bearcti - Megatanus
+--Ursarctic Megatanus
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-
 end
 s.listed_names={id}
 s.listed_series={0x25b}
@@ -25,11 +24,11 @@ s.listed_series={0x25b}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x25b)
 end
-function s.pfilter(c)
-	return c:IsFaceup()
-end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
+end
+function s.pfilter(c)
+	return c:IsFaceup() and c:IsCanTurnSet()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.pfilter(chkc) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end

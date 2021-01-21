@@ -39,25 +39,6 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
 end
-Duel.GetRitualMaterial=(function()
-	local oldfunc=Duel.GetRitualMaterial
-	return function(...)
-		local tp=...
-		local g=oldfunc(...)
-		g:Merge(Duel.GetOverlayGroup(tp,1,0):Filter(Card.IsHasEffect,nil,EFFECT_EXTRA_RITUAL_MATERIAL))
-		return g
-	end
-end)()
-Duel.ReleaseRitualMaterial=(function()
-	local oldfunc=Duel.ReleaseRitualMaterial
-	return function(...)
-		local mat=...
-		local xmat=mat:Filter(Card.IsLocation,nil,LOCATION_OVERLAY)
-		mat:Sub(xmat)
-		Duel.SendtoGrave(xmat,REASON_RITUAL+REASON_EFFECT+REASON_MATERIAL)
-		return oldfunc(...)
-	end
-end)()
 s.listed_series={0x151}
 function s.mttg(e,c)
 	return e:GetHandler():GetOverlayGroup():IsContains(c)

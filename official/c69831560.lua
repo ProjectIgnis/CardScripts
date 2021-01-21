@@ -73,8 +73,6 @@ end
 function s.arcanareg(c,coin)
 	--Heads: can make a second attack, change itself to defense position after second attack
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(3201)
-	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetCondition(s.macon)

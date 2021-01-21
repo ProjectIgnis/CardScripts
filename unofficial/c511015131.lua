@@ -33,7 +33,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.listed_series={0x25c}
+s.listed_series={0x15c}
 s_g=Group.CreateGroup()
 function s.gchk(e,tp,eg,ev,ep,re,r,rp)
 	local c=eg:GetFirst()
@@ -50,7 +50,7 @@ function s.gclear(e,tp,eg,ev,ep,re,r,rp)
 	end
 end
 function s.sfilter(c,e,tp,g)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x25c) and 
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x15c) and 
 		g:IsExists(function (c,lv) return c:GetLevel()==lv end,1,nil,c:GetLevel()-2) and
 		c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,tp,false,false)
 end

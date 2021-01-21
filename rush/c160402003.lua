@@ -35,7 +35,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	--requirement
 	if Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST)>0 then
 		--effect
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsAbleToHand),tp,0,LOCATION_MZONE,1,1,nil)
 		if #g>0 then
 			g=g:AddMaximumCheck()

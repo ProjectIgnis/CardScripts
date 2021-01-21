@@ -31,22 +31,25 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 		if #g>0 then
 			Duel.HintSelection(g)
-			local e1=Effect.CreateEffect(e:GetHandler())
+			local tc=g:GetFirst()
+			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(500)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			g:GetFirst():RegisterEffect(e1)
-			
-			local e2=Effect.CreateEffect(e:GetHandler())
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-			e2:SetValue(s.efilter)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			g:GetFirst():RegisterEffect(e2)
+			tc:RegisterEffect(e1)
+			--cannot be destroyed by trap
+			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3012)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+			e1:SetValue(s.efilter)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			tc:RegisterEffect(e1)
 		end
 	end
 end
 function s.efilter(e,re,rp)
-	return re:IsActiveType(TYPE_TRAP) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return re:GetOwner():IsType(TYPE_TRAP) and e:GetHandlerPlayer()==1-rp
 end

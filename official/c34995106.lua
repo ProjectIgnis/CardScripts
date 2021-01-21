@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion
-	local e1=Fusion.CreateSummonEff(c,nil,nil,s.fextra)
+	local e1=Fusion.CreateSummonEff(c,nil,nil,s.fextra,s.extraop)
 	e1:SetCountLimit(1,id)
 	c:RegisterEffect(e1)
 	--set
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filterchk(c)
-	return c:IsCode(CARD_ALBAZ) and c:IsLocation(LOCATION_HAND+LOCATION_MZONE)
+	return c:IsCode(CARD_ALBAZ)
 end
 function s.fcheck(tp,sg,fc)
 	if not sg:IsExists(Card.IsRace,1,nil,RACE_DRAGON) then
@@ -27,13 +27,20 @@ function s.fcheck(tp,sg,fc)
 	return true
 end
 function s.fextra(e,tp,mg)
-	if mg:IsExists(s.filterchk,1,nil) then
-		local eg=Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
-		if eg and #eg>0 then
+	local eg=Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
+	if #eg>0 and (mg+eg):IsExists(s.filterchk,1,nil) then
+		if #eg>0 then
 			return eg,s.fcheck
 		end
 	end
 	return nil,s.fcheck
+end
+function s.extraop(e,tc,tp,sg)
+	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
+	if #rg>0 then
+		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+		sg:Sub(rg)
+	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

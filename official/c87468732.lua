@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	--Destroy itself
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_SUMMON_SUCCESS)
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetCondition(s.descon)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)

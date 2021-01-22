@@ -82,7 +82,7 @@ function s.stuff(c)
 	local mt=c:GetMetatable()
 	return c:IsFaceup() and mt.has_malefic_unique and mt.has_malefic_unique[c]==true and not c:IsDisabled() and c:IsSetCard(0x23)
 end
-function s.validitycheck()
+function s.validitycheck(e,tp)
 	return Duel.IsExistingMatchingCard(s.stuff,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.rmfilter(c,...)
@@ -92,8 +92,8 @@ function s.rmfilter2(c,fieldid,...)
 	return c:GetFieldID()<fieldid and c:IsCode(...)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
-	if sumpos and (sumpos&POS_FACEDOWN)>0 or (not s.stuff(c) or not s.validitycheck()) then return false end
 	local tp=sump
+	if sumpos and (sumpos&POS_FACEDOWN)>0 or (not s.stuff(c) or not s.validitycheck(tp)) then return false end
 	if targetp then tp=targetp end
 	return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetCode())
 end

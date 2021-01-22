@@ -7,7 +7,7 @@ end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==0 then
 		--piercing
-		local e1=Effect.CreateEffect(c)
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3208)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)

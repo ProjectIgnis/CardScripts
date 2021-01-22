@@ -191,6 +191,8 @@ function Fusion.CheckMix(c,mg,sg,fc,sub,sub2,contact,sumtype,tp,fun1,fun2,...)
 	end
 end
 Fusion.CheckExact=nil
+Fusion.CheckMin=nil
+Fusion.CheckMax=nil
 Fusion.CheckAdditional=nil
 --if sg1 is subset of sg2 then not Fusion.CheckAdditional(tp,sg1,fc) -> not Fusion.CheckAdditional(tp,sg2,fc)
 function Fusion.CheckMixGoal(tp,sg,fc,sub,sub2,contact,sumtype,chkf,...)
@@ -201,7 +203,12 @@ function Fusion.CheckMixGoal(tp,sg,fc,sub,sub2,contact,sumtype,chkf,...)
 end
 function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,...)
 	local res
-	if (Fusion.CheckExact and (Fusion.CheckExact~=#{...} or #mustg>Fusion.CheckExact)) or #mustg>#{...} then return false end
+	local totalcount=#{...}
+	local mustgcount=#mustg
+	if mustgcount>totalcount then return false end
+	if (Fusion.CheckExact and (Fusion.CheckExact~=totalcount or mustgcount>Fusion.CheckExact)) then return false end
+	if (Fusion.CheckMax and (Fusion.CheckMax<totalcount or mustgcount>Fusion.CheckMax)) then return false end
+	if (Fusion.CheckMin and Fusion.CheckMin>totalcount) then return false end
 	-- local rg=Group.CreateGroup()
 	local mg2=mg:Clone()
 	--c has the fusion limit
@@ -214,7 +221,7 @@ function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,...)
 			local sg2=mg2:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			-- rg:Merge(sg2)
 			mg2:Sub(sg2)
-			if #mustg>0 and not mg2:Includes(mustg) then
+			if mustgcount>0 and not mg2:Includes(mustg) then
 				return false
 			end
 		end
@@ -462,11 +469,21 @@ function Fusion.CheckSelectMixRepM(c,tp,...)
 end
 function Fusion.SelectMixRep(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
 	local mg2=mg:Clone()
+	local totalcount=#{...}
+	local mustgcount=#mustg
 	-- local rg=Group.CreateGroup()
 	if Fusion.CheckExact then
-		if Fusion.CheckExact<minc + #{...} or #mustg>Fusion.CheckExact then return false end
-		maxc=Fusion.CheckExact-#{...}
-		minc=Fusion.CheckExact-#{...}
+		if Fusion.CheckExact<(minc+totalcount) or mustgcount>Fusion.CheckExact then return false end
+		maxc=Fusion.CheckExact-totalcount
+		minc=Fusion.CheckExact-totalcount
+	end
+	if Fusion.CheckMax then
+		if Fusion.CheckMax<(minc+totalcount) or mustgcount>Fusion.CheckMax then return false end
+		maxc=math.min(maxc,Fusion.CheckMax-totalcount)
+	end
+	if Fusion.CheckMin then
+		if Fusion.CheckMin>(maxc+totalcount) then return false end
+		minc=math.max(minc,Fusion.CheckMin-totalcount)
 	end
 	--c has the fusion limit
 	if not contact and c:IsHasEffect(EFFECT_FUSION_MAT_RESTRICTION) then
@@ -479,7 +496,7 @@ function Fusion.SelectMixRep(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,f
 			local sg2=mg2:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			-- rg:Merge(sg2)
 			mg2:Sub(sg2)
-			if #mustg>0 and not mg2:Includes(mustg) then
+			if mustgcount>0 and not mg2:Includes(mustg) then
 				return false
 			end
 		end

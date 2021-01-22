@@ -45,11 +45,11 @@ function Pendulum.Filter(c,e,tp,lscale,rscale,lvchk)
 		and not c:IsForbidden()
 end
 function Pendulum.Condition()
-	return	function(e,c,og)
+	return	function(e,c,ischain,re,rp)
 				if c==nil then return true end
 				local tp=c:GetControler()
 				local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-				if rpz==nil or c==rpz or Duel.GetFlagEffect(tp,10000000)>0 then return false end
+				if rpz==nil or c==rpz or (not inchain and Duel.GetFlagEffect(tp,10000000)>0) then return false end
 				local lscale=c:GetLeftScale()
 				local rscale=rpz:GetRightScale()
 				local loc=0
@@ -66,7 +66,7 @@ function Pendulum.Condition()
 			end
 end
 function Pendulum.Operation()
-	return	function(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
+	return	function(e,tp,eg,ep,ev,re,r,rp,c,sg,inchain)
 				local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
 				local lscale=c:GetLeftScale()
 				local rscale=rpz:GetRightScale()
@@ -102,7 +102,7 @@ function Pendulum.Operation()
 					local g=tg:Filter(Card.IsLocation,sg,loc)
 					if #g==0 or ft==0 then break end
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-					local tc=Group.SelectUnselect(g,sg,tp,#sg>0,#sg==0)
+					local tc=Group.SelectUnselect(g,sg,tp,#sg>0,Duel.IsSummonCancelable())
 					if not tc then break end
 					if sg:IsContains(tc) then
 						sg:RemoveCard(tc)
@@ -144,7 +144,9 @@ function Pendulum.Operation()
 					end
 				end
 				if #sg>0 then
-					Duel.RegisterFlagEffect(tp,10000000,RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
+					if not inchain then
+						Duel.RegisterFlagEffect(tp,10000000,RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
+					end
 					Duel.HintSelection(Group.FromCards(c))
 					Duel.HintSelection(Group.FromCards(rpz))
 				end

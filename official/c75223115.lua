@@ -83,7 +83,7 @@ function s.stuff(c)
 	return c:IsFaceup() and mt.has_malefic_unique and mt.has_malefic_unique[c]==true and not c:IsDisabled() and c:IsSetCard(0x23)
 end
 function s.validitycheck()
-	return Duel.IsExistingMatchingCard(s.stuff,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(s.stuff,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.rmfilter(c,...)
 	return c:IsFaceup() and c:IsSetCard(0x23) and c:IsCode(...)

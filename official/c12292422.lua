@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
 		local typ=Duel.AnnounceRace(tp,1,RACE_ALL)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LEVEL)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LVRANK)
 		local lv=Duel.AnnounceLevel(tp,1,12)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(1-tp,s.filter,1-tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,typ,lv)

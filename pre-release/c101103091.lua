@@ -42,7 +42,7 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(1)
 		Duel.RegisterEffect(e2,tp)
 		--return to deck
-		local e3=Effect.CreateEffect(c)
+		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetCode(EVENT_PHASE+PHASE_END)
 		e3:SetCountLimit(1)

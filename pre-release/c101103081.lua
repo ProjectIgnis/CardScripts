@@ -24,12 +24,12 @@ function s.initial_effect(c)
 	e2:SetTarget(s.splimit)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_MATERIACTOR}
+s.listed_series={0x25d}
 function s.spfilter(c,e,tp)
 	return (c:IsType(TYPE_NORMAL) and c:IsLevel(3)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spfilter2(c,e,tp)
-	return (c:IsSetCard(SET_MATERIACTOR) or (c:IsType(TYPE_NORMAL) and c:IsLevel(3))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(0x25d) or (c:IsType(TYPE_NORMAL) and c:IsLevel(3))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

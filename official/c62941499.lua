@@ -94,7 +94,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_ZONE,1-tp,zone>>16)
 	e:SetLabel(zone)
 	local sg=groupfrombit(zone>>16,1-tp)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,math.min(#sg,e:GetHandler():GetOverlayCount()),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

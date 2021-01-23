@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xae,0xaf}
 function s.negfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and aux.disfilter1(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and aux.disfilter2(c)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.negfilter(chkc) end

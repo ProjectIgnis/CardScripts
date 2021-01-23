@@ -30,11 +30,10 @@ function s.atkval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)*100
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-	and Duel.IsBattlePhase()
+	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,Duel.GetAttacker())
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and (c:GetBattledGroupCount()>0 or c:IsRelateToBattle())
+function s.cfilter(c,battle)
+	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and (c:GetBattledGroupCount()>0 or (battle and c:IsRelateToBattle()))
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(5) and c:IsRace(RACE_WARRIOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

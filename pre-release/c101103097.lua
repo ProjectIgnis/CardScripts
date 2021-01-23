@@ -30,11 +30,10 @@ end
 s.listed_series={0x25C}
 
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
-	and Duel.IsBattlePhase()
+	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,Duel.GetAttacker())
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and (c:GetBattledGroupCount()>0 or c:IsRelateToBattle())
+function s.filter(c,battle)
+	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and (c:GetBattledGroupCount()>0 or (battle and c:IsRelateToBattle()))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

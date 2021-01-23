@@ -59,13 +59,10 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetEquipTarget()
 	return Duel.GetAttacker()==tc or Duel.GetAttackTarget()==tc
 end
-function s.disfilter(c)
-	return aux.disfilter1(c) and c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(s.disfilter,tp,0,LOCATION_ONFIELD,c)
+	local g=Duel.GetMatchingGroup(aux.disfilter2,tp,0,LOCATION_ONFIELD,c)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(c)

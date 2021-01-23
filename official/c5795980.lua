@@ -40,7 +40,7 @@ function s.cfilter(c,e,dg)
 	return #dg-a>=1
 end
 function s.tgfilter(c,e)
-	return aux.disfilter1(c) and c:IsCanBeEffectTarget(e)
+	return aux.disfilter3(c) and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.tgfilter(chkc,e) and chkc~=e:GetHandler() end

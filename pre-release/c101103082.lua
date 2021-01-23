@@ -1,6 +1,7 @@
 --Raging Storm Dragon - Beaufort IX
 local s,id=GetID()
 function s.initial_effect(c)
+	c:EnableReviveLimit()
 	--negate attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -92,4 +93,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(rg,nil,REASON_EFFECT)
 	end
 end
-

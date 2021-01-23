@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={SET_MATERIACTOR }
+s.listed_series={0x25d}
 function s.adval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)*500
 end
@@ -49,7 +49,7 @@ function s.xyzcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.xyzfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(SET_MATERIACTOR)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x25d)
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_DECK,0,1,nil) end

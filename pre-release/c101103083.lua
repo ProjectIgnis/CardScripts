@@ -32,7 +32,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if s.destg(e,tp,eg,ep,ev,re,r,rp,0) then ct=ct+1 end
 	if s.atktg(e,tp,eg,ep,ev,re,r,rp,0) then ct=ct+1 end
 	if chk==0 then return ct>0 and Duel.CheckLPCost(tp,2000) end
-	ct=math.min(ct,math.floor(Duel.GetLP(tp)/2000))
+	ct=math.min(ct,Duel.GetLP(tp)//2000)
 	local t={}
 	for i=1,ct do
 		t[i]=i*2000
@@ -56,17 +56,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local idtable={}
 		local desctable={}
 		local t=1
-		if b1 and (opt&1)~=0 then
+		if b1 and (opt&1)==0 then
 			idtable[t]=1
 			desctable[t]=aux.Stringid(id,1)
 			t=t+1
 		end
-		if b1 and (opt&2)~=0 then
+		if b1 and (opt&2)==0 then
 			idtable[t]=2
 			desctable[t]=aux.Stringid(id,2)
 			t=t+1
 		end
-		if b1 and (opt&4)~=0 then
+		if b1 and (opt&4)==0 then
 			idtable[t]=4
 			desctable[t]=aux.Stringid(id,3)
 			t=t+1

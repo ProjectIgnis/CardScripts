@@ -17,7 +17,8 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(TIMING_BATTLE_PHASE+TIMING_BATTLE_END+TIMING_END_PHASE+TIMING_ATTACK+TIMING_BATTLE_START,0)
+	local timing=TIMING_BATTLE_PHASE+TIMING_BATTLE_END+TIMING_END_PHASE+TIMING_ATTACK+TIMING_BATTLE_START
+	e2:SetHintTiming(timing,timing)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
@@ -30,7 +31,7 @@ function s.atkval(e,c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-	and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	and Duel.IsBattlePhase()
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and c:GetBattledGroupCount()>0

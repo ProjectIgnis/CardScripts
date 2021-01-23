@@ -1,5 +1,5 @@
 --オッドアイズ・ペルソナ・ドラゴン
---Odd-Eyes Persona Dragon (Anime)
+--Odd-Eyes Persona Dragon (Manga)
 --fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -45,10 +45,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and aux.disfilter1(chkc) end
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.disfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and aux.disfilter3(chkc) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.disfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,aux.disfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.disfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)

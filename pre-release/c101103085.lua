@@ -2,7 +2,6 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	--Link summon procedure
 	Link.AddProcedure(c,s.matfilter,3,3)
 	--atkup
 	local e1=Effect.CreateEffect(c)
@@ -26,7 +25,7 @@ function s.matfilter(c,lc,st,tp)
 end
 
 function s.matcheck(e,c)
-	local g=c:GetMaterial():Filter(s.matfilter,nil)
+	local g=c:GetMaterial():Filter(aux.NOT(Card.IsType),nil,TYPE_LINK)
 	local atk=g:GetSum(Card.GetOriginalLevel)+g:GetSum(Card.GetOriginalRank)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

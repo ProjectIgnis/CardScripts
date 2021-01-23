@@ -16,7 +16,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		tc:RegisterEffect(e1,true)
 		--Cannot be destroyed by card effect
 		local e2=e1:Clone()
-		e2:SetDescription(3009)
+		e2:SetDescription(3001)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e2:SetValue(1)
 		tc:RegisterEffect(e2,true)

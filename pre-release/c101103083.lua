@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.miracle_synchro_fusion=true
 function s.fusfilter(typ)
 	return  function(c,fc,sumtype,tp)
 				return c:IsType(typ,fc,sumtype,tp)
@@ -39,7 +40,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local cost=Duel.AnnounceNumber(tp,table.unpack(t))
 	Duel.PayLPCost(tp,cost)
-	e:SetLabel(cost)
+	e:SetLabel(cost/2000)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -49,36 +50,39 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
 	local opt=0
+	local optp=0
 	local b1=s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
 	local b2=s.destg(e,tp,eg,ep,ev,re,r,rp,0)
 	local b3=s.atktg(e,tp,eg,ep,ev,re,r,rp,0)
+	local t
 	for i=1,ct do
 		local idtable={}
 		local desctable={}
-		local t=1
+		t=1
 		if b1 and (opt&1)==0 then
 			idtable[t]=1
-			desctable[t]=aux.Stringid(id,1)
+			desctable[t]=aux.Stringid(id,0)
 			t=t+1
 		end
 		if b1 and (opt&2)==0 then
 			idtable[t]=2
-			desctable[t]=aux.Stringid(id,2)
+			desctable[t]=aux.Stringid(id,1)
 			t=t+1
 		end
 		if b1 and (opt&4)==0 then
 			idtable[t]=4
-			desctable[t]=aux.Stringid(id,3)
+			desctable[t]=aux.Stringid(id,2)
 			t=t+1
 		end
 		if t==1 then return end
 		local op=idtable[Duel.SelectOption(tp,table.unpack(desctable)) + 1]
+		optp=opt+optp
 		opt=opt+op
-		if opt==1 then
+		if opt==1 or (optp==2 and opt==3) or (optp==4 and opt==5) or ((optp==8 or optp==10) and opt==7) then
 			s.thop(e,tp,eg,ep,ev,re,r,rp)
-		elseif opt==2 then
+		elseif opt==2 or (optp==1 and opt==3) or (optp==4 and opt==6) or ((optp==6 or optp==9) and opt==7) then
 			s.desop(e,tp,eg,ep,ev,re,r,rp)
-		elseif opt==4 then
+		elseif opt==4 or (optp==1 and opt==5) or (optp==2 and opt==6) or ((optp==4 or optp==5) and opt==7) then
 			s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
@@ -132,7 +136,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabel(c:GetFieldID())
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
-		aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,4),nil)
+		aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,3),nil)
 	end
 end
 function s.ftarget(e,c)

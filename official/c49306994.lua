@@ -60,7 +60,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==tc or Duel.GetAttackTarget()==tc
 end
 function s.disfilter(c)
-	return aux.disfilter1(c) and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return aux.disfilter2(c) and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

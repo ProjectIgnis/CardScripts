@@ -33,7 +33,7 @@ s.listed_names={id}
 s.listed_names={0x25c}
 --search and ATK gain
 function s.thfilter(c)
-	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_WARRIOR) and c:IsAbleToHand()
+	return c:IsSetCard(0x25c) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

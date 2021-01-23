@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
-	c:EnableCounterPermit(0x1f)
+	c:EnableCounterPermit(0x205)
 	--place counters on activation
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
@@ -34,11 +34,11 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={0x25c}
-s.counter_place_list={0x1f}
+s.counter_place_list={0x205}
 --place counters on activation
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	e:GetHandler():AddCounter(0x1f,3)
+	e:GetHandler():AddCounter(0x205,3)
 end
 --remove counter + draw
 function s.dcon(e,tp,eg,ep,ev,re,r,rp)
@@ -47,18 +47,18 @@ function s.dcon(e,tp,eg,ep,ev,re,r,rp)
 	return #eg==1 and rc:IsControler(tp) and tc:IsType(TYPE_MONSTER) and tc:IsReason(REASON_BATTLE) and tc:IsLocation(LOCATION_GRAVE) and rc:IsSetCard(0x25c)
 end
 function s.dtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and e:GetHandler():IsCanRemoveCounter(tp,0x1f,1,REASON_EFFECT) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and e:GetHandler():IsCanRemoveCounter(tp,0x205,1,REASON_EFFECT) end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,e:GetHandler(),1,tp,LOCATION_SZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,1,tp,LOCATION_DECK)
 end
 function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	--remove counter returns void so there is no suitable check for "and if you do"
-	e:GetHandler():RemoveCounter(tp,0x1f,1,REASON_EFFECT)
+	e:GetHandler():RemoveCounter(tp,0x205,1,REASON_EFFECT)
 	Duel.Draw(tp,1,REASON_EFFECT)
 end
 --to GY when last counter is removed
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetCounter(0x1f)==0
+	return e:GetHandler():GetCounter(0x205)==0
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGrave() end

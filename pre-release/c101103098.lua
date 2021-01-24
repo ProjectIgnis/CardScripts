@@ -23,12 +23,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--to GY when last counter is removed
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_TOGRAVE)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_REMOVE_COUNTER)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_REMOVE_COUNTER+0x205)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCondition(s.tgcon)
-	e3:SetTarget(s.tgtg)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
@@ -52,17 +50,17 @@ function s.dtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,1,tp,LOCATION_DECK)
 end
 function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	--remove counter returns void so there is no suitable check for "and if you do"
+	local c=e:GetHandler()
+	local ct=c:GetCounter(0x205)
 	e:GetHandler():RemoveCounter(tp,0x205,1,REASON_EFFECT)
-	Duel.Draw(tp,1,REASON_EFFECT)
+	if c:GetCounter(0x205)<ct then
+		Duel.RaiseEvent(c,EVENT_REMOVE_COUNTER+0x205,e,REASON_EFFECT,tp,tp,1)
+		Duel.Draw(tp,1,REASON_EFFECT)
+	end
 end
 --to GY when last counter is removed
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetCounter(0x205)==0
-end
-function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGrave() end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,tp,LOCATION_SZONE)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)

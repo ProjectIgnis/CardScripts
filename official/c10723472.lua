@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
-	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end

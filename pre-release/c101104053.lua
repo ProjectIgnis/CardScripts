@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsSetCard,0x146),extrafil=s.extragroup,
 								extraop=s.extraop,stage2=s.stage2,forcedselection=s.ritcheck})
-	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x146}

@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id+100)
-	e2:SetCondition(aux.exccon)
+	e2:SetCondition(s.tdcon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
@@ -42,7 +42,9 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SynchroSummon(tp,sg:GetFirst(),nil)
 	end
 end
-
+function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsMainPhase() and Duel.IsTurnPlayer(tp) and aux.exccon(e)
+end
 function s.tdfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsAbleToExtra()
 end

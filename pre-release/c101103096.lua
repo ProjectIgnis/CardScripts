@@ -59,7 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(200)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 		tc:RegisterEffect(e1)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())

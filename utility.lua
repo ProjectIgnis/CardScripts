@@ -140,9 +140,10 @@ function bit.replace(r,v,field,width)
 	return (r&~(m<<f))|((v&m)<< f)
 end
 
-local _type = type
+local _type=type
 function type(o)
-	if _type(o)~="userdata" then return _type(o)
+	local tp=_type(o)
+	if tp~="userdata" then return tp
 	elseif o.GetOriginalCode then return "Card"
 	elseif o.KeepAlive then return "Group"
 	elseif o.SetLabelObject then return "Effect"
@@ -283,12 +284,22 @@ function Auxiliary.FilterBoolFunction(f,...)
 			end
 end
 
+local function GetMulti(tab,key,...)
+	if not key then return nil end
+	return (tab[key]~=nil and tab[key]) or GetMulti(tab,...)
+end
 function Auxiliary.ParamsFromTable(tab,key,...)
 	if key then
-		if ... then
-			return tab[key],Auxiliary.ParamsFromTable(tab,...)
+		local val
+		if type(key)=="table" then
+			val=GetMulti(tab,table.unpack(key))
 		else
-			return tab[key]
+			val=tab[key]
+		end
+		if ... then
+			return val,Auxiliary.ParamsFromTable(tab,...)
+		else
+			return val
 		end
 	end
 end

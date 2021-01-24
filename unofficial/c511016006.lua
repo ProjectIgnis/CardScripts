@@ -33,7 +33,7 @@ s.listed_names={CARD_BLUEEYES_W_DRAGON,23995346}
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(id)==0 and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_EXTRA,0,1,nil,23995346) end
-	c:RegisterFlagEffect(id,nil,0,1)
+	c:RegisterFlagEffect(id,0,0,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_EXTRA,0,1,1,nil,23995346)
 	Duel.ConfirmCards(1-tp,g)

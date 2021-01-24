@@ -93,7 +93,7 @@ end
 function s.retfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetFlagEffect(id)>0
 end
-function s.retfilter2(c)
+function s.retfilter2(c,tp)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetFlagEffect(id)>0 
 		and not Duel.IsExistingMatchingCard(function(c,seq)return c:GetSequence()==seq end,tp,LOCATION_SZONE,0,1,c,((c:GetFlagEffectLabel(id)&4)>>0xf))
 end
@@ -117,7 +117,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local sg1=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.Destroy(sg1,REASON_EFFECT)
-	local sg2=Duel.GetMatchingGroup(s.retfilter2,tp,0x32,0x32,nil)
+	local sg2=Duel.GetMatchingGroup(s.retfilter2,tp,0x32,0x32,nil,tp)
 	--if sg2:IsExists(s.transchk,1,nil) then return end
 	local tc=sg2:GetFirst()
 	while tc do

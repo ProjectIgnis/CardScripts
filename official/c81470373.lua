@@ -1,5 +1,5 @@
 --BF - 毒風のシムーン
---Blackwing – Simoon the Poison Wind
+--Blackwing - Simoon the Poison Wind
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -51,7 +51,7 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.GetFirstMatchingCard(s.tffilter,tp,LOCATION_DECK,0,nil)
+	local tc=Duel.GetFirstMatchingCard(s.tffilter,tp,LOCATION_DECK,0,nil,tp)
 	if tc and Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) and c:IsLocation(LOCATION_HAND)
 		and (c:IsSummonableCard() or c:IsAbleToGrave()) then
 		Duel.BreakEffect()

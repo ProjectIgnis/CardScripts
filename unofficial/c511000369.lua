@@ -119,27 +119,28 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(sg1,REASON_EFFECT)
 	local sg2=Duel.GetMatchingGroup(s.retfilter2,tp,0x32,0x32,nil,tp)
 	--if sg2:IsExists(s.transchk,1,nil) then return end
-	local tc=sg2:GetFirst()
-	while tc do
+	local used={}
+	for tc in sg2:Iter() do
 		local lab=tc:GetFlagEffectLabel(id)
-		local pos=(lab&0xf)
 		local seq=((lab&4)>>0xf)
 		local p=((lab&8)>>0xf)
-		local pzone=((lab&16)>>0xf)
-		local sgf=sg2:Filter(s.fil,nil,seq,p)
-		if #sgf>1 then
-			tc=sgf:Select(p,1,1,nil):GetFirst()
-			sg2:Remove(s.fil,nil,seq,p)
+		if not used[{seq,p}] then
+			local pos=(lab&0xf)
+			local pzone=((lab&16)>>0xf)
+			local sgf=sg2:Filter(s.fil,nil,seq,p)
+			if #sgf>1 then
+				tc=sgf:Select(p,1,1,nil):GetFirst()
+				used[{seq,p}]=true
+			end
+			if pzone==1 then
+				if (seq==4 or seq==7) then seq=1
+				else seq=0 end
+			end
+			local loc=LOCATION_SZONE
+			if pzone==1 then loc=LOCATION_PZONE end
+			if tc:IsType(TYPE_FIELD) then loc=LOCATION_FZONE end
+			Duel.MoveToField(tc,tp,p,loc,pos,true,(1<<seq))
 		end
-		if pzone==1 then
-			if (seq==4 or seq==7) then seq=1
-			else seq=0 end
-		end
-		local loc=LOCATION_SZONE
-		if pzone==1 then loc=LOCATION_PZONE end
-		if tc:IsType(TYPE_FIELD) then loc=LOCATION_FZONE end
-		Duel.MoveToField(tc,tp,p,loc,pos,true,(1<<seq))
-		tc=sg2:GetNext()
 	end
 	Duel.SendtoGrave(sg2:Filter(s.fil2,nil),REASON_RULE)
 end

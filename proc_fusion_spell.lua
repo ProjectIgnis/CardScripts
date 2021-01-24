@@ -156,7 +156,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				Fusion.CheckAdditional=checkAddition
 				local effswithgroup={}
 				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck)
-				if #sg1 > 0 then
+				if #sg1>0 then
 					table.insert(effswithgroup,{e,aux.GrouptoCardid(sg1)})
 				end
 				Fusion.CheckAdditional=nil
@@ -165,7 +165,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 					for _,ce in ipairs(extraeffs) do
 						local fgroup=ce:GetTarget()
 						local mg2=fgroup(ce,e,tp,value)
-						if #mg2>0 and (not Fusion.CheckExact or #mg2==Fusion.CheckExact) and (not Fusion.CheckMin or #mg>=Fusion.CheckMin) then
+						if #mg2>0 and (not Fusion.CheckExact or #mg2==Fusion.CheckExact) and (not Fusion.CheckMin or #mg2>=Fusion.CheckMin) then
 							local mf=ce:GetValue()
 							local fcheck=nil
 							if ce:GetLabelObject() then fcheck=ce:GetLabelObject():GetOperation() end

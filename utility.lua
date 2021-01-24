@@ -1534,6 +1534,7 @@ end
 
 Duel.LoadScript("cards_specific_functions.lua")
 Duel.LoadScript("proc_fusion.lua")
+Duel.LoadScript("proc_fusion_spell.lua")
 Duel.LoadScript("proc_ritual.lua")
 Duel.LoadScript("proc_synchro.lua")
 Duel.LoadScript("proc_union.lua")

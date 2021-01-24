@@ -994,4 +994,3 @@ function Fusion.AddProcMixN(c,sub,insf,...)
 	end
 	return Fusion.AddProcMix(c,sub,insf,table.unpack(fun))
 end
-Duel.LoadScript("proc_fusion2.lua")

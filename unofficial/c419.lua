@@ -117,7 +117,7 @@ if not GenerateEffect then
 		local g6=Group.CreateGroup() --gain def
 		--local g7=Group.CreateGroup() --lose def
 		--local g8=Group.CreateGroup() --gain def from original
-		for tc in aux.Next(g) do
+		for tc in g:Iter() do
 			local prevatk=0
 			if tc:GetFlagEffect(285)>0 then prevatk=tc:GetFlagEffectLabel(285) end
 			g1:AddCard(tc)
@@ -146,7 +146,7 @@ if not GenerateEffect then
 			end
 		end
 		
-		for dc in aux.Next(dg) do
+		for dc in dg:Iter() do
 			local prevdef=0
 			if dc:GetFlagEffect(385)>0 then prevdef=dc:GetFlagEffectLabel(385) end
 			g5:AddCard(dc)
@@ -172,29 +172,41 @@ if not GenerateEffect then
 			end
 		end
 		
-		Duel.RaiseEvent(g1,511001265,re,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g1,511001441,re,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g2,511000377,re,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g2,511001762,re,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g3,511000883,re,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g3,511009110,re,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g4,511002546,re,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g5,511009053,re,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g5,511009565,re,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g9,511010103,re,REASON_EFFECT,rp,ep,0)
+		if #g1>0 then
+			Duel.RaiseEvent(g1,511001265,re,REASON_EFFECT,rp,ep,0)
+			Duel.RaiseEvent(g1,511001441,re,REASON_EFFECT,rp,ep,0)
+		end
+		if #g2>0 then
+			Duel.RaiseEvent(g2,511000377,re,REASON_EFFECT,rp,ep,0)
+			Duel.RaiseEvent(g2,511001762,re,REASON_EFFECT,rp,ep,0)
+		end
+		if #g3>0 then
+			Duel.RaiseEvent(g3,511000883,re,REASON_EFFECT,rp,ep,0)
+			Duel.RaiseEvent(g3,511009110,re,REASON_EFFECT,rp,ep,0)
+		end
+		if #g4>0 then
+			Duel.RaiseEvent(g4,511002546,re,REASON_EFFECT,rp,ep,0)
+		end
+		if #g5>0 then
+			Duel.RaiseEvent(g5,511009053,re,REASON_EFFECT,rp,ep,0)
+			Duel.RaiseEvent(g5,511009565,re,REASON_EFFECT,rp,ep,0)
+		end
+		if #g9>0 then
+			Duel.RaiseEvent(g9,511010103,re,REASON_EFFECT,rp,ep,0)
+		end
 		--Duel.RaiseEvent(g6,,re,REASON_EFFECT,rp,ep,0)
 		
 		local lvg=Duel.GetMatchingGroup(GenerateEffect.lvcfilter,tp,0x7f,0x7f,nil)
-		local lvc=lvg:GetFirst()
-		while lvc do
-			local prevlv=lvc:GetFlagEffectLabel(585)
-			lvc:ResetFlagEffect(584)
-			lvc:ResetFlagEffect(585)
-			lvc:RegisterFlagEffect(584,0,0,1,prevlv)
-			lvc:RegisterFlagEffect(585,0,0,1,lvc:GetLevel())
-			lvc=lvg:GetNext()
+		if #lvg>0 then
+			for lvc in lvg:Iter() do
+				local prevlv=lvc:GetFlagEffectLabel(585)
+				lvc:ResetFlagEffect(584)
+				lvc:ResetFlagEffect(585)
+				lvc:RegisterFlagEffect(584,0,0,1,prevlv)
+				lvc:RegisterFlagEffect(585,0,0,1,lvc:GetLevel())
+			end
+			Duel.RaiseEvent(lvg,511002524,re,REASON_EFFECT,rp,ep,0)
 		end
-		Duel.RaiseEvent(lvg,511002524,re,REASON_EFFECT,rp,ep,0)
 		
 		Duel.RegisterFlagEffect(tp,285,RESET_CHAIN,0,1)
 		Duel.RegisterFlagEffect(1-tp,285,RESET_CHAIN,0,1)
@@ -213,7 +225,7 @@ if not GenerateEffect then
 		--local g6=Group.CreateGroup() --gain def
 		--local g7=Group.CreateGroup() --lose def
 		--local g8=Group.CreateGroup() --gain def from original
-		for tc in aux.Next(g) do
+		for tc in g:Iter() do
 			local prevatk=0
 			if tc:GetFlagEffect(285)>0 then prevatk=tc:GetFlagEffectLabel(285) end
 			g1:AddCard(tc)
@@ -242,7 +254,7 @@ if not GenerateEffect then
 			end
 		end
 		
-		for dc in aux.Next(dg) do
+		for dc in dg:Iter() do
 			local prevdef=0
 			if dc:GetFlagEffect(385)>0 then prevdef=dc:GetFlagEffectLabel(385) end
 			g5:AddCard(dc)
@@ -268,22 +280,36 @@ if not GenerateEffect then
 			end
 		end
 		
-		Duel.RaiseEvent(g1,511001265,e,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g2,511001762,e,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g3,511009110,e,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g4,511002546,e,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g5,511009053,e,REASON_EFFECT,rp,ep,0)
-		Duel.RaiseEvent(g9,511010103,e,REASON_EFFECT,rp,ep,0)
+		if #g1>0 then
+			Duel.RaiseEvent(g1,511001265,e,REASON_EFFECT,rp,ep,0)
+		end
+		if #g2>0 then
+			Duel.RaiseEvent(g2,511001762,e,REASON_EFFECT,rp,ep,0)
+		end
+		if #g3>0 then
+			Duel.RaiseEvent(g3,511009110,e,REASON_EFFECT,rp,ep,0)
+		end
+		if #g4>0 then
+			Duel.RaiseEvent(g4,511002546,e,REASON_EFFECT,rp,ep,0)
+		end
+		if #g5>0 then
+			Duel.RaiseEvent(g5,511009053,e,REASON_EFFECT,rp,ep,0)
+		end
+		if #g9>0 then
+			Duel.RaiseEvent(g9,511010103,e,REASON_EFFECT,rp,ep,0)
+		end
 		
 		local lvg=Duel.GetMatchingGroup(GenerateEffect.lvcfilter,tp,0x7f,0x7f,nil)
-		for lvc in aux.Next(lvg) do
-			local prevlv=lvc:GetFlagEffectLabel(585)
-			lvc:ResetFlagEffect(584)
-			lvc:ResetFlagEffect(585)
-			lvc:RegisterFlagEffect(584,0,0,1,prevlv)
-			lvc:RegisterFlagEffect(585,0,0,1,lvc:GetLevel())
+		if #lvg>0 then
+			for lvc in lvg:Iter() do
+				local prevlv=lvc:GetFlagEffectLabel(585)
+				lvc:ResetFlagEffect(584)
+				lvc:ResetFlagEffect(585)
+				lvc:RegisterFlagEffect(584,0,0,1,prevlv)
+				lvc:RegisterFlagEffect(585,0,0,1,lvc:GetLevel())
+			end
+			Duel.RaiseEvent(lvg,511002524,e,REASON_EFFECT,rp,ep,0)
 		end
-		Duel.RaiseEvent(lvg,511002524,e,REASON_EFFECT,rp,ep,0)
 	end
 	
 	Cardian={}

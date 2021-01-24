@@ -25,6 +25,12 @@ function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locat
 	e1:SetOperation(Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,mincount,maxcount))
 	return e1
 end,"handler","fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","desc","preselect","nosummoncheck","extratg","mincount","maxcount")
+function Fusion.RegisterSummonEff(c,...)
+	local tab=type(c)=="table"
+	local e1=Fusion.CreateSummonEff(tab and c or c,...)
+	Card.RegisterEffect((tab and c["handler"] or c),e1)
+	return e1
+end
 function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck)
 	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c,tp)) and (nosummoncheck or c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false))
 			and c:CheckFusionMaterial(mg,gc,chkf)

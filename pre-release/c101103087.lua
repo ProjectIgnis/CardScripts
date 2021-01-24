@@ -2,7 +2,7 @@
 --Scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
-	c:RegisterEffect(Fusion.CreateSummonEff{handler=c,mincount=3,stage2=s.stage2})
+	Fusion.RegisterSummonEff{handler=c,mincount=3,stage2=s.stage2}
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==0 then

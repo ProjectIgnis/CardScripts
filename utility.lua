@@ -1494,24 +1494,15 @@ function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp)
 	return false
 end
 function Duel.IsMainPhase()
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+	local phase=Duel.GetCurrentPhase()
+	return phase==PHASE_MAIN1 or phase==PHASE_MAIN2
 end
 function Duel.IsBattlePhase()
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
+	local phase=Duel.GetCurrentPhase()
+	return phase>=PHASE_BATTLE_START and phase<=PHASE_BATTLE
 end
 function Duel.IsTurnPlayer(player)
 	return Duel.GetTurnPlayer()==player
-end
-function Auxiliary.DoubleSnareValidity(c,range,property)
-	if c then
-		if not property then property=0 end
-		local eff=Effect.CreateEffect(c)
-		eff:SetType(EFFECT_TYPE_SINGLE)
-		eff:SetProperty(EFFECT_FLAG_CANNOT_DISABLE|EFFECT_FLAG_SINGLE_RANGE|property)
-		eff:SetRange(range)
-		eff:SetCode(3682106)
-		c:RegisterEffect(eff)
-	end
 end
 
 function Auxiliary.ChangeBattleDamage(player,value)

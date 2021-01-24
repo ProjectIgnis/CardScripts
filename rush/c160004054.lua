@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter1,1,nil,e,tp) and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.costfilter(c)
-	return c:IsRace(RACE_WYRM) and c:IsFaceup() and c:IsAbleToGraveAsCost() and c:IsNotMaximumSide()
+	return c:IsRace(RACE_WYRM) and c:IsFaceup() and c:IsAbleToGraveAsCost() and not c:IsMaximumModeSide()
 end
 function s.filter(c,e,tp)
 	return c:IsFaceup()

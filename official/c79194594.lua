@@ -127,8 +127,8 @@ end
 	--If this fusion summoned card was destroyed by opponent's card
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:IsReason(REASON_BATTLE)
-		or (rp==1-tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp)
+	return c:IsSummonType(SUMMON_TYPE_FUSION) and (c:IsReason(REASON_BATTLE)
+		or (rp==1-tp and c:IsReason(REASON_EFFECT)) and c:GetPreviousControler()==tp)
 end
 	--Check for face-up banished "Myutant" card
 function s.thfilter(c)

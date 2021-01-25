@@ -50,7 +50,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetAttacker()
-	if tg:IsRelateToBattle() and not tg:IsStatus(STATUS_ATTACK_CANCELED) then
+	if tg:IsRelateToBattle() and not tg:IsStatus(STATUS_ATTACK_CANCELED) and tg:GetAttackTarget()~=nil then
 		local g=Group.FromCards(tg,e:GetHandler())
 		if #g>0 then
 			Duel.Destroy(g,REASON_EFFECT)

@@ -43,7 +43,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not e:GetHandler():IsRelateToBattle() and Duel.GetAttacker():GetControler()==1-tp and not Duel.GetAttackTarget()==nil end
+	if chk==0 then return not e:GetHandler():IsRelateToBattle() and Duel.GetAttacker():GetControler()==1-tp end
 	local tg=Duel.GetAttacker()
 	local g=Group.FromCards(tg,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)

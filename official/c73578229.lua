@@ -64,7 +64,8 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Readjust()
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsDisabled() then
+	local c=e:GetHandler()
+	if c:IsDisabled() or not c:IsStatus(STATUS_EFFECT_ENABLED) then
 		e:SetLabel(1)
 	else e:SetLabel(0) end
 end

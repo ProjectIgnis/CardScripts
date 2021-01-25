@@ -1,5 +1,5 @@
 -- ベアルクティ－グラン＝シャリオ
--- Bearcti – Grand Chariot
+-- Ursarctic Grand Chariot
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -126,7 +126,5 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsRelateToEffect(re) then
-		Duel.NegateActivation(ev)
-	end
+	Duel.NegateActivation(ev)
 end

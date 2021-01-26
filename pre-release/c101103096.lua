@@ -55,7 +55,7 @@ function s.atkval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)*100
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsBattlePhase() and Duel.GetFlagEffect(tp,id)>0
+	return Duel.IsBattlePhase() and Duel.GetFlagEffect(tp,id)>0 and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(5) and c:IsRace(RACE_WARRIOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

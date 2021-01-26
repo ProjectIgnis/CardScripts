@@ -12,28 +12,50 @@ function s.initial_effect(c)
 	--If your Earth Warrior monster battles
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	local timing=TIMING_BATTLE_PHASE+TIMING_BATTLE_END+TIMING_END_PHASE+TIMING_ATTACK+TIMING_BATTLE_START
+	local timing=TIMING_BATTLE_PHASE+TIMING_BATTLE_END+TIMING_ATTACK+TIMING_BATTLE_START+TIMING_DAMAGE_STEP
 	e2:SetHintTiming(timing,timing)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
+	--Condition check for the Quick Effect
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_ATTACK_ANNOUNCE)
+		ge1:SetOperation(s.checkop)
+		Duel.RegisterEffect(ge1,0)
+		local ge2=Effect.CreateEffect(c)
+		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge2:SetCode(EVENT_BATTLE_CONFIRM)
+		ge2:SetOperation(s.checkop)
+		Duel.RegisterEffect(ge2,0)
+	end)
 end
 s.listed_series={0x25C}
+function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+	local ac=Duel.GetAttacker()
+	local atg=Duel.GetAttackTarget()
+	local ac_chk=ac and ac:IsFaceup() and ac:IsAttribute(ATTRIBUTE_EARTH) and ac:IsRace(RACE_WARRIOR)
+	local atg_chk=atg and atg:IsFaceup() and atg:IsAttribute(ATTRIBUTE_EARTH) and atg:IsRace(RACE_WARRIOR)
+	if ac_chk then
+		Duel.RegisterFlagEffect(ac:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+	end
+	if atg_chk then
+		Duel.RegisterFlagEffect(atg:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+	end
+end
 function s.atkval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)*100
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,Duel.GetAttacker())
-end
-function s.cfilter(c,battle)
-	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH) and (c:GetBattledGroupCount()>0 or (battle and c:IsRelateToBattle()))
+	return Duel.IsBattlePhase() and Duel.GetFlagEffect(tp,id)>0
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(5) and c:IsRace(RACE_WARRIOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

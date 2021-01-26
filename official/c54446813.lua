@@ -62,6 +62,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e2:SetTargetRange(1,0)
 		e2:SetValue(HALF_DAMAGE)
+		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		Duel.RegisterEffect(e2,tp)
 	end
 end

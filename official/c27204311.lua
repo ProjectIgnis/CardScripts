@@ -38,7 +38,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsReleasableByEffect),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if chk==0 then
 		return #g>0 and Duel.GetMZoneCount(tp,g,tp)>0 and Duel.GetMZoneCount(1-tp,g,tp)>0
 			and Duel.IsPlayerCanSpecialSummonCount(tp,2)

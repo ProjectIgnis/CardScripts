@@ -40,6 +40,7 @@ s.listed_series={0xfe}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
+	if not (a and d) then return false end
 	if a:IsControler(1-tp) then a,d=d,a end
 	e:SetLabelObject(d)
 	local g=Group.FromCards(a,d)

@@ -22,12 +22,12 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.filter(c)
-	return c:IsCanChangePosition() and not c:IsMaximumMode()
+	return c:IsCanChangePosition() and c:IsRace(RACE_MACHINE) and not c:IsMaximumMode()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
 	--Effect

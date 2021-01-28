@@ -50,8 +50,7 @@ end
 s.listed_names={49306994}
 s.LVnum=10
 s.LVset=0x111
-
-function s.rescon(sg,tp)
+function s.rescon(sg,e,tp,mg,c)
 	local sum=sg:GetSum(Card.GetLevel)
 	return aux.ChkfMMZ(1)(sg,nil,tp) and sum==10,sum>10
 end

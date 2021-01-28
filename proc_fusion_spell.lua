@@ -87,6 +87,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 								local mf=ce:GetValue()
 								local fcheck=nil
 								if ce:GetLabelObject() then fcheck=ce:GetLabelObject():GetOperation() end
+								Fusion.CheckAdditional=checkAddition
 								if fcheck then
 									if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
 								end
@@ -175,6 +176,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 							local mf=ce:GetValue()
 							local fcheck=nil
 							if ce:GetLabelObject() then fcheck=ce:GetLabelObject():GetOperation() end
+							Fusion.CheckAdditional=checkAddition
 							if fcheck then
 								if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
 							end
@@ -213,6 +215,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 						local ce=sel[1]
 						local fcheck=nil
 						if ce:GetLabelObject() then fcheck=ce:GetLabelObject():GetOperation() end
+						Fusion.CheckAdditional=checkAddition
 						if fcheck then
 							if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
 						end

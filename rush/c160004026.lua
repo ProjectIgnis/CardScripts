@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 			e1:SetValue(atk*-500)
-			c:RegisterEffect(e1)
+			tc:RegisterEffect(e1)
 		end
 	end
 end

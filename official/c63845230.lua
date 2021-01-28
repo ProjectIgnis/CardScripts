@@ -62,11 +62,11 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
-	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c)
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c,POS_FACEDOWN)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-4 and #rg>4 and aux.SelectUnselectGroup(rg,e,tp,5,#rg,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c)
+	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c,POS_FACEDOWN)
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

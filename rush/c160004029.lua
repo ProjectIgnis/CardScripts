@@ -14,13 +14,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsPosition,POS_DEFENSE,tp,0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(Card.IsPosition,tp,0,LOCATION_MZONE,1,nil,POS_DEFENSE)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
-end
-function s.filter(c)
-	return c:IsFaceup() and (c:GetAttack()>0 or c:GetDefense()>0)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsPosition,tp,0,LOCATION_MZONE,1,e:GetHandler(),POS_DEFENSE) end
@@ -31,7 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
 		--Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			local atk=Duel.GetMatchingGroupCount(Card.IsPosition,POS_DEFENSE,tp,0,LOCATION_MZONE,nil)
+			local atk=Duel.GetMatchingGroupCount(Card.IsPosition,POS_DEFENSE,tp,0,LOCATION_MZONE,nil,POS_DEFENSE)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

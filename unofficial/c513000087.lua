@@ -28,6 +28,6 @@ end
 function s.defcon(e)
 	return e:GetHandler():IsDefensePos()
 end
-function s.val(e,c)
+function s.defval(e,c)
 	return Duel.GetMatchingGroup(Card.IsFaceup,c:GetControler(),LOCATION_MZONE,0,c):GetSum(Card.GetDefense)
 end

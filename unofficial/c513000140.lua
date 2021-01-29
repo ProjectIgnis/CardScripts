@@ -2,9 +2,9 @@
 --Scab Scarknight (Anime)
 --Scripted by urielkama
 --Rescripted by Larry126
-local s,id,alias=GetID()
+local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,alias)
+	c:SetUniqueOnField(1,0,c:Alias())
 	--must attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

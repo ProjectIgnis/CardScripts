@@ -1,3 +1,4 @@
+--シンクロ・スピリッツ
 --Synchro Spirits
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local mg=tc:GetMaterial()
 	local ct=#mg
 	local sumtype=tc:GetSummonType()
-	if Duel.Remove(tc,nil,POS_FACEUP,REASON_EFFECT)~=0 and sumtype==SUMMON_TYPE_SYNCHRO
+	if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and sumtype==SUMMON_TYPE_SYNCHRO
 		and ct>0 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and ct<=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		and mg:FilterCount(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,tc)==ct

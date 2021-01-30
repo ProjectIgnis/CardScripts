@@ -43,7 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(td)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)~0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		local sg=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsRace,RACE_FISH),tp,LOCATION_MZONE,0,1,2,nil)

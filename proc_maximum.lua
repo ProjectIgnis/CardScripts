@@ -124,6 +124,16 @@ end
 function Card.IsMaximumModeCenter(c)
 	return c:GetFlagEffect(FLAG_MAXIMUM_CENTER)>0
 end
+function Card.IsMaximumModeLeft(c)
+	local m=c:GetMetatable(true)
+	if not m then return false end
+	return m.MaximumSide=="Left"
+end
+function Card.IsMaximumModeRight(c)
+	local m=c:GetMetatable(true)
+	if not m then return false end
+	return m.MaximumSide=="Right"
+end
 function Card.IsMaximumModeSide(c)
 	return c:GetFlagEffect(FLAG_MAXIMUM_SIDE)>0
 end
@@ -350,8 +360,10 @@ local function initial_effect()
     e2:SetValue(function(e,c)
 					if c:IsMaximumModeCenter() then
 						return 0x4
+					elseif c:IsMaximumModeLeft() then
+						return 0x2
+					else return 0x8
 					end
-					return 0xa
 				end)
     Duel.RegisterEffect(e2,0)
 end

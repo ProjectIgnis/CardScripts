@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	c:AddSideMaximumHandler(e1)
 end
+s.MaximumSide="Right"
 function s.maxCon(e)
 	--maximum mode check to do
 	return e:GetHandler():IsMaximumModeCenter()

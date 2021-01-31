@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_COST) and re:IsActivated() and re:IsActiveType(TYPE_MONSTER)
+	return e:GetHandler():IsReason(REASON_COST) and re:IsActivated()
 		and re:GetHandler():IsCode(CARD_ALBAZ)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)

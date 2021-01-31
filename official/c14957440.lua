@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and not c:IsType(TYPE_TUNER)
+	return c:IsFacedown() or c:IsFaceup() and not c:IsType(TYPE_TUNER)
 end
 function s.atklm(e)
 	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

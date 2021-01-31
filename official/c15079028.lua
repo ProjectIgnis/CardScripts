@@ -57,10 +57,11 @@ function s.sop(e,tp,eg,ep,ev,re,r,rp)
 end
 --To Decktop
 function s.tgfilter(c,tp)
-	return c:IsRace(RACE_FAIRY) and c:IsControler(tp)
+	return c:IsRace(RACE_FAIRY)
+		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.tgfilter,1,e:GetHandler(),tp)
+	return eg:IsExists(s.tgfilter,1,e:GetHandler(),tp) and not eg:IsContains(e:GetHandler())
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeck() end

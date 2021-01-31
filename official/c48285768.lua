@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	--Send 1 "Sprigguns" monster from deck to GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function(e)return e:GetHandler():IsPreviousLocation(LOCATION_EXTRA)end)
@@ -57,10 +57,11 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if current phase is opponent's main phase or battle phase
 function s.bancon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_CHAINING) and ((Duel.IsMainPhase() or Duel.IsBattlePhase()) and Duel.GetTurnPlayer()~=tp)
+	return (Duel.IsMainPhase() or Duel.IsBattlePhase()) and Duel.GetTurnPlayer()~=tp
 end
 function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetHandler(),1,0,0)
 end
 	--Check for fusion monster that lists "Fallen of Albaz"
 function s.edfilter(c)
@@ -82,6 +83,8 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 		--Send 1 fusion monster that lists "Fallen of Albaz" from extra deck to GY
 		if ct>=2 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local g=Duel.SelectMatchingCard(tp,s.edfilter,tp,LOCATION_EXTRA,0,1,1,nil)
 			if #g>0 then
 				Duel.SendtoGrave(g,REASON_EFFECT)

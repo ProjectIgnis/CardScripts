@@ -21,7 +21,6 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.eqcon)
@@ -88,7 +87,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if not eg then return false end
 	local tc=eg:GetFirst()
 	if chkc then return false end
-	if chk==0 then return tc:IsFaceup() and tc:IsCanBeEffectTarget(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+	if chk==0 then return tc:IsFaceup() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)

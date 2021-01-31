@@ -9,7 +9,6 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.thtg)
@@ -20,7 +19,6 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id+1)
 	e2:SetCost(aux.bfgcost)
@@ -28,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tedop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={id,17720747,CARD_BLACK_ROSE_DRAGON,101104035}
+s.listed_names={id,17720747,CARD_BLACK_ROSE_DRAGON,40139997}
 --Tribute + search + deck stack + potentially Normal Summon
 function s.thfilter(c)
 	return c:IsAbleToHand() and c:IsCode(17720747)
@@ -73,7 +71,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 --To Extra Deck
 function s.tedfilter(c,tp)
-	return (c:IsCode(CARD_BLACK_ROSE_DRAGON) or c:IsCode(101104035)) and c:IsAbleToExtra()
+	return (c:IsCode(CARD_BLACK_ROSE_DRAGON) or c:IsCode(40139997)) and c:IsAbleToExtra()
+		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.tedtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tedfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,tp) end

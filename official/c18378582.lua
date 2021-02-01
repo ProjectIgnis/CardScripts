@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_names={66073051,CARD_SANCTUARY_SKY}
 function s.hspcon(e,c)
-	if c==nil then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	if c==nil then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 		or Duel.IsEnvironment(CARD_SANCTUARY_SKY) end
 	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,66073051)
 end

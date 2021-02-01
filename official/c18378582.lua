@@ -55,7 +55,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,0,1,nil)
-		or Duel.IsEnvironment(CARD_SANCTUARY_SKY)
+		or Duel.IsEnvironment(CARD_SANCTUARY_SKY,tp)
 end
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsDiscardable() and c:IsAbleToGraveAsCost()
@@ -71,7 +71,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,0,1,nil)
-		or Duel.IsEnvironment(CARD_SANCTUARY_SKY) then
+		or Duel.IsEnvironment(CARD_SANCTUARY_SKY,tp) then
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 		Duel.Destroy(g,REASON_EFFECT)
 	end

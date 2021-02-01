@@ -33,11 +33,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_EFFECT) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsType(TYPE_EFFECT) and c:IsFaceup() and c:IsAttackAbove(1) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and s.thfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,s.thfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	local d=g:GetFirst():GetAttack()
 	Duel.SetTargetPlayer(tp)
@@ -56,6 +57,7 @@ end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE,0,e:GetHandler())
 	if chk==0 then return g:CheckWithSumEqual(Card.GetLink,4,2,4) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local rg=g:SelectWithSumEqual(tp,Card.GetLink,4,2,4)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end

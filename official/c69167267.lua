@@ -17,10 +17,9 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_DESTROYED)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
@@ -31,7 +30,7 @@ s.listed_names={id,CARD_BLACK_ROSE_DRAGON}
 s.listed_series={0x1123}
 --Special Summon from hand or GY
 function s.ssfilter(c,e,tp)
-	return c:IsSetCard(0x1123) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x1123) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -52,7 +51,8 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function s.spfilter(c,e,tp)
-	return (c:IsCode(CARD_BLACK_ROSE_DRAGON) or aux.IsCodeListed(c,CARD_BLACK_ROSE_DRAGON)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsCode(CARD_BLACK_ROSE_DRAGON) or aux.IsCodeListed(c,CARD_BLACK_ROSE_DRAGON))
+		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.spfilter(chkc,e,tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) end

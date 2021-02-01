@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x7e,0x107e,0x207e,0x95,0x258}
+s.listed_series={0x7e,0x107e,0x207e,0x95,0x15d}
 
 function s.filter(c)
 	return c:IsAbleToDeck() and not c:IsPublic()

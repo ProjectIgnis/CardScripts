@@ -14,21 +14,60 @@ function s.initial_effect(c)
 	e1:SetTarget(s.pentg)
 	e1:SetOperation(s.penop)
 	c:RegisterEffect(e1)
+	aux.GlobalCheck(s,function()
+		s.should_check=false
+		s.exclude_card=nil
+		local geff=Effect.CreateEffect(c)
+		geff:SetType(EFFECT_TYPE_FIELD)
+		geff:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		geff:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		geff:SetTargetRange(1,1)
+		geff:SetTarget(function(e,c)
+			if s.should_check or s.exclude_card then
+				return c==s.exclude_card or not c:IsType(TYPE_PENDULUM)
+			end
+			return false
+		end)
+		Duel.RegisterEffect(geff,0)
+	end)
 end
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp and Duel.IsMainPhase()
 end
+function s.filter(c,tp)
+	s.exclude_card=c
+	local res=c:IsDiscardable() and Duel.IsPlayerCanPendulumSummon(tp)
+	s.exclude_card=nil
+	return res
+end
 function s.pencost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	e:SetLabel(100)
+	return true
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanPendulumSummon(tp) end
+	if chk==0 then
+		if e:GetLabel()==100 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,e:GetHandler(),tp) end
+		s.should_check=true
+		local res=Duel.IsPlayerCanPendulumSummon(tp)
+		s.should_check=nil
+		return res
+	end
+	e:SetLabel(0)
+	Duel.DiscardHand(tp,s.filter,1,1,REASON_COST+REASON_DISCARD,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA+LOCATION_HAND)
+end
+function s.addreset(c)
+	s.should_check=true
+	local eff=Effect.CreateEffect(c)
+	eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	eff:SetCode(EVENT_CHAIN_END)
+	eff:SetOperation(function(e) e:Reset() s.should_check=false end)
+	Duel.RegisterEffect(eff,0)
 end
 function s.penop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.PendulumSummon(tp)
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		s.addreset(e:GetHandler())
 		--indes and can't activate
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)

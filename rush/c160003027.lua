@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 
 function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_AQUA) and c:IsType(TYPE_NORMAL)
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_AQUA) and c:IsType(TYPE_NORMAL)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)

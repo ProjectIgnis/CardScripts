@@ -20,19 +20,19 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	c:CancelToGrave()
-	Duel.SendtoDeck(c,tp,2,REASON_EFFECT)
-	Duel.ShuffleDeck(tp)
-	c:ReverseInDeck()
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TOHAND)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCode(EVENT_DRAW)
-	e1:SetTarget(s.thtg)
-	e1:SetOperation(s.thop)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TOHAND)
-	c:RegisterEffect(e1)
+	if Duel.SendtoDeck(c,tp,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_DECK) then
+		c:ReverseInDeck()
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,0))
+		e1:SetCategory(CATEGORY_TOHAND)
+		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+		e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+		e1:SetCode(EVENT_DRAW)
+		e1:SetTarget(s.thtg)
+		e1:SetOperation(s.thop)
+		e1:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TOHAND))
+		c:RegisterEffect(e1)
+	end
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetLocation()==LOCATION_GRAVE and chkc:GetControler()==tp and chkc:IsAbleToHand() end
@@ -45,8 +45,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and c:IsRelateToEffect(e) then
-		Duel.SendtoGrave(c,REASON_EFFECT)
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
+		if Duel.SendtoGrave(c,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_GRAVE) then
+			Duel.SendtoHand(tc,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,tc)
+		end
 	end
 end

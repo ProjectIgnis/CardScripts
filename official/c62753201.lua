@@ -1,6 +1,5 @@
 --ヴァレル・レフリジェレーション
 --Borrel Cooling
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x102,0x10f}
 
-function s.cfilter(c)
+function s.cfilter(c,tp)
 	return c:IsSetCard(0x102) and Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

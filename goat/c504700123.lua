@@ -32,9 +32,9 @@ function s.initial_effect(c)
 	end)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.GetCurrentChain()==0 and Duel.GetActivityCount(tp,ACTIVITY_SUMMON)==0
+	if chk==0 then return (Duel.GetCurrentChain(true)==0 and Duel.GetActivityCount(tp,ACTIVITY_SUMMON)==0
 		and Duel.GetActivityCount(tp,ACTIVITY_FLIPSUMMON)==0 and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0) or
-			(Duel.GetCurrentChain()>0 and s.activity[tp]==0) end
+			(Duel.GetCurrentChain(true)>0 and s.activity[tp]==0) end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)

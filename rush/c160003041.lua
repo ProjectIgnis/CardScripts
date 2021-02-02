@@ -1,4 +1,5 @@
--- 海竜王グランガノス Kairyu-Oh Granganoth (Sea Dragon King Granganoth)
+-- 海竜王グランガノス Kairyu-Oh Granganoth 
+--Sea Dragon King Granganoth
 local s,id=GetID()
 function s.initial_effect(c)
 	--Pay LP to deal damage
@@ -13,12 +14,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN)
+	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE)>0
 end
 
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	 local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE)
+	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(ct*300)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*300)

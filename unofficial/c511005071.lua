@@ -3,15 +3,6 @@
 --original script by Shad3
 local s,id=GetID()
 function s.initial_effect(c)
-	--Global Reg
-	if not s.gl_chk then
-		s.gl_chk=true
-		local ge1=Effect.GlobalEffect()
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_ADJUST)
-		ge1:SetOperation(s.flagoperation1)
-		Duel.RegisterEffect(ge1,0)
-	end
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -37,6 +28,13 @@ function s.initial_effect(c)
 	e3:SetCondition(s.flagcond)
 	e3:SetOperation(s.flagop2)
 	c:RegisterEffect(e3)
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.GlobalEffect()
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_ADJUST)
+		ge1:SetOperation(s.flagoperation1)
+		Duel.RegisterEffect(ge1,0)
+	end)
 end
 function s.flagregister(c)
 	if c:IsFaceup() and c:GetFlagEffect(id)==0 then

@@ -11,15 +11,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 	--Global check
-	if not s.gl_chk then
-		s.gl_chk=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.GlobalEffect()
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_LEAVE_FIELD)
 		ge1:SetCondition(s.reg_cd)
 		ge1:SetOperation(s.reg_op)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.filter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)

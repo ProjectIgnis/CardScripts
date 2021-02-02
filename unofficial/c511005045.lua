@@ -13,26 +13,21 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 	--Global check
-	if not s.gl_chk then
-		s.gl_chk=true
+	aux.GlobalCheck(s,function()
+		s.dmg={[0]=0,[1]=0}
 		local ge1=Effect.GlobalEffect()
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DAMAGE)
 		ge1:SetOperation(s.reg_op)
 		Duel.RegisterEffect(ge1,0)
-		local ge2=ge1:Clone()
-		ge2:SetCode(EVENT_TURN_END)
-		ge2:SetOperation(s.clr_op)
-		Duel.RegisterEffect(ge2,0)
-		s.dmg={[0]=0,[1]=0}
-	end
+		aux.AddValuesReset(function()
+								s.dmg[0]=0
+								s.dmg[1]=0
+							end)
+	end)
 end
 function s.reg_op(e,tp,eg,ep,ev,re,r,rp)
 	s.dmg[ep]=s.dmg[ep]+ev
-end
-function s.clr_op(e,tp,eg,ep,ev,re,r,rp)
-	s.dmg[0]=0
-	s.dmg[1]=0
 end
 function s.cd(e,tp,eg,ep,ev,re,r,rp)
 	return s.dmg[tp]>0

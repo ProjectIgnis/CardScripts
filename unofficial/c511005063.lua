@@ -3,10 +3,10 @@
 --original script by Shad3
 local s,id=GetID()
 --Jack specific card effects -_-
-if not s.gl_chk then
-	s.gl_chk=true
+aux.GlobalCheck(s,function()
 	local regeff=Card.RegisterEffect
-	Card.RegisterEffect=function(c,e,f)
+	Card.RegisterEffect=function(...)
+		local c,e=...
 		local tc=e:GetOwner()
 		if tc then
 			local tg=e:GetTarget()
@@ -26,9 +26,9 @@ if not s.gl_chk then
 				end
 			end
 		end
-		return regeff(c,e,f)
+		return regeff(...)
 	end
-end
+end)
 function s.initial_effect(c)
 	c:Type(TYPE_TOKEN)
 	--Activate

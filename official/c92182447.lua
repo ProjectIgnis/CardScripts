@@ -16,7 +16,7 @@ end
 s.listed_series={0x122}
 s.listed_names={92182447}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()==1-tp or Duel.GetCurrentPhase()~=PHASE_BATTLE or Duel.GetCurrentChain()>0 then
+	if Duel.GetTurnPlayer()==1-tp or Duel.GetCurrentPhase()~=PHASE_BATTLE or Duel.GetCurrentChain(true)>0 then
 		return false
 	end
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)

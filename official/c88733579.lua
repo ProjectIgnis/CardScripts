@@ -1,4 +1,5 @@
 --穿孔虫
+--Drill Bug
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -14,14 +15,11 @@ s.listed_names={27911549}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp
 end
-function s.filter(c)
-	return c:IsCode(27911549) and c:GetPosition()~=POS_FACEUP_DEFENSE
-end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstMatchingCardGoat(s.filter,tp,LOCATION_DECK,0,nil)
+	local tc=Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_DECK,0,1,1,nil,27911549):GetFirst()
 	if tc then
 		Duel.ShuffleDeck(tp)
-		Duel.MoveSequence(tc,0)
+		Duel.MoveToDeckTop(tc)
 		Duel.ConfirmDecktop(tp,1)
 	end
 end

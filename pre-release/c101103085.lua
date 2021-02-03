@@ -1,6 +1,8 @@
  --Steel Star Regulator
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
+	c:EnableReviveLimit()
 	--Link Summon
 	Link.AddProcedure(c,s.matfilter,3,3)
 	--ATK increase

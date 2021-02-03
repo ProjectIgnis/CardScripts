@@ -44,8 +44,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-function s.atcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()
+function s.atcon(e)
+	return Duel.IsTurnPlayer(e:GetHandlerPlayer()) and Duel.IsMainPhase()
 end
 function s.atlimit(e,c)
 	return not e:GetHandler():GetColumnGroup():IsContains(c)

@@ -44,7 +44,7 @@ end
 function s.naop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	if Duel.NegateAttack() then
-		if a and ((a:IsFaceup() and not a:IsDisabled()) or a:IsType(TYPE_TRAPMONSTER)) and a:IsRelateToEffect(e) then
+		if a and ((a:IsFaceup() and not a:IsDisabled()) or a:IsType(TYPE_TRAPMONSTER)) then
 		Duel.NegateRelatedChain(a,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -1,3 +1,4 @@
+--サイバネット・デフラグ
 --Cynet Defrag
 --scripted by Larry126
 local s,id=GetID()
@@ -30,15 +31,17 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e4:SetCountLimit(1,EFFECT_COUNT_CODE_DUEL)
+	e4:SetCountLimit(1)
 	e4:SetCost(s.cost)
 	e4:SetTarget(s.target)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(id)==0 end
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
+	c:RegisterFlagEffect(id,nil,0,1)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

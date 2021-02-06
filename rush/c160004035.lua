@@ -17,6 +17,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,0)
 end

@@ -89,7 +89,7 @@ function s.distg(e,c)
 end
 --to hand
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return not eg:IsContains(e:GetHandler()) and eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
+	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x25b) and c:IsAbleToHand()

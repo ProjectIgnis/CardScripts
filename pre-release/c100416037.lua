@@ -19,6 +19,7 @@ s.listed_series={0x25b}
 --Special Summon
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x25b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return (chkc:IsLocation(LOCATION_GRAVE) or chkc:IsLocation(LOCATION_REMOVED)) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -48,7 +49,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabelObject(tc)
 		e2:SetCondition(s.descon)
 		e2:SetOperation(s.desop)
-		e2:SetReset(RESET_PHASE+PHASE_END)
 		e2:SetCountLimit(1)
 		Duel.RegisterEffect(e2,tp)
 		local e3=Effect.CreateEffect(c)

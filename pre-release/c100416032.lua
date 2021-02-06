@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	--Banish
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_POSITION)
+	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -34,8 +34,8 @@ end
 function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.bfilter(chkc) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.bfilter,tp,0,LOCATION_GRAVE,1,nil) end
-	local tc=Duel.SelectTarget(tp,s.bfilter,tp,0,LOCATION_GRAVE,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local tc=Duel.SelectTarget(tp,s.bfilter,tp,0,LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,tp,LOCATION_GRAVE)
 end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)

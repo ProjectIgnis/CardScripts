@@ -56,7 +56,7 @@ function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x25b) and
 		(not extracon or Duel.IsExistingMatchingCard(s.repcfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,extracon,base,{e,tp,eg,ep,ev,re,r,rp,chk}))
 end
-function s.repop(e,tp,eg,ep,ev,re,r,rp)
+function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.repcfilter,tp,LOCATION_GRAVE,0,1,1,nil)

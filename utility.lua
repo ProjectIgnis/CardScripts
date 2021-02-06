@@ -47,7 +47,7 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon)
 				end
 				eff=effs[Duel.SelectOption(tp,false,table.unpack(desctable)) + 1]
 			end
-			local res={eff:GetOperation()(e,tp,eg,ep,ev,re,r,rp,chk)}
+			local res={eff:GetOperation()(eff,e,tp,eg,ep,ev,re,r,rp,chk)}
 			eff:UseCountLimit(tp)
 			return table.unpack(res)
 		end

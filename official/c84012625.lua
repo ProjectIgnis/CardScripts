@@ -66,7 +66,7 @@ function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		and c:IsSetCard(0xa3) and c:IsType(TYPE_SYNCHRO)
 end
-function s.repop(e,tp,eg,ep,ev,re,r,rp)
+function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST+REASON_REPLACE)
+	Duel.Remove(base:GetHandler(),POS_FACEUP,REASON_COST+REASON_REPLACE)
 end

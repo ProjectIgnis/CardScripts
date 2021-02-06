@@ -58,7 +58,7 @@ end
 	--Check for "War Rock" monster
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x25c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and not Duel.IsExistingMatchingCard(s.namefilter,tp,LOCATION_MZONE,0,1,nil,c:GetCode())
+		and not Duel.IsExistingMatchingCard(s.namefilter,tp,LOCATION_ONFIELD,0,1,nil,c:GetCode())
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,3 +1,4 @@
+--死霊の盾
 --Spirit Shield
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,7 +41,5 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return false end
-	if Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
-	end
+	Duel.NegateAttack()
 end

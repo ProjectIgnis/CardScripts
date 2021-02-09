@@ -40,7 +40,7 @@ s.listed_names={19877898,34088136}
 s.LVnum=5
 s.LVset=0x5d
 function s.con(e)
-	return e:GetHandler():GetFlagEffect(id)~=0
+	return e:GetHandler():GetFlagEffect(34830502)~=0
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+0x1ec0000+RESET_PHASE+PHASE_END,0,1)

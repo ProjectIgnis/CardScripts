@@ -1,5 +1,5 @@
 --死霊王 ドーハスーラ
---Doomking Balerdorch
+--Doomking Balerdroch
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate and/or banish
@@ -14,6 +14,8 @@ function s.initial_effect(c)
 	e1:SetTarget(s.disrmtg)
 	e1:SetOperation(s.disrmop)
 	c:RegisterEffect(e1)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,3))
@@ -41,12 +43,9 @@ function s.filter(c)
 end
 function s.disrmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsChainDisablable(ev) and Duel.GetFlagEffect(tp,id)==0
-	local b2=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil)
+	local b2=Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.filter),tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil)
 		and Duel.GetFlagEffect(tp,id+1)==0
 	if chk==0 then return b1 or b2 end
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function s.disrmop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.IsChainDisablable(ev) and Duel.GetFlagEffect(tp,id)==0
@@ -62,7 +61,7 @@ function s.disrmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
 	end

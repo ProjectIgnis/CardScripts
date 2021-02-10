@@ -45,7 +45,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.SelectYesNo(1-tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_RTOHAND)
-		local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,0,LOCATION_GRAVE,1,1,nil)
+		local sg=Duel.SelectMatchingCard(1-tp,aux.NecroValleyFilter(s.thfilter),tp,0,LOCATION_GRAVE,1,1,nil)
 		if #sg>0 then
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		end

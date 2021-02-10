@@ -1534,6 +1534,21 @@ function Auxiliary.ChangeBattleDamage(player,value)
 		end
 end
 
+function Auxiliary.EffectCheck(tp,cons,strings,ops)
+	return function(e,tp,eg,ep,ev,re,r,rp)
+		local eff,sel={},{}
+		for i,con in ipairs(cons) do
+			if con then
+				table.insert(eff,strings[i])
+				table.insert(sel,i)
+			end
+		end
+		local choice=Duel.SelectOption(tp,table.unpack(eff))
+		if ops then ops[sel[choice+1]](e,tp,eg,ep,ev,re,r,rp) end
+		return sel[choice+1]
+	end
+end
+
 Duel.LoadScript("cards_specific_functions.lua")
 Duel.LoadScript("proc_fusion.lua")
 Duel.LoadScript("proc_fusion_spell.lua")

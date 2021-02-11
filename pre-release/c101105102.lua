@@ -38,8 +38,9 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and (c:IsLocation(LOCATION_GRAVE) or c:IsLocation(LOCATION_HAND)) and not eg:IsContains(c) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,LOCATION_GRAVE)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+		and (c:IsLocation(LOCATION_GRAVE) or c:IsLocation(LOCATION_HAND)) and not eg:IsContains(c) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,c:GetLocation())
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -69,8 +70,7 @@ function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.stop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
-			Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0xa3,TYPES_TOKEN,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT)
-	then
+			Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0xa3,TYPES_TOKEN,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT) then
 		local token=Duel.CreateToken(tp,id+100)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end

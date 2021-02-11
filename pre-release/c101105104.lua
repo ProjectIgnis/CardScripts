@@ -4,7 +4,8 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterSummonCode(21159309),1,1,Synchro.NonTuner(nil),1,99,nil,nil,nil,nil,s.syncheck)
+	Synchro.AddProcedure(c,aux.FilterSummonCode(21159309),1,1,Synchro.NonTuner(nil),1,99,nil,nil,nil,s.matfilter)
+	
 	c:EnableReviveLimit()
 	--must first be synchro summoned
 	local e0=Effect.CreateEffect(c)
@@ -49,11 +50,11 @@ function s.initial_effect(c)
 end
 s.listed_names={21159309,CARD_STARDUST_DRAGON }
 s.synchro_nt_required=1
-function s.syncheck(g,sc,tp)
-	return g:IsExists(s.synfilter,1,nil,sc,SUMMON_TYPE_SYNCHRO,tp)
+function s.matfilter(g,sc,tp)
+	return g:IsExists(s.cfilter,1,nil,sc,tp)
 end
-function s.synfilter(c,sc,sum,tp)
-	return c:IsNotTuner() and c:IsRace(RACE_DRAGON,sc,sum,tp) and c:IsType(TYPE_SYNCHRO,sc,sum,tp)
+function s.cfilter(c,sc,tp)
+	return c:IsRace(RACE_DRAGON,sc,SUMMON_TYPE_SYNCHRO,tp) and c:IsType(TYPE_SYNCHRO,sc,SUMMON_TYPE_SYNCHRO,tp)
 end
 function s.disfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and not c:IsDisabled()

@@ -36,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,ct):GetFirst()
 	if tc then
@@ -66,4 +66,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroup(s.drfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil):GetClassCount(Card.GetCode)
 	Duel.Draw(p,ct,REASON_EFFECT)
 end
-

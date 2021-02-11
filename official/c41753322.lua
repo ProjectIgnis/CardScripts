@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e5:SetCondition(s.dcon)
-	e5:SetOperation(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
+	e5:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e5)
 end
 function s.otcon(e,c)

@@ -54,6 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 	elseif op==1 then
 		local tc=g2:Select(tp,1,1,nil):GetFirst()
+		Duel.ShuffleDeck(tp)
 		Duel.MoveSequence(tc,SEQ_DECKTOP)
 	end
 	Duel.ConfirmDecktop(tp,1)

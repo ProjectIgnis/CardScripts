@@ -56,12 +56,12 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
-	local tc1=g:GetFirst()
-	local tc2=g:GetNext()
-	if tc1:IsRelateToEffect(e) and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
-		and Duel.SpecialSummon(tc1,0,tp,1-tp,false,false,POS_FACEUP)>0
-		and tc2:IsRelateToEffect(e) and tc2:IsControler(1-tp) then
-		Duel.SendtoGrave(tc2,REASON_EFFECT)
+	local tc1=g:Filter(Card.IsLocation,nil,LOCATION_MZONE):GetFirst()
+	local tc2=g:Filter(Card.IsLocation,nil,LOCATION_GRAVE):GetFirst()
+	if tc2:IsRelateToEffect(e) and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
+		and Duel.SpecialSummon(tc2,0,tp,1-tp,false,false,POS_FACEUP)>0
+		and tc1:IsRelateToEffect(e) and tc1:IsControler(1-tp) then
+		Duel.SendtoGrave(tc1,REASON_EFFECT)
 	end
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

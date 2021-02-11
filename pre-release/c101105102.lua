@@ -1,53 +1,50 @@
--- スターダスト・シンクロン
--- Stardust Synchron
--- scripted by Hatter
+--スターダスト・トレイル
+--Stardust Trail
+--Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
-	-- special summon itself from hand or GY
+	--special summon itself from hand/gy
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_RELEASE)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- add S/T that lists Stardust Dragon
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
-	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetCountLimit(1,id+100)
-	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e1:SetTarget(s.thtg)
-	e1:SetOperation(s.thop)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	--special summon 2 token if used as synchro material
+	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_BE_MATERIAL)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetCountLimit(1,id+100)
+	e2:SetCondition(s.stcon)
+	e2:SetTarget(s.sttg)
+	e2:SetOperation(s.stop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_STARDUST_DRAGON}
-function s.cfilter(c,ft,tp)
-	return ft>0 or (c:IsControler(tp) and c:GetSequence()<5)
+s.listed_series={0x66, 0x1017, 0xa3}
+function s.spcfilter(c,tp)
+	return c:IsPreviousControler(tp)
 end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,ft,tp) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,ft,tp)
-	Duel.Release(g,REASON_COST)
+function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.spcfilter,1,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,c:GetLocation())
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and (c:IsLocation(LOCATION_GRAVE) or c:IsLocation(LOCATION_HAND)) and not eg:IsContains(c) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		-- banish it if it leaves the field
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -57,37 +54,24 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end
-	-- cannot summon extra deck monsters except synchro
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
-	-- lizard check
-	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
-function s.splimit(e,c)
-	return not c:IsType(TYPE_SYNCHRO) and c:IsLocation(LOCATION_EXTRA)
+function s.stcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local rc=c:GetReasonCard()
+	return (rc:IsSetCard(0x66) or rc:IsSetCard(0x1017) or rc:IsSetCard(0xa3)) and r & REASON_SYNCHRO == REASON_SYNCHRO
 end
-function s.lizfilter(e,c)
-	return not c:IsOriginalType(TYPE_SYNCHRO)
+function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
+			Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0xa3,TYPES_TOKEN,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT)
+	end
+	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
-function s.thfilter(c)
-	return c:IsAbleToHand() and c:IsType(TYPE_SPELL|TYPE_TRAP) and aux.IsCodeListed(c,CARD_STARDUST_DRAGON)
-end
-function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-end
-function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+function s.stop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
+			Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0xa3,TYPES_TOKEN,0,0,1,RACE_DRAGON,ATTRIBUTE_LIGHT)
+	then
+		local token=Duel.CreateToken(tp,id+100)
+		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

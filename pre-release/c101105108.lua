@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id,CARD_STARDUST_DRAGON}
 function s.lffilter(c,r,rp,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsCode(CARD_STARDUST_DRAGON) or (aux.IsCodeListed(c,CARD_STARDUST_DRAGON) and c:IsType(TYPE_SYNCHRO))
+	return c:IsPreviousPosition(POS_FACEUP) and (c:IsCode(CARD_STARDUST_DRAGON) or (aux.IsCodeListed(c,CARD_STARDUST_DRAGON) and c:IsType(TYPE_SYNCHRO)))
 		and rp==tp and ((r&REASON_EFFECT)==REASON_EFFECT or (r&REASON_COST)==REASON_COST)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)

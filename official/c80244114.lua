@@ -23,12 +23,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.indop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={44508094}
+s.listed_names={CARD_STARDUST_DRAGON}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(44508094) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsCode(CARD_STARDUST_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

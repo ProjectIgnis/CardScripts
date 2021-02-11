@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={44508094}
+s.listed_names={CARD_STARDUST_DRAGON}
 function s.filter(c,p)
 	return c:GetControler()==p and c:IsOnField()
 end
@@ -23,7 +23,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ex and tg~=nil and tc+tg:FilterCount(s.filter,nil,tp)-#tg>1
 end
 function s.sfilter(c,e,tp)
-	return c:IsCode(44508094) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(CARD_STARDUST_DRAGON) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

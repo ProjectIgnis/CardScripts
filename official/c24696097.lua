@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,aux.FilterSummonCode(44508094),1,1)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,aux.FilterSummonCode(CARD_STARDUST_DRAGON),1,1)
 	c:EnableReviveLimit()
 	--multi attack
 	local e1=Effect.CreateEffect(c)
@@ -56,7 +56,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.valcheck)
 	c:RegisterEffect(e5)
 end
-s.listed_names={44508094}
+s.listed_names={CARD_STARDUST_DRAGON}
 s.synchro_tuner_required=1
 s.synchro_nt_required=1
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)

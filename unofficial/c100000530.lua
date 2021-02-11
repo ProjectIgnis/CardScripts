@@ -14,7 +14,7 @@ function s.vfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_DRAGON)
 end
 function s.sfilter(c,e,tp)
-	return c:GetCode()==44508094 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetCode()==CARD_STARDUST_DRAGON and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -72,7 +72,7 @@ function s.val(e,c)
 	return g:GetSum(Card.GetBaseAttack)
 end
 function s.eqlimit(e,c)
-	return c:GetCode()==44508094
+	return c:GetCode()==CARD_STARDUST_DRAGON
 end
 function s.sendfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_DRAGON) and c:IsAbleToExtra()

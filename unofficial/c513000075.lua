@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Negate
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(44508094,0))
+	e3:SetDescription(aux.Stringid(CARD_STARDUST_DRAGON,0))
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--Revive
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(44508094,1))
+	e4:SetDescription(aux.Stringid(CARD_STARDUST_DRAGON,1))
 	e4:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
@@ -53,9 +53,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.sumop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={44508094,27564031}
+s.listed_names={CARD_STARDUST_DRAGON,27564031}
 function s.spfilter(c)
-	return c:IsCode(44508094) and c:IsAbleToGraveAsCost()
+	return c:IsCode(CARD_STARDUST_DRAGON) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

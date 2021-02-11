@@ -36,9 +36,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x301}
-s.listed_names={44508094,24696097}
+s.listed_names={CARD_STARDUST_DRAGON,24696097}
 function s.filter(c,e,tp)
-	if not c:IsCode(44508094) then return false end
+	if not c:IsCode(CARD_STARDUST_DRAGON) then return false end
 	local code=c:GetOriginalCode()
 	local tuner=Duel.GetMatchingGroup(s.matfilter1,tp,LOCATION_GRAVE,0,nil,c)
 	local nontuner=Duel.GetMatchingGroup(s.matfilter2,tp,LOCATION_GRAVE,0,nil,c)

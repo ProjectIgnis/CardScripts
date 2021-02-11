@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
 	c:EnableReviveLimit()
-	Synchro.AddMajesticProcedure(c,aux.FilterBoolFunction(Card.IsCode,21159309),true,aux.FilterBoolFunction(Card.IsCode,44508094),true,Synchro.NonTuner(nil),false)
+	Synchro.AddMajesticProcedure(c,aux.FilterBoolFunction(Card.IsCode,21159309),true,aux.FilterBoolFunction(Card.IsCode,CARD_STARDUST_DRAGON),true,Synchro.NonTuner(nil),false)
 	--Negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -55,7 +55,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.valcheck)
 	c:RegisterEffect(e5)
 end
-s.listed_names={21159309,44508094}
+s.listed_names={21159309,CARD_STARDUST_DRAGON}
 s.synchro_nt_required=1
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp and Duel.IsChainNegatable(ev)
@@ -121,7 +121,7 @@ function s.aclimit(e,re,tp)
 	return re:GetOwner()==e:GetOwner() and not re:IsHasProperty(EFFECT_FLAG_INITIAL)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(44508094) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(CARD_STARDUST_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

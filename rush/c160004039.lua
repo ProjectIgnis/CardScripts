@@ -13,8 +13,8 @@ function s.rvfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and not c:IsPublic()
 		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.attfilter,c:GetRace()),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c:GetAttribute())
 end
-function s.attfilter(c,att)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and not c:IsAttribute(att)
+function s.attfilter(c,race)
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and not c:IsRace(race)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rvfilter,tp,LOCATION_HAND,0,1,nil,tp) end

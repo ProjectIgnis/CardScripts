@@ -54,7 +54,7 @@ function s.splimit(e,se,sp,st)
 end
 function s.costfilter(c)
 	return c:IsSetCard(0x3d) and c:IsAbleToRemoveAsCost() and ((c:IsOnField() and c:IsFaceup()) or c:IsLocation(LOCATION_HAND)) 
-		and Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
+		and Duel.IsExistingTarget(Card.IsAbleToRemove,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) end

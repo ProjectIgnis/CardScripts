@@ -16,7 +16,7 @@ function s.filter(c,e,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE)
 end
 function s.cfilter(c,tp)
-	return c:IsAbleToDeck() and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_GRAVE,0,2,c:GetRace())
+	return c:IsAbleToDeck() and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_GRAVE,0,2,c,c:GetRace())
 end
 function s.cfilter2(c,race)
 	return c:IsAbleToDeck() and c:IsRace(race)

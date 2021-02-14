@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return s[tp] end)
     	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	aux.GlobalCheck(s,function()
         	s[0]=false

@@ -69,7 +69,7 @@ function s.bop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.Destroy(g1,REASON_EFFECT)>0 then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_SET_ATTACK)
+			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetValue(0)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			g2:GetFirst():RegisterEffect(e1)

@@ -29,5 +29,5 @@ function s.val(e,c)
 	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0x12e),c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)*1000
 end
 function s.atktg(e,c)
-	return c:IsStatus(STATUS_SUMMON_TURN) and c:IsSetCard(0x12e) and (c:GetSummonType()&SUMMON_TYPE_SPECIAL)~=0 
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSetCard(0x12e) and (c:GetSummonType()&SUMMON_TYPE_SPECIAL)~=0 
 end

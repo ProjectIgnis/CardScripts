@@ -50,6 +50,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 		flag=1
+		g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,nil)
+		ct=g:GetClassCount(Card.GetCode)
+		b2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) and ct>=5
+		b3=Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,nil) and ct>=7
 	end
 	if b2 and ((flag==0 and not b3) or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
 		Duel.BreakEffect()
@@ -59,6 +63,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		end
 		flag=1
+		g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,nil)
+		ct=g:GetClassCount(Card.GetCode)
+		b3=Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,nil) and ct>=7
 	end
 	if b3 and (flag==0 or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
 		Duel.BreakEffect()

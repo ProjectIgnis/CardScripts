@@ -1,6 +1,6 @@
 --ドレミコード・フォーマル
 --Doremichord Formal
---Scripted by Eerie Code
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

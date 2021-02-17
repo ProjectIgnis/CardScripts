@@ -74,7 +74,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc==e:GetHandler() then tc=Duel.GetAttackTarget() end
-	if not tc:IsFaceup() then return false end
+	if not (tc and tc:IsFaceup()) then return false end
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_PENDULUM),tp,LOCATION_PZONE,0,nil)
 	local _,sc=g:GetMinGroup(function(c) return c:GetScale() end)
 	return sc and tc and tc:IsControler(1-tp) and tc:IsAttackAbove(sc*300)

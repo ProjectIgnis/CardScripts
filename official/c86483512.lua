@@ -1,5 +1,5 @@
 --電脳堺悟－老々
---Datascape Savant - Laolao
+--Virtual World Roshi - Laolao
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -50,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),nil)
 	--Send to GY and Special Summon
-	if tc and tc:IsRelateToEffect(e) and not tc:IsFacedown() then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,s.togravefilter,tp,LOCATION_DECK,0,1,1,nil,tc:GetType())
 		if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 then

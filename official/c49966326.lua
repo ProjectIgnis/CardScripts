@@ -1,5 +1,5 @@
 --電脳堺麟－麟々
---Datascape Qilin - Linlin
+--Virtual World Kirin - Lili
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e0,tp)
 	aux.RegisterClientHint(c,EFFECT_FLAG_OATH,tp,1,0,aux.Stringid(id,1),nil)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and not tc:IsFacedown() then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local tg=Duel.SelectMatchingCard(tp,s.tgvfilter,tp,LOCATION_DECK,0,1,1,nil,tc:GetType()&key)
 		if #tg>0 and Duel.SendtoGrave(tg,REASON_EFFECT)>0 then

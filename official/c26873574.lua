@@ -79,8 +79,8 @@ end
 function s.fspfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL) and c:IsType(TYPE_FIELD)
 end
-function s.tgcond(e,c,tp)
-	return Duel.IsExistingMatchingCard(s.fspfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+function s.tgcond(e,c)
+	return Duel.IsExistingMatchingCard(s.fspfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.rmvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

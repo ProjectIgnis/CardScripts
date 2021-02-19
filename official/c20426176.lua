@@ -1,19 +1,18 @@
 --海造賊－大航海
 --Plunder Patroll Booty
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 	--Change the attribute of 1 of opponent's monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -35,18 +34,10 @@ function s.initial_effect(c)
 	e3:SetTarget(s.gytg)
 	e3:SetOperation(s.gyop)
 	c:RegisterEffect(e3)
+	if not GhostBelleTable then GhostBelleTable={} end
+    table.insert(GhostBelleTable,e2)
 end
 s.listed_series={0x13f}
-
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if s.cost(e,tp,eg,ep,ev,re,r,rp,0) and s.costg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,94) then
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e:SetOperation(s.cosop)
-		s.cost(e,tp,eg,ep,ev,re,r,rp,1)
-		s.costg(e,tp,eg,ep,ev,re,r,rp,1)
-	end
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
@@ -79,11 +70,14 @@ function s.cosop(e,tp,eg,ep,ev,re,r,rp)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE,0,nil,e,tp,ft)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-			local sc=g:Select(tp,1,1,nil):GetFirst()
+			Duel.BreakEffect()
+			local sg=g:Select(tp,1,1,nil)
+			local sc=sg:GetFirst()
 			if ft>0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not sc:IsAbleToDeck() or Duel.SelectYesNo(tp,aux.Stringid(id,3))) then
 				Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 			else
-				Duel.SendtoDeck(sc,nil,2,REASON_EFFECT)
+				Duel.HintSelection(sg)
+				Duel.SendtoDeck(sc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 			end
 		end
 	end

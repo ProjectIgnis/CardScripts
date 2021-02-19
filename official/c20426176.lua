@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.gyop)
 	c:RegisterEffect(e3)
 	if not GhostBelleTable then GhostBelleTable={} end
-    table.insert(GhostBelleTable,e2)
+	table.insert(GhostBelleTable,e2)
 end
 s.listed_series={0x13f}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

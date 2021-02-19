@@ -82,7 +82,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc then return end
-	if Duel.SendtoHand(tc,tp,REASON_EFFECT)>0 then
+	if Duel.SendtoHand(tc,tp,REASON_EFFECT)>0 and Duel.GetOperatedGroup():GetFirst():IsLocation(LOCATION_HAND) then
 		if Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)>0 then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetDescription(3300)

@@ -34,14 +34,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x135}
-function s.tgfilter(c)
+function s.tgfilter(c,tp)
 	return c:IsControler(tp) and c:IsSetCard(0x135) and c:IsFaceup(0x135)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(tp,94) then
+	if Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,nil,tp) and Duel.SelectYesNo(tp,94) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
-		local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
+		local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 		local tc=Duel.GetFirstTarget()
 		if tc and tc:IsRelateToEffect(e) then
 			if tc:IsFaceup() then

@@ -2,7 +2,7 @@
 --Washing Santa Cloth
 local s,id=GetID()
 function s.initial_effect(c)
-	--Send to GY and destroy
+	--Draw and recover
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)	
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCountRush(Card.IsType,tp,0,LOCATION_MZONE,nil,TYPE_MONSTER)
+	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_MZONE,nil,TYPE_MONSTER)
 	if chk==0 then return ct>0 and Duel.IsPlayerCanDraw(1-tp,ct)  end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(ct)

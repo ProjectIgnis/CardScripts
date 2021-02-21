@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)	
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_MZONE,nil,TYPE_MONSTER)
+	local ct=Duel.GetMatchingGroupCount(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return ct>0 and Duel.IsPlayerCanDraw(1-tp,ct)  end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(ct)

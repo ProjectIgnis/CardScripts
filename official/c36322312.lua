@@ -53,7 +53,8 @@ function s.spfilter(c)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	local g=Duel.GetMatchingGroup(s.spfilter,c:GetControler(),LOCATION_HAND+LOCATION_ONFIELD,0,c)
+	local tp=c:GetControler()
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,c)
 	return aux.SelectUnselectGroup(g,e,tp,2,2,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)

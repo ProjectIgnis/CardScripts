@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x261}
 function s.filter(c)
-	return c:IsFaceup() and c:IsOriginalType(TYPE_PENDULUM) and c:IsSetCard(0x261)
+	return c:IsFaceup() and c:IsOriginalType(TYPE_PENDULUM) and c:IsOriginalType(TYPE_MONSTER) and c:IsSetCard(0x261)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_ONFIELD,0,nil)>2

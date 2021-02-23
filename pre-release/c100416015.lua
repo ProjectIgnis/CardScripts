@@ -58,8 +58,8 @@ function s.repcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsOddScale),e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
 end
 function s.repfilter(c,tp)
-	return c:IsSetCard(0x261) and c:IsType(TYPE_PENDULUM) and c:IsOriginalType(TYPE_MONSTER) and c:IsControler(tp)
-		and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp and not c:IsReason(REASON_REPLACE)
+	return c:IsFaceup() and c:IsSetCard(0x261) and c:IsOriginalType(TYPE_PENDULUM) and c:IsOriginalType(TYPE_MONSTER)
+		and c:IsControler(tp) and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -74,6 +74,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
 			local cg=g:Select(tp,1,1,nil)
 			e:SetLabelObject(cg:GetFirst())
+			Duel.HintSelection(cg)
 		end
 		c:SetStatus(STATUS_DESTROY_CONFIRMED,true)
 		return true

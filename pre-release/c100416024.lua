@@ -74,14 +74,17 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+function s.penfilter(c)
+	return c:IsSetCard(0x261) and c:GetOriginalLevel()>0
+end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id+100)==0 and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,nil,0x261) end
+	if chk==0 then return Duel.GetFlagEffect(tp,id+100)==0 and Duel.IsExistingMatchingCard(s.penfilter,tp,LOCATION_PZONE,0,1,nil) end
 	Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE+PHASE_END,0,1)
 end
 function s.penop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local tc=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_PZONE,0,1,1,nil,0x261):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.penfilter,tp,LOCATION_PZONE,0,1,1,nil):GetFirst()
 	if tc then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -95,7 +98,7 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descfilter(c,f)
-	return c:IsFaceup() and c:IsSetCard(0x261) and c:IsOriginalType(TYPE_MONSTER) and f(c)
+	return c:IsFaceup() and c:IsSetCard(0x261) and c:IsOriginalType(TYPE_PENDULUM) and c:IsOriginalType(TYPE_MONSTER) and f(c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)

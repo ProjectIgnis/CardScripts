@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x261}
 function s.cfilter(c,f)
-	return c:IsFaceup() and c:IsSetCard(0x261) and c:IsType(TYPE_PENDULUM) and f(c)
+	return c:IsFaceup() and c:IsSetCard(0x261) and c:IsOriginalType(TYPE_PENDULUM) and c:IsOriginalType(TYPE_MONSTER) and f(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end

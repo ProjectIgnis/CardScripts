@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.disfilter,tp,LOCATION_EXTRA,0,1,1,nil)
 	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 
 		and Duel.GetOperatedGroup():GetFirst():IsLocation(LOCATION_DECK) then
-		--unaffected
+		--Unaffected
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
@@ -40,18 +40,18 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_PENDULUM))
 		e1:SetValue(s.efilter)
 		e1:SetLabelObject(re)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_CHAIN)
 		Duel.RegisterEffect(e1,tp)
-		--cannot destroy
+		--Cannot be destroyed
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e2:SetTargetRange(LOCATION_PZONE,0)
 		e2:SetValue(s.efilter)
 		e2:SetLabelObject(re)
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_CHAIN)
 		Duel.RegisterEffect(e2,tp)
-		--cannot banish
+		--Cannot be banished
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_PZONE,0,nil)
 		for tc in aux.Next(g) do
 			local e3=Effect.CreateEffect(c)
@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetTargetRange(1,1)
 			e3:SetTarget(s.rmlimit)
 			e3:SetLabelObject(re)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e3:SetReset(RESET_CHAIN)
 			tc:RegisterEffect(e3)
 		end
 	end

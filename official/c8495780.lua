@@ -49,9 +49,8 @@ function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetDecktopGroup(tp,1)
-	if chk==0 then return g:IsExists(Card.IsAbleToGraveAsCost,1,nil) end
-	Duel.SendtoGrave(g,REASON_COST)
+	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
+	Duel.DiscardDeck(tp,1,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelBelow(4) and not c:IsCode(id)

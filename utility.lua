@@ -20,7 +20,6 @@ local function cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r
 				end
 			end
 		end
-		return t
 	end
 	return t
 end

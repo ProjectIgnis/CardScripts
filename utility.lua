@@ -170,6 +170,7 @@ function Auxiliary.Next(g)
 			end
 end
 Group.Iter=Auxiliary.Next
+Group.__bnot=Auxiliary.Next
 
 function Auxiliary.NULL()
 end

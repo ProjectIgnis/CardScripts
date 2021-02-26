@@ -17,7 +17,7 @@ end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_EXTRA,0,1,nil) and
 		Duel.IsExistingMatchingCard(aux.AND(Card.IsAbleToRemove,Card.IsFacedown),tp,0,LOCATION_EXTRA,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,2,nil,LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,2,0,LOCATION_EXTRA)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

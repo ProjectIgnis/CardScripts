@@ -141,14 +141,23 @@ function bit.replace(r,v,field,width)
 	return (r&~(m<<f))|((v&m)<< f)
 end
 
+if not Effect.IsDeleted then
+	Effect.IsDeleted=function(o)
+		return not (pcall(o.GetLuaRef,o))
+	end
+	Group.IsDeleted=Effect.IsDeleted
+	Card.IsDeleted=Group.IsDeleted
+end
+
 local _type=type
 function type(o)
 	local tp=_type(o)
 	if tp~="userdata" then return tp
+	elseif o.IsDeleted and o:IsDeleted() then return "Deleted"
 	elseif o.GetOriginalCode then return "Card"
 	elseif o.KeepAlive then return "Group"
 	elseif o.SetLabelObject then return "Effect"
-	else return "userdata"
+	else return tp
 	end
 end
 

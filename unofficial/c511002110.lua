@@ -84,7 +84,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PHASE+PHASE_END)
+	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.wincon)
 	e2:SetOperation(s.winop)
@@ -106,7 +106,7 @@ function s.reset(e,tp,eg,ep,ev,re,r,rp)
 	s.winop(e:GetLabelObject(),tp,eg,ep,ev,e,r,rp)
 end
 function s.wincon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()+1

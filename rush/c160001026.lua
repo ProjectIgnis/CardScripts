@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 	--Check for level 7+ dragon
 function s.filter(c)
-	return c:IsRace(RACE_DRAGON) and c:IsLevelAbove(7)
+	return c:IsRace(RACE_DRAGON) and c:IsLevelAbove(7) and c:IsFaceup()
 end
 	--If the player controls a level 7+ dragon monster
 function s.condition(e)

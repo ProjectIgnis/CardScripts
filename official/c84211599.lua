@@ -51,6 +51,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 	local d=Duel.AnnounceNumber(tp,table.unpack(ann))
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local rg=g:Select(tp,d,d,nil)
 	Duel.Remove(rg,POS_FACEDOWN,REASON_COST)
 	e:SetLabel(d)

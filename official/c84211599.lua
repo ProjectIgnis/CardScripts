@@ -1,5 +1,5 @@
 --金満で謙虚な壺
---Pot of Disparity
+--Pot of Prosperity
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -85,7 +85,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(s.damval)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
+	aux.RegisterClientHint(e:GetHandler(),nil,tp,0,1,aux.Stringid(id,2),nil)
 end
 function s.damval(e,re,val,r,rp,rc)
 	return math.floor(val/2)

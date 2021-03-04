@@ -43,6 +43,16 @@ Fusion.ForcedMatValidity=function(c,e)
 	return c:IsImmuneToEffect(e)
 end
 
+
+Duel.GetFusionMaterial=(function()
+	local oldfunc=Duel.GetFusionMaterial
+	local function matchfunc(c)
+		return c:IsType(TYPE_MONSTER) and c:IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL)
+	end
+	return function(tp,...)
+		return oldfunc(tp,...)+Duel.GetMatchingGroup(matchfuncr,tp,LOCATION_GRAVE,0,nil)
+	end
+end)()
 Fusion.SummonEffTG = aux.FunctionWithNamedArgs(
 function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,extratg,mincount,maxcount)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -207,7 +217,13 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 							if extraop(e,tc,tp,mat1)==false then return end
 						end
 						if #mat1>0 then
-							Duel.SendtoGrave(mat1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+							local ingrave,notgrave=mat1:Split(Card.IsLocation,nil,LOCATION_GRAVE)
+							if #ingrave>0 then
+								Duel.Remove(ingrave,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+							end
+							if #notgrave>0 then
+								Duel.SendtoGrave(notgrave,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+							end
 						end
 						Duel.BreakEffect()
 						Duel.SpecialSummonStep(tc,value,tp,tp,sumlimit,false,POS_FACEUP)

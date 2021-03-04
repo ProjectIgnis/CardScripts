@@ -50,7 +50,7 @@ Duel.GetFusionMaterial=(function()
 		return c:IsType(TYPE_MONSTER) and c:IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL)
 	end
 	return function(tp,...)
-		return oldfunc(tp,...)+Duel.GetMatchingGroup(matchfuncr,tp,LOCATION_GRAVE,0,nil)
+		return oldfunc(tp,...)+Duel.GetMatchingGroup(matchfunc,tp,LOCATION_GRAVE,0,nil)
 	end
 end)()
 Fusion.SummonEffTG = aux.FunctionWithNamedArgs(

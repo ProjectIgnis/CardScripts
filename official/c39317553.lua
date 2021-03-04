@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz summon procedure
-	Xyz.AddProcedure(c,nil,5,2,aux.FilterFaceupFunction(Card.IsRank,4),aux.Stringid(id,0))
+	Xyz.AddProcedure(c,nil,5,2,aux.FilterFaceupFunction(Card.IsRank,4),aux.Stringid(id,0),2,s.altop)
 	c:EnableReviveLimit()
 	--Cannot be xyz material
 	local e0=Effect.CreateEffect(c)
@@ -31,6 +31,11 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
+end
+function s.altop(e,tp,chk)
+	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	return true
 end
 function s.xyzcon(e)
 	local c=e:GetHandler()

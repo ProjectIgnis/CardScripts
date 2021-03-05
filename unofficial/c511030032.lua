@@ -35,12 +35,12 @@ function s.cfilter(c,e,tp)
 		and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
 		and (not c:IsHasEffect(EFFECT_REVIVE_LIMIT) or c:IsStatus(STATUS_PROC_COMPLETE))
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),c:GetSetCard(),c:GetType(),c:GetAttack(),c:GetDefense(),c:GetLevel(),c:GetRace(),c:GetAttribute(),POS_FACEUP,1-tp,SUMMON_TYPE_SPECIAL)
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetLink())
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
-function s.spfilter(c,e,tp,rating)
-	return c:IsSetCard(0x578) and c:IsLinkMonster() and c:GetLink()==rating
+function s.spfilter(c,e,tp,tc)
+	return c:IsSetCard(0x578) and c:IsLinkMonster() and c:GetLink()==tc:GetLink()
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+		and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.cfilter(chkc,e,tp) end
@@ -54,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0
 		and tc:IsLocation(LOCATION_REMOVED) and Duel.GetLocationCountFromEx(tp)>0 then
-		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc:GetLink())
+		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc)
 		if g and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then
 			if tc:IsLocation(LOCATION_REMOVED) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp) then
 				Duel.BreakEffect()

@@ -1,4 +1,4 @@
---深界の黄昏ーカース
+--溟界の黄昏－カース
 --Curse, Dawn of the Abhyss
 --scripted by Xylen5967
 local s,id=GetID()

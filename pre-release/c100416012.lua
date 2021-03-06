@@ -85,7 +85,7 @@ function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(aux.NOT(Card.IsRace),RACE_REPTILE),tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return true end
 	if #g>0 then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 	end
 end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x66, 0x1017, 0xa3}
 function s.spcfilter(c,tp)
-	return c:IsPreviousControler(tp)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp)

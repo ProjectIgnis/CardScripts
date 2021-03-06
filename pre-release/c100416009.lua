@@ -1,4 +1,4 @@
---冥界神一オグドアビス
+--溟界神－オグドアビス
 --Ogdoabyss, Deity of the Abhyss
 --scripted by Xylen5967
 local s,id=GetID()

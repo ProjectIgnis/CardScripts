@@ -398,3 +398,17 @@ function Maximum.battleop(e,tp,eg,ep,ev,re,r,rp)
 		tc:SetReason(eg:GetFirst():GetReason())
 	end
 end
+
+if not traprush then
+		traprush=Effect.GlobalEffect()
+		traprush:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		traprush:SetCode(EVENT_CHAINING)
+		traprush:SetCondition(function() return Duel.IsDuelType(DUEL_INVERTED_QUICK_PRIORITY) end)
+		traprush:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+							local rc=re:GetHandler()
+							if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) then
+								Duel.SetChainLimit(aux.FALSE)
+							end
+						end)
+		Duel.RegisterEffect(traprush,0)
+	end

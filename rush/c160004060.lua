@@ -20,7 +20,7 @@ function s.atkfilter2(c)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
-	return at:IsControler(tp) and s.atkfilter(at)
+	return at and at:IsControler(tp) and s.atkfilter(at)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

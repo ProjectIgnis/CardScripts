@@ -17,7 +17,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.poptg)
 	e2:SetOperation(s.popop)
 	c:RegisterEffect(e2)
-
 end
 s.listed_names={id}
 s.listed_series={0x165}

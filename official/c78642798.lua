@@ -62,12 +62,13 @@ function s.equipcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for an effect monster that can be taken as equip
 function s.swapfilter(c)
-	return c:IsType(TYPE_EFFECT) and c:IsControlerCanBeChanged()
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToChangeControler()
 end
 	--Activation legality
 function s.equiptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.swapfilter(chkc) end
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(s.swapfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,s.swapfilter,tp,0,LOCATION_MZONE,1,1,nil)
@@ -97,7 +98,7 @@ end
 function s.eqop(c,e,tp,tc,atk)
 	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,nil,false) then return end
 	--ATK gain
-	local e1=Effect.CreateEffect(tc)
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(atk)

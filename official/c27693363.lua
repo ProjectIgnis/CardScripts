@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x165}
-s.listed_names={89264428}
+s.listed_names={CARD_URSARCTIC_BIG_DIPPER}
 function s.sprfilter(c)
 	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:HasLevel()
 end
@@ -90,7 +90,7 @@ function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.fieldfilter,tp,LOCATION_DECK,0,1,nil,tp)
 end
 function s.fieldfilter(c,tp)
-	return c:IsCode(89264428) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
+	return c:IsCode(CARD_URSARCTIC_BIG_DIPPER) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

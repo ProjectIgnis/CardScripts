@@ -1,5 +1,5 @@
 --ベアルクティ・クィントチャージ
---Bearcti Quint Charge
+--Ursarctic Quint Charge
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,11 +40,11 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x25b}
+s.listed_series={0x165}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
-	return tc:IsPreviousControler(tp) and tc:IsPreviousSetCard(0x25b) and tc:IsType(TYPE_MONSTER)
+	return tc:IsPreviousControler(tp) and tc:IsPreviousSetCard(0x165) and tc:IsType(TYPE_MONSTER)
 		and (tc:GetBattlePosition()&POS_FACEUP)~=0
 		and bc:IsRelateToBattle() and bc:IsControler(1-tp) and bc==Duel.GetAttacker()
 end
@@ -68,7 +68,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,700)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x25b) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x165) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -88,14 +88,14 @@ function s.spfilter(c,e,tp,sg)
 	local tc1=sg:GetFirst()
 	local tc2=sg:GetNext()
 	local lv=math.abs(tc1:GetLevel()-tc2:GetLevel())
-	return c:IsSetCard(0x25b) and c:IsLevel(lv) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(0x165) and c:IsLevel(lv) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 		and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
 end
 function s.spcheck(sg,e,tp,mg)
 	return #sg==2 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg)
 end
 function s.spcfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x25b) and c:HasLevel() and c:IsReleasableByEffect()
+	return c:IsFaceup() and c:IsSetCard(0x165) and c:HasLevel() and c:IsReleasableByEffect()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)	
 	if chk==0 then 

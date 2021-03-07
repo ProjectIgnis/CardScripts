@@ -1,5 +1,5 @@
 --ベアルクティ・スライダ
---Bearcti Slider
+--Ursarctic Slider
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,10 +15,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-s.listed_series={0x25b}
+s.listed_series={0x165}
 --Special Summon
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x25b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x165) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

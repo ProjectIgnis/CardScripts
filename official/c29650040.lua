@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x261}
+s.listed_series={0x164}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
 	local b2=s.pentg(e,tp,eg,ep,ev,re,r,rp,0)
@@ -58,7 +58,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x261) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -75,11 +75,11 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.penfilter(c)
-	return c:IsSetCard(0x261) and c:GetOriginalLevel()>0
+	return c:IsSetCard(0x164) and c:GetOriginalLevel()>0
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id+100)==0 and Duel.IsExistingMatchingCard(s.penfilter,tp,LOCATION_PZONE,0,1,nil) end
-	Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return Duel.GetFlagEffect(tp,id+1)==0 and Duel.IsExistingMatchingCard(s.penfilter,tp,LOCATION_PZONE,0,1,nil) end
+	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
 end
 function s.penop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -98,16 +98,16 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descfilter(c,f)
-	return c:IsFaceup() and c:IsSetCard(0x261) and c:IsOriginalType(TYPE_PENDULUM) and c:IsOriginalType(TYPE_MONSTER) and f(c)
+	return c:IsFaceup() and c:IsSetCard(0x164) and c:IsOriginalType(TYPE_PENDULUM) and c:IsOriginalType(TYPE_MONSTER) and f(c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
 	if chk==0 then 
 		local pg1=Duel.GetMatchingGroup(s.descfilter,tp,LOCATION_ONFIELD,0,nil,Card.IsOddScale)
 		local pg2=Duel.GetMatchingGroup(s.descfilter,tp,LOCATION_ONFIELD,0,nil,Card.IsEvenScale)
-		return Duel.GetFlagEffect(tp,id+200)==0 and #g>0 and (pg1:GetClassCount(Card.GetCode)>=3 or pg2:GetClassCount(Card.GetCode)>=3)
+		return Duel.GetFlagEffect(tp,id+2)==0 and #g>0 and (pg1:GetClassCount(Card.GetCode)>=3 or pg2:GetClassCount(Card.GetCode)>=3)
 	end
-	Duel.RegisterFlagEffect(tp,id+200,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

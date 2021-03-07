@@ -1,15 +1,15 @@
--- 溟界の虚
--- Emptiness of the Abhyss
--- scripted by Hatter
+--溟界の虚
+--Emptiness of the Abhyss
+--scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- activate
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
 	c:RegisterEffect(e1)
-	-- special summon
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- send to grave
+	--send to grave
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)

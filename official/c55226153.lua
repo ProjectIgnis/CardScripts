@@ -39,12 +39,12 @@ function s.initial_effect(c)
 	e4:SetValue(s.atkval)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x261}
+s.listed_series={0x164}
 function s.target(e,c)
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsSetCard(0x261) and c:IsType(TYPE_PENDULUM)
+	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x261) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(0x164) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -62,7 +62,7 @@ function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsEvenScale),e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
 end
 function s.atktg(e,c)
-	return c:IsSetCard(0x261) and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM)
 end
 function s.atkval(e,c)
 	return c:GetLeftScale()*100

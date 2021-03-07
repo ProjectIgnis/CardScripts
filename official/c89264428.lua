@@ -1,5 +1,5 @@
 --ベアルクティ・ビッグディッパー
---Bearcti Big Dipper
+--Ursarctic Big Dipper
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -43,17 +43,17 @@ function s.initial_effect(c)
 	e4:SetOperation(s.ctop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x25b}
+s.listed_series={0x165}
 s.counter_place_list={0x204}
 function s.repcfilter(c,extracon,base,params)
-	return c:IsSetCard(0x25b) and c:IsLevelAbove(7) and c:IsAbleToRemoveAsCost() and (not extracon or extracon(base,c,table.unpack(params)))
+	return c:IsSetCard(0x165) and c:IsLevelAbove(7) and c:IsAbleToRemoveAsCost() and (not extracon or extracon(base,c,table.unpack(params)))
 end
 function s.repcon(e)
 	return Duel.IsExistingMatchingCard(s.repcfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)
 end
 function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
 	local c=e:GetHandler()
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x25b) and
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x165) and
 		(not extracon or Duel.IsExistingMatchingCard(s.repcfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,extracon,base,{e,tp,eg,ep,ev,re,r,rp,chk}))
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
@@ -66,7 +66,7 @@ function s.countop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x204,1)
 end
 function s.ctcfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsSetCard(0x25b)
+	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsSetCard(0x165)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.ctcfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)

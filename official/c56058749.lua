@@ -11,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x261}
+s.listed_series={0x164}
 function s.cfilter(c,f)
-	return c:IsFaceup() and c:IsSetCard(0x261) and c:IsOriginalType(TYPE_PENDULUM) and c:IsOriginalType(TYPE_MONSTER) and f(c)
+	return c:IsFaceup() and c:IsSetCard(0x164) and c:IsOriginalType(TYPE_PENDULUM) and c:IsOriginalType(TYPE_MONSTER) and f(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end

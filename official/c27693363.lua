@@ -1,5 +1,5 @@
--- ベアルクティ－ポラリィ
--- Bearcti - Polari 
+--ベアルクティ－ポラリィ
+--Ursarctic Polari
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -36,14 +36,14 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,id+100)
+	e1:SetCountLimit(1,id+1)
 	e1:SetCost(aux.CostWithReplace(s.cost,CARD_URSARCTIC_BIG_DIPPER,s.extracon))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x25b}
-s.listed_names={100416038}
+s.listed_series={0x165}
+s.listed_names={89264428}
 function s.sprfilter(c)
 	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:HasLevel()
 end
@@ -90,7 +90,7 @@ function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.fieldfilter,tp,LOCATION_DECK,0,1,nil,tp)
 end
 function s.fieldfilter(c,tp)
-	return c:IsCode(100416038) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
+	return c:IsCode(89264428) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -108,7 +108,7 @@ function s.extracon(base,c,e,tp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,c,ft,base,tp)
 end
 function s.filter(c,ft,e,tp)
-	return (c:IsSetCard(0x25b) and c:IsType(TYPE_MONSTER)) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return (c:IsSetCard(0x165) and c:IsType(TYPE_MONSTER)) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

@@ -31,9 +31,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.btop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x261}
+s.listed_series={0x164}
 function s.sucfilter(c,tp)
-	return c:IsSetCard(0x261) and c:IsType(TYPE_PENDULUM) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.sucfilter,1,nil,tp) then
@@ -44,12 +44,12 @@ function s.chainlm(e,rp,tp)
 	return tp==rp or (e:IsActiveType(TYPE_SPELL+TYPE_TRAP) and not e:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.cfilter(c,e,tp)
-	return c:IsSetCard(0x261) and c:IsType(TYPE_PENDULUM) and c:IsReleasableByEffect()
+	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM) and c:IsReleasableByEffect()
 		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or c:IsInMainMZone(tp))
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLeftScale())
 end
 function s.spfilter(c,e,tp,sc)
-	return c:IsSetCard(0x261) and c:IsType(TYPE_PENDULUM) and math.abs(c:GetLeftScale()-sc)==2
+	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM) and math.abs(c:GetLeftScale()-sc)==2
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -69,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.btcon(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetAttacker()
-	return ac and ac:IsControler(tp) and ac:IsType(TYPE_PENDULUM) and ac:IsSetCard(0x261)
+	return ac and ac:IsControler(tp) and ac:IsType(TYPE_PENDULUM) and ac:IsSetCard(0x164)
 end
 function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -40,9 +40,9 @@ function s.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x261}
+s.listed_series={0x164}
 function s.target(e,c)
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsSetCard(0x261) and c:IsType(TYPE_PENDULUM)
+	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM)
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
@@ -64,5 +64,5 @@ function s.damcon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsEvenScale),e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
 end
 function s.efilter(e,c)
-	return c:IsSetCard(0x261) and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM)
 end

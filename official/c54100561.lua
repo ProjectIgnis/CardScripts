@@ -34,12 +34,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x261}
+s.listed_series={0x164}
 function s.target(e,c)
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsSetCard(0x261) and c:IsType(TYPE_PENDULUM)
+	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM)
 end
 function s.tefilter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x261) and not c:IsCode(id) and not c:IsForbidden()
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x164) and not c:IsCode(id) and not c:IsForbidden()
 end
 function s.tetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tefilter,tp,LOCATION_DECK,0,1,nil) end
@@ -56,7 +56,7 @@ function s.repcon(e)
 end
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_PENDULUM)
-		and c:IsSetCard(0x261) and c:IsReason(REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
+		and c:IsSetCard(0x164) and c:IsReason(REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

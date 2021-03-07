@@ -28,7 +28,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x163}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,3,false,aux.ReleaseCheckMMZ,nil) end
 	local g=Duel.SelectReleaseGroupCost(tp,nil,3,3,false,aux.ReleaseCheckMMZ,nil)

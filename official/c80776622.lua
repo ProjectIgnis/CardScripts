@@ -1,5 +1,5 @@
 --ドドレミコード・クーリア
---Doremichord Coeuria
+--Dodoremichord Coeuria
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,15 +39,15 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCountLimit(1,id+100)
+	e4:SetCountLimit(1,id+1)
 	e4:SetCondition(s.descon)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x261}
+s.listed_series={0x164}
 function s.sucfilter(c,tp)
-	return c:IsSetCard(0x261) and c:IsType(TYPE_PENDULUM) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.sucfilter,1,nil,tp) then

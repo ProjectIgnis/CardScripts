@@ -1,6 +1,6 @@
--- 溟界の淵源
--- Depths of the Abhyss
--- scripted by Hatter
+--溟界の淵源
+--Depths of the Abhyss
+--scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	-- to grave
+	--to grave
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -21,13 +21,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.gytg)
 	e2:SetOperation(s.gyop)
 	c:RegisterEffect(e2)
-	-- mill
+	--mill
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DECKDES)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1,id+1)
 	e3:SetCode(EVENT_DESTROYED)
 	e3:SetCondition(s.mlcon)
 	e3:SetTarget(s.mltg)

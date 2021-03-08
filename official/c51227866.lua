@@ -1,7 +1,6 @@
 --閃刀機－シャークキャノン
 --Sky Striker Mecha - Shark Cannon
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Banish 1 monster from opponent's GY, or if 3+ spells in your GY, special summon it
@@ -15,6 +14,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e1)
 end
 function s.cfilter(c)
 	return c:GetSequence()<5

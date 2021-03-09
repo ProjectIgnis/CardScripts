@@ -44,7 +44,7 @@ Debug.ReloadFieldBegin=(function()
 
 
 Fusion.CreateSummonEff = aux.FunctionWithNamedArgs(
-function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,desc,preselect,nosummoncheck,extratg,mincount,maxcount)
+function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,desc,preselect,nosummoncheck,extratg,mincount,maxcount,sumpos)
 	local e1=Effect.CreateEffect(c)
 	if desc then
 		e1:SetDescription(desc)
@@ -54,10 +54,10 @@ function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,locat
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(Fusion.SummonEffTG(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,extratg,mincount,maxcount))
-	e1:SetOperation(Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,mincount,maxcount))
+	e1:SetTarget(Fusion.SummonEffTG(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,extratg,mincount,maxcount,sumpos))
+	e1:SetOperation(Fusion.SummonEffOP(fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,mincount,maxcount,sumpos))
 	return e1
-end,"handler","fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","desc","preselect","nosummoncheck","extratg","mincount","maxcount")
+end,"handler","fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","desc","preselect","nosummoncheck","extratg","mincount","maxcount","sumpos")
 function Fusion.RegisterSummonEff(c,...)
 	local tab=type(c)=="table"
 	local e1=Fusion.CreateSummonEff(tab and c or c,...)
@@ -65,7 +65,7 @@ function Fusion.RegisterSummonEff(c,...)
 	return e1
 end
 function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck)
-	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c,tp)) and (nosummoncheck or c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false))
+	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c,tp)) and (nosummoncheck or c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false,sumpos))
 			and c:CheckFusionMaterial(mg,gc,chkf)
 end
 
@@ -87,7 +87,8 @@ Duel.GetFusionMaterial=(function()
 	end
 end)()
 Fusion.SummonEffTG = aux.FunctionWithNamedArgs(
-function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,extratg,mincount,maxcount)
+function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,extratg,mincount,maxcount,sumpos)
+	sumpos = sumpos or POS_FACEUP
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
 				location=location or LOCATION_EXTRA
 				if not chkf or ((chkf&PLAYER_NONE)~=PLAYER_NONE) then
@@ -124,7 +125,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					Fusion.CheckExact=exactcount
 					Fusion.CheckMin=mincount
 					Fusion.CheckMax=maxcount
-					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck)
+					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos)
 					Fusion.CheckAdditional=nil
 					Fusion.ExtraGroup=nil
 					if not res and not sumlimit then
@@ -140,7 +141,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 									if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
 								end
 								Fusion.ExtraGroup=mg
-								if Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck) then
+								if Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck,sumpos) then
 									res=true
 									Fusion.CheckAdditional=nil
 									break
@@ -158,7 +159,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,location)
 				if extratg then extratg(e,tp,eg,ep,ev,re,r,rp,chk) end
 			end
-end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","preselect","nosummoncheck","extratg","mincount","maxcount")
+end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","preselect","nosummoncheck","extratg","mincount","maxcount","sumpos")
 function aux.GrouptoCardid(g)
 	local res={}
 	for card in aux.Next(g) do
@@ -181,7 +182,8 @@ function Fusion.ChainMaterialPrompt(effswithgroup,cardID,tp,e)
 	return effs[Duel.SelectOption(tp,false,table.unpack(desctable)) + 1]
 end
 Fusion.SummonEffOP = aux.FunctionWithNamedArgs(
-function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,mincount,maxcount)
+function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,mincount,maxcount,sumpos)
+	sumpos = sumpos or POS_FACEUP
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				location=location or LOCATION_EXTRA
 				chkf = chkf and chkf|tp or tp
@@ -218,7 +220,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				Fusion.CheckMax=maxcount
 				Fusion.CheckAdditional=checkAddition
 				local effswithgroup={}
-				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck)
+				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos)
 				if #sg1>0 then
 					table.insert(effswithgroup,{e,aux.GrouptoCardid(sg1)})
 				end
@@ -238,7 +240,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 								if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
 							end
 							Fusion.ExtraGroup=mg2
-							local sg2=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg2,gc,chkf,value,sumlimit,nosummoncheck)
+							local sg2=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg2,gc,chkf,value,sumlimit,nosummoncheck,sumpos)
 							if #sg2 > 0 then
 								table.insert(effswithgroup,{ce,aux.GrouptoCardid(sg2)})
 								sg1:Merge(sg2)
@@ -277,7 +279,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 							end
 						end
 						Duel.BreakEffect()
-						Duel.SpecialSummonStep(tc,value,tp,tp,sumlimit,false,POS_FACEUP)
+						Duel.SpecialSummonStep(tc,value,tp,tp,sumlimit,false,sumpos)
 					else
 						local ce=sel[1]
 						local fcheck=nil
@@ -290,7 +292,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 						local mat2=Duel.SelectFusionMaterial(tp,tc,Fusion.ExtraGroup,gc,chkf)
 						Fusion.CheckAdditional=nil
 						Fusion.ExtraGroup=nil
-						ce:GetOperation()(sel[1],e,tp,tc,mat2,value)
+						ce:GetOperation()(sel[1],e,tp,tc,mat2,value,sumpos)
 						backupmat=tc:GetMaterial():Clone()
 					end
 					stage2(e,tc,tp,backupmat,0)
@@ -307,7 +309,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				Fusion.CheckExact=nil
 				Fusion.CheckAdditional=nil
 			end
-end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","preselect","nosummoncheck","mincount","maxcount")
+end,"fusfilter","matfilter","extrafil","extraop","gc","stage2","exactcount","value","location","chkf","preselect","nosummoncheck","mincount","maxcount","sumpos")
 function Fusion.BanishMaterial(e,tc,tp,sg)
 	Duel.Remove(sg,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 	sg:Clear()

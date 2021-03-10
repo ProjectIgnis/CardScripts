@@ -144,6 +144,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 								if Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck,sumpos) then
 									res=true
 									Fusion.CheckAdditional=nil
+									Fusion.ExtraGroup=nil
 									break
 								end
 								Fusion.CheckAdditional=nil
@@ -292,7 +293,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 						local mat2=Duel.SelectFusionMaterial(tp,tc,Fusion.ExtraGroup,gc,chkf)
 						Fusion.CheckAdditional=nil
 						Fusion.ExtraGroup=nil
-						ce:GetOperation()(sel[1],e,tp,tc,mat2,value,sumpos)
+						ce:GetOperation()(sel[1],e,tp,tc,mat2,value,nil,sumpos)
 						backupmat=tc:GetMaterial():Clone()
 					end
 					stage2(e,tc,tp,backupmat,0)

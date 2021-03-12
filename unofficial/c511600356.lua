@@ -18,18 +18,19 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,1,nil) end
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,nil)
 	local race=aux.AnnounceAnotherRace(g,tp)
 	local att=aux.AnnounceAnotherAttribute(g,tp)
 	local param=(race<<8)|att
 	Duel.SetTargetParam(param)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	local c=e:GetHandler()
 	local param=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local race=param>>8
 	local att=param&0xff
-	for tc in aux.Next(g) do
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,nil)
+	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_RACE)

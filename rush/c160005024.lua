@@ -21,10 +21,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
+function s.filter(c)
+	return c:IsLevelAbove(7) and c:IsRace(RACE_FIEND)
+end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
-	if g:IsExists(Card.IsLevelAbove,2,nil,7) then flag=1 end
+	if g:IsExists(s.filter,1,nil) then flag=1 end
 	e:SetLabel(flag)
 end
 function s.descond(e,tp,eg,ep,ev,re,r,rp)

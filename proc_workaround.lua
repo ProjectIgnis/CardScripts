@@ -30,7 +30,7 @@ end
 function Card.AnnounceAnotherAttribute(c,tp)
 	local att=c:GetAttribute()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or 0xff)
+	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or ATTRIBUTE_ALL)
 end
 function Auxiliary.AnnounceAnotherAttribute(g,tp)
 	local att=0
@@ -38,7 +38,20 @@ function Auxiliary.AnnounceAnotherAttribute(g,tp)
 		att=att|tc:GetAttribute()
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or 0xff)
+	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or ATTRIBUTE_ALL)
+end
+function Card.AnnounceAnotherRace(c,tp)
+	local race=c:GetRace()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
+	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and ~race or RACE_ALL)
+end
+function Auxiliary.AnnounceAnotherRace(g,tp)
+	local race=0
+	for tc in ~g do
+		race=race|tc:GetRace()
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
+	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and ~race or RACE_ALL)
 end
 function Auxiliary.ReleaseNonSumCheck(c,tp,e)
 	if c:IsControler(tp) then return false end

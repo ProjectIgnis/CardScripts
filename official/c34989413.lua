@@ -28,10 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local val=0
 	if e:GetLabel()==0 then
 		eff=EFFECT_CHANGE_RACE
-		local race=0
-		lg:ForEach(function(c)race=race|c:GetRace() end)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
-		val=Duel.AnnounceRace(tp,1,race&(race-1)==0 and ~race or RACE_ALL)
+		val=aux.AnnounceAnotherRace(lg,tp)
 	else
 		eff=EFFECT_CHANGE_ATTRIBUTE
 		val=aux.AnnounceAnotherAttribute(lg,tp)

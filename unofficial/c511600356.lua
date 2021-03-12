@@ -16,32 +16,10 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:GetRace()~=RACE_ALL and c:GetAttribute()~=0x7f
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
-	local sharedRace=0
-	if #g>1 then
-		for tc in aux.Next(g) do
-			if g:IsExists(function(c,tc) return c:GetRace()&tc:GetRace()>0 end,#g-1,tc,tc) then
-				if tc:GetRace()&sharedRace==0 then sharedRace=sharedRace+(sharedRace~tc:GetRace()) end
-			end
-		end
-	end
-	local race=Duel.AnnounceRace(tp,1,~sharedRace)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	local sharedAtt=0
-	if #g>1 then
-		for tc in aux.Next(g) do
-			if g:IsExists(function(c,tc) return c:GetAttribute()&tc:GetAttribute()>0 end,#g-1,tc,tc) then
-				if tc:GetAttribute()&sharedAtt==0 then sharedAtt=sharedAtt+(sharedAtt~tc:GetAttribute()) end
-			end
-		end
-	end
-	local att=Duel.AnnounceAttribute(tp,1,~sharedAtt)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_NORMAL),tp,LOCATION_MZONE,0,1,nil) end
+	local race=aux.AnnounceAnotherRace(g,tp)
+	local att=aux.AnnounceAnotherAttribute(g,tp)
 	local param=(race<<8)|att
 	Duel.SetTargetParam(param)
 end

@@ -56,8 +56,9 @@ function s.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local att=c:AnnounceAnotherAttribute(tp)
-	e:SetLabel(att)
+	Duel.Hint(HINT_SELECTMSG,tp,0)
+	local aat=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL)
+	e:SetLabel(aat)
 end
 function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

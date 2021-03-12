@@ -33,7 +33,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoGrave(g,REASON_COST)~=0 then
 		Duel.SendtoGrave(c,REASON_COST)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.ssfilter),tp,LOCATION_GRAVE,0,1,2,nil,e,tp)
+		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+		if ft>2 then ft=2 end
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.ssfilter),tp,LOCATION_GRAVE,0,1,ft,nil,e,tp)
 		Duel.HintSelection(g)
 		if #g>0 then
 			Duel.SSet(tp,g)

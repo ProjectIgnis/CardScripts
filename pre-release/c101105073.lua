@@ -29,23 +29,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 end
-function s.attfilter(c)
-	return c:IsFaceup() and c:GetAttribute()~=0x7f
-end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.attfilter,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re)
 		and Duel.Destroy(eg,REASON_EFFECT)~=0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
-		local share=0
-		for tc in aux.Next(g) do
-			if g:IsExists(function(c,tc) return c:GetAttribute()&tc:GetAttribute()>0 end,#g-1,tc,tc) then
-				if tc:GetAttribute()&share==0 then share=share+(share~tc:GetAttribute()) end
-			end
-		end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-		local val=Duel.AnnounceAttribute(tp,1,~share)
+		local val=aux.AnnounceAnotherAttribute(g,tp)
 		for tc in aux.Next(g) do
 			--Change Attribute
 			local e1=Effect.CreateEffect(c)

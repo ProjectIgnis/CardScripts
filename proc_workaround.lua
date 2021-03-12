@@ -29,6 +29,15 @@ end
 --
 function Card.AnnounceAnotherAttribute(c,tp)
 	local att=c:GetAttribute()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
+	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or 0xff)
+end
+function Auxiliary.AnnounceAnotherAttribute(g,tp)
+	local att=0
+	for tc in ~g do
+		att=att|tc:GetAttribute()
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or 0xff)
 end
 function Auxiliary.ReleaseNonSumCheck(c,tp,e)

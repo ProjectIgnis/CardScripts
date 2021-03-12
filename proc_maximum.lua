@@ -3,6 +3,8 @@
 -- SUMMON_TYPE_MAXIMUM = 0x4e000000 --to check if it is correct
 FLAG_MAXIMUM_CENTER=170000000 --flag for center card maximum mode
 FLAG_MAXIMUM_SIDE=170000001 --flag for Left/right maximum card
+FLAG_MAXIMUM_CENTER_PREONFIELD=170000002 --those two flag are used to check is the card was a maximum monster while on the field (handling to improve later)
+FLAG_MAXIMUM_SIDE_PREONFIELD=170000004 
 if not aux.MaximumProcedure then
 	aux.MaximumProcedure = {}
 	Maximum = aux.MaximumProcedure
@@ -103,9 +105,12 @@ function Maximum.Operation(mats)
 		--adding the "maximum mode" flag
 		--center
 		c:RegisterFlagEffect(FLAG_MAXIMUM_CENTER,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
+		c:RegisterFlagEffect(FLAG_MAXIMUM_CENTER_PREONFIELD,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
+		
 		--side
 		for tc in aux.Next(tg) do
 			tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
+			tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
 		end
 		sg:Merge((tg+c))
 		g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
@@ -136,6 +141,10 @@ function Card.IsMaximumModeRight(c)
 end
 function Card.IsMaximumModeSide(c)
 	return c:GetFlagEffect(FLAG_MAXIMUM_SIDE)>0
+end
+
+function Card.WasMaximumModeSide(c)
+	return c:GetFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD)>0
 end
 --I used Gemini as a reference for that function, while waiting for more information
 function Auxiliary.IsMaximumMode(effect)

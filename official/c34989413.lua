@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local race=0
 		lg:ForEach(function(c)race=race|c:GetRace() end)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
-		val=Duel.AnnounceRace(tp,1,race&(race-1)==0 and ~race or 0xff)
+		val=Duel.AnnounceRace(tp,1,race&(race-1)==0 and ~race or RACE_ALL)
 	else
 		eff=EFFECT_CHANGE_ATTRIBUTE
 		val=aux.AnnounceAnotherAttribute(lg,tp)

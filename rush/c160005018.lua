@@ -29,10 +29,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local c=e:GetHandler()
 	Duel.SendtoGrave(c,REASON_COST)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.ssfilter),tp,LOCATION_GRAVE,0,1,2,nil,e,tp)
 	Duel.HintSelection(g)
 	if #g>0 then

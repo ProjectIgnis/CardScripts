@@ -42,17 +42,13 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
-function s.diffattfil(c,att)
-	local _att=c:GetAttribute()
-	return (_att&att)~=_att
-end
 function s.costg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() and s.diffattfil(chkc,e:GetLabel()) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() and chkc:IsDifferentAttribute(e:GetLabel()) end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCanBeEffectTarget,e),tp,0,LOCATION_MZONE,nil)
 	local att=aux.AnnounceAnotherAttribute(g,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local sel=g:FilterSelect(tp,s.diffattfil,1,1,nil,att)
+	local sel=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
 	Duel.SetTargetCard(sel)
 	e:SetLabel(att)
 end

@@ -26,18 +26,14 @@ s.listed_series={0x1066}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1066)
 end
-function s.diffattfil(c,att)
-	local _att=c:GetAttribute()
-	return (_att&att)~=_att
-end
 function s.target(oppo)
 	return function (e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-		if chkc then return chkc:IsLocation(LOCATION_MZONE) and (oppo==0 or chkc:IsControler(tp)) and s.filter(chkc) and s.diffattfil(chkc,e:GetLabel()) end
+		if chkc then return chkc:IsLocation(LOCATION_MZONE) and (oppo==0 or chkc:IsControler(tp)) and s.filter(chkc) and chkc:IsDifferentAttribute(e:GetLabel()) end
 		if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,oppo,1,nil) end
 		local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,oppo,nil,e)
 		local att=aux.AnnounceAnotherAttribute(g,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local sel=g:FilterSelect(tp,s.diffattfil,1,1,nil,att)
+		local sel=g:FilterSelect(tp,Card.IsDifferentAttribute,1,1,nil,att)
 		Duel.SetTargetCard(sel)
 		e:SetLabel(att)
 	end

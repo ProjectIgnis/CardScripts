@@ -101,6 +101,6 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.GetControl(tc,tp)
+		Duel.GetControl(tc,tp,PHASE_END,1)
 	end
 end

@@ -60,18 +60,18 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp,att)
-	return c:IsRace(RACE_SPELLCASTER) and c:GetDefense()==1500 and c:IsAttribute(att)
-		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
+	return c:IsRace(RACE_SPELLCASTER) and c:IsDefense(1500) and c:IsAttribute(att)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
 		local g=eg:Filter(s.cfilter,nil,tp)
-		local att=0x7f
-		for tc in aux.Next(g) do
-			att=(att&tc:GetOriginalAttribute())
+		local att=0
+		for tc in g:Iter() do
+			att=att|tc:GetOriginalAttribute()
 		end
-		att=0x7f-att
+		att=att&(att-1)==0 and ~att or ATTRIBUTE_ALL
 		e:SetLabel(att)
 		return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,att)
 	end
@@ -81,15 +81,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,e:GetLabel())
-	local tc=g:GetFirst()
-	if tc then
-		local spos=0
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) then spos=spos+POS_FACEUP_ATTACK end
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then spos=spos+POS_FACEDOWN_DEFENSE end
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,spos)
-		if tc:IsFacedown() then
-			Duel.ConfirmCards(1-tp,tc)
-		end
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,e:GetLabel()):GetFirst()
+	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)~=0 and tc:IsFacedown() then
+		Duel.ConfirmCards(1-tp,tc)
 	end
 end

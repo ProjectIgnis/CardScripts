@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160301001}
+s.listed_names={CARD_SEVENS_ROAD_MAGICIAN}
 
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(-400)
 			tc:RegisterEffectRush(e1)
 			local ct=Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_GRAVE,0,nil,RACE_SPELLCASTER)
-			if ct>0 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,160301001),tp,LOCATION_MZONE,0,1,nil) then
+			if ct>0 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SEVENS_ROAD_MAGICIAN),tp,LOCATION_MZONE,0,1,nil) then
 				local e2=Effect.CreateEffect(c)
 				e2:SetType(EFFECT_TYPE_SINGLE)
 				e2:SetCode(EFFECT_UPDATE_ATTACK)

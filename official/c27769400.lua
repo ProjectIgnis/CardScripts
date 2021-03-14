@@ -20,7 +20,6 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCondition(s.descon)
-	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 	aux.GlobalCheck(s,function()
@@ -68,18 +67,10 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
-	local rc=Duel.AnnounceAttribute(tp,1,0xff)
-	Duel.SetTargetParam(rc)
-	e:GetHandler():SetHint(CHINT_ATTRIBUTE,rc)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsAttribute,rc),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
-end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local rc=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
+	local rc=Duel.AnnounceAttribute(tp,1,0xff)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsAttribute,rc),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 	if c:IsRelateToEffect(e) then

@@ -1,5 +1,5 @@
 --音響戦士ドラムス
---Symphonic Warrior Drumms
+--Symphonic Warrior Drumss
 local s,id=GetID()
 function s.initial_effect(c)
 	--attribute change

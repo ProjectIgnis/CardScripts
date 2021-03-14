@@ -27,11 +27,12 @@ function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if Duel.Recover(p,d,REASON_EFFECT)>0 then return end
-	local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
-	if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		local sg=dg:Select(tp,1,1,nil)
-		Duel.HintSelection(sg)
-		Duel.Destroy(sg,REASON_EFFECT)
+	if Duel.Recover(p,d,REASON_EFFECT)>0 then 
+		local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
+		if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			local sg=dg:Select(tp,1,1,nil)
+			Duel.HintSelection(sg)
+			Duel.Destroy(sg,REASON_EFFECT)
+		end
 	end
 end

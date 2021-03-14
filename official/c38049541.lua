@@ -1,4 +1,5 @@
 --A・ジェネクス・ケミストリ
+--Genex Ally Chemister
 local s,id=GetID()
 function s.initial_effect(c)
 	--att change
@@ -21,13 +22,18 @@ end
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x2)
 end
+function s.diffattfil(c,att)
+	local _att=c:GetAttribute()
+	return (_att&att)~=_att
+end
 function s.costg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,0)
-	local att=Duel.AnnounceAttribute(tp,1,0x7f)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) and s.diffattfil(chkc,e:GetLabel()) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x2),tp,LOCATION_MZONE,0,1,nil) end
+	local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,0,nil,e)
+	local att=aux.AnnounceAnotherAttribute(g,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	local sel=g:FilterSelect(tp,s.diffattfil,1,1,nil,att)
+	Duel.SetTargetCard(sel)
 	e:SetLabel(att)
 end
 function s.cosop(e,tp,eg,ep,ev,re,r,rp)

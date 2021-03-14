@@ -1,4 +1,5 @@
 --テュアラティン
+--Tualatin
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -70,8 +71,8 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
-	local rc=Duel.AnnounceAttribute(tp,1,0xff)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
+	local rc=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL)
 	Duel.SetTargetParam(rc)
 	e:GetHandler():SetHint(CHINT_ATTRIBUTE,rc)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsAttribute,rc),tp,LOCATION_MZONE,LOCATION_MZONE,nil)

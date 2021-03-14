@@ -38,10 +38,13 @@ end
 function s.spfilter(c,e,sp)
 	return c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
+function s.tdfilter(c,tp)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil,tp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,1,tp,HINTMSG_TODECK)
 	if sg and #sg==3 then
 		if Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then

@@ -62,7 +62,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
 function s.epcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp=Duel.GetTurnPlayer() and Duel.GetFlagEffect(tp,id)<1
+	return tp==Duel.GetTurnPlayer() and Duel.GetFlagEffect(tp,id)==0
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	--self

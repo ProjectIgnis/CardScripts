@@ -42,14 +42,19 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
+function s.diffattfil(c,att)
+	local _att=c:GetAttribute()
+	return (_att&att)~=_att
+end
 function s.costg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() and s.diffattfil(chkc,e:GetLabel()) end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCanBeEffectTarget,e),tp,0,LOCATION_MZONE,nil)
+	local att=aux.AnnounceAnotherAttribute(g,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	local att=Duel.AnnounceAttribute(tp,1,0xff-g:GetFirst():GetAttribute())
-	Duel.SetTargetParam(att)
+	local sel=g:FilterSelect(tp,s.diffattfil,1,1,nil,att)
+	Duel.SetTargetCard(sel)
+	e:SetLabel(att)
 end
 function s.filter(c,e,tp,ft)
 	return c:IsSetCard(0x13f) and c:IsType(TYPE_MONSTER)
@@ -58,8 +63,9 @@ end
 function s.cosop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	local att=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	local att=e:GetLabel()
+	local prevattr=tc:GetAttribute()
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and (att&prevattr)~=prevattrs then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
@@ -67,6 +73,7 @@ function s.cosop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(att)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
+		if tc:GetAttribute()==prevattr then return end
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE,0,nil,e,tp,ft)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

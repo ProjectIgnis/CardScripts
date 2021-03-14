@@ -28,7 +28,7 @@ function s.diffattfil(c,att)
 end
 function s.costg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) and s.diffattfil(chkc,e:GetLabel()) end
-	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x2),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 	local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,0,nil,e)
 	local att=aux.AnnounceAnotherAttribute(g,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)

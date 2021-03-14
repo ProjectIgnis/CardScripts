@@ -67,7 +67,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveSequence(c,math.log(zone,2))
 		if c:IsFaceup() and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()
-			local att=Duel.AnnounceAttribute(tp,1,0xff&~c:GetAttribute())
+			local att=c:AnnounceAnotherAttribute(tp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)

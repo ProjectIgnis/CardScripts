@@ -1,4 +1,5 @@
 --音響戦士ドラムス
+--Symphonic Warrior Drumms
 local s,id=GetID()
 function s.initial_effect(c)
 	--attribute change
@@ -23,39 +24,41 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1066}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1066) and c:IsLevelAbove(1)
+	return c:IsFaceup() and c:IsSetCard(0x1066)
+end
+function s.diffattfil(c,att)
+	local _att=c:GetAttribute()
+	return (_att&att)~=_att
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) and s.diffattfil(chkc,e:GetLabel()) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)
+	local att=aux.AnnounceAnotherAttribute(g,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	local rc=Duel.AnnounceAttribute(tp,1,0xff-g:GetFirst():GetAttribute())
-	--Duel.SetTargetParam(rc)
-	e:SetLabel(rc)
+	local sel=g:FilterSelect(tp,s.diffattfil,1,1,nil,att)
+	Duel.SetTargetCard(sel)
+	e:SetLabel(att)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) and s.diffattfil(chkc,e:GetLabel()) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+	local g=Duel.GetMatchingGroup(aux.AND(s.filter,Card.IsCanBeEffectTarget),tp,LOCATION_MZONE,0,nil,e)
+	local att=aux.AnnounceAnotherAttribute(g,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	local rc=Duel.AnnounceAttribute(tp,1,0xff-g:GetFirst():GetAttribute())
-	--Duel.SetTargetParam(rc)
-	e:SetLabel(rc)
+	local sel=g:FilterSelect(tp,s.diffattfil,1,1,nil,att)
+	Duel.SetTargetCard(sel)
+	e:SetLabel(att)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	--local rc=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	local rc=e:GetLabel()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(c)
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetValue(e:GetLabel())
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(rc)
 		tc:RegisterEffect(e1)
 	end
 end

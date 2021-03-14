@@ -42,8 +42,7 @@ function s.tglimit(e,c)
 end
 function s.atttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
-	local aat=Duel.AnnounceAttribute(tp,1,0xff-e:GetHandler():GetAttribute())
+	local aat=e:GetHandler():AnnounceAnotherAttribute(tp)
 	e:SetLabel(aat)
 end
 function s.attop(e,tp,eg,ep,ev,re,r,rp)

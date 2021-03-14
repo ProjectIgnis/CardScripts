@@ -1,4 +1,5 @@
 --量子猫
+--Quantum Cat
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,14 +18,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local crac=1
 		while RACE_ALL&crac~=0 do
 			local catt=1
-			for iatt=0,7 do
+			while ATTRIBUTE_ALL&catt~=0 do
 				if Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x11,0,2200,4,crac,catt) then
 					rac=rac+crac
 					break
 				end
-				catt=catt*2
+				catt=catt<<1
 			end
-			crac=crac*2
+			crac=crac<<1
 		end
 		e:SetLabel(rac)
 		return rac~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -37,7 +38,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		if Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x11,0,2200,4,crac,catt) then
 			att=att+catt
 		end
-		catt=catt*2
+		catt=catt<<1
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 	catt=Duel.AnnounceAttribute(tp,1,att)

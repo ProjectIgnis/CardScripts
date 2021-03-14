@@ -40,6 +40,10 @@ function Auxiliary.AnnounceAnotherAttribute(g,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and ~att or ATTRIBUTE_ALL)
 end
+function Card.IsDifferentAttribute(c,att)
+	local _att=c:GetAttribute()
+	return (_att&att)~=_att
+end
 function Card.AnnounceAnotherRace(c,tp)
 	local race=c:GetRace()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)

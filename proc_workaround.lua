@@ -57,6 +57,10 @@ function Auxiliary.AnnounceAnotherRace(g,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
 	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and ~race or RACE_ALL)
 end
+function Card.IsDifferentRace(c,race)
+	local _race=c:GetRace()
+	return (_race&race)~=_race
+end
 function Auxiliary.ReleaseNonSumCheck(c,tp,e)
 	if c:IsControler(tp) then return false end
 	local chk=false

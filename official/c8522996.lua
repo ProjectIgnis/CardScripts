@@ -1,4 +1,5 @@
 --始源の帝王
+--The first monarch
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -56,7 +57,7 @@ end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,0)
-	local aat=Duel.AnnounceAttribute(tp,1,0x7f)
+	local aat=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL)
 	e:SetLabel(aat)
 end
 function s.chop(e,tp,eg,ep,ev,re,r,rp)

@@ -13,7 +13,6 @@ end
 function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 		local att=c:AnnounceAnotherAttribute(tp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

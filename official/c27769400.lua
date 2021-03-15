@@ -1,4 +1,5 @@
 --テュアラティン
+--Tualatin
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -70,7 +71,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	local rc=Duel.AnnounceAttribute(tp,1,0xff)
+	local rc=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsAttribute,rc),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 	if c:IsRelateToEffect(e) then

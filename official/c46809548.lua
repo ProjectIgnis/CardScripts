@@ -1,5 +1,5 @@
 --機巧牙－御神尊真神
---Gizmek Mikoto, the Cut-throat Cyclone Canine
+--Gizmek Makami, the Ferocious Fanged Fortress
 --scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -42,7 +42,8 @@ end
 s.listed_names={id}
 function s.nscon(e,c)
 	if c==nil then return true end
-	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_REMOVED,0)>5
+	local tp=c:GetControler()
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetFieldGroupCount(tp,LOCATION_REMOVED,0)>5
 end
 function s.thcfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()

@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetCountLimit(1)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCost(s.regcost)
+	e4:SetCost(aux.NumeronDetachCost(1))
 	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 	--Cannot be destroyed by battle
@@ -143,10 +143,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	Duel.SendtoGrave(sg2:Filter(s.fil2,nil),REASON_RULE)
-end
-function s.regcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,5 +1,5 @@
 --溟界の漠－ゾーハ
---Zoha, Dreg of the Abhyss
+--Zoha, Haze of the Abhyss
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

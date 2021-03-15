@@ -45,7 +45,7 @@ function s.tgfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x578) and c:IsType(TYPE_MONSTER)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(s.tgfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.colinkop(e,tp,eg,ep,ev,re,r,rp)
 	local clg=e:GetHandler():GetMutualLinkedGroup()

@@ -25,6 +25,18 @@ function s.initial_effect(c)
 	e2:SetTarget(s.nstg)
 	e2:SetOperation(s.nsop)
 	c:RegisterEffect(e2)
+	--recover
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_RECOVER)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode(EVENT_RELEASE)
+	e3:SetCountLimit(1,id+1)
+	e3:SetCondition(s.rccon)
+	e3:SetTarget(s.rctg)
+	e3:SetOperation(s.rcop)
+	c:RegisterEffect(e3)
 	--check
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
@@ -58,31 +70,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	if not g then return end
 	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
-	--recover
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e1:SetCode(EVENT_RELEASE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCountLimit(1,id+1)
-	e1:SetCondition(s.rccon)
-	e1:SetTarget(s.rctg)
-	e1:SetOperation(s.rcop)
-	c:RegisterEffect(e1)
-end
-function s.rccon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetSummonType()==SUMMON_TYPE_SPECIAL+1
-end
-function s.rctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(2050)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,2050)
-end
-function s.rcop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Recover(p,d,REASON_EFFECT)
 end
 function s.nscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
@@ -115,4 +102,18 @@ function s.splimit(tc)
 	return	function(e,c,sump,sumtype,sumpos,targetp,se)
 		return c:GetOriginalRace()~=tc:GetOriginalRace()
 	end
+end
+function s.rccon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetSummonType()==SUMMON_TYPE_SPECIAL+1
+end
+function s.rctg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetParam(2050)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,2050)
+end
+function s.rcop(e,tp,eg,ep,ev,re,r,rp)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Recover(p,d,REASON_EFFECT)
 end

@@ -59,10 +59,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return not (c:GetAttribute()&0x7f==0x7f) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	--could be replaced with "ATTRIBUTE_ALL"
-	local att=Duel.AnnounceAttribute(tp,1,0x7f-c:GetAttribute())
+	if chk==0 then return true end
+	local att=c:AnnounceAnotherAttribute(tp)
 	e:SetLabel(att)
 end
 function s.attop(e,tp,eg,ep,ev,re,r,rp)

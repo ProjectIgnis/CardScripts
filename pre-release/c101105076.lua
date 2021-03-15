@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetCondition(aux.AttractionEquipCon(true))
-	e1:SetCondition(s.negcon)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
@@ -23,18 +22,14 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCondition(aux.AttractionEquipCon(false))
-	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp==1-Duel.GetTurnPlayer()
-end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=e:GetHandler():GetEquipTarget()
 	local tg=Duel.GetAttacker()
-	if chk==0 then return tg and tg:IsOnField() and ec:IsControlerCanBeChanged() end
+	if chk==0 then return tp==1-Duel.GetTurnPlayer() and tg and tg:IsOnField() and ec:IsControlerCanBeChanged() end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,ec,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
@@ -44,12 +39,9 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.GetControl(ec,1-ec:GetControler(),PHASE_BATTLE,1)
 	end
 end
-function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler()==e:GetHandler():GetEquipTarget()
-end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=e:GetHandler():GetEquipTarget()
-	if chk==0 then return ec:IsAbleToHand() end
+	if chk==0 then return re:GetHandler()==ec and ec:IsAbleToHand() end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,ec,1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

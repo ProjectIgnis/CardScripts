@@ -37,9 +37,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsSSetable() and Duel.SSet(tp,tc)~=0 then
 		Duel.ConfirmCards(1-tp,tc)
-		--Banish it if it leaves the field
+		--Place it on the bottom of the deck if it leaves the field
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(3300)
+		e1:SetDescription(3301)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)

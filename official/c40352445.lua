@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_EXTRA,0,1,1,nil)
 	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_GRAVE) then
-		local atk1=g:GetFirst():GetTextAttack()
+		local atk1=g:GetFirst():GetAttack()
 		local rg=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_EXTRA,nil)
 		if #rg>0 then
 			Duel.ConfirmCards(tp,Duel.GetFieldGroup(tp,0,LOCATION_EXTRA))
@@ -52,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local sg=rg:Select(tp,1,1,nil)
 			Duel.SendtoGrave(sg,REASON_EFFECT)
 			Duel.ShuffleExtra(1-tp)
-			if sg:GetFirst():IsLocation(LOCATION_GRAVE) then e:SetLabel(sg:GetFirst():GetTextAttack()) end
+			if sg:GetFirst():IsLocation(LOCATION_GRAVE) then e:SetLabel(sg:GetFirst():GetAttack()) end
 		end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -46,18 +46,20 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_GRAVE) then
 		local atk1=g:GetFirst():GetAttack()
 		local rg=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_EXTRA,nil)
+		local atk2=0
 		if #rg>0 then
 			Duel.ConfirmCards(tp,Duel.GetFieldGroup(tp,0,LOCATION_EXTRA))
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local sg=rg:Select(tp,1,1,nil)
 			Duel.SendtoGrave(sg,REASON_EFFECT)
 			Duel.ShuffleExtra(1-tp)
-			if sg:GetFirst():IsLocation(LOCATION_GRAVE) then e:SetLabel(sg:GetFirst():GetAttack()) end
+			if sg:GetFirst():IsLocation(LOCATION_GRAVE) then atk2=sg:GetFirst():GetAttack() end
 		end
+		--Increase ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue((atk1+e:GetLabel())/2)
+		e1:SetValue((atk1+atk2)/2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end

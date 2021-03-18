@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.hfilter(c,e,tp)
-	return c:GetAttack()==c:GetDefense() and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp)
+	return c:IsDefense(c:GetAttack()) and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp)
 end
 function s.sumtg(e,tp,eg,ev,ep,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -40,7 +40,7 @@ function s.sumop(e,tp,eg,ev,ep,re,r,rp)
 	end
 end
 function s.ffilter(c)
-   return c:GetAttack()==c:GetDefense() and c:IsRace(RACE_MACHINE) and c:IsFaceup()
+   return c:IsDefense(c:GetAttack()) and c:IsRace(RACE_MACHINE) and c:IsFaceup()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.ffilter(chkc) end

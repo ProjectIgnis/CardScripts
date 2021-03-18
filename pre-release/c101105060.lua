@@ -45,7 +45,7 @@ function s.exctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>2 end
 end
 function s.excfilter(c)
-	return c:IsRace(RACE_MACHINE) and c:GetAttack()==c:GetDefense() and c:IsAbleToHand()
+	return c:IsRace(RACE_MACHINE) and c:IsDefense(c:GetAttack()) and c:IsAbleToHand()
 end
 function s.excop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -71,7 +71,7 @@ function s.excop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:GetAttack()==c:GetDefense()
+	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsDefense(c:GetAttack())
 end
 function s.countcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)
@@ -84,5 +84,6 @@ function s.limitcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re,tp)
 	local loc=re:GetActivateLocation()
-	return loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetAttack()~=re:GetHandler():GetDefense()
+	local rc=re:GetHandler()
+	return loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and not rc:IsDefense(rc:GetAttack())
 end

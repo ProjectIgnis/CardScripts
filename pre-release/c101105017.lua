@@ -32,7 +32,7 @@ end
 s.listed_names={id}
 --Stack Topdeck
 function s.tdfilter(c)
-	return c:IsRace(RACE_MACHINE) and c:GetAttack()==c:GetDefense()
+	return c:IsRace(RACE_MACHINE) and c:IsDefense(c:GetAttack())
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>1
@@ -50,7 +50,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 end
 --Banish + Special Summon
 function s.spfilter(c,e,tp)
-	return c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and c:GetAttack()==c:GetDefense()
+	return c:IsRace(RACE_MACHINE) and c:IsDefense(c:GetAttack()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.spfilter(chkc,e,tp) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) end

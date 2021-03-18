@@ -28,10 +28,10 @@ function s.initial_effect(c)
 end
 --Tribute + Special Summon
 function s.relfilter(c,e,tp,ft)
-	return c:IsRace(RACE_MACHINE) and c:GetAttack()==c:GetDefense() and (ft>0 or c:IsInMainMZone(tp)) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
+	return c:IsRace(RACE_MACHINE) and c:IsDefense(c:GetAttack()) and (ft>0 or c:IsInMainMZone(tp)) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()<lv and c:GetAttack()==c:GetDefense()
+	return c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()<lv and c:IsDefense(c:GetAttack())
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -55,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 --Banish + add to hand
 function s.thfilter(c)
-	return c:IsRace(RACE_MACHINE) and c:GetAttack()==c:GetDefense() and c:IsAbleToHand() and c:IsFacedown()
+	return c:IsRace(RACE_MACHINE) and c:IsDefense(c:GetAttack()) and c:IsAbleToHand() and c:IsFacedown()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_REMOVED,0,1,nil) end

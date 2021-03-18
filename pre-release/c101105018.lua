@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 --Special Summon
 function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:GetAttack()==c:GetDefense()
+	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsDefense(c:GetAttack())
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
@@ -47,11 +47,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 --Banish + to GY + ATK/DEF gain
 function s.tgfilter(c,tp)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:GetAttack()==c:GetDefense()
+	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsDefense(c:GetAttack())
 		and Duel.IsExistingMatchingCard(s.tgfilter2,tp,LOCATION_DECK,0,1,nil,c:GetLevel())
 end
 function s.tgfilter2(c,lv)
-	return c:IsRace(RACE_MACHINE) and c:IsAbleToGrave() and c:GetAttack()==c:GetDefense() and c:GetLevel()<lv
+	return c:IsRace(RACE_MACHINE) and c:IsAbleToGrave() and c:IsDefense(c:GetAttack()) and c:GetLevel()<lv
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.tgfilter(chkc,tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end

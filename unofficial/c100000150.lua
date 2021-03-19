@@ -40,8 +40,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	for tc in ~g do
 		local code=tc:GetOriginalCode()
 		if c:IsFaceup() and c:GetFlagEffect(code)==0 then
-			c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
-			c:RegisterFlagEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_EVENT+EVENT_ADJUST,1)
+			c:RegisterFlagEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_EVENT+EVENT_ADJUST,0,1)
 		end
 	end
 end

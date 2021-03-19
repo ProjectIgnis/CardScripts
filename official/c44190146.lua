@@ -143,7 +143,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ex,g=Duel.GetOperationInfo(0,CATEGORY_DESTROY)
 	if g:GetFirst():IsRelateToEffect(e) then
-		if Duel.Destroy(g,REASON_EFFECT) then
+		if Duel.Destroy(g,REASON_EFFECT)>0 then
 			local tc=(Duel.GetTargetCards(e)-g):GetFirst()
 			if not (tc and tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
 			local dam=tc:GetRank()*300

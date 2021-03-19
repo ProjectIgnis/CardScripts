@@ -33,8 +33,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0xb}
 function tab.contains(tab,element)
-	for _, value in pairs(tab) do
-		if value==el then
+	for _,value in pairs(tab) do
+		if value==element then
 			return true
 		end
 	end

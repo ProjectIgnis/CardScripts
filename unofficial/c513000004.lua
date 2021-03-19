@@ -1,4 +1,4 @@
---ワンハンドレッド·アイ·ドラゴン
+--ワンハンドレッド·アイ·ドラゴン (Anime)
 --Hundred Eyes Dragon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function tab.contains(tab,element)
-	for _, value in pairs(tab) do
+	for _,value in pairs(tab) do
 		if value==element then
 			return true
 		end

@@ -31,17 +31,26 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0xb}
+function tab.contains(tab,el)
+	for _, value in pairs(tab) do
+		if value==element then
+			return true
+		end
+	end
+	return false
+end
 function s.filter(c)
 	return c:IsSetCard(0xb) and c:IsType(TYPE_MONSTER)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil)
+	local c,g,tab=e:GetHandler(),Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil),{}
 	for tc in ~g do
 		local code=tc:GetOriginalCode()
-		if c:IsFaceup() and c:GetFlagEffect(code)==0 then
-			c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_EVENT+EVENT_ADJUST,1)
-			c:RegisterFlagEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_EVENT+EVENT_ADJUST,0,1)
+		if not tab:contains(code) then table.insert(tab,code) end
+	end
+	for tc in ~tab do
+		if c:IsFaceup() then
+			c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD,1)
 		end
 	end
 end

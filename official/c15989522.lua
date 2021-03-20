@@ -44,7 +44,7 @@ s.listed_names={CARD_GAIA_CHAMPION}
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsLevel(5)
 end
-function s.descon()
+function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() and e:GetHandler():GetAttack()>=2600
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

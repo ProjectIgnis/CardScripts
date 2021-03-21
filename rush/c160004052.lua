@@ -16,7 +16,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return at and a:IsControler(1-tp) and a:IsLevelBelow(9) and at:IsPosition(POS_FACEUP_ATTACK)
+	return at and a:IsControler(1-tp) and a:IsLevelBelow(9) and a:HasDefense() and at:IsPosition(POS_FACEUP_ATTACK) and at:HasDefense()
 end
 function s.thfilter(c)
 	return c:IsCode(52097679) and c:IsAbleToHand()

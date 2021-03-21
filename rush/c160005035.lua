@@ -1,9 +1,9 @@
 --Siesta Torero
 local s,id=GetID()
 function s.initial_effect(c)
-	--double tribute
+	--change position
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={160002047}
 function s.tdfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()
 end
@@ -36,7 +37,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,s.posfilter,tp,LOCATION_MZONE,0,1,1,nil)
 		Duel.HintSelection(g)
 		if #g>0 then
-			Duel.ChangePosition(g,0,0,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+			local g2=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_GRAVE,0,nil)
+			if Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)>0 and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+				local sg=g2:Select(tp,1,1,nil)
+				Duel.HintSelection(sg)
+				Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			end
 		end
 	end
+end
+function s.thfilter2(c)
+	return c:IsCode(160002047) and c:IsAbleToHand()
 end

@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,ft,nil,e,tp)
 		Duel.HintSelection(g)
 		if #g>0 then
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 		end
 	end
 end

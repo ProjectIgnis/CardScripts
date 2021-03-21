@@ -15,7 +15,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsType(TYPE_NORMAL) and (c:IsCode(70781052) or c:IsRace(RACE_FIEND))
+	return c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) 
+	and c:IsType(TYPE_NORMAL) 
+	and (c:IsCode(70781052) or (c:IsRace(RACE_FIEND) and c:IsLevelAbove(7)))
 		and (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

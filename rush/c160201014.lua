@@ -15,8 +15,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local at=Duel.GetAttacker()
 	local tc=Duel.GetAttackTarget()
-	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:GetAttack()==0
+	return at and tc and tc:IsFaceup() and tc:IsControler(tp) and tc:GetAttack()==0 and at:IsCanChangePosition()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local at=Duel.GetAttacker()

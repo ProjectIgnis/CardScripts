@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return #g~=1 and Duel.GetTurnPlayer()==1-tp and Duel.GetAttacker():IsLevelBelow(8)
+	return #g==1 and Duel.GetTurnPlayer()==1-tp and Duel.GetAttacker():IsLevelBelow(8)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

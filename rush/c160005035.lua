@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g)
 		if #g>0 then
 			local g2=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_GRAVE,0,nil)
-			if Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)>0 and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			if Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)>0 and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				local sg=g2:Select(tp,1,1,nil)
 				Duel.HintSelection(sg)
 				Duel.SendtoHand(sg,nil,REASON_EFFECT)

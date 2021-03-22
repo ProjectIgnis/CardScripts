@@ -25,10 +25,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=sg:GetFirst()
 	local count=0
 	for tc in aux.Next(sg) do
-		count=count+tc:GetCounter(0x100e)
+		count=count+tc:GetCounter(COUNTER_A)
 		tc:RemoveCounter(tp,0,0,0)
 	end
 	if count>0 then
-		Duel.RaiseEvent(e:GetHandler(),EVENT_REMOVE_COUNTER+0x100e,e,REASON_EFFECT,tp,tp,count)
+		Duel.RaiseEvent(e:GetHandler(),EVENT_REMOVE_COUNTER+COUNTER_A,e,REASON_EFFECT,tp,tp,count)
 	end
 end

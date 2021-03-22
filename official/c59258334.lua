@@ -54,9 +54,9 @@ function s.initial_effect(c)
 	e6:SetOperation(s.rcop)
 	c:RegisterEffect(e6)
 end
-s.counter_list={0x100e}
+s.counter_list={COUNTER_A}
 function s.filter(c)
-	return c:GetCounter(0x100e)>0 and c:IsControlerCanBeChanged()
+	return c:GetCounter(COUNTER_A)>0 and c:IsControlerCanBeChanged()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
@@ -68,7 +68,7 @@ end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):GetFirst()
-	if c:IsRelateToEffect(re) and tc and tc:IsFaceup() and tc:GetCounter(0x100e)>0 and tc:IsRelateToEffect(re) then
+	if c:IsRelateToEffect(re) and tc and tc:IsFaceup() and tc:GetCounter(COUNTER_A)>0 and tc:IsRelateToEffect(re) then
 		c:SetCardTarget(tc)
 	end
 end
@@ -78,7 +78,7 @@ end
 function s.descon(e)
 	local c=e:GetHandler()
 	if c:GetCardTargetCount()==0 then return false end
-	return c:GetFirstCardTarget():GetCounter(0x100e)==0
+	return c:GetFirstCardTarget():GetCounter(COUNTER_A)==0
 end
 function s.descon2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()
@@ -92,6 +92,6 @@ function s.rccon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rcop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()
-	tc:RemoveCounter(tp,0x100e,1,REASON_EFFECT)
-	Duel.RaiseEvent(e:GetHandler(),EVENT_REMOVE_COUNTER+0x100e,e,REASON_EFFECT,tp,tp,1)
+	tc:RemoveCounter(tp,COUNTER_A,1,REASON_EFFECT)
+	Duel.RaiseEvent(e:GetHandler(),EVENT_REMOVE_COUNTER+COUNTER_A,e,REASON_EFFECT,tp,tp,1)
 end

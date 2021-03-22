@@ -16,11 +16,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atop)
 	c:RegisterEffect(e2)
 end
-s.counter_list={0x100e}
+s.counter_list={COUNTER_A}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	if bc and bc:GetCounter(0x100e)>0 then
+	if bc and bc:GetCounter(COUNTER_A)>0 then
 		c:RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE,0,1)
 	end
 end

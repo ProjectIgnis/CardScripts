@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.atktg)
 	c:RegisterEffect(e3)
 end
+s.counter_list={COUNTER_A}
 function s.potg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAttackPos() end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
@@ -33,5 +34,5 @@ function s.poop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atktg(e,c)
-	return c:GetCounter(0x100e)>0
+	return c:GetCounter(COUNTER_A)>0
 end

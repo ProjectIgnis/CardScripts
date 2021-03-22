@@ -23,14 +23,14 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.counter_place_list={0x100e}
+s.counter_place_list={COUNTER_A}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0xc) end
 	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0xc)
 	Duel.Release(g,REASON_COST)
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:GetCounter(0x100e)==0
+	return c:IsFaceup() and c:GetCounter(COUNTER_A)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -71,14 +71,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.ctop1(e,tp,eg,ep,ev,re,r,rp)
 	if ep~=tp then
-		eg:GetFirst():AddCounter(0x100e,1)
+		eg:GetFirst():AddCounter(COUNTER_A,1)
 	end
 end
 function s.ctop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
 		if tc:IsFaceup() and not tc:IsSummonPlayer(tp) then
-			tc:AddCounter(0x100e,1)
+			tc:AddCounter(COUNTER_A,1)
 		end
 	end
 end

@@ -13,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.counter_list={0x100e}
+s.counter_list={COUNTER_A}
 function s.filter1(c)
 	return c:IsAbleToChangeControler()
 end
 function s.filter2(c)
-	return c:GetCounter(0x100e)>0 and c:IsAbleToChangeControler()
+	return c:GetCounter(COUNTER_A)>0 and c:IsAbleToChangeControler()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

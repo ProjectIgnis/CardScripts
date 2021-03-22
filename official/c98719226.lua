@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xc}
-s.counter_place_list={0x100e}
+s.counter_place_list={COUNTER_A}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetReasonCard()
 	if tc:IsFaceup() and tc:IsRelateToBattle() then
-		tc:AddCounter(0x100e,2)
+		tc:AddCounter(COUNTER_A,2)
 	end
 end
 function s.adcon(e)
@@ -41,8 +41,8 @@ function s.adcon(e)
 end
 function s.adtg(e,c)
 	local bc=c:GetBattleTarget()
-	return bc and c:GetCounter(0x100e)~=0 and bc:IsSetCard(0xc)
+	return bc and c:GetCounter(COUNTER_A)~=0 and bc:IsSetCard(0xc)
 end
 function s.adval(e,c)
-	return c:GetCounter(0x100e)*-300
+	return c:GetCounter(COUNTER_A)*-300
 end

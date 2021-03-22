@@ -48,7 +48,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.thfilter(c)
-	return aux.CanPlaceCounter(c,0x100e) and c:IsAbleToHand()
+	return aux.CanPlaceCounter(c,COUNTER_A) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -63,8 +63,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x100e,2,REASON_COST) end
-	Duel.RemoveCounter(tp,1,1,0x100e,2,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,COUNTER_A,2,REASON_COST) end
+	Duel.RemoveCounter(tp,1,1,COUNTER_A,2,REASON_COST)
 end
 function s.sumfilter(c)
 	return c:IsRace(RACE_REPTILE) and c:IsSummonable(true,nil)
@@ -81,5 +81,5 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.postrigtg(e,c)
-	return c:IsFaceup() and c:GetCounter(0x100e)>0
+	return c:IsFaceup() and c:GetCounter(COUNTER_A)>0
 end

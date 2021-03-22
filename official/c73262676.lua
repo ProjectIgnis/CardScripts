@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0xc}
-s.counter_place_list={0x100e}
+s.counter_place_list={COUNTER_A}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xc) and c:HasLevel()
 end
@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #g==0 then return end
 		for i=1,lv do
 			local sg=g:Select(tp,1,1,nil)
-			sg:GetFirst():AddCounter(0x100e,1)
+			sg:GetFirst():AddCounter(COUNTER_A,1)
 		end
 	end
 end

@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xc}
-s.counter_list={0x100e}
+s.counter_place_list={COUNTER_A}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and eg:GetFirst():IsSetCard(0xc)
 end
@@ -47,6 +47,6 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	for i=1,2 do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local sg=g:Select(tp,1,1,nil)
-		sg:GetFirst():AddCounter(0x100e,1)
+		sg:GetFirst():AddCounter(COUNTER_A,1)
 	end
 end

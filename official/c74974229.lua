@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.counter_place_list={0x100e}
+s.counter_place_list={COUNTER_A}
 	--Defining cost
 function s.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and c:GetOriginalLevel()>0
@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	for i=1,e:GetLabel() do
 		local sg=g:Select(tp,1,1,nil)
-		sg:GetFirst():AddCounter(0x100e,1)
+		sg:GetFirst():AddCounter(COUNTER_A,1)
 	end
 end
 	--Check if this card was destroyed
@@ -65,7 +65,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for opponent's monsters with A-Counters
 function s.acfilter(c)
-	return c:GetCounter(0x100e)>0
+	return c:GetCounter(COUNTER_A)>0
 end
 	--Check for non-link reptile monsters that can be special summoned
 function s.spfilter(c,e,tp)

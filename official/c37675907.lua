@@ -65,8 +65,15 @@ function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabelObject(g:GetFirst())
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local opt=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
+	local c=e:GetHandler()
+	if chk==0 then return c:HasLevel() end
+	local lv=c:GetLevel()
+	local opt
+	if e:GetLabelObject():GetLevel()<lv then
+		opt=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
+	else
+		opt=Duel.SelectOption(tp,aux.Stringid(id,2))
+	end
 	e:SetLabel(opt)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)

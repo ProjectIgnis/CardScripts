@@ -28,6 +28,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local tg=g:GetMinGroup(Card.GetAttack)
 			local tc=tg:GetFirst()
 			if #tg==1 and Duel.CheckLPCost(tc:GetControler(),500)
+				and not tc:IsImmuneToEffect(e)
 				and Duel.SelectYesNo(tc:GetControler(),aux.Stringid(id,0)) then
 				Duel.PayLPCost(tc:GetControler(),500)
 				local e1=Effect.CreateEffect(c)

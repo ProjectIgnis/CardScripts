@@ -58,9 +58,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	local tc1=g:Filter(Card.IsLocation,nil,LOCATION_MZONE):GetFirst()
 	local tc2=g:Filter(Card.IsLocation,nil,LOCATION_GRAVE):GetFirst()
-	if tc2:IsRelateToEffect(e) and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
+	if tc2 and tc2:IsRelateToEffect(e) and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and Duel.SpecialSummon(tc2,0,tp,1-tp,false,false,POS_FACEUP)>0
-		and tc1:IsRelateToEffect(e) and tc1:IsControler(1-tp) then
+		and tc1 and tc1:IsRelateToEffect(e) and tc1:IsControler(1-tp) then
 		Duel.SendtoGrave(tc1,REASON_EFFECT)
 	end
 end

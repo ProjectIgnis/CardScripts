@@ -24,16 +24,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--requirement
-	if Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST)>0 then
-		--effect
-		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local g=Duel.SelectMatchingCard(tp,Card.IsDefensePos,tp,0,LOCATION_MZONE,1,1,nil)
-			if #g>0 then
-				if Duel.ChangePosition(g,0,0,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0 then
-					Duel.Recover(tp,g:GetFirst():GetBaseAttack(),REASON_EFFECT)
-				end
+	--effect
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		local g=Duel.SelectMatchingCard(tp,Card.IsDefensePos,tp,0,LOCATION_MZONE,1,1,nil)
+		if #g>0 then
+			if Duel.ChangePosition(g,0,0,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0 then
+				Duel.Recover(tp,g:GetFirst():GetBaseAttack(),REASON_EFFECT)
 			end
 		end
 	end

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 function s.counterfilter(c)
-	return not c:IsType(SUMMON_TYPE_PENDULUM)
+	return not c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function s.dmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end

@@ -30,6 +30,8 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,id+1)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e1)
 end
 s.listed_series={0xfb}
 	--Check for anything but "Trickstar" monsters

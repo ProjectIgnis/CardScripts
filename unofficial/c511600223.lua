@@ -42,7 +42,7 @@ function s.spfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH)
 end
 function s.dacon(e)
-	return Duel.IsExistingMatchingCard(s.spfilter,tp,0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(s.spfilter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0

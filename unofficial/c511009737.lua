@@ -1,3 +1,4 @@
+--ドロップドラコ
 --Drop Draco
 --fixed by MLD
 local s,id=GetID()

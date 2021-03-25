@@ -69,23 +69,13 @@ function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosum
 			and c:CheckFusionMaterial(mg,gc,chkf)
 end
 
-Fusion.ForcedMatValidity=function(c,e)
+function Fusion.ForcedMatValidity(c,e)
 	if c==e:GetHandler() then
 		return (not c:IsFaceup() and c:IsLocation(LOCATION_ONFIELD)) or not c:IsRelateToEffect(e)
 	end
 	return c:IsImmuneToEffect(e)
 end
 
-
-Duel.GetFusionMaterial=(function()
-	local oldfunc=Duel.GetFusionMaterial
-	local function matchfunc(c)
-		return c:IsType(TYPE_MONSTER) and c:IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL)
-	end
-	return function(tp,...)
-		return oldfunc(tp,...)+Duel.GetMatchingGroup(matchfunc,tp,LOCATION_GRAVE,0,nil)
-	end
-end)()
 Fusion.SummonEffTG = aux.FunctionWithNamedArgs(
 function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,location,chkf,preselect,nosummoncheck,extratg,mincount,maxcount,sumpos)
 	sumpos = sumpos or POS_FACEUP

@@ -24,8 +24,9 @@ local function cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r
 	return t
 end
 
-function Auxiliary.CostWithReplace(base,replacecode,extracon)
+function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		if alwaysexecute and not alwaysexecute(e,tp,eg,ep,ev,re,r,rp,0) then return false end
 		local cond=base(e,tp,eg,ep,ev,re,r,rp,0)
 		if chk==0 then
 			if cond then return true end
@@ -38,6 +39,7 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon)
 			end
 			return false
 		end
+		if alwaysexecute then alwaysexecute(e,tp,eg,ep,ev,re,r,rp,1) end
 		local effs=cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 		if not cond or (cond and #effs>0 and Duel.SelectYesNo(tp,98)) then
 			local eff=effs[1]

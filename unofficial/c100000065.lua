@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3013}
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.val(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0

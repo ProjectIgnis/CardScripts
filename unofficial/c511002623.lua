@@ -60,6 +60,7 @@ function s.cfilter(c)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
+	local tp=e:GetHandlerPlayer()
 	local g=Duel.GetMatchingGroup(s.cfilter,c:GetControler(),LOCATION_MZONE,0,nil)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g:GetSum(Card.GetLevel)>=8
 end

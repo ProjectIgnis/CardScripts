@@ -18,8 +18,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	s.announce_filter={id+1,OPCODE_ISCODE,nil,OPCODE_ISCODE,OPCODE_NOT,OPCODE_AND}
-	Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
+	s.announce_filter={id+1,OPCODE_ISCODE}
+	Duel.AnnounceCard(tp,s.announce_filter)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x48) and not c:IsSetCard(0x1048) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

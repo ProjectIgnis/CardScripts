@@ -72,7 +72,7 @@ function s.effilter(c)
 	return c:IsFaceup() and (c:IsSetCard(0xbd) or c:IsCode(CARD_GAIA_CHAMPION))
 end
 function s.effcon(e)
-	return Duel.IsExistingMatchingCard(s.effilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.effilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.distg(e,c)
 	return c:IsFacedown()

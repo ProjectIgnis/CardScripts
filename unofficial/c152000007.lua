@@ -11,7 +11,7 @@ function s.ffilter(c,tp)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
-	return Duel.IsExistingMatchingCard(s.ffilter,tp,LOCATION_DECK,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.ffilter,tp,LOCATION_DECK,0,1,nil,tp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--opd check and ask if you want to activate the skill or not

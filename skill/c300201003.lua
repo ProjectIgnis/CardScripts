@@ -25,7 +25,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
 		e2:SetCountLimit(1)
 		e2:SetOperation(s.loseop)
-		Duel.RegisterEffect(e2,p)
+		Duel.RegisterEffect(e2,tp)
 	end
 	--1 flag = 1 counter
 	Duel.RegisterFlagEffect(ep,id,0,0,0)

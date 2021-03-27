@@ -30,11 +30,11 @@ function s.filter(c,tp)
 	return c:IsType(TYPE_SPELL) and (bool_a or bool_b or bool_c) and c:IsFaceup() and c:IsAbleToChangeControler()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_SZONE,1,e:GetHandler()) 
+	if chkc then return chkc:IsOnField() and s.filter(chkc,tp) and chkc~=e:GetHandler() end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_SZONE,1,e:GetHandler(),tp) 
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.GetCurrentChain()==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_SZONE,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_SZONE,1,1,e:GetHandler(),tp)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -63,11 +63,11 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain(true)>0
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_SZONE,1,e:GetHandler()) 
+	if chkc then return chkc:IsOnField() and s.filter(chkc,tp) and chkc~=e:GetHandler() end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_SZONE,1,e:GetHandler(),tp) 
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_SZONE,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_SZONE,1,1,e:GetHandler(),tp)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 end
 function s.activate2(e,tp,eg,ep,ev,re,r,rp)

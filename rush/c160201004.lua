@@ -34,7 +34,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_COST)~0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 		local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(s.filter,e),tp,LOCATION_MZONE,0,1,1,nil)
 		if #g>0 then
 			Duel.HintSelection(g)

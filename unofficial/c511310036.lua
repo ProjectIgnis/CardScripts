@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	--become ignition
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(id) --hardcode
+	e4:SetCode(511310036) --hardcode
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
 	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ALLURE_QUEEN))
@@ -60,12 +60,12 @@ function s.regop(e)
 	s.global_check = true
 	local g=Duel.GetMatchingGroup(Card.IsOriginalSetCard,tp,0xff,0xff,nil,SET_ALLURE_QUEEN)
 	for tc in aux.Next(g) do
-		local effs={tc:GetCardEffect(id)}
+		local effs={tc:GetCardEffect(511310036)}
 		for _,teh in ipairs(effs) do
 			local eff=teh:GetLabelObject()
 			local e1=eff:Clone()
 			e1:SetType(EFFECT_TYPE_IGNITION)
-			e1:SetCode(nil)
+			e1:SetCode(0)
 			e1:SetCondition(s.igcon)
 			tc:RegisterEffect(e1)
 		end
@@ -76,7 +76,7 @@ function s.eqfilter(c,code)
 end
 function s.igcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsHasEffect(id) and #c:GetEquipGroup():Filter(s.eqfilter,nil,c:GetOriginalCode())>0
+	return c:IsHasEffect(511310036) and #c:GetEquipGroup():Filter(s.eqfilter,nil,c:GetOriginalCode())>0
 end
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(SET_ALLURE_QUEEN) and c:IsControler(tp)

@@ -141,16 +141,12 @@ function s.pencon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousPosition(POS_FACEUP) and e:GetHandler():IsPreviousLocation(LOCATION_MZONE)
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local lsc=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
-	local rsc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	local g=Group.FromCards(lsc,rsc)
+	local g=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.penop(e,tp,eg,ep,ev,re,r,rp)
-	local lsc=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
-	local rsc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	local g=Group.FromCards(lsc,rsc)
+	local g=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
 	if Duel.Destroy(g,REASON_EFFECT)~=0 and e:GetHandler():IsRelateToEffect(e) then
 		Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end

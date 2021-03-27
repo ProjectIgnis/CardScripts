@@ -6,9 +6,9 @@ function s.initial_effect(c)
 	--skill
 	aux.AddVrainsSkillProcedure(c,s.flipcon,s.flipop,EFFECT_NEGATE_SKILL)
 end
-function s.flipcon(e,tp,re)
+function s.flipcon(e)
 	--condition
-	return Duel.IsPlayerCanDraw(tp,2)
+	return Duel.IsPlayerCanDraw(e:GetHandleraPlayer(),2)
 end
 function s.flipop(e,tp,re)
 	--opd check and ask if you want to activate the skill or not

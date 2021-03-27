@@ -67,7 +67,7 @@ function s.operation0(e,tp,eg,ev,ep,re,r,rp)
 	local c=e:GetHandler()
 	local mg=c:GetOverlayGroup()
 	if Duel.SendtoDeck(c,nil,0,REASON_EFFECT)~=0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local tg=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_DECK,0,1,1,nil)
 		if tg and #tg>0 then Duel.SendtoHand(tg,nil,REASON_EFFECT) end
 		local count=#mg

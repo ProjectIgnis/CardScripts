@@ -63,7 +63,7 @@ function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
 	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_EXTRA,0,c,POS_FACEDOWN)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-4 and #rg>4 and aux.SelectUnselectGroup(rg,e,tp,5,#rg,aux.ChkfMMZ(1),0)
+	return Duel.GetMZoneCount(tp,rg)>0 and #rg>4 and aux.SelectUnselectGroup(rg,e,tp,5,#rg,aux.ChkfMMZ(1),0)
 end
 function s.mmzfilter(c,tp)
 	return c:IsInMainMZone(tp) and c:IsAbleToRemoveAsCost(POS_FACEDOWN)

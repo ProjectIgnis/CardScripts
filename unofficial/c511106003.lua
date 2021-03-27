@@ -28,7 +28,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-	and Duel.CheckReleaseGroup(tp,s.tfilter,1,nil)
+	and Duel.CheckReleaseGroup(tp,s.tfilter,1,nil,tp)
 	and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -39,8 +39,8 @@ function s.tfilter(c,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if Duel.CheckReleaseGroup(tp,s.tfilter,1,nil) then
-	local tr=Duel.SelectReleaseGroup(tp,s.tfilter,1,1,nil)
+	if Duel.CheckReleaseGroup(tp,s.tfilter,1,nil,tp) then
+	local tr=Duel.SelectReleaseGroup(tp,s.tfilter,1,1,nil,tp)
 	if Duel.Release(tr,REASON_EFFECT)~=0 then 
 	if tc:IsRelateToEffect(e) then
 	if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then 

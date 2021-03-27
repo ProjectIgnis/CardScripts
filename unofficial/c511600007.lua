@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,ec:GetOriginalCode(),0,ec:GetOriginalType(),ec:GetTextAttack(),ec:GetTextDefense(),
 		ec:GetOriginalLevel()+ec:GetOriginalRank(),ec:GetOriginalRace(),ec:GetOriginalAttribute()) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,nil)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()

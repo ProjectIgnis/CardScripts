@@ -53,7 +53,7 @@ function s.disfilter(c,p,link)
 	return c:IsFaceup() and c:IsType(TYPE_LINK) and not c:IsControler(p) and c:GetLink()>=link
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local linkg=Duel.GetMatchingGroup(s.cfilter,p,LOCATION_MZONE,0,nil)
+	local linkg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	local link=0
 	if #linkg>0 then link=linkg:GetFirst():GetLink() end
 	if chk==0 then return eg:IsExists(s.disfilter,1,nil,tp,link) end

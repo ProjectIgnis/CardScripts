@@ -43,7 +43,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon2(e,c)
 	if c==nil then return true end
-	return Duel.GetFieldGroupCount(e:GetHandler(),LOCATION_ONFIELD,LOCATION_ONFIELD)==0
+	return Duel.GetFieldGroupCount(0,LOCATION_ONFIELD,LOCATION_ONFIELD)==0
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

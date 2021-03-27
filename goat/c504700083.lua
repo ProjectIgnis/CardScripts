@@ -62,7 +62,7 @@ end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and bc and bc:IsBattleDestroyed() and bc:GetIsPosition(POS_DEFENSE)
+	return c:IsRelateToBattle() and bc and bc:IsBattleDestroyed() and bc:IsPosition(POS_DEFENSE)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

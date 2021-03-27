@@ -25,6 +25,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsLevelAbove(5) and c:IsRace(RACE_FIEND)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)==1 then
 		--Effect

@@ -58,8 +58,9 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
+	local ct=e:GetLabelObject():GetLink()
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(e:GetLabelObject():GetLink())
+	Duel.SetTargetParam(ct)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,0,0,tp,ct)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)

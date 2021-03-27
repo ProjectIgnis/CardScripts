@@ -1,6 +1,5 @@
 --星遺物の導き
 --World Legacy Landmark
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 2 monsters from GY
@@ -16,11 +15,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0xfe}
-
 function s.cfilter(c,ft)
 	return c:IsSetCard(0xfe) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
-		and (ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
+		and (ft>1 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and ft>0))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -31,7 +29,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end

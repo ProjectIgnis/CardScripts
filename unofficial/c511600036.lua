@@ -41,7 +41,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(id)==0 end
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
-	c:RegisterFlagEffect(id,nil,0,1)
+	c:RegisterFlagEffect(id,0,0,1)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

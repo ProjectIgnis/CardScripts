@@ -31,8 +31,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) and Duel.IsPlayerCanDiscardDeck(tp,2)
-		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=4 end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,2)
+		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=2 end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)

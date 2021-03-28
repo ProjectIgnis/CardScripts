@@ -1,4 +1,5 @@
---Performapal Odd-Eyes Dissolver
+--ＥＭオッドアイズ・ディゾルヴァ (Anime)
+--Performapal Odd-Eyes Dissolver (Anime)
 --original script by Sahim & Cybercatman
 local s,id=GetID()
 function s.initial_effect(c)
@@ -113,7 +114,7 @@ function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and aux.disfilter1(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_MZONE,1,nil) 
-		and not e:GetHandler():IsStatus(STATUS_CHAINING) end
+		and not c:IsStatus(STATUS_CHAINING) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
 	local g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g,0,0)

@@ -2,8 +2,6 @@
 --Golden Allure Queen
 --Scripted by AlphaKretin
 local s,id=GetID()
-local CARD_ALLURE_PALACE=511310036
-local SET_ALLURE_QUEEN=0x14
 function s.initial_effect(c)
 	--link summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER),3,3)
@@ -32,32 +30,31 @@ function s.initial_effect(c)
 	e3:SetCondition(s.indcon2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_ALLURE_QUEEN}
-s.listed_names={CARD_ALLURE_PALACE}
+s.listed_series={0x14}
+s.listed_names={511310036}
 function s.atkcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.atkval(e,c)
-	local g=e:GetHandler():GetLinkedGroup():Filter(aux.FilterFaceupFunction(Card.IsSetCard,SET_ALLURE_QUEEN),nil)
+	local g=e:GetHandler():GetLinkedGroup():Filter(aux.FilterFaceupFunction(Card.IsSetCard,0x14),nil)
 	return g:GetSum(Card.GetAttack)
 end
 function s.tgfilter(c,tp)
-	return c:IsOnField() and c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(SET_ALLURE_QUEEN)
+	return c:IsOnField() and c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x14)
 end
-s.fzfilter=aux.FilterFaceupFunction(Card.IsCode,CARD_ALLURE_PALACE)
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.tgfilter,1,nil,tp)
 	if not tg or #tg<1 then return false end
 	tg:KeepAlive()
 	e:SetLabelObject(tg)
-	return rp~=tp and Duel.IsExistingMatchingCard(s.fzfilter,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
+	return rp~=tp and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,511310036),tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.indcon2(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.tgfilter,1,nil,tp)
 	if not tg or #tg<1 then return false end
 	tg:KeepAlive()
 	e:SetLabelObject(tg)
-	return Duel.IsExistingMatchingCard(s.fzfilter,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,511310036),tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=e:GetLabelObject()

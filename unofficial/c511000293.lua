@@ -1,3 +1,4 @@
+--ドン・サウザンドの玉座 (Anime)
 --Don Thousand's Throne (Anime)
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
@@ -80,7 +81,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local at=Duel.GetAttackTarget()
 	if chk==0 then
-		local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
+		local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(at),tp,nil,nil,REASON_XYZ)
 		return #pg<=1 and at and at:GetRank()>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,at:GetRank(),at,pg)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)

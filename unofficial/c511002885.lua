@@ -1,4 +1,5 @@
---Quiz Hour
+--クイズ・アワー！
+--Quiz Hour!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -44,12 +45,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,511002786)
 	local g3=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,511002781)
 	if #g1>0 and #g2>0 and #g3>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>2 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINT_SET)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local sg1=g1:Select(tp,1,1,nil)
-		Duel.Hint(HINT_SELECTMSG,tp,HINT_SET)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local sg2=g2:Select(tp,1,1,nil)
 		sg1:Merge(sg2)
-		Duel.Hint(HINT_SELECTMSG,tp,HINT_SET)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local sg3=g3:Select(tp,1,1,nil)
 		sg1:Merge(sg3)
 		local tc=sg1:GetFirst()

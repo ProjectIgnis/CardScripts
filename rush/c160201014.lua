@@ -17,7 +17,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	local tc=Duel.GetAttackTarget()
-	return at and tc and tc:IsFaceup() and tc:IsControler(tp) and tc:GetAttack()==0 and at:IsCanChangePosition()
+	return at and tc and tc:IsFaceup() and tc:IsControler(tp) and tc:GetAttack()==0 and at:IsCanChangePositionRush()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local at=Duel.GetAttacker()

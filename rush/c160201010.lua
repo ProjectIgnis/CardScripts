@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsRace(RACE_WARRIOR) and c:IsAttackPos() and c:IsCanChangePosition()
+	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsRace(RACE_WARRIOR) and c:IsAttackPos() and c:IsCanChangePositionRush()
 end
 function s.drwcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

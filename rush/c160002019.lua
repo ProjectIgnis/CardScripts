@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={160002001}
 function s.pfilter(c)
-	return c:IsCode(160002001) and c:IsFaceup() and c:IsAttackPos() and c:IsCanChangePosition()
+	return c:IsCode(160002001) and c:IsFaceup() and c:IsAttackPos() and c:IsCanChangePositionRush()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.pfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.ofilter(c)
-	return c:IsAttackPos() and c:IsCanChangePosition()
+	return c:IsAttackPos() and c:IsCanChangePositionRush()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.ofilter,tp,0,LOCATION_MZONE,1,nil) end

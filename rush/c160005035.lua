@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
 end
 function s.posfilter(c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsLevelBelow(8) and c:IsCanChangePosition()
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsLevelBelow(8) and c:IsCanTurnSet() and c:IsCanChangePositionRush()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--cost

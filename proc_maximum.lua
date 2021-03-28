@@ -421,3 +421,6 @@ if not traprush then
 						end)
 		Duel.RegisterEffect(traprush,0)
 	end
+function Card.IsCanChangePositionRush(c)
+	return c:IsCanChangePosition() and not c:IsMaximumMode()
+end

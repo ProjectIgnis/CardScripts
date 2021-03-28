@@ -16,8 +16,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttackTarget()
-	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRace(RACE_PLANT)
+	local tc=Duel.GetAttackTarget() 
+	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRace(RACE_PLANT) and Duel.GetAttacker():IsCanChangePositionRush()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,2,nil) end
@@ -48,5 +48,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.posfilter(c)
-	return c:IsAttackPos() and c:IsCanChangePosition()
+	return c:IsAttackPos() and c:IsCanChangePositionRush()
 end

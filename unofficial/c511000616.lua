@@ -1,3 +1,4 @@
+--ロスト・プライド
 --Lost Pride
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,15 +27,17 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,0,LOCATION_GRAVE,1,1,nil)
-	Duel.SendtoHand(g,tp,REASON_EFFECT)
-	Duel.ConfirmCards(1-tp,g)
-	g:GetFirst():RegisterFlagEffect(id,nil,0,1)
+	local tc=g:GetFirst()
+	Duel.SendtoHand(tc,tp,REASON_EFFECT)
+	Duel.ConfirmCards(1-tp,tc)
+	tc:RegisterFlagEffect(id,0,0,1)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetCode(EVENT_CHAIN_ACTIVATING)
 	e1:SetOperation(s.damop)
-	e1:SetLabelObject(g:GetFirst())
+	e1:SetLabelObject(tc)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)

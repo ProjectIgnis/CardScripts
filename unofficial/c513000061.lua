@@ -68,19 +68,19 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainDisablable(ev) then return false end
-	local ev,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_CONTROL)
-	if ev and tg~=nil and tg:IsContains(e:GetHandler()) then return true end
-	local ev,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_REMOVE)
-	if ev and tg~=nil and tg:IsContains(e:GetHandler()) then return true end
-	local ev,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
-	if ev and tg~=nil and tg:IsContains(e:GetHandler()) then return true end
-	local ev,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TODECK)
-	if ev and tg~=nil and tg:IsContains(e:GetHandler()) then return true end
-	local ev,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TOGRAVE)
-	if ev and tg~=nil and tg:IsContains(e:GetHandler()) then return true end
-	local ev,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TOHAND)
-	if ev and tg~=nil and tg:IsContains(e:GetHandler()) then return true end
-	return ev and tg~=nil and tg:IsContains(e:GetHandler())
+	local eb,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_CONTROL)
+	if eb and tg and tg:IsContains(e:GetHandler()) then return true end
+	local eb,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_REMOVE)
+	if eb and tg and tg:IsContains(e:GetHandler()) then return true end
+	local eb,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
+	if eb and tg and tg:IsContains(e:GetHandler()) then return true end
+	local eb,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TODECK)
+	if eb and tg and tg:IsContains(e:GetHandler()) then return true end
+	local eb,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TOGRAVE)
+	if eb and tg and tg:IsContains(e:GetHandler()) then return true end
+	local eb,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TOHAND)
+	if eb and tg and tg:IsContains(e:GetHandler()) then return true end
+	return eb and tg and tg:IsContains(e:GetHandler())
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

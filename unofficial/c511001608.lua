@@ -176,6 +176,7 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and c:IsPreviousControler(tp) and (c:GetReasonCard() or c:IsReason(REASON_EFFECT) and re and re:IsActiveType(TYPE_MONSTER))
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return true end
 	local tc=c:GetReasonCard() or re:GetHandler()
 	if tc:IsLocation(LOCATION_MZONE) and not tc:IsControler(tp) and tc:IsControlerCanBeChanged() then

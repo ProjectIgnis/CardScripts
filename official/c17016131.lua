@@ -1,7 +1,6 @@
 --海造賊－誇示
 --Pride of the Plunder Patroll
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -113,7 +112,7 @@ function s.extdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 	if #g>0 then
 		Duel.ConfirmCards(tp,g)
-		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TOGRAVE)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local sg=g:FilterSelect(tp,Card.IsType,1,1,nil,TYPE_MONSTER)
 		Duel.SendtoGrave(sg,REASON_EFFECT)
 		Duel.ShuffleExtra(1-tp)

@@ -18,7 +18,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsPosition(POS_FACEUP_ATTACK) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAttackPos,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
+end
+function s.filter(c)
+	return c:IsAttackPos() and c:IsCanChangePositionRush()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -27,7 +30,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local tc=Duel.SelectMatchingCard(tp,Card.IsAttackPos,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+			local tc=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 			Duel.HintSelection(Group.FromCards(tc))
 			if tc then
 				Duel.ChangePosition(tc,POS_FACEUP_DEFENSE)
@@ -36,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetCode(EFFECT_UPDATE_DEFENSE)
 				e1:SetValue(-600)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				tc:RegisterEffect(e1)
+				tc:RegisterEffectRush(e1)
 			end
 		end
 	end

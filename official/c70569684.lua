@@ -1,7 +1,6 @@
 --ハイレート・ドロー
 --High Rate Draw
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 2+ of your monsters, and if you do, for every 2 destroyed, draw 1
@@ -36,8 +35,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,2,nil,e) end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,nil,e)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,nil,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

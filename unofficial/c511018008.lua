@@ -23,9 +23,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ht1=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 	local ht2=Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)
 	if ht1<6 then 
-		Duel.Draw(tp,6-ht,REASON_EFFECT)
+		Duel.Draw(tp,6-ht1,REASON_EFFECT)
 	end
 	if ht2<6 then 
-		Duel.Draw(1-tp,6-ht,REASON_EFFECT)
+		Duel.Draw(1-tp,6-ht2,REASON_EFFECT)
 	end
 end

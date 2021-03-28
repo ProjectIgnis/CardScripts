@@ -54,11 +54,11 @@ function s.initial_effect(c)
 	e6:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e6)
 end
-s.listed_series={SET_ALLURE_QUEEN}
+s.listed_series={0x14}
 function s.regop(e)
 	if s.global_check then return end
 	s.global_check = true
-	local g=Duel.GetMatchingGroup(Card.IsOriginalSetCard,tp,0xff,0xff,nil,SET_ALLURE_QUEEN)
+	local g=Duel.GetMatchingGroup(Card.IsOriginalSetCard,tp,0xff,0xff,nil,0x14)
 	for tc in aux.Next(g) do
 		local effs={tc:GetCardEffect(511310036)}
 		for _,teh in ipairs(effs) do

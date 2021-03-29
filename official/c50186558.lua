@@ -1,5 +1,5 @@
 --守護竜の結界
---Guardragon's Barrier
+--Guardragon Shield
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,TYPE_LINK)
+	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and Duel.IsExistingMatchingCard(Card.IsType,0,LOCATION_MZONE,LOCATION_MZONE,1,nil,TYPE_LINK)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter(chkc) end
@@ -79,4 +79,3 @@ end
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
-

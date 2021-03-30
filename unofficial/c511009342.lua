@@ -1,4 +1,5 @@
---The Phantom Knights of Wrong Magnet Ring
+--幻影騎士団ウロング・マグネリング (Anime)
+--The Phantom Knights of Wrong Magnetring (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

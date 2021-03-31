@@ -43,14 +43,14 @@ function s.tgfilter(c,tp)
 	return c:IsOnField() and c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x14)
 end
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
-	local tg=eg:Filter(s.tgfilter,1,nil,tp)
+	local tg=eg:Filter(s.tgfilter,nil,tp)
 	if not tg or #tg<1 then return false end
 	tg:KeepAlive()
 	e:SetLabelObject(tg)
 	return rp~=tp and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,511310036),tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.indcon2(e,tp,eg,ep,ev,re,r,rp)
-	local tg=eg:Filter(s.tgfilter,1,nil,tp)
+	local tg=eg:Filter(s.tgfilter,nil,tp)
 	if not tg or #tg<1 then return false end
 	tg:KeepAlive()
 	e:SetLabelObject(tg)

@@ -56,7 +56,7 @@ function s.bptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,sg,#sg,0,0)
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetFieldGroup(tp,LOCATION_MZONE,nil)
+	local sg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	if #sg>0 then
 		Duel.ChangePosition(sg,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 	end

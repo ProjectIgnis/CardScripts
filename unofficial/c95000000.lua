@@ -261,7 +261,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Hint(HINT_CARD,0,id)
 	if op==0 then
-		Duel.RegisterFlagEffect(1-tp,951,nil,0,1)
+		Duel.RegisterFlagEffect(1-tp,951,0,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -281,7 +281,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,1-tp)
 	else
-		Duel.RegisterFlagEffect(1-tp,953,nil,0,1)
+		Duel.RegisterFlagEffect(1-tp,953,0,0,1)
 		local opt=Duel.SelectOption(1-tp,aux.Stringid(id,4),aux.Stringid(id,5))
 		local p=(opt==0 and 1-tp or tp)
 		Duel.Recover(p,startlps//2,REASON_RULE)

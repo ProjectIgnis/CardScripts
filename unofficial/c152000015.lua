@@ -8,7 +8,7 @@ function s.initial_effect(c)
 end
 function s.flipcon(e)
 	--condition
-	return Duel.IsPlayerCanDraw(e:GetHandleraPlayer(),2)
+	return Duel.IsPlayerCanDraw(e:GetHandlerPlayer(),2)
 end
 function s.flipop(e,tp,re)
 	--opd check and ask if you want to activate the skill or not

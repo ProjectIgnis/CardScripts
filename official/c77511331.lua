@@ -39,7 +39,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(c,nil,REASON_EFFECT)
 end
 function s.tgfilter(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetColumnGroup():IsExists(s.gyfilter,nil,tp)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetColumnGroup():IsExists(s.gyfilter,1,nil,tp)
 end
 function s.gyfilter(c,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_PZONE)

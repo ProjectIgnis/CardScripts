@@ -56,7 +56,7 @@ function s.adcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
 end
 function s.adval(e,c)
-	return Duel.GetCounter(tp,LOCATION_ONFIELD,LOCATION_ONFIELD,0x1149)*-100
+	return Duel.GetCounter(e:GetHandlerPlayer(),LOCATION_ONFIELD,LOCATION_ONFIELD,0x1149)*-100
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker() and Duel.GetCounter(tp,LOCATION_ONFIELD,LOCATION_ONFIELD,0x1149)>0

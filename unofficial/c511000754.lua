@@ -1,4 +1,5 @@
---Parallel Twister
+--パラレル・ツイスター (Manga)
+--Parallel Twister (Manga)
 --updated by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,10 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.dfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable() and Duel.IsExistingMatchingCard(s.dfilter2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
-end
-function s.dfilter2(c,s)
-	return c:IsDestructable()
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable() and Duel.IsExistingMatchingCard(Card.IsDestructable,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end
@@ -28,6 +26,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(dg,REASON_EFFECT)
 	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local dg2=Duel.SelectMatchingCard(tp,s.dfilter2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
+	local dg2=Duel.SelectMatchingCard(tp,Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
 	Duel.Destroy(dg2,REASON_EFFECT)
 end

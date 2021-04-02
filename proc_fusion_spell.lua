@@ -84,10 +84,11 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 				if not chkf or ((chkf&PLAYER_NONE)~=PLAYER_NONE) then
 					chkf=chkf and chkf|tp or tp
 				end
-				local sumlimit=(chkf&FUSPROC_NOTFUSION)~=0
+				local sumlimit=(chkf&(FUSPROC_NOTFUSION|FUSPROC_NOLIMIT))~=0
+				local notfusion=(chkf&FUSPROC_NOTFUSION)~=0
 				if not value then value=0 end
 				value = value|MATERIAL_FUSION
-				if not sumlimit then
+				if not notfusion then
 					value = value|SUMMON_TYPE_FUSION
 				end
 				local gc=gc2
@@ -118,7 +119,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos)
 					Fusion.CheckAdditional=nil
 					Fusion.ExtraGroup=nil
-					if not res and not sumlimit then
+					if not res and not notfusion then
 						for _,ce in ipairs({Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)}) do
 							local fgroup=ce:GetTarget()
 							local mg=fgroup(ce,e,tp,value)
@@ -178,9 +179,10 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				location=location or LOCATION_EXTRA
 				chkf = chkf and chkf|tp or tp
-				local sumlimit=(chkf&FUSPROC_NOTFUSION)~=0
+				local sumlimit=(chkf&(FUSPROC_NOTFUSION|FUSPROC_NOLIMIT))~=0
+				local notfusion=(chkf&FUSPROC_NOTFUSION)~=0
 				if not value then value=0 end
-				if not sumlimit then
+				if not notfusion then
 					value = value|SUMMON_TYPE_FUSION|MATERIAL_FUSION
 				end
 				local gc=gc2
@@ -217,7 +219,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				end
 				Fusion.ExtraGroup=nil
 				Fusion.CheckAdditional=nil
-				if not sumlimit then
+				if not notfusion then
 					local extraeffs = {Duel.GetPlayerEffect(tp,EFFECT_CHAIN_MATERIAL)}
 					for _,ce in ipairs(extraeffs) do
 						local fgroup=ce:GetTarget()

@@ -3,22 +3,17 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff({handler=c,extraop=s.extraop,stage2=s.stage2,matfilter=s.matfil})
+	local e1=Fusion.CreateSummonEff{handler=c,extraop=s.extraop,stage2=s.stage2,matfilter=s.matfil,extratg=s.extratg}
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_DESTROY)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
-	local tg=e1:GetTarget()
-	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
-					if chk==0 then
-						return tg(e,tp,eg,ep,ev,re,r,rp,chk)
-					end
-					tg(e,tp,eg,ep,ev,re,r,rp,chk) 
-					Duel.SetOperationInfo(0,CATEGORY_DESTROY,Duel.GetFusionMaterial(tp):Filter(Card.IsOnField,nil),1,tp,LOCATION_ONFIELD)
-				end)
 	c:RegisterEffect(e1)
 end
 function s.matfil(c,e,tp,chk)
 	return c:IsOnField() and c:IsDestructable(e) and not c:IsImmuneToEffect(e)
+end
+function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_ONFIELD)
 end
 function s.extraop(e,tc,tp,sg)
 	local res=Duel.Destroy(sg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)==#sg

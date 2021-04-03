@@ -31,12 +31,12 @@ function s.initial_effect(c)
 end
 s.roll_dice=true
 function s.con(e)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)~=0 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)~=0
+	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)~=0 and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_MZONE)~=0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,nil,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.TossDice(tp,1)

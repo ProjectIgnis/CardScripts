@@ -53,7 +53,7 @@ function s.spcon(e,c)
 	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
 	if c==nil then return true end
-	return Duel.GetLocationCount(1-c:GetControler(),LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_GRAVE,1,nil,tc) 
+	return Duel.GetLocationCount(1-c:GetControler(),LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,c:GetControler(),0,LOCATION_GRAVE,1,nil,tc) 
 end
 function s.opera(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

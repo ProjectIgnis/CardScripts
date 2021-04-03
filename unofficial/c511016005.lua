@@ -1,4 +1,5 @@
 --超越融合
+--Ultra Polymerization (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.mfilter(c)
-	return c:IsOnField() and not c:IsHasEffect(EFFECT_CANNOT_SPECIAL_SUMMON)
+	return not c:IsHasEffect(EFFECT_CANNOT_SPECIAL_SUMMON)
 end
 function s.filter1(c,e1,e2,e,tp,mg)
 	return (not e1 or c:IsCanBeEffectTarget(e1)) and (not e2 or (c:IsRelateToEffect(e2) and not c:IsImmuneToEffect(e2))) 
@@ -33,7 +34,7 @@ function s.spfilter(c,e,tp,mg)
 	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(mg,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local mg=Duel.GetFusionMaterial(tp):Filter(s.mfilter,nil)
+	local mg=Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
 		and Duel.IsPlayerCanSpecialSummonCount(tp,2) and mg:IsExists(s.filter1,1,nil,e,nil,e,tp,mg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)

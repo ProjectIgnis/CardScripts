@@ -1,4 +1,5 @@
 --おジャマ・デルタサンダー！！
+--Ojama Delta Thunder!!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -38,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(s.costfilter,tp,LOCATION_DECK+LOCATION_HAND,0,nil)
 	local dt=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_ONFIELD,nil)
 	if #dg>0 and #dt>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_HINTMSG_TOGRAVE)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local des=dg:Select(tp,1,1,nil)
 		Duel.SendtoGrave(des,REASON_EFFECT)
 		Duel.BreakEffect()

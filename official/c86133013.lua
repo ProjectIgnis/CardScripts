@@ -17,10 +17,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 	--Check for a monster that was destroyed by battle or opponent's card effect
-function s.filter(c,e,tp,g,ft)
+function s.filter(c,e,tp,ft,sg)
 	return (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp))
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 		and c:IsCanBeEffectTarget(e) and c:HasLevel() and not c:IsType(TYPE_TOKEN)
+		and sg:CheckWithSumEqual(Card.GetLevel,c:GetLevel(),1,ft+1)
 end
 	--Check for a monster to special summon
 function s.spfilter(c,e,tp)
@@ -28,9 +29,12 @@ function s.spfilter(c,e,tp)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=eg:Filter(s.filter,nil,e,tp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if not eg then return false end
 	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=min(1,ft) end
+	local g=eg:Filter(s.filter,nil,e,tp,ft,sg)
+	if chk==0 then return ft>0 and #g>0 end
 	local c=nil
 	if #g>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
@@ -38,9 +42,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		c=g:GetFirst()
 	end
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	if chk==0 then return eg and eg:IsExists(s.filter,1,nil,e,tp)
-		and ft>0 and sg:CheckWithSumEqual(Card.GetLevel,c:GetLevel(),1,ft+1) end
 	Duel.SetTargetCard(c)
 	e:SetLabel(c:GetLevel())
 end

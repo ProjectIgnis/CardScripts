@@ -64,7 +64,6 @@ function s.spcon(e,c)
 	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil) then return false end
 	local lv=c:GetLevel()
 	local amt=(lv>6 and 2) or (lv>4 and 1) or 0
-	Debug.Message(amt)
 	return amt==0 or Duel.CheckReleaseGroup(tp,nil,amt,false,amt,true,c,nil,nil,false,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)

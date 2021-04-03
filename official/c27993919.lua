@@ -59,7 +59,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local rg=Duel.SelectReleaseGroup(tp,s.cfilter,1,1,nil,e,tp)
-	if Duel.Release(rg,REASON_EFFECT)>0 then
+	if rg and Duel.Release(rg,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,rg:GetFirst():GetLeftScale())
 		if #g>0 then

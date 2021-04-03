@@ -1,3 +1,4 @@
+--プレデション（予言
 --Prediction
 --original script by Shad3
 local s,id=GetID()
@@ -74,11 +75,11 @@ function s.neg2_cd(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and Duel.GetCurrentChain()==0 and e:GetLabelObject():GetLabel()==2 and eg:IsExists(Card.IsCode,1,nil,e:GetHandler():GetFlagEffectLabel(id))
 end
 function s.neg3_cd(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and Duel.GetCurrentChain()==0 and e:GetLabelObject():GetLabel()==3 and eg:IsExists(Card.IsCode,1,nil,e:GetHandler():GetFlagEffectLabel(s_id))
+	return rp~=tp and Duel.GetCurrentChain()==0 and e:GetLabelObject():GetLabel()==3 and eg:IsExists(Card.IsCode,1,nil,e:GetHandler():GetFlagEffectLabel(id))
 end
 function s.negs_op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateSummon(eg)
 end
 function s.rst_op(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():SetFlagEffectLabel(s_id,0)
+	e:GetHandler():SetFlagEffectLabel(id,0)
 end

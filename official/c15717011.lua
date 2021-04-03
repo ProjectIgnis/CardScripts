@@ -41,7 +41,7 @@ function s.fcheck(mg)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local chkf=tp+0x10100
+	local chkf=tp|FUSPROC_NOTFUSION
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)

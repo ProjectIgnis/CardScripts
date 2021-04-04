@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
-ss.listed_names={95000004,95000005,95000006,95000007,95000008}
+s.listed_names={95000004,95000005,95000006,95000007,95000008}
 s.mark=0
 function s.filter(c)
 	return c:IsCode(95000004,95000005,95000006,95000007,95000008) and c:IsSSetable(true)

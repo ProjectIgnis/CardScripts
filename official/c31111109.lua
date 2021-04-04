@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixRep(c,true,true,c31111109.ffilter,2,2,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9),aux.FilterBoolFunctionEx(Card.IsSetCard,0x1f),aux.FilterBoolFunctionEx(Card.IsSetCard,0x8))
+	Fusion.AddProcMixRep(c,true,true,s.ffilter,2,2,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9),aux.FilterBoolFunctionEx(Card.IsSetCard,0x1f),aux.FilterBoolFunctionEx(Card.IsSetCard,0x8))
 	--copy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

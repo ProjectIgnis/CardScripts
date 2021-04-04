@@ -271,7 +271,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,1-tp)
 	elseif op==1 then
-		Duel.RegisterFlagEffect(1-tp,952,nil,0,1)
+		Duel.RegisterFlagEffect(1-tp,952,0,0,1)
 		--
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

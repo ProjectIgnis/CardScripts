@@ -1,5 +1,5 @@
 --Ｓ－Ｆｏｒｃｅ スペシメン
---Security Force Specimen
+--S-Force Specimen
 --Scripted by edo9300
 
 local s,id=GetID()
@@ -38,7 +38,7 @@ function s.filter(c,e,tp,zone)
 	return c:IsSetCard(0x15a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) and c:IsFaceup()
 end
 local function getzones(tp)
-	local lg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	local lg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 	local zone=0
 	for tc in aux.Next(lg) do
 		zone=(zone|tc:GetColumnZone(LOCATION_MZONE,0,0,tp))

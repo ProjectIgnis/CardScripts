@@ -1,5 +1,6 @@
 --スピリット・ドラゴン
---Spirit Ryu
+--Spirit Ryu (GOAT)
+--the effect is spell speed 1; implemented as quick effect that can only be CL1
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk up
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and Duel.GetCurrentChain()==0
 		and (e:GetHandler()==Duel.GetAttacker() or e:GetHandler()==Duel.GetAttackTarget())
 end
 function s.cfilter(c)

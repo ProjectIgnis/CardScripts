@@ -1,3 +1,4 @@
+--相対性フィールド
 --Relativity Field
 local s,id=GetID()
 function s.initial_effect(c)
@@ -49,7 +50,8 @@ function s.atkop(p)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		local atk=e:GetLabelObject():GetLabel()-Duel.GetLP(p)
 		e:GetLabelObject():SetLabel(Duel.GetLP(p))
-		for tc in Duel.GetMatchingGroup(Card.IsFaceup,p,LOCATION_MZONE,0,nil):Iter() do
+		local g=Duel.GetMatchingGroup(Card.IsFaceup,p,LOCATION_MZONE,0,nil)
+		for tc in g:Iter() do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

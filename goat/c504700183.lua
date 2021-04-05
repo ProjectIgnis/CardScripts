@@ -1,5 +1,5 @@
 --トゥーン・ヂェミナイ・エルフ
---Toon Gemini Elf (TCG)
+--Toon Gemini Elf (GOAT)
 --effect is mandatory
 local s,id=GetID()
 function s.initial_effect(c)

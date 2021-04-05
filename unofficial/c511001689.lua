@@ -36,7 +36,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e)
 	local c=e:GetHandler()
-	local ct=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
+	local ct=Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)
 	return c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==e:GetHandlerPlayer() and ct>0
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

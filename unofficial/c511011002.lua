@@ -72,8 +72,8 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_LEAVE-RESET_TOGRAVE,0,1,tc:GetCounter(0x95))
 	end
 	if re then
-		Duel.RaiseEvent(g,EVENT_CUSTOM+id,re,r,rp,ep,ct)
+		Duel.RaiseEvent(g,EVENT_CUSTOM+id,re,r,rp,ep,ev)
 	else
-		Duel.RaiseEvent(g,EVENT_CUSTOM+id,e,r,rp,ep,ct)
+		Duel.RaiseEvent(g,EVENT_CUSTOM+id,e,r,rp,ep,ev)
 	end
 end

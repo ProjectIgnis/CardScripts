@@ -70,13 +70,14 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local lvl=1
+		local sel=0
 		if tc:GetLevel()==1 then
 			Duel.SelectOption(tp,aux.Stringid(id,1))
 		else
 			sel=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-		end
-		if sel==1 then
-			lvl=-1
+			if sel==1 then
+				lvl=-1
+			end
 		end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

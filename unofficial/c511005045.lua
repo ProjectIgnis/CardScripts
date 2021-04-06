@@ -1,3 +1,4 @@
+--銀河の逆鱗
 --Galactic Fury
 --original script by Shad3
 local s,id=GetID()
@@ -39,11 +40,11 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.sum_fil,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.sum_fil,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(o,CATEGORY_SPECIAL_SUMMON,g,1,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,0)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

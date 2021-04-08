@@ -34,7 +34,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(1-tp,id)>=5 and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return Duel.GetFlagEffect(1-tp,id)>=5 and Duel.IsMainPhase()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -64,7 +64,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0
 		and Duel.GetMZoneCount(1-tp,nil,tp)>0 then
 		local atk=og:GetSum(s.operationvalueatk)
-			local def=og:GetSum(s.operationvaluedef)
+		local def=og:GetSum(s.operationvaluedef)
 		if not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,atk,def,11,RACE_ROCK,ATTRIBUTE_LIGHT,POS_FACEUP,1-tp) then return end
 		Duel.BreakEffect()
 		local token=Duel.CreateToken(tp,id+1)

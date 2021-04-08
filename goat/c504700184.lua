@@ -1,4 +1,4 @@
- --幻想召喚師
+--幻想召喚師
 --Summoner of Illusions (GOAT)
 --tributing monster is a cost
 local s,id=GetID()
@@ -17,8 +17,8 @@ function s.rfilter(c,e,tp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.rfilter,1,false,nil,e:GetHandler()) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.rfilter,1,1,false,nil,e:GetHandler())
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.rfilter,1,false,nil,e:GetHandler(),e,tp) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.rfilter,1,1,false,nil,e:GetHandler(),e,tp)
 	Duel.Release(g,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

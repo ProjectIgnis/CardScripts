@@ -59,7 +59,7 @@ function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(rec)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,s[2][1])
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

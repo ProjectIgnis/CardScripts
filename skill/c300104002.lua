@@ -38,7 +38,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_LEAVE_FIELD)
-	e2:SetLabel(e1)
 	e2:SetCondition(s.leavecon)
 	e2:SetOperation(s.leaveop)
 	Duel.RegisterEffect(e2,tp)
@@ -50,11 +49,11 @@ end
 function s.etarget(e,c)
 	return c:IsAttribute(ATTRIBUTE_WATER)
 end
-function s.cfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsCode(76634149) and c:GetPreviousControler()==tp
+function s.cfilter(c,tp)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsCode(76634149) and c:IsPreviousControler(tp)
 end
 function s.leavecon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp,rp)
+	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.leaveop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(2<<32))

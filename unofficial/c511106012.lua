@@ -1,7 +1,6 @@
 --分断の壁
 --Wall of Disruption (Anime)
 --scripted by Hatter
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,19 +26,24 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return tc:IsControler(1-tp) or (bc and bc:IsControler(1-tp))
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Group.FromCards(Duel.GetAttackTarget(),Duel.GetAttacker())
-	if Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)==0 then return end
 	local atk=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)*800
-	local tc=g:GetFirst()
-	while tc do
-		if tc:IsControler(1-tp) then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(-atk)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
-		end
-		tc=g:GetNext()
+	if atk==0 then return end
+	local g=Group.CreateGroup()
+	local ac,dc=Duel.GetAttacker(),Duel.GetAttackTarget()
+	if ac and ac:IsControler(1-tp) then
+		g:AddCard(ac)
+	end
+	if dc and dc:IsControler(1-tp) then
+		g:AddCard(dc)
+	end
+	if #g==0 then return end
+	for tc in ~g do
+		--Decrease ATK
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(-atk)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1)
 	end
 end

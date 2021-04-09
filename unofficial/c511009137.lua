@@ -1,3 +1,4 @@
+--蠱惑蝶
 --Bewitching Butterfly
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,3 +1,4 @@
+--エクストラ・シェイブ・リボーン
 --Extra Shave Reborn
 --fixed by MLD
 local s,id=GetID()
@@ -32,12 +33,12 @@ function s.gop(e,tp)
 	end
 end
 function s.prefilter(c,tp)
-	return c:IsPreviousControler(tp) and (c:GetPreviousTypeOnField()&TYPE_MONSTER)==TYPE_MONSTER and c:GetLevel()>0 
+	return c:IsPreviousControler(tp) and (c:GetPreviousTypeOnField()&TYPE_MONSTER)==TYPE_MONSTER and c:HasLevel() 
 		and c:GetFlagEffect(id)~=0
 end
 function s.condition(e,tp,eg,ev,ep,re,r,rp)
 	local cg=eg:Filter(s.prefilter,nil,tp)
-	local rg,lv=cg:GetMaxGroup(Card.GetLevel)
+	local lv=cg:GetMaxGroup(Card.GetLevel)
 	e:SetLabel(lv)
 	return #cg>0
 end

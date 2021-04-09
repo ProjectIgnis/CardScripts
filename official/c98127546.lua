@@ -1,5 +1,5 @@
 --閉ザサレシ世界ノ冥神
---Saros Eresh Kurnugias
+--Underworld Goddess of the Closed World
 --Scripted by DyXel and Edo9300
 
 local s,id=GetID()
@@ -89,7 +89,10 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.immval(e,re)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and e:GetOwnerPlayer()~=re:GetOwnerPlayer() and not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
+	if not re:IsActivated() or not e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) or e:GetOwnerPlayer()==re:GetOwnerPlayer() then return false end
+	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return true end
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	return not g or not g:IsContains(e:GetHandler())
 end
 function s.spdiscon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or re:GetHandlerPlayer()==tp or

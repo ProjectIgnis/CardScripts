@@ -28,5 +28,5 @@ function s.sdfilter(c,atk)
 	return c:IsFaceup() and c:GetAttack()>atk
 end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.sdfilter,tp,0,LOCATION_MZONE,1,nil,e:GetHandler():GetAttack())
+	return Duel.IsExistingMatchingCard(s.sdfilter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil,e:GetHandler():GetAttack())
 end

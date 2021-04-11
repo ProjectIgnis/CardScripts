@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--If fusion summoned, fusion summon 1 level 8 or lower fusion monster
-	local params = {s.fusfilter,nil,s.fextra,Fusion.BanishMaterial}
+	local params = {s.fusfilter,Card.IsAbleToRemove,s.fextra,Fusion.BanishMaterial}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)

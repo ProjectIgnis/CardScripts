@@ -71,7 +71,7 @@ end
 
 function Fusion.ForcedMatValidity(c,e)
 	if c==e:GetHandler() then
-		return (not c:IsFaceup() and c:IsLocation(LOCATION_ONFIELD)) or not c:IsRelateToEffect(e)
+		return c:IsRelateToEffect(e)
 	end
 	return c:IsImmuneToEffect(e)
 end

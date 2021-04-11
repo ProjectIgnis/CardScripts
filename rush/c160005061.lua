@@ -12,9 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+function s.filter(c)
+	return c:IsType(TYPE_MONSTER)
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return #g==1 and Duel.GetTurnPlayer()==1-tp and Duel.GetAttacker():IsLevelBelow(8)
+	return Duel.GetMatchingGroupCountRush(s.filter,e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)==1
+	and Duel.GetTurnPlayer()==1-tp and Duel.GetAttacker():IsLevelBelow(8)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

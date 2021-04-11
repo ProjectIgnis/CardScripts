@@ -28,7 +28,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsLevelAbove(1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,c)
+			local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
 			local tc=g:GetFirst()
 			local lv=tc:GetLevel()*100
 			if tc then

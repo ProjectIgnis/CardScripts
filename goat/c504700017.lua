@@ -69,7 +69,8 @@ function s.discon(e)
 	return e:GetHandler():GetCardTargetCount()>0
 end
 function s.distg(e,c)
-	return c:GetFieldID()<=e:GetLabel() and c:IsHasCardTarget(e:GetHandler():GetFirstCardTarget()) and c:IsType(TYPE_SPELL)
+	local ec=e:GetHandler():GetFirstCardTarget()
+	return c:GetFieldID()<=e:GetLabel() and ec and c:IsHasCardTarget(ec) and c:IsType(TYPE_SPELL)
 end
 function s.discon2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()

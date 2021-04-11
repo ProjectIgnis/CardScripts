@@ -97,7 +97,9 @@ function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,specificmatfilte
 	if c.ritual_custom_check then
 		func=aux.tableAND(c.ritual_custom_check,forcedselection or aux.TRUE)
 	end
-	return aux.SelectUnselectGroup(mg,e,tp,1,lv,Ritual.Check(c,lv,func,_type,requirementfunc),0)
+	local res=aux.SelectUnselectGroup(mg,e,tp,1,lv,Ritual.Check(c,lv,func,_type,requirementfunc),0)
+	Ritual.SummoningLevel=nil
+	return res
 end
 
 Ritual.Target = aux.FunctionWithNamedArgs(

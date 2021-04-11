@@ -27,7 +27,7 @@ function s.chlimit(e,ep,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsAttackAbove(1000) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsLevelBelow(3) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

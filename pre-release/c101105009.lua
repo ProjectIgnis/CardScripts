@@ -1,4 +1,4 @@
---
+--妖眼の相剣師
 --Sword Master of the Bewitching Iris
 --scripted by pyrQ
 local s,id=GetID()

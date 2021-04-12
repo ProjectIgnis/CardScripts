@@ -37,6 +37,7 @@ function s.spfilter(c,e,tp)
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=Duel.GetMatchingGroup(aux.NOT(aux.FilterFaceupFunction(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.NOT(aux.FilterFaceupFunction(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)

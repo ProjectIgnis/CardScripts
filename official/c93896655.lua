@@ -44,9 +44,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x2157}
-
-function s.matfilter(c)
-	return c:IsRace(RACE_PLANT) and c:IsLevelBelow(4)
+function s.matfilter(c,lc,sumtype,tp)
+	return c:IsRace(RACE_PLANT,lc,sumtype,tp) and c:IsLevelBelow(4)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial():Filter(Card.IsCode,nil,27520594)

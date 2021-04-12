@@ -26,7 +26,7 @@ function s.xyzfilter(c,tp,mg)
 	return c:IsSetCard(0x70) and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0 and c:IsXyzSummonable(nil,mg,2,2)
 end
 function s.tgfilter(c,e,tp)
-	if c:IsType(TYPE_XYZ) then
+	if c:IsOriginalType(TYPE_XYZ) and c:IsFaceup() then
 		local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp,c:GetRank())
 		return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,tp,mg)
 	end

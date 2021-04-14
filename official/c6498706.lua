@@ -1,7 +1,6 @@
 --融合派兵
 --Fusion Deployment
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +30,7 @@ function s.lizfilter(e,c)
 end
 	--Check for fusion monster with listed material
 function s.exfilter(c,e,tp)
-	return c.material and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,c)
+	return c.material and c:IsType(TYPE_FUSION) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,c)
 end
 	--Check if listed material can be special summoned
 function s.spfilter(c,e,tp,fc)

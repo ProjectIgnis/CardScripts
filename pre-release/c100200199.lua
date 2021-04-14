@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.material={78868119}
 function s.tfilter(c,lc,stype,tp)
 	return c:IsSummonCode(lc,stype,tp,78868119)
 end

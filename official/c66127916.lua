@@ -1,4 +1,5 @@
 --融合準備
+--Fusion Reserve
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_POLYMERIZATION}
 function s.filter1(c,tp)
-	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c)
+	return c.material and c:IsType(TYPE_FUSION) and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c)
 end
 function s.filter2(c,fc)
 	if c:IsForbidden() or not c:IsAbleToHand() then return false end

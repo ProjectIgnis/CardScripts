@@ -78,7 +78,7 @@ function s.hlvop(reset)
 			e1:SetValue(-2)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
 			if tc:RegisterEffect(e1)~=0 then
-				local e2=Effect.CreateEffect(c)
+				local e2=Effect.CreateEffect(e:GetHandler())
 				e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 				e2:SetCode(id)
 				e2:SetLabelObject(e1)

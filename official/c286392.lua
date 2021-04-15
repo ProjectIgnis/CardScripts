@@ -1,6 +1,5 @@
 --ジェット・ウォリアー
 --Jet Warrior
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -29,9 +28,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.material={9742784}
 s.listed_names={9742784}
 s.material_setcode=0x1017
-
 function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,9742784) or c:IsHasEffect(20932152)
 end

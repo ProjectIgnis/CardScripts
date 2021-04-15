@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.material={56286179}
+s.listed_names={56286179}
 s.material_setcode=0x1017
 function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,56286179) or c:IsHasEffect(20932152)

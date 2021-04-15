@@ -1,4 +1,5 @@
 --Sin パラドクス・ドラゴン
+--Malefic Paradox Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -25,7 +26,8 @@ function s.initial_effect(c)
 	e2:SetCondition(s.descon)
 	c:RegisterEffect(e2)
 end
-s.listed_names={27564031}
+s.material={74509280}
+s.listed_names={74509280,27564031}
 function s.descon(e)
 	return not Duel.IsEnvironment(27564031)
 end

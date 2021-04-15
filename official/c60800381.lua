@@ -1,4 +1,5 @@
 --ジャンク・ウォリアー
+--Junk Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -14,6 +15,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
+s.material={63977008}
+s.listed_names={63977008}
 s.material_setcode=0x1017
 function s.tfilter(c,lc,stype,tp)
 	return c:IsSummonCode(lc,stype,tp,63977008) or c:IsHasEffect(20932152)

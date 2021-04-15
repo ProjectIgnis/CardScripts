@@ -1,4 +1,5 @@
 --アンデット・スカル・デーモン
+--Archfiend Zombie-Skull
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -14,3 +15,5 @@ function s.initial_effect(c)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 end
+s.material={33420078}
+s.listed_names={33420078}

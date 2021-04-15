@@ -29,6 +29,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.material={652362}
+s.listed_names={652362}
 s.listed_series={0xc}
 s.counter_place_list={COUNTER_A}
 function s.filter(c)

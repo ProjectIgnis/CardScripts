@@ -1,4 +1,5 @@
 --ニトロ・ウォリアー
+--Nitro Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -31,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.caop)
 	c:RegisterEffect(e3)
 end
+s.material={96182448}
 s.listed_names={96182448}
 s.material_setcode=0x1017
 function s.tfilter(c,lc,stype,tp)

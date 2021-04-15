@@ -1,4 +1,5 @@
 --ジオ・ジェネクス
+--Geo Genex
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -21,6 +22,8 @@ function s.initial_effect(c)
 	e2:SetCondition(s.valcon)
 	c:RegisterEffect(e2)
 end
+s.material={68505803}
+s.listed_names={68505803}
 s.listed_series={0x2}
 function s.valcon(e)
 	return e:GetHandler():GetFlagEffect(id)~=0

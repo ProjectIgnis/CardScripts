@@ -55,6 +55,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.valcheck)
 	c:RegisterEffect(e5)
 end
+s.material={21159309,CARD_STARDUST_DRAGON}
 s.listed_names={21159309,CARD_STARDUST_DRAGON}
 s.synchro_nt_required=1
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)

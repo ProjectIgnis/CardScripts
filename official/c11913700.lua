@@ -1,7 +1,8 @@
 --インスタント・ネオスペース
+--Instant Neo Space
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(aux.IsMaterialListCode,CARD_NEOS))
+	aux.AddEquipProcedure(c,nil,s.eqfilter)
 	--equip effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
@@ -20,6 +21,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={CARD_NEOS}
+function s.eqfilter(c)
+	return c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_NEOS)
+end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetPreviousEquipTarget()
 	return e:GetHandler():IsReason(REASON_LOST_TARGET) and not ec:IsLocation(LOCATION_ONFIELD+LOCATION_OVERLAY)

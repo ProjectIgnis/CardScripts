@@ -1,6 +1,5 @@
 --サイバネティック・ヒドゥン・テクノロジー
 --Cybernetic Hidden Technology
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,10 +24,10 @@ end
 s.listed_names={CARD_CYBER_DRAGON}
 
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return tp==1-Duel.GetTurnPlayer()
 end
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_CYBER_DRAGON) or aux.IsMaterialListCode(c,CARD_CYBER_DRAGON)) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and (c:IsCode(CARD_CYBER_DRAGON) or (c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_CYBER_DRAGON))) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end

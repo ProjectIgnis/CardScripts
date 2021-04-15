@@ -1,8 +1,9 @@
 --アーマード・サイバーン
+--Armored Cybern
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,s.unfilter)
-	--destroy
+	--Destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_CYBER_DRAGON}
 function s.unfilter(c)
-	return c:IsCode(CARD_CYBER_DRAGON) or aux.IsMaterialListCode(c,CARD_CYBER_DRAGON)
+	return c:IsCode(CARD_CYBER_DRAGON) or (c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_CYBER_DRAGON))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end

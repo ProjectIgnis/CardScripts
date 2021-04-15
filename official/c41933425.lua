@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon 1 banished "Neo-Spacian"
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x1f}
-s.listed_names={CARD_NEOS }
+s.listed_names={CARD_NEOS}
 function s.cfilter(c)
 	return c:IsSetCard(0x1f) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
@@ -78,7 +78,7 @@ function s.lizfilter(e,c)
 	return not c:IsOriginalType(TYPE_FUSION)
 end
 function s.spcfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and aux.IsMaterialListCode(c,CARD_NEOS)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_NEOS)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

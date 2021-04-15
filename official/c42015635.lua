@@ -1,4 +1,5 @@
 --ネオスペース
+--Neo Space
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Atk
+	--Increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.atktg)
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
-	--may not return
+	--"Neos" Fusions can choose to not return
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(id)
@@ -25,5 +26,5 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_NEOS}
 function s.atktg(e,c)
-	return c:IsCode(CARD_NEOS) or aux.IsMaterialListCode(c,CARD_NEOS)
+	return c:IsCode(CARD_NEOS) or (c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_NEOS))
 end

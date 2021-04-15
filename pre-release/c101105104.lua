@@ -46,6 +46,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)	
 end
+s.material={21159309}
 s.listed_names={21159309,CARD_STARDUST_DRAGON}
 s.synchro_nt_required=1
 function s.cfilter(c,sc,tp)

@@ -1,4 +1,5 @@
 --ウィンドファーム・ジェネクス
+--Windmill Genex
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -24,6 +25,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.material={68505803}
+s.listed_names={68505803}
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsFacedown,0,LOCATION_SZONE,LOCATION_SZONE,nil)*300
 end

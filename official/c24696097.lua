@@ -56,6 +56,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.valcheck)
 	c:RegisterEffect(e5)
 end
+s.material={CARD_STARDUST_DRAGON}
 s.listed_names={CARD_STARDUST_DRAGON}
 s.synchro_tuner_required=1
 s.synchro_nt_required=1

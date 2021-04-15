@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(e:GetHandler():GetReasonPlayer())
-	return e:GetHandler():IsPosition(POS_FACEUP) and c:IsBattleDestroyed()
+	return e:GetHandler():IsPosition(POS_FACEUP) and e:GetHandler():IsBattleDestroyed()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end

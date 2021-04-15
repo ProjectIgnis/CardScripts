@@ -1,4 +1,5 @@
 --サーマル・ジェネクス
+--Thermal Genex
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -24,6 +25,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
+s.material={68505803}
+s.listed_names={68505803}
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsAttribute,c:GetControler(),LOCATION_GRAVE,0,nil,ATTRIBUTE_FIRE)*200
 end

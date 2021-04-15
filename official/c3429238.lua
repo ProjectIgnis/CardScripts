@@ -1,4 +1,5 @@
 --ドリル・ウォリアー
+--Drill Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -36,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.material={56286179}
 s.material_setcode=0x1017
 function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,56286179) or c:IsHasEffect(20932152)

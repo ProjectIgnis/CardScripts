@@ -68,7 +68,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp,chk)
 	and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_WATER) and c:GetLevel()<=4 and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+	return c:IsAttribute(ATTRIBUTE_WATER) and c:GetLevel()<=4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end

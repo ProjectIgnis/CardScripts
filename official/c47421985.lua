@@ -1,4 +1,5 @@
 --ハイドロ・ジェネクス
+--Hydro Genex
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -16,6 +17,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.recop)
 	c:RegisterEffect(e1)
 end
+s.material={68505803}
+s.listed_names={68505803}
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local t=Duel.GetAttackTarget()

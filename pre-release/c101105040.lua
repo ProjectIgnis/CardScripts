@@ -1,12 +1,12 @@
 --ダイガスタ・ラプラムピリカ
---Daigusto Raprampirika
+--Daigusto Raprampilica
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	--Synchro procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,0x10),1,99)
 	c:EnableReviveLimit()
-	--Synchro summon
+	--Synchro Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--cannot be target
+	--Cannot be targeted by effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -95,7 +95,6 @@ end
 function s.splimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_WIND)
 end
-
 --opponent cannot target
 function s.tgtg(e,c)
 	return c:IsSetCard(0x10) and c:IsType(TYPE_SYNCHRO) and c~=e:GetHandler()

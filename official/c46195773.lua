@@ -1,4 +1,5 @@
 --ターボ・ウォリアー
+--Turbo Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -22,6 +23,8 @@ function s.initial_effect(c)
 	e2:SetValue(s.efilter)
 	c:RegisterEffect(e2)
 end
+s.material={67270095}
+s.listed_names={67270095}
 s.material_setcode=0x1017
 function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,67270095) or c:IsHasEffect(20932152)

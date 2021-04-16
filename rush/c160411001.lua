@@ -21,18 +21,21 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,2,nil) end
 end
+function s.filter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and not  c:IsMaximumModeSide()
+end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local dg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	if chkc then return chkc:IsOnField() and chkc:IsFaceup() end
+	local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
+	if chkc then return chkc:IsOnField() and s.filter(chkc) end
 	if chk==0 then return #dg>0 end
 end
-	--Destroy 1 spell/trap your opponent controls
+	--Destroy 1 monster your opponent controls
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,2,2,nil)
 	if Duel.SendtoGrave(tg,REASON_COST)==2 then
-		local dg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+		local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 		if #dg>0 then
 			local sg=dg:Select(tp,1,1,nil)
 			Duel.HintSelection(sg)

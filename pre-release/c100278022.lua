@@ -37,8 +37,8 @@ s.listed_names={62499965}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
 		if tc:GetPreviousTypeOnField() & (TYPE_SPELL+TYPE_TRAP)~=0 and tc:IsPreviousPosition(POS_FACEDOWN) 
-			and tc:IsPreviousControler(tp) and tc:IsReason(REASON_EFFECT) then
-			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+			and tc:IsPreviousLocation(LOCATION_ONFIELD) and tc:IsReason(REASON_EFFECT) then
+			Duel.RegisterFlagEffect(tc:GetPreviousControler(),id,RESET_PHASE+PHASE_END,0,1)
 		end
 	end
 end

@@ -31,10 +31,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x17}
+s.listed_series={0x1017}
 --To GY + Firewall Lite
 function s.cfilter(c,e,tp,ft)
-	if not (c:IsSetCard(0x17) and c:IsMonster() and c:IsAbleToGraveAsCost()) then return false end
+	if not (c:IsSetCard(0x1017) and c:IsMonster() and c:IsAbleToGraveAsCost()) then return false end
 	if not c:IsLocation(LOCATION_MZONE) then
 		return ft>0 and Duel.IsExistingMatchingCard(Card.IsCanBeSpecialSummoned,tp,LOCATION_HAND,0,1,c,e,0,tp,false,false)
 	else
@@ -69,7 +69,7 @@ function s.filter(c,e,tp,ft)
 	end
 end
 function s.spfilter(c,code,e,tp)
-	return c:IsSetCard(0x17) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsOriginalCode(code)
+	return c:IsSetCard(0x1017) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsOriginalCode(code)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c,ft=e:GetHandler(),Duel.GetLocationCount(tp,LOCATION_MZONE)

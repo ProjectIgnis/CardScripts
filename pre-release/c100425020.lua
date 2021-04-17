@@ -77,7 +77,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		if Duel.SendtoDeck(tc,tp,SEQ_DECKSHUFFLE,REASON_EFFECT)==0 then return end
-		if not Duel.GetOperatedGroup():GetFirst():IsLocation(LOCATION_DECK) then return end
+		if not Duel.GetOperatedGroup():GetFirst():IsLocation(LOCATION_DECK+LOCATION_EXTRA) then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 		if #sc>0 then

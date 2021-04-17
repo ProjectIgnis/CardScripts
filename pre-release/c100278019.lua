@@ -28,11 +28,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-CARD_FLEUR_SYNCHRON=19642774
-s.listed_names={CARD_FLEUR_SYNCHRON}
+s.listed_names={19642774}
 --change a monster into "fleur synchron"
 function s.tunfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(8) and not (c:IsCode(CARD_FLEUR_SYNCHRON) and c:IsType(TYPE_TUNER))
+	return c:IsFaceup() and c:IsLevelBelow(8) and not (c:IsCode(19642774) and c:IsType(TYPE_TUNER))
 end
 function s.tuntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.tunfilter(chkc) end
@@ -49,7 +48,7 @@ function s.tunop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetValue(CARD_FLEUR_SYNCHRON)
+		e1:SetValue(19642774)
 		tc:RegisterEffect(e1)
 		--Becomes Tuner
 		local e2=Effect.CreateEffect(c)

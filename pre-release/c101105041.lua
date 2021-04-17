@@ -44,6 +44,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e)
 	local c=e:GetHandler()
+	if not re:IsActiveType(TYPE_MONSTER) or re:GetHandler()==c then return false end
 	return c:GetFlagEffect(id)>0 and c:GetAttack()<4000
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

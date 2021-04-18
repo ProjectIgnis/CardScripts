@@ -57,14 +57,15 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(ct)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	if c:IsBattleDestroyed() then return false end
+	if e:GetHandler():IsBattleDestroyed() then return false end
 	local ct=e:GetLabelObject():GetLabel()
 	e:SetLabel(ct)
 	return ct>0
 end
 function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if not c:IsBattleDestroyed() then return false end
-	local ct=e:GetHandler():GetCounter(0x29)
+	local ct=c:GetCounter(0x29)
 	e:SetLabel(ct)
 	return ct>0
 end

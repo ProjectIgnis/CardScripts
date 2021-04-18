@@ -80,6 +80,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		tc:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
 end
 function s.eqlimit(e,c)
@@ -93,7 +94,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabelObject():GetLabel()~=0 then return end
 	local tc=e:GetHandler():GetFirstCardTarget()
-	if tc and tc:IsLocation(LOCATION_MZONE) then
+	if tc and tc:IsLocation(LOCATION_MZONE) and tc:GetFlagEffect(id)>0 then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

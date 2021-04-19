@@ -30,14 +30,14 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e3:SetCondition(s.thcon)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={101105056}
-s.listed_series={0x262}
+s.listed_names={99426088}
+s.listed_series={0x167}
 --ATK Up
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,TYPE_MONSTER)
@@ -70,7 +70,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 end
 --Search
 function s.thfilter(c)
-	return c:IsSetCard(0x262) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x167) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

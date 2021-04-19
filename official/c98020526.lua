@@ -31,8 +31,8 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)
-		and Duel.GetFlagEffect(tp,id+100)
-		and Duel.GetFlagEffect(tp,id+200) end
+		and Duel.GetFlagEffect(tp,id+1)
+		and Duel.GetFlagEffect(tp,id+2) end
 end
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -44,8 +44,8 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local ss=eg:Filter(s.lffilter,nil,r,rp,tp):IsExists(s.spfilter,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetFlagEffect(tp,id)==0
-	local rem=Duel.IsExistingMatchingCard(s.remfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,id+100)==0
-	local dam=Duel.GetFlagEffect(tp,id+200)==0
+	local rem=Duel.IsExistingMatchingCard(s.remfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) and Duel.GetFlagEffect(tp,id+1)==0
+	local dam=Duel.GetFlagEffect(tp,id+2)==0
 	local choice=-1
 	if ss and rem then
 		choice=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3))
@@ -61,11 +61,11 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		tc=eg:Filter(s.lffilter,nil,r,rp,tp):FilterSelect(tp,s.spfilter,1,1,nil,e,tp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-	elseif (choice==1 or choice==5) and Duel.GetFlagEffect(tp,id+100)==0 then
+	elseif (choice==1 or choice==5) and Duel.GetFlagEffect(tp,id+1)==0 then
 		tc=Duel.SelectMatchingCard(tp,s.remfilter,tp,0,LOCATION_GRAVE+LOCATION_MZONE,1,1,nil)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE+PHASE_END,0,1)
-	elseif Duel.GetFlagEffect(tp,id+200)==0 then
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+	elseif Duel.GetFlagEffect(tp,id+2)==0 then
 		--Halve damage
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
@@ -76,7 +76,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 		aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,4),nil)
-		Duel.RegisterFlagEffect(tp,id+200,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function s.damval(e,re,ev,r,rp,rc)

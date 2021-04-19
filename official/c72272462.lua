@@ -3,7 +3,7 @@
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x265),s.matfilter)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x166),s.matfilter)
 	c:EnableReviveLimit()
 	--Change ATK to 0
 	local e1=Effect.CreateEffect(c)
@@ -25,13 +25,13 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_LEAVE_FIELD)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x265}
+s.listed_series={0x166}
 s.listed_names={CARD_ALBAZ}
 function s.matfilter(c,fc,st,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT,fc,st,tp) or c:IsAttribute(ATTRIBUTE_DARK,fc,st,tp)
@@ -67,7 +67,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 end
 function s.thfilter(c,e,tp,ft)
-	return ((c:IsSetCard(0x265) and c:IsType(TYPE_MONSTER)) or c:IsCode(CARD_ALBAZ))
+	return ((c:IsSetCard(0x166) and c:IsType(TYPE_MONSTER)) or c:IsCode(CARD_ALBAZ))
 		and (c:IsAbleToHand() or (c:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

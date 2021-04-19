@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
@@ -28,7 +28,8 @@ function s.initial_effect(c)
 end
 --Tribute + Special Summon
 function s.relfilter(c,e,tp,ft)
-	return c:IsRace(RACE_MACHINE) and c:IsDefense(c:GetAttack()) and (ft>0 or c:IsInMainMZone(tp)) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
+	return c:IsRace(RACE_MACHINE) and c:IsDefense(c:GetAttack())
+		and (ft>0 or c:IsInMainMZone(tp)) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
 end
 function s.spfilter(c,e,tp,lv)
 	return c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()<lv and c:IsDefense(c:GetAttack())

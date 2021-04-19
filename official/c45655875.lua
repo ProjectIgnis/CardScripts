@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Fusion summoned properly if to be revived by effect
 	c:EnableReviveLimit()
 	--Fusion Proc
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x262),s.matfilter)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x167),s.matfilter)
 	--Return fusion spell
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -37,8 +37,8 @@ function s.initial_effect(c)
 	e3:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e3)
 end
-s.listed_names={101105056}
-s.listed_series={0x262}
+s.listed_names={99426088}
+s.listed_series={0x167}
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_NORMAL,fc,sumtype,tp) and not c:IsType(TYPE_TOKEN,fc,sumtype,tp)
 end
@@ -46,7 +46,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function s.thfilter(c)
-	return c:IsCode(101105056) and c:IsAbleToHand()
+	return c:IsCode(99426088) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -61,7 +61,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 --check for attack pos monster
 function s.atkfilter(c)
-	return c:IsType(TYPE_MONSTER) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x262))
+	return c:IsType(TYPE_MONSTER) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x167))
 end
 function s.posfilter(c,tp)
 	if c:IsFaceup() and c:IsAttackPos() and c:IsCanChangePosition() then

@@ -1,6 +1,5 @@
 --きまぐれ軍實握り
 --Suship Roll Specials
---scripted by XyleN5967
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x263}
-s.listed_series={101105011}
+s.listed_series={0x168}
+s.listed_series={24639891}
 function s.cfilter(c)
-	return c:IsCode(101105011) and not c:IsPublic() 
+	return c:IsCode(24639891) and not c:IsPublic() 
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -46,7 +45,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x263) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x168) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,3,nil) end
@@ -71,7 +70,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x263) and c:IsAbleToDeck()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x168) and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

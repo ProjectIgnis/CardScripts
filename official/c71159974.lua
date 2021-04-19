@@ -44,9 +44,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x262}
+s.listed_series={0x167}
 function s.matfilter1(c,fc,sumtype,tp)
-	return c:IsSetCard(0x262) and c:IsType(TYPE_EFFECT,fc,sumtype,tp)
+	return c:IsSetCard(0x167) and c:IsType(TYPE_EFFECT,fc,sumtype,tp)
 end
 function s.matfilter2(c,fc,sumtype,tp)
 	return c:IsType(TYPE_NORMAL,fc,sumtype,tp) and not c:IsType(TYPE_TOKEN,fc,sumtype,tp)
@@ -86,7 +86,7 @@ function s.chainlm(e,rp,tp)
 end
 --Destroy
 function s.attfilter(c,tp)
-	return ((c:IsSetCard(0x262) or c:IsType(TYPE_NORMAL)) and c:IsType(TYPE_MONSTER))
+	return ((c:IsSetCard(0x167) or c:IsType(TYPE_NORMAL)) and c:IsType(TYPE_MONSTER))
 		and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttribute())
 end
 function s.desfilter(c,att)

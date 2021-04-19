@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x265}
+s.listed_series={0x166}
 function s.disfilter(c,tp)
-	return c:IsSetCard(0x265) and c:IsLocation(LOCATION_ONFIELD) and c:IsFaceup() and c:IsControler(tp)
+	return c:IsSetCard(0x166) and c:IsLocation(LOCATION_ONFIELD) and c:IsFaceup() and c:IsControler(tp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not (rp==1-tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)) then return false end

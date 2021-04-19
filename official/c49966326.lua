@@ -25,7 +25,7 @@ function s.tgvfilter(c,type1)
 	return c:IsAbleToGrave() and c:IsSetCard(0x150) and not c:IsType(type1)
 end
 function s.tgvfilter2(c,type1,type2)
-	return c:IsAbleToGrave() and c:IsSetCard(0x150) and not c:IsType(type1) and not c:IsType(type2)
+	return c:IsAbleToGrave() and c:IsSetCard(0x150) and not c:IsType(type1) and not c:IsType(type2) and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) and s.tgtfilter(chkc,tp) end

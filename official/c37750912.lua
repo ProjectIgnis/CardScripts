@@ -19,13 +19,13 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.lvtg)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={id,CARD_STARDUST_DRAGON}
+s.listed_names={CARD_STARDUST_DRAGON}
 s.listed_series={0xa3}
 --To Grave
 function s.ssfilter(c)
@@ -70,19 +70,11 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		choice=Duel.SelectOption(tp,aux.Stringid(id,4))
 	end
-	if choice==0 then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetValue(1)
-		tc:RegisterEffect(e1)
-	elseif choice==1 then
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_UPDATE_LEVEL)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e2:SetValue(-1)
-		tc:RegisterEffect(e2)
-	end
+	--Change Level
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_LEVEL)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetValue(1-(choice*2))
+	tc:RegisterEffect(e1)
 end

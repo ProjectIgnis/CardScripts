@@ -23,13 +23,9 @@ function s.thfilter(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil)
-	Duel.HintSelection(td)
+	local tc=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil)
+	Duel.HintSelection(tc)
 	if Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0then
-		if tc:IsLocation(LOCATION_DECK) then
-			Duel.ShuffleDeck(tc:GetControler())
-		end
-		
 		local g=Duel.GetMatchingGroup(s.thfilter,tp,0,LOCATION_MZONE,nil)
 		if Duel.GetFieldGroupCount(e:GetHandlerPlayer(),0,LOCATION_HAND)==0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

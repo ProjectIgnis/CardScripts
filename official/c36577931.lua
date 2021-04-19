@@ -30,14 +30,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x265,0x160}
+s.listed_series={0x166,0x160}
 s.listed_names={id}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_EFFECT) and c:IsFaceup()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x265) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(0x166) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

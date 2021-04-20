@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			sg=sg:AddMaximumCheck()
 			Duel.HintSelection(sg)
 			if #sg>0 then
-				Duel.SendtoHand(g,nil,REASON_EFFECT)
+				Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			end
 		end
 		

@@ -20,13 +20,10 @@ function s.filter1(c,e,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLevelAbove(6) and c:IsFaceup() and c:IsLocation(LOCATION_MZONE)
 end
 function s.filter(c)
-	return c:IsRace(RACE_FIEND) and c:IsLevelAbove(7) and c:IsType(TYPE_NORMAL) and c:IsFaceup() 
+	return ((c:IsRace(RACE_FIEND) and c:IsLevelAbove(7) and c:IsType(TYPE_NORMAL)) or c:IsCode(CARD_SUMMONED_SKULL)) and c:IsFaceup() 
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter1,1,nil,e,tp) and 
-	(Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SUMMONED_SKULL),tp,LOCATION_MZONE,0,1,nil)
-	or
-	Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil))
+	return eg:IsExists(s.filter1,1,nil,e,tp) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.tdfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()

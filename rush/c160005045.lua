@@ -7,16 +7,19 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Atk up
+	--cannot tribute summon
 	local e2=Effect.CreateEffect(c)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCode(EFFECT_CANNOT_SUMMON)
 	e2:SetTarget(s.sumlimit)
 	e2:SetTargetRange(1,1)
 	c:RegisterEffect(e2)
-	
-	
+	local e3=e2:Clone()
+	e3:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetCode(EFFECT_CANNOT_MSET)
+	c:RegisterEffect(e3)
 end
 
 function s.sumlimit(e,c,tp,sumtp)

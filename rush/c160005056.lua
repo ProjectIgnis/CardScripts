@@ -23,6 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
+	local c=e:GetHandler()
 	local tc=Duel.GetAttacker()
 	if tc and tc:IsRelateToBattle() and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())

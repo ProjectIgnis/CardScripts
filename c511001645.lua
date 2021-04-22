@@ -50,7 +50,7 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
 		local g=Duel.GetOperatedGroup()
 		for tc in aux.Next(g) do
-			local code=tc:GetOriginalCode()
+			local code=tc:GetCode()
 			local cid=c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
 			local e1=Effect.CreateEffect(c)
 			e1:SetDescription(aux.Stringid(31111109,1))

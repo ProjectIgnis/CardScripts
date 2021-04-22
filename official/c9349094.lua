@@ -1,7 +1,6 @@
 --神樹獣ハイペリュトン
---Divine Treebeast High Peryton
+--Sacred Tree Beast, Hyperyton
 --Scripted by Hatter
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz summon procedure
@@ -74,7 +73,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local ov=e:GetHandler():GetOverlayGroup():Filter(Card.IsType,nil,rt)
 	if #ov<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local sg=ov:Select(tp,1,1,true,nil)
+	local sg=ov:Select(tp,1,1,nil)
 	if #sg>0 and Duel.SendtoGrave(sg,REASON_EFFECT)>0 then
 		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 			Duel.Destroy(eg,REASON_EFFECT)

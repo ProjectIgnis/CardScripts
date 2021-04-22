@@ -52,8 +52,9 @@ function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if c:IsBattleDestroyed() then return end
-	local ct=e:GetHandler():GetCounter(0x29)
+	local ct=c:GetCounter(0x29)
 	e:SetLabel(ct)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

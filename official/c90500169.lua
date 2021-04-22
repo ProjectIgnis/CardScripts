@@ -25,7 +25,7 @@ function s.filter(c,e,tp,ft)
 end
 function s.spfilter(c,oclass,e,tp,op)
 	local class=c:GetMetatable(true)
-	return class.LVnum~=nil and class.LVnum<oclass.LVnum and class.LVset==oclass.LVset and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP,op)
+	return class and class.LVnum~=nil and class.LVnum<oclass.LVnum and class.LVset==oclass.LVset and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP,op)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

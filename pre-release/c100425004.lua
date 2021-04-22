@@ -45,22 +45,23 @@ end
 s.synchro_tuner_required=1
 s.listed_series={0xff}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsFaceup() and ep==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+	return re:IsActiveType(TYPE_MONSTER) and rp==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and rc:IsFaceup() and rc:IsControler(1-tp)
+	if c:IsRelateToEffect(e) and c:IsFaceup() and rc:IsControler(1-tp)
 		and c:UpdateAttack(rc:GetBaseAttack(),RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)==rc:GetBaseAttack() then
 		--Unaffected
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,3))
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
-		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
-		e1:SetValue(s.immval)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetValue(s.immval)
 		c:RegisterEffect(e1)
 	end
 end

@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tkop)
 	c:RegisterEffect(e3)
 end
-function s.matfilter(c)
+function s.matfilter(c,lc,st,tp)
 	return c:IsSetCard(0x577,lc,sumtype,tp) 
 end
 function s.lnklimit(e,c)

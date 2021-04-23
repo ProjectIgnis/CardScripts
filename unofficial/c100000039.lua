@@ -1,5 +1,5 @@
 --ゴースト・コンバート
---Convert Ghost
+--Convert Ghost (TF6)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,7 +22,7 @@ function s.costfilter1(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOREMOVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)

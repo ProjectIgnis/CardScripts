@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCost(s.descost)
 	e1:SetCondition(s.descon)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
@@ -22,6 +23,12 @@ function s.filter1(c)
 end
 function s.filter2(c)
 	return c:IsCode(160203007)
+end
+function s.costfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+end
+function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.descon(e)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,10),e:GetHandler():GetControler(),0,LOCATION_MZONE,nil)

@@ -1,4 +1,5 @@
---Trap Eater
+--トラップ・イーター (Anime)
+--Trap Eater (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -67,7 +68,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.filter2,tp,LOCATION_SZONE,LOCATION_SZONE,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
+	c:AddMaximumAtkHandler()
 end
 s.MaximumAttack=3400
 function s.filter1(c)

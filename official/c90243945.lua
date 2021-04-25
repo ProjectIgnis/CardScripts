@@ -1,6 +1,5 @@
 --ワイトプリンセス
 --Wightprincess
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Name becomes "Skull Servant" while in GY
@@ -39,7 +38,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={CARD_SKULL_SERVANT,57473560}
-
 function s.tgfilter(c)
 	return c:IsCode(57473560) and c:IsAbleToGrave()
 end
@@ -60,11 +58,14 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
+function s.atkfilter(c)
+	return c:IsFaceup() and (c:GetLevel()>0 or c:GetRank()>0)
+end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local val=0

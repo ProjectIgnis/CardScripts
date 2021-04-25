@@ -38,6 +38,9 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	elseif eq and datk then choice=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))+3
 	elseif datk and dam then choice=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))+5
 	elseif eq and dam then choice=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,3))+7
+	elseif eq then choice=Duel.SelectOption(tp,aux.Stringid(id,1))
+	elseif datk then choice=Duel.SelectOption(tp,aux.Stringid(id,2))+1
+	elseif dam then choice=Duel.SelectOption(tp,aux.Stringid(id,3))+2
 	end
 	if choice==0 or choice==3 or choice==7 then
 		Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,1-tp,LOCATION_MZONE)

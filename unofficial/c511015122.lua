@@ -1,6 +1,5 @@
 --ファントム・エフェクト
 --Phantom Effect
---Cleaned up by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,12 +19,12 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local rd=e1 and not e2
 	local rr=not e1 and e2
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	e:SetLabel(cv)
+	if cv then e:SetLabel(cv) end
 	if ex and (cp==tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then
 		return true
 	end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
-	e:SetLabel(cv)
+	if cv then e:SetLabel(cv) end
 	return ex and (cp==tp or cp==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

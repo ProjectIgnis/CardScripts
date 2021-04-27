@@ -54,8 +54,8 @@ function s.initial_effect(c)
 	e8:SetOperation(s.clearop)
 	c:RegisterEffect(e8)
 end
-function c59160188.relval(e,re,r,rp)
-	return re:IsActivated() and (r&REASON_COST)~=0
+function s.relval(e,re,r,rp)
+	return re and re:IsActivated() and (r&REASON_COST)~=0
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:FilterCount(Card.IsType,nil,TYPE_MONSTER)

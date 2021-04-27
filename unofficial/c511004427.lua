@@ -57,13 +57,13 @@ function s.condition2(e,tp,eg,ev,ep,re,r,rp)
 	local rd=e1 and not e2
 	local rr=not e1 and e2
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	if ex and (cp==tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then
-		e:SetLabel(cv)
+	if cv then e:SetLabel(cv) end
+	if ex and (cp==tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then	
 		return true 
 	end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
+	if cv then e:SetLabel(cv) end
 	if ex and (cp==tp or cp==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then
-		e:SetLabel(cv)
 		return true 
 	end
 	e1=Duel.IsPlayerAffectedByEffect(1-tp,EFFECT_REVERSE_DAMAGE)
@@ -71,12 +71,12 @@ function s.condition2(e,tp,eg,ev,ep,re,r,rp)
 	rd=e1 and not e2
 	rr=not e1 and e2
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
+	if cv then e:SetLabel(cv) end
 	if ex and (cp==1-tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(1-tp,EFFECT_NO_EFFECT_DAMAGE) then
-		e:SetLabel(cv)
 		return true 
 	end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
-	e:SetLabel(cv)
+	if cv then e:SetLabel(cv) end
 	return ex and (cp==1-tp or cp==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(1-tp,EFFECT_NO_EFFECT_DAMAGE)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)

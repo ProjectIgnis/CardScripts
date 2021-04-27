@@ -24,7 +24,7 @@ function s.filter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local b1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,tp)
+	local b1=Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil)
 	local op=0
 	if b1 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
@@ -32,9 +32,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
 	end
 	if op==0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_GRAVE,1,1,nil)
+		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	else
+		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 	end
 	e:SetLabel(op)

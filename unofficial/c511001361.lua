@@ -1,3 +1,4 @@
+--白き盾
 --Sacred Shield
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,10 +15,10 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsActiveType(TYPE_TRAP) then return false end
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	e:SetLabel(cv)
+	if cv then e:SetLabel(cv) end
 	if ex then return true end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
-	e:SetLabel(cv)
+	if cv then e:SetLabel(cv) end
 	return ex
 end
 function s.filter(c)

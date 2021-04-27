@@ -1,4 +1,5 @@
 --ヘル・ポリマー
+--Chthonian Polymer
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,14 +18,18 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	return #eg==1 and tc:IsControler(1-tp) and tc:IsSummonType(SUMMON_TYPE_FUSION)
 end
+function s.cfilter(c,ft,tp,eg)
+	return (ft>0 or c:IsInMainMZone(tp)) and not eg:IsContains(c)
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil) end
-	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,ft,tp,eg) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,ft,tp,eg)
 	Duel.Release(g,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return eg:GetFirst():IsCanBeEffectTarget(e) and eg:GetFirst():IsControlerCanBeChanged() end
+	if chk==0 then return eg:GetFirst():IsCanBeEffectTarget(e) and eg:GetFirst():IsAbleToChangeControler() end
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,eg,1,0,0)
 end

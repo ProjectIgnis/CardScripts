@@ -1,3 +1,4 @@
+--目殺
 --Mokusatsu
 --scripted by Shad3, cleaned up by MLD
 local s,id=GetID()
@@ -40,7 +41,7 @@ function s.cont_op(e,tp,eg,ep,ev,re,r,rp)
 		local ng=tg:Filter(Card.IsCode,nil,Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM))
 		if #ng>0 then
 			Duel.HintSelection(ng)
-			Duel.SendtoGrave(ng,REASON_EFFECT+REASON_DIs)
+			Duel.SendtoGrave(ng,REASON_EFFECT+REASON_DISCARD)
 			Duel.ShuffleHand(1-tp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)

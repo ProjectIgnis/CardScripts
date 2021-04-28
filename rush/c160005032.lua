@@ -28,7 +28,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,LOCATION_MZONE)
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsLevelBelow(8) and not c:IsMaximumModeSide()
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsLevelBelow(8) and not c:IsMaximumModeSide()
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,2,2,nil)

@@ -54,11 +54,16 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingTarget(s.rmgchk(s.matfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,4,nil)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	Duel.SelectTarget(tp,s.rmgchk(Card.IsCode,CARD_NUMERON_NETWORK),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+	local atg1=Duel.SelectTarget(tp,s.rmgchk(Card.IsCode,CARD_NUMERON_NETWORK),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	Duel.SelectTarget(tp,s.rmgchk(s.matfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,4,4,nil)
+	local atg2=Duel.SelectTarget(tp,s.rmgchk(s.matfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,4,4,nil)
 	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
+	atg1:Merge(atg2)
+	local lvgg=atg1:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,1,tp,LOCATION_EXTRA)
+	if #lvgg>0 then
+		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,lvgg,#lvgg,0,0)
+	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -77,7 +82,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(1000)
 		tc:RegisterEffect(e2)
 		Duel.SpecialSummonComplete()
-		local tg=Duel.GetTargetCards(e)
+		local tg=Duel.GetTargetCards(e):Filter(Card.IsRelateToEffect,nil,e)
 		if #tg==5 then
 			Duel.Overlay(tc,tg)
 		end

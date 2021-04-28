@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
+function s.filter(c,tp)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.filter2,tp,0,LOCATION_ONFIELD,1,nil,c:GetCode())
 end
 function s.filter2(c,code)
@@ -20,7 +20,7 @@ function s.filter2(c,code)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g1=Duel.SelectTarget(tp,s.filter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

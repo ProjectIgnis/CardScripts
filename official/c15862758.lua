@@ -53,8 +53,7 @@ function s.initial_effect(c)
 	e7:SetOperation(s.naop)
 	c:RegisterEffect(e7,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x48}
-s.listed_names={100275101}
+s.listed_names={89477759}
 s.xyz_number=1000
 function s.adcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL+0x53b) and not Duel.IsTurnPlayer(e:GetHandlerPlayer())

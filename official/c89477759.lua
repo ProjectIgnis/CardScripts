@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.bptg)
 	e2:SetOperation(s.bpop)
 	c:RegisterEffect(e2)
-	--Special Summon Number IC1000
+	--Special Summon Number iC1000
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x48,100275102}
+s.listed_names={15862758}
 s.xyz_number=1000
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -87,7 +87,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:GetOverlayCount()>0
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(100275102) and c:IsCanBeSpecialSummoned(e,0x53b,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsCode(15862758) and c:IsCanBeSpecialSummoned(e,0x53b,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end

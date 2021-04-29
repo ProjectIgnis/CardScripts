@@ -1,3 +1,4 @@
+--仲裁の裁定者
 --Arbitrator
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,5 +24,5 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end

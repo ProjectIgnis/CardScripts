@@ -56,7 +56,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e2)
 	else
 		if Duel.NegateAttack() then
-			Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+			Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 		end
 	end
 end

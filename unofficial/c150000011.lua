@@ -15,5 +15,5 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end

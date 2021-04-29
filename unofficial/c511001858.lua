@@ -1,3 +1,4 @@
+--ハイド・アンド・シャーク
 --Hide and Shark
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
@@ -41,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.HintSelection(g)
 		if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)>0 then
-			Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+			Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 			Duel.BreakEffect()
 			Duel.ReturnToField(tc)
 			local e1=Effect.CreateEffect(e:GetHandler())

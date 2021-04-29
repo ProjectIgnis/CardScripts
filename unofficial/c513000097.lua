@@ -1,4 +1,5 @@
 --女教皇の錫杖
+--Empress's Staff
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 		Duel.BreakEffect()
 		Duel.Damage(1-tp,500,REASON_EFFECT)
 	end

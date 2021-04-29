@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if dam>1 and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(tp,Duel.GetBattleDamage(tp)/2)

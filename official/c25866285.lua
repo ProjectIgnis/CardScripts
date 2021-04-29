@@ -1,4 +1,5 @@
 --ナチュル・スティンクバグ
+--Naturia Stinkbug
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate attack
@@ -23,6 +24,6 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
 end

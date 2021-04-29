@@ -1,4 +1,5 @@
 --サイバー・ヴァリー
+--Cyber Valley
 local s,id=GetID()
 function s.initial_effect(c)
 	--be target
@@ -41,7 +42,7 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,1,REASON_EFFECT)
-	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end
 function s.filter2(c)
 	return c:IsFaceup() and c:IsAbleToRemove()

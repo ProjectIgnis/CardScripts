@@ -1,9 +1,8 @@
 --バトルフェーダー
 --Battle Fader
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon itself from hand, then end battle phase
+	--Special summon itself from hand, then end the Battle Phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		Duel.BreakEffect()
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3300)

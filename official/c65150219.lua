@@ -1,4 +1,5 @@
 --機甲忍法フリーズ・ロック
+--Armor Ninjitsu Art of Freezing
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,7 +29,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
 end
 function s.poscon(e)

@@ -1,4 +1,5 @@
---ハーフorストップ
+--ハーフｏｒストップ
+--Half or Nothing
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,7 +23,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		opt=Duel.SelectOption(1-tp,aux.Stringid(id,0),aux.Stringid(id,1))
 	end
 	if opt==1 then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 		return
 	end
 	local tc=g:GetFirst()

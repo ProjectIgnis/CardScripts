@@ -85,7 +85,7 @@ end
 function s.skop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetCurrentPhase()~=PHASE_DAMAGE then
 		local p=Duel.GetTurnPlayer()
-		Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_END,1)
+		Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 		e:Reset()
 	end
 end

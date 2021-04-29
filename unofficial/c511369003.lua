@@ -83,7 +83,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	local p=Duel.GetTurnPlayer()
-	Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end
 function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HalfBattleDamage(ep)

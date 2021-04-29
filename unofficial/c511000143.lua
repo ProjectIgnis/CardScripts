@@ -1,3 +1,4 @@
+--妖かしの紅月
 --Red Ghost Moon
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,6 +36,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g)
 		Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT)
 		Duel.BreakEffect()
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
 end

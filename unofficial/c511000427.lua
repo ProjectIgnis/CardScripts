@@ -1,3 +1,4 @@
+--死者の加護
 --Aid to the Doomed
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SkipPhase(sk,PHASE_DRAW,RESET_PHASE+PHASE_END,1)
 	Duel.SkipPhase(sk,PHASE_STANDBY,RESET_PHASE+PHASE_END,1)
 	Duel.SkipPhase(sk,PHASE_MAIN1,RESET_PHASE+PHASE_END,1)
-	Duel.SkipPhase(sk,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(sk,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	Duel.SkipPhase(sk,PHASE_MAIN2,RESET_PHASE+PHASE_MAIN2,1)
 	Duel.SkipPhase(sk,PHASE_END,RESET_PHASE+PHASE_END,1)
 	local e1=Effect.CreateEffect(e:GetHandler())

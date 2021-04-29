@@ -1,3 +1,4 @@
+--ドップラー・フェーズ・コーティング
 --Doppler Phase Coating
 --scripted by Larry126
 --fixed by MLD
@@ -67,5 +68,5 @@ function s.edcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function s.edop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end

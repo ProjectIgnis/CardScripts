@@ -1,4 +1,5 @@
---Magicians; Defence
+--マジシャンズ・プロテクション (Anime)
+--Magicians' Defence (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,5 +25,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev/2)
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end

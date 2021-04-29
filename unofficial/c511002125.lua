@@ -1,4 +1,5 @@
---リジェクト・リボーン
+--リジェクト・リボーン (Anime)
+--Reject Reborn (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -44,7 +45,7 @@ function s.filter(c,e,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
 	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,0,nil)
 	if Duel.Destroy(sg,REASON_EFFECT)>0 or #sg==0 then

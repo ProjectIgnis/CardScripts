@@ -1,3 +1,4 @@
+--断絶拳
 --Extinction Fist
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 					local g=mg:FilterSelect(op,s.mgfilter,ft,ft,nil,e,op,tc)
 					Duel.SpecialSummon(g,0,op,op,false,false,POS_FACEUP)
 				end
-				Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+				Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 			end
 		end
 	end

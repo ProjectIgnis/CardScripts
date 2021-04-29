@@ -1,3 +1,4 @@
+--ランクアップ・グラヴィティ 
 --Rank-Up Gravity
 --fixed by MLD
 local s,id=GetID()
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetValue(s.tgval)
 	c:RegisterEffect(e2)
-	--banishu
+	--banish
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
@@ -78,6 +79,6 @@ end
 function s.desop(e,tp,eg,ev,ep,re,r,rp)
 	if Duel.Destroy(e:GetHandler(),REASON_EFFECT)>0 and Duel.GetCurrentPhase()>=PHASE_BATTLE_START 
 		and Duel.GetCurrentPhase()<=PHASE_BATTLE then
-		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
 end

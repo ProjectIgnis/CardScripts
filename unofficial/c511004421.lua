@@ -85,7 +85,7 @@ function s.sumcon(e,tp,eg,ev,ep,re,r,rp)
 end
 function s.sumop(e,tp,eg,ev,ep,re,r,rp)
 	local tc=e:GetLabelObject()
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(tc),tp,nil,nil,REASON_XYZ)
 	Duel.BreakEffect()
 	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+1,pg):GetFirst()

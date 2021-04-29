@@ -1,4 +1,5 @@
---ハーピィの羽根吹雪
+--ハーピィの羽根吹雪 (Anime)
+--Harpie's Feather Storm (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,5 +30,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end

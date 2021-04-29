@@ -1,3 +1,4 @@
+--ソウル・シールド
 --Soul Shield
 local s,id=GetID()
 function s.initial_effect(c)
@@ -71,6 +72,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(1)
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		tc:RegisterEffect(e1)
-		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
 end

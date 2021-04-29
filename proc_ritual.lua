@@ -77,6 +77,11 @@ function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,force
 	return e1
 end,"handler","lvtype","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter","requirementfunc","sumpos")
 
+local function WrapTableReturn(func)
+	return function(...)
+		return {func(...)}
+	end
+end
 function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,specificmatfilter,lv,requirementfunc,sumpos)
 	if not c:IsRitualMonster() or (filter and not filter(c)) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true,sumpos) then return false end
 	local lv=(lv and (type(lv)=="function" and lv(c)) or lv) or c:GetLevel()
@@ -93,9 +98,13 @@ function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,specificmatfilte
 	if specificmatfilter then
 		mg=mg:Filter(specificmatfilter,nil,c,mg,tp)
 	end
-	local func=forcedselection and function(...)return {forcedselection(...)} end or nil
+	local func=forcedselection and WrapTableReturn(forcedselection) or nil
 	if c.ritual_custom_check then
-		func=aux.tableAND(c.ritual_custom_check,forcedselection or aux.TRUE)
+		if forcedselection then
+			func=aux.tableAND(WrapTableReturn(c.ritual_custom_check),forcedselection)
+		else
+			func=WrapTableReturn(c.ritual_custom_check)
+		end
 	end
 	local res=aux.SelectUnselectGroup(mg,e,tp,1,lv,Ritual.Check(c,lv,func,_type,requirementfunc),0)
 	Ritual.SummoningLevel=nil
@@ -193,14 +202,18 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 						tc:ritual_custom_operation(mg,forcedselection,_type)
 						mat=tc:GetMaterial()
 					else
-						local func=forcedselection and function(...)return {forcedselection(...)} end or nil
+						local func=forcedselection and WrapTableReturn(forcedselection) or nil
 						if tc.ritual_custom_check then
-							func=aux.tableAND(tc.ritual_custom_check,forcedselection or aux.TRUE)
+							if forcedselection then
+								func=aux.tableAND(WrapTableReturn(tc.ritual_custom_check),forcedselection)
+							else
+								func=WrapTableReturn(tc.ritual_custom_check)
+							end
 						end
 						if tc.mat_filter then
 							mg=mg:Filter(tc.mat_filter,tc,tp)
 						end
-						if not mg:IsExists(Card.IsLocation,1,nil,LOCATION_OVERLAY) and ft>0 and not forcedselection then
+						if not mg:IsExists(Card.IsLocation,1,nil,LOCATION_OVERLAY) and ft>0 and not func then
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 							if _type==RITPROC_EQUAL then
 								mat=mg:SelectWithSumEqual(tp,requirementfunc or Card.GetRitualLevel,lv,1,#mg,tc)

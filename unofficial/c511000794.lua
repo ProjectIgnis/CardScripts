@@ -1,3 +1,4 @@
+--地獄蜘蛛
 --Hell Spider
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,5 +15,5 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end

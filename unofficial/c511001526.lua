@@ -1,3 +1,4 @@
+--アモルファス・バリア
 --Amorphous Barrier
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,5 +14,5 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>=3
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end

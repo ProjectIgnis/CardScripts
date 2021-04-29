@@ -6,20 +6,21 @@ function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),2,2)
-	--to hand
+	--add to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.thcon)
 	e1:SetCost(s.thcost)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -32,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSequence()>4 and Duel.GetTurnPlayer()~=tp
+	return e:GetHandler():GetSequence()>4 and Duel.GetTurnPlayer()==1-tp
 end
 function s.thcfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsReleasable()
@@ -80,4 +81,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-

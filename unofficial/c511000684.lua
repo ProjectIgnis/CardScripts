@@ -25,6 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	eg:GetFirst():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=eg:GetFirst()
 	local ct=tc:GetEffectCount(EFFECT_EXTRA_ATTACK)
 	local e2=Effect.CreateEffect(e:GetHandler())

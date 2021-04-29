@@ -1,8 +1,10 @@
 --幻影霧剣
+--Phantom Knights' Fog Blade
+
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,nil,aux.FilterFaceupFunction(Card.IsType,TYPE_EFFECT),CATEGORY_DISABLE,nil,nil,0x1c0,nil,nil,s.target)
-	--cannot attack/disable
+	--Targeted monster has its effects negated, also cannot attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_ATTACK)
@@ -13,7 +15,7 @@ function s.initial_effect(c)
 	local e5=e3:Clone()
 	e5:SetCode(EFFECT_DISABLE)
 	c:RegisterEffect(e5)
-	--cannot be battle target
+	--Targeted monster cannot be targeted for attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
@@ -21,7 +23,7 @@ function s.initial_effect(c)
 	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e4:SetValue(aux.PersistentTargetFilter)
 	c:RegisterEffect(e4)
-	--destroy
+	--Destroy itself if targeted monster leaves field
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e6:SetRange(LOCATION_SZONE)
@@ -29,7 +31,7 @@ function s.initial_effect(c)
 	e6:SetCondition(s.descon)
 	e6:SetOperation(s.desop)
 	c:RegisterEffect(e6)
-	--spsummon
+	--Special summon 1 "The Phantom Knights" monster from GY
 	local e7=Effect.CreateEffect(c)
 	e7:SetDescription(aux.Stringid(id,0))
 	e7:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -41,6 +43,7 @@ function s.initial_effect(c)
 	e7:SetCost(aux.bfgcost)
 	e7:SetTarget(s.sptg)
 	e7:SetOperation(s.spop)
+	e7:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e7)
 end
 s.listed_series={0x10db}
@@ -73,9 +76,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e1,true)

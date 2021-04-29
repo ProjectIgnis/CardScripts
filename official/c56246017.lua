@@ -1,7 +1,9 @@
 --デーモンの雄叫び
+--Archfiend's Roar
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 "Archfiend" monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -10,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x45}
@@ -32,7 +35,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		--Cannot be tributed
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3303)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 		e1:SetValue(1)
@@ -41,6 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 		tc:RegisterEffect(e2,true)
+		--Destroyed during end phase
 		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

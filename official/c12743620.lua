@@ -1,5 +1,5 @@
 --ユニゾン・チューン
---Uni-song Tune
+--Uni-song Tuning
 --scripted Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +27,7 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g1=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil)
 	e:SetLabelObject(g1:GetFirst())
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g1,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g1,1,1,0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g2=Duel.SelectTarget(tp,s.lvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	g1:Merge(g2)

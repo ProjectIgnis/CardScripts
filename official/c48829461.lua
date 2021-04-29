@@ -27,10 +27,7 @@ end
 s.listed_series={0x23}
 s.listed_names={74509280}
 function s.spcon(e,tp,eg,ep,ev,re,r,r,rp)
-	local tc=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	if tc and tc:IsFaceup() then return true end
-	tc=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	return tc and tc:IsFaceup()
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end

@@ -58,7 +58,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local dc=Duel.GetAttackTarget()
-	return tc:IsSetCard(0x1034) or (dc and dc:IsSetCard(0x1034))
+	return tc:IsSetCard(0x1034) or (dc and dc:IsFaceup() and dc:IsSetCard(0x1034))
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

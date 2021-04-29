@@ -1,7 +1,6 @@
 --荒野の大竜巻
 --Wasteland Tornado
---scripted by:urielkama
---fixed and cleaned up by MLD
+--scripted by:urielkama, fixed and cleaned up by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -32,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(s.setfilter,p,LOCATION_HAND,0,nil)
 		if #g>0 and Duel.SelectYesNo(p,aux.Stringid(id,0)) then
 			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,510)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local sg=g:Select(p,1,1,nil)
 			Duel.SSet(p,sg:GetFirst())
 		end

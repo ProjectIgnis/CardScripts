@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--def up
+	--Increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -16,11 +16,11 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x102))
 	e2:SetValue(300)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	c:RegisterEffect(e3)
-	--special summon (hand)
+	--Special summon "Rokket" monsters from the hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.sptg1)
 	e4:SetOperation(s.spop1)
 	c:RegisterEffect(e4)
-	--special summon (GY)
+	--Special summon "Rokket" monster from the GY
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -57,7 +57,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	if ft<1 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
-	if #sg>0 then 
+	if #sg>0 then
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
@@ -76,7 +76,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if ft<1 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
-	if #sg>0 then 
+	if #sg>0 then
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end

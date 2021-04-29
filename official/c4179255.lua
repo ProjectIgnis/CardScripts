@@ -1,23 +1,17 @@
 --妖精竜 エンシェント
+--Ancient Pixie Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--draw
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e0:SetCode(EVENT_CHAINING)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e0:SetRange(LOCATION_MZONE)
-	e0:SetOperation(aux.chainreg)
-	c:RegisterEffect(e0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e1:SetCode(EVENT_CHAIN_SOLVED)
+	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.drcon)
@@ -42,7 +36,6 @@ function s.initial_effect(c)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and re and re:IsActiveType(TYPE_FIELD) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and e:GetHandler():GetFlagEffect(1)>0
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and e:GetHandler():IsFaceup() end
@@ -54,14 +47,8 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-function s.check()
-	local tc=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	if tc and tc:IsFaceup() then return true end
-	tc=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	return tc and tc:IsFaceup()
-end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return s.check()
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.desfilter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK)
@@ -75,7 +62,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsPosition(POS_FACEUP_ATTACK) and s.check() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsPosition(POS_FACEUP_ATTACK) and Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

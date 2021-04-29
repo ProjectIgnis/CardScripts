@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.linkcon)
 	e1:SetOperation(s.linkop)
 	c:RegisterEffect(e1)
-	--return
+	--Return
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -37,8 +37,7 @@ function s.linkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) and Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
@@ -79,7 +78,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 		local g=tdg:Select(tp,lr,lr,mg)
 		if #g<=0 then return end
 		Duel.BreakEffect()
-		if Duel.SendtoDeck(g,nil,2,REASON_EFFECT)==lr then
+		if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==lr then
 			local thg=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsAbleToHand),tp,LOCATION_GRAVE,0,mg)
 			if #thg<=0 then return end
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_RTOHAND)

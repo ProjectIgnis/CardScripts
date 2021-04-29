@@ -1,9 +1,10 @@
---Goyo King
+--ゴヨウ・キング (Anime)
+--Goyo King (Anime)
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(function(c) return c:IsGoyo() end),1,99)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(Card.IsGoyo),1,99)
 	c:EnableReviveLimit()
 	--attack up
 	local e1=Effect.CreateEffect(c)

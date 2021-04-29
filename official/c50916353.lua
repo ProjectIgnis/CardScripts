@@ -1,22 +1,9 @@
 --地獄戦士
+--Chthonian Soldier
+--rescripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--reg
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetProperty(EFFECT_FLAG_AVAILABLE_BD)
-	e1:SetCode(EVENT_BATTLE_DAMAGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.regcon)
-	e1:SetOperation(s.regop)
-	c:RegisterEffect(e1)
-end
-function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return ep==tp and c==Duel.GetAttackTarget()
-end
-function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
+	--damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -25,17 +12,16 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.damcon)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
-	e1:SetLabel(ev)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	c:RegisterEffect(e1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsLocation(LOCATION_GRAVE)
+	return ev==1 and e:GetHandler():IsLocation(LOCATION_GRAVE)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	local total=Duel.GetBattleDamage(tp)
+	if chk==0 then return total>0 end
 	Duel.SetTargetPlayer(1-tp)
-	Duel.SetTargetParam(e:GetLabel())
+	Duel.SetTargetParam(total)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,e:GetLabel())
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)

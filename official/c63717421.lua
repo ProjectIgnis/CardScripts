@@ -1,16 +1,17 @@
---
+--起動指令 ギア・チャージ
 --Boot-Up Order - Gear Charge
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--When activated, special summon any number of your "Gadget" monsters from S/T zones
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.sptg)
 	c:RegisterEffect(e1)
-	--search
+	--Add 1 "Boot-Up Admiral - Destroyer Dynamo" from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -24,6 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_names={36322312}
 s.listed_series={0x51}
+
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x51) and c:IsOriginalType(TYPE_MONSTER) and c:IsType(TYPE_EQUIP) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -80,4 +82,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

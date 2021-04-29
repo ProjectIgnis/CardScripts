@@ -1,4 +1,5 @@
 --猪突猛進
+--Super Rush Headlong
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,9 +20,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
-	local val=0xff
+	local val=ATTRIBUTE_ALL
 	local reg=g:GetFirst():GetFlagEffectLabel(id)
-	if reg then val=val-reg end
+	if reg then val=val&(~reg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 	local att=Duel.AnnounceAttribute(tp,1,val)
 	Duel.SetTargetParam(att)

@@ -35,7 +35,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=eg:GetFirst():GetReasonCard()
 		if not c then c=re:GetHandler() end
 		Duel.RaiseEvent(c, id, e, r, rp, ep, ev)
-	end	
+	end
 	Duel.SendtoGrave(eg,REASON_EFFECT,rp)
 	return true
 end

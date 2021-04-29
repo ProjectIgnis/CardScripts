@@ -1,4 +1,5 @@
 --必殺！黒蠍コンビネーション
+--Dark Scorpion Combination
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -25,7 +26,6 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
@@ -37,19 +37,19 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetTargetRange(0,1)
 	e2:SetCondition(s.rdcon)
-	e2:SetOperation(s.rdop)
+	e2:SetValue(400)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.affected(e,c)
 	return c:GetFlagEffect(id)~=0
 end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetFirst():GetFlagEffect(id)~=0
+function s.rdcon(e)
+	return Duel.GetAttacker():GetFlagEffect(id)~=0 and Duel.GetAttackTarget()==nil
 end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(ep,400)
-end
+

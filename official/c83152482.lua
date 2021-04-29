@@ -30,8 +30,8 @@ function s.lkcon(e)
 	local c=e:GetHandler()
 	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
 end
-function s.spcheck(g,lc,tp)
-	return g:CheckSameProperty(Card.GetRace,lc,SUMMON_TYPE_LINK,tp) or g:CheckSameProperty(Card.GetAttribute,lc,SUMMON_TYPE_LINK,tp)
+function s.spcheck(g,lc,sumtype,tp)
+	return g:CheckSameProperty(Card.GetRace,lc,sumtype,tp) or g:CheckSameProperty(Card.GetAttribute,lc,sumtype,tp)
 end
 function s.filter(c,tp)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,tp,c)

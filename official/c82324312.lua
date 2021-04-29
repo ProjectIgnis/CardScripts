@@ -1,6 +1,5 @@
 --ゴブリン偵察部隊
 --Goblin Recon Squad
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Look at 1 random card in opponent's hand. Send it to GY if spell
@@ -24,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetAttackTarget()==nil
+	return ep==1-tp and Duel.GetAttackTarget()==nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(ep,LOCATION_HAND,0)>0 end

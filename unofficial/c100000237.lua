@@ -20,12 +20,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.filter(c,tp,code)
 	local te=c:GetActivateEffect()
 	if not te then return false end
 	return c:IsCode(code) and (te:IsActivatable(tp) or (c:IsControler(1-tp) and te:IsActivatable(1-tp)))
 end 
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,tp,c:GetCode())

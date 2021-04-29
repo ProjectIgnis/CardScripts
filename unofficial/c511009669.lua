@@ -1,11 +1,12 @@
---Sunvine Thrasher
---cleaned up by MLD
+--聖蔓の剣士 (Anime)
+--Sunvine Thrasher (Anime)
+--Cleaned up by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.matfilter,1,1)
-	--self destroy
+	--Self destruction effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SELF_DESTROY)
 	e1:SetCondition(s.descon)
 	c:RegisterEffect(e1)
-	--spsummon success
+	--Increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(3954901,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon destroyed monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(96622984,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -33,12 +34,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x574}
+s.listed_series={0x1157}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsType(TYPE_NORMAL,lc,sumtype,tp) and c:IsRace(RACE_PLANT,lc,sumtype,tp)
 end
 function s.filter(c,sc,atk)
-	return c:IsFaceup() and c:IsSetCard(0x574) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(sc) and (not atk or c:GetLink()>0)
+	return c:IsFaceup() and c:IsSetCard(0x1157) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(sc) and (not atk or c:GetLink()>0)
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil,e:GetHandler())
@@ -85,7 +86,7 @@ function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return tc and eg:IsContains(tc)
 end
 function s.lkfilter(c)
-	return c:IsSetCard(0x574) and c:IsFaceup() and c:IsLinkMonster()
+	return c:IsSetCard(0x1157) and c:IsFaceup() and c:IsLinkMonster()
 end
 function s.zonefilter(tp)
 	local lg=Duel.GetMatchingGroup(s.lkfilter,tp,LOCATION_MZONE,0,nil)
@@ -93,12 +94,12 @@ function s.zonefilter(tp)
 	lg:ForEach(function(tc)
 		zone=zone|tc:GetLinkedZone()
 	end)
-	return zone
+	return zone&0x1f
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	local zone=s.zonefilter(tp)
-	if zone>0 and tc:IsLocation(LOCATION_GRAVE) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) then 
+	if zone>0 and tc:IsLocation(LOCATION_GRAVE) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 	e:Reset()

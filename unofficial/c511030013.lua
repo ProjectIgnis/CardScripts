@@ -1,10 +1,10 @@
---チェックサム・ドラゴン
+--チェックサム・ドラゴン (Anime)
 --Checksum Dragon (Anime)
 --scripted by pyrQ
 local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()
-	--special summon and recover
+	--Special Summon and recover LP
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_RECOVER)
@@ -31,15 +31,12 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp and Duel.GetAttackTarget()==nil and Duel.GetFlagEffect(tp,id)~=0
+	return at:GetControler()==1-tp and Duel.GetAttackTarget()==nil and Duel.GetFlagEffect(tp,id)~=0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
-			and Duel.GetFlagEffect(tp,id+1)==0
-	end
-	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,c:GetDefense()/2)
 end

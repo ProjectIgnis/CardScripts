@@ -1,4 +1,5 @@
---Number Ci1000: Numerronius Numerronia
+--ＣｉＮｏ．１０００ 夢幻虚光神ヌメロニアス・ヌメロニア
+--Number iC1000: Numeronius Numeronia
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -46,6 +47,7 @@ function s.initial_effect(c)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCode(EVENT_PHASE+PHASE_END)
 	e6:SetCountLimit(1)
+	e6:SetCondition(s.wincon)
 	e6:SetOperation(s.winop)
 	c:RegisterEffect(e6)
 	--negate attack
@@ -77,15 +79,15 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={0x48}
-s.listed_names={511000294}
+s.listed_names={100275101}
 s.xyz_number=1000
 function s.check(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()==tp or Duel.GetFlagEffect(tp,id)~=0 then return end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.cfilter(c,e,tp,xyz)
-	return c:IsCode(511000294) and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and c:IsCanBeXyzMaterial(xyz,tp)
-		and (not e or c:IsRelateToEffect(e))
+	return c:IsCode(100275101) and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY)
+		and c:IsCanBeXyzMaterial(xyz,tp) and (not e or c:IsRelateToEffect(e))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,nil,tp,e:GetHandler())
@@ -93,8 +95,9 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(s.cfilter,nil,nil,tp,e:GetHandler())
 	if chk==0 then
+		local c=e:GetHandler()
 		local pg=aux.GetMustBeMaterialGroup(tp,g,tp,nil,nil,REASON_XYZ)
-		return #pg<=0 and Duel.GetLocationCountFromEx(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+		return #pg<=0 and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 	end
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
@@ -104,20 +107,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) then return end
 	local g=eg:Filter(s.cfilter,nil,e,tp,c)
 	local pg=aux.GetMustBeMaterialGroup(tp,g,tp,nil,nil,REASON_XYZ)
-	if #g>0 and #pg<=0 and Duel.GetLocationCountFromEx(tp)>0 then
+	if #g>0 and #pg<=0 and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 then
 		c:SetMaterial(g)
 		Duel.Overlay(c,g)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		c:CompleteProcedure()
 	end
 end
-function s.chkcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+function s.wincon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==1-tp and Duel.GetFlagEffect(tp,id)==0
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp and Duel.GetFlagEffect(tp,id)==0 then
-		Duel.Win(tp,WIN_REASON_NUMBER_Ci1000)
-	end
+	Duel.Win(tp,WIN_REASON_NUMBER_iC1000)
 end
 function s.nacon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
@@ -128,17 +129,11 @@ function s.nacost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.natg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tg=Duel.GetAttacker()
-	if chk==0 then return tg:IsOnField() end
-	local rec=tg:GetAttack()
-	Duel.SetTargetParam(rec)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,rec)
+	if chk==0 then return Duel.GetAttacker():IsOnField() end
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,Duel.GetAttacker():GetAttack())
 end
 function s.naop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then
-		local a=Duel.GetAttacker()
-		if a:IsRelateToBattle() then
-			Duel.Recover(tp,a:GetAttack(),REASON_EFFECT)
-		end
+		Duel.Recover(tp,Duel.GetAttacker():GetAttack(),REASON_EFFECT)
 	end
 end

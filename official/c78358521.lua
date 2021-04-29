@@ -1,4 +1,5 @@
 --セイクリッド・ソンブレス
+--Constellar Sombre
 local s,id=GetID()
 function s.initial_effect(c)
 	--salvage
@@ -95,7 +96,7 @@ function s.decop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(0x10000000+78358523)
+	e2:SetCode(id)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetTargetRange(1,0)
@@ -104,7 +105,7 @@ function s.decop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
 end
 function s.econ(e)
-	return Duel.GetFlagEffect(e:GetHandlerPlayer(),78358523)~=0
+	return #{Duel.GetPlayerEffect(e:GetHandlerPlayer(),id)}~=0
 end
 function s.rfilter(e,c)
 	return c:IsSetCard(0x53)

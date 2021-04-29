@@ -3,12 +3,14 @@
 --Scripted by Eerie Code fixed by senpaizuri
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion Summon/Contact Fusion
 	c:EnableReviveLimit()
 	local eff=Fusion.AddProcMixN(c,true,true,s.ffilter,3)
-	eff[1]:SetValue(s.matfilter)
-	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
-	--remove
+	if not c:IsStatus(STATUS_COPYING_EFFECT) then
+		eff[1]:SetValue(s.matfilter)
+	end
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit,nil,nil,nil,false)
+	--Banish 1 card each from your Deck, the top of the opponent's deck, and the opponent's Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -43,14 +45,14 @@ function s.contactop(g)
 	Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_MATERIAL)
 end
 function s.splimit(e,se,sp,st)
-	return (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
+	return e:GetHandler():GetLocation()~=LOCATION_EXTRA or (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function s.mfilter(c)
 	return c:GetOriginalRace()~=RACE_DRAGON
 end
 function s.remcon(e,tp,eg,ep,ev,re,r,rp)
 	local mg=e:GetHandler():GetMaterial()
-	return mg and not mg:IsExists(s.mfilter,1,nil)
+	return mg and e:GetHandler():IsSummonLocation(LOCATION_EXTRA) and not mg:IsExists(s.mfilter,1,nil)
 end
 function s.remtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_DECK,0,1,nil)

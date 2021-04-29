@@ -1,3 +1,4 @@
+--七皇転生
 --Reincarnation of the Seven Emperors
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x48}
 function s.cfilter(c)
 	local class=c:GetMetatable(true)
 	if class==nil then return false end
@@ -124,14 +126,15 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		return true
 	else return false end
 end
-function s.filter(c,e,tp)
+function s.filter(c,e,tp,tc)
 	return c:IsRankBelow(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp)
+		and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
-	if chk==0 then return tc and tc:IsAbleToRemove() and tc:GetOverlayGroup():IsExists(Card.IsAbleToRemove,tc:GetOverlayCount(),nil) 
-		and Duel.GetLocationCountFromEx(tp,tp,tc)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return tc and tc:IsAbleToRemove()
+		and tc:GetOverlayGroup():IsExists(Card.IsAbleToRemove,tc:GetOverlayCount(),nil) 
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,tc) end
 	local g=tc:GetOverlayGroup()
 	g:AddCard(tc)
 	Duel.SetTargetCard(tc)
@@ -141,29 +144,28 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e1:SetOperation(s.damop)
+		local c=e:GetHandler()
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(1,0)
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		Duel.RegisterEffect(e1,tp)
-		local e2=Effect.CreateEffect(e:GetHandler())
+		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_DAMAGE_STEP_END)
 		e2:SetOperation(s.banop)
 		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		e2:SetLabelObject(tc)
 		Duel.RegisterEffect(e2,tp)
-		local e3=Effect.CreateEffect(e:GetHandler())
+		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e3:SetValue(1)
 		e3:SetReset(RESET_PHASE+PHASE_DAMAGE)
-		tc:RegisterEffect(e3)
+		tc:RegisterEffect(e3,true)
 	end
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,0)
 end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
@@ -177,11 +179,11 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 		e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
 		e1:SetReset(RESET_PHASE+PHASE_BATTLE)
 		e1:SetCountLimit(1)

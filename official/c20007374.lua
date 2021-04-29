@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.caop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={44508094}
+s.listed_names={CARD_STARDUST_DRAGON}
 function s.cfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_DRAGON)
 end
@@ -38,7 +38,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return g:GetClassCount(Card.GetCode)>=5
 end
 function s.filter(c,e,tp,rp)
-	return c:IsCode(44508094) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
+	return c:IsCode(CARD_STARDUST_DRAGON) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,rp) end

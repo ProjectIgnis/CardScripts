@@ -1,9 +1,9 @@
 --破壊竜ガンドラ－ギガ・レイズ
---Gandora Giga Rays the Dragon of Destruction
+--Gigarays Gandora the Dragon of Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--special summon rule
+	--Special Summon procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--atk gain
+	--ATK increase
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(s.value)
 	c:RegisterEffect(e2)
-	--variable effect
+	--pay LP and apply an effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -42,7 +42,7 @@ function s.spcon(e,c)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,c)
 	return #g>=2 and Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and aux.SelectUnselectGroup(g,e,tp,2,2,aux.ChkfMMZ(1),0)
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local sg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,c)
 	local g=aux.SelectUnselectGroup(sg,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE)
 	if #g>0 then

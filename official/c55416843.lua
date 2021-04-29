@@ -1,7 +1,9 @@
---蛮族の狂宴LV5
+--蛮族の狂宴ＬＶ５
+--Feast of the Wild LV5
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon up to 2 level 5 warrior monsters from hand or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -29,6 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+			--Negate their effects
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
@@ -39,10 +42,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
+			--Cannot attack this turn
 			local e3=Effect.CreateEffect(c)
+			e3:SetDescription(3206)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_CANNOT_ATTACK)
-			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e3)
 		end

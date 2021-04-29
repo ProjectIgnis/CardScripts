@@ -44,8 +44,8 @@ function s.rfilter(c,tp)
 	return c:IsSetCard(0x101b) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.rfilter,2,false,aux.ReleaseCheckMMZ,nil) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.rfilter,2,2,false,aux.ReleaseCheckMMZ,nil)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.rfilter,2,false,aux.ReleaseCheckMMZ,nil,tp) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.rfilter,2,2,false,aux.ReleaseCheckMMZ,nil,tp)
 	Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

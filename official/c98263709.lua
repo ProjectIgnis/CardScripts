@@ -1,7 +1,9 @@
 --銀河魔鏡士
+--Galaxy Mirror Sage
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--recover
+	--Gain 500 LP per "Galaxy" monster in your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_RECOVER)
@@ -10,13 +12,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rectg)
 	e1:SetOperation(s.recop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Register the fact it was flipped face-up
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_FLIP)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetOperation(s.flipop)
 	c:RegisterEffect(e2)
+	--Special summon 1 level 4 or lower "Galaxy" monster from deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -29,6 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x7b}
+
 function s.filter(c)
 	return c:IsSetCard(0x7b) and c:IsType(TYPE_MONSTER)
 end
@@ -65,10 +69,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if not tc then return end
 	if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE) then
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e1,true)

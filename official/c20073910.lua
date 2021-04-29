@@ -1,4 +1,5 @@
 --天照大神
+--Amaterasu
 local s,id=GetID()
 function s.initial_effect(c)
 	--spirit
@@ -9,14 +10,14 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
 	c:RegisterEffect(e1)
-	--spsummon limit
+	--special summon condition
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e2:SetValue(aux.FALSE)
 	c:RegisterEffect(e2)
-	--be target
+	--trigger when targeted
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	--flip
+	--trigger when flipped
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_TOHAND)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -40,7 +41,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return tg:IsContains(e:GetHandler()) and e:GetHandler():IsFacedown()
+	return tg and tg:IsContains(e:GetHandler()) and e:GetHandler():IsFacedown()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

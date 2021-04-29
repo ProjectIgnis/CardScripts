@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,nil,1,2)
 	c:EnableReviveLimit()
-	--pos
+	--change battle position
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_POSITION)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--
+	--cannot be destroyed
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -29,12 +29,12 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e3)
-	--reflect
+	--reflect battle damage
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
 	e4:SetCondition(s.refcon)
-	e4:SetOperation(s.refop)
+	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
 s.xyz_number=13
@@ -78,9 +78,5 @@ function s.indcon(e)
 end
 function s.refcon(e)
 	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
-		and Duel.GetAttackTarget()==e:GetHandler() and Duel.GetBattleDamage(e:GetHandlerPlayer())>0
-end
-function s.refop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(1-tp)+Duel.GetBattleDamage(tp),false)
-	Duel.ChangeBattleDamage(tp,0)
+		and Duel.GetAttackTarget()==e:GetHandler()
 end

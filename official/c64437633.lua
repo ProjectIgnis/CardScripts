@@ -1,16 +1,20 @@
 --儀水鏡の幻影術
+--Aquamirror Illusion
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 "Gishki" ritual monster from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x3a}
+
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x3a) and c:IsRitualMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
 end
@@ -26,11 +30,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,false,true,POS_FACEUP)
+		--Cannot attack
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3206)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1,true)
+		--Return it to hand during end phase
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

@@ -1,5 +1,5 @@
---焔聖騎士-ローラン
---Flame Noble Knight Roland
+--焔聖騎士－ローラン
+--Infernoble Knight - Roland
 --scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -74,7 +74,6 @@ function s.equipop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)
 end
-
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
@@ -106,4 +105,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

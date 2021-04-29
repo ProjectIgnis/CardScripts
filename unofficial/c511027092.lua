@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
-	e1:SetTarget(s.target)  
+	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--Activate from hand
@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.roll_dice=true
 function s.lkfilter(c,p)
 	return s.cfilter(c,p) and c:IsType(TYPE_LINK)
 end
@@ -62,10 +63,10 @@ function s.atkfilter(c)
 	return math.max(c:GetBaseAttack(),0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if chk==0 then return true end
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local dice=Duel.TossDice(1-tp,1)
-	local att=math.pow(2,dice-1)
+	local att=2^(dice-1)
 	local tg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local g=Group.CreateGroup()
 	for tc in aux.Next(tg) do
@@ -76,7 +77,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsAttribute(att) then
 			e1:SetValue(2*tc:GetAttack())
 		else
-			if tc:GetAttack()~=0 then g:AddCard(tc) end
+			if tc:GetAttack()~=0 then
+				g:AddCard(tc)
+			end
 			e1:SetValue(0)
 		end
 		tc:RegisterEffect(e1)

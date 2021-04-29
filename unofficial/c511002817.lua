@@ -1,7 +1,8 @@
+--ライバルクラッシュ
 --Rival Crush
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetCurrentPhase()<PHASE_MAIN2
+	return Duel.GetTurnPlayer()==1-tp and Duel.GetCurrentPhase()<PHASE_MAIN2
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -29,5 +30,5 @@ end
 function s.atktarget(e,c)
 	local atk=c:GetAttack()
 	local p=c:GetControler()
-	return c:IsFaceup() and rk>0 and Duel.IsExistingMatchingCard(s.filter,p,LOCATION_MZONE,0,1,nil,atk)
+	return c:IsFaceup() and atk>0 and Duel.IsExistingMatchingCard(s.filter,p,LOCATION_MZONE,0,1,nil,atk)
 end

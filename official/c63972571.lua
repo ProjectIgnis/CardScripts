@@ -1,9 +1,9 @@
 --獣神王バルバロス
---Beast Lord Barbaros
+--King Beast Barbaros
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy cards on the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--attack all
+	--Attack all monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_ATTACK_ALL)
@@ -35,21 +35,17 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13e}
 function s.rescon(sg,tp)
-	local lv=sg:GetSum(Card.GetLevel)
-	return aux.ChkfMMZ(1)(sg,nil,tp) and lv>=8 and not sg:IsExists(s.rescheck,1,nil,lv)
+	if not aux.ChkfMMZ(1)(sg,nil,tp) then return false end
+	Duel.SetSelectedCard(sg)
+	local res,cont=sg:CheckWithSumGreater(Card.GetLevel,8)
+	return res,not cont
 end
 function s.rescheck(c,lv)
 	return lv-c:GetLevel()>=8
 end
-function s.cfilter(c)
-	return c:IsReleasable() and c:HasLevel()
-end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	--if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.HasLevel,1,false,s.rescon,nil) end
-	--local rg=Duel.SelectReleaseGroupCost(tp,Card.HasLevel,1,99,false,s.rescon,nil)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
-	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon,0) end
-	local rg=aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon,1,tp,HINTMSG_RELEASE)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.HasLevel,1,99,false,s.rescon,nil) end
+	local rg=Duel.SelectReleaseGroupCost(tp,Card.HasLevel,1,99,false,s.rescon,nil)
 	Duel.Release(rg,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

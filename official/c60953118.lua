@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.damcost)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	--coin
+	--Coin toss
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_COIN)
@@ -42,7 +42,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -61,24 +61,24 @@ end
 function s.arcanareg(c,coin)
 	--coin effect
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e1:SetTargetRange(1,0)
+	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e1:SetCondition(s.rdcon1)
-	e1:SetOperation(s.rdop)
+	e1:SetValue(HALF_DAMAGE)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
+	e2:SetTargetRange(0,1)
 	e2:SetCondition(s.rdcon2)
 	c:RegisterEffect(e2)
 	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
 function s.rdcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and e:GetHandler():GetFlagEffectLabel(36690018)==1
+	return e:GetHandler():GetFlagEffectLabel(36690018)==1
 end
 function s.rdcon2(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetFlagEffectLabel(36690018)==0
-end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
+	return  e:GetHandler():GetFlagEffectLabel(36690018)==0
 end

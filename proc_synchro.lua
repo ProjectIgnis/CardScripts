@@ -15,12 +15,19 @@ function Synchro.NonTunerEx(f,val)
 				return target:IsNotTuner(scard,tp) and f(target,val,scard,sumtype,tp)
 			end
 end
+function Synchro.NonTunerEx2(f,...)
+	local params={...}
+	return	function(target,scard,sumtype,tp)
+				return target:IsNotTuner(scard,tp) and f(target,scard,sumtype,tp,table.unpack(params))
+			end
+end
 function Synchro.NonTunerCode(...)
 	local params={...}
 	return	function(target,scard,sumtype,tp)
 				return target:IsNotTuner(scard,tp) and target:IsSummonCode(scard,sumtype,tp,table.unpack(params))
 			end
 end
+Synchro.CheckAdditional=nil
 --Synchro monster, m-n tuners + m-n monsters
 function Synchro.AddProcedure(c,...)
 	--parameters (f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
@@ -87,15 +94,9 @@ function Synchro.Condition(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 				local pg=Auxiliary.GetMustBeMaterialGroup(tp,dg,tp,c,g,REASON_SYNCHRO)
 				if not g:Includes(pg) or pg:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
 				if smat then
-					if smat.KeepAlive then
-						if smat:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
-						pg:Merge(smat)
-						g:Merge(smat)
-					else
-						if not smat:IsCanBeSynchroMaterial(c) then return false end
-						pg:AddCard(smat)
-						g:AddCard(smat)
-					end
+					if smat:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
+					pg:Merge(smat)
+					g:Merge(smat)
 				end
 				if g:IsExists(Synchro.CheckFilterChk,1,nil,f1,f2,sub1,sub2,c,tp) then
 					--if there is a monster with EFFECT_SYNCHRO_CHECK (Genomix Fighter/Mono Synchron)
@@ -507,7 +508,8 @@ function Synchro.CheckP43(tsg,ntsg,sg,lv,sc,tp)
 			end
 		end
 	end
-	return (lvchk or sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc))
+	return (not Synchro.CheckAdditional or Synchro.CheckAdditional(tp,sg,sc))
+	and (lvchk or sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc))
 	and ((sc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0)
 		or (not sc:IsLocation(LOCATION_EXTRA) and Duel.GetMZoneCount(tp,sg,tp)>0))
 end
@@ -529,13 +531,8 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 				end
 				local pg=Auxiliary.GetMustBeMaterialGroup(tp,dg,tp,c,g,REASON_SYNCHRO)
 				if smat then
-					if smat.KeepAlive then
-						pg:Merge(smat)
-						g:Merge(smat)
-					else
-						pg:AddCard(smat)
-						g:AddCard(smat)
-					end
+					pg:Merge(smat)
+					g:Merge(smat)
 				end
 				local tg
 				local ntg
@@ -559,6 +556,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 				end
 				local lv=c:GetLevel()
 				local tsg=Group.CreateGroup()
+				local selectedastuner=Group.CreateGroup()
 				if g:IsExists(Synchro.CheckFilterChk,1,nil,f1,f2,sub1,sub2,c,tp) then
 					local ntsg=Group.CreateGroup()
 					local tune=true
@@ -567,7 +565,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 						local cancel=false
 						local finish=false
 						if tune then
-							cancel=not mgchk and Duel.GetCurrentChain()<=0 and #tsg==0
+							cancel=not mgchk and Duel.IsSummonCancelable() and #tsg==0
 							local g3=ntg:Filter(Synchro.CheckP32,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,c,tp,pg,mgchk,min,max)
 							g2=g:Filter(Synchro.CheckP31,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk,min,max)
 							if #g3>0 and #tsg>=min1 and tsg:IsExists(Synchro.TunerFilter,#tsg,nil,f1,sub1,c,tp) and (not req1 or req1(tsg,c,tp)) then
@@ -589,6 +587,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 								else
 									tsg:AddCard(tc)
 								end
+								selectedastuner:AddCard(tc)
 								sg:AddCard(tc)
 								if tc:IsHasEffect(EFFECT_SYNCHRO_CHECK) then
 									local teg={tc:GetCardEffect(EFFECT_SYNCHRO_CHECK)}
@@ -598,13 +597,14 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 									end
 								end
 							else
+								selectedastuner:RemoveCard(tc)
 								tsg:RemoveCard(tc)
 								sg:RemoveCard(tc)
 								if not sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_SYNCHRO_CHECK) then
 									Duel.AssumeReset()
 								end
 							end
-							if g:FilterCount(Synchro.CheckP31,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk,min,max)==0 or #tsg>=max2 then
+							if g:FilterCount(Synchro.CheckP31,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk,min,max)==0 or #tsg>=max1 then
 								tune=false
 							end
 						else
@@ -613,11 +613,11 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 								and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp)) then
 									finish=true
 							end
-							cancel = (not mgchk and Duel.GetCurrentChain()<=0) and #sg==0
+							cancel = (not mgchk and Duel.IsSummonCancelable()) and #sg==0
 							g2=g:Filter(Synchro.CheckP32,sg,g,tsg,ntsg,sg,f2,sub2,min2,max2,req2,reqm,lv,c,tp,pg,mgchk,min,max)
 							if #g2==0 then break end
 							local g3=g:Filter(Synchro.CheckP31,sg,g,tsg,ntsg,sg,f1,sub1,f2,sub2,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk,min,max)
-							if #g3>0 and #ntsg==0 and #tsg<max1 then
+							if #g3>0 and #(ntsg-selectedastuner)==0 and #tsg<max1 then
 								g2:Merge(g3)
 							end
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
@@ -627,7 +627,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 									and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp) then break end
 								return false
 							end
-							if not tsg:IsContains(tc) then
+							if not selectedastuner:IsContains(tc) then
 								if not sg:IsContains(tc) then
 									ntsg:AddCard(tc)
 									sg:AddCard(tc)
@@ -645,8 +645,10 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 										Duel.AssumeReset()
 									end
 								end
-							elseif #ntsg==0 then
+							elseif #(ntsg-selectedastuner)==0 then
 								tune=true
+								selectedastuner:RemoveCard(tc)
+								ntsg:RemoveCard(tc)
 								tsg:RemoveCard(tc)
 								sg:RemoveCard(tc)
 							end
@@ -661,7 +663,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 						local cancel=false
 						local finish=false
 						if tune then
-							cancel=not mgchk and Duel.GetCurrentChain()<=0 and #tsg==0
+							cancel=not mgchk and Duel.IsSummonCancelable() and #tsg==0
 							local g3=ntg:Filter(Synchro.CheckP42,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,c,tp,pg,mgchk,min,max)
 							g2=tg:Filter(Synchro.CheckP41,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk,min,max)
 							if #g3>0 and #tsg>=min1 and (not req1 or req1(tsg,c,tp)) then
@@ -683,8 +685,10 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 									else
 										tsg:AddCard(tc)
 									end
+									selectedastuner:AddCard(tc)
 									sg:AddCard(tc)
 								else
+									selectedastuner:RemoveCard(tc)
 									tsg:RemoveCard(tc)
 									sg:RemoveCard(tc)
 								end
@@ -697,11 +701,11 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 								and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp) then
 								finish=true
 							end
-							cancel=not mgchk and Duel.GetCurrentChain()<=0 and #sg==0
+							cancel=not mgchk and Duel.IsSummonCancelable() and #sg==0
 							g2=ntg:Filter(Synchro.CheckP42,sg,ntg,tsg,ntsg,sg,min2,max2,req2,reqm,lv,c,tp,pg,mgchk,min,max)
 							if #g2==0 then break end
 							local g3=tg:Filter(Synchro.CheckP41,sg,tg,ntg,tsg,ntsg,sg,min1,max1,min2,max2,req1,req2,reqm,lv,c,tp,pg,mgchk,min,max)
-							if #g3>0 and #ntsg==0 and #tsg<max1 then
+							if #g3>0 and #(ntsg-selectedastuner)==0 and #tsg<max1 then
 								g2:Merge(g3)
 							end
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
@@ -711,7 +715,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 									and sg:Includes(pg) and Synchro.CheckP43(tsg,ntsg,sg,lv,c,tp) then break end
 								return false
 							end
-							if not tsg:IsContains(tc) then
+							if not selectedastuner:IsContains(tc) then
 								if not sg:IsContains(tc) then
 									ntsg:AddCard(tc)
 									sg:AddCard(tc)
@@ -719,8 +723,10 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 									ntsg:RemoveCard(tc)
 									sg:RemoveCard(tc)
 								end
-							elseif #ntsg==0 then
+							elseif #(ntsg-selectedastuner)==0 then
 								tune=true
+								selectedastuner:RemoveCard(tc)
+								ntsg:RemoveCard(tc)
 								tsg:RemoveCard(tc)
 								sg:RemoveCard(tc)
 							end
@@ -730,7 +736,7 @@ function Synchro.Target(f1,min1,max1,f2,min2,max2,sub1,sub2,req1,req2,reqm)
 				local hg=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)
 				aux.ResetEffects(hg,EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)
 				if sg then
-					local subtsg=tsg:Filter(function(c) return sub1 and sub1(c) and ((f1 and not f1(c)) or not c:IsType(TYPE_TUNER)) end,nil)
+					local subtsg=tsg:Filter(function(_c) return sub1 and sub1(_c,c,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp) and ((f1 and not f1(_c,c,SUMMON_TYPE_SYNCHRO|MATERIAL_SYNCHRO,tp)) or not _c:IsType(TYPE_TUNER)) end,nil)
 					local subc=subtsg:GetFirst()
 					while subc do
 						local e1=Effect.CreateEffect(c)
@@ -768,13 +774,14 @@ function Synchro.Operation(e,tp,eg,ep,ev,re,r,rp,c,smat,mg)
 	elseif Synchro.Send==4 then
 		Duel.SendtoHand(g,nil,REASON_MATERIAL+REASON_SYNCHRO)
 	elseif Synchro.Send==5 then
-		Duel.SendtoDeck(g,nil,2,REASON_MATERIAL+REASON_SYNCHRO)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_MATERIAL+REASON_SYNCHRO)
 	elseif Synchro.Send==6 then
 		Duel.Destroy(g,REASON_MATERIAL+REASON_SYNCHRO)
 	else
 		Duel.SendtoGrave(g,REASON_MATERIAL+REASON_SYNCHRO)
 	end
 	Synchro.Send=0
+	Synchro.CheckAdditional=nil
 	g:DeleteGroup()
 end
 
@@ -926,7 +933,8 @@ function Synchro.MajesticCheck2(sg,card1,card2,card3,lv,sc,tp,f1,cbt1,f2,cbt2,f3
 			end
 		end
 	end
-	if not lvchk and not sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc) then return false end
+	if (not lvchk and not sg:CheckWithSumEqual(Card.GetSynchroLevel,lv,#sg,#sg,sc))
+		or (Synchro.CheckAdditional and not Synchro.CheckAdditional(tp,sg,sc)) then return false end
 	if sc:IsLocation(LOCATION_EXTRA) then
 		return Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0
 	else
@@ -955,15 +963,9 @@ function Synchro.MajesticCondition(f1,cbt1,f2,cbt2,f3,cbt3,...)
 				local pg=Auxiliary.GetMustBeMaterialGroup(tp,dg,tp,c,g,REASON_SYNCHRO)
 				if not g:Includes(pg) or pg:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
 				if smat then
-					if smat.KeepAlive then
-						if smat:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
-						pg:Merge(smat)
-						g:Merge(smat)
-					else
-						if not smat:IsCanBeSynchroMaterial(c) then return false end
-						pg:AddCard(smat)
-						g:AddCard(smat)
-					end
+					if smat:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
+					pg:Merge(smat)
+					g:Merge(smat)
 				end
 				if not mgchk then
 					local thg=g:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO)
@@ -1002,13 +1004,8 @@ function Synchro.MajesticTarget(f1,cbt1,f2,cbt2,f3,cbt3,...)
 				end
 				local pg=Auxiliary.GetMustBeMaterialGroup(tp,dg,tp,c,g,REASON_SYNCHRO)
 				if smat then
-					if smat.KeepAlive then
-						pg:Merge(smat)
-						g:Merge(smat)
-					else
-						pg:AddCard(smat)
-						g:AddCard(smat)
-					end
+					pg:Merge(smat)
+					g:Merge(smat)
 				end
 				if not mgchk then
 					local thg=g:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO)
@@ -1024,7 +1021,7 @@ function Synchro.MajesticTarget(f1,cbt1,f2,cbt2,f3,cbt3,...)
 				local card1=nil
 				local card2=nil
 				local card3=nil
-				local cancel=not mgchk and Duel.GetCurrentChain()<=0
+				local cancel=not mgchk and Duel.IsSummonCancelable()
 				while #sg<3 do
 					local g2=g:Filter(Synchro.MajesticCheck1,sg,g,sg,card1,card2,card3,lv,c,tp,pg,f1,cbt1,f2,cbt2,f3,cbt3,table.unpack(t))
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
@@ -1216,6 +1213,7 @@ function Synchro.DarkCheck2(sg,card1,card2,plv,nlv,sc,tp,f1,f2,...)
 			end
 		end
 	end
+	if Synchro.CheckAdditional and not Synchro.CheckAdditional(tp,sg,sc) then return false end
 	if sc:IsLocation(LOCATION_EXTRA) then
 		if Duel.GetLocationCountFromEx(tp,tp,sg,sc)<=0 then return false end
 	else
@@ -1279,15 +1277,9 @@ function Synchro.DarkCondition(f1,f2,plv,nlv,...)
 				local pg=Auxiliary.GetMustBeMaterialGroup(tp,dg,tp,c,g,REASON_SYNCHRO)
 				if not g:Includes(pg) or pg:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
 				if smat then
-					if smat.KeepAlive then
-						if smat:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
-						pg:Merge(smat)
-						g:Merge(smat)
-					else
-						if not smat:IsCanBeSynchroMaterial(c) then return false end
-						pg:AddCard(smat)
-						g:AddCard(smat)
-					end
+					if smat:IsExists(aux.NOT(Card.IsCanBeSynchroMaterial),1,nil,c) then return false end
+					pg:Merge(smat)
+					g:Merge(smat)
 				end
 				if not mgchk then
 					local thg=g:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO)
@@ -1333,13 +1325,8 @@ function Synchro.DarkTarget(f1,f2,plv,nlv,...)
 				end
 				local pg=Auxiliary.GetMustBeMaterialGroup(tp,dg,tp,c,g,REASON_SYNCHRO)
 				if smat then
-					if smat.KeepAlive then
-						pg:Merge(smat)
-						g:Merge(smat)
-					else
-						pg:AddCard(smat)
-						g:AddCard(smat)
-					end
+					pg:Merge(smat)
+					g:Merge(smat)
 				end
 				if not mgchk then
 					local thg=g:Filter(Card.IsHasEffect,nil,EFFECT_HAND_SYNCHRO)
@@ -1354,7 +1341,7 @@ function Synchro.DarkTarget(f1,f2,plv,nlv,...)
 				local lv=c:GetLevel()
 				local card1=nil
 				local card2=nil
-				local cancel=not mgchk and Duel.GetCurrentChain()<=0
+				local cancel=not mgchk and Duel.IsSummonCancelable()
 				while #sg<2 do
 					local g2=g:Filter(Synchro.DarkCheck1,sg,g,sg,card1,card2,plv,nlv,c,tp,pg,f1,f2,table.unpack(t))
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)

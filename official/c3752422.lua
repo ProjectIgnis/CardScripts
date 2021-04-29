@@ -2,9 +2,9 @@
 --Performapal Lebellman
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum atributes
 	Pendulum.AddProcedure(c)
-	--level up
+	--Increase Level from the pendulum zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.lvtg)
 	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
-	--level change
+	--Increase Level from the monster zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -33,7 +33,6 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetMatchingGroup(s.lvfilter,tp,LOCATION_MZONE,0,nil)
-	local tc=tg:GetFirst()
 	for tc in aux.Next(tg) do
 		tc:UpdateLevel(1,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,e:GetHandler())
 	end
@@ -47,7 +46,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return c:GetLevel()>1
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,c) end
 	local p=math.min(c:GetLevel()-1,5)
-	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_LVRANK)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LVRANK)
 	local lv=Duel.AnnounceLevel(tp,1,p)
 	Duel.SetTargetParam(lv)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)

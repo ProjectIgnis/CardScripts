@@ -53,12 +53,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterFlagEffect(tp,id,0,0,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,999999,nil,Duel.GetTurnCount(),e,tp)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
-	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOHAND)
+	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_ATOHAND)
 	local g2=Duel.SelectMatchingCard(1-tp,s.filter,1-tp,LOCATION_GRAVE,0,1,999999,nil,Duel.GetTurnCount(),e,1-tp)
 	if #g2>0 then
 		Duel.SendtoHand(g2,nil,REASON_EFFECT)

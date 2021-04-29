@@ -14,21 +14,21 @@ function s.vfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_DRAGON)
 end
 function s.sfilter(c,e,tp)
-	return c:GetCode()==44508094 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetCode()==CARD_STARDUST_DRAGON and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter1(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
-		and Duel.IsExistingTarget(s.sfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 		and Duel.GetMatchingGroup(s.vfilter,tp,LOCATION_GRAVE,0,nil):GetCount()>4 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or Duel.GetLocationCountFromEx(tp)<=0 then return end
+	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tg=Duel.GetFirstMatchingCard(s.sfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
-	if c:IsRelateToEffect(e) and Duel.SpecialSummonStep(tg,0,tp,tp,false,false,POS_FACEUP) then
+	if c:IsRelateToEffect(e) and tg and Duel.SpecialSummonStep(tg,0,tp,tp,false,false,POS_FACEUP) then
 		c:SetCardTarget(tg)
 		Duel.Equip(tp,c,tg)
 		local e1=Effect.CreateEffect(c)
@@ -72,7 +72,7 @@ function s.val(e,c)
 	return g:GetSum(Card.GetBaseAttack)
 end
 function s.eqlimit(e,c)
-	return c:GetCode()==44508094
+	return c:GetCode()==CARD_STARDUST_DRAGON
 end
 function s.sendfilter(c)
 	return c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_DRAGON) and c:IsAbleToExtra()

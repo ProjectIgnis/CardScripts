@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_MACHINE),2,2)
-	--immune
+	--Unaffected by Spell/Trap
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_UNCOPYABLE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.immcon)
 	e1:SetValue(s.efilter)
 	c:RegisterEffect(e1)
-	--disable
+	--Negate effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	--search
+	--Add to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -37,25 +37,29 @@ function s.initial_effect(c)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.immcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.efilter(e,te)
-	if te:IsActiveType(TYPE_SPELL+TYPE_TRAP) then return true
-	else return te:IsActiveType(TYPE_LINK) and te:IsActivated() and te:GetOwner()~=e:GetOwner() end
+	if te:IsActiveType(TYPE_SPELL+TYPE_TRAP) then
+		return true
+	else
+		return te:IsActiveType(TYPE_LINK) and te:IsActivated() and te:GetOwner()~=e:GetOwner()
+	end
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
-		and Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(aux.disfilter3,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
+		and Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
-	Duel.SelectTarget(tp,aux.disfilter1,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
+	Duel.SelectTarget(tp,aux.disfilter3,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
-	Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_ONFIELD,1,1,nil)
+	Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_ONFIELD,1,1,nil)
 end
 function s.relfilter(c,e)
-	return aux.disfilter1(c) and c:IsRelateToEffect(e)
+	return aux.disfilter3(c) and c:IsRelateToEffect(e)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

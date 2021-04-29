@@ -1,4 +1,5 @@
 --ダーク・ドリアード
+--Dark Doriado
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -28,8 +29,9 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e5)
 end
+local ATTRIBUTES=ATTRIBUTE_EARTH|ATTRIBUTE_WATER|ATTRIBUTE_FIRE|ATTRIBUTE_WIND
 function s.atktg(e,c)
-	return c:IsAttribute(ATTRIBUTE_EARTH+ATTRIBUTE_WATER+ATTRIBUTE_FIRE+ATTRIBUTE_WIND)
+	return c:IsAttribute(ATTRIBUTES)
 end
 function s.value(e,c)
 	local tp=e:GetHandlerPlayer()
@@ -46,34 +48,23 @@ function s.value(e,c)
 	end
 	return ct*200
 end
+function s.spfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTES)
+end
+function s.rescon(sg,e,tp,mg)
+	return true,not sg:CheckDifferentPropertyBinary(function(c)return c:GetAttribute()&(ATTRIBUTES)end)
+end
 function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_EARTH)
-		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_WATER)
-		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_FIRE)
-		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_WIND) end
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil)
+	if chk==0 then return #g>=4 and aux.SelectUnselectGroup(g,e,tp,4,4,s.rescon,0) end
 end
 function s.stop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_EARTH)
-		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_WATER)
-		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_FIRE)
-		and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_DECK,0,1,nil,ATTRIBUTE_WIND) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local g1=Duel.SelectMatchingCard(tp,Card.IsAttribute,tp,LOCATION_DECK,0,1,1,nil,ATTRIBUTE_EARTH)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local g2=Duel.SelectMatchingCard(tp,Card.IsAttribute,tp,LOCATION_DECK,0,1,1,nil,ATTRIBUTE_WATER)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local g3=Duel.SelectMatchingCard(tp,Card.IsAttribute,tp,LOCATION_DECK,0,1,1,nil,ATTRIBUTE_FIRE)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local g4=Duel.SelectMatchingCard(tp,Card.IsAttribute,tp,LOCATION_DECK,0,1,1,nil,ATTRIBUTE_WIND)
-		g1:Merge(g2)
-		g1:Merge(g3)
-		g1:Merge(g4)
-		Duel.ConfirmCards(1-tp,g1)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil)
+	local sg=aux.SelectUnselectGroup(g,e,tp,4,4,s.rescon,1,tp,HINTMSG_TARGET)
+	if sg then
+		Duel.ConfirmCards(1-tp,sg)
 		Duel.ShuffleDeck(tp)
-		local tc=g1:GetFirst()
-		for tc in aux.Next(g1) do
-			Duel.MoveSequence(tc,0)
-		end
+		Duel.MoveToDeckTop(sg)
 		Duel.SortDecktop(tp,tp,4)
 	end
 end

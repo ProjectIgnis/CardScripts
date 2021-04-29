@@ -1,13 +1,15 @@
+-- Ａ ＢＦ－叢雲のクサナギ
 --Assault Blackwing - Kusanagi the Gathering Storm
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--Atk
+	--Atk gain
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCondition(s.valcon)
 	e1:SetOperation(s.valop)
 	c:RegisterEffect(e1)
 	--pierce
@@ -16,9 +18,11 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e2)
 end
+function s.valcon(e)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+end
 function s.valop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetSummonType()~=SUMMON_TYPE_SYNCHRO then return end
 	local g=c:GetMaterial()
 	local tc=g:GetFirst()
 	local atk=0

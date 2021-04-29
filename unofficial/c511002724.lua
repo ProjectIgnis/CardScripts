@@ -1,4 +1,5 @@
---Engrave Soul Light
+--魂を刻む右
+--Soul Fist
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,6 +23,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x543}
 function s.filter(c)
 	return c:IsRed() and c:IsType(TYPE_SYNCHRO)
 end
@@ -29,7 +31,7 @@ function s.atkfilter(c,atk)
 	return c:IsFaceup() and c:GetAttack()>atk
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,0,LOCATION_MZONE,1,nil,e:GetHandler():GetEquipTarget():GetAttack()) end
+	if chk==0 then return e:GetHandler():GetEquipTarget() and Duel.IsExistingMatchingCard(s.atkfilter,tp,0,LOCATION_MZONE,1,nil,e:GetHandler():GetEquipTarget():GetAttack()) end
 end
 function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	local atk=e:GetHandler():GetEquipTarget():GetAttack()

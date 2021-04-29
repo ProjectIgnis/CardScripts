@@ -1,4 +1,4 @@
---Ａｉシャドー
+--Ａｉシャドー (Anime)
 --A.I. Shadow (Anime)
 --Scripted by Larry126
 local s,id,alias=GetID()
@@ -34,14 +34,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x135}
-function s.tgfilter(c)
+function s.tgfilter(c,tp)
 	return c:IsControler(tp) and c:IsSetCard(0x135) and c:IsFaceup(0x135)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(tp,94) then
+	if Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,nil,tp) and Duel.SelectYesNo(tp,94) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
-		local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
+		local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 		local tc=Duel.GetFirstTarget()
 		if tc and tc:IsRelateToEffect(e) then
 			if tc:IsFaceup() then
@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetValue(800)
 				tc:RegisterEffect(e1)
 			end
-			if Duel.GetTurnPlayer()~=tp then
+			if Duel.GetTurnPlayer()==1-tp then
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_FIELD)
 				e1:SetCode(EFFECT_MUST_ATTACK)
@@ -61,17 +61,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.RegisterEffect(e1,tp)
 				local e2=e1:Clone()
 				e2:SetCode(EFFECT_MUST_ATTACK_MONSTER)
+				e2:SetValue(s.atklimit)
 				Duel.RegisterEffect(e2,tp)
-				local e3=Effect.CreateEffect(e:GetHandler())
-				e3:SetType(EFFECT_TYPE_SINGLE)
-				e3:SetCode(EFFECT_MUST_BE_ATTACKED)
-				e3:SetValue(1)
-				e3:SetReset(RESET_PHASE+PHASE_END+RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
-				tc:RegisterEffect(e3,true)
+				tc:CreateEffectRelation(e2)
 				if Duel.GetAttackTarget() and Duel.GetAttackTarget()~=tc then Duel.ChangeAttackTarget(tc) end
 			end
 		end
 	end
+end
+function s.atklimit(e,c)
+	return c:IsRelateToEffect(e)
 end
 function s.check(c,tp)
 	return c and c:IsControler(tp) and c:IsSetCard(0x135)
@@ -86,8 +85,9 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

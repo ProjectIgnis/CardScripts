@@ -1,3 +1,4 @@
+--Pegasus/Spell C
 --Comic Hand
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,13 +14,13 @@ end
 s.listed_names={95000012}
 s.mark=0
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil) end
-	local g=Duel.GetMatchingGroup(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.CheckStealEquip,tp,0,LOCATION_MZONE,1,nil,e,tp) end
+	local g=Duel.GetMatchingGroup(aux.CheckStealEquip,tp,0,LOCATION_MZONE,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g=Duel.SelectMatchingCard(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.CheckStealEquip,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.HintSelection(g)

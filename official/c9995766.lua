@@ -1,6 +1,5 @@
 --宮廷のしきたり
---Imperial Custom
-
+--Imperial Custom, OCG
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -23,5 +22,5 @@ function s.infilter(e,c)
 	return (c:GetType()&0x20004)==0x20004 and c:GetCode()~=id
 end
 function s.indesval(e,re,r,rp)
-	return (r&REASON_RULE)==0
+	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end

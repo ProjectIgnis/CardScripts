@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.stcost)
 	e1:SetOperation(s.stop)
 	c:RegisterEffect(e1)
-	--tograve
+	--send to graveyard
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
@@ -59,7 +59,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct>3 then ct=3 end
 	local t={}
 	for i=1,ct do t[i]=i end
-	Duel.Hint(HINGMSG_NUMBER,tp,HINT_NUMBER)
+	Duel.Hint(HINTMSG_NUMBER,tp,HINT_NUMBER)
 	local ac=Duel.AnnounceNumber(tp,table.unpack(t))
 	Duel.ConfirmDecktop(tp,ac)
 	local g=Duel.GetDecktopGroup(tp,ac)

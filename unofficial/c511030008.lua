@@ -1,10 +1,10 @@
---ダイナレスラー・エスクリマメンチ
---Dinowrestler Eskrimamenchi
+--ダイナレスラー・エスクリマメンチ (Anime)
+--Dinowrestler Eskrimamenchi (Anime)
 --scripted by pyrQ
 local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias = c:GetOriginalCodeRule()
-	--summon with no tribute
+	--Normal Summon without Tributing
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SUMMON_PROC)
 	e1:SetCondition(s.ntcon)
 	c:RegisterEffect(e1)
-	--ss from grave
+	--Special Summon from the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -40,9 +40,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and Duel.GetTurnPlayer()==tp
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and e:GetHandler():IsAbleToHandAsCost() end
+	if chk==0 then return e:GetHandler():IsAbleToHandAsCost() end
 	Duel.SendtoHand(e:GetHandler(),tp,REASON_COST)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x11a) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -57,7 +56,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

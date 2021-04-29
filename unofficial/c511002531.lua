@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if oc~=nil then
 		sg:AddCard(oc)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,#sg,PLAYER_ALL,sc:GetOwner())
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,sg,#sg,#sg==1 and tp or PLAYER_ALL,sc:GetOwner())
 	e:SetLabelObject(sc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

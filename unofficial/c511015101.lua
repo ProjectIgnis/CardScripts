@@ -1,6 +1,6 @@
+--ＤＤＤ フュージョン
 --D/D/D Fusion
---fixed by MLD
---credits to edo9300
+--credits to edo9300, fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -71,13 +71,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(511002961)
-		e1:SetReset(RESET_CHAIN)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(id)
-		e2:SetReset(RESET_CHAIN)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		mg1:AddCard(c)
 		exmat=true

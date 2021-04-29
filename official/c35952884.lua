@@ -44,17 +44,11 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e4:SetCode(EVENT_TO_GRAVE)
+	e4:SetCode(EVENT_LEAVE_FIELD)
 	e4:SetCondition(s.sumcon)
 	e4:SetTarget(s.sumtg)
 	e4:SetOperation(s.sumop)
 	c:RegisterEffect(e4)
-	local e5=e4:Clone()
-	e5:SetCode(EVENT_REMOVE)
-	c:RegisterEffect(e5)
-	local e6=e4:Clone()
-	e6:SetCode(EVENT_TO_DECK)
-	c:RegisterEffect(e6)
 end
 s.listed_names={24696097}
 s.synchro_tuner_required=1

@@ -1,4 +1,5 @@
 --波紋のバリア －ウェーブ・フォース－
+--Drowning Mirror Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetFirst():IsControler(1-tp) and Duel.GetAttackTarget()==nil
+	return eg and eg:GetFirst():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
 function s.filter(c)
 	return c:IsAttackPos() and c:IsAbleToDeck()
@@ -25,6 +26,6 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
-		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

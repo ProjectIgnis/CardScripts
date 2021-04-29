@@ -2,7 +2,7 @@
 --Gazer Shark
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -20,7 +20,7 @@ function s.filter(c,e,tp)
 	return c:GetLevel()==5 and c:IsAttribute(ATTRIBUTE_WATER) and not c:IsCode(id)
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.xyzfilter(c,mg)
+function s.xyzfilter(c,tp,mg)
 	return c:IsAttribute(ATTRIBUTE_WATER) and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0 and c:IsXyzSummonable(nil,mg,2,2)
 end
 function s.mfilter1(c,mg,exg)
@@ -32,7 +32,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,e,tp)
-	local exg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,mg)
+	local exg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,tp,mg)
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
@@ -74,7 +74,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	tc2:RegisterEffect(e4)
 	Duel.SpecialSummonComplete()
 	Duel.BreakEffect()
-	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,g)
+	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,tp,g)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()

@@ -23,17 +23,13 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
-	e2:SetCost(s.descost)
+	e2:SetCost(aux.WitchcrafterDiscardCost)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
 function s.tgtg(e,c)
 	return c:IsRace(RACE_SPELLCASTER) and c~=e:GetHandler()
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return aux.WitchcrafterDiscardCost(aux.FilterBoolFunction(Card.IsType,TYPE_SPELL))(e,tp,eg,ep,ev,re,r,rp,0) end
-	aux.WitchcrafterDiscardCost(aux.FilterBoolFunction(Card.IsType,TYPE_SPELL))(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsFaceup() end

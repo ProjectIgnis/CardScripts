@@ -1,4 +1,5 @@
 --魔の試着部屋
+--Enchanting Fitting Room
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,8 +21,7 @@ function s.filter(c,e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>3
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>3 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

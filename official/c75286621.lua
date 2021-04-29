@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
@@ -38,7 +39,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetLocation())
 	else
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetPreviousLocation())
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,re:GetHandler():GetPreviousLocation())
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)

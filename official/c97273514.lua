@@ -1,11 +1,11 @@
 --甲虫装機 ピコファレーナ
---Inzektor Picofarena
+--Inzektor Picofalena
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_INSECT),2,2)
-	--draw
+	--Return to draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
-	--Equip
+	--Equip from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_EQUIP)
@@ -89,8 +89,8 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.equipop(c,e,tp,tc)
 	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,nil,true) then return end
-	--atkup
-	local e1=Effect.CreateEffect(c)
+	--ATK/DEF increase
+	local e1=Effect.CreateEffect(tc)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(500)
@@ -99,6 +99,7 @@ function s.equipop(c,e,tp,tc)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	tc:RegisterEffect(e2)
+	--Equip limit
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_EQUIP_LIMIT)

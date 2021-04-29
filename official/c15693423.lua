@@ -1,4 +1,5 @@
 --拮抗勝負
+--Evenly Matched
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--act in hand
+	--activate from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
@@ -43,4 +44,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.handcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_ONFIELD,0)==0
+		and Duel.GetFieldGroupCount(1-e:GetHandlerPlayer(),LOCATION_ONFIELD,0)>1
 end

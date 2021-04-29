@@ -1,8 +1,11 @@
+--俊炎星－ゾウセイ
 --Brotherhood of the Fire Fist - Elephant
 --Scripted by Hel
+
 local s,id=GetID()
 function s.initial_effect(c)
 local e1=Effect.CreateEffect(c)
+	--If normal or special summoned, special summon 1 "Fire Fist" monster from hand
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -16,7 +19,7 @@ local e1=Effect.CreateEffect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--shuffle add
+	--Shuffle 1 "Fire Formation" spell/trap from GY to deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -30,6 +33,7 @@ local e1=Effect.CreateEffect(c)
 end
 s.listed_names={id}
 s.listed_series={0x7c,0x79}
+
 function s.cfilter(c)
 	return c:IsFaceup() and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsSetCard(0x7c) and c:IsAbleToGraveAsCost()
 end
@@ -88,4 +92,3 @@ function s.addop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

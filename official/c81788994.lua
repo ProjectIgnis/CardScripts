@@ -71,7 +71,7 @@ function s.chtg(e,te,tp,value)
 	if value&SUMMON_TYPE_FUSION==0 then return Group.CreateGroup() end
 	return Duel.GetMatchingGroup(s.chfilter,tp,LOCATION_MZONE+LOCATION_HAND,LOCATION_MZONE,nil,te,tp)
 end
-function s.chop(e,te,tp,tc,mat,sumtype,sg)
+function s.chop(e,te,tp,tc,mat,sumtype,sg,sumpos)
 	if not sumtype then sumtype=SUMMON_TYPE_FUSION end
 	tc:SetMaterial(mat)
 	Duel.SendtoGrave(mat,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
@@ -82,7 +82,7 @@ function s.chop(e,te,tp,tc,mat,sumtype,sg)
 	if sg then
 		sg:AddCard(tc)
 	else
-		Duel.SpecialSummon(tc,sumtype,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(tc,sumtype,tp,tp,false,false,sumpos)
 	end
 end
 function s.chk(tp,sg,fc)

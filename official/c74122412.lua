@@ -1,15 +1,18 @@
 --グングニールの影霊衣
+--Nekroz of Gungnir
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--cannot special summon
+	--Must be ritual summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.ritlimit)
 	c:RegisterEffect(e1)
-	--indes
+	--Targeted "Nekroz" monster cannot be destroyed by battle or card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -20,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.indtg)
 	e2:SetOperation(s.indop)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy 1 card on the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
@@ -31,9 +34,11 @@ function s.initial_effect(c)
 	e3:SetCost(s.descost)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xb4}
+
 function s.mat_filter(c)
 	return c:GetLevel()~=7
 end
@@ -53,7 +58,10 @@ end
 function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		--Cannot be destroyed by battle or card effects
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3008)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

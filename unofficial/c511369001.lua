@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
-	e2:SetCountLimit(1,id+EFFECT_COUNT_CODE_DUEL)
+	e2:SetCountLimit(1,id,EFFECT_COUNT_CODE_DUEL)
 	e2:SetCondition(s.spcon2)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
@@ -43,7 +43,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon2(e,c)
 	if c==nil then return true end
-	return Duel.GetFieldGroupCount(e:GetHandler(),LOCATION_ONFIELD,LOCATION_ONFIELD)==0
+	return Duel.GetFieldGroupCount(0,LOCATION_ONFIELD,LOCATION_ONFIELD)==0
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

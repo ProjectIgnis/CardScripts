@@ -1,3 +1,4 @@
+--ラプターズ・ストーム
 --Raptor's Storm
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xba}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xba)
 end

@@ -1,9 +1,8 @@
 --剛鬼死闘
---Gouki Deathmatch
---
+--Gouki Cage Match
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x146)
+	c:EnableCounterPermit(0x46)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
@@ -36,13 +35,13 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfc}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanAddCounter(tp,0x146,3,e:GetHandler()) end
+	if chk==0 then return Duel.IsCanAddCounter(tp,0x46,3,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,3,0,0x146)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		c:AddCounter(0x146,3)
+		c:AddCounter(0x46,3)
 	end
 end
 function s.rccon(e,tp,eg,ep,ev,re,r,rp)
@@ -54,13 +53,13 @@ end
 function s.rcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		c:RemoveCounter(tp,0x146,1,REASON_EFFECT)
+		c:RemoveCounter(tp,0x46,1,REASON_EFFECT)
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetCounter(0x146)==0 and c:GetFlagEffect(id)>2
+	return c:GetCounter(0x46)==0 and c:GetFlagEffect(id)>2
 end
 function s.spfilter(c,e,sp)
 	return c:IsSetCard(0xfc) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
@@ -79,7 +78,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local g=aux.SelectUnselectGroup(tg,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		c:AddCounter(0x146,3)
+		c:AddCounter(0x46,3)
 		c:ResetFlagEffect(id)
 	end
 end

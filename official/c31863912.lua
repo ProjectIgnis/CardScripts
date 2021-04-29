@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target1)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--
+	--roll a die on summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetLabel(1)
 	c:RegisterEffect(e2)
 end
+s.roll_dice=true
 function s.cfilter(c,sp)
 	return c:IsFaceup() and c:GetSummonPlayer()==sp
 end

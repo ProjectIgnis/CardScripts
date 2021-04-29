@@ -66,9 +66,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e)
-	local f1=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	local f2=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	return (f1==nil or f1:IsFacedown()) and (f2==nil or f2:IsFacedown())
+	return not Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.decon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

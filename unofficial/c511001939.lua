@@ -1,4 +1,5 @@
 --コピーキャット
+--Mimicat (DM)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,7 +33,7 @@ function s.filter(c,e,tp,eg,ep,ev,re,r,rp,chain)
 		local cost=te:GetCost()
 		local target=te:GetTarget()
 		if te:GetCode()==EVENT_CHAINING then
-			if chain<=0 then return false end
+			if not chain or chain<=0 then return false end
 			local te2=Duel.GetChainInfo(chain,CHAININFO_TRIGGERING_EFFECT)
 			local tc=te2:GetHandler()
 			local g=Group.FromCards(tc)
@@ -57,15 +58,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_GRAVE,1,1,nil,e,tp,eg,ep,ev,re,r,rp,chain)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local chain=Duel.GetCurrentChain()-1
+	local chain=math.max(Duel.GetCurrentChain()-1,0)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not tc or not tc:IsRelateToEffect(e) or not c:IsRelateToEffect(e) then return end
 	if tc:IsType(TYPE_MONSTER) then
+		c:AddMonsterAttribute(tc:GetType())
 		Duel.MoveToField(c,tp,tp,LOCATION_MZONE,POS_FACEUP,true)
 		c:SetStatus(STATUS_PROC_COMPLETE,true)
 		c:SetStatus(STATUS_SPSUMMON_TURN,true)
-		c:AddMonsterAttribute(tc:GetType())
 		c:AddMonsterAttributeComplete()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -98,7 +99,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tpe=tc:GetType()
 		if (tpe&TYPE_FIELD)~=0 then
 			local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-			if Duel.IsDuelType(DUEL_OBSOLETE_RULING) then
+			if Duel.IsDuelType(DUEL_1_FIELD) then
 				if fc then Duel.Destroy(fc,REASON_RULE) end
 				fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 				if fc and Duel.Destroy(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
@@ -106,13 +107,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 				if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 			end
-		end	
+		end 
 		Duel.ClearTargetCard()
 		local tg=te:GetTarget()
 		e:SetCategory(te:GetCategory())
 		e:SetProperty(te:GetProperty())
 		if te:GetCode()==EVENT_CHAINING then
-			local chain=Duel.GetCurrentChain()-1
+			local chain=math.max(Duel.GetCurrentChain()-1,0)
 			local te2=Duel.GetChainInfo(chain,CHAININFO_TRIGGERING_EFFECT)
 			local tc=te2:GetHandler()
 			local g=Group.FromCards(tc)
@@ -133,7 +134,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		local op=te:GetOperation()
 		if te:GetCode()==EVENT_CHAINING then
-			local chain=Duel.GetCurrentChain()-1
+			local chain=math.max(Duel.GetCurrentChain()-1,0)
 			local te2=Duel.GetChainInfo(chain,CHAININFO_TRIGGERING_EFFECT)
 			local tc=te2:GetHandler()
 			local g=Group.FromCards(tc)

@@ -1,4 +1,5 @@
 --スクラップ・シャーク
+--Scrap Shark
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -19,7 +20,6 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_BATTLED)
-	e3:SetProperty(EFFECT_FLAG_AVAILABLE_BD)
 	e3:SetOperation(s.desop2)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)

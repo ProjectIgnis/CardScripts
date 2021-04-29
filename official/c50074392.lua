@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--lv
+	--change level
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -39,14 +39,13 @@ function s.filter(c)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_LVRANK)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LVRANK)
 	local lv=Duel.AnnounceLevel(tp,3,5)
 	Duel.SetTargetParam(lv)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

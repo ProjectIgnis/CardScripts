@@ -1,4 +1,5 @@
---Barrier Ninjitsu Art of Hazy Extinguishing
+--結界忍法－朧滅却の術
+--Barrier Ninjitsu Art of Extinguishment
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,11 +26,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2b)
-end
+s.listed_series={0x2b}
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2b),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.damval(e,re,val,r,rp,rc)
 	if (r&REASON_EFFECT)~=0 and rp~=e:GetHandlerPlayer() and val<=800 then

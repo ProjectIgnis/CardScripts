@@ -1,14 +1,16 @@
 --ハーフ・アンブレイク
 --Half Unbreak
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Targeted monster cannot be destroyed by battle, you take half battle damage involving it
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -20,30 +22,22 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
+		--Cannot be destroyed by battle
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3000)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
+		--Halve battle damage involving this card
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e2:SetCondition(s.rdcon)
-		e2:SetOperation(s.rdop)
-		e2:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e2,tp)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+		e2:SetValue(aux.ChangeBattleDamage(0,HALF_DAMAGE))
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e2)
 	end
-end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	local at=Duel.GetAttacker()
-	local bt=Duel.GetAttackTarget()
-	return ep==e:GetOwnerPlayer() and 
-		((at and at:GetFlagEffect(id)>0) or 
-		(bt and bt:GetFlagEffect(id)>0))
-end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
 end

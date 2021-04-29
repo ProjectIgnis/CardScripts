@@ -1,4 +1,4 @@
-----BF－尖鋭のボーラ (Anime)
+--BF－尖鋭のボーラ (Anime)
 --Blackwing - Boreas the Sharp (Anime)
 --scripted by Larry126
 local s,id=GetID()
@@ -45,5 +45,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e3)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler():GetBattleTarget(),REASON_EFFECT)
+	local dg=e:GetHandler():GetBattleTarget()
+	if dg then
+		Duel.Destroy(dg,REASON_EFFECT)
+	end
 end

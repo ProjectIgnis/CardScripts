@@ -1,10 +1,11 @@
---No.72 ラインモンスター チャリオッツ・飛車
+--Ｎｏ．７２ ラインモンスター チャリオッツ・飛車
+--Number 72: Shogi Rook
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,nil,6,2)
 	c:EnableReviveLimit()
-	--destroy
+	--Destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -37,22 +38,16 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if #tg>0 then
+	local tg=Duel.GetTargetCards(e)
+	if tg and #tg>0 then
 		Duel.Destroy(tg,REASON_EFFECT)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e1:SetCondition(s.dcon)
-	e1:SetOperation(s.dop)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(0,1)
+	e1:SetValue(HALF_DAMAGE)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-end
-function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
 end

@@ -1,7 +1,6 @@
 --オーバーロード・アンカー (Anime)
 --Overload Anchor (Anime)
---scripted by Larry126
---cleaned up by MLD
+--scripted by Larry126, cleaned up by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -9,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_BATTLE_START)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--
 	local e2=Effect.CreateEffect(c)
@@ -21,16 +19,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tg)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local ex,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE,true)
-	if ex and s.con(e,tp,teg,tep,tev,tre,tr,trp) and s.tg(e,tp,teg,tep,tev,tre,tr,trp,0) and Duel.SelectYesNo(tp,94) then
-		s.tg(e,tp,teg,tep,tev,tre,tr,trp,1)
-		e:SetOperation(s.op)
-	else
-		e:SetOperation(nil)
-	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
@@ -78,7 +66,9 @@ function s.damval(e,re,val,r,rp,rc)
 	if r==REASON_BATTLE then
 		e:SetLabel(1)
 		return val/2
-	else return val end
+	else
+		return val
+	end
 end
 function s.edcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():GetLabel()==1
@@ -89,33 +79,30 @@ function s.edop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
 	local c=e:GetOwner()
 	--atk
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(2137678,0))
-	e3:SetCategory(CATEGORY_ATKCHANGE)
-	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMINGS_CHECK_MONSTER+TIMING_DAMAGE_STEP)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e3:SetOwnerPlayer(tp)
-	e3:SetCondition(s.atkcon)
-	e3:SetCost(aux.bfgcost)
-	e3:SetTarget(s.atktg)
-	e3:SetOperation(s.atkop)
-	c:RegisterEffect(e3)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(2137678,0))
+	e1:SetCategory(CATEGORY_ATKCHANGE)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMINGS_CHECK_MONSTER+TIMING_DAMAGE_STEP)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetOwnerPlayer(tp)
+	e1:SetCondition(s.atkcon)
+	e1:SetCost(aux.bfgcost)
+	e1:SetTarget(s.atktg)
+	e1:SetOperation(s.atkop)
+	c:RegisterEffect(e1)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsControler(e:GetOwnerPlayer()) and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsLinkMonster()
-end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
+	local sg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLinkMonster),tp,0,LOCATION_MZONE,nil)
 	sg:ForEach(function(tc)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -1,4 +1,5 @@
 --ダークビショップデーモン
+--Darkbishop Archfiend
 local s,id=GetID()
 function s.initial_effect(c)
 	--maintain
@@ -20,6 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x45}
+s.roll_dice=true
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end

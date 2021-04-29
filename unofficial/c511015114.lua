@@ -1,5 +1,5 @@
+--ガガガヘッド (Manga)
 --Gagaga Head (Manga)
---fixed by MLD
 --NOTE: Change Draw effect to trigger once implementable
 local s,id=GetID()
 function s.initial_effect(c)
@@ -71,60 +71,32 @@ function s.efcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_XYZ
 end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
-	local n = e:GetHandler():GetReasonCard():GetOverlayGroup():FilterCount(Card.IsSetCard,nil,0x54)
-	Duel.Draw(tp,n,REASON_EFFECT)
+	Duel.Hint(HINT_CARD,0,id)
+	Duel.Hint(HINT_CARD,1,id)
+	local n = e:GetHandler():GetReasonCard():GetMaterial():FilterCount(Card.IsSetCard,nil,0x54)
+	Duel.Draw(rp,n,REASON_EFFECT)
 end
-function s.xyzfilter(c,m,cc)
-	if not c:IsType(TYPE_XYZ) or not c:IsSetCard(0x48) or not c.xyz_filter then return false end
-	local f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk=table.unpack(c.xyz_parameters)
-	if not maxct then maxct=ct end
-	local e1=Effect.CreateEffect(cc)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetDescription(1073)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetRange(LOCATION_GRAVE)
-	e1:SetCondition(Xyz.Condition(f,lv,ct,maxct,mustbemat,exchk))
-	e1:SetTarget(Xyz.Target(f,lv,ct,maxct,mustbemat,exchk))
-	e1:SetOperation(Xyz.Operation(f,lv,ct,maxct,mustbemat,exchk))
-	e1:SetValue(SUMMON_TYPE_XYZ)
-	e1:SetReset(RESET_CHAIN)
-	c:RegisterEffect(e1)
-	local res=c:IsXyzSummonable(nil,m,#m,#m)
-	e1:Reset()
-	return res
+function s.filter(c,xyz,tp)
+	return c:IsFaceup() and c:IsSetCard(0x54,xyz,SUMMON_TYPE_XYZ) and c:IsCanBeXyzMaterial(xyz,tp)
 end
-function s.gafilter(c)
-	return c:IsSetCard(0x54) and c:IsFaceup()
+function s.xyzfilter(c,e,tp)
+	if not (c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,true)) then return false end
+	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,c,tp)
+	return mg:GetFirst() and Duel.GetMZoneCount(tp,mg)>0
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local m=Duel.GetMatchingGroup(s.gafilter,tp,LOCATION_MZONE,0,nil)
-		return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_GRAVE,0,1,nil,m,e:GetHandler()) 
-	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local m=Duel.GetMatchingGroup(s.gafilter,tp,LOCATION_MZONE,0,nil)
-	local g=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_GRAVE,0,nil,m,c)
+	local g=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
-		local f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk=table.unpack(tc.xyz_parameters)
-		if not maxct then maxct=ct end
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetDescription(1073)
-		e1:SetCode(EFFECT_SPSUMMON_PROC)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e1:SetRange(LOCATION_GRAVE)
-		e1:SetCondition(Xyz.Condition(f,lv,ct,maxct,mustbemat,exchk))
-		e1:SetTarget(Xyz.Target(f,lv,ct,maxct,mustbemat,exchk))
-		e1:SetOperation(Xyz.Operation(f,lv,ct,maxct,mustbemat,exchk))
-		e1:SetValue(SUMMON_TYPE_XYZ)
-		e1:SetReset(RESET_CHAIN)
-		tc:RegisterEffect(e1)
-		Duel.XyzSummon(tp,tc,nil,m)
+		local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,tc,tp)
+		tc:SetMaterial(mg)
+		Duel.Overlay(tc,mg)
+		Duel.SpecialSummon(tc,SUMMON_TYPE_XYZ,tp,tp,false,true,POS_FACEUP)
+		tc:CompleteProcedure()
 	end
 end

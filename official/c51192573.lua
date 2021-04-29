@@ -29,21 +29,21 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0xc}
-s.counter_place_list={0x100e}
+s.counter_place_list={COUNTER_A}
 function s.otfilter(c,tp)
-	return c:GetOwner()==tp
+	return c:GetOwner()==1-tp
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end 
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,g,1,0x100e,1)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,g,1,COUNTER_A,1)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		tc:AddCounter(0x100e,1)
+		tc:AddCounter(COUNTER_A,1)
 	end
 end
 function s.adcon(e)
@@ -51,8 +51,8 @@ function s.adcon(e)
 end
 function s.adtg(e,c)
 	local bc=c:GetBattleTarget()
-	return bc and c:GetCounter(0x100e)~=0 and bc:IsSetCard(0xc)
+	return bc and c:GetCounter(COUNTER_A)~=0 and bc:IsSetCard(0xc)
 end
 function s.adval(e,c)
-	return c:GetCounter(0x100e)*-300
+	return c:GetCounter(COUNTER_A)*-300
 end

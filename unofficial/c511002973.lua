@@ -1,4 +1,5 @@
---Gladiator Beast Assault Fort
+--剣闘獣の強襲城
+--Gladiator Beast's Assault Fort
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -153,7 +154,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.acfilter(c,tp)
 	local te=c:GetActivateEffect()
-	return c:IsCode(511002975) and te:IsActivatable(tp)
+	return c:IsCode(511002975) and te:IsActivatable(tp,true,true)
 end
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,0,nil)
@@ -177,7 +178,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ClearTargetCard()
 			if (tpe&TYPE_FIELD)~=0 then
 				local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-				if Duel.IsDuelType(DUEL_OBSOLETE_RULING) then
+				if Duel.IsDuelType(DUEL_1_FIELD) then
 					if fc then Duel.Destroy(fc,REASON_RULE) end
 					fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 					if fc and Duel.Destroy(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
@@ -205,7 +206,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 			end
 			if op then op(te,tp,eg,ep,ev,re,r,rp) end
 			tc:ReleaseEffectRelation(te)
-			if etc then	
+			if etc then
 				etc=g:GetFirst()
 				while etc do
 					etc:ReleaseEffectRelation(te)

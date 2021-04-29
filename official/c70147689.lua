@@ -1,21 +1,22 @@
 --古代の機械要塞
+--Ancient Gear Fortress
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--indes
+	--Prevent destruction by opponent's effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(s.target)
-	e2:SetValue(s.indval)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
-	--cannot be target
+	--Prevent effect target
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -25,14 +26,14 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
-	--act limit
+	--Limit activations
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetOperation(s.chainop)
 	c:RegisterEffect(e4)
-	--special summon
+	--Special summon from hand or GY
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e5:SetDescription(aux.Stringid(id,0))
@@ -47,9 +48,6 @@ end
 s.listed_series={0x7}
 function s.target(e,c)
 	return c:IsSetCard(0x7) and c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
-end
-function s.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end
 function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsSetCard(0x7) then

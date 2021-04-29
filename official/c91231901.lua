@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xc}
-s.counter_place_list={0x100e}
+s.counter_place_list={COUNTER_A}
 function s.filter(c)
 	return c:GetLevel()>0 and c:IsSetCard(0xc) and c:IsAbleToGrave()
 end
@@ -35,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,g,1,0x100e,1)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,g,1,COUNTER_A,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.SendtoGrave(g,REASON_EFFECT)~=0 and sg:IsLocation(LOCATION_GRAVE) then
 			local tc=Duel.GetFirstTarget()
 			if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-				tc:AddCounter(0x100e,sg:GetLevel())
+				tc:AddCounter(COUNTER_A,sg:GetLevel())
 			end
 		end
 	end

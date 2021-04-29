@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct>3 then ct=3 end
 	local t={}
 	for i=1,ct do t[i]=i end
-	Duel.Hint(HINGMSG_NUMBER,tp,HINT_NUMBER)
+	Duel.Hint(HINTMSG_NUMBER,tp,HINT_NUMBER)
 	local ac=Duel.AnnounceNumber(tp,table.unpack(t))
 	Duel.ConfirmDecktop(tp,ac)
 	local g=Duel.GetDecktopGroup(tp,ac)
@@ -45,11 +45,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	ac=ac-#sg
 	if ac>0 then
-		Duel.SortDecktop(tp,tp,ac)
-		for i=1,ac do
-			local mg=Duel.GetDecktopGroup(tp,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
-		end
+		Duel.MoveToDeckBottom(ac,tp)
+		Duel.SortDeckbottom(tp,tp,ac)
 	end
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
@@ -68,7 +65,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
 	end
 end

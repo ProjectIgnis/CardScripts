@@ -1,8 +1,9 @@
 --EMオッドアイズ・シンクロン
+--Performapal Odd-Eyes Synchron
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--tuner
+	--Tuner
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetValue(LOCATION_REMOVED)
 	e2:SetCondition(s.rmcon)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special Summon from GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	--synchro
+	--Synchro Summon with Pendulum Scale
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -44,7 +45,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9f,0x99}
 function s.tnfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x9f) or c:IsSetCard(0x99)) and (not c:IsType(TYPE_TUNER) or c:IsLevelAbove(2))
+	return c:IsFaceup() and (c:IsSetCard(0x9f) or c:IsSetCard(0x99)) and c:HasLevel() and (not c:IsType(TYPE_TUNER) or c:IsLevelAbove(2))
 end
 function s.tntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tnfilter(chkc) end
@@ -88,7 +89,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,182,tp,tp,false,false,POS_FACEUP) then
+	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,182,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -105,9 +106,9 @@ end
 function s.scfilter1(c,e,tp,mc)
 	local mg=Group.FromCards(c,mc)
 	return c:IsCanBeSynchroMaterial() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(s.scfilter2,tp,LOCATION_EXTRA,0,1,nil,mg)
+		and Duel.IsExistingMatchingCard(s.scfilter2,tp,LOCATION_EXTRA,0,1,nil,tp,mg)
 end
-function s.scfilter2(c,mg)
+function s.scfilter2(c,tp,mg)
 	return Duel.GetLocationCountFromEx(tp,tp,mg,c)>0 and c:IsSynchroSummonable(nil,mg)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -136,7 +137,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 	if not c:IsRelateToEffect(e) then return end
 	local mg=Group.FromCards(c,tc)
-	local g=Duel.GetMatchingGroup(s.scfilter2,tp,LOCATION_EXTRA,0,nil,mg)
+	local g=Duel.GetMatchingGroup(s.scfilter2,tp,LOCATION_EXTRA,0,nil,tp,mg)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)

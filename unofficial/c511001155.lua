@@ -1,3 +1,4 @@
+--バースト・シンクロ・サモン
 --Burst Synchro Summon
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,12 +22,13 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ex and (cp==tp or cp==PLAYER_ALL) and Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_RECOVER)
 end
 function s.filter(c,e,tp,atk)
-	return c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetAttack()==atk and c:IsType(TYPE_SYNCHRO)
+	return c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+		and c:GetAttack()==atk and c:IsType(TYPE_SYNCHRO)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cid=e:GetLabel()
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,cid) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,cid) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -40,10 +42,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(s.damcon)
 	e1:SetReset(RESET_CHAIN)
 	Duel.RegisterEffect(e1,tp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,cid)
-	local tc=g:GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,cid):GetFirst()
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())

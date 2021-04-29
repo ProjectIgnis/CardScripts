@@ -7,7 +7,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
@@ -44,45 +43,13 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_TO_GRAVE)
-	e4:SetCountLimit(1,35125881)
+	e4:SetCountLimit(1,id+2)
 	e4:SetCondition(s.descon)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0xf9}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
-	if chk==0 then return true end
-	local b1=s.cost(e,tp,eg,ep,ev,re,r,rp,0)
-		and s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
-	local b2=s.sumcon(e,tp,eg,ep,ev,re,r,rp)
-		and s.cost(e,tp,eg,ep,ev,re,r,rp,0)
-		and s.sumtg(e,tp,eg,ep,ev,re,r,rp,0)
-	if (b1 or b2) and Duel.SelectYesNo(tp,94) then
-		local op=0
-		if b1 and b2 then op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-		elseif b1 then op=Duel.SelectOption(tp,aux.Stringid(id,0))
-		else op=Duel.SelectOption(tp,aux.Stringid(id,1))+1 end
-		if op==0 then
-			e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-			e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-			e:SetOperation(s.spop)
-			s.cost(e,tp,eg,ep,ev,re,r,rp,1)
-			s.sptg(e,tp,eg,ep,ev,re,r,rp,1)
-		else
-			e:SetCategory(CATEGORY_SUMMON)
-			e:SetProperty(0)
-			e:SetOperation(s.sumop)
-			s.cost(e,tp,eg,ep,ev,re,r,rp,1)
-			s.sumtg(e,tp,eg,ep,ev,re,r,rp,1)
-		end
-	else
-		e:SetCategory(0)
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
 	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
@@ -103,29 +70,28 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()~=tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
+	return Duel.GetTurnPlayer()==1-tp and Duel.IsMainPhase()
 end
 function s.sumfilter(c)
 	return c:IsSetCard(0xf9) and c:IsSummonable(true,nil,1)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND,0,1,nil)
-		and Duel.GetFlagEffect(tp,35125881)==0 end
-	Duel.RegisterFlagEffect(tp,35125881,RESET_PHASE+PHASE_END,0,1)
+		and Duel.GetFlagEffect(tp,id+2)==0 end
+	Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
@@ -149,7 +115,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

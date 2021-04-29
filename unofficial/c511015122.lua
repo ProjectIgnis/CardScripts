@@ -1,11 +1,11 @@
+--ファントム・エフェクト
 --Phantom Effect
---cleaned up by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	--negate daamge
+	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
@@ -13,7 +13,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and aux.damcon1(e,tp,eg,ep,ev,re,r,rp)
+	if not re:IsActiveType(TYPE_SPELL+TYPE_TRAP) then return false end
+	local e1=Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_DAMAGE)
+	local e2=Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_RECOVER)
+	local rd=e1 and not e2
+	local rr=not e1 and e2
+	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
+	if cv then e:SetLabel(cv) end
+	if ex and (cp==tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then
+		return true
+	end
+	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
+	if cv then e:SetLabel(cv) end
+	return ex and (cp==tp or cp==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -38,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_SET_BASE_ATTACK)
+	e2:SetCode(EFFECT_SET_ATTACK)
 	e2:SetValue(e:GetLabel())
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	token:RegisterEffect(e2,true)
@@ -53,6 +65,5 @@ function s.damcon(e,re,val,r,rp,rc)
 	local cc=Duel.GetCurrentChain()
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
 	if cc==0 or r&REASON_EFFECT==0 or cid~=e:GetLabel() then return val end
-	e:SetLabel(val)
 	return 0
 end

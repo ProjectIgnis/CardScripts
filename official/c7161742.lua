@@ -33,6 +33,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,2,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetTargetCards(e)
 	if ft>0 and (#g>0 or (#g>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT))) then
@@ -40,7 +41,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		if #g>ft then g=g:Select(tp,ft,ft,nil) end
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -54,7 +55,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e3=e1:Clone()
 	e3:SetCode(EFFECT_CANNOT_MSET)
 	Duel.RegisterEffect(e3,tp)
-	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
+	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),nil)
+	--cannot special summon from Main Deck
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetCode(CARD_EHERO_BLAZEMAN)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e4:SetTargetRange(1,0)
+	e4:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e4,tp)
 end
 function s.splimit(e,c)
 	return not c:IsType(TYPE_FUSION)

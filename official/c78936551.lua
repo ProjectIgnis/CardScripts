@@ -1,5 +1,5 @@
 --轍の魔妖-俥夫　
--- Rickshaw Mayakashi – Shafu
+--Shafu, the Wheeled Mayakashi
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -25,6 +25,8 @@ function s.initial_effect(c)
 	e3:SetTargetRange(1,0)
 	e3:SetTarget(s.sumlimit)
 	c:RegisterEffect(e3)
+	--Lizard check
+	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
 end
 s.listed_names={id}
 s.listed_series={0x121}
@@ -56,8 +58,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
 end
-
+function s.lizfilter(e,c)
+	return not c:IsOriginalSetCard(0x121)
+end

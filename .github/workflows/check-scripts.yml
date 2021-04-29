@@ -1,0 +1,26 @@
+name: Script validity checker
+on:
+  push:
+    branches:
+      - master
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    if: >-
+      !(
+        contains(github.event.head_commit.message, '[ci skip]') ||
+        contains(github.event.head_commit.message, '[skip ci]') ||
+        contains(github.event.head_commit.message, '[actions skip]') ||
+        contains(github.event.head_commit.message, '[skip actions]')
+      )
+    steps:
+    - uses: actions/checkout@v1
+    - name: Download checker
+      run: |
+        curl --retry 5 --connect-timeout 30 --location --remote-header-name --output ignis-test-bin.tar.gz https://github.com/ProjectIgnis/Checker/releases/download/1.1.1/ignis-test-bin.tar.gz
+        tar xf ignis-test-bin.tar.gz
+        cp ignis-test/script_syntax_check ignis-test/libocgcore.so .
+        rm -rf ignis-test
+    - name: Run checker
+      run: |
+        ./script_syntax_check .

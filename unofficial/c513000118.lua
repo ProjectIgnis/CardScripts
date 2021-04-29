@@ -40,18 +40,18 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(0xff,0xff)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e4:SetTarget(aux.FieldSummonProcTg(function(e,c)return c:GetFlagEffect(id1)>0 and c:GetOriginalLevel()<5 end))
+	e4:SetTarget(aux.FieldSummonProcTg(function(e,c)return c:GetFlagEffect(id+1)>0 and c:GetOriginalLevel()<5 end))
 	e4:SetCondition(s.ntcon)
 	e4:SetValue(SUMMON_TYPE_NORMAL)
 	c:RegisterEffect(e4)
 	local e5=e4:Clone()
-	e5:SetTarget(aux.FieldSummonProcTg(function(e,c)return c:GetFlagEffect(id1)>0 and c:GetOriginalLevel()>4 and c:GetOriginalLevel()<8 end))
+	e5:SetTarget(aux.FieldSummonProcTg(function(e,c)return c:GetFlagEffect(id+1)>0 and c:GetOriginalLevel()>4 and c:GetOriginalLevel()<8 end))
 	e5:SetCondition(s.ttcon1)
 	e5:SetOperation(s.ttop1)
 	e5:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e5)
 	local e6=e5:Clone()
-	e6:SetTarget(aux.FieldSummonProcTg(function(e,c)return c:GetFlagEffect(id1)>0 and c:GetOriginalLevel()>7 end))
+	e6:SetTarget(aux.FieldSummonProcTg(function(e,c)return c:GetFlagEffect(id+1)>0 and c:GetOriginalLevel()>7 end))
 	e6:SetCondition(s.ttcon2)
 	e6:SetOperation(s.ttop2)
 	c:RegisterEffect(e6)
@@ -175,13 +175,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc2=g2:GetFirst()
 	if tc2 then
 		while tc2 do
-			tc2:RegisterFlagEffect(id1,0,0,1)
+			tc2:RegisterFlagEffect(id+1,0,0,1)
 			tc2=g2:GetNext()
 		end
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,id0)==0
+	return Duel.GetFlagEffect(tp,id+1000)==0
 --and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
 function s.spfilter(c,e,tp)
@@ -190,7 +190,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.RegisterFlagEffect(tp,id0,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+1000,RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -204,11 +204,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,1-tp,LOCATION_GRAVE,0,1,nil,e,1-tp)
 		and Duel.SelectYesNo(1-tp,aux.Stringid(102380,0))
-		and Duel.GetFlagEffect(1-tp,id0)==0 then
+		and Duel.GetFlagEffect(1-tp,id+1000)==0 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 		local g2=Duel.SelectMatchingCard(1-tp,s.spfilter,1-tp,LOCATION_GRAVE,0,1,1,nil,e,1-tp)
 		Duel.SpecialSummonStep(g2:GetFirst(),0,1-tp,1-tp,false,false,POS_FACEUP)
-		Duel.RegisterFlagEffect(1-tp,id0,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(1-tp,id+1000,RESET_PHASE+PHASE_END,0,1)
 	end
 	Duel.SpecialSummonComplete()
 end

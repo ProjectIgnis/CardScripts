@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xc}
-s.counter_place_list={0x100e}
+s.counter_place_list={COUNTER_A}
 function s.ctfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(0xc)
 end
@@ -36,11 +36,11 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.ctfilter,1,nil)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+0x100e,1)
+	e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+COUNTER_A,1)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x100e,2,REASON_COST) end
-	Duel.RemoveCounter(tp,1,1,0x100e,2,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,COUNTER_A,2,REASON_COST) end
+	Duel.RemoveCounter(tp,1,1,COUNTER_A,2,REASON_COST)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0xc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

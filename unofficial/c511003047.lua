@@ -1,4 +1,5 @@
---クリスタルウィング・シンクロ・ドラゴン
+--クリスタルウィング・シンクロ・ドラゴン (Anime)
+--Crystal Wing Synchro Dragon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -72,7 +73,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local sg=g:Select(tp,1,1,nil)
 	Duel.SetTargetCard(sg)
-	local i=sg:GetFirst():GetFlagEffectLabel(51102034)
+	local i=sg:GetFirst():GetFlagEffectLabel(511002034)
 	local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,sg,1,0,0)
 	if sg:GetFirst():IsRelateToEffect(te) then
@@ -106,7 +107,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3)
 	end
-	local i=tc:GetFlagEffectLabel(51102034)
+	local i=tc:GetFlagEffectLabel(511002034)
 	local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
 	if not tc:IsImmuneToEffect(e1) and not tc:IsImmuneToEffect(e2) and (not e3 or not tc:IsImmuneToEffect(e3)) and tc:IsRelateToEffect(te) 
 		and Duel.Destroy(tc,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsFaceup() then

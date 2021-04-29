@@ -1,3 +1,4 @@
+--古の書物
 --Ancient Tome
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,7 +38,7 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetDecktopGroup(tp,1):GetFirst()
 	if not dg or not dg:IsAbleToHand() then return end
-	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 	if #g>0 then
 		Duel.DisableShuffleCheck()

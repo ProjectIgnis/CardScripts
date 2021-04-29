@@ -81,6 +81,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			e1:SetValue(sc:GetAttack()*num)
 			sc:RegisterEffect(e1)
-		end		
+		end
 	end
 end

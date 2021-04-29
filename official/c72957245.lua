@@ -40,6 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local dc=Duel.GetOperatedGroup():GetFirst()
 		if dc:IsSetCard(0x140) and Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_DECK,0,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_DECK,0,1,1,nil)
 			local tc=g:GetFirst()
 			if tc then

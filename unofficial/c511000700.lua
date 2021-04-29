@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetHintTiming(TIMING_END_PHASE)
+	e1:SetHintTiming(TIMING_END_PHASE,TIMING_END_PHASE)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 			s[1]=false
 		end)
 	end)
-end	
+end 
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_END and s[tp]
 end
@@ -45,7 +45,7 @@ end
 function s.filter(c,e,tp,ft,g,pg)
 	local ct=c.minxyzct
 	return ft>=ct and c:IsRankBelow(4) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_FIEND) and c:IsType(TYPE_XYZ) 
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) 
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 		and aux.SelectUnselectGroup(g,e,tp,ct,ct,aux.FilterBoolFunction(Group.Includes,pg),0)
 end
 function s.spfilter(c,e,tp)
@@ -56,15 +56,16 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local pg=aux.GetMustBeMaterialGroup(tp,g,tp,nil,nil,REASON_XYZ)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_EXTRA) and s.filter(chkc,e,tp,ft,g,pg) end
-	if chk==0 then return ft>0 and Duel.GetLocationCountFromEx(tp)>0 
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,ft,g,pg) end
+	if chk==0 then return ft>0 and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)>0
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,ft,g,pg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,ft,g,pg)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,ft,g,pg)
+	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.GetLocationCountFromEx(tp)>0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)>0 then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local ct=tc.minxyzct
 		local ct2=tc.maxxyzct

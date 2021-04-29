@@ -1,4 +1,5 @@
---Gouki Shadow Ogre
+--剛鬼ジャドウ・オーガ (Anime)
+--Gouki Shadow Ogre (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,6 +19,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0xfc}
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lg=e:GetHandler():GetLinkedGroup()
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
@@ -27,7 +29,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsRelateToEffect(re) then
+	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 end

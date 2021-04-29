@@ -1,17 +1,9 @@
+--オーバーレイ・マーカー
 --Overlay Marker
---original script by Shad3
+--Originally scripted by Shad3
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_DETACH_EVENT)
-	--Global Check
-	if not s['gl_chk'] then
-	s['gl_chk']=true
-	local ge1=Effect.GlobalEffect()
-	ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	ge1:SetCode(EVENT_DETACH_MATERIAL)
-	ge1:SetOperation(s.flag_op)
-	Duel.RegisterEffect(ge1,0)
-	end
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -22,6 +14,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
+	--Global Check
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.GlobalEffect()
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_DETACH_MATERIAL)
+		ge1:SetOperation(s.flag_op)
+		Duel.RegisterEffect(ge1,0)
+	end)
 end
 function s.flag_op(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetCurrentChain()
@@ -35,7 +35,7 @@ end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsRelateToEffect(re) then
+	if re:GetHandler():IsRelateToEffect(re) and re:GetHandler():IsDestructable() then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 	local val=Duel.GetAttacker():GetAttack()+Duel.GetAttackTarget():GetAttack()

@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon itself
+	--Special summon itself as a monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,13 +14,15 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Set
+	--Set 1 "Eldlixir" Spell/Trap from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_PHASE+PHASE_END)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetHintTiming(TIMING_END_PHASE)
 	e2:SetCountLimit(1,id)
+	e2:SetCondition(s.setcond)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
@@ -42,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonStep(c,1,tp,tp,true,false,POS_FACEUP)
 	c:AddMonsterAttributeComplete()
 	Duel.SpecialSummonComplete()
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_GOLDEN_LORD),tp,LOCATION_MZONE,0,1,nil)
+	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_GOLDEN_LORD),tp,LOCATION_ONFIELD,0,1,nil)
 	and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
@@ -53,8 +55,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
+function s.setcond(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()==PHASE_END
+end
 function s.setfilter(c)
-	return c:IsSetCard(0x143) and c:IsSSetable()
+	return c:IsSetCard(0x143) and c:IsSSetable() and not c:IsForbidden()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -67,6 +72,5 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SSet(tp,g)
-		Duel.ConfirmCards(1-tp,g)
 	end
 end

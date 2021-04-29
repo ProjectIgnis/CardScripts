@@ -1,5 +1,5 @@
 --ダイスエット
---Dicette
+--Dice It
 --scripted by andre
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation2)
 	c:RegisterEffect(e2)
 end
+s.roll_dice=true
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return tp == Duel.GetTurnPlayer()
 end
@@ -63,4 +64,3 @@ function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

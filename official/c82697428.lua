@@ -1,8 +1,9 @@
---V・HEROウィッチ・レイド
+--Ｖ・ＨＥＲＯウィッチ・レイド
 --Vision HERO Witch Raider
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon with s/t
+	--Can also tribute trap cards for its tribute summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TRAP))
 	e1:SetValue(POS_FACEUP)
 	c:RegisterEffect(e1)
-	--destroy
+	--When normal summoned, destroy all of opponent's spells/traps
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -24,6 +25,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_series={0x8}
+
 function s.counterfilter(c)
 	return c:IsSetCard(0x8)
 end
@@ -40,7 +42,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	e2:SetTargetRange(1,0)
 	Duel.RegisterEffect(e2,tp)

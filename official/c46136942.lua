@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--fusion (p)
+	--fusion from the pendulum zone
 	local params = {aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON)}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--fusion (m)
+	--fusion from the monster zone
 	local params2 = {nil,Fusion.CheckWithHandler(Fusion.OnFieldMat),s.fextra,nil,Fusion.ForcedHandler}
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)

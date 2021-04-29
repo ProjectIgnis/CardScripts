@@ -1,12 +1,12 @@
 --トポロジック・ゼロヴォロス
---Topologic Zerovoros
+--Topologic Zeroboros
 --Scripted by AlphaKretin and andré
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2)
 	c:EnableReviveLimit()
-	--force zone
+	--Disable zones
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_FORCE_MZONE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.znval)
 	c:RegisterEffect(e1)
-	--atk
+	--ATK up
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--banish
+	--Banish all cards on field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_REMOVE)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
-	--special summon
+	--Special summon itself
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -77,7 +77,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 end
 function s.spreg(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler()==e:GetHandler() then
+	if re and re:GetHandler()==e:GetHandler() then
 		e:SetLabel(Duel.GetTurnCount())
 		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
 	end

@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)
 end
+s.roll_dice=true
 --[[function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
 	local ex=Duel.GetOperationInfo(ev,CATEGORY_DICE)

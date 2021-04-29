@@ -2,7 +2,7 @@
 --Cyber Pharos
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
-	--special summon
+	--Fusion summon
 	local params = {aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE)}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -23,8 +23,8 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
-	c:RegisterEffect(e2)	
-	--search
+	c:RegisterEffect(e2)
+	--Search
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -40,23 +40,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={37630732}
-function s.spfilter(c,ft,tp)
-	return c:IsRace(RACE_MACHINE)
-		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
-end
 function s.spcon1(e,c)
 	if c==nil then return true end
-	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp)
-	return aux.SelectUnselectGroup(rg,e,tp,1,1,s.rescon,0)
-end
-function s.rescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.spfilter,1,nil,tp)
+	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsRace,1,false,1,true,c,c:GetControler(),nil,false,e:GetHandler(),RACE_MACHINE)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp)
-	local g=aux.SelectUnselectGroup(rg,e,tp,1,1,s.rescon,1,tp,HINTMSG_RELEASE,nil,nil,true)
-	if #g>0 then
+	local g=Duel.SelectReleaseGroup(tp,Card.IsRace,1,1,false,true,true,c,nil,nil,false,e:GetHandler(),RACE_MACHINE)
+	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)
 		return true
@@ -90,5 +80,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-
-

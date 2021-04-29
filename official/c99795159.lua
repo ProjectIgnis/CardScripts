@@ -1,4 +1,5 @@
 --ゴーストリック・ハウス
+--Ghostrick Mansion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--atklimit
+	--Limit attacks
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetValue(aux.TargetBoolFunction(Card.IsFacedown))
 	c:RegisterEffect(e2)
-	--direct attack
+	--Direct attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_DIRECT_ATTACK)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e3:SetTarget(s.dirtg)
 	c:RegisterEffect(e3)
-	--
+	--Change damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetRange(LOCATION_FZONE)
@@ -31,12 +32,9 @@ function s.initial_effect(c)
 	e4:SetTargetRange(1,1)
 	e4:SetValue(s.val)
 	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e5:SetRange(LOCATION_FZONE)
-	e5:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e5:SetCondition(s.dcon)
-	e5:SetOperation(s.dop)
+	local e5=e4:Clone()
+	e5:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e5:SetValue(s.damval)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0x8d}
@@ -45,13 +43,12 @@ function s.dirtg(e,c)
 end
 function s.val(e,re,dam,r,rp,rc)
 	if r&REASON_EFFECT~=0 then
-		return dam/2
-	else return dam end
+		return math.floor(dam/2)
+	else
+		return dam
+	end
 end
-function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	return not tc:IsSetCard(0x8d)
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
+function s.damval(e,rc)
+	if rc:IsSetCard(0x8d) then return -1 end
+	return HALF_DAMAGE
 end

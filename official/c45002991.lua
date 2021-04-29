@@ -1,11 +1,11 @@
 --アークロード・パラディオン
---Arch-lord Palladion
+--Crusadia Equimax
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2,3,s.lcheck)
-	--atk up
+	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	--cannot attack
+	--Cannot attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(s.atklimit)
 	c:RegisterEffect(e2)
-	--negate effect
+	--Negate effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DISABLE)
@@ -36,8 +36,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xfe,0x116}
-function s.lcheck(g,lc)
-	return g:IsExists(Card.IsType,1,nil,TYPE_LINK)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsType,1,nil,TYPE_LINK,lc,sumtype,tp)
 end
 function s.atkval(e,c)
 	local g=e:GetHandler():GetLinkedGroup():Filter(Card.IsFaceup,nil)
@@ -47,7 +47,7 @@ function s.atklimit(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c)
 end
 function s.disfilter(c,e)
-	return aux.disfilter1(c) and c:IsCanBeEffectTarget(e)
+	return aux.disfilter3(c) and c:IsCanBeEffectTarget(e)
 end
 function s.cfilter(c,tg,lg)
 	return (c:IsSetCard(0xfe) or c:IsSetCard(0x116)) and lg:IsContains(c)
@@ -60,16 +60,16 @@ function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and aux.disfilter1(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_ONFIELD,1,1,nil)
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and aux.disfilter3(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
+	local g=Duel.SelectTarget(tp,aux.disfilter3,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if ((tc:IsFaceup() and not tc:IsDisabled()) or tc:IsType(TYPE_TRAPMONSTER)) and tc:IsRelateToEffect(e) then
+	if tc and ((tc:IsFaceup() and not tc:IsDisabled()) or tc:IsType(TYPE_TRAPMONSTER)) and tc:IsRelateToEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -94,4 +94,3 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

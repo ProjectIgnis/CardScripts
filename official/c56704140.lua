@@ -1,4 +1,5 @@
 --氷結界の風水師
+--Geomancer of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--untargetable
@@ -14,13 +15,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	if chk==0 then return aux.IceBarrierDiscardCost(nil,true)(e,tp,eg,ep,ev,re,r,rp,0) end
+	aux.IceBarrierDiscardCost(nil,true)(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,0)
-	local aat=Duel.AnnounceAttribute(tp,1,0x7f)
+	local aat=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL)
 	e:SetLabel(aat)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

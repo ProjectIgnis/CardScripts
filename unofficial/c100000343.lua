@@ -1,4 +1,5 @@
 --森の聖騎士 ワンコ
+--Wonko, Noble Knight of the Forest
 local s,id=GetID()
 function s.initial_effect(c)
 	--target
@@ -22,10 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.tgcon(e,c)
-	local tc=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	if tc and tc:IsFaceup() then return true end
-	tc=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	return tc and tc:IsFaceup()
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.tglimit(e,c)
 	return c~=e:GetHandler()
@@ -39,6 +37,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e1:SetValue(-300)
+	e1:SetValue(-500)
 	bc:RegisterEffect(e1)
 end

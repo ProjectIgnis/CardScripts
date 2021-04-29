@@ -1,4 +1,5 @@
 --マジェスティック・ジェスター
+--Majestic Jester
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -12,20 +13,21 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
+s.roll_dice=true
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()~=nil
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end	
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetAttackTarget()
 	if c==tc then tc=Duel.GetAttacker() end
-	if not tc:IsRelateToBattle() then return end
+	if not tc or not tc:IsRelateToBattle() then return end
 	local d=Duel.TossDice(tp,1)
-	if d==6 then	
+	if d==6 then
 		if c:IsFaceup() and c:IsLocation(LOCATION_MZONE) then Duel.Destroy(tc,REASON_EFFECT) end
 	else
 		Duel.Destroy(c,REASON_EFFECT)

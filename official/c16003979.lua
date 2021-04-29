@@ -1,9 +1,9 @@
---
---Gladiator Beast Saditari
+--剣闘獣サジタリィ
+--Gladiator Beast Sagittarii
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--draw
+	--Draw 2 cards when Special Summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(65984457,0))
 	e1:SetCategory(CATEGORY_DRAW)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon form deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x19}
-s.listed_names={}
+s.listed_names={id}
 function s.cfilter(c)
 	return c:IsSetCard(0x19) and c:IsDiscardable()
 end
@@ -45,7 +45,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)	
+	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattledGroupCount()>0
@@ -69,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc then
-		Duel.SpecialSummon(tc,104,tp,tp,false,false,POS_FACEUP)		
+		Duel.SpecialSummon(tc,104,tp,tp,false,false,POS_FACEUP)
 		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
 	end
 end

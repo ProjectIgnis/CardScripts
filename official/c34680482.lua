@@ -1,7 +1,9 @@
 --マドルチェ・エンジェリー
+--Madolche Anjelly
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--to deck
+	--When sent to GY, shuffle itself into deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)
@@ -11,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rettg)
 	e1:SetOperation(s.retop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special summon 1 "Madolche" monster from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,6 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x71}
+
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetReasonPlayer()~=tp
 		and e:GetHandler():IsPreviousControler(tp)
@@ -57,14 +60,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,Duel.GetTurnCount())
+		--Cannot be destroyed by battle
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.Stringid(id,2))
+		e1:SetDescription(3000)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
+		--Shuffle it into deck during end phase of next turn
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

@@ -3,13 +3,13 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--cannot special summon
+	--Special summon limitation
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon procedure
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg1)
 	e2:SetOperation(s.spop1)
 	c:RegisterEffect(e2)
-	--to grave
+	--Send cards to the graveyard
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DAMAGE)

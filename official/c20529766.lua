@@ -1,4 +1,5 @@
 --超電磁稼動ボルテック・ドラゴン
+--Super-Electromagnetic Voltech Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success
@@ -15,11 +16,11 @@ function s.initial_effect(c)
 	e2:SetValue(s.valcheck)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local code=tc:GetCode()
 		if code==55401221 then

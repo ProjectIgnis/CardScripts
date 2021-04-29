@@ -1,6 +1,5 @@
 --バウンドリンク
 --Link Bound
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,19 +31,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local tc=Duel.GetFirstTarget()
 	local ct=tc:GetLink()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_EXTRA) then
+	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_EXTRA) then
 		if Duel.Draw(p,ct,REASON_EFFECT)==ct then
 			local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,LOCATION_HAND,0,nil)
 			if #g==0 then return end
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 			local sg=g:Select(p,ct,ct,nil)
-			Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
-			Duel.SortDecktop(p,p,ct)
-			for i=1,ct do
-				local mg=Duel.GetDecktopGroup(p,1)
-				Duel.MoveSequence(mg:GetFirst(),1)
+			Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+			local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_DECK)
+			if ct>0 then
+				Duel.SortDeckbottom(p,p,ct)
 			end
 		end
 	end
 end
-

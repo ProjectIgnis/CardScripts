@@ -66,9 +66,9 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetTargetCards(e)
-	if #tg>0 and Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)>0 then
+	if #tg>0 and Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 		local ct=#(Duel.GetOperatedGroup())
-		local cg=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_ONFIELD,nil)
+		local cg=Duel.GetMatchingGroup(aux.disfilter3,tp,0,LOCATION_ONFIELD,nil)
 		if ct>0 and #cg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			local sg=cg:Select(tp,1,ct,nil)

@@ -1,42 +1,35 @@
 --風霊媒師ウィン
 --Wynn the Wind Spirit Medium
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
-	--Always treated as a "Charmer" card
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_ADD_SETCODE)
-	e1:SetValue(0xbf)
-	c:RegisterEffect(e1)
+	c:AddSetcodesRule(0xbf)
 	--Discard this + WIND monster; add WIND monster with <= 1500 DEF, locked into WIND effects
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_HAND)
-	e2:SetCountLimit(1,id)
-	e2:SetCost(s.shcost)
-	e2:SetTarget(s.shtg)
-	e2:SetOperation(s.shop)
-	c:RegisterEffect(e2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetCountLimit(1,id)
+	e1:SetCost(s.shcost)
+	e1:SetTarget(s.shtg)
+	e1:SetOperation(s.shop)
+	c:RegisterEffect(e1)
 	--Special summon from hand
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_BATTLE_DESTROYED)
-	e3:SetRange(LOCATION_HAND)
-	e3:SetCountLimit(1,id+1)
-	e3:SetCondition(s.spcon)
-	e3:SetTarget(s.sptg)
-	e3:SetOperation(s.spop)
-	c:RegisterEffect(e3)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_BATTLE_DESTROYED)
+	e2:SetRange(LOCATION_HAND)
+	e2:SetCountLimit(1,id+1)
+	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
+	e2:SetOperation(s.spop)
+	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 s.listed_series={0xbf}
 	--Discard this card + 1 WIND monster
 function s.dfilter(c)
@@ -52,7 +45,7 @@ function s.shcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for WIND monster with <= 1500 DEF
 function s.shfilter(c)
-	return c:IsDefenseBelow(1500) and c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsAbleToHand()
+	return c:IsDefenseBelow(1500) and c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_WIND) and not c:IsCode(id) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.shtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -94,7 +87,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)   
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 	--Special summon from hand
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -102,4 +95,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-

@@ -1,15 +1,17 @@
+--炎舞－「洞明」
 --Fire Formation - Domei
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--When activated, ritual summon 1 beast-warrior ritual monster from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target(Ritual.Target(s.filter,RITPROC_GREATER),Ritual.Operation(s.filter,RITPROC_GREATER)))
 	c:RegisterEffect(e1)
-	--special summon
+	--If this face-up card is sent to GY, special summon 1 "Fire Fist" monster from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -23,6 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x79}
+
 function s.filter(c)
 	return c:IsRace(RACE_BEASTWARRIOR) and c:IsRitualMonster()
 end

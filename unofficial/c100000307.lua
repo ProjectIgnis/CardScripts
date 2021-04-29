@@ -1,4 +1,5 @@
 --穢された大地
+--Contaminated Earth
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -41,7 +42,7 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp)
 	s[1]=false
 end
 function s.filter(c,e,tp)
-	return  c:IsSetCard(0x21) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x21) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and s[tp]

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xd7}
 function s.cfilter(c)
-	return c:IsFaceup() and aux.IsMaterialListCode(c,78193831)
+	return c:IsFaceup() and (c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,78193831))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

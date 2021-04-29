@@ -20,17 +20,8 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e3)
 	--summon with 1 tribute
-	local e4=Effect.CreateEffect(c)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-	e4:SetCondition(s.ttcon)
-	e4:SetOperation(s.ttop)
-	e4:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e4)
-	local e5=e4:Clone()
-	e5:SetCode(EFFECT_LIMIT_SET_PROC)
-	c:RegisterEffect(e5)
+	local e4=aux.AddNormalSummonProcedure(c,true,false,1,1)
+	local e5=aux.AddNormalSetProcedure(c,true,false,1,1)
 	--tribute limit
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
@@ -52,24 +43,13 @@ function s.initial_effect(c)
 end
 s.listed_series={0x48}
 s.mark=0
-function s.ttcon(e,c)
-	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-1 and Duel.GetTributeCount(c)>=1
-end
-function s.ttop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectTribute(tp,c,1,1)
-	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
-end
 function s.tlimit(e,c)
 	return not c:IsType(TYPE_TOKEN) or not c:IsSetCard(0x48)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetReleaseGroup(tp)
-	g:RemoveCard(e:GetHandler())
+	local g,exg=Duel.GetReleaseGroup(tp):Split(aux.ReleaseCostFilter,e:GetHandler(),tp)
+	exg:RemoveCard(e:GetHandler())
 	if chk==0 then return #g>0 and g:FilterCount(aux.MZFilter,nil,tp)+Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
-	local exg=Duel.GetMatchingGroup(aux.ReleaseCostFilter,tp,0,LOCATION_MZONE,e:GetHandler())
-	exg:Sub(g)
 	if #exg>0 and Duel.SelectYesNo(tp,aux.Stringid(59160188,2)) then
 		g:Merge(exg)
 	end

@@ -1,4 +1,5 @@
 --ZW－一角獣皇槍
+--ZW - Unicorn Spear
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
+	aux.AddZWEquipLimit(c,s.eqcon,function(tc,c,tp) return s.filter(tc) and tc:IsControler(tp) end,s.equipop,e1)
 	--disable
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -23,8 +25,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={56840427}
-function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():CheckUniqueOnField(tp)
+function s.eqcon(e)
+	return e:GetHandler():CheckUniqueOnField(e:GetHandlerPlayer())
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(56840427)
@@ -40,25 +42,21 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:GetControler()~=tp or tc:IsFacedown() or not tc:IsRelateToEffect(e) or not c:CheckUniqueOnField(tp) then
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or not tc:IsRelateToEffect(e) or tc:IsFacedown() or tc:GetControler()~=tp or not c:CheckUniqueOnField(tp) then
 		Duel.SendtoGrave(c,REASON_EFFECT)
 		return
 	end
-	Duel.Equip(tp,c,tc,true)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e1:SetValue(s.eqlimit)
-	e1:SetLabelObject(tc)
-	c:RegisterEffect(e1)
+	s.equipop(c,e,tp,tc)
+end
+function s.equipop(c,e,tp,tc)
+	if not aux.EquipAndLimitRegister(c,e,tp,tc) then return end
 	--atkup
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetValue(1900)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(1900)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	c:RegisterEffect(e1)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
@@ -76,7 +74,4 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 	tc:RegisterEffect(e2)
-end
-function s.eqlimit(e,c)
-	return c==e:GetLabelObject()
 end

@@ -1,10 +1,11 @@
 --エヴォルカイザー・ラギア
+--Evolzar Laggia
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DINOSAUR),4,2)
 	c:EnableReviveLimit()
-	--negate activate
+	--Negate activation
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target1)
 	e1:SetOperation(s.operation1)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--disable summon
+	--Negate Normal Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_DESTROY)
@@ -29,10 +30,12 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target2)
 	e2:SetOperation(s.operation2)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	--Negate Special Summon
 	local e3=e2:Clone()
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCode(EVENT_SPSUMMON)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)

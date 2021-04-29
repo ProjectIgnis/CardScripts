@@ -1,3 +1,4 @@
+--ＴＧ ラッシュ・ライノ BE-04
 --T.G. Rush Rhino (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -85,9 +86,12 @@ function s.sop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
-		local e1 = Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_FORBIDDEN)
+		e1:SetRange(0xff)
+		e1:SetTargetRange(0x7f,0x7f)
+		e1:SetTarget(function(e,c) return c==e:GetHandler() end)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		g:GetFirst():RegisterEffect(e1)
 	end

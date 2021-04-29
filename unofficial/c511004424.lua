@@ -1,3 +1,4 @@
+--覇王乱舞
 --Supreme Faceoff
 --fixed by MLD
 local s,id=GetID()
@@ -6,7 +7,6 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--target
 	local e2=Effect.CreateEffect(c)
@@ -51,24 +51,10 @@ function s.initial_effect(c)
 	e5:SetOperation(s.atop2)
 	c:RegisterEffect(e5)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
-	if chk==0 then return true end
-	if s.atcon(e,tp,eg,ep,ev,re,r,rp) and s.attg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,94) then
-		e:SetOperation(s.atop)
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		s.attg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
-end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xf8)
-end
+s.listed_series={0xf8}
 function s.atcon(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE 
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetTurnPlayer()==1-tp and Duel.IsBattlePhase()
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0xf8),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
 	return c:IsFaceup() and not c:IsHasEffect(EFFECT_CANNOT_ATTACK) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK_ANNOUNCE) 
@@ -76,9 +62,8 @@ function s.filter(c)
 end
 function s.attg(e,tp,eg,ev,ep,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) and e:GetHandler():GetFlagEffect(id)==0 end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,0)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.atop(e,tp,eg,ev,ep,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -120,7 +105,7 @@ function s.edescon(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and tc+tg:FilterCount(s.cdfilter,nil,tp)-#tg>0
 end
-function s.edestg(e,tp,eg,ev,ep,re,r,rp,chk)
+function s.edestg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	local g=tg:Filter(s.cdfilter,nil,tp)
@@ -140,7 +125,7 @@ function s.edesop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atcon2(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE 
+	return Duel.GetTurnPlayer()~=tp and Duel.IsBattlePhase()
 end
 function s.atcost2(e,tp,eg,ev,ep,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

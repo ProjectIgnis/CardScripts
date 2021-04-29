@@ -1,31 +1,29 @@
 --Performapal Lizardraw (anime)
---fixed by MLD
---fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
 	Pendulum.AddProcedure(c)
-	--draw P
+	--draw from the pendulum zone
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_DRAW)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetRange(LOCATION_PZONE)
+	e1:SetTarget(s.drawtg)
+	e1:SetOperation(s.drawop)
+	c:RegisterEffect(e1)
+	--draw from the monster zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DRAW)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetRange(LOCATION_PZONE)
-	e2:SetTarget(s.drawtg)
-	e2:SetOperation(s.drawop)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EVENT_DESTROYED)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetCountLimit(1)
+	e2:SetCondition(s.drcon)
+	e2:SetTarget(s.drtg)
+	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
-	--draw M
-	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_DRAW)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EVENT_DESTROYED)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e3:SetCountLimit(1)
-	e3:SetCondition(s.drcon)
-	e3:SetTarget(s.drtg)
-	e3:SetOperation(s.drop)
-	c:RegisterEffect(e3)
 end
 s.listed_series={0x9f}
 function s.drawtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -41,7 +39,7 @@ function s.drawop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_EFFECT)
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

@@ -1,9 +1,10 @@
 --スカーレッド・レイン
---Red Rain
+--Red Reign
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Banish all monsters on the field, except monster(s) with the highest level
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--to hand
+	--Add this card from GY to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -49,9 +50,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	ig:ForEach(s.immop,e:GetHandler())
 end
 function s.immop(tc,c)
+	--Unaffected by other card effects
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3100)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetValue(s.efilter)
@@ -78,4 +81,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	end
 end
-

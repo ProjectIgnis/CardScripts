@@ -1,4 +1,5 @@
 --スカイスクレイパー・シュート
+--Skydive Scorcher
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -41,7 +42,7 @@ function s.ffilter(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
+	if not tc or not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil,tc:GetAttack())
 	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE)

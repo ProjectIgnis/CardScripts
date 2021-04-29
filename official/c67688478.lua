@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or (not re:IsHasType(EFFECT_TYPE_ACTIVATE) and not re:IsActiveType(TYPE_MONSTER))

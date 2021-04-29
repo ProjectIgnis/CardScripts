@@ -1,10 +1,11 @@
 --ドラゴニック・プレッシャー
 --Dragonic Pressure
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy all monsters on the field, special summon 1 dragon from GY in defense position
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(s.spcost)
@@ -28,15 +29,17 @@ function s.spfilter(c,e,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	Duel.DiscardHand(tp,s.cfilter,3,3,REASON_COST+REASON_DISCARD,e:GetHandler())
-	--Effect
-	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local ct=Duel.Destroy(sg,REASON_EFFECT)
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-	if ct>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:Select(tp,1,1,nil)
-		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+	if Duel.DiscardHand(tp,s.cfilter,3,3,REASON_COST+REASON_DISCARD,e:GetHandler())>0 then
+		--Effect
+		local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		local ct=Duel.Destroy(sg,REASON_EFFECT)
+		local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
+		if ct>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sg=g:Select(tp,1,1,nil)
+			Duel.HintSelection(sg)
+			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		end
 	end
 end

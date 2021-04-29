@@ -20,17 +20,20 @@ function s.initial_effect(c)
 	--
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCost(s.cost)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.op)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x21}
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local sg=Duel.GetMatchingGroupCount(Card.IsPosition,tp,LOCATION_MZONE,LOCATION_MZONE,nil,POS_FACEUP_DEFENSE)
 	e:GetHandler():AddCounter(0x94,sg)
 end

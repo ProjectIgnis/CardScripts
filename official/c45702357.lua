@@ -1,9 +1,10 @@
 --リバーシブル・ビートル
 --Reversible Beetle
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--to deck
+	--Shuffle face-up monsters in its column to deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1)
-	--flip down
+	--Change all monsters in its column to face-down defense
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_POSITION)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -36,9 +37,9 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsOnField() then return end
 	local cg=c:GetColumnGroup()
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,cg)
-	if c:IsFaceup() and c:IsAbleToDeck() then g:AddCard(c) end
+	if c:IsFaceup() and c:IsAbleToDeck() and not c:IsStatus(STATUS_BATTLE_DESTROYED) then g:AddCard(c) end
 	if #g>0 then
-		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
 function s.posfilter(c,g)

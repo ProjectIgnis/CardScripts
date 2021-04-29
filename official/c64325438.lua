@@ -31,8 +31,9 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and Duel.GetCurrentChain()>1 and Duel.GetChainInfo(Duel.GetCurrentChain() - 1,CHAININFO_TRIGGERING_CONTROLER) == tp
-		and Duel.GetChainInfo(Duel.GetCurrentChain() - 1,CHAININFO_TRIGGERING_EFFECT):GetHandler():IsSetCard(0x134)
+	local ch=Duel.GetCurrentChain(true)-1
+	return ep==1-tp and ch>0 and Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_CONTROLER)==tp
+		and Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_EFFECT):GetHandler():IsSetCard(0x134)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end

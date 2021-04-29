@@ -1,5 +1,5 @@
---Divine Hierarchy Token
---scripted by Larry126
+--Divine Hierarchy Rules
+--Scripted by Larry126
 if not DivineHierarchy then
 	DivineHierarchy = {}
 	local function finish_setup()
@@ -10,7 +10,7 @@ if not DivineHierarchy then
 		rank:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_IGNORE_RANGE)
 		rank:SetCondition(DivineHierarchy.hrcon)
 		rank:SetOperation(DivineHierarchy.rank)
-		Duel.RegisterEffect(rank,0) 
+		Duel.RegisterEffect(rank,0)
 		--immunes
 		local immunity=Effect.GlobalEffect()
 		immunity:SetType(EFFECT_TYPE_FIELD)
@@ -40,7 +40,7 @@ if not DivineHierarchy then
 		ep:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ep:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 		ep:SetRange(LOCATION_MZONE)
-		ep:SetCode(EVENT_PHASE+PHASE_END)
+		ep:SetCode(EVENT_TURN_END)
 		ep:SetCondition(DivineHierarchy.stgcon)
 		ep:SetOperation(DivineHierarchy.stgop)
 		 --release limit
@@ -148,13 +148,12 @@ if not DivineHierarchy then
 		local owner=false
 		local effs={c:GetCardEffect()}
 		for _,eff in ipairs(effs) do
-			owner=(eff:GetOwner()~=c and not eff:GetOwner():IsCode(0)
-				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-				and (eff:GetTarget()==aux.PersistentTargetFilter or not eff:IsHasType(EFFECT_TYPE_GRANT+EFFECT_TYPE_FIELD)))
-				and (eff:GetOwner()~=c and not eff:GetOwner():IsCode(0)
-				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-				and (eff:GetTarget()==aux.PersistentTargetFilter or not eff:IsHasType(EFFECT_TYPE_GRANT+EFFECT_TYPE_FIELD)))
-				or owner
+			if (eff:GetOwner()~=c and not eff:GetOwner():IsCode(0)
+				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE) and eff:GetCode()~=EFFECT_SPSUMMON_PROC
+				and (eff:GetTarget()==aux.PersistentTargetFilter or not eff:IsHasType(EFFECT_TYPE_GRANT+EFFECT_TYPE_FIELD))) then
+				owner=true
+				break
+			end
 		end
 		return c:GetFlagEffect(513000065)>0 and (owner or c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetPreviousLocation()~=0)
 	end
@@ -163,7 +162,7 @@ if not DivineHierarchy then
 		local effs={c:GetCardEffect()}
 		for _,eff in ipairs(effs) do
 			if eff:GetOwner()~=c and not eff:GetOwner():IsCode(0)
-				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+				and not eff:IsHasProperty(EFFECT_FLAG_IGNORE_IMMUNE) and eff:GetCode()~=EFFECT_SPSUMMON_PROC
 				and (eff:GetTarget()==aux.PersistentTargetFilter or not eff:IsHasType(EFFECT_TYPE_GRANT+EFFECT_TYPE_FIELD)) then
 				eff:Reset()
 			end

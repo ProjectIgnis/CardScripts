@@ -9,11 +9,12 @@ end
 function Fusion.ParseMaterialTable(tab,mat)
 	local named_mats={}
 	local tmp_extramat_func=function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return (sub2 and c:IsHasEffect(511002961)) end
-	local name_func=function(tab) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,sumtype,fc:GetControler(),table.unpack(tab)) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end end
+	local name_func=function(_tab) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return c:IsSummonCode(fc,sumtype,fc:GetControler(),table.unpack(_tab)) or (sub and c:CheckFusionSubstitute(fc)) or (sub2 and c:IsHasEffect(511002961)) end end
+	local function_func=function(func) return function(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) return func(c,fc,sumtype,tp,sub,mg,sg,contact) end end
 	local func=aux.FALSE
 	for _,fmat in ipairs(tab) do
 		if type(fmat)=="function" then
-			func=aux.OR(func,aux.OR(fmat,tmp_extramat_func))
+			func=aux.OR(func,aux.OR(function_func(fmat),tmp_extramat_func))
 		else
 			table.insert(named_mats,fmat)
 			local addmat=true
@@ -82,19 +83,18 @@ function Fusion.ConditionMix(insf,sub,...)
 	local funs={...}
 	return	function(e,g,gc,chkfnf)
 				local mustg=nil
-				if g==nil then
-					mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,nil,REASON_FUSION)
-				return insf and #mustg==0 end
-				local chkf=chkfnf&0xff
 				local c=e:GetHandler()
 				local tp=c:GetControler()
+				if g==nil then
+					mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,nil,REASON_FUSION)
+					return insf and #mustg==0
+				end
+				local chkf=chkfnf&0xff
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
 				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
-				if notfusion then
-					sumtype=0
-				elseif contact then
+				if notfusion or contact then
 					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
@@ -102,9 +102,9 @@ function Fusion.ConditionMix(insf,sub,...)
 				local mg=g:Filter(Fusion.ConditionFilterMix,c,c,sub,sub,contact,sumtype,matcheck,tp,table.unpack(funs))
 				mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_FUSION)
 				if contact then mustg:Clear() end
-				if not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c) then return false end
+				if not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c,sumtype) then return false end
 				if gc then
-					if gc:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c) 
+					if gc:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c,sumtype) 
 						or gc:IsExists(aux.NOT(Fusion.ConditionFilterMix),1,nil,c,sub,sub,contact,sumtype,matcheck,tp,table.unpack(funs)) then return false end
 					mustg:Merge(gc)
 				end
@@ -123,9 +123,7 @@ function Fusion.OperationMix(insf,sub,...)
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
 				local sumtype=SUMMON_TYPE_FUSION|MATERIAL_FUSION
-				if notfusion then
-					sumtype=0
-				elseif contact then
+				if notfusion or contact then
 					sumtype=MATERIAL_FUSION
 				end
 				local matcheck=e:GetValue()
@@ -171,11 +169,7 @@ function Fusion.OperationMix(insf,sub,...)
 end
 function Fusion.ConditionFilterMix(c,fc,sub,sub2,contact,sumtype,matcheck,tp,...)
 	if matcheck~=0 and not matcheck(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) then return false end
-	if contact then
-		if not c:IsCanBeFusionMaterial(fc,tp) then return false end
-	else
-		if not c:IsCanBeFusionMaterial(fc) then return false end
-	end
+	if not c:IsCanBeFusionMaterial(fc,sumtype) then return false end
 	for i,f in ipairs({...}) do
 		if f(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) then return true end
 	end
@@ -197,16 +191,24 @@ function Fusion.CheckMix(c,mg,sg,fc,sub,sub2,contact,sumtype,tp,fun1,fun2,...)
 	end
 end
 Fusion.CheckExact=nil
+Fusion.CheckMin=nil
+Fusion.CheckMax=nil
 Fusion.CheckAdditional=nil
 --if sg1 is subset of sg2 then not Fusion.CheckAdditional(tp,sg1,fc) -> not Fusion.CheckAdditional(tp,sg2,fc)
 function Fusion.CheckMixGoal(tp,sg,fc,sub,sub2,contact,sumtype,chkf,...)
 	local g=Group.CreateGroup()
-	return sg:IsExists(Fusion.CheckMix,1,nil,sg,g,fc,sub,sub2,contact,sumtype,tp,...) and (chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(tp,tp,sg,fc)>0)
+	return sg:IsExists(Fusion.CheckMix,1,nil,sg,g,fc,sub,sub2,contact,sumtype,tp,...) and
+		(chkf==PLAYER_NONE or (fc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg,fc) or Duel.GetMZoneCount(tp,sg,tp))>0)
 		and (not Fusion.CheckAdditional or Fusion.CheckAdditional(tp,sg,fc))
 end
 function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,...)
 	local res
-	if (Fusion.CheckExact and (Fusion.CheckExact~=#{...} or #mustg>Fusion.CheckExact)) or #mustg>#{...} then return false end
+	local totalcount=#{...}
+	local mustgcount=#mustg
+	if mustgcount>totalcount then return false end
+	if (Fusion.CheckExact and (Fusion.CheckExact~=totalcount or mustgcount>Fusion.CheckExact)) then return false end
+	if (Fusion.CheckMax and (Fusion.CheckMax<totalcount or mustgcount>Fusion.CheckMax)) then return false end
+	if (Fusion.CheckMin and Fusion.CheckMin>totalcount) then return false end
 	-- local rg=Group.CreateGroup()
 	local mg2=mg:Clone()
 	--c has the fusion limit
@@ -219,7 +221,7 @@ function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,...)
 			local sg2=mg2:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			-- rg:Merge(sg2)
 			mg2:Sub(sg2)
-			if #mustg>0 and not mg2:Includes(mustg) then
+			if mustgcount>0 and not mg2:Includes(mustg) then
 				return false
 			end
 		end
@@ -238,7 +240,7 @@ function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,...)
 	end
 	-- mg2:Sub(rg)
 	sg:AddCard(c)
-	if #sg<#{...} then
+	if #sg<totalcount then
 		res=mg2:IsExists(Fusion.SelectMix,1,sg,tp,mg2,sg,mustg-sg,fc,sub,sub2,contact,sumtype,chkf,...)
 	else
 		res=Fusion.CheckMixGoal(tp,sg,fc,sub,sub2,contact,sumtype,chkf,...)
@@ -292,12 +294,13 @@ function Fusion.ConditionMixRep(insf,sub,fun1,minc,maxc,...)
 	local funs={...}
 	return	function(e,g,gc,chkfnf)
 				local mustg=nil
-				if g==nil then
-					mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,nil,REASON_FUSION)
-				return insf and #mustg==0 end
-				local chkf=chkfnf&0xff
 				local c=e:GetHandler()
 				local tp=c:GetControler()
+				if g==nil then
+					if not insf then return false end
+					return #(Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,nil,REASON_FUSION))==0
+				end
+				local chkf=chkfnf&0xff
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
@@ -312,9 +315,9 @@ function Fusion.ConditionMixRep(insf,sub,fun1,minc,maxc,...)
 				if contact then mustg:Clear() end
 				local sub=not listedmats and (sub or notfusion) and not contact
 				local mg=g:Filter(Fusion.ConditionFilterMix,c,c,sub,sub,contact,sumtype,matcheck,tp,fun1,table.unpack(funs))
-				if not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c) then return false end
+				if not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c,sumtype) then return false end
 				if gc then
-					if gc:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c)
+					if gc:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c,sumtype)
 						or gc:IsExists(aux.NOT(Fusion.ConditionFilterMix),1,nil,c,sub,sub,contact,sumtype,matcheck,tp,fun1,table.unpack(funs))then return false end
 					mustg:Merge(gc)
 				end
@@ -344,7 +347,7 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 				local mg=eg:Filter(Fusion.ConditionFilterMix,c,c,sub,sub,contact,sumtype,matcheck,tp,fun1,table.unpack(funs))
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,eg,tp,c,mg,REASON_FUSION)
 				if contact then mustg:Clear() end
-				if not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c) then return false end
+				if not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c,sumtype) then return false end
 				if gc then
 					mustg:Merge(gc)
 				end
@@ -358,8 +361,8 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 				while #sg<maxc+#funs do
 					local cg=mg:Filter(Fusion.SelectMixRep,sg,tp,mg,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs))
 					if #cg==0 then break end
-					local finish=Fusion.CheckMixRepGoal(tp,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs)) and not Fusion.CheckExact
-					local cancel=(contact and #sg==0) and not Fusion.CheckExact
+					local finish=Fusion.CheckMixRepGoal(tp,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs)) and not Fusion.CheckExact and not (Fusion.CheckMin and #sg<Fusion.CheckMin)
+					local cancel=(contact and #sg==0)
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 					local tc=Group.SelectUnselect(cg,sg,p,finish,cancel)
 					if not tc then break end
@@ -387,7 +390,7 @@ end
 function Fusion.CheckMixRepFilter(c,sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)
 	if fun2(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) then
 		g:AddCard(c)
-		local sub=sub and fun2(c,fc,false,sub2,contact,sumtype,mg,sg,tp)
+		local sub=sub and fun2(c,fc,false,sub2,mg,sg,tp,contact,sumtype)
 		local res=Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,...)
 		g:RemoveCard(c)
 		return res
@@ -466,11 +469,21 @@ function Fusion.CheckSelectMixRepM(c,tp,...)
 end
 function Fusion.SelectMixRep(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
 	local mg2=mg:Clone()
+	local totalcount=#{...}
+	local mustgcount=#mustg
 	-- local rg=Group.CreateGroup()
 	if Fusion.CheckExact then
-		if Fusion.CheckExact<minc + #{...} or #mustg>Fusion.CheckExact then return false end
-		maxc=Fusion.CheckExact-#{...}
-		minc=Fusion.CheckExact-#{...}
+		if Fusion.CheckExact<(minc+totalcount) or mustgcount>Fusion.CheckExact then return false end
+		maxc=Fusion.CheckExact-totalcount
+		minc=Fusion.CheckExact-totalcount
+	end
+	if Fusion.CheckMax then
+		if Fusion.CheckMax<(minc+totalcount) or mustgcount>Fusion.CheckMax then return false end
+		maxc=math.min(maxc,Fusion.CheckMax-totalcount)
+	end
+	if Fusion.CheckMin then
+		if Fusion.CheckMin>(maxc+totalcount) then return false end
+		minc=math.max(minc,Fusion.CheckMin-totalcount)
 	end
 	--c has the fusion limit
 	if not contact and c:IsHasEffect(EFFECT_FUSION_MAT_RESTRICTION) then
@@ -483,7 +496,7 @@ function Fusion.SelectMixRep(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,f
 			local sg2=mg2:Filter(Auxiliary.HarmonizingMagFilter,nil,f,f:GetValue())
 			-- rg:Merge(sg2)
 			mg2:Sub(sg2)
-			if #mustg>0 and not mg2:Includes(mustg) then
+			if mustgcount>0 and not mg2:Includes(mustg) then
 				return false
 			end
 		end
@@ -588,9 +601,9 @@ function Fusion.ConditionMixRepUnfix(insf,sub,minc,maxc,...)
 				local mg=g:Filter(Fusion.ConditionFilterMixRepUnfix,c,c,sub,sub,contact,sumtype,tp,table.unpack(funs))
 				mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_FUSION)
 				if contact then mustg:Clear() end
-				if not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c) then return false end
+				if not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c,sumtype) then return false end
 				if gc then
-					if gc:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c) then return false end
+					if gc:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c,sumtype) then return false end
 					mustg:Merge(gc)
 				end
 				local sg=Group.CreateGroup()
@@ -659,11 +672,7 @@ function Fusion.OperationMixRepUnfix(insf,sub,minc,maxc,...)
 			end
 end
 function Fusion.ConditionFilterMixRepUnfix(c,fc,sub,sub,contact,sumtype,tp,...)
-	if contact then
-		if not c:IsCanBeFusionMaterial(fc,tp) then return false end
-	else
-		if not c:IsCanBeFusionMaterial(fc) then return false end
-	end
+	if not c:IsCanBeFusionMaterial(fc,sumtype) then return false end
 	for i,f in ipairs({...}) do
 		if f[1](c,fc,sub,sub2,mg,sg,tp) then return true end
 	end
@@ -823,7 +832,9 @@ function Fusion.SelectMixRepUnfix(c,tp,mg,sg,mustg,fc,sub,sub2,minc,maxc,chkf,..
 end
 
 
-function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc)
+
+function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard)
+	if c:IsStatus(STATUS_COPYING_EFFECT) then return end
 	local mt=c.__index
 	local t={}
 	if mt.contactfus then
@@ -858,6 +869,10 @@ function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc)
 			e2:SetValue(sumcon)
 		end
 		c:RegisterEffect(e2)
+	end
+	--lizard check
+	if cannotBeLizard~=false then
+		Auxiliary.addLizardCheck(c)
 	end
 end
 function Fusion.ContactCon(f,fcon)
@@ -979,4 +994,3 @@ function Fusion.AddProcMixN(c,sub,insf,...)
 	end
 	return Fusion.AddProcMix(c,sub,insf,table.unpack(fun))
 end
-Duel.LoadScript("proc_fusion2.lua")

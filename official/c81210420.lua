@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.GetTurnPlayer()==1-tp and Duel.IsBattlePhase()
 end
 function s.filter(c)
 	return c:GetSequence()<5 and not c:IsType(TYPE_TOKEN+TYPE_LINK)
@@ -47,7 +47,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			tc:ClearEffectRelation()
 		end
 	end
-	local tg=sg:GetFirst()
 	local fid=e:GetHandler():GetFieldID()
 	for tg in aux.Next(sg) do
 		local e1=Effect.CreateEffect(tg)

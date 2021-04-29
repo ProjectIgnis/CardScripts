@@ -1,5 +1,6 @@
+--ダイナドメイン
 --Dino Domain
---scripted by Naim
+--Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--back to hand
 	local e2=Effect.CreateEffect(c)
@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
+	e2:SetCountLimit(1)
 	e2:SetTarget(s.rthtg)
 	e2:SetOperation(s.rthop)
 	c:RegisterEffect(e2)
@@ -41,36 +42,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x11a}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.rthtg(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
-	if chk==0 then return true end
-	if s.rthtg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		e:SetCategory(CATEGORY_TOHAND)
-		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
-		e:SetOperation(s.rthop)
-		s.rthtg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetCategory(0)
-		e:SetProperty(0)
-		e:SetOperation(nil)
-	end
-end
 function s.rfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x11a) and c:IsAbleToHand()
 end
 function s.rthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.rfilter(chkc) end
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0
-		and Duel.IsExistingTarget(s.rfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.rfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,s.rfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.rthop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		local og=Duel.GetOperatedGroup()
 		local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_HAND)
@@ -99,6 +84,6 @@ end
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end
-function s.tgcond(e,tp)
-	return Duel.IsExistingMatchingCard(s.exmfilter,tp,LOCATION_MZONE,0,1,nil)
+function s.tgcond(e)
+	return Duel.IsExistingMatchingCard(s.exmfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end

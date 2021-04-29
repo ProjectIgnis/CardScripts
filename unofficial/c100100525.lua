@@ -1,4 +1,5 @@
 --Ｓｐ－シンクロパニック
+--Speed Spell - Synchro Panic
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetCondition(s.con)
+	e2:SetCondition(s.condition)
 	e2:SetTarget(s.tg)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
@@ -28,30 +29,25 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		tc=eg:GetNext()
 	end
 end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	return tc and tc:GetCounter(0x91)>6
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCounter(tp,1,0,0x91)>=3
 end
 function s.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetFlagEffect(id)~=0
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:GetFlagEffect(id)~=0
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ft=Duel.GetLocationCountFromEx(tp)
+	local ft=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_SYNCHRO)
 	if ft<=0 then return end
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	if ect and ft>ect then ft=ect end
+	ft=math.min(ft,aux.CheckSummonGate(tp) or ft)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,ft,ft,nil,e,tp)
 	if #g>0 then
-		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(c)

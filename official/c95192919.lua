@@ -1,9 +1,9 @@
 --烈風の覇者シムルグ
---Simorgh, Lord of the Storms
+--Simorgh, Lord of the Storm
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Cannot target
+	--Cannot be targeted by opponent's effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.ctcon)
 	e1:SetValue(s.ctval)
 	c:RegisterEffect(e1)
-	--To deck
+	--Shuffle 1 card into the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TODECK)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
-	--To hand
+	--Add itself to the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -43,7 +43,7 @@ function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.ctval(e,re,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp~=e:GetHandlerPlayer()
+	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp==1-e:GetHandlerPlayer()
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
@@ -85,5 +85,5 @@ function s.thcfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsRace(RACE_WINGEDBEAST) and c:IsReason(REASON_BATTLE)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.thcfilter,1,e:GetHandler(),tp)
+	return eg and eg:IsExists(s.thcfilter,1,e:GetHandler(),tp)
 end

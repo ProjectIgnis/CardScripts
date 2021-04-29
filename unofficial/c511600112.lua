@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--link summon
 	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x579),2,2)
 	c:EnableReviveLimit()
-	--
+	--Move to its own linked zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(4013,12))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--
+	--Move to linked zone of other card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(4013,13))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -28,7 +28,7 @@ end
 s.listed_series={0x579}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=e:GetHandler():GetLinkedZone()&0x1f
-	if chk==0 then return Duel.GetLocationCount(p,LOCATION_MZONE,p,LOCATION_REASON_CONTROL,zone)>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,zone)>0 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -50,13 +50,13 @@ function s.zonefilter(c)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=s.zonefilter(e:GetHandler())
-	if chk==0 then return Duel.GetLocationCount(p,LOCATION_MZONE,p,LOCATION_REASON_CONTROL,zone)>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,zone)>0 end
 end
 function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local zone=s.zonefilter(c)
-	if Duel.GetLocationCount(p,LOCATION_MZONE,p,LOCATION_REASON_CONTROL,zone)>0 then
+	if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,zone)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 		local nseq=math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~zone),2)
 		Duel.MoveSequence(c,nseq)

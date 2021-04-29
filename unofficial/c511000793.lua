@@ -1,3 +1,4 @@
+--煉獄の零門
 --Zero Gate of the Void
 Duel.LoadScript("c419.lua")
 local s,id=GetID()

@@ -1,3 +1,4 @@
+--獣に隠された真言
 --Beast-Concealed Mantra
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={511000380}
+s.listed_series={0x51e}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSetCard,1,nil,0x51e)
 end

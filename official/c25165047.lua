@@ -1,4 +1,5 @@
 --ライフ・ストリーム・ドラゴン
+--Life Stream Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -39,6 +40,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.valcheck)
 	c:RegisterEffect(e5)
 end
+s.material={2403771}
 s.listed_names={2403771}
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)

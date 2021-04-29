@@ -1,25 +1,25 @@
 --トリガー・ヴルム (Anime)
 --Triggering Wurm (Anime)
---scripted by Larry126
---cleaned up by MLD
-local s,id=GetID()
+--scripted by Larry126, cleaned up by MLD
+local s,id,alias=GetID()
 function s.initial_effect(c)
-	--spsummon
+	alias=c:GetOriginalCodeRule()
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(95504778,0))
+	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCode(EVENT_BE_MATERIAL)
-	e1:SetCountLimit(1,95504778,EFFECT_COUNT_CODE_DUEL)
+	e1:SetCountLimit(1,alias,EFFECT_COUNT_CODE_DUEL)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--draw
+	--Draw
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(95504778,1))
+	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_PLAYER_TARGET)

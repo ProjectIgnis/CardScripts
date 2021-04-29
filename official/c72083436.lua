@@ -1,9 +1,10 @@
 --天馬の翼
 --Pegasus Wing
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Your "Valkyrie" monsters can attack directly, halve their battle damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -29,37 +30,26 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then g:ForEach(s.op,e:GetHandler()) end
 end
 function s.op(tc,c)
-	--direct attack
+	--Can attack directly
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3205)
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_DIRECT_ATTACK)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	tc:RegisterEffect(e1)
+	--Halve battle damage inflicted
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_DIRECT_ATTACK)
+	e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e2:SetCondition(s.rdcon)
+	e2:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	tc:RegisterEffect(e2)
-	--damage reduce
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e3:SetLabel(c:GetCode())
-	e3:SetCondition(s.rdcon)
-	e3:SetOperation(s.rdop)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	tc:RegisterEffect(e3)
+	tc:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD|RESET_DISABLE)&~(RESET_LEAVE)|RESET_PHASE|PHASE_END,0,1)
 end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetAttackTarget()==nil
-		and e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
-		and Duel.IsExistingMatchingCard(aux.NOT(Card.IsHasEffect),tp,0,LOCATION_MZONE,1,nil,EFFECT_IGNORE_BATTLE_TARGET)
-end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local effs={c:GetCardEffect(EFFECT_DIRECT_ATTACK)}
-	local eg=Group.CreateGroup()
-	for _,eff in ipairs(effs) do
-		eg:AddCard(eff:GetOwner())
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	local ec = #eg==1 and eg:GetFirst() or eg:Select(tp,1,1,nil):GetFirst()
-	if e:GetLabel()==ec:GetOriginalCode() then
-		Duel.HalfBattleDamage(ep)
-	end
+function s.rdcon(e)
+	local c,tp=e:GetHandler(),e:GetHandlerPlayer()
+	return Duel.GetAttackTarget()==nil and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and c:GetFlagEffect(id)>0
 end

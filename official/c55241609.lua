@@ -1,5 +1,5 @@
 --魔境のパラディオン
---Palladion of the Fiendish Illusion
+--Crusadia Reclusia
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetTargetRange(POS_FACEUP_DEFENSE,0)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spcon)
 	e1:SetValue(s.spval)
 	c:RegisterEffect(e1)
@@ -43,10 +43,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x116)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	local lg1=Duel.GetLinkedGroup(tp,1,1)
-	local lg2=Duel.GetLinkedGroup(1-tp,1,1)
-	lg1:Merge(lg2)
-	return lg1 and lg1:IsContains(e:GetHandler())
+	return Duel.GetLinkedGroup(tp,LOCATION_MZONE,0):IsContains(e:GetHandler())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -65,4 +62,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-

@@ -1,4 +1,5 @@
 --カブレラ・ストーン
+--Cabrera Stone
 local s,id=GetID()
 function s.initial_effect(c)
 	--self destroy
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(76321376,0))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)

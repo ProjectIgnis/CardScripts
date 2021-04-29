@@ -33,6 +33,7 @@ function s.condition(e,tp,eg,ev,ep,re,r,rp)
 	return d and d:IsControler(tp)
 end
 function s.operation(e,tp,eg,ev,ep,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
@@ -52,11 +53,11 @@ function s.con1(e,tp,eg,ev,ep,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)==0 and e:GetHandler():GetCardTarget():GetCount()>0
 end
 function s.op1(e,tp,eg,ev,ep,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	local ecg=c:GetCardTarget()
-	local ecc=ecg:GetFirst()
-	while ecc do
+	for ecc in ecg:Iter() do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
@@ -78,6 +79,7 @@ function s.op1(e,tp,eg,ev,ep,re,r,rp)
 		e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 		e3:SetRange(LOCATION_MZONE)
 		e3:SetCondition(s.kek)
+		e3:SetValue(1)
 		ecc:RegisterEffect(e3)
 		local e4=e1:Clone()
 		e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -86,7 +88,6 @@ function s.op1(e,tp,eg,ev,ep,re,r,rp)
 		e4:SetCondition(s.kek)
 		e4:SetValue(1)
 		ecc:RegisterEffect(e4)
-		ecc=ecg:GetNext()
 	end
 end
 function s.kek(e)
@@ -96,6 +97,7 @@ function s.con2(e,tp,eg,ev,ep,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function s.op2(e,tp,eg,ev,ep,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local ct=c:GetTurnCounter()
 	ct=ct+1

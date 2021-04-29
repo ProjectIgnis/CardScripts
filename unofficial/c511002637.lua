@@ -1,3 +1,4 @@
+--王者の鼓動
 --Champion's Pulse
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
@@ -21,5 +22,5 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(1-tp,1000,REASON_EFFECT)
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end

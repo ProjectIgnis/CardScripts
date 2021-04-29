@@ -1,4 +1,5 @@
---Spacetime Trancendency
+--時空超越
+--Spacetime Transcendence
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,18 +30,18 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		return aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon,0) end
-	local rg=aux.SelectUnselectGroup(mg,e,tp,nil,nil,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon)
+		return aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon,0)
+	end
+	local rg=aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon)
 	Duel.SetTargetParam(#rg)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or lv<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,lv)
-	local tc=g:GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,lv):GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -1,10 +1,11 @@
 --サイバー・ドラゴン・ノヴァ
+--Cyber Dragon Nova
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_MACHINE),5,2)
 	c:EnableReviveLimit()
-	--spsummon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--atkup
+	--Increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -30,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.atkcost)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-	--spsummon2
+	--Special Summon when sent to the graveyard
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -60,7 +61,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
@@ -88,7 +89,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and (r&REASON_EFFECT)~=0 and e:GetHandler():IsPreviousControler(tp)
+	return rp==1-tp and (r&REASON_EFFECT)~=0 and e:GetHandler():IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_FUSION) and c:IsRace(RACE_MACHINE) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

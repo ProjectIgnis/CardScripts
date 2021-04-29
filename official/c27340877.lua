@@ -1,4 +1,5 @@
 --DNA定期健診
+--DNA Checkup
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,7 +21,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWN)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_ATTRIBUTE)
-	local rc=Duel.AnnounceAttribute(1-tp,2,0xffffff)
+	local rc=Duel.AnnounceAttribute(1-tp,2,ATTRIBUTE_ALL)
 	e:SetLabel(rc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

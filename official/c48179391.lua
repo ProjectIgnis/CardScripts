@@ -1,4 +1,5 @@
 --オレイカルコスの結界
+--The Seal of Orichalcos
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,6 +11,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.acttg)
 	e1:SetOperation(s.actop)
 	c:RegisterEffect(e1)
+	--if activation negated, reset state
+	local e1b=Effect.CreateEffect(c)
+	e1b:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1b:SetCode(EVENT_CHAIN_NEGATED)
+	e1b:SetCondition(s.negdcon)
+	e1b:SetOperation(s.negdop)
+	e1b:SetLabelObject(e1)
+	Duel.RegisterEffect(e1b,0)
 	--spsummon limit
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -45,6 +54,8 @@ function s.initial_effect(c)
 	e5:SetCondition(s.atkcon)
 	e5:SetValue(s.atlimit)
 	c:RegisterEffect(e5)
+	--clock lizard
+	aux.addContinuousLizardCheck(c,LOCATION_FZONE)
 end
 function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
@@ -64,6 +75,12 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end
+end
+function s.negdcon(e,tp,eg,ep,ev,re,r,rp)
+	return re==e:GetLabelObject() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+end
+function s.negdop(e)
+	Duel.ResetFlagEffect(e:GetHandlerPlayer(),id)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA)

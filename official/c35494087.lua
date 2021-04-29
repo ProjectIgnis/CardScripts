@@ -22,11 +22,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--battle damage
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e3:SetCondition(s.damcon)
-	e3:SetOperation(s.damop)
-	e3:SetCountLimit(1)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
+	e3:SetValue(s.refval)
 	c:RegisterEffect(e3)
 	--self destroy
 	local e4=Effect.CreateEffect(c)
@@ -55,17 +53,19 @@ end
 function s.indval(e,c)
 	return c:IsSummonType(SUMMON_TYPE_NORMAL)
 end
+function s.refval(e,c)
+	if e:GetHandler():GetFlagEffect(id)~=0 then
+		Duel.RegisterFlagEffect(e:GetHandlerPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():ResetFlagEffect(id)
+		return true
+	elseif Duel.GetFlagEffect(e:GetHandlerPlayer(),id)==0 then
+		e:GetHandler():RegisterFlagEffect(id,0,0,1)
+		return true
+	else return false end
+end
 function s.sdfilter(c)
 	return c:IsFaceup() and not c:IsSetCard(0x2016)
 end
 function s.sdcon(e)
 	return Duel.IsExistingMatchingCard(s.sdfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
-end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetBattleDamage(tp)>0 and Duel.GetFlagEffect(tp,id)==0
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(1-tp)+Duel.GetBattleDamage(tp),false)
-	Duel.ChangeBattleDamage(tp,0)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end

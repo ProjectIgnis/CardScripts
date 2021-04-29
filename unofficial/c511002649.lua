@@ -1,4 +1,5 @@
---Enshrined Force of Duality
+--陰陽合祀
+--Enshrined Duality
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,24 +13,23 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={1686814}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsCode,1,nil,1686814) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.spfilter(c,e,tp)
-	return c:GetLevel()==10 and c:IsRace(RACE_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetLevel()==10 and c:IsRace(RACE_DRAGON)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>1
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,2,nil,e,tp) and (not ect or ect>=2) end
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,2,nil,e,tp) and aux.CheckSummonGate(tp,2) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_EXTRA)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=1 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	if ect~=nil and ect<2 then return end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
+	if not aux.CheckSummonGate(tp,2) then return end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if #g<2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

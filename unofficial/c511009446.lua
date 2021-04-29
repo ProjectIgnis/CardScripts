@@ -1,3 +1,4 @@
+--Ｄ－ソウルバースト
 --D - Soul Burst
 --fixed by MLD
 local s,id=GetID()
@@ -34,8 +35,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		if not tc:IsImmuneToEffect(e1) and tc:GetAttack()==atk/2 then
-			Duel.Damage(1-tp,atk,REASON_EFFECT,true)
-			Duel.Damage(tp,atk,REASON_EFFECT,true)
+			Duel.Damage(1-tp,atk/2,REASON_EFFECT,true)
+			Duel.Damage(tp,atk/2,REASON_EFFECT,true)
 			Duel.RDComplete()
 		end
 	end

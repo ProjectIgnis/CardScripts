@@ -3,13 +3,13 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--cannot special summon
+	--Cannot special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon procedure
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--negate
+	--Destroy 1 monster and negate Spell/Trap activation
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.negtg)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
-	--tohand
+	--Addd 1 "Evolution Pill" card to the hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -44,10 +44,11 @@ function s.initial_effect(c)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_series={0x10e}
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) and c:IsAbleToDeckAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -70,7 +71,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
-	Duel.SendtoDeck(g,nil,2,REASON_COST)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
 	g:DeleteGroup()
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
@@ -78,11 +79,20 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.desfilter(c)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DINOSAUR)
+	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DINOSAUR) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
+end
+function s.pubfilter(c)
+	return c:IsPublic() and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DINOSAUR)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND+LOCATION_MZONE)
+	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+	if #hg==0 or (hg:FilterCount(Card.IsPublic,nil)==#hg and hg:IsExists(s.pubfilter,1,nil)) then
+		local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,tp,LOCATION_HAND+LOCATION_MZONE)
+	else
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND+LOCATION_MZONE)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)

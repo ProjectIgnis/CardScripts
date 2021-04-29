@@ -20,7 +20,9 @@ end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
-	if g:IsExists(Card.IsBattleguard,1,nil,0x2310) then flag=1 end
+	if g and g:IsExists(Card.IsBattleguard,1,nil,0x2310)
+		then flag=1
+	end
 	e:SetLabel(flag)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)

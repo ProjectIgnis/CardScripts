@@ -1,4 +1,5 @@
 --デスカイザー・ドラゴン
+--Doomkaiser Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -22,6 +23,8 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
+s.material={33420078}
+s.listed_names={33420078}
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_ZOMBIE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

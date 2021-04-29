@@ -41,7 +41,7 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	if tc:GetCounter(0x91)<=1 then return end
-	if tc:GetCounter(0x91)>1 then 
-		tc:RemoveCounter(tp,0x91,tc:GetCounter(0x91)-1,REASON_EFFECT)	
+	if tc:GetCounter(0x91)>1 then
+		tc:RemoveCounter(tp,0x91,tc:GetCounter(0x91)-1,REASON_EFFECT)
 	end
 end

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCondition(s.spcon)
-	e1:SetCost(s.spcost)
+	e1:SetCost(aux.WitchcrafterDiscardAndReleaseCost)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -34,12 +34,7 @@ end
 s.listed_series={0x128}
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() and aux.WitchcrafterDiscardCost(aux.FilterBoolFunction(Card.IsType,TYPE_SPELL))(e,tp,eg,ep,ev,re,r,rp,0) end
-	aux.WitchcrafterDiscardCost(aux.FilterBoolFunction(Card.IsType,TYPE_SPELL))(e,tp,eg,ep,ev,re,r,rp,1)
-	Duel.Release(e:GetHandler(),REASON_COST)
+	return Duel.IsMainPhase()
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x128) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

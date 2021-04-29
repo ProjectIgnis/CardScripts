@@ -28,8 +28,8 @@ end
 function s.spfilter(c,e,tp,mc)
 	if Duel.GetLocationCountFromEx(tp,tp,mc,c)<=0 then return false end
 	local mustg=aux.GetMustBeMaterialGroup(tp,nil,tp,c,nil,REASON_FUSION)
-	return aux.IsMaterialListCode(c,mc:GetCode()) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
-	and (#mustg==0 or (#mustg==1 and mustg:IsContains(mc)))
+	return c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,mc:GetCode()) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
+		and (#mustg==0 or (#mustg==1 and mustg:IsContains(mc)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc==0 then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc,e,tp) end

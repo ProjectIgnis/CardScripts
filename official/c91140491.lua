@@ -48,8 +48,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-function s.lcheck(g,lc)
-	return g:GetClassCount(Card.GetCode)==#g
+function s.lcheck(g,lc,sumtype,tp)
+	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

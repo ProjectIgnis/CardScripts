@@ -1,8 +1,9 @@
 --オルターガイスト・クンティエリ
 --Altergeist Kunquery
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--negate attack
+	--Negate attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -27,7 +28,7 @@ end
 s.listed_series={0x103}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x103),tp,LOCATION_ONFIELD,0,1,nil)
+	return at:GetControler()==1-tp and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x103),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -52,7 +53,7 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 		c:SetCardTarget(tc)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -60,6 +61,14 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.rcon)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
+		if tc:IsType(TYPE_TRAPMONSTER) then
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e2:SetCode(EFFECT_DISABLE_TRAPMONSTER)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e2)
+		end
 	end
 end
 function s.rcon(e)

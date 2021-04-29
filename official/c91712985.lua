@@ -76,7 +76,7 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,1,nil)
-	if #g>0 and Duel.SendtoDeck(g,nil,2,REASON_EFFECT)~=0 then
+	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 then
 		Duel.Damage(1-tp,500,REASON_EFFECT)
 	end
 end

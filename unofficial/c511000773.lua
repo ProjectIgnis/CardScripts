@@ -46,6 +46,7 @@ function s.filter2(c,e,tp)
 		and c:IsRelateToEffect(e) and c:IsControlerCanBeChanged()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local g=eg:Filter(s.filter2,nil,e,tp)
 	local tc=g:GetFirst()

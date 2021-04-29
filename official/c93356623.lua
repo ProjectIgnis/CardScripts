@@ -1,5 +1,5 @@
 --魔弾－クロス・ドミネーター
---Magibullet - Cross-Dominator
+--Magical Musket - Cross-Domination
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+0x1c0)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -33,7 +33,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e0=Effect.CreateEffect(c)
 		e0:SetType(EFFECT_TYPE_SINGLE)
 		e0:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -55,12 +55,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetValue(RESET_TURN_SET)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3)
-		if tc:IsType(TYPE_TRAPMONSTER) then
-			local e4=Effect.CreateEffect(c)
-			e4:SetType(EFFECT_TYPE_SINGLE)
-			e4:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-			e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e4)
-		end
 	end
 end

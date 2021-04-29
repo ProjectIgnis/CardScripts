@@ -1,9 +1,11 @@
 --覇王門零
 --Supreme King Gate Zero
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Enable pendulum summon
 	Pendulum.AddProcedure(c)
-	--avoid damage
+	--Take no battle or effect damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
@@ -14,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.ndcon)
 	e1:SetValue(s.damval)
 	c:RegisterEffect(e1)
-	--search
+	--Add 1 "Polymerization" spell or "fusion" spell from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -25,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon 1 dragon fusion or synchro monster from extra deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
@@ -36,7 +38,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	--pendulum
+	--Place itself into pendulum zone
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,2))
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -58,6 +60,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x46}
 s.listed_names={13331639,22211622}
+
 function s.ndcfilter(c)
 	return c:IsFaceup() and c:IsCode(13331639)
 end
@@ -132,6 +135,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		if #g==0 then return end
 		local sc=g:GetFirst()
 		if Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
+			--Negate its effects
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
@@ -142,6 +146,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			sc:RegisterEffect(e2,true)
+			--ATK/DEF becomes 0
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -151,11 +156,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e4=e3:Clone()
 			e4:SetCode(EFFECT_SET_DEFENSE_FINAL)
 			sc:RegisterEffect(e4,true)
+			--Cannot be used as synchro material
 			local e5=e3:Clone()
+			e5:SetDescription(3310)
+			e5:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e5:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 			e5:SetValue(1)
 			sc:RegisterEffect(e5,true)
+			--Cannot be used as Xyz material
 			local e6=e5:Clone()
+			e6:SetDescription(3311)
 			e6:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
 			sc:RegisterEffect(e6,true)
 		end

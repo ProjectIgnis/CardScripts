@@ -1,4 +1,5 @@
 --紫光の宣告者
+--Herald of Purple Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate
@@ -14,9 +15,10 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return ep==1-tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsChainNegatable(ev)
 end
 function s.costfilter(c)

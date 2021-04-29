@@ -48,12 +48,10 @@ function s.filter1(c,e,tp)
 		return false
 	end
 	local no=m.xyz_number
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
 	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and no and no>=101 and no<=107 and c:IsSetCard(0x48) and not c:IsSetCard(0x1048)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and (not ect or ect>1 or c:IsLocation(LOCATION_GRAVE))
+		and (aux.CheckSummonGate(tp,2) or c:IsLocation(LOCATION_GRAVE))
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,no,pg)
 end
 function s.filter2(c,e,tp,mc,no,pg)

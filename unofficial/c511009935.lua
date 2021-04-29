@@ -4,7 +4,7 @@ function s.initial_effect(c)
 	--negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_NEGATE)
+	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_HAND)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsChainNegatable(ev) and re:IsActiveType(TYPE_MONSTER) and ep~=tp
+	return Duel.IsChainDisablable(ev) and re:IsActiveType(TYPE_MONSTER) and ep~=tp
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
@@ -24,8 +24,8 @@ function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateActivation(ev)
+	Duel.NegateEffect(ev)
 end

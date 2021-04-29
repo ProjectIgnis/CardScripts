@@ -1,3 +1,4 @@
+--上級魔術士の呪文詠唱
 --Master Magician's Incantation
 --original script by Shad3
 --Works perfectly for "EVENT_FREE_CHAIN" and "EVENT_CHAINING" spells only
@@ -5,15 +6,6 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Flag to avoid infinite loop
 	s['no_react_ev']=true
-	--Global check
-	if not s['gl_chk'] then
-		s['gl_chk']=true
-		local ge1=Effect.GlobalEffect()
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_CHAINING)
-		ge1:SetOperation(s.flag_op)
-		Duel.RegisterEffect(ge1,0)
-	end
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -21,6 +13,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.GlobalEffect()
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_CHAINING)
+		ge1:SetOperation(s.flag_op)
+		Duel.RegisterEffect(ge1,0)
+	end)
 end
 function s.flag_op(e,tp,eg,ep,ev,re,r,rp)
 	local ch=Duel.GetCurrentChain()
@@ -88,7 +87,11 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ClearTargetCard()
 	e:SetProperty(te:GetProperty())
 	if tc:IsLocation(LOCATION_HAND) then
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		local loc=LOCATION_SZONE
+		if tc:IsType(TYPE_FIELD) then
+			loc=LOCATION_FZONE
+		end
+		Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 	else
 		Duel.ChangePosition(tc,POS_FACEUP)
 	end
@@ -102,8 +105,8 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if g then
 		local tgc=g:GetFirst()
 		while tgc do
-		  tgc:CreateEffectRelation(te)
-		  tgc=g:GetNext()
+			tgc:CreateEffectRelation(te)
+			tgc=g:GetNext()
 		end
 	end
 	tc:SetStatus(STATUS_ACTIVATED,true)
@@ -112,8 +115,8 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if g then
 		local tgc=g:GetFirst()
 		while tgc do
-		  tgc:ReleaseEffectRelation(te)
-		  tgc=g:GetNext()
+			tgc:ReleaseEffectRelation(te)
+			tgc=g:GetNext()
 		end
 	end
 end

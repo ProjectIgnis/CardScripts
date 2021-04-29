@@ -25,6 +25,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	c=Duel.GetAttackTarget()
 	if c~=nil and c:IsRelateToBattle() then g:AddCard(c) end
 	if #g>0 then
-		Duel.Destroy(g,nil,REASON_EFFECT)
+		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

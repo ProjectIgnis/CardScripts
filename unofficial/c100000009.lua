@@ -1,14 +1,15 @@
 --時械神 ラツィオン
+--Lazion, the Timelord (VG)
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot special summon
+	--Cannot be special summoned from the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetRange(LOCATION_DECK)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--summon
+	--Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_SUMMON_PROC)
 	e2:SetCondition(s.ntcon)
 	c:RegisterEffect(e2)
-	--indes
+	--Cannot be destroyed
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -31,7 +32,7 @@ function s.initial_effect(c)
 	e5:SetCondition(s.dacon)
 	e5:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	c:RegisterEffect(e5)
-	--damage
+	--Inflict Damage
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e6:SetRange(LOCATION_MZONE)
@@ -40,7 +41,7 @@ function s.initial_effect(c)
 	e6:SetTarget(s.drtg)
 	e6:SetOperation(s.drop)
 	c:RegisterEffect(e6)
-	--to deck
+	--Send cards to the Deck
 	local e7=Effect.CreateEffect(c)
 	e7:SetCategory(CATEGORY_TODECK)
 	e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -52,7 +53,7 @@ function s.initial_effect(c)
 	e7:SetTarget(s.tg)
 	e7:SetOperation(s.op)
 	c:RegisterEffect(e7)
-	--to deck
+	--Send itself to the Deck
 	local e8=Effect.CreateEffect(c)
 	e8:SetDescription(aux.Stringid(id,1))
 	e8:SetCategory(CATEGORY_TODECK)

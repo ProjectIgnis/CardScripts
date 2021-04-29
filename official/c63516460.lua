@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()>1 and Duel.CheckChainUniqueness()
+	return Duel.GetCurrentChain(true)>1 and Duel.CheckChainUniqueness()
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

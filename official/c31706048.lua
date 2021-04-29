@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			else Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
 			end
 		else
-			Duel.SendtoDeck(g,nil,2,REASON_EFFECT+REASON_REVEAL)
+			Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT+REASON_REVEAL)
 			Duel.ShuffleDeck(tp)
 		end
 	end
@@ -56,8 +56,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.splimit(e,c)
 	return not c:IsLinkMonster() and c:IsLocation(LOCATION_EXTRA)
 end
-
+function s.lizfilter(e,c)
+	return not c:IsOriginalType(TYPE_LINK)
+end

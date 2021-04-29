@@ -1,4 +1,5 @@
---人造人間－サイコ・ショッカー
+--人造人間－サイコ・ショッカー (Anime)
+--Jinzo (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_DISABLE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
-	e4:SetTarget(s.distg)
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TRAP))
 	c:RegisterEffect(e4)
 	--disable effect
 	local e5=Effect.CreateEffect(c)
@@ -40,9 +41,10 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e6:SetTarget(s.distg)
+	e6:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TRAP))
 	c:RegisterEffect(e6)
 	--self destroy
+--[[
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_FIELD)
 	e7:SetCode(EFFECT_SELF_DESTROY)
@@ -51,17 +53,15 @@ function s.initial_effect(c)
 	e7:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	e7:SetTarget(s.distg)
 	c:RegisterEffect(e7)
-end
-function s.filter(c)
-	return c:IsType(TYPE_TRAP) and c:IsDestructable()
+	]]
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,TYPE_TRAP)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0,nil)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,TYPE_TRAP)
 	local sg=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_SZONE,LOCATION_SZONE,nil)
 	if #sg>0 then
 		Duel.ConfirmCards(1-tp,sg)
@@ -69,15 +69,12 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Destroy(g,REASON_EFFECT)
 end
-function s.distg(e,c)
-	return c:IsType(TYPE_TRAP)
-end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if re:IsActiveType(TYPE_TRAP) and rc:IsOnField() then
 		Duel.NegateEffect(ev)
 		if rc:IsRelateToEffect(re) then
-			Duel.Destroy(eg,REASON_EFFECT)
+			Duel.Destroy(rc,REASON_EFFECT)
 		end
 	end
 end

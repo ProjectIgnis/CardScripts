@@ -1,6 +1,6 @@
 --コマンドローン・ダブルスナイパー
 --Commandrone Double Sniper
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x581)

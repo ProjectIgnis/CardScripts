@@ -1,4 +1,5 @@
 --ホープ剣スラッシュ
+--Rising Sun Slash
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x31)
@@ -47,9 +48,5 @@ function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 		and ep==e:GetOwnerPlayer() and e:GetHandler():GetEquipTarget()==re:GetHandler() and re:GetHandler():GetOverlayCount()>=ev-1
 end
 function s.rop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=(ev&0xffff)
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-	if ct>1 then
-		re:GetHandler():RemoveOverlayCard(tp,ct-1,ct-1,REASON_COST)
-	end
+	return Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end

@@ -51,7 +51,7 @@ function s.initial_effect(c)
 end
 s.material_setcode={0x119}
 function s.ffilter(c,fc,sumtype,tp)
-	return c:IsType(TYPE_LINK,fc,sumtype,tp) and c:IsSetCard(0x119,fc,sumtype,tp)
+	return c:IsType(TYPE_LINK,fc,sumtype,tp) or c:IsSetCard(0x119,fc,sumtype,tp)
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)

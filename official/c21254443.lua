@@ -1,7 +1,8 @@
 --星遺物の導き
+--World Legacy Landmark
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Special summon 2 monsters from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -17,7 +18,7 @@ s.listed_series={0xfe}
 function s.cfilter(c,ft)
 	return c:IsSetCard(0xfe) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
-		and (ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
+		and (ft>1 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and ft>0))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -28,7 +29,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
@@ -58,7 +59,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+		--Cannot attack this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3206)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

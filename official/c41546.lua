@@ -2,9 +2,9 @@
 --D/D Savant Thomas
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum summon
 	Pendulum.AddProcedure(c)
-	--tohand
+	--Add to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--destroy
+	--Special Summon from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
@@ -62,7 +62,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
@@ -81,18 +81,13 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	Duel.SpecialSummonComplete()
 	end
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e2:SetCondition(s.dcon)
-	e2:SetOperation(s.dop)
-	e2:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e2,tp)
+	local e3=Effect.CreateEffect(e:GetHandler())
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetTargetRange(0,1)
+	e3:SetValue(HALF_DAMAGE)
+	e3:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e3,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
-end
-function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
 end

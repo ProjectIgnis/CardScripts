@@ -1,15 +1,17 @@
 --伝説のフィッシャーマン三世
 --The Legendary Fisherman III
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--cannot special summon
+	--Must be special summoned by its own method
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon procedure (from hand)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -19,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--remove
+	--Banish all of opponent's monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -27,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.rmtg)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
-	--indes
+	--Cannot be destroyed by battle or card effect
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -38,7 +40,7 @@ function s.initial_effect(c)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e5)
-	--immune
+	--Unaffected by spell/trap effects
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
 	e6:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -46,7 +48,7 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_IMMUNE_EFFECT)
 	e6:SetValue(s.efilter)
 	c:RegisterEffect(e6)
-	--double damage
+	--Return all of opponent's banished cards to GY
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_IGNITION)
 	e7:SetRange(LOCATION_MZONE)
@@ -56,6 +58,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 s.listed_names={3643300}
+
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,3643300)
@@ -84,10 +87,12 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,nil)
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
+		--Cannot attack this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3206)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e:GetHandler():RegisterEffect(e1)
 	end
@@ -112,11 +117,21 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e2:SetTargetRange(0,1)
+		e2:SetValue(DOUBLE_DAMAGE)
+		e2:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL+PHASE_END)
+		Duel.RegisterEffect(e2,tp)
 	end
 end
 function s.damval(e,re,val,r,rp,rc)
 	local tp=e:GetHandlerPlayer()
-	if Duel.GetFlagEffect(tp,id)==0 or r&REASON_BATTLE+REASON_EFFECT==0 then return val end
+	if Duel.GetFlagEffect(tp,id)==0 or r&REASON_EFFECT==0 then
+		return val
+	end
 	Duel.ResetFlagEffect(tp,id)
 	return val*2
 end

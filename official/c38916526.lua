@@ -1,8 +1,8 @@
 --空牙団の英雄 ラファール
---Lafarl, Hero of the Skyfang Brigade
+--Rafale, Champion Fur Hire
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--Excavate and add to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate the activation of a monster effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
@@ -47,14 +47,17 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(tp,ct)
 	local g=Duel.GetDecktopGroup(tp,ct)
 	if #g>0 then
-		local tg=g:Filter(Card.IsAbleToHand,nil)
-		if #tg>0 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local sg=tg:Select(tp,1,1,nil)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local sg=g:Select(tp,1,1,nil)
+		Duel.DisableShuffleCheck()
+		if sg:GetFirst():IsAbleToHand() then
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
+			Duel.ShuffleHand(tp)
+		else
+			Duel.SendtoGrave(sg,REASON_RULE)
 		end
-		Duel.ShuffleDeck(tp)
+		if ct>1 then Duel.ShuffleDeck(tp) end
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
@@ -77,4 +80,3 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(eg,REASON_EFFECT)
 	end
 end
-

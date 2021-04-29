@@ -1,9 +1,10 @@
 --孤高除獣
---The Proud Beast
+--Aloof Lupine
 --Scripted by ahtelel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--remove
+	--Banish 1 monster from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
-	--to hand
+	--Add 1 of your banished monsters to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -54,7 +55,6 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (c:IsReason(REASON_BATTLE) or (rp~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)))
-		and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

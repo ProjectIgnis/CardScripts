@@ -11,14 +11,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.condition)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 		e1:SetOperation(s.op)
 		Duel.RegisterEffect(e1,0)
-	end
+	end)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetBattleDamage(0)>0 or Duel.GetBattleDamage(1)>0 then
@@ -31,13 +30,11 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ge1=Effect.CreateEffect(e:GetHandler())
-	ge1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	ge1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	ge1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
-	ge1:SetOperation(s.dop)
+	ge1:SetType(EFFECT_TYPE_FIELD)
+	ge1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	ge1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	ge1:SetTargetRange(1,1)
+	ge1:SetValue(DOUBLE_DAMAGE)
+	ge1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DoubleBattleDamage(tp)
-	Duel.DoubleBattleDamage(1-tp)
 end

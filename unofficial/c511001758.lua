@@ -1,3 +1,4 @@
+--アカシックレコード
 --Akashic Record
 local s,id=GetID()
 function s.initial_effect(c)
@@ -43,13 +44,11 @@ function s.filter(c)
 	return false
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	while tc do
+	for tc in aux.Next(eg) do
 		if not s.filter(tc) then
 			s[0]=s[0]+1
 			s[s[0]]=tc:GetCode()
 		end
-		tc=eg:GetNext()
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -62,6 +61,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 	local dg=Duel.GetOperatedGroup()
+	Duel.ConfirmCards(1-p,dg)
 	local rg=dg:Filter(s.filter,nil)
 	if #rg>0 then
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)

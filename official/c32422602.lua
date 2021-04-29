@@ -1,9 +1,9 @@
 --戦華の智－諸葛孔
---Senka Strategist – Zhuge Kong
+--Ancient Warriors - Ingenious Zhuge Kong
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,id+2)
 	e3:SetCondition(s.negcon2)
 	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_names={40428851}
 s.listed_series={0x137}
@@ -68,10 +69,11 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateActivation(ev)
+	if Duel.NegateActivation(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SendtoGrave(eg,REASON_EFFECT)
+	end
 end
 function s.negcon2(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,40428851),tp,LOCATION_ONFIELD,0,1,nil)
 end
-

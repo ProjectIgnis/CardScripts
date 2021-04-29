@@ -1,4 +1,5 @@
---No.80 狂装覇王ラプソディ・イン・バーサーク
+--Ｎｏ.８０ 狂装覇王ラプソディ・イン・バーサーク (Anime)
+--Number 80: Rhapsody in Berserk (Anime)
 Duel.LoadCardScript("c93568288.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,21 +21,21 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(612115,0))
 	e2:SetCategory(CATEGORY_REMOVE)
-	e2:SetProperty(0,EFFECT_FLAG2_XMDETACH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCost(s.rmcost)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
-	c:RegisterEffect(e2)
+	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 	--battle indestructable
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e3:SetValue(s.indes)
+	e3:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x48}
 s.xyz_number=80
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc~=e:GetHandler() end
@@ -67,7 +68,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e2:SetLabelObject(tc)
 	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)	
+	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e3:SetCondition(s.btcon)
@@ -84,7 +85,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetCost(s.btcost)
 	e4:SetOperation(s.op)
 	e4:SetReset(RESET_EVENT+RESETS_STANDARD)
-	c:RegisterEffect(e4)	
+	c:RegisterEffect(e4)
 end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
@@ -169,7 +170,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
 	if ex and (cp==tp or cp==PLAYER_ALL) and cv>=1000 then return true end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
-	return ex and (cp==tp or cp==PLAYER_ALL) and Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_RECOVER) and cv>=1000 
+	return ex and (cp==tp or cp==PLAYER_ALL) and Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_RECOVER) and cv>=1000
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
@@ -206,7 +207,4 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
-end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
 end

@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9f}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x9f) and c:GetSummonType()==SUMMON_TYPE_PENDULUM
 end
@@ -47,7 +48,7 @@ function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_LVRANK)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LVRANK)
 	local lv=Duel.AnnounceLevel(tp,1,4,e:GetHandler():GetLevel())
 	Duel.SetTargetParam(lv)
 end

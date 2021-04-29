@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	if s.flagmap[c]==nil then
 		s.flagmap[c] = {}
 	end
-	--search
+	--Search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -36,7 +36,7 @@ function s.extrafilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function s.extracon(c,e,tp,sg,mg,lc,og,chk)
-	return (sg+mg):Filter(s.extrafilter,nil,e:GetHandlerPlayer()):IsExists(Card.IsRace,og,1,RACE_CYBERSE) and
+	return (sg+mg):Filter(s.extrafilter,nil,e:GetHandlerPlayer()):IsExists(Card.IsRace,1,og,RACE_CYBERSE) and
 	sg:FilterCount(s.flagcheck,nil)<2
 end
 function s.flagcheck(c)
@@ -46,7 +46,7 @@ function s.extraval(chk,summon_type,e,...)
 	local c=e:GetHandler()
 	if chk==0 then
 		local tp,sc=...
-		if not summon_type==SUMMON_TYPE_LINK or not sc:IsSetCard(0x101) or Duel.GetFlagEffect(tp,id)>0 then
+		if summon_type~=SUMMON_TYPE_LINK or not sc:IsSetCard(0x101) or Duel.GetFlagEffect(tp,id)>0 then
 			return Group.CreateGroup()
 		else
 			table.insert(s.flagmap[c],c:RegisterFlagEffect(id,0,0,1))
@@ -86,4 +86,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

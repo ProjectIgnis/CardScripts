@@ -1,10 +1,12 @@
 --混源龍レヴィオニア
 --Chaos Dragon Levianeer
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--special summon procedure from hand
+	--Special summon procedure (from hand)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -16,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--apply effect
+	--Apply 1 of 3 effects, depending on monsters banished
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -72,12 +74,6 @@ function s.condition(e)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e:GetHandler():RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=e:GetLabel()
@@ -114,6 +110,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(0)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
+	--Cannot attack this turn
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3206)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_CANNOT_ATTACK)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e:GetHandler():RegisterEffect(e1)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -122,6 +126,14 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
+	--Cannot attack this turn
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3206)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_CANNOT_ATTACK)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e:GetHandler():RegisterEffect(e1)
 	local hg=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_HAND,nil)
 	if #hg>0 then
 		local sg=hg:RandomSelect(tp,1)
@@ -129,6 +141,14 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	--Cannot attack this turn
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3206)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_CANNOT_ATTACK)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e:GetHandler():RegisterEffect(e1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,2,nil)
 	if #g>0 then

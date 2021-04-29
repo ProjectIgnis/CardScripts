@@ -1,4 +1,5 @@
 --深黒の落とし穴
+--Deep Dark Trap Hole
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)
@@ -15,7 +16,7 @@ function s.filter(c,e)
 		and (not e or c:IsRelateToEffect(e)) and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(s.filter,1,nil,nil) end
+	if chk==0 then return eg and eg:IsExists(s.filter,1,nil,nil) end
 	local g=eg:Filter(s.filter,nil,nil)
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)

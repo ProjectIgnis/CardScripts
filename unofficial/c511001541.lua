@@ -1,4 +1,5 @@
---Ancient Gear Rebirth Fusion
+--古代の機械再生融合
+--Ancient Gear Reverse Fusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,8 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x7}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_EFFECT)==REASON_EFFECT and rp~=tp
+	return (r&REASON_EFFECT)==REASON_EFFECT and rp==1-tp
 end
 function s.cfilter(c,fc,e,tp)
 	local fd=c:GetCode()
@@ -26,13 +28,14 @@ function s.cfilter(c,fc,e,tp)
 end
 function s.spfilter(c,e,tp,eg)
 	local ct=c.material_count
-	return ct~=nil and eg:IsExists(s.cfilter,1,nil,c,e,tp) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) 
-		and c:CheckFusionMaterial()
+	return ct~=nil and eg:IsExists(s.cfilter,1,nil,c,e,tp)
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) 
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:CheckFusionMaterial()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,eg)
 	if chkc then return false end
-	if chk==0 then return #sg>0 and Duel.GetLocationCountFromEx(tp)>0 end
+	if chk==0 then return #sg>0 end
 	local tcg=sg:GetFirst()
 	local tg=Group.CreateGroup()
 	while tcg do
@@ -56,7 +59,7 @@ function s.spfilter2(c,e,tp,tc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc or not tc:IsRelateToEffect(e) or Duel.GetLocationCountFromEx(tp)<=0 then return end
+	if not tc or not tc:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc):GetFirst()
 	if sc and Duel.SpecialSummon(sc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)>0 then

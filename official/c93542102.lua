@@ -1,4 +1,5 @@
 --D・モバホン
+--Morphtronic Celfon
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tga)
 	e1:SetOperation(s.opa)
 	c:RegisterEffect(e1)
-	--confirm
+	--confirm top deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -23,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.opd)
 	c:RegisterEffect(e2)
 end
+s.roll_dice=true
 s.listed_series={0x26}
 function s.cona(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsDisabled() and e:GetHandler():IsAttackPos()

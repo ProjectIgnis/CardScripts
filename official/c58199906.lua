@@ -33,14 +33,14 @@ function s.filter(c,e)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove() and not c:IsImmuneToEffect(e)
 end
 function s.chain_target(e,te,tp,value)
-	if value&SUMMON_TYPE_FUSION==0 then return Group.CreateGroup() end
+	if value and value&SUMMON_TYPE_FUSION==0 then return Group.CreateGroup() end
 	if Duel.IsPlayerAffectedByEffect(tp,69832741) then
 		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,te)
 	else
 		return Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,nil,te)
 	end
 end
-function s.chain_operation(e,te,tp,tc,mat,sumtype,sg)
+function s.chain_operation(e,te,tp,tc,mat,sumtype,sg,sumpos)
 	if not sumtype then sumtype=SUMMON_TYPE_FUSION end
 	tc:SetMaterial(mat)
 	Duel.Remove(mat,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
@@ -48,7 +48,7 @@ function s.chain_operation(e,te,tp,tc,mat,sumtype,sg)
 	if sg then
 		sg:AddCard(tc)
 	else
-		Duel.SpecialSummonStep(tc,sumtype,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummonStep(tc,sumtype,tp,tp,false,false,sumpos)
 	end
 	e:Reset()
 end

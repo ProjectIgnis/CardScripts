@@ -1,8 +1,10 @@
+--ディザスター・デーモン
 --Annihilator Archfiend
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--
+	--Destroy 1 card from each side of the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
@@ -45,4 +47,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

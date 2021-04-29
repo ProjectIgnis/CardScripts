@@ -1,15 +1,15 @@
 --キャッチ・コピー
---Catch Copy
+--Sales Pitch
 --Scripted by Eerie Code
 local s,id=GetID()
-function s.initial_effect(c)	
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_TO_HAND)
-	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -52,4 +52,3 @@ function s.aclimit(e,re,tp)
 	local tc=e:GetLabelObject()
 	return re:GetHandler():IsCode(tc:GetCode())
 end
-

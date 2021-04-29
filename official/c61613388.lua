@@ -1,8 +1,9 @@
---U.A.ターンオーバー・タクティクス
+--Ｕ．Ａ．ターンオーバー・タクティクス
 --U.A. Turnover Tactics
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
@@ -12,9 +13,11 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0xb2}
+
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xb2)
 end
@@ -41,7 +44,7 @@ function s.locfilter(c,sp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	Duel.ShuffleDeck(tp)
 	local ct1=Duel.GetOperatedGroup():FilterCount(s.locfilter,nil,tp)
 	local ct2=Duel.GetOperatedGroup():FilterCount(s.locfilter,nil,1-tp)
@@ -65,7 +68,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sc=sg:GetFirst()
 	for sc in aux.Next(sg) do
 		if Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
+			--Cannot attack this turn
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3206)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

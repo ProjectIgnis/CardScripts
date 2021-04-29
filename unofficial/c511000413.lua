@@ -34,7 +34,6 @@ end
 function s.filter1(c)
 	return c:IsFaceup() and c:GetFlagEffect(id)~=0
 end
-
 function s.filter2(c)
 	return c:IsPosition(POS_FACEUP_ATTACK)
 end
@@ -68,6 +67,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if a:IsPosition(POS_FACEUP_ATTACK) then
 			Duel.CalculateDamage(a,d)
-		end		
+		end
 	end
 end

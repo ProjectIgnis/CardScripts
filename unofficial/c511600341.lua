@@ -126,6 +126,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp,Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE):GetSum(Card.GetLink))
 	if tc then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)  
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

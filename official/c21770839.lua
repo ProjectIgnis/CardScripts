@@ -43,7 +43,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x99}
 function s.counterfilter(c)
-	return not c:IsType(SUMMON_TYPE_PENDULUM)
+	return not c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

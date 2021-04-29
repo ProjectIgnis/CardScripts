@@ -66,7 +66,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		ec:RegisterEffect(e3)
 	end
-end		
+end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end

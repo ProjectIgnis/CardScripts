@@ -1,4 +1,5 @@
---Black Feather Reverse
+--黒羽限界突破
+--Black Feather Reversal
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,12 +24,13 @@ function s.condition1(e,tp,eg,ev,ep,re,r,rp)
 	return Duel.GetBattleDamage(tp)>0 or Duel.GetBattleDamage(1-tp)>0
 end
 function s.filter(c,e,tp,atk)
-	return c:IsType(TYPE_SYNCHRO) and c:GetAttack()==atk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_SYNCHRO) and c:IsAttack(atk)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dam=Duel.GetBattleDamage(tp)>0 and Duel.GetBattleDamage(tp) or Duel.GetBattleDamage(1-tp)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,dam) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,dam) end
 	Duel.SetTargetParam(dam)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
@@ -42,7 +44,6 @@ function s.activate1(e,tp,eg,ev,ep,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	e1:SetValue(1)
 	Duel.RegisterEffect(e1,tp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,d)
 	if #g>0 then
@@ -56,13 +57,13 @@ function s.condition2(e,tp,eg,ev,ep,re,r,rp)
 	local rd=e1 and not e2
 	local rr=not e1 and e2
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	if ex and (cp==tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then
-		e:SetLabel(cv)
+	if cv then e:SetLabel(cv) end
+	if ex and (cp==tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then	
 		return true 
 	end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
+	if cv then e:SetLabel(cv) end
 	if ex and (cp==tp or cp==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then
-		e:SetLabel(cv)
 		return true 
 	end
 	e1=Duel.IsPlayerAffectedByEffect(1-tp,EFFECT_REVERSE_DAMAGE)
@@ -70,18 +71,17 @@ function s.condition2(e,tp,eg,ev,ep,re,r,rp)
 	rd=e1 and not e2
 	rr=not e1 and e2
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
+	if cv then e:SetLabel(cv) end
 	if ex and (cp==1-tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(1-tp,EFFECT_NO_EFFECT_DAMAGE) then
-		e:SetLabel(cv)
 		return true 
 	end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
-	e:SetLabel(cv)
+	if cv then e:SetLabel(cv) end
 	return ex and (cp==1-tp or cp==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(1-tp,EFFECT_NO_EFFECT_DAMAGE)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dam=e:GetLabel()
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,dam) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,dam) end
 	e:SetLabel(0)
 	Duel.SetTargetParam(dam)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)

@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
 end
+s.roll_dice=true
 function s.lvfilter(c)
 	return c:IsFaceup() and c:HasLevel()
 end
@@ -27,7 +28,7 @@ end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local dc=Duel.TossDice(tp,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -1,3 +1,4 @@
+--霧の祭壇
 --Altar of Mist
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,7 +37,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsType(TYPE_RITUAL) and c:IsAbleToHand()
+	return c:IsRitualSpell() and c:IsAbleToHand()
 end
 function s.tohand(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()~=tp then return end

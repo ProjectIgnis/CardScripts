@@ -1,15 +1,14 @@
---ＳＮｏ．０ ホープ・ゼアル
---Number S0: Utopic ZEXAL (Anime)
+--ＳＮｏ．０ ホープ・ゼアル (Manga)
+--Number S0: Utopic ZEXAL (Manga)
 --scripted by Larry126
 Duel.LoadScript("c420.lua")
-Duel.LoadScript("c52653092.lua")
+Duel.LoadCardScript("c52653092.lua")
 local s,id,alias=GetID()
-local zexal=nil
-function target()
-end
+local zexal={}
 function s.initial_effect(c)
-	zexal=c
-	alias=c:GetOriginalCodeRule()
+	if not c:IsStatus(STATUS_COPYING_EFFECT) then
+		zexal[c]=true
+	end
 	--xyz summon
 	c:EnableReviveLimit()
 	Xyz.AddProcedure(c,s.xyzfilter,nil,3)
@@ -30,7 +29,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetCondition(s.effcon2)
+	e3:SetCondition(s.effcon)
 	e3:SetOperation(s.spsumsuc)
 	c:RegisterEffect(e3)
 	--atk & def
@@ -53,35 +52,36 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_series={0x48}
 s.xyz_number=0
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	for i=0,1 do
 		return Duel.IsPlayerAffectedByEffect(i,EFFECT_CANNOT_SPECIAL_SUMMON)
 	end
 end
-function s.splimit(e,c,tp,sumtp,sumpos)
-	return target and c~=zexal
+function s.splimit(target)
+	return function (e,c,tp,sumtp,sumpos)
+		return (not target or target(e,c,tp,sumtp,sumpos)) and not zexal[c]
+	end
 end
+local effmap={}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	for i=0,1 do
 		local effs={Duel.GetPlayerEffect(i,EFFECT_CANNOT_SPECIAL_SUMMON)}
 		for _,eff in ipairs(effs) do
-			if eff:GetLabel()~=id then
-				target=eff:GetTarget()
-				eff:SetTarget(s.splimit)
-				eff:SetLabel(id)
+			local target=eff:GetTarget()
+			if target==nil or not effmap[target] then
+				eff:SetTarget(s.splimit(eff:GetTarget()))
+				effmap[eff:GetTarget()]=true
 			end
 		end
 	end
 end
 function s.xyzfilter(c,xyz,sumtype,tp)
-	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsNumberS()
+	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsNumberS(xyz,sumtype,tp)
 end
 function s.effcon(e)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL
-end
-function s.effcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 function s.spsumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(s.chlimit)

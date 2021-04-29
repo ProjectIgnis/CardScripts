@@ -2,10 +2,10 @@
 --Gouki the Giant Ogre
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfc),3)
 	c:EnableReviveLimit()
-	--indes
+	--Prevent destruction by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--immune
+	--Unaffected by activated effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(s.immval)
 	c:RegisterEffect(e2)
-	--negate
+	--Negate
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_NEGATE)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.negtg)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
-	--atk up
+	--Increase ATK
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_ATKCHANGE)
@@ -81,7 +81,9 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetValue(-500)
 	c:RegisterEffect(e1)
 	if not c:IsImmuneToEffect(e1) and not c:IsHasEffect(EFFECT_REVERSE_UPDATE) then
-		Duel.NegateActivation(ev)
+		if Duel.NegateActivation(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
+			Duel.SendtoGrave(eg,REASON_EFFECT)
+		end
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

@@ -1,13 +1,15 @@
 --アップデートジャマー
 --Update Jammer
---scripted by Larry126
+--Scripted by Larry126
+
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	c:EnableReviveLimit()
+	--Must be properly summoned before reviving
 	Link.AddProcedure(c,s.matfilter,2,2)
-	--Activate
+	--Link summon procedure
+	c:EnableReviveLimit()
+	--If your cyberse monster battles, negate all other card effects on the field, also use original ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
@@ -16,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--Material
+	--If sent to GY as link material, that link monster can make a second attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BE_MATERIAL)
@@ -152,13 +154,12 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	local sc=c:GetReasonCard()
 	if sc and sc:IsFaceup() and sc:IsOnField() then
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.Stringid(id,1))
+		e1:SetDescription(3201)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		sc:RegisterEffect(e1)
 	end
 end
-

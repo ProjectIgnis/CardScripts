@@ -34,8 +34,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local cc=cg:GetFirst()
 	if dc:IsRelateToEffect(e) and cc:IsRelateToEffect(e) and Duel.Destroy(dc,REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-		local zone=Duel.SelectDisableField(tp,1,0,LOCATION_MZONE,0)>>16
-		Duel.GetControl(cc,1-tp,0,0,zone)
+		Duel.GetControl(cc,1-tp)
 	end
 end

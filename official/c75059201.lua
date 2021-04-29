@@ -1,9 +1,9 @@
---F.A.ターボチャージャー
+--Ｆ．Ａ．ターボチャージャー
 --F.A. Turbo Charger
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--atk up
+	--increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	--untargetable
+	--prevent battle targets
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.atglimit)
 	e2:SetValue(s.atlimit)
 	c:RegisterEffect(e2)
+	--prevent other targets
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -29,34 +30,27 @@ function s.initial_effect(c)
 	e3:SetTarget(s.tglimit)
 	e3:SetValue(s.tgval)
 	c:RegisterEffect(e3)
-	--lv up
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e0:SetCode(EVENT_CHAINING)
-	e0:SetRange(LOCATION_MZONE)
-	e0:SetOperation(aux.chainreg)
-	c:RegisterEffect(e0)
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetCategory(CATEGORY_LVCHANGE)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e4:SetCode(EVENT_CHAIN_SOLVING)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(s.lvcon)
-	e4:SetOperation(s.lvop)
-	c:RegisterEffect(e4)
-	--actlimit
+	--increase level
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD)
-	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e5:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetCategory(CATEGORY_LVCHANGE)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e5:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e5:SetCode(EVENT_CHAINING)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetTargetRange(0,1)
-	e5:SetValue(s.aclimit)
-	e5:SetCondition(s.actcon)
+	e5:SetCondition(s.lvcon)
+	e5:SetOperation(s.lvop)
 	c:RegisterEffect(e5)
+	--limits activations
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD)
+	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e6:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetTargetRange(0,1)
+	e6:SetValue(s.aclimit)
+	e6:SetCondition(s.actcon)
+	c:RegisterEffect(e6)
 end
 s.listed_series={0x107}
 function s.atkval(e,c)
@@ -87,7 +81,7 @@ function s.tgval(e,re,rp)
 	else return false end
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x107) and e:GetHandler():GetFlagEffect(1)>0
+	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x107)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

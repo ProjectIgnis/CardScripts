@@ -1,10 +1,11 @@
---幻奏の華歌聖ブルーム・ディーヴァ
+--幻奏の華歌聖ブルーム・ディーヴァ (Anime)
+--Bloom Diva the Melodious Choir (Anime)
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,function(c) return c:IsMelodiousSongtress(true) end,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9b))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx2(Card.IsMelodiousSongtress),aux.FilterBoolFunctionEx(Card.IsSetCard,0x9b))
 	--effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x9b}
 s.material_setcode={0x9b,0x209b}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

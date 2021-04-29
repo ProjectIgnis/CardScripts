@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--level
+	--change levels
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.lvcost)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
-	--spsummon
+	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)

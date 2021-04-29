@@ -28,7 +28,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.SelectMatchingCard(tp,s.fil,tp,LOCATION_DECK,0,1,1,nil)
 	if #tg~=0 then
 		if Duel.SendtoGrave(tg,REASON_EFFECT)~=0 then
-		  --Special Summon the nonexisting Deep Anglerfish Jr.
+		--Special Summon the nonexisting Deep Anglerfish Jr.
 		end
 	end
 end

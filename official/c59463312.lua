@@ -29,7 +29,7 @@ s.listed_names={id}
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetTargetRange(LOCATION_HAND,0)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
@@ -68,6 +68,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA)

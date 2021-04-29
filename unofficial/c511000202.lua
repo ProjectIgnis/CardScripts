@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	e:SetLabel(3)
 	if tp~=Duel.GetTurnPlayer() and Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.NegateAttack()
@@ -42,6 +43,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetCard(tg)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.NegateAttack()
 	local ct=e:GetLabelObject():GetLabel()
 	ct=ct-1

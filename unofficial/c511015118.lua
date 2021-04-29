@@ -1,5 +1,6 @@
+--No.48 シャドー・リッチ (Manga)
 --Number 48: Shadow Lich (Manga)
-
+Duel.LoadCardScript("c21521304.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
 	e2:SetTarget(s.reptg)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	--atkup
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE)
@@ -32,6 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x48}
 s.listed_names={1426715}
+s.xyz_number=48
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)==0
 end
@@ -82,10 +84,10 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e4:SetValue(TYPE_TOKEN)
 	c:RegisterEffect(e4)
 	
-	local tg=Group.FromCards(c)	
+	local tg=Group.FromCards(c)
 	while Duel.GetLocationCount(tp,LOCATION_MZONE)>0 do
-		local token=Duel.CreateToken(tp,id,TYPES_TOKEN,500,500,3,RACE_FIEND,ATTRIBUTE_DARK)	
-		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)		
+		local token=Duel.CreateToken(tp,id,TYPES_TOKEN,500,500,3,RACE_FIEND,ATTRIBUTE_DARK)
+		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 		tg:AddCard(token)
 		
 		token:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
@@ -125,7 +127,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e6:SetOperation(s.damop)
 		token:RegisterEffect(e6)
 	end
-	Duel.ShuffleSetCard(tg)		
+	Duel.ShuffleSetCard(tg)
 	Duel.ChangePosition(tg,pos)
 	return true
 end

@@ -1,4 +1,5 @@
 --沈黙の邪悪霊
+--Dark Spirit of the Silent
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -30,8 +31,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ChangePosition(tc,POS_FACEUP_ATTACK)
 		end
 		if tc:CanAttack() and not tc:IsImmuneToEffect(e) then
-			Duel.ChangeAttacker(tc)
-			--Duel.CalculateDamage(tc,Duel.GetAttackTarget())
+			Duel.BreakEffect()
+			Duel.CalculateDamage(tc,Duel.GetAttackTarget())
 		end
 	end
 end

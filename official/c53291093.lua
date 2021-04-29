@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0xc}
-s.counter_list={0x100e}
+s.counter_list={COUNTER_A}
 function s.filter(c)
-	return c:GetCounter(0x100e)>0
+	return c:GetCounter(COUNTER_A)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

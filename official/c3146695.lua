@@ -41,9 +41,7 @@ function s.filter(c,g)
 	return c:GetFlagEffect(id)>0 and g:IsContains(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
-	local g=Group.FromCards(a,d)
+	local g=Group.FromCards(table.unpack({Duel.GetAttacker(),Duel.GetAttackTarget()}))
 	if chk==0 then return d and g:IsExists(s.filter,1,nil,e:GetLabelObject()) end
 	local rg=g:Filter(Card.IsRelateToBattle,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,rg,#rg,0,0)

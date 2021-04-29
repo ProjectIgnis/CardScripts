@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.descon)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
 function s.synlimit(e,c)
 	if c==nil then return false end

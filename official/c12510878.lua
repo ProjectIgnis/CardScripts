@@ -46,7 +46,7 @@ function s.spcon(e,c)
 	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,18036057)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,Card.IsCode1,1,false,true,true,c,nil,nil,false,nil,18036057)
+	local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,false,nil,18036057)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)
@@ -61,7 +61,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

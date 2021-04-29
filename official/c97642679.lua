@@ -1,4 +1,5 @@
 --闇の支配者－ゾーク
+--Dark Master - Zorc
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.roll_dice=true
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)

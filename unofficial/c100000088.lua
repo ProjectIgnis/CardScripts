@@ -1,4 +1,5 @@
 --バトル・リターン
+--Battle Return
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3013}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==tp and ph>=0x08 and ph<=0x20 and (ph~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() and (ph~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,0,1,nil) end
@@ -23,7 +25,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
@@ -33,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+RESET_END)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e2:SetValue(tc:GetAttack()/2)
 		tc:RegisterEffect(e2)
 	end

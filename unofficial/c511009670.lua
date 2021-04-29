@@ -32,9 +32,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.bpop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x574}
+s.listed_series={0x1157}
 function s.filter(c,sc,dam)
-	return c:IsFaceup() and c:IsSetCard(0x574) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(sc) and (not dam or c:GetLink()>0)
+	return c:IsFaceup() and c:IsSetCard(0x1157) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(sc) and (not dam or c:GetLink()>0)
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil,e:GetHandler())

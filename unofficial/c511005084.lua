@@ -1,6 +1,6 @@
 --Infection Extension
 --インフェクション・エクステンション
---  By Shad3
+--By Shad3
 --cleaned up and fixed by MLD and edo9300
 local s,id=GetID()
 function s.initial_effect(c)

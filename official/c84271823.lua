@@ -33,8 +33,8 @@ end
 function s.mfilter(c)
 	return c:HasLevel() and not c:IsLevel(0)
 end
-function s.matcheck(g,lc,tp)
-	return g:GetClassCount(Card.GetLevel,lc,SUMMON_TYPE_LINK,tp)==#g
+function s.matcheck(g,lc,sumtype,tp)
+	return g:GetClassCount(Card.GetLevel)==#g
 end
 function s.cfilter(c,tp,lg)
 	return c:IsLevelAbove(1) and c:IsFaceup() and c:IsControler(tp) and lg:IsContains(c)
@@ -85,5 +85,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
-	Duel.Destroy(g,REASON_EFFECT)
+	if g then
+		Duel.Destroy(g,REASON_EFFECT)
+	end
 end

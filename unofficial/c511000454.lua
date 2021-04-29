@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetCondition(s.con)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.filter(c,e,tp)
 	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

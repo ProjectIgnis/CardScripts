@@ -1,10 +1,10 @@
 --CX 冀望皇バリアン (Anime)
 --CXyz Barian Hope (Anime)
---fixed by Larry126
+--Rescripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,nil,7,3,nil,nil,5)
+	Xyz.AddProcedure(c,nil,7,3,nil,nil,99)
 	c:EnableReviveLimit()
 	local e0=Effect.CreateEffect(c)
 	e0:SetDescription(aux.Stringid(67926903,0))
@@ -35,30 +35,35 @@ function s.initial_effect(c)
 		local ge1=Effect.GlobalEffect()
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_ADJUST)
+		ge1:SetCondition(s.con)
 		ge1:SetOperation(s.op)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
 s.listed_series={0x1048}
 function s.cfilter(c)
-	return c:IsHasEffect(511002571) and #{c:GetCardEffect(id)}==0
+	return c:IsHasEffect(511002571) and c:GetFlagEffect(5110013630)==0
+end
+function s.con(e)
+	return Duel.IsExistingMatchingCard(s.cfilter,0,LOCATION_ALL,LOCATION_ALL,1,nil)
 end
 function s.op(e)
-	local g=Duel.GetMatchingGroup(s.cfilter,0,0xff,0xff,nil)
+	local g=Duel.GetMatchingGroup(s.cfilter,0,LOCATION_ALL,LOCATION_ALL,nil)
 	for c in aux.Next(g) do
 		local effs={c:GetCardEffect(511002571)}
 		for _,eff in ipairs(effs) do
 			local te=eff:GetLabelObject()
+			if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
 			local resetflag,resetcount=te:GetReset()
 			local rm,max,code=te:GetCountLimit()
-			local prop1,prop2=eff:GetProperty()
+			local prop1,prop2=te:GetProperty()
 			local e1=Effect.CreateEffect(c)
 			if te:GetDescription() then
 				e1:SetDescription(te:GetDescription())
 			end
 			e1:SetLabelObject(te)
-			e1:SetType(EFFECT_TYPE_XMATERIAL+te:GetType())
-			if te:GetCode() then
+			e1:SetType(EFFECT_TYPE_XMATERIAL+te:GetType()&(~EFFECT_TYPE_SINGLE))
+			if te:GetCode()>0 then
 				e1:SetCode(te:GetCode())
 			end
 			e1:SetProperty(prop1|EFFECT_FLAG_CARD_TARGET,prop2)
@@ -73,22 +78,13 @@ function s.op(e)
 			if te:GetOperation() then
 				e1:SetOperation(te:GetOperation())
 			end
-			if resetflag and resetcount then
+			if resetflag>0 and resetcount>0 then
 				e1:SetReset(resetflag,resetcount)
-			elseif resetflag then
+			elseif resetflag>0 then
 				e1:SetReset(resetflag)
 			end
 			c:RegisterEffect(e1,true)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(id)
-			e2:SetProperty(prop1,prop2)
-			if resetflag and resetcount then
-				e2:SetReset(resetflag,resetcount)
-			elseif resetflag then
-				e2:SetReset(resetflag)
-			end
-			c:RegisterEffect(e2,true)
+			c:RegisterFlagEffect(5110013630,resetflag,prop1,resetcount)
 		end
 	end
 end
@@ -142,13 +138,12 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og)
 	local mg=Duel.GetMatchingGroup(s.ovfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	og:Merge(mg)
 	local tc=mg:GetFirst()
-	while tc do
+	for tc in aux.Next(mg) do
 		local ov=tc:GetOverlayGroup()
 		if #ov>0 then
 			Duel.Overlay(c,ov)
 			og:Merge(ov)
 		end
-		tc=mg:GetNext()
 	end
 	c:SetMaterial(og)
 	Duel.Overlay(c,og)

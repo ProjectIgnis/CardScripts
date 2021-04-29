@@ -1,4 +1,5 @@
 --青氷の白夜龍
+--White Night Dragon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate
@@ -28,7 +29,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) or ep==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g and g:IsContains(c)
+	return g and g:IsContains(c) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

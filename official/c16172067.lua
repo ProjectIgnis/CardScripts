@@ -5,14 +5,14 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--synchro summon
 	Synchro.AddProcedure(c,nil,2,2,Synchro.NonTuner(nil),1,99)
-	--cannot special summon
+	--Special Summon condition
 	local e0=Effect.CreateEffect(c)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e0:SetValue(aux.synlimit)
 	c:RegisterEffect(e0)
-	--destroy
+	--Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e4:SetCode(21142671)
 	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1

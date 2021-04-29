@@ -1,7 +1,8 @@
 --ヴァンパイア・グレイス
+--Vampire Grace
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--When a level 5+ zombie is special summoned to your field, revive itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--
+	--Declare 1 card type; opponent mills 1 card of declared type from deck to GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
@@ -25,6 +26,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
+
 function s.cfilter(c,tp)
 	return c:IsLevelAbove(5) and c:IsRace(RACE_ZOMBIE) and c:IsControler(tp)
 end
@@ -49,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPTION)
 	local op=Duel.SelectOption(tp,70,71,72)
 	e:SetLabel(op)

@@ -1,7 +1,9 @@
 --トゥーン・ロールバック
+--Toon Roollback
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Targeted toon monster can make a second attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -15,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_TOON) and not c:IsHasEffect(EFFECT_EXTRA_ATTACK)
+	return c:IsFaceup() and c:IsType(TYPE_TOON) and c:CanAttack() and not c:IsHasEffect(EFFECT_EXTRA_ATTACK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -25,11 +27,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
+		--Can make a second attack
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3201)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)

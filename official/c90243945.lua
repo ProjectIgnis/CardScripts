@@ -1,15 +1,16 @@
 --ワイトプリンセス
+--Wightprincess
 local s,id=GetID()
 function s.initial_effect(c)
-	--change code
+	--Name becomes "Skull Servant" while in GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetValue(32274490)
+	e1:SetValue(CARD_SKULL_SERVANT)
 	c:RegisterEffect(e1)
-	--to grave
+	--If normal or special summoned, send 1 "Wightprince" from deck to GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--atk/def down
+	--Lower ATK/DEF of all monsters on field
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -36,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={57473560}
+s.listed_names={CARD_SKULL_SERVANT,57473560}
 function s.tgfilter(c)
 	return c:IsCode(57473560) and c:IsAbleToGrave()
 end
@@ -57,11 +58,14 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
+function s.atkfilter(c)
+	return c:IsFaceup() and (c:GetLevel()>0 or c:GetRank()>0)
+end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local val=0

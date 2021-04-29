@@ -26,13 +26,20 @@ function s.initial_effect(c)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
+	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e3:SetCondition(s.actcon)
+	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 	aux.GlobalCheck(s,function()
 		--activatable if set by Altergeist
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetCode(EVENT_SSET)
-		e3:SetOperation(s.operation)
-		--Duel.RegisterEffect(e3,0)
+		local ge=Effect.CreateEffect(c)
+		ge:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge:SetCode(EVENT_SSET)
+		ge:SetOperation(s.operation)
+		Duel.RegisterEffect(ge,0)
 	end)
 end
 s.listed_series={0x103}
@@ -79,23 +86,8 @@ function s.actcon(e)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(Card.IsCode,nil,id)
-	Debug.Message("Group count: "..#g)
-	for ec in aux.Next(g) do
-		if not re then
-			Debug.Message("No associated effect from re")
-		end
-		if not ec:GetReasonCard() then
-			Debug.Message("No associated card")
-		end
-		if not ec:GetReasonEffect() then
-			Debug.Message("No associated effect from function")
-		end
-		local e0=Effect.CreateEffect(ec)
-		e0:SetType(EFFECT_TYPE_SINGLE)
-		e0:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
-		e0:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-		e0:SetReset(RESET_EVENT+RESETS_STANDARD)
-		ec:RegisterEffect(e0)
+	if not re or not re:GetHandler():IsSetCard(0x103) then return end
+	for ec in aux.Next(eg) do
+		ec:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end

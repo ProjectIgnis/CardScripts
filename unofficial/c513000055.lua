@@ -1,7 +1,8 @@
---二重魔法
+--二重魔法 (Anime)
+--Double Spell (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--copy spell
+	--Copy spell
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -25,7 +26,7 @@ function s.filter(c,e,tp,eg,ep,ev,re,r,rp,tid)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tid=Duel.GetTurnCount()
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp)  and s.filter(chkc,e,tp,eg,ep,ev,re,r,rp,tid) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.filter(chkc,e,tp,eg,ep,ev,re,r,rp,tid) end
 	if chk==0 then
 		local b=e:GetHandler():IsLocation(LOCATION_HAND)
 		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
@@ -51,13 +52,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e:SetCategory(te:GetCategory())
 		e:SetProperty(te:GetProperty())
 		Duel.ClearTargetCard()
+		local loc=LOCATION_SZONE
 		if (tpe&TYPE_FIELD)~=0 then
+			loc=LOCATION_FZONE
 			local of=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
 			if of then Duel.Destroy(of,REASON_RULE) end
 			of=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 			if of and Duel.Destroy(of,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 		end
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 		Duel.Hint(HINT_CARD,0,tc:GetCode())
 		tc:CreateEffectRelation(te)
 		if (tpe&TYPE_EQUIP+TYPE_CONTINUOUS+TYPE_FIELD)==0 then
@@ -76,7 +79,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if op then op(te,tp,eg,ep,ev,re,r,rp) end
 		tc:ReleaseEffectRelation(te)
-		if etc then	
+		if etc then
 			etc=g:GetFirst()
 			while etc do
 				etc:ReleaseEffectRelation(te)

@@ -1,4 +1,5 @@
 --幻影のゴラ亀
+--Gora Turtle of Illusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable
@@ -25,12 +26,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.distg)
 	c:RegisterEffect(e3)
 	--Double Snare
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(3682106)
-	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.distg(e,c)
 	return c:IsControler(1-e:GetHandlerPlayer()) and c:IsHasCardTarget(e:GetHandler())

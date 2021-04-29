@@ -1,6 +1,5 @@
 --雀姉妹
---Janshimatsu
---
+--Mahjong Munia Maidens
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -21,10 +20,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-end
-s.listed_series={0xed}
-function s.tgfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xed) and c:IsDiscardable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -50,4 +45,3 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(c,POS_FACEDOWN_DEFENSE)
 	end
 end
-

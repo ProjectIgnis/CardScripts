@@ -1,12 +1,12 @@
 --エンプレス・オブ・エンディミオン
---Reflection of Endymion 
+--Reflection of Endymion
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE+LOCATION_MZONE)
 	c:SetSPSummonOnce(id)
 	Pendulum.AddProcedure(c)
-	--spsummon
+	--Special Summon itself and from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--add counter
+	--Add counter
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_PZONE)
 	e3:SetOperation(s.acop)
 	c:RegisterEffect(e3)
-	--tohand
+	--return targets to the hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND)
@@ -40,13 +40,14 @@ function s.initial_effect(c)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
-	--search
+	--Register when destroyed by battle
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EVENT_LEAVE_FIELD_P)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e5:SetOperation(s.regop)
 	c:RegisterEffect(e5)
+	--Add 1 "Endymion" card to the hand
 	local e6=Effect.CreateEffect(c)
 	e6:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -103,11 +104,11 @@ end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_ONFIELD,0,1,c,e) and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
-	local g1=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_ONFIELD,0,1,1,c,e)
-	e:SetLabelObject(g1:GetFirst())
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
-	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	local g1=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	local g2=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_ONFIELD,0,1,1,c,e)
+	e:SetLabelObject(g2:GetFirst())
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g1,2,0,LOCATION_ONFIELD)
 end

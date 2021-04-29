@@ -1,12 +1,14 @@
 --青眼の究極亜龍
 --Blue-Eyes Alternative Ultimate Dragon
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Fusion summon procedure
 	Fusion.AddProcMixN(c,true,true,CARD_BLUEEYES_W_DRAGON,3)
-	--immune
+	--Cannot be targeted by opponent's card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -14,11 +16,12 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(aux.tgoval)
 	c:RegisterEffect(e1)
+	--Cannot be destroyed by opponent's card effects
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetValue(s.indval)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy up to 3 of opponent's cards
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DESTROY)
@@ -38,6 +41,7 @@ function s.initial_effect(c)
 end
 s.material_setcode=0xdd
 s.listed_names={CARD_BLUEEYES_W_DRAGON,38517737}
+
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end
@@ -48,10 +52,12 @@ function s.valcheck(e,c)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
+	--Cannot attack
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3206)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end

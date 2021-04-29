@@ -1,4 +1,5 @@
---Advanced Crystal Beast Emerald Turtle
+--Ａ宝玉獣エメラルド・タートル
+--Advanced Crystal Beast Emerald Tortoise
 local s,id=GetID()
 function s.initial_effect(c)
 	--Treated as "Crystal Beast Emerald Tortoise"
@@ -12,9 +13,8 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(68215963,0))
 	e2:SetCategory(CATEGORY_POSITION)
+	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetTarget(s.shelltg)

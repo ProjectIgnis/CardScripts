@@ -1,4 +1,5 @@
 --極星宝グングニル
+--Nordic Relic Gungnir
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -36,18 +37,19 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 and e:GetLabel()==1 then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetCountLimit(1)
-		e1:SetCondition(s.retcon)
-		e1:SetOperation(s.retop)
-		e1:SetLabel(2)
-		e1:SetLabelObject(e:GetLabelObject())
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
-		Duel.RegisterEffect(e1,tp)
+	if tc and tc:IsRelateToEffect(e) and e:GetLabel()==1 then
+		Duel.Destroy(tc,REASON_EFFECT)
 	end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetCountLimit(1)
+	e1:SetCondition(s.retcon)
+	e1:SetOperation(s.retop)
+	e1:SetLabel(2)
+	e1:SetLabelObject(e:GetLabelObject())
+	e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+	Duel.RegisterEffect(e1,tp)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

@@ -1,16 +1,16 @@
--- Big Cannon Ogre
--- scripted by: UnknownGuest
+--Big Cannon Ogre
+--scripted by: UnknownGuest
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- cannot special summon
+	--special Summon Limit
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	-- special summon
+	--Special summon procedure
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -20,14 +20,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- double battle damage
+	--Double battle damage
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e3:SetOperation(s.dop)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e3:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e3)
-	-- when destroyed, Special summon
+	--When destroyed, Special summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -38,14 +37,14 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop2)
 	c:RegisterEffect(e4)
 end
-s.listed_names={810000038}
+s.listed_names={810000038,511000014}
 function s.spcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),s.spfilter,1,false,1,true,c,c:GetControler(),nil,false,nil)
+	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,511000014)
 		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,810000038)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,s.spfilter,1,1,false,true,true,c,nil,nil,false,nil)
+	local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,false,nil,511000014)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)
@@ -58,9 +57,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	if not g then return end
 	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(1-tp,ev*2)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(810000038) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

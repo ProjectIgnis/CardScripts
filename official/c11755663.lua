@@ -66,7 +66,7 @@ function s.bpop(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.skop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetTurnPlayer()
-	Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_END,1)
+	Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end
 function s.sscon(e,c)
 	return Duel.GetLocationCount(e:GetHandler():GetControler(),LOCATION_MZONE)>0 

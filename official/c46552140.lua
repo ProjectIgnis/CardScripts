@@ -44,11 +44,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if #rg>0 then
 		Duel.ConfirmCards(1-tp,rg)
 		Duel.ShuffleDeck(tp)
-		local tg=rg:GetFirst()
-		while tg do
-			Duel.MoveSequence(tg,0)
-			tg=rg:GetNext()
-		end
+		Duel.MoveToDeckTop(rg)
 		Duel.SortDecktop(tp,tp,#rg)
 	end
 end

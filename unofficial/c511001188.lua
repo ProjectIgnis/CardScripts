@@ -1,4 +1,5 @@
 --銀河再誕
+--Galaxy Rebirth
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x7b}
 function s.spfilter(c,e,tp)
-	return  c:IsSetCard(0x7b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x7b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -82,9 +83,8 @@ function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():GetEquipTarget():RegisterFlagEffect(511001187,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end
-
 function s.ccost(e,tp)
-	if tp~=Duel.GetTurnPlayer()  then return end
+	if tp~=Duel.GetTurnPlayer() then return end
 	if e:GetHandler():GetEquipTarget():GetFlagEffect(511001187)==0 then
 		Duel.Destroy(e:GetHandler():GetEquipTarget(),REASON_EFFECT)
 	end

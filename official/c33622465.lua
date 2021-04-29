@@ -1,8 +1,9 @@
 --救護部隊
 --First-Aid Squad
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Add 1 normal monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -10,8 +11,9 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special summon itself as a monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -59,14 +61,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:AssumeProperty(ASSUME_RACE,RACE_WARRIOR)
 		Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP_DEFENSE)
 		c:AddMonsterAttributeComplete()
-		--redirect
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
-		e2:SetValue(LOCATION_REMOVED)
-		c:RegisterEffect(e2,true)
+		--Banish it if it leaves the field
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3300)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetValue(LOCATION_REMOVED)
+		c:RegisterEffect(e1,true)
 		Duel.SpecialSummonComplete()
 	end
 end

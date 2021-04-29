@@ -1,4 +1,5 @@
 --ＲＵＭ－ダーク・フォース
+--Rank-Up-Magic Dark Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,11 +16,13 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
-	return #eg==1 and tc:IsControler(tp) and bc:IsReason(REASON_BATTLE)
+	return #eg==1 and tc:IsControler(tp) and bc and bc:IsReason(REASON_BATTLE)
 end
-function s.filter2(c,rk,e,tp,mc)
+function s.filter2(c,rk,e,tp,mc,ft)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
-	return c:IsType(TYPE_XYZ) and mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsRank(rk) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+	return c:IsType(TYPE_XYZ) and mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp)
+		and c:IsRank(rk) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>ft
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=eg:GetFirst()
@@ -28,9 +31,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
 		return #pg<=0 and tg:IsOnField() and tg:IsCanBeEffectTarget(e) and tg:IsAbleToGrave() 
-			and (rk>0 or tg:IsStatus(STATUS_NO_LEVEL)) and Duel.IsPlayerCanSpecialSummonCount(tp,2) and Duel.GetLocationCountFromEx(tp,tp,tg)>1
-			and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,rk+1,e,tp,tg)
-			and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,rk+2,e,tp,tg)
+			and (rk>0 or tg:IsStatus(STATUS_NO_LEVEL)) and Duel.IsPlayerCanSpecialSummonCount(tp,2)
+			and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,rk+1,e,tp,tg,1)
+			and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,rk+2,e,tp,tg,1)
 	end
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,tg,1,0,0)
@@ -39,10 +42,10 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
-	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) or #pg>0 
-		or Duel.GetLocationCountFromEx(tp,tp,tc)<=1 or Duel.SendtoGrave(tc,REASON_EFFECT)==0 then return end
+	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp)
+		or tc:IsImmuneToEffect(e) or #pg>0 or Duel.SendtoGrave(tc,REASON_EFFECT)==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc1=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,tc:GetRank()+1,e,tp,tc):GetFirst()
+	local tc1=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,tc:GetRank()+1,e,tp,tc,1):GetFirst()
 	if tc1 then
 		Duel.SpecialSummon(tc1,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP_ATTACK)
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -57,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc1:RegisterEffect(e2,true)
 		tc1:CompleteProcedure()
 	end
-	local tc2=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,tc:GetRank()+2,e,tp,tc):GetFirst()
+	local tc2=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,tc:GetRank()+2,e,tp,tc,0):GetFirst()
 	if tc2 then
 		Duel.SpecialSummon(tc2,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		local e3=Effect.CreateEffect(e:GetHandler())

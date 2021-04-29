@@ -1,16 +1,20 @@
 --メタファイズ・ホルス・ドラゴン
+--Metaphys Horus
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--mat check
+	--Synchro summon procedure
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--Check materials used for its synchro summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
 	e1:SetValue(s.valcheck)
 	c:RegisterEffect(e1)
-	--immune
+	--Activate the following effects, depending on the monster type used
+	--Normal monster: this card becomes unaffected by other card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -20,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.immop)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
-	--negate
+	--Effect monster: negate 1 other card on the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DISABLE)
@@ -32,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	e3:SetLabelObject(e1)
 	c:RegisterEffect(e3)
-	--control
+	--Pendulum monster: take control 1 of opponent's monsters
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_CONTROL)
@@ -63,9 +67,11 @@ end
 function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
+		--Unaffected by other card effects
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3100)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.efilter)
@@ -94,6 +100,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -116,11 +123,14 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_CONTROL)
-	local g=Duel.SelectMatchingCard(1-tp,Card.IsAbleToChangeControler,1-tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(1-tp,Card.IsControlerCanBeChanged,1-tp,LOCATION_MZONE,0,1,1,nil)
 	local tc=g:GetFirst()
 	if not tc then return end
-	if Duel.GetControl(tc,tp)~=0 then
+	if Duel.GetControl(tc,tp,nil,nil,nil,1-tp)~=0 then
+		--Cannot attack
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3206)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

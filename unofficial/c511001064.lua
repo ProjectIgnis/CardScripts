@@ -1,3 +1,4 @@
+--ウラトラＣ
 --Ultra C
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,12 +41,13 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
-		return #pg<=0 and Duel.GetLocationCountFromEx(tp)>0 and Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)>0 
-			and Duel.IsPlayerCanSpecialSummon(tp,SUMMON_TYPE_XYZ,POS_FACEUP,tp) end
+		return #pg<=0 and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)>0 and Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)>0 
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,nil,nil,nil,nil,nil,nil,nil,nil,POS_FACEUP,tp,SUMMON_TYPE_XYZ) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.eqlimit(e,c)
 	return e:GetLabelObject()==c
@@ -53,7 +55,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
-	if not c:IsRelateToEffect(e) or #pg>0 or Duel.GetLocationCountFromEx(tp)<=0 then return end
+	if not c:IsRelateToEffect(e) or #pg>0 or Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)<=0 then return end
 	local sg=Duel.GetMatchingGroup(s.spfilter,tp,0,LOCATION_EXTRA,nil,e,tp)
 	if #sg>0 then
 		Duel.ConfirmCards(tp,sg)

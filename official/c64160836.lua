@@ -24,12 +24,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xc}
-s.counter_place_list={0x100e}
+s.counter_place_list={COUNTER_A}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
 		if tc:IsFaceup() and tc:IsControler(1-tp) then
-			tc:AddCounter(0x100e,1)
+			tc:AddCounter(COUNTER_A,1)
 		end
 	end
 end
@@ -38,8 +38,8 @@ function s.adcon(e)
 end
 function s.adtg(e,c)
 	local bc=c:GetBattleTarget()
-	return bc and c:GetCounter(0x100e)~=0 and bc:IsSetCard(0xc)
+	return bc and c:GetCounter(COUNTER_A)~=0 and bc:IsSetCard(0xc)
 end
 function s.adval(e,c)
-	return c:GetCounter(0x100e)*-300
+	return c:GetCounter(COUNTER_A)*-300
 end

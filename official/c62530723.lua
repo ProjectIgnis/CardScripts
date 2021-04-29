@@ -8,9 +8,10 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
+	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	--disable
+	--Negate Spell effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAIN_SOLVING)
@@ -20,6 +21,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x10c}
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
+end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsLevelAbove(5)
 end

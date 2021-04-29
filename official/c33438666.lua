@@ -1,6 +1,5 @@
 --ヴァンパイア・グリムゾン
 --Vampire Grimson
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy replace
@@ -31,8 +30,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp))
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=eg:FilterCount(s.repfilter,nil,tp)
@@ -77,4 +76,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

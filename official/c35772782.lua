@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.diceop)
 	c:RegisterEffect(e2)
 end
+s.roll_dice=true
 s.xyz_number=67
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1

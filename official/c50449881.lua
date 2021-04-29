@@ -1,10 +1,13 @@
 --シャーク・フォートレス
+--Shark Fortress
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,5,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--second attack
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,5,2)
+	--Targeted monster can make a second attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -16,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--atk limit
+	--Opponent can only target this card for attacks
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
@@ -44,9 +47,11 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
+		--Can make a second attack
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3201)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(1)

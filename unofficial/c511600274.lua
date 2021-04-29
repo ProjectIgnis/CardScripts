@@ -37,11 +37,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x13c}
-function s.lfilter(c)
-	return c:IsType(TYPE_LINK,lc,SUMMON_TYPE_LINK) and c:IsSetCard(0x13c,lc,SUMMON_TYPE_LINK)
+function s.lfilter(c,lc,sumtype,tp)
+	return c:IsType(TYPE_LINK,lc,sumtype,tp) and c:IsSetCard(0x13c,lc,sumtype,tp)
 end
-function s.lcheck(g,lc)
-	return g:IsExists(s.lfilter,1,nil,lc)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(s.lfilter,1,nil,lc,sumtype,tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0

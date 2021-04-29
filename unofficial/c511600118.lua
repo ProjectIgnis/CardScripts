@@ -21,12 +21,13 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_series={0x9f}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for ec in aux.Next(eg) do
 		if ec:IsPreviousLocation(LOCATION_MZONE) then
-			if ec:IsPreviousControler(0) then 
+			if ec:IsPreviousControler(0) then
 				Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
-			else 
+			else
 				Duel.RegisterFlagEffect(1,id,RESET_PHASE+PHASE_END,0,1)
 			end
 		end
@@ -46,6 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local g=Duel.GetDecktopGroup(tp,ct):Filter(Card.IsSetCard,nil,0x9f)
 	local mg,lv=g:GetMaxGroup(Card.GetLevel)
+	if not mg then return end
 	local tg=mg:Filter(Card.IsCanBeSpecialSummoned,nil,e,0,tp,false,false)
 	if #tg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

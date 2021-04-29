@@ -1,4 +1,5 @@
 --スカーレッド・ノヴァ・ドラゴン
+--Red Nova Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -51,6 +52,7 @@ function s.initial_effect(c)
 	e6:SetCode(21142671)
 	c:RegisterEffect(e6)
 end
+s.material={70902743}
 s.listed_names={70902743}
 s.synchro_nt_required=1
 function s.atkval(e,c)

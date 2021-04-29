@@ -20,12 +20,12 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(s.searchtg)
 		e1:SetOperation(s.searchop)
 		Duel.RegisterEffect(e1,tp)
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetCode(EVENT_PHASE+PHASE_END)
-		e3:SetCountLimit(1)
-		e3:SetOperation(s.loseop)
-		Duel.RegisterEffect(e3,p)
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCode(EVENT_PHASE+PHASE_END)
+		e2:SetCountLimit(1)
+		e2:SetOperation(s.loseop)
+		Duel.RegisterEffect(e2,tp)
 	end
 	--1 flag = 1 counter
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
@@ -58,6 +58,7 @@ function s.searchtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function s.searchop(e,tp,eg,ep,ev,re,r,rp)
+	if not _replace_count then return end
 	_replace_count=_replace_count+1
 	if _replace_count>_replace_max then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -79,10 +80,11 @@ Duel.Draw = function(...)
 	local tp=tb[1]
 	local count=tb[2]
 	if (Duel.GetFlagEffect(tp,id)>2 and Duel.SelectYesNo(tp,aux.Stringid(id,0))) then
-		local g=Duel.SelectMatchingCard(tp,LOCATION_DECK,0,tp,count,count)
-		Duel.SendToHand(g,tp,REASON_EFFECT)
+		local g=Duel.SelectMatchingCard(tp,s.searchfilter,tp,LOCATION_DECK,0,count,count,nil)
+		Duel.SendtoHand(g,tp,REASON_EFFECT)
 		Duel.RegisterFlagEffect(tp,id+1,0,0,0)
+		return 0
 	else
-		ddr(...)
+		return ddr(...)
 	end
 end

@@ -1,10 +1,13 @@
---B・F－降魔弓のハマ 
+--Ｂ・Ｆ－降魔弓のハマ
 --Battlewasp – Hama the Conquering Bow
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Synchro summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
-	--double atk
+	--If synchro summoned using a synchro monster, can make a second attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -17,8 +20,8 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_MATERIAL_CHECK)
 	e2:SetValue(s.valcheck)
 	e2:SetLabelObject(e1)
-	c:RegisterEffect(e2)	
-	--atk
+	c:RegisterEffect(e2)
+	--Make all of opponent's monsters lose 1000 ATK/DEF
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
@@ -30,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.attg)
 	e3:SetOperation(s.atop)
 	c:RegisterEffect(e3)
-	--Damage
+	--Inflict damage, equal to number of "Battlewasp" monsters in GY x 300
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_DAMAGE)
@@ -60,6 +63,7 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={0x12f}
+
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if g:IsExists(Card.IsType,1,nil,TYPE_SYNCHRO) then
@@ -73,7 +77,10 @@ function s.tncon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	--Can make a second attack
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3201)
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(1)
@@ -81,7 +88,7 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.NOT(aux.FilterFaceupFunction(Card.IsStatus,STATUS_BATTLE_DESTROYED)),tp,0,LOCATION_MZONE,1,nil) end

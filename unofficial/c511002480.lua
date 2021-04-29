@@ -21,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.filter1(c,e,tp,ft)
 	return c:IsType(TYPE_SYNCHRO) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) 
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,c:GetCode(),e,tp)
+		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c:GetCode(),e,tp)
 end
 function s.filter2(c,tcode,e,tp)
 	return c:IsSetCard(0x104f) and c.assault_mode and c.assault_mode==tcode and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
@@ -36,29 +36,34 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.SelectReleaseGroupCost(tp,s.filter1,1,1,false,nil,nil,e,tp,ft)
 	Duel.SetTargetParam(rg:GetFirst():GetCode())
 	Duel.Release(rg,REASON_COST)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local code=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,code,e,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK,0,1,1,nil,code,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)>0 then
+		--Cannot be destroyed by battle this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
+		--Unaffected this turn
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e2:SetRange(LOCATION_MZONE)
+		e2:SetCode(EFFECT_IMMUNE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e2:SetValue(s.efilter)
+		e2:SetOwnerPlayer(tp)
 		tc:RegisterEffect(e2)
 		tc:CompleteProcedure()
 	end
 end
-function s.efilter(e,re,rp)
-	return e:GetHandlerPlayer()~=rp
+function s.efilter(e,re)
+	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end

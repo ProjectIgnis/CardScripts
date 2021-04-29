@@ -1,4 +1,5 @@
 --真竜皇バハルストスF
+--True King Bahrastos, the Fathomer
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -34,6 +35,8 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local loc=LOCATION_MZONE+LOCATION_HAND
+	if ft<0 then loc=LOCATION_MZONE end
 	local loc2=0
 	if Duel.IsPlayerAffectedByEffect(tp,88581108) then loc2=LOCATION_MZONE end
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE+LOCATION_HAND,loc2,c)

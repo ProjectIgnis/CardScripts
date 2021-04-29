@@ -1,12 +1,14 @@
 --水晶機巧－ハリファイバー
 --Crystron Halqifibrax
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	Link.AddProcedure(c,nil,2,2,s.lcheck)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--special summon tuner
+	--Link summon prcoedure
+	Link.AddProcedure(c,nil,2,2,s.lcheck)
+	--Special summon 1 level 3 or lower tuner monster from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -18,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.hsptg)
 	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
-	--special summon from the Extra Deck
+	--Special summon 1 synchro tuner monster from extra deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -34,8 +36,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-function s.lcheck(g,lc)
-	return g:IsExists(Card.IsType,1,nil,TYPE_TUNER)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsType,1,nil,TYPE_TUNER,lc,sumtype,tp)
 end
 function s.hspcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
@@ -54,7 +56,10 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.hspfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
+		--Cannot activate its effects
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3302)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

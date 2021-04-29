@@ -1,3 +1,4 @@
+--ファイナル・ライフ・ガードナー
 --Final Life Gardna
 --original script by Shad3
 local s,id=GetID()
@@ -21,7 +22,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.zero_op)
 	Duel.RegisterEffect(e1,tp)
 	Duel.SetLP(tp,100)
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end
 function s.zero_op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(tp,0)

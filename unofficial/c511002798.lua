@@ -1,3 +1,4 @@
+--カオス・ライジング
 --Chaos Rising
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,21 +12,21 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x1048}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return ep==tp and ev>=2000 and (a:IsSetCard(0x1048) or (d and d:IsSetCard(0x1048)))
+	return ep==tp and ev>=2000 and (a:IsSetCard(0x1048) and a:IsControler(1-tp) or (d and d:IsSetCard(0x1048) and d:IsControler(1-tp)))
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x1048) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if #g>0 then
 		local sg=g:RandomSelect(tp,1)

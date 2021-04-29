@@ -1,4 +1,5 @@
---Raidraptor - Rudder Strix
+--ＲＲ－ラダー・ストリクス (Anime)
+--Raidraptor - Rudder Strix (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetDescription(aux.Stringid(114932,0))
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetTarget(s.damtg)

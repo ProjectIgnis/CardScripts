@@ -49,7 +49,7 @@ function s.fmcon(e)
 	return e:GetHandler():IsInExtraMZone()
 end
 function s.fmval(e,c,fp,rp,r)
-	return e:GetHandler():GetLinkedZone(rp)
+	return e:GetHandler():GetLinkedZone(rp)|0x600060
 end
 function s.indcon(e)
 	return #(e:GetHandler():GetLinkedGroup():Filter(Card.IsType,nil,TYPE_MONSTER))>0

@@ -2,14 +2,14 @@
 --Sauropod Brachion
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot special summon
+	--Cannot special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetRange(LOCATION_DECK)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--summon with 1 tribute
+	--Summon with 1 tribute
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.otop)
 	e2:SetValue(SUMMON_TYPE_TRIBUTE)
 	c:RegisterEffect(e2)
-	--turn set
+	--Change itself to face-down
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_POSITION)
@@ -38,13 +38,13 @@ function s.initial_effect(c)
 	e4:SetTarget(s.postg2)
 	e4:SetOperation(s.posop2)
 	c:RegisterEffect(e4)
-	--damage amp
+	--Double damage
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e5:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e5:SetCondition(s.dcon)
-	e5:SetOperation(s.dop)
+	e5:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e5)
 end
 function s.otcon(e,c)
@@ -87,10 +87,6 @@ function s.posop2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 	Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 end
-function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return ep~=tp and Duel.GetAttackTarget()==c
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DoubleBattleDamage(ep)
+function s.dcon(e)
+	return Duel.GetAttackTarget()==e:GetHandler()
 end

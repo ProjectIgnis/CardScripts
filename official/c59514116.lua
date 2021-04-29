@@ -17,7 +17,7 @@ end
 s.listed_names={CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL}
 function s.costhint(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_OPTSELECTED,1-tp,e:GetDescription())
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function s.matcheck(tp,sg,fc)
 	return sg:IsExists(Card.IsSummonCode,1,nil,fc,SUMMON_TYPE_FUSION,tp,CARD_DARK_MAGICIAN,CARD_DARK_MAGICIAN_GIRL)

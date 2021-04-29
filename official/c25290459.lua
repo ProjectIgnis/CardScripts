@@ -15,16 +15,11 @@ end
 s.listed_series={0x41}
 function s.costfilter(c,e,tp)
 	if not c:IsSetCard(0x41) or not c:IsAbleToGraveAsCost() or not c:IsFaceup() then return false end
-	local class=c:GetMetatable(true)
-	if class==nil or class.listed_names==nil then return false end
-	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,class,e,tp)
+	return c.listed_names and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,c,e,tp)
 end
 function s.spfilter(c,class,e,tp)
-	local code=c:GetCode()
-	for i=1,#class.listed_names do
-		if code==class.listed_names[i] then	return c:IsCanBeSpecialSummoned(e,0,tp,true,true) end
-	end
-	return false
+	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
+		and class.listed_names and c:IsCode(table.unpack(class.listed_names))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
@@ -39,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.SendtoGrave(g,REASON_COST)
-	local code=g:GetFirst():GetCode()
+	local code=g:GetFirst():GetOriginalCode()
 	Duel.SetTargetParam(code)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end

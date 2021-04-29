@@ -2,8 +2,8 @@
 --Vision HERO Gravito
 --Scripted by AlphaKretin
 local s,id=GetID()
-function s.initial_effect(c)   
-	--add to hand
+function s.initial_effect(c)
+	--Add to hand 1 banished "HERO" to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon monsters from the Spell/Trap Zone
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -43,7 +43,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,tp,REASON_EFFECT)
 	end
 end
@@ -52,19 +52,20 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.spfilter(c,e,sp)
-	return c:IsFaceup() and c:IsSetCard(0x5008) and c:IsCanBeSpecialSummoned(e,0,sp,true,false)
+	return c:IsFaceup() and c:IsSetCard(0x5008) and c:GetSequence()<5 and c:IsCanBeSpecialSummoned(e,0,sp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_SZONE,0,2,nil,e,tp)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
+	if chk==0 then return ft>1 and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_SZONE,0,2,nil,e,tp)
+		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_SZONE,0,2,2,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)	
-	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+	local sg=Duel.GetTargetCards(e)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	if ft<#sg then return end

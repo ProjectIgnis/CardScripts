@@ -104,8 +104,6 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	local p=Duel.GetTurnPlayer()
 	if tc then
-		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TOZONE)
-		local zone=Duel.SelectDisableField(p,1,0,LOCATION_MZONE,0)>>16
-		Duel.GetControl(tc,1-p,0,0,zone)
+		Duel.GetControl(tc,1-p)
 	end
 end

@@ -1,7 +1,7 @@
 --Rank Revolution
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,s.filter,CATEGORY_DISABLE,nil,nil,0x1c0,s.condition)
+	aux.AddPersistentProcedure(c,0,s.filter,CATEGORY_DISABLE,nil,nil,TIMINGS_CHECK_MONSTER,s.condition)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DISABLE)

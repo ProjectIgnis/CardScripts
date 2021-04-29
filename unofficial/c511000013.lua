@@ -1,6 +1,6 @@
 --Jormungandr of the Nordic Wicked Dragons
 local s,id=GetID()
-function s.initial_effect(c)  
+function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--special summon
 	local e1=Effect.CreateEffect(c)

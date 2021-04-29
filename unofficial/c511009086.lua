@@ -1,4 +1,5 @@
---Double Cipher
+--二重光波 (Anime)
+--Double Cipher (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,11 +19,11 @@ function s.filter(c)
 end
 function s.spfilter(c,e,tp,ec)
 	return c:IsCode(18963306) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,nil,nil) end
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) 
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) 
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
@@ -34,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 	local og=tc:GetOverlayGroup()
 	if #og==0 then return end
-	if Duel.SendtoGrave(og,REASON_EFFECT)~=0 and Duel.GetLocationCountFromEx(tp)>0 then
+	if Duel.SendtoGrave(og,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 		if #g>0 then

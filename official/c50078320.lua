@@ -1,4 +1,5 @@
 --刻印の調停者
+--Engraver of the Mark
 local s,id=GetID()
 function s.initial_effect(c)
 	--Announce
@@ -50,7 +51,7 @@ function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(id,1))

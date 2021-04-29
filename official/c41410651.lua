@@ -1,5 +1,5 @@
 --斬機刀ナユタ
---Zan-Ki Equalizer Nayuta
+--Mathmech Billionblade Nayuta
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,6 +33,7 @@ s.listed_names={id}
 s.listed_series={0x132}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler():GetEquipTarget()
+	if not c then return false end
 	local bc=c:GetBattleTarget()
 	return bc and bc:IsFaceup()
 end

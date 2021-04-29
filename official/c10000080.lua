@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	e8:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e8:SetValue(aux.tgoval)
 	c:RegisterEffect(e8)
-	--spsummon
+	--special summon
 	local e9=Effect.CreateEffect(c)
 	e9:SetDescription(aux.Stringid(id,2))
 	e9:SetCategory(CATEGORY_SPECIAL_SUMMON)

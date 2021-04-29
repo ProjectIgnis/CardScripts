@@ -1,4 +1,5 @@
 --時械神 サディオン
+--Sadion, the Timelord (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_SUMMON_PROC)
 	e2:SetCondition(s.ntcon)
 	c:RegisterEffect(e2)
-	--indes
+	--Cannot be destroyed
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -31,7 +32,7 @@ function s.initial_effect(c)
 	e5:SetCondition(s.damcon)
 	e5:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	c:RegisterEffect(e5)
-	--LP
+	--Change LP
 	local e6=Effect.CreateEffect(c)
 	e6:SetCategory(CATEGORY_DAMAGE)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -41,7 +42,7 @@ function s.initial_effect(c)
 	e6:SetCondition(s.thcon)
 	e6:SetOperation(s.thop)
 	c:RegisterEffect(e6)
-	--to deck
+	--Send itself to deck
 	local e7=Effect.CreateEffect(c)
 	e7:SetDescription(aux.Stringid(id,1))
 	e7:SetCategory(CATEGORY_TODECK)

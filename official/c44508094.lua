@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(aux.StardustCost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -37,20 +37,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetChainInfo(ev-1,CHAININFO_TRIGGERING_EFFECT):IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-#tg>0
-end
-function s.cfcost(c)
-	return c:IsCode(84012625) and c:IsAbleToRemoveAsCost()
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=e:GetHandler():IsReleasable()
-	local b2=Duel.IsExistingMatchingCard(s.cfcost,tp,LOCATION_GRAVE,0,1,nil)
-	if chk==0 then return b1 or b2 end
-	if b2 and (not b1 or Duel.SelectYesNo(tp,aux.Stringid(84012625,0))) then
-		local tg=Duel.GetFirstMatchingCard(s.cfcost,tp,LOCATION_GRAVE,0,nil)
-		Duel.Remove(tg,POS_FACEUP,REASON_COST)
-	else
-		Duel.Release(e:GetHandler(),REASON_COST)
-	end	
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

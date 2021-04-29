@@ -1,14 +1,15 @@
 --ワンダー・ワンド
+--Wonder Wand
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_SPELLCASTER))
-	--Atk up
+	--increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
-	--draw
+	--send to the gy and draw
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_DRAW)
@@ -22,9 +23,10 @@ function s.initial_effect(c)
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() and c:GetControler()==c:GetEquipTarget():GetControler()
-		and c:GetEquipTarget():IsAbleToGraveAsCost() end
-	local g=Group.FromCards(c,c:GetEquipTarget())
+	local ec=c:GetEquipTarget()
+	if chk==0 then return c:IsAbleToGraveAsCost() and ec and c:GetControler()==ec:GetControler()
+		and ec:IsAbleToGraveAsCost() end
+	local g=Group.FromCards(c,ec)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

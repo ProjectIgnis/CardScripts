@@ -2,7 +2,7 @@
 --Phantom of Chaos
 local s,id=GetID()
 function s.initial_effect(c)
-	--copy
+	--Copy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--no battle damage
+	--No battle damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_NO_BATTLE_DAMAGE)

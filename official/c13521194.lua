@@ -1,7 +1,8 @@
 --ヘルウェイ・パトロール
+--Stygian Street Patrol
 local s,id=GetID()
 function s.initial_effect(c)
-	--damage
+	--Damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.damtarget)
 	e1:SetOperation(s.damoperation)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -27,8 +28,11 @@ function s.damtarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	local m=0
-	if a==e:GetHandler() then m=d:GetLevel()*100
-	else m=a:GetLevel()*100 end
+	if a==e:GetHandler() then
+		m=d:GetLevel()*100
+	else
+		m=a:GetLevel()*100
+	end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(m)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,m)

@@ -21,8 +21,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.doperation)
 	c:RegisterEffect(e2)
 end
-function s.lcheck(g,lc)
-	return g:GetClassCount(Card.GetCode)==#g
+function s.lcheck(g,lc,sumtype,tp)
+	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
 end
 function s.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsLevelAbove(7)

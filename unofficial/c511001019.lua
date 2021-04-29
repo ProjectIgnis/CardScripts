@@ -1,4 +1,5 @@
 --シャイニング・リバース
+--Shining Rebirth
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -51,14 +52,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(Synchro.Target(table.unpack(t)))
 		e1:SetOperation(Synchro.Operation)
 		e1:SetValue(SUMMON_TYPE_SYNCHRO)
-		e1:SetReset(RESET_CHAIN)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		Duel.SynchroSummon(tp,tc,nil)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

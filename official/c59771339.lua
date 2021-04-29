@@ -1,4 +1,5 @@
 --ジャンク・バーサーカー
+--Junk Berserker
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -26,6 +27,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
+s.material={63977008}
+s.listed_names={63977008}
 s.listed_series={0x43}
 s.material_setcode=0x1017
 function s.tfilter(c,lc,stype,tp)

@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={id}
 s.counter_place_list={COUNTER_SPELL}
 s.listed_series={0x10d}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
@@ -64,7 +65,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_EXTRA,0,1,1,nil)
-		if #g>0 and Duel.SendtoDeck(g,nil,2,REASON_EFFECT)~=0 then
+		if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 then
 			Duel.BreakEffect()
 			Duel.ShuffleDeck(tp)
 			Duel.Draw(tp,1,REASON_EFFECT)

@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	--draw
 	local e5=Effect.CreateEffect(c)
-	e5:SetCategory(CATEGORY_DRAW)   
+	e5:SetCategory(CATEGORY_DRAW)
 	e5:SetDescription(aux.Stringid(id,2))
 	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e5:SetType(EFFECT_TYPE_IGNITION)

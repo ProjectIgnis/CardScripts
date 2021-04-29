@@ -1,6 +1,6 @@
 --ハイドライブ・プロテクション
 --Hydradrive Protection
---scripted by pyrQ
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--leave field
+	--Leave field
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_LEAVE_FIELD)
@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x577}
 function s.monfilter(c)
 	return c:IsLinkMonster() and c:IsSetCard(0x577) and c:IsFaceup()
 end
@@ -38,8 +39,8 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if #tg<1 then return end
+	local tg=Duel.GetTargetCards(e)
+	if #tg<2 then return end
 	local tc1=tg:GetFirst()
 	tc1:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	local tc2=tg:GetNext()
@@ -68,16 +69,20 @@ function s.protop(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=g:GetFirst()
 	local tc2=g:GetNext()
 	--cannot destroy
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	tc1:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e2:SetValue(1)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	tc2:RegisterEffect(e2)
+	if tc1 then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc1:RegisterEffect(e1)
+	end
+	if tc2 then
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e2:SetValue(1)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc2:RegisterEffect(e2)
+	end
 end

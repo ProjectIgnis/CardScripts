@@ -1,10 +1,13 @@
---No.107 銀河眼の時空竜
+--Ｎｏ．１０７ 銀河眼の時空竜
+--Number 107: Galaxy-Eyes Tachyon Dragon
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,8,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--negate
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,8,2)
+	--Negate all other monsters on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -16,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--
+	--Can gain ATK and make a second attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetRange(LOCATION_MZONE)
@@ -26,6 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.xyz_number=107
+
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
@@ -92,13 +96,17 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	--Gains 1000 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(1000)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_BATTLE)
 	c:RegisterEffect(e1)
+	--Can make a second attack
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(3201)
+	e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_EXTRA_ATTACK)
 	e2:SetValue(1)

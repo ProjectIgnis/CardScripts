@@ -1,8 +1,9 @@
+--トラップリン
 --Traplin
 --By Shad3
 local s,id=GetID()
 function s.initial_effect(c)
-	--SpSummon proc
+	--Special Summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -14,18 +15,24 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spfilter(c,tp)
-	return c:GetType()&(TYPE_TRAP+TYPE_CONTINUOUS)==(TYPE_TRAP+TYPE_CONTINUOUS) and c:IsFaceup() and c:IsReleasable() 
+	return (c:IsType(TYPE_TRAP) and c:IsType(TYPE_CONTINUOUS)) and c:IsReleasable() and (not tp or Duel.GetMZoneCount(tp,c)>0)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),s.spfilter,1,false,1,true,c,c:GetControler(),nil,false,nil)
+	local g=Duel.GetMatchingGroup(s.spfilter,c:GetControler(),LOCATION_ONFIELD,0,nil,tp)
+	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),EFFECT_CANNOT_RELEASE) and #g>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,s.spfilter,1,1,false,true,true,c,nil,nil,false,nil)
-	if g then
-		g:KeepAlive()
-		e:SetLabelObject(g)
-	return true
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_ONFIELD,0,nil)
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+	local dg=sg:Filter(Card.IsFacedown,nil)
+    	if #dg>0 then
+		Duel.ConfirmCards(1-tp,dg)
+	end
+	if sg then
+		sg:KeepAlive()
+		e:SetLabelObject(sg)
+		return true
 	end
 	return false
 end

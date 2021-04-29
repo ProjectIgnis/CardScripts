@@ -1,3 +1,4 @@
+--エース・オブ・ワンド
 --Ace of Wand
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,9 +1,9 @@
 --終焉の覇王デミス
--- Demise, Supreme King of Armageddon
+--Demise, Supreme King of Armageddon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--code
+	--Change name
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE+LOCATION_HAND)
 	e1:SetValue(72426662)
 	c:RegisterEffect(e1)
-	--indes
+	--Prevent battle destruction
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.indtg)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy cards
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.costchange)
 	c:RegisterEffect(e4)
 end
+s.listed_names={72426662}
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_RITUAL)
@@ -77,7 +78,7 @@ function s.costcon(e)
 	return c:GetSummonType()==SUMMON_TYPE_RITUAL and #mg>0 and not mg:IsExists(s.mfilter1,1,nil)
 end
 function s.costchange(e,re,rp,val)
-	if re and re:GetHandler()==e:GetHandler() then
+	if re and re:IsActivated() and re:GetHandler()==e:GetHandler() then
 		return 0
 	else
 		return val

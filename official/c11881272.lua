@@ -3,16 +3,16 @@
 --Scripted by Randuin and AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip only to lvl 5+ hero
+	--Equip only to lvl 5+ hero
 	aux.AddEquipProcedure(c,nil,s.filter)
-	--gain atk equal to def
+	--Provide ATK equal to the DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetCondition(s.tgocon)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	--untargetable
+	--Prevent effect target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.tgocon)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
-	--activate field
+	--Activate 1 Field Spell
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.acttg)
 	e3:SetOperation(s.actop)
 	c:RegisterEffect(e3)
-	--destroy
+	--Second attack in a row
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -66,7 +66,7 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
 	return ec==eg:GetFirst() and ec==Duel.GetAttacker()
-		 and ec:IsStatus(STATUS_OPPO_BATTLE) and ec:CanChainAttack()
+		and ec:IsStatus(STATUS_OPPO_BATTLE) and ec:CanChainAttack()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -75,4 +75,3 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChainAttack()
 end
-

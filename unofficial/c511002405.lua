@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #ag<=0 or Duel.SelectYesNo(tp,31) then
 		Duel.CalculateDamage(tc,nil)
 	else
-		Duel.Hint(HINT_SELECTMSG,tp,549)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACKTARGET)
 		Duel.CalculateDamage(tc,ag:Select(tp,1,1,nil):GetFirst())
 	end
 end

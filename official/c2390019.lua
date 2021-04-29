@@ -24,9 +24,9 @@ function s.initial_effect(c)
 end
 s.listed_series={0xf}
 function s.ffilter(c,e,tp,rg,ft)
-	if not c.material then return false end
+	if not (c.material and c:IsType(TYPE_FUSION)) then return false end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp,table.unpack(c.material))
-	return #g>0 and c:IsType(TYPE_FUSION) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_MACHINE) 
+	return #g>0 and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_MACHINE) 
 		and aux.SelectUnselectGroup(rg,e,tp,nil,1,s.rescon1(g,ft),0)
 end
 function s.cfilter(c)

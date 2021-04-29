@@ -56,6 +56,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.reccon)
 		e1:SetTarget(s.rectg)
 		e1:SetOperation(s.recop)
+		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

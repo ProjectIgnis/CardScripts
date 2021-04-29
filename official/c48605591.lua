@@ -47,16 +47,12 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)<=3
 end
 function s.mvalue(e,fp,rp,r)
-	if r~=LOCATION_REASON_TOFIELD then return 5 end
+	if r~=LOCATION_REASON_TOFIELD then return 99 end
 	return 3
 end
 function s.svalue(e,fp,rp,r)
-	if r~=LOCATION_REASON_TOFIELD then return 5 end
-	local ct=3
-	for i=5,7 do
-		if Duel.GetFieldCard(fp,LOCATION_SZONE,i) then ct=ct-1 end
-	end
-	return ct
+	if r~=LOCATION_REASON_TOFIELD then return 99 end
+	return 3-Duel.GetFieldGroupCount(fp,LOCATION_FZONE,0)
 end
 function s.aclimit(e,re,tp)
 	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end

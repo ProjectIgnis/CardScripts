@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x574}
+s.listed_series={0x1157}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x574)
+	return c:IsFaceup() and c:IsSetCard(0x1157)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
@@ -46,7 +46,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-	   Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function s.cfilter(c,e,tp)

@@ -28,21 +28,21 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10f,0x102}
 function s.tgfilter(c,e,tp)
-	return c:IsSetCard(0x10f) and c:IsType(TYPE_LINK) and Duel.IsExistingMatchingCard(s.exfilter,tp,LOCATION_EXTRA,0,1,nil,c,e,tp)
+	return c:IsSetCard(0x10f) and c:IsType(TYPE_LINK)and Duel.IsExistingMatchingCard(s.exfilter,tp,LOCATION_EXTRA,0,1,nil,c,e,tp)
 end
 function s.exfilter(c,rel,e,tp)
-	return c:IsSetCard(0x10f) and c:IsType(TYPE_LINK) and c:GetLink()==rel:GetLink() and c:GetCode()~=rel:GetCode() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x10f) and c:IsType(TYPE_LINK) and c:GetLink()==rel:GetLink()
+		and c:GetCode()~=rel:GetCode() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chck then return chck:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tgfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
-		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	local tg=Duel.GetFirstTarget()
 	if tg and tg:IsRelateToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

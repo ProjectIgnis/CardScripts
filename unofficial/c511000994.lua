@@ -1,4 +1,5 @@
---ZW－Sylphid Wing
+-- ＺＷ－天風精霊翼 (Anime)
+--ZW－Sylphid Wing (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -70,8 +71,11 @@ end
 function s.eqlimit(e,c)
 	return c:IsCode(84013237)
 end
+function s.atkfilter(c,tp)
+	return c:IsType(TYPE_XYZ) and c:IsSummonPlayer(1-tp)
+end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsType,1,nil,TYPE_XYZ) and ep~=tp
+	return eg:IsExists(s.atkfilter,1,nil,tp) 
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

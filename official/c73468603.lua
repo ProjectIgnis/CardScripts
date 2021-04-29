@@ -54,7 +54,7 @@ function s.con(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_FIELD) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():GetFlagEffect(id)==0
+	return re and re:IsActiveType(TYPE_FIELD) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():GetFlagEffect(id)==0
 end
 function s.setlimit(e,c,tp)
 	return c:IsType(TYPE_FIELD) and c:GetFlagEffect(id)==0

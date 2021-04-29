@@ -1,5 +1,5 @@
 --ファイナル・ギアス
---FInal Geas
+--Final Geas
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	aux.GlobalCheck(s,function()
 		s[0]=false
 		s[1]=false

@@ -1,4 +1,5 @@
 --EMホタルクス
+--Performapal Fireflux
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -43,6 +44,6 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) and Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
 end

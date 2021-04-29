@@ -1,4 +1,5 @@
 --オッドアイズ・グラビティ・ドラゴン
+--Odd-Eyes Gravity Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	--accumulate
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(0x10000000+id)
+	e3:SetCode(id)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(0,1)
@@ -48,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(sg,nil,REASON_EFFECT)
 end
 function s.costchk(e,te_or_c,tp)
-	local ct=Duel.GetFlagEffect(tp,id)
+	local ct=#{Duel.GetPlayerEffect(tp,id)}
 	return Duel.CheckLPCost(tp,ct*500)
 end
 function s.costop(e,tp,eg,ep,ev,re,r,rp)

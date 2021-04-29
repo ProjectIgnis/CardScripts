@@ -1,15 +1,17 @@
 --究極幻神 アルティミトル・ビシバールキン
 --Phantasmal Lord Ultimitl Bishbaalkin
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--spsummon condition
+	--Must be special summoned by its own method
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--special summon rule
+	--Special summon procedure (from extra deck)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -19,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sprtg)
 	e2:SetOperation(s.sprop)
 	c:RegisterEffect(e2)
-	--battle indestructable
+	--Cannot be destroyed by card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -27,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	--atk up
+	--Gains 1000 ATK per monster on the field
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_UPDATE_ATTACK)
@@ -35,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetValue(s.atkval)
 	c:RegisterEffect(e4)
-	--token
+	--Special summon tokens to each player's field
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -59,8 +61,7 @@ function s.sprfilter1(c,tp,g,sc)
 end
 function s.sprfilter2(c,tp,mc,sc,lv)
 	local sg=Group.FromCards(c,mc)
-	return c:GetLevel()==lv and not c:IsType(TYPE_TUNER)
-		and Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0
+	return c:GetLevel()==lv and not c:IsType(TYPE_TUNER) and Duel.GetLocationCountFromEx(tp,tp,sg,sc)>0
 end
 function s.sprcon(e,c)
 	if c==nil then return true end
@@ -69,13 +70,14 @@ function s.sprcon(e,c)
 	return g:IsExists(s.sprfilter1,1,nil,tp,g,c)
 end
 function s.sprtg(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.sprfilter,tp,LOCATION_MZONE,0,nil)
 	local g1=g:Filter(s.sprfilter1,nil,tp,g,c)
-	local mg1=aux.SelectUnselectGroup(g1,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE,nil,nil,true)
+	local mg1=aux.SelectUnselectGroup(g1,e,tp,1,1,nil,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
 	if #mg1>0 then
 		local mc=mg1:GetFirst()
 		local g2=g:Filter(s.sprfilter2,mc,tp,mc,c,mc:GetLevel())
-		local mg2=aux.SelectUnselectGroup(g2,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE,nil,nil,true)
+		local mg2=aux.SelectUnselectGroup(g2,e,tp,1,1,nil,1,tp,HINTMSG_TOGRAVE,nil,nil,true)
 		mg1:Merge(mg2)
 	end
 	if #mg1==2 then
@@ -95,8 +97,7 @@ function s.atkval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,LOCATION_MZONE)*1000
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -125,9 +126,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 	end
 	if c:IsRelateToEffect(e) then
+		--Cannot attack
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3206)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)

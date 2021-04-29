@@ -1,9 +1,11 @@
---アルカナフォースEX－THE DARK RULER
+--アルカナフォースＥＸ－ＴＨＥ ＤＡＲＫ ＲＵＬＥＲ
 --Arcana Force EX - The Dark Ruler
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--special summon procedure
+	--Special summon procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -13,13 +15,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--cannot special summon
+	--Must be special summoned by its own method
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e2)
-	--coin register
+	--Toss a coin and apply appropriate effect, base on result
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_COIN)
@@ -30,6 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.toss_coin=true
+
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
@@ -68,7 +71,7 @@ function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	s.arcanareg(c,res)
 end
 function s.arcanareg(c,coin)
-	--coin effect
+	--Heads: can make a second attack, change itself to defense position after second attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
@@ -85,19 +88,19 @@ function s.arcanareg(c,coin)
 	e2:SetOperation(s.posop)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)
-	--
+	--Tails: if this card is destroyed, destroy all cards on the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_LEAVE_FIELD_P)
 	e3:SetOperation(s.desop1)
 	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e3)
-	--
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_LEAVE_FIELD)
 	e4:SetOperation(s.desop2)
-	e4:SetReset(RESET_EVENT+RESETS_CANNOT_ACT)
+	e4:SetReset(RESET_EVENT+RESET_OVERLAY+RESET_TOFIELD)
+	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
 	c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
 end
@@ -114,20 +117,22 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 	end
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3313)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_COPY_INHERIT)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
 	c:RegisterEffect(e1)
 end
 function s.desop1(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetFlagEffectLabel(36690018)==0 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_CANNOT_ACT,0,1)
-	end
+		e:SetLabel(1)
+	else e:SetLabel(0) end
 end
 function s.desop2(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():GetFlagEffect(id)~=0 then
+	if e:GetLabelObject() and e:GetLabelObject():GetLabel()~=0 then
 		local g=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
+	e:Reset()
 end

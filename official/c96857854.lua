@@ -1,8 +1,9 @@
 --ダイヤモンドダストン
 --Diamond Duston
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon "Duston" monsters to either field
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special summon itself from GY as a monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -28,6 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x80}
+
 function s.cfilter(c)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
@@ -100,10 +102,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:AddMonsterAttribute(TYPE_NORMAL)
 		c:AssumeProperty(ASSUME_RACE,RACE_FIEND)
 		Duel.SpecialSummonStep(c,0,tp,1-tp,true,false,POS_FACEUP_DEFENSE)
-		c:AddMonsterAttributeComplete()	
+		c:AddMonsterAttributeComplete()
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3303)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 		e1:SetValue(1)
@@ -115,16 +118,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e3:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
-		e3:SetValue(1)
+		e3:SetCode(EFFECT_CANNOT_BE_MATERIAL)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetValue(aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ))
 		c:RegisterEffect(e3,true)
-		local e4=e3:Clone()
-		e4:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
-		c:RegisterEffect(e4,true)
-		local e5=e3:Clone()
-		e5:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-		c:RegisterEffect(e5,true)
 		Duel.SpecialSummonComplete()
 	end
 end

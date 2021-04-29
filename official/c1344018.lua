@@ -2,13 +2,13 @@
 --Time Pendulumgraph
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
-	--Cannot target
+	--Prevent effect target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_SPELLCASTER))
 	e2:SetValue(s.evalue)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy 2 cards
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DESTROY)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x98}
 function s.evalue(e,re,rp)
-	return re:IsActiveType(TYPE_TRAP) and rp~=e:GetHandlerPlayer()
+	return re:IsActiveType(TYPE_TRAP) and rp==1-e:GetHandlerPlayer()
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)

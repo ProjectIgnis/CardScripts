@@ -1,9 +1,10 @@
---スキエルＡ３
---Skiel Attack 3
+--スキエルＡ３ (TF6)
+--Skiel Attack 3 (TF6)
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -54,14 +55,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
-function s.filter(c)
-	return c:IsFaceup() and c:CanAttack()
-end
+s.filter=aux.FilterFaceupFunction(Card.CanAttack)
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
@@ -84,6 +83,6 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_SET_ATTACK)
 		e2:SetValue(tc:GetAttack()/2)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e2)		
+		tc:RegisterEffect(e2)
 	end
 end

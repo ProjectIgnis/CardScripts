@@ -1,7 +1,6 @@
---Substitution Shield
 --身代わりの盾
---  By Shad3
---cleaned and updated by MLD
+--Substitution Shield
+--scripted by Shad3, cleaned and updated by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

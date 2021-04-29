@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_BATTLE_DAMAGE)
-	e1:SetCountLimit(1,id)--+EFFECT_COUNT_CODE_OATH
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return ep==tp and Duel.GetBattleDamage(ep)>=1000 end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	--SpSummon
+	--Special Summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(8062132,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -78,11 +78,12 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.spfilter(c,e,tp,ct)
-	return c:IsSetCard(0x577) and c:IsLinkMonster() and c:IsLink(ct) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x577) and c:IsLinkMonster() and c:IsLink(ct)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,e:GetHandler():GetCounter(0xda)) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,e:GetHandler():GetCounter(0xda)) end
 	Duel.SetTargetParam(e:GetLabel())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end

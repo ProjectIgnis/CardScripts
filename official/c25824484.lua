@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
 	else
-		Duel.MoveSequence(tc,1)
+		Duel.MoveToDeckBottom(tc)
 	end
 end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
@@ -49,9 +49,12 @@ function s.sdop(e,tp,eg,ep,ev,re,r,rp)
 	if ct==0 then return end
 	local ac=1
 	if ct>1 then
-		Duel.Hint(HINGMSG_NUMBER,tp,HINT_NUMBER)
-		if ct==2 then ac=Duel.AnnounceNumber(tp,1,2)
-		else ac=Duel.AnnounceNumber(tp,1,2,3) end
+		Duel.Hint(HINTMSG_NUMBER,tp,HINT_NUMBER)
+		if ct==2 then
+			ac=Duel.AnnounceNumber(tp,1,2)
+		else
+			ac=Duel.AnnounceNumber(tp,1,2,3)
+		end
 	end
 	Duel.SortDecktop(tp,tp,ac)
 end

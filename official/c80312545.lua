@@ -1,5 +1,5 @@
 --七精の解門
---The Seven Spirit Gates Unleashed
+--Opening of the Spirit Gates
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -60,7 +60,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.spfilter(c,e,tp)
-	return c:IsRace(RACE_FIEND) and c:GetAttack()==0 and c:GetDefense()==0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_FIEND) and c:IsAttack(0) and c:IsDefense(0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

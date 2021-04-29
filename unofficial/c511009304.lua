@@ -61,6 +61,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
+s.listed_series={0x19}
 s.material_setcode=0x19
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsSetCard(0x19,fc,sumtype,tp) and c:GetLevel()>=5
@@ -76,7 +77,7 @@ function s.contactop(g,tp)
 	if #cg>0 then
 		Duel.ConfirmCards(1-tp,cg)
 	end
-	Duel.SendtoDeck(g,nil,2,REASON_COST+REASON_MATERIAL)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)
 end
 function s.espfilter(c,e,tp)
 	return c:IsSetCard(0x19) and c:IsType(TYPE_FUSION) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,124,tp,true,false)
@@ -156,7 +157,7 @@ function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler(),ft) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,e:GetHandler(),ft)
-	Duel.SendtoDeck(g,nil,2,REASON_COST)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.spfilter2(c,e,tp)
 	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,124,tp,false,false)

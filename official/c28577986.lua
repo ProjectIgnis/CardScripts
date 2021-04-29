@@ -43,10 +43,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local slv=tc:GetLevel()
 	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,slv,e,tp)
 	if #sg==0 then return end
-	local tg=aux.SelectUnselectGroup(sg,e,tp,1,nil,s.rescon(slv),1,tp,HINTMSG_SPSUMMON)
+	local tg=aux.SelectUnselectGroup(sg,e,tp,1,ft,s.rescon(slv),1,tp,HINTMSG_SPSUMMON)
 	Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
 	Duel.BreakEffect()
 	Duel.SendtoGrave(tc,REASON_EFFECT)

@@ -3,6 +3,7 @@
 --anime version scripted by pyrQ, changes in OCG version by Naim
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x119)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -12,12 +13,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCode(EFFECT_ADD_SETCODE)
-	e2:SetValue(0x119)
-	c:RegisterEffect(e2)
 end
 s.listed_series={0x119}
 function s.filter(c,e,tp)
@@ -83,7 +78,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)	
+	Duel.RegisterEffect(e1,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp)
 end
 function s.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA)

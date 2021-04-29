@@ -2,7 +2,7 @@
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--damage
+	--Inflict effect damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -20,13 +20,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target0)
 	e2:SetOperation(s.operation0)
 	c:RegisterEffect(e2)
-	--atk update
+	--ATK increase
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_SET_BASE_ATTACK)
 	e3:SetValue(function (e) return 800*e:GetHandler():GetOverlayGroup():FilterCount(Card.IsType,nil,TYPE_MONSTER) end)
 	c:RegisterEffect(e3)
-	--add effect
+	--Add to hand when destroying a monster by battle
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_BATTLED)
@@ -74,18 +74,18 @@ end
 function s.target1(e,tp,eg,ev,ep,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToDeck() and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil) end
-	local tg=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_DECK,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,tg:AddCard(c),2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,tp,true,false) and c:IsType(TYPE_MONSTER) and c:IsCubicSeed()
 end
 function s.operation1(e,tp,eg,ev,ep,re,r,rp)
-	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
 	local mg=c:GetOverlayGroup()
-	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,0,REASON_EFFECT)~=0 then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+	if Duel.SendtoDeck(c,nil,0,REASON_EFFECT)~=0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local tg=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_DECK,0,1,1,nil)
+		if tg and #tg>0 then Duel.SendtoHand(tg,nil,REASON_EFFECT) end
 		local count=#mg
 		mg=mg:Filter(s.spfilter,nil,e,tp)
 		if #mg<count then return end

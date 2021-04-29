@@ -1,3 +1,4 @@
+--トライアングル・ギミック・ボックス
 --Triangle Gimmick Box
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,19 +13,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e)
-	return c:IsType(TYPE_XYZ) and c:IsAbleToRemove() and (not e or not c:IsCanBeEffectTarget(e)) and aux.SpElimFilter(c,true)
+	return c:IsType(TYPE_XYZ) and c:IsAbleToRemove() and (not e or c:IsCanBeEffectTarget(e)) and aux.SpElimFilter(c,true)
 end
-function s.spfilter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsType(TYPE_XYZ)
+function s.spfilter(c,e,tp,sg)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsType(TYPE_XYZ) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
 end
 function s.rescon(sg,e,tp,mg)
-	return Duel.GetLocationCountFromEx(tp,tp,sg)>0
+	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,e)
-	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,0) 
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,0) end
 	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,1,tp,HINTMSG_REMOVE)
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,sg,3,0,0)
@@ -32,13 +32,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=3 then return end
-	Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
-	Duel.BreakEffect()
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
+	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=3 or Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)~=3 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
-	local tc=g:GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tg):GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -50,6 +46,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
-		end
+	end
 	Duel.SpecialSummonComplete()
 end

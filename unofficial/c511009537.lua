@@ -1,8 +1,9 @@
---Supreme King Wrath
+--覇王の逆鱗 (Anime)
+--Supreme Rage (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -40,7 +41,7 @@ function s.cfilter(c,code)
 	return c:IsFaceup() and c:IsCode(code)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END and s[tp]>=2000 
+	return Duel.GetCurrentPhase()==PHASE_END and s[tp]>=2000
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil,13331639)
 end
 function s.desfilter(c)
@@ -56,10 +57,10 @@ function s.spfilterchk(c,g,sg,code,...)
 	else return true end
 end
 function s.rescon(mft,exft,ft,ect)
-	return	function(sg,e,tp,mg)
+	return function(sg,e,tp,mg)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				local mct=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
-				return (not ect or ect>=exct) and exft>=exct and mft>=mct and ft>=#sg 
+				return (not ect or ect>=exct) and exft>=exct and mft>=mct and ft>=#sg
 					and sg:IsExists(s.spfilterchk,nil,sg,Group.CreateGroup(),43387895,70771599,42160203,96733134)
 			end
 end
@@ -67,8 +68,6 @@ function s.spfilter(c,e,tp)
 	return c:IsCode(43387895,70771599,42160203,96733134) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if chk==0 then
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return false end
 		local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
@@ -76,8 +75,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)+dg:FilterCount(function(c) return c:GetSequence()<5 end,nil)
 		local ftt=Duel.GetUsableMZoneCount(tp)
 		local ftex=Duel.GetLocationCountFromEx(tp,tp,dg)
-		return sg:IsExists(Card.IsCode,1,nil,43387895) and sg:IsExists(Card.IsCode,1,nil,70771599) and sg:IsExists(Card.IsCode,1,nil,42160203) and sg:IsExists(Card.IsCode,1,nil,96733134)
-			and aux.SelectUnselectGroup(sg,e,tp,4,4,s.rescon(ft,ftex,ftt,ect),0)
+		return sg:IsExists(Card.IsCode,1,nil,43387895) and sg:IsExists(Card.IsCode,1,nil,70771599)
+			and sg:IsExists(Card.IsCode,1,nil,42160203) and sg:IsExists(Card.IsCode,1,nil,96733134)
+			and aux.SelectUnselectGroup(sg,e,tp,4,4,s.rescon(ft,ftex,ftt,aux.CheckSummonGate(tp)),0)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,4,tp,LOCATION_EXTRA+LOCATION_GRAVE)
 end
@@ -85,15 +85,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
 	if Duel.Destroy(dg,REASON_EFFECT)>0 or #dg==0 then
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-		local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-		local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local ftt=Duel.GetUsableMZoneCount(tp)
 		local ftex=Duel.GetLocationCountFromEx(tp)
 		if ftt<=3 then return end
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_EXTRA+LOCATION_GRAVE,0,nil,e,tp)
 		if #g<=3 then return end
-		local spg=aux.SelectUnselectGroup(g,e,tp,4,4,s.rescon(ft,ftex,ftt,ect),1,tp,HINTMSG_SPSUMMON)
+		local spg=aux.SelectUnselectGroup(g,e,tp,4,4,s.rescon(ft,ftex,ftt,aux.CheckSummonGate(tp)),1,tp,HINTMSG_SPSUMMON)
 		if #spg<=3 then return end
 		if Duel.SpecialSummon(spg,0,tp,tp,false,false,POS_FACEUP) > 0 then
 			for tc in aux.Next(spg) do

@@ -1,4 +1,5 @@
 --アトリビュート・ボム
+--Attribute Bomb
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,nil,nil,nil,s.tg)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,tc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	local att=Duel.AnnounceAttribute(tp,1,0xffff)
+	local att=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL)
 	e:GetHandler():RegisterFlagEffect(10000197,RESET_EVENT+RESETS_STANDARD,0,1,att)
 	e:GetHandler():SetHint(CHINT_ATTRIBUTE,att)
 end

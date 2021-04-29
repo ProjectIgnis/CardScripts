@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(id0)
+	e3:SetCode(id+1000)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
@@ -77,7 +77,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,g)
-  return g:IsContains(c)
+	return g:IsContains(c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -90,7 +90,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetRange(LOCATION_MZONE)
@@ -110,6 +110,6 @@ function s.mvchk(e,tp,eg,ep,ev,re,r,rp)
 		e:SetLabel(c:GetSequence())
 	elseif c:GetSequence()~=e:GetLabel() or c:GetControler()~=c:GetPreviousControler() then
 		e:SetLabel(c:GetSequence())
-		Duel.RaiseSingleEvent(c,id0,e,0,0,0,0)
+		Duel.RaiseSingleEvent(c,id+1000,e,0,0,0,0)
 	end
 end

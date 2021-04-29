@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	local e4=e2:Clone()
 	e4:SetCode(EVENT_SPSUMMON)
 	c:RegisterEffect(e4)
-	--spsummon
+	--special summon
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -41,10 +41,10 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_names={97836203}
+s.listed_names={CARD_ASSAULT_MODE,97836203}
 s.assault_mode=97836203
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=ep and Duel.GetCurrentChain()==0
+	return tp==1-ep and Duel.GetCurrentChain()==0
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -83,4 +83,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
 	end
 end
-

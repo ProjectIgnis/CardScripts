@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--cannot be target
+	--Cannot be target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	c:RegisterEffect(e3)
-	--damage
+	--Damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_DAMAGE)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.damtg)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
-	--search
+	--Search
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -65,7 +65,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,v,REASON_EFFECT)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&0x41)==0x41 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+	return (r&(REASON_EFFECT+REASON_DESTROY))==(REASON_EFFECT+REASON_DESTROY) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c)
 	return c:IsAttribute(ATTRIBUTE_DIVINE) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

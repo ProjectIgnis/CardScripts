@@ -1,5 +1,5 @@
 --Contract of Mask
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcGreaterCode(c,511001809)
+	Ritual.AddProcGreaterCode(c,6,nil,511001809)
 end

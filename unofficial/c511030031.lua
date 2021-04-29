@@ -21,11 +21,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	e2:SetLabelObject(e1)
 end
+s.listed_series={0x578}
 function s.linkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(e:GetHandler())
 end
 function s.linkfilter(c,e,tp)
-	return c and c:IsLinkMonster() and c:IsSetCard(0x578) and c:IsFaceup() and c:IsControler(tp)
+	return c:IsLinkMonster() and c:IsSetCard(0x578) and c:IsControler(tp)
 		and (e:GetHandler():GetLinkedGroup():IsContains(c) or c:GetLinkedGroup():IsContains(e:GetHandler()))
 end
 function s.linkop(e,tp,eg,ep,ev,re,r,rp)

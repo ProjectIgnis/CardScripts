@@ -1,3 +1,4 @@
+--ジェスター・クィーン
 --Jester Queen
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,25 +11,29 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sttg)
 	e1:SetOperation(s.stop)
 	c:RegisterEffect(e1)
-	--Mulitple Attacks
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_EXTRA_ATTACK)
-	e2:SetValue(s.value)
+	local e2=e1:Clone()
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-end
-function s.stfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()  
+	--Mulitple Attacks
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_EXTRA_ATTACK)
+	e3:SetCondition(s.condition)
+	e3:SetValue(s.value)
+	c:RegisterEffect(e3)
 end
 function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.stfilter,tp,LOCATION_ONFIELD,0,1,c) end
-	local sg=Duel.GetMatchingGroup(s.stfilter,tp,LOCATION_ONFIELD,0,c)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_SZONE,0,1,nil) end
+	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_SZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 end
 function s.stop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,e:GetHandler())
+	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_SZONE,0,nil)
 	Duel.Destroy(sg,REASON_EFFECT)
+end
+function s.condition(e)
+	return not Duel.IsExistingMatchingCard(aux.TRUE,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.value(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsType,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,nil,TYPE_SPELL+TYPE_TRAP)

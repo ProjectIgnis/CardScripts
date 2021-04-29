@@ -1,8 +1,11 @@
---BF－朧影のゴウフウ
+--ＢＦ－朧影のゴウフウ
+--Blackwing - Gofu the Vague Shadow
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--special summon
+	--Special summon procedure (from hand)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -10,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	--token
+	--Special summon 2 tokens to your field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -20,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tkntg)
 	e2:SetOperation(s.tknop)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special summon 1 "Blackwing" synchro monster from GY, treated as a tuner
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -32,6 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x33}
+
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)==0
@@ -53,7 +57,10 @@ function s.tknop(e,tp,eg,ep,ev,re,r,rp)
 		for i=1,2 do
 			local token=Duel.CreateToken(tp,id+1)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+			--Cannot be tributed
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3303)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 			e1:SetValue(1)
@@ -62,7 +69,9 @@ function s.tknop(e,tp,eg,ep,ev,re,r,rp)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 			token:RegisterEffect(e2,true)
+			--Cannot be used as synchro material
 			local e3=e2:Clone()
+			e3:SetDescription(3310)
 			e3:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 			token:RegisterEffect(e3,true)
 		end

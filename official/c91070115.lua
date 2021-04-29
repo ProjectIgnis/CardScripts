@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xc}
-s.counter_list={0x100e}
+s.counter_list={COUNTER_A}
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,0,1,0x100e,1,REASON_COST) end
-	Duel.RemoveCounter(tp,0,1,0x100e,1,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,0,1,COUNTER_A,1,REASON_COST) end
+	Duel.RemoveCounter(tp,0,1,COUNTER_A,1,REASON_COST)
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
@@ -55,8 +55,8 @@ function s.adcon(e)
 end
 function s.adtg(e,c)
 	local bc=c:GetBattleTarget()
-	return bc and c:GetCounter(0x100e)~=0 and bc:IsSetCard(0xc)
+	return bc and c:GetCounter(COUNTER_A)~=0 and bc:IsSetCard(0xc)
 end
 function s.adval(e,c)
-	return c:GetCounter(0x100e)*-300
+	return c:GetCounter(COUNTER_A)*-300
 end

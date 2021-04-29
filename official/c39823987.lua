@@ -1,4 +1,5 @@
 --太陽龍インティ
+--Sun Dragon Inti
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -23,7 +24,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={66818682}
+s.material={78275321}
+s.listed_names={78275321,66818682}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end

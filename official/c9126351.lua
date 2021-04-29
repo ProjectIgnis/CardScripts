@@ -65,7 +65,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.SendtoGrave(rg,REASON_COST+REASON_DISCARD)
 	rg:DeleteGroup()
 end
-
 function s.tgfilter(c)
 	return c:IsLevelBelow(2) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsRace(RACE_AQUA)
 		and (c:IsLocation(LOCATION_DECK) or c:IsFaceup()) and c:IsAbleToGrave()
@@ -82,13 +81,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.excost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanAdditionalSummon(tp) and Duel.IsExistingMatchingCard(Card.IsAbleToHandAsCost,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and Duel.IsExistingMatchingCard(Card.IsAbleToHandAsCost,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHandAsCost,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SendtoHand(g,nil,REASON_COST)
 end
 function s.extg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanSummon(tp) end
+	if chk==0 then return Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAdditionalSummon(tp) end
 end
 function s.exop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -99,6 +98,7 @@ function s.exop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.estg)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.estg(e,c)
 	return c:IsSetCard(0x12) and c:GetCode()~=id

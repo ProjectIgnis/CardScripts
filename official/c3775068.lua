@@ -3,14 +3,14 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--special summon condition
+	--Special summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon procedure
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg1)
 	e2:SetOperation(s.spop1)
 	c:RegisterEffect(e2)
-	--damage
+	--Damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DAMAGE)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
-	--special summon
+	--Special summon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_series={0xe3}
 function s.tgfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xe3) and c:IsAbleToGraveAsCost()
 end
@@ -90,7 +91,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():IsPreviousControler(tp)
+	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xe3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -126,7 +127,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
-			Duel.ShuffleDeck(tp)
 		end
 	end
 end

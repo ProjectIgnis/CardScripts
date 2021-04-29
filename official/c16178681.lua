@@ -1,9 +1,10 @@
 --オッドアイズ・ペンデュラム・ドラゴン
+--Odd-Eyes Pendulum Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum summon
 	Pendulum.AddProcedure(c)
-	--reduce
+	--Reduce damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.rdcon)
 	e1:SetOperation(s.rdop)
 	c:RegisterEffect(e1)
-	--tohand
+	--Add from the deck to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -23,12 +24,12 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--double
+	--Double damage
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e3:SetCondition(s.damcon)
-	e3:SetOperation(s.damop)
+	e3:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e3)
 end
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
@@ -66,9 +67,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetBattleTarget()~=nil
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DoubleBattleDamage(ep)
+function s.damcon(e)
+	return e:GetHandler():GetBattleTarget()~=nil
 end

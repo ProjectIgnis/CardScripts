@@ -16,8 +16,7 @@
 -- Duel.SelectTarget()
 
 if c300 then
-function c300.initial_effect(c)
-end
+	function c300.initial_effect(c) end
 end
 
 if not DeckMasters then
@@ -31,7 +30,7 @@ if not DeckMasters then
 				return isloc(c,loc)
 			end
 		end
-	local dmzonechk=function(c) 
+	local dmzonechk=function(c)
 		return (Duel.IsDuelType(DUEL_SEPARATE_PZONE) and isloc(c,LOCATION_MZONE) and c:GetSequence()==5) or (not Duel.IsDuelType(DUEL_SEPARATE_PZONE) and isloc(c,LOCATION_SZONE) and c:GetSequence()==6)
 	end
 	local isexist=Duel.IsExistingMatchingCard
@@ -55,9 +54,9 @@ if not DeckMasters then
 			f1=function(c) return f(c,table.unpack(arg)) and not dmzonechk(c) end
 		end
 		if arg~=nil then
-			return isexist(f1,tp,int_s,int_o,count,ex,table.unpack(arg))
+			return isexisttg(f1,tp,int_s,int_o,count,ex,table.unpack(arg))
 		else
-			return isexist(f1,tp,int_s,int_o,count,ex)
+			return isexisttg(f1,tp,int_s,int_o,count,ex)
 		end
 	end
 	local getmatchg=Duel.GetMatchingGroup
@@ -105,7 +104,7 @@ if not DeckMasters then
 	end
 	local gettgc=Duel.GetTargetCount
 		Duel.GetTargetCount=function(...)
-								return Duel.GetTarget(...):GetCount()
+								return Duel.GetMatchingGroup(...):Filter(Card.IsCanBeEffectTarget,nil):GetCount()
 							end
 	local seltg=Duel.SelectTarget
 		Duel.SelectTarget=function(sp,f,tp,int_s,int_o,min,max,ex, ...)
@@ -115,11 +114,11 @@ if not DeckMasters then
 			f1=function(c) return f(c,table.unpack(arg)) and not dmzonechk(c) end
 		end
 		if arg~=nil then
-			local sel=selmatchc(sp,f1,tp,int_s,int_o,min,max,ex,table.unpack(arg))
+			local sel=seltg(sp,f1,tp,int_s,int_o,min,max,ex,table.unpack(arg))
 			Duel.SetTargetCard(sel)
 			return sel
 		else
-			local sel=selmatchc(sp,f1,tp,int_s,int_o,min,max,ex)
+			local sel=seltg(sp,f1,tp,int_s,int_o,min,max,ex)
 			Duel.SetTargetCard(sel)
 			return sel
 		end
@@ -153,7 +152,7 @@ if not DeckMasters then
 			Duel.MoveSequence(c,6)
 		end
 	end
-	local function finish_setup() 
+	local function finish_setup()
 		--register
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -171,6 +170,7 @@ if not DeckMasters then
 		Duel.RegisterEffect(e2,0)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+		e3:SetValue(1)
 		Duel.RegisterEffect(e3,0)
 		local e4=e2:Clone()
 		e4:SetCode(EFFECT_UNRELEASABLE_SUM)
@@ -304,7 +304,7 @@ if not DeckMasters then
 		local f2=Duel.GetFlagEffect(1-tp,300+1)+Duel.GetFlagEffect(1-tp,302)
 		if c1==0 and c2>0 and f1==0 then
 			Duel.Win(1-tp,WIN_REASON_DECK_MASTER)
-		elseif c1==0 and c2==0 and f2==0 and f1==0  then
+		elseif c1==0 and c2==0 and f2==0 and f1==0 then
 			Duel.Win(PLAYER_NONE,WIN_REASON_DECK_MASTER)
 		elseif c1>0 and c2==0 and f2==0 then
 			Duel.Win(tp,WIN_REASON_DECK_MASTER)

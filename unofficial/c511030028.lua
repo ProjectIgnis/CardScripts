@@ -3,10 +3,10 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x578),3)
 	c:EnableReviveLimit()
-	--return to hand
+	--Return to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(5043010,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_NO_TURN_RESET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1e0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(21123811,0))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -33,9 +33,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x578}
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local ct=c:GetMutualLinkedGroupCount()
+	local ct=c:GetMutualLinkedGroup():FilterCount(Card.IsLinkMonster,nil)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and chkc:IsAbleToHand() end
 	if chk==0 then return ct>0 and Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
@@ -44,16 +45,15 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(5043010,2))
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	local g=Duel.GetTargetCards(e)
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsType(TYPE_LINK) and Duel.IsChainNegatable(ev)
+	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and re:IsActiveType(TYPE_LINK) and Duel.IsChainNegatable(ev)
 		and e:GetHandler():IsLinked()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)

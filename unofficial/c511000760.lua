@@ -1,7 +1,8 @@
---Absolute King Back Jack
+--絶対王 バック・ジャック (Manga)
+--Absolute King Back Jack (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
-	--disable attack
+	--Draw and activate Trap Card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -48,9 +49,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e:SetCategory(te:GetCategory())
 		e:SetProperty(te:GetProperty())
 		Duel.ClearTargetCard()
+		local loc=LOCATION_SZONE
 		if (tpe&TYPE_FIELD)~=0 then
+			loc=LOCATION_FZONE
 			local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-			if Duel.IsDuelType(DUEL_OBSOLETE_RULING) then
+			if Duel.IsDuelType(DUEL_1_FIELD) then
 				if fc then Duel.Destroy(fc,REASON_RULE) end
 				fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 				if fc and Duel.Destroy(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
@@ -59,7 +62,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 			end
 		end
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 		if (tpe&TYPE_TRAP+TYPE_FIELD)==TYPE_TRAP+TYPE_FIELD then
 			Duel.MoveSequence(tc,5)
 		end
@@ -116,7 +119,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Equip(tp,tc,g:GetFirst())
 		end
 		tc:ReleaseEffectRelation(te)
-		if etc then	
+		if etc then
 			etc=g:GetFirst()
 			while etc do
 				etc:ReleaseEffectRelation(te)

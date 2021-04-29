@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_DECK,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
 	local rc=Duel.AnnounceRace(tp,1,RACE_ALL)
-	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_LVRANK)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LVRANK)
 	local lv=Duel.AnnounceLevel(tp)
 	e:SetLabel(lv)
 	Duel.SetTargetParam(rc)
@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(1-tp,s.filter,1-tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,rc,lv)
 	local tc=g:GetFirst()
 	if tc then
-		Duel.SendtoGrave(tc,nil,REASON_EFFECT)
+		Duel.SendtoGrave(tc,REASON_EFFECT)
 		Duel.ConfirmCards(tp,tc)
 	else
 		local dg=Duel.GetFieldGroup(tp,0,LOCATION_DECK+LOCATION_HAND)

@@ -5,8 +5,8 @@ function s.initial_effect(c)
 	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0xdf),nil,s.fextra)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
-	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
+	AshBlossomTable=AshBlossomTable or {}
+	table.insert(AshBlossomTable,e1)
 end
 s.listed_series={0xdf}
 function s.fcheck(tp,sg,fc)

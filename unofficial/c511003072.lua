@@ -1,4 +1,5 @@
 --王者の調和
+--King's Synchro (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -38,7 +39,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local sg=g:Select(tp,1,1,nil)
 			Synchro.Send=2
 			Duel.SynchroSummon(tp,sg:GetFirst(),nil,tg)
-			Synchro.Send=0
 		end
 	end
 end

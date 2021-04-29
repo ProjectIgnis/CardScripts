@@ -1,6 +1,5 @@
 --焔凰神－ネフティス
---Nephthys the Blazing Sacred Phoenix
---
+--Nephthys, the Sacred Flame
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -8,11 +7,9 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--effect gain
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(s.regcon)
-	e1:SetOperation(s.regop)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_MATERIAL_CHECK)
+	e1:SetValue(s.matcheck)
 	c:RegisterEffect(e1)
 	--cannot select battle target
 	local e2=Effect.CreateEffect(c)
@@ -25,23 +22,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x11f}
-function s.lcheck(g,lc)
-	return g:IsExists(Card.IsType,1,nil,TYPE_RITUAL)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsType,1,nil,TYPE_RITUAL,lc,sumtype,tp)
 end
-function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
-end
-function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
+function s.matcheck(e,c)
 	local ct=c:GetMaterial():FilterCount(Card.IsType,nil,TYPE_RITUAL)
 	if ct>=1 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e1)
-		if ct==1 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0)) end
+		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	end
 	if ct>=2 then
 		local e2=Effect.CreateEffect(c)
@@ -50,14 +43,15 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetValue(1200)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e3:SetValue(1)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e3)
-		if ct==2 then
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1)) end
+		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 	end
 	if ct==3 then
 		local e4=Effect.CreateEffect(c)
@@ -66,6 +60,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EFFECT_UPDATE_ATTACK)
 		e4:SetRange(LOCATION_MZONE)
 		e4:SetValue(1200)
+		e4:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e4)
 		local e5=Effect.CreateEffect(c)
 		e5:SetType(EFFECT_TYPE_SINGLE)
@@ -73,6 +68,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 		e5:SetRange(LOCATION_MZONE)
 		e5:SetValue(1)
+		e5:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e5)
 		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
@@ -83,4 +79,3 @@ end
 function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x11f) and c:GetSequence()<5
 end
-

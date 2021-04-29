@@ -1,7 +1,8 @@
 --十二獣ラム
+--Zoodiac Ramram
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--get effect
+	--grants an effect while attached
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -42,17 +43,19 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return c:GetOriginalRace()==RACE_BEASTWARRIOR
 		and not c:IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
-		and re:IsActiveType(TYPE_TRAP) and Duel.IsChainNegatable(ev)
+		and Duel.IsChainNegatable(ev)
+		and re and re:IsActiveType(TYPE_TRAP)
 		and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
-		and Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):IsContains(c)
+		and tg and tg:IsContains(c)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

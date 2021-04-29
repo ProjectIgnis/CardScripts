@@ -1,9 +1,10 @@
 --手札断殺
+--Hand Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DRAW)
+	e1:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
@@ -17,6 +18,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local h2=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
 		return h1>1 and h2>1 and Duel.IsPlayerCanDraw(tp,2) and Duel.IsPlayerCanDraw(1-tp,2)
 	end
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,PLAYER_ALL,2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,2)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

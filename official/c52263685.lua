@@ -1,4 +1,5 @@
 --盗み見ゴブリン
+--Peeking Goblin
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,13 +20,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(p,0,LOCATION_DECK)==0 then return end
 	Duel.ConfirmDecktop(1-p,3)
 	local g=Duel.GetDecktopGroup(1-p,3)
-	local ct=#g
-	if ct>0 then
-		Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(id,0))
-		local sg=g:Select(p,1,1,nil)
-		Duel.MoveSequence(sg:GetFirst(),1)
-		Duel.ConfirmCards(1-p,sg)
-		Duel.SortDecktop(p,1-p,ct-1)
-		Duel.ConfirmDecktop(1-p,ct-1)
-	end
+	Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(id,0))
+	local sg=g:Select(p,1,1,nil)
+	Duel.MoveToDeckBottom(sg)
+	Duel.ConfirmCards(1-p,sg)
+	Duel.SortDecktop(p,1-p,2)
 end

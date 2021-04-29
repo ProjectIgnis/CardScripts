@@ -33,13 +33,11 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target2)
 	e3:SetOperation(s.activate2)
 	e3:SetLabelObject(e1)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 end
-
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
-
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,TYPE_MONSTER) end
 	Duel.SetTargetPlayer(1-tp)
@@ -52,11 +50,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dam=Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_MONSTER)*1
 	Duel.DiscardDeck(1-tp,dam,REASON_EFFECT)
 end
-
 function s.discon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
-
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,TYPE_MONSTER) end
 	Duel.SetTargetPlayer(tp)

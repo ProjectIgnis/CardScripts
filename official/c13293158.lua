@@ -1,17 +1,26 @@
 --E－HERO ワイルド・サイクロン
+--Evil HERO Wild Cyclone
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--Fusion material
 	Fusion.AddProcMix(c,true,true,21844576,86188410)
-	--spsummon condition
+	--lizard check
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(CARD_CLOCK_LIZARD)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCondition(s.lizcon)
+	e0:SetValue(1)
+	c:RegisterEffect(e0)
+	--Special Summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.EvilHeroLimit)
 	c:RegisterEffect(e1)
-	--actlimit
+	--Prevent Spell/Traps activation while battling
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -21,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.aclimit)
 	e2:SetCondition(s.actcon)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy all face-down Spell/Trap
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DESTROY)
@@ -35,8 +44,9 @@ end
 s.material_setcode={0x8,0x3008}
 s.dark_calling=true
 s.listed_names={CARD_DARK_FUSION,21844576,86188410}
-function s.splimit(e,se,sp,st)
-	return st==SUMMON_TYPE_FUSION+0x10
+function s.lizcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE)
 end
 function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)

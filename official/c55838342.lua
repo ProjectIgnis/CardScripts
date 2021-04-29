@@ -1,5 +1,5 @@
 --クローラー・パラディオン
---Krawler Palladion
+--Crusadia Krawler
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfe}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
 		Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x01040116,0x21,300,2100,2,RACE_INSECT,ATTRIBUTE_EARTH) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
@@ -41,11 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local lg1=Duel.GetLinkedGroup(tp,1,1)
-	local lg2=Duel.GetLinkedGroup(1-tp,1,1)
-	lg1:Merge(lg2)
-	return lg1 and lg1:IsContains(c)
+	return Duel.GetLinkedGroup(tp,LOCATION_MZONE,0):IsContains(e:GetHandler())
 end
 function s.filter(c)
 	return c:IsSetCard(0xfe) and c:IsAbleToHand()
@@ -62,4 +58,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

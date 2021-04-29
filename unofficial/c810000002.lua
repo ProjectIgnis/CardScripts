@@ -1,8 +1,10 @@
--- Dark Spell Regeneration
--- scripted by: UnknownGuest
-local s,id=GetID()
+--暗黒の魔再生 (Anime)
+--Dark Spell Regeneration (Anime)
+--Scripted by: UnknownGuest
+local s,id,alias=GetID()
 function s.initial_effect(c)
-	-- Activate
+	alias=c:Alias()
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -16,12 +18,12 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
 end
 function s.filter(c,e,tp)
-	if c:IsHasEffect(EFFECT_CANNOT_TRIGGER) then return false end
+	if c:IsHasEffect(EFFECT_CANNOT_TRIGGER) or c:IsCode(alias) then return false end
 	local pre={Duel.GetPlayerEffect(tp,EFFECT_CANNOT_ACTIVATE)}
 	if pre[1] then
 		for i,eff in ipairs(pre) do
 			local prev=eff:GetValue()
-			if type(prev)~='function' or prev(eff,te,tp) then return false end
+			if type(prev)~='function' or prev(eff,e,tp) then return false end
 		end
 	end
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
@@ -32,10 +34,6 @@ function s.filter(c,e,tp)
 		and (ft>0 or c:IsType(TYPE_FIELD))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	if e:GetHandler():IsLocation(LOCATION_HAND) then
-		ft=ft-1
-	end
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
@@ -61,9 +59,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e:SetCategory(te:GetCategory())
 		e:SetProperty(te:GetProperty())
 		Duel.ClearTargetCard()
+		local loc=LOCATION_SZONE
 		if (tpe&TYPE_FIELD)~=0 then
+			loc=LOCATION_FZONE
 			local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-			if Duel.IsDuelType(DUEL_OBSOLETE_RULING) then
+			if Duel.IsDuelType(DUEL_1_FIELD) then
 				if fc then Duel.Destroy(fc,REASON_RULE) end
 				fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 				if fc and Duel.Destroy(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
@@ -72,7 +72,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 			end
 		end
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 		if (tpe&TYPE_TRAP+TYPE_FIELD)==TYPE_TRAP+TYPE_FIELD then
 			Duel.MoveSequence(tc,5)
 		end
@@ -94,7 +94,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Equip(tp,tc,g:GetFirst())
 		end
 		tc:ReleaseEffectRelation(te)
-		if etc then 
+		if etc then
 			etc=g:GetFirst()
 			while etc do
 				etc:ReleaseEffectRelation(te)

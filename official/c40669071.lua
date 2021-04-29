@@ -38,9 +38,10 @@ function s.lzfilter(c)
 	return c:GetSequence()>4
 end
 function s.lztg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(s.lzfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if chk==0 then return ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=ct end
-	local dis=Duel.SelectDisableField(tp,ct,LOCATION_MZONE,LOCATION_MZONE,0)
+	local ct1=Duel.GetMatchingGroupCount(s.lzfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local ct2=Duel.GetLocationCount(tp,LOCATION_MZONE)+Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	if chk==0 then return ct1>0 and ct2>=ct1 end
+	local dis=Duel.SelectDisableField(tp,ct1,LOCATION_MZONE,LOCATION_MZONE,0)
 	Duel.Hint(HINT_ZONE,tp,dis)
 	e:SetLabel(dis)
 end

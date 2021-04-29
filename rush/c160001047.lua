@@ -1,5 +1,5 @@
 --地縛霊の誘い
--- Call of the Earthbound (Rush)
+--Call of the Earthbound (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

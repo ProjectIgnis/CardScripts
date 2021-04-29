@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(100243010,0))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_SZONE)
@@ -31,12 +31,9 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local tc=Duel.GetFirstTarget()
-	if e:GetHandler():IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) then
-		if tc:IsCode(ac) then
-			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
-		else
-			Duel.ConfirmCards(tp,tc)
-			Duel.ConfirmCards(1-tp,tc)
-		end
+	if not (e:GetHandler():IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFacedown()) then return end
+	Duel.ConfirmCards(tp,tc)
+	if tc:IsCode(ac) then
+		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end

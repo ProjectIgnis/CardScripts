@@ -1,13 +1,16 @@
 --チューナーズ・バリア
+--Tuner's Barrier
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Targeted tuner monster cannot be destroyed by battle or card effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE+TIMING_BATTLE_START)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
@@ -22,7 +25,10 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
+		--Cannot be destroyed by battle or card effect
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3008)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)

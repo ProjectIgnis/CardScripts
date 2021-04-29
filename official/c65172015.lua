@@ -19,7 +19,7 @@ function s.initial_effect(c)
 		e1:SetOperation(Fusion.OperationMix(true,true,s.ffilter(1561110),s.ffilter(91998119)))
 		c:RegisterEffect(e1)
 	end
-	--negate
+	--Negate activations
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special Summon banished monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -45,6 +45,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_names={1561110,91998119}
 function s.ffilter(code)

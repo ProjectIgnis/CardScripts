@@ -1,13 +1,87 @@
 Auxiliary={}
 aux=Auxiliary
 
-Auxiliary.ProcCancellable=false
-
 function GetID()
 	return self_table,self_code
 end
 
+local function cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
+	local t={}
+	for _,eff in ipairs({Duel.GetPlayerEffect(tp,replacecode)}) do
+		if eff:CheckCountLimit(tp) then
+		local val=eff:GetValue()
+			if type(val)=="number" then
+				if val==1 then
+					table.insert(t,eff)
+				end
+			elseif type(val)=="function" then
+				if val(eff,e,tp,eg,ep,ev,re,r,rp,chk,extracon) then
+					table.insert(t,eff)
+				end
+			end
+		end
+	end
+	return t
+end
+
+function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		if alwaysexecute and not alwaysexecute(e,tp,eg,ep,ev,re,r,rp,0) then return false end
+		local cond=base(e,tp,eg,ep,ev,re,r,rp,0)
+		if chk==0 then
+			if cond then return true end
+			for _,eff in ipairs({Duel.GetPlayerEffect(tp,replacecode)}) do
+				if eff:CheckCountLimit(tp) then
+					local val=eff:GetValue()
+					if type(val)=="number" and val==1 then return true end
+					if type(val)=="function" and val(eff,e,tp,eg,ep,ev,re,r,rp,chk,extracon) then return true end
+				end
+			end
+			return false
+		end
+		if alwaysexecute then alwaysexecute(e,tp,eg,ep,ev,re,r,rp,1) end
+		local effs=cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
+		if not cond or (cond and #effs>0 and Duel.SelectYesNo(tp,98)) then
+			local eff=effs[1]
+			if #effs>1 then
+				local desctable={}
+				for _,_eff in ipairs(effs) do
+					table.insert(desctable,_eff:GetDescription())
+				end
+				eff=effs[Duel.SelectOption(tp,false,table.unpack(desctable)) + 1]
+			end
+			local res={eff:GetOperation()(eff,e,tp,eg,ep,ev,re,r,rp,chk)}
+			eff:UseCountLimit(tp)
+			return table.unpack(res)
+		end
+		return base(e,tp,eg,ep,ev,re,r,rp,1)
+	end
+end
+
+local function setcodecondition(e)
+	return e:GetHandler():IsCode(e:GetHandler():GetOriginalCodeRule())
+end
+function Card.AddSetcodesRule(c,...)
+	local t={}
+	for _,setcode in pairs({...}) do
+		local e=Effect.CreateEffect(c)
+		e:SetType(EFFECT_TYPE_SINGLE)
+		e:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e:SetCode(EFFECT_ADD_SETCODE)
+		e:SetValue(setcode)
+		e:SetCondition(setcodecondition)
+		c:RegisterEffect(e)
+		table.insert(t,e)
+	end
+	return t
+end
+
 function Duel.LoadCardScript(code)
+	if type(code)=="number" then
+		code="c"..code..".lua"
+	elseif type(code)~="string" then
+		error("Parameter 1 should be \"number\" or \"string\"",2)
+	end
 	local card=string.sub(code,0,string.len(code)-4)
 	if not _G[card] then
 		local oldtable,oldcode=GetID()
@@ -69,9 +143,10 @@ function bit.replace(r,v,field,width)
 	return (r&~(m<<f))|((v&m)<< f)
 end
 
-local _type = type
+local _type=type
 function type(o)
-	if _type(o)~="userdata" then return _type(o)
+	local tp=_type(o)
+	if tp~="userdata" then return tp
 	elseif o.GetOriginalCode then return "Card"
 	elseif o.KeepAlive then return "Group"
 	elseif o.SetLabelObject then return "Effect"
@@ -96,6 +171,8 @@ function Auxiliary.Next(g)
 				else return g:GetNext() end
 			end
 end
+Group.Iter=Auxiliary.Next
+Group.__bnot=Auxiliary.Next
 
 function Auxiliary.NULL()
 end
@@ -211,12 +288,22 @@ function Auxiliary.FilterBoolFunction(f,...)
 			end
 end
 
+local function GetMulti(tab,key,...)
+	if not key then return nil end
+	return (tab[key]~=nil and tab[key]) or GetMulti(tab,...)
+end
 function Auxiliary.ParamsFromTable(tab,key,...)
 	if key then
-		if ... then
-			return tab[key],Auxiliary.ParamsFromTable(tab,...)
+		local val
+		if type(key)=="table" then
+			val=GetMulti(tab,table.unpack(key))
 		else
-			return tab[key]
+			val=tab[key]
+		end
+		if ... then
+			return val,Auxiliary.ParamsFromTable(tab,...)
+		else
+			return val
 		end
 	end
 end
@@ -279,7 +366,9 @@ end
 --for additional registers
 local regeff=Card.RegisterEffect
 function Card.RegisterEffect(c,e,forced,...)
-	if c:IsStatus(STATUS_INITIALIZING) and not e then Debug.Message("missing (Effect e) in c"..c:GetOriginalCode()..".lua") return end
+	if c:IsStatus(STATUS_INITIALIZING) and not e then
+		error("Parameter 2 expected to be Effect, got nil instead.",2)
+	end
 	--1 == 511002571 - access to effects that activate that detach an Xyz Material as cost
 	--2 == 511001692 - access to Cardian Summoning conditions/effects
 	--4 ==  12081875 - access to Thunder Dragon effects that activate by discarding
@@ -351,9 +440,17 @@ function Auxiliary.IsCodeListed(c,...)
 	end
 	return false
 end
---card effect disable filter(target)
+--"Can be negated" check for monsters
 function Auxiliary.disfilter1(c)
 	return c:IsFaceup() and not c:IsDisabled() and (not c:IsNonEffectMonster() or c:GetOriginalType()&TYPE_EFFECT~=0)
+end
+--"Can be negated" check for Spells/Traps
+function Auxiliary.disfilter2(c)
+	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+end
+--"Can be negated" check for cards
+function Auxiliary.disfilter3(c)
+	return aux.disfilter1(c) or aux.disfilter2(c)
 end
 --condition of EVENT_BATTLE_DESTROYING
 function Auxiliary.bdcon(e,tp,eg,ep,ev,re,r,rp)
@@ -380,7 +477,7 @@ end
 --condition of EVENT_TO_GRAVE + destroyed_by_opponent_from_field
 function Auxiliary.dogcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and rp~=tp
+	return c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and rp==1-tp
 end
 --condition of "except the turn this card was sent to the Graveyard"
 function Auxiliary.exccon(e)
@@ -424,8 +521,8 @@ end
 function Auxiliary.sumreg(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()
 	for tc in aux.Next(eg) do
-		if tc:GetOriginalCode()==code then 
-			tc:RegisterFlagEffect(code,RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1) 
+		if tc:GetOriginalCode()==code then
+			tc:RegisterFlagEffect(code,RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -458,6 +555,22 @@ end
 function Auxiliary.lnklimit(e,se,sp,st)
 	return aux.sumlimit(SUMMON_TYPE_LINK)(e,se,sp,st)
 end
+--value for EFFECT_CANNOT_BE_MATERIAL
+function Auxiliary.cannotmatfilter(val1,...)
+	local allowed=val1
+	if type(val1)~="table" then allowed={val1,...} end
+	local tot=0
+	for _,val in pairs(allowed) do
+		tot = tot|val
+	end
+	return function(e,c,sumtype,tp)
+		local sum=tot&sumtype
+		for _,val in pairs(allowed) do
+			if sum==val then return 1 end
+		end
+		return 0
+	end
+end
 --effects inflicting damage to tp
 function Auxiliary.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_DAMAGE)
@@ -465,8 +578,8 @@ function Auxiliary.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	local rd=e1 and not e2
 	local rr=not e1 and e2
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	if ex and (cp==tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then 
-		return true 
+	if ex and (cp==tp or cp==PLAYER_ALL) and not rd and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE) then
+		return true
 	end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
 	return ex and (cp==tp or cp==PLAYER_ALL) and rr and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_NO_EFFECT_DAMAGE)
@@ -492,7 +605,6 @@ function Card.MoveAdjacent(c)
 	Duel.MoveSequence(c,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag),2))
 end
 
-
 function Card.IsColumn(c,seq,tp,loc)
 	if not c:IsOnField() then return false end
 	local cseq=c:GetSequence()
@@ -509,7 +621,7 @@ function Card.IsColumn(c,seq,tp,loc)
 		if seq==5 then seq=1 end
 		if seq==6 then seq=3 end
 	else
-		if cseq==6 then cseq=5 end
+		if seq==6 then seq=5 end
 	end
 	if c:IsControler(tp) then
 		return cseq==seq
@@ -807,27 +919,26 @@ function Auxiliary.ResetEffects(g,eff)
 	end
 end
 function Auxiliary.CallToken(code)
-	Debug.Message(code.." called Auxiliary.CallToken, use Duel.LoadCardScript or Duel.LoadScript instead!!!")
+	error("This function is deleted, use Duel.LoadCardScript or Duel.LoadScript instead.",2)
 end
 --utility entry for SelectUnselect loops
 --returns bool if chk==0, returns Group if chk==1
 function Auxiliary.SelectUnselectLoop(c,sg,mg,e,tp,minc,maxc,rescon)
-	local res
+	local res=not rescon
 	if #sg>=maxc then return false end
 	sg:AddCard(c)
 	if rescon then
-		local _,stop=rescon(sg,e,tp,mg)
-		if stop then 
+		local stop
+		res,stop=rescon(sg,e,tp,mg,c)
+		if stop then
 			sg:RemoveCard(c)
 			return false
 		end
 	end
 	if #sg<minc then
 		res=mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
-	elseif #sg<maxc then
-		res=(not rescon or rescon(sg,e,tp,mg)) or mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
-	else
-		res=(not rescon or rescon(sg,e,tp,mg))
+	elseif #sg<maxc and not res then
+		res=mg:IsExists(Auxiliary.SelectUnselectLoop,1,sg,sg,mg,e,tp,minc,maxc,rescon)
 	end
 	sg:RemoveCard(c)
 	return res
@@ -835,7 +946,15 @@ end
 function Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,rescon,chk,seltp,hintmsg,finishcon,breakcon,cancelable)
 	local minc=minc or 1
 	local maxc=maxc or #g
-	if chk==0 then return g:IsExists(Auxiliary.SelectUnselectLoop,1,nil,Group.CreateGroup(),g,e,tp,minc,maxc,rescon) end
+	if chk==0 then
+		if #g<minc then return false end
+		local eg=g:Clone()
+		for c in g:Iter() do
+			if Auxiliary.SelectUnselectLoop(c,Group.CreateGroup(),eg,e,tp,minc,maxc,rescon) then return true end
+			eg:RemoveCard(c)
+		end
+		return false
+	end
 	local hintmsg=hintmsg and hintmsg or 0
 	local sg=Group.CreateGroup()
 	while true do
@@ -964,7 +1083,7 @@ function Auxiliary.MainAndExtraGetSummonZones(c,mmz,emz,e,sumtype,sump,targetp,n
 	if c:IsLocation(LOCATION_EXTRA) then
 		for i=0,6 do
 			local zone=0x1<<i
-			if emz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone) 
+			if emz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone)
 				and Auxiliary.MainAndExtraZoneCheckBool(nc,mmz&~zone,emz&~zone,e,sumtype,sump,targetp,nocheck,nolimit,pos,...) then
 				zones=zones|zone
 			end
@@ -972,7 +1091,7 @@ function Auxiliary.MainAndExtraGetSummonZones(c,mmz,emz,e,sumtype,sump,targetp,n
 	else
 		for i=0,4 do
 			local zone=0x1<<i
-			if mmz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone) 
+			if mmz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone)
 				and Auxiliary.MainAndExtraZoneCheckBool(nc,mmz&~zone,emz&~zone,e,sumtype,sump,targetp,nocheck,nolimit,pos,...) then
 				zones=zones|zone
 			end
@@ -985,7 +1104,7 @@ function Auxiliary.MainAndExtraZoneCheckBool(c,mmz,emz,e,sumtype,sump,targetp,no
 	if c:IsLocation(LOCATION_EXTRA) then
 		for i=0,6 do
 			local zone=0x1<<i
-			if emz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone) 
+			if emz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone)
 				and Auxiliary.MainAndExtraZoneCheckBool(nc,mmz&~zone,emz&~zone,e,sumtype,sump,targetp,nocheck,nolimit,pos,...) then
 				return true
 			end
@@ -993,7 +1112,7 @@ function Auxiliary.MainAndExtraZoneCheckBool(c,mmz,emz,e,sumtype,sump,targetp,no
 	else
 		for i=0,4 do
 			local zone=0x1<<i
-			if mmz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone) 
+			if mmz&zone==zone and c:IsCanBeSpecialSummoned(e,sumtype,sump,nocheck,nolimit,pos,targetp,zone)
 				and Auxiliary.MainAndExtraZoneCheckBool(nc,mmz&~zone,emz&~zone,e,sumtype,sump,targetp,nocheck,nolimit,pos,...) then
 				return true
 			end
@@ -1111,7 +1230,58 @@ function Group.CheckSameProperty(g,f,...)
 	end
 	return prop~=0, prop
 end
-
+local function checkrecbin(c,g,val,f,...)
+	local prop=f(c,...)&(~val)
+	if prop==0 then return false end
+	local i=1
+	while i<=prop do
+		if prop&i~=0 then
+			if #g<2 or g:IsExists(checkrecbin,1,c,g-c,val|i,f,...) then return true end
+		end
+		i=i<<1
+	end
+	return false
+end
+--function to check if every card in a group has at least a different property from the others
+--with a function that stores the properties in binary form
+function Group.CheckDifferentPropertyBinary(g,f,...)
+	if #g<2 then return true end
+	return g:IsExists(checkrecbin,1,nil,g,0,f,...)
+end
+local function checkrec(c,g,t,f,...)
+	for _,prop in ipairs({f(c,...)}) do
+		if not t[prop] then
+			t[prop]=true
+			if #g<2 or g:IsExists(checkrec,1,c,g-c,t,f,...) then return true end
+			t[prop]=nil
+		end
+	end
+	return false
+end
+--function to check if every card in a group has at least a different property from the others
+--with a function that stores the properties in multiple returns form
+function Group.CheckDifferentProperty(g,f,...)
+	if #g<2 then return true end
+	return g:IsExists(checkrec,1,nil,g,{},f,...)
+end
+function Auxiliary.PropertyTableFilter(f,...)
+	local cachetab={}
+	local truthtable={}
+	for _,elem in pairs({...}) do
+		truthtable[elem]=true
+	end
+	return function(c,...)
+		if not cachetab[c] then
+			cachetab[c]={}
+			for _,val in pairs({f(c,...)}) do
+				if truthtable[val] then
+					table.insert(cachetab[c],val)
+				end
+			end
+		end
+		return table.unpack(cachetab[c])
+	end
+end
 function Auxiliary.AskEveryone(stringid)
 	local count0 = Duel.GetPlayersCount(0)
 	local count1 = Duel.GetPlayersCount(1)
@@ -1167,21 +1337,19 @@ function Auxiliary.EnableExtraRules(c,card,init,...)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ADJUST)
-	e1:SetCountLimit(1)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
-	e1:SetRange(0xff)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetOperation(Auxiliary.EnableExtraRulesOperation(card,init,...))
 	Duel.RegisterEffect(e1,0)
 end
 function Auxiliary.EnableExtraRulesOperation(card,init,...)
 	local arg = {...}
 	return function(e,tp,eg,ep,ev,re,r,rp)
-		local c = e:GetHandler()
+		local c = e:GetOwner()
 		local p = c:GetControler()
 		Duel.DisableShuffleCheck()
 		Duel.SendtoDeck(c,nil,-2,REASON_RULE)
 		local ct = Duel.GetMatchingGroupCount(nil,p,LOCATION_HAND+LOCATION_DECK,0,c)
-		if (Duel.IsDuelType(SPEED_DUEL) and ct < 20 or ct < 40) and Duel.SelectYesNo(1-p, aux.Stringid(4014,5)) then
+		if (Duel.IsDuelType(DUEL_MODE_SPEED) and ct < 20 or ct < 40) and Duel.SelectYesNo(1-p, aux.Stringid(4014,5)) then
 			Duel.Win(1-p,0x55)
 		end
 		if c:IsPreviousLocation(LOCATION_HAND) then Duel.Draw(p, 1, REASON_RULE) end
@@ -1198,11 +1366,12 @@ function Auxiliary.EnableExtraRulesOperation(card,init,...)
 			end
 			card.global_active_check = true
 		end
+		e:Reset()
 	end
 end
 --[[
 Function to perform "Either add it to the hand or do X"
--card: affected card to be moved;
+-card: affected card or group of cards to be moved;
 -player: player performing the operation
 -check: condition for the secondary action, if not provided the default action is "Send it to the GY";
 oper: secondary action;
@@ -1213,8 +1382,20 @@ function Auxiliary.ToHandOrElse(card,player,check,oper,str,...)
 		if not check then check=Card.IsAbleToGrave end
 		if not oper then oper=aux.thoeSend end
 		if not str then str=574 end
-		local b1=card:IsAbleToHand()
-		local b2=check(card,...)
+		local b1,b2=true,true
+		if type(card)=="Group" then
+			for ctg in aux.Next(card) do
+				if not ctg:IsAbleToHand() then
+					b1=false
+				end
+				if not check(ctg,...) then
+					b2=false
+				end
+			end
+		else
+			b1=card:IsAbleToHand()
+			b2=check(card,...)
+		end
 		local opt
 		if b1 and b2 then
 			opt=Duel.SelectOption(player,573,str)
@@ -1316,7 +1497,7 @@ function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 			end
 		end
-		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(c,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 		local te=c:GetActivateEffect()
 		te:UseCountLimit(tp,1,true)
 		local tep=c:GetControler()
@@ -1327,9 +1508,59 @@ function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp)
 	end
 	return false
 end
+function Duel.IsMainPhase()
+	local phase=Duel.GetCurrentPhase()
+	return phase==PHASE_MAIN1 or phase==PHASE_MAIN2
+end
+function Duel.IsBattlePhase()
+	local phase=Duel.GetCurrentPhase()
+	return phase>=PHASE_BATTLE_START and phase<=PHASE_BATTLE
+end
+function Duel.IsTurnPlayer(player)
+	return Duel.GetTurnPlayer()==player
+end
+
+function Auxiliary.ChangeBattleDamage(player,value)
+	return function(e,damp)
+				if player==0 then
+					if e:GetOwnerPlayer()==damp then
+						return value
+					else
+						return -1
+					end
+				elseif player==1 then
+					if e:GetOwnerPlayer()==1-damp then
+						return value
+					else
+						return -1
+					end
+				end
+		end
+end
+
+function Card.GetScale(c)
+	if not c:IsType(TYPE_PENDULUM) then return 0 end
+	local sc=0
+	if c:IsLocation(LOCATION_PZONE) then
+		local seq=c:GetSequence()
+		if seq==0 then sc=c:GetLeftScale() else sc=c:GetRightScale() end
+	else
+		sc=c:GetLeftScale()
+	end
+	return sc
+end
+function Card.IsOddScale(c)
+	if not c:IsType(TYPE_PENDULUM) then return false end
+	return c:GetScale() % 2 ~= 0
+end
+function Card.IsEvenScale(c)
+	if not c:IsType(TYPE_PENDULUM) then return false end
+	return c:GetScale() % 2 == 0
+end
 
 Duel.LoadScript("cards_specific_functions.lua")
 Duel.LoadScript("proc_fusion.lua")
+Duel.LoadScript("proc_fusion_spell.lua")
 Duel.LoadScript("proc_ritual.lua")
 Duel.LoadScript("proc_synchro.lua")
 Duel.LoadScript("proc_union.lua")
@@ -1339,7 +1570,7 @@ Duel.LoadScript("proc_link.lua")
 Duel.LoadScript("proc_equip.lua")
 Duel.LoadScript("proc_persistent.lua")
 Duel.LoadScript("proc_workaround.lua")
-Duel.LoadScript("proc_damage_fix.lua")
 Duel.LoadScript("proc_normal.lua")
 Duel.LoadScript("proc_skill.lua")
+Duel.LoadScript("proc_maximum.lua")
 pcall(dofile,"init.lua")

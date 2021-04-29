@@ -1,12 +1,12 @@
 --リングリボー
 --Linguriboh
---Fixed by Larry126
+--original anime script by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link summon
 	Link.AddProcedure(c,s.matfilter,1,1)
 	c:EnableReviveLimit()
-	--negate
+	--Negate Trap Card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_series={0x135}
 function s.matfilter(c,lc,sumtype,tp)
@@ -41,14 +42,14 @@ function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and ep~=tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
+	return ep==1-tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsChainDisablable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return re:GetHandler():IsAbleToRemove() end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
+	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
 	end
 end
@@ -58,8 +59,8 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,ft,tp)
-	return c:IsSetCard(0x135) and c:IsControler(tp)
-	   and c:GetSummonLocation()==LOCATION_EXTRA and (ft>0 or c:GetSequence()<5)
+	return c:IsSetCard(0x135) and c:IsControler(tp) and c:GetSummonLocation()==LOCATION_EXTRA
+		and (ft>0 or c:GetSequence()<5)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -72,7 +73,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then 
+	if e:GetHandler():IsRelateToEffect(e) then
 		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 	end
 end

@@ -1,6 +1,7 @@
 --虚の王 ウートガルザ
 --Utgarda, Generaider Boss of Delusion
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -22,7 +23,7 @@ s.listed_series={0x134}
 function s.cfilter(c,tp)
 	return (c:IsRace(RACE_ROCK) or (c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER))) and (c:IsControler(tp) or c:IsFaceup())
 end
-function s.check(sg,e,tp)
+function s.check(sg,tp)
 	return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,sg)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

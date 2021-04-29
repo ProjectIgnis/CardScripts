@@ -67,10 +67,10 @@ end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttackTarget()==nil
 end
-function s.eqfilter2(c,tc)
+function s.eqfilter2(c,tc,tp)
 	return c:IsCode(9677699) and tc:GetEquipGroup():IsContains(c)
-	and Duel.IsExistingTarget(s.eqfilter3,tp,LOCATION_MZONE,LOCATION_MZONE,1,tc,c)
-	and c:CheckUniqueOnField(tp) and not c:IsForbidden()
+		and Duel.IsExistingTarget(s.eqfilter3,tp,LOCATION_MZONE,LOCATION_MZONE,1,tc,c)
+		and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
 function s.eqfilter3(c,ec)
 	return c:IsFaceup() and ec:CheckEquipTarget(c)
@@ -78,9 +78,9 @@ end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.eqfilter2,tp,LOCATION_SZONE,0,1,nil,c) end
+	if chk==0 then return Duel.IsExistingTarget(s.eqfilter2,tp,LOCATION_SZONE,0,1,nil,c,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g1=Duel.SelectTarget(tp,s.eqfilter2,tp,LOCATION_SZONE,0,1,1,nil,c)
+	local g1=Duel.SelectTarget(tp,s.eqfilter2,tp,LOCATION_SZONE,0,1,1,nil,c,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	e:SetLabelObject(g1:GetFirst())
 	local g2=Duel.SelectTarget(tp,s.eqfilter3,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c,g1:GetFirst())
@@ -99,4 +99,3 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Equip(tp,ec,tc)
 	end
 end
-

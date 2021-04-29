@@ -39,7 +39,7 @@ end
 function s.xyzop(e,tp,chk,mc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local tc=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,nil):SelectUnselect(Group.CreateGroup(),tp,false,aux.ProcCancellable)
+	local tc=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,nil):SelectUnselect(Group.CreateGroup(),tp,false,Xyz.ProcCancellable)
 	if tc then
 		Duel.SendtoGrave(tc,REASON_DISCARD+REASON_COST)
 		return true
@@ -58,7 +58,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local dam=tc:GetAttack()
 		if dam<0 or tc:IsFacedown() then dam=0 end
 		if Duel.Destroy(tc,REASON_EFFECT)~=0 then

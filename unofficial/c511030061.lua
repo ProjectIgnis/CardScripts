@@ -1,12 +1,12 @@
---乾燥機塊ドライドレイク
---Appliancer Dryer Drake
---scripted by pyrQ
+--乾燥機塊ドライドレイク (Anime)
+--Appliancer Dryer Drake (Anime)
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.matfilter,1)
-	--cannot link material
+	--Cannot be Link Material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.lkcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--atkup
+	--increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.colinkcon)
 	e2:SetValue(1000)
 	c:RegisterEffect(e2)
-	--move
+	--Move monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.mvtg)
 	e3:SetOperation(s.mvop)
 	c:RegisterEffect(e3)
-	--negate attack
+	--Negate attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_BE_BATTLE_TARGET)
@@ -44,9 +44,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atknegop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x57a}
+s.listed_series={0x14a}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x57a,fc,sumtype,tp) and c:IsLink(1)
+	return c:IsSetCard(0x14a,fc,sumtype,tp) and c:IsLink(1)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()
@@ -56,15 +56,15 @@ function s.colinkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.mvcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) and e:GetHandler():GetMutualLinkedGroupCount()>0
+	return Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() and e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.mvfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x57a) and c:IsType(TYPE_LINK) and c:IsLink(1) and c:IsInMainMZone(tp)
+	return c:IsSetCard(0x14a) and c:IsLinkMonster() and c:IsLink(1) and c:IsInMainMZone(tp)
 end
-function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc~=e:GetHandler() and s.mvfilter(chkc,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.mvfilter,tp,LOCATION_MZONE,0,1,e:GetHandler(),tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.mvfilter,tp,LOCATION_MZONE,0,1,1,e:GetHandler(),tp)
 end
 function s.mvop(e,tp,eg,ep,ev,re,r,rp)

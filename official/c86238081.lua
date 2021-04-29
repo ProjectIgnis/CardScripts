@@ -1,13 +1,15 @@
---Odd-Eyes Raging Dragon
 --覇王烈竜オッドアイズ・レイジング・ドラゴン 
+--Odd-Eyes Raging Dragon
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),7,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--pendulum summon
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),7,2)
+	--Enable pendulum summon
 	Pendulum.AddProcedure(c,false)
-	--pendulum set
+	--Place 1 pendulum monster from deck into pendulum zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -16,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.pctg)
 	e1:SetOperation(s.pcop)
 	c:RegisterEffect(e1)
-	--summon success
+	--Check materials used for its Xyz summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -30,14 +32,14 @@ function s.initial_effect(c)
 	e3:SetValue(s.valcheck)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
-	--extra attack
+	--Can make a second attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_EXTRA_ATTACK)
 	e4:SetValue(1)
 	e4:SetCondition(s.effcon)
 	c:RegisterEffect(e4)
-	--destroy
+	--Destroy as many of opponent's cards as possible, gains 200 ATK per card
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_DESTROY)
@@ -49,7 +51,7 @@ function s.initial_effect(c)
 	e5:SetTarget(s.destg)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
-	--pendulum
+	--Place itself into pendulum zone
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,2))
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -61,6 +63,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.pendulum_level=7
+
 function s.pcfilter(c)
 	return c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end

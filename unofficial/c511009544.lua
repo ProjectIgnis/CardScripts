@@ -1,4 +1,5 @@
---Twilight Ninja Kagen
+--黄昏の忍者－カゲン (Anime)
+--Twilight Ninja Kagen (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCondition(s.atkcon)
 	e2:SetOperation(s.atkop)
@@ -37,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x2b}
-function s.target(e,tp,eg,ep,ev,re,r,rp,ch)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local seq=e:GetHandler():GetSequence()
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-seq)
 	if chk==0 then return tc and e:GetHandler():GetFlagEffect(id)==0 end

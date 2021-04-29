@@ -1,5 +1,5 @@
---スキエルＡ５
---Skiel Attack 5
+--スキエルＡ５ (TF6)
+--Skiel Attack 5 (TF6)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -51,5 +51,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x3013),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end

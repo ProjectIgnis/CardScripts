@@ -1,6 +1,6 @@
+--死神の巡遊 (Anime)
 --Tour of Doom (Anime)
---updated by GameMaster(GM)
---cleaned up by MLD
+--Updated by GameMaster(GM) & MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +11,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--coin
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(62784717,0))
 	e2:SetCategory(CATEGORY_COIN)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_SZONE)

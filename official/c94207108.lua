@@ -110,8 +110,7 @@ function s.eqlimit(e,c)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_BATTLE)
-		or (rp~=tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp)
+	return c:IsReason(REASON_BATTLE) or (rp==1-tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp)
 end
 function s.spfilter2(c,e,tp)
 	return c:IsSetCard(0x12b) and c:IsLinkBelow(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -124,5 +123,7 @@ end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
-	if tc then Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end
+	if tc then
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	end
 end

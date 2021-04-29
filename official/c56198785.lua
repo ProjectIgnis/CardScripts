@@ -1,9 +1,10 @@
---
+--背護衛
 --Guard Ghost
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--target protection
+	--Targeted monster cannot be destroyed by battle or card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -14,13 +15,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.indtg)
 	e1:SetOperation(s.indop)
 	c:RegisterEffect(e1)
-	--register banished
+	--Register the fact it was banished this turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
-	--to hand after banished
+	--Add this banished card to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -46,7 +47,10 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
+		--Cannot be destroyed by battle or card effects
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3008)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)

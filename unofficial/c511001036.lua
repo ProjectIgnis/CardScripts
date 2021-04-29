@@ -1,3 +1,4 @@
+--コスタリカン・ストーン・ボール
 --Stone Bola
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		if Duel.NegateAttack() then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

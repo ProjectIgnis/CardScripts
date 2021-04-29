@@ -1,3 +1,4 @@
+--チューナーズ・リフレクト
 --Tuner's Reflect
 local s,id=GetID()
 function s.initial_effect(c)
@@ -6,18 +7,18 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x11e8)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_ATTACK+TIMING_BATTLE_START)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp,tid)
-	return (c:GetReason()&REASON_DESTROY)==REASON_DESTROY and c:GetTurnID()==tid and c:IsType(TYPE_TUNER) 
+	return (c:GetReason()&REASON_DESTROY)==REASON_DESTROY and c:GetTurnID()==tid and c:IsType(TYPE_TUNER)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tid=Duel.GetTurnCount()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,2,nil,e,tp,tid) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)

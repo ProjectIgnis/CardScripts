@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Deflect
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_SPSUMMON)
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_SZONE)

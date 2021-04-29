@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tkop)
 	c:RegisterEffect(e3)
 end
-function s.matfilter(c)
+function s.matfilter(c,lc,st,tp)
 	return c:IsSetCard(0x577,lc,sumtype,tp) 
 end
 function s.lnklimit(e,c)
@@ -42,7 +42,7 @@ function s.spfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER)
 end
 function s.dacon(e)
-	return  Duel.IsExistingMatchingCard(s.spfilter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(s.spfilter,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return r&(REASON_EFFECT+REASON_BATTLE)~=0

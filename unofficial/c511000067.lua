@@ -74,8 +74,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer() and tp~=e:GetHandlerPlayer() and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
+	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer() and tp~=e:GetHandlerPlayer() and Duel.IsMainPhase()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
@@ -85,13 +84,14 @@ function s.desfilter(c)
 	return c:IsFaceup() and c:IsCode(id+1)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE)  and chkc:IsOnField() and c511000001.filter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsOnField() and c511000001.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)

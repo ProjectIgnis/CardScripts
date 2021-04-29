@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon 1 banished "Neo-Spacian"
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x1f}
-s.listed_names={CARD_NEOS }
+s.listed_names={CARD_NEOS}
 function s.cfilter(c)
 	return c:IsSetCard(0x1f) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
@@ -62,6 +62,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon2,1,tp,HINTMSG_SPSUMMON)
@@ -72,8 +74,11 @@ end
 function s.splimit(e,c)
 	return not c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_EXTRA)
 end
+function s.lizfilter(e,c)
+	return not c:IsOriginalType(TYPE_FUSION)
+end
 function s.spcfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and aux.IsMaterialListCode(c,CARD_NEOS)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_NEOS)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -85,7 +90,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,1,nil,tp,LOCATION_REMOVED)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end

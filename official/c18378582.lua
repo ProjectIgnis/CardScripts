@@ -3,14 +3,14 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--cannot special summon
+	--Cannot Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon procedure
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -20,12 +20,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.hsptg)
 	e2:SetOperation(s.hspop)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy all the opponent's monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCondition(s.descon)
 	e3:SetCost(s.descost)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
@@ -33,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_names={66073051,CARD_SANCTUARY_SKY}
 function s.hspcon(e,c)
-	if c==nil then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	if c==nil then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 		or Duel.IsEnvironment(CARD_SANCTUARY_SKY) end
 	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,66073051)
 end
@@ -52,6 +53,10 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
 end
+function s.descon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,0,1,nil)
+		or Duel.IsEnvironment(CARD_SANCTUARY_SKY,tp)
+end
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsDiscardable() and c:IsAbleToGraveAsCost()
 end
@@ -65,8 +70,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
-		or Duel.IsEnvironment(CARD_SANCTUARY_SKY) then
+	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_SANCTUARY_SKY),tp,LOCATION_ONFIELD,0,1,nil)
+		or Duel.IsEnvironment(CARD_SANCTUARY_SKY,tp) then
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 		Duel.Destroy(g,REASON_EFFECT)
 	end

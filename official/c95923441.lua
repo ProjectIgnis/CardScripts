@@ -27,10 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xe2}
 function s.sumcon(e)
-	local tc=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	if tc and tc:IsFaceup() then return true end
-	tc=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	return tc and tc:IsFaceup()
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.filter(c,tp,code)
 	return c:IsType(TYPE_FIELD) and c:IsSetCard(0xe2) and c:GetActivateEffect():IsActivatable(tp,true,true) and not c:IsCode(code)

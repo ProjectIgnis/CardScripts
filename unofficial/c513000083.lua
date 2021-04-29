@@ -86,7 +86,7 @@ function s.eqlimit(e,c)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	return ep==tp and (ec==Duel.GetAttacker() or ec==Duel.GetAttackTarget()) and ec:CanChainAttack()
+	return ep==tp and (ec==Duel.GetAttacker() or ec==Duel.GetAttackTarget()) and ec:CanChainAttack(0)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -99,7 +99,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(ec:GetAttack()*2)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
-	if not c:IsImmuneToEffect(e1) then
+	if not c:IsImmuneToEffect(e1) and Duel.GetTurnPlayer()==tp then
 		Duel.ChainAttack()
 	end
 end

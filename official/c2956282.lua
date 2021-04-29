@@ -1,10 +1,11 @@
 --ナチュル・パルキオン
+--Naturia Barkion
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
+	--Synchro summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_EARTH),1,1,Synchro.NonTunerEx(Card.IsAttribute,ATTRIBUTE_EARTH),1,99)
 	c:EnableReviveLimit()
-	--negate
+	--Negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)

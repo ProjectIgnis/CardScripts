@@ -1,3 +1,4 @@
+--ネクロ・サクリファイス
 --Necro Sacrifice
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,15 +21,16 @@ function s.spfilter(c,e,tp)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetLocation()==LOCATION_HAND and chkc:GetControler()==tp and s.filter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(89252153,0))
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,nil)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+	Duel.SetTargetCard(g:GetFirst())
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local mi,ma=tc:GetTributeRequirement()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,ma,ma,nil,e,tp)
 		if #g>0 then

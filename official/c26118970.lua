@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={73580471}
+s.listed_names={CARD_BLACK_ROSE_DRAGON}
 s.listed_series={0x1123}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -29,7 +29,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 	local rc=e:GetHandler():GetReasonCard()
-	if rc and (rc:IsCode(73580471) or (rc:IsRace(RACE_PLANT) and rc:IsType(TYPE_SYNCHRO))) then
+	if rc and (rc:IsCode(CARD_BLACK_ROSE_DRAGON) or (rc:IsRace(RACE_PLANT) and rc:IsType(TYPE_SYNCHRO))) then
 		e:SetLabel(1)
 	else
 		e:SetLabel(0)

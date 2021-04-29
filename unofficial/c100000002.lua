@@ -1,4 +1,5 @@
 --時械神 サンダイオン
+--Sandaion, the Timelord (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

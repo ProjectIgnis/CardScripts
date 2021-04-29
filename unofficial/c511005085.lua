@@ -1,6 +1,6 @@
 --クロス・カウンター・トラップ
 --Cross Counter Trap
---original script by Shad3
+--Original script by Shad3
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,15 +17,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 	--External register
-	if not s.gl_chk then
-	s.gl_chk=true
-	s.tcount={[0]=0,[1]=0}
-	local ge1=Effect.GlobalEffect()
-	ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	ge1:SetCode(EVENT_TURN_END)
-	ge1:SetOperation(s.regop)
-	Duel.RegisterEffect(ge1,0)
-	end
+	aux.GlobalCheck(s,function()
+		s.tcount={[0]=0,[1]=0 }
+		aux.AddValuesReset(function()
+							s.tcount[0]=0
+							s.tcount[1]=0
+							end)
+	end)
 end
 function s.regop()
 	s.tcount[0]=0

@@ -1,8 +1,8 @@
--- プランキッズ・ランプ
--- Prankids Lamp
+--プランキッズ・ランプ
+--Prank-Kids Lampsies
 local s,id=GetID()
 function s.initial_effect(c)
-	--recover
+	--Inflict Damage and Special Summon 1 "Prank-Kids" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCategory(CATEGORY_DAMAGE+CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x120}
-s.listed_names={}
+s.listed_names={id}
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
@@ -27,7 +27,7 @@ function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_DECK+LOCATION_HAND)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x120) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)  and not c:IsCode(id)
+	return c:IsSetCard(0x120) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,nil,e,tp)
@@ -38,4 +38,3 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-

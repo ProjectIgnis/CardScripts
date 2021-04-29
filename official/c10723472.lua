@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
-	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
@@ -38,7 +38,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil) 
 	if #g>0 then
 		if Duel.SendtoHand(g,tp,REASON_EFFECT)>0 then
@@ -58,10 +58,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_SYNCHRO))
-	e2:SetValue(s.evalue)
+	e2:SetValue(aux.indoval)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
-end
-function s.evalue(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end

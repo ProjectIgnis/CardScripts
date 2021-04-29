@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local tc=g:GetFirst()
 			for tc in aux.Next(g) do
 				Duel.SpecialSummonStep(tc,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE)
-				if tc:HasLevel() and not tc:GetLevel()==1 then
+				if tc:HasLevel() and tc:IsLevelAbove(2) then
 					local e1=Effect.CreateEffect(e:GetHandler())
 					e1:SetType(EFFECT_TYPE_SINGLE)
 					e1:SetCode(EFFECT_UPDATE_LEVEL)

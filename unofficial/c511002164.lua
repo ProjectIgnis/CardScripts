@@ -1,3 +1,4 @@
+--王者の残像
 --Shade of the King
 local s,id=GetID()
 function s.initial_effect(c)
@@ -63,13 +64,13 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.cfilter(c,e)
-	return c:IsOnField() and c:IsType(TYPE_XYZ) and c:GetRank()>=8 and (not e or c:IsRelateToEffect(e))
+function s.cfilter(c)
+	return c:IsOnField() and c:IsType(TYPE_XYZ) and c:GetRank()>=8
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	if tg==nil then return false end
-	local g=tg:Filter(s.cfilter,nil,nil)
+	local g=tg:Filter(s.cfilter,nil)
 	if ex and #g==1 then
 		e:SetLabelObject(g:GetFirst())
 		return true
@@ -79,22 +80,21 @@ function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter2(c,e,tp,mc,rk,code)
 	if c.rum_limit_code and code~=c.rum_limit_code then return false end
-	return c:GetRank()==rk and mc:IsCanBeXyzMaterial(c,tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetRank()==rk and mc:IsCanBeXyzMaterial(c,tp)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
-	if chk==0 then return tc and Duel.GetLocationCountFromEx(tp,tp,tc)>0 
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,tc,tc:GetRank()+1,tc:GetCode()) end
+	if chk==0 then return tc and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,tc,tc:GetRank()+1,tc:GetCode()) end
 	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
-	if Duel.GetLocationCountFromEx(tp,tp,tc)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+1,tc:GetCode())
-	local sc=g:GetFirst()
+	local sc=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+1,tc:GetCode()):GetFirst()
 	if sc then
 		local mg=tc:GetOverlayGroup()
 		if #mg~=0 then

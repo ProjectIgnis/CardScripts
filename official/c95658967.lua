@@ -1,12 +1,13 @@
 --祝福の教会－リチューアル・チャーチ
+--Ritual Sanctuary
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--search
+	--Add from Deck to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special Summon 1 Fairy from the GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -75,7 +76,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+			and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 	end
 	e:SetLabel(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -84,13 +85,13 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabel(lv)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local tg=Duel.SelectMatchingCard(tp,s.cfilter2,tp,LOCATION_GRAVE,0,lv,lv,nil)
-	Duel.SendtoDeck(tg,nil,2,REASON_COST)
+	Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

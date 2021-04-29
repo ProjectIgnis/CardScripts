@@ -4,6 +4,7 @@ function s.initial_effect(c)
 	--skill
 	aux.AddPreDrawSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
+s.roll_dice=true
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
 	return Duel.GetCurrentChain()==0 and Duel.GetTurnCount()==5

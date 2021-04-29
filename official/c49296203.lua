@@ -65,9 +65,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.splimit(e,c)
 	return not (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)) and c:IsLocation(LOCATION_EXTRA)
+end
+function s.lizfilter(e,c)
+	return not (c:IsOriginalRace(RACE_MACHINE) and c:IsOriginalAttribute(ATTRIBUTE_EARTH))
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

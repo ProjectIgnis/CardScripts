@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	while tc do
 		if tc:GetFlagEffect(id)==0 then
-			local e1=Effect.CreateEffect(e:GetHandler())	
+			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE)
 			e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 			e1:SetCode(EVENT_CHANGE_POS)
@@ -42,10 +42,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetOperation(s.op)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 			tc:RegisterEffect(e1)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET,0,1) 	
-		end	
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET,0,1)
+		end
 		tc=g:GetNext()
-	end		
+	end
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

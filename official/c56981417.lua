@@ -2,7 +2,7 @@
 --Spellbook of the Master
 local s,id=GetID()
 function s.initial_effect(c)
-	--copy spell
+	--copy a "Spellbook" Spell
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -32,29 +32,39 @@ function s.filter(c)
 	return c:IsSetCard(0x106e) and not c:IsCode(id) and c:GetType()==TYPE_SPELL and c:CheckActivateEffect(true,true,false)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
+	if chkc then
+		local tg=e:GetLabelObject():GetTarget()
+		return tg and tg(e,tp,eg,ep,ev,re,r,rp,0,chkc)
+	end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
+	e:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e:SetCategory(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local te=g:GetFirst():CheckActivateEffect(true,true,false)
+	Duel.ClearTargetCard()
+	e:SetProperty(te:GetProperty())
+	e:SetLabel(te:GetLabel())
+	e:SetLabelObject(te:GetLabelObject())
+	local tg=te:GetTarget()
+	if tg then
+		tg(e,tp,eg,ep,ev,re,r,rp,1)
+	end
+	te:SetLabel(e:GetLabel())
+	te:SetLabelObject(e:GetLabelObject())
+	e:SetLabelObject(te)
+	Duel.ClearOperationInfo(0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if not (tc and tc:IsRelateToEffect(e)) then return end
-	local te,ceg,cep,cev,cre,cr,crp=tc:CheckActivateEffect(false,true,true)
-	if not te then return end
-	local tg=te:GetTarget()
-	local op=te:GetOperation()
-	if tg then tg(e,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,1) end
-	Duel.BreakEffect()
-	tc:CreateEffectRelation(te)
-	Duel.BreakEffect()
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	for etc in aux.Next(g) do
-		etc:CreateEffectRelation(te)
-	end
-	if op then op(e,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,1) end
-	tc:ReleaseEffectRelation(te)
-	for etc in aux.Next(g) do
-		etc:ReleaseEffectRelation(te)
+	local te=e:GetLabelObject()
+	if te:GetHandler():IsRelateToEffect(e) then
+		e:SetLabel(te:GetLabel())
+		e:SetLabelObject(te:GetLabelObject())
+		local op=te:GetOperation()
+		if op then
+			op(e,tp,eg,ep,ev,re,r,rp)
+		end
+		te:SetLabel(e:GetLabel())
+		te:SetLabelObject(e:GetLabelObject())
 	end
 end

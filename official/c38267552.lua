@@ -1,8 +1,10 @@
+--夢魔鏡の黒騎士－ルペウス
 --Morpheus, the Dream Mirror Black Knight
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--Destroy 1 card on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -14,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special summon 1 "Morpheus, the Dream Mirror White Knight" from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -30,6 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_DREAM_MIRROR_JOY,1872843}
 s.listed_series={0x131}
+
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x131)

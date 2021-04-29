@@ -2,10 +2,11 @@
 --Jet Warrior
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,s.tfilter,1,1,Synchro.NonTuner(nil),1,99)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--tohand
+	--Synchro summon procedure
+	Synchro.AddProcedure(c,s.tfilter,1,1,Synchro.NonTuner(nil),1,99)
+	--If synchro summoned, return 1 of your opponent's cards to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -27,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.material={9742784}
 s.listed_names={9742784}
 s.material_setcode=0x1017
 function s.tfilter(c,scard,sumtype,tp)
@@ -65,10 +67,12 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)

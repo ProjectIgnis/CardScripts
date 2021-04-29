@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--special summon procedure
+	--Special Summon procedure
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -13,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--cannot special summon
+	--Special Special limitation
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e2)
-	--coin
+	--Coin registration
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_COIN)
@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.cointg)
 	e3:SetOperation(s.coinop)
 	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.toss_coin=true
 function s.spcon(e,c)
@@ -109,7 +110,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
 	end

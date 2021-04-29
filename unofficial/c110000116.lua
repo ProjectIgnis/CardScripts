@@ -1,3 +1,4 @@
+--アーマード・グラビテーション
 --Armored Gravitation
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsType(0x10000000) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsType(TYPE_ARMOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

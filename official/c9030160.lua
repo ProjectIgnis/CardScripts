@@ -1,12 +1,13 @@
 --常闇の契約書
+--Dark Contract with the Eternal Darkness
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--cannot be target
+	--Prevent effect target
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.condition)
 	e2:SetValue(s.evalue)
 	c:RegisterEffect(e2)
-	--cannot release
+	--Prevent tribute
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_SZONE)
@@ -35,7 +36,7 @@ function s.initial_effect(c)
 	local e7=e3:Clone()
 	e7:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
 	c:RegisterEffect(e7)
-	--damage
+	--Inflict 2000 damage
 	local e8=Effect.CreateEffect(c)
 	e8:SetDescription(aux.Stringid(id,0))
 	e8:SetCategory(CATEGORY_DAMAGE)
@@ -48,6 +49,7 @@ function s.initial_effect(c)
 	e8:SetOperation(s.damop)
 	c:RegisterEffect(e8)
 end
+s.listed_series={0xaf}
 function s.condition(e)
 	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,2,nil,0xaf)
 end
@@ -56,7 +58,7 @@ function s.sumlimit(e,c)
 	return not c:IsControler(e:GetHandlerPlayer())
 end
 function s.evalue(e,re,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp~=e:GetHandlerPlayer()
+	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp==1-e:GetHandlerPlayer()
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

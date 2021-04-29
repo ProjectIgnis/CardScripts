@@ -1,7 +1,8 @@
 --紅姫チルビメ
+--Chirubimé, Princess of Autumn Leaves
 local s,id=GetID()
 function s.initial_effect(c)
-	--cannot be battle target
+	--Cannot be battle target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetValue(s.bttg)
 	c:RegisterEffect(e1)
-	--summon success
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -25,7 +26,7 @@ function s.bttg(e,c)
 	return c~=e:GetHandler() and c:IsFaceup() and c:IsRace(RACE_PLANT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():IsPreviousControler(tp)
+	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_PLANT) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

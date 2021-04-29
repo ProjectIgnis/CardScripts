@@ -1,4 +1,5 @@
 --紋章変換
+--Heraldry Change
 local s,id=GetID()
 function s.initial_effect(c)
 	--end battle phase
@@ -30,6 +31,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then
 		Duel.BreakEffect()
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
 end

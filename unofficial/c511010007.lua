@@ -22,6 +22,8 @@ function s.initial_effect(c)
 	e2:SetValue(s.indes)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x48}
+s.roll_dice=true
 s.xyz_number=7
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -30,7 +32,6 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local d1=Duel.TossDice(tp,1)
-	local tc=e:GetHandler():GetBattleTarget()
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)

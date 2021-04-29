@@ -1,12 +1,11 @@
 --アルカナ エクストラジョーカー
 --Arcana Extra Joker
---
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_WARRIOR),3,3,s.lcheck)
 	c:EnableReviveLimit()
-	--negate
+	--Negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE)
@@ -20,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -30,9 +29,10 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-function s.lcheck(g,lc,tp)
-	return g:GetClassCount(Card.GetCode)==#g
+function s.lcheck(g,lc,sumtype,tp)
+	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
 end
 function s.negfilter(c,g)
 	return g:IsContains(c)
@@ -59,7 +59,9 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)
-	Duel.NegateActivation(ev)
+	if Duel.NegateActivation(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SendtoGrave(eg,REASON_EFFECT)
+	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -90,4 +92,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

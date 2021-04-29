@@ -9,13 +9,13 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_LEAVE_FIELD)
-	e1:SetCountLimit(1,id)--+EFFECT_COUNT_CODE_OATH
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x57a}
+s.listed_series={0x14a}
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(1-tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
@@ -27,7 +27,7 @@ function s.rmfilter(c,e,tp,fp)
 		and (not fp or Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_GRAVE,0,1,c,e,tp))
 end
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0x57a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(0x14a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.spfilter2(c,e,tp)
 	return c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,1-tp,false,false,POS_FACEUP)

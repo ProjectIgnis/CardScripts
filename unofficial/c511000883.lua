@@ -63,6 +63,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetParam(dam)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local atk=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then

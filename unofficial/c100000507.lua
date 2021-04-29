@@ -4,18 +4,18 @@
 local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()
-	--send 
+	--Place in the Spell/Trap Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_DAMAGE)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(s.recon)
 	e1:SetTarget(s.rectg)
 	e1:SetOperation(s.recop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--special summon2
+	--Special Summon from Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(alias,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -78,7 +78,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp,c)   
+function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	if e:GetHandler():IsRelateToEffect(e) then
 		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 	end

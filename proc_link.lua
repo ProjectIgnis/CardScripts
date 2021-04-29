@@ -15,7 +15,7 @@ function Link.AddProcedure(c,f,min,max,specialchk,desc)
 		e1:SetDescription(1174)
 	end
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetRange(LOCATION_EXTRA)
 	if max==nil then max=c:GetLink() end
 	e1:SetCondition(Link.Condition(f,min,max,specialchk))
@@ -35,7 +35,6 @@ end
 function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	if #sg>maxc then return false end
 	filt=filt or {}
-	local oldfilt={table.unpack(filt)}
 	sg:AddCard(c)
 	for _,filt in ipairs(filt) do
 		if not filt[2](c,filt[3],tp,sg,mg,lc,filt[1],1) then
@@ -47,19 +46,16 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 		res=aux.CheckValidExtra(c,tp,sg,mg,lc,emt,filt)
 		if not res then
 			sg:RemoveCard(c)
-			filt={table.unpack(oldfilt)}
 			return false
 		end
 	end
 	local res=Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
-		or (#sg<maxc and mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt))
+		or (#sg<maxc and mg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,{table.unpack(filt)}))
 	sg:RemoveCard(c)
-	filt={table.unpack(oldfilt)}
 	return res
 end
 function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 	if #sg>maxc then return false end
-	local oldfilt={table.unpack(filt)}
 	sg:AddCard(c)
 	for _,filt in ipairs(filt) do
 		if not filt[2](c,filt[3],tp,sg,mg,lc,filt[1],1) then
@@ -71,7 +67,6 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 		res=aux.CheckValidExtra(c,tp,sg,mg,lc,emt,filt)
 		if not res then
 			sg:RemoveCard(c)
-			filt={table.unpack(oldfilt)}
 			return false
 		end
 	end
@@ -97,7 +92,7 @@ function Link.CheckGoal(tp,sg,lc,minc,f,specialchk,filt)
 		end
 	end
 	return #sg>=minc and sg:CheckWithSumEqual(Link.GetLinkCount,lc:GetLink(),#sg,#sg)
-		and (not specialchk or specialchk(sg,lc,tp)) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0
+		and (not specialchk or specialchk(sg,lc,SUMMON_TYPE_LINK|MATERIAL_LINK,tp)) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0
 end
 function Link.Condition(f,minc,maxc,specialchk)
 	return	function(e,c,must,g,min,max)
@@ -116,6 +111,7 @@ function Link.Condition(f,minc,maxc,specialchk)
 				max = max or maxc
 				if mustg:IsExists(aux.NOT(Link.ConditionFilter),1,nil,f,c,tp) or #mustg>max then return false end
 				local emt,tg=aux.GetExtraMaterials(tp,mustg+mg,c,SUMMON_TYPE_LINK)
+				tg=tg:Filter(Link.ConditionFilter,nil,f,c,tp)
 				local res=(mg+tg):Includes(mustg) and #mustg<=max
 				if res then
 					if #mustg==max then
@@ -143,6 +139,7 @@ function Link.Target(f,minc,maxc,specialchk)
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_LINK)
 				if must then mustg:Merge(must) end
 				local emt,tg=aux.GetExtraMaterials(tp,mustg+mg,c,SUMMON_TYPE_LINK)
+				tg=tg:Filter(Link.ConditionFilter,nil,f,c,tp)
 				local sg=Group.CreateGroup()
 				local finish=false
 				local cancel=false
@@ -152,10 +149,10 @@ function Link.Target(f,minc,maxc,specialchk)
 					if #sg>0 then
 						Link.CheckRecursive2(sg:GetFirst(),tp,Group.CreateGroup(),sg,mg+tg,mg+tg,c,min,max,f,specialchk,mg,emt,filters)
 					end
-					local cg=(mg+tg):Filter(Link.CheckRecursive,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt,filters)
+					local cg=(mg+tg):Filter(Link.CheckRecursive,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt,{table.unpack(filters)})
 					if #cg==0 then break end
 					finish=#sg>=min and #sg<=max and Link.CheckGoal(tp,sg,c,min,f,specialchk,filters)
-					cancel=not og and Duel.GetCurrentChain()<=0 and #sg==0
+					cancel=not og and Duel.IsSummonCancelable() and #sg==0
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
 					local tc=Group.SelectUnselect(cg,sg,tp,finish,cancel,1,1)
 					if not tc then break end

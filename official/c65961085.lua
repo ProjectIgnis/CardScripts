@@ -34,7 +34,7 @@ end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if #g>0 then
-		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 	local g2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_REMOVED,0,nil)
 	if #g2>0 then

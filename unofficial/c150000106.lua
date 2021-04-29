@@ -24,6 +24,6 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD+LOCATION_HAND,nil)
 	if Duel.Destroy(g,REASON_EFFECT)>0 then
-		Duel.Damage(1-tp,300,REASON_EFFECT)  
+		Duel.Damage(1-tp,300,REASON_EFFECT)
 	end
 end

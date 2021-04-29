@@ -1,6 +1,7 @@
 --地底のアラクネー
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x601)
 	--dark synchro summon
 	c:EnableReviveLimit()
 	Synchro.AddDarkSynchroProcedure(c,Synchro.NonTuner(nil),nil,6)
@@ -27,13 +28,6 @@ function s.initial_effect(c)
 	e3:SetOperation(s.eqop)
 	c:RegisterEffect(e3)
 	aux.AddEREquipLimit(c,s.eqcon,function(ec,_,tp) return ec:IsControler(1-tp) end,s.equipop,e3)
-	--add setcode
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetCode(EFFECT_ADD_SETCODE)
-	e4:SetValue(0x601)
-	c:RegisterEffect(e4)
 end
 function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)

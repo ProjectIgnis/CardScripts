@@ -1,4 +1,5 @@
---D・ライトン
+--D・ライトン (Anime)
+--Morphtronic Lantron (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetValue(s.refval)
 	c:RegisterEffect(e1)
 	--def
-	local e5=Effect.CreateEffect(c)	
+	local e5=Effect.CreateEffect(c) 
 	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e5:SetCode(EVENT_CHAIN_SOLVED)

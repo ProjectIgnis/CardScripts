@@ -1,7 +1,8 @@
 --召喚師アレイスター
+--Aleister the Invoker
 local s,id=GetID()
 function s.initial_effect(c)
-	--boost
+	--Increase ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -9,13 +10,13 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+0x1c0)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
 	e1:SetCondition(s.adcon)
 	e1:SetCost(s.adcost)
 	e1:SetTarget(s.adtg)
 	e1:SetOperation(s.adop)
 	c:RegisterEffect(e1)
-	--search
+	--Add 1 "Invocation" to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -48,7 +49,7 @@ function s.adtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.adop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

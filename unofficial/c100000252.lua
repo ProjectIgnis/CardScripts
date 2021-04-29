@@ -1,4 +1,5 @@
 --レベル・チェンジ
+--Level Change
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x41}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END and Duel.GetTurnPlayer()~=tp  
+	return Duel.GetCurrentPhase()==PHASE_END and Duel.GetTurnPlayer()==1-tp
 end
 function s.costfilter(c,e,tp,ft)
 	if not c:IsSetCard(0x41) or not c:IsAbleToGraveAsCost() then return false end
@@ -25,7 +26,9 @@ end
 function s.spfilter(c,class,e,tp)
 	local code=c:GetCode()
 	for i=1,#class.listed_names do
-		if code==class.listed_names[i] then	return c:IsCanBeSpecialSummoned(e,0,tp,true,false) end
+		if code==class.listed_names[i] then
+			return c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+		end
 	end
 	return false
 end

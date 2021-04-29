@@ -1,6 +1,6 @@
 --狂戦士の魂 (Anime)
 --Berserker Soul (Anime)
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local dc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,dc)
 		Duel.BreakEffect()
-		if dc:IsType(TYPE_MONSTER) and Duel.SendtoGrave(dc,REASON_COST+REASON_DISCARD)>0 and dc:IsLocation(LOCATION_GRAVE) then
+		if dc:IsType(TYPE_MONSTER) and Duel.SendtoGrave(dc,REASON_EFFECT+REASON_DISCARD)>0 and dc:IsLocation(LOCATION_GRAVE) then
 			Duel.ChainAttack()
 			local e1=Effect.GlobalEffect()
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -57,7 +57,6 @@ function s.caop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,dc)
 		Duel.BreakEffect()
 		if dc:IsType(TYPE_MONSTER) and Duel.SendtoGrave(dc,REASON_COST+REASON_DISCARD)>0 and dc:IsLocation(LOCATION_GRAVE) then
-			Debug.Message("Dorō! Monsutākādo!")
 			Duel.ChainAttack()
 		else
 			e:Reset()

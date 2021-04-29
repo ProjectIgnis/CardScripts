@@ -1,9 +1,9 @@
 --サイバネティック・レボリューション
 --Cybernetic Revolution
---
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 fusion monster, that lists "Cyber Dragon" as material, from extra deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,9 +12,11 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(TIMING_BATTLE_PHASE+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_CYBER_DRAGON}
+
 function s.cfilter(c,e,tp)
 	return c:IsCode(CARD_CYBER_DRAGON) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
@@ -36,12 +38,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
+		--Cannot attack directly
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3207)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
+		--Destroy it during next end phase
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PHASE+PHASE_END)

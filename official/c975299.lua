@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--atk/def up
+	--ATK increase
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -18,19 +18,20 @@ function s.initial_effect(c)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x15))
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
+	--DEF increase
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
-	--indes
+	--Prevent destruction by opponent's effect
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
 	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x15))
-	e4:SetValue(s.indval)
+	e4:SetValue(aux.indoval)
 	c:RegisterEffect(e4)
-	--cannot be target
+	--Prevent effect target
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
 	e5:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -40,7 +41,7 @@ function s.initial_effect(c)
 	e5:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x15))
 	e5:SetValue(aux.tgoval)
 	c:RegisterEffect(e5)
-	--spsummon
+	--Special Summon from hand
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -50,7 +51,7 @@ function s.initial_effect(c)
 	e6:SetTarget(s.sptg)
 	e6:SetOperation(s.spop)
 	c:RegisterEffect(e6)
-	--counter
+	--Add counters
 	local e7=Effect.CreateEffect(c)
 	e7:SetDescription(aux.Stringid(id,2))
 	e7:SetCategory(CATEGORY_COUNTER)
@@ -80,9 +81,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-function s.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
-end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x15) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -103,7 +101,7 @@ function s.ctfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x15) and c:IsControler(tp)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.ctfilter,1,nil,tp)
+	return eg and eg:IsExists(s.ctfilter,1,nil,tp)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

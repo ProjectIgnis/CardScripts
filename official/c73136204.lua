@@ -1,4 +1,5 @@
 --森羅の渡し守 ロータス
+--Sylvan Lotuswain
 local s,id=GetID()
 function s.initial_effect(c)
 	--deck
@@ -43,11 +44,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	ac=ac-#sg
 	if ac>0 then
-		Duel.SortDecktop(tp,tp,ac)
-		for i=1,ac do
-			local mg=Duel.GetDecktopGroup(tp,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
-		end
+		Duel.MoveToDeckBottom(ac,tp)
+		Duel.SortDeckbottom(tp,tp,ac)
 	end
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)

@@ -1,4 +1,5 @@
 --スフィア・フィールド
+--Sphere Field
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,17 +29,18 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil)
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
-		return #pg<=0 and Duel.GetLocationCountFromEx(tp)>0 and g:IsExists(s.lvfilter,1,nil,g) 
+		return #pg<=0 and g:IsExists(s.lvfilter,1,nil,g) 
 			and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.xyzfilter(c,e,tp)
-	return c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,true,false)
+	return c:IsSetCard(0x48) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,true,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
-	if not e:GetHandler():IsRelateToEffect(e) or Duel.GetLocationCountFromEx(tp)<=0 or #pg>0 then return end
+	if not e:GetHandler():IsRelateToEffect(e) or #pg>0 then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e)
 	local sg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if #sg>0 and g:IsExists(s.lvfilter,1,nil,g) then

@@ -1,4 +1,5 @@
 --封魔の伝承者
+--Disciple of the Forbidden Spell
 local s,id=GetID()
 function s.initial_effect(c)
 	--to defense
@@ -20,7 +21,7 @@ function s.ancop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_GRAVE,0,nil,id)
 	if ct>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-		local att=Duel.AnnounceAttribute(tp,ct,0xffff)
+		local att=Duel.AnnounceAttribute(tp,ct,ATTRIBUTE_ALL)
 		e:GetHandler():SetHint(CHINT_ATTRIBUTE,att)
 		--destroy
 		local e1=Effect.CreateEffect(c)

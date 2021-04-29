@@ -1,8 +1,8 @@
---Dragunity Pilum
 --ドラグニティ－ピルム
+--Dragunity Pilum
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip
+	--Equip
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
@@ -11,18 +11,17 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--direct attack
+	--Direct attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e2)
-	--damage reduce
+	--Reduce battle damage
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e3:SetType(EFFECT_TYPE_EQUIP)
+	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e3:SetCondition(s.rdcon)
-	e3:SetOperation(s.rdop)
+	e3:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x29}
@@ -59,23 +58,7 @@ end
 function s.eqlimit(e,c)
 	return e:GetLabelObject()==c
 end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler():GetEquipTarget()
-	return ep~=tp and c==Duel.GetAttacker() and Duel.GetAttackTarget()==nil
-		and c:IsHasEffect(EFFECT_DIRECT_ATTACK)
-		and Duel.IsExistingMatchingCard(aux.NOT(Card.IsHasEffect),tp,0,LOCATION_MZONE,1,nil,EFFECT_IGNORE_BATTLE_TARGET)
-end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=c:GetEquipTarget()
-	local effs={tc:GetCardEffect(EFFECT_DIRECT_ATTACK)}
-	local eg=Group.CreateGroup()
-	for _,eff in ipairs(effs) do
-		eg:AddCard(eff:GetOwner())
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	local ec = #eg==1 and eg:GetFirst() or eg:Select(tp,1,1,nil):GetFirst()
-	if c==ec then
-		Duel.HalfBattleDamage(ep)
-	end
+function s.rdcon(e)
+	local c,tp=e:GetHandler():GetEquipTarget(),e:GetHandlerPlayer()
+	return Duel.GetAttackTarget()==nil and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end

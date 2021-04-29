@@ -1,6 +1,6 @@
 --融合解除 (Manga)
 --De-Fusion (Manga)
---updated by Larry126
+--Updated by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,26 +12,17 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+	--Trap Spell
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCode(EFFECT_ADD_TYPE)
-	e2:SetValue(TYPE_SPELL)
+	e2:SetCode(EFFECT_BECOME_QUICK)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EFFECT_TRAP_ACT_IN_HAND)
-	e3:SetCondition(s.handcon)
+	e3:SetCode(EFFECT_QP_ACT_IN_SET_TURN)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e4:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
-	c:RegisterEffect(e4)
-end
-function s.handcon(e)
-	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local at=Duel.GetAttacker()

@@ -1,4 +1,5 @@
 --ライトレイ ギア・フリード
+--Lightray Gearfried
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -30,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.negtg)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

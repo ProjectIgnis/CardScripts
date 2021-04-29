@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
 	c:EnableCounterPermit(COUNTER_SPELL,LOCATION_PZONE+LOCATION_MZONE)
 	Pendulum.AddProcedure(c)
-	--Add counter (self)
+	--Add counter to itself
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetCode(EVENT_CHAIN_SOLVING)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg1)
 	e2:SetOperation(s.spop1)
 	c:RegisterEffect(e2)
-	--Place counter
+	--Place Spell counters
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.ctcon)
 	e3:SetOperation(s.ctop2)
 	c:RegisterEffect(e3)
-	--SPsummon from deck
+	--Special Summon from deck
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -46,14 +46,14 @@ function s.initial_effect(c)
 	e4:SetTarget(s.sptg2)
 	e4:SetOperation(s.spop2)
 	c:RegisterEffect(e4)
-	--counter check
+	--Counter check
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e0:SetCode(EVENT_DESTROY)
 	e0:SetOperation(s.ctchk)
 	e0:SetLabel(0)
 	c:RegisterEffect(e0)
-	--pendulum
+	--Place itself in the `Pendulum Zone when destroyed
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,2))
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -117,7 +117,7 @@ function s.ctop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,3,REASON_COST) end
@@ -152,7 +152,7 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
 	local c=e:GetHandler()
 	local ct=e:GetLabelObject():GetLabel()
-	if c:IsRelateToEffect(e) and Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true) then
+	if c:IsRelateToEffect(e) and Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true) and ct>0 then
 		Duel.BreakEffect()
 		c:AddCounter(COUNTER_SPELL,ct)
 	end

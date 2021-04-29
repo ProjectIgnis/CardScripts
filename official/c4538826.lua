@@ -1,5 +1,5 @@
 --終焉龍 カオス・エンペラー
---Chaos Emperor, the Armageddon Dragon
+--Chaos Emperor, the Dragon of Armageddon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_SPSUMMON_PROC)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCountLimit(1,id+1)
+	e3:SetCountLimit(1,id+1,EFFECT_COUNT_CODE_OATH)
 	e3:SetRange(LOCATION_EXTRA+LOCATION_HAND)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)

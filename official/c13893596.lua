@@ -64,7 +64,7 @@ function s.spcon(e,c)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
-	Duel.SendtoDeck(g,nil,2,REASON_COST)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

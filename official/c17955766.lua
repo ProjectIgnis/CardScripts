@@ -1,4 +1,5 @@
 --N・アクア・ドルフィン
+--Neo-Spacian Aqua Dolphin
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,12 +24,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 	if #g>0 then
 		Duel.ConfirmCards(tp,g)
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
 		local tg=g:FilterSelect(tp,Card.IsType,1,1,nil,TYPE_MONSTER)
 		local tc=tg:GetFirst()
 		if tc then
 			local atk=tc:GetAttack()
-			if atk>=0 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,atk),tp,LOCATION_MZONE,0,1,nil) then
+			if tc:IsAttackAbove(0) and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,atk),tp,LOCATION_MZONE,0,1,nil) then
 				Duel.Destroy(tc,REASON_EFFECT)
 				Duel.Damage(1-tp,500,REASON_EFFECT)
 			else

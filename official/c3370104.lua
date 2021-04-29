@@ -1,7 +1,8 @@
 --サイバー・フェニックス
+--Cyber Phoenix
 local s,id=GetID()
 function s.initial_effect(c)
-	--disable
+	--Negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DISABLE)
@@ -10,14 +11,14 @@ function s.initial_effect(c)
 	e1:SetCondition(s.discon)
 	e1:SetTarget(s.distg)
 	c:RegisterEffect(e1)
-	--disable effect
+	--Negate effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAIN_SOLVING)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	--draw
+	--Draw
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DRAW)
@@ -28,14 +29,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	--Double Snare
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(s.discon)
-	e4:SetCode(3682106)
-	c:RegisterEffect(e4)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.discon(e)
 	return e:GetHandler():IsAttackPos()

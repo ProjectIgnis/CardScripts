@@ -4,17 +4,17 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_DETACH_EVENT)
-	--link summon
+	--Link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.mfilter,2,nil,s.matcheck)
-	--cannot be link material
+	--Cannot be link material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--xyz summon
+	--Xyz summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -25,40 +25,35 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetCategory(CATEGORY_DESTROY)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetOperation(aux.chainreg)
+	e3:SetCountLimit(1,id+1)
+	e3:SetCondition(s.descon)
+	e3:SetTarget(s.destg)
+	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_DESTROY)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e4:SetCode(EVENT_CHAIN_SOLVING)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCountLimit(1,id+1)
-	e4:SetCondition(s.descon)
-	e4:SetTarget(s.destg)
-	e4:SetOperation(s.desop)
-	c:RegisterEffect(e4)
-	if not s.global_check then
-		s.global_check=true
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
+	aux.GlobalCheck(s,function()
 		s[0]=nil
+		s[1]=nil
+		s[2]=nil
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DETACH_MATERIAL)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.mfilter(c)
-	return c:HasLevel() and not c:IsLevel(0)
+	return c:IsLevelAbove(1)
 end
-function s.matcheck(g,lc,tp)
-	return g:GetClassCount(Card.GetLevel,lc,SUMMON_TYPE_LINK,tp)==1
+function s.matcheck(g,lc,sumtype,tp)
+	return g:GetClassCount(Card.GetLevel)==1
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
@@ -89,8 +84,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,nil,e,tp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,1,tp,HINTMSG_SPSUMMON)
 	if #sg~=2 then return end
-	local tc=sg:GetFirst()
-	while tc do
+	for tc in sg:Iter() do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -100,16 +94,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		tc:RegisterEffect(e2)
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetType(EFFECT_TYPE_FIELD)
-		e3:SetRange(LOCATION_MZONE)
-		e3:SetCode(EFFECT_EXTRA_MATERIAL)
-		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e3:SetTargetRange(1,0)
-		e3:SetValue(s.extram)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e3,true)
-		tc=sg:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 	Duel.BreakEffect()
@@ -120,31 +104,27 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.XyzSummon(tp,xyz,sg,sg)
 	end
 end
-function s.extram(chk,summon_type,e,...)
-	local c=e:GetHandler()
-	if chk==0 then
-		local tp,sc=...
-		if summon_type==SUMMON_TYPE_XYZ then
-			return Group.FromCards(c)
-		else
-			return Group.CreateGroup()
-		end
-	end
-end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetCurrentChain()
 	if cid>0 and r&REASON_COST==REASON_COST then
-		s[0]=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE,CHAININFO_TRIGGERING_CONTROLER)
+		s[0],s[1]=Duel.GetChainInfo(cid,CHAININFO_CHAIN_ID),Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)
+		local seq=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_SEQUENCE)
+		local te=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_EFFECT)
+		local tc,p=te:GetHandler(),e:GetHandler():GetControler()
+		if tc:IsRelateToEffect(te) then
+			if tc:IsControler(1-p) then seq=seq+16 end
+		else
+			if tc:GetPreviousControler()==1-p then seq=seq+16 end
+		end
+		s[2]=seq
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	local loc,seq,p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE,CHAININFO_TRIGGERING_CONTROLER)
-	if p==1-tp then seq=seq+16 end
-	return Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE,CHAININFO_TRIGGERING_CONTROLER)==s[0]
+	local loc,seq=s[1],s[2]
+	if c:IsStatus(STATUS_BATTLE_DESTROYED) or not seq then return false end
+	return Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)==s[0]
 		and re:IsActiveType(TYPE_XYZ) and (loc&LOCATION_MZONE)~=0 and bit.extract(c:GetLinkedZone(),seq)~=0
-		and e:GetHandler():GetFlagEffect(1)>0
 end
 function s.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

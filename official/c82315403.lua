@@ -1,11 +1,11 @@
 --サイバー・エタニティ・ドラゴン
--- Cyber Eternity Dragon
+--Cyber Eternity Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1093),1,aux.FilterBoolFunctionEx(Card.IsRace,RACE_MACHINE),2)
-	--cannot be target
+	--Cannot be target
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e0:SetCondition(s.imunecond)
 	e0:SetValue(aux.tgoval)
 	c:RegisterEffect(e0)
-	--cannot be destroyed
+	--Cannot be destroyed
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.imunecond)
 	e1:SetValue(aux.tgoval)
 	c:RegisterEffect(e1)
-	--summon
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -55,7 +55,8 @@ function s.filter(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_FUSION) and rp~=tp
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_FUSION)
+		and c:IsPreviousControler(tp) and rp==1-tp
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_CYBER_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -73,7 +74,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,true,true,POS_FACEUP)
 	end
 end
-
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -90,9 +90,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.tgvalue(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
+	return rp==1-e:GetHandlerPlayer()
 end
 function s.tg(e,c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION)
 end
-

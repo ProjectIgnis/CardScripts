@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--banish
+	--remove card from the graveyard
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -54,15 +54,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local ac=5-ct
 	if ac>0 then
-		Duel.SortDecktop(tp,tp,ac)
-		for i=1,ac do
-			local mg=Duel.GetDecktopGroup(tp,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
-		end
+		Duel.MoveToDeckBottom(ac,tp)
+		Duel.SortDeckbottom(tp,tp,ac)
 	end
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_WIND) and Duel.GetTurnPlayer()~=tp
+	return Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_WIND) and Duel.GetTurnPlayer()==1-tp
 end
 function s.rmfilter(c)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c)

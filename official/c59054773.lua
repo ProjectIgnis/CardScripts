@@ -83,6 +83,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		s.attr_list[tp]=s.attr_list[tp]|attr
 	end
+	if not attr then return end
 	for _,str in aux.GetAttributeStrings(attr) do
 		e:GetHandler():RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,str)
 	end
@@ -109,4 +110,3 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SSet(tp,c)
 	end
 end
-

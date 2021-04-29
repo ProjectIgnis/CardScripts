@@ -1,10 +1,8 @@
 --サスペンド・ワンド
 --Suspend Wand
 --scripted by Larry126
-
 --Substitue ID
 local s,id=GetID()
-
 function s.initial_effect(c)
 	--Equip
 	aux.AddEquipProcedure(c,nil,s.eqfilter)
@@ -71,15 +69,16 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		ec:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e3:SetOperation(s.damop)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+		e3:SetCondition(s.dcon)
+		e3:SetValue(aux.ChangeBattleDamage(0,DOUBLE_DAMAGE))
 		e3:SetReset(RESET_PHASE+PHASE_DAMAGE)
-		Duel.RegisterEffect(e3,tp)
+		ec:RegisterEffect(e3)
 	end
 end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DoubleBattleDamage(tp)
+function s.dcon(e)
+	return Duel.GetAttackTarget()==e:GetHandler():GetEquipTarget()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()

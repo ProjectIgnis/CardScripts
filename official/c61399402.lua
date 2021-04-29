@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Xyz.AddProcedure(c,nil,4,2)
-	--destroy
+	--destroy monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--spsummon
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--destroy replace
+	--destruction replacement
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
@@ -59,7 +59,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsControler(tp) and tc:IsRace(RACE_CYBERSE) and tc~=e:GetHandler()
+	return ep==1-tp and tc:IsControler(tp) and tc:IsRace(RACE_CYBERSE) and tc~=e:GetHandler()
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -79,11 +79,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsReason(REASON_EFFECT)
+		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=eg:FilterCount(s.repfilter,nil,tp)
-	if chk==0 then return ct>0 and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
+	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp) and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		local c=e:GetHandler()
 		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
@@ -93,4 +92,3 @@ end
 function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
-

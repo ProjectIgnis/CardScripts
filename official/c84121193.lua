@@ -1,11 +1,14 @@
 --コードブレイカー・ウイルスソードマン
 --Codebreaker Virus Swordsman
 --Scripted by Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2,2)
-	--special summon
+	--Special summon 1 "Codebreaker Zero Day" to either field from your deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,13 +19,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--special summon from grave
+	--Register the fact it was sent to GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
+	--Special summon itself from GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -37,6 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13c}
 s.listed_names={8662794}
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
@@ -82,13 +87,14 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end
 end
-

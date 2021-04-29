@@ -1,8 +1,9 @@
 --バックグランド・ドラゴン
 --Background Dragon
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special summon itself (GY) and 1 level 4 or lower dragon monster (hand)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -37,13 +38,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		g:AddCard(c)
 		if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0 then
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
-			e2:SetValue(LOCATION_REMOVED)
-			c:RegisterEffect(e2,true)
+			--Banish it if it leaves the field
+			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(3300)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+			e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+			e1:SetValue(LOCATION_REMOVED)
+			c:RegisterEffect(e1,true)
 		end		
 	end
 end

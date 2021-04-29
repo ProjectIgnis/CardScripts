@@ -1,3 +1,4 @@
+--督戦官コヴィントン (Manga)
 --Commander Covington (Manga)
 --fixed by MLD
 local s,id=GetID()
@@ -42,20 +43,21 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x36}
 s.listed_names={58054262}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
-	if chk==0 then return #g>1 and Duel.GetLocationCountFromEx(tp,tp,g)>0 end
+	if chk==0 then return #g>1 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g) end
 	g:KeepAlive()
 	e:SetLabelObject(g)
-	local tc=Duel.GetFirstMatchingCard(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
+	local tc=Duel.GetFirstMatchingCard(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp,g)
 	Duel.Overlay(tc,g)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x36)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return true end
 	local g=e:GetLabelObject()
 	g:KeepAlive()
 	Duel.SetTargetCard(g)
@@ -90,15 +92,16 @@ function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	Duel.SendtoGrave(g,REASON_RULE)
 end
-function s.filter(c,e,tp)
+function s.filter(c,e,tp,mg)
 	return c:IsCode(58054262) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local og=Duel.GetTargetCards(e)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then Duel.SendtoGrave(g,REASON_RULE) return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,og):GetFirst()
 	if tc then
 		Duel.Overlay(tc,og)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)

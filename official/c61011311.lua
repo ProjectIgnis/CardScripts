@@ -1,7 +1,9 @@
 --巻きすぎた発条
+--Zenmailfunction
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 "Wind-Up" monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -12,6 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x58}
+
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x58) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
@@ -27,6 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
+		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -37,10 +41,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
-		--cannot release
+		--Cannot be tributed
 		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(3303)
 		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e3:SetRange(LOCATION_MZONE)
 		e3:SetCode(EFFECT_UNRELEASABLE_SUM)
 		e3:SetValue(1)
@@ -49,11 +54,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e4=e3:Clone()
 		e4:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 		tc:RegisterEffect(e4,true)
-		--unsynchroable
+		--Cannot be used as synchro material
 		local e5=Effect.CreateEffect(c)
+		e5:SetDescription(3310)
 		e5:SetType(EFFECT_TYPE_SINGLE)
 		e5:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
-		e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e5:SetValue(1)
 		e5:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e5,true)

@@ -1,4 +1,5 @@
 --天魔神 インヴィシル
+--Sky Scourge Invicil
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -20,6 +21,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.facechk)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.chkfilter(c,rac,att)
 	return c:IsRace(rac) and c:IsAttribute(att)

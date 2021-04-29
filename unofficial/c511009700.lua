@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--persistent prochedure
-	aux.AddPersistentProcedure(c,0,s.filter,CATEGORY_ATKCHANGE,nil,nil,0x1c0,nil,s.cost,s.target)
+	aux.AddPersistentProcedure(c,0,s.filter,CATEGORY_ATKCHANGE,nil,nil,TIMINGS_CHECK_MONSTER,nil,s.cost,s.target)
 	--atk change
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -13,15 +13,14 @@ function s.initial_effect(c)
 	e1:SetTarget(aux.PersistentTargetFilter)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
 	--Destroy
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EVENT_LEAVE_FIELD)
-	e3:SetCondition(s.descon)
-	e3:SetOperation(s.desop)
-	c:RegisterEffect(e3)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCode(EVENT_LEAVE_FIELD)
+	e2:SetCondition(s.descon)
+	e2:SetOperation(s.desop)
+	c:RegisterEffect(e2)
 end
 function s.filter(c)
 	return c:IsLinkMonster() and c:IsLinkAbove(4) and c:IsRace(RACE_PLANT) and c:GetSequence()>4
@@ -61,7 +60,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_DESTROY_CONFIRMED) then return false end
 	local tc=c:GetFirstCardTarget()
-	return tc and eg:IsContains(tc) and tc:IsReason(REASON_DESTROY)
+	return tc and eg:IsContains(tc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

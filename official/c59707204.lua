@@ -1,9 +1,10 @@
 --護神鳥シムルグ
 --Simorgh, Bird of Protection
---scripted by Larry126
+--Scripted by Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Return
+	--When normal summoned, return 1 card from opponent's S/T zones to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special summon itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -56,14 +57,17 @@ end
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end
+	--Cannot special summon for rest of turn, except winged beast monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)

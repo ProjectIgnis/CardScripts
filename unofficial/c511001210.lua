@@ -1,3 +1,4 @@
+--ジャマー・スライム
 --Jammer Slime
 Duel.LoadScript("c420.lua")
 local s,id=GetID()

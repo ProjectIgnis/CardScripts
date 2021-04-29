@@ -1,7 +1,9 @@
 --鉄巨人アイアンハンマー
+--Ironhammer the Giant
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
@@ -9,14 +11,14 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	--
+	--Cannot change its battle position
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	c:RegisterEffect(e2)
-	--atk
+	--Make targeted monster be able to attack directly
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -47,8 +49,10 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		--Can attack directly
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetDescription(3205)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

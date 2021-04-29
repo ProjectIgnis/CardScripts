@@ -1,4 +1,5 @@
 --ネクロバレーの祭殿
+--Hidden Temples of Necrovalley
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -31,9 +32,7 @@ function s.cfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(0x2e)
 end
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
---Debug.Message(tostring(Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)).."|"..tostring(Duel.IsEnvironment(CARD_NECROVALLEY)))
-return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) 
-		and Duel.IsEnvironment(CARD_NECROVALLEY)
+	return Duel.IsExistingMatchingCard(s.cfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.IsEnvironment(CARD_NECROVALLEY)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return not c:IsSetCard(0x2e)

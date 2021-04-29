@@ -1,4 +1,5 @@
---Supreme King Servant Dragon Dark Rebellion
+--覇王眷竜 ダークリベリオン (Anime)
+--Supreme King Dragon Dark Rebellion (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -51,12 +52,9 @@ s.listed_names={13331639}
 function s.spfilter(c,tp)
 	return c:IsControler(1-tp) and c:IsType(TYPE_XYZ) and c:IsSummonType(SUMMON_TYPE_XYZ)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(13331639)
-end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.spfilter,1,nil,tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-		and e:GetHandler():IsXyzSummonable()
+	return eg:IsExists(s.spfilter,1,nil,tp) and e:GetHandler():IsXyzSummonable()
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,13331639),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -142,33 +140,30 @@ function s.spfilter2(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x20f8) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-		and Duel.GetLocationCountFromEx(tp,tp,e:GetHandler())>1 and e:GetHandler():GetFlagEffect(id)==0
+		and ft>=2 and e:GetHandler():GetFlagEffect(id)==0
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE,0,2,nil,e,tp) end
 	e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_GRAVE)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)
-end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCountFromEx(tp)<2 then return end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_GRAVE,0,nil,e,tp)
 	if #g>=2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,2,2,nil)
 		Duel.HintSelection(sg)
 		if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0 then return end
-		local ag=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-		local tc=ag:GetFirst()
-		while tc do
+		local ag=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,0,LOCATION_MZONE,nil)
+		for tc in aux.Next(ag) do
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e2:SetValue(0)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
-			tc=ag:GetNext()
 		end
 	end
 end

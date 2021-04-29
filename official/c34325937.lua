@@ -1,10 +1,12 @@
 --方界合神
 --Unification of the Cubic Lords
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Fusion 1 "Cubic" fusion monster
+	--Use monsters from hand or field as fusion materials
 	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0xe3)))
-	--spsummon
+	--Special summon 1 level 4 or lower "Cubic" monster from hand or deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -19,6 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xe3}
+
 function s.cfilter(c)
 	return c:IsPreviousSetCard(0xe3) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousPosition(POS_FACEUP)
@@ -39,7 +42,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)~=0 then
+		--Cannot be destroyed by battle or card effect
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3008)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)

@@ -29,10 +29,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local dg=Duel.GetMatchingGroup(Card.IsFaceup,e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)		
+	local dg=Duel.GetMatchingGroup(Card.IsFaceup,e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,e:GetHandler():GetControler(),HINTMSG_FACEUP)
 	local tdg=dg:Select(e:GetHandler():GetControler(),1,1,nil)
-	local tc=tdg:GetFirst()	
+	local tc=tdg:GetFirst()
 	if tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

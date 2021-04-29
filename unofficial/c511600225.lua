@@ -1,6 +1,6 @@
 --Ｇゴーレム・ディグニファイド・トリリトン
 --G Golem Dignified Trilithon
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

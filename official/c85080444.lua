@@ -1,13 +1,14 @@
 --アーティファクト－アイギス
+--Artifact Aegis
 local s,id=GetID()
 function s.initial_effect(c)
-	--set
+	--Set itself to the S/T zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MONSTER_SSET)
 	e1:SetValue(TYPE_SPELL)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special summon itself
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--indes
+	--Prevent destruction by opponent's effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -42,7 +43,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.tg(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x97)
@@ -53,7 +54,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetTarget(s.tg)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetValue(s.tgvalue)
+	e1:SetValue(aux.indoval)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
@@ -61,7 +62,4 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetValue(aux.tgoval)
 	Duel.RegisterEffect(e2,tp)
-end
-function s.tgvalue(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end

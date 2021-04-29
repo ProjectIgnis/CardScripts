@@ -73,10 +73,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 			Duel.SortDecktop(tp,1-tp,3)
 			if opt==0 then
-				for i=1,3 do
-					local mg=Duel.GetDecktopGroup(1-tp,1)
-					Duel.MoveSequence(mg:GetFirst(),1)
-				end
+				Duel.MoveToDeckBottom(3,1-tp)
 			end
 		else
 			Duel.BreakEffect()

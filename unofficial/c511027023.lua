@@ -1,7 +1,6 @@
 --プロパティ・フラッド
 --Property Flood
---Scripted by TheRazgriz
---Fixed by Larry126
+--Scripted by TheRazgriz, fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id)--+EFFECT_COUNT_CODE_OATH
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -21,9 +20,10 @@ s.listed_series={0x577}
 function s.counterfilter(c)
 	return c:IsSetCard(0x577)
 end
-function s.relfilter(tp)
+function s.relfilter(e,tp)
 	return function(c)
 		return c:IsSetCard(0x577) and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,c)
+			and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetAttribute())
 	end
 end
 function s.filter(c)
@@ -35,8 +35,8 @@ function s.spfilter(c,e,tp,att)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 
-		and Duel.CheckReleaseGroupCost(tp,s.relfilter(tp),1,false) end
-	local rc=Duel.SelectReleaseGroupCost(tp,s.relfilter(tp),1,1,false):GetFirst()
+		and Duel.CheckReleaseGroupCost(tp,s.relfilter(e,tp),1,false) end
+	local rc=Duel.SelectReleaseGroupCost(tp,s.relfilter(e,tp),1,1,false):GetFirst()
 	local att=rc:GetAttribute()
 	e:SetLabel(att)
 	Duel.Release(rc,REASON_COST)
@@ -64,7 +64,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local ft=math.min(tc:GetLink(),Duel.GetLocationCount(tp,LOCATION_MZONE))
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp,e:GetLabel())
-	if tc:IsRelateToEffect(e) and #g>0 and ft>0 then
+	if tc and tc:IsRelateToEffect(e) and #g>0 and ft>0 then
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 		local sg=g:Select(tp,1,ft,nil)
 		local c=e:GetHandler()

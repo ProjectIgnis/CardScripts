@@ -1,12 +1,16 @@
 --閃刀姫-カイナ
 --Sky Striker Ace - Kaina
 --Scripted by AlphaKretin
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Can only be special summoned once per turn
 	c:SetSPSummonOnce(id)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,s.matfilter,1,1)
-	--no attack
+	--Targeted monster cannot attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -14,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.natg)
 	e1:SetOperation(s.naop)
 	c:RegisterEffect(e1)
-	--recover LP
+	--Gain 100 LP each time you activate a "Sky Striker" spell card or effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAINING)
@@ -32,6 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x115}
+
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsSetCard(0x1115,scard,sumtype,tp) and not c:IsAttribute(ATTRIBUTE_EARTH,scard,sumtype,tp)
 end
@@ -44,7 +49,10 @@ end
 function s.naop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
+		--Cannot attack
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3206)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,1)

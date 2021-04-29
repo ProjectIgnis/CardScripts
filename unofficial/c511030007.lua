@@ -3,7 +3,7 @@
 local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()
-	aux.AddEquipProcedure(c,1,Card.IsControlerCanBeChanged,s.eqlimit,nil,s.target)
+	aux.AddEquipProcedure(c,1,aux.CheckStealEquip,s.eqlimit,nil,s.target)
 	--control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(alias,0))

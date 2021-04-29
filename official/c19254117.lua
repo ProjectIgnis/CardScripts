@@ -72,8 +72,7 @@ function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
-		and (Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE))
+	return Duel.GetTurnPlayer()==1-tp and (Duel.IsAbleToEnterBP() or Duel.IsBattlePhase())
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:GetFlagEffect(id)==0 end
@@ -87,22 +86,15 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_RISE_TO_FULL_HEIGHT)
+		e1:SetCode(EFFECT_ONLY_ATTACK_MONSTER)
 		e1:SetTargetRange(0,LOCATION_MZONE)
+		e1:SetValue(s.atklimit)
 		e1:SetLabel(tc:GetRealFieldID())
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_ONLY_BE_ATTACKED)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e2,true)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,0)
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
-		e3:SetDescription(aux.Stringid(id,2))
-		e3:SetReset(RESET_PHASE+PHASE_END)
-		e3:SetTargetRange(0,1)
-		Duel.RegisterEffect(e3,tp)
+		aux.RegisterClientHint(e:GetHandler(),EFFECT_FLAG_OATH,tp,0,1,aux.Stringid(id,2))
 	end
+end
+function s.atklimit(e,c)
+	return c:GetRealFieldID()==e:GetLabel()
 end

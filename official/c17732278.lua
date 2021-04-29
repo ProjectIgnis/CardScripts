@@ -1,4 +1,5 @@
 --N・グロー・モス
+--Neo-Spacian Glow Moss
 local s, id = GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsType(TYPE_MONSTER) then
 		if not Duel.IsPlayerAffectedByEffect(Duel.GetTurnPlayer(),EFFECT_SKIP_BP) then
 			Duel.BreakEffect()
-			Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+			Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 		end
 	elseif tc:IsType(TYPE_SPELL) then
 		if c==Duel.GetAttacker() and not c:IsHasEffect(EFFECT_CANNOT_DIRECT_ATTACK)

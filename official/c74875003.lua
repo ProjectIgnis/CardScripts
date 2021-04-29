@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	--release limit
+	--tribute limit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_UNRELEASABLE_SUM)
 	e5:SetValue(s.sumval)
 	c:RegisterEffect(e5)
-	--
+	--summon limit
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD)
 	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

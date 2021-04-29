@@ -41,14 +41,8 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-function s.check()
-	local tc=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	if tc and tc:IsFaceup() then return true end
-	tc=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	return tc and tc:IsFaceup()
-end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return s.check()
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end

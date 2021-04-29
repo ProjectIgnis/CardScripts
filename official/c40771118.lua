@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--To hand
+	--add to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -20,9 +20,8 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--Place
+	--place on the field
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_TOFIELD)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -62,7 +61,7 @@ function s.smfilter(c)
 	return c:IsCode(table.unpack(CARDS_SPIRIT_MESSAGE)) and not c:IsForbidden()
 end
 function s.plcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
+	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and not e:GetHandler():IsStatus(STATUS_CHAINING) end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -86,26 +85,28 @@ function s.extraop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	if Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x11,0,0,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,tp,181)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and (Duel.GetLocationCount(tp,LOCATION_SZONE)<1	or Duel.SelectYesNo(tp,aux.Stringid(CARD_DARK_SANCTUARY,0))) then
-		tc:AddMonsterAttribute(TYPE_NORMAL,ATTRIBUTE_DARK,RACE_FIEND,1,0,0)
-		Duel.SpecialSummonStep(tc,181,tp,tp,true,false,POS_FACEUP)
-		tc:AddMonsterAttributeComplete()
-		--immune
-		local e7=Effect.CreateEffect(c)
-		e7:SetType(EFFECT_TYPE_SINGLE)
-		e7:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-		e7:SetRange(LOCATION_MZONE)
-		e7:SetCode(EFFECT_IMMUNE_EFFECT)
-		e7:SetValue(s.efilter)
-		e7:SetReset(RESET_EVENT+RESETS_REDIRECT)
-		tc:RegisterEffect(e7)
-		--cannot be target
-		local e8=Effect.CreateEffect(c)
-		e8:SetType(EFFECT_TYPE_SINGLE)
-		e8:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
-		e8:SetReset(RESET_EVENT+RESETS_REDIRECT)
-		tc:RegisterEffect(e8)
-		Duel.SpecialSummonComplete()
+		and (Duel.GetLocationCount(tp,LOCATION_SZONE)<1
+		or Duel.SelectYesNo(tp,aux.Stringid(CARD_DARK_SANCTUARY,0))) then
+			tc:AddMonsterAttribute(TYPE_NORMAL,ATTRIBUTE_DARK,RACE_FIEND,1,0,0)
+			Duel.SpecialSummonStep(tc,181,tp,tp,true,false,POS_FACEUP)
+			tc:AddMonsterAttributeComplete()
+			--immune
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+			e1:SetRange(LOCATION_MZONE)
+			e1:SetCode(EFFECT_IMMUNE_EFFECT)
+			e1:SetValue(s.efilter)
+			e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+			tc:RegisterEffect(e1)
+			--cannot be target
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+			e2:SetValue(1)
+			e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
+			tc:RegisterEffect(e2)
+			Duel.SpecialSummonComplete()
 	elseif Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end

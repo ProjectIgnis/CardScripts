@@ -28,7 +28,7 @@ end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,nil,0,1)
+	c:RegisterFlagEffect(id,0,0,1)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

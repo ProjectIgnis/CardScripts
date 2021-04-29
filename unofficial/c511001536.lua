@@ -1,10 +1,13 @@
---Advance Carnival
+--アドバンス・カーニバル
+--Tribute Carnival
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(s.condition)
+	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	aux.GlobalCheck(s,function()
@@ -36,8 +39,13 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp)
 	s[0]=false
 	s[1]=false
 end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFlagEffect(tp,id)==0
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAdditionalSummon(tp) end
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetTargetRange(LOCATION_HAND,0)

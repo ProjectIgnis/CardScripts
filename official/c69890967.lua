@@ -3,14 +3,14 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--cannot special summon
+	--Cannot be special summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon procedure
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--token
+	--Special Summon tokens
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.tktg)
 	e3:SetOperation(s.tkop)
 	c:RegisterEffect(e3)
-	--atkup
+	--increase ATK
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_ATKCHANGE)
@@ -48,11 +48,11 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil)
+	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil,tp)
 	return aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil)
+	local rg=Duel.GetReleaseGroup(tp):Filter(s.rfilter,nil,tp)
 	local mg=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
 	if #mg==3 then
 		mg:KeepAlive()
@@ -76,8 +76,7 @@ function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,1000,1000,1,RACE_FIEND,ATTRIBUTE_DARK) then
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,1000,1000,1,RACE_FIEND,ATTRIBUTE_DARK) then
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())

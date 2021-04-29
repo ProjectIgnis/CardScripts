@@ -1,4 +1,5 @@
---Red Supremacy
+--レッド・スプレマシー (Manga)
+--Red Supremacy (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,10 +23,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
+		return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
 	local code=g:GetFirst():GetOriginalCode()
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	Duel.SetTargetParam(code)

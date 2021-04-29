@@ -1,7 +1,9 @@
 --ダイナミスト・ラッシュ
+--Dinomist Rush
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 "Dinomist" monster from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -9,9 +11,11 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0xd8}
+
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xd8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -26,6 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+		--Destroy it during end phase
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -36,9 +41,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.desop)
 		Duel.RegisterEffect(e1,tp)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		--Unaffected by card effects
 		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetDescription(3100)
 		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetCode(EFFECT_IMMUNE_EFFECT)
 		e2:SetValue(s.efilter)

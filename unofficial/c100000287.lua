@@ -1,4 +1,5 @@
 --バリアンズ・バトル・マスター
+--Barian's Battle Buster
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,7 +8,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(s.cost)
-	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 	--negate attack
 	local e2=Effect.CreateEffect(c)
@@ -15,10 +15,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(2)
-	e2:SetCondition(s.condition)
-	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
+	--
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -36,36 +35,13 @@ function s.costfilter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOREMOVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	if Duel.GetAttacker()~=nil and Duel.GetAttacker():IsOnField() and Duel.GetAttacker():IsCanBeEffectTarget(e)
-	and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		e:SetLabel(1)
-		Duel.SetTargetCard(Duel.GetAttacker())
-		e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
-	else e:SetLabel(0) end
-end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
-	if	e:GetHandler():GetFlagEffect(id)>0 then
-		Duel.NegateAttack()
-	end
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker()~=nil and Duel.GetFlagEffect(tp,id)==0
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local tg=Duel.GetAttacker()
-	if chkc then return chkc==tg end
-	if chk==0 then return tg:IsOnField() and tg:IsCanBeEffectTarget(e) end
-	Duel.SetTargetCard(tg)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.NegateAttack()
-	if e:GetHandler():GetFlagEffect(id)>0 then
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
-	end
 end
 function s.dcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE and Duel.GetTurnPlayer()~=tp

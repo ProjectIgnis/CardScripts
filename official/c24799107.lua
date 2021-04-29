@@ -54,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp and Duel.IsChainNegatable(ev)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToExtra() and Duel.IsExistingMatchingCard(s.house_filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
@@ -64,7 +64,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.house_filter(c,e,tp)
-	return c:IsCode(41232647) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(41232647) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,e:GetHandler(),c)>0
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -72,10 +72,10 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		if re:GetHandler():IsRelateToEffect(re) then
 			Duel.Destroy(eg,REASON_EFFECT)
 		end
+		if not c:IsRelateToEffect(e) then return end
 		Duel.BreakEffect()
 		Duel.SendtoDeck(c,nil,0,REASON_EFFECT)
-		if c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp)>0
-			and Duel.IsExistingMatchingCard(s.house_filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) then
+		if c:IsLocation(LOCATION_EXTRA) and Duel.IsExistingMatchingCard(s.house_filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) then
 			local tg=Duel.GetFirstMatchingCard(s.house_filter,tp,LOCATION_EXTRA,0,nil,e,tp)
 			if tg then
 				Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)

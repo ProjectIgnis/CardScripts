@@ -40,7 +40,7 @@ function s.cfilter(c,e,dg)
 	return #dg-a>=1
 end
 function s.tgfilter(c,e)
-	return aux.disfilter1(c) and c:IsCanBeEffectTarget(e)
+	return aux.disfilter3(c) and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.tgfilter(chkc,e) and chkc~=e:GetHandler() end
@@ -63,7 +63,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local sg=rg:FilterSelect(tp,s.cfilter,1,1,e:GetHandler(),e,dg)
 		Duel.Release(sg,REASON_COST)
 	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
@@ -100,13 +100,12 @@ end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	local rc=Duel.AnnounceAttribute(tp,1,0xffff)
+	local rc=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL)
 	Duel.SetTargetParam(rc)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

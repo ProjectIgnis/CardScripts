@@ -11,6 +11,7 @@ local register=function(what)
 		return what(...)
 	end
 end
+s.roll_dice=true
 local tossd=Duel.TossDice
 Duel.TossDice=register(tossd)
 local tossc=Duel.TossCoin

@@ -1,21 +1,22 @@
 --閃刀姫－レイ
---Brandish Maiden Rei
---, completed by Eerie Code
+--Sky Striker Ace - Raye
+--completed by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon from the Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetCountLimit(1,id)
 	e1:SetCost(s.spcost1)
 	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -87,4 +88,3 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

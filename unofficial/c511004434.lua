@@ -49,7 +49,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.condition(e,tp,eg,ev,ep,re,r,rp)
-	if Duel.GetAttacker() or Duel.GetCurrentChain()>0 then return false end
+	if Duel.GetAttacker() or Duel.GetCurrentChain(true)>0 then return false end
 	local ph=Duel.GetCurrentPhase()
 	return (Duel.GetTurnPlayer()==tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)) 
 		or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)

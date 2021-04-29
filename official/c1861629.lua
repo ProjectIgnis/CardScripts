@@ -2,10 +2,10 @@
 --Decode Talker
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2)
 	c:EnableReviveLimit()
-	--atk
+	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate activation
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)

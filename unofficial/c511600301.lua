@@ -32,11 +32,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-function s.lfilter(c,att,lc,tp)
-	return c:IsAttribute(att,lc,SUMMON_TYPE_LINK,tp)
-end
-function s.lcheck(g,lc,tp)
-	return g:IsExists(s.lfilter,1,nil,ATTRIBUTE_FIRE,lc,tp)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_FIRE,lc,sumtype,tp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker()

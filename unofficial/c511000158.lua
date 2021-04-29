@@ -7,7 +7,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	-- special summon
 	local e2=Effect.CreateEffect(c)
@@ -23,18 +22,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={511000157}
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	if s.spcon(e,tp,eg,ep,ev,re,r,rp) and s.sptg(e,tp,eg,ep,ev,re,r,rp,0) 
-		and Duel.SelectYesNo(tp,aux.Stringid(61965407,0)) then
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-		e:SetOperation(s.spop)
-		s.sptg(e,tp,eg,ep,ev,re,r,rp,1)
-	else
-		e:SetCategory(0)
-		e:SetOperation(nil)
-	end
-end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(511000157)
 end
@@ -46,12 +33,11 @@ function s.filter(c,e,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) 
-		and e:GetHandler():GetFlagEffect(id)==0 end
-	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)

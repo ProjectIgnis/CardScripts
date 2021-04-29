@@ -1,7 +1,9 @@
 --ロックストーン・ウォリアー
+--Rockstone Warrior
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--token
+	--Special summon 2 tokens to your field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -11,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--
+	--Take no battle damage involving this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
@@ -33,7 +35,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	for i=1,2 do
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+		--Cannot be tributed for a tribute summon
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3303)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)

@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCode(EFFECT_SET_DEFENSE)
 	e5:SetCondition(s.adcon)
-	e5:SetValue(s.defval)	
+	e5:SetValue(s.defval)
 	c:RegisterEffect(e5)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
@@ -53,7 +53,7 @@ function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return #g==0
 end
 function s.eqfilter(c)
-	return c:GetFlagEffect(id)~=0 
+	return c:GetFlagEffect(id)~=0
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToChangeControler() end
@@ -67,12 +67,12 @@ function s.equipop(c,e,tp,tc)
 	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,id) then return end
 	--substitute
 	local e2=Effect.CreateEffect(c)
- 	e2:SetType(EFFECT_TYPE_EQUIP)
- 	e2:SetCode(EFFECT_DESTROY_SUBSTITUTE)
- 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
- 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
- 	e2:SetValue(s.repval)
- 	tc:RegisterEffect(e2)		
+	e2:SetType(EFFECT_TYPE_EQUIP)
+	e2:SetCode(EFFECT_DESTROY_SUBSTITUTE)
+	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetValue(s.repval)
+	tc:RegisterEffect(e2)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -80,7 +80,7 @@ end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 end
-function s.indescond(e,tp)
-	return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil)
+function s.indescond(e)
+	return Duel.IsExistingMatchingCard(nil,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end
 

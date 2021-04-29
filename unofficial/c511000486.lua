@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)	
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetLabelObject(e1)
 	e1:SetLabelObject(e2)
 	local descnum=tp==c:GetOwner() and 0 or 1
-	local e2=Effect.CreateEffect(c)
+	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetDescription(aux.Stringid(4931121,descnum))
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
@@ -66,7 +66,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	Duel.ConfirmCards(tp,tc)
-	if tc:IsType(TYPE_MONSTER) and tc:IsCanBeSpecialSummoned(e,0,tp,true,false) then
+	if tc and tc:IsType(TYPE_MONSTER) and tc:IsCanBeSpecialSummoned(e,0,tp,true,false) then
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
 	end
 	Duel.ShuffleHand(tp)

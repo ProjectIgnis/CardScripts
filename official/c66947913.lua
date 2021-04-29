@@ -3,6 +3,7 @@
 --scripted by Naim, based off of Larry126's Anime version
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x119)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -44,13 +45,6 @@ function s.initial_effect(c)
 	e5:SetTarget(s.rmtg)
 	e5:SetOperation(s.rmop)
 	c:RegisterEffect(e5)
-	--add setcode
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e6:SetCode(EFFECT_ADD_SETCODE)
-	e6:SetValue(0x119)
-	c:RegisterEffect(e6)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
@@ -70,7 +64,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e)
+	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e)
 		and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		Duel.Equip(tp,c,tc)
 		--Add Equip limit

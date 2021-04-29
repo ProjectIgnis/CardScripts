@@ -1,4 +1,5 @@
 --サイコロン
+--Dicephoon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,11 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.roll_dice=true
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

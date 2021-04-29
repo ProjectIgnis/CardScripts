@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e4:SetTargetRange(1,0)
 	e4:SetTarget(s.sumlimit)
 	c:RegisterEffect(e4)
+	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
 end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
@@ -78,4 +79,6 @@ end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA) and not (c:IsType(TYPE_XYZ) and c:IsRace(RACE_MACHINE))
 end
-
+function s.lizfilter(e,c)
+	return not (c:IsOriginalType(TYPE_XYZ) and c:IsOriginalRace(RACE_MACHINE))
+end

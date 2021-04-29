@@ -1,3 +1,4 @@
+--ヒーロー・シールド
 --Hero Shield
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x8}
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x8)
 end
@@ -37,10 +39,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(aux.Stringid(id,1))
 		e2:SetCategory(CATEGORY_DRAW)
-		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+		e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e2:SetRange(LOCATION_SZONE)
-		e2:SetCode(EVENT_BATTLE_DAMAGE)
 		e2:SetCondition(s.drcon)
 		e2:SetTarget(s.drtg)
 		e2:SetOperation(s.drop)
@@ -69,19 +71,17 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	local at=Duel.GetAttackTarget()
-	local a=Duel.GetAttacker()
-	return ep==tp and ((at and at==e:GetHandler():GetEquipTarget()) or (a and a==e:GetHandler():GetEquipTarget()))
-		and ev>=1000
+	return e:GetHandler():GetEquipTarget() and e:GetHandler():GetEquipTarget():IsRelateToBattle()
+		and Duel.GetBattleDamage(tp)>=1000
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=math.floor(ev/1000)
+	local ct=math.floor(Duel.GetBattleDamage(tp)/1000)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,ct) end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(ct)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)
+	local ct=math.floor(Duel.GetBattleDamage(tp)/1000)
+	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+	Duel.Draw(p,ct,REASON_EFFECT)
 end

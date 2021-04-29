@@ -1,6 +1,8 @@
---Goyo Defender
-local s,id=GetID()
+--ゴヨウ・ディフェンダー (Anime)
+--Goyo Defender (Anime)
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
 	--synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
@@ -25,7 +27,6 @@ function s.initial_effect(c)
 	--atkup
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE)
-	e3:SetDescription(aux.Stringid(511000034,0))
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetHintTiming(TIMING_DAMAGE_CAL)
@@ -47,16 +48,16 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={58901502}
+s.listed_names={alias}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCountFromEx(tp)>0
+	return Duel.GetLocationCountFromEx(tp,tp,nil,e:GetHandler())>0
 		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter(c)
-	return c:IsFacedown() or not c:IsCode(58901502)
+	return c:IsFacedown() or not c:IsCode(alias)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local e1=Effect.CreateEffect(c)
@@ -77,10 +78,10 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if (phase~=PHASE_DAMAGE and phase~=PHASE_DAMAGE_CAL) or Duel.IsDamageCalculated() then return false end
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return a:GetControler()~=tp and d and d==e:GetHandler()
+	return a:GetControler()==1-tp and d and d==e:GetHandler()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsCode(58901502)
+	return c:IsFaceup() and c:IsCode(alias)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) 

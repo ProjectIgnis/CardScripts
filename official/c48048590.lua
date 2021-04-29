@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--search
+	--Add to hand when summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special summon a fusion material
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -46,9 +46,14 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_FUSION) and c:IsLocation(LOCATION_EXTRA)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalType(TYPE_FUSION)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil)
@@ -72,14 +77,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter1(c,e,tp)
-	return c.material and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
+	return c.material and c:IsType(TYPE_FUSION) and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function s.filter2(c,e,tp,fc)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and c:IsCode(table.unpack(fc.material))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return s.cost(e,tp,eg,ep,ev,re,r,rp,0) 
-		and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return s.cost(e,tp,eg,ep,ev,re,r,rp,0) and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	Duel.ConfirmCards(1-tp,g)

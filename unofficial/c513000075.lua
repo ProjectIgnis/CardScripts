@@ -30,20 +30,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Negate
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(44508094,0))
+	e3:SetDescription(aux.Stringid(CARD_STARDUST_DRAGON,0))
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.condition)
-	e3:SetCost(s.cost)
+	e3:SetCost(aux.StardustCost)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 	--Revive
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(44508094,1))
+	e4:SetDescription(aux.Stringid(CARD_STARDUST_DRAGON,1))
 	e4:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
@@ -53,12 +53,13 @@ function s.initial_effect(c)
 	e4:SetOperation(s.sumop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={44508094,27564031}
+s.listed_names={CARD_STARDUST_DRAGON,27564031}
 function s.spfilter(c)
-	return c:IsCode(44508094) and c:IsAbleToGraveAsCost()
+	return c:IsCode(CARD_STARDUST_DRAGON) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
+	local tp=c:GetControler()
 	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil)
 	return aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),0)
 end
@@ -87,10 +88,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetChainInfo(ev-1,CHAININFO_TRIGGERING_EFFECT):IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-#tg>0
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

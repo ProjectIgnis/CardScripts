@@ -1,4 +1,5 @@
 --セフィラの聖選士
+--Chosen of Zefra
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
-	--Atk up
+	--Increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.atkval)
 	e2:SetLabel(3)
 	c:RegisterEffect(e2)
-	--indes
+	--Prevent destruction by opponent's effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -27,10 +28,10 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetCondition(s.effcon)
-	e3:SetValue(s.indval)
+	e3:SetValue(aux.indoval)
 	e3:SetLabel(5)
 	c:RegisterEffect(e3)
-	--cannot be target
+	--Prevent effect target
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -41,7 +42,7 @@ function s.initial_effect(c)
 	e4:SetValue(aux.tgoval)
 	e4:SetLabel(8)
 	c:RegisterEffect(e4)
-	--todeck
+	--Shuffle all cards into the Deck
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_TODECK)
 	e5:SetType(EFFECT_TYPE_QUICK_O)
@@ -63,9 +64,6 @@ end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsFaceup,0,LOCATION_EXTRA,LOCATION_EXTRA,nil)*100
 end
-function s.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
-end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0xc4),tp,LOCATION_EXTRA,0,nil):GetClassCount(Card.GetCode)==10
 end
@@ -80,5 +78,5 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsAbleToDeck),tp,0,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,nil)
-	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

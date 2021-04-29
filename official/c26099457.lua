@@ -20,7 +20,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_LVRANK)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LVRANK)
 	local lv=Duel.AnnounceLevel(tp,1,3,g:GetFirst():GetLevel())
 	Duel.SetTargetParam(lv)
 end

@@ -81,9 +81,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+function s.cfilter(c)
+	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_WARRIOR) and c:IsType(TYPE_SYNCHRO)
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.ffilter,1,false,nil,nil) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.ffilter,1,1,false,nil,nil)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil)
 	Duel.Release(g,REASON_COST)
 end
 function s.filter(c,tp)

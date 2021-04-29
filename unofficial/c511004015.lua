@@ -42,7 +42,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		op=0
 	end
 	if op==0 or op==1 then
-		sg=Duel.SelectReleaseGroup(tp,nil,1,1,nil)		
+		sg=Duel.SelectReleaseGroup(tp,nil,1,1,nil)
 	elseif op==2 then
 		sg=Duel.SelectReleaseGroup(tp,s.filter2,1,1,nil,tp,e)
 	end
@@ -124,9 +124,7 @@ end
 function s.operation3(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
-			Duel.Damage(p,d,REASON_EFFECT)
-		end
+	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+		Duel.Damage(p,d,REASON_EFFECT)
 	end
 end

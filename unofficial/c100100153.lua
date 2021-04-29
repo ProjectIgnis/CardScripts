@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_DRAW_PHASE)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	--
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	if not tc then return end
 	tc:RegisterFlagEffect(110000000,RESET_CHAIN,0,1)

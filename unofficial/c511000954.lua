@@ -67,6 +67,7 @@ function s.revcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterFlagEffect(tp,id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,0,0)
 end
 function s.revop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.DisableShuffleCheck()
 	Duel.ConfirmDecktop(1-tp,1)
 	local g=Duel.GetDecktopGroup(1-tp,1)

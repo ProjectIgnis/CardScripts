@@ -1,3 +1,4 @@
+--恋文
 --Love Letter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0 
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
 		and Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_SZONE,0,1,c)
 end
 function s.filter(c)
@@ -41,6 +42,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.GetControl(g:GetFirst(),1-tp)
 	elseif op==1 then
 		local g=Duel.SelectMatchingCard(1-tp,s.filter,1-tp,0,LOCATION_SZONE,1,1,e:GetHandler())
-		Duel.MoveToField(g:GetFirst(),tp,1-tp,LOCATION_SZONE,POS_FACEDOWN,true)
+		local loc=LOCATION_SZONE
+		if g:GetFirst():IsType(TYPE_FIELD) then
+			loc=LOCATION_FZONE
+		end
+		Duel.MoveToField(g:GetFirst(),tp,1-tp,loc,POS_FACEDOWN,true)
 	end
 end

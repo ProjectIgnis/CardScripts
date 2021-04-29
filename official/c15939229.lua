@@ -1,16 +1,17 @@
 --DDD双暁王カリ・ユガ
+--D/D/D Duo-Dawn King Kali Yuga
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xaf),8,2)
 	c:EnableReviveLimit()
-	--summon success
+	--Summon success
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetOperation(s.sumsuc)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -18,11 +19,12 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1)
+	e2:SetHintTiming(0,TIMING_SSET+TIMINGS_CHECK_MONSTER_E)
 	e2:SetCost(s.cost)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	--set
+	--Set
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -32,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.settg)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_series={0xae,0xaf}
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
@@ -88,7 +91,7 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsSSetable() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsSSetable() then
 		Duel.SSet(tp,tc)
 	end
 end

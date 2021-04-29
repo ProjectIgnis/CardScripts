@@ -1,5 +1,5 @@
---Topologic Gamble Dragon
---fixed by MLD
+--トポロジック・ガンブラー・ドラゴン (Anime)
+--Topologic Gumblar Dragon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--damage
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(5821478,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(49352945,1))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -39,15 +39,19 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
-function s.cfilter(c,zone)
-	local seq=c:GetSequence()
-	if c:IsControler(1) then seq=seq+16 end
-	return bit.extract(zone,seq)~=0
+function s.cfilter(c,ec)
+	if c:IsLocation(LOCATION_MZONE) then
+		return ec:GetLinkedGroup():IsContains(c)
+	else
+		return (ec:GetLinkedZone(c:GetPreviousControler())&(1<<c:GetPreviousSequence()))~=0
+	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	local zone=Duel.GetLinkedZone(0)+Duel.GetLinkedZone(1)*0x10000
-	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,zone)
-		and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0
+	if eg:IsContains(e:GetHandler()) or Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0 then return false end
+	for tc in aux.Next(Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_LINK)) do
+		if eg:IsExists(s.cfilter,1,nil,tc) then return true end
+	end
+	return false
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

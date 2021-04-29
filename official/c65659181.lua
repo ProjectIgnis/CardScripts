@@ -1,7 +1,9 @@
 --ヴァイロン・ポリトープ
+--Vylon Polytope
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special summon any number of "Vylon" monsters that treated as equips
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -9,9 +11,11 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x30}
+
 function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x30) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
@@ -38,6 +42,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		for tc in aux.Next(sg) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3300)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 			e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
@@ -52,6 +58,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		for tc in aux.Next(fg) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3300)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 			e1:SetReset(RESET_EVENT+RESETS_REDIRECT)

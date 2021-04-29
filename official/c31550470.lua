@@ -1,4 +1,5 @@
 --闇次元の解放
+--Escape from the Dark Dimension
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -40,7 +41,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		c:SetCardTarget(tc)
 		e:SetLabelObject(tc)
 		c:CreateRelation(tc,RESET_EVENT+RESETS_STANDARD)

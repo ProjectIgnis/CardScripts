@@ -1,4 +1,5 @@
 --カオス狂宴
+--Chaos Caller
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,20 +35,18 @@ function s.spfilter(c,e,tp)
 	if class==nil then return false end
 	local no=class.xyz_number
 	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,true,false) 
-		and no and no>=101 and no<=107 and c:IsSetCard(0x1048) 
+		and no and no>=101 and no<=107 and c:IsSetCard(0x1048)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=s and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and s[tp]
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>2 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,3,nil,e,tp) and (not ect or ect>=3) end
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,3,nil,e,tp)
+		and aux.CheckSummonGate(tp,3) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<3 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=s and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and s[tp]
-	if ect~=nil and ect<3 then return end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
+	if not aux.CheckSummonGate(tp,3) then return end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if #g<3 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

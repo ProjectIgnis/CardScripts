@@ -20,7 +20,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)   
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED)
 		and Duel.Destroy(tc,REASON_EFFECT)>0 then

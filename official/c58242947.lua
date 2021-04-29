@@ -1,4 +1,5 @@
 --ジャンク・コレクター
+--Junk Collector
 local s,id=GetID()
 function s.initial_effect(c)
 	--copy trap
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1e1)
+	e1:SetHintTiming(0,TIMING_DRAW_PHASE+TIMINGS_CHECK_MONSTER_E)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)

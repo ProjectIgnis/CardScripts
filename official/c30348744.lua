@@ -2,12 +2,12 @@
 --T.G. Drill Fish
 local s,id=GetID()
 function s.initial_effect(c)
-	--direct attack
+	--Direct attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon itself from the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,8 +17,8 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
-	c:RegisterEffect(e2)	
-	--destroy
+	c:RegisterEffect(e2)
+	--Destroy 1 monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DESTROY)
@@ -33,12 +33,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x27}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x27)
-end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return #g>0 and g:FilterCount(s.cfilter,nil)==#g
+	return #g>0 and g:FilterCount(aux.FilterFaceupFunction(Card.IsSetCard,0x27),nil)==#g
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -55,7 +52,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(0x27)
 end
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
@@ -64,7 +61,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

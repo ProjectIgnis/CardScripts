@@ -1,7 +1,9 @@
 --魔導皇士 アンプール
+--Emperor of Prophecy
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--attack up
+	--Take control 1 of opponent's monsters until end phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -15,6 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x106e}
+
 function s.cfilter1(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToRemoveAsCost()
 end
@@ -31,9 +34,11 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g2=Duel.SelectMatchingCard(tp,s.cfilter2,tp,LOCATION_GRAVE,0,1,1,nil)
 	g1:Merge(g2)
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
+	--Cannot attack this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3206)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)

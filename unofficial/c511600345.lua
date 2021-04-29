@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -34,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsAttackAbove(2300) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsAttackAbove(2300) then
 		local zones=Duel.GetLinkedZone(tp)
 		local tg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,zones)
 		if #tg<=0 then return end

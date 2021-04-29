@@ -1,4 +1,5 @@
---暗黒の召喚神
+--暗黒の召喚神 (Anime)
+--Dark Summoning Beast (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)	
 end
+s.listed_names={6007213,32491822,69890967}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() and Duel.GetActivityCount(tp,ACTIVITY_BATTLE_PHASE)==0 end
 	Duel.Release(e:GetHandler(),REASON_COST)

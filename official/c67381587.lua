@@ -1,4 +1,5 @@
 --黒猫の睨み
+--Black Cat-astrophe
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,7 +27,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(Card.IsPosition,tp,LOCATION_MZONE,0,2,nil,POS_FACEDOWN_DEFENSE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end
 function s.posfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(0xcc) and c:IsCanTurnSet()

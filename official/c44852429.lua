@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,0xaf),1,99)
 	c:EnableReviveLimit()
-	--negate
+	--Negate Spell/Trap
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE)
@@ -13,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
-	--recover
+	--Gain LP
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_RECOVER)
@@ -28,29 +28,20 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rectg)
 	e2:SetOperation(s.recop)
 	c:RegisterEffect(e2)
-	--Double Snare
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(3682106)
-	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.listed_series={0xae,0xaf}
-function s.negfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and aux.disfilter1(c)
-end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and s.negfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.negfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
-	local g=Duel.SelectTarget(tp,s.negfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	if chkc then return chkc:IsOnField() and aux.disfilter2(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(aux.disfilter2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
+	local g=Duel.SelectTarget(tp,aux.disfilter2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if ((tc:IsFaceup() and not tc:IsDisabled()) or tc:IsType(TYPE_TRAPMONSTER)) and tc:IsRelateToEffect(e) then
+	if tc and ((tc:IsFaceup() and not tc:IsDisabled()) or tc:IsType(TYPE_TRAPMONSTER)) and tc:IsRelateToEffect(e) then
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

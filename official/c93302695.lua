@@ -1,7 +1,9 @@
---Kozmo－ダーク・ローズ
+--Ｋｏｚｍｏ－ダーク・ローズ
+--Kozmoll Wickedwitch
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special summon 1 level 5+ "Kozmo" monster from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -13,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--indestructable
+	--Make itself unable to be destroyed by battle or card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -22,9 +24,11 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetCost(s.indcost)
 	e2:SetOperation(s.indop)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xd2}
+
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xd2) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -49,10 +53,12 @@ end
 function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
+		--Cannot be destroyed by battle or card effects
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3008)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)

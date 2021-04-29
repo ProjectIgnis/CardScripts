@@ -1,5 +1,6 @@
 --サイバー・ネットワーク
 --Cyber Network
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.acttg)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--banish a machine
+	--Banish 1 LIGHT machine monster from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special summon as many of your banished LIGHT machine monsters as possible
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -35,6 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_CYBER_DRAGON}
+
 function s.filter2(c)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToRemove()
 end
@@ -123,7 +125,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=tg:Select(tp,ft,ft,nil)
 	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+		--Cannot activate their effects
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3302)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
@@ -133,4 +138,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,0,nil)
 	Duel.Destroy(dg,REASON_EFFECT)
 end
-

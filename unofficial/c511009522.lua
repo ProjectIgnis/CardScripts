@@ -1,4 +1,5 @@
---Supreme King Servant Dragon Odd eyes
+--覇王眷竜オッドアイズ (Anime)
+--Supreme King Dragon Odd-Eyes (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -65,9 +66,6 @@ s.listed_names={13331639}
 function s.spfilter(c,tp)
 	return c:IsControler(1-tp) and c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(13331639)
-end
 function s.costfilter(c,tp,sg,tc)
 	if not c:IsSetCard(0x20f8) then return false end
 	sg:AddCard(c)
@@ -89,7 +87,8 @@ function s.fcheck(c,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return eg:IsExists(s.spfilter,1,nil,tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return eg:IsExists(s.spfilter,1,nil,tp)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,13331639),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.CheckReleaseGroup(tp,s.costfilter,1,nil,tp,Group.CreateGroup(),c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -126,41 +125,38 @@ end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(1-tp,ev*2)
 end
-function s.spfilter2(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x20f8) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.spfilter2(c,e,tp,ec)
+	return c:IsFaceup() and c:IsSetCard(0x20f8) and c:IsType(TYPE_PENDULUM)
+		and Duel.GetLocationCountFromEx(tp,tp,ec,c)>=2
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToDeckOrExtraAsCost() 
-		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,2,e:GetHandler(),e,tp) end
-	Duel.SendtoExtraP(e:GetHandler(),nil,REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToDeckOrExtraAsCost() 
+		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,2,c,e,tp,c) end
+	Duel.SendtoExtraP(c,nil,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and (not ect or ect>=2)
-		and Duel.GetLocationCountFromEx(tp,tp,e:GetHandler())>0 and e:GetHandler():GetFlagEffect(id)==0 end
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
+		and aux.CheckSummonGate(tp,2) and e:GetHandler():GetFlagEffect(id)==0 end
 	e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_EXTRA)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or (ect and ect<2) or Duel.GetLocationCountFromEx(tp)<2 then return end
-	local g=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_EXTRA,0,e:GetHandler(),e,tp)
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or not aux.CheckSummonGate(tp,2) then return end
+	local g=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_EXTRA,0,e:GetHandler(),e,tp,e:GetHandler())
 	if #g>=2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,2,2,nil)
 		if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 		local ag=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-		local tc=ag:GetFirst()
-		while tc do
+		for tc in aux.Next(ag) do
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e2:SetValue(0)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
-			tc=ag:GetNext()
 		end
 	end
 end

@@ -2,8 +2,8 @@
 --Vision HERO Faris
 --Scripted by Larry126
 local s,id=GetID()
-function s.initial_effect(c)   
-	--special summon
+function s.initial_effect(c)
+	--Special summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--send to grave
+	--Send to grave
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -77,7 +77,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsSetCard(0x8) and c:IsLocation(LOCATION_EXTRA)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalSetCard(0x8)
 end

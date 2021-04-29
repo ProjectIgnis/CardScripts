@@ -1,4 +1,5 @@
---Supreme King Servant Dragon Starving Venom
+--覇王眷竜スターヴ・ヴェノム (Anime)
+--Supreme King Dragon Starving Venom (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -59,9 +60,6 @@ s.listed_names={13331639}
 function s.spfilter(c,tp)
 	return c:IsControler(1-tp) and c:IsType(TYPE_FUSION) and c:IsSummonType(SUMMON_TYPE_FUSION)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(13331639)
-end
 function s.costfilter(c,tp,sg,tc)
 	if not c:IsSetCard(0x20f8) then return false end
 	sg:AddCard(c)
@@ -76,7 +74,8 @@ function s.costfilter(c,tp,sg,tc)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:CheckFusionMaterial() and eg:IsExists(s.spfilter,1,nil,tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return c:CheckFusionMaterial() and eg:IsExists(s.spfilter,1,nil,tp)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,13331639),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.CheckReleaseGroup(tp,s.costfilter,1,nil,tp,Group.CreateGroup(),c) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,true)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -97,9 +96,8 @@ function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c~=e:GetHandler()
 end
 function s.cpcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return false end
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2
+	if Duel.GetTurnPlayer()==1-tp then return false end
+	return Duel.IsMainPhase() or Duel.IsBattlePhase()
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsType(TYPE_MONSTER) end
@@ -134,38 +132,33 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToExtraAsCost() end
 	Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_COST)
 end
-function s.spfilter2(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x20f8) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.spfilter2(c,e,tp,ec)
+	return c:IsFaceup() and c:IsSetCard(0x20f8) and c:IsType(TYPE_PENDULUM)
+		and Duel.GetLocationCountFromEx(tp,tp,ec,c)>=2
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and (not ect or ect>=2)
-		and Duel.GetLocationCountFromEx(tp,tp,e:GetHandler())>1 and e:GetHandler():GetFlagEffect(id)==0
-		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,2,nil,e,tp) end
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
+		and aux.CheckSummonGate(tp,2) and e:GetHandler():GetFlagEffect(id)==0
+		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,2,nil,e,tp,e:GetHandler()) end
 	e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_EXTRA)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION)
-end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or (ect and ect<2) or Duel.GetLocationCountFromEx(tp)<2 then return end
-	local g=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_EXTRA,0,nil,e,tp)
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or not aux.CheckSummonGate(tp,2) then return end
+	local g=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_EXTRA,0,nil,e,tp,e:GetHandler())
 	if #g>=2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,2,2,nil)
 		if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0 then return end
-		local ag=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-		local tc=ag:GetFirst()
-		while tc do
+		local ag=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_FUSION),tp,0,LOCATION_MZONE,nil)
+		for tc in aux.Next(ag) do
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e2:SetValue(0)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
-			tc=ag:GetNext()
 		end
 	end
 end

@@ -39,6 +39,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x19}
+s.listed_names={3779662}
 s.material_setcode=0x19
 function s.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
@@ -51,7 +53,7 @@ function s.contactop(g,tp)
 	if #cg>0 then
 		Duel.ConfirmCards(1-tp,cg)
 	end
-	Duel.SendtoDeck(g,nil,2,REASON_COST+REASON_MATERIAL)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)
 end
 function s.espfilter(c,e,tp)
 	return c:IsSetCard(0x19) and c:IsType(TYPE_FUSION)

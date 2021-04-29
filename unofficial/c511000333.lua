@@ -16,7 +16,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b2=Duel.GetTurnCount()==1 and Duel.GetCurrentPhase()<=PHASE_BATTLE
 	if chk==0 then return b1 or b2 end
 	local op=0
-	Duel.Hint(HINT_SELECTMSG,tp,550)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
 	if b1 and b2 then
 		op=Duel.SelectOption(tp,aux.Stringid(22093873,0),1157)
 	elseif Duel.IsPlayerCanDraw(tp,1) then

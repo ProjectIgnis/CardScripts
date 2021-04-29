@@ -1,6 +1,7 @@
 --ダーク・フラット・トップ
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x601)
 	--dark synchro summon
 	c:EnableReviveLimit()
 	Synchro.AddDarkSynchroProcedure(c,Synchro.NonTuner(nil),nil,8)
@@ -15,13 +16,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)
-	--add setcode
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EFFECT_ADD_SETCODE)
-	e3:SetValue(0x601)
-	c:RegisterEffect(e3)
 end
 function s.filter(c,e,tp)
 	return c:GetLevel()==8 and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)

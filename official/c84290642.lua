@@ -1,4 +1,5 @@
 --スナイプストーカー
+--Snipe Hunter
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.roll_dice=true
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)

@@ -1,4 +1,5 @@
 --サテライト・レーザー　Ｘ－０６Ｓ　バルサム
+--Satellite Laser Balsam
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_BATTLE_END)
+	e3:SetCode(EVENT_BATTLED)
 	e3:SetOperation(s.retop)
 	c:RegisterEffect(e3)
 	--pierce

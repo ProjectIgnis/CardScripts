@@ -47,7 +47,7 @@ function Ritual.WholeLevelTributeValue(cond)
 end
 --Ritual Summon
 Ritual.CreateProc = aux.FunctionWithNamedArgs(
-function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
+function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc,sumpos)
 	--lv can be a function (like GetLevel/GetOriginalLevel), fixed level, if nil it defaults to GetLevel
 	if filter and type(filter)=="function" then
 		local mt=c.__index
@@ -65,21 +65,22 @@ function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,force
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(Ritual.Target(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,specificmatfilter))
-	e1:SetOperation(Ritual.Operation(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter))
+	e1:SetTarget(Ritual.Target(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,specificmatfilter,requirementfunc,sumpos))
+	e1:SetOperation(Ritual.Operation(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc,sumpos))
 	return e1
-end,"handler","lvtype","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter")
+end,"handler","lvtype","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter","requirementfunc","sumpos")
 
 Ritual.AddProc = aux.FunctionWithNamedArgs(
-function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
-	local e1=Ritual.CreateProc(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
+function(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc,sumpos)
+	local e1=Ritual.CreateProc(c,_type,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc,sumpos)
 	c:RegisterEffect(e1)
 	return e1
-end,"handler","lvtype","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter")
+end,"handler","lvtype","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter","requirementfunc","sumpos")
 
-function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,lv)
-	if not c:IsRitualMonster() or (filter and not filter(c)) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
-	local lv=(lv and (type(lv)=="function" and lv()) or lv) or c:GetLevel()
+function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,specificmatfilter,lv,requirementfunc,sumpos)
+	if not c:IsRitualMonster() or (filter and not filter(c)) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true,sumpos) then return false end
+	local lv=(lv and (type(lv)=="function" and lv(c)) or lv) or c:GetLevel()
+	lv=math.max(1,lv)
 	Ritual.SummoningLevel=lv
 	local mg=m:Filter(Card.IsCanBeRitualMaterial,c,c)
 	mg:Merge(m2-c)
@@ -92,112 +93,95 @@ function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,lv)
 	if specificmatfilter then
 		mg=mg:Filter(specificmatfilter,nil,c,mg,tp)
 	end
+	local func=forcedselection and function(...)return {forcedselection(...)} end or nil
 	if c.ritual_custom_check then
-		forcedselection=aux.tableAND(c.ritual_custom_check,forcedselection or aux.TRUE)
+		func=aux.tableAND(c.ritual_custom_check,forcedselection or aux.TRUE)
 	end
-	local sg=Group.CreateGroup()
-	local res=Ritual.Check(nil,sg,mg,tp,c,lv,forcedselection,e,_type)
+	local res=aux.SelectUnselectGroup(mg,e,tp,1,lv,Ritual.Check(c,lv,func,_type,requirementfunc),0)
 	Ritual.SummoningLevel=nil
 	return res
 end
 
 Ritual.Target = aux.FunctionWithNamedArgs(
-function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection)
+function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,specificmatfilter,requirementfunc,sumpos)
+	location = location or LOCATION_HAND
+	sumpos = sumpos or POS_FACEUP
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
-				location = location or LOCATION_HAND
 				if chk==0 then
-					local mg=Duel.GetRitualMaterial(tp)
+					local mg=Duel.GetRitualMaterial(tp,not requirementfunc)
 					local mg2=extrafil and extrafil(e,tp,eg,ep,ev,re,r,rp,chk) or Group.CreateGroup()
 					Ritual.CheckMatFilter(matfilter,e,tp,mg,mg2)
-					return Duel.IsExistingMatchingCard(Ritual.Filter,tp,location,0,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,forcedselection,lv)
+					return Duel.IsExistingMatchingCard(Ritual.Filter,tp,location,0,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,forcedselection,specificmatfilter,lv,requirementfunc,sumpos)
 				end
 				Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,location)
 			end
-end,"filter","lvtype","lv","extrafil","extraop","matfilter","stage2","location","forcedselection")
+end,"filter","lvtype","lv","extrafil","extraop","matfilter","stage2","location","forcedselection","specificmatfilter","requirementfunc","sumpos")
 
-function Ritual.FastCheck(tp,lv,mg,sc,_type)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-		if _type==RITPROC_EQUAL then
-			return mg:CheckWithSumEqual(Card.GetRitualLevel,lv,0,#mg,sc)
-		else
-			return mg:CheckWithSumGreater(Card.GetRitualLevel,lv,sc)
-		end
+function Auxiliary.RitualCheckAdditionalLevel(c,rc)
+	local raw_level=c:GetRitualLevel(rc)
+	local lv1=raw_level&0xffff
+	local lv2=raw_level>>16
+	if lv2>0 then
+		return math.min(lv1,lv2)
 	else
-		return mg:IsExists(Ritual.FilterF,1,nil,tp,mg,sc,lv,_type)
+		return lv1
 	end
 end
-function Ritual.FilterF(c,tp,mg,sc,lv,_type)
-	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then
-		Duel.SetSelectedCard(c)
-		if _type==RITPROC_EQUAL then
-			return mg:CheckWithSumEqual(Card.GetRitualLevel,lv,0,#mg,sc)
-		else
-			return mg:CheckWithSumGreater(Card.GetRitualLevel,lv,sc)
-		end
-	else return false end
-end
-function Ritual.Check(c,sg,mg,tp,sc,lv,forcedselection,e,_type)
-	if not c and not forcedselection and #sg==0 then
-		return Ritual.FastCheck(e:GetHandlerPlayer(),lv,mg,sc,_type)
-	end
-	if c then
-		sg:AddCard(c)
-	end
-	local res=false
-	local stop=false
+function Ritual.Check(sc,lv,forcedselection,_type,requirementfunc)
+	local chk
 	if _type==RITPROC_EQUAL then
-		local cont=true
-		res,cont=sg:CheckWithSumEqual(Card.GetRitualLevel,lv,#sg,#sg,sc)
-		stop=not cont
+		chk=function(g) return g:GetSum(requirementfunc or Auxiliary.RitualCheckAdditionalLevel,sc)<=lv end
 	else
-		Duel.SetSelectedCard(sg)
-		local cont=true
-		res,cont=sg:CheckWithSumGreater(Card.GetRitualLevel,lv,sc)
-		stop=not cont
+		chk=function(g,c) return g:GetSum(requirementfunc or Auxiliary.RitualCheckAdditionalLevel,sc) - (requirementfunc or Auxiliary.RitualCheckAdditionalLevel)(c,sc)<=lv end
 	end
-	res=res and Duel.GetMZoneCount(tp,sg,tp)>0
-	if res and forcedselection then
-		res,stop=forcedselection(e,tp,sg,sc)
+	return function(sg,e,tp,mg,c)
+		local res=chk(sg,c)
+		if not res then return false,true end
+		local stop=false
+		if forcedselection then
+			local ret=forcedselection(e,tp,sg,sc)
+			res=ret[1]
+			stop=ret[2] or stop
+		end
+		if res and not stop then
+			if _type==RITPROC_EQUAL then
+				res=sg:CheckWithSumEqual(requirementfunc or Card.GetRitualLevel,lv,#sg,#sg,sc)
+			else
+				Duel.SetSelectedCard(sg)
+				res=sg:CheckWithSumGreater(requirementfunc or Card.GetRitualLevel,lv,sc)
+			end
+			local stop=false
+			res=res and Duel.GetMZoneCount(tp,sg,tp)>0
+		end
+		return res,stop
 	end
-	if not res and not stop then
-		res=mg:IsExists(Ritual.Check,1,sg,sg,mg,tp,sc,lv,forcedselection,e,_type)
-	end
-	if c then
-		sg:RemoveCard(c)
-	end
-	return res
 end
-function Ritual.SelectMaterials(sc,mg,forcedselection,lv,tp,e,_type)
-	local sg=Group.CreateGroup()
-	while true do
-		local cg=mg:Filter(Ritual.Check,sg,sg,mg,tp,sc,lv,forcedselection,e,_type)
-		if #cg==0 then break end
-		local finish=Ritual.Check(nil,sg,sg,tp,sc,lv,forcedselection,e,_type)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local tc=cg:SelectUnselect(sg,tp,finish,finish,lv)
-		if not tc then break end
-		if not sg:IsContains(tc) then
-			sg:AddCard(tc)
+function Ritual.Finishcon(sc,lv,requirementfunc,_type)
+	return function(sg,e,tp,mg)
+		if _type==RITPROC_EQUAL then
+			return sg:CheckWithSumEqual(requirementfunc or Card.GetRitualLevel,lv,#sg,#sg,sc)
 		else
-			sg:RemoveCard(tc)
+			Duel.SetSelectedCard(sg)
+			return sg:CheckWithSumGreater(requirementfunc or Card.GetRitualLevel,lv,sc)
 		end
 	end
-	return sg
 end
 
 Ritual.Operation = aux.FunctionWithNamedArgs(
-function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
+function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc,sumpos)
+	location = location or LOCATION_HAND
+	sumpos = sumpos or POS_FACEUP
 	return	function(e,tp,eg,ep,ev,re,r,rp)
-				location = location or LOCATION_HAND
-				local mg=Duel.GetRitualMaterial(tp)
+				local mg=Duel.GetRitualMaterial(tp,not requirementfunc)
 				local mg2=extrafil and extrafil(e,tp,eg,ep,ev,re,r,rp) or Group.CreateGroup()
 				Ritual.CheckMatFilter(matfilter,e,tp,mg,mg2)
 				local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-				local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Ritual.Filter),tp,location,0,1,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,forcedselection,lv)
+				local tg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Ritual.Filter),tp,location,0,1,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,forcedselection,specificmatfilter,lv,requirementfunc,sumpos)
 				if #tg>0 then
 					local tc=tg:GetFirst()
-					local lv=(lv and (type(lv)=="function" and lv()) or lv) or tc:GetLevel()
+					local lv=(lv and (type(lv)=="function" and lv(tc)) or lv) or tc:GetLevel()
+					lv=math.max(1,lv)
 					Ritual.SummoningLevel=lv
 					local mat=nil
 					mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)
@@ -209,21 +193,22 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 						tc:ritual_custom_operation(mg,forcedselection,_type)
 						mat=tc:GetMaterial()
 					else
+						local func=forcedselection and function(...)return {forcedselection(...)} end or nil
 						if tc.ritual_custom_check then
-							forcedselection=aux.tableAND(tc.ritual_custom_check,forcedselection or aux.TRUE)
+							func=aux.tableAND(tc.ritual_custom_check,forcedselection or aux.TRUE)
 						end
 						if tc.mat_filter then
 							mg=mg:Filter(tc.mat_filter,tc,tp)
 						end
-						if ft>0 and not forcedselection and not Auxiliary.RitualExtraCheck then
+						if not mg:IsExists(Card.IsLocation,1,nil,LOCATION_OVERLAY) and ft>0 and not forcedselection then
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 							if _type==RITPROC_EQUAL then
-								mat=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,lv,1,#mg,tc)
+								mat=mg:SelectWithSumEqual(tp,requirementfunc or Card.GetRitualLevel,lv,1,#mg,tc)
 							else
-								mat=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,lv,tc)
+								mat=mg:SelectWithSumGreater(tp,requirementfunc or Card.GetRitualLevel,lv,tc)
 							end
 						else
-							mat=Ritual.SelectMaterials(tc,mg,forcedselection,lv,tp,e,_type)
+							mat=aux.SelectUnselectGroup(mg,e,tp,1,lv,Ritual.Check(tc,lv,func,_type,requirementfunc),1,tp,HINTMSG_RELEASE,Ritual.Finishcon(tc,lv,requirementfunc,_type))
 						end
 					end
 					if not customoperation then
@@ -234,7 +219,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 							Duel.ReleaseRitualMaterial(mat)
 						end
 						Duel.BreakEffect()
-						Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
+						Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,sumpos)
 						tc:CompleteProcedure()
 						if stage2 then
 							stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
@@ -245,13 +230,13 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 					Ritual.SummoningLevel=nil
 				end
 			end
-end,"filter","lvtype","lv","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter")
+end,"filter","lvtype","lv","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter","requirementfunc","sumpos")
 
 --Ritual Summon, geq fixed lv
 Ritual.AddProcGreater = aux.FunctionWithNamedArgs(
-function(c,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
-	return Ritual.AddProc(c,RITPROC_GREATER,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
-end,"handler","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter")
+function(c,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc,sumpos)
+	return Ritual.AddProc(c,RITPROC_GREATER,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc,sumpos)
+end,"handler","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter","requirementfunc","sumpos")
 
 function Ritual.AddProcCode(c,_type,lv,desc,...)
 	if not c:IsStatus(STATUS_COPYING_EFFECT) and c.fit_monster==nil then
@@ -267,9 +252,9 @@ end
 
 --Ritual Summon, equal to
 Ritual.AddProcEqual = aux.FunctionWithNamedArgs(
-function(c,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
-	return Ritual.AddProc(c,RITPROC_EQUAL,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter)
-end,"handler","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter")
+function(c,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc,sumpos)
+	return Ritual.AddProc(c,RITPROC_EQUAL,filter,lv,desc,extrafil,extraop,matfilter,stage2,location,forcedselection,customoperation,specificmatfilter,requirementfunc,sumpos)
+end,"handler","filter","lv","desc","extrafil","extraop","matfilter","stage2","location","forcedselection","customoperation","specificmatfilter","requirementfunc","sumpos")
 
 function Ritual.AddProcEqualCode(c,lv,desc,...)
 	return Ritual.AddProcCode(c,RITPROC_EQUAL,lv,desc,...)

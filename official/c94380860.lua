@@ -24,20 +24,30 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function s.filter(c)
+function s.filter(c,e)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:GetAttack()~=c:GetBaseAttack()
+		and c:IsCanBeEffectTarget(e)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e) end
+	if chk==0 then
+		--retain applicable targets in case cost makes an indirect change to ATK
+		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil,e)
+		if #g==0 or not Duel.IsPlayerCanDraw(tp,1) then return end
+		g:KeepAlive()
+		e:SetLabelObject(g)
+		return true
+	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	local g=e:GetLabelObject()
+	local sg=g:Select(tp,1,1,nil)
+	Duel.SetTargetCard(sg)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
+	if not tc then return end
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

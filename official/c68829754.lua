@@ -55,7 +55,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsRace(RACE_ZOMBIE)
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x144) and c:IsSSetable()
+	return c:IsSetCard(0x144) and c:IsSSetable() and not c:IsForbidden()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -68,6 +68,5 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SSet(tp,g)
-		Duel.ConfirmCards(1-tp,g)
 	end
 end

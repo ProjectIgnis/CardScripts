@@ -1,9 +1,9 @@
 --戦華の来－張遠
---Senka Herald – Zhang Yuan
+--Ancient Warriors - Fearsome Zhang Yuan
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon and atk
+	--Special summon and decrease ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--indes
+	--Prevnet destruction by battle
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tg)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy 1 target on the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DESTROY)
@@ -85,8 +85,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-

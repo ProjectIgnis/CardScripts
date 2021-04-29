@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.incon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsType,1,nil,TYPE_LINK) and not eg:IsContains(e:GetHandler())
+	return eg:IsExists(Card.IsLinkMonster,1,nil) and not eg:IsContains(e:GetHandler())
 end
 function s.inop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

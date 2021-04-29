@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
@@ -25,11 +25,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
-	Duel.SendtoHand(sg,nil,REASON_EFFECT)	
+	Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	Duel.BreakEffect()
 	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
 	--damage
-	local e1=Effect.CreateEffect(e:GetHandler())	
+	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EVENT_PHASE+PHASE_END)

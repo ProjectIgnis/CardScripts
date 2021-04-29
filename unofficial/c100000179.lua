@@ -25,11 +25,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e1:SetValue(e:GetHandler():GetAttack()/2)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e:GetHandler():RegisterEffect(e1)	
+	e:GetHandler():RegisterEffect(e1)
 	--direct attack
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DIRECT_ATTACK)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	e:GetHandler():RegisterEffect(e2)	
+	e:GetHandler():RegisterEffect(e2)
 end

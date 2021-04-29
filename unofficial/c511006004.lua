@@ -1,3 +1,4 @@
+--修行王国トレーニング・ワールド
 --Training Grounds
 local s,id=GetID()
 function s.initial_effect(c)
@@ -5,20 +6,23 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetValue(SUMMON_TYPE_NORMAL)
 	c:RegisterEffect(e1)
-	--summon
+	--Summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_SUMMON)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_FZONE)
-	e2:SetCost(s.cost)
-	e2:SetTarget(s.target)
-	e2:SetOperation(s.operation)
-	e2:SetLabelObject(e1)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(id)
+	e2:SetValue(SUMMON_TYPE_NORMAL)
 	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_SUMMON)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_FZONE)
+	e3:SetCost(s.cost)
+	e3:SetTarget(s.target)
+	e3:SetOperation(s.operation)
+	e3:SetLabelObject(e2)
+	c:RegisterEffect(e3)
 end
-
 function s.lvfilter(c,se)
 	return c:GetLevel()>6 and c:IsSummonable(false,se)
 end
@@ -31,7 +35,6 @@ end
 function s.filter2(c,se,tp)
 	return s.discardfilter(c) and Duel.IsExistingMatchingCard(s.lvfilter,tp,LOCATION_HAND,0,1,c,se) 
 end
-
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local se=e:GetLabelObject()
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,se,tp) end

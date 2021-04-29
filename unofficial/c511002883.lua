@@ -23,12 +23,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.indop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={44508094}
+s.listed_names={CARD_STARDUST_DRAGON}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(44508094) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(CARD_STARDUST_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -44,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indfilter(c)
-	return c:IsFaceup() and c:IsCode(44508094)
+	return c:IsFaceup() and c:IsCode(CARD_STARDUST_DRAGON)
 end
 function s.indtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.indfilter,tp,LOCATION_MZONE,0,1,nil) end

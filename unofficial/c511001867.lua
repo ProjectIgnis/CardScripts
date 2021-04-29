@@ -50,6 +50,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,1,tp,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetDecktopGroup(tp,1)
 	local tc=g:GetFirst()
 	Duel.Draw(tp,1,REASON_EFFECT)

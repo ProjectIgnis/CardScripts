@@ -1,3 +1,4 @@
+--デュエル
 --Duel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,19 +13,19 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct1=6-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	local ct2=6-Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
+	local ct2=6-Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)
 	if chk==0 then return ct1>0 and Duel.IsPlayerCanDraw(tp,ct1)
 		and ct2>0 and Duel.IsPlayerCanDraw(1-tp,ct2) end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,ct2)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local ht=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	if ht<6 then 
-		Duel.Draw(tp,6-ht,REASON_EFFECT)
+	local ht1=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+	local ht2=Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)
+	if ht1<6 then 
+		Duel.Draw(tp,6-ht1,REASON_EFFECT)
 	end
-	ht=Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)
-	if ht<6 then 
-		Duel.Draw(1-tp,6-ht,REASON_EFFECT)
+	if ht2<6 then 
+		Duel.Draw(1-tp,6-ht2,REASON_EFFECT)
 	end
 end

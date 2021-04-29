@@ -11,7 +11,7 @@ function Auxiliary.AddNormalSummonProcedure(c,ns,opt,min,max,val,desc,f,sumop)
 		e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
 	end
 	if ns then
-		e1:SetCondition(Auxiliary.NormalSummonCondition1(min,max,f))
+		e1:SetCondition(Auxiliary.NormalSummonCondition1(min,max,f,opt))
 		e1:SetTarget(Auxiliary.NormalSummonTarget(min,max,f))
 		e1:SetOperation(Auxiliary.NormalSummonOperation(min,max,sumop))
 	else
@@ -21,7 +21,15 @@ function Auxiliary.AddNormalSummonProcedure(c,ns,opt,min,max,val,desc,f,sumop)
 	c:RegisterEffect(e1)
 	return e1
 end
-function Auxiliary.NormalSummonCondition1(min,max,f)
+function maplevel(level)
+	if level>=5 and level<=6 then
+		return 1
+	elseif level>=7 then
+		return 2
+	end
+	return 0
+end
+function Auxiliary.NormalSummonCondition1(min,max,f,opt)
 	return function (e,c,minc,zone,relzone,exeff)
 		if c==nil then return true end
 		local tp=c:GetControler()
@@ -30,7 +38,8 @@ function Auxiliary.NormalSummonCondition1(min,max,f)
 		if f then
 			mg=mg:Filter(f,nil,tp)
 		end
-		return minc<=min and Duel.CheckTribute(c,min,max,mg,tp,zone)
+		local tributes=maplevel(c:GetLevel())
+		return (not opt or (tributes>0 and tributes~=max)) and minc<=min and Duel.CheckTribute(c,min,max,mg,tp,zone)
 	end
 end
 function Auxiliary.NormalSummonCondition2()
@@ -46,7 +55,7 @@ function Auxiliary.NormalSummonTarget(min,max,f)
 		if f then
 			mg=mg:Filter(f,nil,tp)
 		end
-		local g=Duel.SelectTribute(tp,c,min,max,mg,tp,zone,Duel.GetCurrentChain()==0)
+		local g=Duel.SelectTribute(tp,c,min,max,mg,tp,zone,Duel.IsSummonCancelable())
 		if g and #g>0 then
 			g:KeepAlive()
 			e:SetLabelObject(g)
@@ -89,7 +98,7 @@ function Auxiliary.AddNormalSetProcedure(c,ns,opt,min,max,val,desc,f,sumop)
 	c:RegisterEffect(e1)
 	return e1
 end
-function Auxiliary.NormalSetCondition1(min,max,f)
+function Auxiliary.NormalSetCondition1(min,max,f,opt)
 	return function (e,c,minc,zone,relzone,exeff)
 		if c==nil then return true end
 		local tp=c:GetControler()
@@ -98,7 +107,8 @@ function Auxiliary.NormalSetCondition1(min,max,f)
 		if f then
 			mg=mg:Filter(f,nil,tp)
 		end
-		return minc<=min and Duel.CheckTribute(c,min,max,mg,tp,zone)
+		local tributes=maplevel(c:GetLevel())
+		return (not opt or (tributes>0 and tributes~=max)) and minc<=min and Duel.CheckTribute(c,min,max,mg,tp,zone)
 	end
 end
 function Auxiliary.NormalSetCondition2()
@@ -114,7 +124,7 @@ function Auxiliary.NormalSetTarget(min,max,f)
 		if f then
 			mg=mg:Filter(f,nil,tp)
 		end
-		local g=Duel.SelectTribute(tp,c,min,max,mg,tp,zone,Duel.GetCurrentChain()==0)
+		local g=Duel.SelectTribute(tp,c,min,max,mg,tp,zone,Duel.IsSummonCancelable())
 		if g and #g>0 then
 			g:KeepAlive()
 			e:SetLabelObject(g)

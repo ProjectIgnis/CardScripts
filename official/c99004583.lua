@@ -1,5 +1,6 @@
 --アクションマジック－フルターン
 --Action Magic - Full Turn
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--set
+	--Set itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -29,19 +30,18 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,1)
+	e1:SetValue(DOUBLE_DAMAGE)
 	e1:SetCondition(s.dcon)
-	e1:SetOperation(s.dop)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
-function s.dcon(e,tp,eg,ep,ev,re,r,rp)
+function s.dcon(e)
 	return Duel.GetAttackTarget()
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DoubleBattleDamage(ep)
 end
 function s.costfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsDiscardable()

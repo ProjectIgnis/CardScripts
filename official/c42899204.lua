@@ -1,5 +1,5 @@
 --死配の呪眼
---Death Control of the Evil Eye
+--Evil Eye Mesmerism
 local s,id = GetID()
 function s.initial_effect(c)
 	--activate and use effect
@@ -63,7 +63,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(s.cfilter1,tp,LOCATION_MZONE,0,nil)
 	if chkc then return s.cfilter2(chkc,e,tp,g) and eg:IsContains(chkc) end
-	if chk==0 then return eg:IsExists(s.cfilter2,1,nil,e,tp,g) end
+	if chk==0 then return eg and eg:IsExists(s.cfilter2,1,nil,e,tp,g) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local tg=eg:FilterSelect(tp,s.cfilter2,1,1,nil,e,tp,g)
 	Duel.SetTargetCard(tg)

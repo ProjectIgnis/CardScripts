@@ -2,10 +2,10 @@
 --Borreload Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),3)
 	c:EnableReviveLimit()
-	--cannot be target
+	--cannot be targeted
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(s.efilter1)
 	c:RegisterEffect(e2)
-	--atk down
+	--reduce ATK/DEF
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
-	--control
+	--take control
 	local e4=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
+	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_CONTROL)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_BATTLE_START)
@@ -76,15 +76,23 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local zone=c:GetLinkedZone()&0x1f
 		return Duel.GetAttacker()==c and tc and tc:IsControlerCanBeChanged(false,zone)
 	end
+	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,tc,1,0,0)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttackTarget()
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and tc then
+	local tc=Duel.GetAttackTarget()
+	if not c:IsRelateToEffect(e) then return end
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) then
 		local zone=c:GetLinkedZone()&0x1f
 		if Duel.GetControl(tc,tp,0,0,zone)~=0 then
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
+			for _,eff in ipairs({tc:GetCardEffect(EFFECT_SET_CONTROL)}) do
+				if eff:GetOwner()==c then
+					eff:SetReset((eff:GetReset())|RESET_TEMP_REMOVE)
+				end
+			end
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

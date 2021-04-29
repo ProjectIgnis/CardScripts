@@ -43,7 +43,7 @@ end
 function s.cbbtcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)>1
 end
-function s.filter(c,tp)													 ---------affects one side of field----------------
+function s.filter(c,tp)--affects one side of field
 	return c:IsReason(REASON_BATTLE) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsType(TYPE_MONSTER)
 end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
@@ -56,6 +56,6 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		Duel.Destroy(c,nil,REASON_EFFECT)
+		Duel.Destroy(c,REASON_EFFECT)
 	end
 end

@@ -1,4 +1,5 @@
 --ディアバウンド・カーネル
+--Diabound Kernel
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk up
@@ -17,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.atkcon)
 	e2:SetTarget(s.atktg)

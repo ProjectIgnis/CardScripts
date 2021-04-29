@@ -88,16 +88,13 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	local sg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP) end
+	local sg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,LOCATION_ONFIELD)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local sg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 	Duel.Destroy(sg,REASON_EFFECT)
 end
 function s.retcfilter(c,tp,e)
@@ -119,6 +116,12 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if #g<=0 or g:IsExists(aux.NOT(s.retcfilter2),1,nil,tp) then return end
 	for tc in aux.Next(g) do
-		Duel.MoveToField(tc,tp,tp,tc:GetPreviousLocation(),tc:GetPreviousPosition(),true,math.pow(2,tc:IsPreviousLocation(LOCATION_PZONE) and tc:GetPreviousSequence()==4 and 1 or tc:GetPreviousSequence()))
+		if tc:IsPreviousLocation(LOCATION_PZONE) then
+			local seq=0
+			if tc:GetPreviousSequence()==7 or tc:GetPreviousSequence()==4 then seq=1 end
+			Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,tc:GetPreviousPosition(),true,(1<<seq))
+		else
+			Duel.MoveToField(tc,tp,tp,tc:GetPreviousLocation(),tc:GetPreviousPosition(),true,(1<<tc:GetPreviousSequence()))
+		end
 	end
 end

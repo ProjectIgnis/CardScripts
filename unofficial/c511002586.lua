@@ -13,11 +13,16 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	e:SetLabel(cv)
-	if ex and (cp==tp or cp==PLAYER_ALL) then return true end
+	if ex and (cp==tp or cp==PLAYER_ALL) then
+		e:SetLabel(cv)
+		return true
+	end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
-	e:SetLabel(cv)
-	return ex and (cp==tp or cp==PLAYER_ALL) and Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_RECOVER)
+	if ex and (cp==tp or cp==PLAYER_ALL) and Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_RECOVER) then
+		e:SetLabel(cv)
+		return true
+	end
+	return false
 end
 function s.filter(c,e,tp,atk)
 	return c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:GetAttack()==atk

@@ -1,4 +1,5 @@
 --武闘円舞
+--Battle Waltz
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -30,12 +31,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,tc:GetAttack(),tc:GetDefense(),tc:GetLevel(),tc:GetRace(),tc:GetAttribute()) then
 		local token=Duel.CreateToken(tp,id+1)
-		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetValue(tc:GetAttack())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		token:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_BASE_DEFENSE)
@@ -53,6 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e5:SetValue(tc:GetAttribute())
 		token:RegisterEffect(e5)
+		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		local e6=Effect.CreateEffect(e:GetHandler())
 		e6:SetType(EFFECT_TYPE_SINGLE)
 		e6:SetCode(EFFECT_NO_BATTLE_DAMAGE)

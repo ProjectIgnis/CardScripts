@@ -2,13 +2,13 @@
 --Toll Hike
 --Scripted by Eerie Code
 local s,id=GetID()
-function s.initial_effect(c)	
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--attack cost
+	--Attack cost
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_ATTACK_COST)
@@ -21,14 +21,14 @@ function s.initial_effect(c)
 	--accumulate
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(0x10000000+id)
+	e3:SetCode(id)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(1,1)
 	c:RegisterEffect(e3)
 end
 function s.atcost(e,c,tp)
-	local ct=Duel.GetFlagEffect(tp,id)
+	local ct=#{Duel.GetPlayerEffect(tp,id)}
 	return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,ct,nil)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)

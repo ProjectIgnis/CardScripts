@@ -1,3 +1,4 @@
+--オーバーハンドレッド・コール
 --Hundred Summon
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x48}
 function s.cfilter(c)
 	local class=c:GetMetatable(true)
 	if class==nil then return false end
@@ -24,18 +26,17 @@ function s.filter(c,e,tp)
 	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
-	return no and no>=101 and no<=107 and c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return no and no>=101 and no<=107 and c:IsSetCard(0x48)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
-	local tc=g:GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

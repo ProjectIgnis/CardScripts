@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.spcon)
 	e3:SetCost(s.spcost)
 	e3:SetTarget(s.sptg)
@@ -87,14 +87,12 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local f=aux.FilterFaceupFunction(Card.IsType,TYPE_SYNCHRO)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,f,2,false,nil,nil) end
-	local g=Duel.SelectReleaseGroupCost(tp,f,2,2,false,nil,nil)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsType,2,false,aux.ReleaseCheckMMZ,nil,TYPE_SYNCHRO) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsType,2,2,false,aux.ReleaseCheckMMZ,nil,TYPE_SYNCHRO)
 	Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

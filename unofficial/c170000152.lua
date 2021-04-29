@@ -1,4 +1,5 @@
---Eye of Timaeus
+--ティマイオスの眼 (Anime)
+--The Eye of Timaeus (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,6 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -16,12 +18,14 @@ function s.initial_effect(c)
 	e2:SetValue(s.monval)
 	c:RegisterEffect(e2)
 end
-function s.filter1(c,e,tp)
-	return Duel.GetLocationCountFromEx(tp,tp,c)>0 
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,c:GetCode(),e,tp)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentChain()==0 and Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp
 end
-function s.filter2(c,code,e,tp)
-	if not c.material_count or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) or not c:CheckFusionMaterial() then return false end
+function s.filter1(c,e,tp)
+	return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,c:GetCode(),e,tp,c)
+end
+function s.filter2(c,code,e,tp,mc)
+	if not c.material_count or Duel.GetLocationCountFromEx(tp,tp,mc,c)<=0 or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) or not c:CheckFusionMaterial() then return false end
 	for i=1,c.material_count do
 		if code==c.material[i] then
 			for j=1,c.material_count do
@@ -43,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		g:AddCard(e:GetHandler())
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sc=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,tc:GetCode(),e,tp):GetFirst()
+		local sc=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,tc:GetCode(),e,tp,tc):GetFirst()
 		if sc then
 			sc:SetMaterial(g)
 			Duel.SendtoGrave(g,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)

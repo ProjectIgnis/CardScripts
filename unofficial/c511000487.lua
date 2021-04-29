@@ -10,6 +10,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x3008}
+s.roll_dice=true
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3008)
 end
@@ -28,7 +30,7 @@ function s.desfilter(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local dice=Duel.TossDice(tp,1)
 		if dice==1 then
 			Duel.Damage(tp,tc:GetAttack(),REASON_EFFECT)

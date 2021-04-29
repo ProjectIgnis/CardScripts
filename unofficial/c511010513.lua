@@ -1,5 +1,5 @@
+--RDM－ヌメロン・フォール (Anime)
 --Rank-Down-Magic Numeron Fall (Anime)
---RDM－ヌメロン・フォール
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,10 +17,10 @@ function s.filter1(c,e,tp)
 	local rk=c:GetRank()
 	return rk>1 and c:IsFaceup() and c:IsSetCard(0x48)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,rk)
-		and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
 function s.filter2(c,e,tp,mc,rk)
 	return c:IsRankBelow(rk-1) and mc:IsCanBeXyzMaterial(c,tp)
+		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -32,7 +32,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCountFromEx(tp,tp,tc)<=0 then return end
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank())

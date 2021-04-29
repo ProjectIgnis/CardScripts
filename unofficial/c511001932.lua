@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x1034}
 function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_DECK) and c:IsPreviousControler(tp) and c:IsControler(tp) 
 		and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1034)
@@ -34,11 +35,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(tp,2,2,nil)
 		sg:AddCard(tc)
 		Duel.ShuffleDeck(tp)
-		local sgc=sg:GetFirst()
-		while sgc do
-			Duel.MoveSequence(sgc,0)
-			sgc=sg:GetNext()
-		end
-		Duel.SortDecktop(tp,tp,3)
+		Duel.MoveToDeckTop(sg)
+		Duel.SortDecktop(tp,tp,#sg)
 	end
 end

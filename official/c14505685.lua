@@ -1,4 +1,5 @@
 --サイバース・コンバーター
+--Cyberse Converter
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.sprcon)
 	c:RegisterEffect(e1)
 	--race
@@ -41,7 +42,7 @@ function s.rctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rcop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_RACE)

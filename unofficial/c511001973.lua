@@ -1,4 +1,5 @@
---TG レシプロ・ドラゴン・フライ
+--TG レシプロ・ドラゴン・フライ (Anime)
+--T.G. Recipro Dragonfly (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -79,13 +80,13 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SelectOption(tp,aux.Stringid(52823314,0))
 		op=1
 	end
-	local mg=tc:GetMaterial()
+	local mg=tc:GetMaterial():Filter(Card.IsType,nil,TYPE_SYNCHRO)
 	local sumtype=tc:GetSummonType()
 	local sumable=false
 	if op==0 and Duel.SendtoGrave(tc,REASON_EFFECT)>0 then sumable=true end
 	if op==1 and Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)>0 then sumable=true end
-	if sumable and sumtype==SUMMON_TYPE_SYNCHRO and #mg>0 or #mg<=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		and mg:FilterCount(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,tc)==#mg and Duel.SelectYesNo(tp,aux.Stringid(32441317,0)) then
+	local ft=Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and 1 or Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if sumable and sumtype==SUMMON_TYPE_SYNCHRO and #mg>0 and #mg<=ft and mg:FilterCount(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,tc)==#mg and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		Duel.SpecialSummon(mg,0,tp,tp,false,false,POS_FACEUP)
 	end

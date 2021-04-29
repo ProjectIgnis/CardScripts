@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e4:SetValue(aux.tgval)
+	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_IMMUNE_EFFECT)
@@ -59,7 +59,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
 function s.cfilter(c,tp)
-	return c:IsRace(RACE_REPTILE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
+	return c:IsRace(RACE_REPTILE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -84,7 +84,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PHASE+PHASE_END)
+	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.wincon)
 	e2:SetOperation(s.winop)
@@ -106,7 +106,7 @@ function s.reset(e,tp,eg,ep,ev,re,r,rp)
 	s.winop(e:GetLabelObject(),tp,eg,ep,ev,e,r,rp)
 end
 function s.wincon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()+1

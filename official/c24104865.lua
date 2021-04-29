@@ -39,11 +39,11 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.counter_list={0x100e}
+s.counter_list={COUNTER_A}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local t=Duel.GetAttackTarget()
-	if t and t~=c and t:GetCounter(0x100e)>0 then
+	if t and t~=c and t:GetCounter(COUNTER_A)>0 then
 		e:SetLabel(1)
 	else e:SetLabel(0) end
 end

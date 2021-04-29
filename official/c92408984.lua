@@ -6,10 +6,8 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(s.cost)
-	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	--instant(chain)
+	--Negate and destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
@@ -21,40 +19,10 @@ function s.initial_effect(c)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	--Double Snare
-	local e6=Effect.CreateEffect(c)
-	e6:SetType(EFFECT_TYPE_SINGLE)
-	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e6:SetRange(LOCATION_SZONE)
-	e6:SetCode(3682106)
-	c:RegisterEffect(e6)
+	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 end
 function s.cfilter(c)
 	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsRace(RACE_DRAGON)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	return true
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		e:SetLabel(0)
-		return true
-	end
-	local ct=Duel.GetCurrentChain()-1
-	if ct<=0 then return end
-	local pe,p=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
-	local g=Group.FromCards(pe:GetHandler())
-	if s.discon(e,tp,g,p,ct,pe,0,p) and (e:GetLabel()~=1 or s.discost(e,tp,g,p,ct,pe,0,p,0)) and s.distg(e,tp,g,p,ct,pe,0,p,0) 
-		and Duel.SelectYesNo(tp,94) then
-		e:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
-		e:SetOperation(s.activate(g,ct,pe))
-		if e:GetLabel()==1 then s.discost(e,tp,g,p,ct,pe,0,p,1) end
-		s.distg(e,tp,g,p,ct,pe,0,p,1)
-	else
-		e:SetCategory(0)
-		e:SetOperation(nil)
-	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not (re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end

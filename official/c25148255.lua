@@ -28,9 +28,9 @@ end
 function s.mfilter(c,e,tp,mc)
 	local mg=Group.FromCards(c,mc)
 	return c:IsSetCard(0x43) and not c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
+		and Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_EXTRA,0,1,nil,mg,tp)
 end
-function s.scfilter(c,mg)
+function s.scfilter(c,mg,tp)
 	return aux.IsMaterialListSetCard(c,0x1017) and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0 and c:IsSynchroSummonable(nil,mg)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -50,7 +50,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) or Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 	if not c:IsRelateToEffect(e) then return end
 	local mg=Group.FromCards(c,tc)
-	local g=Duel.GetMatchingGroup(s.scfilter,tp,LOCATION_EXTRA,0,nil,mg)
+	local g=Duel.GetMatchingGroup(s.scfilter,tp,LOCATION_EXTRA,0,nil,mg,tp)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)

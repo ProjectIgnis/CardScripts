@@ -3,17 +3,17 @@
 --Scripted by Playmaker 772211
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x577),1,1)
 	c:EnableReviveLimit()
-	-- cannot link
+	--Cannot be link
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	e1:SetValue(s.lnklimit)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -33,11 +33,13 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
-function s.spfilter(c,e,tp,zone)
-	return c:IsSetCard(0x577) and c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+function s.spfilter(c,e,tp,zone,link)
+	return c:IsSetCard(0x577) and c:IsType(TYPE_LINK) and c:GetLink()<link
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.tgfilter(c,e,tp)
-	return c:IsSetCard(0x577) and c:IsType(TYPE_LINK) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetLinkedZone(tp)&0x1f)
+	return c:IsSetCard(0x577) and c:IsType(TYPE_LINK)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetLinkedZone(tp)&0x1f,c:GetLink())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc,e,tp) end
@@ -50,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		local zone=tc:GetLinkedZone(tp)&0x1f
-		local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp,zone)
+		local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp,zone,tc:GetLink())
 		if #sg==0 then return end
 		local ct=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone))
 		local rg=aux.SelectUnselectGroup(sg,e,tp,ct,ct,s.spcheck,1,tp,HINTMSG_SPSUMMON)

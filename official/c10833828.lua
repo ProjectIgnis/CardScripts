@@ -18,9 +18,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--fusion summon
-	local params = {aux.FilterBoolFunction(Card.IsRace,RACE_FIEND),nil,function(e,tc,mg)
-					return nil,s.extrafil(e:GetHandler():GetCardTarget():Filter(Card.IsControler,nil,tp))
-					end}
+	local params = {aux.FilterBoolFunction(Card.IsRace,RACE_FIEND),nil,function(e,tc,mg) return nil,s.extrafil(e:GetHandler():GetCardTarget()) end}
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)

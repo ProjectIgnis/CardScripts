@@ -1,3 +1,4 @@
+--ＲＲ－シンボル
 --Raidraptor - Symbol
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,8 +26,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local at=Duel.GetAttackTarget()
-	if Duel.GetAttacker():IsSetCard(0xba) and at then
+	if Duel.GetAttacker():IsSetCard(0xba) then
 		s[0]=true
 		s[1]=true
 	end

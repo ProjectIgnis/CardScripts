@@ -1,6 +1,9 @@
---EMオッドアイズ・シンクロン
-local s,id=GetID()
+--EMオッドアイズ・シンクロン (Anime)
+--Performapal Odd-Eyes Synchron (Anime)
+local s,id,alias=GetID()
 function s.initial_effect(c)
+	alias=c:GetOriginalCodeRule()
+	--pendulum
 	Pendulum.AddProcedure(c)
 	--eff
 	local e1=Effect.CreateEffect(c)
@@ -12,7 +15,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.indop)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(8873112,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(LOCATION_PZONE)
@@ -24,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--synchro
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(82224646,2))
+	e4:SetDescription(aux.Stringid(alias,2))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
@@ -77,27 +79,27 @@ function s.indop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.scfilter1(c,tp,mc)
-	return Duel.IsExistingMatchingCard(s.scfilter2,tp,LOCATION_PZONE,0,1,nil,mc,c)
+	return Duel.IsExistingMatchingCard(s.scfilter2,tp,LOCATION_PZONE,0,1,nil,mc,c,tp)
 end
-function s.scfilter2(c,mc,sc)
+function s.scfilter2(c,mc,sc,tp)
 	local mg=Group.FromCards(c,mc)
 	return c:IsCanBeSynchroMaterial(sc) and sc:IsSynchroSummonable(nil,mg)
+		and Duel.GetLocationCountFromEx(tp,tp,mg,sc)>0
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCountFromEx(tp,tp,c)>0
-		and Duel.IsExistingMatchingCard(s.scfilter1,tp,LOCATION_EXTRA,0,1,nil,tp,c) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.scfilter1,tp,LOCATION_EXTRA,0,1,nil,tp,c) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or Duel.GetLocationCountFromEx(tp,tp,c)<=0 then return end
+	if not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(s.scfilter1,tp,LOCATION_EXTRA,0,nil,tp,c)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=g:Select(tp,1,1,nil):GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
-		local mg=Duel.SelectMatchingCard(tp,s.scfilter2,tp,LOCATION_PZONE,0,1,1,nil,c,sc)
+		local mg=Duel.SelectMatchingCard(tp,s.scfilter2,tp,LOCATION_PZONE,0,1,1,nil,c,sc,tp)
 		mg:AddCard(c)
 		Duel.SynchroSummon(tp,sc,nil,mg)
 	end

@@ -1,3 +1,4 @@
+--ドロップドラコ
 --Drop Draco
 --fixed by MLD
 local s,id=GetID()
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SPSUM_PARAM+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetTargetRange(POS_FACEUP_DEFENSE,0)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,51109737)
+	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
 	--damage
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetCountLimit(1,51109737)
+	e2:SetCountLimit(1,id+1)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)

@@ -1,5 +1,5 @@
 --星辰のパラディオン
---Palladion of the Celestial Bodies
+--Crusadia Draco
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,11 +11,11 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetTargetRange(POS_FACEUP_DEFENSE,0)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spcon)
 	e1:SetValue(s.spval)
 	c:RegisterEffect(e1)
-	--to hand
+	--add card back to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -48,10 +48,7 @@ function s.filter2(c,ec)
 	return c:IsFaceup() and c:IsLinkMonster() and c:GetLinkedGroup():IsContains(ec)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local lg1=Duel.GetLinkedGroup(tp,1,1)
-	local lg2=Duel.GetLinkedGroup(1-tp,1,1)
-	lg1:Merge(lg2)
-	return lg1 and lg1:IsContains(e:GetHandler())
+	return Duel.GetLinkedGroup(tp,LOCATION_MZONE,0):IsContains(e:GetHandler())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter1(chkc) and s.filter2(chkc,e:GetHandler()) end
@@ -62,7 +59,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

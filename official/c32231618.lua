@@ -1,8 +1,9 @@
 --占術姫コインノーマ
 --Prediction Princess Coinorma
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special summon 1 level 3+ flip monster from hand or deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0xcc}
+
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_FLIP) and c:IsLevelAbove(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
@@ -29,9 +31,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.actlimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)

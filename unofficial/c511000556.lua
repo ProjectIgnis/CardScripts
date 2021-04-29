@@ -1,14 +1,15 @@
+--エクシーズ・チャージ・アップ
 --Xyz Charge Up
 local s,id=GetID()
 function s.initial_effect(c)
-	--Negate Damage
+	--Make effect damage become 0
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetCondition(s.con)
-	e1:SetOperation(s.op)
+	e1:SetCondition(s.condition)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--gain atk
+	--Increase ATK of an Xyz Monster by the amount that this blocked
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -17,14 +18,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetCondition(s.condition)
-	e2:SetCost(s.cost)
-	e2:SetTarget(s.tg)
+	e2:SetCondition(s.atkcon)
+	e2:SetCost(s.atkcost)
+	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
 	e:SetLabel(cv)
 	if ex and (cp==tp or cp==PLAYER_ALL) then return true end
@@ -32,7 +33,8 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(cv)
 	return ex and (cp==tp or cp==PLAYER_ALL) and Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_RECOVER)
 end
-function s.op(e,tp,eg,ep,ev,re,r,rp,val,r,rc)
+function s.activate(e,tp,eg,ep,ev,re,r,rp,val,r,rc)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 	local e1=Effect.CreateEffect(c)
@@ -41,33 +43,37 @@ function s.op(e,tp,eg,ep,ev,re,r,rp,val,r,rc)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetLabel(cid)
-	e1:SetValue(s.refcon)
+	e1:SetValue(s.chdmgcon)
 	e1:SetReset(RESET_CHAIN)
+	e1:SetLabelObject(e)
 	Duel.RegisterEffect(e1,tp)
 end
-function s.refcon(e,re,val,r,rp,rc)
+function s.chdmgcon(e,re,val,r,rp,rc)
 	local cc=Duel.GetCurrentChain()
 	if cc==0 or (r&REASON_EFFECT)==0 then return end
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
-	if cid==e:GetLabel() then return 0
+	if cid==e:GetLabel() then 
+		if e:GetLabelObject():GetLabel()==0 then
+			e:GetLabelObject():SetLabel(val)
+		end
+		return 0
 	else return val end
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
+function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)
-end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.HintSelection(g)
+	local tc=g:GetFirst()
 	if tc then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+	--Change control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_CONTROL)
@@ -22,7 +23,8 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
+	e2:SetCondition(s.ctcond)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.cttg)
 	e2:SetOperation(s.ctop)
@@ -68,6 +70,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function s.ctcond(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp and Duel.IsMainPhase()
+end
 function s.cttarget(c,e)
 	return c:IsSetCard(0x55) and c:IsFaceup() and c:IsControlerCanBeChanged() and (not e or c:IsCanBeEffectTarget(e))
 end
@@ -79,7 +84,7 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.GetControl(tc,tp)
 		--cannot attack
 		local e1=Effect.CreateEffect(e:GetHandler())

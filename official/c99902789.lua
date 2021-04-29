@@ -1,4 +1,5 @@
 --チャウチャウちゃん
+--Chow Chow Chan
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate
@@ -13,10 +14,11 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) and Duel.GetAttacker():IsControler(tp) and Duel.GetAttackTarget()~=nil
-		and ep~=tp and re:GetActiveType()==TYPE_TRAP and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+		and ep==1-tp and re:GetActiveType()==TYPE_TRAP and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end

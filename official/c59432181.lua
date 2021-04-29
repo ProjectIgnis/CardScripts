@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_EXTRA,0,1,nil,c)
+	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_EXTRA,0,1,nil,c,tp)
 end
-function s.cfilter(c,tc)
+function s.cfilter(c,tc,tp)
 	return c:IsType(TYPE_FUSION) and not c:IsCode(tc:GetCode(nil,SUMMON_TYPE_FUSION,tp))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -27,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local cg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_EXTRA,0,1,1,nil,tc)
+	local cg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_EXTRA,0,1,1,nil,tc,tp)
 	if #cg==0 then return end
 	Duel.ConfirmCards(1-tp,cg)
 	local code1,code2=cg:GetFirst():GetOriginalCodeRule()

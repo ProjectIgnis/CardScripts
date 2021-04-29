@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp)  end
+		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,e,tp):Filter(Card.IsCanBeEffectTarget,nil,e)
 	local g=aux.SelectUnselectGroup(sg,e,tp,2,2,s.sgfilter,1,tp,HINTMSG_SPSUMMON,s.sgfilter)
 	Duel.SetTargetCard(g)
@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e3:SetValue(0)
 			tc:RegisterEffect(e3)
-			local e4=e1:Clone()										
+			local e4=e1:Clone()
 			e4:SetCode(EFFECT_SET_DEFENSE_FINAL)
 			tc:RegisterEffect(e4)
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
@@ -80,7 +80,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	if not g:IsExists(s.desfilter,1,nil,e:GetLabel()) then
-		g:DeleteGroup()  
+		g:DeleteGroup()
 		e:Reset()
 		return false
 	else return true end

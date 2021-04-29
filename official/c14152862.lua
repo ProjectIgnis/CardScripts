@@ -1,10 +1,11 @@
 --風紀宮司ノリト
+--Norito the Moral Leader
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER),6,2)
 	c:EnableReviveLimit()
-	--
+	--Negate activation
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

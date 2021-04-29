@@ -1,4 +1,4 @@
---覇王龍ズァーク
+--覇王龍ズァーク (Anime)
 --Supreme King Z-ARC (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -102,7 +102,8 @@ function s.fscon(e,g,gc,chkfnf)
 	return false
 end
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsCode(76794549)
+	local code=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CODE)
+	return se:GetHandler():IsCode(76794549) or code==76794549
 end
 function s.cfilter(c,ft,tp)
 	return c:IsSetCard(0xf8) and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
@@ -163,23 +164,22 @@ end
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
-function s.spfilter(c,e,tp)
+function s.spfilter(c,e,tp,rp)
+	if c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,rp,nil,c)<=0 then return false end
 	return c:IsSetCard(0x20f8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCountFromEx(tp)>1 
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,2,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_EXTRA)
+    if chk==0 then
+        return loc~=0 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,2,nil,e,tp,rp)
+    end
+    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_EXTRA)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCountFromEx(tp)<2 then return end
-	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
-	if #g>=2 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:Select(tp,2,2,nil)
-		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-	end
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+    local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,2,2,nil,e,tp,rp)
+    if #g>0 then
+        Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+    end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DRAW and eg:IsExists(Card.IsControler,1,nil,1-tp)

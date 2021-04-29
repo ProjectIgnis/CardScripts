@@ -1,5 +1,5 @@
 --閃刀姫-カガリ
---Brandish Maiden Kagari
+--Sky Striker Ace - Kagari
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,18 +14,15 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_UPDATE_DEFENSE)
-	c:RegisterEffect(e2)
 	--search
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
-	e3:SetTarget(s.thtg)
-	e3:SetOperation(s.thop)
-	c:RegisterEffect(e3)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e2:SetTarget(s.thtg)
+	e2:SetOperation(s.thop)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x115}
 function s.matfilter(c,scard,sumtype,tp)
@@ -50,4 +47,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

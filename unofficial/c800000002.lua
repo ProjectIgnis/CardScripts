@@ -39,8 +39,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,c)
-	local tc=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	if tc and tc:IsFaceup() then return true end
-	tc=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	return tc and tc:IsFaceup()
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end

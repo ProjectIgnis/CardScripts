@@ -1,4 +1,5 @@
 --不死王リッチー
+--Fushioh Richie
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -32,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.distg)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -58,7 +60,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

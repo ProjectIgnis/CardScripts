@@ -7,10 +7,10 @@ function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--equip
+	--Equip
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
 	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e1)
-	--negate
+	--Negate activation
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_NEGATE)
@@ -79,7 +79,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqfilter(c)
-	return c:GetFlagEffect(id)~=0 
+	return c:GetFlagEffect(id)~=0
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
@@ -93,6 +93,8 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateActivation(ev)
+	if Duel.NegateActivation(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SendtoGrave(eg,REASON_EFFECT)
+	end
 end
 

@@ -1,4 +1,5 @@
 --迅雷の魔王－スカル・デーモン
+--Skull Archfiend of Lightning
 local s,id=GetID()
 function s.initial_effect(c)
 	--maintain
@@ -19,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
+s.roll_dice=true
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end

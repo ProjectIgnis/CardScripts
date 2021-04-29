@@ -1,9 +1,10 @@
 --ファイアウォール・ガーディアン
 --Firewall Guardian
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special summon itself from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--negate attack
+	--Negate attack, and if you do, opponent's monster's ATK becomes 0
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -38,10 +39,12 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
@@ -60,15 +63,18 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
 	if tc and tc:IsRelateToBattle() and tc:IsFaceup() and Duel.NegateAttack() then
+		--ATK becomes 0
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetValue(0)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
+		--Unaffected by other card effects
 		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetDescription(3100)
 		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetCode(EFFECT_IMMUNE_EFFECT)
 		e2:SetValue(s.efilter)
@@ -79,4 +85,3 @@ end
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
-

@@ -1,3 +1,4 @@
+--精霊炉
 --Spirit Reactor
 --fixed by MLD
 local s,id=GetID()
@@ -46,8 +47,8 @@ end
 function s.filter(c)
 	return c:IsAttribute(ATTRIBUTE_EARTH+ATTRIBUTE_WATER+ATTRIBUTE_FIRE+ATTRIBUTE_WIND) and c:IsFaceup()
 end
-function s.indcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+function s.indcon(e)
+	return Duel.IsExistingMatchingCard(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.indct(e,re,r,rp)
 	if r&REASON_BATTLE+REASON_EFFECT~=0 then

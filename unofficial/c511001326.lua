@@ -1,3 +1,4 @@
+--虚無坑
 --Anti Emptiness
 local s,id=GetID()
 function s.initial_effect(c)

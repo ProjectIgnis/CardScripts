@@ -36,6 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.opd)
 	c:RegisterEffect(e3)
 end
+s.roll_dice=true
 s.listed_series={0x26}
 function s.spfilter(c,tp)
 	return c:IsSetCard(0x26) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
@@ -44,11 +45,11 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,tp)
 	return aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,tp)
 	local g=aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()
@@ -103,8 +104,5 @@ function s.opd(e,tp,eg,ep,ev,re,r,rp)
 	local op=Duel.SelectOption(tp,aux.Stringid(id,3),aux.Stringid(id,4))
 	Duel.SortDecktop(tp,tp,ct)
 	if op==0 then return end
-	for i=1,ct do
-		local tg=Duel.GetDecktopGroup(tp,1)
-		Duel.MoveSequence(tg:GetFirst(),1)
-	end
+	Duel.MoveToDeckBottom(ct,tp)
 end

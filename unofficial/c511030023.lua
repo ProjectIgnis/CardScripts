@@ -1,10 +1,10 @@
---クロス・デバッガー
+--クロス・デバッガー (Anime)
 --Cross Debug (Anime)
 --scripted by pyrQ
 local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()
-	--special summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(alias,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--change atk
+	--increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(alias,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -40,9 +40,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -61,9 +59,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsType(TYPE_LINK) end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_LINK)
-		and Duel.GetFlagEffect(tp,id+1)==0 end
-	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return Duel.IsExistingTarget(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_LINK) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tg=Duel.SelectTarget(tp,Card.IsType,tp,LOCATION_GRAVE,0,1,1,nil,TYPE_LINK)
 end

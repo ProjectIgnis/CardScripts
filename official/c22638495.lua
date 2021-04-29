@@ -1,11 +1,14 @@
---剛竜剣士ダイナスターP
+--剛竜剣士ダイナスターＰ
+--Dinoster Power, the Mighty Dracoslayer
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Fusion summon/contact fusion procedure
 	Fusion.AddProcMix(c,true,true,s.ffilter,aux.FilterBoolFunctionEx(Card.IsType,TYPE_PENDULUM))
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
-	--spsummon
+	--Special summon 1 "Dracoslayer" pendulum monster from GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -14,7 +17,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
-	--indes
+	--Pendulum monsters in your monster zones or pendulum zones cannot be destroyed
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -61,7 +64,10 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		--Cannot be used as fusion material
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3309)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
 		e1:SetValue(1)

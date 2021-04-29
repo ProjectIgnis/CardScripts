@@ -1,7 +1,9 @@
 --アロマセラフィ－アンゼリカ
+--Aromaseraphy Angelica
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--recover
+	--Gain LP equal to targeted "Aroma" monster in your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_RECOVER)
@@ -13,8 +15,9 @@ function s.initial_effect(c)
 	e1:SetCost(s.reccost)
 	e1:SetTarget(s.rectg)
 	e1:SetOperation(s.recop)
+	e1:SetHintTiming(0,TIMING_MAIN_END+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -27,6 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xc9}
+
 function s.reccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
@@ -58,10 +62,12 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)

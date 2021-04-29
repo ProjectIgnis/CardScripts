@@ -1,4 +1,4 @@
---Element Change
+--Element Conversion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +12,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	local att=Duel.AnnounceAttribute(tp,1,0xffff)
+	local att=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL)
 	e:SetLabel(att)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

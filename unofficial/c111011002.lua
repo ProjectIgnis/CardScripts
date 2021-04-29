@@ -1,4 +1,5 @@
 --カオス・フィールド
+--Chaos Field
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,20 +39,20 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	tc:RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and Duel.IsPlayerCanSpecialSummon(tp) end
+	if chk==0 then return Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)>0 and Duel.IsPlayerCanSpecialSummon(tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or Duel.GetLocationCountFromEx(tp)<=0 then return end
+	if not c:IsRelateToEffect(e) or Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)<=0 then return end
 	local xyzg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_EXTRA,nil,e,tp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:RandomSelect(tp,1):GetFirst()
-		if Duel.SpecialSummonStep(xyz,0,tp,tp,false,false,POS_FACEUP) then	
+		if Duel.SpecialSummonStep(xyz,0,tp,tp,false,false,POS_FACEUP) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
@@ -88,7 +89,8 @@ function s.tgfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,rank,e,tp,c,pg)
 end
 function s.xyzfilter(c,rank,e,tp,mc,pg)
-	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:GetRank()==rank+1 and c:IsC() and mc:IsCanBeXyzMaterial(c,tp) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:GetRank()==rank+1 and c:IsC()
+		and mc:IsCanBeXyzMaterial(c,tp) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and (#pg<=0 or pg:IsContains(mc)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

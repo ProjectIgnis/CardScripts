@@ -13,11 +13,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.fil(c)
-  return c:IsRace(RACE_PLANT) and c:IsPosition(POS_FACEUP_ATTACK)
+	return c:IsRace(RACE_PLANT) and c:IsPosition(POS_FACEUP_ATTACK)
 end
 function s.tg(e,c)
-  return s.fil(c)
+	return s.fil(c)
 end
 function s.val(e,c)
-  return Duel.GetMatchingGroup(s.fil,c:GetControler(),LOCATION_MZONE,0,c):GetSum(Card.GetBaseAttack)
+	return Duel.GetMatchingGroup(s.fil,c:GetControler(),LOCATION_MZONE,0,c):GetSum(Card.GetBaseAttack)
 end

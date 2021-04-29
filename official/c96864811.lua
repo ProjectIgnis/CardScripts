@@ -1,7 +1,9 @@
 --禁じられた聖衣
+--Forbidden Dress
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Targeted monster loses 600 ATK, cannot be targeted or destroyed by card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -26,13 +28,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		--Loses 600 ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(-600)
 		tc:RegisterEffect(e1)
+		--Cannot be targeted or destroyed by card effects
 		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(3009)
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 		e2:SetValue(1)

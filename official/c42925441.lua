@@ -1,6 +1,5 @@
 --フォトン・チェンジ
 --Photon Change
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,18 +10,18 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--effect
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e4:SetType(EFFECT_TYPE_QUICK_O)
-	e4:SetCode(EVENT_FREE_CHAIN)
-	e4:SetCountLimit(1,id)
-	e4:SetHintTiming(0,TIMING_END_PHASE)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCost(s.effcost)
-	e4:SetTarget(s.efftg)
-	e4:SetOperation(s.effop)
-	c:RegisterEffect(e4)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetCountLimit(1,id)
+	e2:SetHintTiming(0,TIMING_END_PHASE)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCost(s.effcost)
+	e2:SetTarget(s.efftg)
+	e2:SetOperation(s.effop)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x55,0x7b}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
@@ -31,6 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	--destroy
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(12670770,1))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)

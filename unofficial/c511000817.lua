@@ -3,17 +3,11 @@
 --updated by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x601)
 	--dark synchro summon
 	c:EnableReviveLimit()
 	Synchro.AddDarkSynchroProcedure(c,Synchro.NonTuner(nil),nil,0)
 	c:SetStatus(STATUS_NO_LEVEL,true)
-	--add setcode
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_ADD_SETCODE)
-	e1:SetValue(0x601)
-	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -99,9 +93,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e15)
 end
 s.listed_series={0xc2}
-function s.spfilter(c,e,tp)
+function s.spfilter(c,e,tp,ct)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and (c:IsRace(RACE_DRAGON) or c:IsSetCard(0xc2)) 
+		and (c:IsRace(RACE_DRAGON) or c:IsSetCard(0xc2))
+		and (not ct or Duel.GetLocationCountFromEx(tp,tp,nil,c)>=ct)
 end
 function s.cfilter(c,p)
 	return c:IsFacedown() and c:IsControler(p)
@@ -117,9 +112,9 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,ct=Duel.GetOperationInfo(0,CATEGORY_SPECIAL_SUMMON)
-	if Duel.GetLocationCountFromEx(tp)<ct or (ct>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) then return end
+	if ct>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,ct,ct,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,ct,ct,nil,e,tp,ct)
 	if #g==ct then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

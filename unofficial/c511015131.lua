@@ -1,3 +1,4 @@
+--人形の家
 --Doll House
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,11 +33,12 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
+s.listed_series={0x15c}
 s_g=Group.CreateGroup()
 function s.gchk(e,tp,eg,ev,ep,re,r,rp)
 	local c=eg:GetFirst()
 	while c do
-		if c:IsPreviousControler(tp) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1517) then
+		if c:IsPreviousControler(tp) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x25c) then
 			s_g:AddCard(c) 
 		end
 		c=eg:GetNext()
@@ -48,7 +50,7 @@ function s.gclear(e,tp,eg,ev,ep,re,r,rp)
 	end
 end
 function s.sfilter(c,e,tp,g)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1517) and 
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x15c) and 
 		g:IsExists(function (c,lv) return c:GetLevel()==lv end,1,nil,c:GetLevel()-2) and
 		c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,tp,false,false)
 end
@@ -56,13 +58,13 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local n=#s_g
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and ft>0 then ft=2 end
-	return n>1 and n<=ft and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,n-1,nil,e,tp,s.g)
+	return n>1 and n<=ft and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,n-1,nil,e,tp,s_g)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local n=#s_g
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and ft>0 then ft=2 end
 	if n>ft then n=ft end
-	local tg=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_DECK,0,n-1,n-1,nil,e,tp,s.g)
+	local tg=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_DECK,0,n-1,n-1,nil,e,tp,s_g)
 	Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
 end

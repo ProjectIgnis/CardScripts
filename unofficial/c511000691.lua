@@ -11,7 +11,7 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_HAND,0,1,e:GetHandler()) and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_HAND,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_ATOHAND,nil,1-tp,tp,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1-tp,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)

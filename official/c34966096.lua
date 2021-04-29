@@ -1,9 +1,10 @@
 --カオス・ベトレイヤー
 --Chaos Betrayer
---scripted by andré
+--Scripted by andré
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon from grave
+	--Special summon itself from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sstarget)
 	e1:SetOperation(s.ssoperation)
 	c:RegisterEffect(e1)
-	--banish
+	--If special summoned, banish 1 card from opponent's GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
@@ -25,8 +26,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
+
 function s.ssfilter(c)
-	return c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and not c:IsCode(id) and aux.SpElimFilter(c,true,false)
+	return c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and not c:IsCode(id) and aux.SpElimFilter(c,true,false) and c:IsAbleToRemoveAsCost()
 end
 function s.ssfilter1(c,sg)
 	return c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and sg:IsExists(s.ssfilter2,1,c,(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK)&~c:GetAttribute())
@@ -47,15 +49,17 @@ end
 function s.sstarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,1,c,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,Group.FromCards(c),1,tp,0)
 end
 function s.ssoperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0 then
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
@@ -74,4 +78,3 @@ function s.roperation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
-

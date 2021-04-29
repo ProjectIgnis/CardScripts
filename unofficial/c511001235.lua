@@ -31,6 +31,6 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(p,Card.IsAbleToDeck,p,LOCATION_HAND,0,2,2,nil)
 	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-	Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 	Duel.SortDecktop(p,p,2)
 end

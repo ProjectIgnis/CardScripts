@@ -48,7 +48,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_MAIN2,0,1)
 	end
-	Duel.RegisterEffect(e1,tp)	
+	Duel.RegisterEffect(e1,tp)
 end
 function s.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsActivated()

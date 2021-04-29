@@ -1,16 +1,17 @@
 --A・ジェネクス・トライアーム
+--Genex Ally Triarm
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,aux.FilterSummonCode(68505803),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--mat check
+	--material verification check
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
 	e1:SetValue(s.valcheck)
 	c:RegisterEffect(e1)
-	--synchro success
+	--effect registration
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -19,6 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	e2:SetLabelObject(e1)
 end
+s.material={68505803}
 s.listed_names={68505803}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
@@ -109,7 +111,7 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
@@ -127,7 +129,7 @@ function s.target3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation3(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Destroy(tc,REASON_EFFECT)
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

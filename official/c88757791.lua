@@ -1,9 +1,10 @@
 --法眼の魔術師
+--Dharma-Eye Magician
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum attributes
 	Pendulum.AddProcedure(c)
-	--change scale
+	--Change scale
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -13,13 +14,14 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sctg)
 	e2:SetOperation(s.scop)
 	c:RegisterEffect(e2)
-	--indes
+	--Register when pendulum summoned
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetOperation(s.sumsuc)
 	c:RegisterEffect(e3)
+	--Prevent destruction by opponent's effect
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -27,7 +29,7 @@ function s.initial_effect(c)
 	e4:SetTargetRange(LOCATION_MZONE,0)
 	e4:SetCondition(s.indcon)
 	e4:SetTarget(s.indtg)
-	e4:SetValue(s.indval)
+	e4:SetValue(aux.indoval)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x98}
@@ -53,7 +55,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	local pc=e:GetLabelObject()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LSCALE)
@@ -75,7 +77,4 @@ function s.indcon(e)
 end
 function s.indtg(e,c)
 	return c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)
-end
-function s.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
 end

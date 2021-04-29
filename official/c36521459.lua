@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	c:SetUniqueOnField(1,1,aux.MaleficUniqueFilter(c),LOCATION_MZONE)
-	aux.AddMaleficSummonProcedure(c,44508094,LOCATION_EXTRA)
+	aux.AddMaleficSummonProcedure(c,CARD_STARDUST_DRAGON,LOCATION_EXTRA)
 	--selfdes
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
@@ -36,11 +36,9 @@ function s.initial_effect(c)
 	ea:SetValue(aux.FALSE)
 	c:RegisterEffect(ea)
 end
-s.listed_names={44508094}
+s.listed_names={CARD_STARDUST_DRAGON}
 function s.descon(e)
-	local f1=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	local f2=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	return (f1==nil or f1:IsFacedown()) and (f2==nil or f2:IsFacedown())
+	return not Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.antarget(e,c)
 	return c~=e:GetHandler()

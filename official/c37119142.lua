@@ -37,7 +37,7 @@ function s.extrafilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function s.extracon(c,e,tp,sg,mg,lc,og,chk)
-	return (sg+mg):Filter(s.extrafilter,nil,e:GetHandlerPlayer()):IsExists(Card.IsRace,og,1,RACE_CYBERSE) and
+	return (sg+mg):Filter(s.extrafilter,nil,e:GetHandlerPlayer()):IsExists(Card.IsRace,1,og,RACE_CYBERSE) and
 	sg:FilterCount(s.flagcheck,nil)<2
 end
 function s.flagcheck(c)
@@ -47,7 +47,7 @@ function s.extraval(chk,summon_type,e,...)
 	local c=e:GetHandler()
 	if chk==0 then
 		local tp,sc=...
-		if not summon_type==SUMMON_TYPE_LINK or not sc:IsSetCard(0x101) or Duel.GetFlagEffect(tp,id)>0 then
+		if summon_type~=SUMMON_TYPE_LINK or not sc:IsSetCard(0x101) or Duel.GetFlagEffect(tp,id)>0 then
 			return Group.CreateGroup()
 		else
 			table.insert(s.flagmap[c],c:RegisterFlagEffect(id,0,0,1))
@@ -72,37 +72,37 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsPreviousLocation(LOCATION_ONFIELD) then e:SetLabel(1) end
 	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousLocation(LOCATION_ONFIELD+LOCATION_HAND) and r==REASON_LINK and c:GetReasonCard():IsSetCard(0x101)
 end
-function s.thfilter(c,chk)
+function s.thfilter(c,e,tp,chk)
 	return c:IsRace(RACE_CYBERSE) and c:IsLevelBelow(4) and (c:IsAbleToHand() or (chk==1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,e:GetLabel()) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc,e,tp,check) end
+	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,check) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,check)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ck=e:GetLabel()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,ck):GetFirst()
-	if tc then
-		if ck==1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
-		and (not tc:IsAbleToHand() or Duel.SelectYesNo(tp,aux.Stringid(id,1))) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-			local e1=Effect.CreateEffect(e:GetHandler())
+	local tc=Duel.GetFirstTarget()
+	if not tc or not tc:IsRelateToEffect(e) then return end
+	if tc:IsAbleToHand() and (e:GetLabel()==0 or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		or Duel.SelectOption(tp,1190,1152)==0) then
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,tc)
+	else
+		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(e:GetHandler())
+			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
-			Duel.SpecialSummonComplete()
-		else
-			Duel.SendtoHand(tc,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,tc)
 		end
+		Duel.SpecialSummonComplete()
 	end
 end
-

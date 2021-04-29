@@ -1,4 +1,5 @@
 --マジシャン・オブ・ブラック・イリュージョン
+--Magician of Dark Illusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--change name
@@ -16,25 +17,18 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetRange(LOCATION_HAND)
-	e2:SetCode(EVENT_CHAIN_SOLVING)
+	e2:SetCode(EVENT_CHAINING)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.condition1)
 	e2:SetTarget(s.target1)
 	e2:SetOperation(s.operation1)
 	c:RegisterEffect(e2)
-	--spsummon (DM)
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_CHAINING)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetOperation(aux.chainreg)
-	c:RegisterEffect(e3)
+	--Special Summon "Dark Magician"
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_CHAIN_SOLVING)
+	e4:SetCode(EVENT_CHAINING)
 	e4:SetProperty(EFFECT_FLAG_NO_TURN_RESET+EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,id+1)
@@ -59,7 +53,7 @@ function s.operation1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and e:GetHandler():GetFlagEffect(1)>0
+	return rp==tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.filter(c,e,tp)
 	return c:IsCode(CARD_DARK_MAGICIAN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -74,7 +68,7 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

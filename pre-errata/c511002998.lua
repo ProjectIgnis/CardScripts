@@ -1,4 +1,5 @@
---王家の眠る谷－ネクロバレー
+--王家の眠る谷－ネクロバレー (Pre-Errata)
+--Necrovalley (Pre-Errata)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Atk&Def
+	--Increase ATK/DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
-	--cannot remove
+	--Cards in the GY cannot be banished
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_CANNOT_REMOVE)
@@ -30,7 +31,7 @@ function s.initial_effect(c)
 	e5:SetTargetRange(0,LOCATION_GRAVE)
 	e5:SetCondition(s.conntp)
 	c:RegisterEffect(e5)
-	--necro valley
+	--Necrovalley effect
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD)
 	e6:SetCode(EFFECT_NECRO_VALLEY)
@@ -56,7 +57,7 @@ function s.initial_effect(c)
 	e9:SetTargetRange(0,1)
 	e9:SetCondition(s.conntp)
 	c:RegisterEffect(e9)
-	--disable
+	--Negate on resolution if an effect would move a card in the GY (other than itself)
 	local e10=Effect.CreateEffect(c)
 	e10:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e10:SetCode(EVENT_CHAIN_SOLVING)
@@ -64,6 +65,7 @@ function s.initial_effect(c)
 	e10:SetOperation(s.disop)
 	c:RegisterEffect(e10)
 end
+s.listed_series={0x2e}
 function s.discon(e,c)
 	return e:GetHandler()~=c
 end
@@ -73,9 +75,9 @@ end
 function s.conntp(e)
 	return not Duel.IsPlayerAffectedByEffect(1-e:GetHandler():GetControler(),EFFECT_NECRO_VALLEY_IM)
 end
-function s.disfilter(c,im0,im1)
-	if c:IsControler(0) then return im0 and c:IsHasEffect(EFFECT_NECRO_VALLEY)
-	else return im1 and c:IsHasEffect(EFFECT_NECRO_VALLEY) end
+function s.disfilter(c,im0,im1,re)
+	if c:IsControler(0) then return im0 and c:IsHasEffect(EFFECT_NECRO_VALLEY) and c:IsRelateToEffect(re)
+	else return im1 and c:IsHasEffect(EFFECT_NECRO_VALLEY) and c:IsRelateToEffect(re) end
 end
 function s.discheck(ev,category,re,im0,im1,targets)
 	local ex,tg,ct,p,v=Duel.GetOperationInfo(ev,category)
@@ -88,9 +90,9 @@ function s.discheck(ev,category,re,im0,im1,targets)
 	end
 	if tg and #tg>0 then
 		if targets and targets:IsContains(re:GetHandler()) then
-			return tg:IsExists(s.disfilter,1,nil,im0,im1)
+			return tg:IsExists(s.disfilter,1,nil,im0,im1,re)
 		else
-			return tg:IsExists(s.disfilter,1,re:GetHandler(),im0,im1)
+			return tg:IsExists(s.disfilter,1,re:GetHandler(),im0,im1,re)
 		end
 	end
 	return false
@@ -109,6 +111,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not res and s.discheck(ev,CATEGORY_REMOVE,re,im0,im1,targets) then res=true end
 	if not res and s.discheck(ev,CATEGORY_TOHAND,re,im0,im1,targets) then res=true end
 	if not res and s.discheck(ev,CATEGORY_TODECK,re,im0,im1,targets) then res=true end
+	if not res and s.discheck(ev,CATEGORY_TOEXTRA,re,im0,im1,targets) then res=true end
 	if not res and s.discheck(ev,CATEGORY_LEAVE_GRAVE,re,im0,im1,targets) then res=true end
-	if res then	Duel.NegateEffect(ev) end
+	if res then Duel.NegateEffect(ev) end
 end

@@ -1,3 +1,4 @@
+--エクシーズ・シフト (Anime)
 --Xyz Shift (Anime)
 --Scripter by IanxWaifu
 --fixed by MLD
@@ -18,11 +19,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.cfilter(c,e,tp)
-	return c:IsType(TYPE_XYZ) and c:IsAbleToGraveAsCost() and Duel.GetLocationCountFromEx(tp,tp,c)>0 
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetRank())
+	return c:IsType(TYPE_XYZ) and c:IsAbleToGraveAsCost()
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetRank(),c)
 end
-function s.spfilter(c,e,tp,rk)
+function s.spfilter(c,e,tp,rk,mc)
 	return c:IsRank(rk) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -37,11 +39,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
-	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)):GetFirst()
 	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		local c=e:GetHandler()
 		if c:IsRelateToEffect(e) then
 			c:CancelToGrave()
 			Duel.Overlay(sc,Group.FromCards(c))

@@ -1,11 +1,12 @@
 --DNA移植手術
+--DNA Transplant
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1c1)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_DRAW_PHASE)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--race
@@ -21,7 +22,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	local rc=Duel.AnnounceAttribute(tp,1,0xffff)
+	local rc=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL)
 	e:GetLabelObject():SetLabel(rc)
 	e:GetHandler():SetHint(CHINT_ATTRIBUTE,rc)
 end

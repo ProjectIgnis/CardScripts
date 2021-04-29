@@ -1,4 +1,5 @@
---Summon Dice
+--サモン・ダイス (Anime)
+--Summon Dice (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.roll_dice=true
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
@@ -31,8 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 		e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 		Duel.RegisterEffect(e1,tp)
-	elseif (dice==3 or dice==4) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) 
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	elseif (dice==3 or dice==4) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)

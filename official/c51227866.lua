@@ -3,7 +3,7 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Banish 1 monster from opponent's GY, or if 3+ spells in your GY, special summon it
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +12,10 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e1)
 end
 function s.cfilter(c)
 	return c:GetSequence()<5
@@ -40,7 +43,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 			and (not tc:IsAbleToRemove() or Duel.SelectYesNo(tp,aux.Stringid(id,0))) then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+			--Cannot attack
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3206)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
@@ -50,4 +56,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

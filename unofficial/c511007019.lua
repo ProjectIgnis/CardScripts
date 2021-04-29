@@ -1,4 +1,5 @@
---Chain Summon
+--連鎖召喚 (Manga)
+--Chain Summon (Manga)
 --coded by Lyris
 --fixed by MLD
 local s,id=GetID()
@@ -53,7 +54,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.cfilter(c,tp)
-	return c:GetSummonType()==SUMMON_TYPE_XYZ and c:IsSummonPlayer(tp)
+	return c:IsSummonType(SUMMON_TYPE_XYZ) and c:IsSummonPlayer(tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil,tp) then
@@ -106,14 +107,14 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp,rk)
 	return c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 		and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil,c:GetRank())
 end
 function s.filter(c,rk)
 	return c:IsFaceup() and c:GetRank()<=rk
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

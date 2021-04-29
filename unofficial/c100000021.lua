@@ -1,4 +1,5 @@
 --女教皇の錫杖
+--Empress's Staff
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end

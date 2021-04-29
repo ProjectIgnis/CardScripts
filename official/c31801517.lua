@@ -2,10 +2,10 @@
 --Number 62: Galaxy-Eyes Prime Photon Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,nil,8,2)
 	c:EnableReviveLimit()
-	--increase ATK
+	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.atkcost)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--special summon
+	--Special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -25,12 +25,12 @@ function s.initial_effect(c)
 	e2:SetCondition(s.spcon)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--half damage
+	--Halve damage
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e3:SetCondition(s.rdcon)
-	e3:SetOperation(s.rdop)
+	e3:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
@@ -101,9 +101,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and not e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_GALAXYEYES_P_DRAGON)
+function s.rdcon(e)
+	return not e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_GALAXYEYES_P_DRAGON)
 end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(ep,ev/2)
-end
+

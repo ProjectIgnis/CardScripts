@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-   return c:GetSequence()>=5 and c:IsType(TYPE_LINK)
+	return c:GetSequence()>=5 and c:IsType(TYPE_LINK)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.GetAttacker():IsControler(tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

@@ -42,7 +42,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	if Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE then
+	if Duel.IsBattlePhase() then
 		local bc=e:GetHandler():GetBattleTarget()
 		local dam=bc:GetAttack()*2
 		if dam<0 then dam=0 end

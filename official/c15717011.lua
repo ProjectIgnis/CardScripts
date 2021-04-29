@@ -32,37 +32,39 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.fil(c,tp)
-	return c:IsCanBeFusionMaterial() and c:IsHasEffect(59160188)
+	return c:IsCanBeFusionMaterial(nil,MATERIAL_FUSION) and c:IsHasEffect(EFFECT_EXTRA_RELEASE_NONSUM)
 end
 function s.fcheck(mg)
 	return function(tp,sg,fc)
-		return #sg-#(sg-mg)<2
+		return #(sg&mg)<2
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local chkf=tp+0x10100
+	local chkf=tp|FUSPROC_NOTFUSION
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		local mg=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_MZONE,0,nil)
+		local mg=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_MZONE,0,nil,nil,MATERIAL_FUSION)
 		local mg2=Duel.GetMatchingGroup(s.fil,tp,0,LOCATION_MZONE,nil,tp)
 		Fusion.CheckAdditional=s.fcheck(mg2)
 		local res=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg+mg2,c,chkf)
 		Fusion.CheckAdditional=nil
 		return res
 	end
-	local mg=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_MZONE,0,nil)
+	local mg=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_MZONE,0,nil,nil,MATERIAL_FUSION)
 	local mg2=Duel.GetMatchingGroup(s.fil,tp,0,LOCATION_MZONE,nil,tp)
 	Fusion.CheckAdditional=s.fcheck(mg2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,mg+mg2,c,chkf)
 	local mat=Duel.SelectFusionMaterial(tp,g:GetFirst(),mg+mg2,c,chkf)
 	Fusion.CheckAdditional=nil
-	if #(mat-mg2)~=#mat then
-		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-		Duel.Hint(HINT_CARD,0,fc:GetCode())
-		fc:RegisterFlagEffect(59160188,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+	if #(mat&mg2)>0 then
+		local eff=(mat&mg2):GetFirst():IsHasEffect(EFFECT_EXTRA_RELEASE_NONSUM)
+		if eff then
+			eff:UseCountLimit(tp,1)
+			Duel.Hint(HINT_CARD,0,eff:GetHandler():GetCode())
+		end
 	end
 	Duel.Release(mat,REASON_COST)
 	e:SetLabel(g:GetFirst():GetCode())

@@ -1,5 +1,6 @@
---coded by Lyris
+--突貫工事
 --Charging Construction
+--coded by Lyris
 --cleaned up by MLD
 Duel.LoadScript("c420.lua")
 local s,id=GetID()

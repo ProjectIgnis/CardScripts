@@ -1,9 +1,13 @@
 --ＷＷ－ウィンター・ベル
+--Windwitch - Winter Bell
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Synchro summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsAttribute,ATTRIBUTE_WIND),1,99)
-	--damage
+	--Inflict damage equal to targeted "Windwitch" monster's level x 200
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -14,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon 1 monster from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -23,13 +27,14 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id+1)
-	e2:SetHintTiming(0,TIMING_BATTLE_END)
+	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xf0}
+
 function s.damfil(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf0) and c:IsLevelAbove(1)
 end
@@ -75,12 +80,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfil2,tp,LOCATION_HAND,0,1,1,nil,e,tp,lv)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_CANNOT_ATTACK)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e2)
+		--Cannot attack
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3206)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CANNOT_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()
 end

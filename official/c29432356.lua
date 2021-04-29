@@ -153,7 +153,7 @@ function s.pencon1(e,c,og)
 	end
 	return g:IsExists(s.penfilter,1,nil,e,tp,lscale,rscale)
 end
-function s.penop1(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
+function s.penop1(e,tp,eg,ep,ev,re,r,rp,c,sg,inchain)
 	local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
 	local lscale=c:GetLeftScale()
 	local rscale=rpz:GetRightScale()
@@ -177,9 +177,7 @@ function s.penop1(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 	end
 	ft1=math.min(ft1,tg:FilterCount(Card.IsLocation,nil,LOCATION_HAND))
 	ft2=math.min(ft2,tg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA))
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	if ect and ect<ft2 then ft2=ect end
+	ft2=math.min(ft2,aux.CheckSummonGate(tp) or ft2)
 	while true do
 		local ct1=tg:FilterCount(Card.IsLocation,nil,LOCATION_HAND)
 		local ct2=tg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
@@ -192,7 +190,7 @@ function s.penop1(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 		local g=tg:Filter(Card.IsLocation,sg,loc)
 		if #g==0 or ft==0 then break end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tc=Group.SelectUnselect(g,sg,tp,true,true)
+		local tc=Group.SelectUnselect(g,sg,tp,#sg>0,Duel.IsSummonCancelable())
 		if not tc then break end
 		if sg:IsContains(tc) then
 				sg:RemoveCard(tc)
@@ -219,9 +217,10 @@ function s.penop1(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 	Duel.HintSelection(Group.FromCards(rpz))
 	end
 end
-function s.pencon2(e,c,og)
+function s.pencon2(e,c,inchain,re,rp)
 	if c==nil then return true end
 	local tp=e:GetOwnerPlayer()
+	if inchain and tp~=rp then return false end
 	local rpz=Duel.GetFieldCard(1-tp,LOCATION_PZONE,1)
 	if rpz==nil or rpz:GetFieldID()~=c:GetFlagEffectLabel(31531170) or Duel.GetFlagEffect(tp,id)>0 then return false end
 	local lscale=c:GetLeftScale()
@@ -235,7 +234,7 @@ function s.pencon2(e,c,og)
 		return Duel.IsExistingMatchingCard(s.penfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lscale,rscale)
 	end
 end
-function s.penop2(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
+function s.penop2(e,tp,eg,ep,ev,re,r,rp,c,sg,inchain)
 	local tp=e:GetOwnerPlayer()
 	local rpz=Duel.GetFieldCard(1-tp,LOCATION_PZONE,1)
 	local lscale=c:GetLeftScale()
@@ -243,21 +242,11 @@ function s.penop2(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 	if lscale>rscale then lscale,rscale=rscale,lscale end
 	local ft=Duel.GetLocationCountFromEx(tp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	if ect then ft=math.min(ft,ect) end
-	if og then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=og:FilterSelect(tp,s.penfilter,0,ft,nil,e,tp,lscale,rscale)
-		if g then
-			sg:Merge(g)
-		end
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,s.penfilter,tp,LOCATION_EXTRA,0,0,ft,nil,e,tp,lscale,rscale)
-		if g then
-			sg:Merge(g)
-		end
+	ft=math.min(ft,aux.CheckSummonGate(tp) or ft)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,s.penfilter,tp,LOCATION_EXTRA,0,inchain and 1 or 0,ft,nil,e,tp,lscale,rscale)
+	if g then
+		sg:Merge(g)
 	end
 	if #sg>0 then
 		Duel.Hint(HINT_CARD,0,31531170)

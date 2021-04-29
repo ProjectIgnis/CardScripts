@@ -2,16 +2,16 @@
 --Accesscode Talker
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2)
 	c:EnableReviveLimit()
-	--mat check
+	--Check materials for a Link Monster
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_MATERIAL_CHECK)
 	e0:SetValue(s.valcheck)
 	c:RegisterEffect(e0)
-	--atk
+	--ATK increase
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	e1:SetLabelObject(e0)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -32,9 +32,8 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--register attributes
-	if not s.global_flag then
-		s.global_flag=true
+	--Register Attributes used
+	aux.GlobalCheck(s,function()
 		s.attr_list={}
 		s.attr_list[0]=0
 		s.attr_list[1]=0
@@ -44,7 +43,7 @@ function s.initial_effect(c)
 		ge1:SetCountLimit(1)
 		ge1:SetCondition(s.resetop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
@@ -97,8 +96,8 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,e,tp)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	e:SetLabel(g:GetFirst():GetAttribute())
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end

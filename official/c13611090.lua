@@ -1,4 +1,5 @@
 --マジェスペクター・ソニック
+--Majespecter Sonics
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,7 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -42,17 +43,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(tc:GetDefense()*2)
 		tc:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-		e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e3:SetCondition(s.rdcon)
-		e3:SetOperation(s.rdop)
+		e3:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 		tc:RegisterEffect(e3)
 	end
-end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
-end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
 end

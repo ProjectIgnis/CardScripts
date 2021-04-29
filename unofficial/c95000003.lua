@@ -1,3 +1,4 @@
+--ダークネス／魔法Ａ
 --Darkness/Spell A (Darkness)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--
+	--Indestructible OPT
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
@@ -44,45 +45,22 @@ end
 s.listed_names={95000004,95000005,95000006,95000007,95000008}
 s.mark=0
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetSequence()<5
-end
-function s.setfilter(c,code)
-	return c:IsSSetable() and c:IsCode(code)
+	return c:IsCode(95000004,95000005,95000006,95000007,95000008) and c:IsSSetable(true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_SZONE)-Duel.GetLocationCount(tp,LOCATION_FZONE)-Duel.GetLocationCount(tp,LOCATION_PZONE))>4
-		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000004)
-		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000005)
-		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000006)
-		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000007)
-		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,95000008)
-	end
+	if chk==0 then return Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil):GetClassCount(Card.GetCode)==5 end
+end
+function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(Card.IsCode,1,nil,95000004) and sg:IsExists(Card.IsCode,1,nil,95000005) and sg:IsExists(Card.IsCode,1,nil,95000006) and sg:IsExists(Card.IsCode,1,nil,95000007) and sg:IsExists(Card.IsCode,1,nil,95000008)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if (Duel.GetLocationCount(tp,LOCATION_SZONE)-Duel.GetLocationCount(tp,LOCATION_FZONE)-Duel.GetLocationCount(tp,LOCATION_PZONE))<=4 then return end
-	local g1=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,95000004)
-	local g2=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,95000005)
-	local g3=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,95000006)
-	local g4=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,95000007)
-	local g5=Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,95000008)
-	if #g1>0 and #g2>0 and #g3>0 and #g4>0 and #g5>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINT_SET)
-		local sg1=g1:Select(tp,1,1,nil)
-		Duel.Hint(HINT_SELECTMSG,tp,HINT_SET)
-		local sg2=g2:Select(tp,1,1,nil)
-		sg1:Merge(sg2)
-		Duel.Hint(HINT_SELECTMSG,tp,HINT_SET)
-		local sg3=g3:Select(tp,1,1,nil)
-		sg1:Merge(sg3)
-		Duel.Hint(HINT_SELECTMSG,tp,HINT_SET)
-		local sg4=g4:Select(tp,1,1,nil)
-		sg1:Merge(sg4)
-		Duel.Hint(HINT_SELECTMSG,tp,HINT_SET)
-		local sg5=g5:Select(tp,1,1,nil)
-		sg1:Merge(sg5)
-		for tc in aux.Next(sg1) do
-			Duel.SSet(tp,tc)
-		end
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<5 then return end
+	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil)
+	if not s.rescon(sg) then return end
+	local setg=aux.SelectUnselectGroup(sg,e,tp,5,5,s.rescon,1,tp,HINTMSG_SET)
+	if #sg>0 then
+		Duel.SSet(tp,setg)
 	end
 end
 function s.valcon(e,re,r,rp)

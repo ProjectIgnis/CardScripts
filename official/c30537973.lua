@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
+	--Pendulum attributes
 	Pendulum.AddProcedure(c,false)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCost(s.reg)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy a Spell/Trap
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--search
+	--Search
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -43,11 +43,11 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetSequence()<5
+	return c:IsFaceup() and c:GetSequence()<5
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsOnField() and chkc:IsType(TYPE_SPELL+TYPE_TRAP) and chkc:IsFaceup() and chkc~=c end
+	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:GetSequence()<5 and chkc:IsFaceup() and chkc~=c end
 	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,c)
@@ -56,7 +56,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

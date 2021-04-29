@@ -1,9 +1,11 @@
 --不知火流 才華の陣
 --Shiranui Style Success
---scripted by Logical Nonsense
+--Logical Nonsense
+
+--Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 1 zombie monster from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--immune
+	--Targeted zombie monster becomes unaffected by other card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -24,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.immtg)
 	e2:SetOperation(s.immop)
+	e2:SetHintTiming(TIMING_END_PHASE)
 	c:RegisterEffect(e2)
 end
 function s.spfilter(c,e,tp)
@@ -40,10 +43,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then 
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e1)
@@ -62,7 +67,10 @@ end
 function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		--Unaffected by other card effects
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3100)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.efilter)

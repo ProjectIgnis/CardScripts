@@ -24,8 +24,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-function s.lcheck(g,lc,tp)
-	return g:GetClassCount(Card.GetCode)==#g
+function s.lcheck(g,lc,sumtype,tp)
+	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
@@ -121,11 +121,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 		local sg=g:Select(p,3,3,nil)
-		Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
-		Duel.SortDecktop(p,p,3)
-		for i=1,3 do
-			local mg=Duel.GetDecktopGroup(p,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
-		end
+		Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+		Duel.SortDeckbottom(p,p,3)
 	end
 end

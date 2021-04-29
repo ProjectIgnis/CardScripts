@@ -34,6 +34,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=tc:GetBattleTarget()
 	return tc:IsRelateToBattle() and tc:IsStatus(STATUS_OPPO_BATTLE) and tc:IsControler(tp) and tc:IsSetCard(0x12f)
 		and bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE) and bc:GetPreviousControler()~=tp and bc:GetBaseAttack()>0
+		and bc:GetOwner()==1-tp
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
@@ -81,7 +82,12 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.splimit(e,c)
 	return not c:IsRace(RACE_INSECT) and c:IsLocation(LOCATION_EXTRA)
+end
+function s.lizfilter(e,c)
+	return not c:IsOriginalRace(RACE_INSECT)
 end

@@ -35,7 +35,7 @@ function s.initial_effect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge1:SetOperation(s.regop)
-		Duel.RegisterEffect(ge1,tp)
+		Duel.RegisterEffect(ge1,0)
 	end)
 end
 s.listed_names={84243274,73879377}
@@ -90,4 +90,3 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end
-

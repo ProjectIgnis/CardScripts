@@ -1,8 +1,9 @@
 --オーバード・パラディオン
---Overed Palladion
+--Crusadia Power
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Targeted "Crusadia" monster becomes unaffected by other card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -10,9 +11,11 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x116}
+
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x116)
 end
@@ -25,7 +28,10 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		--Unaffected by other card effects
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3100)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.efilter)
@@ -36,5 +42,3 @@ end
 function s.efilter(e,re)
 	return e:GetHandler()~=re:GetOwner()
 end
-
-

@@ -1,11 +1,13 @@
 --B・F－霊弓のアズサ
 --Battlewasp - Azusa the Ghost Bow
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--damage
+	--Synchro summon procedure
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--Inflict damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -18,7 +20,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -31,6 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x12f}
+
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and (r&REASON_BATTLE)==0 and re and re:GetHandler():IsSetCard(0x12f) and not (re:GetHandler()==e:GetHandler())
 end
@@ -47,11 +50,11 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,tp)
 	local rc=c:GetReasonCard()
-	return (rc:IsSetCard(0x12f) and rc:IsControler(tp)) 
+	return (rc:IsSetCard(0x12f) and rc:IsControler(tp))
 		or (c:IsSetCard(0x12f) and c:IsControler(tp))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.filter,1,nil,tp)   
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.filter,1,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -62,10 +65,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)

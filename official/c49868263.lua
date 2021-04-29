@@ -1,4 +1,5 @@
 --ドラゴン・ウォリアー
+--Ryu Senshi
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -39,13 +40,7 @@ function s.initial_effect(c)
 	e4:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
 	e4:SetTarget(s.distg2)
 	c:RegisterEffect(e4)
-	--Double Snare
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetCode(3682106)
-	c:RegisterEffect(e5)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

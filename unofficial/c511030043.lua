@@ -1,12 +1,12 @@
---洗濯機塊ランドリードラゴン
---Appliancer Laundry Dragon
---scripted by pyrQ
+--洗濯機塊ランドリードラゴン (Anime)
+--Appliancer Laundry Dragon (Anime)
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,s.matfilter,1)
-	--cannot link material
+	--Cannot be Link Material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.lkcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--banish
+	--Banish
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.rmcon)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
-	--destroy
+	--Destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
@@ -33,8 +33,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x14a}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x57a,fc,sumtype,tp) and c:IsLink(1)
+	return c:IsSetCard(0x14a,fc,sumtype,tp) and c:IsLink(1)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()
@@ -46,14 +47,14 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return bc and bc:IsControler(1-tp) and c:GetMutualLinkedGroupCount()>0
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	--no damage
+	--No damage
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e1:SetOperation(s.damop)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
-	--banish
+	--Banish
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_BATTLED)
@@ -81,14 +82,14 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return bc and bc:IsControler(1-tp) and c:GetMutualLinkedGroupCount()==0
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	--no damage
+	--No damage
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e1:SetOperation(s.damop)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
-	--destroy
+	--Destroy
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_BATTLED)

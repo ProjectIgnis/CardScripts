@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x8e}

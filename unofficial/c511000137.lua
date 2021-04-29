@@ -13,5 +13,5 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetValue(1)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end

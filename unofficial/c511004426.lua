@@ -55,7 +55,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
-	if chk==0 then return tc and tc:GetOverlayCount()~=0 and tc:CheckRemoveOverlayCard(tp,tc:GetOverlayCount(),REASON_COST)  end
+	if chk==0 then return tc and tc:GetOverlayCount()~=0 and tc:CheckRemoveOverlayCard(tp,tc:GetOverlayCount(),REASON_COST) end
 	tc:RemoveOverlayCard(tp,tc:GetOverlayCount(),tc:GetOverlayCount(),REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

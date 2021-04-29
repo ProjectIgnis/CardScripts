@@ -1,12 +1,15 @@
 --骸の魔妖-餓者髑髏
---Skeleton Mayakashi - Gashadokuro 
+--Gashadokuro, the Skeleton Mayakashi
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Can only control one
 	c:SetUniqueOnField(1,0,id)
-	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--immune
+	--Synchro summon procedure
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--Make itself unaffected by other card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -16,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_REMOVE)
@@ -36,7 +39,10 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		--Unaffected by other card effects
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3100)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.efilter)
@@ -73,4 +79,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

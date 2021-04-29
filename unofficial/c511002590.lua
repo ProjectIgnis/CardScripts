@@ -1,4 +1,5 @@
---RUM－レヴォリューション・フォース
+--RUM－レヴォリューション・フォース (Anime)
+--Rank-Up-Magic Revolution Force (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,12 +21,14 @@ function s.filter(c,e,tp)
 end
 function s.spfilter(c,e,tp,mc,rk,pg)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
-	return c:IsType(TYPE_XYZ) and mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsRank(rk) and c:IsSetCard(0xba) and mc:IsCanBeXyzMaterial(c,tp)
+	return c:IsType(TYPE_XYZ) and mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsRank(rk)
+		and c:IsSetCard(0xba) and mc:IsCanBeXyzMaterial(c,tp)
+		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and (#pg<=0 or pg:IsContains(mc)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)

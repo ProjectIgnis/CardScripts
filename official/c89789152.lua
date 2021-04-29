@@ -1,18 +1,20 @@
 --タキオン・ギャラクシースパイラル
---Tachyon Galaxy Spiral
+--Tachyon Spiral Galaxy
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Targeted dragon "Galaxy" monster becomes unaffected by other card effects and cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--act in hand
+	--Activate from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
@@ -20,6 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x7b,0x307b}
+
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x7b) and c:IsRace(RACE_DRAGON)
 end
@@ -33,13 +36,19 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		--Unaffected by other card effects
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3100)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.efilter)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
+		--Cannot be destroyed by battle
 		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(3000)
+		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e2:SetValue(1)

@@ -27,7 +27,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsRelateToEffect(e) and Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 		Duel.BreakEffect()
 		local atk=tc:GetAttack()
 		tc:AddCounter(0x1009,1)

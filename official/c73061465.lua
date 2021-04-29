@@ -1,4 +1,5 @@
 --氷結界の封魔団
+--Spellbreaker of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--act limit
@@ -16,10 +17,8 @@ function s.cfilter(c)
 	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_COST)
+	if chk==0 then return aux.IceBarrierDiscardCost(s.cfilter,false)(e,tp,eg,ep,ev,re,r,rp,0) end
+	aux.IceBarrierDiscardCost(s.cfilter,false)(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

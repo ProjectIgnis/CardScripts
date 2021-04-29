@@ -1,3 +1,4 @@
+--クロニック・デジャヴュ
 --Chronic Déjà Vu
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,18 +34,10 @@ function s.filter2(c,e,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter2,nil,e,tp)
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
-		local code=tc:GetOriginalCode()
+		local code=tc:GetCode()
 		local token=Duel.CreateToken(tp,code)
 		Duel.SpecialSummonStep(token,0,tp,tp,true,false,tc:GetPosition())
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetCode(EFFECT_CHANGE_TYPE)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
-		e1:SetValue(TYPE_MONSTER)
-		token:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()
 end

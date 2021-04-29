@@ -1,10 +1,7 @@
 --Vampire's Curse (Anime)
--- [Monster / Effect]
--- [Zombie:Dark 6* 2000/800]
 local s,id=GetID()
 function s.initial_effect(c)
-
-	--[Effect e1] Special Summon of Graveyard
+	--Special Summon of Graveyard
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,22 +12,18 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	e1:SetLabel(0)
 	c:RegisterEffect(e1)
-	--[Effect e3] If its Special Summon, update ATK.
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_ATKCHANGE)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetCondition(s.upcon)
-	e3:SetOperation(s.upop)
-	e3:SetLabelObject(e1)
-	c:RegisterEffect(e3)
+	--If its Special Summon, update ATK
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_ATKCHANGE)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCondition(s.upcon)
+	e2:SetOperation(s.upop)
+	e2:SetLabelObject(e1)
+	c:RegisterEffect(e2)
 end
-
-
------ ########## < Effect e1 >  ########## -----
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_DESTROY)
 end
@@ -44,11 +37,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(e:GetLabel() + 1)
 	Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
 end
-
------ ########## < /Effect e1 >  ########## -----
-
-
------ ########## < Effect e3 >  ########## -----
 function s.upcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
@@ -63,4 +51,3 @@ function s.upop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
------ ########## < /Effect e3 >  ########## -----

@@ -17,7 +17,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetAttacker()
 	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return tg:IsControler(tp) and tg:IsRace(RACE_DINOSAUR)
+	if chk==0 then return tg and tg:IsControler(tp) and tg:IsRace(RACE_DINOSAUR)
 	and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_ONFIELD,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

@@ -23,14 +23,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.recop)
 	c:RegisterEffect(e2)
 end
-function s.filter(c)
-	return c:IsFaceup() and c:IsControlerCanBeChanged()
-end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and aux.CheckStealEquip(chkc,e,tp) end
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.CheckStealEquip,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
@@ -40,7 +37,7 @@ end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsFaceup() and c:IsRelateToEffect(e) and Duel.Equip(tp,c,tc) then
+	if tc and not c:IsStatus(STATUS_BATTLE_DESTROYED) and aux.CheckStealEquip(tc,e,tp) and c:IsRelateToEffect(e) and Duel.Equip(tp,c,tc) then
 		--Add Equip limit
 		local e1=Effect.CreateEffect(tc)
 		e1:SetType(EFFECT_TYPE_SINGLE)

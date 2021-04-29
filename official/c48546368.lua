@@ -3,14 +3,14 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--spsummon condition
+	--Special Summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.ritlimit)
 	c:RegisterEffect(e1)
-	--negate
+	--Negate activation
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
-	--disable spsummon
+	--Negates Special Summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DISABLE_SUMMON+CATEGORY_DESTROY)
@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.distg)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

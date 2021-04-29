@@ -1,5 +1,6 @@
---Scripted by Eerie Code
+--Ｅｍボーナス・ディーラー
 --Performage Bonus Dealer
+--Scripted by Eerie Code
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,11 +30,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xc6,0x9f}
-function s.drfil(c)
-	return c:GetSummonType()==SUMMON_TYPE_PENDULUM and (c:IsSetCard(0xc6) or c:IsSetCard(0x9f)) and c:IsPreviousLocation(LOCATION_HAND)
+function s.drfil(c,tp)
+	return c:IsSummonPlayer(tp) and c:GetSummonType()==SUMMON_TYPE_PENDULUM and (c:IsSetCard(0xc6) or c:IsSetCard(0x9f)) and c:IsPreviousLocation(LOCATION_HAND)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.drfil,3,nil)
+	return eg:IsExists(s.drfil,3,nil,tp)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

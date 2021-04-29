@@ -22,14 +22,13 @@ function s.initial_effect(c)
 	e2:SetCondition(s.efcon)
 	e2:SetOperation(s.efop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_LEAVE_FIELD)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-	end
+	end)
 end
 s.listed_series={0x119}
 s.listed_names={id}

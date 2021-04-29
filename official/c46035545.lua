@@ -1,8 +1,11 @@
---DD魔導賢者ニコラ
+--ＤＤ魔導賢者ニコラ
+--D/D Savant Nikola
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Enable pendulum summon
 	Pendulum.AddProcedure(c)
-	--splimit
+	--Cannot pendulum summon monsters, except "D/D" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_PZONE)
@@ -11,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	c:RegisterEffect(e1)
-	--atk up
+	--Targeted "D/D" monster gains 2000 ATK/DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -23,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-	--
+	--Return 1 "D/D/D" monster to hand, place 2 "D/D" pendulum monsters into pendulum zones
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -36,6 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xaf,0x10af}
+
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return not c:IsSetCard(0xaf) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
@@ -102,7 +106,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		local pc=g:GetFirst()
 		for pc in aux.Next(g) do
 			Duel.MoveToField(pc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
+			--Cannot activate their effects this turn
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3302)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_TRIGGER)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

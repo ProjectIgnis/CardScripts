@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(s.reptg)
 		e1:SetOperation(s.repop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)		
+		tc:RegisterEffect(e1)
 	end
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

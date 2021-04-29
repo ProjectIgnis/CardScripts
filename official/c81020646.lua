@@ -1,10 +1,11 @@
 --煉獄龍 オーガ・ドラグーン
+--Void Ogre Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--negate
+	--Negate Spell/Trap activation
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -17,9 +18,10 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)

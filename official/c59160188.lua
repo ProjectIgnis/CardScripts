@@ -19,11 +19,12 @@ function s.initial_effect(c)
 	--tribute substitute
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(id)
+	e3:SetCode(EFFECT_EXTRA_RELEASE_NONSUM)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(0,LOCATION_MZONE)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK))
-	e3:SetCondition(s.condition)
+	e3:SetCountLimit(1)
+	e3:SetValue(s.relval)
 	c:RegisterEffect(e3)
 	--token
 	local e5=Effect.CreateEffect(c)
@@ -53,8 +54,8 @@ function s.initial_effect(c)
 	e8:SetOperation(s.clearop)
 	c:RegisterEffect(e8)
 end
-function s.condition(e)
-	return e:GetHandler():GetFlagEffect(id)==0
+function s.relval(e,re,r,rp)
+	return re and re:IsActivated() and (r&REASON_COST)~=0
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:FilterCount(Card.IsType,nil,TYPE_MONSTER)

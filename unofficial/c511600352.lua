@@ -49,7 +49,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x135}
 function s.target(e,c)
-	return c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(e:GetHandler())
+	return c:IsLinkMonster() and c:GetLinkedGroup():IsContains(e:GetHandler())
 end
 function s.aefilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsActivated()
@@ -60,7 +60,9 @@ end
 function s.indct(e,re,r,rp)
 	if r&REASON_EFFECT==REASON_EFFECT then
 		return 1
-	else return 0 end
+	else
+		return 0
+	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local de,dp=Duel.GetChainInfo(ev,CHAININFO_DISABLE_REASON,CHAININFO_DISABLE_PLAYER)
@@ -88,7 +90,7 @@ function s.immtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(alias,2))
 		e1:SetType(EFFECT_TYPE_SINGLE)

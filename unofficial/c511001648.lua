@@ -1,3 +1,4 @@
+--ダイナ・タンク
 --Dyna Tank
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,10 +24,11 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_F)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_CHAINING)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.tgcon)
+	e3:SetTarget(s.tgtg)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
@@ -46,20 +48,26 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return eg and g:IsContains(c)
+	if not g or #g~=1 then return false end
+	return g:GetFirst()==c
 end
-function s.filter(c,re,rp,tf)
-	return tf(re,rp,nil,nil,nil,nil,nil,nil,0,c)
+function s.filter(c,ct)
+	return Duel.CheckChainTarget(ct,c)
+end
+function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return false end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,ev) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,ev)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tf=re:GetTarget()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,re,rp,tf)
-	if #g>0 then
-		Duel.HintSelection(g)
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) and Duel.CheckChainTarget(ev,tc) then
+		local g=Group.FromCards(tc)
 		Duel.ChangeTargetCard(ev,g)
 	end
 end

@@ -1,6 +1,6 @@
+--迷惑な鎧
 --Spam Mail
---scripted by Larry126
---fixed by MLD
+--Scripted and fixed by Larry126 & MLD 
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,0,s.eqfilter,s.eqlimit)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_CHANGE_TYPE)
-	e1:SetValue(TYPE_NORMAL)
+	e1:SetValue(TYPE_MONSTER+TYPE_NORMAL)
 	c:RegisterEffect(e1)
 	--negate
 	local e2=Effect.CreateEffect(c)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--draw and return
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(22093873,0))
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DRAW+CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)

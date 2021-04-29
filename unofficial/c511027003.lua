@@ -1,14 +1,13 @@
 --パンドラの宝札
 --Card of Pandora
---Scripted by Playmaker 772211
---Fixed by Larry126
+--Scripted by Playmaker772211, fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -20,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	local c=e:GetHandler()
-	if tc==c or tc:GetControler()~=tp or not tc:IsLocation(LOCATION_SZONE) then return false end
+	if tc==c or tc:GetControler()==1-tp or not tc:IsLocation(LOCATION_SZONE) then return false end
 	local tf=re:GetTarget()
 	local res,ceg,cep,cev,cre,cr,crp=Duel.CheckEvent(re:GetCode(),true)
 	return tf(re,rp,ceg,cep,cev,cre,cr,crp,0,c)

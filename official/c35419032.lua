@@ -40,7 +40,7 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 		if g:GetFirst():IsLocation(LOCATION_HAND) then
 			Duel.ConfirmCards(1-tp,g)
 		end
-		Duel.SendtoDeck(g,nil,2,REASON_COST)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		e:SetLabel(1)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
@@ -67,7 +67,7 @@ function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if g:GetFirst():IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,g)
 	end
-	Duel.SendtoDeck(g,nil,2,REASON_COST)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0

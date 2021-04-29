@@ -1,8 +1,9 @@
 --花合わせ
 --Flower Gathering
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special summon 4 "Flower Cardian" monsters with 100 ATK from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -16,6 +17,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_series={0xe6}
+
 function s.counterfilter(c)
 	return c:IsSetCard(0xe6)
 end
@@ -54,6 +56,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g1=aux.SelectUnselectGroup(g,e,tp,4,4,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	for tc in aux.Next(g1) do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK) then
+			--Negate their effects
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
@@ -64,9 +67,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2,true)
+			--Cannot be tributed for a tribute summon
 			local e3=Effect.CreateEffect(c)
+			e3:SetDescription(3304)
 			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+			e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 			e3:SetCode(EFFECT_UNRELEASABLE_SUM)
 			e3:SetRange(LOCATION_MZONE)
 			e3:SetValue(1)
@@ -76,4 +81,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-

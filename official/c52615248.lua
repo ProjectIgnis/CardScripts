@@ -1,12 +1,13 @@
 --プログレオ
 --Progleo
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--must be first link summoned
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--link summon
+	--Link summon procedure
 	Link.AddProcedure(c,aux.NOT(aux.FilterBoolFunctionEx(Card.IsType,TYPE_TOKEN)),2)
-	--effect
+	--Special summon 1 link monster from either GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -39,9 +40,11 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)

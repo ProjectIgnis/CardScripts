@@ -1,4 +1,5 @@
---Raidraptor - Ultimate Falcon
+--ＲＲ－アルティメット・ファルコン
+--Raidraptor - Ultimate Falcon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -50,13 +51,13 @@ function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.disfilter1,tp,0,LOCATION_ONFIELD,1,nil) end
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_ONFIELD,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.disfilter3,tp,0,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(aux.disfilter3,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,#g,0,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,0,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(aux.disfilter3,tp,0,LOCATION_ONFIELD,nil)
 	local tc=g:GetFirst()
 	while tc do
 		local e1=Effect.CreateEffect(e:GetHandler())

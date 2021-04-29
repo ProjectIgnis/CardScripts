@@ -2,7 +2,7 @@
 --Witchcrafter Golem Aruru
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--Special Summon and return a target to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_BECOME_TARGET)
 	e2:SetCondition(s.thcon2)
 	c:RegisterEffect(e2)
-	--to hand
+	--Return itself to the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -40,7 +40,7 @@ function s.thcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tgfilter,1,nil,tp)
 end
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and eg:IsExists(s.tgfilter,1,nil,tp)
+	return rp==1-tp and eg:IsExists(s.tgfilter,1,nil,tp)
 end
 function s.filter(c,tp)
 	return c:IsAbleToHand() and (c:IsControler(1-tp) or (c:IsType(TYPE_SPELL) and c:IsSetCard(0x128)))
@@ -48,7 +48,8 @@ end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and s.filter(chkc) end
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,LOCATION_ONFIELD,1,nil,tp) end
+		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,LOCATION_ONFIELD,1,nil,tp)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,LOCATION_ONFIELD,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
@@ -63,7 +64,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon3(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.thtg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

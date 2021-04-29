@@ -3,7 +3,7 @@
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sstg)
 	e1:SetOperation(s.ssop)
 	c:RegisterEffect(e1)
-	--atkup
+	--Increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.cond)
 	e2:SetValue(s.val)
 	c:RegisterEffect(e2)
-	--extra attack
+	--Extra attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -74,4 +74,3 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-

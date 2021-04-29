@@ -1,9 +1,10 @@
 --聖剣 EX－カリバーン
+--Noble Arms - Excaliburn
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x107a))
-	--spsummon
+	--Special Ssummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--Untargetable
+	--Prevent effect target
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -31,8 +32,9 @@ function s.filter1(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,c:GetCode(),pg)
 end
 function s.filter2(c,e,tp,mc,code,pg)
-	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ) and c:IsSetCard(0x107a) and not c:IsCode(code) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
-		and mc:IsCanBeXyzMaterial(c,tp)	and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ)
+		and c:IsSetCard(0x107a) and not c:IsCode(code) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+		and mc:IsCanBeXyzMaterial(c,tp) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter1(chkc,e,tp) end

@@ -69,6 +69,8 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	--lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
 	e2:SetDescription(aux.Stringid(id,2))
@@ -79,4 +81,6 @@ end
 function s.splimit(e,c)
 	return not c:IsType(TYPE_XYZ) and c:IsLocation(LOCATION_EXTRA)
 end
-
+function s.lizfilter(e,c)
+	return not c:IsOriginalType(TYPE_XYZ)
+end

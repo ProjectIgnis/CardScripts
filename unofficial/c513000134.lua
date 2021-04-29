@@ -1,23 +1,13 @@
 --The Sun of God Dragon
 --マイケル・ローレンス・ディーによってスクリプト
---scripted by MLD
---credit to TPD & Cybercatman
+--scripted by MLD, credit to TPD & Cybercatman
 --updated and currently maintained by Larry126
 Duel.LoadScript("c421.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Summon With 3 Tributes
-	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
-	e1:SetCondition(s.sumoncon)
-	e1:SetOperation(s.sumonop)
-	e1:SetValue(SUMMON_TYPE_TRIBUTE)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_LIMIT_SET_PROC)
-	c:RegisterEffect(e2)
+	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3)
+	local e2=aux.AddNormalSetProcedure(c,true,false,3,3)
 	--Unstoppable Attack
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -33,35 +23,35 @@ function s.initial_effect(c)
 	e4:SetCondition(s.egpcon)
 	e4:SetTarget(s.immortal)
 	c:RegisterEffect(e4)
-	--Stats When Normal Summoned
-	local ea=Effect.CreateEffect(c)
-	ea:SetType(EFFECT_TYPE_SINGLE)
-	ea:SetCode(EFFECT_MATERIAL_CHECK)
-	ea:SetValue(s.valcheck)
-	c:RegisterEffect(ea)
-	local ex=Effect.CreateEffect(c)
-	ex:SetType(EFFECT_TYPE_SINGLE)
-	ex:SetCode(EFFECT_SUMMON_COST)
-	ex:SetLabelObject(ea)
-	ex:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) e:GetLabelObject():SetLabel(1) end)
-	c:RegisterEffect(ex)
+	--Stats when Normal Summoned
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_MATERIAL_CHECK)
+	e5:SetValue(s.valcheck)
+	c:RegisterEffect(e5)
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetCode(EFFECT_SUMMON_COST)
+	e6:SetLabelObject(e5)
+	e6:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) e:GetLabelObject():SetLabel(1) end)
+	c:RegisterEffect(e6)
 	--Chanting
-	local sum1=Effect.CreateEffect(c)
-	sum1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	sum1:SetCode(EVENT_SUMMON_SUCCESS)
-	sum1:SetOperation(s.sumop)
-	c:RegisterEffect(sum1)
-	local sum2=sum1:Clone()
-	sum2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	c:RegisterEffect(sum2)
-	local sum3=sum1:Clone()
-	sum3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(sum3)
-	local sum=Effect.CreateEffect(c)
-	sum:SetType(EFFECT_TYPE_SINGLE)
-	sum:SetCode(id)
-	sum:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	c:RegisterEffect(sum)
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e7:SetCode(EVENT_SUMMON_SUCCESS)
+	e7:SetOperation(s.sumop)
+	c:RegisterEffect(e7)
+	local e8=e7:Clone()
+	e8:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
+	c:RegisterEffect(e8)
+	local e9=e7:Clone()
+	e9:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e9)
+	local e10=Effect.CreateEffect(c)
+	e10:SetType(EFFECT_TYPE_SINGLE)
+	e10:SetCode(id)
+	e10:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+	c:RegisterEffect(e10)
 	aux.GlobalCheck(s,function()
 		--De-Fusion
 		local df=Effect.CreateEffect(c)
@@ -74,12 +64,7 @@ end
 s.listed_names={95286165,10000010,511000987}
 --De-Fusion
 function s.dffilter(c)
-	if not c:IsCode(95286165) then return false end
-	local effs={c:GetCardEffect()}
-	for _,eff in ipairs(effs) do
-		if eff:GetLabel()==608286299 then return false end
-	end
-	return true
+	return c:IsCode(95286165) and c:GetFlagEffect(608286299)==0
 end
 function s.dfop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.dffilter,tp,0xff,0xff,nil)
@@ -90,10 +75,10 @@ function s.dfop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_ACTIVATE)
 		e1:SetCode(tc:GetActivateEffect():GetCode())
 		e1:SetProperty(tc:GetActivateEffect():GetProperty()|EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetLabel(608286299)
 		e1:SetTarget(s.tg)
 		e1:SetOperation(s.op)
 		tc:RegisterEffect(e1)
+		tc:RegisterFlagEffect(608286299,0,0,0)
 	end
 end
 function s.dffilter2(c)
@@ -110,45 +95,16 @@ function s.tgfilter(c,tc)
 	return c:IsHasCardTarget(tc)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
 	local atk=tc:GetAttack()
-	tc:ResetEffect(RESET_LEAVE,RESET_EVENT)
 	if tc:RegisterFlagEffect(236,RESET_EVENT+RESETS_STANDARD,0,1) then
-		Duel.Recover(tp,atk,REASON_EFFECT)
-		tc:ClearEffectRelation()
-		local tg=Duel.GetMatchingGroup(s.tgfilter,tp,0xff,0xff,Group.FromCards(tc,c),tc)
-		for ec in aux.Next(tg) do
-			ec:CancelCardTarget(tc)
-		end
-		if c:IsOriginalCode(511000987) then
+		Duel.Recover(tc:GetControler(),atk,REASON_EFFECT)
+		if e:GetHandler():IsOriginalCode(511000987) then
 			Duel.BreakEffect()
 			Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
 		end
-		if Duel.GetCurrentChain()<=1 then return end
-		for i=1,Duel.GetCurrentChain()-1 do
-			local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
-			local g=Duel.GetChainInfo(i,CHAININFO_TARGET_CARDS)
-			if te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and g:IsContains(tc) then
-				local rg=Group.CreateGroup()
-				rg:Merge(g)
-				rg:RemoveCard(tc)
-				Duel.ChangeTargetCard(i,rg)
-			end
-		end
 	end
-end
--------------------------------------------
---Summon With 3 Tributes
-function s.sumoncon(e,c)
-	if c==nil then return true end
-	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-3 and Duel.GetTributeCount(c)>=3
-end
-function s.sumonop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectTribute(tp,c,3,3)
-	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
 end
 -------------------------------------------
 --Resurrection
@@ -195,7 +151,7 @@ function s.payatkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCondition(s.dfcon)
 		e1:SetValue(c:GetBaseAttack()+lp)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_BASE_DEFENSE)
@@ -248,7 +204,7 @@ function s.payatkop(e,tp,eg,ep,ev,re,r,rp)
 		e7:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE)
 		e7:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
 		e7:SetCondition(s.dfcon)
-		e7:SetTarget(function(e,c) return c:GetFlagEffect(id)>0 end)
+		e7:SetTarget(function(e,c) return c:GetFlagEffect(id+100)>0 end)
 		e7:SetValue(function(e,c) return c==e:GetHandler() end)
 		e7:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e7)
@@ -278,22 +234,18 @@ function s.payatkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
-	if ep~=tp then return end
+	if ep==1-tp then return end
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(ev)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetCode(EFFECT_UPDATE_DEFENSE)
-	e1:SetValue(ev)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_UPDATE_DEFENSE)
+	c:RegisterEffect(e2)
 	Duel.SetLP(tp,1,REASON_EFFECT)
 end
 function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
@@ -305,15 +257,11 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(lp-1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetCode(EFFECT_UPDATE_DEFENSE)
-	e1:SetValue(lp-1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_UPDATE_DEFENSE)
+	c:RegisterEffect(e2)
 	Duel.SetLP(tp,1,REASON_EFFECT)
 end
 function s.tatkcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -338,13 +286,13 @@ function s.tatkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(e:GetLabel())
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	e2:SetValue(e:GetLabelObject():GetLabel())
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e2)
 end
 function s.uncon(e,tp,eg,ep,ev,re,r,rp)
@@ -353,7 +301,7 @@ function s.uncon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.unop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetHandler():GetBattleTarget()
-	bc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
+	bc:RegisterFlagEffect(id+100,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
 end
 function s.dircon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()==nil and Duel.GetAttacker()==e:GetHandler() and e:GetHandler():GetFlagEffect(236)<=0
@@ -487,7 +435,7 @@ function s.valcheck(e,c)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+0xff0000)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_BASE_DEFENSE)
@@ -525,6 +473,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e1:Clone()
 		e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
+		e3:SetValue(1)
 		e3:SetRange(LOCATION_MZONE)
 		c:RegisterEffect(e3)
 	end

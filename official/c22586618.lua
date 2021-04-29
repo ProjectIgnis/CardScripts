@@ -3,7 +3,7 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	--attribute
+	--Add WIND attribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(ATTRIBUTE_WIND)
 	c:RegisterEffect(e1)
-	--sp summon
+	--Special Suummon itself
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--negate
+	--Negate activation
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.distg)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
@@ -58,8 +59,8 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_WINGEDBEAST) and c:IsAttribute(ATTRIBUTE_WIND) 
-		 and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return c:IsFaceup() and c:IsRace(RACE_WINGEDBEAST) and c:IsAttribute(ATTRIBUTE_WIND)
+		and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil) end

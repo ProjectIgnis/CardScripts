@@ -1,4 +1,5 @@
 --ワイズ・コア
+--Wise Core
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -11,15 +12,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--battle indes
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
-	e3:SetCountLimit(1)
-	e3:SetValue(s.valcon)
-	c:RegisterEffect(e3)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
+	e2:SetCountLimit(1)
+	e2:SetValue(s.valcon)
+	c:RegisterEffect(e2)
 end
+s.listed_names={68140974,100000051,100000052,100000053,100000054}
 function s.valcon(e,re,r,rp)
 	return r&REASON_BATTLE~=0
 end
@@ -30,34 +32,24 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,5,tp,0x13)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,5,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
 end
-function s.filter(c,code,e,tp)
-	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.filter(c,e,tp)
+	return c:IsCode(68140974,100000051,100000052,100000053,100000054) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(Card.IsCode,1,nil,68140974) and sg:IsExists(Card.IsCode,1,nil,100000051) and sg:IsExists(Card.IsCode,1,nil,100000052) and sg:IsExists(Card.IsCode,1,nil,100000053) and sg:IsExists(Card.IsCode,1,nil,100000054)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,0,nil)
 	Duel.Destroy(sg,REASON_EFFECT)
-	local g1=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,0x13,0,nil,68140974,e,tp)
-	local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,0x13,0,nil,100000051,e,tp)
-	local g3=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,0x13,0,nil,100000052,e,tp)
-	local g4=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,0x13,0,nil,100000053,e,tp)
-	local g5=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,0x13,0,nil,100000054,e,tp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>=5 and #g1>0 and #g2>0 and #g3>0 
-		and #g4>0 and #g5>0 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tc1=g1:Select(tp,1,1,nil):GetFirst()
-		Duel.SpecialSummonStep(tc1,0,tp,tp,false,false,POS_FACEUP)
-		local tc2=g2:Select(tp,1,1,nil):GetFirst()
-		Duel.SpecialSummonStep(tc2,0,tp,tp,false,false,POS_FACEUP)
-		local tc3=g3:Select(tp,1,1,nil):GetFirst()
-		Duel.SpecialSummonStep(tc3,0,tp,tp,false,false,POS_FACEUP)
-		local tc4=g4:Select(tp,1,1,nil):GetFirst()
-		Duel.SpecialSummonStep(tc4,0,tp,tp,false,false,POS_FACEUP)
-		local tc5=g5:Select(tp,1,1,nil):GetFirst()
-		Duel.SpecialSummonStep(tc5,0,tp,tp,false,false,POS_FACEUP)
-		Duel.SpecialSummonComplete()
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if ft<=0 or (ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) then return end
+ 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
+ 	if not s.rescon(sg) then return end
+ 	local spg=aux.SelectUnselectGroup(sg,e,tp,5,5,s.rescon,1,tp,HINTMSG_SPSUMMON)
+	if #sg>0 then
+		Duel.SpecialSummon(spg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

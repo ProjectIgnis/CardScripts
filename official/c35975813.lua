@@ -1,4 +1,5 @@
 --ジェノサイドキングデーモン
+--Terrorking Archfiend
 local s,id=GetID()
 function s.initial_effect(c)
 	--sumlimit
@@ -36,11 +37,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0x45}
-function s.exfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x45)
-end
+s.roll_dice=true
 function s.excon(e)
-	return not Duel.IsExistingMatchingCard(s.exfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x45),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

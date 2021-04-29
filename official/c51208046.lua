@@ -30,6 +30,8 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1,id+1)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e1)
 end
 s.listed_series={0xfb}
 	--Check for anything but "Trickstar" monsters
@@ -80,7 +82,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
-	 --Performing the effect of special summoning token
+	--Performing the effect of special summoning token
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e)
 		or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
@@ -96,4 +98,3 @@ end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter2,tp,0,LOCATION_SZONE,1,nil)
 end
-

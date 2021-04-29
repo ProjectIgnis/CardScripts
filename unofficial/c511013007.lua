@@ -70,6 +70,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	if not tc or not tc:IsRelateToBattle() then return end

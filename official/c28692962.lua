@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.hspcon)
 	e1:SetValue(s.hspval)
 	c:RegisterEffect(e1)
@@ -68,7 +68,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)~=0
+	if tc and tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)~=0
 		and tc:IsLocation(LOCATION_REMOVED) then
 		local ct=(Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()<=PHASE_STANDBY) and 2 or 1
 		local val=(Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()<=PHASE_STANDBY) and Duel.GetTurnCount() or (Duel.GetTurnCount()-1)

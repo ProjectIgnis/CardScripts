@@ -1,17 +1,20 @@
 --呪眼の王 ザラキエル
 --Zerrziel, Ruler of the Evil Eyed
---scripted by Naim
+--Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Link summon procedure
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x129),2)
-  	--effect gain
+	--If link summoned with a monster with 2600+ ATK, this card can make a second attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
 	e1:SetValue(s.matcheck)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy 1 of opponent's card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -24,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--negate
+	--Negate 1 monster it points to
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_DISABLE)
@@ -39,20 +42,17 @@ function s.initial_effect(c)
 end
 s.listed_series={0x129}
 s.listed_names={CARD_EVIL_EYE_SELENE}
-function s.filter(c)
-	return c:IsAttackAbove(2600)
-end
 function s.matcheck(e,c)
 	local c=e:GetHandler()
 	local g=c:GetMaterial()
-	if g:IsExists(s.filter,1,nil) then
+	if g:IsExists(Card.IsAttackAbove,1,nil,2600) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
+		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,EFFECT_FLAG_CLIENT_HINT,1,0,3201)
 	end
 end
 function s.descond(e)
@@ -74,7 +74,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
@@ -93,8 +93,7 @@ function s.ngtfilt(c,e)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local lg=e:GetHandler():GetLinkedGroup()
-	Duel.Hint(HINT_SELECTMSG,tp,560)
-	--!system 560 Select
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 	local g=Duel.SelectMatchingCard(tp,s.ngtfilt,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,e,lg)
 	if #g>0 then
 		local tc=g:GetFirst()

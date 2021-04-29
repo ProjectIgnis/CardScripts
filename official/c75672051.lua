@@ -1,6 +1,8 @@
 --黒牙の魔術師
+--Black Fang Magician
 local s,id=GetID()
 function s.initial_effect(c)
+	c:AddSetcodesRule(0x2073)
 	Pendulum.AddProcedure(c)
 	--Halve ATK
 	local e1=Effect.CreateEffect(c)
@@ -24,13 +26,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	--add setcode
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCode(EFFECT_ADD_SETCODE)
-	e2:SetValue(0x2073)
-	c:RegisterEffect(e2)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
@@ -54,7 +49,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return r&REASON_EFFECT+REASON_BATTLE~=0
+	return r&(REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

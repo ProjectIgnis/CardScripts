@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x102))
 	e2:SetValue(300)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	c:RegisterEffect(e3)
@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x102}
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
-  if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,6) end
+	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,6) end
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) or not Duel.IsPlayerCanDiscardDeck(tp,6) then return end
@@ -57,11 +57,8 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REVEAL)
 		end
 		local ac=6-#tg
-		Duel.SortDecktop(tp,tp,ac)
-		for i=1,ac do
-			local mg=Duel.GetDecktopGroup(tp,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
-		end
+		Duel.MoveToDeckBottom(ac,tp)
+		Duel.SortDeckbottom(tp,tp,ac)
 	end
 end
 function s.spfilter(c,e,tp)

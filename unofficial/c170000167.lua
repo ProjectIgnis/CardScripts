@@ -1,28 +1,30 @@
+--オレイカルコス・シュノロス (Anime)
 --Orichalcos Shunoros (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--cannot summon
+	--Must be Special Summoned by the effect of Orichalcos Kyutora
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
-	--ATK goes down
+	--ATK goes down after battle
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_BATTLED)
 	e2:SetCondition(s.statcon)
 	e2:SetOperation(s.statop)
 	c:RegisterEffect(e2)
-	--DEF goes down
+	--DEF goes down after battle
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_BATTLED)
 	e3:SetCondition(s.statcon2)
 	e3:SetOperation(s.statop2)
 	c:RegisterEffect(e3)
-	--DIVINE SERPENT
+	--Summon Divine Serpent Geh on destruction
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
@@ -32,15 +34,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.dstg)
 	e4:SetOperation(s.dsop)
 	c:RegisterEffect(e4)
-	--atk
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e5:SetCode(170000166)
-	e5:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetOperation(s.atkop)
-	c:RegisterEffect(e5)
-	--sp summon
+	--Special Summon Aristeros/Dexia
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(62892347,0))
 	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -88,10 +82,14 @@ function s.statop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e:GetHandler():RegisterEffect(e1)
 end
+function s.splimit(e,se,sp,st)
+	local code=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CODE)
+	return se:GetHandler():IsCode(170000166) or code==170000166
+end
 function s.dscon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local crp=c:GetReasonPlayer()
-	return c:IsReason(REASON_DESTROY) and  e:GetHandler():GetPreviousAttackOnField()==0 and Duel.GetLP(tp)>=10000
+	return c:IsReason(REASON_DESTROY) and e:GetHandler():GetPreviousAttackOnField()==0 and Duel.GetLP(tp)>=10000
 end
 function s.filter(c,e,tp)
 	return c:IsCode(82103466) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
@@ -110,20 +108,9 @@ function s.dsop(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 	end
 end
-function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SET_BASE_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(ev)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-	c:RegisterEffect(e1)
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,id+1) 
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,id+1)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,170000169) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK+LOCATION_HAND)
 end

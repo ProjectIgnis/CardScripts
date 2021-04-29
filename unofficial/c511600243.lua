@@ -1,6 +1,6 @@
 --バトルドローン・ウォラント
 --Battledrone Warrant
---scripted by Larry126
+--Scripted by Larry126
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.mfilter(c,lc,sumtype,tp)
-	return c:IsDrone() and not c:IsType(TYPE_TOKEN)
+	return c:IsDrone(lc,sumtype,tp) and not c:IsType(TYPE_TOKEN)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and not Duel.IsExistingMatchingCard(function(c) return c:GetSequence()<5 end,tp,LOCATION_MZONE,0,1,nil)

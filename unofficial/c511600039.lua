@@ -1,5 +1,6 @@
---Odd-Eyes Mirage Dragon (Anime)
---scripted by Larry126
+--オッドアイズ・ミラージュ・ドラゴン (Manga)
+--Odd-Eyes Mirage Dragon (Manga)
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -66,31 +67,26 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and c:GetFlagEffect(id)<Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_PZONE,0,nil) end
 	Duel.SetTargetCard(e:GetLabelObject())
 end
-function s.cfilter(c,e,tp)
-	return c:IsOnField() and c:IsType(TYPE_MONSTER) and c:IsRelateToEffect(e) and c:IsRelateToBattle()
-end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.cfilter,nil,e,tp)
+	local g=Duel.GetTargetCards(e)
 	g:KeepAlive()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_DESTROY_SUBSTITUTE)
+	e1:SetCode(EFFECT_DESTROY_REPLACE)
 	e1:SetLabelObject(g)
 	e1:SetTarget(s.destg)
 	e1:SetValue(s.value)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e2:SetOperation(s.damop)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetTargetRange(1,0)
 	e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e2,tp)
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(Duel.GetBattleDamage(tp)>0 and tp or 1-tp,0)
 end
 function s.desfilter(c,g)
 	return c:IsLocation(LOCATION_ONFIELD) and c:IsType(TYPE_MONSTER)

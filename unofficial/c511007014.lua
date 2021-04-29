@@ -1,5 +1,6 @@
---coded by Lyris
+--潔癖のバリア－クリア・フォース－
 --Clean Barrier - Clear Force
+--coded by Lyris
 local s,id=GetID()
 function s.initial_effect(c)
 	--When an opponent's monster declares an attack: The ATK of all face-up monsters your opponent currently controls becomes their original ATK, [Number 107: Galaxy-Eyes Tachyon Dragon] also negate any card effects that would change the ATK of a monster(s) your opponent controls [Distortion Crystal]. These changes last until the end of the Battle Phase.
@@ -20,12 +21,12 @@ function s.initial_effect(c)
 	end)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()  
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(nil,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
 	while tc do
 		if tc:IsFaceup() and tc:GetFlagEffect(id)==0 then
-			local e1=Effect.CreateEffect(c) 
+			local e1=Effect.CreateEffect(c)
 			e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 			e1:SetCode(EVENT_CHAIN_SOLVED)
@@ -34,10 +35,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetOperation(s.op)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)  
-		end 
+			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		end
 		tc=g:GetNext()
-	end	 
+	end
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

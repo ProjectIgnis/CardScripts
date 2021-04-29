@@ -1,12 +1,14 @@
---
+--海造賊－静寂のメルケ号
 --Plunder Patrollship Moerk
 --Scripted by Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,4,2)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--banish
+	--Xyz summon procedure
+	Xyz.AddProcedure(c,nil,4,2)
+	--Banish 1 of opponent's monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -26,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e2:SetCondition(s.condition2)
 	c:RegisterEffect(e2)
-	--destroy replace
+	--If your "Plunder Patroll" card(s) would be destroyed by battle or card effect, detach 1 instead
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
@@ -37,6 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x13f}
+
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x13f)
 end

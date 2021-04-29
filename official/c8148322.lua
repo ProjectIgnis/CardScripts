@@ -14,10 +14,6 @@ s.listed_series={0x10f3}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x10f3),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
-end
 function s.checkextra(tp,sg,fc)
 	return sg:IsExists(aux.AND(aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),aux.FilterBoolFunction(Card.IsControler,tp)),2,nil)
 end

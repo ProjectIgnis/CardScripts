@@ -1,8 +1,8 @@
--- イカズチのサンダー 
--- Thunder the Lightning
+--イカズチのサンダー
+--Thunder the Lightning
 local s,id=GetID()
 function s.initial_effect(c)
-	--to hand
+	--ATK Change
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)

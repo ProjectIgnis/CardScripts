@@ -39,7 +39,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 		local hct=#g-math.ceil(#g/5)
 		g=Duel.GetFieldGroup(tp,LOCATION_HAND,LOCATION_HAND)
-		Duel.SendtoDeck(g,nil,2,REASON_RULE)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_RULE)
 		Duel.ShuffleDeck(tp)
 		Duel.ShuffleDeck(1-tp)
 		--halve LP

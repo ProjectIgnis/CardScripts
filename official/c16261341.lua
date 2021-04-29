@@ -1,21 +1,14 @@
 --天空聖騎士アークパーシアス
---Angel Paladin Arch-Parshath
+--Sacred Arch-Airknight Parshath
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_CHAINING)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetOperation(aux.chainreg)
-	c:RegisterEffect(e1)
+	--Special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_HAND+LOCATION_GRAVE)
-	e3:SetCode(EVENT_CHAIN_SOLVED)
+	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCondition(s.spcon1)
 	e3:SetCost(s.spcost)
@@ -44,7 +37,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10a}
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_COUNTER) and e:GetHandler():GetFlagEffect(1)>0
+	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_COUNTER)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local dp=Duel.GetChainInfo(ev,CHAININFO_DISABLE_PLAYER)
@@ -89,7 +82,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function s.thfilter(c)
 	return (c:IsSetCard(0x10a) or c:IsType(TYPE_COUNTER)) and c:IsAbleToHand()

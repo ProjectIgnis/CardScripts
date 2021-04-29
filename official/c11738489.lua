@@ -51,7 +51,7 @@ function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
 function s.desfilter(c,hc,tp)
-	local zone=hc:GetLinkedZone(tp)
+	local zone=hc:GetLinkedZone(tp)&~0x60
 	return Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -67,11 +67,11 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
+	local zone=e:GetHandler():GetLinkedZone(tp)&~0x60
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0
-		and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,e:GetHandler():GetLinkedZone(tp))>0
+		and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x135,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) then
 		local token=Duel.CreateToken(tp,id+1)
-		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP,e:GetHandler():GetLinkedZone())
+		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 end
-

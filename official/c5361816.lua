@@ -1,8 +1,9 @@
 --聖騎士ペリノア
 --Noble Knight Pellinore
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy
+	--Destroy 1 "Noble Arms" equipped to this card and 1 of opponent's monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
@@ -12,9 +13,10 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 s.listed_series={0x207a}
+
 function s.desfilter(c,g)
 	return c:IsFaceup() and c:IsSetCard(0x207a) and g:IsContains(c)
 end
@@ -35,10 +37,12 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.Destroy(g,REASON_EFFECT)~=0 and c:IsRelateToEffect(e) then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
+		--Cannot attack this turn
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3206)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end

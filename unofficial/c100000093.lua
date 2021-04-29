@@ -1,5 +1,5 @@
---Ｓｉｎ Ｃｒｏｓｓ
---Malefic Divide (tag Force 6)
+--Ｓｉｎ Ｃｒｏｓｓ (VG)
+--Malefic Divide (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,35 +26,45 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)>0 then
+		local c=e:GetHandler()
+		local fid=c:GetFieldID()
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
+		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e3:SetRange(LOCATION_MZONE)
-		e3:SetCode(EVENT_PHASE+PHASE_END)
-		e3:SetOperation(s.desop)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e3:SetCountLimit(1)
-		tc:RegisterEffect(e3)
+		local e3=e1:Clone()
+		e3:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+		tc:RegisterEffect(e3,true)
+		--Destroy it during end phase
 		local e4=Effect.CreateEffect(c)
-		e4:SetType(EFFECT_TYPE_SINGLE)
-		e4:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e4)
+		e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e4:SetCode(EVENT_PHASE+PHASE_END)
+		e4:SetCountLimit(1)
+		e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e4:SetLabel(fid)
+		e4:SetLabelObject(tc)
+		e4:SetCondition(s.descon)
+		e4:SetOperation(s.desop)
+		Duel.RegisterEffect(e4,tp)
 	end
-	Duel.SpecialSummonComplete()
+end
+function s.descon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if tc:GetFlagEffectLabel(id)==e:GetLabel() then
+		return true
+	else
+		e:Reset()
+		return false
+	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+	local tc=e:GetLabelObject()
+	Duel.Destroy(tc,REASON_EFFECT)
 end

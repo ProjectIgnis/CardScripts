@@ -1,8 +1,9 @@
 --水晶機巧－ローズニクス
 --Crystron Rosenix
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Destroy 1 card, and if you do, special summon 1 "Crystron" tuner from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--token
+	--Special summon 1 token to your field
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -24,6 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xea}
+
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0xea) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -61,9 +63,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	--Clock Lizard check
+	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.splimit(e,c)
 	return not (c:IsRace(RACE_MACHINE) and c:IsType(TYPE_SYNCHRO)) and c:IsLocation(LOCATION_EXTRA)
+end
+function s.lizfilter(e,c)
+	return not (c:IsOriginalRace(RACE_MACHINE) and c:IsOriginalType(TYPE_SYNCHRO))
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -76,7 +83,10 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0xea,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_WATER) then
 		local token=Duel.CreateToken(tp,id+1)
 		if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) then
+			--Cannot be tributed
 			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetDescription(3303)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 			e1:SetValue(1)

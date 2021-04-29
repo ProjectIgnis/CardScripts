@@ -2,7 +2,7 @@
 --Mecha Phantom Beast Warbluran
 local s,id=GetID()
 function s.initial_effect(c)
-	--
+	--cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e2)
-	--token
+	--special summon token
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	--lvup
+	--increase level
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetType(EFFECT_TYPE_IGNITION)

@@ -48,10 +48,10 @@ function s.trigop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseEvent(e:GetHandler(),id,e,REASON_RULE,Duel.GetTurnPlayer(),1-Duel.GetTurnPlayer(),ev)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and ep==tp
+	return Duel.GetTurnPlayer()~=tp
 end
 function s.cfilter(c,tp,tid)
-	return c:IsPreviousControler(tp) and c:GetTurnID()==tid and c:GetReason()&REASON_BATTLE==0
+	return c:IsPreviousControler(tp) and c:GetTurnID()==tid and c:GetReason()&REASON_BATTLE~=0
 end
 function s.ftchk(ft,tp,ct,e)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,0,e:GetHandler())

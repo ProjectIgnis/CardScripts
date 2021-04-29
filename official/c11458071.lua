@@ -1,16 +1,18 @@
 --天魔神 エンライズ
 --Sky Scourge Enrise
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--cannot special summon
+	--Must be special summon by its own method
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special summon procedure (from hand)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -20,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--remove
+	--Banish 1 monster on the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_REMOVE)
@@ -74,9 +76,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
+	--Cannot attack this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3206)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1,true)

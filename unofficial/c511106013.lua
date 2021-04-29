@@ -47,16 +47,16 @@ end
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsType(TYPE_LINK,scard,sumtype,tp) and c:IsSetCard(0x577,scard,sumtype,tp)
 end
-function s.spcheck(g,lc,tp)
-	return g:CheckSameProperty(Card.GetAttribute,lc,SUMMON_TYPE_LINK,tp)
+function s.spcheck(g,lc,sumtype,tp)
+	return g:CheckSameProperty(Card.GetAttribute,lc,sumtype,tp)
 end
 function s.attcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.atttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,563)
-	local aat=Duel.AnnounceAttribute(tp,2,0xe)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
+	local aat=Duel.AnnounceAttribute(tp,2,ATTRIBUTE_WATER|ATTRIBUTE_FIRE|ATTRIBUTE_WIND)
 	e:SetLabel(aat)
 end
 function s.attop(e,tp,eg,ep,ev,re,r,rp)

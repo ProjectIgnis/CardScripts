@@ -1,14 +1,16 @@
+--泥岩の霊長－マンドストロング
 --Primineral Mandstrong
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--set
+	--Set itself into S/T zones as a spell
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MONSTER_SSET)
 	e1:SetValue(TYPE_SPELL)
 	c:RegisterEffect(e1)
-	--to grave
+	--Special summon itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -17,6 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
+
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsReason(REASON_DESTROY) and c:GetReasonPlayer()==1-tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN) then 
@@ -55,4 +58,3 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

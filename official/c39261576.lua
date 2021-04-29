@@ -3,8 +3,9 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047),Fusion.OnFieldMat,nil,nil,nil,s.stage2))
-	--atk up
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047),Fusion.OnFieldMat,nil,nil,nil,s.stage2)
+	c:RegisterEffect(e1)
+	--Increase ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -21,7 +22,16 @@ s.listed_series={0x1047}
 function s.stage2(e,tc,tp,sg,chk)
 	if chk==1 then
 		e:SetLabelObject(tc)
-		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_CHAIN_END)
+		e1:SetOperation((function(p,_e)
+							return function(e)
+									Duel.RaiseSingleEvent(_e:GetHandler(),EVENT_CUSTOM+id,_e,0,p,p,0)
+									e:Reset()
+								end
+						end)(tp,e))
+		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -42,7 +52,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sc=e:GetLabelObject():GetLabelObject()
 	if not sc:IsRelateToEffect(e) or sc:IsFacedown() then return end
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) then return end
+	if not tc or not tc:IsRelateToEffect(e) then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)

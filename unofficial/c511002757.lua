@@ -1,4 +1,5 @@
---エクシーズ熱戦！！
+--エクシーズ熱戦！！ (Anime)
+--Xyz Xtreme !! (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,14 +24,15 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function s.filter(c,e,tp,eg)
-	return c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+	return c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 		and eg:IsExists(s.rkfilter,1,nil,c:GetRank(),tp)
 end
 function s.rkfilter(c,rk,tp)
 	return c:GetRank()==rk and c:IsPreviousControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and Duel.GetLocationCountFromEx(1-tp)>0
+	if chk==0 then return Duel.GetLocationCountFromEx(1-tp,1-tp,nil,TYPE_XYZ)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,eg) 
 		and Duel.GetFieldGroupCount(1-tp,LOCATION_EXTRA,0)>0 end
 	Duel.SetTargetCard(eg)
@@ -42,23 +44,21 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc2=nil
 	local tg1=eg:Filter(s.cfilter,nil,e,tp)
 	local tg2=eg:Filter(s.cfilter,nil,e,1-tp)
-	local fid=e:GetHandler():GetFieldID()
-	if Duel.GetLocationCountFromEx(tp)>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		tc1=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,eg):GetFirst()
-		local pos=POS_FACEUP
-		if Duel.GetTurnPlayer()==tp then pos=POS_FACEUP_ATTACK end
-		if tc1 and Duel.SpecialSummonStep(tc1,0,tp,tp,false,false,pos) then
-			tc1:RegisterFlagEffect(51102757,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1,fid)
+	local fid=e:GetFieldID()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	tc1=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,eg):GetFirst()
+	if tc1 then
+		local pos=Duel.GetTurnPlayer()==tp and POS_FACEUP_ATTACK or POS_FACEUP
+		if Duel.SpecialSummonStep(tc1,0,tp,tp,false,false,pos) then
+			tc1:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1,fid)
 		end
 	end
-	if Duel.GetLocationCountFromEx(1-tp)>0 then
+	if Duel.GetLocationCountFromEx(1-tp,1-tp,nil,TYPE_XYZ)>0 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 		tc2=Duel.SelectMatchingCard(1-tp,s.filter,1-tp,LOCATION_EXTRA,0,1,1,nil,e,1-tp,eg):GetFirst()
-		local pos=POS_FACEUP
-		if Duel.GetTurnPlayer()~=tp then pos=POS_FACEUP_ATTACK end
+		local pos=Duel.GetTurnPlayer()==1-tp and POS_FACEUP_ATTACK or POS_FACEUP
 		if tc2 and Duel.SpecialSummonStep(tc2,0,1-tp,1-tp,false,false,pos) then
-			tc2:RegisterFlagEffect(51102757,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1,fid)
+			tc2:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1,fid)
 		end
 	end
 	Duel.SpecialSummonComplete()
@@ -90,7 +90,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.desfilter(c,fid)
-	return c:GetFlagEffectLabel(51102757)==fid
+	return c:GetFlagEffectLabel(id)==fid
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()

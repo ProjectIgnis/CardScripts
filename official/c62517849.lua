@@ -1,14 +1,15 @@
---No.39 希望皇ホープ・ダブル
+--Ｎｏ．３９ 希望皇ホープ・ダブル
 --Number 39: Utopia Double
---scripted by Logical Nonsense
+--Logical Nonsense
+
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--Must be properly summoned
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Xyz summon method
+	--Xyz summon procedure
 	Xyz.AddProcedure(c,nil,4,2)
-	--Search and Xyz
+	--Add 1 "Double or Nothing!" from deck, then special summon 1 "Utopia" Xyz monster from extra deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
@@ -19,12 +20,17 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
+	--Lists "Utopia" archetype
 s.listed_series={0x107f}
+	--Specifically lists "Double or Nothing!"
 s.listed_names={94770493}
+	--Number 39
 s.xyz_number=39
-	--Detach 1 material
+
+	--Detach 1 material as cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -49,7 +55,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-	--Performing the effect of adding "Double or Nothing!", then Xyz summon 1 "Utopia" monster
+	--Add 1 "Double or Nothing!", then Xyz summon 1 "Utopia" Xyz monster by using this card, and if you do, double its ATK
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -74,12 +80,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Overlay(sc,Group.FromCards(c))
 				if Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)>0 then
 					sc:CompleteProcedure()
+					--Cannot attack directly
 					local e1=Effect.CreateEffect(c)
+					e1:SetDescription(3207)
 					e1:SetType(EFFECT_TYPE_SINGLE)
-					e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+					e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 					e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 					e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 					sc:RegisterEffect(e1)
+					--Double its ATK
 					local e2=Effect.CreateEffect(c)
 					e2:SetType(EFFECT_TYPE_SINGLE)
 					e2:SetCode(EFFECT_SET_ATTACK)

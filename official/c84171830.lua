@@ -43,6 +43,10 @@ function s.initial_effect(c)
 	e5:SetTarget(s.lvtg)
 	e5:SetOperation(s.lvop)
 	c:RegisterEffect(e5)
+	--clock lizard
+	local e6=aux.createContinuousLizardCheck(c,LOCATION_FZONE,nil,0xff,0xff)
+	e6:SetCondition(s.discon)
+	c:RegisterEffect(e6)
 end
 function s.splimit(e,c)
 	if e:GetHandler():GetFlagEffect(id)>0 then e:GetHandler():ResetFlagEffect(id) return false end

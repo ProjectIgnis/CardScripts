@@ -1,4 +1,5 @@
 --零鳥獣シルフィーネ
+--Ice Beast Zerofyne (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -28,12 +29,12 @@ function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.disfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) 
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.disfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) 
 		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
+	local g=Duel.GetMatchingGroup(aux.disfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
 	local tc=g:GetFirst()
 	if not tc then return end
 	while tc do

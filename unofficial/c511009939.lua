@@ -1,3 +1,4 @@
+--転生炎獣の散火
 --Salamangreat Sparks
 local s,id=GetID()
 function s.initial_effect(c)
@@ -54,7 +55,7 @@ end
 function s.tokenop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=2
 	if ct==0 then return end
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLEUEYES_SPIRIT) then ct=1 end
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
 	repeat
 		local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x119,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_FIRE,POS_FACEUP_DEFENSE,tp)
 		local b2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x119,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_FIRE,POS_FACEUP_DEFENSE,1-tp)

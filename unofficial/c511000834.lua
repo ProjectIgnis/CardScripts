@@ -1,3 +1,4 @@
+--深層へと導く光
 --Light to the Depths
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,8 +18,11 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+function s.filter(c,tp)
+	return c:IsSummonPlayer(tp) and c:IsAttribute(ATTRIBUTE_LIGHT)
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0 and eg:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_LIGHT)
+	return Duel.GetCurrentChain()==0 and eg:IsExists(s.filter,1,nil,1-tp) 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

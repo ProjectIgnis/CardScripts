@@ -1,3 +1,4 @@
+--Ｎｏ．９２ 偽骸神龍 Ｈｅａｒｔ－ｅａｒｔＨ Ｄｒａｇｏｎ (Anime)
 --Number 92: Heart-eartH Dragon (Anime)
 Duel.LoadCardScript("c97403510.lua")
 local s,id=GetID()
@@ -54,7 +55,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.posop)
 	c:RegisterEffect(e6)
 	--Activate
-	local e8=Effect.CreateEffect(c)	
+	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e8:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e8:SetOperation(s.dam)
@@ -73,11 +74,11 @@ function s.initial_effect(c)
 	e7:SetOperation(s.recop)
 	c:RegisterEffect(e7)
 	--number generic effect
-	local e8=Effect.CreateEffect(c)
-	e8:SetType(EFFECT_TYPE_SINGLE)
-	e8:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e8:SetValue(s.indes)
-	c:RegisterEffect(e8)
+	local e9=Effect.CreateEffect(c)
+	e9:SetType(EFFECT_TYPE_SINGLE)
+	e9:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e9:SetValue(s.indes)
+	c:RegisterEffect(e9)
 end
 s.xyz_number=92
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
@@ -104,7 +105,7 @@ end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,nil,0,1)
+	c:RegisterFlagEffect(id,0,0,1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetOverlayCount()==0

@@ -1,4 +1,5 @@
 --魔力無力化の仮面
+--Mask of Dispel
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -50,11 +51,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()
-	return tc and Duel.GetTurnPlayer()==tc:GetControler()
+	return tc and Duel.IsTurnPlayer(e:GetHandlerPlayer())
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetTargetPlayer(Duel.GetTurnPlayer())
+	local tc=e:GetHandler():GetFirstCardTarget()
+	Duel.SetTargetPlayer(tc:GetControler())
 	Duel.SetTargetParam(500)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,Duel.GetTurnPlayer(),500)
 end

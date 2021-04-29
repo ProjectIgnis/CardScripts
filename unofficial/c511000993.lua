@@ -1,3 +1,4 @@
+--ＺＳ－双頭龍賢者
 --ZS - Ouroboros Sage
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,20 +1,21 @@
 --沈黙の剣
 --Silent Sword Slash
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Targeted "Silent Swordsman" gains 1500 ATK/DEF, also unaffected by opponent's card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_CANNOT_INACTIVATE+EFFECT_FLAG_CANNOT_NEGATE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_INACTIVATE+EFFECT_FLAG_CANNOT_NEGATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--to hand
+	--Add 1 "Silent Swordsman" monster from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -41,7 +42,8 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
+		--Gains 1500 ATK/DEF
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -51,10 +53,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		tc:RegisterEffect(e2)
+		--Unaffected by opponent's card effects
 		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(3110)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_IMMUNE_EFFECT)
-		e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e3:SetRange(LOCATION_MZONE)
 		e3:SetValue(s.efilter)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

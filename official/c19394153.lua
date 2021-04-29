@@ -1,7 +1,9 @@
 --フェザー・ショット
+--Feather Shot
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--multi atk
+	--Make 1 "Elemental HERO Avian" be able to attack multiple times
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,6 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={21844576}
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
@@ -38,13 +41,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		local ct=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
 		if ct>1 then
+			--Attack up to the number of monsters you control
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EXTRA_ATTACK)
 			e1:SetValue(ct-1)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)
+			--Cannot attack directly
 			local e2=Effect.CreateEffect(e:GetHandler())
+			e2:SetDescription(3207)
+			e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

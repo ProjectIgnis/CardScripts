@@ -51,6 +51,7 @@ function s.desfilter(c,sg)
 	return sg:IsContains(c) and c:IsReason(REASON_DESTROY)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
+	if re==e then return false end
 	local c=e:GetHandler()
 	if c:GetCardTargetCount()==0 then return false end
 	return eg:IsExists(s.desfilter,1,nil,c:GetCardTarget())
@@ -58,15 +59,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetCardTarget():Filter(Card.IsLocation,nil,LOCATION_MZONE)
 	if Duel.Destroy(g,REASON_EFFECT)>0 then
-		local dam=0
-		local sg=Duel.GetOperatedGroup()
-		local tc=sg:GetFirst()
-		while tc do
-			local atk=tc:GetPreviousAttackOnField()
-			if atk<0 then atk=0 end
-			dam=dam+atk
-			tc=sg:GetNext()
-		end
+		local dam=Duel.GetOperatedGroup():GetSum(Card.GetPreviousAttackOnField)
 		Duel.Damage(tp,dam,REASON_EFFECT)
 		Duel.Damage(1-tp,dam,REASON_EFFECT)
 	end

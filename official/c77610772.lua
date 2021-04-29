@@ -1,4 +1,5 @@
 --星杯神楽イヴ
+--Ib the World Chalice Priestess
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -41,8 +42,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0xfd}
-function s.spcheck(g,lc,tp)
-	return g:GetClassCount(Card.GetRace,lc,SUMMON_TYPE_LINK,tp)>1 and g:GetClassCount(Card.GetAttribute,lc,SUMMON_TYPE_LINK,tp)>1
+function s.spcheck(g,lc,sumtype,tp)
+	return g:CheckDifferentPropertyBinary(Card.GetRace,lc,sumtype,tp) and g:CheckDifferentPropertyBinary(Card.GetAttribute,lc,sumtype,tp)
 end
 function s.incon(e)
 	return e:GetHandler():IsLinked()

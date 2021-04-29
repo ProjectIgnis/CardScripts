@@ -1,7 +1,8 @@
 --強奪
+--Snatch Steal
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,1,Card.IsControlerCanBeChanged,s.eqlimit,nil,s.target)
+	aux.AddEquipProcedure(c,1,aux.CheckStealEquip,s.eqlimit,nil,s.target)
 	--recover
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

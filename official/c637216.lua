@@ -1,8 +1,10 @@
+--モンスターエクスプレス
 --Monster Express
 --Scripted by Naim
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--send to grave
+	--Send 1 monster from extra deck to GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -51,4 +53,3 @@ function s.splimit(tc)
 		return c:GetOriginalRace()~=tc:GetOriginalRace()
 	end
 end
-

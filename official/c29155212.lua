@@ -1,4 +1,5 @@
 --ゴースト王－パンプキング－
+--Pumpking the King of Ghosts
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -30,7 +31,7 @@ function s.adval(e,c)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFlagEffect(id)<=4
+	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFlagEffect(id)<=4 and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,62121),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

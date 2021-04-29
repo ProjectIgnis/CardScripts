@@ -1,4 +1,5 @@
 --輪廻独断
+--Declaration of Rebirth
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	--race
+	--Change Type
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.value)
 	c:RegisterEffect(e2)
 	e1:SetLabelObject(e2)
-	--4064256 chk
+	--Zombie World-like effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(4064256)
@@ -35,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
 	local rc=Duel.AnnounceRace(tp,1,RACE_ALL)
-	e:GetLabelObject():SetLabel(rc)
+	if e:GetLabelObject() then e:GetLabelObject():SetLabel(rc) end
 	e:GetHandler():SetHint(CHINT_RACE,rc)
 end
 function s.value(e,c)

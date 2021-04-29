@@ -1,4 +1,5 @@
 --Ｓｐ－二重召喚
+--Speed Spell - Double Summon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,12 +7,23 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(s.con)
+	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	return tc and tc:GetCounter(0x91)>1
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then
+		local ct=0
+		local ce={Duel.IsPlayerAffectedByEffect(tp,EFFECT_SET_SUMMON_COUNT_LIMIT)}
+		for _,te in ipairs(ce) do
+			ct=math.max(ct,te:GetValue())
+		end
+		return ct<2
+	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

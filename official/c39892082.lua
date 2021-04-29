@@ -1,4 +1,5 @@
 --バルーン・リザード
+--Balloon Lizard
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x29)
@@ -16,15 +17,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_DAMAGE)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_LEAVE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCondition(s.damcon)
-	e2:SetTarget(s.damtg)
-	e2:SetOperation(s.damop)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_LEAVE_FIELD_P)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_DAMAGE)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode(EVENT_DESTROYED)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetCondition(s.damcon)
+	e3:SetTarget(s.damtg)
+	e3:SetOperation(s.damop)
+	e3:SetLabelObject(e2)
+	c:RegisterEffect(e3)
 end
 function s.addccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
@@ -38,11 +46,14 @@ function s.addc(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():AddCounter(0x29,1)
 	end
 end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local ct=c:GetCounter(0x29)
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	local ct=e:GetHandler():GetCounter(0x29)
 	e:SetLabel(ct)
-	return ct>0 and c:IsReason(REASON_DESTROY)
+end
+function s.damcon(e,tp,eg,ep,ev,re,r,rp)
+	local ct=e:GetLabelObject():GetLabel()
+	e:SetLabel(ct)
+	return ct>0
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

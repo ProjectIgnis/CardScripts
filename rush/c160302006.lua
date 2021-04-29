@@ -1,7 +1,9 @@
+--ツインエッジ・ドラゴン
 --Twin-Edge Dragon
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--multiatk
+	--Can make a second attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -24,13 +26,14 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	-- requirement
+	--Requirement
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
-	-- effect
+	--Effect
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3201)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

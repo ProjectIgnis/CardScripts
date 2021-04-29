@@ -1,3 +1,4 @@
+--曲芸の魔術師 (Anime)
 --Acrobatic Magician (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_DESTROYED)
 	e1:SetCondition(s.spcon1)
 	e1:SetTarget(s.sptg)
-	e1:SetOperation(s.spop1)
+	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--Special Summon (hand)
 	local e2=Effect.CreateEffect(c)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.spcon2)
 	e2:SetTarget(s.sptg)
-	e2:SetOperation(s.spop1)
+	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--Place in P.Zone
 	local e7=Effect.CreateEffect(c)
@@ -56,6 +57,6 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.CheckLocation(tp,LOCATION_SZONE,6) and not Duel.CheckLocation(tp,LOCATION_SZONE,7) then return false end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end

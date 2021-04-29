@@ -18,8 +18,7 @@ end
 s.listed_series={0x9d}
 function s.target(e,tp,eg,ep,ev,re,r,rp,tc,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
-	local att=Duel.AnnounceAttribute(tp,1,0xff-tc:GetAttribute())
+	local att=tc:AnnounceAnotherAttribute(tp)
 	e:SetLabel(att)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

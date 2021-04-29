@@ -5,6 +5,7 @@ function s.initial_effect(c)
 	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsSetCard,0x10cf),lv=8,extrafil=s.extragroup,
 									extraop=s.extraop,matfilter=s.matfilter,location=LOCATION_HAND|LOCATION_GRAVE,forcedselection=s.ritcheck,specificmatfilter=s.specificfilter})
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 	if not AshBlossomTable then AshBlossomTable={} end
 	table.insert(AshBlossomTable,e1)
@@ -32,5 +33,5 @@ function s.matfilter1(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT+ATTRIBUTE_DARK) and c:IsLocation(LOCATION_HAND+LOCATION_DECK) and c:IsAbleToGrave()
 end
 function s.ritcheck(e,tp,g,sc)
-	return #g==2 and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_LIGHT) and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_DARK) and g:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) and g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK),#g>=2
+	return #g==2 and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_LIGHT) and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_DARK) and g:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) and g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK),#g>2
 end

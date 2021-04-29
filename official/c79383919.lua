@@ -1,5 +1,5 @@
 --断罪の呪眼
---Sentence of the Evil Eye
+--Evil Eye Retribution
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_EVIL_EYE_SELENE),tp,LOCATION_SZONE,0,1,nil) then
-		e:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
+		e:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE+EFFECT_FLAG_CANNOT_INACTIVATE)
 	else
 		e:SetProperty(0)
 	end

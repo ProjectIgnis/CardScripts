@@ -1,17 +1,26 @@
---E－HERO ヘル・スナイパー
+--Ｅ－ＨＥＲＯ ヘル・スナイパー
+--Evil HERO Infernal Sniper
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--Fusion material
 	Fusion.AddProcMix(c,true,true,84327329,58932615)
-	--spsummon condition
+	--lizard check
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(CARD_CLOCK_LIZARD)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCondition(s.lizcon)
+	e0:SetValue(1)
+	c:RegisterEffect(e0)
+	--Special Summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.EvilHeroLimit)
 	c:RegisterEffect(e1)
-	--damage
+	--Inflict damage in the Standby Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DAMAGE)
@@ -24,7 +33,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	--indes
+	--Cannot be destroyed by Spell effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -36,8 +45,9 @@ end
 s.material_setcode={0x8,0x3008}
 s.dark_calling=true
 s.listed_names={CARD_DARK_FUSION,58932615,84327329}
-function s.splimit(e,se,sp,st)
-	return st==SUMMON_TYPE_FUSION+0x10
+function s.lizcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_SUPREME_CASTLE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE) and Duel.GetTurnPlayer()==tp

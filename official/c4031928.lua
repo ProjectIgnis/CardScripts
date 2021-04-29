@@ -1,6 +1,5 @@
 --心変わり
 --Change of Heart
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Take control of an opponent's monster until end phase

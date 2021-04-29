@@ -1,4 +1,5 @@
---The Phantom Knights of Around Burn
+--ファントム・ナイツ・アラウンド・バーン
+--The Phantom Knights' Round Blaze
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 	aux.GlobalCheck(s,function()
 		s[0]=0
 		s[1]=0
@@ -39,11 +40,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return  Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
@@ -54,7 +54,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	--e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e1:SetCode(EVENT_ADJUST)
 	e1:SetCountLimit(1)
 	e1:SetOperation(s.damop)
 	e1:SetReset(RESET_PHASE+PHASE_BATTLE)

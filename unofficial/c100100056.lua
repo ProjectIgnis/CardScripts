@@ -14,9 +14,9 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-	if chk==0 then return tc and tc:IsCanRemoveCounter(tp,0x91,10,REASON_COST) end	 
+	if chk==0 then return tc and tc:IsCanRemoveCounter(tp,0x91,10,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	tc:RemoveCounter(tp,0x91,10,REASON_COST)	
+	tc:RemoveCounter(tp,0x91,10,REASON_COST)
 end
 function s.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -31,7 +31,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

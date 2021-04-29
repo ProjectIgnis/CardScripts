@@ -1,13 +1,14 @@
 --ネクロバレーの神殿
 --Necrovalley Temple
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--atk down
+	--Decrease ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -16,11 +17,11 @@ function s.initial_effect(c)
 	e2:SetCondition(s.atkcon)
 	e2:SetValue(-500)
 	c:RegisterEffect(e2)
-	--def down
+	--Decrease DEF
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
-	--activate Necrovalley
+	--Activate "Necrovalley"
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetType(EFFECT_TYPE_QUICK_O)
@@ -30,7 +31,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.accon)
 	e4:SetOperation(s.acop)
 	c:RegisterEffect(e4)
-	--set
+	--Set 1 "Necrovalley" Spell/Trap
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -43,15 +44,12 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2e,0x91}
 s.listed_names={CARD_NECROVALLEY}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2e)
-end
+
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.IsEnvironment(CARD_NECROVALLEY)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2e),e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.IsEnvironment(CARD_NECROVALLEY)
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp)
+	return Duel.IsMainPhase() and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp)
 		and not Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_FZONE,0,1,nil)
 end
 function s.filter(c,tp)

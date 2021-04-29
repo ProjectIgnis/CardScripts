@@ -1,4 +1,5 @@
 --エンシェントサンシャイン
+--Ancient Sunshine
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,8 +20,8 @@ function s.confilter(c)
 	return c:IsFaceup() and c:IsCode(20210570)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE+LOCATION_MZONE+LOCATION_EXTRA,0,1,nil) 
-		and Duel.GetActivityCount(tp,ACTIVITY_ATTACK)==0  end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE+LOCATION_MZONE+LOCATION_EXTRA,0,1,nil)
+		and Duel.GetActivityCount(tp,ACTIVITY_ATTACK)==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE+LOCATION_MZONE+LOCATION_EXTRA,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
@@ -48,6 +49,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Damage(p,d,REASON_EFFECT) then
 		Duel.BreakEffect()
 		local sg=Duel.GetMatchingGroup(Card.IsDestructable,tp,LOCATION_ONFIELD,0,nil)
-		Duel.Destroy(sg,REASON_EFFECT)	
+		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end

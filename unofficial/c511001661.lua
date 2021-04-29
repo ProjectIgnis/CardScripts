@@ -1,9 +1,10 @@
---森の番人グリーン・バブーン
+--森の番人グリーン・バブーン (Manga)
+--Green Baboon, Defender of the Forest (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(46668237,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
@@ -16,11 +17,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_BEAST) and c:IsPreviousPosition(POS_FACEUP)
-		and c:IsPreviousLocation(LOCATION_MZONE) and (c:GetPreviousRaceOnField()&RACE_BEAST)~=0
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE) and (c:GetPreviousRaceOnField()&(RACE_BEAST|RACE_BEASTWARRIOR|RACE_PLANT|RACE_INSECT))~=0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp)
+	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
@@ -32,8 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	if e:GetHandler():IsRelateToEffect(e) then
+		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 	end
 end

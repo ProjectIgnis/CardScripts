@@ -1,7 +1,8 @@
 --有翼賢者ファルコス
+--Winged Sage Falcos
 local s,id=GetID()
 function s.initial_effect(c)
-	--to deck
+	--Place destroyed monster on top of the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)
@@ -16,7 +17,7 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	if not c:IsRelateToBattle() or c:IsFacedown() then return false end
-	return bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER) and bc:IsControler(1-tp) and bc:GetBattlePosition()==POS_FACEUP_ATTACK
+	return bc:IsLocation(LOCATION_GRAVE) and bc:IsType(TYPE_MONSTER) and bc:IsControler(1-tp) and bc:IsPreviousPosition(POS_FACEUP_ATTACK)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetHandler():GetBattleTarget()
@@ -27,6 +28,6 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end

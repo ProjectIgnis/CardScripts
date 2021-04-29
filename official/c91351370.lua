@@ -1,4 +1,5 @@
 --黒い旋風
+--Black Whirlwind
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--search
+	--Search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -20,7 +21,7 @@ end
 s.listed_series={0x33}
 function s.filter(c,val)
 	local atk=c:GetAttack()
-	return atk>=0 and atk<val and c:IsSetCard(0x33) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsAttackAbove(0) and atk<val and c:IsSetCard(0x33) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()

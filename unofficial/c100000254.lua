@@ -1,4 +1,5 @@
 --レベルの絆
+--Level Bond
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,10 +28,10 @@ function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:GetClassCount(Card.GetCode)==1 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp,sg:GetFirst():GetCode())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 		return Duel.IsPlayerCanDraw(1-tp,2) and Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g>1 
 			and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 	local rg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE)

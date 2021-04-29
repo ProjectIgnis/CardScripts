@@ -17,13 +17,13 @@ function s.filter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_SZONE,0,1,nil) end 
-	Duel.Hint(HINT_SELECT,tp,HINTMSG_TARGET)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_SZONE,0,1,1,nil)
 	Duel.SetChainLimit(s.climit)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then
 		tc:RegisterFlagEffect(id,RESET_PHASE+PHASE_END+RESET_EVENT+RESETS_STANDARD,0,1)
 		if tc:IsCode(95000004) then
 		local te=tc:GetActivateEffect()

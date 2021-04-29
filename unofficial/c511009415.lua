@@ -1,15 +1,16 @@
 --スターヴ・ヴェネミー・ドラゴン (Manga)
 --Starving Venemy Dragon (Manga)
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableReviveLimit()
 	--pendulum summon
 	Pendulum.AddProcedure(c,false)
 	--fusion material
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsType,TYPE_PENDULUM),2)
+	c:EnableReviveLimit()
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsType,TYPE_PENDULUM),aux.FilterBoolFunctionEx(Card.IsLevelAbove,5))
 	--reduce
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(16178681,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e1:SetRange(LOCATION_PZONE)
@@ -18,8 +19,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--copy
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_ATKCHANGE+CATEGORY_DAMAGE)
-	e2:SetDescription(aux.Stringid(41209827,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -31,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--pendulum
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(90036274,0))
+	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCode(EVENT_DESTROYED)
@@ -40,26 +41,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--Venemy Counter
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(51053997,3))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e4:SetCode(EVENT_LEAVE_FIELD)
 	e4:SetRange(LOCATION_PZONE)
-	e4:SetTarget(s.cttg)
-	e4:SetOperation(s.ctop)
+	e4:SetOperation(s.acop)
 	c:RegisterEffect(e4)
-	--atk def
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD)
-	e5:SetCode(EFFECT_UPDATE_ATTACK)
-	e5:SetRange(LOCATION_MZONE+LOCATION_PZONE)
-	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e5:SetCondition(s.adcon)
-	e5:SetTarget(s.adtg)
-	e5:SetValue(s.adval)
-	c:RegisterEffect(e5)
 end
+s.counter_list={0x1149}
 s.listed_series={0x576}
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and ev>0
@@ -73,9 +61,7 @@ function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.copycon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return false end
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2
+	return Duel.GetTurnPlayer()==tp and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.copytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and aux.disfilter1(chkc) end
@@ -123,26 +109,9 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end
-
-
-function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-end
-function s.ctop(e,tp,eg,ep,ev,re,r,rp)
+function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local tc=g:GetFirst()
-	while tc do
-		tc:AddCounter(0x1114,1,REASON_EFFECT)
-		tc=g:GetNext()
+	for tc in aux.Next(g) do
+		tc:AddCounter(0x1149,#eg,REASON_EFFECT)
 	end
-end
-
-function s.adcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
-end
-function s.adtg(e,c)
-	return c:GetCounter(0x1114)~=0 and not c:IsSetCard(0x576)
-end
-function s.adval(e,c)
-	return c:GetCounter(0x1114)*-100
 end

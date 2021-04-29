@@ -4,6 +4,7 @@ function s.initial_effect(c)
 	--skill
 	aux.AddPreDrawSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
+s.roll_dice=true
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
 	if Duel.GetFlagEffect(ep,id)>0 then return end
@@ -17,7 +18,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	--opd register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
-	local n1=Duel.AnnounceLevel(tp,1,6,nil)
+	local n1=Duel.AnnounceLevel(tp,1,6)
 	local n2=Duel.AnnounceLevel(tp,1,6,n1)
 	local dc=Duel.TossDice(tp,1)
 	if n1==dc or n2==dc then
@@ -36,10 +37,9 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 	end
-	
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLP(tp)<1 then 
+	if Duel.GetLP(tp)<1 then
 		Duel.SetLP(tp,1)
 	end
 end

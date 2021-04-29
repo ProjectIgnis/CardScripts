@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--spsummon
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -21,9 +21,9 @@ function s.initial_effect(c)
 end
 s.listed_series={0x70}
 function s.costfilter(c,e,tp,ft)
-	return c:IsSetCard(0x70) and c:IsAbleToRemoveAsCost() and c:IsType(TYPE_MONSTER) and c:HasLevel() and aux.SpElimFilter(c,true) 
-		and (ft>0 or (aux.MZFilter(c,c:GetControler()) and ft>-1)) 
-		and	Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp,c:GetLevel())
+	return c:IsSetCard(0x70) and c:IsAbleToRemoveAsCost() and c:IsType(TYPE_MONSTER) and c:HasLevel() and aux.SpElimFilter(c,true)
+		and (ft>0 or (aux.MZFilter(c,c:GetControler()) and ft>-1))
+		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp,c:GetLevel())
 end
 function s.spfilter(c,e,tp,lv)
 	return c:IsSetCard(0x70) and c:IsType(TYPE_MONSTER) and c:GetLevel()==lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

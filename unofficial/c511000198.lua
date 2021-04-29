@@ -2,25 +2,30 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_ACTIVATE)
-	e0:SetCode(EVENT_FREE_CHAIN)
-	c:RegisterEffect(e0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e1:SetCondition(s.condition)
-	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e1:SetTarget(s.tg)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
+	e2:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
+end
+function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_PRE_DAMAGE_CALCULATE,true)
+	if res and s.condition(e,tp,teg,tep,tev,tre,tr,trp) and s.target(e,tp,teg,tep,tev,tre,tr,trp,0) then
+		e:SetOperation(s.operation)
+		s.target(e,tp,teg,tep,tev,tre,tr,trp,1)
+	else
+		e:SetOperation(nil)
+	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
@@ -58,6 +63,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(tc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())

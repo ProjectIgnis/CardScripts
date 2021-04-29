@@ -1,7 +1,9 @@
---WW－スノウ・ベル
+--ＷＷ－スノウ・ベル
+--Windwitch - Snow Bell
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -11,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--effect
+	--A WIND synchro monster using this card cannot be destroyed by opponent's card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -46,8 +48,9 @@ end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
+	--Cannot be destroyed by opponent's card effects
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetDescription(3060)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

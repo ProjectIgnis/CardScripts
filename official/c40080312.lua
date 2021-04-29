@@ -25,7 +25,7 @@ function s.contactfil(tp)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
-	Duel.SendtoDeck(g,nil,2,REASON_COST+REASON_MATERIAL)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)
 end
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
@@ -52,7 +52,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local d=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
-	local g=Duel.GetMatchingGroup(aux.disfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(aux.disfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 and #g>0 then
 		Duel.BreakEffect()
 		local sg=g:Select(tp,1,1,nil)

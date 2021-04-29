@@ -1,12 +1,12 @@
 --サイバー・ドラゴン・ズィーガー
---Cyber Dragon Zieger
+--Cyber Dragon Sieger
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_MACHINE),2,2,s.lcheck)
-	--code
+	--Change name
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e1:SetValue(CARD_CYBER_DRAGON)
 	c:RegisterEffect(e1)
-	--atk/def
+	--Increase ATK/DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	e2:SetCondition(s.con)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
-	c:RegisterEffect(e2)	
+	c:RegisterEffect(e2)
 end
-function s.lcheck(g,lc,tp)
-	return g:IsExists(Card.IsSummonCode,1,nil,lc,SUMMON_TYPE_LINK,tp,CARD_CYBER_DRAGON)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsSummonCode,1,nil,lc,sumtype,tp,CARD_CYBER_DRAGON)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) and e:GetHandler():GetAttackAnnouncedCount()<1
@@ -47,7 +47,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -71,4 +71,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e4)
 	end
 end
-

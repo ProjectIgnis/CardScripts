@@ -1,4 +1,5 @@
 --イージーチューニング
+--Battle Tuned
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
+	return c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost() and c:GetAttack()>0 and aux.SpElimFilter(c,true) 
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -32,7 +33,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetLabel(0)
 		return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
 	local atk=g:GetFirst():GetAttack()
 	if atk<0 then atk=0 end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)

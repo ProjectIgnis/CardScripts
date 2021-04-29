@@ -1,6 +1,8 @@
+--デカゴ・ナイト
 --Decago Knight
 local s,id=GetID()
 function s.initial_effect(c)
+	--Shuffle all "Decago Knights" from GY to deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(95100664,0))
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -11,13 +13,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={id}
 function s.cfilter(c)
 	return c:IsCode(id)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,3,nil)
 end
-function s.filter1(c)
+function s.filter(c)
 	return c:IsCode(id) and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -28,6 +31,6 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil)
 	if #g>0 then
-		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

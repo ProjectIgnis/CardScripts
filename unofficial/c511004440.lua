@@ -8,7 +8,7 @@ function s.initial_effect(c)
 		s.g=g
 	else
 		g=s.g
-	end  
+	end
 	g:KeepAlive()
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -52,6 +52,7 @@ function s.target(e,tp,eg,ev,ep,re,r,rp,chk)
 	Duel.SetTargetCard(sg)
 end
 function s.operation(e,tp,eg,ev,ep,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local c=e:GetHandler()
 	local og=e:GetLabelObject()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)

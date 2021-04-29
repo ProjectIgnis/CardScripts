@@ -36,7 +36,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if g:GetFirst():IsLocation(LOCATION_HAND) then
 		Duel.ConfirmCards(1-tp,g)
 	end
-	Duel.SendtoDeck(g,nil,2,REASON_COST)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

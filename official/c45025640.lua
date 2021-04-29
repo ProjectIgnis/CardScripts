@@ -11,11 +11,12 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
 	e1:SetCondition(s.dmgcond)
+	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_DAMAGE)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCode(EVENT_BATTLED)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
@@ -26,10 +27,7 @@ function s.dmgcond(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return ep==tp and (r&REASON_BATTLE)~=0
-		and (Duel.GetAttacker()==c or Duel.GetAttackTarget()==c)
-		and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.GetBattleDamage(e:GetHandlerPlayer())>0
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

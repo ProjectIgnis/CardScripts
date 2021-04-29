@@ -2,16 +2,17 @@
 --Sylvan Cherubsprout
 local s,id=GetID()
 function s.initial_effect(c)
-	--excavate
+	--Excavate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetCategory(CATEGORY_DECKDES)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--special summon from deck
+	--Special summon from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -33,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct==0 then return end
 	local ac=1
 	if ct>1 then
-		Duel.Hint(HINGMSG_NUMBER,tp,HINT_NUMBER)
+		Duel.Hint(HINTMSG_NUMBER,tp,HINT_NUMBER)
 		ac=Duel.AnnounceNumber(tp,1,2)
 	end
 	Duel.ConfirmDecktop(tp,ac)
@@ -45,11 +46,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	ac=ac-#sg
 	if ac>0 then
-		Duel.SortDecktop(tp,tp,ac)
-		for i=1,ac do
-			local mg=Duel.GetDecktopGroup(tp,1)
-			Duel.MoveSequence(mg:GetFirst(),1)
-		end
+		Duel.MoveToDeckBottom(g)
+		Duel.SortDeckbottom(tp,tp,ac)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -57,7 +55,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_REVEAL)
 end
 function s.filter(c,e,tp)
-	return c:GetLevel()==1 and c:IsRace(RACE_PLANT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevel(1) and c:IsRace(RACE_PLANT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

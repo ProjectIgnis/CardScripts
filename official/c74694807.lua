@@ -1,4 +1,5 @@
 --再融合
+--Re-Fusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,800)
-	else Duel.PayLPCost(tp,800)	end
+	else Duel.PayLPCost(tp,800) end
 end
 function s.filter(c,e,tp)
 	return (c:GetType()&0x41)==0x41 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

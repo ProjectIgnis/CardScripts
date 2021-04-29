@@ -9,18 +9,16 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--spsummon
+	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetProperty(EFFECT_FLAG_CVAL_CHECK)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.spcon1)
 	e2:SetTarget(s.sptg1)
 	e2:SetOperation(s.spop1)
-	e2:SetValue(s.valcheck)
 	c:RegisterEffect(e2)
 	--immune
 	local e3=Effect.CreateEffect(c)
@@ -30,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(s.efilter)
 	c:RegisterEffect(e3)
-	--tograve
+	--send itself to the GY
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOGRAVE)
@@ -40,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.tgtg)
 	e4:SetOperation(s.tgop)
 	c:RegisterEffect(e4)
-	--spsummon
+	--special summon
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,2))
 	e5:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
@@ -69,9 +67,6 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)~=0 then
 		c:CompleteProcedure()
 	end
-end
-function s.valcheck(e)
-	Duel.SetChainLimit(aux.FALSE)
 end
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()

@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.sdesop)
 	c:RegisterEffect(e4)
 end
-function s.otfilter(c)
+function s.otfilter(c,tp)
 	local ag=Duel.GetMatchingGroup(Card.IsAttribute,tp,LOCATION_GRAVE,0,nil,ATTRIBUTE_DARK)
 	return c:IsAttribute(ATTRIBUTE_DARK) and ag:GetClassCount(Card.GetCode)>=4
 end

@@ -1,4 +1,5 @@
 --アルカナフォースＶＩＩＩ－ＳＴＲＥＮＧＴＨ
+--Arcana Force VIII - The Strength
 local s,id=GetID()
 function s.initial_effect(c)
 	--coin
@@ -17,6 +18,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.toss_coin=true
 function s.cointg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
@@ -34,7 +36,7 @@ function s.arcanareg(c,coin)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ADJUST)
-	e1:SetRange(LOCATION_MZONE)	
+	e1:SetRange(LOCATION_MZONE) 
 	e1:SetOperation(s.ctop)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)

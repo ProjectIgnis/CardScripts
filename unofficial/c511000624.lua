@@ -1,8 +1,9 @@
+--クラッシュ・スター
 --Crush Star
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_DESTROYED)
@@ -11,25 +12,22 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,tp)
-	return c:IsType(TYPE_SYNCHRO) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
-		and c:IsControler(tp) and c:IsPreviousControler(tp)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(Card.IsType,1,nil,TYPE_SYNCHRO)
 end
 function s.filter(c,e,tp)
-	return c:IsAttackBelow(1000) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsAttackBelow(1000) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 
-		and Duel.IsExistingTarget(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp) 
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp) 
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g1=Duel.SelectTarget(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+	local g1=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g2=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.SetTargetCard(g1:GetFirst())
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g1,2,0,0)
 end

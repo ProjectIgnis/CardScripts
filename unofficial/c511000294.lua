@@ -1,8 +1,9 @@
---Number C1000: Numerronius
+--ＣＮｏ．１０００ 夢幻虚神ヌメロニアス
+--Number C1000: Numeronius
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,nil,12,5)
 	c:EnableReviveLimit()
 	--negate and cannot attack
@@ -13,51 +14,51 @@ function s.initial_effect(c)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetTarget(s.filter)--aux.TargetBoolFunction(Card.IsC))
 	c:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_CANNOT_ATTACK)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetTargetRange(0,LOCATION_MZONE)
+	e2:SetTarget(s.filter)--aux.TargetBoolFunction(Card.IsC))
+	c:RegisterEffect(e2)
+	--Destruction replacement
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_CANNOT_ATTACK)
+	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_DESTROY_REPLACE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetTarget(s.filter)--aux.TargetBoolFunction(Card.IsC))
+	e3:SetTarget(s.desreptg)
+	e3:SetOperation(s.desrepop)
 	c:RegisterEffect(e3)
-	--Destroy replace
+	--Destroy and Special Summon "Number C"
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_DESTROY_REPLACE)
-	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetCategory(CATEGORY_DESTROY)
+	e4:SetDescription(aux.Stringid(id,2))
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetTarget(s.desreptg)
-	e4:SetOperation(s.desrepop)
-	c:RegisterEffect(e4)
-	--destroy and summon C
+	e4:SetCountLimit(1)
+	e4:SetCost(s.descost)
+	e4:SetTarget(s.destg)
+	e4:SetOperation(s.desop)
+	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
+	--Destroy and Special Summon (Battle Phase)
 	local e5=Effect.CreateEffect(c)
-	e5:SetCategory(CATEGORY_DESTROY)
-	e5:SetDescription(aux.Stringid(id,2))
-	e5:SetType(EFFECT_TYPE_QUICK_O)
-	e5:SetCode(EVENT_FREE_CHAIN)
-	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e5:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCountLimit(1)
-	e5:SetCost(s.descost)
-	e5:SetTarget(s.destg)
-	e5:SetOperation(s.desop)
-	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
-	--destroy and summon Battle
+	e5:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e5:SetTarget(s.bptg)
+	e5:SetOperation(s.bpop)
+	c:RegisterEffect(e5)
+	--number generic effect
 	local e6=Effect.CreateEffect(c)
-	e6:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
-	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetCountLimit(1)
-	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
-	e6:SetTarget(s.bptg)
-	e6:SetOperation(s.bpop)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e6:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
 	c:RegisterEffect(e6)
-	--battle indestructable
-	local e7=Effect.CreateEffect(c)
-	e7:SetType(EFFECT_TYPE_SINGLE)
-	e7:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e7:SetValue(s.indes)
-	c:RegisterEffect(e7)
 end
 s.listed_series={0x48}
 s.xyz_number=1000
@@ -93,8 +94,7 @@ function s.desfilter(c,e,tp)
 	return Duel.IsExistingMatchingCard(s.xyzfilter,c:GetControler(),LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.xyzfilter(c,e,tp,dc)
-	return c:IsC() and c:IsCanBeSpecialSummoned(e,0,tp,true,false) 
-		and Duel.GetLocationCountFromEx(tp,tp,dc,c)>0
+	return c:IsC() and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,dc,c)>0
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.desfilter(chkc,e,tp) end
@@ -143,7 +143,4 @@ function s.bpop(e,tp,eg,ep,ev,re,r,rp)
 		g=g:Select(tp,ft,ft,nil)
 	end
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-end
-function s.indes(e,c)
-	return not c:IsSetCard(0x48)
 end

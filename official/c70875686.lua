@@ -1,18 +1,18 @@
---プランキッズ・ロアゴン リンク
---Prankids Roargon
+--プランキッズ・ロアゴン
+--Prank-Kids Rip-Roarin-Roaster
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link summon
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x120),2)
 	c:EnableReviveLimit()
-	--spsummon condition
+	--Special Summon condition
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e0:SetValue(aux.lnklimit)
 	c:RegisterEffect(e0)
-	--destroy
+	--Destroy Spell/Traps
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--tohand
+	--Add card to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -38,12 +38,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x120}
+function s.filter(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)
-end
-function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_ONFIELD,1,nil) end
@@ -56,7 +56,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:IsPreviousControler(tp)
+	return rp==1-tp and c:IsPreviousControler(tp)
 end
 function s.thfilter(c)
 	return not c:IsLinkMonster() and c:IsAbleToHand()
@@ -74,4 +74,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

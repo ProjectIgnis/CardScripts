@@ -3,10 +3,10 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x578),2,2,s.lcheck)
-	--special summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--reduce damage
+	--reduce battle damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
@@ -25,8 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-function s.lcheck(g,lc,tp)
-	return g:IsExists(Card.IsType,1,nil,TYPE_LINK,lc,SUMMON_TYPE_LINK,tp)
+s.listed_series={0x578}
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsType,1,nil,TYPE_LINK,lc,sumtype,tp)
 end
 function s.spfilter(c,e,tp,zone)
 	return c:IsSetCard(0x578) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
@@ -35,9 +36,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local zone=e:GetHandler():GetLinkedZone(tp)&0x1f
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp,zone) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,zone)
-		and Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,zone) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,zone)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,LOCATION_GRAVE)

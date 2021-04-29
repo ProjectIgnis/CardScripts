@@ -68,7 +68,7 @@ function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.stop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsSSetable() then
+	if tc and tc:IsRelateToEffect(e) and tc:IsSSetable() then
 		Duel.SSet(tp,tc)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

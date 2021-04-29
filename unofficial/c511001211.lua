@@ -4,7 +4,6 @@ function s.initial_effect(c)
 	--reg
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetProperty(EFFECT_FLAG_AVAILABLE_BD)
 	e1:SetCode(EVENT_BATTLE_DAMAGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.regcon)

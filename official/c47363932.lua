@@ -3,10 +3,10 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link summon
 	Link.AddProcedure(c,nil,2,2,s.lcheck)
 	c:EnableReviveLimit()
-	--spsummon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--special summon from deck
+	--Special summon from deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -32,8 +32,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x24}
-function s.lcheck(g,lc,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x24,lc,SUMMON_TYPE_LINK,tp)
+function s.lcheck(g,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,0x24,lc,sumtype,tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x24) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -53,7 +53,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local d=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,0,1,1,nil)
@@ -78,7 +78,7 @@ function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not e:GetHandler():IsRelateToEffect(e) then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then

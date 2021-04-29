@@ -1,4 +1,5 @@
---Smile Universe
+--スマイル・ユニバース (Anime)
+--Smile Universe (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -47,25 +48,22 @@ function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 
+	if chk==0 then return Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM)>0 
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,1-tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCountFromEx(tp)
+	local ft=Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_PENDULUM)
 	local tg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
 	if ft<=0 or #tg==0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	if ect and ft>ect then ft=ect end
+	ft=math.min(ft,aux.CheckSummonGate(tp) or ft)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=tg:Select(tp,ft,ft,nil)
 	local c=e:GetHandler()
-	local tc=g:GetFirst()
 	local lp=0
-	while tc do
+	for tc in aux.Next(g) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -84,7 +82,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e3)
 		lp=lp+tc:GetAttack()
-		tc=g:GetNext()
 	end
 	Duel.SpecialSummonComplete()
 	if lp>0 then

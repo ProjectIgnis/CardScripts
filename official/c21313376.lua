@@ -1,4 +1,5 @@
 --No.14 強欲のサラメーヤ
+--Number 14: Greedy Sarameya
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 end
 s.xyz_number=14
 function s.refcon(e,re,val,r,rp,rc)
-	return (r&REASON_EFFECT)~=0 and rp~=e:GetHandlerPlayer()
+	return (r&REASON_EFFECT)~=0 and rp==1-e:GetHandlerPlayer()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

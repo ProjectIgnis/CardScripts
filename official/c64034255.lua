@@ -1,7 +1,9 @@
---A・ジェネクス・バードマン
+--Ａ・ジェネクス・バードマン
+--Genex Ally Birdman
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special summon this card from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -39,10 +41,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e1)
 		end
+		--Banish it if it leaves the field
 		local e2=Effect.CreateEffect(c)
+		e2:SetDescription(3300)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
 		e2:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e2,true)

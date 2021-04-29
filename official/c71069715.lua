@@ -1,4 +1,5 @@
 --DDリビルド
+--D/D Reroll
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,16 +7,16 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--indes
+	--Prevent destruction by opponent's effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_ONFIELD,0)
 	e2:SetTarget(s.indtg)
-	e2:SetValue(s.indval)
+	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
-	--to deck
+	--Shuffle banished cards into the Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TODECK)
@@ -32,9 +33,6 @@ s.listed_series={0xae,0xaf}
 function s.indtg(e,c)
 	return c:IsSetCard(0xae)
 end
-function s.indval(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
-end
 function s.tdfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsAbleToDeck()
 end
@@ -49,6 +47,6 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if #g>0 then
-		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

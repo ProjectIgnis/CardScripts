@@ -1,5 +1,5 @@
 --戦華史略－孫劉同盟
---Senka Legend - The Sun-Liu Alliance
+--Ancient Warriors Saga - Sun-Liu Alliance
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,8 +8,9 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--declare attribute
+	--Declare attribute
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
@@ -17,8 +18,9 @@ function s.initial_effect(c)
 	e2:SetTarget(s.natg)
 	e2:SetOperation(s.naop)
 	c:RegisterEffect(e2)
-	--increase atk
+	--Increase ATK
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
@@ -29,15 +31,8 @@ function s.initial_effect(c)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_CHAINING)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetOperation(aux.chainreg)
-	c:RegisterEffect(e4)
 	local e5=e3:Clone()
-	e5:SetCode(EVENT_CHAIN_SOLVED)
+	e5:SetCode(EVENT_CHAINING)
 	e5:SetCondition(s.atkcon2)
 	c:RegisterEffect(e5)
 end
@@ -76,7 +71,7 @@ function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp
 end
 function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and e:GetHandler():GetFlagEffect(1)>0 and re:GetHandler():IsSetCard(0x137) and re:GetHandler():IsType(TYPE_MONSTER)
+	return rp==tp and re:GetHandler():IsSetCard(0x137) and re:GetHandler():IsType(TYPE_MONSTER)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,1,nil) end
@@ -89,4 +84,3 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:UpdateAttack(#g*300,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
 	end
 end
-

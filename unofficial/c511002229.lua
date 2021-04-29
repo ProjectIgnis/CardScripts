@@ -1,4 +1,5 @@
---ライトニング・トライコーン
+--ライトニング・トライコーン (Anime)
+--Lightning Tricorn (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -16,16 +17,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	local code=c:GetCode()
-	return (code==77506119 or code==13995824) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(77506119,13995824) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if #g>0 then

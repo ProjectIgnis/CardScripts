@@ -7,7 +7,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
 	if not AshBlossomTable then AshBlossomTable={} end
+	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(AshBlossomTable,e1)
+	table.insert(GhostBelleTable,e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0

@@ -1,14 +1,13 @@
---Number 100: Numeron Dragon
---By Edo9300
---atkup fixed by eclair
---forced trigger fixed by MLD
+--Ｎｏ．１００ ヌメロン・ドラゴン (Anime)
+--Number 100: Numeron Dragon (Anime)
+--scripted by Edo9300, fixes by eclair and MLD
 Duel.LoadCardScript("c57314798.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,nil,1,2)
 	c:EnableReviveLimit()
-	--special summon
+	--Special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -19,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--atk change
+	--ATK change (trigger)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -27,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
-	--destroy and return
+	--Destroy and return
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DESTROY)
@@ -37,17 +36,17 @@ function s.initial_effect(c)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	--attack up
+	--AtK increase
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_ATKCHANGE)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetCountLimit(1)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCost(s.regcost)
+	e4:SetCost(aux.NumeronDetachCost(1))
 	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
-	--battle indestructable
+	--Cannot be destroyed by battle
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -63,14 +62,15 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_series={0x48}
 s.xyz_number=100
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp and at:IsType(TYPE_XYZ) and Duel.GetAttackTarget()==nil and Duel.GetFieldGroupCount(tp,LOCATION_HAND+LOCATION_ONFIELD,0)==0
+	return at:GetControler()==1-tp and at:IsType(TYPE_XYZ) and Duel.GetAttackTarget()==nil and Duel.GetFieldGroupCount(tp,LOCATION_HAND+LOCATION_ONFIELD,0)==0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -93,7 +93,7 @@ end
 function s.retfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetFlagEffect(id)>0
 end
-function s.retfilter2(c)
+function s.retfilter2(c,tp)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetFlagEffect(id)>0 
 		and not Duel.IsExistingMatchingCard(function(c,seq)return c:GetSequence()==seq end,tp,LOCATION_SZONE,0,1,c,((c:GetFlagEffectLabel(id)&4)>>0xf))
 end
@@ -117,34 +117,32 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local sg1=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.Destroy(sg1,REASON_EFFECT)
-	local sg2=Duel.GetMatchingGroup(s.retfilter2,tp,0x32,0x32,nil)
+	local sg2=Duel.GetMatchingGroup(s.retfilter2,tp,0x32,0x32,nil,tp)
 	--if sg2:IsExists(s.transchk,1,nil) then return end
-	local tc=sg2:GetFirst()
-	while tc do
+	local used={}
+	for tc in sg2:Iter() do
 		local lab=tc:GetFlagEffectLabel(id)
-		local pos=(lab&0xf)
 		local seq=((lab&4)>>0xf)
 		local p=((lab&8)>>0xf)
-		local pzone=((lab&16)>>0xf)
-		local sgf=sg2:Filter(s.fil,nil,seq,p)
-		if #sgf>1 then
-			tc=sgf:Select(p,1,1,nil):GetFirst()
-			sg2:Remove(s.fil,nil,seq,p)
+		if not used[{seq,p}] then
+			local pos=(lab&0xf)
+			local pzone=((lab&16)>>0xf)
+			local sgf=sg2:Filter(s.fil,nil,seq,p)
+			if #sgf>1 then
+				tc=sgf:Select(p,1,1,nil):GetFirst()
+				used[{seq,p}]=true
+			end
+			if pzone==1 then
+				if (seq==4 or seq==7) then seq=1
+				else seq=0 end
+			end
+			local loc=LOCATION_SZONE
+			if pzone==1 then loc=LOCATION_PZONE end
+			if tc:IsType(TYPE_FIELD) then loc=LOCATION_FZONE end
+			Duel.MoveToField(tc,tp,p,loc,pos,true,(1<<seq))
 		end
-		if pzone==1 then
-			if (seq==4 or seq==7) then seq=1
-			else seq=0 end
-		end
-		local loc=LOCATION_SZONE
-		if pzone==1 then loc=LOCATION_PZONE end
-		Duel.MoveToField(tc,tp,p,loc,pos,true,(1<<seq))
-		tc=sg2:GetNext()
 	end
 	Duel.SendtoGrave(sg2:Filter(s.fil2,nil),REASON_RULE)
-end
-function s.regcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

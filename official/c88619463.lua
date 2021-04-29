@@ -32,17 +32,19 @@ function s.initial_effect(c)
 	e3:SetTarget(s.distg)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
+	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.rfilter(c,tp)
-	return c:IsRace(RACE_SPELLCASTER) and c:IsLevelAbove(6) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsRace(RACE_SPELLCASTER) and c:IsLevelAbove(6) and c:IsControler(tp)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),s.rfilter,2,false,2,true,c,c:GetControler(),nil,false,nil)
+	local tp=e:GetHandlerPlayer()
+	return Duel.CheckReleaseGroup(tp,s.rfilter,2,false,2,true,c,tp,nil,nil,nil,tp)
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=Duel.SelectReleaseGroup(tp,s.rfilter,2,2,false,true,true,c,nil,nil,false,nil)
+	local g=Duel.SelectReleaseGroup(tp,s.rfilter,2,2,false,true,true,c,nil,nil,false,nil,tp)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)

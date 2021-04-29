@@ -1,4 +1,5 @@
---Earthbound God Aslla Piscu
+--地縛神 Ａｓｌｌａ ｐｉｓｃｕ (Anime)
+--Earthbound Immortal Aslla piscu (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	local e0=Effect.CreateEffect(c)
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_DIRECT_ATTACK)
-	e3:SetCondition(s.havefieldcon)
+	e3:SetCondition(aux.NOT(s.nofieldcon))
 	c:RegisterEffect(e3)
 	--Unaffected by Spell and Trap Cards
 	local e4=Effect.CreateEffect(c)
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCode(EFFECT_IMMUNE_EFFECT)
-	e4:SetCondition(s.havefieldcon)
+	e4:SetCondition(aux.NOT(s.nofieldcon))
 	e4:SetValue(s.unaffectedval)
 	c:RegisterEffect(e4)
 	--Cannot be Battle Target
@@ -36,7 +37,8 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetCondition(s.havefieldcon)
+	e5:SetCondition(aux.NOT(s.nofieldcon))
+	e5:SetValue(1)
 	c:RegisterEffect(e5)
 	--Destroy all Monsters and Inflict 800 Damage for Each Monster
 	local e6=Effect.CreateEffect(c)
@@ -63,19 +65,13 @@ s.listed_series={0x21}
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsSetCard(0x21)
 end
-function s.havefieldfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FIELD)
-end
-function s.havefieldcon(e)
-	return Duel.IsExistingMatchingCard(s.havefieldfilter,0,LOCATION_SZONE,LOCATION_SZONE,1,e:GetHandler())
-end
 function s.unaffectedval(e,te)
 	return (te:IsActiveType(TYPE_SPELL) or te:IsActiveType(TYPE_TRAP)) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK)
-		and Duel.IsExistingMatchingCard(s.havefieldfilter,0,LOCATION_SZONE,LOCATION_SZONE,1,e:GetHandler())
+		and Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsDestructable()
@@ -97,9 +93,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.nofieldcon(e)
-	local f1=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	local f2=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	return (f1==nil or not f1:IsFaceup()) and (f2==nil or not f2:IsFaceup())
+	return not Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.nofieldop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

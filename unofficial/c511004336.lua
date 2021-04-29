@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
-	c:RegisterEffect(e1)  
+	c:RegisterEffect(e1)
 end
 function s.filter(c)
 	return c:GetCounter(0x1107)>0

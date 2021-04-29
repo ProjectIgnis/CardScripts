@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--search
+	--Search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--draw
+	--Draw
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DRAW)
@@ -34,8 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
-		and Duel.GetDrawCount(tp)>0
+	return Duel.GetTurnPlayer()==tp and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 and Duel.GetDrawCount(tp)>0
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsAbleToHand()

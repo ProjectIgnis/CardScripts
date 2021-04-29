@@ -1,16 +1,15 @@
 --ハイドライブ・ユーティリゼーション
---Hydradrive Utilization (Anime)
+--Hydradrive Utilization
 --scripted by Hatter
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
  	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -38,13 +37,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then 
-	if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp,tc:GetCode()) then
-	 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
-	 	local tg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode())
-	 	if #tg>0 then
-	 	Duel.SendtoHand(tg,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tg) end
+	if tc and tc:IsRelateToEffect(e) then
+		if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp,tc:GetCode()) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local tg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode())
+			if #tg>0 then
+				Duel.SendtoHand(tg,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,tg)
+			end
 		end
 	end
 end

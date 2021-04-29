@@ -1,14 +1,15 @@
 --ミラーフォース・ドラゴン
+--Mirror Force Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--spsummon condition
+	--Special Summon Condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -31,11 +32,11 @@ function s.descon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tgfilter,1,nil,tp)
 end
 function s.descon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and eg:IsExists(s.tgfilter,1,nil,tp)
+	return rp==1-tp and eg:IsExists(s.tgfilter,1,nil,tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil)
-		 and not e:GetHandler():IsStatus(STATUS_CHAINING) end
+		and not e:GetHandler():IsStatus(STATUS_CHAINING) end
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end

@@ -36,8 +36,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
-	if not s.global_check then
-		s.global_check=true
+	aux.GlobalCheck(s,function()
 		--overwriting functions to handle effects that Special Summon while treating it as a Link Summon
 		local iscan=Card.IsCanBeSpecialSummoned
 		Card.IsCanBeSpecialSummoned=function(c,e,sumtype,tp,con,limit,sump,sumptp,zone,...)
@@ -57,9 +56,9 @@ function s.initial_effect(c)
 			end
 			return spstep(c,sumtype,tp,sumtp,con,check,sump,zone,...)
 		end
-	end
+	end)
 end
-s.listed_names={}
+s.listed_names={id}
 s.matfilter=aux.FilterBoolFunctionEx(Card.IsType,TYPE_NORMAL)
 function s.emzcon(e,c)
 	local tp=e:GetHandler():GetControler()
@@ -97,8 +96,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfil,1,nil,1-tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(500)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)

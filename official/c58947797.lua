@@ -1,7 +1,8 @@
 --ヴァンパイア・デューク
+--Vampire Duke
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsuccess
+	--Upon normal summon, special summon 1 DARK "Vampire" monster from GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--to grave
+	--Declare 1 card type; opponent mills 1 card of declared type from deck to GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
-	--
+	--Can only be used as Xyz material for a DARK Xyz monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
@@ -31,6 +32,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x8e}
+s.listed_names={id}
+
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x8e) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
@@ -44,12 +47,12 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
 	local op=Duel.SelectOption(tp,70,71,72)
 	e:SetLabel((1<<op))

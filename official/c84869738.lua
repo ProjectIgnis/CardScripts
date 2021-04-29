@@ -2,7 +2,7 @@
 --Supreme Rage
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--material
+	--Attach Xyz Materials
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -24,30 +24,22 @@ function s.initial_effect(c)
 end
 s.listed_series={0x20f8}
 s.listed_names={13331639}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(13331639)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,13331639),tp,LOCATION_ONFIELD,0,1,nil)
 end
-function s.desfilter(c)
-	return not s.cfilter(c)
-end
-function s.mzfilter(c)
-	return c:GetSequence()<5
-end
-function s.spfilter(c,e,tp,g)
+function s.spfilter(c,e,tp)
 	if not (c:IsSetCard(0x20f8) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)) then return false end
 	if c:IsLocation(LOCATION_EXTRA) then
+		local g=Duel.GetMatchingGroup(aux.NOT(aux.FilterFaceupFunction(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,nil)
 		return Duel.GetLocationCountFromEx(tp,tp,g,c)>0
 	else
 		return Duel.GetMZoneCount(tp,g)>0
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
-	if chk==0 then return #g>0
-		and Duel.IsExistingMatchingCard(c84869738.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil,e,tp,g) end
+	local g=Duel.GetMatchingGroup(aux.NOT(aux.FilterFaceupFunction(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.NOT(aux.FilterFaceupFunction(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA)
 end
@@ -59,8 +51,8 @@ function s.exfilter2(c)
 end
 function s.rescon(ft1,ft2,ft3,ft4,ft)
 	return	function(sg,e,tp,mg)
-				local exnpct=sg:FilterCount(c84869738.exfilter1,nil,LOCATION_EXTRA)
-				local expct=sg:FilterCount(c84869738.exfilter2,nil,LOCATION_EXTRA)
+				local exnpct=sg:FilterCount(s.exfilter1,nil,LOCATION_EXTRA)
+				local expct=sg:FilterCount(s.exfilter2,nil,LOCATION_EXTRA)
 				local mct=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
 				local exct=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				local groupcount=#sg
@@ -70,7 +62,7 @@ function s.rescon(ft1,ft2,ft3,ft4,ft)
 			end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
+	local dg=Duel.GetMatchingGroup(aux.NOT(aux.FilterFaceupFunction(Card.IsCode,13331639)),tp,LOCATION_MZONE,0,nil)
 	if Duel.Destroy(dg,REASON_EFFECT)==0 then return end
 	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ft2=Duel.GetLocationCountFromEx(tp)
@@ -84,8 +76,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if ft4>0 then ft4=1 end
 		ft=1
 	end
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
+	local ect=aux.CheckSummonGate(tp)
 	if ect then
 		ft1 = math.min(ect, ft1)
 		ft2 = math.min(ect, ft2)

@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,0x1e0)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -16,8 +16,9 @@ function s.filter(c)
 	return c:GetLevel()<=4 and c:IsType(TYPE_MONSTER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_MZONE,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 
-	and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

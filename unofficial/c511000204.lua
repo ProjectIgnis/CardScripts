@@ -1,3 +1,4 @@
+--魔封印の宝札
 --Card of Spell Containment
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,27 +13,59 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	aux.GlobalCheck(s,function()
-		s[0]=true
-		s[1]=true
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_CHAINING)
-		ge1:SetOperation(s.checkop)
+		ge1:SetOperation(s.checkop1)
 		Duel.RegisterEffect(ge1,0)
-		aux.AddValuesReset(function()
-			s[0]=true
-			s[1]=true
-		end)
+		local ge2=Effect.CreateEffect(c)
+		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge2:SetCode(EVENT_MSET)
+		ge2:SetOperation(s.checkop2)
+		Duel.RegisterEffect(ge2,0)
+		local ge3=ge2:Clone()
+		ge3:SetCode(EVENT_SSET)
+		Duel.RegisterEffect(ge3,0)
+		local ge4=Effect.CreateEffect(c)
+		ge4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge4:SetCode(EVENT_CHANGE_POS)
+		ge4:SetOperation(s.checkop3)
+		Duel.RegisterEffect(ge4,0)
+		local ge5=Effect.CreateEffect(c)
+		ge5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge5:SetCode(EVENT_SPSUMMON_SUCCESS)
+		ge5:SetOperation(s.checkop4)
+		Duel.RegisterEffect(ge5,0)
 	end)
 end
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+function s.checkop1(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsActiveType(TYPE_SPELL) then
-		s[rp]=false
+		Duel.RegisterFlagEffect(rp,id,RESET_PHASE+PHASE_END,0,1)
+	end
+end
+function s.checkop2(e,tp,eg,ep,ev,re,r,rp)
+	for ec in aux.Next(eg) do
+		Duel.RegisterFlagEffect(ec:GetReasonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+	end
+end
+function s.checkop3(e,tp,eg,ep,ev,re,r,rp)
+	for ec in aux.Next(eg) do
+		if ec:IsPreviousPosition(POS_FACEUP) and ec:IsFacedown() then
+			Duel.RegisterFlagEffect(ec:GetReasonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+		end
+	end
+end
+function s.checkop4(e,tp,eg,ep,ev,re,r,rp)
+	for ec in aux.Next(eg) do
+		if ec:IsFacedown() then
+			Duel.RegisterFlagEffect(ec:GetSummonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+		end
 	end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return s[tp] end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_MSET)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -50,7 +83,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e4:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e4:SetTarget(s.sumlimit)
 	Duel.RegisterEffect(e4,tp)
-	local e5=Effect.CreateEffect(e:GetHandler())
+	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_FIELD)
 	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e5:SetCode(EFFECT_CANNOT_ACTIVATE)
@@ -58,6 +91,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e5:SetValue(s.aclimit)
 	e5:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e5,tp)
+	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,0),nil)
 end
 function s.aclimit(e,re,tp)
 	return re:GetHandler():IsType(TYPE_SPELL)

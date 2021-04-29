@@ -15,7 +15,7 @@ function s.filter(c,tp)
 	return c:IsType(TYPE_UNION) and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,0,1,nil,c)
 end
 function s.filter2(c,eqc)
-	return c:IsFaceup() and eqc:CheckEquipTarget(c) and aux.CheckUnionEquip(eqc,c)
+	return c:IsFaceup() and eqc:CheckUnionTarget(c) and aux.CheckUnionEquip(eqc,c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,tp) end
@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,nil,tc)
 		local tc2=g:GetFirst()

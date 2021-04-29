@@ -1,9 +1,10 @@
 --コンドーレンス・パペット
 --Condolence Puppet
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Send "Gimmick Puppet" monsters from deck to GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--indes
+	--Targeted machine Xyz monster cannot be destroyed by opponent's card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -50,14 +51,17 @@ end
 function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		--Cannot be destroyed by opponent's card effects
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(aux.Stringid(id,0))
+		e1:SetDescription(3060)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e1:SetValue(1)
+		e1:SetValue(s.efilter)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
-
+function s.efilter(e,re,rp)
+	return e:GetHandlerPlayer()==1-rp
+end

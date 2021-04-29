@@ -46,14 +46,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc=g:GetNext()
 	end
 end
+function s.desfilter(c,tc)
+	return c==tc and c:IsFaceup() and not c:IsDisabled()
+end
 function s.descon(e)
 	if e:GetHandler():GetCounter(0x1109)>0 then return false end
-	local tc1=Duel.GetFieldCard(0,LOCATION_SZONE,5)
-	local tc2=Duel.GetFieldCard(1,LOCATION_SZONE,5)
-	if tc1 and tc1==e:GetLabelObject() and tc1:IsFaceup() and not tc1:IsDisabled() then return true
-	elseif tc2 and tc2==e:GetLabelObject() and tc2:IsFaceup() and not tc2:IsDisabled() then return true
-	else return false
-	end
+	return Duel.IsExistingMatchingCard(s.desfilter,0,LOCATION_FZONE,LOCATION_FZONE,1,nil,e:GetLabelObject())
 end
 function s.rmcfilter(c)
 	return c:GetCounter(0x1109)~=0

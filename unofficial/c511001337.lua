@@ -1,3 +1,5 @@
+--ステルス・クラーゲン・エフィラ
+--Kragen Spawn
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -27,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_LEAVE_FIELD)
+	e3:SetCode(EVENT_LEAVE_FIELD_P)
 	e3:SetOperation(s.op)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
@@ -64,20 +66,20 @@ end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousPosition(POS_FACEUP) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
-function s.rescon(sg,e,tp,mg)
-	local gate=Duel.GetMetatable(CARD_SUMMON_GATE)
-	local ect=gate and Duel.IsPlayerAffectedByEffect(tp,CARD_SUMMON_GATE) and gate[tp]
-	return Duel.GetLocationCountFromEx(tp)>=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA) 
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
-		and Duel.GetUsableMZoneCount(tp)>=#sg
-		and (not ect or sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)<=ect) 
+function s.rescon(ect)
+	return function(sg,e,tp,mg)
+		return Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)>=sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA) 
+			and Duel.GetLocationCount(tp,LOCATION_MZONE)>=sg:FilterCount(aux.NOT(Card.IsLocation),nil,LOCATION_EXTRA)
+			and Duel.GetUsableMZoneCount(tp)>=#sg
+			and (not ect or sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)<=ect)
+	end
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject()
 	local ct=#g
 	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,e:GetHandler(),e,tp)
 	if chk==0 then return ct>0 and (not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or ct<=1) 
-		and aux.SelectUnselectGroup(sg,e,tp,nil,nil,s.rescon,0) end
+		and aux.SelectUnselectGroup(sg,e,tp,nil,nil,s.rescon(aux.CheckSummonGate(tp)),0) end
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,ct,tp,nil)
 end
@@ -86,7 +88,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=#mg
 	if ct<=0 or (Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and ct>1) then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_EXTRA+LOCATION_GRAVE,0,e:GetHandler(),e,tp)
-	local sg=aux.SelectUnselectGroup(g,e,tp,ct,ct,s.rescon,1,tp,HINTMSG_SPSUMMON)
+	local sg=aux.SelectUnselectGroup(g,e,tp,ct,ct,s.rescon(aux.CheckSummonGate(tp)),1,tp,HINTMSG_SPSUMMON)
 	if #sg<=0 then return end
 	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP) > 0 then
 		for oc in aux.Next(mg) do

@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy opponent's attacking monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -22,11 +22,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_CYBER_DRAGON}
+
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return tp==1-Duel.GetTurnPlayer()
 end
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_CYBER_DRAGON) or aux.IsMaterialListCode(c,CARD_CYBER_DRAGON)) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and (c:IsCode(CARD_CYBER_DRAGON) or (c:IsType(TYPE_FUSION) and aux.IsMaterialListCode(c,CARD_CYBER_DRAGON))) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -37,8 +38,7 @@ end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetAttacker()
 	if chkc then return chkc==tg end
-	if chk==0 then return not e:GetHandler():IsStatus(STATUS_CHAINING)
-		and tg:IsOnField() and tg:IsCanBeEffectTarget(e) end
+	if chk==0 then return tg:IsOnField() and tg:IsCanBeEffectTarget(e) end
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
 end

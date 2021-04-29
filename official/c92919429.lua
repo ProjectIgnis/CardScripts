@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_names={}
 function s.tgfilter(c)
-	return c:IsRace(RACE_FAIRY) and c:IsAbleToGrave() and c:HasLevel() --check this exists
+	return c:IsRace(RACE_FAIRY) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil)
@@ -41,7 +41,7 @@ end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil):GetFirst()
-	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) and tc:HasLevel() then
+	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) and tc:HasLevel() then
 		local lv=tc:GetLevel()
 		e:GetHandler():UpdateLevel(lv,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 	end

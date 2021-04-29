@@ -22,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() then	
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		--damage
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetDescription(aux.Stringid(100000210,0))
@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e2:SetCondition(s.condition)
-		e2:SetTarget(s.target2)		
+		e2:SetTarget(s.target2)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e2:SetOperation(s.operation)
 		tc:RegisterEffect(e2)

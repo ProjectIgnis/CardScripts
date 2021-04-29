@@ -1,3 +1,4 @@
+--おジャマーキング
 --Ojamarking
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,6 +14,13 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
+	--banish
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_TO_GRAVE_REDIRECT)
+	e2:SetValue(LOCATION_REMOVED)
+	e2:SetCondition(s.rmcon)
+	c:RegisterEffect(e2)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
@@ -39,4 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
+end
+function s.rmcon(e)
+	return e:GetHandler():IsFacedown() and e:GetHandler():IsLocation(LOCATION_ONFIELD)
 end

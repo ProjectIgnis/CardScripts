@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x7}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	return #eg==1 and ec:IsSetCard(0x7) and ec:IsPreviousLocation(LOCATION_GRAVE) 
@@ -31,6 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ec:GetAttack()/2)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local ec=eg:GetFirst()
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	Duel.Damage(p,ec:GetAttack()/2,REASON_EFFECT)

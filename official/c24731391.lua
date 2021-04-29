@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--halve damage
+	--Halve damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_MZONE)
@@ -12,13 +12,6 @@ function s.initial_effect(c)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.val)
 	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e2:SetCondition(s.dcon)
-	e2:SetOperation(s.dop)
-	c:RegisterEffect(e2)
 	--target
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -42,12 +35,10 @@ function s.initial_effect(c)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_UPDATE_ATTACK)
-	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e5:SetRange(LOCATION_MZONE)
 	e5:SetCondition(s.atkcon)
 	e5:SetValue(1000)
 	c:RegisterEffect(e5)
-	--to hand
+	--add to hand
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetCategory(CATEGORY_TOHAND)
@@ -61,15 +52,7 @@ function s.initial_effect(c)
 end
 s.listed_names={34767865}
 function s.val(e,re,dam,r,rp,rc)
-	if (r&REASON_EFFECT)~=0 then
-		return dam/2
-	else return dam end
-end
-function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.HalfBattleDamage(ep)
+	return math.floor(dam/2)
 end
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(Card.IsLinkMonster,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
@@ -83,14 +66,14 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return bc and bc:IsLinkMonster()
+	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and bc and bc:IsLinkMonster()
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT) and rp~=tp and c:IsPreviousControler(tp)
+	return c:IsReason(REASON_EFFECT) and rp==1-tp and c:IsPreviousControler(tp)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

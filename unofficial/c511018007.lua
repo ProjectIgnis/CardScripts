@@ -1,3 +1,4 @@
+--捕食植物ドロソフィルム・ヒドラ (Anime)
 --Predaplant Drosophyllum Hydra (Anime)
 --fixed by MLD
 local s,id=GetID()
@@ -30,7 +31,7 @@ function s.initial_effect(c)
 end
 function s.cfil(c,label)
 	return c:IsSetCard(0x10f3) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
-		and (label~=1 or Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,c))
+		and (label~=1 or Duel.IsExistingTarget(Card.IsFaceup,0,LOCATION_MZONE,LOCATION_MZONE,1,c))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfil,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,e:GetLabel()) end

@@ -1,16 +1,18 @@
 --超重荒神スサノ－O (Anime)
+--Superheavy Samurai Warlord Susanowo (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
+	--Synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,0x9a),1,99)
 	c:EnableReviveLimit()
-	--defense attack
+	c:AddSetcodesRule(0x9a)
+	--Attack while in Defense position
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DEFENSE_ATTACK)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--set
+	--Set card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -24,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.acop)
 	c:RegisterEffect(e2)
 end
+s.listed_series={0x9a}
 function s.accost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end
 	Duel.PayLPCost(tp,500)
@@ -43,7 +46,7 @@ function s.actg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) then
+	if tc and tc:IsRelateToEffect(e) and (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) then
 		local tpe=tc:GetType()
 		local te=tc:GetActivateEffect()
 		local tg=te:GetTarget()
@@ -52,9 +55,11 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 		e:SetCategory(te:GetCategory())
 		e:SetProperty(te:GetProperty())
 		Duel.ClearTargetCard()
+		local loc=LOCATION_SZONE
 		if (tpe&TYPE_FIELD)~=0 then
+			loc=LOCATION_FZONE
 			local fc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
-			if Duel.IsDuelType(DUEL_OBSOLETE_RULING) then
+			if Duel.IsDuelType(DUEL_1_FIELD) then
 				if fc then Duel.Destroy(fc,REASON_RULE) end
 				fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 				if fc and Duel.Destroy(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
@@ -63,7 +68,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 				if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
 			end
 		end
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 		Duel.Hint(HINT_CARD,0,tc:GetCode())
 		tc:CreateEffectRelation(te)
 		if (tpe&TYPE_EQUIP+TYPE_CONTINUOUS+TYPE_FIELD)==0 and not tc:IsHasEffect(EFFECT_REMAIN_FIELD) then
@@ -82,7 +87,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if op then op(te,tp,eg,ep,ev,re,r,rp) end
 		tc:ReleaseEffectRelation(te)
-		if etc then	
+		if etc then
 			etc=g:GetFirst()
 			while etc do
 				etc:ReleaseEffectRelation(te)

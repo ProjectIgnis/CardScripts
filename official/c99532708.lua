@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	c:RegisterEffect(e1)
 end
-s.counter_list={0x100e}
+s.counter_list={COUNTER_A}
 function s.distg(e,c)
-	return c:GetCounter(0x100e)>0 and c:GetCode()~=id
+	return c:GetCounter(COUNTER_A)>0 and c:GetCode()~=id
 end

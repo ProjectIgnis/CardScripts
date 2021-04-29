@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
+	e2:SetCountLimit(1,id)
 	e2:SetCost(s.spcost)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -46,4 +47,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-

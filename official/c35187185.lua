@@ -1,10 +1,14 @@
+--夢魔鏡の天魔－ネイロス
 --Oneiros, the Dream Mirror Erlking
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
+	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
+	--Fusion summon procedure
 	Fusion.AddProcMixN(c,true,true,s.ffilter,2)
-	--dual attribute
+	--Also treated as a DARK monster while on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -12,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(ATTRIBUTE_DARK)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy 1 card on the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -25,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special summon 1 "Dream Mirror" monster from GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -40,8 +44,9 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={0x131}
+
 function s.ffilter(c,fc,sumtype,sp,sub,mg,sg)
-	return  c:IsSetCard(0x131,fc,sumtype,tp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
+	return c:IsSetCard(0x131,fc,sumtype,sp) and (not sg or sg:FilterCount(aux.TRUE,c)==0 or not sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sp))
 end
 function s.descfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp

@@ -61,12 +61,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if tc and tc:IsCanBeEffectTarget(e) and te:IsActiveType(TYPE_MONSTER) then
 			local loc=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_LOCATION)
 			local check=false
-			if tc:IsLevelAbove(5) and loc==LOCATION_MZONE then g:AddCard(tc) end
+			if tc:IsLevelAbove(5) and loc==LOCATION_MZONE then check=true end
 			if te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then
 				local tg=Duel.GetChainInfo(i,CHAININFO_TARGET_CARDS)
-				if tg and tg:IsExists(s.cfilter,1,nil) then g:AddCard(tc) end
+				if tg and tg:IsExists(s.cfilter,1,nil) then check=true end
 			end
-			if check then tc:RegisterFlagEffect(51102034,RESET_CHAIN,0,1,i) end
+			if check then
+				g:AddCard(tc)
+				tc:RegisterFlagEffect(51102034,RESET_CHAIN,0,1,i)
+			end
 		end
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)

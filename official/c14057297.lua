@@ -1,4 +1,5 @@
 --死なばもろとも
+--Multiple Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,16 +28,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local st=0
 	for i=1,2 do
 		local sg=Duel.GetFieldGroup(p,LOCATION_HAND,0)
-		Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		local og=Duel.GetOperatedGroup()
 		local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_DECK)
 		if ct>0 then
 			st=st+ct
-			Duel.SortDecktop(p,p,ct)
-			for j=1,ct do
-				local mg=Duel.GetDecktopGroup(p,1)
-				Duel.MoveSequence(mg:GetFirst(),1)
-			end
+			Duel.SortDeckbottom(p,p,ct)
 		end
 		p=1-p
 	end

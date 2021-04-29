@@ -1,19 +1,12 @@
 --心眼の鉾
+--Rod of the Mind's Eye
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
-	--damage change
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e3:SetCondition(s.damcon)
-	e3:SetOperation(s.damop)
-	c:RegisterEffect(e3)
-end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetFirst()==e:GetHandler():GetEquipTarget() and ep~=tp
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(ep,1000)
+	--Change damage
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e1:SetValue(aux.ChangeBattleDamage(1,1000))
+	c:RegisterEffect(e1)
 end

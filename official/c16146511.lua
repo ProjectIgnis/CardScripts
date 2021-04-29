@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_names={16146511}
+s.listed_names={id}
 	--Check for gemini or FIRE warrior, besides "Evocator Eveque"
 function s.filter(c,e,tp)
 	return not c:IsCode(id) and (c:IsType(TYPE_GEMINI) or (c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -40,7 +40,7 @@ end
 	--Special summoning the target
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

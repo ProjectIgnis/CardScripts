@@ -1,3 +1,4 @@
+--融合霧散
 --Fusion Dispersal
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)==0 then return end
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	if sumtype&SUMMON_TYPE_FUSION==SUMMON_TYPE_FUSION and #mg>0
 		and #mg<=ft and (not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or #mg==1) 
 		and mg:FilterCount(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,tc)==#mg then

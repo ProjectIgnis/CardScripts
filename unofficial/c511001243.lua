@@ -1,3 +1,4 @@
+--エクシーズ・トリップ
 --Xyz Trip
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,5 +21,5 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tc:IsType(TYPE_XYZ) and tc:IsControler(1-tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end

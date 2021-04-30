@@ -60,7 +60,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 		if sg then
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-			Duel.ConfirmCards(1-tp,sg)
 		end
 	end
 end

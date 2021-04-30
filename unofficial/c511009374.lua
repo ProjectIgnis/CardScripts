@@ -10,6 +10,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)	
 	--destroy
 	local e2=Effect.CreateEffect(c)
@@ -73,6 +74,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e2:SetOperation(s.reset)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,e:GetLabel())
 	c:RegisterEffect(e2)
+end
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end
 function s.reset(e,tp,eg,ep,ev,re,r,rp)
 	s.desop(e:GetLabelObject(),tp,eg,ep,ev,e,r,rp)

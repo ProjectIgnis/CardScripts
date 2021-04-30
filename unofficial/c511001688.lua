@@ -1,3 +1,4 @@
+--黄泉の防人
 --Abyss Guardian
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,5 +41,5 @@ function s.skipcon(e,tp,eg,ep,ev,re,r,rp)
 	return ph>=0x08 and ph<=0x20
 end
 function s.skipop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end

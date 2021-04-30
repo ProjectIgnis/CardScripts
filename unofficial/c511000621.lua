@@ -1,3 +1,4 @@
+--トラスト・チェーン
 --Trust Chain
 local s,id=GetID()
 function s.initial_effect(c)
@@ -48,7 +49,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end
 function s.atktarget(e,c)
 	return c:IsType(TYPE_SYNCHRO)

@@ -1,3 +1,4 @@
+--封印防御壁
 --Defense Seal Wall
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if tc and tc:IsRelateToBattle() and Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

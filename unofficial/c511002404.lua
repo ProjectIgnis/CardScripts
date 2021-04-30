@@ -1,3 +1,4 @@
+--仲裁の代償
 --Compensation Mediation
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,rsel)
 		Duel.ConfirmCards(1-tp,rsel)
 		if rsel:IsContains(c) then
-			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 			sg:RemoveCard(c)
 			Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
 			Duel.SendtoGrave(c,REASON_EFFECT)

@@ -1,4 +1,5 @@
---サイバー・ヴァリー
+--サイバー・ヴァリー (Anime)
+--Cyber Valley (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw 1
@@ -48,7 +49,7 @@ function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.op1(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	Duel.Draw(tp,1,REASON_EFFECT)
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)

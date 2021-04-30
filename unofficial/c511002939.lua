@@ -1,3 +1,4 @@
+--埋没神の救済
 --Rescuer from the Grave
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,6 +26,6 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
 end

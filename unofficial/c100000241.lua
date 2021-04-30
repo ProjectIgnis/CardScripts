@@ -1,4 +1,5 @@
 --フォトン・エスケープ
+--Photon Escape
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,6 +27,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttackTarget()
 	if a:IsFaceup() and a:IsRelateToEffect(e) then
 		Duel.Remove(a,POS_FACEUP,REASON_EFFECT)
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
 end

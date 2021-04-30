@@ -1,4 +1,5 @@
---Binding Swords of Impact
+--衝撃の拘束剣
+--Restraining Sword of Impact
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)

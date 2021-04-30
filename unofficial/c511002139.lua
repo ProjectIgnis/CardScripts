@@ -1,3 +1,4 @@
+--バスター・トラップ
 --Buster Trap
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,6 +27,6 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 then
-		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
 end

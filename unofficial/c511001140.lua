@@ -1,4 +1,5 @@
---Attack Guidance Armor
+--攻撃誘導バリア
+--Attack Guidance Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--change target
@@ -29,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		if a:CanAttack() and not a:IsImmuneToEffect(e) and not tc:IsImmuneToEffect(e) then 
 			Duel.CalculateDamage(a,tc)
-			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 		end
 	end
 end

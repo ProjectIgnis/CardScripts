@@ -114,5 +114,5 @@ function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
 	return s.condition() and Duel.GetTurnPlayer()==1-tp and Duel.GetFlagEffect(0,id+1)>0
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end

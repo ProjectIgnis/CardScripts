@@ -1,3 +1,4 @@
+--超重武神フドウミョウ－Ｏ
 --Superheavy Samurai Bushin Fudomyo'o
 --fixed by MLD
 local s,id=GetID()
@@ -66,7 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(c,REASON_RULE)
 		end
 		Duel.BreakEffect()
-		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 		if tc and tc:IsRelateToEffect(e) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)

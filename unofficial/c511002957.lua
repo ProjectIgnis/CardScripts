@@ -1,4 +1,5 @@
---超電磁タートル
+--超電磁タートル (Anime)
+--Electromagnetic Turtle (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--end battle phase
@@ -16,5 +17,5 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetTurnCount()==e:GetHandler():GetTurnID() and not e:GetHandler():IsReason(REASON_RETURN)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end

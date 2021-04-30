@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e:SetLabel(0)
 		if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP,zones)>0 then
 			Duel.BreakEffect()
-			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 		end
 	end
 end

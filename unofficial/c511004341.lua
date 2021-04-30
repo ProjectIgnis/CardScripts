@@ -1,3 +1,4 @@
+--攻撃の無力化 (Anime)
 --Negate Attack (anime)
 --scripted by andré
 local s,id=GetID()
@@ -15,6 +16,6 @@ function s.condition(e,tp,ev,eg,ep,re,r,rp)
 end
 function s.operation(e,tp,ev,eg,ep,re,r,rp)
 	if Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	end
 end

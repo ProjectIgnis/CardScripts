@@ -1,3 +1,4 @@
+--献身的な愛
 --Devoted Love
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 	Duel.BreakEffect()
 	Duel.Draw(1-tp,1,REASON_EFFECT)
 	local e1=Effect.CreateEffect(e:GetHandler())

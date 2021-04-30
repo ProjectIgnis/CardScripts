@@ -26,7 +26,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
-		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 		Duel.BreakEffect()
 		local ph=Duel.GetCurrentPhase()
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -37,9 +37,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetTurnPlayer()==tp and ph>PHASE_MAIN1 and ph<PHASE_MAIN2 then
 			e1:SetLabel(Duel.GetTurnCount())
 			e1:SetCondition(s.skipcon)
-			e1:SetReset(RESET_PHASE+PHASE_BATTLE_STEP+RESET_SELF_TURN,2)
+			e1:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_SELF_TURN,2)
 		else
-			e1:SetReset(RESET_PHASE+PHASE_BATTLE_STEP+RESET_SELF_TURN,1)
+			e1:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_SELF_TURN,1)
 		end
 		Duel.RegisterEffect(e1,tp)
 	end

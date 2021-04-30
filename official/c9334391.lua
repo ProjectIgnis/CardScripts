@@ -1,6 +1,5 @@
 --宝玉の絆
 --Crystal Bond
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 "Crystal Beast" monster from deck
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x1034}
-
 function s.thfilter(c,tp)
 	return c:IsSetCard(0x1034) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(s.plfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
@@ -32,13 +30,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g1=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tp)
-	if #g1>0 then
-		Duel.SendtoHand(g1,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g1)
-	end
+	if #g1<=0 then return end
+	Duel.SendtoHand(g1,nil,REASON_EFFECT)
+	if not Duel.GetOperatedGroup():GetFirst():IsLocation(LOCATION_HAND) then return end
+	Duel.ConfirmCards(1-tp,g1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g2=Duel.SelectMatchingCard(tp,s.plfilter,tp,LOCATION_DECK,0,1,1,nil,g1:GetFirst():GetCode())
-	if #g2<=0 then return end
 	local tc=g2:GetFirst()
 	if tc then
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)

@@ -45,7 +45,7 @@ function s.aclimtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.aclimop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		--Cannot activate its effects
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3302)

@@ -1,4 +1,4 @@
---きまぐれ軍實握り
+--きまぐれ軍貫握り
 --Suship Roll Specials
 local s,id=GetID()
 function s.initial_effect(c)

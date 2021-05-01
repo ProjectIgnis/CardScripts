@@ -64,8 +64,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(math.floor(tc2:GetAttack()/2))
 		tc1:RegisterEffect(e1)
-		Duel.BreakEffect()
-		Duel.Overlay(c,tc2)
+		if not tc1:IsHasEffect(EFFECT_REVERSE_UPDATE) and c:IsRelateToEffect(e) then
+			Duel.BreakEffect()
+			Duel.Overlay(c,tc2)
+		end
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)

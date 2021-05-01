@@ -58,10 +58,12 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local tc
 	if (choice==0 or choice==3) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetFlagEffect(tp,id)==0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		tc=eg:Filter(s.lffilter,nil,r,rp,tp):FilterSelect(tp,s.spfilter,1,1,nil,e,tp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	elseif (choice==1 or choice==5) and Duel.GetFlagEffect(tp,id+1)==0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		tc=Duel.SelectMatchingCard(tp,s.remfilter,tp,0,LOCATION_GRAVE+LOCATION_MZONE,1,1,nil)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)

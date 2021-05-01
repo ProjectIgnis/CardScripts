@@ -3,7 +3,7 @@
 --scripted by GameMaster(GM), fixed by MLD and Larry126
 local s,id,alias=GetID()
 function s.initial_effect(c)
-	local alias=c:GetOriginalCodeRule()
+	alias=c:GetOriginalCodeRule()
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COIN)

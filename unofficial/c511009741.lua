@@ -60,5 +60,5 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,heal,REASON_EFFECT)
 end
 function s.condition(e)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<=1
+	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)<=1
 end

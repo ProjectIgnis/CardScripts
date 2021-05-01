@@ -1,4 +1,4 @@
---ものマネ幻想師
+--ものマネ幻想師 (Anime)
 --Copycat (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and tc:IsType(TYPE_EQUIP+TYPE_CONTINUOUS) then
 		local tpe=tc:GetType()
 		local code=tc:GetOriginalCode()
-		c:CopyEffect(code,nil,1)
+		c:CopyEffect(code,0,1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_TYPE)

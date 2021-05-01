@@ -1,4 +1,4 @@
---魔鍵疑—羅一
+--魔鍵錠－解－
 --Magikey Lock - Unlock
 --scripted by XyleN5967
 local s,id=GetID()

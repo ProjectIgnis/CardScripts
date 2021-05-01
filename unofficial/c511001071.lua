@@ -33,17 +33,13 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	local g=Group.FromCards(a,d)
-	g=g:Filter(s.filter,nil,tp)
-	local tc=g:GetFirst()
-	while tc do
+	for tc in Group.FromCards(table.unpack({a,d})):Filter(s.filter,nil,tp):Iter() do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		tc:RegisterEffect(e1)
-		tc=g:GetNext()
 	end
 	local sg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	if #sg<=0 then return end

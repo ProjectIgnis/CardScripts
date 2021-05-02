@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.activate)
+	e1:SetLabel(0)
 	c:RegisterEffect(e1)
 	--Can activate from hand during opponent's turn
 	local e2=Effect.CreateEffect(c)
@@ -16,7 +17,6 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.actcon)
-	e2:SetLabel(0)
 	c:RegisterEffect(e2)
 	e1:SetLabelObject(e2)
 end
@@ -24,28 +24,31 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsPreviousControler,1,nil,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local label=e:GetLabelObject():GetLabel()
+	local c=e:GetHandler()
 	if chk==0 then
-		if label==0 or Duel.IsTurnPlayer(tp) then
-			e:GetLabelObject():SetLabel(0)
+		if c:GetFlagEffect(id)==0 or Duel.IsTurnPlayer(tp) then
+			e:SetLabel(0)
 			return true
-		elseif label==1 then
-			return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,2,e:GetHandler())
+		elseif c:GetFlagEffect(id)>0 and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,2,c) then
+			e:SetLabel(1)
+			return true
 		end
 	end
-	if label==1 then
-		Duel.DiscardHand(tp,Card.IsDiscardable,2,2,REASON_COST+REASON_DISCARD,e:GetHandler())
+	if e:GetLabel()==1 then
+		e:SetLabel(0)
+		Duel.DiscardHand(tp,Card.IsDiscardable,2,2,REASON_COST+REASON_DISCARD,c)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end
 function s.actcon(e)
-	if Duel.IsExistingMatchingCard(Card.IsDiscardable,e:GetHandlerPlayer(),LOCATION_HAND,0,2,e:GetHandler()) then
-		e:SetLabel(1)
+	local c=e:GetHandler()
+	if Duel.IsExistingMatchingCard(Card.IsDiscardable,e:GetHandlerPlayer(),LOCATION_HAND,0,2,c) then
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		return true
 	else
-		e:SetLabel(0)
+		c:ResetFlagEffect(id)
 		return false
 	end
 end

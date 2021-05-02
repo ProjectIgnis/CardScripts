@@ -26,10 +26,11 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local label=e:GetLabelObject():GetLabel()
 	if chk==0 then
-		if label==1 then
-			return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,2,e:GetHandler())
-		elseif label==0 then
+		if label==0 or Duel.IsTurnPlayer(tp) then
+			e:GetLabelObject():SetLabel(0)
 			return true
+		elseif label==1 then
+			return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,2,e:GetHandler())
 		end
 	end
 	if label==1 then

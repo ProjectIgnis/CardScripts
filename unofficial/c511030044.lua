@@ -48,7 +48,6 @@ function s.initial_effect(c)
 	e5:SetCondition(s.drcon)
 	e5:SetTarget(s.drtg)
 	e5:SetOperation(s.drop)
-	e5:SetLabelObject(e4)
 	c:RegisterEffect(e5)
 end
 s.listed_series={0x14a}
@@ -103,14 +102,13 @@ function s.checkcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.checkfilter,1,e:GetHandler(),e,tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	e:SetLabel(1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetLabelObject():GetLabel()==1
+	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
-	e:GetLabelObject():SetLabel(0)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)

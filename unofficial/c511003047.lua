@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--
+	--ATK up
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
@@ -58,16 +58,16 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 				g:AddCard(tc)
 			end
 		end
-		return #g>0 end
+		return #g>0
+	end
 	local g=Group.CreateGroup()
 	for i=1,ev do
 		local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
 		local tc=te:GetHandler()
 		if tc and tc:IsCanBeEffectTarget(e) and te:IsActiveType(TYPE_MONSTER) then
 			local loc=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_LOCATION)
-			local check=false
 			g:AddCard(tc)
-			if check then tc:RegisterFlagEffect(51102034,RESET_CHAIN,0,1,i) end
+			tc:RegisterFlagEffect(511002034,RESET_CHAIN,0,1,i)
 		end
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
@@ -98,9 +98,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetValue(RESET_TURN_SET)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	tc:RegisterEffect(e2)
-	local e3=nil
 	if tc:IsType(TYPE_TRAPMONSTER) then
-		e3=Effect.CreateEffect(c)
+		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)

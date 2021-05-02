@@ -1,7 +1,6 @@
 --アームド・ドラゴン・サンダー LV5
 --Armed Dragon Thunder LV5
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Treat name as "Armed Dragon LV5"
@@ -73,6 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local label=e:GetLabel()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp,label)
+		if #g<=0 then return end
 		if label==1 and g:GetFirst():IsCode(73879377) then
 			Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 			g:GetFirst():CompleteProcedure()

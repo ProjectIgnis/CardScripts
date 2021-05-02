@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local sg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
 	if #sg<=0 then return end
-	if #g<=0 or Duel.SelectYesNo(tp,aux.Stringid(52687916,2)) then
+	if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(52687916,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local rg=sg:Select(tp,1,1,nil)
 		if Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)>0 then

@@ -16,20 +16,20 @@ function s.initial_effect(c)
 end
 s.listed_series={0x146}
 s.listed_names={CARD_ALBAZ}
-function s.tgfilter(c,tp)
-	return c:IsAbleToGrave() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetAttack())
+function s.tgfilter(c,tp,necro)
+    return c:IsAbleToGrave() and Duel.IsExistingMatchingCard(necro and aux.NecroValleyFilter(s.thfilter) or s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetAttack())
 end
 function s.thfilter(c,atk)
 	return (c:IsCode(CARD_ALBAZ) or (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x146))) and c:GetAttack()<=atk and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,nil,tp,false) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g1=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_EXTRA,0,1,1,nil,tp)
+	local g1=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_EXTRA,0,1,1,nil,tp,true)
 	if #g1>0 and Duel.SendtoGrave(g1,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		if og:GetFirst():IsLocation(LOCATION_GRAVE) then

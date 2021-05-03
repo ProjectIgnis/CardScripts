@@ -17,7 +17,7 @@ end
 s.listed_series={0x146}
 s.listed_names={CARD_ALBAZ}
 function s.tgfilter(c,tp,necro)
-    return c:IsAbleToGrave() and Duel.IsExistingMatchingCard(necro and aux.NecroValleyFilter(s.thfilter) or s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetAttack())
+	return c:IsAbleToGrave() and Duel.IsExistingMatchingCard(necro and aux.NecroValleyFilter(s.thfilter) or s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetAttack())
 end
 function s.thfilter(c,atk)
 	return (c:IsCode(CARD_ALBAZ) or (c:IsType(TYPE_MONSTER) and c:IsSetCard(0x146))) and c:GetAttack()<=atk and c:IsAbleToHand()

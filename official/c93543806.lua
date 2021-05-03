@@ -40,7 +40,7 @@ function s.splimit(e,c)
 	return not c:IsSetCard(0x70)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x70) and c:GetLevel()~=6
+	return c:IsFaceup() and c:IsSetCard(0x70) and not c:IsLevel(6) and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

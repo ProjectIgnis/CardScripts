@@ -1,6 +1,5 @@
 --ラヴァルバル・サラマンダー
 --Lavalval Salamander
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -51,7 +50,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(p)
 	Duel.BreakEffect()
 	local cg=Duel.GetFieldGroup(p,LOCATION_HAND,0)
-	local og=aux.SelectUnselectGroup(cg,e,tp,2,2,s.rescon,1,tp,HINTMSG_DISCARD,s.rescon)
+	local og=aux.SelectUnselectGroup(cg,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE,s.rescon)
 	if og and #og>=2 then
 		local ct=Duel.SendtoGrave(og,REASON_EFFECT)
 	else
@@ -79,11 +78,11 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local sc=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.posfilter(chkc) end
 	if chk==0 then return sc>0 and Duel.IsExistingMatchingCard(s.posfilter,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,1,1,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(tp,Card.IsCanTurnSet,tp,0,LOCATION_MZONE,1,ct,nil)
 	Duel.HintSelection(g)
 	Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)

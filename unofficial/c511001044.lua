@@ -37,7 +37,7 @@ end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local scl=math.max(0,e:GetHandler():GetLeftScale()-5)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,sc1)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,scl)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 end
 function s.scop(e,tp,eg,ep,ev,re,r,rp)

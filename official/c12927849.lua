@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
-	aux.AddZWEquipLimit(c,nil,function(tc,c,tp) return s.filter(tc) and tc:IsControler(tp) end,aux.EquipAndLimitRegister,e2)
+	aux.AddZWEquipLimit(c,nil,function(tc,c,tp) return s.eqfilter(tc) and tc:IsControler(tp) end,aux.EquipAndLimitRegister,e2)
 	--salvage
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))

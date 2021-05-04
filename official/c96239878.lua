@@ -1,4 +1,4 @@
---JP name
+--束ねられし力
 --Strength in Unity
 --Scripted by Naim
 local s,id=GetID()
@@ -44,10 +44,10 @@ function s.rmvcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.rmvfilter(c)
-	return c:IsAbleToRemove() and aux.SpElimFilter(c,true,true)
+	return c:IsAbleToRemove() and aux.SpElimFilter(c,false,true)
 end
 function s.rmvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_MZONE) and chkc:IsControler(tp) and s.rmvfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_ONFIELD) and chkc:IsControler(tp) and s.rmvfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.rmvfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,s.rmvfilter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,1,nil)

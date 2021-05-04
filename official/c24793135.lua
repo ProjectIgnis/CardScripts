@@ -85,5 +85,5 @@ end
 function s.aclimit(e,re,tp)
 	local loc=re:GetActivateLocation()
 	local rc=re:GetHandler()
-	return loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and not rc:IsDefense(rc:GetAttack())
+	return loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and rc:GetDefense()~=rc:GetAttack()
 end

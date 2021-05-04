@@ -15,10 +15,10 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp then return false end
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	e:SetLabel(cv)
+	if cv then e:SetLabel(cv) end
 	if ex and (cp==tp or cp==PLAYER_ALL) then return true end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
-	e:SetLabel(cv)
+	if cv then e:SetLabel(cv) end
 	return ex and (cp==tp or cp==PLAYER_ALL) and Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_RECOVER)
 end
 function s.filter(c,e,tp,atk)

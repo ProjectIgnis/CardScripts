@@ -1,3 +1,4 @@
+--ダウジング・バーン
 --Dowsing Burn
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,7 +16,7 @@ function s.banfilter(c)
 		and Duel.IsExistingTarget(s.desfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetLevel(),c:GetRace())
 end
 function s.desfilter(c,lv,race)
-	return c:IsFaceup() and c:GetLevel()<lv and c:IsRace(race)
+	return c:IsFaceup() and c:HasLevel() and c:GetLevel()<lv and c:IsRace(race)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.banfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) end

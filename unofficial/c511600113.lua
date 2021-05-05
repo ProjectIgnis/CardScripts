@@ -64,13 +64,13 @@ function s.event(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=e:GetHandler():GetLinkedZone()&0x1f
-	if chk==0 then return Duel.GetLocationCount(p,LOCATION_MZONE,p,LOCATION_REASON_CONTROL,zone)>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,zone)>0 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local zone=c:GetLinkedZone()&0x1f
-	if Duel.GetLocationCount(p,LOCATION_MZONE,p,LOCATION_REASON_CONTROL,zone)>0 then
+	if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL,zone)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 		local nseq=math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~zone),2)
 		Duel.MoveSequence(c,nseq)

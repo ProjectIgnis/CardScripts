@@ -47,7 +47,7 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==1-tp
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
+	if chk==0 then return e:GetHandler():IsReleasable() and Duel.GetFlagEffect(0,id)==0 end
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
@@ -68,4 +68,5 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,1,aux.Stringid(id,2),nil)
+	Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
 end

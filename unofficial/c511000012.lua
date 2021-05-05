@@ -1,4 +1,5 @@
---Fenrir of the Nordic Wicked Wolves
+--極星邪狼フェンリル (VG)
+--Fenrir the Nordic Wolf (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -51,8 +52,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.bptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(aux.TRUE,tp,LOCATION_MZONE,1,nil) end
-	local sg=Duel.GetFieldGroup(tp,aux.TRUE,tp,LOCATION_MZONE,nil)
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0 end
+	local sg=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,sg,#sg,0,0)
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp)

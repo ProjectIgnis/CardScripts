@@ -1,4 +1,4 @@
---Parametalfoes Azothles 
+--Parametalfoes Azortless 
 --パラメタルフォーゼ・アゾートレス
 
 local s,id=GetID()
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.descon2)

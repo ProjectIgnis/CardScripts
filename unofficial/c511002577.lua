@@ -1,3 +1,4 @@
+--元素融合 エレメント・フュージョン
 --Element Fusion
 local s,id=GetID()
 function s.initial_effect(c)
@@ -87,7 +88,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil)
 	local tc=g:GetFirst()
 	while tc do
-		tc:RegisterFlagEffect(id,nil,0,0)
+		tc:RegisterFlagEffect(id,0,0,0)
 		tc=g:GetNext()
 	end
 end

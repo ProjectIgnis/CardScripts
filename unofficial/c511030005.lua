@@ -1,11 +1,11 @@
---幻奏の音姫マイスタリン・シューベルト
---Schuberta the Melodious Maestra (anime)
+--幻奏の音姫マイスタリン・シューベルト (Anime)
+--Schuberta the Melodious Maestra (Anime)
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,76990617,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9b))
-	--target grave
+	--Banish and gain ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_REMOVE)
@@ -29,7 +29,7 @@ function s.filter1(c)
 			c:RegisterFlagEffect(id,RESET_EVENT+RESET_TOHAND+RESET_TODECK+RESET_REMOVE+RESET_TOFIELD,0,0,fcid)
 			c:RegisterFlagEffect(id+1,RESET_EVENT+RESET_TOHAND+RESET_TODECK+RESET_REMOVE+RESET_TOFIELD,0,0,fcmc)
 		end
-		local i=Duel.GetMatchingGroupCount(s.filter2,tp,LOCATION_GRAVE,LOCATION_GRAVE,c,c:GetFlagEffectLabel(id))
+		local i=Duel.GetMatchingGroupCount(s.filter2,0,LOCATION_GRAVE,LOCATION_GRAVE,c,c:GetFlagEffectLabel(id))
 		if i~=(c:GetFlagEffectLabel(id+1)-1) then
 			return false
 		end

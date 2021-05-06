@@ -53,9 +53,12 @@ end
 function s.matfilter(c)
 	return aux.SpElimFilter(c) and c:IsAbleToRemove()
 end
+function s.extrafil(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+end
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		return Duel.GetMatchingGroup(aux.AND(Card.IsType,Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
+		return Duel.GetMatchingGroup(s.extrafil,tp,LOCATION_GRAVE,0,nil)
 	end
 	return nil
 end

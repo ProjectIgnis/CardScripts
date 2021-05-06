@@ -55,7 +55,7 @@ function s.matfilter(c)
 end
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		return Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
+		return Duel.GetMatchingGroup(aux.AND(Card.IsType,Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
 	end
 	return nil
 end

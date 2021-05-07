@@ -29,7 +29,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,2,REASON_COST)>0 then
 		--Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			c:UpdateAttack(-1000)
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(-1000)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			c:RegisterEffectRush(e1)
 			--cannot direct attack
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

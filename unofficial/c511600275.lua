@@ -56,7 +56,7 @@ function s.descon(e)
 end
 function s.atg(e,c)
 	local lg=Group.CreateGroup()
-	for lc in aux.Next(Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)) do
+	for lc in aux.Next(Duel.GetMatchingGroup(s.cfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)) do
 		lg=lg+lc:GetLinkedGroup()
 	end
 	return not lg:IsContains(c)

@@ -43,7 +43,9 @@ end
 
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tg=c:AddMaximumCheck()
+	local tg=Group.CreateGroup()
+	tg:AddCard(c)
+	tg=tg:AddMaximumCheck()
 	if Duel.SendtoGrave(tg,REASON_COST)~=0 then
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)

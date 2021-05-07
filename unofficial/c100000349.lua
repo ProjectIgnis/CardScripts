@@ -1,4 +1,5 @@
 --チーム・プレー
+--All For One
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter1(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,0,1,nil,c:GetRace())
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,0,1,nil,tp,c:GetRace())
 end
-function s.filter2(c,rc)
+function s.filter2(c,tp,rc)
 	local lv=c:GetLevel()
 	return lv>0 and c:IsRace(rc) and c:IsFaceup() and Duel.IsExistingTarget(s.filter3,tp,LOCATION_MZONE,0,1,c,rc,lv)
 end

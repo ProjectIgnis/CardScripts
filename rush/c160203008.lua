@@ -10,12 +10,13 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
+	e1:SetCondition(s.damcon)
 	e1:SetCost(s.damcost)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
+function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<Duel.GetLP(1-tp) 
 end
 function s.costfilter(c)
@@ -29,7 +30,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsLocaton(LOCATION_GRAVE)
+	return c:IsType(TYPE_MONSTER) and c:IsLocation(LOCATION_GRAVE)
 end
 
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
@@ -40,6 +41,6 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	
 	Duel.DiscardDeck(1-tp,2,REASON_EFFECT)
 	local g2=Duel.GetOperatedGroup()
-	local dam=(g:FilterCount(s.filter,nil) and g2:FilterCount(s.filter,nil))*400
+	local dam=(g:FilterCount(s.filter,nil) + g2:FilterCount(s.filter,nil))*400
 	Duel.Damage(1-tp,dam,REASON_EFFECT)
 end

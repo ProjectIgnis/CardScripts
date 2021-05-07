@@ -12,8 +12,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
+function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) and c:IsLevelAbove(7)
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter2(c)
 	return c:IsFacedown()

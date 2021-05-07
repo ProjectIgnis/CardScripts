@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	c:AddSideMaximumHandler(e1)
 end
-s.MaximumSide="Left"
+s.MaximumSide="Right"
 function s.maxCon(e)
 	return e:GetHandler():IsMaximumModeCenter()
 end

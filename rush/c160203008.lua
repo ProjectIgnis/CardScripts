@@ -35,12 +35,16 @@ end
 
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,2,2,nil)
+	if Duel.SendtoDeck(dg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 then
+		Duel.SortDeckbottom(tp,tp,#dg)
 	
-	Duel.DiscardDeck(tp,2,REASON_EFFECT)
-	local g=Duel.GetOperatedGroup()
+		Duel.DiscardDeck(tp,2,REASON_EFFECT)
+		local g=Duel.GetOperatedGroup()
 	
-	Duel.DiscardDeck(1-tp,2,REASON_EFFECT)
-	local g2=Duel.GetOperatedGroup()
-	local dam=(g:FilterCount(s.filter,nil) + g2:FilterCount(s.filter,nil))*400
-	Duel.Damage(1-tp,dam,REASON_EFFECT)
+		Duel.DiscardDeck(1-tp,2,REASON_EFFECT)
+		local g2=Duel.GetOperatedGroup()
+		local dam=(g:FilterCount(s.filter,nil) + g2:FilterCount(s.filter,nil))*400
+		Duel.Damage(1-tp,dam,REASON_EFFECT)
+	end
 end

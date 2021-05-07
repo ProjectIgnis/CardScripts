@@ -34,6 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local dg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 		if #dg>0 then
 			local sg=dg:Select(tp,1,1,nil)
+			sg=sg:AddMaximumCheck()
 			Duel.HintSelection(sg)
 			Duel.Destroy(sg,REASON_EFFECT)
 		end

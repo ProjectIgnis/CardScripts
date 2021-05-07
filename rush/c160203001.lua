@@ -18,7 +18,7 @@ s.MaximumSide="Left"
 function s.maxCon(e)
 	return e:GetHandler():IsMaximumModeCenter()
 end
-function s.cfilter(c)
+function s.cfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()
 	and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,c)
 end
@@ -26,10 +26,10 @@ function s.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:HasLevel() and c:IsLevelAbove(0)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -39,8 +39,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(g)
 	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
-		local tc=g:GetFirst()
+		local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
+		local tc=g2:GetFirst()
 		local dam=tc:GetLevel()*100
 		if Duel.Damage(1-tp,dam,REASON_EFFECT)>0 then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)

@@ -37,8 +37,6 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoDeck(dg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 then
-		Duel.SortDeckbottom(tp,tp,#dg)
-	
 		Duel.DiscardDeck(tp,2,REASON_EFFECT)
 		local g=Duel.GetOperatedGroup()
 	

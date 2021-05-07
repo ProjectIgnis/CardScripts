@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Your attacked monster gains 500 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE)
+	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCondition(s.condition)
@@ -16,8 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttackTarget()
-	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRace(RACE_PSYCHIC)
+	return Duel.GetTurnPlayer()==1-tp
 end
 function s.cfilter(c)
 	return c:IsRace(RACE_DINOSAUR) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()
@@ -26,12 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,3,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tg=Duel.GetAttackTarget()
-	if chk==0 then return tg:IsControler(tp) and tg:IsOnField() end
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.filter(c)
 	return c:IsFaceup()

@@ -1,3 +1,4 @@
+--魔導戒厳令
 --Magic Law
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
 end
-function s.tgfilter(c)
+function s.tgfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,2,c,c:GetCode())
 end
@@ -26,12 +27,12 @@ function s.filter(c,code)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
 	if #g>0 then
 		local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,2,2,g:GetFirst(),g:GetFirst():GetCode())
 		g:Merge(g2)

@@ -31,8 +31,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	s.announce_filter={200000001,OPCODE_ISCODE,nil,OPCODE_ISCODE,OPCODE_NOT,OPCODE_AND}
-	Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
+	Duel.AnnounceCard(tp,{200000001,OPCODE_ISCODE})
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 end

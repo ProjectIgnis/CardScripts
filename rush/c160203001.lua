@@ -1,3 +1,4 @@
+--超魔旗艦マグナム・オーバーロード［Ｌ］
 --Super Magiflag Ship Magnum Over Road [L]
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,8 +20,7 @@ function s.maxCon(e)
 	return e:GetHandler():IsMaximumModeCenter()
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()
-	and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost() and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,c)
 end
 function s.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:HasLevel() and c:IsLevelAbove(0)
@@ -36,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.HintSelection(g)
 	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,tp)

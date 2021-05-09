@@ -77,10 +77,10 @@ end
 function s.discheck(ev,category,re,im0,im1)
 	local ex,tg,ct,p,v=Duel.GetOperationInfo(ev,category)
 	if not ex then return false end
-	if v==LOCATION_GRAVE and ct>0 and not tg then
+	if (category==CATEGORY_LEAVE_GRAVE or v==LOCATION_GRAVE) and ct>0 and not tg then
 		if p==0 then return im0
 		elseif p==1 then return im1
-		elseif p==PLAYER_ALL then return im0 and im1
+		elseif p==PLAYER_ALL then return im0 or im1
 		end
 	end
 	if tg and #tg>0 then

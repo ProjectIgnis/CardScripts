@@ -1,5 +1,5 @@
 --変導機咎 クロックアーク
---Transforming Machine Clockark
+--Clock Arc, the Fluctuerror Orchanism
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,11 +23,10 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCondition(s.slcon)
-	e2:SetValue(-3)
+	e2:SetValue(s.slval)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_RSCALE)
-	e3:SetValue(4)
 	c:RegisterEffect(e3)
 	--Destroy itself
 	local e4=Effect.CreateEffect(c)
@@ -74,6 +73,14 @@ function s.slfilter(c)
 end
 function s.slcon(e)
 	return not Duel.IsExistingMatchingCard(s.slfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+end
+function s.slval(e)
+	local seq=e:GetHandler():GetSequence()
+	if seq==0 or seq==6 then
+		return -3
+	else
+		return 4
+	end
 end
 function s.descon(e)
 	return e:GetHandler():GetSequence()~=2

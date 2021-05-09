@@ -1,3 +1,4 @@
+--リリース・トレード
 --Tribute Trade
 --scripted by: UnknownGuest
 --fixed by MLD
@@ -19,7 +20,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cfilter(c,tp)
 	local lv=c:GetLevel()
-	return lv>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,lv+1)
+	return lv>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,lv+1)
 end
 function s.filter(c,lv)
 	return c:IsLevel(lv) and c:IsAbleToHand()

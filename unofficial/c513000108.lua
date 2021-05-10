@@ -1,15 +1,17 @@
---Infernity Des Gunman
+--インフェルニティ・デス・ガンマン (Anime)
+--Infernity Des Gunman (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate Damage
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(511000035,0))
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetProperty(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_GRAVE)
-	e1:SetCondition(s.con)
-	e1:SetCost(s.cost)
-	e1:SetOperation(s.op)
+	e1:SetCondition(s.condition)
+	e1:SetCost(aux.bfgcost)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	aux.GlobalCheck(s,function()
 		s[0]=0
@@ -17,7 +19,6 @@ function s.initial_effect(c)
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DAMAGE)
-		ge1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
 		local ge2=Effect.CreateEffect(c)
@@ -28,8 +29,17 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
-	if ep==tp or Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 then return false end
+function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+	if (r&REASON_EFFECT)>0 then
+		s[ep]=s[ep]+ev
+	end
+end
+function s.clear(e,tp,eg,ep,ev,re,r,rp)
+	s[0]=0
+	s[1]=0
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 then return false end
 	local e1=Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_DAMAGE)
 	local e2=Duel.IsPlayerAffectedByEffect(tp,EFFECT_REVERSE_RECOVER)
 	local rd=e1 and not e2
@@ -46,34 +56,27 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	end
 	return false
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
-end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local val=e:GetLabel()
-	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
-	local e1=Effect.CreateEffect(e:GetHandler())
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetLabel(cid)
+	e1:SetLabel(Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID))
 	e1:SetValue(s.refcon)
 	e1:SetReset(RESET_CHAIN)
 	Duel.RegisterEffect(e1,tp)
-	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 and s[tp]>0 and Duel.SelectYesNo(tp,aux.Stringid(39910367,1)) then
+	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 and s[tp]>0 and Duel.SelectEffectYesNo(1-tp,c) then
 		Duel.ConfirmDecktop(tp,1)
-		local g=Duel.GetDecktopGroup(tp,1)
-		local tc=g:GetFirst()
+		local tc=Duel.GetDecktopGroup(tp,1):GetFirst()
 		if tc:IsType(TYPE_MONSTER) then
-			Duel.Damage(1-tp,s[tp]+val,REASON_EFFECT)
+			Duel.Damage(1-tp,s[tp]+e:GetLabel(),REASON_EFFECT)
 		else
 			Duel.Damage(tp,s[tp],REASON_EFFECT)
 		end
-		Duel.ShuffleDeck(tp,REASON_EFFECT)
 	else
-		local e2=Effect.CreateEffect(e:GetHandler())
+		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
 		e2:SetCode(EFFECT_CHANGE_DAMAGE)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -97,13 +100,4 @@ end
 function s.damval(e,re,val,r,rp,rc)
 	if (r&REASON_EFFECT)~=0 then return 0
 	else return val end
-end
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if (r&REASON_EFFECT)>0 then
-		s[ep]=s[ep]+ev
-	end
-end
-function s.clear(e,tp,eg,ep,ev,re,r,rp)
-	s[0]=0
-	s[1]=0
 end

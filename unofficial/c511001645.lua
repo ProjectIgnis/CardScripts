@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcCodeFunRep(c,CARD_NEOS,s.ffilter,6,6,false,true)
+	Fusion.AddProcMixN(c,false,false,CARD_NEOS,1,s.ffilter,6)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--copy
 	local e1=Effect.CreateEffect(c)
@@ -16,20 +16,20 @@ function s.initial_effect(c)
 	e1:SetOperation(s.copyop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1f}
+s.material_setcode={0x8,0x3008,0x9,0x1f}
 s.listed_names={CARD_NEOS}
+function s.ffilter(c,fc,sub,sub2,mg,sg)
+	return c:IsSetCard(0x1f,fc,SUMMON_TYPE_FUSION,fc:GetControler()) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(),fc,fc:GetControler()))
+end
+function s.fusfilter(c,code,fc,tp)
+	return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,tp,code) and not c:IsHasEffect(511002961)
+end
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)
-end
-function s.ffilter(c,fc,sub,sub2,mg,sg)
-	return c:IsSetCard(0x1f,fc,SUMMON_TYPE_FUSION,fc:GetControler()) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(),fc,fc:GetControler()))
-end
-function s.fusfilter(c,code,fc,tp)
-	return c:IsSummonCode(fc,SUMMON_TYPE_FUSION,tp,code) and not c:IsHasEffect(511002961)
 end
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
@@ -45,12 +45,12 @@ function s.copytg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.copyfilter,tp,LOCATION_DECK,0,1,Duel.GetMatchingGroupCount(s.copyfilter,tp,LOCATION_DECK,0,nil),nil)
+	local g=Duel.SelectMatchingCard(tp,s.copyfilter,tp,LOCATION_DECK,0,1,1,nil)
 	local c=e:GetHandler()
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
 		local g=Duel.GetOperatedGroup()
 		for tc in aux.Next(g) do
-			local code=tc:GetOriginalCode()
+			local code=tc:GetCode()
 			local cid=c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
 			local e1=Effect.CreateEffect(c)
 			e1:SetDescription(aux.Stringid(31111109,1))

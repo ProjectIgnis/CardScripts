@@ -65,7 +65,7 @@ function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e5,tp)
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e6:SetCode(EVENT_PHASE+PHASE_END)
+	e6:SetCode(EVENT_TURN_END)
 	e6:SetLabelObject(g)
 	e6:SetCountLimit(1)
 	e6:SetCondition(s.chcon)
@@ -80,13 +80,13 @@ function s.repcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsDeckMaster(tp,id)
 end
 function s.repfilter(c)
-	return c:GetDestination()==LOCATION_GRAVE and c:IsType(TYPE_MONSTER)
+	return c:GetDestination()&LOCATION_GRAVE==LOCATION_GRAVE and c:IsType(TYPE_MONSTER)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil) end
 	local g=eg:Filter(s.repfilter,nil)
-	Duel.SendtoDeck(g,0,-2,REASON_EFFECT)
-	e:GetLabelObject():Merge(g)
+	Duel.SendtoDeck(g,tp,-2,REASON_EFFECT)
+	e:GetLabelObject():Merge(Duel.GetOperatedGroup():Filter(aux.NOT(Card.IsLocation),nil,LOCATION_ALL))
 	return true
 end
 function s.repval(e,c)
@@ -100,37 +100,47 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsDeckMaster(tp,id)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
+--OP:
 --0 - Banish
 --1 - Transform
 --2 - Check Ark
 --3 - Check Turn
+
+--Strings:
+--0 - 7 turns
+--8 - Check Turn
+--9 - Check Ark
+--10 - Banish
+--11 - Transform
 	local op=4
 	local g=e:GetLabelObject()
 	if not Duel.IsTurnPlayer(tp) and Duel.IsMainPhase() then
 		if #e:GetLabelObject()==0 then
+			Duel.SelectOption(tp,aux.Stringid(id,8))
 			op=3
 		else
-			op=Duel.SelectOption(tp,aux.Stringid(id,3),aux.Stringid(id,4))+2
+			op=Duel.SelectOption(tp,aux.Stringid(id,9),aux.Stringid(id,8))+2
 		end
 	else
 		local seventhTurn=Duel.GetFlagEffect(tp,id)==7
 		if #e:GetLabelObject()==0 then
 			if not seventhTurn then
+				Duel.SelectOption(tp,aux.Stringid(id,8))
 				op=3
 			else
-				op=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,4))*2+1
+				op=Duel.SelectOption(tp,aux.Stringid(id,11),aux.Stringid(id,8))*2+1
 			end
 		else
 			local removeCheck=#g==g:FilterCount(Card.IsAbleToRemoveAsCost,nil)
 			if not seventhTurn and not removeCheck then
-				op=Duel.SelectOption(tp,aux.Stringid(id,3),aux.Stringid(id,4))+2
+				op=Duel.SelectOption(tp,aux.Stringid(id,9),aux.Stringid(id,8))+2
 			elseif not seventhTurn then
-				op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,3),aux.Stringid(id,4))
+				op=Duel.SelectOption(tp,aux.Stringid(id,10),aux.Stringid(id,9),aux.Stringid(id,8))
 				if op>0 then op=op+1 end
 			elseif not removeCheck then
-				op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,4))*2-1
+				op=Duel.SelectOption(tp,aux.Stringid(id,11),aux.Stringid(id,9),aux.Stringid(id,8))*2-1
 			else
-				op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2),aux.Stringid(id,3),aux.Stringid(id,4))
+				op=Duel.SelectOption(tp,aux.Stringid(id,10),aux.Stringid(id,11),aux.Stringid(id,9),aux.Stringid(id,8))
 			end
 		end
 	end
@@ -152,7 +162,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	elseif op==2 then
 		Duel.ConfirmCards(tp,g)
 	elseif op==3 then
-		Duel.Hint(HINT_NUMBER,tp,Duel.GetFlagEffect(tp,id))
+		Duel.Hint(HINT_MESSAGE,tp,aux.Stringid(id,Duel.GetFlagEffect(tp,id)))
 	end 
 end
 function s.defcon(e,tp,eg,ep,ev,re,r,rp)

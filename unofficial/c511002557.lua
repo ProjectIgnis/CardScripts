@@ -1,3 +1,4 @@
+--ハンド・パワー
 --Hand Power
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
@@ -19,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.cfilter(c,tp)
-	return c:IsHand() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
+	return c:IsHand() and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

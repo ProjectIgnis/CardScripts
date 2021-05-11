@@ -27,6 +27,6 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local dam=tc:GetAttack()
 	if tc then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.Damage(1-tp,dam,REASON_EFECT)
+		Duel.Damage(1-tp,dam,REASON_EFFECT)
 	end
 end

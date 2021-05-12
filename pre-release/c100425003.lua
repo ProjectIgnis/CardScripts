@@ -60,6 +60,7 @@ function s.syncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function s.splimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_WIND)

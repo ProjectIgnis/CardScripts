@@ -183,7 +183,7 @@ function s.movecon(e,c,og)
 end
 function s.moveop(e,tp,eg,ep,ev,re,r,rp,c,og)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,s.mvfilter,tp,LOCATION_ONFIELD,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.mvfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp):GetFirst()
 	if tc then
 		if tc:IsLocation(LOCATION_MZONE) then
 			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)

@@ -1,3 +1,4 @@
+--ミラクルシルクハット
 --Magical Silk Hat
 --fixed by MLD
 local s,id=GetID()
@@ -42,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local fid=c:GetFieldID()
 	while tc do
 		Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEDOWN_ATTACK)
-		tc:RegisterFlagEffect(51109375,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_TYPE)
@@ -72,6 +73,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e6,true)
 		tc=sg1:GetNext()
 	end
+	Duel.SpecialSummonComplete()
 	Duel.ShuffleSetCard(sg1)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -126,7 +128,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetLabel(fid)
 end
 function s.desfilter(c,fid)
-	return c:GetFlagEffectLabel(51109375)==fid
+	return c:GetFlagEffectLabel(id)==fid
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
@@ -144,7 +146,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(tg,REASON_EFFECT)
 end
 function s.damfilter(c,fid)
-	return c:GetFlagEffectLabel(51109375)==fid and Duel.GetAttackTarget()==c
+	return c:GetFlagEffectLabel(id)==fid and Duel.GetAttackTarget()==c
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
@@ -159,7 +161,7 @@ end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	local tc=g:Filter(s.damfilter,nil,e:GetLabel()):GetFirst()
-	if tc:IsType(TYPE_SPELL+TYPE_TRAP) then
+	if tc:IsOriginalType(TYPE_SPELL+TYPE_TRAP) then
 		Duel.ChangeBattleDamage(tp,0)
 		Duel.ChangeBattleDamage(1-tp,0)
 	else

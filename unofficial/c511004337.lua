@@ -14,13 +14,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.tfilter(c)
-	return c:GetCounter(0x1107)~=0 and c:IsAbleToHand()
+	return c:GetCounter(0x1107)>0 and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then chkc:IsLocation(LOCATION_ONFIELD) and s.tfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and s.tfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.tfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,s.tfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.tfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	local dam=g:GetFirst():GetAttack()
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(dam)
@@ -30,8 +30,8 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+	if tc and tc:IsRelateToEffect(e) Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND) then
+		Duel.BreakEffect()
 		Duel.Damage(p,d,REASON_EFFECT)
 	end
 end

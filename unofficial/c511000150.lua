@@ -1,5 +1,5 @@
---クリバビロン
---Kuribabylon
+--クリバビロン (Anime)
+--Kuribabylon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--ss success
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.negcon)
 	c:RegisterEffect(e3)
 end
-s.listed_names={511000153}
+s.listed_names={511000153,CARD_KURIBOH}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst()==e:GetHandler()
 end
@@ -70,7 +70,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
 	if chk==0 then return ft>4 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,40640057) 
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,CARD_KURIBOH) 
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,511000153) 
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,id+1) 
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,511000152) 
@@ -79,7 +79,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=4 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,40640057)
+	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,CARD_KURIBOH)
 	local g2=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,511000153)
 	local g3=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,id+1)
 	local g4=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,511000152)

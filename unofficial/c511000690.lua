@@ -1,7 +1,8 @@
 --虹色の祝福
+--Rainbow Blessing (DM)
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsCode,40640057))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsCode,CARD_KURIBOH))
 	--Direct
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.diract)
 	c:RegisterEffect(e2)
 end
+s.listed_names={CARD_KURIBOH}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local eq=e:GetHandler():GetEquipTarget()
 	if chk==0 then return eq:IsReleasable() end

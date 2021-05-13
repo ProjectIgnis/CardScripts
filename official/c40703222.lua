@@ -1,6 +1,5 @@
 --増殖
 --Multiply
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon as many tokens as possible to your field
@@ -14,10 +13,9 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
-s.listed_names={40640057}
-
+s.listed_names={CARD_KURIBOH}
 function s.cfilter(c,ft,tp)
-	return c:IsFaceup() and c:IsCode(40640057) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
+	return c:IsFaceup() and c:IsCode(CARD_KURIBOH) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

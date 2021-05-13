@@ -1,4 +1,5 @@
---Kuribah
+--クリバー (Anime)
+--Kuribah (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -20,9 +21,9 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_names={511000150}
+s.listed_names={511000150,CARD_KURIBOH}
 function s.rescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),511000152,511000151,40640057,id+1)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),511000152,511000151,CARD_KURIBOH,id+1)
 end
 function s.chk(c,sg,g,code,...)
 	if not c:IsCode(code) then return false end
@@ -43,7 +44,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g1=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil,511000152)
 	local g2=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil,511000151)
-	local g3=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil,40640057)
+	local g3=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil,CARD_KURIBOH)
 	local g4=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil,id+1)
 	local g=g1:Clone()
 	g:Merge(g2)

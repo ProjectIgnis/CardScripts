@@ -804,6 +804,7 @@ function Auxiliary.SecurityForceCost(e,tp,eg,ep,ev,re,r,rp,chk)
     end
     Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
+--Standard functions for the "Ursarctic" Special Summoning Quick Effects
 local Ursarctic={}
 function Ursarctic.spcfilter(c)
 	return c:IsLocation(LOCATION_HAND) and c:IsLevelAbove(7)
@@ -875,6 +876,7 @@ function Auxiliary.DoubleSnareValidity(c,range,property)
 		c:RegisterEffect(eff)
 	end
 end
+--Standard target and operation functions for the "Cyberdark" effects that Trigger on Normal/Special Summon (also see "Cyberdark World")
 Cyberdark={}
 function Cyberdark.EquipFilter(f)
 	return	function(c,tp)
@@ -913,14 +915,14 @@ end
 function Cyberdark.EquipTarget_NTG(f,mandatory)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local wc=Duel.IsPlayerAffectedByEffect(tp,EFFECT_CYBERDARK_WORLD)
-		local loc,pl=0,tp
+		local loc,player=0,tp
 		if wc then 
 			loc=LOCATION_GRAVE 
-			pl=PLAYER_ALL
+			player=PLAYER_ALL
 		end
 		if chk==0 then return mandatory or (Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingMatchingCard(f,tp,LOCATION_GRAVE,loc,1,nil,tp)) end
-		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,pl,0)
-		Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,pl,LOCATION_GRAVE)
+		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,player,0)
+		Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,player,LOCATION_GRAVE)
 	end
 end
 function Cyberdark.EquipOperation_TG(f,op)

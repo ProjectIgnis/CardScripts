@@ -1,4 +1,5 @@
 --トゥーンのかばん
+--Toon Briefcase
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,14 +18,11 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_TOON)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_TOON),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c,tp)
-	return c:IsSummonPlayer(tp) and c:IsAbleToDeck()
+	return c:IsSummonPlayer(tp) and c:IsAbleToDeck() and c:IsLocation(LOCATION_MZONE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.filter,1,nil,1-tp) end
@@ -33,6 +31,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetTargetCards(e)
-	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+	local g=Duel.GetTargetCards(e):Filter(Card.IsRelateToEffect,nil,e)
+	if #g>0 then
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+	end
 end

@@ -1,4 +1,5 @@
 --No.39 希望皇ホープ
+--Number 39: Utopia
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetCost(s.atkcost)
 	e1:SetOperation(s.atkop)
-	c:RegisterEffect(e1)
+	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 	--self destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))

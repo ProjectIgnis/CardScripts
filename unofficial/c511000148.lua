@@ -1,4 +1,5 @@
---Five Star Twilight
+--ティンクル・ファイブスター (Anime)
+--Five Star Twilight (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={40640057}
 function s.cfilter(c,ft,tp)
 	return c:IsLevel(5) and (ft>4 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 end
@@ -59,7 +61,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg5=g5:Select(tp,1,1,nil)
 		sg1:Merge(sg5)
-		local tc=sg1:GetFirst()
 		for tc in aux.Next(sg1) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(e:GetHandler())

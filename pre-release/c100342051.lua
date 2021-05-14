@@ -89,7 +89,7 @@ function s.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
 function s.filter(c,e,tp,rp)
-	return c:IsSetCard(0x48) and c.xyz_number>=1 and c.xyz_number<=100
+	return c:IsSetCard(0x48) and c.xyz_number and c.xyz_number>=1 and c.xyz_number<=100
 		and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

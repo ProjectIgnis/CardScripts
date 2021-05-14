@@ -54,12 +54,12 @@ end
 function s.efilter(e,c)
 	return c:IsSetCard(0x99)
 end
-function s.scfilter(c,tc)
+function s.scfilter(c,tp,tc)
 	return Duel.GetLocationCountFromEx(tp,tp,tc,c)>0 and c:IsSynchroSummonable(tc)
 end
 function s.mfilter(c,e,tp)
 	return c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_EXTRA,0,1,nil,c)
+		and Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_EXTRA,0,1,nil,tp,c)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)

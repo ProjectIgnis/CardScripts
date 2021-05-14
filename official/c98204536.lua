@@ -59,7 +59,7 @@ function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_COST)~=0 and re:IsActivated()
 		and re:IsActiveType(TYPE_XYZ) and (rc:IsSetCard(0x70) or rc:IsSetCard(0x48))
 		and e:GetHandler():IsAbleToGraveAsCost()
-		and ep==e:GetOwnerPlayer() and ev>=1
+		and ep==e:GetOwnerPlayer() and ev>=1 and rc:GetOverlayCount()>=ev-1
 end
 function s.rop(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.SendtoGrave(e:GetHandler(),REASON_COST)

@@ -53,12 +53,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Except turn was sent, and would detach
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.exccon(e)
-		and (r&REASON_COST)~=0 and re:IsActivated()
+	return aux.exccon(e) and (r&REASON_COST)~=0 and re:IsActivated()
 		and re:IsActiveType(TYPE_XYZ)
 		and e:GetHandler():IsAbleToRemoveAsCost()
 		and ep==e:GetOwnerPlayer() and ev>=1
-		and rc:GetOverlayCount()>=ev-1
+		and re:GetHandler():GetOverlayCount()>=ev-1
 end
 	--Detach substitution
 function s.rop(e,tp,eg,ep,ev,re,r,rp)

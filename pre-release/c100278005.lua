@@ -37,8 +37,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={100278002,100278003,100278004,100278005,CARD_KURIBOH}
 s.listed_series={0xa4}
-s.listed_names={CARD_KURIBOH}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)>Duel.GetMatchingGroupCount(Card.IsType,1-tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER)
 end

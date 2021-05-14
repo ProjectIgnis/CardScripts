@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_KURIBOH}
+s.listed_names={100278002,100278003,100278004,100278005,CARD_KURIBOH}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	return #g==1 and g:GetFirst():IsLevel(5) and g:GetFirst():IsFaceup()

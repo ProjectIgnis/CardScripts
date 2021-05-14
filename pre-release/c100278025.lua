@@ -85,9 +85,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local rc=re:GetHandler()
 	return (r&REASON_COST)~=0 and re:IsActivated()
 		and re:IsActiveType(TYPE_XYZ)
-		and re:GetHandler():GetEquipGroup():IsContains(c)
+		and rc:GetEquipGroup():IsContains(c)
 		and c:IsAbleToGraveAsCost()
 		and ep==e:GetOwnerPlayer() and ev>=1
 		and rc:GetOverlayCount()>=ev-1

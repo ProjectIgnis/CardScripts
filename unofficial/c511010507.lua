@@ -1,6 +1,6 @@
 --アストログラフ・マジシャン (Anime)
 --Astrograph Sorcerer (Anime)
---rescripted by Naim
+--Rescripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -29,7 +29,7 @@ s.listed_names={13331639,41209827,82044279,16195942,16178681}
 local ZARC_LOC=LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_EXTRA+LOCATION_DECK
 function s.spcfilter(c,e,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
-		and (c:IsCanBeEffectTarget(e) and (c:IsLocation(LOCATION_SZONE+LOCATION_GRAVE+LOCATION_MZONE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))) or (c:IsLocation(LOCATION_HAND+LOCATION_DECK) or (c:IsLocation(LOCATION_EXTRA) and c:IsFaceup()))
+		and ((c:IsCanBeEffectTarget(e) and (c:IsLocation(LOCATION_SZONE+LOCATION_GRAVE+LOCATION_MZONE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))) or (c:IsLocation(LOCATION_HAND+LOCATION_DECK) or (c:IsLocation(LOCATION_EXTRA) and c:IsFaceup())))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

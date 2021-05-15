@@ -1,5 +1,5 @@
 --ミラクルシルクハット
---Magical Silk Hat
+--Miraculous Hats
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)

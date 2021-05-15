@@ -75,9 +75,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		sc:CompleteProcedure()
 	end
 end
-function s.mcfilter(c,e,tp)
-	return c:IsType(TYPE_XYZ)
-end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if not (re:IsActivated() and rc and rc:IsType(TYPE_XYZ) and rc:IsSetCard(0x7f) and rc:IsRankAbove(10)) then return end
@@ -94,8 +91,12 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
 	end
 end
+function s.mcfilter(c,e)
+	return c:IsType(TYPE_XYZ) and c:IsFaceup() and c:IsLocation(LOCATION_MZONE)
+		and c:IsCanBeEffectTarget(e)
+end
 function s.mtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local g=e:GetLabelObject():Filter(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),nil,e,tp)
+	local g=e:GetLabelObject():Filter(s.mcfilter,nil,e)
 	if chkc then return g:IsContains(chkc) and chkc:IsType(TYPE_XYZ) and chkc:IsFaceup() end
 	if chk==0 then return #g>0 and Duel.GetFlagEffect(tp,id)==0 end
 	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)

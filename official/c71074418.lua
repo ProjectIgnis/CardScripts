@@ -46,7 +46,7 @@ function s.filter(c,tp)
 	return c:IsAbleToHand() and (c:IsControler(1-tp) or (c:IsType(TYPE_SPELL) and c:IsSetCard(0x128)))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and s.filter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD+LOCATION_GRAVE) and s.filter(chkc,tp) end
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,LOCATION_ONFIELD,1,nil,tp)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end

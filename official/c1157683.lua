@@ -105,11 +105,11 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=Duel.GetMatchingGroup(s.descfilter,tp,LOCATION_SZONE,0,nil)
 	local dg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
-	if chk==0 then return Duel.GetFlagEffect(tp,id+100)==0 and #mg>0 and #dg>0 end
+	if chk==0 then return Duel.GetFlagEffect(tp,id+1)==0 and #mg>0 and #dg>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=mg:Select(tp,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
-	Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,1-tp,LOCATION_ONFIELD)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

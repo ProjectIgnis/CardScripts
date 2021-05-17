@@ -1,3 +1,4 @@
+--重楽鬼アンサンブルファイター
 --Ensemble Fighter the Heavy Music Oni
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,5 +39,6 @@ end
 function s.actcon(e)
 	local tp=e:GetHandlerPlayer()
 	local a=Duel.GetAttacker()
-	return a and a:IsRace(RACE_WARRIOR) and a:IsAttribute(ATTRIBUTE_WIND) and a:IsControler(tp)
+	return a and a:IsRace(RACE_WARRIOR) and a:IsAttribute(ATTRIBUTE_WIND)
+		and a:IsControler(tp) and Duel.GetCurrentPhase()~=PHASE_DAMAGE
 end

@@ -85,5 +85,5 @@ function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject() and e:GetLabelObject():IsRelateToCard(e:GetHandler())
 end
 function s.val(e,c)
-	return -Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil):GetSum(Card.GetDefense)
+	return -Duel.GetMatchingGroup(s.cfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil):GetSum(Card.GetDefense)
 end

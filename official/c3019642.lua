@@ -2,7 +2,7 @@
 --Cyberdark Keel
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip
+	--Equip
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -13,14 +13,14 @@ function s.initial_effect(c)
 	e1:SetOperation(Cyberdark.EquipOperation(s.eqfilter,s.equipop,true))
 	c:RegisterEffect(e1)
 	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e1)
-	--damage
+	--Damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
-	e2:SetCondition(s.damcon)
+	e2:SetCondition(aux.bdocon)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
@@ -51,10 +51,6 @@ function s.equipop(c,e,tp,tc)
 end
 function s.repval(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0
-end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsRelateToBattle() and c:GetBattleTarget():IsType(TYPE_MONSTER)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

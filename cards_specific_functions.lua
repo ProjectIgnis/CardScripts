@@ -931,7 +931,7 @@ function Cyberdark.EquipOperation_TG(f,op)
 		local c=e:GetHandler()
 		if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 		local tc=Duel.GetFirstTarget()
-		if tc and tc:IsRelateToEffect(e) then
+		if tc and tc:IsRelateToEffect(e) and f(tc,tp) then
 			op(c,e,tp,tc)
 		end
 	end

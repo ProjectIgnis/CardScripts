@@ -108,8 +108,8 @@ end
 function s.cfilter(c)
 	return c:IsSetCard(0x1157) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
-function s.tgocon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+function s.tgocon(e)
+	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsDisabled() then

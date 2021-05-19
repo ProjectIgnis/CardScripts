@@ -315,21 +315,39 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 							--chooses to apply the effect, then select which cards
 							--the effect will be applied for and execute the operation.
 							if extra_feff and extra_feff_op and extraop~=extra_feff_op
-								and Duel.GetFlagEffect(tp,extra_feff_c:GetCode())==0
-								and Duel.SelectEffectYesNo(tp,extra_feff_c) then
+								and Duel.GetFlagEffect(tp,extra_feff_c:GetCode())==0 then
+								local flag=0
+								if extrafil then
+									local extrafil_g=extrafil(e,tp,mg1)
+									if #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
+										--The Fusion effect by default does not use the GY
+										--so the player is forced to apply this effect.
+										mat1:Sub(extra_feff_mg)
+										extra_feff_op(e,tc,tp,extra_feff_mg)
+										flag=1
+									elseif Duel.SelectEffectYesNo(tp,extra_feff_c) then
+										--Select which cards you'll apply the
+										--EFFECT_EXTRA_FUSION_MATERIAL effect for
+										--and execute the operation.
+										Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVECARD)
+										local g=extra_feff_mg:Select(tp,1,#extra_feff_mg,nil)
+										if #g>0 then
+											mat1:Sub(g)
+											extra_feff_op(e,tc,tp,g)
+											flag=1
+										end
+									end
+								else
+									--The Fusion effect by default does not use the GY
+									--so the player is forced to apply this effect.
+									mat1:Sub(extra_feff_mg)
+									extra_feff_op(e,tc,tp,extra_feff_mg)
+									flag=1
+								end
 								--If the EFFECT_EXTRA_FUSION_MATERIAL effect is OPT
 								--register a flag on the player with the card's ID.
-								if extra_feff:GetCountLimit()>0 then
+								if flag==1 and extra_feff:GetCountLimit()>0 then
 									Duel.RegisterFlagEffect(tp,extra_feff_c:GetCode(),RESET_PHASE+PHASE_END,0,1)
-								end
-								--Select which cards you'll apply the
-								--EFFECT_EXTRA_FUSION_MATERIAL effect for
-								--and execute the operation.
-								Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVECARD)
-								local g=extra_feff_mg:Select(tp,1,#extra_feff_mg,nil)
-								if #g>0 then
-									extra_feff_op(e,tc,tp,g)
-									mat1:Sub(g)
 								end
 							end
 						end

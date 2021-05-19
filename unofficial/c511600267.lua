@@ -65,7 +65,7 @@ end
 s.listed_series={0x12b}
 s.listed_names={67712104}
 function s.spcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsCode,1,nil,67712104,lc,sumtype,tp)
+	return g:IsExists(Card.IsSummonCode,1,nil,lc,sumtype,tp,67712104)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattleTarget() and not e:GetHandler():GetBattleTarget():IsControler(tp)

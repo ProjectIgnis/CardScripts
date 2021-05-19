@@ -2,7 +2,6 @@
 --Pinpoint Landing
 local s,id=GetID()
 function s.initial_effect(c)
-	Duel.EnableGlobalFlag(GLOBALFLAG_SELF_TOGRAVE)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

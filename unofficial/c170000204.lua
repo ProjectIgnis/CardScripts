@@ -1,4 +1,5 @@
 --伝説の騎士 ヘルモス
+--Legendary Knight Hermos (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -93,7 +94,7 @@ end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.chkfilter,nil,e)
-	if c:IsFaceup() and c:IsRelateToEffect(e) and #tg>0then
+	if c:IsFaceup() and c:IsRelateToEffect(e) and #tg>0 then
 		tg:KeepAlive()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

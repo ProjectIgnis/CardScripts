@@ -319,13 +319,13 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 								local flag=0
 								if extrafil then
 									local extrafil_g=extrafil(e,tp,mg1)
-									if #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
+									if #extrafil_g>=0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
 										--The Fusion effect by default does not use the GY
 										--so the player is forced to apply this effect.
 										mat1:Sub(extra_feff_mg)
 										extra_feff_op(e,tc,tp,extra_feff_mg)
 										flag=1
-									elseif Duel.SelectEffectYesNo(tp,extra_feff_c) then
+									elseif #extrafil_g>=0 and Duel.SelectEffectYesNo(tp,extra_feff_c) then
 										--Select which cards you'll apply the
 										--EFFECT_EXTRA_FUSION_MATERIAL effect for
 										--and execute the operation.

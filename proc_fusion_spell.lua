@@ -116,6 +116,35 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					Fusion.CheckExact=exactcount
 					Fusion.CheckMin=mincount
 					Fusion.CheckMax=maxcount
+					--"Cyberdark Chimera" OPT EFFECT_EXTRA_FUSION_MATERIAL check
+					local extra_feff_mg=mg1:Filter(Card.IsHasEffect,nil,EFFECT_EXTRA_FUSION_MATERIAL)
+					if #extra_feff_mg>0 then
+						local extra_feff=extra_feff_mg:GetFirst():IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL)
+						--Check if you need to remove materials from the pool if the flag is ON
+						if extra_feff and Duel.GetFlagEffect(tp,extra_feff:GetHandler():GetCode())>0 then
+							--If "extrafil" exists and it doesn't return anything in
+							--the GY (so that effects like "Dragon's Mirror" are excluded),
+							--remove all the EFFECT_EXTRA_FUSION_MATERIAL cards
+							--that are in the GY from the material group.
+							--Hardcoded to LOCATION_GRAVE since it's currently
+							--impossible to get the TargetRange of the
+							--EFFECT_EXTRA_FUSION_MATERIAL effect (but the only OPT effect atm uses the GY).
+							if extrafil then
+								local extrafil_g=extrafil(e,tp,mg1)
+								if #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
+									mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+								end
+							--If "extrafil" doesn't exist then remove all the
+							--EFFECT_EXTRA_FUSION_MATERIAL cards from the material group.
+							--A more complete implementation would check for cases where the
+							--Fusion Summoning effect can use the whole field (including LOCATION_SZONE),
+							--but it's currently not possible to know if that is the case
+							--(only relevant for "Fullmetalfoes Alkahest" atm, but he's not OPT).
+							else
+								mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+							end
+						end
+					end
 					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos)
 					Fusion.CheckAdditional=nil
 					Fusion.ExtraGroup=nil
@@ -255,20 +284,81 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 					if sel[1]==e then
 						Fusion.CheckAdditional=checkAddition
 						Fusion.ExtraGroup=extragroup
+						--"Cyberdark Chimera" OPT EFFECT_EXTRA_FUSION_MATERIAL check
+						--Same checks etc as line 119.
+						local extra_feff_mg=mg1:Filter(Card.IsHasEffect,nil,EFFECT_EXTRA_FUSION_MATERIAL)
+						if #extra_feff_mg>0 then
+							local extra_feff=extra_feff_mg:GetFirst():IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL)
+							if extra_feff and Duel.GetFlagEffect(tp,extra_feff:GetHandler():GetCode())>0 then
+								if extrafil then
+									local extrafil_g=extrafil(e,tp,mg1)
+									if #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
+										mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+									end
+								else
+									mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+								end
+							end
+						end
 						local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,gc,chkf)
 						Fusion.ExtraGroup=nil
 						backupmat=mat1:Clone()
 						tc:SetMaterial(mat1)
+						--Checks for the case that the Fusion effect has an "extraop"
+						extra_feff_mg=mat1:Filter(Card.IsHasEffect,nil,EFFECT_EXTRA_FUSION_MATERIAL)
+						if #extra_feff_mg>0 and extraop then
+							local extra_feff=extra_feff_mg:GetFirst():IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL)
+							local extra_feff_op=extra_feff:GetOperation()
+							local extra_feff_c=extra_feff:GetHandler()
+							--If the operation of the EFFECT_EXTRA_FUSION_MATERIAL effect
+							--is different than "extraop", the flag is OFF, and the player
+							--chooses to apply the effect, then select which cards
+							--the effect will be applied for and execute the operation.
+							if extra_feff and extra_feff_op and extraop~=extra_feff_op
+								and Duel.GetFlagEffect(tp,extra_feff_c:GetCode())==0
+								and Duel.SelectEffectYesNo(tp,extra_feff_c) then
+								--If the EFFECT_EXTRA_FUSION_MATERIAL effect is OPT
+								--register a flag on the player with the card's ID.
+								if extra_feff:GetCountLimit()>0 then
+									Duel.RegisterFlagEffect(tp,extra_feff_c:GetCode(),RESET_PHASE+PHASE_END,0,1)
+								end
+								--Select which cards you'll apply the
+								--EFFECT_EXTRA_FUSION_MATERIAL effect for
+								--and execute the operation.
+								Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVECARD)
+								local g=extra_feff_mg:Select(tp,1,#extra_feff_mg,nil)
+								if #g>0 then
+									extra_feff_op(e,tc,tp,g)
+									mat1:Sub(g)
+								end
+							end
+						end
 						if extraop then
 							if extraop(e,tc,tp,mat1)==false then return end
 						end
 						if #mat1>0 then
-							local ingrave,notgrave=mat1:Split(Card.IsLocation,nil,LOCATION_GRAVE)
-							if #ingrave>0 then
-								Duel.Remove(ingrave,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+							--Split the group of selected materials to
+							--"extra_feff_mg" and "normal_mg", send "normal_mg"
+							--to the GY, and execute the operation of the
+							--EFFECT_EXTRA_FUSION_MATERIAL effect, if it exists.
+							--If it doesn't exist then send the materials to the GY.
+							local extra_feff_mg,normal_mg=mat1:Split(Card.IsHasEffect,nil,EFFECT_EXTRA_FUSION_MATERIAL)
+							if #normal_mg>0 then
+								Duel.SendtoGrave(normal_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 							end
-							if #notgrave>0 then
-								Duel.SendtoGrave(notgrave,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+							if #extra_feff_mg>0 then
+								local extra_feff=extra_feff_mg:GetFirst():IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL)
+								local extra_feff_op=extra_feff:GetOperation()
+								if extra_feff and extra_feff_op then
+									extra_feff_op(e,tc,tp,extra_feff_mg)
+								else
+									Duel.SendtoGrave(extra_feff_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+								end
+								--If the EFFECT_EXTRA_FUSION_MATERIAL effect is OPT
+								--register a flag on the player with the card's ID.
+								if extra_feff:GetCountLimit()>0 then
+									Duel.RegisterFlagEffect(tp,extra_feff:GetHandler():GetCode(),RESET_PHASE+PHASE_END,0,1)
+								end
 							end
 						end
 						Duel.BreakEffect()

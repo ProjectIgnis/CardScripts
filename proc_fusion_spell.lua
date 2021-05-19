@@ -43,10 +43,20 @@ Debug.ReloadFieldBegin=(function()
 )()
 
 --Card.IsHasEffect cannot be used because it would return the above effect as well
-local function GetExtraMatEff(c)
+--If summon_card is provided, also mimic the check done internally for EFFECT_EXTRA_FUSION_MATERIAL
+--where the value is checked with the currently summoning card
+local function GetExtraMatEff(c,summon_card)
 	local effs={c:GetCardEffect(EFFECT_EXTRA_FUSION_MATERIAL)}
 	for _,eff in ipairs(effs) do
-		if eff~=geff then return eff end
+		if eff~=geff then
+			if not summon_card then
+				return eff
+			end
+			local val=eff:GetValue()
+			if (type(val)=="function" and val(eff,summon_card)) or val==1 then
+				return eff
+			end
+		end
 	end
 end
 
@@ -313,9 +323,9 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 						backupmat=mat1:Clone()
 						tc:SetMaterial(mat1)
 						--Checks for the case that the Fusion effect has an "extraop"
-						extra_feff_mg=mat1:Filter(GetExtraMatEff,nil)
+						extra_feff_mg=mat1:Filter(GetExtraMatEff,nil,tc)
 						if #extra_feff_mg>0 and extraop then
-							local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst())
+							local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst(),tc)
 							if extra_feff then
 								local extra_feff_op=extra_feff:GetOperation()
 								local extra_feff_c=extra_feff:GetHandler()
@@ -370,12 +380,12 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 							--to the GY, and execute the operation of the
 							--EFFECT_EXTRA_FUSION_MATERIAL effect, if it exists.
 							--If it doesn't exist then send the materials to the GY.
-							local extra_feff_mg,normal_mg=mat1:Split(GetExtraMatEff,nil)
+							local extra_feff_mg,normal_mg=mat1:Split(GetExtraMatEff,nil,tc)
 							if #normal_mg>0 then
 								Duel.SendtoGrave(normal_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 							end
 							if #extra_feff_mg>0 then
-								local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst())
+								local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst(),tc)
 								local extra_feff_op=extra_feff:GetOperation()
 								if extra_feff and extra_feff_op then
 									extra_feff_op(e,tc,tp,extra_feff_mg)

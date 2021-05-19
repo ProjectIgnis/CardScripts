@@ -1,5 +1,5 @@
 --鉄獣戦線 徒花のフェリジット
---Tribrigade Felidgette the Fruitless Flower
+--Tri-Brigade Ferrijit the Barren Blossom
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,8 +41,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetTargetRange(0xff,0xff)
 	e1:SetTarget(s.matlimit)
-	e1:SetTargetRange(LOCATION_ALL,LOCATION_ALL)
 	e1:SetValue(s.sumlimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
@@ -56,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.matlimit(e,c,sumtype,pos)
+function s.matlimit(e,c)
 	return not c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
 end
 function s.sumlimit(e,c)

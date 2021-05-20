@@ -2,7 +2,7 @@
 local s,id=GetID()
 
 function s.initial_effect(c)
---	aux.EnableExtraRules(c,s,DeckMaster.RegisterRules)
+--  aux.EnableExtraRules(c,s,DeckMaster.RegisterRules)
 end
 
 function Duel.AnnounceCardFromCodes(p,alias,...)
@@ -78,6 +78,7 @@ if not DeckMaster then
 			end
 			e:Reset()
 		end)
+		Duel.RegisterEffect(e0,0)
 	end
 
 	function DeckMaster.RegisterRules(c)

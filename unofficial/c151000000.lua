@@ -99,7 +99,7 @@ if not ActionDuel then
 
 	function ActionDuel.op(e,tp,eg,ep,ev,re,r,rp)
 		local actionFieldToBeUsed={}
-		local announceFilter={TYPE_ACTION,OPCODE_ISTYPE,TYPE_FIELD,OPCODE_ISTYPE,OPCODE_AND}
+		local announceFilter={TYPE_ACTION,OPCODE_ISTYPE,TYPE_FIELD,OPCODE_ISTYPE,OPCODE_AND,OPCODE_ALLOW_ALIASES}
 		while #actionFieldToBeUsed==0 do
 			for p=0,1 do
 				if Duel.SelectYesNo(p,aux.Stringid(id,3)) then

@@ -2,7 +2,25 @@
 local s,id=GetID()
 
 function s.initial_effect(c)
-	aux.EnableExtraRules(c,s,DeckMaster.RegisterRules)
+--	aux.EnableExtraRules(c,s,DeckMaster.RegisterRules)
+end
+
+function Duel.AnnounceCardFromCodes(p,alias,...)
+	if type(alias) ~= "number" and type(alias) ~= "boolean" then Debug.Message("Parameter 2 must be an int/bool for 'Duel.AnnounceCardFromCodes'") return 0 end
+	local names={...}
+	if type(alias) ~= "boolean" and #names==0 then Debug.Message("'Duel.AnnounceCardFromCodes' requires a list of card IDs") return 0 end
+	--
+	if type(alias) == "number" then table.insert(alias, 1, names) end
+	local command={}
+	for i,name in ipairs(names) do
+		table.insert(command,name)
+		table.insert(command,OPCODE_ISCODE)
+		if i>1 then
+			table.insert(command,OPCODE_OR)
+		end
+	end
+	if type(alias) == "boolean" and alias then table.insert(command,OPCODE_ALLOW_ALIASES) end
+	return Duel.AnnounceCard(p,command)
 end
 
 if not DeckMaster then
@@ -50,25 +68,23 @@ if not DeckMaster then
 
 	function DeckMaster.RegisterAbilities(c,...)
 		local id=c:GetOriginalCode()
-		if DeckMaster[id] then return end
-		DeckMaster[id]=true
 		local deckMasterEffects={...}
-		for _,eff in ipairs(deckMasterEffects) do
-			Duel.RegisterEffect(eff,0)
-			Duel.RegisterEffect(eff:Clone(),1)
-		end
+		local e0=Effect.GlobalEffect()
+		e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e0:SetCode(EVENT_PREDRAW)
+		e0:SetOperation(function(e)
+			for _,eff in ipairs(deckMasterEffects) do
+				Duel.RegisterEffect(eff:Clone(),c:GetOwner())
+			end
+			e:Reset()
+		end)
 	end
 
 	function DeckMaster.RegisterRules(c)
-		Duel.CreateToken(0,153000018)
-		local dmGroup=Group.CreateGroup()
-		for _,dm in ipairs(DeckMasterTable) do
-			dmGroup:AddCard(Duel.CreateToken(0,dm))
-		end
 		for p=0,1 do
 			Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(FLAG_DECK_MASTER,1))
-			local dm=dmGroup:Select(p,1,1,nil):GetFirst()
-			local dg=Duel.GetMatchingGroup(Card.IsOriginalCode,p,LOCATION_ALL,0,nil,dm:GetOriginalCodeRule())
+			local dmc=Duel.SelectCardsFromCodes(p,1,1,false,false,table.unpack(DeckMasterTable))
+			local dg=Duel.GetMatchingGroup(Card.IsOriginalCode,p,LOCATION_ALL,0,nil,dmc)
 			if #dg==3 then
 				Duel.Hint(HINT_MESSAGE,p,aux.Stringid(FLAG_DECK_MASTER,2))
 				Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(FLAG_DECK_MASTER,4))
@@ -79,10 +95,9 @@ if not DeckMaster then
 				local burn=dg:Select(p,1,1,nil)
 				Duel.SendtoDeck(burn,nil,-2,REASON_RULE)
 			end
-			local t=Duel.CreateToken(p,dm:GetOriginalCode())
+			local t=Duel.CreateToken(p,dmc)
 			t:MoveToDeckMasterZone(p)
 		end
-		dmGroup:DeleteGroup()
 		--Summon Deck Master
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -181,7 +196,6 @@ if not DeckMaster then
 			Duel.Win(PLAYER_NONE,WIN_REASON_DECK_MASTER)
 		end
 	end
-
 	DeckMasterTable={153000001,153000002,153000003,153000004,153000005,153000006,153000007,153000008,153000009,153000010,
 		153000011,153000012,153000013,153000014,153000015,153000016,153000017,153000018}
 end

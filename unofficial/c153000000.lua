@@ -5,26 +5,10 @@ function s.initial_effect(c)
 --  aux.EnableExtraRules(c,s,DeckMaster.RegisterRules)
 end
 
-function Duel.AnnounceCardFromCodes(p,alias,...)
-	if type(alias) ~= "number" and type(alias) ~= "boolean" then Debug.Message("Parameter 2 must be an int/bool for 'Duel.AnnounceCardFromCodes'") return 0 end
-	local names={...}
-	if type(alias) ~= "boolean" and #names==0 then Debug.Message("'Duel.AnnounceCardFromCodes' requires a list of card IDs") return 0 end
-	--
-	if type(alias) == "number" then table.insert(alias, 1, names) end
-	local command={}
-	for i,name in ipairs(names) do
-		table.insert(command,name)
-		table.insert(command,OPCODE_ISCODE)
-		if i>1 then
-			table.insert(command,OPCODE_OR)
-		end
-	end
-	if type(alias) == "boolean" and alias then table.insert(command,OPCODE_ALLOW_ALIASES) end
-	return Duel.AnnounceCard(p,command)
-end
-
 if not DeckMaster then
 	DeckMaster={}
+	DeckMaster[0]={}
+	DeckMaster[1]={}
 	DeckMasterZone={}
 	FLAG_DECK_MASTER = id
 
@@ -65,16 +49,18 @@ if not DeckMaster then
 		c:RegisterFlagEffect(FLAG_DECK_MASTER,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_CONTROL,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(FLAG_DECK_MASTER,0))
 		return res
 	end
-
 	function DeckMaster.RegisterAbilities(c,...)
-		local id=c:GetOriginalCode()
 		local deckMasterEffects={...}
 		local e0=Effect.GlobalEffect()
 		e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e0:SetCode(EVENT_PREDRAW)
+		e0:SetCode(EVENT_ADJUST)
 		e0:SetOperation(function(e)
-			for _,eff in ipairs(deckMasterEffects) do
-				Duel.RegisterEffect(eff:Clone(),c:GetOwner())
+			local id=c:GetOriginalCode()
+			if not DeckMaster[c:GetOwner()][id] then
+				DeckMaster[c:GetOwner()][id]=true
+				for _,eff in ipairs(deckMasterEffects) do
+					Duel.RegisterEffect(eff:Clone(),c:GetOwner())
+				end
 			end
 			e:Reset()
 		end)
@@ -84,7 +70,7 @@ if not DeckMaster then
 	function DeckMaster.RegisterRules(c)
 		for p=0,1 do
 			Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(FLAG_DECK_MASTER,1))
-			local dmc=Duel.SelectCardsFromCodes(p,1,1,false,false,table.unpack(DeckMasterTable))
+			local dmc=Duel.SelectCardsFromCodes(p,1,1,false,false,table.unpack(DeckMasterTableSelect))
 			local dg=Duel.GetMatchingGroup(Card.IsOriginalCode,p,LOCATION_ALL,0,nil,dmc)
 			if #dg==3 then
 				Duel.Hint(HINT_MESSAGE,p,aux.Stringid(FLAG_DECK_MASTER,2))
@@ -197,6 +183,8 @@ if not DeckMaster then
 			Duel.Win(PLAYER_NONE,WIN_REASON_DECK_MASTER)
 		end
 	end
+	DeckMasterTableSelect={153000001,153000002,153000003,153000004,153000005,153000006,153000007,153000008,153000009,153000010,
+		153000011,153000012,153000013,153000014,153000015,153000016,153000017}
 	DeckMasterTable={153000001,153000002,153000003,153000004,153000005,153000006,153000007,153000008,153000009,153000010,
 		153000011,153000012,153000013,153000014,153000015,153000016,153000017,153000018}
 end

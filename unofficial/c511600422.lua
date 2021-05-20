@@ -22,8 +22,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x562}
-function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsInfinity),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+function s.sdcon(e)
+	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsInfinity),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.val(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0

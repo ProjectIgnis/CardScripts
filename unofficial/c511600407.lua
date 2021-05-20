@@ -52,6 +52,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(g,REASON_COST)
 	g:DeleteGroup()
 end
-function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
+function s.sdcon(e)
 	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsInfinity),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end

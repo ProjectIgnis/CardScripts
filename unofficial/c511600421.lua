@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x562}
-function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
+function s.sdcon(e)
 	return not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsInfinity),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.cbcon(e,tp,eg,ep,ev,re,r,rp)

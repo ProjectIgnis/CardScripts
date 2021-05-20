@@ -3,7 +3,7 @@
 --Scripted by Larry126
 local s,id,alias=GetID()
 function s.initial_effect(c)
-	alias=c:GetAlias()
+	alias=c:Alias()
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)

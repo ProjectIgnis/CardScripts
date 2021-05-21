@@ -1,6 +1,5 @@
 --ゴッドオーガス
 --Orgoth the Relentless
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Apply appropriate effect, depending on dice results
@@ -22,14 +21,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local res,atk={0,0,0,0,0,0,false,false,false,false},0
+	local res,atk={0,0,0,0,0,0,0,false,false,false,false},0
 	for _,i in ipairs({Duel.TossDice(tp,3)}) do
 		atk=atk+(i*100)
 		res[i]=res[i]+1
 		if res[i]>=2 then
-			res[(i+1)//2+6]=true
+			res[(i+1)//2+7]=true
 		end
-		res[10]=res[i]==3
+		res[11]=res[i]==3
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -40,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e2)
-	if res[1+6] or res[10] then
+	if res[1+7] or res[11] then
 		--Cannot be destroyed by battle or card effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3008)
@@ -54,10 +53,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		c:RegisterEffect(e2)
 	end
-	if res[2+6] or res[10] then
+	if res[2+7] or res[11] then
+		--Draw 2 cards
 		Duel.Draw(tp,2,REASON_EFFECT)
 	end
-	if res[3+6] or res[10] then
+	if res[3+7] or res[11] then
 		--Can attack directly
 		local e3=Effect.CreateEffect(c)
 		e3:SetDescription(3205)

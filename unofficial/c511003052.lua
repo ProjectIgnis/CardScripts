@@ -1,4 +1,5 @@
---Past Tuning
+--パスト・チューニング
+--Critical Tuning
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,6 +21,7 @@ function s.ccfilter(c,mc,oc,lv,tp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_ADD_TYPE)
 	e1:SetValue(TYPE_MONSTER)
+	e1:SetCondition(function() return cetempchk end)
 	mc:RegisterEffect(e1,true)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CHANGE_RACE)
@@ -47,17 +49,9 @@ function s.ccfilter(c,mc,oc,lv,tp)
 	e11:SetCode(EFFECT_ADD_TYPE)
 	e11:SetValue(TYPE_TUNER)
 	c:RegisterEffect(e11,true)
-	local e12=Effect.CreateEffect(mc)
-	e12:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e12:SetType(EFFECT_TYPE_SINGLE)
-	e12:SetCode(EFFECT_DISABLE)
-	c:RegisterEffect(e12,true)
-	local e13=e12:Clone()
-	e13:SetCode(EFFECT_DISABLE_EFFECT)
-	c:RegisterEffect(e13,true)
-	tempchk=true
+	cetempchk=true
 	local res=Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,nil,Group.FromCards(c,mc))
-	tempchk=false
+	cetempchk=false
 	e1:Reset()
 	e2:Reset()
 	e4:Reset()
@@ -65,8 +59,6 @@ function s.ccfilter(c,mc,oc,lv,tp)
 	e8:Reset()
 	e10:Reset()
 	e11:Reset()
-	e12:Reset()
-	e13:Reset()
 	mc:SetStatus(STATUS_NO_LEVEL,true)
 	return res
 end

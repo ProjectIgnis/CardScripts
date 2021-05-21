@@ -1,4 +1,5 @@
---花騎士団の駿馬
+--花騎士団の駿馬 (VG)
+--Horse of the Floral Knights (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_POLYMERIZATION,500000141}
+s.listed_names={CARD_POLYMERIZATION,100278019}
 function s.filter(c)
 	return c:IsCode(CARD_POLYMERIZATION) or c:IsCode(500000141)
 end

@@ -1,4 +1,5 @@
---エコール・ド・ゾーン
+--エコール・ド・ゾーン (VG)
+--Ecole de Zone (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -43,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local p=tc:GetControler()
 		local pos=tc:GetPosition()
 		if Duel.Destroy(tc,REASON_EFFECT)~=0 then
-			local token=Duel.CreateToken(tp,id+1)
+			local token=Duel.CreateToken(tp,100278121)
 			if Duel.SpecialSummonStep(token,0,tp,p,false,false,pos) then
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)

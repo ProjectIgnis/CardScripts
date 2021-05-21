@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	e3:SetCondition(s.negcon)
 	c:RegisterEffect(e3)
 end
-s.listed_names={511000153,CARD_KURIBOH}
+s.listed_names={CARD_KURIBOH,100278001,100278002,100278003,100278004}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst()==e:GetHandler()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return rc:IsCode(511000153)
+	return rc:IsCode(100278001)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -71,19 +71,19 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
 	if chk==0 then return ft>4 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) 
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,CARD_KURIBOH) 
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,511000153) 
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,id+1) 
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,511000152) 
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,511000154) end
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,100278001) 
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,100278002) 
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,100278003) 
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp,100278004) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,5,tp,LOCATION_REMOVED)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=4 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,CARD_KURIBOH)
-	local g2=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,511000153)
-	local g3=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,id+1)
-	local g4=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,511000152)
-	local g5=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,511000154)
+	local g2=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,100278001)
+	local g3=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,100278002)
+	local g4=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,100278003)
+	local g5=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,0,nil,e,tp,100278004)
 	if #g1>0 and #g2>0 and #g3>0 and #g4>0 and #g5>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg1=g1:Select(tp,1,1,nil)

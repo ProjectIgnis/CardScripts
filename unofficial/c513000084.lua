@@ -1,4 +1,5 @@
---エコール・ド・ゾーン
+--エコール・ド・ゾーン (Anime)
+--Ecole de Zone (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -60,7 +61,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(eg,REASON_EFFECT)
 	local tc=eg:GetFirst()
 	while tc do
-		local token=Duel.CreateToken(tp,500000148)
+		local token=Duel.CreateToken(tp,100278121)
 		Duel.SpecialSummonStep(token,0,tc:GetPreviousControler(),tc:GetPreviousControler(),false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -95,7 +96,7 @@ function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
 		if not tc:IsLocation(LOCATION_MZONE) then
-			local token=Duel.CreateToken(tp,500000148)
+			local token=Duel.CreateToken(tp,100278121)
 			Duel.SpecialSummonStep(token,0,tc:GetPreviousControler(),tc:GetPreviousControler(),false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

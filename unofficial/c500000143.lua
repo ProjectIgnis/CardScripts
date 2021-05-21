@@ -1,9 +1,10 @@
---ケンタウルミナ
+--ケンタウルミナ (VG)
+--Centaur Mina (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,500000141,500000142)
+	Fusion.AddProcMix(c,true,true,100278019,100278018)
 	--negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -18,6 +19,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={100278018,100278019}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 		and rp~=tp and tp==Duel.GetTurnPlayer()

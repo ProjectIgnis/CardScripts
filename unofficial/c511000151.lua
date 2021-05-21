@@ -1,5 +1,4 @@
---クリビー (Anime)
---Kuribee (Anime)
+--Kuribee
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate attack
@@ -20,11 +19,11 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_names={511000153,511000154,CARD_KURIBOH}
+s.listed_names={CARD_KURIBOH,100278001,100278002,100278003,100278004}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return d and d:IsControler(tp) and d:IsFaceup() and 
-		(d:IsCode(id) or d:IsCode(id+1) or d:IsCode(511000153) or d:IsCode(511000154) or d:IsCode(CARD_KURIBOH))
+		(d:IsCode(100278001) or d:IsCode(100278002) or d:IsCode(100278003) or d:IsCode(100278004) or d:IsCode(CARD_KURIBOH))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()

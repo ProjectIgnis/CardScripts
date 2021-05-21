@@ -1,3 +1,4 @@
+--バースト・インパクト
 --Burst Impact
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,34 +13,28 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={58932615}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(58932615)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,58932615),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsDestructable()
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
-end
-function s.tfilter(c)
-	return not (c:IsFaceup() and c:IsCode(58932615)) and c:IsDestructable()
+	return not c:IsCode(58932615) or c:IsFacedown()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	local g=Duel.GetMatchingGroup(s.tfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,0,#g*300)
-	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(c19613556.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
-	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
+end
+function s.cfilter(c,p)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(p)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g1=Duel.GetMatchingGroup(s.tfilter,tp,LOCATION_MZONE,0,nil)
-	local g2=Duel.GetMatchingGroup(s.tfilter,tp,0,LOCATION_MZONE,nil)
-	local ct1=Duel.Destroy(g1,REASON_EFFECT)
-	local ct2=Duel.Destroy(g2,REASON_EFFECT)
-	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
-	Duel.Destroy(sg,REASON_EFFECT)Duel.Damage(tp,ct1*300,REASON_EFFECT)
-	Duel.Damage(1-tp,ct2*300,REASON_EFFECT)
+	local dg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+	Duel.Destroy(dg,REASON_EFFECT)
+	local og=Duel.GetOperatedGroup()
+	local ct1=og:FilterCount(s.cfilter,nil,tp)
+	local ct2=og:FilterCount(s.cfilter,nil,1-tp)
+	Duel.Damage(tp,ct1*300,REASON_EFFECT,true)
+	Duel.Damage(1-tp,ct2*300,REASON_EFFECT,true)
+	Duel.RDComplete()
 end

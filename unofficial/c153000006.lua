@@ -3,6 +3,10 @@
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
+	if not DeckMaster then
+		Debug.Message("You are not using "..math.floor(id).." properly!")
+		return
+	end
 	--Deck Master Effect
 	local dme1=Effect.CreateEffect(c)
 	dme1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)

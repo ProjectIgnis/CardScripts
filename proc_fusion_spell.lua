@@ -139,7 +139,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					if #extra_feff_mg>0 then
 						local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst())
 						--Check if you need to remove materials from the pool if the flag is ON
-						if extra_feff and Duel.GetFlagEffect(tp,extra_feff:GetHandler():GetCode())>0 then
+						if extra_feff and not extra_feff:CheckCountLimit(tp) then
 							--If "extrafil" exists and it doesn't return anything in
 							--the GY (so that effects like "Dragon's Mirror" are excluded),
 							--remove all the EFFECT_EXTRA_FUSION_MATERIAL cards
@@ -307,7 +307,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 						local extra_feff_mg=mg1:Filter(GetExtraMatEff,nil)
 						if #extra_feff_mg>0 then
 							local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst())
-							if extra_feff and Duel.GetFlagEffect(tp,extra_feff:GetHandler():GetCode())>0 then
+							if extra_feff and not extra_feff:CheckCountLimit(tp) then
 								if extrafil then
 									local extrafil_g=extrafil(e,tp,mg1)
 									if #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
@@ -328,13 +328,11 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 							local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst(),tc)
 							if extra_feff then
 								local extra_feff_op=extra_feff:GetOperation()
-								local extra_feff_c=extra_feff:GetHandler()
 								--If the operation of the EFFECT_EXTRA_FUSION_MATERIAL effect
 								--is different than "extraop", the flag is OFF, and the player
 								--chooses to apply the effect, then select which cards
 								--the effect will be applied for and execute the operation.
-								if extra_feff_op and extraop~=extra_feff_op
-									and Duel.GetFlagEffect(tp,extra_feff_c:GetCode())==0 then
+								if extra_feff_op and extraop~=extra_feff_op and extra_feff:CheckCountLimit(tp) then
 									local flag
 									if extrafil then
 										local extrafil_g=extrafil(e,tp,mg1)
@@ -344,7 +342,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 											mat1:Sub(extra_feff_mg)
 											extra_feff_op(e,tc,tp,extra_feff_mg)
 											flag=true
-										elseif #extrafil_g>=0 and Duel.SelectEffectYesNo(tp,extra_feff_c) then
+										elseif #extrafil_g>=0 and Duel.SelectEffectYesNo(tp,extra_feff:GetHandler()) then
 											--Select which cards you'll apply the
 											--EFFECT_EXTRA_FUSION_MATERIAL effect for
 											--and execute the operation.
@@ -364,9 +362,9 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 										flag=true
 									end
 									--If the EFFECT_EXTRA_FUSION_MATERIAL effect is OPT
-									--register a flag on the player with the card's ID.
-									if flag and extra_feff:GetCountLimit()>0 then
-										Duel.RegisterFlagEffect(tp,extra_feff_c:GetCode(),RESET_PHASE+PHASE_END,0,1)
+									--then "use" its count limit.
+									if flag and extra_feff:CheckCountLimit(tp) then
+										extra_feff:UseCountLimit(tp,1)
 									end
 								end
 							end
@@ -393,9 +391,9 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 									Duel.SendtoGrave(extra_feff_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 								end
 								--If the EFFECT_EXTRA_FUSION_MATERIAL effect is OPT
-								--register a flag on the player with the card's ID.
-								if extra_feff:GetCountLimit()>0 then
-									Duel.RegisterFlagEffect(tp,extra_feff:GetHandler():GetCode(),RESET_PHASE+PHASE_END,0,1)
+								--then "use" its count limit.
+								if extra_feff:CheckCountLimit(tp) then
+									extra_feff:UseCountLimit(tp,1)
 								end
 							end
 						end

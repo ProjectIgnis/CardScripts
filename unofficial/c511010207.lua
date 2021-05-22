@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_CHAIN_SOLVED)
+		ge1:SetCode(EVENT_CHAINING)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
 		local ge2=Effect.CreateEffect(c)
@@ -133,6 +133,9 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		elseif rc:GetFlagEffectLabel(id+1)==LOCATION_EXTRA then
 			Duel.SendtoDeck(rc,rc:GetFlagEffectLabel(511010209),0,REASON_EFFECT)
 		else
+			if rc:IsStatus(STATUS_LEAVE_CONFIRMED) then
+				rc:CancelToGrave()
+			end
 			local loc=rc:GetFlagEffectLabel(id+1)
 			if rc:IsType(TYPE_FIELD) then
 				loc=LOCATION_FZONE
@@ -141,7 +144,11 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 			if rc:GetSequence()~=rc:GetFlagEffectLabel(511010211) then
 				Duel.MoveSequence(rc,rc:GetFlagEffectLabel(511010211))
 			end
+			if rc:GetPosition()~=rc:GetFlagEffectLabel(511010210) then
+				Duel.ChangePosition(rc,rc:GetFlagEffectLabel(511010210),rc:GetFlagEffectLabel(511010210),rc:GetFlagEffectLabel(511010210),rc:GetFlagEffectLabel(511010210),true,true)
+			end
 		end
+		Duel.NegateRelatedChain(rc,RESET_TURN_SET)
 	end
 	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if #sg>0 and (not nochk or Duel.SelectYesNo(tp,aux.Stringid(402568,0))) then

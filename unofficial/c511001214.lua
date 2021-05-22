@@ -102,7 +102,7 @@ end
 function s.spcon3(e,c,og)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetLabelObject():GetLabel()==1
+	return Duel.GetLocationCount(e:GetHandlerPlayer(),LOCATION_MZONE)>0 and e:GetLabelObject():GetLabel()==1
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 end
 function s.spop3(e,tp,eg,ep,ev,re,r,rp,c,og)

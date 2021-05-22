@@ -3,7 +3,6 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	if not DeckMaster then
-		Debug.Message("You are not using "..math.floor(id).." properly!")
 		return
 	end
 	--Can attack

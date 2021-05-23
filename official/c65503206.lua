@@ -55,7 +55,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (c:GetReason()&0x41)==0x41 and re:GetOwner():IsSetCard(0x24)
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT) and re and re:GetOwner():IsSetCard(0x24)
 end
 function s.filter(c)
 	return c:IsSetCard(0x24) and c:IsType(TYPE_MONSTER) and c:GetCode()~=id and c:IsAbleToHand()

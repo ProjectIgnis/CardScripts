@@ -42,6 +42,7 @@ function s.initial_effect(c)
 end
 s.material={2403771}
 s.listed_names={2403771}
+s.synchro_nt_required=1
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end

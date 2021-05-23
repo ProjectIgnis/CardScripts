@@ -82,7 +82,13 @@ function Fusion.RegisterSummonEff(c,...)
 	Card.RegisterEffect((tab and c["handler"] or c),e1)
 	return e1
 end
-function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck,sumpos)
+function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck,sumpos,efmg)
+	if efmg and #efmg>0 then
+		efmg=efmg:Filter(GetExtraMatEff,nil,c)
+		if #efmg>0 then
+			mg:Merge(efmg)
+		end
+	end
 	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c,tp)) and (nosummoncheck or c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false,sumpos))
 			and c:CheckFusionMaterial(mg,gc,chkf)
 end
@@ -115,7 +121,12 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 				matfilter=matfilter or Card.IsAbleToGrave
 				stage2 = stage2 or aux.TRUE
 				if chk==0 then
-					local mg1=Duel.GetFusionMaterial(tp):Filter(matfilter,nil,e,tp,0)
+					
+					--FIX FLASH FUSION ATTEMPT
+					local fmg_all=Duel.GetFusionMaterial(tp)
+					local mg1=fmg_all:Filter(matfilter,nil,e,tp,0)
+					local efmg=fmg_all:Filter(GetExtraMatEff,nil)
+					
 					local checkAddition=nil
 					if extrafil then
 						local ret = {extrafil(e,tp,mg1)}
@@ -163,7 +174,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 							end
 						end
 					end
-					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos)
+					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos,efmg)
 					Fusion.CheckAdditional=nil
 					Fusion.ExtraGroup=nil
 					if not res and not notfusion then
@@ -238,7 +249,12 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				matfilter=matfilter or Card.IsAbleToGrave
 				stage2 = stage2 or aux.TRUE
 				local checkAddition
-				local mg1=Duel.GetFusionMaterial(tp):Filter(matfilter,nil,e,tp,1)
+				
+				--FIX FLASH FUSION ATTEMPT
+				local fmg_all=Duel.GetFusionMaterial(tp)
+				local mg1=fmg_all:Filter(matfilter,nil,e,tp,1)
+				local efmg=fmg_all:Filter(GetExtraMatEff,nil)
+				
 				local extragroup=nil
 				if extrafil then
 					local ret = {extrafil(e,tp,mg1)}
@@ -260,7 +276,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				Fusion.CheckMax=maxcount
 				Fusion.CheckAdditional=checkAddition
 				local effswithgroup={}
-				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos)
+				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos,efmg)
 				if #sg1>0 then
 					table.insert(effswithgroup,{e,aux.GrouptoCardid(sg1)})
 				end

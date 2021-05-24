@@ -398,7 +398,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 								local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst(),tc)
 								if extra_feff then
 									local extra_feff_op=extra_feff:GetOperation()
-									if extra_feff and extra_feff_op then
+									if extra_feff_op then
 										extra_feff_op(e,tc,tp,extra_feff_mg)
 									else
 										Duel.SendtoGrave(extra_feff_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)

@@ -1,7 +1,6 @@
 --海造賊－象徴
 --Emblem of the Plunder Patroll
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,11 +31,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x13f}
-
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() end
-	e:SetLabelObject(c:GetEquipTarget())
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.filter(c,e,tp,att)
@@ -53,8 +50,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	if chk==0 then return att>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,att) end
+	local c=e:GetHandler()
+	Duel.SetTargetCard(c:GetPreviousEquipTarget())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetLabelObject(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,c:GetPreviousEquipTarget(),1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local att=0
@@ -65,9 +64,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,att):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
-		local tg=e:GetLabelObject()
-		if tg then
-			s.equipop(tc,e,tp,tg)
+		local ec=e:GetHandler():GetPreviousEquipTarget()
+		if ec and ec:IsRelateToEffect(e) then
+			s.equipop(tc,e,tp,ec)
 		end
 	end
 end

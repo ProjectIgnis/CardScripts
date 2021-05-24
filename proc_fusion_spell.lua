@@ -162,6 +162,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 								local extrafil_g=extrafil(e,tp,mg1)
 								if #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
 									mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+									efmg:Clear()
 								end
 							--If "extrafil" doesn't exist then remove all the
 							--EFFECT_EXTRA_FUSION_MATERIAL cards from the material group.
@@ -171,6 +172,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 							--(only relevant for "Fullmetalfoes Alkahest" atm, but he's not OPT).
 							else
 								mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+								efmg:Clear()
 							end
 						end
 					end
@@ -328,9 +330,11 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 									local extrafil_g=extrafil(e,tp,mg1)
 									if #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
 										mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+										efmg:Clear()
 									end
 								else
 									mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+									efmg:Clear()
 								end
 							end
 						end

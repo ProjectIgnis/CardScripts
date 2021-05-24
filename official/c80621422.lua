@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e3:SetCountLimit(1,id)
 	e3:SetCost(s.cost)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
@@ -66,6 +66,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local ec=e:GetHandler():GetPreviousEquipTarget()
 		if ec and ec:IsRelateToEffect(e) then
+			Duel.BreakEffect()
 			s.equipop(tc,e,tp,ec)
 		end
 	end

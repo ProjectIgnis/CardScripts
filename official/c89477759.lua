@@ -74,7 +74,7 @@ function s.bpop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.Destroy(dg,REASON_EFFECT)
 	if ct==0 or Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_GRAVE,nil,e,tp)
-	if g:GetFirst() and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)

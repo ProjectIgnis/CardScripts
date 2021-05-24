@@ -396,16 +396,18 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 							end
 							if #extra_feff_mg>0 then
 								local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst(),tc)
-								local extra_feff_op=extra_feff:GetOperation()
-								if extra_feff and extra_feff_op then
-									extra_feff_op(e,tc,tp,extra_feff_mg)
-								else
-									Duel.SendtoGrave(extra_feff_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-								end
-								--If the EFFECT_EXTRA_FUSION_MATERIAL effect is OPT
-								--then "use" its count limit.
-								if extra_feff:CheckCountLimit(tp) then
-									extra_feff:UseCountLimit(tp,1)
+								if extra_feff then
+									local extra_feff_op=extra_feff:GetOperation()
+									if extra_feff and extra_feff_op then
+										extra_feff_op(e,tc,tp,extra_feff_mg)
+									else
+										Duel.SendtoGrave(extra_feff_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+									end
+									--If the EFFECT_EXTRA_FUSION_MATERIAL effect is OPT
+									--then "use" its count limit.
+									if extra_feff:CheckCountLimit(tp) then
+										extra_feff:UseCountLimit(tp,1)
+									end
 								end
 							end
 						end

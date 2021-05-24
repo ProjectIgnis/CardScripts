@@ -71,10 +71,10 @@ function s.filter(c,e,tp)
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
-	Duel.Destroy(dg,REASON_EFFECT)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+	local ct=Duel.Destroy(dg,REASON_EFFECT)
+	if ct==0 or Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_GRAVE,nil,e,tp)
-	if g:GetFirst() and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:Select(tp,1,1,nil)
@@ -92,7 +92,8 @@ function s.spfilter(c,e,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

@@ -59,7 +59,40 @@ local function GetExtraMatEff(c,summon_card)
 		end
 	end
 end
-
+--"Cyberdark Chimera" OPT EFFECT_EXTRA_FUSION_MATERIAL check
+local function ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
+	local extra_feff_mg=mg1:Filter(GetExtraMatEff,nil)
+	if #extra_feff_mg>0 then
+		local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst())
+		--Check if you need to remove materials from the pool if count limit has been used
+		if extra_feff and not extra_feff:CheckCountLimit(tp) then
+			--If "extrafil" exists and it doesn't return anything in
+			--the GY (so that effects like "Dragon's Mirror" are excluded),
+			--remove all the EFFECT_EXTRA_FUSION_MATERIAL cards
+			--that are in the GY from the material group.
+			--Hardcoded to LOCATION_GRAVE since it's currently
+			--impossible to get the TargetRange of the
+			--EFFECT_EXTRA_FUSION_MATERIAL effect (but the only OPT effect atm uses the GY).
+			if extrafil then
+				local extrafil_g=extrafil(e,tp,mg1)
+				if #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
+					mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+					efmg:Clear()
+				end
+			--If "extrafil" doesn't exist then remove all the
+			--EFFECT_EXTRA_FUSION_MATERIAL cards from the material group.
+			--A more complete implementation would check for cases where the
+			--Fusion Summoning effect can use the whole field (including LOCATION_SZONE),
+			--but it's currently not possible to know if that is the case
+			--(only relevant for "Fullmetalfoes Alkahest" atm, but he's not OPT).
+			else
+				mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+				efmg:Clear()
+			end
+		end
+	end
+	return mg1,efmg
+end
 
 Fusion.CreateSummonEff = aux.FunctionWithNamedArgs(
 function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,desc,preselect,nosummoncheck,extratg,mincount,maxcount,sumpos)
@@ -122,7 +155,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 				stage2 = stage2 or aux.TRUE
 				if chk==0 then
 					
-					--FIX FLASH FUSION ATTEMPT
+					--Attempted fix for "Flash Fusion" and co
 					local fmg_all=Duel.GetFusionMaterial(tp)
 					local mg1=fmg_all:Filter(matfilter,nil,e,tp,0)
 					local efmg=fmg_all:Filter(GetExtraMatEff,nil)
@@ -145,37 +178,10 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					Fusion.CheckExact=exactcount
 					Fusion.CheckMin=mincount
 					Fusion.CheckMax=maxcount
-					--"Cyberdark Chimera" OPT EFFECT_EXTRA_FUSION_MATERIAL check
-					local extra_feff_mg=mg1:Filter(GetExtraMatEff,nil)
-					if #extra_feff_mg>0 then
-						local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst())
-						--Check if you need to remove materials from the pool if the flag is ON
-						if extra_feff and not extra_feff:CheckCountLimit(tp) then
-							--If "extrafil" exists and it doesn't return anything in
-							--the GY (so that effects like "Dragon's Mirror" are excluded),
-							--remove all the EFFECT_EXTRA_FUSION_MATERIAL cards
-							--that are in the GY from the material group.
-							--Hardcoded to LOCATION_GRAVE since it's currently
-							--impossible to get the TargetRange of the
-							--EFFECT_EXTRA_FUSION_MATERIAL effect (but the only OPT effect atm uses the GY).
-							if extrafil then
-								local extrafil_g=extrafil(e,tp,mg1)
-								if #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
-									mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
-									efmg:Clear()
-								end
-							--If "extrafil" doesn't exist then remove all the
-							--EFFECT_EXTRA_FUSION_MATERIAL cards from the material group.
-							--A more complete implementation would check for cases where the
-							--Fusion Summoning effect can use the whole field (including LOCATION_SZONE),
-							--but it's currently not possible to know if that is the case
-							--(only relevant for "Fullmetalfoes Alkahest" atm, but he's not OPT).
-							else
-								mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
-								efmg:Clear()
-							end
-						end
-					end
+					
+					--Attempted fix for "Flash Fusion" and co
+					mg1,efmg=ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
+					
 					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos,efmg)
 					Fusion.CheckAdditional=nil
 					Fusion.ExtraGroup=nil
@@ -252,7 +258,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				stage2 = stage2 or aux.TRUE
 				local checkAddition
 				
-				--FIX FLASH FUSION ATTEMPT
+				--Attempted fix for "Flash Fusion" and co
 				local fmg_all=Duel.GetFusionMaterial(tp)
 				local mg1=fmg_all:Filter(matfilter,nil,e,tp,1)
 				local efmg=fmg_all:Filter(GetExtraMatEff,nil)
@@ -278,6 +284,10 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				Fusion.CheckMax=maxcount
 				Fusion.CheckAdditional=checkAddition
 				local effswithgroup={}
+				
+				--Attempted fix for "Flash Fusion" and co
+				mg1,efmg=ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
+				
 				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos,efmg)
 				if #sg1>0 then
 					table.insert(effswithgroup,{e,aux.GrouptoCardid(sg1)})
@@ -320,30 +330,12 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 					if sel[1]==e then
 						Fusion.CheckAdditional=checkAddition
 						Fusion.ExtraGroup=extragroup
-						--"Cyberdark Chimera" OPT EFFECT_EXTRA_FUSION_MATERIAL check
-						--Same checks etc as line 119.
-						local extra_feff_mg=mg1:Filter(GetExtraMatEff,nil)
-						if #extra_feff_mg>0 then
-							local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst())
-							if extra_feff and not extra_feff:CheckCountLimit(tp) then
-								if extrafil then
-									local extrafil_g=extrafil(e,tp,mg1)
-									if #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
-										mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
-										efmg:Clear()
-									end
-								else
-									mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
-									efmg:Clear()
-								end
-							end
-						end
 						local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,gc,chkf)
 						Fusion.ExtraGroup=nil
 						backupmat=mat1:Clone()
 						tc:SetMaterial(mat1)
 						--Checks for the case that the Fusion effect has an "extraop"
-						extra_feff_mg=mat1:Filter(GetExtraMatEff,nil,tc)
+						local extra_feff_mg=mat1:Filter(GetExtraMatEff,nil,tc)
 						if #extra_feff_mg>0 and extraop then
 							local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst(),tc)
 							if extra_feff then

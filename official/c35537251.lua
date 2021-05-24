@@ -1,8 +1,8 @@
---BK シャドー
+--ＢＫ シャドー
 --Battlin' Boxer Shadow
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Detach material and Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,34 +16,28 @@ end
 s.listed_series={0x84}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x84) and c:IsType(TYPE_XYZ)
+		and c:GetOverlayCount()>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local g=Group.CreateGroup()
-		local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
-		local tc=mg:GetFirst()
-		for tc in aux.Next(mg) do
-			g:Merge(tc:GetOverlayGroup())
-			tc=mg:GetNext()
-		end
-		if #g==0 then return false end
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+			and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Group.CreateGroup()
-	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
-	local tc=mg:GetFirst()
-	for tc in aux.Next(mg) do
-		g:Merge(tc:GetOverlayGroup())
-	end
-	if #g==0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DEATTACHFROM)
+	local xyzg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local tc=xyzg:GetFirst()
+	if not tc then return end
+	Duel.HintSelection(xyzg)
+	local mg=tc:GetOverlayGroup()
+	local ct=#mg
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)
-	local sg=g:Select(tp,1,1,nil)
-	Duel.SendtoGrave(sg,REASON_EFFECT)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	local sg=mg:Select(tp,1,1,nil)
+	if #sg>0 and Duel.SendtoGrave(sg,REASON_EFFECT)>0
+		and tc:GetOverlayCount()<ct then
+		local c=e:GetHandler()
+		if not c:IsRelateToEffect(e) then return end
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	end
 end

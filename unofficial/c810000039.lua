@@ -1,3 +1,4 @@
+--ビッグ・キャノン・オーガ
 --Big Cannon Ogre
 --scripted by: UnknownGuest
 local s,id=GetID()
@@ -41,7 +42,7 @@ s.listed_names={810000038,511000014}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsCode,1,false,1,true,c,c:GetControler(),nil,false,nil,511000014)
-		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,810000038)
+		and Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,810000038)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,false,nil,511000014)

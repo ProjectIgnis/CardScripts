@@ -14,6 +14,8 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target(fustg,rittg))
 	e1:SetOperation(s.operation(fustg,fusop,rittg,ritop))
 	c:RegisterEffect(e1)
+	if not AshBlossomTable then AshBlossomTable={} end
+	table.insert(AshBlossomTable,e1)
 end
 s.listed_series={0x167}
 function s.fextra(e,tp,mg)

@@ -31,6 +31,8 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
+	if not AshBlossomTable then AshBlossomTable={} end
+	table.insert(AshBlossomTable,e3)
 end
 s.listed_names={21159309}
 s.listed_series={0x3f}

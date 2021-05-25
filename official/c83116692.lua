@@ -25,6 +25,8 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sstg)
 	e2:SetOperation(s.ssop)
 	c:RegisterEffect(e2)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e2)
 end
 --Special Summon
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -47,20 +49,6 @@ function s.remfilter(c)
 end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local c=e:GetHandler()
-	local ctm=Duel.GetMatchingGroupCount(Card.IsMonster,tp,0,LOCATION_GRAVE,nil)
-	local ctst=Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_GRAVE,nil,TYPE_SPELL+TYPE_TRAP)
-	local tgg=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_MZONE,1,nil)
-	local remg=Duel.GetMatchingGroup(s.remfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil)
-	local tg=ctm<ctst and #tgg>0 and c:IsAbleToGrave()
-	local rem=ctm>ctst and #remg>0 and c:IsAbleToRemove()
-	if tg then
-		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,c,1,tp,LOCATION_MZONE)
-		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,tgg,1,1-tp,LOCATION_MZONE)
-	elseif rem then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,c,1,tp,LOCATION_MZONE)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,remg,1,1-tp,LOCATION_GRAVE)
-	end
 end
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -7,6 +7,8 @@ function s.initial_effect(c)
 	local e1=Fusion.CreateSummonEff(c,nil,nil,s.fextra,s.extraop)
 	e1:SetCountLimit(1,id)
 	c:RegisterEffect(e1)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e1)
 	--set
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)

@@ -30,6 +30,8 @@ function s.initial_effect(c)
 	e2:SetTarget(s.bptg)
 	e2:SetOperation(s.bpop)
 	c:RegisterEffect(e2)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e2)
 	--Special Summon Number iC1000
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))

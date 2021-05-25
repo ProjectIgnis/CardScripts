@@ -70,6 +70,43 @@ function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	e6:SetCondition(s.chcon)
 	e6:SetOperation(s.chop)
 	Duel.RegisterEffect(e6,tp)
+	--Replace rule
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_FIELD)
+	e7:SetCode(EFFECT_TO_GRAVE_REDIRECT)
+	e7:SetValue(LOCATION_DECKBOT)
+	e7:SetTargetRange(0xff,0xff)
+	e7:SetTarget(s.repRuleTg)
+	Duel.RegisterEffect(e7,tp)
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_TO_DECK)
+	e8:SetLabelObject(g)
+	e8:SetOperation(s.repRuleOp)
+	Duel.RegisterEffect(e8,tp)
+end
+function s.repRuleTg(e,c)
+	if c:IsType(TYPE_MONSTER) and c:IsReason(REASON_RULE) then
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD&~(RESET_TODECK|RESET_LEAVE),0,1)
+		return true
+	else return false end
+end
+function s.rdfilter(c)
+	return c:GetFlagEffect(id)>0 and c:IsType(TYPE_MONSTER) and c:IsReason(REASON_RULE)
+end
+function s.repRuleOp(e,tp,eg,ep,ev,re,r,rp)
+	local g=eg:Filter(s.rdfilter,nil)
+	if #g==0 then return end
+	for tc in ~g do
+		local e1=Effect.CreateEffect(e:GetOwner())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetCode(EFFECT_CANNOT_TRIGGER)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD&~(RESET_LEAVE))
+		tc:RegisterEffect(e1)
+	end
+	Duel.SendtoDeck(g,tp,-2,REASON_EFFECT)
+	e:GetLabelObject():Merge(Duel.GetOperatedGroup():Filter(aux.NOT(Card.IsLocation),nil,LOCATION_ALL))
 end
 function s.repcon(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)>7 then
@@ -84,6 +121,14 @@ end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil) end
 	local g=eg:Filter(s.repfilter,nil)
+	for tc in ~g do
+		local e1=Effect.CreateEffect(e:GetOwner())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetCode(EFFECT_CANNOT_TRIGGER)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD&~(RESET_LEAVE))
+		tc:RegisterEffect(e1)
+	end
 	Duel.SendtoDeck(g,tp,-2,REASON_EFFECT)
 	e:GetLabelObject():Merge(Duel.GetOperatedGroup():Filter(aux.NOT(Card.IsLocation),nil,LOCATION_ALL))
 	return true
@@ -194,6 +239,12 @@ function s.defop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	for tc in aux.Next(tg) do
 		Duel.MoveToField(tc,tp,tp,LOCATION_MZONE,POS_FACEUP_DEFENSE,true)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_CONTROL)
+		e1:SetValue(tp)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_CHAIN)
+		tc:RegisterEffect(e1)
 	end
 end
 function s.checkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -225,7 +276,7 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	Duel.Hint(HINT_CARD,1-tp,id)
 	local c=Duel.GetDeckMaster(tp)
-	c:Recreate(153000018,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,true)
+	c:Recreate(153000018,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,true)
 	if not c:IsLocation(LOCATION_ONFIELD) then Duel.Hint(HINT_SKILL,tp,153000018) end
 	if e:GetLabelObject():GetFirst() then Duel.SendtoGrave(e:GetLabelObject(),REASON_RULE) end
 end

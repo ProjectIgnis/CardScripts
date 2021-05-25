@@ -105,6 +105,7 @@ function s.repRuleOp(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD&~(RESET_LEAVE))
 		tc:RegisterEffect(e1)
 	end
+	Duel.DisableShuffleCheck()
 	Duel.SendtoDeck(g,tp,-2,REASON_EFFECT)
 	e:GetLabelObject():Merge(Duel.GetOperatedGroup():Filter(aux.NOT(Card.IsLocation),nil,LOCATION_ALL))
 end
@@ -200,7 +201,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_CARD,tp,id)
 		Duel.Hint(HINT_CARD,1-tp,id)
 		local c=Duel.GetDeckMaster(tp)
-		c:Recreate(153000018,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,true)
+		c:Recreate(153000018,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,true)
 		if not c:IsLocation(LOCATION_ONFIELD) then Duel.Hint(HINT_SKILL,tp,153000018) end
 		if g:GetFirst() then Duel.SendtoGrave(g,REASON_RULE) end
 	elseif op==2 then

@@ -20,6 +20,8 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tg)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e2)
 end
 s.listed_names={id,CARD_STARDUST_DRAGON}
 function s.lffilter(c,r,rp,tp)

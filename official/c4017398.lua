@@ -1,7 +1,6 @@
 --ゼアル・エントラスト
 --ZEXAL Entrust
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,6 +15,8 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e1)
 	--Add 1 "ZEXAL" spell/trap from GY to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -49,8 +50,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SetTargetCard(sg)
-		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 	end
 end
 	--Add or special summon 1 "Utopia", "ZW -", or "ZS -" monster from GY

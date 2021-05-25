@@ -1,3 +1,4 @@
+--ピンポイント・シュート
 --Pinpoint Shot
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,8 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0
-		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
 	local ac=Duel.AnnounceCard(tp)
 	Duel.SetTargetParam(ac)

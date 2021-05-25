@@ -46,7 +46,7 @@ Debug.ReloadFieldBegin=(function()
 --If summon_card is provided, also mimic the check done internally for EFFECT_EXTRA_FUSION_MATERIAL
 --where the value is checked with the currently summoning card
 local function GetExtraMatEff(c,summon_card)
-	local effs={c:GetCardEffect(EFFECT_EXTRA_FUSION_MATERIAL)}
+	local effs={c:IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL)}
 	for _,eff in ipairs(effs) do
 		if eff~=geff then
 			if not summon_card then

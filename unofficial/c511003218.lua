@@ -46,23 +46,22 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
     	return e:GetHandler():GetFlagEffect(id)>0 and #g>0
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local g1=Duel.GetMatchingGroup(s.relfilter,tp,LOCATION_MZONE,0,nil,e:GetLabel(),e:GetLabelObject():GetLabel())
-    	local g2=Duel.GetMatchingGroup(s.relfilter,tp,0,LOCATION_MZONE,nil,e:GetLabel(),e:GetLabelObject():GetLabel())
-	if #g1>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+    	local g1=Duel.GetMatchingGroup(s.relfilter,tp,LOCATION_MZONE,0,nil,e:GetLabel(),eGetLabelObject():GetLabel())
+    	if #g1>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local sg=Duel.SelectMatchingCard(tp,s.relfilter,tp,LOCATION_MZONE,0,1,1,nil,e:GetLabel(),e:GetLabelObject():GetLabel())
-		local tc=sg:GetFirst()
-		local atk=(tc:GetAttack()/2)
-		local typ=tc:GetCode()
-		if Duel.Release(tc,REASON_EFFECT)>0 then
-			if Duel.IsExistingMatchingCard(s.relfilter,tp,0,LOCATION_MZONE,1,nil,typ) and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
-				Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_RELEASE)
-				local sg2=Duel.SelectMatchingCard(1-tp,s.relfilter,1-tp,LOCATION_MZONE,0,1,1,nil,typ)
-				local tc2=sg2:GetFirst()
-				Duel.Release(tc2,REASON_EFFECT)	   
-			else	 
-				Duel.Damage(1-tp,atk,REASON_EFFECT)
-			end
+        	local tc=g1:Select(tp,1,1,nil):GetFirst()
+        	local atk=(tc:GetAttack()/2)
+        	local code=tc:GetCode()
+        	if Duel.Release(tc,REASON_EFFECT)>0 then
+            		local g2=Duel.GetMatchingGroup(s.relfilter,1-tp,LOCATION_MZONE,0,nil,code)
+            		if #g2>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
+                		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_RELEASE)
+                		local tc2=g2:Select(1-tp,1,1,nil)
+                		Duel.Release(tc2,REASON_EFFECT)    
+            		else     
+                		Duel.Damage(1-tp,atk,REASON_EFFECT)
+            		end
 		end
-	end
+    	end
 end

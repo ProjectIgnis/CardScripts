@@ -33,7 +33,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,1-tp,LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:Select(tp,aux.NecroValleyFilter(s.spfilter),1,1,nil,e,tp):GetFirst()
+	local tc=eg:FilterSelect(tp,aux.NecroValleyFilter(s.spfilter),1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local c=e:GetHandler()
 		local e1 = Effect.CreateEffect(c)

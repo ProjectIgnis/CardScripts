@@ -24,14 +24,14 @@ s.listed_names={86120751}
 function s.matfilter(c)
 	return (c:IsLocation(LOCATION_HAND) and c:IsAbleToGrave()) or (c:IsOnField() and c:IsAbleToRemove())
 end
-function s.checkmat(tp,sg,fc)
-	return fc:IsSetCard(0xf4) or not sg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE+LOCATION_ONFIELD)
+function s.groupfil(mg,fc,gc)
+	return fc:IsSetCard(0xf4) and mg or mg:Filter(Card.IsLocation,nil,LOCATION_HAND)
 end
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,LOCATION_GRAVE,nil),s.checkmat
+		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,LOCATION_GRAVE,nil),nil,s.groupfil
 	end
-	return nil,s.checkmat
+	return nil,nil,s.groupfil
 end
 function s.extraop(e,tc,tp,sg)
 	local rg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE+LOCATION_ONFIELD)

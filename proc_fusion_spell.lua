@@ -64,9 +64,9 @@ function Fusion.RegisterSummonEff(c,...)
 	Card.RegisterEffect((tab and c["handler"] or c),e1)
 	return e1
 end
-function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck,sumpos)
+function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck,sumpos,groupfilter)
 	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c,tp)) and (nosummoncheck or c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false,sumpos))
-			and c:CheckFusionMaterial(mg,gc,chkf)
+			and c:CheckFusionMaterial(not groupfilter and mg or groupfilter(mg,c,gc),gc,chkf)
 end
 
 function Fusion.ForcedMatValidity(c,e)
@@ -99,6 +99,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 				if chk==0 then
 					local mg1=Duel.GetFusionMaterial(tp):Filter(matfilter,nil,e,tp,0)
 					local checkAddition=nil
+					local groupfilter=nil
 					if extrafil then
 						local ret = {extrafil(e,tp,mg1)}
 						if ret[1] then
@@ -106,6 +107,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 							mg1:Merge(ret[1])
 						end
 						checkAddition=ret[2]
+						groupfilter=ret[3]
 					end
 					if gc and not mg1:Includes(gc) then
 						Fusion.ExtraGroup=nil
@@ -116,7 +118,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					Fusion.CheckExact=exactcount
 					Fusion.CheckMin=mincount
 					Fusion.CheckMax=maxcount
-					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos)
+					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos,groupfilter)
 					Fusion.CheckAdditional=nil
 					Fusion.ExtraGroup=nil
 					if not res and not notfusion then
@@ -132,7 +134,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 									if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
 								end
 								Fusion.ExtraGroup=mg
-								if Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck,sumpos) then
+								if Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck,sumpos,groupfilter) then
 									res=true
 									Fusion.CheckAdditional=nil
 									Fusion.ExtraGroup=nil
@@ -193,6 +195,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				local checkAddition
 				local mg1=Duel.GetFusionMaterial(tp):Filter(matfilter,nil,e,tp,1)
 				local extragroup=nil
+				local groupfilter=nil
 				if extrafil then
 					local ret = {extrafil(e,tp,mg1)}
 					if ret[1] then
@@ -201,6 +204,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 						mg1:Merge(ret[1])
 					end
 					checkAddition=ret[2]
+					groupfilter=ret[3]
 				end
 				mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil,nil,value)
 				mg1=mg1:Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
@@ -213,7 +217,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				Fusion.CheckMax=maxcount
 				Fusion.CheckAdditional=checkAddition
 				local effswithgroup={}
-				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos)
+				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos,groupfilter)
 				if #sg1>0 then
 					table.insert(effswithgroup,{e,aux.GrouptoCardid(sg1)})
 				end
@@ -233,7 +237,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 								if checkAddition then Fusion.CheckAdditional=aux.AND(checkAddition,fcheck) else Fusion.CheckAdditional=fcheck end
 							end
 							Fusion.ExtraGroup=mg2
-							local sg2=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg2,gc,chkf,value,sumlimit,nosummoncheck,sumpos)
+							local sg2=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,aux.AND(mf,fusfilter or aux.TRUE),e,tp,mg2,gc,chkf,value,sumlimit,nosummoncheck,sumpos,groupfilter)
 							if #sg2 > 0 then
 								table.insert(effswithgroup,{ce,aux.GrouptoCardid(sg2)})
 								sg1:Merge(sg2)

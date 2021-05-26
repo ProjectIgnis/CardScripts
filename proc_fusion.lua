@@ -318,12 +318,12 @@ function Fusion.ConditionMixRep(insf,sub,fun1,minc,maxc,...)
 				if not mg:Includes(mustg) or mustg:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c,sumtype) then return false end
 				if gc then
 					if gc:IsExists(aux.NOT(Card.IsCanBeFusionMaterial),1,nil,c,sumtype)
-						or gc:IsExists(aux.NOT(Fusion.ConditionFilterMix),1,nil,c,sub,sub,contact,sumtype,matcheck,tp,fun1,table.unpack(funs))then return false end
+						or gc:IsExists(aux.NOT(Fusion.ConditionFilterMix),1,nil,c,sub,sub,contact,sumtype,matcheck,tp,fun1,table.unpack(funs)) then return false end
 					mustg:Merge(gc)
 				end
 				local sg=Group.CreateGroup()
 				mg:Merge(mustg)
-				return mg:IsExists(Fusion.SelectMixRep,1,nil,tp,mg,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs)) 
+				return mg:IsExists(Fusion.SelectMixRep,1,nil,tp,mg,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs))
 			end
 end
 function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
@@ -355,11 +355,12 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 				local p=tp
 				local sfhchk=false
 				if not contact and Duel.IsPlayerAffectedByEffect(tp,511004008) and Duel.SelectYesNo(1-tp,65) then
-					p=1-tp Duel.ConfirmCards(1-tp,mg)
+					p=1-tp
+					Duel.ConfirmCards(1-tp,mg)
 					if mg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then sfhchk=true end
 				end
+				local cg=mg:Filter(Fusion.SelectMixRep,sg,tp,mg,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs))
 				while #sg<maxc+#funs do
-					local cg=mg:Filter(Fusion.SelectMixRep,sg,tp,mg,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs))
 					if #cg==0 then break end
 					local finish=Fusion.CheckMixRepGoal(tp,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs)) and not Fusion.CheckExact and not (Fusion.CheckMin and #sg<Fusion.CheckMin)
 					local cancel=(contact and #sg==0)
@@ -369,8 +370,15 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 					if #mustg==0 or not mustg:IsContains(tc) then
 						if not sg:IsContains(tc) then
 							sg:AddCard(tc)
+							cg=mg:Filter(Fusion.SelectMixRep,sg,tp,mg,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs))
 						else
 							sg:RemoveCard(tc)
+							local cg2=mg:Filter(Fusion.SelectMixRep,sg,tp,mg,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs))
+							if #cg2>0 then
+								cg=cg2
+							else
+								sg:AddCard(tc)
+							end
 						end
 					end
 				end
@@ -415,15 +423,15 @@ function Fusion.CheckMixRepTemplate(c,cond,tp,mg,sg,mustg,g,fc,sub,sub2,contact,
 			if res then return true end
 		end
 	end
-	if maxc>0 then
-		if fun1(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) then
-			g:AddCard(c)
-			local sub=sub and fun1(c,fc,false,sub2,mg,sg,tp,contact,sumtype)
-			local res=cond(tp,mg,sg,mustg-c,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc-1,maxc-1,...)
-			g:RemoveCard(c)
-			if res then return true end
-		end
-	end
+	-- if maxc>0 then
+		-- if fun1(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) then
+			-- g:AddCard(c)
+			-- local sub=sub and fun1(c,fc,false,sub2,mg,sg,tp,contact,sumtype)
+			-- local res=cond(tp,mg,sg,mustg-c,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc-1,maxc-1,...)
+			-- g:RemoveCard(c)
+			-- if res then return true end
+		-- end
+	-- end
 	return false
 end
 function Fusion.CheckMixRepSelectedCond(tp,mg,sg,mustg,g,...)

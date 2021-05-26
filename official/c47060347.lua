@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rectg)
 	e1:SetOperation(s.recop)
 	c:RegisterEffect(e1)
-	--leave
+	--Damage when leaving
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -37,13 +37,13 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(p,d,REASON_EFFECT)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsDisabled() then
+	local c=e:GetHandler()
+	if c:IsDisabled() or not c:IsStatus(STATUS_EFFECT_ENABLED) then
 		e:SetLabel(1)
 	else e:SetLabel(0) end
 end
 function s.leave(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if e:GetLabelObject():GetLabel()==0 and c:IsPreviousControler(tp) then
-		Duel.Damage(tp,3000,REASON_EFFECT)
+	if e:GetLabelObject():GetLabel()==0 then
+		Duel.Damage(e:GetHandler():GetPreviousControler(),3000,REASON_EFFECT)
 	end
 end

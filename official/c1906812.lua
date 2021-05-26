@@ -1,7 +1,6 @@
 --灰燼竜バスタード
---Splind the Steelexpress Dragon
+--Sprind the Irondash Dragon
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,7 +32,7 @@ s.listed_names={CARD_ALBAZ}
 
 	--Check for an effect that was special summoned this turn
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsStatus(STATUS_SPSUMMON_TURN)
+	return c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_EFFECT) and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 	--Activation legality
 function s.seqtg(e,tp,eg,ep,ev,re,r,rp,chk)

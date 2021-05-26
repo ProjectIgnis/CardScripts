@@ -39,7 +39,7 @@ function s.typetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
 function s.relfilter(c,code1,code2)
-	return c:IsReleasable() and c:IsCode(code) and c:IsFaceup()
+	return c:IsReleasable() and c:IsCode(code1,code2) and c:IsFaceup()
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.relfilter,tp,LOCATION_MZONE,0,nil,e:GetLabel(),e:GetLabelObject():GetLabel())

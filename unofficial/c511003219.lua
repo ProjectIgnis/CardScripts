@@ -39,25 +39,21 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(g,POS_FACEUP_ATTACK,0,POS_FACEUP_ATTACK,0)
 		Duel.BreakEffect()
 		if Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,0,1,c) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-			if a and a==c and at then
+			if a==c and at then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACK)
 				local sc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,c):GetFirst()
-				if sc then
-					Duel.CalculateDamage(sc,at)
-				end
-			elseif a and a~=c and a:IsControler(1-tp) and at and at==c then
+				Duel.ChangeAttacker(sc)
+			elseif at and at==c then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACKTARGET)
 				local sc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,c):GetFirst()
-				if sc then
-					Duel.CalculateDamage(a,sc)
-				end
+				Duel.ChangeAttackTarget(sc)
 			end
 		end
 	end
 end
-function s.condition(e)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Duel.GetAttacker()~=c or Duel.GetAttackTarget()~=c
+	return Duel.GetAttacker()~=c and Duel.GetAttackTarget() and Duel.GetAttackTarget()~=c
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

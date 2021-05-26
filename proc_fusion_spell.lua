@@ -391,23 +391,22 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 							--EFFECT_EXTRA_FUSION_MATERIAL effect, if it exists.
 							--If it doesn't exist then send the materials to the GY.
 							local extra_feff_mg,normal_mg=mat1:Split(GetExtraMatEff,nil,tc)
+							local extra_feff
+							if #extra_feff_mg>0 then extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst(),tc) end
 							if #normal_mg>0 then
 								Duel.SendtoGrave(normal_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 							end
-							if #extra_feff_mg>0 then
-								local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst(),tc)
-								if extra_feff then
-									local extra_feff_op=extra_feff:GetOperation()
-									if extra_feff_op then
-										extra_feff_op(e,tc,tp,extra_feff_mg)
-									else
-										Duel.SendtoGrave(extra_feff_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-									end
-									--If the EFFECT_EXTRA_FUSION_MATERIAL effect is OPT
-									--then "use" its count limit.
-									if extra_feff:CheckCountLimit(tp) then
-										extra_feff:UseCountLimit(tp,1)
-									end
+							if extra_feff then
+								local extra_feff_op=extra_feff:GetOperation()
+								if extra_feff_op then
+									extra_feff_op(e,tc,tp,extra_feff_mg)
+								else
+									Duel.SendtoGrave(extra_feff_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+								end
+								--If the EFFECT_EXTRA_FUSION_MATERIAL effect is OPT
+								--then "use" its count limit.
+								if extra_feff:CheckCountLimit(tp) then
+									extra_feff:UseCountLimit(tp,1)
 								end
 							end
 						end

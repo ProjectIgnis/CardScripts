@@ -8,12 +8,12 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	--Declare monster types then Tribute
+	--Declare monster names then Tribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_FZONE)
 	e1:SetProperty(EFFECT_FLAG_BOTH_SIDE)
-	e1:SetCountLimit(1)
+	e1:SetCountLimit(2)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.typetg)
 	c:RegisterEffect(e1)
@@ -31,13 +31,13 @@ function s.initial_effect(c)
 end
 function s.typetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,e:GetHandlerPlayer(),HINTMSG_RACE)
-	local race=Duel.AnnounceRace(tp,2,RACE_ALL)
-	e:GetLabelObject():SetLabel(race)
-	e:GetHandler():SetHint(CHINT_RACE,race)
+	Duel.Hint(HINT_SELECTMSG,e:GetHandlerPlayer(),HINTMSG_CODE)
+	local code=Duel.AnnounceCard(tp,TYPE_MONSTER)
+	e:GetLabelObject():SetLabel(code)
+	e:GetHandler():SetHint(CHINT_CARD,code)
 end
-function s.relfilter(c,race)
-	return c:IsReleasable() and c:IsRace(race) and c:IsFaceup()
+function s.relfilter(c,code)
+	return c:IsReleasable() and c:IsRace(code) and c:IsFaceup()
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(s.relfilter,tp,LOCATION_MZONE,0,nil,e:GetLabel())
@@ -51,7 +51,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Duel.SelectMatchingCard(tp,s.relfilter,tp,LOCATION_MZONE,0,1,1,nil,e:GetLabel())
 		local tc=sg:GetFirst()
 		local atk=(tc:GetAttack()/2)
-		local typ=tc:GetRace()
+		local typ=tc:GetCode()
 		if Duel.Release(tc,REASON_EFFECT)>0 then
 			if Duel.IsExistingMatchingCard(s.relfilter,tp,0,LOCATION_MZONE,1,nil,typ) and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 				Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_RELEASE)

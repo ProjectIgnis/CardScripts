@@ -37,7 +37,7 @@ function s.typetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():SetHint(CHINT_CARD,code)
 end
 function s.relfilter(c,code)
-	return c:IsReleasable() and c:IsRace(code) and c:IsFaceup()
+	return c:IsReleasable() and c:IsCode(code) and c:IsFaceup()
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(s.relfilter,tp,LOCATION_MZONE,0,nil,e:GetLabel())

@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(s.reg)
 	c:RegisterEffect(e1)
 	--WATER monsters cannot be targeted by opponents card effects
 	local e2=Effect.CreateEffect(c)
@@ -27,6 +28,13 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
+end
+function s.reg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
+end
+function s.descon(e)
+	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

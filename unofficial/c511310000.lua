@@ -35,6 +35,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	Duel.ConfirmCards(tp,tc)
 	if tc:IsCode(ac) then
-		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

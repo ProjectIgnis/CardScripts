@@ -1,6 +1,6 @@
 --大精霊機巧軍－ペンデュラム・ルーラー
 --Master Spirit Tech Force - Pendulum Ruler
---fixed by Larry126
+--Fixed by Larry126
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -67,12 +67,8 @@ end
 s.listed_series={0x154e}
 s.material_setcode={0x54e}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	while tc do
-		if tc:IsFaceup() and tc:IsType(TYPE_MONSTER) then
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-		end
-		tc=eg:GetNext()
+	if re:IsActiveType(TYPE_MONSTER) then
+		re:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
 end
 function s.atlimit2(e,c)
@@ -95,29 +91,28 @@ function s.eftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local c=e:GetHandler()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) and Duel.Release(tc,REASON_EFFECT)>0 then
+	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.Release(tc,REASON_EFFECT)>0 then
+		local c=e:GetHandler()
+		local fid=c:GetFieldID()
 		Duel.MajesticCopy(c,tc)
 		Duel.MajesticCopy(c,tc)
-		e:GetHandler():RegisterFlagEffect(tc:GetCode(),RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-		if c:GetFlagEffect(id)==0 then
-			--double
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_FIELD)
-			e1:SetCode(EFFECT_CHANGE_DAMAGE)
-			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-			e1:SetCountLimit(1)
-			e1:SetTargetRange(1,1)
-			e1:SetValue(s.damval)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			Duel.RegisterEffect(e1,tp)
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-		end
+		c:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1) --Treated as Pendulum Summoned from hand for Spirit Gem effects
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CHANGE_DAMAGE)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e1:SetTargetRange(1,1)
+		e1:SetLabel(fid)
+		e1:SetValue(s.damval)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e1)
 	end
 end
 function s.damval(e,re,val,r,rp,rc)
-	local c=e:GetHandler()
-	if (r&REASON_EFFECT)>0 and re:GetHandler()==c then return val*2 else return val end
+	local cc=Duel.GetCurrentChain()
+	if cc==0 or r&REASON_EFFECT==0 then return val end
+	if re:GetHandler():GetFieldID()==e:GetLabel() then return val*2 else return val end
 end
 function s.pztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_PZONE,0,nil)<2 end

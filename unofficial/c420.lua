@@ -150,7 +150,7 @@ if not AnimeArchetype then
 	-- 蝉 
 	-- せみ
 	-- Number 3: Cicada King
-	Card.IsCicada=MakeCheck({0x50f},{100266028})
+	Card.IsCicada=MakeCheck({0x50f},{4997565})
 
 	-- Champion
 	-- 王者

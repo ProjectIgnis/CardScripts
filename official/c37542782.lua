@@ -91,7 +91,7 @@ end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,PLAYER_ALL,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,PLAYER_EITHER,LOCATION_GRAVE)
 end
 function s.equipop(c,e,tp,tc)
 	aux.EquipByEffectAndLimitRegister(c,e,tp,tc,nil,true)

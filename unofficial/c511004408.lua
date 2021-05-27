@@ -1,4 +1,5 @@
---Predator Germination
+--捕食発芽
+--Predaprouting
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,11 +22,11 @@ function s.tg(e,tp,eg,ev,ep,re,r,rp,chk)
 	e:SetProperty(0)
 	local opt=0
 	if t1 and t2 then
-		opt=Duel.SelectOption(tp,aux.Stringid(67284107,0),aux.Stringid(33883834,0),aux.Stringid(37390589,2))
+		opt=Duel.SelectOption(tp,aux.Stringid(511004408,0),aux.Stringid(511004408,1),aux.Stringid(511004408,2))
 	elseif t1 then
-		opt=Duel.SelectOption(tp,aux.Stringid(67284107,0))
+		opt=Duel.SelectOption(tp,aux.Stringid(511004408,0))
 	else
-		opt=Duel.SelectOption(tp,aux.Stringid(33883834,0))+1
+		opt=Duel.SelectOption(tp,aux.Stringid(511004408,1))+1
 	end
 	if opt==0 or opt==2 then
 		e:SetCategory(e:GetCategory()+CATEGORY_DESTROY)

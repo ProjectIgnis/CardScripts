@@ -25,8 +25,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsCode,tp,0,LOCATION_MZONE,1,nil,CARD_GALAXYEYES_P_DRAGON)
+function s.atkcon(e)
+	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil,CARD_GALAXYEYES_P_DRAGON)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

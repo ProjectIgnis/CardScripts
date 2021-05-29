@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(-500)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		g:GetFirst():RegisterEffectRush(e1)
-		if Duel.GetLP(tp)-Duel.GetLP(tp)>=2000 then
+		if Duel.GetLP(1-tp)-Duel.GetLP(tp)>=2000 then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

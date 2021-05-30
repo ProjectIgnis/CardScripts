@@ -1,4 +1,5 @@
---トゲトゲ神の殺虫剤
+--トゲトゲ神の殺虫剤 (Anime)
+--Eradicating Aerosol (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,15 +11,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsRace(RACE_INSECT) and c:IsFaceup() and c:IsDestructable()
-end
 function s.filter(c,tp)
 	return c:IsRace(RACE_INSECT) and (c:IsFaceup() or c:IsControler(tp)) and c:IsDestructable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
+	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

@@ -47,5 +47,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	 local c=e:GetLabelObject()
-	 return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0 and c:GetFlagEffect(id)>0
+	 return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)==0 and c:GetFlagEffect(id)>0
 end

@@ -22,12 +22,9 @@ function s.costfilter(c)
 	return c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rt=Duel.GetTargetCount(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
-	if rt>2 then rt=2 end	
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	local rt=math.min(2,Duel.GetTargetCount(aux.TRUE,tp,0,LOCATION_ONFIELD,nil))
 	if chk==0 then return aux.IceBarrierDiscardCost(s.costfilter,true,1,rt)(e,tp,eg,ep,ev,re,r,rp,0) end
-	local cg=aux.IceBarrierDiscardCost(s.costfilter,true,1,rt)(e,tp,eg,ep,ev,re,r,rp,1)
-	e:SetLabel(cg)
+	e:SetLabel(aux.IceBarrierDiscardCost(s.costfilter,true,1,rt)(e,tp,eg,ep,ev,re,r,rp,1))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
@@ -38,8 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,ct,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local rg=tg:Filter(Card.IsRelateToEffect,nil,e)
+	local rg=Duel.GetTargetCards(e)
 	if #rg>0 then 
 		Duel.Destroy(rg,REASON_EFFECT)
 	end

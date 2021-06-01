@@ -1,7 +1,8 @@
 --スフィア・ボム球体時限爆弾
+--Blast Sphere
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip
+	--Equip
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -23,6 +24,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		return
 	end
 	Duel.Equip(tp,c,tc)
+	--Equip limit
 	local e1=Effect.CreateEffect(tc)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
@@ -30,7 +32,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	c:RegisterEffect(e1)
-	--destroy&damage
+	--Destroy and deal damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
@@ -64,8 +66,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetLabelObject()
 	if ec:IsRelateToEffect(e) and ec:IsFaceup() then
 		local atk=ec:GetAttack()
-		if Duel.Destroy(ec,REASON_EFFECT)~=0 then
+		if Duel.Destroy(ec,REASON_EFFECT)>0 then
 			Duel.Damage(1-tp,atk,REASON_EFFECT)
-		else Duel.Destroy(c,REASON_EFFECT) end
+		end
 	end
 end

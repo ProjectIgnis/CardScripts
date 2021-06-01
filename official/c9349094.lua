@@ -69,12 +69,14 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local rt=re:GetActiveType()&(TYPE_SPELL|TYPE_MONSTER|TYPE_TRAP)
-	local ov=e:GetHandler():GetOverlayGroup():Filter(Card.IsType,nil,rt)
+	local ov=c:GetOverlayGroup():Filter(Card.IsType,nil,rt)
 	if #ov<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local sg=ov:Select(tp,1,1,nil)
 	if #sg>0 and Duel.SendtoGrave(sg,REASON_EFFECT)>0 then
+		Duel.RaiseSingleEvent(c,EVENT_DETACH_MATERIAL,e,0,0,0,0)
 		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 			Duel.Destroy(eg,REASON_EFFECT)
 		end

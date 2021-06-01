@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:IsRace(RACE_DINOSAUR) and c:GetOriginalLevel()>0 and c:IsFaceup() and c:IsAbleToGraveAsCost()
+	return c:IsRace(RACE_DINOSAUR) and c:GetOriginalLevel()>0 and c:IsFaceup() and c:IsAbleToGraveAsCost() and not c:IsMaximumModeSide()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -31,6 +31,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	-- requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local lvl=g:GetFirst():GetOriginalLevel()
+	g=g:AddMaximumCheck()
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	if ct>0 then
 		--Effect
@@ -40,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #g2>0 then
 			Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP)
 			if g:GetFirst():GetOriginalLevel()>0 then
-				local atk=g:GetFirst():GetOriginalLevel()*100
+				local atk=lvl*100
 				local tc=g2:GetFirst()
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)

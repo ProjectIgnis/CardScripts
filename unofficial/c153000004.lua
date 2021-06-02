@@ -31,11 +31,11 @@ function s.initial_effect(c)
 end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetOwner()
-	return (Duel.GetBattleDamage(tp)>0 or aux.damcon1(e,tp,eg,ep,ev,re,r,rp)) and Duel.GetDeckMaster(tp)==c
-		and (c:IsLocation(LOCATION_MZONE) or Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+	local dm=Duel.GetDeckMaster(tp)
+	return (Duel.GetBattleDamage(tp)>0 or aux.damcon1(e,tp,eg,ep,ev,re,r,rp)) and dm:IsCode(40640057)
+		and (dm:IsLocation(LOCATION_MZONE) or Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and dm:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function s.dmop1(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,tp,id)
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end
 	local c=e:GetOwner()
 	if not c:IsLocation(LOCATION_MZONE) and Duel.SummonDeckMaster(tp)<=0 then return end

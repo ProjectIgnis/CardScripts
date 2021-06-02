@@ -41,6 +41,10 @@ if not DeckMaster then
 	end
 	--function that summon the monster from the DMzone
 	--remove from DMzone, remove the DMzone flag, summon the deck master
+
+--RESET_TOFIELD to handle move between S/T and M (maybe change later?)
+--RESET_CONTROL to handle control change which will cause Deck Master no longer Deck Master
+--Xyz Material is handled by field check automatically
 	function Duel.SummonDeckMaster(p)
 		local c=DeckMasterZone[p]
 		if not c then return false end

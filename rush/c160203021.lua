@@ -20,7 +20,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
 end
 function s.thfilter(c)
-	return c:IsRace(RACE_CYBERSE) and c:IsAbleToHand() 
+	return c:IsRace(RACE_CYBERSE) and c:IsAbleToHand() and c:GetDefense()==0
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

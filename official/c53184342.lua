@@ -1,7 +1,6 @@
 --ドラグニティアームズ－グラム
 --Dragunity Arma Gram
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon procedure (from hand or GY)
@@ -97,22 +96,48 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.eqpfilter(c,tp)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp)
+	return c:IsMonster() and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
+		and c:IsPreviousControler(1-tp) and s.exfilter(c,tp)
+end
+function s.exfilter(c,tp)
+	return not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.eqpcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.eqpfilter,1,nil,1-tp)
+	return eg:IsExists(s.eqpfilter,1,nil,tp)
 end
 function s.eqptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
-	local tc=eg:Filter(s.eqpfilter,nil,1-tp):GetFirst()
-	Duel.SetTargetCard(tc)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tc,1,0,0)
+	local eqg=eg:Filter(s.eqpfilter,nil,tp)
+	if chk==0 then return #eqg>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>=#eqg end
+	Duel.SetTargetCard(eqg)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,eqg,1,0,0)
 end
 function s.eqpop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<1 then return end
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	if ft<1 then return end
 	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsRelateToEffect(e) then
-		aux.EquipByEffectAndLimitRegister(c,e,tp,tc)
+	local tg=Duel.GetTargetCards(e):Filter(s.exfilter,nil,tp)
+	if c:IsFaceup() and c:IsRelateToEffect(e) and #tg>0 and ft>0 then
+		local eqg=nil
+		if #tg>ft then
+			eqg=tg:Select(tp,ft,ft,nil)
+		else
+			eqg=tg
+		end
+		for tc in ~eqg do
+			if Duel.Equip(tp,tc,c,true,true) then
+				--Equip limit
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_EQUIP_LIMIT)
+				e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetValue(s.eqlimit)
+				tc:RegisterEffect(e1)
+			end
+		end
+		Duel.EquipComplete()
 	end
+end
+function s.eqlimit(e,c)
+	return e:GetOwner()==c
 end

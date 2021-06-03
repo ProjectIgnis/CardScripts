@@ -54,5 +54,5 @@ end
 function s.efilter(e,te)
 	local tc=te:GetOwner()
 	return tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:IsSummonLocation(LOCATION_EXTRA) and tc~=e:GetHandler()
-		and te:IsActiveType(TYPE_MONSTER) and te:IsActivated()
+		and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
 end

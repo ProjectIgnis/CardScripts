@@ -18,20 +18,31 @@ function s.initial_effect(c)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	--Register effect to handle variable count limit
+	--Destroy a card when damage is inflicted
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetOperation(s.regop)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetCode(EVENT_DAMAGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(s.descon)
+	e2:SetTarget(s.destg)
+	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--Material check
+	--Material check on summon
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_MATERIAL_CHECK)
-	e3:SetValue(s.valcheck)
-	e3:SetLabelObject(e2)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e3:SetCondition(s.regcon)
+	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_MATERIAL_CHECK)
+	e4:SetValue(s.valcheck)
+	e4:SetLabelObject(e3)
+	c:RegisterEffect(e4)
 end
 s.listed_series={0xf0}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
@@ -56,47 +67,20 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(p,tc:GetAttack()//2,REASON_EFFECT)
 	end
 end
-function s.valcheck(e,c)
-	local g=c:GetMaterial()
-	if not g then return end
-	local ct=g:FilterCount(Card.IsSetCard,nil,0xf0)
-	if ct==#g then
-		e:GetLabelObject():SetLabel(2)
-	else
-		e:GetLabelObject():SetLabel(1)
-	end
-end
-function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
-end
-function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local ct=e:GetLabel()
-	if s.regcon(e,tp,eg,ep,ev,re,r,rp) and ct==2 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
-	else
-		ct=1
-	end
-	--Destroy a card when damage is inflicted
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_DAMAGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e1:SetCountLimit(ct)
-	e1:SetCondition(s.descon)
-	e1:SetTarget(s.destg)
-	e1:SetOperation(s.desop)
-	c:RegisterEffect(e1)
-end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local c=e:GetHandler()
 	if chkc then return chkc:IsOnField() end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then
+		local wwchk=c:GetFlagEffect(id)
+		local ct=c:GetFlagEffect(id+1)
+		if wwchk>0 and ct>1 then return false
+		elseif wwchk==0 and ct>0 then return false end
+		return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	end
+	c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
@@ -105,5 +89,21 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
+	end
+end
+function s.regcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetLabel()==1
+end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+end
+function s.valcheck(e,c)
+	local g=c:GetMaterial()
+	if not g then return end
+	local ct=g:FilterCount(Card.IsSetCard,nil,0xf0)
+	if ct==#g then
+		e:GetLabelObject():SetLabel(1)
+	else
+		e:GetLabelObject():SetLabel(0)
 	end
 end

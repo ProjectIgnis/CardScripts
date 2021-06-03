@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Card.Alias(c,79759861)
-	--Destroy 1 spell/trap your opponent controls
+	--Destroy 1 monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -17,13 +17,16 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 end
+function s.filter(c)
+	return c:IsType(TYPE_MONSTER) and not c:IsMaximumModeSide()
+end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local dg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_ONFIELD,e:GetHandler())
+	local dg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_ONFIELD,e:GetHandler())
 	if chkc then return chkc:IsOnField() end
 	if chk==0 then return #dg>0 end
 end
-	--Send 1 card from hand to GY to destroy 1 spell/trap your opponent controls
+	--Send 1 card from hand to GY to destroy 1 monster
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	local c=e:GetHandler()
@@ -31,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,e:GetHandler())
 	--Effect
 	if Duel.SendtoGrave(g,REASON_COST)~=0 then
-		local dg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
+		local dg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 		if #dg>0 then
 			local sg=dg:Select(tp,1,1,nil)
 			sg=sg:AddMaximumCheck()

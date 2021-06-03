@@ -38,9 +38,9 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfe}
 function s.immval(e,te)
-	local tc=te:GetHandler()
-	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) 
-		and te:IsActivated() and tc:GetSummonLocation()==LOCATION_EXTRA and tc:IsSummonType(SUMMON_TYPE_SPECIAL)
+	local tc=te:GetOwner()
+	return tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:IsSummonLocation(LOCATION_EXTRA) and te:IsActiveType(TYPE_MONSTER)
+		and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
 end
 function s.tgtg(e,c)
 	return c:IsFaceup() and c:IsSetCard(0xfe) and (e:GetHandler():GetColumnGroup():IsContains(c) or e:GetHandler()==c)

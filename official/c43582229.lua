@@ -1,7 +1,6 @@
 --氷結界の晶壁
 --Clear Wall of the Ice Barrier
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate and Special Summon from GY
@@ -23,7 +22,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x2f}
-
 function s.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0x2f) and c:IsLevelBelow(4)
 end
@@ -59,6 +57,6 @@ function s.unacon(e)
 end
 function s.unaval(e,te)
 	local tc=te:GetOwner()
-	return tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:GetSummonLocation()==LOCATION_EXTRA
-		and te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActivated()
+	return tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:IsSummonLocation(LOCATION_EXTRA) and and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+		and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
 end

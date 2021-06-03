@@ -36,8 +36,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	--lp
 	local e6=Effect.CreateEffect(c)
-	e6:SetCategory(CATEGORY_DAMAGE)
-	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
 	e6:SetCountLimit(1)
@@ -83,4 +81,3 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
 	end
 end
-

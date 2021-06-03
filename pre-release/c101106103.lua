@@ -46,8 +46,9 @@ function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 	tc:RegisterEffect(e2,true)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:IsActivated()
-		and te:GetHandler():IsSummonLocation(LOCATION_EXTRA)
+	local tc=te:GetOwner()
+	return tc:IsSummonType(SUMMON_TYPE_SPECIAL) and tc:IsSummonLocation(LOCATION_EXTRA) and te:IsActiveType(TYPE_MONSTER)
+		and te:IsActivated() and te:GetActivateLocation()==LOCATION_MZONE
 end
 function s.indval(e,c)
 	return c:IsSummonLocation(LOCATION_EXTRA)

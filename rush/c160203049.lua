@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:GetOriginalLevel()>0 and c:IsFaceup() and c:IsAbleToGraveAsCost() and not c:IsMaximumModeSide()
+	return c:GetOriginalLevel()>0 and c:IsAbleToGraveAsCost() and not c:IsMaximumModeSide()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil)

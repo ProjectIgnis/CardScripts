@@ -1,4 +1,5 @@
 --無視加護
+--Insect Neglect
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -9,7 +10,6 @@ function s.initial_effect(c)
 	--negate attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)

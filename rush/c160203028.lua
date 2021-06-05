@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.RegisterEffect(ge1,tp)
 			
 			--cannot attack directly with other cards
-			local ge2=Effect.CreateEffect(c)
+			local ge2=Effect.CreateEffect(e:GetHandler())
 			ge2:SetType(EFFECT_TYPE_FIELD)
 			ge2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 			ge2:SetProperty(EFFECT_FLAG_OATH+EFFECT_FLAG_IGNORE_IMMUNE)

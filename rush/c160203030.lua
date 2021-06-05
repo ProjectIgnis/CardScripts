@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.actcond)
 	c:RegisterEffect(e1)
 	--double tribute
-	local e2=s.summonproc(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
+	local e2=s.summonproc(c,true,false,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),s.otfilter)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e3:SetRange(LOCATION_FZONE)

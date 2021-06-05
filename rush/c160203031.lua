@@ -36,13 +36,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter2),tp,0,LOCATION_MZONE,nil)
 	if #g2==0 then return end
-	for tc in g2:Iter() do
+	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		for tc in g2:Iter() do
 		--Decrease ATK
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetValue(-1200)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffectRush(e2)
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_UPDATE_ATTACK)
+			e2:SetValue(-1200)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			tc:RegisterEffectRush(e2)
+		end
 	end
 end

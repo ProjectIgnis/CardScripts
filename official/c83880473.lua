@@ -26,8 +26,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
 	local atk=Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,POS_FACEUP_ATTACK)
 	local def=Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,POS_FACEUP_DEFENSE)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and (atk or def) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and (atk or def) end
 	local choice=-1
 	local pos=0
 	if atk and def then

@@ -41,6 +41,7 @@ function s.initial_effect(c)
 	--Record of each materials before this card leaves the field
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetCode(EVENT_LEAVE_FIELD_P)
 	e4:SetOperation(s.recordop)
 	e4:SetLabelObject(e3)
@@ -99,7 +100,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsAttribute),tp,LOCATION_GRAVE,0,nil,ATTRIBUTE_WATER)
 			if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 				Duel.BreakEffect()
-				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 				sg=sg:Select(tp,1,count,nil)
 				for oc in aux.Next(sg) do
 					local tc=g:FilterSelect(tp,Card.IsLocation,1,1,nil,LOCATION_MZONE):GetFirst()

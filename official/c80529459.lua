@@ -1,11 +1,11 @@
--- スクラップ・ラプタ
+--スクラップ・ラプタ
 --Scrap Raptor
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_TOGRAVE)
+	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
@@ -51,7 +51,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (c:GetReason()&0x41)==0x41 and re:GetOwner():IsSetCard(0x24)
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_EFFECT) and re and re:GetHandler():IsSetCard(0x24)
 end
 function s.thfilter(c)
 	return (c:IsCode(28388296) or (c:IsSetCard(0x24) and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TUNER))) and c:IsAbleToHand()

@@ -39,8 +39,9 @@ function s.lkcon(e)
 	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttackTarget()
-	local b=Duel.GetAttacker()
+	local a=Duel.GetAttacker()
+	local b=Duel.GetAttackTarget()
+	if not b then return false end
 	if a:IsControler(1-tp) then a,b=b,a end
 	if e:GetHandler():GetMutualLinkedGroupCount()>0
 		and a:IsControler(tp) and b:IsControler(1-tp)
@@ -50,8 +51,9 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local a=Duel.GetAttackTarget()
-	local b=Duel.GetAttacker()
+	local a=Duel.GetAttacker()
+	local b=Duel.GetAttackTarget()
+	if not b then return false end
 	if a:IsControler(1-tp) then a,b=b,a end
 	if c:GetMutualLinkedGroupCount()==0 and a==c and b:IsControler(1-tp)
 		and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL then

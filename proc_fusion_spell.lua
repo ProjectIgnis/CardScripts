@@ -42,9 +42,9 @@ Debug.ReloadFieldBegin=(function()
 	end
 )()
 
---Card.IsHasEffect cannot be used because it would return the above effect as well
---If summon_card is provided, also mimic the check done internally for EFFECT_EXTRA_FUSION_MATERIAL
---where the value is checked with the currently summoning card
+--Returns the first EFFECT_EXTRA_FUSION_MATERIAL applied on Card c.
+--If summon_card is provided, it will also check if the effect's value function applies to that card.
+--Card.IsHasEffect alone cannot be used because it would return the above effect as well.
 local function GetExtraMatEff(c,summon_card)
 	local effs={c:IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL)}
 	for _,eff in ipairs(effs) do
@@ -59,7 +59,11 @@ local function GetExtraMatEff(c,summon_card)
 		end
 	end
 end
---"Cyberdark Chimera" OPT EFFECT_EXTRA_FUSION_MATERIAL check
+--Once per turn check for EFFECT_EXTRA_FUSION_MATERIAL effects.
+--Removes cards from the material pool group if the OPT of the
+--EFFECT_EXTRA_FUSION_MATERIAL effect has already been used.
+--Returns the main material group and the extra material group separately, both
+--of which are then passed to Fusion.SummonEffFilter.
 local function ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
 	local extra_feff_mg=mg1:Filter(GetExtraMatEff,nil)
 	if #extra_feff_mg>0 then
@@ -116,6 +120,12 @@ function Fusion.RegisterSummonEff(c,...)
 	return e1
 end
 function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck,sumpos,efmg)
+	--efmg is the group of Fusion Materials with an EFFECT_EXTRA_FUSION_MATERIAL effect.
+	--If any materials in that group with that effect are valid materials for Card c
+	--then merge those into mg before performing the check below.
+	--Attempt to fix the interaction between an EFFECT_EXTRA_FUSION_MATERIAL effect
+	--and Fusion Summoning effects that normally allow you to only use a single location
+	--(e.g. with "Flash Fusion" you can normally only use monsters on your field).
 	if efmg and #efmg>0 then
 		efmg=efmg:Filter(GetExtraMatEff,nil,c)
 		if #efmg>0 then
@@ -154,12 +164,12 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 				matfilter=matfilter or Card.IsAbleToGrave
 				stage2 = stage2 or aux.TRUE
 				if chk==0 then
-					
-					--Attempted fix for "Flash Fusion" and co
+					--Separate the Fusion Materials filtered by matfilter
+					--and the ones with an EFFECT_EXTRA_FUSION_MATERIAL effect.
+					--Both will be passed to Fusion.SummonEffFilter later.
 					local fmg_all=Duel.GetFusionMaterial(tp)
 					local mg1=fmg_all:Filter(matfilter,nil,e,tp,0)
 					local efmg=fmg_all:Filter(GetExtraMatEff,nil)
-					
 					local checkAddition=nil
 					if extrafil then
 						local ret = {extrafil(e,tp,mg1)}
@@ -178,10 +188,10 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					Fusion.CheckExact=exactcount
 					Fusion.CheckMin=mincount
 					Fusion.CheckMax=maxcount
-					
-					--Attempted fix for "Flash Fusion" and co
+					--Adjust the main material group and the extra material group accordingly
+					--if an OPT EFFECT_EXTRA_FUSION_MATERIAL effect has already been used.
+					--Both will be passed to Fusion.SummonEffFilter later.
 					mg1,efmg=ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
-					
 					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos,efmg)
 					Fusion.CheckAdditional=nil
 					Fusion.ExtraGroup=nil
@@ -257,12 +267,10 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				matfilter=matfilter or Card.IsAbleToGrave
 				stage2 = stage2 or aux.TRUE
 				local checkAddition
-				
-				--Attempted fix for "Flash Fusion" and co
+				--Same as line 167 above
 				local fmg_all=Duel.GetFusionMaterial(tp)
 				local mg1=fmg_all:Filter(matfilter,nil,e,tp,1)
 				local efmg=fmg_all:Filter(GetExtraMatEff,nil)
-				
 				local extragroup=nil
 				if extrafil then
 					local ret = {extrafil(e,tp,mg1)}
@@ -284,10 +292,8 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				Fusion.CheckMax=maxcount
 				Fusion.CheckAdditional=checkAddition
 				local effswithgroup={}
-				
-				--Attempted fix for "Flash Fusion" and co
+				--Same as line 191 above
 				mg1,efmg=ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
-				
 				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos,efmg)
 				if #sg1>0 then
 					table.insert(effswithgroup,{e,aux.GrouptoCardid(sg1)})
@@ -334,16 +340,16 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 						Fusion.ExtraGroup=nil
 						backupmat=mat1:Clone()
 						tc:SetMaterial(mat1)
-						--Checks for the case that the Fusion effect has an "extraop"
+						--Checks for the case that the Fusion Summoning effect has an "extraop"
 						local extra_feff_mg=mat1:Filter(GetExtraMatEff,nil,tc)
 						if #extra_feff_mg>0 and extraop then
 							local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst(),tc)
 							if extra_feff then
 								local extra_feff_op=extra_feff:GetOperation()
-								--If the operation of the EFFECT_EXTRA_FUSION_MATERIAL effect
-								--is different than "extraop", the flag is OFF, and the player
+								--If the operation of the EFFECT_EXTRA_FUSION_MATERIAL effect is different than "extraop",
+								--it's not OPT or it hasn't been used yet, and the player
 								--chooses to apply the effect, then select which cards
-								--the effect will be applied for and execute the operation.
+								--the effect will be applied to and execute its operation.
 								if extra_feff_op and extraop~=extra_feff_op and extra_feff:CheckCountLimit(tp) then
 									local flag
 									if extrafil then
@@ -356,8 +362,8 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 											flag=true
 										elseif #extrafil_g>=0 and Duel.SelectEffectYesNo(tp,extra_feff:GetHandler()) then
 											--Select which cards you'll apply the
-											--EFFECT_EXTRA_FUSION_MATERIAL effect for
-											--and execute the operation.
+											--EFFECT_EXTRA_FUSION_MATERIAL effect to
+											--and execute its operation.
 											Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVECARD)
 											local g=extra_feff_mg:Select(tp,1,#extra_feff_mg,nil)
 											if #g>0 then
@@ -389,7 +395,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 							--"extra_feff_mg" and "normal_mg", send "normal_mg"
 							--to the GY, and execute the operation of the
 							--EFFECT_EXTRA_FUSION_MATERIAL effect, if it exists.
-							--If it doesn't exist then send the materials to the GY.
+							--If it doesn't exist then send the extra materials to the GY.
 							local extra_feff_mg,normal_mg=mat1:Split(GetExtraMatEff,nil,tc)
 							local extra_feff
 							if #extra_feff_mg>0 then extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst(),tc) end

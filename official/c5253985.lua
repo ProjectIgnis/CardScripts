@@ -1,5 +1,5 @@
 --交差する魂
---Exchanging Souls
+--Soul Crossing
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,8 +8,8 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,id)
-	e1:SetCondition(function()return Duel.IsMainPhase()end)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e1:SetCondition(function()return Duel.IsMainPhase() end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -19,9 +19,6 @@ function s.chainfilter(re,tp,cid)
 	if Duel.GetFlagEffect(tp,id)==0 then return true end
 	return not (re:IsActiveType(TYPE_SPELL+TYPE_TRAP) or not re:GetHandler():IsRace(RACE_DIVINE))
 end
-function s.tg(e,c)
-	return not c:IsImmuneToEffect(e:GetLabelObject())
-end
 function s.filter(c,e,ec)
 	if not c:IsRace(RACE_DIVINE) then return false end
 	local e1=Effect.CreateEffect(ec)
@@ -29,8 +26,6 @@ function s.filter(c,e,ec)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_ADD_EXTRA_TRIBUTE)
 	e1:SetTargetRange(0,LOCATION_MZONE)
-	e1:SetLabelObject(e)
-	e1:SetTarget(s.tg)
 	e1:SetValue(POS_FACEUP)
 	e1:SetReset(RESET_CHAIN)
 	c:RegisterEffect(e1,true)
@@ -52,8 +47,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_ADD_EXTRA_TRIBUTE)
 		e1:SetTargetRange(0,LOCATION_MZONE)
-		e1:SetLabelObject(e)
-		e1:SetTarget(s.tg)
 		e1:SetValue(POS_FACEUP)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)

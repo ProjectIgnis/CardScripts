@@ -28,7 +28,7 @@ Debug.ReloadFieldBegin=(function()
 	local old=Debug.ReloadFieldBegin
 	return function(...)
 			old(...)
-			local geff=Effect.GlobalEffect()
+			geff=Effect.GlobalEffect()
 			geff:SetType(EFFECT_TYPE_FIELD)
 			geff:SetCode(EFFECT_EXTRA_FUSION_MATERIAL)
 			geff:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
@@ -42,6 +42,61 @@ Debug.ReloadFieldBegin=(function()
 	end
 )()
 
+--Returns the first EFFECT_EXTRA_FUSION_MATERIAL applied on Card c.
+--If summon_card is provided, it will also check if the effect's value function applies to that card.
+--Card.IsHasEffect alone cannot be used because it would return the above effect as well.
+local function GetExtraMatEff(c,summon_card)
+	local effs={c:IsHasEffect(EFFECT_EXTRA_FUSION_MATERIAL)}
+	for _,eff in ipairs(effs) do
+		if eff~=geff then
+			if not summon_card then
+				return eff
+			end
+			local val=eff:GetValue()
+			if (type(val)=="function" and val(eff,summon_card)) or val==1 then
+				return eff
+			end
+		end
+	end
+end
+--Once per turn check for EFFECT_EXTRA_FUSION_MATERIAL effects.
+--Removes cards from the material pool group if the OPT of the
+--EFFECT_EXTRA_FUSION_MATERIAL effect has already been used.
+--Returns the main material group and the extra material group separately, both
+--of which are then passed to Fusion.SummonEffFilter.
+local function ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
+	local extra_feff_mg=mg1:Filter(GetExtraMatEff,nil)
+	if #extra_feff_mg>0 then
+		local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst())
+		--Check if you need to remove materials from the pool if count limit has been used
+		if extra_feff and not extra_feff:CheckCountLimit(tp) then
+			--If "extrafil" exists and it doesn't return anything in
+			--the GY (so that effects like "Dragon's Mirror" are excluded),
+			--remove all the EFFECT_EXTRA_FUSION_MATERIAL cards
+			--that are in the GY from the material group.
+			--Hardcoded to LOCATION_GRAVE since it's currently
+			--impossible to get the TargetRange of the
+			--EFFECT_EXTRA_FUSION_MATERIAL effect (but the only OPT effect atm uses the GY).
+			if extrafil then
+				local extrafil_g=extrafil(e,tp,mg1)
+				if #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
+					mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+					efmg:Clear()
+				end
+			--If "extrafil" doesn't exist then remove all the
+			--EFFECT_EXTRA_FUSION_MATERIAL cards from the material group.
+			--A more complete implementation would check for cases where the
+			--Fusion Summoning effect can use the whole field (including LOCATION_SZONE),
+			--but it's currently not possible to know if that is the case
+			--(only relevant for "Fullmetalfoes Alkahest" atm, but he's not OPT).
+			else
+				mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+				efmg:Clear()
+			end
+		end
+	end
+	return mg1,efmg
+end
 
 Fusion.CreateSummonEff = aux.FunctionWithNamedArgs(
 function(c,fusfilter,matfilter,extrafil,extraop,gc,stage2,exactcount,value,location,chkf,desc,preselect,nosummoncheck,extratg,mincount,maxcount,sumpos)
@@ -64,7 +119,19 @@ function Fusion.RegisterSummonEff(c,...)
 	Card.RegisterEffect((tab and c["handler"] or c),e1)
 	return e1
 end
-function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck,sumpos)
+function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosummoncheck,sumpos,efmg)
+	--efmg is the group of Fusion Materials with an EFFECT_EXTRA_FUSION_MATERIAL effect.
+	--If any materials in that group with that effect are valid materials for Card c
+	--then merge those into mg before performing the check below.
+	--Attempt to fix the interaction between an EFFECT_EXTRA_FUSION_MATERIAL effect
+	--and Fusion Summoning effects that normally allow you to only use a single location
+	--(e.g. with "Flash Fusion" you can normally only use monsters on your field).
+	if efmg and #efmg>0 then
+		efmg=efmg:Filter(GetExtraMatEff,nil,c)
+		if #efmg>0 then
+			mg:Merge(efmg)
+		end
+	end
 	return c:IsType(TYPE_FUSION) and (not fusfilter or fusfilter(c,tp)) and (nosummoncheck or c:IsCanBeSpecialSummoned(e,value,tp,sumlimit,false,sumpos))
 			and c:CheckFusionMaterial(mg,gc,chkf)
 end
@@ -97,7 +164,12 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 				matfilter=matfilter or Card.IsAbleToGrave
 				stage2 = stage2 or aux.TRUE
 				if chk==0 then
-					local mg1=Duel.GetFusionMaterial(tp):Filter(matfilter,nil,e,tp,0)
+					--Separate the Fusion Materials filtered by matfilter
+					--and the ones with an EFFECT_EXTRA_FUSION_MATERIAL effect.
+					--Both will be passed to Fusion.SummonEffFilter later.
+					local fmg_all=Duel.GetFusionMaterial(tp)
+					local mg1=fmg_all:Filter(matfilter,nil,e,tp,0)
+					local efmg=fmg_all:Filter(GetExtraMatEff,nil)
 					local checkAddition=nil
 					if extrafil then
 						local ret = {extrafil(e,tp,mg1)}
@@ -116,7 +188,11 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					Fusion.CheckExact=exactcount
 					Fusion.CheckMin=mincount
 					Fusion.CheckMax=maxcount
-					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos)
+					--Adjust the main material group and the extra material group accordingly
+					--if an OPT EFFECT_EXTRA_FUSION_MATERIAL effect has already been used.
+					--Both will be passed to Fusion.SummonEffFilter later.
+					mg1,efmg=ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
+					local res=Duel.IsExistingMatchingCard(Fusion.SummonEffFilter,tp,location,0,1,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos,efmg)
 					Fusion.CheckAdditional=nil
 					Fusion.ExtraGroup=nil
 					if not res and not notfusion then
@@ -191,7 +267,10 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				matfilter=matfilter or Card.IsAbleToGrave
 				stage2 = stage2 or aux.TRUE
 				local checkAddition
-				local mg1=Duel.GetFusionMaterial(tp):Filter(matfilter,nil,e,tp,1)
+				--Same as line 167 above
+				local fmg_all=Duel.GetFusionMaterial(tp)
+				local mg1=fmg_all:Filter(matfilter,nil,e,tp,1)
+				local efmg=fmg_all:Filter(GetExtraMatEff,nil)
 				local extragroup=nil
 				if extrafil then
 					local ret = {extrafil(e,tp,mg1)}
@@ -213,7 +292,9 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				Fusion.CheckMax=maxcount
 				Fusion.CheckAdditional=checkAddition
 				local effswithgroup={}
-				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos)
+				--Same as line 191 above
+				mg1,efmg=ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
+				local sg1=Duel.GetMatchingGroup(Fusion.SummonEffFilter,tp,location,0,nil,fusfilter,e,tp,mg1,gc,chkf,value&0xffffffff,sumlimit,nosummoncheck,sumpos,efmg)
 				if #sg1>0 then
 					table.insert(effswithgroup,{e,aux.GrouptoCardid(sg1)})
 				end
@@ -259,16 +340,80 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 						Fusion.ExtraGroup=nil
 						backupmat=mat1:Clone()
 						tc:SetMaterial(mat1)
+						--Checks for the case that the Fusion Summoning effect has an "extraop"
+						local extra_feff_mg=mat1:Filter(GetExtraMatEff,nil,tc)
+						if #extra_feff_mg>0 and extraop then
+							local extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst(),tc)
+							if extra_feff then
+								local extra_feff_op=extra_feff:GetOperation()
+								--If the operation of the EFFECT_EXTRA_FUSION_MATERIAL effect is different than "extraop",
+								--it's not OPT or it hasn't been used yet, and the player
+								--chooses to apply the effect, then select which cards
+								--the effect will be applied to and execute its operation.
+								if extra_feff_op and extraop~=extra_feff_op and extra_feff:CheckCountLimit(tp) then
+									local flag
+									if extrafil then
+										local extrafil_g=extrafil(e,tp,mg1)
+										if #extrafil_g>=0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
+											--The Fusion effect by default does not use the GY
+											--so the player is forced to apply this effect.
+											mat1:Sub(extra_feff_mg)
+											extra_feff_op(e,tc,tp,extra_feff_mg)
+											flag=true
+										elseif #extrafil_g>=0 and Duel.SelectEffectYesNo(tp,extra_feff:GetHandler()) then
+											--Select which cards you'll apply the
+											--EFFECT_EXTRA_FUSION_MATERIAL effect to
+											--and execute its operation.
+											Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVECARD)
+											local g=extra_feff_mg:Select(tp,1,#extra_feff_mg,nil)
+											if #g>0 then
+												mat1:Sub(g)
+												extra_feff_op(e,tc,tp,g)
+												flag=true
+											end
+										end
+									else
+										--The Fusion effect by default does not use the GY
+										--so the player is forced to apply this effect.
+										mat1:Sub(extra_feff_mg)
+										extra_feff_op(e,tc,tp,extra_feff_mg)
+										flag=true
+									end
+									--If the EFFECT_EXTRA_FUSION_MATERIAL effect is OPT
+									--then "use" its count limit.
+									if flag and extra_feff:CheckCountLimit(tp) then
+										extra_feff:UseCountLimit(tp,1)
+									end
+								end
+							end
+						end
 						if extraop then
 							if extraop(e,tc,tp,mat1)==false then return end
 						end
 						if #mat1>0 then
-							local ingrave,notgrave=mat1:Split(Card.IsLocation,nil,LOCATION_GRAVE)
-							if #ingrave>0 then
-								Duel.Remove(ingrave,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+							--Split the group of selected materials to
+							--"extra_feff_mg" and "normal_mg", send "normal_mg"
+							--to the GY, and execute the operation of the
+							--EFFECT_EXTRA_FUSION_MATERIAL effect, if it exists.
+							--If it doesn't exist then send the extra materials to the GY.
+							local extra_feff_mg,normal_mg=mat1:Split(GetExtraMatEff,nil,tc)
+							local extra_feff
+							if #extra_feff_mg>0 then extra_feff=GetExtraMatEff(extra_feff_mg:GetFirst(),tc) end
+							if #normal_mg>0 then
+								Duel.SendtoGrave(normal_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 							end
-							if #notgrave>0 then
-								Duel.SendtoGrave(notgrave,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+							if extra_feff then
+								local extra_feff_op=extra_feff:GetOperation()
+								if extra_feff_op then
+									extra_feff_op(e,tc,tp,extra_feff_mg)
+								else
+									Duel.SendtoGrave(extra_feff_mg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+								end
+								--If the EFFECT_EXTRA_FUSION_MATERIAL effect is OPT
+								--then "use" its count limit.
+								if extra_feff:CheckCountLimit(tp) then
+									extra_feff:UseCountLimit(tp,1)
+								end
 							end
 						end
 						Duel.BreakEffect()

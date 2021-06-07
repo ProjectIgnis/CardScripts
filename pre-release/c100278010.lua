@@ -73,7 +73,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e):Filter(Card.IsFaceup,nil)
-	if not #g==2 then return end
+	if #g~=2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	local tg=g:Select(tp,1,1,nil)
 	Duel.HintSelection(tg)

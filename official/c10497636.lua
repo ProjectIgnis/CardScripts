@@ -5,7 +5,9 @@ function s.initial_effect(c)
 	--Cannot be destroyed by oppos card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(aux.indoval)
 	c:RegisterEffect(e1)
 	--Negate Effects

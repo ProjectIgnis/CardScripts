@@ -67,17 +67,27 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
-	local e1=Effect.CreateEffect(c)
+	--Gains 200 ATK
+	local e1=Effect.CreateEffect(rc)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(200)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
+	--Possession cannot switch
+	local e2=Effect.CreateEffect(rc)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_CANNOT_CHANGE_CONTROL)
 	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 	rc:RegisterEffect(e2)
+	if not rc:IsType(TYPE_EFFECT) then
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_ADD_TYPE)
+		e3:SetValue(TYPE_EFFECT)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		rc:RegisterEffect(e3,true)
+	end
 end

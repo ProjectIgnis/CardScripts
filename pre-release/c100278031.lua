@@ -59,6 +59,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e4:SetCode(EVENT_LEAVE_FIELD_P)
 		e4:SetOperation(s.recordop)
+		e4:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOGRAVE-RESET_LEAVE-RESET_REMOVE)
 		e4:SetLabelObject(e3)
 		c:RegisterEffect(e4)
 	end

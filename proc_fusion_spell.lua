@@ -79,7 +79,10 @@ local function ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
 			--EFFECT_EXTRA_FUSION_MATERIAL effect (but the only OPT effect atm uses the GY).
 			if extrafil then
 				local extrafil_g=extrafil(e,tp,mg1)
-				if #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
+				if extrafil_g and #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
+					mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+					efmg:Clear()
+				elseif not extrafil_g then
 					mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
 					efmg:Clear()
 				end

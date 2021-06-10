@@ -97,7 +97,6 @@ local function ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
 				efmg:Clear()
 			end
 		end
-	
 	elseif #efmg>0 then
 		local extra_feff=GetExtraMatEff(efmg:GetFirst())
 		if extra_feff and not extra_feff:CheckCountLimit(tp) then
@@ -360,7 +359,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 								--chooses to apply the effect, then select which cards
 								--the effect will be applied to and execute its operation.
 								if extra_feff_op and extraop~=extra_feff_op and extra_feff:CheckCountLimit(tp) then
-									local flag
+									local flag=nil
 									if extrafil then
 										local extrafil_g=extrafil(e,tp,mg1)
 										if #extrafil_g>=0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then

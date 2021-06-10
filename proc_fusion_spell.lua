@@ -97,6 +97,12 @@ local function ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
 				efmg:Clear()
 			end
 		end
+	
+	elseif #efmg>0 then
+		local extra_feff=GetExtraMatEff(efmg:GetFirst())
+		if extra_feff and not extra_feff:CheckCountLimit(tp) then
+			efmg:Clear()
+		end
 	end
 	return mg1,efmg
 end

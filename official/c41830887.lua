@@ -29,17 +29,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x14a}
-s.listed_names={id}
-function s.spfilter(c)
-	return not c:IsCode(id) and c:IsFaceup() and c:IsSetCard(0x14a)
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsSetCard(0x14a) end
 	local c=e:GetHandler()
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.spfilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_MZONE,0,1,nil,c) end
-	Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_MZONE,0,1,1,nil,c)
+		and Duel.IsExistingTarget(aux.FilterFaceupFunction(Card.IsSetCard,0x14a),tp,LOCATION_MZONE,0,1,nil,c) end
+	Duel.SelectTarget(tp,aux.FilterFaceupFunction(Card.IsSetCard,0x14a),tp,LOCATION_MZONE,0,1,1,nil,c)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -47,7 +43,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e)) then return end
 	if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
-		--change name
+		--Change name
 		local code=tc:GetOriginalCode()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

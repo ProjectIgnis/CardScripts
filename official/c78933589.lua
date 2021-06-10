@@ -1,4 +1,5 @@
 --原初のスープ
+--Primordial Soup
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -29,17 +30,17 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) or not Duel.IsPlayerCanDraw(tp) then return end
-	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
-	if ct==0 then return end
-	if ct>2 then ct=2 end
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,ct,nil)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,2,nil)
 	if #g>0 then
 		Duel.ConfirmCards(1-tp,g)
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
-		Duel.ShuffleDeck(tp)
-		Duel.BreakEffect()
-		Duel.Draw(tp,#g,REASON_EFFECT)
+		local ct=#Duel.GetOperatedGroup()
+		if ct>0 then Duel.ShuffleDeck(tp) end
+		if ct==#g then
+			Duel.BreakEffect()
+			Duel.Draw(tp,ct,REASON_EFFECT)
+		end
 	end
 end

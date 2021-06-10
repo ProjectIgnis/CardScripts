@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_MATERIAL_CHECK)
 	e3:SetValue(s.valcheck)
 	e3:SetLabelObject(e2)
-	c:RegisterEffect(e3)  
+	c:RegisterEffect(e3)
 end
 s.listed_series={0x168}
 s.listed_names={24639891,61027400}
@@ -62,26 +62,18 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetLabel()>0
 end
 function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local label=e:GetLabel()
-	if chk==0 then return label>1 or (label==1 and Duel.IsPlayerCanDraw(tp,1)) end
+	local effs=e:GetLabel()
+	if chk==0 then return (effs&1)==0 or Duel.IsPlayerCanDraw(tp,1) end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,1) then
-		--Draw
+	local effs=e:GetLabel()
+	--"Rice Suship": Draw 1 card.
+	if (effs&1)~=0 and Duel.IsPlayerCanDraw(tp,1) then
 		Duel.Draw(tp,1,REASON_EFFECT)
-	elseif e:GetLabel()==2 then
-		--Extra Attack
-		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(3201)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e1:SetCode(EFFECT_EXTRA_ATTACK)
-		e1:SetValue(1)
-		c:RegisterEffect(e1)
-	elseif e:GetLabel()==3 then
-		--Draw + Extra Attack
-		Duel.Draw(tp,1,REASON_EFFECT)
+	end
+	--"Roe Suship": This card can make a second attack during each Battle Phase.
+	if (effs&(1<<1))~=0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3201)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -93,17 +85,10 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	--Only draw effect if Rice Suship is used
-	if g:IsExists(Card.IsCode,1,nil,24639891) and not g:IsExists(Card.IsCode,1,nil,61027400) then
-		e:GetLabelObject():SetLabel(1)
-	--Only second attack effect if Roe Suship is used
-	elseif not g:IsExists(Card.IsCode,1,nil,24639891) and g:IsExists(Card.IsCode,1,nil,61027400) then
-		e:GetLabelObject():SetLabel(2)
-	--Both Effects if Rice Suship and Roe Suship are used
-	elseif g:IsExists(Card.IsCode,1,nil,24639891) and g:IsExists(Card.IsCode,1,nil,61027400) then
-		e:GetLabelObject():SetLabel(3)
-	--Neither effect
-	else
-		e:GetLabelObject():SetLabel(0)
-	end
+	local effs=0
+	--Check for "Rice Suship".
+	if g:IsExists(Card.IsCode,1,nil,24639891) then effs=1 end
+	--Check for "Roe Suship".
+	if g:IsExists(Card.IsCode,1,nil,61027400) then effs=effs|(1<<1) end
+	e:GetLabelObject():SetLabel(effs)
 end

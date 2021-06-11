@@ -1,5 +1,5 @@
 --魔鍵変鬼－トランスフルミネ
---Magikey-Mutated Ogre – Transfurmine
+--Magikey-Mutated Ogre - Transfurmine
 --scripted by the Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -47,7 +47,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and mat:GetClassCount(Card.GetAttribute)>1
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x167) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable(true)
+	return c:IsSetCard(0x167) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsType(TYPE_FIELD) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thchk)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1)
@@ -65,13 +65,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.thchk(e,tp,eg,ep,ev,re,r,rp)
-	if not (Duel.GetTurnPlayer()==tp) or Duel.GetCurrentPhase()~=PHASE_END then return end
 	if eg:IsExists(s.cfilter,1,nil) then
 		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 	end
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)==0
+	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFlagEffect(id)==0
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then Duel.Destroy(e:GetHandler(),REASON_EFFECT) end

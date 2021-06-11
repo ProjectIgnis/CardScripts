@@ -1,5 +1,5 @@
---Scripted by Eerie Code
 --Abyss Script - Fantasy Magic
+--Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,8 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x10ec}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x120e)
+	return c:IsFaceup() and c:IsSetCard(0x10ec)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -25,7 +26,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.Stringid(2356994,0))
+		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetCategory(CATEGORY_TOHAND)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)

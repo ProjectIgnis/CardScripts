@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x48}
-s.listed_names={511001337,100278031}
+s.listed_names={94942656}
 s.xyz_number=4
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
@@ -81,7 +81,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_XYZ)
 end
 function s.spfilter(c,e,tp,rp)
-	return c:IsCode(100278031) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(94942656) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject()

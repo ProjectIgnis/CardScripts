@@ -53,8 +53,8 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		local def=tc:GetDefense()
 		local p=tc:GetControler()
 		if Duel.Destroy(tc,REASON_EFFECT)==0 then return end
-		if Duel.GetLocationCount(p,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(p,id+100,0,TYPES_TOKEN,atk,def,1,RACE_SPELLCASTER,ATTRIBUTE_DARK) then
-			local token=Duel.CreateToken(p,id+100) 
+		if Duel.GetLocationCount(p,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(p,id+1,0,TYPES_TOKEN,atk,def,1,RACE_SPELLCASTER,ATTRIBUTE_DARK) then
+			local token=Duel.CreateToken(p,id+1) 
 			if Duel.SpecialSummonStep(token,0,p,p,false,false,POS_FACEUP) then
 				--Set ATK/DEF
 				local e1=Effect.CreateEffect(c)
@@ -85,7 +85,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCode,id+100),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCode,id+1),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,0,nil)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end

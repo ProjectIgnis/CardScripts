@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={100278002,100278003,100278001,CARD_KURIBOH,16404809}
+s.listed_names={44632120,71036835,7021574,CARD_KURIBOH,16404809}
 s.listed_series={0xa4}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
@@ -54,7 +54,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcfilter(c,tp)
-	return c:IsCode(100278001,100278002,100278003,CARD_KURIBOH) and c:IsReleasable()
+	return c:IsCode(44632120,71036835,7021574,CARD_KURIBOH) and c:IsReleasable()
 		and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.rescon(sg,tp,mg)

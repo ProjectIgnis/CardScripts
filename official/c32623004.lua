@@ -1,4 +1,5 @@
 --否定ペンギン
+--Nopenguin
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x5a}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsSetCard(0x5a)
+	return re:GetHandler():IsSetCard(0x5a) and re:IsActiveType(TYPE_MONSTER)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

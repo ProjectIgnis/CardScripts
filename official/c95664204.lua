@@ -1,5 +1,5 @@
 --ゼアル・カタパルト
---ZEXAL Catapult
+--Zexal Catapult
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,14 +20,14 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(aux.exccon)
 	e2:SetCost(s.cost)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x107f, 0x107e, 0x207e}
+s.listed_series={0x107f,0x107e,0x207e}
 function s.spfilter(c,e,tp)
 	return (c:IsSetCard(0x107e) or c:IsSetCard(0x207e)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

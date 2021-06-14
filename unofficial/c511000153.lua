@@ -20,9 +20,9 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_KURIBOH,100278001,100278002,100278003,100278004,100278005}
+s.listed_names={CARD_KURIBOH,44632120,71036835,7021574,34419588,70914287}
 function s.rescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),100278002,100278003,100278004,CARD_KURIBOH)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),71036835,7021574,34419588,CARD_KURIBOH)
 end
 function s.chk(c,sg,g,code,...)
 	if not c:IsCode(code) then return false end
@@ -41,9 +41,9 @@ function s.cfilter(c,code)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g1=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil,100278002)
-	local g2=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil,100278003)
-	local g3=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil,100278004)
+	local g1=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil,71036835)
+	local g2=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil,7021574)
+	local g3=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil,34419588)
 	local g4=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil,CARD_KURIBOH)
 	local g=g1:Clone()
 	g:Merge(g2)
@@ -58,7 +58,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsCode(100278005) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(70914287) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0x13,0,1,nil,e,tp) end

@@ -19,11 +19,11 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_KURIBOH,100278001,100278002,100278003,100278004}
+s.listed_names={CARD_KURIBOH,44632120,71036835,7021574,34419588}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return d and d:IsControler(tp) and d:IsFaceup() and 
-		(d:IsCode(100278001) or d:IsCode(100278002) or d:IsCode(100278003) or d:IsCode(100278004) or d:IsCode(CARD_KURIBOH))
+		(d:IsCode(44632120) or d:IsCode(71036835) or d:IsCode(7021574) or d:IsCode(34419588) or d:IsCode(CARD_KURIBOH))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()

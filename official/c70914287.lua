@@ -53,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.filter(c)
-	return c:IsCode(0xa4) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+	return c:IsCode(0xa4) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0xa4),c:GetControler(),LOCATION_MZONE+LOCATION_GRAVE,0,nil)*300

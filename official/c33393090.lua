@@ -1,4 +1,4 @@
--- 聖鳥クレイン
+-- ヨーウィー
 -- Yowie
 -- scripted by Hatter
 local s,id=GetID()

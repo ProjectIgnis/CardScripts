@@ -68,15 +68,14 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local g=Duel.GetTargetCards(e)
 	local gc=#g
+	if gc==0 then return end
 	local rescon=s.resconfunc(g)
 	local sg=Duel.GetMatchingGroup(Card.IsCanBeSpecialSummoned,tp,LOCATION_DECK,0,nil,e,0,tp,false,false)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<gc
-		or gc~=g:FilterCount(Card.IsRelateToEffect,nil,e)
 		or (gc>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT))
-		or not aux.SelectUnselectGroup(sg,e,tp,gc,gc,rescon,0)
-	then return end
+		or not aux.SelectUnselectGroup(sg,e,tp,gc,gc,rescon,0) then return end
 	local ssg=aux.SelectUnselectGroup(sg,e,tp,gc,gc,rescon,1,tp,HINTMSG_SPSUMMON)
 	if #g==#ssg then
 		for sc in ~ssg do

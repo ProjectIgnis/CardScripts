@@ -52,11 +52,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-function s.filter(c)
-	return c:IsCode(0xa4) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+function s.atkfilter(c)
+	return c:IsSetCard(0xa4) and c:IsMonster() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsSetCard,0xa4),c:GetControler(),LOCATION_MZONE+LOCATION_GRAVE,0,nil)*300
+	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_MZONE+LOCATION_GRAVE,0,nil)*300
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp) and (Duel.IsBattlePhase() or Duel.IsMainPhase())

@@ -147,8 +147,8 @@ function Pendulum.Operation()
 					if not inchain then
 						Duel.RegisterFlagEffect(tp,10000000,RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
 					end
-					Duel.HintSelection(Group.FromCards(c))
-					Duel.HintSelection(Group.FromCards(rpz))
+					Duel.HintSelection(Group.FromCards(c),true)
+					Duel.HintSelection(Group.FromCards(rpz),true)
 				end
 			end
 end

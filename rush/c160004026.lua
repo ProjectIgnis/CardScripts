@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and (c:GetAttack()>0 or c:GetDefense()>0)
+	return c:IsFaceup() and c:IsMaximumModeSide()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -45,10 +45,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 			e1:SetValue(atk*-500)
-			tc:RegisterEffect(e1)
+			tc:RegisterEffectRush(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)
-			tc:RegisterEffect(e2)
+			tc:RegisterEffectRush(e2)
 		end
 	end
 end

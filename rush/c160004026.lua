@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsMaximumModeSide()
+	return c:IsFaceup() and not c:IsMaximumModeSide()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

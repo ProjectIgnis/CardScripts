@@ -74,7 +74,8 @@ end
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local def=0
-	for tc in aux.Next(eg) do
+	local g=eg:Filter(s.filter,nil,tp)
+	for tc in aux.Next(g) do
 		if tc:GetPreviousDefenseOnField()<0 then def=0 end
 		def=def+tc:GetPreviousDefenseOnField()
 	end

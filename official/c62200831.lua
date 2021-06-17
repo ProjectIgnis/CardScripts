@@ -79,11 +79,13 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		if tc:GetPreviousDefenseOnField()<0 then def=0 end
 		def=def+tc:GetPreviousDefenseOnField()
 	end
+	if not Duel.CheckLPCost(1-tp,def) then return end
 	Duel.PayLPCost(1-tp,def)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 		and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local hc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 		if Duel.SpecialSummon(hc,0,tp,tp,false,false,POS_FACEUP)>0 then
@@ -91,6 +93,7 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 			local xyzg=Duel.SelectMatchingCard(tp,s.xyzfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 			local sc=xyzg:GetFirst()
 			if sc then
+				Duel.BreakEffect()
 				Duel.Overlay(sc,hc)
 				if Duel.SpecialSummonStep(sc,SUMMON_TYPE_XYZ,tp,tp,true,false,POS_FACEUP) then
 					sc:SetMaterial(hc)

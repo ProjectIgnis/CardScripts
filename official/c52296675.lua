@@ -1,5 +1,5 @@
 --アンカモフライト
---Uncamouflight
+--Anchamoufrite
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -52,14 +52,15 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if Duel.Destroy(e:GetHandler(),REASON_EFFECT)~=0 then
+	if Duel.Destroy(e:GetHandler(),REASON_EFFECT)>0 then
 		Duel.BreakEffect()
 		Duel.Draw(p,d,REASON_EFFECT)
 	end
 end
 function s.spcon(e,c)
 	if c==nil then return true end
-	return s.condition(e)
+	local tp=e:GetHandlerPlayer()
+	return s.condition(e) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.recon(e)
 	return e:GetHandler():IsFaceup() and e:GetHandler():IsLocation(LOCATION_MZONE)

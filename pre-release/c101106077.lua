@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	-- Special Summon
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -29,16 +30,14 @@ function s.filter(c,e,tp)
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.rescon(sg,e,tp,mg)
-	local lvl=sg:GetFirst():GetLevel()
-	if #sg>1 then lvl=lvl+sg:GetNext():GetLevel() end
-	return lvl<=8
+	return sg:GetSum(Card.GetLevel)<=8
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local tg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,e,tp)
 	if chk==0 then return aux.SelectUnselectGroup(tg,e,tp,1,1,s.rescon,0) end
 	local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),2)
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or not aux.SelectUnselectGroup(tg,e,tp,2,2,rescon,0) then
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or not aux.SelectUnselectGroup(tg,e,tp,2,2,s.rescon,0) then
 		ft=1
 	end
 	local g=aux.SelectUnselectGroup(tg,e,tp,1,ft,s.rescon,1,tp,HINTMSG_SPSUMMON)

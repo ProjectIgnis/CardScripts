@@ -1,5 +1,5 @@
 --ペンギン勇者
---Penguin Heroes
+--Penguin Brave
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -59,6 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)

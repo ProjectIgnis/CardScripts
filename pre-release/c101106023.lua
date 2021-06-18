@@ -30,11 +30,11 @@ end
 	--Lists "Suship" archetype
 s.listed_series={0x168}
 	--Specifically lists itself and "Rice Suship"
-s.listed_names={id,24639891}
+s.listed_names={id,CARD_RICE_SUSHIP}
 
 	--Check for a "Rice Suship" you control (in MZ or as overlay material)
 function s.xyzfilter(c)
-	return c:IsFaceup() and (c:IsCode(24639891) or (c:GetOverlayCount()>0 and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,24639891)))
+	return c:IsFaceup() and (c:IsCode(CARD_RICE_SUSHIP) or (c:GetOverlayCount()>0 and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_RICE_SUSHIP)))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -63,7 +63,7 @@ function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Rice Suship"
 function s.tdfilter(c)
-	return c:IsCode(24639891) and c:IsAbleToDeck()
+	return c:IsCode(CARD_RICE_SUSHIP) and c:IsAbleToDeck()
 end
 	--Special summon 1 "Suship" monster from hand, except "Icefish Suship"
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)

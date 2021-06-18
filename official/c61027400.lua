@@ -1,9 +1,10 @@
 --いくらの軍貫
 --Roe Suship
---coded by V.J.Wilson
+--Coded by V.J.Wilson
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon proc
+	--Special Summon procedure (from hand)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
-	--excvate and either special summon or add to hand
+	--Excavate and either Special Summon or add to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -24,17 +25,18 @@ function s.initial_effect(c)
 	e2:SetOperation(s.excop)
 	c:RegisterEffect(e2)
 end
-s.listedNames={24639891}
+s.listedNames={CARD_RICE_SUSHIP}
+
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,24639891),c:GetControler(),LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_RICE_SUSHIP),c:GetControler(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.exctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>2 end
 end
 function s.excfilter(c,e,tp)
-	return c:IsCode(24639891) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+	return c:IsCode(CARD_RICE_SUSHIP) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function s.excop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return end

@@ -1,6 +1,7 @@
 --軍貫処『海せん』
 --Suship Galley "Kaisen"
 --Scripted by The Razgriz
+
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	--Place Suship card on deck top
+	--Place "Suship" card on top of deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--Opponent pays LP, Special Summon Suship Xyz
+	--Opponent pays LP, Special Summon "Suship" Xyz
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -36,7 +37,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x168}
-s.listed_names={24639891}
+s.listed_names={CARD_RICE_SUSHIP}
+
 function s.cfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x168) and c:IsSummonPlayer(tp)
 end
@@ -65,7 +67,7 @@ function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(24639891) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(CARD_RICE_SUSHIP) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.xyzfilter(c,e,tp)
 	return c:IsSetCard(0x168) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)

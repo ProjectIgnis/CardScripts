@@ -43,7 +43,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x168}
-s.listed_names={24639891,URCHIN_SUSHIP_CODE}
+s.listed_names={CARD_RICE_SUSHIP,URCHIN_SUSHIP_CODE}
+
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()) or
 	       (Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase())
@@ -120,7 +121,7 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local effs=0
 	--Check for "Rice Suship".
-	if g:IsExists(Card.IsCode,1,nil,24639891) then effs=1 end
+	if g:IsExists(Card.IsCode,1,nil,CARD_RICE_SUSHIP) then effs=1 end
 	--Check for "Urchin Suship".
 	if g:IsExists(Card.IsCode,1,nil,URCHIN_SUSHIP_CODE) then effs=effs|(1<<1) end
 	e:GetLabelObject():SetLabel(effs)

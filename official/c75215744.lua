@@ -1,9 +1,10 @@
 --弩級軍貫－いくら型一番艦
 --Dreadnought Suship - Roe-class First Wardish
 --Scripted by The Razgriz
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz summon
 	Xyz.AddProcedure(c,nil,4,2)
 	c:EnableReviveLimit()
 	--Destroy 1 card your opponent controls
@@ -39,7 +40,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x168}
-s.listed_names={24639891,61027400}
+s.listed_names={CARD_RICE_SUSHIP,61027400}
+
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp then return false end
 	local rc=eg:GetFirst()
@@ -87,7 +89,7 @@ function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local effs=0
 	--Check for "Rice Suship".
-	if g:IsExists(Card.IsCode,1,nil,24639891) then effs=1 end
+	if g:IsExists(Card.IsCode,1,nil,CARD_RICE_SUSHIP) then effs=1 end
 	--Check for "Roe Suship".
 	if g:IsExists(Card.IsCode,1,nil,61027400) then effs=effs|(1<<1) end
 	e:GetLabelObject():SetLabel(effs)

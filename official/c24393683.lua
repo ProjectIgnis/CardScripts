@@ -1,8 +1,9 @@
 --きまぐれ軍貫握り
 --Suship Roll Specials
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Select 3 "Suship" monster from deck, add 1 to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Shuffle to deck and draw
+	--Shuffle 3 "Suship" monsters to deck, draw 1
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
@@ -27,9 +28,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x168}
-s.listed_series={24639891}
+s.listed_series={CARD_RICE_SUSHIP}
+
 function s.cfilter(c)
-	return c:IsCode(24639891) and not c:IsPublic() 
+	return c:IsCode(CARD_RICE_SUSHIP) and not c:IsPublic() 
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

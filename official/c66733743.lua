@@ -27,7 +27,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x27}
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetReasonPlayer()~=tp
+	return c:IsPreviousLocation(LOCATION_MZONE) and (c:IsReason(REASON_BATTLE)
+		or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

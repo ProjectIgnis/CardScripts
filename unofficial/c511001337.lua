@@ -1,5 +1,5 @@
---ステルス・クラーゲン・エフィラ
---Kragen Spawn
+--ステルス・クラーゲン・エフィラ (Anime)
+--Kragen Spawn (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -81,7 +81,7 @@ function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return ct>0 and (not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or ct<=1) 
 		and aux.SelectUnselectGroup(sg,e,tp,nil,nil,s.rescon(aux.CheckSummonGate(tp)),0) end
 	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,ct,tp,nil)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,ct,tp,0)
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local mg=Duel.GetTargetCards(e)

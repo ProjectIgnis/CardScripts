@@ -1,3 +1,4 @@
+--ＪＡＭ：Ｐセット！
 --JAM:P Set!
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,34 +13,36 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_PSYCHIC) and c:GetLevel()==2 and c:IsAbleToDeckAsCost()
+	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_PSYCHIC) and c:IsLevelBelow(2) and c:IsAbleToDeckAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
-
 function s.rtdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(8) and c:IsAbleToDeck() and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsAbleToDeck() and not c:IsMaximumModeSide()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rtdfilter,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,0,0)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-	--requirement
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	local tdg=Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
-	
-	--effect
+	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g2=Duel.SelectMatchingCard(tp,s.rtdfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g1=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	if #g1==0 then return end
+	if Duel.SendtoDeck(g1,nil,SEQ_DECKTOP,REASON_COST)==0 then return end
+	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g2=Duel.SelectMatchingCard(tp,s.rtdfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	g2:AddMaximumCheck()
 	if #g2>0 then
-		Duel.HintSelection(g2)
-		Duel.SendtoDeck(g2,nil,0,REASON_EFFECT)
-		if tdg:GetFirst():IsCode(CARD_CAN_D) and Duel.IsExistingMatchingCard(s.tdfilter,tp,0,LOCATION_GRAVE,1,nil) then
-			local tdg2=Duel.SelectMatchingCard(tp,s.tdfilter,tp,0,LOCATION_GRAVE,1,1,nil)
-			Duel.SendtoDeck(tdg2,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+		Duel.HintSelection(g2,true)
+		if Duel.SendtoDeck(g2,nil,SEQ_DECKTOP,REASON_EFFECT)>0 and g1:GetFirst():IsCode(CARD_CAN_D)
+			and Duel.IsExistingMatchingCard(s.tdfilter,tp,0,LOCATION_GRAVE,1,nil)
+			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+			local g3=Duel.SelectMatchingCard(tp,s.tdfilter,tp,0,LOCATION_GRAVE,1,2,nil)
+			Duel.SendtoDeck(g3,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		end
 	end
 end

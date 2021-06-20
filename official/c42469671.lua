@@ -33,6 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetOperatedGroup():FilterCount(s.filter,nil,1-tp)
 	if Duel.IsMainPhase() and Duel.IsTurnPlayer(tp) and ct>0
 		and Duel.IsPlayerCanDraw(tp,ct) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		Duel.BreakEffect()
 		Duel.Draw(tp,ct,REASON_EFFECT)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)

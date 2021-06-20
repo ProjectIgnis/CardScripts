@@ -22,7 +22,6 @@ end
 function s.filter(c,tp)
 	return c:GetLevel()==7
 end
-
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--requirement
@@ -35,8 +34,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	c:RegisterEffect(e1)
 	-- summon
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil,tp)
-	if g:GetClassCount(Card.GetCode)>=4 then
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,tp)
+	if g:GetClassCount(Card.GetCode)>=4 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if #g>0 then

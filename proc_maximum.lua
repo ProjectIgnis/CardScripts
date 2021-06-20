@@ -142,7 +142,9 @@ end
 function Card.IsMaximumModeSide(c)
 	return c:GetFlagEffect(FLAG_MAXIMUM_SIDE)>0
 end
-
+function Card.IsNotMaximumModeSide(c)
+	return not c:GetFlagEffect(FLAG_MAXIMUM_SIDE)>0
+end
 function Card.WasMaximumModeSide(c)
 	return c:GetFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD)>0
 end

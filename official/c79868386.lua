@@ -25,14 +25,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
-function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local tc=Duel.SelectMatchingCard(tp,aux.disfilter1,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 	if tc then
 		local c=e:GetHandler()
+		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -45,6 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 		Duel.AdjustInstantly(c)
 		if not tc:IsImmuneToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)>0 then
+			--Negate effects of cards with the same original name
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_FIELD)
 			e3:SetCode(EFFECT_DISABLE)
@@ -61,11 +60,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e4:SetLabel(tc:GetOriginalCodeRule())
 			e4:SetReset(RESET_PHASE+PHASE_END)
 			Duel.RegisterEffect(e4,tp)
+			--Destroy all Spells/Traps the opponent controls
+			local sg=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
+			if Duel.IsMainPhase() and Duel.IsTurnPlayer(tp) and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+				Duel.BreakEffect()
+				Duel.Destroy(sg,REASON_EFFECT)
+			end
 		end
-	end
-	local sg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
-	if Duel.IsMainPhase() and Duel.IsTurnPlayer(tp) and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end
 function s.distg(e,c)

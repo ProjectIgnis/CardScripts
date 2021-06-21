@@ -37,7 +37,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(-400)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		a:RegisterEffectRush(e1)
-		if Duel.IsExistingMatchingCard(s.atkfilter2,tp,0,LOCATION_MZONE,1,nil,tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		if Duel.IsExistingMatchingCard(s.atkfilter2,tp,LOCATION_MZONE,0,1,nil,tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_SZONE,1,1,nil)

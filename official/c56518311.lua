@@ -1,6 +1,5 @@
 --メタルフォーゼ・バニッシャー
 --Metalfoes Vanisher
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -75,17 +74,19 @@ function s.rescon2(sg,e,tp,mg)
 	return sg:IsExists(Card.IsSetCard,1,nil,0xe1) and sg:IsExists(s.mzfilter,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsCanBeEffectTarget,e),tp,LOCATION_ONFIELD,0,nil,e)
 	local filter=s.rescon
 	if ft==0 or (ft==1 and Duel.GetMatchingGroupCount(s.mzfilter,tp,LOCATION_MZONE,0,nil)>4) then
 		filter=s.rescon2
 	end
-	if chk==0 then return aux.SelectUnselectGroup(g,1,tp,2,2,filter,chk,tp) end
+	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and aux.SelectUnselectGroup(g,1,tp,2,2,filter,chk,tp) end
 	local tg=aux.SelectUnselectGroup(g,1,tp,2,2,filter,chk,tp)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)

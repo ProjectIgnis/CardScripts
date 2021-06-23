@@ -45,8 +45,8 @@ function s.chainfilter(re,tp,cid)
 		and (Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)==LOCATION_HAND))
 end
 function s.hspfilter(c,tp,sc)
-	return c:IsRace(RACE_THUNDER) and not c:IsType(TYPE_FUSION,sc,SUMMON_TYPE_FUSION,tp) 
-		and c:IsType(TYPE_EFFECT,sc,SUMMON_TYPE_FUSION,tp) and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
+	return c:IsRace(RACE_THUNDER) and not c:IsType(TYPE_FUSION,sc,MATERIAL_FUSION,tp) 
+		and c:IsType(TYPE_EFFECT,sc,MATERIAL_FUSION,tp) and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
 end
 function s.hspcon(e,c)
 	if c==nil then return true end

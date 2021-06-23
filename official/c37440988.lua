@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1034}
 function s.hspfilter(c,tp,sc)
-	return c:IsSetCard(0x2034,sc,SUMMON_TYPE_FUSION,tp) and c:GetLevel()==10 and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
+	return c:IsSetCard(0x2034,sc,MATERIAL_FUSION,tp) and c:GetLevel()==10 and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
 end
 function s.hspcon(e,c)
 	if c==nil then return true end

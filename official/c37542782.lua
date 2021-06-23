@@ -55,7 +55,7 @@ end
 s.listed_names={40418351,1546123}
 s.listed_series={0x4093}
 function s.hspfilter(c,tp,sc)
-	return c:IsType(TYPE_FUSION,sc,SUMMON_TYPE_FUSION,tp) and c:IsSetCard(0x4093,sc,SUMMON_TYPE_FUSION,tp) and c:IsLevelBelow(10) 
+	return c:IsType(TYPE_FUSION,sc,MATERIAL_FUSION,tp) and c:IsSetCard(0x4093,sc,MATERIAL_FUSION,tp) and c:IsLevelBelow(10) 
 		and c:GetEquipGroup():IsExists(aux.FilterBoolFunction(Card.IsCode,1546123),1,nil)
 		and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
 end

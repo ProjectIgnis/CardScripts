@@ -1,9 +1,9 @@
 --ダックドロッパー
---Duck Dropper
+--Duck Dummy
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.EnableGeminiAttribute(c)
-	--cannot be target/effect indestructable
+	--Cannot be targeted/destroyed by effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -15,14 +15,16 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	c:RegisterEffect(e2)
-	--force direct
+	--Force direct attacks
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
-	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e3:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(LOCATION_MZONE,0)
+	e3:SetTargetRange(0,LOCATION_MZONE)
 	e3:SetCondition(aux.IsGeminiState)
-	e3:SetValue(aux.imval1)
+	e3:SetValue(1)
 	c:RegisterEffect(e3)
+	local e4=e3:Clone()
+	e4:SetCode(EFFECT_DIRECT_ATTACK)
+	c:RegisterEffect(e4)
 end

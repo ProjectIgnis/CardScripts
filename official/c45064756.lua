@@ -23,6 +23,8 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local rc=Duel.AnnounceRace(tp,1,RACE_ALL)
 	e:SetLabel(rc)
+	--Operation info needed to handle the interaction with "Necrovalley"
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,0,0)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -31,12 +33,13 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_RACE)
-	e1:SetRange(LOCATION_SZONE)
+	--e1:SetRange(LOCATION_SZONE)
 	e1:SetTargetRange(LOCATION_GRAVE,LOCATION_GRAVE)
 	e1:SetTarget(s.rctg)
 	e1:SetValue(race)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-	c:RegisterEffect(e1)
+	--RESET_EVENT+RESETS_STANDARD+
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 	--id chk
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)

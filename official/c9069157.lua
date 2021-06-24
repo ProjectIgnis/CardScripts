@@ -29,8 +29,8 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1)
-	e3:SetTarget(s.atttg)
-	e3:SetOperation(s.attop)
+	e3:SetTarget(s.rctg)
+	e3:SetOperation(s.rcop)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x16}
@@ -118,30 +118,20 @@ end
 function s.chainlm(e,rp,tp)
 	return tp==rp
 end
-function s.atttg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.rctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then
-		local eff={c:GetCardEffect(EFFECT_NECRO_VALLEY)}
-		for _,te in ipairs(eff) do
-			local op=te:GetOperation()
-			if not op or op(e,e:GetHandler()) then return false end
-		end
-		return true
-	end
+	if chk==0 then return not c:IsRace(RACE_DRAGON) end
+	--Operation info needed to handle the interaction with "Necrovalley"
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,tp,LOCATION_GRAVE)
 end
-function s.attop(e,tp,eg,ep,ev,re,r,rp)
+function s.rcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		local eff={c:GetCardEffect(EFFECT_NECRO_VALLEY)}
-		for _,te in ipairs(eff) do
-			local op=te:GetOperation()
-			if not op or op(e,c) then return end
-		end
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CHANGE_RACE)
-		e1:SetValue(RACE_DRAGON)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e1)
-	end
+	if not c:IsRelateToEffect(e) then return end
+	--Change Type
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_CHANGE_RACE)
+	e1:SetValue(RACE_DRAGON)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	c:RegisterEffect(e1)
 end

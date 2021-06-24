@@ -1,5 +1,5 @@
 --契珖のヴルーレセンス
---Fluorescent Vluorescence
+--Radiant Vouirescence
 --Logical Nonsense
 
 --Substitute ID
@@ -60,29 +60,19 @@ end
 	--Activation legality
 function s.atttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then
-		local eff={c:GetCardEffect(EFFECT_NECRO_VALLEY)}
-		for _,te in ipairs(eff) do
-			local op=te:GetOperation()
-			if not op or op(e,e:GetHandler()) then return false end
-		end
-		return not e:GetHandler():IsAttribute(ATTRIBUTE_DARK)
-	end
+	if chk==0 then return not e:GetHandler():IsAttribute(ATTRIBUTE_DARK) end
+	--Operation info needed to handle the interaction with "Necrovalley"
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,tp,LOCATION_GRAVE)
 end
 	--Make itself become DARK
 function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		local eff={c:GetCardEffect(EFFECT_NECRO_VALLEY)}
-		for _,te in ipairs(eff) do
-			local op=te:GetOperation()
-			if not op or op(e,c) then return end
-		end
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
-		e1:SetValue(ATTRIBUTE_DARK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e1)
-	end
+	if not c:IsRelateToEffect(e) then return end
+	--Change Attribute
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
+	e1:SetValue(ATTRIBUTE_DARK)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	c:RegisterEffect(e1)
 end

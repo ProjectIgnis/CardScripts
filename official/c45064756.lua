@@ -33,11 +33,9 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_RACE)
-	--e1:SetRange(LOCATION_SZONE)
 	e1:SetTargetRange(LOCATION_GRAVE,LOCATION_GRAVE)
 	e1:SetTarget(s.rctg)
 	e1:SetValue(race)
-	--RESET_EVENT+RESETS_STANDARD+
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--id chk

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 	--If your LP is lower than opponent's LP by 1000
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetLP(tp)<=Duel.GetLP(1-tp)-1000
+	return Duel.GetLP(tp)<=Duel.GetLP(1-tp)-1000 and e:GetHandler():CanAttack()
 end
 	--Check for psychic monsters in GY
 function s.cfilter(c)

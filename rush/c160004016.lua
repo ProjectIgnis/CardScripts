@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	Duel.SortDeckbottom(tp,tp,#g)
 	--Effect
-	local mg=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,LOCATION_MZONE)
+	local mg=Duel.GetMatchingGroupCount(Card.IsNotMaximumModeSide,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK)

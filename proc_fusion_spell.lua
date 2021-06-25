@@ -444,7 +444,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 					stage2(e,tc,tp,backupmat,0)
 					Duel.SpecialSummonComplete()
 					stage2(e,tc,tp,backupmat,3)
-					if not sumlimit then
+					if (chkf&FUSPROC_NOTFUSION)==0 then
 						tc:CompleteProcedure()
 					end
 					stage2(e,tc,tp,backupmat,1)

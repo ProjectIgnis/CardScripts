@@ -18,13 +18,13 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCost(s.thcost)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x73,0x139,0x7e,0x26a}
+s.listed_series={0x73,0x139,0x7e,0x16c}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
@@ -48,7 +48,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thfilter(c)
 	if not (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()) then return false end
-	return c:IsSetCard(0x73) or c:IsSetCard(0x139) or c:IsSetCard(0x7e) or c:IsSetCard(0x26a)
+	return c:IsSetCard(0x73) or c:IsSetCard(0x139) or c:IsSetCard(0x7e) or c:IsSetCard(0x16c)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

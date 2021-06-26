@@ -2,7 +2,7 @@
 --Power Bond (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	c:RegisterEffect(Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE),nil,nil,nil,nil,s.stage2))
+	Fusion.RegisterSummonEff{handler=c,fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE),stage2=s.stage2}
 end
 function s.stage2(e,tc,tp,sg,chk)
 	if chk~=0 then return end
@@ -22,11 +22,13 @@ function s.stage2(e,tc,tp,sg,chk)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetLabelObject() then e:Reset() return false end
+	local label=e:GetLabelObject()
+	if not label or label:IsDeleted() then e:Reset() return false end
 	return Duel.GetTurnPlayer()==tp
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetLabelObject() then return end
-	local tc=e:GetLabelObject():GetHandler()
+	local label=e:GetLabelObject()
+	if not label or label:IsDeleted() then return false end
+	local tc=label:GetHandler()
 	Duel.Damage(tc:GetControler(),tc:GetBaseAttack(),REASON_EFFECT)
 end

@@ -59,7 +59,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())
 end
 function s.filter(c,p)
-	return c:IsFacedown() and (c:IsControler(p) or (c:IsLocation(LOCATION_FZONE) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0))
+	return c:IsFacedown() and (c:IsControler(p) or (c:IsLocation(LOCATION_FZONE) or Duel.GetLocationCount(pp,LOCATION_SZONE)>0))
 end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,2,nil)

@@ -105,6 +105,12 @@ function Duel.GetMetatable(code)
 	return _G["c" .. code]
 end
 
+function Auxiliary.TakeN(n,f)
+	return function(...)
+		return f(table.unpack(1,n))
+	end
+end
+
 bit={}
 function bit.band(a,b)
 	return a&b

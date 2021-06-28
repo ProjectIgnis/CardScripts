@@ -30,7 +30,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	local ct=4-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	if ct>0 then
+	if ct>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsPlayerCanDraw(tp,ct) then
 		Duel.Draw(tp,ct,REASON_EFFECT)
 	end
 	local e2=Effect.CreateEffect(e:GetHandler())

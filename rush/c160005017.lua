@@ -18,12 +18,8 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	local sg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,0,nil)
 	if chk==0 then return 
 		Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,2000),tp,0,LOCATION_MZONE,1,nil) 
-		or
-		(ft>0 and #sg>0)
 	end
 end
 function s.sfilter(c)

@@ -27,7 +27,8 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsRelateToEffect(e)
+		and not tc:IsImmuneToEffect(e) then
 		c:SetCardTarget(tc)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -41,5 +42,5 @@ end
 function s.ctcon(e)
 	local c=e:GetOwner()
 	local h=e:GetHandler()
-	return h:IsAttribute(ATTRIBUTE_FIRE) and c:IsHasCardTarget(h)
+	return c:IsHasCardTarget(h)
 end

@@ -78,7 +78,7 @@ function s.flipop2(e,tp,eg,ep,ev,re,r,rp)
 		--opd register
 		Duel.RegisterFlagEffect(ep,id+1,0,0,0)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,code)
+		local g=Duel.SelectMatchingCard(tp,s.thfilter2,tp,LOCATION_DECK,0,1,1,nil,eg:GetFirst():GetCode())
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)

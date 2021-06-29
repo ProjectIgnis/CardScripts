@@ -32,7 +32,7 @@ function s.ffilter(c,e)
 		and c:IsReleasableByEffect() and Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,c)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.ffilter,e;GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,e) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.ffilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,e) end
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,tp,500)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

@@ -1,6 +1,5 @@
 --宝玉の集結
 --Crystal Conclave
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -61,8 +60,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToGraveAsCost() and c:IsStatus(STATUS_EFFECT_ENABLED) end
+	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.thfilter1(c,rc)
 	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsAbleToHand()

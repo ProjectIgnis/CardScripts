@@ -40,8 +40,9 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToGraveAsCost() and c:IsStatus(STATUS_EFFECT_ENABLED) end
+	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject():GetLabelObject()
@@ -110,4 +111,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not rc or rc:IsFacedown() or rc:GetFlagEffect(id)==0 then return end
 	Duel.SendtoHand(rc,nil,REASON_EFFECT)
 end
-

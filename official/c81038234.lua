@@ -1,5 +1,5 @@
 --夢魔鏡の夢語らい
---Dream Mirror Dreamtelling
+--Dream Mirror Recap
 --Logical Nonsense
 
 --Substitute ID
@@ -46,8 +46,9 @@ function s.reptg(e,c)
 end
 	--Send this face-up card to GY as cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToGraveAsCost() and c:IsStatus(STATUS_EFFECT_ENABLED) end
+	Duel.SendtoGrave(c,REASON_COST)
 end
 	--Check for "Dream Mirror of Joy"/"Dream Mirror of Terror"
 function s.filter(c,tp)

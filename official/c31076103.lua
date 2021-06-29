@@ -1,4 +1,5 @@
 --第一の棺
+--The First Sarcophagus
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -77,7 +78,8 @@ function s.cfilter3(c)
 	return c:IsFaceup() and c:IsCode(id,4081094,78697395) and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost()
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToGraveAsCost() and c:IsStatus(STATUS_EFFECT_ENABLED)
 		and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_SZONE,0,1,nil,4081094)
 		and Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_SZONE,0,1,nil,78697395) end
 	local g=Duel.GetMatchingGroup(s.cfilter3,tp,LOCATION_SZONE,0,nil)

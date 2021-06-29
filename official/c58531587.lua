@@ -1,4 +1,5 @@
 --バブル・ブリンガー
+--Bubble Bringer
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -35,8 +36,9 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToGraveAsCost() and c:IsStatus(STATUS_EFFECT_ENABLED) end
+	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.filter(c,e,tp)
 	return c:IsLevelBelow(3) and c:IsAttribute(ATTRIBUTE_WATER)

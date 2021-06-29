@@ -1,4 +1,5 @@
 --陽炎光輪
+--Hazy Glory
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -30,8 +31,9 @@ function s.initial_effect(c)
 end
 s.listed_series={0x7d,0x107d}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToGraveAsCost() and c:IsStatus(STATUS_EFFECT_ENABLED) end
+	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.filter(c)
 	return c:IsSetCard(0x7d) and c:GetCode()~=id and c:IsAbleToHand()

@@ -73,7 +73,8 @@ end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
-	if chk==0 then return e:GetLabel()==100 and c:IsAbleToGraveAsCost() and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
+	if chk==0 then return e:GetLabel()==100 and c:IsAbleToGraveAsCost() and c:IsStatus(STATUS_EFFECT_ENABLED)
+		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE)
 	tg:AddCard(c)
 	Duel.SendtoGrave(tg,REASON_COST)

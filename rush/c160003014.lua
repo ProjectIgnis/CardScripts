@@ -15,16 +15,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={76103675,160301014}
 function s.costfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(4) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsLevelBelow(4) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
-		return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,1),tp,0,LOCATION_MZONE,1,nil) 
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.sfilter(c)
 	return c:IsCode(76103675,160301014) and c:IsSSetable()
@@ -40,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		-- Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-			local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsAttackAbove,1),tp,0,LOCATION_MZONE,1,1,nil)
+			local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 			if #g>0 then
 				Duel.HintSelection(g)
 				local e1=Effect.CreateEffect(c)
@@ -50,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 				g:GetFirst():RegisterEffectRush(e1)
 			end
-			--Set cards
+			-- Set cards
 			local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 			local sg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,0,nil)
 			if ft>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

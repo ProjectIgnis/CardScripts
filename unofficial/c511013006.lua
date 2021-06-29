@@ -1,4 +1,5 @@
---Invalid Insensitive
+--インヴァリッド・インセンシティブ
+--Invalidate
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -49,8 +50,9 @@ function s.hdcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsRelateToBattle()
 end
 function s.hdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToGraveAsCost() and c:IsStatus(STATUS_EFFECT_ENABLED) end
+	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

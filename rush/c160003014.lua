@@ -1,10 +1,9 @@
---スパークハーツ・ガール
---Sparkhearts Girl
---Scripted by Hatter
-
+-- スパークハーツ・ガール
+-- Sparkhearts Girl
+-- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--Make 1 of opponent's monsters lose 500 ATK
+	-- Make 1 opponent monster lose 500 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_LEAVE_GRAVE)
@@ -23,12 +22,8 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-	local sg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,0,nil)
-	if chk==0 then return 
-		Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,1),tp,0,LOCATION_MZONE,1,nil) 
-		or
-		(ft>0 and #sg>0)
+	if chk==0 then 
+		return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,1),tp,0,LOCATION_MZONE,1,nil) 
 	end
 end
 function s.sfilter(c)
@@ -39,10 +34,10 @@ function s.rescon(sg,e,tp,mg)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--Requirement
+	-- Requirement
 	local tg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoGrave(tg,REASON_COST)==1 then
-		--Effect
+		-- Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 			local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsAttackAbove,1),tp,0,LOCATION_MZONE,1,1,nil)

@@ -62,6 +62,11 @@ function s.linkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetLinkedGroup()
 	if #g>0 then
 		e:SetLabel(1)
+		g:KeepAlive()
+		local prevgroup=e:GetLabelObject()
+		if prevgroup then
+			prevgroup:DeleteGroup()
+		end
 		e:SetLabelObject(g)
 	end
 end
@@ -71,8 +76,9 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local le=e:GetLabelObject()
 	local g=le:GetLabelObject()
-	if g:IsDeleted() then return end
+	if not g then return end
 	Duel.Destroy(g,REASON_EFFECT)
 	le:SetLabel(0)
 	le:GetLabelObject():DeleteGroup()
+	le:SetLabelObject(nil)
 end

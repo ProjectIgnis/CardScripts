@@ -55,11 +55,14 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		aux.EquipByEffectAndLimitRegister(c,e,tp,tc)
 	end
 end
+function s.cfilter(c,tp)
+	return c:IsAbleToGraveAsCost() and c:IsControler(tp)
+end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetEquipGroup():IsExists(Card.IsAbleToGraveAsCost,1,nil) end
+	if chk==0 then return c:GetEquipGroup():IsExists(s.cfilter,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=c:GetEquipGroup():FilterSelect(tp,Card.IsAbleToGraveAsCost,1,1,nil)
+	local g=c:GetEquipGroup():FilterSelect(tp,s.cfilter,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

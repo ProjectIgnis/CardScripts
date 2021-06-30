@@ -71,7 +71,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local le=e:GetLabelObject()
 	local g=le:GetLabelObject()
-	if not g then return end
+	if g:IsDeleted() then return end
 	Duel.Destroy(g,REASON_EFFECT)
 	le:SetLabel(0)
 	le:GetLabelObject():DeleteGroup()

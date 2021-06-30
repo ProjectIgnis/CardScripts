@@ -1,4 +1,5 @@
 --冥界龍 ドラゴネクロ
+--Dragonecro Nethersoul Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -37,7 +38,7 @@ function s.splimit(e,se,sp,st)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=e:GetHandler():GetBattleTarget()
-	if chk==0 then return bc and bc:IsRelateToBattle() and bc:GetOriginalLevel()>0 end
+	if chk==0 then return bc and bc:IsRelateToBattle() end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
@@ -46,13 +47,14 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=c:GetBattleTarget()
 	if bc:IsRelateToBattle() and bc:IsFaceup() then
 		local atk=bc:GetBaseAttack()
-		local lv=bc:GetOriginalLevel()
+		--Change ATK to 0
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		bc:RegisterEffect(e1)
+		local lv=bc:GetOriginalLevel()
 		if lv>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,-2,0,0,RACE_ZOMBIE,ATTRIBUTE_DARK) then
 			local token=Duel.CreateToken(tp,id+1)

@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetValue(s.btindes)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	-- Cannot be destroyed by effects of monsters of the same type
 	local e3=e2:Clone()
@@ -57,9 +57,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.btindes(e,c)
-	return c and c:IsRace(e:GetHandler():GetRace())
-end
 function s.efindes(e,re)
-	return s.btindes(e,re:GetHandler())
+	local tc=re:GetHandler()
+	return tc and e:GetHandler():IsRace(tc:GetRace())
 end

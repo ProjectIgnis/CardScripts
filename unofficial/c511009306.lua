@@ -1,3 +1,4 @@
+--剣闘獣の蛇頭楯
 --Gladiator Beast Medusa Shield
 --fixed by MLD
 local s,id=GetID()
@@ -88,7 +89,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_DESTROY_CONFIRMED) then return false end
 	local tc=c:GetFirstCardTarget()
-	return tc and eg:IsContains(tc) and tc:IsReason(REASON_DESTROY)
+	return tc and eg:IsContains(tc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

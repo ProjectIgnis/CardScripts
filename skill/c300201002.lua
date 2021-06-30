@@ -15,11 +15,13 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if not s[tp] then s[tp]=Duel.GetLP(tp) end
-	if s[tp]>Duel.GetLP(tp) then
-		s[2+tp]=s[2+tp]+(s[tp]-Duel.GetLP(tp))
-		s[tp]=Duel.GetLP(tp)
+function s.checkop()
+	for tp=0,1 do
+		if not s[tp] then s[tp]=Duel.GetLP(tp) end
+		if s[tp]>Duel.GetLP(tp) then
+			s[2+tp]=s[2+tp]+(s[tp]-Duel.GetLP(tp))
+			s[tp]=Duel.GetLP(tp)
+		end
 	end
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)

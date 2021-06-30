@@ -1,4 +1,5 @@
---デーモンとの駆け引き
+--デーモンとの駆け引き (GOAT)
+--A Deal with Dark Ruler (GOAT)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -6,6 +7,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_END_PHASE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -36,6 +38,7 @@ function s.filter(c,e,tp)
 	return c:IsCode(85605684) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	Debug.Message(s[tp] and Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
 	if chk==0 then return s[tp] and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
 end

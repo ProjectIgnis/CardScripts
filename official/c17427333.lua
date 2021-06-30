@@ -19,8 +19,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c,tc)
-	return c:IsMonster() and c:IsRace(RACE_MACHINE) and c:GetBaseAttack()>=1000 and
-		Duel.IsExistingTarget(nil,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,Group.FromCards(tc,c))
+	return c:IsMonster() and c:IsRace(RACE_MACHINE) and c:GetBaseAttack()>=1000
+		and Duel.IsExistingTarget(nil,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,Group.FromCards(tc,c))
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(DIDNT_SKIP_COST)
@@ -37,7 +37,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local mtgc=tg:GetFirst():GetBaseAttack()//1000
 	Duel.Release(tg,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,mtgc,c)
+	local g=Duel.SelectTarget(tp,nil,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,mtgc,c)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desact(e,tp,eg,ep,ev,re,r,rp)

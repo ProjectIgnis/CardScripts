@@ -1,4 +1,5 @@
 --エルシャドール・アノマリリス
+--El Shaddoll Anoyatyllis
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -38,7 +39,7 @@ function s.matfilter(c,lc,sumtype,tp)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return se:IsActiveType(TYPE_SPELL+TYPE_TRAP) and se:IsHasType(EFFECT_TYPE_ACTIONS) 
-		and c:IsLocation(LOCATION_GRAVE+LOCATION_HAND)
+		and c:IsLocation(LOCATION_GRAVE+LOCATION_HAND) and c:IsMonster()
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x9d) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()

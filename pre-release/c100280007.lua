@@ -1,4 +1,4 @@
---Joker’s Wild
+--Joker's Wild
 --Scripted by fiftyfour
 
 local s,id=GetID()
@@ -19,11 +19,13 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_TODECK)
-	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
-	e2:SetCode(EVENT_PHASE+PHASE_END)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetHintTiming(TIMING_END_PHASE)
 	e2:SetCountLimit(1,id+100)
+	e2:SetCondition(s.tdcon)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
@@ -70,6 +72,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		te:SetLabel(e:GetLabel())
 		te:SetLabelObject(e:GetLabelObject())
 	end
+end
+function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()==PHASE_END
 end
 function s.tdfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_WARRIOR) and c:IsAbleToDeck()

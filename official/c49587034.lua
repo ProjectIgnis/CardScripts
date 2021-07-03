@@ -1,4 +1,5 @@
 --光の封札剣
+--Lightforce Sword
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,11 +28,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_REMOVED)
 		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 		e1:SetCountLimit(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,4)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,5)
 		e1:SetCondition(s.thcon)
 		e1:SetOperation(s.thop)
 		e1:SetLabel(0)
 		card:RegisterEffect(e1)
+		card:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		local descnum=tp==c:GetOwner() and 0 or 1
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
@@ -50,7 +52,7 @@ function s.reset(e,tp,eg,ep,ev,re,r,rp)
 	s.thop(e:GetLabelObject(),tp,eg,ep,ev,e,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetFlagEffect(id)==0
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()+1

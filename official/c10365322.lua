@@ -1,10 +1,11 @@
 --起爆獣ヴァルカノン
+--Ignition Beast Volcannon
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion Material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_MACHINE),aux.FilterBoolFunctionEx(Card.IsRace,RACE_PYRO))
-	--destroy
+	--Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
@@ -31,18 +32,13 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
-	if not tc:IsRelateToEffect(e) and not c:IsRelateToEffect(e) then return end
-	if not tc:IsRelateToEffect(e) then
-		Duel.Destroy(c,REASON_EFFECT)
-	elseif not c:IsRelateToEffect(e) then
-		Duel.Destroy(tc,REASON_EFFECT)
-	else
-		local dg=Group.FromCards(c,tc)
-		if Duel.Destroy(dg,REASON_EFFECT)==2 and tc:IsLocation(LOCATION_GRAVE) and c:IsLocation(LOCATION_GRAVE) then
-			Duel.BreakEffect()
-			local d=tc:GetAttack()
-			if d<0 then d=0 end
-			Duel.Damage(1-tp,d,REASON_EFFECT)
-		end
+	if not (tc:IsRelateToEffect(e) and c:IsRelateToEffect(e)) then return end
+	if not tc:IsControler(1-tp) then return end
+	local dg=Group.FromCards(c,tc)
+	if Duel.Destroy(dg,REASON_EFFECT)==2 and tc:IsLocation(LOCATION_GRAVE) and c:IsLocation(LOCATION_GRAVE) then
+		Duel.BreakEffect()
+		local atk=tc:GetAttack()
+		if atk<0 then atk=0 end
+		Duel.Damage(1-tp,atk,REASON_EFFECT)
 	end
 end

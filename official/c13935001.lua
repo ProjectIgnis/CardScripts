@@ -37,28 +37,31 @@ function s.initial_effect(c)
 end
 s.listed_series={0xdf}
 	--If fusion monster(s) were fusion summoned to your field
-function s.cfilter(c,tp)
+function s.cfilter(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_FUSION)
+		and c:IsCanBeEffectTarget(e)
 end
 	--If it ever happened
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(s.cfilter,1,nil,e,tp)
 end
 	--Activation legality
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return eg:IsContains(chkc) and s.cfilter(chkc,tp) end
-	if chk==0 then return eg:IsExists(s.cfilter,1,nil,tp) 
+	if chkc then return eg:IsContains(chkc) and s.cfilter(chkc,e,tp) end
+	if chk==0 then return eg:IsExists(s.cfilter,1,nil,e,tp) 
 		and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0 
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0xdf,TYPES_TOKEN,2000,2000,1,RACE_BEASTWARRIOR,ATTRIBUTE_DARK,POS_FACEUP,1-tp) 
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=eg:FilterSelect(tp,s.cfilter,1,1,nil,tp)
+	local g=eg:FilterSelect(tp,s.cfilter,1,1,nil,e,tp)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 	--Performing the effect of ATK gain and token special summoned to opponent's field
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0xdf,TYPES_TOKEN,2000,2000,1,RACE_BEASTWARRIOR,ATTRIBUTE_DARK,POS_FACEUP,1-tp) then
@@ -67,7 +70,8 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local atk=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)*500
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(e:GetHandler())
+		--Increase ATK
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)

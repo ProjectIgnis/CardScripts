@@ -1,5 +1,5 @@
 --双穹の騎士アストラム
---Mekk-Knight Crusadia Astram
+--Mekk-Knight Crusadia Avramax
 --scripted by andré
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,8 +37,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--shuffle 1 card on field to deck
 	local e4=Effect.CreateEffect(c)
-	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetCategory(CATEGORY_TODECK)
 	e4:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetCondition(s.tdcondition)
 	e4:SetTarget(s.tdtarget)
@@ -78,10 +79,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tdcondition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsSummonType(SUMMON_TYPE_LINK) and rp~=tp
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsSummonType(SUMMON_TYPE_LINK) and rp==1-tp
 end
 function s.tdtarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,0,0)
 end
 function s.tdoperation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
@@ -90,4 +92,3 @@ function s.tdoperation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
-

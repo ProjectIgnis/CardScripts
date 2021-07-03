@@ -1,11 +1,12 @@
---サイバー・プリマ
+--Cyber Prima (Anime)
+--サイバー・プリマ (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(2158562,0))
 	e1:SetCategory(CATEGORY_DESTROY)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetTarget(s.destg)

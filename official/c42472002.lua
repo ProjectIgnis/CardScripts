@@ -62,6 +62,7 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	local c=e:GetHandler()
+	--Cannot Special Summon from the Extra Deck, except "Noble Knight" monsters
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD)
 	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
@@ -73,12 +74,12 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e0,tp)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
+	--Additional Normal Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	--e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x107a))
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)

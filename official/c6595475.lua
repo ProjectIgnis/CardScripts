@@ -1,4 +1,5 @@
 --オノマト連携
+--Onomatopaira
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,7 +36,8 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
 	if #g==0 then return end
-	tg=aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,1,tp,HINTMSG_ATOHAND)
+	local tg=aux.SelectUnselectGroup(g,e,tp,1,2,s.rescon,1,tp,HINTMSG_ATOHAND)
+	if #tg==0 then return end
 	Duel.SendtoHand(tg,nil,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,tg)
 end

@@ -1,4 +1,5 @@
 --パワー・フレーム
+--Power Frame
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,8 +22,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetCard(d)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateAttack()
 	local c=e:GetHandler()
+	if not Duel.NegateAttack() then
+		c:CancelToGrave(false)
+		return
+	end
 	if not c:IsRelateToEffect(e) or c:IsStatus(STATUS_LEAVE_CONFIRMED) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then

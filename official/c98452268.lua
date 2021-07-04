@@ -50,7 +50,7 @@ function s.ovfilter(c)
 end
 function s.spfilter(c,e,tp,mc,pg)
 	return c:IsFacedown() and (c:IsSetCard(0x13b) or c:IsSetCard(0x10db)) and c:IsType(TYPE_XYZ)
-		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 		and mc:IsCanBeXyzMaterial(c,tp) and not c:IsCode(id)
 		and (not pg or #pg<=0 or pg:IsContains(mc))

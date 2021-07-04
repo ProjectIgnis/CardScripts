@@ -1,4 +1,5 @@
 --セフィラの神託
+--Oracle of Zefra
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--
+	--Ritual
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TODECK)
@@ -23,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	e2:SetLabel(TYPE_RITUAL)
 	c:RegisterEffect(e2)
+	--Fusion
 	local e3=e2:Clone()
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	e3:SetLabel(TYPE_FUSION)
 	c:RegisterEffect(e3)
+	--Synchro
 	local e4=e2:Clone()
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(0)
@@ -37,6 +40,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.stop)
 	e4:SetLabel(TYPE_SYNCHRO)
 	c:RegisterEffect(e4)
+	--Xyz
 	local e5=e2:Clone()
 	e5:SetDescription(aux.Stringid(id,3))
 	e5:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
@@ -44,6 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.drop)
 	e5:SetLabel(TYPE_XYZ)
 	c:RegisterEffect(e5)
+	--Material check
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD)
 	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_RANGE)
@@ -77,8 +82,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+function s.confilter(c,label)
+	return c:IsType(label) and c:GetFlagEffect(id)>0
+end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
-	return #eg==1 and eg:GetFirst():IsType(e:GetLabel()) and eg:GetFirst():GetFlagEffect(id)~=0
+	return eg:IsExists(s.confilter,1,nil,e:GetLabel())
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -88,7 +96,10 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+	if #g>0 then
+		Duel.HintSelection(g,true)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+	end
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -128,7 +139,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.Draw(tp,1,REASON_EFFECT)~=0 then
+	if Duel.Draw(tp,1,REASON_EFFECT)>0 then
 		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()
 		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)

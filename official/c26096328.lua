@@ -41,8 +41,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-		e1:SetRange(LOCATION_MZONE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
 		e1:SetValue(2000)
 		c:RegisterEffect(e1)
@@ -68,4 +66,3 @@ function s.raval(e,c)
 	local oc=e:GetHandler():GetOverlayCount()
 	return math.max(0,oc)
 end
-

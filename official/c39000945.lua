@@ -113,14 +113,20 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g1,2,0,LOCATION_ONFIELD)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if #tg>0 then
-		local ct=e:GetLabelObject():GetCounter(COUNTER_SPELL)
-		if Duel.SendtoHand(tg,nil,REASON_EFFECT)~=0 then
-			Duel.BreakEffect()
-			e:GetHandler():AddCounter(COUNTER_SPELL,ct)
-		end
+	local tg=Duel.GetTargetCards(e)
+	if #tg==0 then return end
+	local sc=e:GetLabelObject()
+	local oc=(tg-sc):GetFirst()
+	if sc and sc:IsControler(1-tp) then tg:RemoveCard(sc) end
+	if oc and oc:IsControler(tp) then tg:RemoveCard(oc) end
+	if #tg==0 then return end
+	local ct=0
+	if tg:IsContains(sc) then ct=sc:GetCounter(COUNTER_SPELL) end
+	local c=e:GetHandler()
+	if #tg>0 and Duel.SendtoHand(tg,nil,REASON_EFFECT)>0 and ct>0 and tg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND)
+		and c:IsRelateToEffect(e) then
+		Duel.BreakEffect()
+		c:AddCounter(COUNTER_SPELL,ct)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)

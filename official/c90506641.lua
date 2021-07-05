@@ -35,8 +35,10 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
+	if #g<5 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local sg=aux.SelectUnselectGroup(g,e,tp,5,5,s.rescon,1,tp,HINTMSG_ATOHAND)
+	if #sg~=5 then return end
 	local sc
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	if sg:FilterCount(Card.IsAbleToHand,nil)>0 then

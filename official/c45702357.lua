@@ -34,7 +34,7 @@ function s.tdfilter(c,g)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsOnField() then return end
+	if not c:IsRelateToEffect(e) then return end
 	local cg=c:GetColumnGroup()
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,cg)
 	if c:IsFaceup() and c:IsAbleToDeck() and not c:IsStatus(STATUS_BATTLE_DESTROYED) then g:AddCard(c) end
@@ -51,7 +51,7 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsOnField() then return end
+	if not c:IsRelateToEffect(e) then return end
 	local cg=c:GetColumnGroup()
 	local g=Duel.GetMatchingGroup(s.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,cg)
 	if c:IsFaceup() and c:IsCanTurnSet() then g:AddCard(c) end

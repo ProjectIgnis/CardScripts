@@ -56,7 +56,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) or not s.tgfilter(tc) then return end
+	if not tc:IsRelateToEffect(e) or not s.tgfilter(tc,tp) then return end
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsAttackBelow,tc:GetAttack()),tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		g:AddCard(tc)

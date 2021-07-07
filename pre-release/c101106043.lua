@@ -1,5 +1,5 @@
 -- レプティレス・メルジーヌ
--- Reptilianne Melsine
+-- Reptilianne Melusine
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -51,7 +51,7 @@ function s.indcon(e)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp 
-		and re:IsActiveType(TYPE_MONSTER) and Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
+		and re:IsActiveType(TYPE_MONSTER) and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and aux.nzatk(chkc) end

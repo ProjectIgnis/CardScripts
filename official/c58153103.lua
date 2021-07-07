@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e1000:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
 	e1000:SetType(EFFECT_TYPE_QUICK_O)
 	e1000:SetCode(EVENT_FREE_CHAIN)
-	e1000:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
+	e1000:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER_E)
 	e1000:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1000:SetRange(LOCATION_MZONE)
 	e1000:SetCountLimit(1)
@@ -82,7 +82,8 @@ function s.atkcon(atk)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsTurnPlayer(tp) and s.atkcon(1000)(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsTurnPlayer(1-tp) and s.atkcon(1000)(e,tp,eg,ep,ev,re,r,rp)
+		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end

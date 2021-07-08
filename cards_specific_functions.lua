@@ -966,6 +966,7 @@ function Drytron.TributeBaseCost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function Drytron.TributeExtraCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
+	local id=c:GetOriginalCode()
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
 	--Cannot Special Summon this turn, except Unsummonable
 	local e1=Effect.CreateEffect(c)

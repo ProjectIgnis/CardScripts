@@ -952,3 +952,33 @@ function Cyberdark.EquipOperation_NTG(f,op)
 		end
 	end
 end
+
+Drytron={}
+Drytron.TributeCost=aux.CostWithReplace(Drytron.TributeBaseCost,CARD_URSARCTIC_DRYTRON,nil,Drytron.TributeExtraCost)
+function Drytron.TributeCostFilter(c,tp)
+	return ((c:IsSetCard(0x151) and c:IsType(TYPE_MONSTER)) or c:IsRitualMonster()) and (c:IsControler(tp) or c:IsFaceup())
+		and (c:IsInMainMZone(tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
+end
+function Drytron.TributeBaseCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Drytron.TributeCostFilter,1,false,nil,nil,tp) end
+	local sg=Duel.SelectReleaseGroupCost(tp,Drytron.TributeCostFilter,1,1,false,nil,nil,tp)
+	Duel.Release(sg,REASON_COST)
+end
+function Drytron.TributeExtraCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	local id=c:GetOriginalCode()
+	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
+	--Cannot Special Summon this turn, except Unsummonable
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(Drytron.TributeSummonLimit)
+	Duel.RegisterEffect(e1,tp)
+end
+function Drytron.TributeSummonLimit(e,c)
+	return c:IsSummonableCard()
+end

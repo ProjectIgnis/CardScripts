@@ -963,7 +963,6 @@ function Drytron.TributeBaseCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=Duel.SelectReleaseGroupCost(tp,Drytron.TributeCostFilter,1,1,false,nil,nil,tp)
 	Duel.Release(sg,REASON_COST)
 end
-Drytron.TributeCost=aux.CostWithReplace(Drytron.TributeBaseCost,CARD_URSARCTIC_DRYTRON,nil,Drytron.TributeExtraCost)
 function Drytron.TributeExtraCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local id=c:GetOriginalCode()
@@ -982,3 +981,4 @@ end
 function Drytron.TributeSummonLimit(e,c)
 	return c:IsSummonableCard()
 end
+Drytron.TributeCost=aux.CostWithReplace(Drytron.TributeBaseCost,CARD_URSARCTIC_DRYTRON,nil,Drytron.TributeExtraCost)

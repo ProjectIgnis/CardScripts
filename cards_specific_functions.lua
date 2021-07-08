@@ -954,7 +954,6 @@ function Cyberdark.EquipOperation_NTG(f,op)
 end
 
 Drytron={}
-Drytron.TributeCost=aux.CostWithReplace(Drytron.TributeBaseCost,CARD_URSARCTIC_DRYTRON,nil,Drytron.TributeExtraCost)
 function Drytron.TributeCostFilter(c,tp)
 	return ((c:IsSetCard(0x151) and c:IsType(TYPE_MONSTER)) or c:IsRitualMonster()) and (c:IsControler(tp) or c:IsFaceup())
 		and (c:IsInMainMZone(tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
@@ -964,6 +963,7 @@ function Drytron.TributeBaseCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=Duel.SelectReleaseGroupCost(tp,Drytron.TributeCostFilter,1,1,false,nil,nil,tp)
 	Duel.Release(sg,REASON_COST)
 end
+Drytron.TributeCost=aux.CostWithReplace(Drytron.TributeBaseCost,CARD_URSARCTIC_DRYTRON,nil,Drytron.TributeExtraCost)
 function Drytron.TributeExtraCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local id=c:GetOriginalCode()

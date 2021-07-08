@@ -29,7 +29,7 @@ if not DeckMaster then
 	function Card.MoveToDeckMasterZone(c,p)
 		Duel.DisableShuffleCheck()
 		Duel.SendtoDeck(c,nil,-2,REASON_RULE)
-		Duel.Hint(HINT_SKILL,p,c:GetOriginalCode())
+		Duel.Hint(HINT_SKILL_FLIP,p,c:GetOriginalCode()|(1<<32))
 		DeckMasterZone[p]=c
 	end
 	--function that remove the card from the DM/Skill zone

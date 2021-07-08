@@ -1,6 +1,5 @@
 --スターヴ・ヴェネミー・ドラゴン (Manga)
 --Starving Venemy Dragon (Manga)
-Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -14,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e1:SetRange(LOCATION_PZONE)
+	e1:SetCountLimit(1)
 	e1:SetCondition(s.rdcon)
 	e1:SetOperation(s.rdop)
 	c:RegisterEffect(e1)
@@ -48,13 +48,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.counter_list={0x1149}
-s.listed_series={0x576}
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and ev>0
+	return ep==tp
 end
 function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetFlagEffect(id)==0 and Duel.SelectEffectYesNo(tp,c) then
+	if Duel.SelectEffectYesNo(tp,c) then
 		Duel.Hint(HINT_CARD,0,id)
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		Duel.ChangeBattleDamage(tp,0)
@@ -75,7 +74,6 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsType(TYPE_TOKEN) then
-		local code=tc:GetOriginalCode()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -88,14 +86,14 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		if not tc:IsType(TYPE_TRAPMONSTER) then
-			local cid=c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD,1)
-			local e3=Effect.CreateEffect(e:GetHandler())
-			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetCode(EFFECT_UPDATE_ATTACK)
-			e3:SetValue(-500)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e3)
+			c:CopyEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD,1)
 		end
+		local e3=Effect.CreateEffect(e:GetHandler())
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_UPDATE_ATTACK)
+		e3:SetValue(-500)
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e3)
 		Duel.Damage(1-tp,500,REASON_EFFECT)
 	end
 end

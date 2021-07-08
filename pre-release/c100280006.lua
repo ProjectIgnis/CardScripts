@@ -54,6 +54,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
 			Duel.ConfirmCards(1-tp,g)
 			if Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_HAND,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+				Duel.BreakEffect()
+				Duel.ShuffleHand(tp)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
 				local g2=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
 				local tc=g2:GetFirst()

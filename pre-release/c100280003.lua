@@ -30,9 +30,6 @@ function s.spfilter(c,e,tp,ft)
 	return c:IsCode(CARD_JACK_KNIGHT,CARD_KING_KNIGHT,CARD_QUEEN_KNIGHT)
 		and ((c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and ft>0) or c:IsAbleToHand())
 end
-function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetCode)==3
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp,ft)

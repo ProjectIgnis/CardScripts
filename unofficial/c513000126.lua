@@ -1,6 +1,7 @@
 --アルカナフォースＶＩＩＩ－ＳＴＲＥＮＧＴＨ (Anime)
 --Arcana Force VIII - The Strength (Anime)
 --Scripted by Keddy
+--Fixed by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
     --coin
@@ -40,15 +41,16 @@ function s.arcanareg(c,coin)
     e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
     e1:SetCode(EVENT_ADJUST)
     e1:SetRange(LOCATION_MZONE) 
-    e1:SetOperation(s.controlop)
+    e1:SetOperation(s.ctop)
     e1:SetReset(RESET_EVENT+RESETS_STANDARD)
     c:RegisterEffect(e1)
     c:RegisterFlagEffect(36690018,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,coin,63-coin)
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,coin)
 end
-function s.controlop(e,tp,eg,ep,ev,re,r,rp)
+function s.ctop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    local val=c:GetFlagEffectLabel(36690018)
-    if val==1 then
+    --heads effect
+    if c:GetFlagEffectLabel(36690018)==1 and c:GetFlagEffectLabel(id)==1 then
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
         local g=Duel.SelectMatchingCard(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
         local tc=g:GetFirst()
@@ -56,7 +58,10 @@ function s.controlop(e,tp,eg,ep,ev,re,r,rp)
             Duel.HintSelection(g)
             Duel.GetControl(tc,tp)
         end
-    else
+	end
+    --tails  effect
+	if c:GetFlagEffectLabel(36690018)==0 and c:GetFlagEffectLabel(id)==0 then
+		c:SetFlagEffectLabel(id,1)
         local g=Duel.GetMatchingGroup(Card.IsControlerCanBeChanged,tp,LOCATION_MZONE,0,c)
         Duel.GetControl(g,1-tp)
         local e1=Effect.CreateEffect(c)

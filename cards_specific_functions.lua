@@ -959,8 +959,8 @@ function Drytron.TributeCostFilter(c,tp)
 		and (c:IsInMainMZone(tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
 end
 function Drytron.TributeBaseCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Drytron.TributeCostFilter,1,false,nil,nil,tp) end
-	local sg=Duel.SelectReleaseGroupCost(tp,Drytron.TributeCostFilter,1,1,false,nil,nil,tp)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Drytron.TributeCostFilter,1,true,nil,e:GetHandler(),tp) end
+	local sg=Duel.SelectReleaseGroupCost(tp,Drytron.TributeCostFilter,1,1,true,nil,e:GetHandler(),tp)
 	Duel.Release(sg,REASON_COST)
 end
 function Drytron.TributeExtraCost(e,tp,eg,ep,ev,re,r,rp,chk)

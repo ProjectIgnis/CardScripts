@@ -30,10 +30,10 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,tp)
-	return c:IsAbleToHand() and s[1-tp]:IsExists(s.cfilter,1,nil,c:GetCode())
+	return c:IsAbleToHand() and s[1-tp]:IsExists(s.cfilter,1,nil,c:GetCode(),1-tp)
 end
-function s.cfilter(c,code)
-	return c:IsCode(code) and not c:IsLocation(LOCATION_GRAVE)
+function s.cfilter(c,code,tp)
+	return c:IsCode(code) and not (c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,tp) end
@@ -45,7 +45,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		Duel.SendtoHand(tc,tp,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
 	end
 end

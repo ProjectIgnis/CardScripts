@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lvfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x26c) or c:IsRace(RACE_WYRM))
+	return c:IsFaceup() and (c:IsSetCard(0x26c) or c:IsRace(RACE_WYRM)) and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.lvfilter(chkc) end

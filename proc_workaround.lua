@@ -431,10 +431,3 @@ function Auxiliary.GetRaceStrings(v)
 	end
 	return pairs(res)
 end
---Multi purpose token
-if not c946 then
-	c946 = {}
-	setmetatable(c946, Card)
-	rawset(c946,"__index",c946)
-	c946.initial_effect=function()end
-end

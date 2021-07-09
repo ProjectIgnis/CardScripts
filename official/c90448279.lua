@@ -1,5 +1,5 @@
 --天霆號アーゼウス
---Negalogia AA-Zeus
+--Divine Arsenal AA-ZEUS - Sky Thunder
 --scripted by Hatter and Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -92,8 +92,5 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(og,REASON_RULE)
 		end
 		Duel.Overlay(c,Group.FromCards(tc))
-	end
-	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 then
-		Duel.ShuffleDeck(tp)
 	end
 end

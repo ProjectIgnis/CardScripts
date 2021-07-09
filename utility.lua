@@ -441,6 +441,13 @@ function Auxiliary.IsCodeListed(c,...)
 	end
 	return false
 end
+--Multi purpose token
+if not c946 then
+	c946 = {}
+	setmetatable(c946, Card)
+	rawset(c946,"__index",c946)
+	c946.initial_effect=function()end
+end
 --Returns true if the Card "c" specifically lists the name of a card that is part of an archetype in "..."
 Auxiliary.IsArchetypeCodeListed=(function()
 	local sc=Debug.AddCard(946,0,0,0,0,0)

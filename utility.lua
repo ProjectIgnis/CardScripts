@@ -5,6 +5,15 @@ function GetID()
 	return self_table,self_code
 end
 
+
+--Multi purpose token
+if not c946 then
+	c946 = {}
+	setmetatable(c946, Card)
+	rawset(c946,"__index",c946)
+	c946.initial_effect=function()end
+end
+
 local function cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 	local t={}
 	for _,eff in ipairs({Duel.GetPlayerEffect(tp,replacecode)}) do
@@ -441,13 +450,6 @@ function Auxiliary.IsCodeListed(c,...)
 	end
 	return false
 end
---Multi purpose token
-if not c946 then
-	c946 = {}
-	setmetatable(c946, Card)
-	rawset(c946,"__index",c946)
-	c946.initial_effect=function()end
-end
 --Returns true if the Card "c" specifically lists the name of a card that is part of an archetype in "..."
 Auxiliary.IsArchetypeCodeListed=(function()
 	local sc=Debug.AddCard(946,0,0,0,0,0)
@@ -455,7 +457,7 @@ Auxiliary.IsArchetypeCodeListed=(function()
 		local old=Debug.ReloadFieldBegin
 		return function(...)
 				old(...)
-				sc=Duel.CreateToken(946,0,0,0,0,0)
+				sc=Debug.AddCard(946,0,0,0,0,0)
 			end
 		end
 	)()

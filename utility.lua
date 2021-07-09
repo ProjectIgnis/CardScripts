@@ -430,6 +430,7 @@ function Auxiliary.IsMaterialListSetCard(c,...)
 	end
 	return false
 end
+--Returns true if the Card "c" specifically lists any of the card IDs in "..."
 function Auxiliary.IsCodeListed(c,...)
 	if not c.listed_names then return false end
 	local codes={...}
@@ -440,6 +441,29 @@ function Auxiliary.IsCodeListed(c,...)
 	end
 	return false
 end
+--Returns true if the Card "c" specifically lists the name of a card that is part of an archetype in "..."
+Auxiliary.IsArchetypeCodeListed=(function()
+	local sc=Debug.AddCard(946,0,0,0,0,0)
+	Debug.ReloadFieldBegin=(function()
+		local old=Debug.ReloadFieldBegin
+		return function(...)
+				old(...)
+				sc=Duel.CreateToken(946,0,0,0,0,0)
+			end
+		end
+	)()
+	return function(c,...)
+		if not c.listed_names then return false end
+		local setcodes={...}
+		for _,ccode in ipairs(c.listed_names) do
+			sc:Recreate(ccode)
+			for _,setcode in ipairs(setcodes) do
+				if sc:IsSetCard(setcode) then return true end
+			end
+		end
+		return false
+	end
+end)()
 --"Can be negated" check for monsters
 function Auxiliary.disfilter1(c)
 	return c:IsFaceup() and not c:IsDisabled() and (not c:IsNonEffectMonster() or c:GetOriginalType()&TYPE_EFFECT~=0)

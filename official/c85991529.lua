@@ -56,7 +56,6 @@ end
 s.listed_series={0xd2}
 function s.rescon(sg,e,tp,mg)
 	return sg:GetSum(Card.GetLevel)>=10
-	--return sg:CheckWithSumGreater(Card.GetLevel,10)
 end
 function s.spfilter(c)
 	return c:IsSetCard(0xd2) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
@@ -80,7 +79,6 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
-	Duel.Release(g,REASON_COST)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	g:DeleteGroup()
 end

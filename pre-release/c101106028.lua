@@ -50,7 +50,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x36}
 function s.rescon(sg,e,tp,mg)
-	return sg:CheckWithSumGreater(Card.GetLevel,12)
+	Duel.SetSelectedCard(sg)
+	return (sg:CheckWithSumGreater(Card.GetLevel,12))
 end
 function s.spfilter(c)
 	return c:HasLevel() and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_MACHINE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)

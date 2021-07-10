@@ -55,7 +55,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xd2}
 function s.rescon(sg,e,tp,mg)
-	return sg:GetSum(Card.GetLevel)>=10
+	return sg:CheckWithSumGreater(Card.GetLevel,10)
 end
 function s.spfilter(c)
 	return c:IsSetCard(0xd2) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()

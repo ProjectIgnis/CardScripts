@@ -3,7 +3,6 @@
 --Scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableReviveLimit()
 	--special summon self
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

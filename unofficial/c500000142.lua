@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_POLYMERIZATION,7721912}
 function s.filter(c)
-	return c:IsCode(CARD_POLYMERIZATION) or c:IsCode(500000141)
+	return c:IsCode(CARD_POLYMERIZATION) or c:IsCode(7721912)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

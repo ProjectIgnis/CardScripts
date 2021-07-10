@@ -26,6 +26,13 @@ end
 function Card.IsMonster(c)
 	return c:IsType(TYPE_MONSTER)
 end
+function Group.GetLinkedZone(g,tp)
+	local zones=0
+	for c in g:Iter() do
+		zones=zones|c:GetLinkedZone(tp)
+	end
+	return zones
+end
 --
 function Card.AnnounceAnotherAttribute(c,tp)
 	local att=c:GetAttribute()

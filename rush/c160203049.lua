@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local lvl=g:GetSum(Card.GetOriginalLevel)
 	g=g:AddMaximumCheck()
 	local ct=Duel.SendtoGrave(g,REASON_COST)
-	if ct>0 and lvl>=10 then
+	if ct>0 and lvl>=10 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		--Effect
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

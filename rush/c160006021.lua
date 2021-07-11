@@ -35,7 +35,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(1000)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
-		if g:GetFirst():IsRace(RACE_WARRIOR+RACE_WINGEDBEAST) then
+		local g0=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,e,tp)
+		if #g0>0 and g:GetFirst():IsRace(RACE_WARRIOR+RACE_WINGEDBEAST) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local g2=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 			if #g2>0 then

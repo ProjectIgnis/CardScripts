@@ -60,7 +60,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgcostfilter(c,ct)
-	return c:IsSetCard(0x155) and c:IsAbleToGraveAsCost() 
+	return c:IsSetCard(0x155) and c:IsAbleToGraveAsCost() and c:IsMonster()
 		and (not c:IsLocation(LOCATION_MZONE) or (c:IsFaceup() and ct>1))
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)

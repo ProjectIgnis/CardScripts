@@ -31,7 +31,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLevelBelow(8) and not c:IsMaximumSide()
+	return c:IsFaceup() and c:IsLevelBelow(8) and not c:IsMaximumModeSide()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

@@ -1,4 +1,5 @@
 --マジック・キャンセラー
+--Spell Canceller
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot trigger
@@ -27,10 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_SPELL)
-end
-function s.distg(e,c)
-	return c:IsType(TYPE_SPELL)
+	return re:IsActiveType(TYPE_SPELL) and (re:GetHandler():IsOnField() or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)

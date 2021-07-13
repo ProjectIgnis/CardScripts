@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CHAIN_SOLVED)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,id)
+	e2:SetLabel(0)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -56,13 +57,15 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return rc and rc:IsType(TYPE_SPELL|TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and
-	       not rc:IsStatus(STATUS_ACT_FROM_HAND) and rc:IsPreviousPosition(POS_FACEDOWN)
+	return rc and rc:IsType(TYPE_SPELL|TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+		and not rc:IsStatus(STATUS_ACT_FROM_HAND)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if c:IsPublic() then e:SetLabel(1)
+	else e:SetLabel(0) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.setfilter(c)
@@ -71,7 +74,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local wasrev=s.isrev(c)
+	local wasrev=(e:GetLabel()==1)
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 and wasrev and
 		Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) and
 		Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

@@ -55,15 +55,15 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
-			and e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,1)
+	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
+		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) and e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,1)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		if tc:IsLocation(LOCATION_DECK) and tc:IsControler(tp) then
 			Duel.ShuffleDeck(tp)
 		end
 		Duel.Draw(tp,1,REASON_EFFECT)
-		end
+	end
 end
 function s.drfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x112) and c:GetMutualLinkedGroupCount()>0

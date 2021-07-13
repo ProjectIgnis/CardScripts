@@ -89,7 +89,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Performapal" monsters, "Magician" pendulums, or "Odd-Eyes" monsters
 function s.drfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x9f) or c:IsSetCard(0x98) or c:IsSetCard(0x99))
+	return c:IsFaceup() and (c:IsSetCard(0x9f) or (c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)) or c:IsSetCard(0x99))
 end
 	--If you only control those archetypes and this card's ATK is boosted
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)

@@ -50,7 +50,7 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:Filter(s.tdfilter,nil,tp)
-	if ec and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if ec and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.SendtoDeck(ec,tp,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

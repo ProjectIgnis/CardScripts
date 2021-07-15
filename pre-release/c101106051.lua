@@ -41,6 +41,9 @@ end
 function s.spfilter(c,e,tp)
 	return (c:IsSetCard(0x153) or c:IsSetCard(0x154)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
+function s.sprescon(sg)
+	return sg:FilterCount(Card.IsSetCard,nil,0x153)<2 and sg:FilterCount(Card.IsSetCard,nil,0x154)<2
+end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		return (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or e:GetHandler():IsInMainMZone())
@@ -54,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 	if #g<1 then return end
-	local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,function(sg)return sg:GetClassCount(Card.GetSetCard)==#sg end,1,tp,HINTMSG_SPSUMMON)
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,s.sprescon,1,tp,HINTMSG_SPSUMMON)
 	if #sg>0 then
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end

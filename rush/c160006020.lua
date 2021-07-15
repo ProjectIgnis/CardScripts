@@ -25,6 +25,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.HintSelection(g)
 	if #g>0 then
-		Duel.ChangePosition(g,0,0,POS_FACEUP_DEFENSE,POS_FACEUP_DEFENSE)
+		Duel.ChangePosition(g:GetFirst(),POS_FACEUP_DEFENSE)
 	end
 end

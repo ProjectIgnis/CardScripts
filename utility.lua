@@ -473,6 +473,17 @@ Auxiliary.IsArchetypeCodeListed=(function()
 		return false
 	end
 end)()
+--Returns true if the Card "c" specifically lists any of the card types in "..."
+function Auxiliary.IsCardTypeListed(c,...)
+	if not c.listed_card_types then return false end
+	local card_types={...}
+	for _,typ in ipairs(card_types) do
+		for _,typp in ipairs(c.listed_card_types) do
+			if (typ&typp)~=0 then return true end
+		end
+	end
+	return false
+end
 --"Can be negated" check for monsters
 function Auxiliary.disfilter1(c)
 	return c:IsFaceup() and not c:IsDisabled() and (not c:IsNonEffectMonster() or c:GetOriginalType()&TYPE_EFFECT~=0)

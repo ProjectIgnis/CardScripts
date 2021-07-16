@@ -1,4 +1,5 @@
 --デュアル・ブースター
+--Gemini Booster
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.daop)
 	c:RegisterEffect(e2)
 end
+s.listed_card_types={TYPE_GEMINI}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end

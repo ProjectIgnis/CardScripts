@@ -1,4 +1,5 @@
 --金剛真力
+--Herculean Power
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,6 +19,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_card_types={TYPE_GEMINI}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)~=0

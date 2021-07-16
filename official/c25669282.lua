@@ -1,4 +1,5 @@
 --完全燃焼
+--Burnout
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,6 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xeb}
+s.listed_card_types={TYPE_GEMINI}
 function s.cfilter(c,ft)
 	return c:IsFaceup() and c:IsSetCard(0xeb) and c:IsAbleToRemoveAsCost() and (ft>1 or c:GetSequence()<5)
 end

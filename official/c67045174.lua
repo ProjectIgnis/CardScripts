@@ -1,4 +1,5 @@
 --二重の落とし穴
+--Gemini Trap Hole
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,6 +19,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_card_types={TYPE_GEMINI}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local t=Duel.GetAttackTarget()

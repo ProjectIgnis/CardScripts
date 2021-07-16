@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.listed_card_types={TYPE_GEMINI}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0

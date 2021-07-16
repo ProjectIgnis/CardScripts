@@ -1,4 +1,5 @@
 --ヴィクティム・カウンター
+--Gemini Counter
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_card_types={TYPE_GEMINI}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end

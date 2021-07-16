@@ -1,4 +1,5 @@
 --スペシャル・デュアル・サモン
+--Super Double Summon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_card_types={TYPE_GEMINI}
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and not c:IsGeminiState()
 end

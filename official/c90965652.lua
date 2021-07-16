@@ -26,6 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xeb}
 s.listed_names={65959844,25669282}
+s.listed_card_types={TYPE_GEMINI}
 function s.codefilter(c,code)
 	return c:IsCode(code) and c:IsAbleToHand()
 end

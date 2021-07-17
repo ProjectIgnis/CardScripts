@@ -99,7 +99,15 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sel=e:GetLabel()
-	if (sel&0x1==0x1) then s.mthop(e,tp,eg,ep,ev,re,r,rp) end
-	if (sel&0x2==0x2) then s.stthop(e,tp,eg,ep,ev,re,r,rp) end
+	local ct=0
+	if (sel&0x1==0x1) then
+		s.mthop(e,tp,eg,ep,ev,re,r,rp)
+		Duel.BreakEffect()
+		ct=ct+1
+	end
+	if (sel&0x2==0x2) then
+		s.stthop(e,tp,eg,ep,ev,re,r,rp)
+		if ct==0 then Duel.BreakEffect() end
+	end
 	if (sel&0x4==0x4) then s.atkop(e,tp,eg,ep,ev,re,r,rp) end
 end

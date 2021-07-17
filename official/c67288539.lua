@@ -37,13 +37,13 @@ function s.initial_effect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_REMOVE)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_GRAVE)
-	e4:SetCountLimit(1,id+100)
+	e4:SetCountLimit(1,id+1)
 	e4:SetCost(aux.bfgcost)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x26d}
+s.listed_series={0x170}
 --indestructible
 function s.indfilter(c,cc)
 	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(cc)
@@ -78,7 +78,7 @@ function s.rmfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil,e,tp,rmc)
 end
 function s.spfilter(c,e,tp,rmc)
-	return c:IsSetCard(0x26d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x170) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and ((c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,rmc,c)>0)
 		or (c:IsLocation(LOCATION_GRAVE) and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or rmc:IsInMainMZone(tp))))
 end

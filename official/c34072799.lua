@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={101106064}
+s.listed_names={17888577}
 function s.thfilter1(c,tp)
 	return c:IsRitualSpell() and not c:IsPublic() and c:IsAbleToDeck()
 		and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil,c)

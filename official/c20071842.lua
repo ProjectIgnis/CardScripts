@@ -5,11 +5,11 @@ local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcGreater{handler=c,filter=s.ritualfil,lv=8,extrafil=s.extrafil,extraop=s.extraop,stage2=s.stage2}
 end
-s.listed_names={101106102}
-s.fit_monster={101106102} --should be removed in hardcode overhaul
+s.listed_names={7987191}
+s.fit_monster={7987191} --should be removed in hardcode overhaul
 s.listed_series={0x102}
 function s.ritualfil(c)
-	return c:IsCode(101106102) and c:IsRitualMonster()
+	return c:IsCode(7987191) and c:IsRitualMonster()
 end
 function s.mfilter(c,e)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:HasLevel() and c:IsSetCard(0x102) and c:IsType(TYPE_MONSTER) and c:IsDestructable(e)

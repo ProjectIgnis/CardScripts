@@ -32,7 +32,6 @@ s.listed_names={101106040,89264428,58793369,27693363,97148796}
 s.listed_series={0x165,0x151}
 function s.rmfilter(c)
 	return c:IsCode(89264428,58793369) and c:IsAbleToRemove()
-		and (c:IsFaceup() or not c:IsOnField())
 end
 function s.excheck(tp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,27693363,97148796),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)

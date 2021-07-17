@@ -2,7 +2,7 @@
 --Carrier Suship - Icefish-Class Auxiliary Dish
 --Scripted by DyXel
 
-local ICEFISH_SUSHIP_CODE=101106023 --TODO: Update when released.
+local ICEFISH_SUSHIP_CODE=78362751 --TODO: Update when released.
 
 local s,id=GetID()
 function s.initial_effect(c)

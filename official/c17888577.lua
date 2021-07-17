@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	Ritual.AddProcGreater({handler=c,filter=aux.FilterBoolFunction(Card.IsCode,101106037),stage2=s.stage2})
+	Ritual.AddProcGreater({handler=c,filter=aux.FilterBoolFunction(Card.IsCode,34072799),stage2=s.stage2})
 	--to gy
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -16,8 +16,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.gyop)
 	c:RegisterEffect(e1)
 end
-s.fit_monster={101106037}
-s.listed_names={101106037}
+s.fit_monster={34072799}
+s.listed_names={34072799}
 function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

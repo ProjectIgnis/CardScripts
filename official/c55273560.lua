@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.sscon)
 	e2:SetCost(s.sscost)
 	e2:SetTarget(s.sstg)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCountLimit(1,id+200)
+	e3:SetCountLimit(1,id+2)
 	e3:SetCondition(s.thcon)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_names={CARD_ALBAZ}
-s.listed_series={0x26c}
+s.listed_series={0x16d}
 -- global check
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
@@ -71,7 +71,7 @@ function s.sscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.ssfilter(c,e,tp)
-	return (c:IsCode(CARD_ALBAZ) or c:IsSetCard(0x26c)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsCode(CARD_ALBAZ) or c:IsSetCard(0x16d)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or e:GetHandler():IsInMainMZone())

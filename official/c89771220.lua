@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetCode(CARD_URSARCTIC_DRYTRON)
 	c:RegisterEffect(e3)
 end
-s.listed_names={101106040,89264428,58793369,27693363,97148796}
+s.listed_names={33250142,89264428,58793369,27693363,97148796}
 s.listed_series={0x165,0x151}
 function s.rmfilter(c)
 	return c:IsCode(89264428,58793369) and c:IsAbleToRemove()
@@ -37,7 +37,7 @@ function s.excheck(tp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,27693363,97148796),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.spfilter(c,e,tp,sg)
-	return c:IsCode(101106040) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0 
+	return c:IsCode(33250142) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0 
 		and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.spcheck(sg,e,tp,mg)

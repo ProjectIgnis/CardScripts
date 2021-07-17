@@ -2,7 +2,7 @@
 --Superdreadnought Suship - Urchin-Class Second Wardish
 --Scripted by DyXel
 
-local URCHIN_SUSHIP_CODE=101106022 --TODO: Update when released.
+local URCHIN_SUSHIP_CODE=42377643 --TODO: Update when released.
 
 local s,id=GetID()
 function s.initial_effect(c)

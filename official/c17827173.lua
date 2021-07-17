@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1,id+1)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_REMOVED)
 	e3:SetCost(s.cost)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Flundereeze" archetype
-s.listed_series={0x268}
+s.listed_series={0x16f}
 
 	--Cannot special summon the turn you activate e1 or e3
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -61,7 +61,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for a card to banish
 function s.addfilter(c)
-	return c:IsSetCard(0x268) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(0x16f) and c:IsFaceup() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

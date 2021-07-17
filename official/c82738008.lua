@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_ALBAZ}
-s.listed_series={0x160}
+s.listed_series={0x166}
 --To hand + potential Fusion Summon
 function s.thfilter(c)
 	return c:IsAbleToHand() and ((c:IsSetCard(0x166) and c:IsMonster()) or c:IsCode(CARD_ALBAZ))

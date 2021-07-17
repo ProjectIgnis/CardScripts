@@ -31,12 +31,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ngop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x26c}
+s.listed_series={0x16d}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x26c) and (c:IsAbleToHand() or c:IsAbleToRemove())
+	return c:IsSetCard(0x16d) and (c:IsAbleToHand() or c:IsAbleToRemove())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -51,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	)
 end
 function s.costfilter(c)
-	return (c:IsSetCard(0x26c) or c:IsRace(RACE_WYRM)) and c:IsAbleToRemoveAsCost()
+	return (c:IsSetCard(0x16d) or c:IsRace(RACE_WYRM)) and c:IsAbleToRemoveAsCost()
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.ngcost(e,tp,eg,ep,ev,re,r,rp,chk)

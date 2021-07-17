@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x26b}
+s.listed_series={0x16e}
 function s.filter(c,tp)
-	return c:IsMonster() and c:IsSetCard(0x26b) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x16e) and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

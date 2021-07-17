@@ -1,7 +1,6 @@
 -- 相剣軍師－龍淵
 -- Long Yuan, the Xiangjian Tactician
 -- Scripted by Hatter
-local TOKEN_XIANGJIAN=101106203
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Special Summon self and token
@@ -22,15 +21,15 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BE_MATERIAL)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.damcon)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x26c}
+s.listed_series={0x16d}
 function s.spcostfilter(c)
-	return (c:IsSetCard(0x26c) or (c:IsMonster() and c:IsRace(RACE_WYRM))) and c:IsDiscardable(REASON_COST)
+	return (c:IsSetCard(0x16d) or (c:IsMonster() and c:IsRace(RACE_WYRM))) and c:IsDiscardable(REASON_COST)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spcostfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -45,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)>0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_XIANGJIAN,0x26c,TYPES_TOKEN+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_XIANGJIAN,0x16d,TYPES_TOKEN+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
 		local token=Duel.CreateToken(tp,TOKEN_XIANGJIAN)

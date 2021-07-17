@@ -35,12 +35,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.adop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x268}
+s.listed_series={0x16f}
 function s.trsumcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x268) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x16f) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

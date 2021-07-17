@@ -1,7 +1,6 @@
 -- 相剣暗転
 -- Xiangjian Sudden Shift
 -- Scripted by Hatter
-local TOKEN_XIANGJIAN=101106203
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Destroy
@@ -21,12 +20,12 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_REMOVE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetTarget(s.tktg)
 	e2:SetOperation(s.tkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x26c}
+s.listed_series={0x16d}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then 
@@ -48,7 +47,7 @@ end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_XIANGJIAN,0x26c,TYPES_TOKEN+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_XIANGJIAN,0x16d,TYPES_TOKEN+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)

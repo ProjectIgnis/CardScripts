@@ -34,16 +34,16 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetRange(LOCATION_REMOVED)
 	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e4:SetCondition(s.setcon)
 	e4:SetTarget(s.settg)
 	e4:SetOperation(s.setop)
 	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x26d}
+s.listed_series={0x170}
 function s.cfilter(c)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x26d) and c:IsFaceup()
+	return c:IsType(TYPE_LINK) and c:IsSetCard(0x170) and c:IsFaceup()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

@@ -31,20 +31,23 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
+function s.tgfilter(c,e)
+	return c:IsAbleToGrave() and not c:IsImmuneToEffect(e)
+end
 function s.otcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return minc<=2 and Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-		and Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,0,LOCATION_ONFIELD,1,nil)
+		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE,0,1,nil,e)
+		and Duel.IsExistingMatchingCard(s.tgfilter,tp,0,LOCATION_ONFIELD,1,nil,e)
 end
 function s.ottg(e,c)
 	local mi,ma=c:GetTributeRequirement()
 	return mi<=2 and ma>=2
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg1=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,nil)
-	local mg2=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,0,LOCATION_ONFIELD,nil)
+	local mg1=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_MZONE,0,nil,e)
+	local mg2=Duel.GetMatchingGroup(s.tgfilter,tp,0,LOCATION_ONFIELD,nil,e)
 	::restart::
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g1=mg1:Select(tp,1,1,true,nil)
@@ -62,7 +65,7 @@ end
 function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local sg=e:GetLabelObject()
 	if not sg then return end
-	Duel.SendtoGrave(sg,REASON_COST)
+	Duel.SendtoGrave(sg,REASON_EFFECT)
 	sg:DeleteGroup()
 end
 function s.drfilter(c)

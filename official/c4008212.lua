@@ -29,13 +29,13 @@ end
 s.listed_series={0xc008}
 s.listed_names={76263644,id}
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsCode(76263644) or (c:IsLevelAbove(8) and c:IsSetCard(0xc008) and c:IsMonster())
+	return c:IsFaceup() and c:IsCode(76263644) or (c:IsLevelAbove(8) and c:IsSetCard(0xc008))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_ONFIELD,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

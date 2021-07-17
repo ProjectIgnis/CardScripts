@@ -24,19 +24,19 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetRange(LOCATION_FZONE)
-	e3:SetCountLimit(1,id+100)
+	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.nscon)
 	e3:SetTarget(s.nstg)
 	e3:SetOperation(s.nsop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x268}
+s.listed_series={0x16f}
 function s.filter(c,tp)
-	return c:IsSetCard(0x268) and c:IsLevel(1) and c:IsSummonable(true,nil) and not c:IsPublic()
+	return c:IsSetCard(0x16f) and c:IsLevel(1) and c:IsSummonable(true,nil) and not c:IsPublic()
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.filter2(c,code)
-	return c:IsSetCard(0x268) and c:IsAbleToRemove() and not c:IsCode(code)
+	return c:IsSetCard(0x16f) and c:IsAbleToRemove() and not c:IsCode(code)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,tp) end
@@ -59,7 +59,7 @@ function s.nscon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and ep==1-tp
 end
 function s.nsfilter(c)
-	return c:IsSetCard(0x268) and c:IsSummonable(true,nil)
+	return c:IsSetCard(0x16f) and c:IsSummonable(true,nil)
 end
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end

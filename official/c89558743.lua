@@ -13,14 +13,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-local getfuncs={Card.GetRace,Card.GetAttribute,Card.GetLevel,Card.GetAttack,Card.GetDefense}
-local isfuncs={Card.IsRace,Card.IsAttribute,Card.IsLevel,Card.IsAttack,Card.IsDefense}
-function s.singleprop(c1,c2)
+function s.singleprop(c,d)
 	local ct=0
-	for i=1,5 do
-		if isfuncs[i](c1,getfuncs[i](c2)) then ct=ct+1 end
-		if ct>1 then return false end
-	end
+	if c:IsRace(d:GetRace()) then ct=ct+1 end
+	if c:IsAttribute(d:GetAttribute()) then ct=ct+1 end
+	if c:IsLevel(d:GetLevel()) then ct=ct+1 end
+	if c:IsAttack(d:GetAttack()) and d:IsAttack(c:GetAttack()) then ct=ct+1 end
+	if c:IsDefense(d:GetDefense()) and d:IsDefense(c:GetDefense()) then ct=ct+1 end
 	return ct==1
 end
 function s.thfilter(c,mc)

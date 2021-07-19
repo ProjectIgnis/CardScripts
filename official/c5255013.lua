@@ -1,4 +1,5 @@
 --セフィラの輝跡
+--Zefra Path
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -40,7 +41,7 @@ s.listed_series={0xc4}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 	local tc2=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	if not tc1 or not tc2 or not tc1:IsSetCard(0xc4) or not tc2:IsSetCard(0xc4) then return false end
+	if not (tc1 and tc2 and tc1:IsSetCard(0xc4) and tc2:IsSetCard(0xc4)) then return false end
 	local scl1=tc1:GetLeftScale()
 	local scl2=tc2:GetRightScale()
 	if scl1>scl2 then scl1,scl2=scl2,scl1 end

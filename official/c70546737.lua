@@ -1,4 +1,5 @@
 --アンブラル・ウィル・オ・ザ・ウィスプ
+--Umbral Horror Will o' the Wisp
 local s,id=GetID()
 function s.initial_effect(c)
 	--lv change
@@ -51,7 +52,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetBattlePosition()==POS_FACEUP_ATTACK and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
+	return c:IsPreviousPosition(POS_FACEUP_ATTACK) and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

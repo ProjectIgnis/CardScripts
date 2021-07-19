@@ -21,8 +21,8 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	local tc=sg:GetFirst()
 	if tc then
-		if Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP_DEFENSE)>0 then
-			Duel.Recover(tp,tc:GetBaseDefense(),REASON_EFFECT)
+		if Duel.SpecialSummon(sg,0,tp,tp,true,false,POS_FACEUP_DEFENSE)>0 then
+			Duel.Recover(tp,tc:GetBaseAttack(),REASON_EFFECT)
 		end
 	end
 end

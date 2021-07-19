@@ -17,12 +17,8 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	--opd register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
-	local c=e:GetHandler()
-	local sg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	local tc=sg:GetFirst()
-	if tc then
-		if Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP_DEFENSE)>0 then
-			Duel.Recover(tp,tc:GetBaseDefense(),REASON_EFFECT)
-		end
+	local tc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
+	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0 then
+		Duel.Recover(tp,tc:GetBaseAttack(),REASON_EFFECT)
 	end
 end

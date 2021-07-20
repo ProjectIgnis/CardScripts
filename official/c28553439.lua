@@ -1,4 +1,5 @@
 --ディメンション・マジック
+--Magical Dimension
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -21,7 +22,7 @@ function s.filter(c,e,tp)
 end
 function s.rfilter(c,e,tp,ft)
 	return c:IsReleasableByEffect() and c:IsCanBeEffectTarget(e)
-		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5))
+		and (ft>0 or c:IsInMainMZone(tp))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -34,18 +35,17 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
+	if tc:IsRelateToEffect(e) and tc:IsControler(tp) and not tc:IsImmuneToEffect(e) then
 		if Duel.Release(tc,REASON_EFFECT)==0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 		if #sg==0 then return end
-		Duel.BreakEffect()
-		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+		if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 		local dg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local des=dg:Select(tp,1,1,nil)
-			Duel.HintSelection(des)
+			Duel.HintSelection(des,true)
 			Duel.BreakEffect()
 			Duel.Destroy(des,REASON_EFFECT)
 		end

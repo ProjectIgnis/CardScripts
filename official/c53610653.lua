@@ -2,7 +2,7 @@
 --Bound Wand
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,s.filter)
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_SPELLCASTER))
 	--Atk up
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
@@ -20,9 +20,6 @@ function s.initial_effect(c)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
-end
-function s.filter(c)
-	return c:IsRace(RACE_SPELLCASTER) and c:GetLevel()>0
 end
 function s.atkval(e,c)
 	return c:GetLevel()*100

@@ -60,7 +60,8 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.lrcon(e,tp,eg,ep,ev,re,r,rp)
 	if tp~=ep then return false end
-	if not re or not re:IsActivated() then return false end
+	if Duel.GetLP(ep)<ev then return false end
+	if not (re and re:IsActivated()) then return false end
 	local rc=re:GetHandler()
 	return rc:IsLocation(LOCATION_MZONE) and rc:IsRace(RACE_PSYCHIC)
 end

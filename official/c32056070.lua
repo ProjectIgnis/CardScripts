@@ -77,7 +77,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		sc=g:GetFirst()
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		sc=g:Select(tp,1,1,nil)
+		sc=g:Select(tp,1,1,nil):GetFirst()
 	end
 	local attr=sc:GetAttribute()
 	e:SetLabel(attr)

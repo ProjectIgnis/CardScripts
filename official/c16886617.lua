@@ -33,17 +33,19 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
-function s.rfilter(c,tp)
-	return c:IsFaceup() and c:GetAttack()==0 and (c:IsControler(tp) or c:IsControler(1-tp))
+function s.rfilter(c)
+	return c:IsFaceup() and c:IsAttack(0) and c:IsReleasable()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
-	return Duel.CheckReleaseGroup(tp,s.rfilter,2,false,2,true,c,c:GetControler(),nil,true,nil,tp)
+	local rg=Duel.GetMatchingGroup(s.rfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
+	return #rg>0 and aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),0)
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.SelectReleaseGroup(tp,s.rfilter,2,2,false,true,true,c,nil,nil,true,nil,tp)
-	if g then
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local rg=Duel.GetMatchingGroup(s.rfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+	if #g>0 then
 		g:KeepAlive()
 		e:SetLabelObject(g)
 	return true

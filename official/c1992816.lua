@@ -39,7 +39,10 @@ function s.initial_effect(c)
 end
 s.xyz_number=9
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler()==Duel.GetAttackTarget() and e:GetHandler():GetOverlayCount()~=0
+	local at=Duel.GetAttacker()
+	if at and at:IsStatus(STATUS_ATTACK_CANCELED) then return false end
+	local c=e:GetHandler()
+	return c==Duel.GetAttackTarget() and c:GetOverlayCount()>0
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
@@ -81,11 +84,12 @@ function s.dacost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsFaceup() and c:IsRelateToEffect(e)
-		and Duel.IsExistingMatchingCard(s.dafilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack()) then
+	if c:IsFaceup() and c:IsRelateToEffect(e) then
+		--Direct attack
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(3205)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)

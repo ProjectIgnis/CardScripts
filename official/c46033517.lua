@@ -49,23 +49,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x36}
-function s.rescon(sg,e,tp,mg)
-	Duel.SetSelectedCard(sg)
-	return (sg:CheckWithSumGreater(Card.GetLevel,12))
-end
 function s.spfilter(c)
-	return c:HasLevel() and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_MACHINE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
+	return c:HasLevel() and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_MACHINE) and c:IsAbleToRemoveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,e:GetHandler())
-	return aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon,0)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,e:GetHandler())
+	return g:CheckWithSumGreater(Card.GetLevel,12)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,e:GetHandler())
-	local g=aux.SelectUnselectGroup(rg,e,tp,1,#rg,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon,nil,true)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,e:GetHandler())
+	local g=rg:SelectWithSumGreater(tp,Card.GetLevel,12)
 	if #g>0 then
 		g:KeepAlive()
 		e:SetLabelObject(g)

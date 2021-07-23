@@ -40,9 +40,8 @@ function s.ffilter(c)
 end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
-	local fc=Duel.GetFieldCard(c:GetControler(),LOCATION_SZONE,5)
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and fc and s.ffilter(fc)
+		and Duel.IsExistingMatchingCard(s.ffilter,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.ffilter,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)

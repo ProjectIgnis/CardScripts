@@ -35,5 +35,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsType(TYPE_MONSTER) not  c:IsMaximumModeSide()
+	return c:IsType(TYPE_MONSTER) and not c:IsMaximumModeSide()
 end

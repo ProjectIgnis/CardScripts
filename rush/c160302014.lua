@@ -23,18 +23,17 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
 	if chk==0 then return #g>0 and Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetChainLimit(s.chlimit)
-end
-function s.chlimit(e,ep,tp)
-	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoGrave(tg,REASON_COST)~=0 then
-		local g=Duel.SelectMatchingCard(tp,Card.IsNotMaximumSide,tp,0,LOCATION_MZONE,1,1,nil)
-		g:AddMaximumCheck()
+		local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
+		g=g:AddMaximumCheck()
 		if #g>0 then
 			Duel.Destroy(g,REASON_EFFECT)
 		end
 	end
+end
+function s.filter(c)
+	return c:IsType(TYPE_MONSTER) not  c:IsMaximumModeSide()
 end

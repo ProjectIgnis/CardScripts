@@ -36,7 +36,9 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local reset=RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END
 	if #tg==1 then
-		tg:GetFirst():UpdateLevel(-lv,reset,c)
+		local tc=tg:GetFirst()
+		if tc:GetLevel()<=lv then return end
+		tc:UpdateLevel(-lv,reset,c)
 	elseif #tg==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 		local rd=tg:FilterSelect(tp,Card.IsLevelAbove,1,1,nil,lv+1):GetFirst()

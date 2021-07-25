@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	if not GhostBelleTable then GhostBelleTable={} end
-	table.insert(GhostBelleTable,e1)
+	table.insert(GhostBelleTable,e2)
 end
 s.listed_series={0xee}
 function s.spfilter(c,e,tp,zone)

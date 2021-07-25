@@ -28,6 +28,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return tg:IsControler(tp) and tg:IsOnField() end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	--requirement
+	Duel.PayLPCost(tp,600)
 	--Effect
 	local tc=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()

@@ -2,13 +2,21 @@
 --Frightfur Sanctuary
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0xad)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(s.cost)
 	c:RegisterEffect(e1)
+	--add setcode
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_FUSION))
+	e2:SetCode(EFFECT_ADD_SETCODE)
+	e2:SetValue(0xad)
+	c:RegisterEffect(e2)
 	--return
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TODECK)

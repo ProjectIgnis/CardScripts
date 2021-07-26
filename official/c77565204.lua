@@ -1,4 +1,5 @@
 --未来融合－フューチャー・フュージョン
+--Future Fusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -91,7 +92,10 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		local code=tc:GetCode()
 		local mat=Duel.SelectFusionMaterial(tp,tc,mg)
 		mat:KeepAlive()
-		Duel.SendtoGrave(mat,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+		Duel.SendtoGrave(mat,REASON_EFFECT)
+		for mc in aux.Next(mat) do
+			mc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		end
 		e:SetLabel(code)
 		e:SetLabelObject(mat)
 	end
@@ -106,14 +110,22 @@ function s.procop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local code=e:GetLabelObject():GetLabel()
-	local mg=e:GetLabelObject():GetLabelObject()
+	local mat=e:GetLabelObject():GetLabelObject()
+	if not mat or #mat==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.procfilter,tp,LOCATION_EXTRA,0,1,1,nil,code,e,tp)
 	local tc=g:GetFirst()
 	if not tc then return end
-	if mg and #mg>0 then tc:SetMaterial(mg) end
+	tc:SetStatus(STATUS_FUTURE_FUSION,true)
+	for mc in aux.Next(mat) do
+		if mc:GetFlagEffect(id)>0 then
+			mc:SetReason(REASON_EFFECT+REASON_FUSION+REASON_MATERIAL)
+		end
+	end
+	tc:SetMaterial(mat)
 	Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
 	tc:CompleteProcedure()
+	tc:SetStatus(STATUS_FUTURE_FUSION,false)
 	c:SetCardTarget(tc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

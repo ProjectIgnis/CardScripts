@@ -1,4 +1,5 @@
 --幻影騎士団クラックヘルム
+--The Phantom Knights of Cloven Helm
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk up
@@ -22,6 +23,8 @@ function s.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e2)
 end
 s.listed_series={0x10db,0xdb}
 function s.tgfilter(c,tp)

@@ -35,6 +35,8 @@ function s.initial_effect(c)
 	e3:SetCondition(s.spcon)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e3)
 end
 s.listed_series={0x8,0xc008}
 s.material_setcode={0x8,0xc008}
@@ -90,7 +92,7 @@ function s.filter(c,e,tp)
 end
 function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

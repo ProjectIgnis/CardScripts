@@ -12,17 +12,21 @@ function s.initial_effect(c)
 	e1:SetOperation(s.flipop2)
 	c:RegisterEffect(e1)
 end
+function s.setfilter(c)
+	return c:IsFacedown() and c:GetSequence()<5
+end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
 	return aux.CanActivateSkill(tp)
-	and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_JINZO),tp,LOCATION_MZONE,0,1,nil)
-	and Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_SZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_JINZO),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.setfilter,tp,0,LOCATION_SZONE,1,nil)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_SZONE,0,nil)
-	local tc=g:Select(tp,1,1,nil)
+	local g=Duel.GetMatchingGroup(s.setfilter,tp,0,LOCATION_SZONE,nil)
+	local tc=g:Select(tp,1,1,nil):GetFirst()
+	if not tc then return end
 	Duel.ConfirmCards(tp,tc)
 	if tc:IsType(TYPE_TRAP) then
 		Duel.Draw(tp,1,REASON_EFFECT)

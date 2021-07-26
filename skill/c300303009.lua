@@ -64,7 +64,6 @@ function s.flipop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(ep,id+1,0,0,0)
 	local c=e:GetHandler()
 	local g=Duel.SelectReleaseGroupCost(tp,s.flipconfilter,1,1,false,aux.ReleaseCheckMMZ,nil,ft,tp)
-	Duel.DiscardHand(tp,aux.TRUE,2,2,REASON_COST+REASON_DISCARD)
 	Duel.Release(g,REASON_COST)
 	Duel.Draw(tp,2,REASON_EFFECT)
 end

@@ -17,11 +17,12 @@ function s.initial_effect(c)
 	--Cannot activate the monster effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CANNOT_TRIGGER)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTargetRange(0,LOCATION_MZONE)
+	e2:SetTargetRange(0,1)
 	e2:SetCondition(s.trsumcon)
-	e2:SetTarget(s.actlmttg)
+	e2:SetValue(s.actlmtval)
 	c:RegisterEffect(e2)
 	--Halve the ATK/DEF of that monster
 	local e3=Effect.CreateEffect(c)
@@ -65,8 +66,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.actlmttg(e,c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAttackPos()
+function s.actlmtval(e,re,rp)
+	local rc=re:GetHandler()
+	return rc:IsSummonType(SUMMON_TYPE_SPECIAL) and rc:IsAttackPos() and rc:IsLocation(LOCATION_MZONE)
+		and re:IsActiveType(TYPE_MONSTER)
 end
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattleTarget()~=nil

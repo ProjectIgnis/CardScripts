@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 function s.val(e,c)
 	local ph=Duel.GetCurrentPhase()
-	if not (ph==PHASE_DAMAGE) or not (ph==PHASE_DAMAGE_CAL) then return end
-	return c:IsControler(e:GetHandlerPlayer()) and c:IsRelateToBattle() and c:GetBattleTarget()~=nil
-		and c:IsFaceup() and c:IsLevelBelow(4) and c:IsType(TYPE_FUSION)
+	if not (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) then return end
+	return c:IsFaceup() and c:IsRelateToBattle() and c:GetBattleTarget()~=nil
+		and c:IsLevelBelow(4) and c:IsType(TYPE_FUSION)
 end

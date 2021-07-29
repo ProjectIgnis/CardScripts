@@ -22,7 +22,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetHandler():GetLevel()>e:GetHandler():GetLevel()
+	local c,tc=e:GetHandler(),te:GetHandler()
+	return te:IsActiveType(TYPE_MONSTER) and (not tc:HasLevel() or tc:GetLevel()>c:GetLevel())
 end
 function s.cfilter(c)
 	return c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c)

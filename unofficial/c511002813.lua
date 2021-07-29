@@ -14,9 +14,9 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
+	if chk==0 then return #g>0 end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,PLAYER_ALL,LOCATION_REMOVED)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)

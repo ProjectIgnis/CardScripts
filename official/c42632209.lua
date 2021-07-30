@@ -38,7 +38,7 @@ function s.econ(e)
 	return e:GetHandler():IsInExtraMZone()
 end
 function s.efilter(e,te)
-	return not te:GetHandler():IsSetCard(0x132)
+	return not te:GetOwner():IsSetCard(0x132)
 end
 function s.dcon(e)
 	return e:GetHandler():GetBattleTarget()~=nil and e:GetHandler():IsInExtraMZone()

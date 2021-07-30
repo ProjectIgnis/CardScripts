@@ -21,11 +21,11 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
-function s.filter(c,tp)
-	return c:IsFaceup() and c:GetLevel()
+function s.filter(c)
+	return c:IsFaceup() and c:GetLevel()>0
 end
 function s.actcond(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,1-tp)
-	local lvl=g:GetSum(Card.GetAttack)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
+	local lvl=g:GetSum(Card.GetLevel)
 	return lvl>9
 end

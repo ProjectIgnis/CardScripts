@@ -24,6 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil)
 	local td=aux.SelectUnselectGroup(g,e,tp,2,3,s.rescon,1,tp,HINTMSG_SELECT)
 	if #td>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)

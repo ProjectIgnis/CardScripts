@@ -57,7 +57,7 @@ function s.filter(c)
 	return c:IsType(TYPE_XYZ) and c:GetFlagEffect(id)~=0
 end
 function s.tgcon(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.tgval(e,c)
 	return not s.filter(c)

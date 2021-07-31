@@ -57,8 +57,8 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return rc and rc:IsType(TYPE_SPELL|TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and not rc:IsStatus(STATUS_ACT_FROM_HAND)
+	return rc and (not rc:IsStatus(STATUS_ACT_FROM_HAND)) and re:IsActiveType(TYPE_SPELL|TYPE_TRAP)
+		and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

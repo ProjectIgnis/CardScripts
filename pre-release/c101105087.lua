@@ -59,6 +59,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetTargetCards(e)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 and #g>0 then
+		local tc=g:Filter(Card.IsControler,nil,tp):GetFirst()
+		if tc and not tc:IsRace(RACE_INSECT) then
+			g:RemoveCard(tc)
+			if #g==0 then return end
+		end
 		Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	end
 end

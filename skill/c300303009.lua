@@ -8,7 +8,7 @@ end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
 	return Duel.GetCurrentChain()==0 and Duel.GetTurnCount()==1
-	and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,CARD_DARK_MAGICIAN)
+		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,CARD_DARK_MAGICIAN)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--ask if you want to activate the skill or not
@@ -54,8 +54,8 @@ function s.flipcon2(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
 	if Duel.GetFlagEffect(ep,id+1)>0 then return end
 	--condition
-	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.flipconfilter,tp,LOCATION_ONFIELD,0,1,nil)
-	and Duel.IsPlayerCanDraw(tp,2)
+	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(Card.IsOriginalCode,tp,LOCATION_MZONE,0,1,nil,CARD_DARK_MAGICIAN)
+		and Duel.IsPlayerCanDraw(tp,2)
 end
 function s.flipop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
@@ -63,7 +63,7 @@ function s.flipop2(e,tp,eg,ep,ev,re,r,rp)
 	--opd register
 	Duel.RegisterFlagEffect(ep,id+1,0,0,0)
 	local c=e:GetHandler()
-	local g=Duel.SelectReleaseGroupCost(tp,s.flipconfilter,1,1,false,aux.ReleaseCheckMMZ,nil,ft,tp)
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsOriginalCode,1,1,false,nil,nil,CARD_DARK_MAGICIAN)
 	Duel.Release(g,REASON_COST)
 	Duel.Draw(tp,2,REASON_EFFECT)
 end

@@ -47,9 +47,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --tribute 1 DM to draw 2
-function s.flipconfilter(c)
-	return c:IsFaceup() and c:IsOriginalCode(CARD_DARK_MAGICIAN)
-end
 function s.flipcon2(e,tp,eg,ep,ev,re,r,rp)
 	--opd check
 	if Duel.GetFlagEffect(ep,id+1)>0 then return end

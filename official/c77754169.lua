@@ -28,11 +28,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.eqrfilter(c,code,e)
-	return c:IsCode(code) and c:IsCanBeEffectTarget(e)
+	return c:IsCode(code) and c:IsCanBeEffectTarget(e) and not c:IsForbidden()
 end
 function s.eqfilter(c,e,tp)
-	return c:IsRace(RACE_INSECT) and c:IsCanBeEffectTarget(e) and
-	       Duel.IsExistingMatchingCard(s.eqrfilter,tp,LOCATION_GRAVE,0,2,c,c:GetCode(),e)
+	return c:IsRace(RACE_INSECT) and c:IsCanBeEffectTarget(e) and not c:IsForbidden() and
+		Duel.IsExistingMatchingCard(s.eqrfilter,tp,LOCATION_GRAVE,0,2,c,c:GetCode(),e)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetCode)==1
@@ -47,10 +47,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	local ct=math.min(Duel.GetLocationCount(tp,LOCATION_SZONE),3)
 	local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local tg=aux.SelectUnselectGroup(g,e,tp,1,ct,s.rescon,1,tp,HINTMSG_EQUIP)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tg,#tg,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end

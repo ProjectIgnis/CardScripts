@@ -1,19 +1,21 @@
---超装甲兵器ロボ ブラックアイアンG
---Super Armored Robot Weapon - Black Iron "C"
---
+--超装甲兵器ロボ ブラックアイアンＧ
+--Super Armored Robot Armed Black Iron "C"
+--Updated by DyXel
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon itself and equip.
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Destroy
+	--Send equip and destroy.
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -25,44 +27,50 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-function s.eqfilter(c,tp)
-	return c:IsRace(RACE_INSECT) and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,2,c,c:GetCode())
+function s.eqrfilter(c,code,e)
+	return c:IsCode(code) and c:IsCanBeEffectTarget(e)
 end
-function s.eqfilter2(c,code)
-	return  c:IsRace(RACE_INSECT) and c:IsCode(code)
+function s.eqfilter(c,e,tp)
+	return c:IsRace(RACE_INSECT) and c:IsCanBeEffectTarget(e) and
+	       Duel.IsExistingMatchingCard(s.eqrfilter,tp,LOCATION_GRAVE,0,2,c,c:GetCode(),e)
+end
+function s.rescon(sg,e,tp,mg)
+	return sg:GetClassCount(Card.GetCode)==1
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.eqfilter(chkc,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_GRAVE,0,1,nil,tp)
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	local ct=math.min((Duel.GetLocationCount(tp,LOCATION_SZONE)),3)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.eqfilter(chkc,e,tp) end
+	if chk==0 then
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
+		       Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and
+		       e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and
+		       Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
+	end
+	local ct=math.min(Duel.GetLocationCount(tp,LOCATION_SZONE),3)
+	local g=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectTarget(tp,s.eqfilter2,tp,LOCATION_GRAVE,0,1,ct-1,g:GetFirst(),g:GetFirst():GetCode())
-	g:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,#g,0,0)
+	local tg=aux.SelectUnselectGroup(g,e,tp,1,ct,s.rescon,1,tp,HINTMSG_EQUIP)
+	Duel.SetTargetCard(tg)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tg,#tg,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
-	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
-		local g=Duel.GetTargetCards(e)
-		if ft<#g then return end
-		Duel.BreakEffect()
-		for tc in aux.Next(g) do
-			Duel.Equip(tp,tc,c,false)
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
-			e1:SetCode(EFFECT_EQUIP_LIMIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e1:SetValue(s.eqlimit)
-			tc:RegisterEffect(e1)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-		end
+	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)==0 then return end
+	local tg=Duel.GetTargetCards(e)
+	local tgc=#tg
+	if tgc==0 or Duel.GetLocationCount(tp,LOCATION_SZONE)<tgc then return end
+	Duel.BreakEffect()
+	for tc in tg:Iter() do
+		Duel.Equip(tp,tc,c,false)
+		--Equip limit.
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
+		e1:SetCode(EFFECT_EQUIP_LIMIT)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetValue(s.eqlimit)
+		tc:RegisterEffect(e1)
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 	end
 end
 function s.eqlimit(e,c)
@@ -76,11 +84,13 @@ function s.desfilter(c,atk)
 	return c:IsFaceup() and c:IsAttackAbove(atk)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetEquipGroup():IsExists(s.tgfilter,1,nil,tp) end
+	local c=e:GetHandler()
+	local eqg=c:GetEquipGroup()
+	if chk==0 then return eqg:IsExists(s.tgfilter,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=e:GetHandler():GetEquipGroup():FilterSelect(tp,s.tgfilter,1,1,nil,tp)
-	e:SetLabel(g:GetFirst():GetTextAttack())
-	Duel.SendtoGrave(g,REASON_COST)
+	local tc=eqg:FilterSelect(tp,s.tgfilter,1,1,nil,tp):GetFirst()
+	e:SetLabel(tc:GetTextAttack())
+	Duel.SendtoGrave(tc,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

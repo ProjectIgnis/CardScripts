@@ -25,6 +25,9 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc and tc:CanAttack() and tc:IsRelateToBattle() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
-		Duel.Destroy(tc,REASON_EFFECT)
+		local tg=Group.CreateGroup()
+		tg:AddCard(tc)
+		tg=tg:AddMaximumCheck()
+		Duel.Destroy(tg,REASON_EFFECT)
 	end
 end

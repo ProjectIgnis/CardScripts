@@ -1,3 +1,4 @@
+--Ｅｍマジック・タクティシャン
 --Performage Magic Tactician
 local s,id=GetID()
 function s.initial_effect(c)
@@ -44,8 +45,8 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return tg and tg:IsExists(s.tgfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local lc=Duel.GetFieldCard(tp,LOCATION_SZONE,6)
-	local rc=Duel.GetFieldCard(tp,LOCATION_SZONE,7)
+	local lc=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
+	local rc=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
 	if chk==0 then return (not lc or lc:IsDestructable()) and (not rc or rc:IsDestructable()) end
 	local g=Group.FromCards(lc,rc)
 	Duel.Destroy(g,REASON_COST)

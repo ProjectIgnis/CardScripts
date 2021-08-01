@@ -24,7 +24,7 @@ end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local a=Duel.GetAttacker()
-		return a:IsAttackPos() and a:IsCanChangePositionRush()
+		return a:IsAttackPos() 
 	end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

@@ -69,8 +69,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	c:AddCounter(COUNTER_FW,getcount(tp))
 end
 function s.atkcon(e)
-	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end
 function s.atkval(e,c)
 	return c:GetCounter(COUNTER_FW)*2500
@@ -89,7 +88,10 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetAttacker()
-	if Duel.NegateActivation(ev) and c==tc and c:CanChainAttack(0) then
+	if Duel.NegateActivation(ev) and c==tc and c:CanChainAttack(0)
+		and c:IsRelateToEffect(e) then
+		Duel.ChainAttack()
+		--Make another attack in a row
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_DAMAGE_STEP_END)

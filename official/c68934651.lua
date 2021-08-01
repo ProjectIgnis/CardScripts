@@ -75,7 +75,7 @@ function s.atkval(e,c)
 	return c:GetCounter(COUNTER_FW)*2500
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
+	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,COUNTER_FW,1,REASON_COST) end
@@ -90,6 +90,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if Duel.NegateActivation(ev) and c==tc and c:CanChainAttack(0)
 		and c:IsRelateToEffect(e) then
+		--Needed for the end of the Damage Step
 		Duel.ChainAttack()
 		--Make another attack in a row
 		local e1=Effect.CreateEffect(c)

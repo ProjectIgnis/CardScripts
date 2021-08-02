@@ -3,17 +3,15 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCode(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--move
+	--Move to another MMZ
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -34,11 +32,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,e,tp)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
+		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SetTargetCard(sg)
-		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	else
+		e:SetCategory(0)
+		e:SetProperty(0)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -70,4 +71,3 @@ function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 	local nseq=math.log(s,2)
 	Duel.MoveSequence(tc,nseq)
 end
-

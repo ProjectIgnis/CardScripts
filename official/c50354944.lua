@@ -26,10 +26,11 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_GRAVE)
+	e3:SetHintTiming(TIMING_DAMAGE_STEP)
 	e3:SetCountLimit(1,id+1)
 	e3:SetCondition(s.atkcon)
 	e3:SetCost(aux.bfgcost)
@@ -70,7 +71,7 @@ function s.atkfilter(c)
 end
 	--Check if it is the battle phase
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsBattlePhase()
+	return Duel.IsBattlePhase() and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 	--Activation legality
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

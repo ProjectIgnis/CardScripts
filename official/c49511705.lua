@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--coin
+	--Apply effects based on the number of heads
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAINING)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.regcon)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
-	--coin result
+	--Treat all results as heads
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_QUICK_O)
@@ -81,6 +81,7 @@ end
 function s.coincon1(e,tp,eg,ep,ev,re,r,rp)
 	local ex,eg,et,cp,ct=Duel.GetOperationInfo(ev,CATEGORY_COIN)
 	if ex and ct>1 then
+		e:SetLabel(ct)
 		e:SetLabelObject(re)
 		return true
 	else return false end
@@ -89,15 +90,15 @@ function s.coinop1(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_TOSS_COIN_NEGATE)
-	e1:SetCountLimit(1)
+	e1:SetCountLimit(e:GetLabel())
 	e1:SetCondition(s.coincon2)
 	e1:SetOperation(s.coinop2)
-	e1:SetLabelObject(e:GetLabelObject())
+	e1:SetLabelObject(e)
 	e1:SetReset(RESET_CHAIN)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.coincon2(e,tp,eg,ep,ev,re,r,rp)
-	return re==e:GetLabelObject()
+	return re==e:GetLabelObject():GetLabelObject()
 end
 function s.coinop2(e,tp,eg,ep,ev,re,r,rp)
 	local res={Duel.GetCoinResult()}
@@ -106,5 +107,5 @@ function s.coinop2(e,tp,eg,ep,ev,re,r,rp)
 		res[i]=1
 	end
 	Duel.SetCoinResult(table.unpack(res))
+	e:GetLabelObject():SetLabelObject(nil)
 end
-

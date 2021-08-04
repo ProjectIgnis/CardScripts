@@ -93,12 +93,12 @@ function s.coinop1(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(e:GetLabel())
 	e1:SetCondition(s.coincon2)
 	e1:SetOperation(s.coinop2)
-	e1:SetLabelObject(e)
+	e1:SetLabelObject(e:GetLabelObject())
 	e1:SetReset(RESET_CHAIN)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.coincon2(e,tp,eg,ep,ev,re,r,rp)
-	return re==e:GetLabelObject():GetLabelObject()
+	return re==e:GetLabelObject()
 end
 function s.coinop2(e,tp,eg,ep,ev,re,r,rp)
 	local res={Duel.GetCoinResult()}
@@ -107,5 +107,4 @@ function s.coinop2(e,tp,eg,ep,ev,re,r,rp)
 		res[i]=1
 	end
 	Duel.SetCoinResult(table.unpack(res))
-	e:GetLabelObject():SetLabelObject(nil)
 end

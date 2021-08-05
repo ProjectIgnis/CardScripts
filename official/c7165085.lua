@@ -1,4 +1,5 @@
 --おとり人形
+--Bait Doll
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -79,7 +80,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				tg:ReleaseEffectRelation(te)
 			end
 		else
-			if Duel.Destroy(tc,REASON_EFFECT)~=0 then
+			if Duel.Destroy(tc,REASON_EFFECT)==0 then
 				Duel.SendtoGrave(tc,REASON_RULE)
 			end
 		end

@@ -10,7 +10,6 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetCondition(s.spcon)
 	e1:SetValue(s.spval)
 	c:RegisterEffect(e1)
 	--special summon a dark dragon-machine
@@ -28,21 +27,8 @@ s.listed_names={id}
 function s.filter(c)
 	return c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsFaceup()
 end
-function s.getzones(tp)
-	local zones=0
-	for tc in Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil):Iter() do
-		zones=zones|tc:GetFreeLinkedZone(tp)
-	end
-	return zones
-end
-function s.spcon(e,c)
-	if c==nil then return true end
-	local tp=e:GetHandlerPlayer()
-	local zone=s.getzones(tp)&0x1f
-	return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,true,POS_FACEUP,tp,zone)
-end
 function s.spval(e,c)
-	return 0,s.getzones(c:GetControler())&0x1f
+	return 0,Duel.GetMatchingGroup(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,nil):GetLinkedZone(c:GetControler())&0x1f
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end

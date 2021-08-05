@@ -15,7 +15,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return ep~=tp and tg and #tg==1 and and tg:GetFirst():GetControler()==e:GetHandlerPlayer() and tg:GetFirst():IsLocation(LOCATION_MZONE)
+	return ep~=tp and tg and #tg==1 and tg:GetFirst():GetControler()==e:GetHandlerPlayer() and tg:GetFirst():IsLocation(LOCATION_MZONE)
 		and re:IsActiveType(TYPE_EFFECT) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -22,9 +22,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local ct=Duel.GetFieldGroupCountRush(tp,0,LOCATION_ONFIELD)
 	Duel.ConfirmDecktop(p,1)
-	local g=Duel.GetDecktopGroup(p,ct)
+	local g=Duel.GetDecktopGroup(p,1)
 	if Duel.SelectOption(p,aux.Stringid(id,0),aux.Stringid(id,1))==1 then
 		Duel.MoveToDeckBottom(g)
 		Duel.SortDeckbottom(p,p,#g)

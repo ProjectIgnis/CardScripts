@@ -21,10 +21,10 @@ function s.filter(c)
 	return c:IsFaceup() and c:HasCounters() and c:IsDestructable()
 end
 function s.countcounters(c)
-    local count=0
-    for counter,amount in pairs(c:GetAllCounters()) do
-        count=count+amount
-    end
+	local count=0
+	for counter,amount in pairs(c:GetAllCounters()) do
+		count=count+amount
+	end
 	return count
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -36,10 +36,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,s.countcounters(g:GetFirst())*100)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-    local tc=Duel.GetFirstTarget()
-    if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
+	local tc=Duel.GetFirstTarget()
+	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
 	local lp=s.countcounters(tc)*100
-    if Duel.Destroy(tc,REASON_EFFECT)>0 then
-        Duel.Recover(tp,lp,REASON_EFFECT)
-    end
+	if Duel.Destroy(tc,REASON_EFFECT)>0 then
+		Duel.Recover(tp,lp,REASON_EFFECT)
+	end
 end

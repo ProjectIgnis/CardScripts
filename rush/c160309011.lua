@@ -29,7 +29,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local cg=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsAbleToDeckAsCost),tp,LOCATION_FZONE,0,1,1,nil)
 	if #cg<1 then return end
 	Duel.HintSelection(cg,true)
-	if Duel.SendtoDeck(cg,nil,SEQ_DECKBOTTOM,REASON_COST)>0 then
+	if Duel.SendtoDeck(cg,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		-- Effect
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Damage(p,d,REASON_EFFECT)

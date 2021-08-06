@@ -16,7 +16,6 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and r==REASON_RULE
 end
-
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 end
@@ -29,6 +28,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	--Requirement
+	Duel.PayLPCost(tp,1000)
+	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,2,nil)
 	if #g>0 then
@@ -45,7 +47,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
-end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_THUNDER) and c:IsLevelBelow(4)
 end

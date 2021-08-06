@@ -2,7 +2,7 @@
 --Draftannium the Mythic Sword Engineer
 local s,id=GetID()
 function s.initial_effect(c)
-	--Send to GY and destroy
+	--check top of deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -20,7 +20,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=1 end
 	Duel.SetTargetPlayer(tp)
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	Duel.ConfirmDecktop(p,1)
 	local g=Duel.GetDecktopGroup(p,1)

@@ -2,7 +2,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--remove
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -19,31 +19,17 @@ function s.initial_effect(c)
 		ge1:SetCode(EFFECT_MATERIAL_CHECK)
 		ge1:SetValue(s.valcheck)
 		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_SPSUMMON_SUCCESS)
-		ge2:SetOperation(s.checkop)
-		Duel.RegisterEffect(ge2,0)
 	end)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if g:IsExists(Card.IsType,1,nil,TYPE_NORMAL) then
-		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_LEAVE|RESET_TEMP_REMOVE),0,1)
-	end
-end
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	for tc in aux.Next(eg) do
-		local sts={SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ,SUMMON_TYPE_LINK,SUMMON_TYPE_RITUAL}
-		for _,st in ipairs(sts) do
-			if tc:IsSummonType(st) then
-				tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-			end
-		end
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:GetFlagEffect(id)==2
+	local summon_types={SUMMON_TYPE_RITUAL,SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ,SUMMON_TYPE_LINK}
+	return c:IsFaceup() and c:GetFlagEffect(id)>0 and c:IsSummonType(table.unpack(summon_types))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

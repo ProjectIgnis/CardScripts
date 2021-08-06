@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) and e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN) end
+	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) and e:GetHandler():IsStatus(STATUS_SUMMON_TURN) end
 end
 function s.spfilter(c,e,tp)
 	return c:GetLevel()==7 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)

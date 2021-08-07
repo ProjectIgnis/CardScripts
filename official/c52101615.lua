@@ -33,6 +33,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.fil(c,tp)
 	return c:IsCanBeFusionMaterial(nil,MATERIAL_FUSION) and c:IsHasEffect(EFFECT_EXTRA_RELEASE_NONSUM)
+		and c:IsReleasable()
+end
+function s.fil2(c)
+	return c:IsCanBeFusionMaterial(nil,MATERIAL_FUSION) and c:IsReleasable()
 end
 function s.fcheck(mg)
 	return function(tp,sg,fc)
@@ -43,16 +47,16 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local chkf=tp|FUSPROC_NOTFUSION
 	if chk==0 then
-		if e:GetLabel()~=1 then return false end
+		if e:GetLabel()~=1 or not c:IsReleasable() then return false end
 		e:SetLabel(0)
-		local mg=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_MZONE,0,nil,nil,MATERIAL_FUSION)
+		local mg=Duel.GetMatchingGroup(s.fil2,tp,LOCATION_MZONE,0,nil,nil,MATERIAL_FUSION)
 		local mg2=Duel.GetMatchingGroup(s.fil,tp,0,LOCATION_MZONE,nil,tp)
 		Fusion.CheckAdditional=s.fcheck(mg2)
 		local res=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg+mg2,c,chkf)
 		Fusion.CheckAdditional=nil
 		return res
 	end
-	local mg=Duel.GetMatchingGroup(Card.IsCanBeFusionMaterial,tp,LOCATION_MZONE,0,nil,nil,MATERIAL_FUSION)
+	local mg=Duel.GetMatchingGroup(s.fil2,tp,LOCATION_MZONE,0,nil)
 	local mg2=Duel.GetMatchingGroup(s.fil,tp,0,LOCATION_MZONE,nil,tp)
 	Fusion.CheckAdditional=s.fcheck(mg2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

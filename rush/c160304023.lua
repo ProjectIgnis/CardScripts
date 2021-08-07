@@ -34,7 +34,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local hg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-		if #hg>0 then
+		if #hg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.SendtoHand(hg,nil,REASON_EFFECT)
 		end
 	end

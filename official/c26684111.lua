@@ -17,13 +17,13 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EFFECT_DESTROY_REPLACE)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetTarget(s.reptg)
 	e2:SetValue(s.repval)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x44,0x269}
+s.listed_series={0x44,0x171}
 s.listed_names={CARD_SANCTUARY_SKY}
 function s.acfilter(c,tp)
 	return c:IsCode(CARD_SANCTUARY_SKY) and c:GetActivateEffect()
@@ -39,7 +39,7 @@ function s.acthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.lpfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x44) or c:IsSetCard(0x269))
+	return c:IsFaceup() and (c:IsSetCard(0x44) or c:IsSetCard(0x171))
 end
 function s.acthop(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.IsExistingMatchingCard(s.acfilter,tp,LOCATION_DECK,0,1,nil,tp)

@@ -15,18 +15,10 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local check=true
 	Duel.Hint(HINT_MESSAGE,1-tp,aux.Stringid(4006,7))
-	local h=Duel.GetDecktopGroup(1-tp,1)
-	local tc=h:GetFirst()
-	Duel.Draw(1-tp,1,REASON_EFFECT)
-	if tc then
+	if Duel.Draw(1-tp,1,REASON_EFFECT)==1 then
+		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
-		local ct=1
-		while ct<=4095 and check==true do
-			if tc:IsSetCard(ct) then
-				check=false
-			end
-			ct=ct+1
-		end
+		check=#{tc:GetSetCard()}==0
 		Duel.ShuffleHand(1-tp)
 	end
 	Duel.BreakEffect()

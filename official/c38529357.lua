@@ -21,19 +21,19 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCode(EVENT_REMOVE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x44,0x269}
+s.listed_series={0x44,0x171}
 s.listed_names={CARD_SANCTUARY_SKY}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.spfilter(c,e,tp,sanc)
-	return ((c:IsSetCard(0x44) and not c:IsCode(id)) or (sanc and c:IsSetCard(0x269))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return ((c:IsSetCard(0x44) and not c:IsCode(id)) or (sanc and c:IsSetCard(0x171))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

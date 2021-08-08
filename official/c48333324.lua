@@ -1,6 +1,5 @@
 --ＲＵＭ－ヌメロン・フォース
 --Rank-Up-Magic Numeron Force
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x1048}
-
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
@@ -54,12 +52,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
 		local g1=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,sc)
-		g1:RemoveCard(c)
-		if #g1>0 then
-			Duel.BreakEffect()
-		end
+		if c:IsStatus(STATUS_LEAVE_CONFIRMED) then g1:RemoveCard(c) end
+		if #g1==0 then return end
+		Duel.BreakEffect()
 		local ng=g1:Filter(s.disfilter,nil)
-		local nc=ng:GetFirst()
 		for nc in aux.Next(ng) do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

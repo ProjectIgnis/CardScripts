@@ -58,7 +58,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter(c,att)
-	return c:GetFlagEffect(id)~=0 and c:IsAttribute(att)
+	return c:GetFlagEffect(id)>0 and c:IsAttribute(att)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -75,6 +75,8 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local dt=e:GetLabelObject()
+	local eqg=e:GetHandler():GetEquipGroup()
+	if #eqg==0 or not eqg:IsExists(s.desfilter,1,nil,dt:GetAttribute()) then return end
 	if dt:IsRelateToBattle() then
 		Duel.Destroy(dt,REASON_EFFECT)
 	end

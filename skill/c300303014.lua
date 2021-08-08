@@ -120,7 +120,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (s[tp]>0 or s[1-tp]>0)  and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		if tc then
 			Duel.SendtoHand(tc,tp,REASON_EFFECT)
@@ -132,7 +132,7 @@ function s.flipcon2(e,tp,eg,ep,ev,re,r,rp)
 	return (s[tp]>0 or s[1-tp]>0) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.GetFlagEffect(tp,id+100)==0
 end
 function s.flipop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE+PHASE_END,0,1)
 		Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 		Duel.Hint(HINT_CARD,tp,id)

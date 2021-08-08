@@ -1,5 +1,5 @@
 --精霊術の使い手
---Masters of the Spiritual Arts
+--Spirit Charmers
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -49,6 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,c1)
 		if c2:GetFirst():IsType(TYPE_MONSTER) then
 			Duel.SpecialSummon(c2,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
+			Duel.ConfirmCards(1-tp,c2)
 		else
 			Duel.SSet(tp,c2)
 		end

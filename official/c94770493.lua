@@ -1,6 +1,5 @@
 --ダブル・アップ・チャンス
 --Double or Nothing!
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Allow a monster, whose attack was negated, to make a second attack
@@ -23,13 +22,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:GetFlagEffect(id)==0 then
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-		--Make a second attack
+		--Can make another attack
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(3201)
-		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
-		e1:SetValue(1)
+		e1:SetValue(tc:GetAttackAnnouncedCount())
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		--Double its ATK

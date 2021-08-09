@@ -1,5 +1,5 @@
 --スプリガンズ・シップ エクスブロウラー
---Sprigguns Ship Exblower
+--Springans Ship - Exblowrer
 --Scripted by DyXel
 
 local s,id=GetID()
@@ -99,10 +99,9 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=groupfrombit(e:GetLabel()>>16,1-tp)
-	if #g==0 then return end
-	local sg=g:Select(tp,1,c:GetOverlayCount(),false)
-	local sgc=#sg
-	if c:RemoveOverlayCard(tp,sgc,sgc,REASON_EFFECT) then
+	if #g==0 or c:GetOverlayCount()==0 or not c:RemoveOverlayCard(tp,1,#g,REASON_EFFECT) then return end
+	local sg=g:Select(tp,1,#Duel.GetOperatedGroup(),false)
+	if #sg>0 then
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end

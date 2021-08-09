@@ -62,7 +62,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerCanDraw(tp,1) then ty=ty | TYPE_SPELL end
 	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,nil) then ty=ty | TYPE_TRAP end
 	if ty==0 then return end
-	local sg=aux.SelectUnselectGroup(g:Filter(Card.IsType,nil,ty),e,tp,1,3,s.rescon,1,tp,HINTMSG_XMATERIAL)
+	local sg=aux.SelectUnselectGroup(g:Filter(Card.IsType,nil,ty),e,tp,1,3,s.rescon,1,tp,HINTMSG_REMOVEXYZ)
 	local lb=0
 	for tc in aux.Next(sg) do
 		lb=lb | tc:GetType()

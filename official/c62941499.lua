@@ -100,6 +100,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=groupfrombit(e:GetLabel()>>16,1-tp)
 	if #g==0 or c:GetOverlayCount()==0 or not c:RemoveOverlayCard(tp,1,#g,REASON_EFFECT) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local sg=g:Select(tp,1,#Duel.GetOperatedGroup(),false)
 	if #sg>0 then
 		Duel.Destroy(sg,REASON_EFFECT)

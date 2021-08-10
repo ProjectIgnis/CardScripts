@@ -39,7 +39,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon(fg),1,tp,HINTMSG_REMOVE,s.rescon(fg))
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	Duel.SetTargetParam(#rg)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,fg:Filter(Card.IsLevel,rg,#rg),1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

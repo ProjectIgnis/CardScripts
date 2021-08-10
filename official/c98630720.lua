@@ -77,6 +77,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc2=g:GetFirst()
 	if tc2==tc1 then tc2=g:GetNext() end
 	if tc1 and tc1:IsFaceup() and tc1:IsRelateToEffect(e) and not tc1:IsDisabled() then
+		Duel.NegateRelatedChain(tc1,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -85,6 +86,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
+		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc1:RegisterEffect(e2)
 		if tc1:IsImmuneToEffect(e1) or tc1:IsImmuneToEffect(e2) or not tc2 or not tc2:IsRelateToEffect(e) then return end

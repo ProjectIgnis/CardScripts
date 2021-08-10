@@ -27,31 +27,25 @@ end
 function s.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c)
 end
-function s.tfilter(c,ct)
-	return c:IsFaceup() and c:GetLevel()==ct
-end
 function s.rescon(fg)
 	return function(sg,e,tp,mg)
 		return fg:IsExists(Card.IsLevel,1,sg,#sg),not fg:IsExists(Card.IsLevelAbove,1,sg,#sg)
 	end
 end
-function s.lvfilter(c,ct)
-	return c:IsFaceup() and c:IsLevelBelow(ct)
-end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	local fg=Duel.GetMatchingGroup(s.lvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,#cg)
+	local fg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelBelow,#cg),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if chk==0 then return aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon(fg),0) end
 	local rg=aux.SelectUnselectGroup(cg,e,tp,nil,nil,s.rescon(fg),1,tp,HINTMSG_REMOVE,s.rescon(fg))
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	Duel.SetTargetParam(#rg)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	if lv==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,s.tfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,lv)
+	local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsLevel,lv),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 end

@@ -1,4 +1,5 @@
 --罪鍵の法－シン・キー・ロウ
+--Corrupted Keys
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={67949764}
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x87,TYPES_TOKEN,-2,0,1,RACE_FIEND,ATTRIBUTE_DARK)

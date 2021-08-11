@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tkop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={TOKEN_WORLD_LEGACY}
 s.listed_series={0x11b,0xfe}
 function s.tgfilter(c)
 	return (c:IsSetCard(0x11b) or c:IsSetCard(0xfe)) and c:IsAbleToGrave()

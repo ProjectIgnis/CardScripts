@@ -116,7 +116,7 @@ end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local att,mat=0,e:GetHandler():GetMaterial()
 	if e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) and mat:GetClassCount(Card.GetAttribute)>1 then
-		for tc in ~Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER) do
+		for tc in Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER):Iter() do
 			att=att|tc:GetAttribute()
 		end
 		return att>0 and eg:IsExists(s.drfilter,1,nil,tp,att)

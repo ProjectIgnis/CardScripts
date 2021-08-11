@@ -23,7 +23,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local dg=Group.CreateGroup()
 	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsType,TYPE_EQUIP),tp,LOCATION_SZONE,LOCATION_SZONE,nil)
-	for ec in ~g do
+	for ec in g:Iter() do
 		if tc:IsFaceup() and tc:IsRelateToEffect(e) and ec:CheckEquipTarget(tc) then
 			Duel.Equip(tp,ec,tc,false,false)
 		else

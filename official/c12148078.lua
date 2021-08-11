@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=g:SelectWithSumEqual(tp,Card.GetLevel,dc,1,ft)
 		if #sg>0 then
-			for tc in ~sg do
+			for tc in sg:Iter() do
 				if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 					--Negate their effects
 					local e1=Effect.CreateEffect(e:GetHandler())

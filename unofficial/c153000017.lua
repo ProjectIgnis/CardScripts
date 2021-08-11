@@ -97,7 +97,7 @@ end
 function s.repRuleOp(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.rdfilter,nil)
 	if #g==0 then return end
-	for tc in ~g do
+	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(e:GetOwner())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -122,7 +122,7 @@ end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil) end
 	local g=eg:Filter(s.repfilter,nil)
-	for tc in ~g do
+	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(e:GetOwner())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

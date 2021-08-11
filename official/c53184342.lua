@@ -123,7 +123,7 @@ function s.eqpop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			eqg=tg
 		end
-		for tc in ~eqg do
+		for tc in eqg:Iter() do
 			if Duel.Equip(tp,tc,c,true,true) then
 				--Equip limit
 				local e1=Effect.CreateEffect(c)

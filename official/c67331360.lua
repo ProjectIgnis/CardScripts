@@ -78,7 +78,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		or not aux.SelectUnselectGroup(sg,e,tp,gc,gc,rescon,0) then return end
 	local ssg=aux.SelectUnselectGroup(sg,e,tp,gc,gc,rescon,1,tp,HINTMSG_SPSUMMON)
 	if #g==#ssg then
-		for sc in ~ssg do
+		for sc in ssg:Iter() do
 			-- Special summon as Level 6 DARK monster
 			if Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
 				local e1=Effect.CreateEffect(c)

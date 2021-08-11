@@ -41,7 +41,7 @@ function Card.AnnounceAnotherAttribute(c,tp)
 end
 function Auxiliary.AnnounceAnotherAttribute(g,tp)
 	local att=0
-	for tc in ~g do
+	for tc in g:Iter() do
 		att=att|tc:GetAttribute()
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
@@ -58,7 +58,7 @@ function Card.AnnounceAnotherRace(c,tp)
 end
 function Auxiliary.AnnounceAnotherRace(g,tp)
 	local race=0
-	for tc in ~g do
+	for tc in g:Iter() do
 		race=race|tc:GetRace()
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)

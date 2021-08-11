@@ -37,7 +37,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		g:AddCard(dc)
 	end
 	if #g==0 then return end
-	for tc in ~g do
+	for tc in g:Iter() do
 		--Decrease ATK
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

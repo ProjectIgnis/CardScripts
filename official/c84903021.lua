@@ -51,7 +51,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsSetCard,0x161),tp,LOCATION_MZONE,0,nil)
 		if #g==0 then return end
 		Duel.BreakEffect()
-		for tc in ~g do
+		for tc in g:Iter() do
 			--Increase ATK
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)

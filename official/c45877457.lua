@@ -49,7 +49,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local mat=c:GetMaterial()
 	if re:IsActiveType(TYPE_MONSTER) and rp==1-tp and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 		and c:IsSummonType(SUMMON_TYPE_RITUAL) and mat:GetClassCount(Card.GetAttribute)>1 then
-		for tc in ~Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER) do
+		for tc in Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_MONSTER):Iter() do
 			att=att|tc:GetAttribute()
 		end
 		return rc:GetAttribute()&att>0

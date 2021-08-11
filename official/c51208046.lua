@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
 end
-s.listed_names={51208047}
+s.listed_names={TOKEN_TRICKSTAR}
 s.listed_series={0xfb}
 	--Check for anything but "Trickstar" monsters
 function s.counterfilter(c)

@@ -41,6 +41,7 @@ function s.initial_effect(c)
 			end)
 		end)
 end
+s.listed_names={TOKEN_IGNISTER}
 function s.filter(c,e,tp)
 	local attr=c:GetAttribute()
 	if not (c:IsFaceup() and c:IsRace(RACE_CYBERSE) and c:GetBaseAttack()==2300 and s.attr_list[tp]&attr==0) then return false end
@@ -157,7 +158,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,11738490,0x135,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_IGNISTER,0x135,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
@@ -166,8 +167,8 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	s.operation(c,tp,e:GetLabel())
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,11738490,0x135,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) then
-		local token=Duel.CreateToken(tp,11738490)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_IGNISTER,0x135,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) then
+		local token=Duel.CreateToken(tp,TOKEN_IGNISTER)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

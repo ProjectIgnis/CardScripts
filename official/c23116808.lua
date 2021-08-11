@@ -1,4 +1,5 @@
 --怨念の魂 業火
+--Goka, the Pyre of Malice
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -43,6 +44,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={TOKEN_FIREBALL}
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE)
 end
@@ -77,8 +79,8 @@ function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,100,100,1,RACE_PYRO,ATTRIBUTE_FIRE) then
-		local token=Duel.CreateToken(tp,id+1)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_FIREBALL,0,TYPES_TOKEN,100,100,1,RACE_PYRO,ATTRIBUTE_FIRE) then
+		local token=Duel.CreateToken(tp,TOKEN_FIREBALL)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end

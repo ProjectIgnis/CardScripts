@@ -51,6 +51,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={90884404}
 function s.sprfilter(c)
 	return c:IsFaceup() and c:GetLevel()>7 and c:IsAbleToGraveAsCost()
 end

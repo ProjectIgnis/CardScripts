@@ -1,26 +1,23 @@
 --ビビット騎士
+--Vivid Knight
 local s,id=GetID()
 function s.initial_effect(c)
-	--change target
+	--Banish temporarily and Special Summon this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_HAND)
+	e1:SetLabel(0)
 	e1:SetCondition(s.tgcon1)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	local e2=e1:Clone()
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e2:SetRange(LOCATION_HAND)
+	e2:SetLabel(1)
 	e2:SetCondition(s.tgcon2)
-	e2:SetTarget(s.tgtg)
-	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
 function s.tgcon1(e,tp,eg,ep,ev,re,r,rp)
@@ -33,23 +30,27 @@ function s.tgcon1(e,tp,eg,ep,ev,re,r,rp)
 		and tc:IsAttribute(ATTRIBUTE_LIGHT) and tc:IsRace(RACE_BEASTWARRIOR)
 end
 function s.tgcon2(e,tp,eg,ep,ev,re,r,rp)
-	if tp==Duel.GetTurnPlayer() then return false end
+	if Duel.IsTurnPlayer(tp) then return false end
 	local tc=Duel.GetAttackTarget()
 	e:SetLabelObject(tc)
 	return tc and tc:IsFaceup() and tc:IsAttribute(ATTRIBUTE_LIGHT) and tc:IsRace(RACE_BEASTWARRIOR)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
-	if chk==0 then return tc:IsAbleToRemove() and Duel.GetLocationCount(tp,LOCATION_MZONE)>=0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	local label=e:GetLabel()
+	if chk==0 then return tc:IsAbleToRemove() and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or c:IsInMainMZone())
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and (label==0 or (label==1 and not c:IsStatus(STATUS_CHAINING))) end
 	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,LOCATION_HAND)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsControler(tp) and Duel.Remove(tc,tc:GetPosition(),REASON_EFFECT+REASON_TEMPORARY)~=0 then
+	if tc:IsRelateToEffect(e) and tc:IsControler(tp) and Duel.Remove(tc,tc:GetPosition(),REASON_EFFECT+REASON_TEMPORARY)>0 then
+		--Return it during your next Standby Phase
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)

@@ -1,5 +1,5 @@
 --トリックスター・フェス
---Trickstar Fest
+--Trickstar Festival
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SUMMON,s.counterfilter)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_names={51208047}
 s.listed_series={0xfb}
 function s.counterfilter(c)
 	return c:IsSetCard(0xfb)

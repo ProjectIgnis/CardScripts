@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={TOKEN_XIANGJIAN}
 s.listed_series={0x16d}
 function s.tkcostfilter(c)
 	return (c:IsSetCard(0x16d) or (c:IsMonster() and c:IsRace(RACE_WYRM))) and not c:IsPublic()

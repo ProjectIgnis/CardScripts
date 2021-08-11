@@ -58,6 +58,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetCode(EVENT_SUMMON_SUCCESS)
 			e2:SetOperation(s.sumsuc)
+			e2:SetLabel(tp)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 			tc:RegisterEffect(e2,true)
 			Duel.Summon(tp,tc,true,nil,1)
@@ -68,13 +69,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetCode(EVENT_MSET)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 			e3:SetOperation(s.sumsuc)
+			e3:SetLabel(tp)
 			tc:RegisterEffect(e3,true)
 			Duel.MSet(tp,tc,true,nil,1)
 		end
 	end
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():GetMaterial():IsExists(Card.IsPreviousControler,1,nil,1-tp) then
+	local player=e:GetLabel()
+	if e:GetHandler():GetMaterial():IsExists(Card.IsPreviousControler,1,nil,1-player) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetType(EFFECT_TYPE_FIELD)
@@ -84,8 +87,8 @@ function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.accon)
 		e1:SetValue(s.aclimit)
 		e1:SetReset(RESET_PHASE+PHASE_END,2)
-		Duel.RegisterEffect(e1,tp)
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,2)
+		Duel.RegisterEffect(e1,player)
+		Duel.RegisterFlagEffect(player,id,RESET_PHASE+PHASE_END,0,2)
 	end
 end
 function s.accon(e)

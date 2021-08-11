@@ -60,8 +60,8 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.splimit(target)
-	return function (e,c,tp,sumtp,sumpos)
-		return (not target or target(e,c,tp,sumtp,sumpos)) and not zexal[c]
+	return function (...)
+		return (not target or target(...)) and not zexal[c]
 	end
 end
 local effmap={}

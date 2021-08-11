@@ -41,24 +41,17 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetFirst():GetSummonPlayer()==tp and eg:GetFirst():IsSummonType(SUMMON_TYPE_LINK)
-end
-function s.getLinkedZones(g,p)
-	local zones=0
-	for c in aux.Next(g) do
-		zones=zones|(c:GetLinkedZone(p)&0x1f)
-	end
-	return zones
+	return rp==tp and eg:IsExists(Card.IsSummonType,1,nil,SUMMON_TYPE_LINK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local zones=s.getLinkedZones(eg,tp)
+	local zones=eg:Filter(Card.IsSummonType,nil,SUMMON_TYPE_LINK):GetLinkedZone(tp)&0x1f
 	if chk==0 then return zones~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zones) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,LOCATION_HAND)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local zones=s.getLinkedZones(eg,tp)
+	local zones=eg:Filter(Card.IsSummonType,nil,SUMMON_TYPE_LINK):GetLinkedZone(tp)&0x1f
 	if c:IsRelateToEffect(e) and zones~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zones) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zones)
 	end

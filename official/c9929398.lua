@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
+s.listed_names={9929399}
 s.listed_series={0x33}
 
 function s.spcon(e,c)

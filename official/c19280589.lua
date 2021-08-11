@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={19280590}
 	--Stats for "Tellus Wing Token"
 function s.cansstk(tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and

@@ -168,9 +168,7 @@ function Link.Target(f,minc,maxc,specialchk)
 					local filters={}
 					Link.CheckRecursive2(sg:GetFirst(),tp,Group.CreateGroup(),sg,mg+tg,mg+tg,c,min,max,f,specialchk,mg,emt,filters)
 					sg:KeepAlive()
-					local reteff=Effect.GlobalEffect()
-					reteff:SetTarget(function()return sg,filters,emt end)
-					e:SetLabelObject(reteff)
+					e:SetLabelObject({sg,filters,emt})
 					return true
 				else 
 					aux.DeleteExtraMaterialGroups(emt)
@@ -180,8 +178,7 @@ function Link.Target(f,minc,maxc,specialchk)
 end
 function Link.Operation(f,minc,maxc,specialchk)
 	return	function(e,tp,eg,ep,ev,re,r,rp,c,must,g,min,max)
-				local g,filt,emt=e:GetLabelObject():GetTarget()()
-				e:GetLabelObject():Reset()
+				local g,filt,emt=table.unpack(e:GetLabelObject())
 				for _,ex in ipairs(filt) do
 					if ex[3]:GetValue() then
 						ex[3]:GetValue()(1,SUMMON_TYPE_LINK,ex[3],ex[1]&g,c,tp)

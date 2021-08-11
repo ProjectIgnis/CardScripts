@@ -39,14 +39,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x101b}
+s.listed_names={TOKEN_MECHA_PHANTOM_BEAST}
 function s.hdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
 function s.hdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsCode,1,false,nil,nil,31533705)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsCode,1,false,nil,nil,TOKEN_MECHA_PHANTOM_BEAST)
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsCode,1,ct,false,nil,nil,31533705)
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsCode,1,ct,false,nil,nil,TOKEN_MECHA_PHANTOM_BEAST)
 	e:SetLabel(#g)
 	Duel.Release(g,REASON_COST)
 end

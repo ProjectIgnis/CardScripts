@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SUMMON,s.counterfilter)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_names={43140792}
 function s.counterfilter(c)
 	return not c:IsLevel(3) and not c:IsLevel(4)
 end

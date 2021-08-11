@@ -1,4 +1,5 @@
 --トリッキーズ・マジック4
+--Tricky Spell 4
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={14778250}
+s.listed_names={14778250,75622825}
 function s.cfilter(c,ft,ct)
 	return c:IsFaceup() and c:IsCode(14778250) and c:IsAbleToGraveAsCost() and (ft>=ct or c:GetSequence()<5)
 end

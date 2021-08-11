@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x10b}
-s.listed_names={94365540}
+s.listed_names={94365540,75119041}
 function s.cfilter(c)
 	return c:IsSetCard(0x10b) and c:IsType(TYPE_MONSTER)
 end

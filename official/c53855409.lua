@@ -1,4 +1,5 @@
 --ドッペル・ウォリアー
+--Doppelwarrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -23,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.top)
 	c:RegisterEffect(e2)
 end
+s.listed_names={53855410}
 function s.gfilter(c,tp)
 	return c:GetPreviousLocation()==LOCATION_GRAVE and c:IsPreviousControler(tp)
 end

@@ -1,4 +1,5 @@
 --BF－隠れ蓑のスチーム
+--Blackwing - Steam the Cloak
 local s,id=GetID()
 function s.initial_effect(c)
 	--token
@@ -30,6 +31,7 @@ function s.initial_effect(c)
 	e4:SetValue(aux.TargetBoolFunction(Card.IsSetCard,0x33))
 	c:RegisterEffect(e4)
 end
+s.listed_names={9047461}
 s.listed_series={0x33}
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

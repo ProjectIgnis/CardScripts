@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.stop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={9047461}
+s.listed_names={63184228}
 s.listed_series={0x66,0x1017,0xa3}
 function s.spcfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)

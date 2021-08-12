@@ -1,4 +1,5 @@
 --Kozmo－ドッグファイター
+--Kozmo DOG Fighter
 local s,id=GetID()
 function s.initial_effect(c)
 	--token
@@ -25,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={29491335}
 s.listed_series={0xd2}
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

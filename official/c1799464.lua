@@ -16,6 +16,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tkop)
 	c:RegisterEffect(e1)
 end
+	--Lists "Moult Token" in its text
+s.listed_names={1799465}
 	--Activation legality
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

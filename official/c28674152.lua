@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tkop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={28674153}
 s.counter_list={0x37}
 s.listed_series={0xd3}
 function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)

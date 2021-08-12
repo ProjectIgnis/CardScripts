@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
 end
+s.listed_names={23837055}
 s.listed_series={0x163}
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_REPTILE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

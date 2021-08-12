@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.nmop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={44586427}
 function s.tgfilter(c)
 	return c:IsRace(RACE_THUNDER) and c:IsAbleToGrave()
 end

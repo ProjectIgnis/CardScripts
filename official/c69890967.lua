@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={69890968}
 function s.rfilter(c,tp)
 	return c:IsRace(RACE_FIEND) and (c:IsControler(tp) or c:IsFaceup())
 end

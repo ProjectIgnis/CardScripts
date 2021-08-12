@@ -1,4 +1,5 @@
 --ジュラック・スタウリコ
+--Jurrac Stauriko
 local s,id=GetID()
 function s.initial_effect(c)
 	--token
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={48411997}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,tp,0)

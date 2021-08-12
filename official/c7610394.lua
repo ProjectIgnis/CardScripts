@@ -1,5 +1,5 @@
 --眷現の呪眼
---Evil Eye Manifestation
+--Evil Eye Reemergence
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_EVIL_EYE_SELENE}
+s.listed_names={CARD_EVIL_EYE_SELENE,7610395}
 s.listed_series={0x129}
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

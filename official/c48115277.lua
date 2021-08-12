@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={48115278}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsTurnPlayer(tp) then
 		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,0)

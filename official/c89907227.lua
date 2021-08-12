@@ -1,5 +1,5 @@
 --白闘気双頭神龍 
---White Aura Biphamet
+--White Aura Bihamut
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={89907228}
 s.synchro_tuner_required=1
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

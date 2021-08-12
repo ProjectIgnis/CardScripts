@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
-s.listed_names={48068379}
+s.listed_names={TOKEN_LINK}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsLinkAbove(2) and c:IsType(TYPE_LINK,lc,sumtype,tp)
 end
@@ -34,7 +34,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,48068379,0,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_LINK,0,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
@@ -44,12 +44,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetTargetRange(0xff,0xff)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,48068379))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,TOKEN_LINK))
 	e1:SetValue(s.lklimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),e:GetLabel())
-	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,48068379,0,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) then return end
+	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_LINK,0,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_LIGHT) then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local ct=ft
 	if ft>1 then
@@ -61,7 +61,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local c=e:GetHandler()
 	for i=1,ct do
-		local token=Duel.CreateToken(tp,48068379)
+		local token=Duel.CreateToken(tp,TOKEN_LINK)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 	end
 	Duel.SpecialSummonComplete()

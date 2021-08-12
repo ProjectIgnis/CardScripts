@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.hspop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={64382840}
 function s.cfilter(c,tp)
 	return c:IsPreviousControler(1-tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 		and c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_TOKEN)
@@ -49,12 +50,10 @@ function s.hspcon(e,c)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectReleaseGroup(tp,Card.IsCode,1,1,false,true,true,c,nil,nil,false,nil,id+1)
-	if g then
-		g:KeepAlive()
-		e:SetLabelObject(g)
+	if not g then return false end
+	g:KeepAlive()
+	e:SetLabelObject(g)
 	return true
-	end
-	return false
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()

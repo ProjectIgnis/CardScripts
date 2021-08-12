@@ -1,4 +1,5 @@
 --レクンガ
+--Lekunga
 local s,id=GetID()
 function s.initial_effect(c)
 	--token
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={62543394}
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

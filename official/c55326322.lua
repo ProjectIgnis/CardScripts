@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tkop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={55326323}
 s.listed_series={0xea}
 
 function s.spfilter(c,e,tp)

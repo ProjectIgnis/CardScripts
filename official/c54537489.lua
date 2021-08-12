@@ -1,4 +1,5 @@
 --タツノオトシオヤ
+--Mare Mare
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon condition
@@ -19,6 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={54537489}
 function s.splimit(e,se,sp,st)
 	return se:IsActiveType(TYPE_MONSTER) and se:GetHandler():IsRace(RACE_WYRM)
 end

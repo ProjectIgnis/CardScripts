@@ -1,5 +1,5 @@
 --隅烏賊
---Sumi'ika
+--Squirt Squid
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.tgval)
 	c:RegisterEffect(e2)
 end
+s.listed_names={65500516}
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local at=Duel.GetAttacker()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and

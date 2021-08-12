@@ -1,4 +1,5 @@
 --オイスターマイスター
+--Oyster Meister
 local s,id=GetID()
 function s.initial_effect(c)
 	--token
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={83239740}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetPreviousLocation()&LOCATION_ONFIELD>0
 		and not (r&REASON_BATTLE+REASON_DESTROY==REASON_BATTLE+REASON_DESTROY)

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={11050416}
+s.listed_names={TOKEN_HIPPO}
 
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e1:SetTargetRange(0,LOCATION_MZONE)
-	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsCode,11050416)))
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsCode,TOKEN_HIPPO)))
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

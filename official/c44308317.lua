@@ -1,6 +1,6 @@
 --氷結界の依巫
---Vessel Miko of the Ice Barrier
---LUA by Kohana Sonogami
+--Speaker for the Ice Barriers
+--Scripted by Kohana Sonogami
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tokenop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={44308318}
 s.listed_series={0x2f}
 
 function s.changecon(e)

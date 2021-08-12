@@ -1,4 +1,5 @@
 --インセクト女王
+--Insect Queen
 local s,id=GetID()
 function s.initial_effect(c)
 	--attack cost
@@ -35,6 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={TOKEN_INSECT_MONSTER}
 function s.atcost(e,c,tp)
 	return Duel.CheckReleaseGroup(tp,nil,1,e:GetHandler())
 end
@@ -66,8 +68,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,100,100,1,RACE_INSECT,ATTRIBUTE_EARTH) then
-		local token=Duel.CreateToken(tp,id+1)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_INSECT_MONSTER,0,TYPES_TOKEN,100,100,1,RACE_INSECT,ATTRIBUTE_EARTH) then
+		local token=Duel.CreateToken(tp,TOKEN_INSECT_MONSTER)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 	end
 end

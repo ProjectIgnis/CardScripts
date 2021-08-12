@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tkop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={49808197}
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_SUMMON and e:GetHandler():GetReasonCard():IsAttribute(ATTRIBUTE_DARK)
 end

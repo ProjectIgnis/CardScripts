@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tkop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={22953212}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsType,1,nil,TYPE_TOKEN,lc,sumtype,tp)
 end

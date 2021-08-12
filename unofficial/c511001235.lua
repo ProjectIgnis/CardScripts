@@ -1,3 +1,4 @@
+--大統龍 ブレーンドラゴン
 --Brain Dragon
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,15 +23,17 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,0,tp,2)
 end
-function s.drop(e,tp,eg,ep,ev,re,r,rp,c)
+function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)
-	Duel.BreakEffect()
-	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(p,Card.IsAbleToDeck,p,LOCATION_HAND,0,2,2,nil)
-	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
-	Duel.SortDecktop(p,p,2)
+	if Duel.Draw(p,d,REASON_EFFECT)==2 then
+		local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,LOCATION_HAND,0,nil)
+		if #g==0 then return end
+		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
+		local sg=g:Select(p,2,2,nil)
+		Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)
+		Duel.SortDeckbottom(p,p,2)
+	end
 end

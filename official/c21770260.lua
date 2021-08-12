@@ -39,8 +39,9 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
 	c:RegisterEffect(e5)
 end
+s.listed_names={TOKEN_SLIME}
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:GetCode()~=21770261
+	return not c:IsCode(TOKEN_SLIME)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp
@@ -52,8 +53,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,21770261,0x54b,TYPES_TOKEN,500,500,1,RACE_AQUA,ATTRIBUTE_WATER) then
-		local token=Duel.CreateToken(tp,id+1)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_SLIME,0x54b,TYPES_TOKEN,500,500,1,RACE_AQUA,ATTRIBUTE_WATER) then
+		local token=Duel.CreateToken(tp,TOKEN_SLIME)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 	end
 end

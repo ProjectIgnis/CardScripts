@@ -1,4 +1,5 @@
 --極星天ヴァルキュリア
+--Valkyrie of the Nordic Ascendant
 local s,id=GetID()
 function s.initial_effect(c)
 	--token
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={40844553}
 s.listed_series={0x42}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)<=1

@@ -1,4 +1,5 @@
 --ロストワールド
+--Lost World
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -59,6 +60,7 @@ function s.initial_effect(c)
 	g:KeepAlive()
 	e7:SetLabelObject(g)
 end
+s.listed_names={17228909}
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(aux.FilterFaceupFunction(Card.IsRace,RACE_DINOSAUR),1,nil,tp)
 end

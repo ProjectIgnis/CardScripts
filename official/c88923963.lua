@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
 end
+s.listed_names={88923964}
 s.listed_series={0x107a,0x207a}
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSetCard,1,nil,0x207a)

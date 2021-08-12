@@ -30,6 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tkop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={101105190}
 s.listed_series={0x26f}
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x26f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

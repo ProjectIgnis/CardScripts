@@ -68,7 +68,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCondition(s.descon)
 		e3:SetOperation(s.desop)
 		Duel.RegisterEffect(e3,tp)
-		tc:CreateEffectRelation(e3)
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		--Cannot attack
 		local e4=Effect.CreateEffect(c)
 		e4:SetDescription(3206)
@@ -83,12 +83,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc and tc:IsRelateToEffect(e) then
-		return true
-	else
-		e:Reset()
-		return false
-	end
+	if tc and tc:GetFlagEffect(id)~=0 then return true end
+	e:Reset()
+	return false
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

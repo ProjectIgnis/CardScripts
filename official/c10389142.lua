@@ -1,4 +1,5 @@
 --No.42 スターシップ・ギャラクシー・トマホーク
+--Number 42: Galaxy Tomahawk
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -16,6 +17,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
+s.listed_names={10389143}
 s.xyz_number=42
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end

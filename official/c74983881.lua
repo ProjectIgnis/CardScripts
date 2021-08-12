@@ -1,4 +1,5 @@
 --モロコシーナ
+--Sweet Corn
 local s,id=GetID()
 function s.initial_effect(c)
 	--coin effect
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={74983882}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN2
 end

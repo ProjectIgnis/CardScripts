@@ -1,4 +1,5 @@
 --ブラック・リベンジ
+--Black Wing Revenge
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={9925983}
 function s.cfilter(c,tp)
 	return c:IsReason(REASON_BATTLE) and c:IsLocation(LOCATION_GRAVE) and c:IsPreviousControler(tp) and c:IsRace(RACE_WINGEDBEAST)
 end

@@ -1,5 +1,6 @@
---T.G. Tank Larva
---scripted by Logical Nonsense
+--ＴＧ タンク・ラーヴァ
+--T.G. Tank Grub
+--Dcripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Non-tuner
@@ -22,6 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.top)
 	c:RegisterEffect(e2)
 end
+s.listed_names={74627017}
 s.listed_series={0x27}
 function s.ntval(c,sc,tp)
 	return sc and sc:IsSetCard(0x27)

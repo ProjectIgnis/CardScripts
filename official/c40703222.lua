@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_KURIBOH}
+s.listed_names={CARD_KURIBOH,TOKEN_KURIBOH}
 function s.cfilter(c,ft,tp)
 	return c:IsFaceup() and c:IsCode(CARD_KURIBOH) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
 end
@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
 		e:SetLabel(0)
-		return Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,300,200,1,RACE_FIEND,ATTRIBUTE_DARK)
+		return Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_KURIBOH,0,TYPES_TOKEN,300,200,1,RACE_FIEND,ATTRIBUTE_DARK)
 	end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
@@ -37,10 +37,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,300,200,1,RACE_FIEND,ATTRIBUTE_DARK) then return end
+	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_KURIBOH,0,TYPES_TOKEN,300,200,1,RACE_FIEND,ATTRIBUTE_DARK) then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	for i=1,ft do
-		local token=Duel.CreateToken(tp,id+1)
+		local token=Duel.CreateToken(tp,TOKEN_KURIBOH)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		--Cannot be tributed for a tribute summon
 		local e1=Effect.CreateEffect(e:GetHandler())

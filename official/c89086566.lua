@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_KURIBOH}
+s.listed_names={CARD_KURIBOH,TOKEN_KURIBOH}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(CARD_KURIBOH,40703223)
+	return c:IsFaceup() and c:IsCode(CARD_KURIBOH,TOKEN_KURIBOH)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil) end

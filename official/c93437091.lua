@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0xdd}
+s.listed_names={CARD_BLUEEYES_W_DRAGON,23995346}
 function s.filter(c)
 	return ( ( (c:IsSetCard(0xdd) and c:IsType(TYPE_MONSTER)) ) or ( (aux.IsCodeListed(c,CARD_BLUEEYES_W_DRAGON) or aux.IsCodeListed(c,23995346)) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsCode(id) ) ) 
 		and c:IsAbleToHand()

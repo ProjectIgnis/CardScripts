@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 
 function s.filter(c)
-	return c:IsFaceup() and not c:IsAttribute(ATTRIBUTE_DARK)
+	return c:IsFaceup() and c:GetAttribute()~=ATTRIBUTE_DARK
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end

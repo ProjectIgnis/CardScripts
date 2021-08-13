@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spatkop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x26f}
+s.listed_series={0x172}
 function s.indcon(e)
 	return e:GetHandler():IsAttackBelow(3000)
 end
@@ -61,7 +61,7 @@ function s.spatkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x26f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x172) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spatktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

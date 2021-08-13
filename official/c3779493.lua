@@ -32,7 +32,7 @@ s.material={36107810}
 s.listed_names={36107810}
 --banish when itself or a spellcaster is summoned
 function s.cfilter(c,tp)
-	return c:IsRace(RACE_SPELLCASTER) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:IsControler(tp)
 end
 function s.rmvcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

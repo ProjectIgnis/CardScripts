@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(0,1)
+	e2:SetCondition(s.costcon)
 	c:RegisterEffect(e2)
 	--Special summon itself from hand
 	local e3=Effect.CreateEffect(c)

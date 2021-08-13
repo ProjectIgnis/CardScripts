@@ -75,7 +75,7 @@ end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,nil)
-			and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or e:GetHandler():IsInMainMZone())
+			and Duel.GetMZoneCount(tp,e:GetHandler())>0
 			and Duel.IsExistingMatchingCard(s.tgspfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,0,0,tp,1)

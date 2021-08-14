@@ -31,7 +31,7 @@ function s.filter1(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,pg)
 end
 function s.filter2(c,e,tp,mc,pg)
-	return c:IsType(TYPE_XYZ) and mc:IsSetCard(0x270,c,SUMMON_TYPE_XYZ,tp)
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x270) and mc:IsSetCard(0x270,c,SUMMON_TYPE_XYZ,tp)
 		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and mc:IsCanBeXyzMaterial(c,tp) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end

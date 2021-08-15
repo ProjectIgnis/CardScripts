@@ -76,7 +76,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.gyfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil)
-	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 and tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_GRAVE)
+		and tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		--Increase ATK
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

@@ -31,7 +31,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.descon(e)
-	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,10),e:GetHandler():GetControler(),0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,9),e:GetHandler():GetControler(),0,LOCATION_MZONE,nil)
 	return e:GetHandler():IsMaximumMode() and #g==0
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

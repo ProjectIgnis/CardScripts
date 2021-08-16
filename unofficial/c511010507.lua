@@ -48,7 +48,8 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g,freezone=Duel.GetTargetCards(e),true
+	local g=Duel.GetTargetCards(e)
+	local freezone=true
 	for tc in g:Iter() do
 		if Duel.GetFieldCard(tp,tc:GetPreviousLocation(),tc:GetPreviousSequence()) then freezone=false end
 	end

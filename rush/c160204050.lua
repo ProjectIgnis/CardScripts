@@ -3,6 +3,6 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,nil,Fusion.OnFieldMat)
+	Fusion.RegisterSummonEff(c,nil,Fusion.OnFieldMat(Card.IsFaceup))
 	c:RegisterEffect(e1)
 end

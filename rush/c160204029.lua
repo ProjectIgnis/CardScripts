@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(g)
-	Duel.SendtoDeck(tg,nil,SEQ_DECKBOTTOM,REASON_COST)	
+	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)	
 	--Effect
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)

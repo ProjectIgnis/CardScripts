@@ -63,6 +63,8 @@ TOKEN_BRAVE     = 100417125
 --Commonly used Rush Card
 CARD_SEVENS_ROAD_MAGICIAN = 160301001
 CARD_CAN_D                = 160005002
+CARD_FUSION               = 160204050
+CARD_IMAGINARY_ACTOR      = 160204006
 
 --Commonly used counters
 COUNTER_SPELL    = 0x1

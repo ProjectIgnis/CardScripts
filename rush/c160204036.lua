@@ -34,10 +34,12 @@ function s.thfilter(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
+	Duel.DisableShuffleCheck(true)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(g)
 	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)==0 then return end
+	Duel.ShuffleDeck(tp)
 	--Effect
 	if Duel.DiscardDeck(tp,3,REASON_EFFECT)>0 and Duel.GetOperatedGroup():FilterCount(s.cfilter,nil)>0
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

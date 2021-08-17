@@ -5,7 +5,6 @@ function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,160005037,160309011)
-	
 	--Send the top 3 cards of deck to GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -38,13 +37,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(g)
-	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
-	Duel.ShuffleDeck(tp)
+	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)==0 then return end
 	--Effect
-	Duel.DiscardDeck(tp,3,REASON_EFFECT)
-	local g=Duel.GetOperatedGroup()
-	local ct=g:FilterCount(s.cfilter,nil)
-	if ct>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.DiscardDeck(tp,3,REASON_EFFECT)>0 and Duel.GetOperatedGroup():FilterCount(s.cfilter,nil)>0
+		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,1,2,nil)
 		Duel.HintSelection(g)

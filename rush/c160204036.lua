@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,3,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	local ct=g:FilterCount(s.cfilter,nil)
-	if ct>0 then
+	if ct>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,1,2,nil)
 		Duel.HintSelection(g)

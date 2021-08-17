@@ -56,7 +56,7 @@ function s.tdop1(e,tp,eg,ep,ev,re,r,rp)
 end
 --shuffle up to 2 spellcaster to the deck
 function s.tdtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter2,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.tdfilter2),tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_MZONE)
 end
 function s.tdfilter2(c)
@@ -71,7 +71,8 @@ function s.tdop2(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-		local g=Duel.SelectMatchingCard(tp,s.tdfilter2,tp,0,LOCATION_MZONE,1,2,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.tdfilter2),tp,0,LOCATION_MZONE,1,2,nil)
+		g=g:AddMaximumCheck()
 		Duel.HintSelection(g)
 		if #g>0 then
 			Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)

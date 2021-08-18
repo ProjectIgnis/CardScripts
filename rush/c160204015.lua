@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	Fusion.AddProcMix(c,true,true,CARD_SEVENS_ROAD_MAGICIAN,160204021)
 	--ATK increase
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
@@ -22,6 +23,7 @@ function s.initial_effect(c)
 	
 	--to deck and draw
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)

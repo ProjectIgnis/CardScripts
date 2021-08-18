@@ -68,7 +68,7 @@ end
 function s.tdfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
-function s.drop(e,tp,eg,ep,ev,re,r,rp)
+function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()	
 	--requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then

@@ -35,7 +35,7 @@ function s.filter(c)
 	return (c:IsFaceup() and not (c:IsRace(RACE_DRAGON) or c:IsRace(RACE_HIGHDRAGON))) or c:IsFacedown()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP() and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsAbleToEnterBP() and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end

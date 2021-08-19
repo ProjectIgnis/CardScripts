@@ -1,9 +1,4 @@
 -- Magical Knight - Sevens Palladion
-
--- Sevens Road Magician + Roadstar Swordsman
--- Requirement: Send the top card of your Deck to the GY.
--- Chosen Effect: - Until the end of this turn, this card gains 400 ATK for each Attribute in both players' GYs.
--- - Return 1 monster from your GY to the Deck. Then, draw 1 card.
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -20,7 +15,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	
 	--to deck and draw
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -33,7 +27,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
@@ -58,7 +51,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
 --to deck and draw
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -76,7 +68,10 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		if #g>0 then
 		Duel.HintSelection(g)
-		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) 		
+			if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) then
+				 Duel.ShuffleDeck(tp)
+				 Duel.Draw(tp,1,REASON_EFFECT)
+			end		
 		end
 	end
 end

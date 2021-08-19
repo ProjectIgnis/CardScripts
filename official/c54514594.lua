@@ -10,14 +10,14 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.cost)
-	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation)
+	e1:SetCost(s.damcost)
+	e1:SetTarget(s.damtg)
+	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x32}
 
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
 	--Cannot attack this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -28,13 +28,16 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,1,nil,0x32) end
+function s.damfilter(c)
+	return c:IsMonster() and c:IsSetCard(0x32)
+end
+function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local d=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_GRAVE,0,nil,0x32)*200
+	local d=Duel.GetMatchingGroupCount(s.damfilter,tp,LOCATION_GRAVE,0,nil)*200
 	Duel.Damage(p,d,REASON_EFFECT)
 end

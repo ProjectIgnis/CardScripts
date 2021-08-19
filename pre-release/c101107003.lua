@@ -29,7 +29,7 @@ end
 s.listed_names={CARD_DARK_MAGICIAN}
 function s.spcfilter(c,ft)
 	return c:IsAbleToGraveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
-		and (c:IsRace(RACE_SPELLCASTER) or (c:IsType(TYPE_SPELL+TYPE_TRAP) and aux.IsCodeListed(c,CARD_DARK_MAGICIAN)))
+		and ((c:IsRace(RACE_SPELLCASTER) and c:IsMonster()) or (c:IsType(TYPE_SPELL+TYPE_TRAP) and aux.IsCodeListed(c,CARD_DARK_MAGICIAN)))
 		and (ft>0 or c:IsInMainMZone())
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

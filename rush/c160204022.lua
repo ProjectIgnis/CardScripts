@@ -1,9 +1,4 @@
 -- Supergeardragon Dragearstar F
-
--- Rush Dragon Dragears + The☆Dragon
--- Requirement: If all monsters you control are Dragon or High Dragon, send the top card of your Deck to the GY.
--- Chosen Effect: - This turn, this card gains 900 ATK, and if it does, it can attack monsters twice.
--- - This turn, this card can attack monsters twice, and it inflicts piercing battle damage.
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -32,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return (c:IsFaceup() and not (c:IsRace(RACE_DRAGON) or c:IsRace(RACE_HIGHDRAGON))) or c:IsFacedown()
+	return c:IsType(TYPE_MONSTER) and not (c:IsRace(RACE_DRAGON) or c:IsRace(RACE_HIGHDRAGON))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP() and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil)

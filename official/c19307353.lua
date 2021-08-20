@@ -3,7 +3,7 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--search
+	--Search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -15,20 +15,27 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.filter(c,tp)
+function s.statsum(c)
+	return math.max(c:GetTextAttack(),0)+math.max(c:GetTextDefense(),0)
+end
+function s.cfilter(c,tp)
 	if not (c:IsAttackAbove(0) and c:IsDefenseAbove(0)) then return false end
-	local total=c:GetBaseAttack()+c:GetBaseDefense()
+	if not (c:GetTextAttack()>=0 and c:GetTextDefense()>=0) then return false end
+	local total=s.statsum(c)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,total)
 end
 function s.thfilter(c,total)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:GetBaseAttack()+c:GetBaseDefense()==total
+	if not (c:GetTextAttack()>=0 and c:GetTextDefense()>=0) then return false end
+	local ctotal=s.statsum(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and ctotal==total
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.filter,1,false,nil,nil,tp) end
-	local sg=Duel.SelectReleaseGroupCost(tp,s.filter,1,1,false,nil,nil,tp)
-	local total=sg:GetFirst():GetBaseAttack()+sg:GetFirst():GetBaseDefense()
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local tc=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,tp):GetFirst()
+	local total=s.statsum(tc)
 	e:SetLabel(total)
-	Duel.Release(sg,REASON_COST)
+	Duel.Release(tc,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

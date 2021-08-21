@@ -50,8 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.look(tp,p)
-	local g=Duel.GetFieldGroup(p,LOCATION_DECK,0)
-	local gc=#g
+	local gc=math.min(5,Duel.GetFieldGroupCount(p,LOCATION_DECK,0))
 	if gc>0 then
 		local ac=gc==1 and gc or Duel.AnnounceNumberRange(tp,1,gc)
 		Duel.ConfirmCards(tp,Duel.GetDecktopGroup(p,ac))

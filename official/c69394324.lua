@@ -46,6 +46,7 @@ end
 function s.stop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4
 	local b2=Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>4
+	if not b1 and not b2 then return end
 	local p=0
 	if b1 and b2 then
 		p=Duel.SelectOption(tp,aux.Stringid(id,3),aux.Stringid(id,4))

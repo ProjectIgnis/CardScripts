@@ -1,7 +1,6 @@
 --エンジェルＯ１
 --Angel O1
 --Scripted by Rundas
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -24,22 +23,20 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_HAND,0)
 	e2:SetCondition(s.con)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsLevelAbove,7))
-	e2:SetValue(POS_FACEUP_ATTACK)
-	e2:SetOperation(s.op)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsLevelAbove(7) and not c:IsPublic()
+	return c:IsLevelAbove(7) and c:IsType(TYPE_MONSTER) and not c:IsPublic()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil)
-	local g=aux.SelectUnselectGroup(rg,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_CONFIRM,nil,nil,true)
-	if #g>0 then
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,true,nil)
+	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)
 		return true
@@ -54,8 +51,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.con(e)
-	return Duel.IsMainPhase() and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and Duel.GetFlagEffect(e:GetHandlerPlayer(),id+1)==0
-end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+	return Duel.IsMainPhase() and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
 end

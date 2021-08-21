@@ -1,4 +1,5 @@
 --円卓の聖騎士
+--Noble Knights of the Round Table
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -98,7 +99,7 @@ function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
-	if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)==0 then return end
+	if not tc or Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 	local tg=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_HAND,0,nil,tc,tp)
 	if #tg>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
 		Duel.BreakEffect()

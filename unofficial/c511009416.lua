@@ -1,5 +1,5 @@
---ジャンク・ウォリアー
---Junk Warrior
+--ジャンク・ウォリアー (Anime)
+--Junk Warrior (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,7 +19,7 @@ end
 s.material={63977008}
 s.listed_names={63977008}
 s.material_setcode=0x1017
-function s.tfilter(c)
+function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(lc,stype,tp,63977008) or c:IsHasEffect(20932152)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
@@ -29,12 +29,5 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsLevelBelow(2)
 end
 function s.value(e,c)
-	local atk=0
-	local g=Duel.GetMatchingGroup(s.filter,c:GetControler(),LOCATION_MZONE,0,c)
-	local tc=g:GetFirst()
-	while tc do
-		atk=atk+tc:GetAttack()
-		tc=g:GetNext()
-	end
-	return atk
+	return Duel.GetMatchingGroup(s.filter,c:GetControler(),LOCATION_MZONE,0,c):GetSum(Card.GetAttack)
 end

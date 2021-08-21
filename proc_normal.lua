@@ -33,9 +33,10 @@ function Auxiliary.NormalSummonCondition1(min,max,f,opt)
 	return function (e,c,minc,zone,relzone,exeff)
 		if c==nil then return true end
 		local tp=c:GetControler()
-		local mg=Duel.GetTributeGroup(c):Match(Auxiliary.IsZone,nil,relzone,tp)
+		local mg=Duel.GetTributeGroup(c)
+		mg=mg:Filter(Auxiliary.IsZone,nil,relzone,tp)
 		if f then
-			mg:Match(f,nil,tp)
+			mg=mg:Filter(f,nil,tp)
 		end
 		local tributes=maplevel(c:GetLevel())
 		return (not opt or (tributes>0 and tributes~=max)) and minc<=min and Duel.CheckTribute(c,min,max,mg,tp,zone)
@@ -49,9 +50,10 @@ function Auxiliary.NormalSummonCondition2()
 end
 function Auxiliary.NormalSummonTarget(min,max,f)
 	return function (e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
-		local mg=Duel.GetTributeGroup(c):Match(Auxiliary.IsZone,nil,relzone,tp)
+		local mg=Duel.GetTributeGroup(c)
+		mg=mg:Filter(Auxiliary.IsZone,nil,relzone,tp)
 		if f then
-			mg:Match(f,nil,tp)
+			mg=mg:Filter(f,nil,tp)
 		end
 		local g=Duel.SelectTribute(tp,c,min,max,mg,tp,zone,Duel.IsSummonCancelable())
 		if g and #g>0 then
@@ -100,9 +102,10 @@ function Auxiliary.NormalSetCondition1(min,max,f,opt)
 	return function (e,c,minc,zone,relzone,exeff)
 		if c==nil then return true end
 		local tp=c:GetControler()
-		local mg=Duel.GetTributeGroup(c):Match(Auxiliary.IsZone,nil,relzone,tp)
+		local mg=Duel.GetTributeGroup(c)
+		mg=mg:Filter(Auxiliary.IsZone,nil,relzone,tp)
 		if f then
-			mg:Match(f,nil,tp)
+			mg=mg:Filter(f,nil,tp)
 		end
 		local tributes=maplevel(c:GetLevel())
 		return (not opt or (tributes>0 and tributes~=max)) and minc<=min and Duel.CheckTribute(c,min,max,mg,tp,zone)
@@ -116,9 +119,10 @@ function Auxiliary.NormalSetCondition2()
 end
 function Auxiliary.NormalSetTarget(min,max,f)
 	return function (e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
-		local mg=Duel.GetTributeGroup(c):Match(Auxiliary.IsZone,nil,relzone,tp)
+		local mg=Duel.GetTributeGroup(c)
+		mg=mg:Filter(Auxiliary.IsZone,nil,relzone,tp)
 		if f then
-			mg:Match(f,nil,tp)
+			mg=mg:Filter(f,nil,tp)
 		end
 		local g=Duel.SelectTribute(tp,c,min,max,mg,tp,zone,Duel.IsSummonCancelable())
 		if g and #g>0 then

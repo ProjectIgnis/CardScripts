@@ -111,16 +111,15 @@ function Link.Condition(f,minc,maxc,specialchk)
 				max = max or maxc
 				if mustg:IsExists(aux.NOT(Link.ConditionFilter),1,nil,f,c,tp) or #mustg>max then return false end
 				local emt,tg=aux.GetExtraMaterials(tp,mustg+mg,c,SUMMON_TYPE_LINK)
-				tg:Match(Link.ConditionFilter,nil,f,c,tp)
-				local mg_tg=mg+tg
-				local res=mg_tg:Includes(mustg) and #mustg<=max
+				tg=tg:Filter(Link.ConditionFilter,nil,f,c,tp)
+				local res=(mg+tg):Includes(mustg) and #mustg<=max
 				if res then
 					if #mustg==max then
 						local sg=Group.CreateGroup()
-						res=mustg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg_tg,c,min,max,f,specialchk,mg,emt)
+						res=mustg:IsExists(Link.CheckRecursive,1,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt)
 					elseif #mustg<max then
 						local sg=mustg
-						res=mg_tg:IsExists(Link.CheckRecursive,1,sg,tp,sg,mg_tg,c,min,max,f,specialchk,mg,emt)
+						res=(mg+tg):IsExists(Link.CheckRecursive,1,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt)
 					end
 				end
 				aux.DeleteExtraMaterialGroups(emt)
@@ -140,18 +139,17 @@ function Link.Target(f,minc,maxc,specialchk)
 				local mustg=Auxiliary.GetMustBeMaterialGroup(tp,g,tp,c,mg,REASON_LINK)
 				if must then mustg:Merge(must) end
 				local emt,tg=aux.GetExtraMaterials(tp,mustg+mg,c,SUMMON_TYPE_LINK)
-				tg:Match(Link.ConditionFilter,nil,f,c,tp)
+				tg=tg:Filter(Link.ConditionFilter,nil,f,c,tp)
 				local sg=Group.CreateGroup()
 				local finish=false
 				local cancel=false
 				sg:Merge(mustg)
-				local mg_tg=mg+tg
 				while #sg<max do
 					local filters={}
 					if #sg>0 then
-						Link.CheckRecursive2(sg:GetFirst(),tp,Group.CreateGroup(),sg,mg_tg,mg_tg,c,min,max,f,specialchk,mg,emt,filters)
+						Link.CheckRecursive2(sg:GetFirst(),tp,Group.CreateGroup(),sg,mg+tg,mg+tg,c,min,max,f,specialchk,mg,emt,filters)
 					end
-					local cg=mg_tg:Filter(Link.CheckRecursive,sg,tp,sg,mg_tg,c,min,max,f,specialchk,mg,emt,{table.unpack(filters)})
+					local cg=(mg+tg):Filter(Link.CheckRecursive,sg,tp,sg,(mg+tg),c,min,max,f,specialchk,mg,emt,{table.unpack(filters)})
 					if #cg==0 then break end
 					finish=#sg>=min and #sg<=max and Link.CheckGoal(tp,sg,c,min,f,specialchk,filters)
 					cancel=not og and Duel.IsSummonCancelable() and #sg==0
@@ -168,7 +166,7 @@ function Link.Target(f,minc,maxc,specialchk)
 				end
 				if #sg>0 then
 					local filters={}
-					Link.CheckRecursive2(sg:GetFirst(),tp,Group.CreateGroup(),sg,mg_tg,mg_tg,c,min,max,f,specialchk,mg,emt,filters)
+					Link.CheckRecursive2(sg:GetFirst(),tp,Group.CreateGroup(),sg,mg+tg,mg+tg,c,min,max,f,specialchk,mg,emt,filters)
 					sg:KeepAlive()
 					e:SetLabelObject({sg,filters,emt})
 					return true

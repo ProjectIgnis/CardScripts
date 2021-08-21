@@ -36,8 +36,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.spcfilter,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,1,tp,false,false) end
 	local g=eg:Filter(s.spcfilter,nil,e,tp)
 	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,#g,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+	if g:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)>0 then
+		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g:Filter(Card.IsLocation,nil,LOCATION_GRAVE),g:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE),tp,LOCATION_GRAVE)
+	end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,LOCATION_HAND)
 end
 function s.spcfilterchk(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
@@ -47,7 +49,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetTargetCards(e)
-	if Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)>0 and #g>0 and Duel.SelectEffectYesNo(tp,c) then
+	local freezone=true
+	for tc in g:Iter() do
+		if Duel.GetFieldCard(tp,tc:GetPreviousLocation(),tc:GetPreviousSequence()) then freezone=false end
+	end
+	if Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)>0 and #g>0 and freezone==true and Duel.SelectEffectYesNo(tp,c) then
 		g:KeepAlive()
 		--spsummon
 		local e1=Effect.CreateEffect(c)

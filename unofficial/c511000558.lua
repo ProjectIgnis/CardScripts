@@ -1,3 +1,4 @@
+--ライフ・ストリーム・ドラゴン
 --Life Stream Dragon
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,7 +39,9 @@ function s.initial_effect(c)
 	e4:SetValue(s.valcheck)
 	c:RegisterEffect(e4)
 end
+s.material={2403771}
 s.listed_names={2403771}
+s.synchro_nt_required=1
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO and (Duel.GetLP(tp)<2000 or Duel.GetLP(1-tp)<2000)
 end

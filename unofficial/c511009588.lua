@@ -1,3 +1,4 @@
+--覇王白竜オッドアイズ・ウィング・ドラゴン
 --Odd-Eyes Wing Dragon
 --fixed by MLD
 local s,id=GetID()

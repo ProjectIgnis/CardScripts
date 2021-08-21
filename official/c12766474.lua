@@ -1,5 +1,5 @@
 --影王デュークシェード
---Duke Shade, King of the Umbra
+--Duke Shade, the Sinister Shadow Lord
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

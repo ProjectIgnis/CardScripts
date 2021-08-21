@@ -61,7 +61,10 @@ function s.initial_effect(c)
 	e5:SetOperation(s.retop)
 	c:RegisterEffect(e5)
 end
+s.material={CARD_STARDUST_DRAGON}
 s.listed_names={CARD_STARDUST_DRAGON}
+s.synchro_tuner_required=1
+s.synchro_nt_required=1
 function s.syncon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end

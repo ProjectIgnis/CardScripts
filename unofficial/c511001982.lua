@@ -36,6 +36,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.material={56286179}
+s.listed_names={56286179}
 s.material_setcode=0x1017
 function s.tfilter(c,lc,stype,tp)
 	return c:IsSummonCode(lc,stype,tp,56286179) or c:IsHasEffect(20932152)

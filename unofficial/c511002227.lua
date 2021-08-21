@@ -1,4 +1,5 @@
 --フルール・ド・シュヴァリエ
+--Chevalier de Fleur
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -18,6 +19,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
 end
+s.material={19642774}
+s.listed_names={19642774}
 s.material_setcode=0x1017
 function s.tfilter(c,lc,stype,tp)
 	return c:IsSummonCode(lc,stype,tp,19642774) or c:IsHasEffect(20932152)

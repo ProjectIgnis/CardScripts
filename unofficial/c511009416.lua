@@ -1,4 +1,5 @@
 --ジャンク・ウォリアー
+--Junk Warrior
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,10 +16,11 @@ function s.initial_effect(c)
 	e1:SetValue(s.value)
 	c:RegisterEffect(e1)
 end
+s.material={63977008}
 s.listed_names={63977008}
-s.material_setcode=0x17
+s.material_setcode=0x1017
 function s.tfilter(c)
-	return c:IsCode(63977008) or c:IsHasEffect(20932152)
+	return c:IsSummonCode(lc,stype,tp,63977008) or c:IsHasEffect(20932152)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)

@@ -17,6 +17,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.material={63977008}
+s.listed_names={63977008}
 s.listed_series={0x43}
 s.material_setcode=0x1017
 function s.tfilter(c,lc,stype,tp)

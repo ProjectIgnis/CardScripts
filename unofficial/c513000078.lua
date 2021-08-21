@@ -51,7 +51,9 @@ function s.initial_effect(c)
 	e5:SetOperation(s.operation)
 	c:RegisterEffect(e5)
 end
+s.material={70902743,21159309}
 s.listed_names={70902743,21159309}
+s.synchro_nt_required=1
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker()
 end

@@ -428,8 +428,9 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
 				if og and not min then
 					if (#og>=minc and #og<=maxc) or not og:IsExists(Card.IsHasEffect,1,nil,511002116) then
-						og:KeepAlive()
-						e:SetLabelObject(og)
+						local sg=og:Clone()
+						sg:KeepAlive()
+						e:SetLabelObject(sg)
 						return true
 					else
 						local tab={}
@@ -633,17 +634,16 @@ function Xyz.Operation(f,lv,minc,maxc,mustbemat,exchk)
 				if not g then return end
 				local remg=g:Filter(Card.IsHasEffect,nil,511002116)
 				remg:ForEach(function(c) c:RegisterFlagEffect(511002115,RESET_EVENT+RESETS_STANDARD,0,0) end)
-				local matg=g:Clone():Remove(Card.IsHasEffect,nil,511002116)
-				matg:Remove(Card.IsHasEffect,nil,511002115)
+				g:Remove(Card.IsHasEffect,nil,511002116):Remove(Card.IsHasEffect,nil,511002115)
 				local sg=Group.CreateGroup()
-				for tc in matg:Iter() do
+				for tc in g:Iter() do
 					local sg1=tc:GetOverlayGroup()
 					sg:Merge(sg1)
 				end
 				Duel.SendtoGrave(sg,REASON_RULE)
-				c:SetMaterial(matg)
+				c:SetMaterial(g)
 				Duel.Overlay(c,g:Filter(function(c) return c:GetEquipTarget() end,nil))
-				Duel.Overlay(c,matg)
+				Duel.Overlay(c,g)
 				g:DeleteGroup()
 			end
 end

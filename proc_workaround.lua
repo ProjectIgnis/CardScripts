@@ -137,7 +137,7 @@ function Duel.CheckReleaseGroupSummon(c,tp,e,fil,minc,maxc,last,...)
 		table.remove(params,1)
 	end
 	local checkfunc=aux.ZoneCheckFunc(c,tp,zone)
-	local rg,rgex=Duel.GetReleaseGroup(tp,false):Filter(aux.TRUE,ex):Split(fil,nil,table.unpack(params))
+	local rg,rgex=Duel.GetReleaseGroup(tp,false):Match(aux.TRUE,ex):Split(fil,nil,table.unpack(params))
 	if #rg<minc or rgex:IsExists(Card.IsHasEffect,nil,EFFECT_EXTRA_RELEASE) then return false end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local must,nonmust=rg:Split(Card.IsHasEffect,nil,EFFECT_EXTRA_RELEASE)
@@ -167,7 +167,7 @@ function Duel.SelectReleaseGroupSummon(c,tp,e,fil,minc,maxc,last,...)
 		table.remove(params,1)
 	end
 	local checkfunc=aux.ZoneCheckFunc(c,tp,zone)
-	local rg,rgex=Duel.GetReleaseGroup(tp,false):Filter(aux.TRUE,ex):Split(fil,nil,...)
+	local rg,rgex=Duel.GetReleaseGroup(tp,false):Match(aux.TRUE,ex):Split(fil,nil,...)
 	if #rg<minc or rgex:IsExists(Card.IsHasEffect,nil,EFFECT_EXTRA_RELEASE) then return nil end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local must,nonmust=rg:Split(Card.IsHasEffect,nil,EFFECT_EXTRA_RELEASE)
@@ -184,7 +184,7 @@ local p_rem=Duel.RemoveCounter
 function Duel.RemoveCounter(tp,s,o,counter,...)
 	local ex_params={...}
 	local s,o=s>0 and LOCATION_ONFIELD or 0,o>0 and LOCATION_ONFIELD or 0
-	local cg=Duel.GetFieldGroup(tp,s,o):Filter(function(c) return c:GetCounter(counter)>0 end,nil)
+	local cg=Duel.GetFieldGroup(tp,s,o):Match(function(c) return c:GetCounter(counter)>0 end,nil)
 	if #cg==1 then
 		return cg:GetFirst():RemoveCounter(tp,counter,table.unpack(ex_params))
 	end
@@ -242,16 +242,16 @@ function Duel.CheckReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 		maxc,use_hand,check,ex=minc,maxc,use_hand,check
 	end
 	if not ex then ex=Group.CreateGroup() end
-	local g,exg=Duel.GetReleaseGroup(tp,use_hand):Filter(f and f or aux.TRUE,ex,table.unpack(params)):Split(Auxiliary.ReleaseCostFilter,nil,tp)
+	local g,exg=Duel.GetReleaseGroup(tp,use_hand):Match(f and f or aux.TRUE,ex,table.unpack(params)):Split(Auxiliary.ReleaseCostFilter,nil,tp)
 	local specialchk=Auxiliary.MakeSpecialCheck(check,tp,exg,table.unpack(params))
-	local mustg=g:Filter(function(c,tp)return c:IsHasEffect(EFFECT_EXTRA_RELEASE) and c:IsControler(1-tp)end,nil,tp)
 	local mg=g+exg
+	local mustg=g:Match(function(c,tp)return c:IsHasEffect(EFFECT_EXTRA_RELEASE) and c:IsControler(1-tp)end,nil,tp)
 	local sg=Group.CreateGroup()
 	return mg:Includes(mustg) and mg:IsExists(Auxiliary.RelCheckRecursive,1,nil,tp,sg,mg,exg,mustg,0,minc,maxc,specialchk)
 end
 function Duel.SelectReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 	if not ex then ex=Group.CreateGroup() end
-	local g,exg=Duel.GetReleaseGroup(tp,use_hand):Filter(f and f or aux.TRUE,ex,...):Split(Auxiliary.ReleaseCostFilter,nil,tp)
+	local g,exg=Duel.GetReleaseGroup(tp,use_hand):Match(f and f or aux.TRUE,ex,...):Split(Auxiliary.ReleaseCostFilter,nil,tp)
 	local specialchk=Auxiliary.MakeSpecialCheck(check,tp,exg,...)
 	local mg=g+exg
 	local mustg=g:Filter(function(c,tp)return c:IsHasEffect(EFFECT_EXTRA_RELEASE) and c:IsControler(1-tp)end,nil,tp)

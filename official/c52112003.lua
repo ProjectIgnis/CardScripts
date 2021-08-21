@@ -15,7 +15,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
+	local ct=math.min(5,Duel.GetFieldGroupCount(tp,LOCATION_DECK,0))
 	if ct~=0 then
 		local ac=ct==1 and ct or Duel.AnnounceNumberRange(tp,1,ct)
 		Duel.SortDecktop(tp,tp,ct)

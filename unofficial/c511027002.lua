@@ -1,5 +1,5 @@
---聖天樹の灰樹精
---Sunavalon Melias
+--聖天樹の灰樹精 (Anime)
+--Sunavalon Melias (Anime)
 --Scripted by Playmaker 772211
 --Fixed by Larry126
 local s,id=GetID()
@@ -81,28 +81,36 @@ end
 function s.atfilter(c,lg)
 	return c:IsSetCard(0x2157) and c:IsLinkMonster() and lg and lg:IsContains(c)
 end
+function s.valfilter(c)
+	return c:IsSetCard(0x1157) and c:IsLinkMonster()
+end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.atfilter(chkc,e:GetHandler():GetLinkedGroup()) end
 	local lg=e:GetHandler():GetLinkedGroup()
-	if chk==0 then return Duel.IsExistingTarget(s.atfilter,tp,LOCATION_MZONE,0,1,nil,lg) end
+	if chk==0 then return Duel.IsExistingTarget(s.atfilter,tp,LOCATION_MZONE,0,1,nil,lg)
+		and Duel.GetMatchingGroupCount(s.valfilter,tp,LOCATION_MZONE,0,nil)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,s.atfilter,tp,LOCATION_MZONE,0,1,1,nil,lg)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if not (tc and tc:IsRelateToEffect(e)) then return end
+	local ct=Duel.GetMatchingGroupCount(s.valfilter,tp,LOCATION_MZONE,0,nil)
+	if ct>0 then
+		--Can make additional attacks this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
-		e1:SetValue(s.val)
+		e1:SetValue(ct-1)
 		tc:RegisterEffect(e1)
+	elseif ct==0 then
+		--Cannot attack this turn if there are no "Sunavalon" Link Monsters when this effect resovles
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_CANNOT_ATTACK)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		tc:RegisterEffect(e2)
 	end
-end
-function s.valfilter(c)
-	return c:IsSetCard(0x1157) and c:IsLinkMonster()
-end
-function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.valfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)-1
 end

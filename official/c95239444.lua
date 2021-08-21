@@ -54,13 +54,10 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
-	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
+	local ct=math.min(3,Duel.GetFieldGroupCount(tp,LOCATION_DECK,0))
 	if ct==0 then return end
-	if ct>3 then ct=3 end
-	local t={}
-	for i=1,ct do t[i]=i end
 	Duel.Hint(HINTMSG_NUMBER,tp,HINT_NUMBER)
-	local ac=Duel.AnnounceNumber(tp,table.unpack(t))
+	local ac=Duel.AnnounceNumberRange(tp,1,ct)
 	Duel.ConfirmDecktop(tp,ac)
 	local g=Duel.GetDecktopGroup(tp,ac)
 	local sg=g:Filter(Card.IsRace,nil,RACE_PLANT)

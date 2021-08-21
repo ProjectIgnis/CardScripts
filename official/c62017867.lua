@@ -1,4 +1,5 @@
 --超重武者グロウ－V
+--Superheavy Samurai Gigagloves
 local s,id=GetID()
 function s.initial_effect(c)
 	--sort decktop
@@ -30,7 +31,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5 end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<5 then return end
 	Duel.SortDecktop(tp,tp,5)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

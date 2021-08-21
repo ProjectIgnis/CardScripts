@@ -53,14 +53,8 @@ function s.look(tp,p)
 	local g=Duel.GetFieldGroup(p,LOCATION_DECK,0)
 	local gc=#g
 	if gc>0 then
-		local t={}
-		local l=1
-		local ct=math.min(5,gc)
-		while l<=ct do
-			t[l]=l
-			l=l+1
-		end
-		Duel.ConfirmCards(tp,Duel.GetDecktopGroup(p,Duel.AnnounceNumber(tp,table.unpack(t))))
+		local ac=gc==1 and gc or Duel.AnnounceNumberRange(tp,1,gc)
+		Duel.ConfirmCards(tp,Duel.GetDecktopGroup(p,ac))
 	end
 end
 function s.con(e,tp,eg,ev,ep,re,r,rp)

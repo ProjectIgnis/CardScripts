@@ -47,14 +47,6 @@ end
 function s.sdop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	if ct==0 then return end
-	local ac=1
-	if ct>1 then
-		Duel.Hint(HINTMSG_NUMBER,tp,HINT_NUMBER)
-		if ct==2 then
-			ac=Duel.AnnounceNumber(tp,1,2)
-		else
-			ac=Duel.AnnounceNumber(tp,1,2,3)
-		end
-	end
+	local ac=ct==1 and ct or Duel.AnnounceNumberRange(tp,1,ct)
 	Duel.SortDecktop(tp,tp,ac)
 end

@@ -15,7 +15,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SortDecktop(tp,tp,5)
+	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
+	if ct~=0 then
+		local ac=ct==1 and ct or Duel.AnnounceNumberRange(tp,1,ct)
+		Duel.SortDecktop(tp,tp,ct)
+	end
 	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,1))

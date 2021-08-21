@@ -66,14 +66,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tc)
 		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xe6) then
 			local ct=Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)
-			if ct<3 then return end
+			if ct==0 then return end
 			Duel.BreakEffect()
-			local g=Duel.GetDecktopGroup(1-tp,3)
+			local g=Duel.GetDecktopGroup(1-tp,ct)
 			Duel.ConfirmCards(tp,g)
 			local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-			Duel.SortDecktop(tp,1-tp,3)
+			Duel.SortDecktop(tp,1-tp,ct)
 			if opt==0 then
-				Duel.MoveToDeckBottom(3,1-tp)
+				Duel.MoveToDeckBottom(ct,1-tp)
 			end
 		else
 			Duel.BreakEffect()

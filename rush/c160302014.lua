@@ -12,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
-		and c==Duel.GetAttackTarget() and c:IsRace(RACE_DRAGON)
+function s.cfilter(c,tp)
+	return c:GetPreviousRaceOnField()&RACE_DRAGON>0 and (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp))
+		and c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter,1,nil,tp)
+	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local at=Duel.GetAttacker()

@@ -77,18 +77,17 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.disop(e,tp)
 	local c=e:GetHandler()
-	local zone = c:GetColumnZone(LOCATION_ONFIELD)
-	local cg=c:GetColumnGroup()
-	for tc in aux.Next(cg) do
-		local dz = tc:IsLocation(LOCATION_MZONE) and 1 or (1 << 8)
+	local zone=c:GetColumnZone(LOCATION_ONFIELD)
+	for tc in e:GetHandler():GetColumnGroup():Iter() do
+		local dz=tc:IsLocation(LOCATION_MZONE) and 1 or (1 << 8)
 		if tc:IsSequence(5,6) then
-			dz1 = tc:IsControler(tp) and (dz << tc:GetSequence()) or (dz << (16 + tc:GetSequence()))
-			dz2 = tc:IsControler(tp) and (dz << (16 + (11 - tc:GetSequence()))) or (dz << (11 - tc:GetSequence()))
-			dz = dz1|dz2
+			local dz1=tc:IsControler(tp) and (dz << tc:GetSequence()) or (dz << (16 + tc:GetSequence()))
+			local dz2=tc:IsControler(tp) and (dz << (16 + (11 - tc:GetSequence()))) or (dz << (11 - tc:GetSequence()))
+			dz=dz1|dz2
 		else
-			dz = tc:IsControler(tp) and (dz << tc:GetSequence()) or (dz << (16 + tc:GetSequence()))
+			dz=tc:IsControler(tp) and (dz << tc:GetSequence()) or (dz << (16 + tc:GetSequence()))
 		end
-		zone = zone &~dz
+		zone=zone&~dz
 	end
 	return zone
 end

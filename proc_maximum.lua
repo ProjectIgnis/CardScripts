@@ -148,6 +148,9 @@ end
 function Card.WasMaximumModeSide(c)
 	return c:GetFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD)~=0
 end
+function Card.WasMaximumMode(c)
+	return c:GetFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD)~=0 or c:GetFlagEffect(FLAG_MAXIMUM_CENTER_PREONFIELD)~=0
+end
 --I used Gemini as a reference for that function, while waiting for more information
 function Auxiliary.IsMaximumMode(effect)
 	local c=effect:GetHandler()
@@ -384,7 +387,7 @@ initial_effect()
 
 -- handling for tribute summon
 function Maximum.cfilter(c,tp)
-    return c:IsReason(REASON_SUMMON) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
+    return c:IsReason(REASON_SUMMON) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:WasMaximumMode()
 end
 function Maximum.tribcon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(Maximum.cfilter,1,nil,tp)
@@ -409,7 +412,6 @@ function Maximum.battleop(e,tp,eg,ep,ev,re,r,rp)
 		tc:SetReason(eg:GetFirst():GetReason())
 	end
 end
-
 if not traprush then
 		traprush=Effect.GlobalEffect()
 		traprush:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

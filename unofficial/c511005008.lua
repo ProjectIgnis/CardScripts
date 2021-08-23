@@ -1,4 +1,5 @@
---Pappycorn
+--オヤコーン (Manga)
+--Papa-Corn (Manga)
 --original script by Shad3
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,12 +12,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={511002672}
-function s.fil(c)
-	return c:IsCode(511002672) and c:IsFaceup()
-end
 function s.val(e,c)
-	if Duel.IsExistingMatchingCard(s.fil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then
+	if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,511002672),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) then
 		return 1000
 	end
-		return 0
+	return 0
 end

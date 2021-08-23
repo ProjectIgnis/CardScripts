@@ -90,9 +90,10 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
-	if c:IsRelateToEffect(e) and c:IsAbleToRemove() and #g>0 then
-		g:AddCard(c)
-		if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
+	if c:IsRelateToEffect(e) and c:IsAbleToRemove() then g:AddCard(c) end
+	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
+		local og=Duel.GetOperatedGroup()
+		if og:IsContains(c) then
 			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
 		end
 	end

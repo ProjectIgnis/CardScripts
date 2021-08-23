@@ -1,5 +1,5 @@
 --人攻智能ME-PSY-YA
---Antagonistic Intelligence ME-PSY-YA
+--Antihuman Intelligence ME-PSY-YA
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.gycon)
+	e3:SetTarget(s.gytg)
 	e3:SetOperation(s.gyop)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
@@ -68,18 +69,24 @@ end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler())
 end
+function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local g=eg:Filter(Card.IsLocation,nil,LOCATION_MZONE)
+	Duel.SetTargetCard(g)
+end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
-	for tc in aux.Next(eg) do
+	local g=Duel.GetTargetCards(e)
+	for tc in aux.Next(g) do
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		--Send to GY
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetCountLimit(1)
 		e1:SetCondition(s.con)
 		e1:SetOperation(s.op)
 		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetCountLimit(1)
 		e1:SetLabelObject(tc)
 		Duel.RegisterEffect(e1,tp)
 	end

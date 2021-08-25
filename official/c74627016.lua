@@ -1,6 +1,6 @@
 --ＴＧ タンク・ラーヴァ
 --T.G. Tank Grub
---Dcripted by Logical Nonsense
+--Scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Non-tuner

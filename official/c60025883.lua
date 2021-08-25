@@ -1,5 +1,5 @@
 --決闘竜 デュエル・リンク・ドラゴン
---Duel Link Dragon
+--Duel Link Dragon, the Duel Dragon
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xc2}
-s.listed_names={id+1}
+s.listed_names={60025883}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsType,1,nil,TYPE_SYNCHRO,lc,sumtype,tp)
 end

@@ -1,4 +1,5 @@
 --ダメージ・トランスレーション
+--Damage Translation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,6 +22,7 @@ function s.initial_effect(c)
 		end)
 	end)
 end
+s.listed_names={35268888}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if r&REASON_EFFECT~=0 then
 		s[ep]=s[ep]+1

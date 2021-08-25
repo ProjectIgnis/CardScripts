@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={TOKEN_XIANGJIAN}
 s.listed_series={0x16d}
 function s.spcostfilter(c)
 	return (c:IsSetCard(0x16d) or (c:IsMonster() and c:IsRace(RACE_WYRM))) and c:IsDiscardable(REASON_COST)

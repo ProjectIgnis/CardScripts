@@ -1,4 +1,5 @@
 --ナイトメア・デーモンズ
+--Nightmare Archfiends
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={42956964}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil) end
 	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,nil)

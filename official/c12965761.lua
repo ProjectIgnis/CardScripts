@@ -1,4 +1,5 @@
 --デス・デンドル
+--Des Dendle
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsCode,46571052),true)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tkop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={46571052}
+s.listed_names={12965762,46571052}
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.IsUnionState(e) and eg:GetFirst()==e:GetHandler():GetEquipTarget()
 end

@@ -18,6 +18,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_names={23331401}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and c:IsControler(tp)
 end

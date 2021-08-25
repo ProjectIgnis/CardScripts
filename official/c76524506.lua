@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.scop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={71645243}
+s.listed_names={TOKEN_ROSE}
 function s.filter(c)
 	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_FIELD) and c:IsFaceup() and c:IsAbleToHand()
 end
@@ -60,8 +60,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 		if Duel.Destroy(tc,REASON_EFFECT)>0 then
 			if Duel.GetLocationCount(p,LOCATION_MZONE)>0 
-				and Duel.IsPlayerCanSpecialSummonMonster(tp,71645243,0,TYPES_TOKEN,800,800,2,RACE_PLANT,ATTRIBUTE_DARK,POS_FACEUP_ATTACK,p) then
-				local token=Duel.CreateToken(tp,71645243)
+				and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_ROSE,0,TYPES_TOKEN,800,800,2,RACE_PLANT,ATTRIBUTE_DARK,POS_FACEUP_ATTACK,p) then
+				local token=Duel.CreateToken(tp,TOKEN_ROSE)
 				Duel.SpecialSummon(token,0,tp,p,false,false,POS_FACEUP_ATTACK)
 			end
 		end

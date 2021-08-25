@@ -1,4 +1,5 @@
 --D－HERO ダブルガイ
+--Destiny HERO - Double Dude
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -21,6 +22,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={28355719}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsReason(REASON_DESTROY) then

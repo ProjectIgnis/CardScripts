@@ -1,4 +1,5 @@
 --ジュラック・スピノス
+--Jurrac Spinos
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={44689689}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	return #eg==1 and tc:GetReasonCard()==e:GetHandler()

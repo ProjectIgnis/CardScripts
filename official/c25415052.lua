@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.retreg)
 	c:RegisterEffect(e3)
 end
+s.listed_names={TOKEN_SHINOBIRD}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
 end
@@ -91,7 +92,7 @@ function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 		else
 			return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 				and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-				and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,1500,1500,4,RACE_WINGEDBEAST,ATTRIBUTE_WIND)
+				and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_SHINOBIRD,0,TYPES_TOKEN,1500,1500,4,RACE_WINGEDBEAST,ATTRIBUTE_WIND)
 		end
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
@@ -103,9 +104,9 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and c:IsFaceup() and Duel.SendtoHand(c,nil,REASON_EFFECT)~=0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,1500,1500,4,RACE_WINGEDBEAST,ATTRIBUTE_WIND) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_SHINOBIRD,0,TYPES_TOKEN,1500,1500,4,RACE_WINGEDBEAST,ATTRIBUTE_WIND) then
 		for i=1,2 do
-			local token=Duel.CreateToken(tp,id+1)
+			local token=Duel.CreateToken(tp,TOKEN_SHINOBIRD)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		end
 		Duel.SpecialSummonComplete()

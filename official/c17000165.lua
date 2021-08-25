@@ -2,7 +2,6 @@
 -- Reptilianne Recoil
 -- Scripted by Hatter
 local s,id=GetID()
-local REPTILIANNE_TOKEN=21179144
 function s.initial_effect(c)
 	-- Activate
 	local e1=Effect.CreateEffect(c)
@@ -34,6 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.ctlop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={TOKEN_REPTILIANNE}
 s.listed_series={0x3c}
 function s.desfilter(c,ft)
 	return c:IsFaceup() and c:IsAttack(0) and (ft>0 or c:IsInMainMZone())
@@ -76,7 +76,7 @@ function s.ctltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.ctlfilter(chkc,ft) end
 	if chk==0 then
 		return Duel.IsExistingTarget(s.ctlfilter,tp,0,LOCATION_MZONE,1,nil,ft)
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,REPTILIANNE_TOKEN,0,TYPES_TOKEN,0,0,1,RACE_REPTILE,ATTRIBUTE_EARTH,POS_FACEUP,1-tp)
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_REPTILIANNE,0,TYPES_TOKEN,0,0,1,RACE_REPTILE,ATTRIBUTE_EARTH,POS_FACEUP,1-tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local g=Duel.SelectTarget(tp,s.ctlfilter,tp,0,LOCATION_MZONE,1,1,nil,ft)
@@ -89,9 +89,9 @@ function s.ctlop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	if Duel.GetControl(tc,tp) and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,REPTILIANNE_TOKEN,0,TYPES_TOKEN,0,0,1,RACE_REPTILE,ATTRIBUTE_EARTH,POS_FACEUP,1-tp) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_REPTILIANNE,0,TYPES_TOKEN,0,0,1,RACE_REPTILE,ATTRIBUTE_EARTH,POS_FACEUP,1-tp) then
 		Duel.BreakEffect()
-		local token=Duel.CreateToken(tp,REPTILIANNE_TOKEN)
+		local token=Duel.CreateToken(tp,TOKEN_REPTILIANNE)
 		Duel.SpecialSummon(token,0,tp,1-tp,false,false,POS_FACEUP)
 	end
 end

@@ -1,4 +1,5 @@
 --スプリット・D・ローズ
+--Regenerating Rose
 local s,id=GetID()
 function s.initial_effect(c)
 	--token
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={31986289}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end

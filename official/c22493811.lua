@@ -1,4 +1,5 @@
 --アリの増殖
+--Multiplication of Ants
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={22493812}
 function s.cfilter(c,ft,tp)
 	return c:IsRace(RACE_INSECT) and (ft>1 or (c:GetSequence()<5 and c:IsControler(tp)))
 end

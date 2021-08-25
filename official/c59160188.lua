@@ -54,6 +54,7 @@ function s.initial_effect(c)
 	e8:SetOperation(s.clearop)
 	c:RegisterEffect(e8)
 end
+s.listed_names={59160189}
 function s.relval(e,re,r,rp)
 	return re and re:IsActivated() and (r&REASON_COST)~=0
 end

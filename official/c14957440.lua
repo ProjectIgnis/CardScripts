@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tkop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={14957441}
 function s.atkfilter(c)
 	return c:IsFacedown() or c:IsFaceup() and not c:IsType(TYPE_TUNER)
 end

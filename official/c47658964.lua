@@ -1,4 +1,5 @@
 --紅蓮の炎壁
+--Searing Fire Wall
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={47658965}
 s.listed_series={0x39}
 function s.cfilter(c)
 	return c:IsSetCard(0x39) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)

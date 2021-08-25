@@ -1,5 +1,5 @@
 --業神ー不知火 
---Shiranui Skillsaga
+--Shiranui Swordsaga
 --scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,6 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tkop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={26326542}
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and Card.IsCanChangePosition(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsCanChangePosition,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

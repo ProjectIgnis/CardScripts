@@ -1,4 +1,5 @@
 --ヴィシャス・クロー
+--Vicious Claw
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
-s.listed_names={id}
+s.listed_names={75524093}
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=e:GetHandler():GetEquipTarget()
 	if chk==0 then return tg and tg:IsReason(REASON_BATTLE) end

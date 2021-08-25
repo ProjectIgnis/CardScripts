@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SUMMON,s.counterfilter)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
+s.listed_names={2819436}
 s.listed_series={0xfa}
 function s.counterfilter(c)
 	return not c:IsType(TYPE_EFFECT)

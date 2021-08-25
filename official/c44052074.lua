@@ -1,4 +1,5 @@
 --古代の機械射出機
+--Ancient Gear Catapult
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -26,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tkop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={44052075}
 s.listed_series={0x7}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0

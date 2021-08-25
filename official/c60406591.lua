@@ -1,4 +1,5 @@
 --デモンバルサム・シード
+--Sinister Seeds
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,6 +27,7 @@ function s.initial_effect(c)
 		end)
 	end)
 end
+s.listed_names={60406592}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	s[0]=ep
 	s[1]=math.floor(ev/500)

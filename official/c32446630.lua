@@ -1,4 +1,5 @@
 --CNo.43 魂魄傀儡鬼神カオス・マリオネッター
+--Number C43: High Manipulator of Chaos
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.xyz_number=43
-s.listed_names={56051086}
+s.listed_names={56051086,32446631}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,56051086)
 end

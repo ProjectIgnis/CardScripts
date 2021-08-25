@@ -14,8 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={63442605}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return not Duel.IsTurnPlayer(tp)
 end
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:HasLevel()

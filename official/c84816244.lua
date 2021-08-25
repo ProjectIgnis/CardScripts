@@ -1,4 +1,5 @@
 --ドングルドングリ
+--Datacorn
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tkop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={84816245}
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_CYBERSE,ATTRIBUTE_DARK) end

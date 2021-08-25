@@ -1,4 +1,5 @@
 --堕天使アスモディウス
+--Darklord Asmodeus
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -30,6 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={85771020}
 function s.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FAIRY) and c:IsAbleToGrave()
 end

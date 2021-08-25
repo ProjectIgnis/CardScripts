@@ -1,4 +1,5 @@
 --スネークポット
+--Cobra Jar
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={86801872}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)

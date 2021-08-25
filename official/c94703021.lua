@@ -1,4 +1,5 @@
 --クラスター・コンジェスター
+--Cluster Congester
 local s,id=GetID()
 function s.initial_effect(c)
 	--token
@@ -27,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tkop2)
 	c:RegisterEffect(e3)
 end
+s.listed_names={94703022}
 function s.tkcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_MZONE,0,nil,TYPE_LINK)==0
 end

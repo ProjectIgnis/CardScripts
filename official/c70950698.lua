@@ -1,4 +1,5 @@
 --ブート・スタッガード
+--Boot Staggered
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -24,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tkop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={70950699}
 function s.spcfilter(c,tp)
 	return c:IsControler(tp) and c:IsRace(RACE_CYBERSE)
 end

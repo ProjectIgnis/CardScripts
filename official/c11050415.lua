@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
-s.listed_names={41440148,id+1}
+s.listed_names={41440148,TOKEN_HIPPO}
 
 function s.filter(c,e,tp)
 	return c:IsCode(41440148) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if ft<=0 or (Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and ft>1) then return end
-		if Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_BEAST,ATTRIBUTE_EARTH)
+		if Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_HIPPO,0,TYPES_TOKEN,0,0,1,RACE_BEAST,ATTRIBUTE_EARTH)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.BreakEffect()
 			local c=e:GetHandler()
@@ -80,5 +80,5 @@ function s.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA)
 end
 function s.atlimit(e,c)
-	return not c:IsCode(id+1)
+	return not c:IsCode(TOKEN_HIPPO)
 end

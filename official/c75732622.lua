@@ -1,4 +1,5 @@
 --トーチ・ゴーレム
+--Grinder Golem
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -21,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spcop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={75732623}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()

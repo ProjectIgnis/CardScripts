@@ -1,5 +1,5 @@
 --戦華史略－大丈夫之義
---Ancient Warriors Saga - A Man's Honor
+--Ancient Warriors Saga - Chivalrous Path
 --Scripted by DyXel
 
 local s,id=GetID()
@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e4:SetOperation(function(_,_,_,_,ev)Duel.NegateActivation(ev)end)
 	c:RegisterEffect(e4)
 end
+s.listed_names={82255873}
 s.listed_series={0x137}
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and

@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x120}
-s.listed_names={id}
+s.listed_names={43664495}
 
 function s.cfilter(c)
 	return c:IsSetCard(0x120) and c:IsDiscardable()

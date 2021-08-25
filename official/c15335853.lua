@@ -45,13 +45,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.listed_series={0x101b}
-s.listed_names={31533705}
+s.listed_names={TOKEN_MECHA_PHANTOM_BEAST}
 function s.lvval(e,c)
 	local tp=c:GetControler()
 	local lv=0
 	for i=0,4 do
 		local tc=Duel.GetFieldCard(tp,LOCATION_MZONE,i)
-		if tc and tc:IsCode(31533705) then lv=lv+tc:GetLevel() end
+		if tc and tc:IsCode(TOKEN_MECHA_PHANTOM_BEAST) then lv=lv+tc:GetLevel() end
 	end
 	return lv
 end

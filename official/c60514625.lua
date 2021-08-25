@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={60514626}
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	if #eg~=1 then return false end
 	local tc=eg:GetFirst()

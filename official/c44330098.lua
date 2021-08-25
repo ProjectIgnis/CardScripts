@@ -1,4 +1,5 @@
 --冥府の使者ゴーズ
+--Gorz the Emissary of Darkness
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -36,6 +37,7 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e1)
 	c:RegisterEffect(e3)
 end
+s.listed_names={44330099}
 function s.filter(c)
 	return not c:IsStatus(STATUS_LEAVE_CONFIRMED)
 end

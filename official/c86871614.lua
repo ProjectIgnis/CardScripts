@@ -1,4 +1,5 @@
 --クローン複製
+--Cloning
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,6 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
+s.listed_names={86871615}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end

@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 end
-s.listed_names={id+1}
+s.listed_names={1426715}
 s.xyz_number=48
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp

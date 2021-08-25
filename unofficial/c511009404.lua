@@ -1,4 +1,5 @@
---Performapal Sky Illusion
+--スカイ・イリュージョン
+--Sky Illusion
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	--
+	--Indestructible
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -38,14 +39,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={73734821}
-function s.cfilter(c)
+function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsCode(73734821) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,c)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) 
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -57,10 +57,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffect(e1)
-			local atk=tc:GetTextAttack()
-			if atk>0 then
-				Duel.SetLP(tp,Duel.GetLP(tp)-atk)
-			end
+		end
+		local atk=tc:GetTextAttack()
+		if atk>0 then
+			Duel.SetLP(tp,Duel.GetLP(tp)-atk)
 		end
 	end
 end

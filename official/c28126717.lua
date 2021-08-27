@@ -44,9 +44,11 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g1=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,tp)
 	if #g1>0 then
 		Duel.ConfirmCards(1-tp,g1)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g2=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK,0,1,1,nil,g1:GetFirst():GetCode())
 		if #g2>0 and Duel.Remove(g2,POS_FACEUP,REASON_EFFECT)>0 then
 			Duel.BreakEffect()

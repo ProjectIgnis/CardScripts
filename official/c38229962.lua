@@ -46,7 +46,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0x172}
 function s.indcon(e)
-	return e:GetHandler():IsAttackBelow(3000)
+	local c=e:GetHandler()
+	return c:IsSummonType(SUMMON_TYPE_LINK) and c:IsAttackBelow(3000)
 end
 function s.cfilter(c,tp,tc,ft,spcheck)
 	return c:IsRace(RACE_INSECT) and (c~=tc or (spcheck and (ft>0 or c:IsInMainMZone(tp))))

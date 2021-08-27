@@ -1,4 +1,4 @@
---弩級軍貫－いくら型一番艦
+--空母軍貫－しらうお型特務艦
 --Carrier Suship - Icefish-Class Auxiliary Dish
 --Scripted by DyXel
 

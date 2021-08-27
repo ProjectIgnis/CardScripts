@@ -1,4 +1,4 @@
---ジーナの蟲惑魔
+--ふわんだりぃず×ろびーな
 --Flundereeze x Robina
 --Logical Nonsense
 --Substitute ID
@@ -80,6 +80,7 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 		local sg1=Duel.GetMatchingGroup(s.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 		if #sg1>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.BreakEffect()
+			Duel.ShuffleHand(tp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
 			local sg2=sg1:Select(tp,1,1,nil):GetFirst()
 			Duel.Summon(tp,sg2,true,nil)

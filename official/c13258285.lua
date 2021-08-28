@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Fusion Summon
-	local fusparam=aux.FilterBoolFunction(Card.IsSetCard,0x26e)
+	local fusparam=aux.FilterBoolFunction(Card.IsSetCard,0x173)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -23,20 +23,20 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(function(_,tp)return Duel.IsTurnPlayer(1-tp)end)
 	e2:SetCost(s.cost)
 	e2:SetTarget(s.sctg)
 	e2:SetOperation(s.scop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x26e}
+s.listed_series={0x173}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,600) end
 	Duel.PayLPCost(tp,600)
 end
 function s.scfilter(c)
-	return c:IsSetCard(0x26e) and c:IsSynchroSummonable(nil)
+	return c:IsSetCard(0x173) and c:IsSynchroSummonable(nil)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_EXTRA,0,1,nil) end

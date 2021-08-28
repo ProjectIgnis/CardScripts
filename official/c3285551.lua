@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	-- Count activated monster effects
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.actfilter)
 end
-s.listed_names={TOKEN_BRAVE,100417029}
+s.listed_names={TOKEN_BRAVE,39568067}
 function s.actfilter(re)
 	local rc=re:GetHandler()
 	return not (re:IsActiveType(TYPE_MONSTER) and rc:IsOnField() and not rc:IsSummonType(SUMMON_TYPE_SPECIAL))
@@ -47,13 +47,13 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.plfilter(c)
-	return c:IsCode(100417029) and not c:IsForbidden()
+	return c:IsCode(39568067) and not c:IsForbidden()
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not s.sptg(e,tp,eg,ep,ev,re,r,rp,0) then return end
 	local token=Duel.CreateToken(tp,TOKEN_BRAVE)
 	if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,100417029),tp,LOCATION_ONFIELD,0,1,nil)
+		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,39568067),tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.plfilter,tp,LOCATION_DECK,0,1,nil) 
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)

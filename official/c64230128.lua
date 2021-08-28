@@ -42,10 +42,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={TOKEN_BRAVE,100417030,id}
+s.listed_names={TOKEN_BRAVE,65952776,id}
 --No Activations during BP
 function s.eqfilter(c)
-	return c:GetEquipGroup():IsExists(Card.IsCode,1,nil,100417030)
+	return c:GetEquipGroup():IsExists(Card.IsCode,1,nil,65952776)
 end
 function s.actcon(e)
 	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(s.eqfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

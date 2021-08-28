@@ -1,3 +1,4 @@
+--連命共有
 --Engagement Destiny
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,10 +15,10 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	e:SetLabel(cv)
+	if cv then e:SetLabel(cv) end
 	if ex and (cp==1-tp or cp==PLAYER_ALL) then return true end
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
-	e:SetLabel(cv)
+	if cv then e:SetLabel(cv) end
 	return ex and (cp==1-tp or cp==PLAYER_ALL) and Duel.IsPlayerAffectedByEffect(1-tp,EFFECT_REVERSE_RECOVER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

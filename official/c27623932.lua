@@ -51,15 +51,15 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.eqfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-			local ec=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.eqfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
-			if not ec then return end
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-			local tg=Duel.SelectMatchingCard(tp,s.eqfilter2,tp,LOCATION_MZONE,0,1,1,nil,ec)
-			if #tg==0 then return end
-			Duel.HintSelection(tg,true)
-			local ectg=tg:GetFirst()
-			Duel.BreakEffect()
-			Duel.Equip(tp,ec,ectg)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+		local ec=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.eqfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
+		if not ec then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+		local tg=Duel.SelectMatchingCard(tp,s.eqfilter2,tp,LOCATION_MZONE,0,1,1,nil,ec)
+		if #tg==0 then return end
+		Duel.HintSelection(tg,true)
+		local ectg=tg:GetFirst()
+		Duel.BreakEffect()
+		Duel.Equip(tp,ec,ectg)
 	end
 end

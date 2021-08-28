@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_BECOME_TARGET)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.efdrcon)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
@@ -32,13 +32,13 @@ function s.initial_effect(c)
 	e3:SetCondition(s.btdrcon)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x26e}
+s.listed_series={0x173}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,600) end
 	Duel.PayLPCost(tp,600)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x26e) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x173) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -53,7 +53,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.drconfilter(c,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x26e)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x173)
 end
 function s.efdrcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and eg:IsExists(s.drconfilter,1,nil,tp)

@@ -22,16 +22,16 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_LEAVE_GRAVE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={100417014}
-s.listed_series={0x270}
+s.listed_names={43863925}
+s.listed_series={0x174}
 function s.hspcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x270),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x174),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -42,7 +42,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,100417014),tp,LOCATION_ONFIELD,0,1,nil) then
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,43863925),tp,LOCATION_ONFIELD,0,1,nil) then
 		Duel.BreakEffect()
 		Duel.Recover(tp,800,REASON_EFFECT)
 	end
@@ -51,7 +51,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return rp==1-tp
 end
 function s.spfilter(c,e,tp,mc,pg)
-	return c:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsSetCard(0x270) and mc:IsCanBeXyzMaterial(c,tp)
+	return c:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsSetCard(0x174) and mc:IsCanBeXyzMaterial(c,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

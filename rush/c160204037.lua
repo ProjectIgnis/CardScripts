@@ -12,9 +12,10 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCost(s.cost)
-	e1:SetOperation(s.spop)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={70368879}
 function s.cfilter(c)
 	return c:IsRace(RACE_DINOSAUR) and c:IsAbleToDeckAsCost()
 end

@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x26e}
+s.listed_series={0x173}
 --Negate Effect
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and not c:IsDisabled()
@@ -28,7 +28,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 end
 function s.recfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x26e)
+	return c:IsFaceup() and c:IsSetCard(0x173)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

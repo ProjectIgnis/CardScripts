@@ -42,10 +42,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={TOKEN_BRAVE,100417031,id}
+s.listed_names={TOKEN_BRAVE,92341815,id}
 --Protect
 function s.immtg(e,c)
-	return c:GetEquipGroup():IsExists(Card.IsCode,1,nil,100417031)
+	return c:GetEquipGroup():IsExists(Card.IsCode,1,nil,92341815)
 end
 function s.immval(e,te)
 	return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActivated()

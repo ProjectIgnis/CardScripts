@@ -15,10 +15,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x26e}
+s.listed_series={0x173}
 --Pop
 function s.filter(c)
-	return c:IsSetCard(0x26e) and c:IsFaceup()
+	return c:IsSetCard(0x173) and c:IsFaceup()
 end
 function s.tgfilter(c,punk)
 	return c:IsFacedown() or punk

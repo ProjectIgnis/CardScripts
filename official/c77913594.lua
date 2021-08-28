@@ -17,20 +17,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-s.listed_series={0x270}
+s.listed_series={0x174}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,800) end
 	Duel.PayLPCost(tp,800)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x270) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(0x174) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.listfilter(c,sc)
-	return c:IsSetCard(0x270) and c:IsFaceup() and c:IsMonster() and aux.IsCodeListed(sc,c:GetCode())
+	return c:IsSetCard(0x174) and c:IsFaceup() and c:IsMonster() and aux.IsCodeListed(sc,c:GetCode())
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

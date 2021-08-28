@@ -14,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x270}
+s.listed_series={0x174}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,800) end
 	Duel.PayLPCost(tp,800)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x270) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x174) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:IsExists(s.lfilter1,1,nil,sg)
@@ -96,8 +96,8 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x270) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsSetCard(0x174) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0x270)
+	return not c:IsOriginalSetCard(0x174)
 end

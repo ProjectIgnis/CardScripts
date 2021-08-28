@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
-	e2:SetCountLimit(1,id+100)
+	e2:SetCountLimit(1,id+1)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
@@ -30,13 +30,13 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,id+200)
+	e3:SetCountLimit(1,id+2)
 	e3:SetCondition(s.bravecon)
 	e3:SetTarget(s.pltg)
 	e3:SetOperation(s.plop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={TOKEN_BRAVE,100417025}
+s.listed_names={TOKEN_BRAVE,3285551}
 function s.bravecon(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,TOKEN_BRAVE),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
@@ -52,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsCode(100417025) and c:IsAbleToHand()
+	return c:IsCode(3285551) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end

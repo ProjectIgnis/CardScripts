@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x270))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x174))
 	e2:SetValue(s.tgval)
 	c:RegisterEffect(e2)
 	--Negate
@@ -38,18 +38,18 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetCountLimit(1,id+100)
+	e4:SetCountLimit(1,id+1)
 	e4:SetCondition(s.descon)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x270}
+s.listed_series={0x174}
 function s.tgval(e,re,rp)
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSummonLocation(LOCATION_GRAVE)
 end
 function s.negcfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_XYZ) and c:IsSetCard(0x270) and c:IsSummonPlayer(tp)
+	return c:IsSummonType(SUMMON_TYPE_XYZ) and c:IsSetCard(0x174) and c:IsSummonPlayer(tp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.negcfilter,1,nil,tp)
@@ -83,7 +83,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetLabel(ac)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
-	--Reset the card hint in the End Phase
+	--Reset the card hint at the end of the turn
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_TURN_END)
@@ -108,8 +108,8 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return (a:IsControler(tp) and a:IsSetCard(0x270))
-		or (at and at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(0x270))
+	return (a:IsControler(tp) and a:IsSetCard(0x174))
+		or (at and at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(0x174))
 end
 function s.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

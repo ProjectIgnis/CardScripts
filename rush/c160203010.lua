@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={70368879}
+s.listed_names={CARD_UPSTART_GOBLIN}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)==0
 end
@@ -25,7 +25,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
 end
 function s.sfilter(c)
-	return c:IsCode(70368879) and c:IsSSetable()
+	return c:IsCode(CARD_UPSTART_GOBLIN) and c:IsSSetable()
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local h1=Duel.Draw(tp,1,REASON_EFFECT)

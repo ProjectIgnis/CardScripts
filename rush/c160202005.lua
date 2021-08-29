@@ -14,10 +14,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160001017}
+s.listed_names={CARD_KURIBOTT}
 
 function s.filter(c)
-	return c:IsCode(160001017) and c:IsAbleToDeckAsCost()
+	return c:IsCode(CARD_KURIBOTT) and c:IsAbleToDeckAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,3,nil) end

@@ -1,3 +1,13 @@
+if not Group.Match then
+	Group.Match=function(g,filter,ex,...)
+		local excheck=(type(ex)=="Group" and function(c) return ex:IsContains(c) end) or (type(ex)=="Card" and function(c) return ex==c end) or aux.FALSE
+		local filterfunc=function(c,...)
+			return not filter(c,...) or excheck(c)
+		end
+		return g:Remove(filterfunc,nil,...)
+	end
+end
+
 --Utilities to be added to the core
 function Duel.GoatConfirm(tp,loc)
 	local dg,hg=Duel.GetFieldGroup(tp,loc&(LOCATION_HAND|LOCATION_DECK),0):Split(Card.IsLocation,nil,LOCATION_DECK)

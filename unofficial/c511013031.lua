@@ -1,31 +1,41 @@
---タスケルトン
---Bacon Saver
+--タスケルトン (Anime)
+--Bacon Saver (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(95360850,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCode(EVENT_BATTLE_START)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetHintTiming(TIMING_BATTLE_PHASE)
 	e1:SetCost(aux.bfgcost)
+	e1:SetCondition(s.atkcon)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
-function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
-	if not a then return false end
-	local g=Group.FromCards(a,Duel.GetAttackTarget())
-	if chk==0 then return g:IsExists(Card.IsControler,1,nil,tp) end
-	local sg=g:Filter(Card.IsControler,nil,tp)
-	Duel.SetTargetCard(sg)
+	local d=Duel.GetAttackTarget()
+	if a:IsControler(tp) and a:IsRelateToBattle() then
+		e:SetLabelObject(a)
+		return true
+	end
+	if d:IsControler(tp) and d:IsRelateToBattle() then
+		e:SetLabelObject(d)
+		return true
+	end
+	return false
+end
+function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local tc=e:GetLabelObject()
+	if chk==0 then return true end
+	Duel.SetTargetCard(tc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetTargetCards(e)
-	local tc=g:GetFirst()
-	while tc do
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -38,6 +48,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(1)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
 		tc:RegisterEffect(e2)
-		tc=g:GetNext()
 	end
 end

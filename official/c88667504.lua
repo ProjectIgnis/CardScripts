@@ -1,6 +1,7 @@
 --超整地破砕
 --Crusher Run
---scripted by Logical Nonsense
+--Logical Nonsense
+
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	--If EARTH machine destroyed, destroy 1 card
+	--Destroy 1 card on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--Set "Outrigger Expansion" or "Spin Turn"
+	--Set "Outrigger Expansion" or "Spin Turn" from Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -36,6 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={96462121,22866836}
+
 function s.desfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) 
 	and c:GetPreviousAttributeOnField()==ATTRIBUTE_EARTH and c:GetPreviousRaceOnField()==RACE_MACHINE
@@ -48,9 +50,9 @@ end
 	--Activation legality
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler():IsStatus(STATUS_CHAINING) and e:GetHandler() or nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetHandler() or nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 	--Destroy a card on field

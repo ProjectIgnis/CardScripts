@@ -1,9 +1,8 @@
 --烙印凶鳴
---Stigmata Ominous Cry
-
+--Screams of the Branded
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon 1 of your fusion monsters that is banished or in GY
+	--Special Summon 1 of your Fusion Monsters that is banished or in GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -20,15 +19,25 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
+	--Check for Fusion Monsters sent to the GY
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_TO_GRAVE)
+		ge1:SetOperation(s.checkop)
+		Duel.RegisterEffect(ge1,0)
+	end)
 end
 s.listed_names={CARD_ALBAZ}
-
-function s.cfilter(c,tid)
-	return c:GetTurnID()==tid and c:IsType(TYPE_FUSION)
+function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+	for tc in aux.Next(eg) do
+		if tc:IsType(TYPE_FUSION) then 
+			Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+		end
+	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tid=Duel.GetTurnCount()
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil,tid)
+	return Duel.GetFlagEffect(tp,id)>0
 end
 function s.filter(c,e,tp)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE)) and c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -46,26 +55,26 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
-function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_COST) and re:IsActivated()
-		and re:GetHandler():IsCode(CARD_ALBAZ)
-end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsReason(REASON_COST) and re and re:IsActivated() and re:IsActiveType(TYPE_MONSTER)
 		and re:GetHandler():IsCode(CARD_ALBAZ) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,1))
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetCountLimit(1,id+1)
+		e1:SetType(EFFECT_TYPE_QUICK_O)
+		e1:SetCode(EVENT_FREE_CHAIN)
 		e1:SetRange(LOCATION_GRAVE)
+		e1:SetCountLimit(1,id)
+		e1:SetHintTiming(TIMING_END_PHASE)
+		e1:SetCondition(s.setcon)
 		e1:SetTarget(s.settg)
 		e1:SetOperation(s.setop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
+end
+function s.setcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()==PHASE_END
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsSSetable() end

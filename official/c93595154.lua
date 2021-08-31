@@ -1,6 +1,5 @@
 --烙印の裁き
---Judgment of Stigmata
-
+--Judgment of the Branded
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy all of opponent's monsters, that has ATK >= than the targeted monster's ATK
@@ -44,26 +43,26 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-
-function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_COST) and re:IsActivated()
-		and re:GetHandler():IsCode(CARD_ALBAZ)
-end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsReason(REASON_COST) and re and re:IsActivated() and re:IsActiveType(TYPE_MONSTER)
 		and re:GetHandler():IsCode(CARD_ALBAZ) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,1))
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetCountLimit(1,id+1)
+		e1:SetType(EFFECT_TYPE_QUICK_O)
+		e1:SetCode(EVENT_FREE_CHAIN)
 		e1:SetRange(LOCATION_GRAVE)
+		e1:SetCountLimit(1,id)
+		e1:SetHintTiming(TIMING_END_PHASE)
+		e1:SetCondition(s.setcon)
 		e1:SetTarget(s.settg)
 		e1:SetOperation(s.setop)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
+end
+function s.setcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()==PHASE_END
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsSSetable() end

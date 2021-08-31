@@ -46,6 +46,7 @@ function s.atkval(e,c)
 end
 function s.cfilter(c,e,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
+		and c:IsLocation(LOCATION_MZONE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,e,tp)

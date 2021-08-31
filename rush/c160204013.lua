@@ -35,8 +35,11 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 	Duel.SetChainLimit(function(e)return not e:IsHasType(EFFECT_TYPE_ACTIVATE)end)
 end
+function s.filter(c,race)
+	return c:IsRace(race) and c:IsType(TYPE_NORMAL)
+end
 function s.desfilter(c,tp)
-	return c:IsFaceup() and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,1,nil,c:GetRace())
+	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,c:GetRace())
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)

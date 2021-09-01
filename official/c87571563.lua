@@ -37,6 +37,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SetTargetCard(sg)
+		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,sg,1,0,0)
 	else
 		e:SetCategory(0)
 		e:SetProperty(0)

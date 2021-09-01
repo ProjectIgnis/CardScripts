@@ -1,5 +1,5 @@
 -- 相剣大師－赤霄
--- Chi Xiao, the Xiangjian Grand Swordmaster
+-- Chi Xiao, the Grand Swordsoul Swordmaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -73,6 +73,7 @@ function s.ngop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		local c=e:GetHandler()
 		--Negate its effects
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)

@@ -1,4 +1,5 @@
 --氷結界の神精霊
+--Sacred Spirit of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -21,7 +22,7 @@ end
 s.listed_series={0x2f}
 function s.retreg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--to hand
+	--Return self to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetDescription(1104)
@@ -29,7 +30,11 @@ function s.retreg(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TEMP_REMOVE+RESET_PHASE+PHASE_END)
+	if e:GetCode() == EVENT_FLIP then
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	else
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TEMP_REMOVE-RESET_LEAVE+RESET_PHASE+PHASE_END)
+	end
 	e1:SetCondition(s.retcon)
 	e1:SetTarget(s.rettg)
 	e1:SetOperation(aux.SpiritReturnOperation)
@@ -37,6 +42,7 @@ function s.retreg(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	c:RegisterEffect(e2)
+	--Return opponent's monster to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetDescription(1104)
@@ -45,7 +51,11 @@ function s.retreg(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1)
-	e3:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TEMP_REMOVE+RESET_PHASE+PHASE_END)
+	if e:GetCode() == EVENT_FLIP then
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	else
+		e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TEMP_REMOVE-RESET_LEAVE+RESET_PHASE+PHASE_END)
+	end
 	e3:SetCondition(s.retcon2)
 	e3:SetTarget(s.rettg2)
 	e3:SetOperation(s.retop2)

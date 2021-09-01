@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_LEAVE_GRAVE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id+1)
-	e2:SetCondition(s.spcon)
+	e2:SetCondition(function(_,tp,_,_,_,_,_,rp)return rp==1-tp end)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -54,17 +54,15 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Recover(tp,800,REASON_EFFECT)
 	end
 end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	return rp==1-tp
-end
-function s.spfilter(c,e,tp,mc,pg)
+function s.spfilter(c,e,tp,mc)
 	return c:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsSetCard(0x174) and mc:IsCanBeXyzMaterial(c,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
-		local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(e:GetHandler()),tp,nil,nil,REASON_XYZ)
-		return #pg<=1 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,e:GetHandler(),pg)
+		local c=e:GetHandler()
+		local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
+		return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
@@ -72,8 +70,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) or c:IsControler(1-tp) or c:IsImmuneToEffect(e) then return end
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
+	if #pg>1 or (#pg==1 and not pg:IsContains(c)) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,c,pg):GetFirst()
+	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,c):GetFirst()
 	if sc then
 		local mg=Group.FromCards(c)
 		sc:SetMaterial(mg)

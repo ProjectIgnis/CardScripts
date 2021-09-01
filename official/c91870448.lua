@@ -41,13 +41,15 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local d=Duel.GetAttackTarget()
-	if chk==0 then return d and not d:IsControler(tp) and d:IsFaceup() and d:IsType(TYPE_EFFECT) end
+	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_SZONE,tp)>0
+		and d and d:IsControler(1-tp) and d:IsFaceup() and d:IsType(TYPE_EFFECT) end
 	d:CreateEffectRelation(e)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
-	if d:IsRelateToEffect(e) then
-		Duel.MoveToField(d,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true)
+	if d:IsRelateToBattle() and d:IsControler(1-tp) and d:IsRelateToEffect(e) and not d:IsImmuneToEffect(e) then
+		if not Duel.MoveToField(d,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true) then return end
+		--Treated as a Continuous Trap
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetCode(EFFECT_CHANGE_TYPE)
 		e1:SetType(EFFECT_TYPE_SINGLE)

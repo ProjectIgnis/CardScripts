@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_REMOVE)
-	e2:SetCountLimit(1,id+1,EFFECT_COUNT_CODE_DUEL)
+	e2:SetCountLimit(1,{id,1},EFFECT_COUNT_CODE_DUEL)
 	c:RegisterEffect(e2)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

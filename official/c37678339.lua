@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e3:SetCost(s.spcost)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
-	e3:SetCountLimit(1,id+1)
+	e3:SetCountLimit(1,{id,1})
 	e3:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e3)
 end

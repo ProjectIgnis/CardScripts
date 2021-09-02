@@ -55,7 +55,7 @@ function s.op(e)
 			local te=eff:GetLabelObject()
 			if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
 			local resetflag,resetcount=te:GetReset()
-			local rm,max,code,flag=te:GetCountLimit()
+			local rm,max,code,flag,hopt=te:GetCountLimit()
 			local prop1,prop2=te:GetProperty()
 			local e1=Effect.CreateEffect(c)
 			if te:GetDescription() then
@@ -70,7 +70,7 @@ function s.op(e)
 			e1:SetCondition(s.copycon)
 			e1:SetCost(s.copycost)
 			if max>0 then
-				e1:SetCountLimit(max,code,flag)
+				e1:SetCountLimit(max,{code,hopt},flag)
 			end
 			if te:GetTarget() then
 				e1:SetTarget(te:GetTarget())

@@ -64,8 +64,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:GetFlagEffect(id)>0 then
 		for _,te in ipairs(s[0][tc]) do
-			local _,ctmax,ctcode,ctflag=te:GetCountLimit()
-			te:SetCountLimit(ctmax,ctcode,ctflag)
+			local _,ctmax,ctcode,ctflag,hopt=te:GetCountLimit()
+			te:SetCountLimit(ctmax,{ctcode,hopt},ctflag)
 		end
 	end
 end

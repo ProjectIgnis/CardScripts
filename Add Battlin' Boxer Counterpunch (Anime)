@@ -1,5 +1,4 @@
-Yugipedia link : https://yugipedia.com/wiki/Battlin%27_Boxer_Counterpunch_(anime)
-Script text
+
 
 --BK カウンターブロー
 function c120000032.initial_effect(c)

@@ -1,4 +1,5 @@
 --心鎮壷
+--Xing Zhen Hu
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -42,6 +43,8 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,re)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
-		c:SetCardTarget(tc)
+		if tc:IsFacedown() then
+			c:SetCardTarget(tc)
+		end
 	end
 end

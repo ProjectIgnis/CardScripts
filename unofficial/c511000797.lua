@@ -1,4 +1,5 @@
---Counterattack Ecdysis
+--反撃の脱皮
+--Counterstrike Molt
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,tp)
 	local tc=g:GetFirst()
-	e:SetLabel(tc:GetLevel())
+	if tc then e:SetLabel(tc:GetLevel()) end
 	return tc
 end
 function s.spfilter(c,e,tp,lv)

@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	--register effect
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetCondition(s.regcon)
 	e0:SetOperation(s.regop)
@@ -60,7 +61,7 @@ function s.valcheck(e,c)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetMaterial():FilterCount(Card.IsType,nil,TYPE_NORMAL)>0
+	return c:IsSummonType(SUMMON_TYPE_FUSION) and e:GetLabel()>0
 end
 function s.chkfilter(c,label)
 	return c:GetFlagEffect(label)>0

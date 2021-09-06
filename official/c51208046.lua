@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCondition(s.spcon2)
-	e3:SetCountLimit(1,id+1)
+	e3:SetCountLimit(1,{id,1})
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 	if not GhostBelleTable then GhostBelleTable={} end

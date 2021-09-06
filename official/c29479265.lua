@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetCountLimit(1,id+1)
+	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.descon2)
 	c:RegisterEffect(e2)
 	--destroy!!
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetCondition(aux.TRUE)
-	e3:SetCountLimit(1,id+2)
+	e3:SetCountLimit(1,{id,2})
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}

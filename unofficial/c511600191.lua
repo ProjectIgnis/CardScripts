@@ -74,8 +74,8 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		for _,eff in ipairs(effs) do
 			local te=eff:GetLabelObject()
 			if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
-			local _,_,ctlcode=te:GetCountLimit()
-			if ctlcode&EFFECT_COUNT_CODE_SINGLE>0 then
+			local _,_,_,ctlflag=te:GetCountLimit()
+			if ctlflag&EFFECT_COUNT_CODE_SINGLE>0 then
 				local chk=true
 				for _,te2 in ipairs(OPTEffs[rc]) do
 					if te==te2 then chk=false end
@@ -91,9 +91,9 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp)
 	OPTEffs={}
 	for _,c in pairs(AffectedEffs) do
 		for _,te in ipairs(c) do
-			local _,_,_,ctflag=te:GetCountLimit()
+			local _,_,ctcode,ctflag,hopt=te:GetCountLimit()
 			if ctflag&EFFECT_COUNT_CODE_SINGLE>0 then
-				te:SetCountLimit(1,ctcode)
+				te:SetCountLimit(1,{ctcode,hopt},ctflag)
 			end
 		end
 	end
@@ -107,11 +107,11 @@ function s.tptop(e,tp,eg,ep,ev,re,r,rp)
 			if te2==te then chk=false end
 		end
 		if chk then
-			local _,ctmax,ctcode,ctflag=te:GetCountLimit()
+			local _,ctmax,ctcode,ctflag,hopt=te:GetCountLimit()
 			if ctflag&EFFECT_COUNT_CODE_SINGLE>0 then
-				te:SetCountLimit(ctmax+1,ctcode,ctflag)
+				te:SetCountLimit(ctmax+1,{ctcode,hopt},ctflag)
 			else
-				te:SetCountLimit(ctmax,ctcode,ctflag)
+				te:SetCountLimit(ctmax,{ctcode,hopt},ctflag)
 			end
 			table.insert(AffectedEffs[eqc],te)
 		end

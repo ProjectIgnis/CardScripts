@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	--destroy s/t
 	local e3=e2:Clone()
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCountLimit(1,id+1)
+	e3:SetCountLimit(1,{id,1})
 	e3:SetCost(s.descost2)
 	e3:SetTarget(s.destg2)
 	e3:SetOperation(s.desop2)

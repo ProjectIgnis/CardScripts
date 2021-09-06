@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.rmcon)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
-	e2:SetCountLimit(1,id+1)
+	e2:SetCountLimit(1,{id,1})
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x122}

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	--Special Summon if not co-linked
 	local e3=e2:Clone()
 	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCountLimit(1,id+1)
+	e3:SetCountLimit(1,{id,1})
 	e3:SetCondition(aux.NOT(s.spcon))
 	e3:SetLabel(0)
 	c:RegisterEffect(e3)

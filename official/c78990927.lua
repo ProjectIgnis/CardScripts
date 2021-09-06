@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(0,TIMING_MAIN_END)
-	e2:SetCountLimit(1,id+1)
+	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.ritcon)
 	c:RegisterEffect(e2)
 end

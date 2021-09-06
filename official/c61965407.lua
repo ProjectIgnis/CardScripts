@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.tgcon)
 	e3:SetTarget(s.tgtg)
 	e3:SetOperation(s.tgop)
-	e3:SetCountLimit(1,id+1)
+	e3:SetCountLimit(1,{id,1})
 	e3:SetLabel(2)
 	c:RegisterEffect(e3)
 	--Send itself to the GY

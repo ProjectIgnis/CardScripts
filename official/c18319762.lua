@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_ICEBARRIER_REPLACE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCountLimit(1,id+1)
+	e3:SetCountLimit(1,{id,1})
 	c:RegisterEffect(e3)
 end
 function s.sumcon(e)

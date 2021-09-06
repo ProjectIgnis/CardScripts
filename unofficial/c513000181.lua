@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x27}
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLevelBelow(2)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLevelBelow(4)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

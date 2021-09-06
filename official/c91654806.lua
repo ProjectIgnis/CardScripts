@@ -1,5 +1,5 @@
 --宇宙との交信
---In Touch with the Cosmos
+--Cosmos Channelling
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetCountLimit(id)
+	e2:SetCountLimit(1,id)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCost(s.cost)
 	e2:SetTarget(s.sptg)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DRAW)
-	e3:SetCountLimit({id,1})
+	e3:SetCountLimit(1,{id,1})
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCondition(s.drcon)
 	e3:SetTarget(s.drtg)

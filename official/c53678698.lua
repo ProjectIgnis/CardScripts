@@ -1,4 +1,5 @@
 --武神－ミカヅチ
+--Bujin Mikazuchi
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -37,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x88}
 function s.cfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsSetCard(0x88) and c:IsRace(RACE_BEASTWARRIOR) and c:IsReason(REASON_DESTROY)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

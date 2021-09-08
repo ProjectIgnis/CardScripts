@@ -1,4 +1,5 @@
 --コアキメイル・クルセイダー
+--Koa'ki Meiru Crusader
 local s,id=GetID()
 function s.initial_effect(c)
 	--cost
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
-	e2:SetCondition(s.thcon)
+	e2:SetCondition(aux.bdocon)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
@@ -63,10 +64,6 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		Duel.Destroy(c,REASON_COST)
 	end
-end
-function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsRelateToBattle() and c:GetBattleTarget():IsType(TYPE_MONSTER)
 end
 function s.filter(c)
 	return c:IsSetCard(0x1d) and c:IsAbleToHand()

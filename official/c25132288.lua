@@ -1,4 +1,5 @@
 --ライトエンド・ドラゴン
+--Light End Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -40,7 +41,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		c:RegisterEffect(e2)
-		if tc:IsRelateToEffect(e) and tc:IsFaceup() and not c:IsHasEffect(EFFECT_REVERSE_UPDATE) then
+		if tc:IsRelateToBattle() and tc:IsRelateToEffect(e) and tc:IsFaceup()
+			and not c:IsHasEffect(EFFECT_REVERSE_UPDATE) then
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)

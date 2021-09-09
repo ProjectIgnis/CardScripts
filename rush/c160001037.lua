@@ -25,9 +25,11 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
-	Duel.HintSelection(Group.FromCards(tc))
-	if tc and tc:IsFaceup() then
+	local tg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	if #tg==0 then return end
+	Duel.HintSelection(tg)
+	local tc=tg:GetFirst()
+	if tc:IsFaceup() then
 		--Inflict piercing damage
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3208)

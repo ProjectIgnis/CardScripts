@@ -94,7 +94,9 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp,chk)
 	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		if og:IsContains(c) then
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,1)
+			local ct=0
+			if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_END then ct=1 end
+			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,ct+1)
 		end
 	end
 end

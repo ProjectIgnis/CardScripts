@@ -67,15 +67,8 @@ function s.piercingOp(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	--Effect
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		-- atk boost
 		-- Piercing
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetDescription(3208)
-		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_PIERCE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffectRush(e2)
+		c::AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		--Attack up to twice
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)

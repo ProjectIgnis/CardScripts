@@ -29,12 +29,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		--Piercing
-		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(3208)
-		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_PIERCE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e1)
+		c:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 	end
 end

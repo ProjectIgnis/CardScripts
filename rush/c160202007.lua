@@ -41,13 +41,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(400)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffectRush(e1)
-			local e2=Effect.CreateEffect(c)
-			e2:SetDescription(3208)
-			e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_PIERCE)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			tc:RegisterEffectRush(e2)
+			--piercing
+			tc:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
 			if tc:IsLevel(10) then
 				Duel.Damage(1-tp,1000,REASON_EFFECT)
 			end

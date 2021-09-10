@@ -36,13 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.HintSelection(g)
 			-- Piercing
-			local e2=Effect.CreateEffect(e:GetHandler())
-			e2:SetDescription(3208)
-			e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_PIERCE)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			g:GetFirst():RegisterEffectRush(e2)
+			g:GetFirst():AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
 		end
 	end
 end

@@ -44,14 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			local temp=Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 			if temp==1 then
-				--Piercing
-				local e2=Effect.CreateEffect(c)
-				e2:SetDescription(3208)
-				e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-				e2:SetType(EFFECT_TYPE_SINGLE)
-				e2:SetCode(EFFECT_PIERCE)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-				c:RegisterEffect(e2)
+				c:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			end
 		end
 	end

@@ -1,4 +1,5 @@
 --輝竜星－ショウフク
+--Baxia, Brightness of the Yang Zing
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -57,7 +58,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter(c,ft)
-	return ft>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5)
+	return ft>0 or c:IsInMainMZone()
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -80,7 +81,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ex,g2=Duel.GetOperationInfo(0,CATEGORY_SPECIAL_SUMMON)
 	local tc1=g1:GetFirst()
 	local tc2=g2:GetFirst()
-	if tc1:IsRelateToEffect(e) and tc2:IsRelateToEffect(e) and Duel.Destroy(tc1,REASON_EFFECT)~=0 then
+	if tc1:IsRelateToEffect(e) and Duel.Destroy(tc1,REASON_EFFECT)>0 and tc2:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc2,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 		Duel.HintSelection(g)
 		if #g>0 then
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 			--Prevent non-fiend from attacking
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)

@@ -38,7 +38,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x8d}
-s.curgroup=nil
 function s.matfilter(c,lc,stype,tp)
 	return c:IsSetCard(0x8d,lc,stype,tp) and not c:IsType(TYPE_LINK,lc,stype,tp)
 end
@@ -48,15 +47,8 @@ function s.extraval(chk,summon_type,e,...)
 		if summon_type~=SUMMON_TYPE_LINK or sc~=e:GetHandler() then
 			return Group.CreateGroup()
 		else
-			s.curgroup=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_MZONE,0,nil)
-			s.curgroup:KeepAlive()
-			return s.curgroup
+			return Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_MZONE,0,nil)
 		end
-	elseif chk==2 then
-		if s.curgroup then
-			s.curgroup:DeleteGroup()
-		end
-		s.curgroup=nil
 	end
 end
 function s.dacon(e,tp,eg,ep,ev,re,r,rp)

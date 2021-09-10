@@ -18,7 +18,7 @@ function s.condition(e,tp)
 	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_ONFIELD,0,1,e:GetHandler(),TYPE_MONSTER)
 end
 function s.tdfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAttack(0)	and c:IsAbleToDeckAsCost()
+	return c:IsType(TYPE_MONSTER) and c:IsAttack(0)	and c:IsAbleToDeck()
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttack(0) and c:IsLevelAbove(5)

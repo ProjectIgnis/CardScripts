@@ -32,7 +32,7 @@ if chk==0 then return Duel.IsPlayerCanDraw(tp,3) end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)
 end
 function s.ctfilter(c)
-	return c:IsCode(160202014,160202015,160202016) and c:IsAbleToDeckAsCost()
+	return c:IsCode(160202014,160202015,160202016) and c:IsAbleToDeck()
 end
 function s.ctcheck(sg,e,tp)
 	return sg:GetClassCount(Card.GetCode)==#sg

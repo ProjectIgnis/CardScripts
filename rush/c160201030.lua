@@ -21,7 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for psychic monsters in GY
 function s.cfilter(c)
-	return c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()
+	return c:IsRace(RACE_PSYCHIC) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end

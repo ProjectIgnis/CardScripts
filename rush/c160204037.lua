@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_UPSTART_GOBLIN}
 function s.cfilter(c)
-	return c:IsRace(RACE_DINOSAUR) and c:IsAbleToDeckAsCost()
+	return c:IsRace(RACE_DINOSAUR) and c:IsAbleToDeck()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),e,tp) end

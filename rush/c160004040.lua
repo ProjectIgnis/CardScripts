@@ -12,11 +12,11 @@ function s.initial_effect(c)
 end
 function s.tdfilter(c,tp)
 	local race=c:GetRace()
-	return c:IsAbleToDeckAsCost()
+	return c:IsAbleToDeck()
 		and Duel.IsExistingMatchingCard(s.tdfilter2,tp,LOCATION_GRAVE,0,1,c,race)
 end
 function s.tdfilter2(c,race)
-	return c:IsRace(race) and c:IsAbleToDeckAsCost()
+	return c:IsRace(race) and c:IsAbleToDeck()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelBelow(8) and not c:IsMaximumModeSide()

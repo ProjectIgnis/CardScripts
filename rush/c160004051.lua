@@ -39,7 +39,7 @@ function s.spfilter(c,e,sp)
 	return c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
 function s.tdfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

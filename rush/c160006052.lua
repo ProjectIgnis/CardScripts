@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.atkcostfilter(c)
-	return c:IsRace(RACE_PYRO) and c:IsAbleToDeckAsCost()
+	return c:IsRace(RACE_PYRO) and c:IsAbleToDeck()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcostfilter,tp,LOCATION_GRAVE,0,4,nil) end

@@ -20,7 +20,7 @@ function s.maxCon(e)
 	return e:GetHandler():IsMaximumModeCenter()
 end
 function s.tdfilter(c)
-	return c:IsAbleToDeckAsCost()
+	return c:IsAbleToDeck()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end

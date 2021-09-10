@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 s.listed_names={160001024,160002019}
 function s.descostfilter(c)
-	return c:IsCode(160001024,160002019) and c:IsAbleToDeckAsCost()
+	return c:IsCode(160001024,160002019) and c:IsAbleToDeck()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.descostfilter,tp,LOCATION_GRAVE,0,1,nil) end

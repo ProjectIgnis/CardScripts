@@ -1,4 +1,5 @@
 --幻影騎士団ダスティローブ
+--The Phantom Knights of Ancient Cloak
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk/def up
@@ -40,10 +41,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) or Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE)==0 then return end
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) or c:IsFacedown() or Duel.ChangePosition(c,POS_FACEUP_DEFENSE)==0 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(e:GetHandler())
+		--Increase ATK/DEF
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

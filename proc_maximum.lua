@@ -428,3 +428,150 @@ if not traprush then
 function Card.IsCanChangePositionRush(c)
 	return c:IsCanChangePosition() and not c:IsMaximumMode()
 end
+
+
+
+--Add function to simplify some effect
+
+--c: the card gaining effect
+--reset: when the effect should disappear 
+--rc: the card giving effect
+--condition: condition for the effect to be "active"
+--properties: properties beside EFFECT_FLAG_CLIENT_HINT
+function Card.AddPiercing(c,reset,rc,condition,properties)
+	local e1=nil
+	if rc then 
+		e1=Effect.CreateEffect(rc)
+	else 
+		e1=Effect.CreateEffect(c)
+	end
+	e1:SetDescription(3208)
+	if not properties then properties=0 end
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+properties)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_PIERCE)
+	if condition then e1:SetCondition(condition) end
+	if reset then e1:SetReset(reset) end
+	c:RegisterEffectRush(e1)
+end
+function Card.AddDirectAttack(c,reset,rc,condition,properties)
+	local e1=nil
+	if rc then 
+		e1=Effect.CreateEffect(rc)
+	else 
+		e1=Effect.CreateEffect(c)
+	end
+	e1:SetDescription(3205)
+	if not properties then properties=0 end
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+properties)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_DIRECT_ATTACK)
+	if condition then e1:SetCondition(condition) end
+	if reset then e1:SetReset(reset) end
+	c:RegisterEffectRush(e1)
+end
+--attack each monster once each
+function Card.AddAdditionalAttackOnMonsterAll(c,reset,rc,value,condition,properties)
+	local e1=nil
+	if rc then 
+		e1=Effect.CreateEffect(rc)
+	else 
+		e1=Effect.CreateEffect(c)
+	end
+	--Attack all
+	e1:SetDescription(3215)
+	if not properties then properties=0 end
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+properties)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_ATTACK_ALL)
+	if value then e1:SetValue(value) end
+	if condition then e1:SetCondition(condition) end
+	if reset then e1:SetReset(reset) end
+	c:RegisterEffectRush(e1)
+end
+function Card.AddAdditionalAttack(c,atknum,reset,rc,condition,properties)
+	local e1=nil
+	if rc then 
+		e1=Effect.CreateEffect(rc)
+	else 
+		e1=Effect.CreateEffect(c)
+	end
+	if atknum==1 then e1:SetDescription(3201) end
+	if not properties then properties=0 end
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+properties)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_EXTRA_ATTACK)
+	e1:SetValue(atknum)
+	if condition then e1:SetCondition(condition) end
+	if reset then e1:SetReset(reset) end
+	c:RegisterEffectRush(e1)
+end
+function Card.AddAdditionalAttackOnMonster(c,atknum,reset,rc,condition,properties)
+	local e1=nil
+	if rc then 
+		e1=Effect.CreateEffect(rc)
+	else 
+		e1=Effect.CreateEffect(c)
+	end
+	if atknum==1 then e1:SetDescription(3202) end
+	if not properties then properties=0 end
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+properties)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
+	e1:SetValue(atknum)
+	if condition then e1:SetCondition(condition) end
+	if reset then e1:SetReset(reset) end
+	c:RegisterEffectRush(e1)
+end
+--ctype: card type that cannot destroy
+function Card.AddCannotBeDestroyedEffect(c,ctype,reset,rc,condition,properties)
+	local e1=nil
+	if rc then 
+		e1=Effect.CreateEffect(rc)
+	else 
+		e1=Effect.CreateEffect(c)
+	end
+	if ctype==TYPE_MONSTER then e1:SetDescription(3068)
+	elseif ctype==TYPE_SPELL then e1:SetDescription(3069)
+	elseif ctype==TYPE_TRAP then e1:SetDescription(3070)
+	end
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	if not properties then properties=0 end
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+properties)
+	e1:SetValue(aux.indesfilter)
+	e1:SetLabel(ctype)
+	if condition then e1:SetCondition(condition) end
+	if reset then e1:SetReset(reset) end
+	c:RegisterEffectRush(e1)
+end
+function aux.indesfilter(e,te)
+	local ctype=e:GetLabel()
+	return te:IsActiveType(ctype) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+end
+function Card.AddCannotBeDestroyedBattle(c,reset,value,rc,condition,properties)
+	--Cannot be destroyed battle
+	local e1=nil
+	if rc then 
+		e1=Effect.CreateEffect(rc)
+	else 
+		e1=Effect.CreateEffect(c)
+	end
+	e1:SetDescription(3000)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	if not properties then properties=0 end
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+properties)
+	if value then e1:SetValue(value) else e1:SetValue(1) end
+	if condition then e1:SetCondition(condition) end
+	if reset then e1:SetReset(reset) end
+	c:RegisterEffect(e1)
+end
+
+--Rush cost utilities
+-- p: player that mill
+-- num: number of card send from the top to the gy
+-- reason: reason of the mill (REASON_EFFECT or REASON_COST)
+function aux.DeckMill(p,num,reason)
+	if Duel.DiscardDeck(p,num,reason)<num then return false else return true end 
+end

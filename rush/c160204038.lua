@@ -26,7 +26,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
-	if Duel.PayLPCost(tp,600)>0 then
+	Duel.PayLPCost(tp,600) 
 		--Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
 			local atk=Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_GRAVE,0,e:GetHandler(),RACE_MACHINE)
@@ -45,7 +45,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				end
 			end
 		end
-	end
 end
 function s.tdfilter(c,tp)
 	return c:IsCode(160006062,160006063) and c:IsAbleToDeckAsCost()

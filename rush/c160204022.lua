@@ -68,7 +68,7 @@ function s.piercingOp(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		-- Piercing
-		c::AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		c:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		--Attack up to twice
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)

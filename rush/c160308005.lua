@@ -24,7 +24,7 @@ function s.filter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMatchingGroupCount(s.filter,tp,0,LOCATION_MZONE,1,nil)>0
+	if chk==0 then return Duel.GetMatchingGroupCount(s.filter2,tp,0,LOCATION_MZONE,1,nil)>0
 	end
 end
 function s.filter2(c)

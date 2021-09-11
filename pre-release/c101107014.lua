@@ -63,7 +63,7 @@ function s.posfilter(c)
 end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,2,REASON_EFFECT)~=2 then return end
-	local og=Duel.GetOperatedGroup():Filter(Card.IsSetCard,nil,0x8d):Filter(Card.IsLocation,nil,LOCATION_GRAVE)
+	local og=Duel.GetOperatedGroup():Match(Card.IsSetCard,nil,0x8d):Match(Card.IsLocation,nil,LOCATION_GRAVE)
 	if #og==0 then return end
 	local g1=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 	local g2=Duel.GetMatchingGroup(s.posfilter,tp,0,LOCATION_MZONE,0,nil)

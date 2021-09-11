@@ -16,7 +16,7 @@ end
 --function that return if the player (tp) can activate the skill
 --condition is no chain, it is your turn and it is the Main Phase
 function Auxiliary.CanActivateSkill(tp)
-	return Duel.GetCurrentChain()==0 and Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return Duel.GetCurrentChain()==0 and Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()
 end
 --If the card have an "You draw 1 less card at the beginning of the Duel" condition
 Auxiliary.Drawless={}

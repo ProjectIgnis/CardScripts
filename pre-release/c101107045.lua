@@ -64,10 +64,11 @@ function s.spfilter(c,e,tp)
 end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local gy1=Duel.DiscardDeck(tp,4,REASON_EFFECT)
+	local og=Duel.GetOperatedGroup()
 	local gy2=Duel.DiscardDeck(1-tp,4,REASON_EFFECT)
 	if gy1==0 and gy2==0 then return end
-	local og=Duel.GetOperatedGroup()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and og:IsExists(s.spfilter,1,nil,e,tp)
+	og:Merge(Duel.GetOperatedGroup())
+	if #og>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and og:IsExists(s.spfilter,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

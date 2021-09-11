@@ -31,8 +31,6 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain()==0 and tp==Duel.GetTurnPlayer() and s[2+tp]>=1200 and aux.CanActivateSkill(tp) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	--ask if you want to activate the skill or not
-	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 	--Set 1 Statue to your S/T Zone
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)

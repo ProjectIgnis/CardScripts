@@ -48,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				and Duel.IsExistingMatchingCard(s.filter2,tp,0,LOCATION_ONFIELD,1,nil)
 				and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-					local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
+					local g=Duel.SelectMatchingCard(tp,s.filter2,tp,0,LOCATION_ONFIELD,1,1,nil)
 					g=g:AddMaximumCheck()
 					Duel.HintSelection(g)
 					Duel.BreakEffect()

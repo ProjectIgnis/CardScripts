@@ -47,7 +47,7 @@ function s.lvval(e,c,rc)
 end
 function s.tgval(e,re,rp)
 	local rc=re:GetHandler()
-	local loc=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION)
+	local loc=re:GetActivateLocation()
 	return re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and not rc:IsSummonLocation(LOCATION_GRAVE)
 		and rc:IsSummonType(SUMMON_TYPE_SPECIAL)
 end

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_WYRM) and c:IsAbleToDeck()
+	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_WYRM) and c:IsAbleToDeckAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end

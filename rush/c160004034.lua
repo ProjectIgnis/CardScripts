@@ -20,7 +20,7 @@ function s.condition(e,tp)
 	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_ONFIELD,0,1,e:GetHandler(),TYPE_MONSTER)
 end
 function s.tdfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PYRO) and c:IsAbleToDeck()
+	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PYRO) and c:IsAbleToDeckAsCost()
 	and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

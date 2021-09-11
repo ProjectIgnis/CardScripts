@@ -27,7 +27,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for fish monster
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FISH) and c:IsAbleToDeck()
+	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_FISH) and c:IsAbleToDeckAsCost()
 end
 	--If player has a fish monster to return to deck
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

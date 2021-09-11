@@ -31,7 +31,7 @@ function s.chlimit(e,ep,tp)
 	return not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.tdfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PLANT) and c:IsAbleToDeck()
+	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_PLANT) and c:IsAbleToDeckAsCost()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

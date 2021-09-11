@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN)
 end
 function s.cfilter(c)
-	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToDeck()
+	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToDeckAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),e,tp) end

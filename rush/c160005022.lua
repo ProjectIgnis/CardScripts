@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.tdfilter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_WARRIOR) and c:IsLevelAbove(7)	and c:IsAbleToDeck()
+	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_WARRIOR) and c:IsLevelAbove(7)	and c:IsAbleToDeckAsCost()
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_WARRIOR) and c:IsLevelAbove(7) and c:IsAbleToHand()

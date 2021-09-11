@@ -17,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer() and Duel.GetAttackTarget()==nil and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,3,nil)
 end
 function s.filter(c)
-	return c:IsRace(RACE_PLANT)  and c:IsAbleToDeckAsCost()
+	return c:IsRace(RACE_PLANT)  and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetAttacker()

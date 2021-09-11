@@ -17,7 +17,7 @@ end
 s.listed_names={CARD_KURIBOTT}
 
 function s.filter(c)
-	return c:IsCode(CARD_KURIBOTT) and c:IsAbleToDeckAsCost()
+	return c:IsCode(CARD_KURIBOTT) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,3,nil) end

@@ -48,5 +48,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 end
 function s.tdfilter(c,tp)
-	return c:IsCode(160006062,160006063) and c:IsAbleToDeckAsCost()
+	return c:IsCode(160006062,160006063) and c:IsAbleToDeckOrExtraAsCost()
 end

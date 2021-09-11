@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 
 function s.cfilter(c)
-	return c:IsRace(RACE_PLANT) and c:IsAbleToDeckAsCost()
+	return c:IsRace(RACE_PLANT) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),e,tp) end

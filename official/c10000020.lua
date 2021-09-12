@@ -1,4 +1,5 @@
 --オシリスの天空竜
+--Slifer the Sky Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
@@ -42,7 +43,7 @@ function s.initial_effect(c)
 	--atkdown
 	local e8=Effect.CreateEffect(c)
 	e8:SetDescription(aux.Stringid(id,1))
-	e8:SetCategory(CATEGORY_ATKCHANGE)
+	e8:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY)
 	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e8:SetRange(LOCATION_MZONE)
 	e8:SetCode(EVENT_SUMMON_SUCCESS)
@@ -73,21 +74,21 @@ end
 function s.adval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)*1000
 end
-function s.atkfilter(c,e,tp)
-	return c:IsControler(tp) and c:IsPosition(POS_FACEUP_ATTACK) and (not e or c:IsRelateToEffect(e))
+function s.atkfilter(c,tp)
+	return c:IsControler(1-tp) and c:IsPosition(POS_FACEUP_ATTACK)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.atkfilter,1,nil,nil,1-tp)
+	return eg:IsExists(s.atkfilter,1,nil,tp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) end
 	Duel.SetTargetCard(eg)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(s.atkfilter,nil,e,1-tp)
+	local g=Duel.GetTargetCards(e)
+	if #g==0 then return end
 	local dg=Group.CreateGroup()
 	local c=e:GetHandler()
-	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		local preatk=tc:GetAttack()
 		local e1=Effect.CreateEffect(c)
@@ -98,5 +99,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		if preatk~=0 and tc:GetAttack()==0 then dg:AddCard(tc) end
 	end
+	if #dg==0 then return end
+	Duel.BreakEffect()
 	Duel.Destroy(dg,REASON_EFFECT)
 end

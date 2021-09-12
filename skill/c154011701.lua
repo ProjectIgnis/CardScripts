@@ -44,6 +44,6 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_DISABLE_EFFECT)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e3)
+		tk:RegisterEffect(e3)
 	end
 end

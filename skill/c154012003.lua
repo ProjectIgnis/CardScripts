@@ -18,7 +18,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	--Onslaught
-	local random=math.random(1,2)
+	local random=Duel.GetRandomNumber(1,2)
 	for i=1,random do 
 		local token=Duel.CreateToken(tp,77585513)
 		Duel.SendtoDeck(token,tp,2,REASON_EFFECT)

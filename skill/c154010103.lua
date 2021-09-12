@@ -16,7 +16,6 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0xbc}
 function s.checkop()
 	for tp=0,1 do
 		if not s[tp] then s[tp]=Duel.GetLP(tp) end

@@ -52,7 +52,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-	--Draw 1 random Insect
+	--Draw 1 random GK
 	local g=Duel.GetMatchingGroup(tp,s.filter,LOCATION_DECK,0,nil)
 	local tc=g:RandomSelect(tp,1):GetFirst()
 	Duel.MoveSequence(tc,SEQ_DECKTOP)

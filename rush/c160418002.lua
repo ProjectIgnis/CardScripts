@@ -28,6 +28,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	g=g:AddMaximumCheck()
 	if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
 		if g:GetFirst():IsCode(CARD_SEVENS_ROAD_MAGICIAN) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Draw(tp,1,REASON_EFFECT)

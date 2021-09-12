@@ -27,7 +27,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0xc1}
 function s.regcfilter(c,tp)
-	return c:IsRace(RACE_PSYCHIC) and c:IsFaceup() and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
+	return c:IsRace(RACE_PSYCHIC) and c:IsFaceup() and c:GetPreviousRaceOnField()&RACE_PSYCHIC~=0
+		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.regcfilter,1,e:GetHandler(),tp)
@@ -59,4 +60,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tc)
 	end
 end
-

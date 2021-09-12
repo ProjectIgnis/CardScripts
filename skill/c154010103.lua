@@ -50,7 +50,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	--opd register
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
-	--Draw 1 random Insect
+	--Draw 1 random card of your choice
 	local g=Duel.GetFieldGroup(tp,LOCATION_DECK,0)
 	local tc=g:Select(tp,1,1,nil):GetFirst()
 	Duel.MoveSequence(tc,SEQ_DECKTOP)

@@ -39,7 +39,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	--Add 1 of the 3 Gate Guardians
 	local guard={98434877,62340868,25955164}
-	local create=guard[math.random(1,#guard)]   
+	local create=guard[Duel.GetRandomNumber(1,#guard)]   
 	local tc=Duel.CreateToken(tp,create)
 	if tc then
 		Duel.SendtoHand(tc,tp,REASON_EFFECT)

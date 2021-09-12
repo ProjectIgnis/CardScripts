@@ -20,7 +20,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 	if Duel.SendtoDeck(sg,tp,2,REASON_EFFECT) then
 		local table={86569121,13676474}
-		local mask=table[math.random(1,#table)]   
+		local mask=table[Duel.GetRandomNumber(1,#table)]   
 		local tc=Duel.CreateToken(tp,mask)
 		if tc then
 			Duel.MoveToField(tc,tp,tp,LOCATION_MZONE,POS_FACEUP_DEFENSE,true)

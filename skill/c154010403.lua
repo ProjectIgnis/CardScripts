@@ -8,7 +8,7 @@ s.listed_names={18144506}
 s.listed_series={0x64}
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
-	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_HAND,0,4,nil,0x64) and Duel.GetFlagEffect(ep,id)==0 and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_CANNOT_TO_HAND)
+	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,4,nil,0x64) and Duel.GetFlagEffect(ep,id)==0 and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_CANNOT_TO_HAND)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))

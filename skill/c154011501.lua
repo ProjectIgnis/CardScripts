@@ -31,7 +31,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	Duel.RegisterFlagEffect(ep,id,0,0,0)
 	local power={12580477,18144506,83764718,71413901,44095762}
-	local create=power[math.random(1,#power)]   
+	local create=power[Duel.GetRandomNumber(1,#power)]   
 	local tc=Duel.CreateToken(tp,create)
 	if tc then
 		Duel.SendtoHand(tc,tp,REASON_EFFECT)

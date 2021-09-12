@@ -15,11 +15,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)
-		and c:GetBattledGroupCount()==1 and c:GetEffectCount(EFFECT_EXTRA_ATTACK)==0
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:GetAttackedCount()==1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -38,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 		tc:RegisterEffect(e1)
 		--Opponent cannot activate cards/effects until end of damage step
 		local e2=Effect.CreateEffect(c)

@@ -46,6 +46,35 @@ drawlesseff:SetCode(EVENT_STARTUP)
 drawlesseff:SetOperation(aux.drawlessop)
 Duel.RegisterEffect(drawlesseff,0)
 
+--function to check for LP loss for related skills
+function Auxiliary.AddLPLossCheck()
+    Auxiliary.PreviousLp={}
+    Auxiliary.LPLoss={}
+    Auxiliary.LPLoss[0]=0
+    Auxiliary.LPLoss[1]=0
+
+    local ge1=Effect.GlobalEffect()
+    ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    ge1:SetCode(EVENT_ADJUST)
+    ge1:SetOperation(function()
+        for tempP=0,1 do
+            local currentLP=Duel.GetLP(tempP)
+            if not Auxiliary.PreviousLp[tempP] then Auxiliary.PreviousLp[tempP]=currentLP end
+            if Auxiliary.PreviousLp[tempP]>currentLP then
+                Auxiliary.LPLoss[tempP]=Auxiliary.LPLoss[tempP]+(Auxiliary.PreviousLp[tempP]-currentLP)
+                Auxiliary.PreviousLp[tempP]=currentLP
+            end
+        end
+    end)
+    Duel.RegisterEffect(ge1,0)
+    function Auxiliary.GetLPLoss(p)
+	return Auxiliary.LPLoss[p]
+    end
+    function Auxiliary.ResetLPLoss(p)
+	Auxiliary.LPLoss[p]=0
+    end
+end
+
 -- proc for Field skills
 -- c: the skill (card)
 -- coverNum: the cover corresponding to the back (int)

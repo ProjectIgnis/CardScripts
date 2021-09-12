@@ -1,4 +1,4 @@
---Destiny Draw (DL Skill)
+--Sorcery Conduit
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -46,7 +46,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-	--Draw 1 random Dinosaur
+	--Draw 1 random Spellcaster
 	local g=Duel.GetMatchingGroup(tp,Card.IsRace,LOCATION_DECK,0,nil,RACE_SPELLCASTER)
 	local tc=g:RandomSelect(tp,1):GetFirst()
 	Duel.MoveSequence(tc,SEQ_DECKTOP)

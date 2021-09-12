@@ -15,7 +15,6 @@ function s.initial_effect(c)
 end
 s.listed_names={75782277}
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.SelectYesNo(tp,aux.Stringid(id,0)) then return end
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	--Play Harpie Hunting Ground

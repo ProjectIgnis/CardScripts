@@ -89,7 +89,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local sc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
 		if not sc then return end
-		Duel.HintSelection(Group.FromCards(sc))
+		Duel.HintSelection(Group.FromCards(sc),true)
 		Duel.BreakEffect()
 		if sc:IsCanChangePosition() and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.ChangePosition(sc,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
@@ -98,11 +98,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_UPDATE_DEFENSE)
 			e3:SetValue(500)
-			if sc==c then
-				e3:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-			else
-				e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-			end
+			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 			sc:RegisterEffect(e3)
 		end
 	end

@@ -25,7 +25,7 @@ function s.actcond(e,tp,eg,ep,ev,re,r,rp)
 	 return Duel.GetMatchingGroupCountRush(s.filter,e:GetHandler():GetControler(),0,LOCATION_MZONE,nil)>=2
 end
 function s.indtg(e,c)
-	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_FIEND)
+	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_FIEND) and c:IsFaceup()
 end
 function s.indesval(e,re)
 	return re:GetHandler():IsType(TYPE_TRAP)

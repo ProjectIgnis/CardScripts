@@ -123,7 +123,7 @@ function s.zarctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	g:Merge(g2)
 	g:Merge(g3)
 	g:Merge(g4)
-	if chk==0 then return #g1>0 and #g2>0 and #g3>0 and #g4>0 and Duel.IsExistingMatchingCard(s.zarcspfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.zarcspfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,4,tp,ZARC_LOC)
 end

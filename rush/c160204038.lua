@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil,tp)
 			if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 				local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-				if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)~0 then
+				if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)~0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 					Duel.Draw(tp,1,REASON_EFFECT)
 				end
 			end

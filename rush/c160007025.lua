@@ -16,7 +16,7 @@ function s.fupfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_SPIRIT_STADIUM)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.fupfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.fupfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,500) end

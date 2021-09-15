@@ -56,5 +56,5 @@ end
 function s.atktg(e,c)
 	local tp=e:GetHandlerPlayer()
 	local bc=c:GetBattleTarget()
-	return c:IsControler(1-tp) and bc:IsSetCard(0x16e) and bc:IsControler(tp)
+	return c:IsControler(1-tp) and bc and bc:IsSetCard(0x16e) and bc:IsControler(tp)
 end

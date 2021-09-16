@@ -76,8 +76,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.eqcheck(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabelObject() then e:GetLabelObject():DeleteGroup() end
-	local g=e:GetHandler():GetEquipGroup()
-	if g then g=g:Filter(s.spfilter,nil) end
+	local g=e:GetHandler():GetEquipGroup():Match(s.spfilter,nil)
 	g:KeepAlive()
 	e:SetLabelObject(g)
 end
@@ -108,7 +107,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		g=g:Select(tp,ft,ft,nil)
 	end
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 			tc:EnableGeminiState()
 			tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,64)

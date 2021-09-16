@@ -41,12 +41,12 @@ function s.initial_effect(c)
 end
 s.listed_names={TOKEN_BRAVE}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Group.CreateGroup()
-	g:AddCard(Duel.GetAttacker())
-	if Duel.GetAttackTarget() then g:AddCard(Duel.GetAttackTarget()) end
-	g=g:Filter(aux.IsCodeListed,nil,TOKEN_BRAVE)
-	for tc in aux.Next(g) do
-		Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE+PHASE_BATTLE,0,1)
+	local attacker,target=Duel.GetBattleMonster(tp)
+	if attacker and aux.IsCodeListed(attacker,TOKEN_BRAVE) then
+		Duel.RegisterFlagEffect(attacker:GetControler(),id,RESET_PHASE+PHASE_BATTLE,0,1)
+	end
+	if target and aux.IsCodeListed(target,TOKEN_BRAVE) then
+		Duel.RegisterFlagEffect(target:GetControler(),id,RESET_PHASE+PHASE_BATTLE,0,1)
 	end
 end
 function s.bravecon(e)

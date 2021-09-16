@@ -43,8 +43,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	if #tg>0 then
 		Duel.Destroy(tg,REASON_EFFECT)
-		local g=Duel.GetOperatedGroup()
-		g=g:Filter(Card.IsPreviousControler,nil,1-tp)
+		local g=Duel.GetOperatedGroup():Match(Card.IsPreviousControler,nil,1-tp)
 		if #g>0 and Duel.IsPlayerCanDraw(1-tp,#g) and Duel.SelectYesNo(1-tp,aux.Stringid(id,0)) then
 			Duel.BreakEffect()
 			Duel.Draw(1-tp,#g,REASON_EFFECT)

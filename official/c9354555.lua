@@ -1,4 +1,5 @@
 --フォトン・ベール
+--Photon Veil
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -33,8 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #sg==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local hg=sg:Select(tp,1,1,nil)
-	sg:RemoveCard(hg:GetFirst())
-	sg=sg:Filter(Card.IsCode,nil,hg:GetFirst():GetCode())
+	sg:Match(Card.IsCode,hg,hg:GetFirst():GetCode())
 	if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local tg=sg:Select(tp,1,2,nil)

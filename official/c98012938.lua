@@ -40,11 +40,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if not g then return end
-	g=g:Filter(s.hfilter,nil,e)
+	g:Match(s.hfilter,nil,e)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		local tc=g:GetFirst()
-		for tc in aux.Next(g) do
+		for tc in g:Iter() do
 			if tc:IsLocation(LOCATION_HAND) then
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_FIELD)

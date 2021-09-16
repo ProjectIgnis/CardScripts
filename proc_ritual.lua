@@ -93,10 +93,10 @@ function Ritual.Filter(c,filter,_type,e,tp,m,m2,forcedselection,specificmatfilte
 		return c:ritual_custom_condition(mg,forcedselection,_type)
 	end
 	if c.mat_filter then
-		mg=mg:Filter(c.mat_filter,c,tp)
+		mg:Match(c.mat_filter,c,tp)
 	end
 	if specificmatfilter then
-		mg=mg:Filter(specificmatfilter,nil,c,mg,tp)
+		mg:Match(specificmatfilter,nil,c,mg,tp)
 	end
 	local func=forcedselection and WrapTableReturn(forcedselection) or nil
 	if c.ritual_custom_check then
@@ -193,10 +193,10 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 					lv=math.max(1,lv)
 					Ritual.SummoningLevel=lv
 					local mat=nil
-					mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)
+					mg:Match(Card.IsCanBeRitualMaterial,tc,tc)
 					mg:Merge(mg2-tc)
 					if specificmatfilter then
-						mg=mg:Filter(specificmatfilter,nil,tc,mg,tp)
+						mg:Match(specificmatfilter,nil,tc,mg,tp)
 					end
 					if tc.ritual_custom_operation then
 						tc:ritual_custom_operation(mg,forcedselection,_type)
@@ -211,7 +211,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 							end
 						end
 						if tc.mat_filter then
-							mg=mg:Filter(tc.mat_filter,tc,tp)
+							mg:Match(tc.mat_filter,tc,tp)
 						end
 						if not mg:IsExists(Card.IsLocation,1,nil,LOCATION_OVERLAY) and ft>0 and not func then
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)

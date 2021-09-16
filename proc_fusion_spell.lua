@@ -135,8 +135,7 @@ function Fusion.SummonEffFilter(c,fusfilter,e,tp,mg,gc,chkf,value,sumlimit,nosum
 	--and Fusion Summoning effects that normally allow you to only use a single location
 	--(e.g. with "Flash Fusion" you can normally only use monsters on your field).
 	if efmg and #efmg>0 then
-		efmg=efmg:Filter(GetExtraMatEff,nil,c)
-		if #efmg>0 then
+		if #(efmg:Match(GetExtraMatEff,nil,c))>0 then
 			mg:Merge(efmg)
 		end
 	end
@@ -182,7 +181,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					if extrafil then
 						local ret = {extrafil(e,tp,mg1)}
 						if ret[1] then
-							Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
+							Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
 							mg1:Merge(ret[1])
 						end
 						checkAddition=ret[2]
@@ -192,7 +191,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 						return false
 					end
 					Fusion.CheckAdditional=checkAddition
-					mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
+					mg1:Match(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
 					Fusion.CheckExact=exactcount
 					Fusion.CheckMin=mincount
 					Fusion.CheckMax=maxcount
@@ -283,14 +282,13 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				if extrafil then
 					local ret = {extrafil(e,tp,mg1)}
 					if ret[1] then
-						Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
+						Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
 						extragroup=ret[1]
 						mg1:Merge(ret[1])
 					end
 					checkAddition=ret[2]
 				end
-				mg1=mg1:Filter(Card.IsCanBeFusionMaterial,nil,nil,value)
-				mg1=mg1:Filter(aux.NOT(Card.IsImmuneToEffect),nil,e)
+				mg1:Match(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
 				if gc and (not mg1:Includes(gc) or gc:IsExists(Fusion.ForcedMatValidity,1,nil,e)) then
 					Fusion.ExtraGroup=nil
 					return false

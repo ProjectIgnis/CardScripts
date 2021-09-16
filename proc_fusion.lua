@@ -141,7 +141,7 @@ function Fusion.OperationMix(insf,sub,...)
 						local eff={gc:GetCardEffect(EFFECT_FUSION_MAT_RESTRICTION)}
 						for i=1,#eff do
 							local f=eff[i]:GetValue()
-							mg=mg:Filter(Auxiliary.HarmonizingMagFilter,tc,eff[i],f)
+							mg:Match(Auxiliary.HarmonizingMagFilter,tc,eff[i],f)
 						end
 					end
 				end
@@ -641,7 +641,7 @@ function Fusion.OperationMixRepUnfix(insf,sub,minc,maxc,...)
 						local eff={gc:GetCardEffect(EFFECT_FUSION_MAT_RESTRICTION)}
 						for i=1,#eff do
 							local f=eff[i]:GetValue()
-							mg=mg:Filter(aux.NOT(Auxiliary.HarmonizingMagFilter),tc,eff[i],f)
+							mg:Match(aux.NOT(Auxiliary.HarmonizingMagFilter),tc,eff[i],f)
 						end
 					end
 				end

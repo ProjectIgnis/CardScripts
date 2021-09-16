@@ -253,19 +253,19 @@ function Duel.CheckReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 		maxc,use_hand,check,ex=minc,maxc,use_hand,check
 	end
 	if not ex then ex=Group.CreateGroup() end
-	local g,exg=Duel.GetReleaseGroup(tp,use_hand):Match(f and f or aux.TRUE,ex,table.unpack(params)):Split(Auxiliary.ReleaseCostFilter,nil,tp)
+	local mg=Duel.GetReleaseGroup(tp,use_hand):Match(f and f or aux.TRUE,ex,table.unpack(params))
+	local g,exg=mg:Split(Auxiliary.ReleaseCostFilter,nil,tp)
 	local specialchk=Auxiliary.MakeSpecialCheck(check,tp,exg,table.unpack(params))
-	local mg=g+exg
 	local mustg=g:Match(function(c,tp)return c:IsHasEffect(EFFECT_EXTRA_RELEASE) and c:IsControler(1-tp)end,nil,tp)
 	local sg=Group.CreateGroup()
 	return mg:Includes(mustg) and mg:IsExists(Auxiliary.RelCheckRecursive,1,nil,tp,sg,mg,exg,mustg,0,minc,maxc,specialchk)
 end
 function Duel.SelectReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 	if not ex then ex=Group.CreateGroup() end
-	local g,exg=Duel.GetReleaseGroup(tp,use_hand):Match(f and f or aux.TRUE,ex,...):Split(Auxiliary.ReleaseCostFilter,nil,tp)
+	local mg=Duel.GetReleaseGroup(tp,use_hand):Match(f and f or aux.TRUE,ex,...)
+	local g,exg=mg:Split(Auxiliary.ReleaseCostFilter,nil,tp)
 	local specialchk=Auxiliary.MakeSpecialCheck(check,tp,exg,...)
-	local mg=g+exg
-	local mustg=g:Filter(function(c,tp)return c:IsHasEffect(EFFECT_EXTRA_RELEASE) and c:IsControler(1-tp)end,nil,tp)
+	local mustg=g:Match(function(c,tp)return c:IsHasEffect(EFFECT_EXTRA_RELEASE) and c:IsControler(1-tp)end,nil,tp)
 	local sg=Group.CreateGroup()
 	local cancel=false
 	sg:Merge(mustg)
@@ -359,7 +359,7 @@ function Card.IsSummonLocation(c,loc)
 	return c:GetSummonLocation() & loc~=0
 end
 function Duel.GetTargetCards(e)
-	return Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	return Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Match(Card.IsRelateToEffect,nil,e)
 end
 --Checks whether the card is located at any of the sequences passed as arguments.
 function Card.IsSequence(c,...)

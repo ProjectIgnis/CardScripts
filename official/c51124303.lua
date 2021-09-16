@@ -60,7 +60,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			local mg2=Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_EXTRA,0,nil)
 			mg:Merge(mg2)
 		else
-			mg=mg:Filter(s.mzfilter,nil,tp)
+			mg:Match(s.mzfilter,nil,tp)
 		end
 		return mg:IsExists(s.filter,1,nil,e,tp)
 	end
@@ -74,7 +74,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local mg2=Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_EXTRA,0,nil)
 		mg:Merge(mg2)
 	else
-		mg=mg:Filter(Card.IsLocation,nil,LOCATION_MZONE)
+		mg:Match(Card.IsLocation,nil,LOCATION_MZONE)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local mat=mg:FilterSelect(tp,s.filter,1,1,nil,e,tp)

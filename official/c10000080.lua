@@ -60,6 +60,7 @@ end
 s.listed_names={CARD_RA}
 function s.ttcon2(e,c,minc,zone,relzone,exeff)
 	if c==nil then return true end
+	if minc>3 return false end
 	if exeff then
 		local ret=exeff:GetValue()
 		if type(ret)=="function" then
@@ -70,9 +71,8 @@ function s.ttcon2(e,c,minc,zone,relzone,exeff)
 		end
 	end
 	local tp=c:GetControler()
-	local mg=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
-	mg=mg:Filter(Auxiliary.IsZone,nil,relzone,tp)
-	return minc<=3 and Duel.CheckTribute(c,3,3,mg,1-tp,zone)
+	local mg=Duel.GetMatchingGroup(aux.IsZone,tp,0,LOCATION_MZONE,relzone,tp)
+	return Duel.CheckTribute(c,3,3,mg,1-tp,zone)
 end
 function s.tttg2(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
 	if exeff then
@@ -84,8 +84,7 @@ function s.tttg2(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
 			end
 		end
 	end
-	local mg=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
-	mg=mg:Filter(Auxiliary.IsZone,nil,relzone,tp)
+	local mg=Duel.GetMatchingGroup(aux.IsZone,tp,0,LOCATION_MZONE,relzone,tp)
 	local g=Duel.SelectTribute(tp,c,3,3,mg,1-tp,zone,true)
 	if g and #g>0 then
 		g:KeepAlive()

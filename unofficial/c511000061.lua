@@ -86,7 +86,7 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
-	g=g:Filter(Card.IsFaceup,nil)
+	g:Match(Card.IsFaceup,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetSum(Card.GetAttack))
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)

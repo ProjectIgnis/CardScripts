@@ -41,7 +41,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=Duel.SelectMatchingCard(tp,s.ritfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg,ft):GetFirst()
 		if tc then
-			mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)
+			mg:Match(Card.IsCanBeRitualMaterial,tc,tc)
 			local mat=nil
 			if ft>0 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)

@@ -27,9 +27,10 @@ function s.otfilter(c,tp)
 end
 function s.otcon(e,c,minc)
 	if c==nil then return true end
+	if minc>1 then return false end
 	local tp=c:GetControler()
 	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	return minc<=1 and Duel.CheckTribute(c,1,1,mg)
+	return Duel.CheckTribute(c,1,1,mg)
 end
 function s.ottg(e,c)
 	return c:IsLevelAbove(7)
@@ -37,7 +38,7 @@ end
 function s.ottgsum(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then
-		mg=mg:Filter(Card.IsControler,nil,tp)
+		mg:Match(Card.IsControler,nil,tp)
 	end
 	local sg=Duel.SelectTribute(tp,c,1,1,mg,nil,nil,true)
 	if sg then

@@ -49,41 +49,38 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and e:GetHandler():GetOverlayCount() > 0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function s.gfilter(c,rank)
-	return c:GetRank()==rank
-end
-function s.freezoneschk(c,tp,rp)
-	return Duel.GetLocationCountFromEx(tp,rp,nil,c)>0
+function s.gfilter(c,tp,rp,rank)
+	return not c:IsRank(rank) and Duel.GetLocationCountFromEx(tp,rp,nil,c)>0
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=c:GetOverlayGroup():GetClassCount(Card.GetCode)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
 	ct=math.min(ct,aux.CheckSummonGate(tp) or ct)
-	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp,rp)
-	if #g1>0 and ct>0 then
-		repeat
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local g2=g1:Select(tp,1,1,nil)
-			local tc=g2:GetFirst()
-			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e2)
-			g1:Remove(s.gfilter,nil,tc:GetRank())
-			g1=g1:Filter(s.freezoneschk,nil,tp,rp)
-			ct=ct-1
-		until #g1==0 or ct==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,1))
-		Duel.SpecialSummonComplete()
-		Duel.BreakEffect()
-		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
+	if ct>0 then
+		local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_EXTRA,0,nil,e,tp,rp)
+		if #g1>0 then
+			repeat
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+				local tc=g1:Select(tp,1,1,nil):GetFirst()
+				Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_DISABLE)
+				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				tc:RegisterEffect(e1)
+				local e2=Effect.CreateEffect(c)
+				e2:SetType(EFFECT_TYPE_SINGLE)
+				e2:SetCode(EFFECT_DISABLE_EFFECT)
+				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+				tc:RegisterEffect(e2)
+				g1:Match(s.gfilter,nil,tp,rp,tc:GetRank())
+				ct=ct-1
+			until #g1==0 or ct==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,1))
+			Duel.SpecialSummonComplete()
+			Duel.BreakEffect()
+			c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
+		end
 	end
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetType(EFFECT_TYPE_FIELD)

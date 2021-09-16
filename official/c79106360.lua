@@ -1,4 +1,5 @@
 --カオスポッド
+--Morphing Jar #2
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -16,19 +17,15 @@ end
 function s.filter(c)
 	return not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsAbleToDeck()
 end
+function s.filter2(c)
+	return c:IsLocation(LOCATION_DECK) and c:IsType(TYPE_MONSTER)
+end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SendtoDeck(rg,nil,0,REASON_EFFECT)
-	local ct1=0
-	local ct2=0
-	rg=Duel.GetOperatedGroup()
-	local tc=rg:GetFirst()
-	for tc in aux.Next(rg) do
-		if tc:IsLocation(LOCATION_DECK) and tc:IsType(TYPE_MONSTER) then
-			if tc:GetControler()==tp then ct1=ct1+1
-			else ct2=ct2+1 end
-		end
-	end
+	rg=Duel.GetOperatedGroup():Match(s.filter2,nil)
+	local ct1=rg:FilterCount(Card.IsControler,nil,tp)
+	local ct2=#rg-ct1
 	if ct1>0 then Duel.ShuffleDeck(tp) end
 	if ct2>0 then Duel.ShuffleDeck(1-tp) end
 	Duel.BreakEffect()
@@ -41,16 +38,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if g2 then Duel.ShuffleSetCard(g2) end
 end
 function s.spfilter(c,e,tp)
-	local lv=c:GetLevel()
-	return lv>0 and lv<=4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.sp(e,tp,ct)
 	local g=Duel.GetFieldGroup(tp,LOCATION_DECK,0)
 	local dt=#g
-	if dt==0 then return false end
+	if dt==0 then return end
 	local dlist={}
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		if tc:IsType(TYPE_MONSTER) then dlist[tc:GetSequence()]=tc end
 	end
 	local i=dt-1
@@ -69,13 +64,12 @@ function s.sp(e,tp,ct)
 	local conf=dt-last:GetSequence()
 	Duel.ConfirmDecktop(tp,conf)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	g=g:Filter(s.spfilter,nil,e,tp)
+	g:Match(s.spfilter,nil,e,tp)
 	if #g>ft then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		g=g:Select(tp,ft,ft,nil)
 	end
-	tc=g:GetFirst()
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		Duel.DisableShuffleCheck()
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
 	end

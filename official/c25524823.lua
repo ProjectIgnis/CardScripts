@@ -34,19 +34,18 @@ function s.initial_effect(c)
 	e4:SetLabelObject(e3)
 end
 s.listed_series={0x2e}
-function s.otfilter(c,tp)
-	return c:IsSetCard(0x2e) and (c:IsControler(tp) or c:IsFaceup())
+function s.otfilter(c,tp,relzone)
+	return (c:IsControler(tp) or c:IsFaceup()) and c:IsSetCard(0x2e) and aux.IsZone(relzone,tp)
 end
 function s.otcon(e,c,minc,zone,relzone,exeff)
 	if c==nil then return true end
+	if minc>1 or c:GetLevel()<=6 then return false end
 	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	mg=mg:Filter(Auxiliary.IsZone,nil,relzone,tp)
-	return c:GetLevel()>6 and minc<=1 and Duel.CheckTribute(c,1,1,mg,tp,zone)
+	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp,relzone)
+	return Duel.CheckTribute(c,1,1,mg,tp,zone)
 end
 function s.ottg(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
-	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	mg=mg:Filter(Auxiliary.IsZone,nil,relzone,tp)
+	local mg=Duel.GetMatchingGroup(s.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp,relzone)
 	local sg=Duel.SelectTribute(tp,c,1,1,mg,tp,zone,true)
 	if sg and #sg>0 then
 		sg:KeepAlive()
@@ -64,11 +63,7 @@ end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local ct=g:FilterCount(Card.IsSetCard,nil,0x2e)
-	local lv=0
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
-		lv=lv+tc:GetLevel()
-	end
+	local lv=g:GetSum(Card.GetLevel)
 	e:SetLabel(lv)
 	e:GetLabelObject():SetLabel(ct)
 end

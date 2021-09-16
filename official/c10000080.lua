@@ -60,7 +60,7 @@ end
 s.listed_names={CARD_RA}
 function s.ttcon2(e,c,minc,zone,relzone,exeff)
 	if c==nil then return true end
-	if minc>3 return false end
+	if minc>3 then return false end
 	if exeff then
 		local ret=exeff:GetValue()
 		if type(ret)=="function" then

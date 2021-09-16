@@ -4,7 +4,8 @@ if not Group.Match then
 		local filterfunc=function(c,...)
 			return not filter(c,...) or excheck(c)
 		end
-		return g:Remove(filterfunc,nil,...)
+		g:Remove(filterfunc,nil,...)
+		return g
 	end
 end
 

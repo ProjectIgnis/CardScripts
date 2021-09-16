@@ -47,12 +47,12 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local loc=LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE+LOCATION_ONFIELD
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local tc=Duel.SelectMatchingCard(tp,s.rmfilter,tp,loc,LOCATION_ONFIELD,1,1,nil):GetFirst()
-	if tc then
-		if tc:IsLocation(LOCATION_ONFIELD) then
-			Duel.HintSelection(tc,true)
+	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,loc,LOCATION_ONFIELD,1,1,nil)
+	if #g>0 then
+		if g:GetFirst():IsLocation(LOCATION_ONFIELD) then
+			Duel.HintSelection(g,true)
 		end
-		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)

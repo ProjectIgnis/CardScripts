@@ -16,6 +16,9 @@ end
 function s.filter(c)
 	return c:IsCanChangePositionRush()
 end
+function s.filter2(c)
+	return c:IsFaceup() and c:IsCanChangePositionRush()
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,1,nil) end
 end

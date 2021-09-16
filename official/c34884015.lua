@@ -61,7 +61,7 @@ end
 function s.cpsoperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local tg=Duel.GetTargetCards()
+	local tg=Duel.GetTargetCards(e)
 	for tc in tg:Iter() do
 		Duel.HintSelection(Group.FromCards(tc))
 		Duel.Hint(HINT_CARD,tp,tc:GetOriginalCode())

@@ -71,7 +71,7 @@ function s.ttcon2(e,c,minc,zone,relzone,exeff)
 		end
 	end
 	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(aux.IsZone,tp,0,LOCATION_MZONE,relzone,tp)
+	local mg=Duel.GetMatchingGroup(aux.IsZone,tp,0,LOCATION_MZONE,nil,relzone,tp)
 	return Duel.CheckTribute(c,3,3,mg,1-tp,zone)
 end
 function s.tttg2(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
@@ -84,7 +84,7 @@ function s.tttg2(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
 			end
 		end
 	end
-	local mg=Duel.GetMatchingGroup(aux.IsZone,tp,0,LOCATION_MZONE,relzone,tp)
+	local mg=Duel.GetMatchingGroup(aux.IsZone,tp,0,LOCATION_MZONE,nil,relzone,tp)
 	local g=Duel.SelectTribute(tp,c,3,3,mg,1-tp,zone,true)
 	if g and #g>0 then
 		g:KeepAlive()

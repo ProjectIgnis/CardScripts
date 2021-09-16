@@ -40,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if not g then return end
-	g:Match(s.hfilter,nil,e)
+	g=g:Filter(s.hfilter,nil,e)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		for tc in g:Iter() do

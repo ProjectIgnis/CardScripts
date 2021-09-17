@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2e}
 function s.otfilter(c,tp,relzone)
-	return (c:IsControler(tp) or c:IsFaceup()) and c:IsSetCard(0x2e) and aux.IsZone(relzone,tp)
+	return (c:IsControler(tp) or c:IsFaceup()) and c:IsSetCard(0x2e) and aux.IsZone(c,relzone,tp)
 end
 function s.otcon(e,c,minc,zone,relzone,exeff)
 	if c==nil then return true end

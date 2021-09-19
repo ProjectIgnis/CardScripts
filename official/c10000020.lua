@@ -85,7 +85,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(eg)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetTargetCards(e)
+	local g=Duel.GetTargetCards(e):Filter(Card.IsFaceup,nil)
 	if #g==0 then return end
 	local dg=Group.CreateGroup()
 	local c=e:GetHandler()

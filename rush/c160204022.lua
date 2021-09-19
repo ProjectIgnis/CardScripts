@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCost(s.cost)
-	e2:SetCondition(s.condition)
+	e2:SetCondition(s.condition2)
 	e2:SetOperation(s.piercingOp)
 	c:RegisterEffect(e2)
 end
@@ -30,7 +30,7 @@ function s.filter(c)
 	return c:IsType(TYPE_MONSTER) and not (c:IsRace(RACE_DRAGON) or c:IsRace(RACE_HIGHDRAGON))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP() and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil)
+	return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_MONSTER) and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) 
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
@@ -61,6 +61,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --piercing
+function s.condition2(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsAbleToEnterBP() and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_MONSTER) and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil)
+end
 function s.piercingOp(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement

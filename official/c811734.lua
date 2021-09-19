@@ -30,7 +30,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
 	elseif b1 then
 		op=Duel.SelectOption(tp,aux.Stringid(id,0))
-	else op=Duel.SelectOption(tp,aux.Stringid(id,1))+1 end
+	else
+		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
+	end
 	e:SetLabel(op)
 	if op==0 then
 		e:SetCategory(CATEGORY_REMOVE)
@@ -48,9 +50,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g=Duel.SelectMatchingCard(tp,s.atkfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+		if #g==0 then return end
 		local atk=g:GetFirst():GetAttack()
 		local tc=Duel.GetAttacker()
-		if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 and tc:IsRelateToBattle() and tc:IsFaceup() then
+		if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 and tc:IsRelateToBattle() and tc:IsFaceup() then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

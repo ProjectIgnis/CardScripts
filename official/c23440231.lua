@@ -135,7 +135,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetLocation())
 	else
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetPreviousLocation())
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,re:GetHandler():GetPreviousLocation())
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)

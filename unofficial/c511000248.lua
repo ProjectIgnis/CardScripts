@@ -1,4 +1,5 @@
---Defend Slime
+--ディフェンド・スライム (Manga)
+--Jam Defender (Manga)
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,6 +35,13 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_SELF_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(1,1)
+		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		Duel.RegisterEffect(e1,tp)
 		Duel.ChangeAttackTarget(tc)
 	end
 end

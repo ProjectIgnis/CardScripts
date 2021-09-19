@@ -39,7 +39,6 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(av,0)
 	end)
 end
-s.listed_names={21208154}
 function s.avfilter(c)
 	local atktes={c:GetCardEffect(EFFECT_SET_ATTACK_FINAL)}
 	local ae=nil

@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	--atkdown
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(4012,0))
-	e6:SetCategory(CATEGORY_ATKCHANGE)
+	e6:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE+CATEGORY_DESTROY)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCode(EVENT_SUMMON_SUCCESS)
@@ -56,12 +56,12 @@ function s.adval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)*1000
 end
 -------------------------------------------------------------------
-function s.atkfilter(c,e,tp)
-	return c:IsControler(tp) and c:IsPosition(POS_FACEUP) and (not e or c:IsRelateToEffect(e))
+function s.atkfilter(c,p)
+	return c:IsControler(p) and c:IsPosition(POS_FACEUP)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return eg:IsExists(s.atkfilter,1,nil,nil,1-tp)
+	return eg:IsExists(s.atkfilter,1,nil,1-tp)
 		and (not c:IsHasEffect(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 		and not c:IsHasEffect(EFFECT_FORBIDDEN) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK)
 		and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_CANNOT_ATTACK_ANNOUNCE)
@@ -73,7 +73,8 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(eg)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(s.atkfilter,nil,e,1-tp)
+	local g=Duel.GetTargetCards(e):Filter(Card.IsFaceup,nil)
+	if #g==0 then return end
 	local dg=Group.CreateGroup()
 	local c=e:GetHandler()
 	for tc in aux.Next(g) do
@@ -95,5 +96,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			if tc:GetDefense()==0 then dg:AddCard(tc) end
 		end
 	end
+	if #dg==0 then return end
+	Duel.BreakEffect()
 	Duel.Destroy(dg,REASON_EFFECT)
 end

@@ -1,14 +1,14 @@
 --応身の機械天使
---Machine Angel Manifestation
+--Incarnated Machine Angel
 --Scripted by ahtelel
 local s, id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--battle indestructable
+	--Cannot be destroyed by battle
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.indfilter)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--ritual summon
+	--Ritual Summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_SZONE)
@@ -38,15 +38,17 @@ end
 function s.spcondition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==ep and (r==REASON_BATTLE or tp~=rp)
 end
-function s.infilter(c,e,tp)
-	return c:IsRitualMonster() and c:IsSetCard(0x2093) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,c,e,tp)
+function s.infilter(c,e,tp,ft)
+	return s.indfilter(e,c) and (ft>0 or c:IsInMainMZone(tp))
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,c,e,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsRitualMonster() and c:IsSetCard(0x2093) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false)
+	return s.indfilter(e,c) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.infilter,1,true,aux.ChkfMMZ(1),nil,e,tp) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.infilter,1,1,true,aux.ChkfMMZ(1),nil,e,tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.infilter,1,true,nil,nil,e,tp,ft) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.infilter,1,1,true,nil,nil,e,tp,ft)
 	Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -62,4 +64,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 	end
 end
-

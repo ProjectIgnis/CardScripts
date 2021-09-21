@@ -13,6 +13,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e2)
 end
 function s.filter1(c,e,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE) and c:IsLevelAbove(5)
@@ -21,7 +24,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter1,1,nil,e,tp)
 end
 function s.recfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_PYRO) and c:IsLevelAbove(1) and c:GetAttack()>0
+	return c:IsFaceup() and c:IsRace(RACE_PYRO) and c:IsLevelAbove(1)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

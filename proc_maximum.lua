@@ -66,18 +66,19 @@ function Maximum.AddProcedure(c,desc,...)
 end
 --that function check if you can maximum summon the monster and its other part(s)
 function Maximum.Condition(mats)
-	local ct=#mats
-	return  function(e,c,og)
-		if c==nil then return true end
-		local tp=c:GetControler()
-		local g=nil
-		if og then
-			g=og:Filter(Card.IsLocation,nil,LOCATION_HAND)
-		else
-			g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-		end
-		return Duel.GetMZoneCount(tp,Duel.GetFieldGroup(tp,LOCATION_MZONE,0))>=3 and aux.SelectUnselectGroup(g,e,tp,ct,ct,Maximum.spcheck(mats),0)
-	end
+    local ct=#mats
+    return  function(e,c,og)
+        if c==nil then return true end
+        local tp=c:GetControler()
+        if not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_MAXIMUM,tp,false,false,POS_FACEUP_ATTACK) then return false end
+        local g=nil
+        if og then
+            g=og:Filter(Card.IsLocation,nil,LOCATION_HAND)
+        else
+            g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+        end
+        return Duel.GetMZoneCount(tp,Duel.GetFieldGroup(tp,LOCATION_MZONE,0))>=3 and aux.SelectUnselectGroup(g,e,tp,ct,ct,Maximum.spcheck(mats),0)
+    end
 end
 function Maximum.spcheck(filters)
 	return function(sg,e,tp,mg)

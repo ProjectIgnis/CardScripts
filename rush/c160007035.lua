@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e2:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.condition)
+	e2:SetCondition(s.condition)
 	e2:SetTarget(s.rectg)
 	e2:SetOperation(s.recop)
 	c:RegisterEffect(e2)
@@ -78,7 +78,6 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.Recover(p,d,REASON_EFFECT)>0 and #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			local sg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,120,nil)
 			if #sg>0 then
-				Duel.HintSelection(Group.FromCards(sg))
 				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 			end
 		end

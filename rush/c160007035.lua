@@ -43,7 +43,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,nil)
 	if #g==0 then return end
-	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then                        
+	if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		for tc in g:Iter() do
 		--Decrease ATK
 			local e1=Effect.CreateEffect(c)
@@ -75,8 +75,8 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-		if Duel.Recover(p,d,REASON_EFFECT)>0 and #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-			local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+		if Duel.Recover(p,d,REASON_EFFECT)>0 and #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+			local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 			if #sg>0 then
 				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 			end

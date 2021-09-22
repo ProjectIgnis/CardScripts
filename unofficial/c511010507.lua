@@ -123,20 +123,14 @@ function s.zarctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	g:Merge(g2)
 	g:Merge(g3)
 	g:Merge(g4)
+	g:KeepAlive()
+	e:SetLabelObject(g)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.zarcspfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,4,tp,ZARC_LOC)
 end
 function s.zarcop(e,tp,eg,ep,ev,re,r,rp)
-	local rg=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsAbleToRemove),tp,ZARC_LOC,0,nil)
-	local g1=rg:Filter(Card.IsCode,nil,41209827)
-	local g2=rg:Filter(Card.IsCode,nil,82044279)
-	local g3=rg:Filter(Card.IsCode,nil,16195942)
-	local g4=rg:Filter(Card.IsCode,nil,16178681)
-	local g=g1:Clone()
-	g:Merge(g2)
-	g:Merge(g3)
-	g:Merge(g4)
+	local g=e:GetLabelObject()
 	if not Duel.IsExistingMatchingCard(s.zarcspfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,g) then return end
 	g=aux.SelectUnselectGroup(g,e,tp,4,4,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,false)
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>3 then

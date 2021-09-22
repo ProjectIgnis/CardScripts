@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	return ec:GetAttack()>=500 and ec:IsRelateToBattle() and Duel.GetAttacker()==ec  and ec:CanChainAttack()
+	return ec:GetAttack()>=500 and ec:IsRelateToBattle() and Duel.GetAttacker()==ec  and ec:CanChainAttack(0)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

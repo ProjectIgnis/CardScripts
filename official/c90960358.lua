@@ -53,7 +53,7 @@ function s.initial_effect(c)
 	e8:SetValue(s.val)
 	c:RegisterEffect(e8)
 end
-s.listed_names={15259703,30208479}
+s.listed_names={15259703,CARD_DARK_MAGICIAN,30208479}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.CheckReleaseGroup(c:GetControler(),aux.TRUE,1,false,1,true,c,c:GetControler(),nil,false,nil)

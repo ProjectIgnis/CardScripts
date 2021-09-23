@@ -1,4 +1,5 @@
 --ポセイドン・ウェーブ
+--Poseidon Wave
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -30,7 +31,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.NegateAttack() then
+	if tc and tc:IsRelateToEffect(e) and Duel.NegateAttack() then
 		local dam=Duel.GetMatchingGroupCount(s.dfilter,tp,LOCATION_MZONE,0,nil)*800
 		if dam>0 then
 			Duel.Damage(1-tp,dam,REASON_EFFECT)

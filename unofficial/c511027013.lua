@@ -72,7 +72,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsType(TYPE_FIELD) then
 		loc=LOCATION_FZONE
 	end
-		if tc then
+	if tc then
 		if loc==LOCATION_MZONE then
 			Duel.GetControl(tc,tp)
 		else

@@ -72,7 +72,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsType(TYPE_FIELD) then
 		loc=LOCATION_FZONE
 	end
-	if tc then
+		if tc then
 		if loc==LOCATION_MZONE then
 			Duel.GetControl(tc,tp)
 		else
@@ -81,9 +81,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				if tc:IsType(TYPE_EQUIP) then
 					ec=tc:GetEquipTarget()
 				end
-				Duel.GetControl(tc,tp,0,0,loc)
-				if ec then
-					Debug.PreEquip(tc,ec)
+				if not tc:IsImmuneToEffect(e) then
+					Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
+					if ec then
+						Debug.PreEquip(tc,ec)
+					end
 				end
 			else
 				Duel.SendtoGrave(tc,REASON_RULE)

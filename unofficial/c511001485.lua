@@ -27,10 +27,18 @@ end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=c:GetEquipTarget()
-	if c:IsRelateToEffect(e) and ec:IsRelateToBattle() and not ec:IsImmuneToEffect(e) then
-		local amt=ec:GetAttack()*(-0.5)
-		if ec:UpdateAttack(amt,nil,c)==amt then
+	if c:IsRelateToEffect(e) and ec:IsRelateToBattle() then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_EQUIP)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetValue(s.atkval)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		c:RegisterEffect(e1)
+		if not ec:IsImmuneToEffect(e) then
 			Duel.ChainAttack()
 		end
 	end
+end
+function s.atkval(e,c)
+	return c:GetAttack()/2
 end

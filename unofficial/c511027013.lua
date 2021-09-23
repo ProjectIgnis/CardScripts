@@ -81,7 +81,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				if tc:IsType(TYPE_EQUIP) then
 					ec=tc:GetEquipTarget()
 				end
-				Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
+				Duel.GetControl(tc,tp,0,0,loc)
 				if ec then
 					Debug.PreEquip(tc,ec)
 				end

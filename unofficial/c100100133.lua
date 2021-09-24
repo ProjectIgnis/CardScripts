@@ -1,4 +1,5 @@
 --Ｓｐ－デッド・シンクロン
+--Speed Spell - Deceased Synchron
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,7 +21,7 @@ end
 function s.filter1(c,e,tp)
 	local lv1=c:GetLevel()
 	return c:IsLevelBelow(8) and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
-		and Duel.IsExistingMatchingCard(s.filter2,to,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,lv1,tp)
+		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,lv1,tp)
 end
 function s.filter2(c,lv1,tp)
 	local lv2=c:GetLevel()

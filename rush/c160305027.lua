@@ -27,6 +27,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
 end
+function s.tdfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.PayLPCost(tp,1000)
@@ -37,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g)
 		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
 		if Duel.GetMatchingGroupCount(Card.IsPosition,tp,LOCATION_MZONE,0,nil,POS_DEFENSE)>=3 then
-			local og=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,nil)
+			local og=Duel.GetMatchingGroup(s.tdfilter,tp,0,LOCATION_GRAVE,nil)
 			if #og>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

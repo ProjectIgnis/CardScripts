@@ -1,5 +1,5 @@
 --切り裂かれし闇
---Shatter the Darkness
+--Piercing the Darkness
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

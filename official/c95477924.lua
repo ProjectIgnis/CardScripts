@@ -1,5 +1,5 @@
 --マジシャンズ・サルベーション
---Magician Salvation
+--Magician's Salvation
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)

@@ -45,34 +45,22 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={0x11c}
-function s.spfilter1(c)
-	return c:IsRace(RACE_THUNDER) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
-end
-function s.spfilter2(c)
-	return c:IsRace(RACE_THUNDER) and c:IsType(TYPE_FUSION) and not c:IsCode(id) and c:IsAbleToRemoveAsCost()
+function s.spfilter(c)
+	return c:IsRace(RACE_THUNDER) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or (c:IsType(TYPE_FUSION) and not c:IsCode(id)))
 end
 function s.rescon(sg,e,tp,mg)
-	return Duel.GetLocationCountFromEx(tp,tp,sg,e:GetHandler())>0 and sg:IsExists(s.spfilter1,1,nil) and sg:IsExists(s.spfilter2,1,nil)
-end
-function s.breakcon(sg,e,tp,mg)
-	return #sg == 0 or #sg == 2
+	return Duel.GetLocationCountFromEx(tp,tp,sg,e:GetHandler())>0 and sg:FilterCount(Card.IsLocation,nil,LOCATION_HAND)~=#sg
 end
 function s.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_HAND,0,nil)
-	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE,0,nil)
-	local g=g1:Clone()
-	g:Merge(g2)
-	return #g1>0 and #g2>0
-		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil)
+	if #g==g:FilterCount(Card.IsLocation,nil,LOCATION_HAND) then return false end
+	return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_HAND,0,nil)
-	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE,0,nil)
-	local g=g1:Clone()
-	g:Merge(g2)
-	local sg=aux.SelectUnselectGroup(g,e,tp,0,2,s.rescon,1,tp,HINTMSG_REMOVE,s.breakcon)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil)
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
 	if #sg > 0 then
 		sg:KeepAlive()
 		e:SetLabelObject(sg)

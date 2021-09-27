@@ -1,4 +1,5 @@
 --ガトムズの緊急指令
+--Gottoms' Emergency Call
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,8 +33,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+	local sg=Duel.GetTargetCards(e)
 	if #sg~=2 then return end
 	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 end

@@ -5,10 +5,17 @@ end
 if not Synchro then
 	Synchro = aux.SynchroProcedure
 end
-function Synchro.NonTuner(f,a,b,c)
-	return	function(target,scard,sumtype,tp)
-				return target:IsNotTuner(scard,tp) and (not f or f(target,a,b,c))
-			end
+function Synchro.Tuner(f,...)
+	local params={...}
+	return function(target,scard,sumtype,tp)
+		return target:IsType(TYPE_TUNER,scard,sumtype,tp) and (not f or f(target,table.unpack(params)))
+	end
+end
+function Synchro.NonTuner(f,...)
+	local params={...}
+	return function(target,scard,sumtype,tp)
+		return target:IsNotTuner(scard,tp) and (not f or f(target,table.unpack(params)))
+	end
 end
 function Synchro.NonTunerEx(f,val)
 	return	function(target,scard,sumtype,tp)

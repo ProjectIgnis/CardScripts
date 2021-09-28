@@ -1,3 +1,4 @@
+--ザ・ロック・オブ・ウォークライ
 --War Rock Mountain
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--special summon a war rock
+	--Special Summon 1 "War Rock" from your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -44,38 +45,30 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
---special summon
 function s.cfilter(c)
 	return c:IsFacedown() or not c:IsRace(RACE_WARRIOR)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
---Check names of monsters
-function s.namefilter(c,cd)
-	return c:IsCode(cd) and c:IsFaceup()
-end
-	--Check for "War Rock" monster
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x161) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and not Duel.IsExistingMatchingCard(s.namefilter,tp,LOCATION_ONFIELD,0,1,nil,c:GetCode())
+		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD,0,1,nil)
 end
-	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
-	--Performing the effect of special summoning a "War Rock" monster with different name from controlled monsters
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
---destroy replace
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		and c:IsRace(RACE_WARRIOR) and c:IsReason(REASON_BATTLE) and not c:IsReason(REASON_REPLACE)

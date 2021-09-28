@@ -11,10 +11,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={450000110}
-function s.filter(c)
-	return c:IsFaceup() and c:IsCode(450000110)
-end
 function s.pcon(e)
-	return Duel.IsExistingMatchingCard(s.filter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
-		or Duel.GetEnvironment()==450000110
+	return Duel.IsEnvironment(450000110)
 end

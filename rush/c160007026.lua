@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end 
 function s.tdfilter(c,tp)
-	return c:IsCode(CARD_SPIRIT_STADIUM) and c:IsAbleToDeckAsCost()
+	return c:IsCode(CARD_SPIRIT_STADIUM) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsType(TYPE_NORMAL) and c:IsDefense(400)

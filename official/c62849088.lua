@@ -123,8 +123,8 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetCurrentChain()==0 then g:Clear() end
 		g:Remove(function(c) return c:GetFlagEffect(id)==0 end,nil)
 		g:Merge(tg)
-		if c:GetFlagEffect(id+1)==0 then
-			c:RegisterFlagEffect(id+1,RESETS_STANDARD+RESET_CHAIN,0,1)
+		if Duel.GetFlagEffect(tp,id+1)==0 then
+			Duel.RegisterFlagEffect(tp,id+1,RESET_CHAIN,0,1)
 			Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,0,tp,tp,0)
 		end
 	end

@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x20cd}
+s.listed_names={CARD_UMI,CARD_BIG_OCEAN}
 function s.fupfilter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_UMI) or c:IsCode(160003050))
+	return c:IsFaceup() and (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN))
 end
 function s.thcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.fupfilter,tp,LOCATION_ONFIELD,0,1,nil)

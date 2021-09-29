@@ -50,5 +50,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_NORMAL) and c:IsAbleToDeck()
+	return c:IsType(TYPE_NORMAL) and c:IsFaceup()
 end

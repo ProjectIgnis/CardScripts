@@ -17,8 +17,8 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTarget(s.atktg)
-	e2:SetOperation(s.atkop)
+	e2:SetTarget(s.negtg)
+	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 	--If your EARTH Warrior monster battles
 	local e3=Effect.CreateEffect(c)
@@ -61,13 +61,13 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterFlagEffect(bc1:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
 	end
 end
-function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local at=Duel.GetAttackTarget()
 	if chk==0 then return ((at and at:IsFaceup() and Duel.GetAttacker()==e:GetHandler()) or at==e:GetHandler())
 		and not e:GetHandler():IsStatus(STATUS_CHAINING) end
 	Duel.SetTargetCard(e:GetHandler():GetBattleTarget())
 end
-function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	local code=tc:GetOriginalCode()

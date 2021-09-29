@@ -90,12 +90,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	--Cannot attack directly with Level 5 or lower monsters
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsLevelBelow,5))
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
+	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,1),0)
 end

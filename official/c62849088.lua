@@ -102,9 +102,16 @@ function s.spfilter(c,e,tp)
 end
 function s.hdextg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local label=e:GetLabel()
-	if chk==0 then return (label==1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp))
-		or (label==2 and Duel.IsPlayerCanDraw(tp,2))
-		or (label==3 and #g>0)
+	if chk==0 then
+		if label==1 then
+			return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+				and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
+		elseif label==2 then
+			return Duel.IsPlayerCanDraw(tp,2)
+		elseif label==3 then
+			local g=e:GetLabelObject():Filter(s.hdexfilter,nil,tp,LOCATION_EXTRA)
+			return #g>0
+		end
 	end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	if label==1 then

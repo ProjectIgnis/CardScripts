@@ -73,12 +73,14 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 --banish monster
-function s.filter(c,tp)
-	return c:IsSummonPlayer(1-tp) and c:IsAbleToRemove()
+function s.filter(c,tp,e)
+	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE) and c:IsAbleToRemove()
+		and (not e or c:IsRelateToEffect(e))
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=e:GetLabelObject():Filter(s.filter,nil,tp)
+	local g=e:GetLabelObject():Filter(s.filter,nil,tp,nil)
 	if chk==0 then return #g>0 end
+	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1200)
 end
@@ -86,7 +88,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=e:GetLabelObject()
 	if #g==0 then return end 
-	local bg=g:FilterSelect(tp,s.filter,1,1,nil,tp)
+	local bg=g:FilterSelect(tp,s.filter,1,1,nil,tp,e)
 	if #bg>0 and Duel.Remove(bg,POS_FACEUP,REASON_EFFECT)>0 then
 		Duel.Damage(1-tp,1200,REASON_EFFECT)
 	end

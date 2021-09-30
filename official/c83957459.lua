@@ -1,7 +1,8 @@
 --ライノタウルス
+--Rhinotaurus
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Second attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
@@ -23,7 +24,9 @@ function s.initial_effect(c)
 	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local cp=eg:GetFirst():GetControler()
+	local bc=eg:GetFirst()
+	local cp=bc:GetControler()
+	if not bc:IsRelateToBattle() then cp=bc:GetPreviousControler() end
 	s[cp]=s[cp]+1
 end
 function s.macon(e)

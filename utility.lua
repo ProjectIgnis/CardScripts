@@ -1459,6 +1459,19 @@ end
 function Auxiliary.thoeSend(card)
 	return Duel.SendtoGrave(card,REASON_EFFECT)
 end
+--Helper functions to use with cards that normal summon or set a monster
+function Card.CanSummonOrSet(...)
+	return Card.IsSummonable(...) or Card.IsMSetable(...)
+end
+function Duel.SummonOrSet(tp,...)
+	local s1=Card.IsSummonable(...)
+	local s2=Card.IsMSetable(...)
+	if (s1 and s2 and Duel.SelectPosition(tp,(...),POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)==POS_FACEUP_ATTACK) or not s2 then
+		Duel.Summon(tp,...)
+	else
+		Duel.MSet(tp,...)
+	end
+end
 --[[
 Function to simplify registering EFFECT_FLAG_CLIENT_HINT to players
 -card: card that creates the hintmsg;

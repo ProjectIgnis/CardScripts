@@ -39,6 +39,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		local e3=e1:Clone()
 		e3:SetCode(EFFECT_CANNOT_MSET)
 		Duel.RegisterEffect(e3,tp)
+		Duel.AddNoTributeCheck(c,tp,id,0,1,0)
 	end
 end
 

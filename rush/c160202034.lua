@@ -47,6 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetReset(RESET_PHASE+PHASE_END)
 			e3:SetTargetRange(1,0)
 			Duel.RegisterEffect(e3,tp)
+			Duel.AddNoTributeCheck(c,tp,id,0,1,0)
 		end
 	end
 end

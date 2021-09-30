@@ -576,3 +576,63 @@ end
 function aux.DeckMill(p,num,reason)
 	if Duel.DiscardDeck(p,num,reason)<num then return false else return true end 
 end
+
+
+
+--Double tribute handler
+FLAG_NO_TRIBUTE=160001029
+function Card.AddDoubleTribute(c,id,otfilter,eftg)
+	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	local e1=aux.summonproc(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),otfilter)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetTargetRange(LOCATION_HAND,0)
+	e2:SetTarget(eftg)
+	e2:SetLabelObject(e1)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	c:RegisterEffect(e2)
+end
+function aux.DoubleTributeCon(e,tp,eg,ep,ev,re,r,rp)
+	return not Duel.IsPlayerAffectedByEffect(tp,FLAG_NO_TRIBUTE)
+end
+function Card.AddNoTributeCheck(c,rangeP1,rangeP2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(FLAG_NO_TRIBUTE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(rangeP1,rangeP2)
+	c:RegisterEffect(e1)
+end
+function Duel.AddNoTributeCheck(c,tp,id,rangeP1,rangeP2)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(FLAG_NO_TRIBUTE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetTargetRange(rangeP1,rangeP2)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+end
+function aux.summonproc(c,ns,opt,min,max,val,desc,f,sumop)
+	val = val or SUMMON_TYPE_TRIBUTE
+	local e1=Effect.CreateEffect(c)
+	if desc then e1:SetDescription(desc) end
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	if ns and opt then
+		e1:SetCode(EFFECT_SUMMON_PROC)
+	else
+		e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
+	end
+	if ns then
+		e1:SetCondition(Auxiliary.NormalSummonCondition1(min,max,f))
+		e1:SetTarget(Auxiliary.NormalSummonTarget(min,max,f))
+		e1:SetOperation(Auxiliary.NormalSummonOperation(min,max,sumop))
+	else
+		e1:SetCondition(Auxiliary.NormalSummonCondition2())
+	end
+	e1:SetValue(val)
+	return e1
+end

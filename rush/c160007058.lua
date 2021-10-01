@@ -44,6 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(g)
 	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
+	Duel.ShuffleDeck(tp)
 		--Effect
 		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 		if #g>0 then
@@ -57,14 +58,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 					local dg=Duel.GetOperatedGroup()
 					Duel.ConfirmCards(1-tp,dg)
 					local ct=dg:FilterCount(s.umifilter,nil)
-					if ct>1 then Duel.Damage(1-tp,500,REASON_EFFECT) end
+					Debug.Message(ct)
+					if ct>0 then Duel.Damage(1-tp,500,REASON_EFFECT) end
 				end
 			else if Duel.Destroy(tg,REASON_EFFECT) then
 					if Duel.Draw(tp,1,REASON_EFFECT)<1 then return end
 					local dg=Duel.GetOperatedGroup()
 					Duel.ConfirmCards(1-tp,dg)
 					local ct=dg:FilterCount(s.umifilter,nil)
-					if ct>1 then Duel.Damage(1-tp,500,REASON_EFFECT) end
+					Debug.Message(ct)
+					if ct>0 then Duel.Damage(1-tp,500,REASON_EFFECT) end
 				end
 			end
 		end

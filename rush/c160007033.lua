@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 end
-function s.costfilter(c)
+function s.costfilter(c,tp)
 	return c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(s.costfilter2,tp,LOCATION_HAND,0,1,c)
 end
 function s.costfilter2(c)
@@ -32,7 +32,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	--requirement
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND,0,e:GetHandler())
+	local g=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,e:GetHandler())
 	local og=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_DISCARD,s.rescon)
 	if og and #og>0 and Duel.SendtoGrave(og,REASON_COST)>0 then
 		--effect

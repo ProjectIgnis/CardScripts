@@ -58,7 +58,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 					local dg=Duel.GetOperatedGroup()
 					Duel.ConfirmCards(1-tp,dg)
 					local ct=dg:FilterCount(s.umifilter,nil)
-					Debug.Message(ct)
 					if ct>0 then Duel.Damage(1-tp,500,REASON_EFFECT) end
 				end
 			else if Duel.Destroy(tg,REASON_EFFECT) then
@@ -66,7 +65,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 					local dg=Duel.GetOperatedGroup()
 					Duel.ConfirmCards(1-tp,dg)
 					local ct=dg:FilterCount(s.umifilter,nil)
-					Debug.Message(ct)
 					if ct>0 then Duel.Damage(1-tp,500,REASON_EFFECT) end
 				end
 			end

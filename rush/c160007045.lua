@@ -16,7 +16,7 @@ function s.costfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 end
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_FISH+RACE_SEASERPENT+RACE_THUNDER+RACE_AQUA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

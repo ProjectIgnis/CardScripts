@@ -87,7 +87,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	tc:CompleteProcedure()
 	end
 end
---fusion
+--fusion Summon Chimera
 function s.cfilter(c,e,tp)
 	if not c:IsDiscardable() then return false end
 	local chkf=tp
@@ -113,6 +113,7 @@ function s.fusTarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
+--Add "Phantom Beast" card to hand
 function s.thfilter(c)
 	return c:IsSetCard(0x1b) and c:IsAbleToHand()
 end
@@ -120,7 +121,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (s[tp]>0 or s[1-tp]>0)  and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		if tc then
 			Duel.SendtoHand(tc,tp,REASON_EFFECT)
@@ -132,7 +133,7 @@ function s.flipcon2(e,tp,eg,ep,ev,re,r,rp)
 	return (s[tp]>0 or s[1-tp]>0) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.GetFlagEffect(tp,id+100)==0
 end
 function s.flipop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE+PHASE_END,0,1)
 		Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 		Duel.Hint(HINT_CARD,tp,id)
@@ -142,6 +143,7 @@ function s.flipop2(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,tc)
 		end
 	end
+	--Fusion Summon Chimera
 	if not (Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp) then return end
 	local g2=s.fusTarget(e,tp,eg,ep,ev,re,r,rp,0)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)

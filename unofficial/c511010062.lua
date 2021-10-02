@@ -1,5 +1,5 @@
---Number 62: Galaxy-Eyes Prime Photon Dragon (Anime)
 --No.62 銀河眼の光子竜皇 (Anime)
+--Number 62: Galaxy-Eyes Prime Photon Dragon (Anime)
 --Scripted By TheOnePharaoh
 --fixed by MLD
 --effect updated by Larry126 (ATK multiplied while attacking)
@@ -51,7 +51,7 @@ function s.initial_effect(c)
 end
 s.xyz_number=62
 function s.atkcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and e:GetHandler():GetBattleTarget()
+	return e:GetHandler():IsRelateToBattle()
 end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)

@@ -53,7 +53,7 @@ function s.op(e)
 		local effs={c:GetCardEffect(511002571)}
 		for _,eff in ipairs(effs) do
 			local te=eff:GetLabelObject()
-			if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
+			if te:GetCode()&511001822==511001822 or te:GetLabel()==511001822 then te=te:GetLabelObject() end
 			local resetflag,resetcount=te:GetReset()
 			local rm,max,code,flag,hopt=te:GetCountLimit()
 			local prop1,prop2=te:GetProperty()

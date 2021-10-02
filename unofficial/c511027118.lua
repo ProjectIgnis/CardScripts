@@ -58,7 +58,7 @@ function s.aclimit(e,re)
 	local eff={re:GetHandler():GetCardEffect(511002571)}
 	for _,ree in ipairs(eff) do
 		local te=ree:GetLabelObject()
-		if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
+		if te:GetCode()&511001822==511001822 or te:GetLabel()==511001822 then te=te:GetLabelObject() end
 		if re==te then return true end
 	end
 	return false

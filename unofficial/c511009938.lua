@@ -1,3 +1,4 @@
+--聖蔓の交配 (Anime)
 --Sunvine Cross Breed (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,8 +21,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsType,1,false,aux.ChkfMMZ(1),nil,TYPE_LINK) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsType,1,1,false,aux.ChkfMMZ(1),nil,TYPE_LINK)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsType,1,false,1,true,nil,tp,0xff,false,nil,TYPE_LINK) end
+	local g=Duel.SelectReleaseGroup(tp,Card.IsType,1,1,false,false,true,nil,tp,0xff,false,nil,TYPE_LINK)
 	Duel.Release(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)

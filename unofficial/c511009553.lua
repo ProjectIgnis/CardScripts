@@ -1,4 +1,5 @@
---Superheavy Samurai Steam Fiend Tetsudo'o
+--超重蒸鬼テツドウ－Ｏ (Anime)
+--Superheavy Samurai Steam Train King (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:AddSetcodesRule(0x9a)
@@ -17,7 +18,6 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCost(s.cost)
@@ -39,7 +39,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x9a}
-
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,2,nil) end
 	Duel.DiscardHand(tp,Card.IsAbleToGraveAsCost,2,2,REASON_COST+REASON_DISCARD)
@@ -57,10 +56,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-
-------------------------------------
-
-
 function s.cfilter(c)
 	return (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsAbleToRemove()
 end

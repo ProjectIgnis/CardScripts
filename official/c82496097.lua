@@ -53,12 +53,9 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(tc,g)
 	end
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ)
-end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Group.CreateGroup()
-	local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
+	local mg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,0,nil,TYPE_XYZ)
 	for tc in aux.Next(mg) do
 		g:Merge(tc:GetOverlayGroup())
 	end

@@ -29,14 +29,9 @@ function s.initial_effect(c)
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_ATTACK_ANNOUNCE)
+		ge1:SetCode(EVENT_BATTLED)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_BATTLE_CONFIRM)
-		ge2:SetOperation(s.checkop)
-		Duel.RegisterEffect(ge2,0)
 	end)
 end
 s.listed_series={0x161}
@@ -44,6 +39,7 @@ function s.checkfilter(c)
 	return c and c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_WARRIOR)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+	if not Duel.IsDamageCalculated() then return end
 	local bc0,bc1=Duel.GetBattleMonster(0)
 	if s.checkfilter(bc0) then
 		Duel.RegisterFlagEffect(bc0:GetControler(),id,RESET_PHASE+PHASE_END,0,1)

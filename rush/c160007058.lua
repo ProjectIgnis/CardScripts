@@ -28,12 +28,9 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local tg=g:GetMaxGroup(Card.GetAttack)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
-end
-function s.filter(c)
-	return c:IsFaceup()
 end
 function s.umifilter(c)
 	return c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN)
@@ -43,32 +40,22 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(g)
-	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
+	if #g==0 or Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)==0 then return end
 	Duel.BreakEffect()
 	Duel.ShuffleDeck(tp)
-		--Effect
-		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-		if #g>0 then
-			local tg=g:GetMaxGroup(Card.GetAttack)
-			if #tg>1 then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-				local sg=tg:Select(tp,1,1,nil)
-				Duel.HintSelection(sg)
-				if Duel.Destroy(sg,REASON_EFFECT) then 
-					if Duel.Draw(tp,1,REASON_EFFECT)<1 then return end
-					local dg=Duel.GetOperatedGroup()
-					Duel.ConfirmCards(1-tp,dg)
-					local ct=dg:FilterCount(s.umifilter,nil)
-					if ct>0 then Duel.Damage(1-tp,500,REASON_EFFECT) end
-				end
-			else if Duel.Destroy(tg,REASON_EFFECT) then
-					if Duel.Draw(tp,1,REASON_EFFECT)<1 then return end
-					local dg=Duel.GetOperatedGroup()
-					Duel.ConfirmCards(1-tp,dg)
-					local ct=dg:FilterCount(s.umifilter,nil)
-					if ct>0 then Duel.Damage(1-tp,500,REASON_EFFECT) end
-				end
-			end
-		end
+	--Effect
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	if #g==0 then return end
+	local tg=g:GetMaxGroup(Card.GetAttack)
+	if #tg>1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		tg=tg:Select(tp,1,1,nil)
+		Duel.HintSelection(tg)
 	end
+	if Duel.Destroy(tg,REASON_EFFECT)==0 or Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
+	local dg=Duel.GetOperatedGroup()
+	Duel.ConfirmCards(1-tp,dg)
+	local ct=dg:FilterCount(s.umifilter,nil)
+	if ct>0 then Duel.Damage(1-tp,500,REASON_EFFECT) end
+	Duel.ShuffleHand(tp)
 end

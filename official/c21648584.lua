@@ -1,13 +1,15 @@
 --RR－レディネス
+--Raidraptor - Readiness
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(s.condition)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--no damage
+	--No damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_GRAVE)
@@ -18,7 +20,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xba}
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFlagEffect(tp,id)==0
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -35,9 +42,11 @@ function s.cfilter(c)
 	return c:IsSetCard(0xba) and c:IsType(TYPE_MONSTER)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)
+	return Duel.GetFlagEffect(tp,id+1)==0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+	--No damage
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)

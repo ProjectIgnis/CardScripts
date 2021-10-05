@@ -1,5 +1,5 @@
 --繁華の花笑み
---Beaming Prosperity
+--Flourishing Frolic
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,16 +31,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,ct)
 	if #g==0 then return end
 	if g:GetClassCount(s.filter)==3 then
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local sg=g:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)
-	if #sg>0 then
-		Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,sg)
-		g:RemoveCard(sg:GetFirst())
-	end
-	Duel.SendtoGrave(g,REASON_EFFECT)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local sg=g:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)
+		if #sg>0 then
+			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,sg)
+			g:RemoveCard(sg:GetFirst())
+		end
+		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
 	else
-	Duel.ShuffleDeck(tp)
+		Duel.ShuffleDeck(tp)
 	end
 end
-

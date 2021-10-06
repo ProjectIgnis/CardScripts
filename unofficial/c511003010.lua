@@ -16,8 +16,7 @@ function s.filter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function s.check(tp,sg,fc)
-	local cnt=sg:FilterCount(s.filter,nil,tp)
-	return cnt==1,cnt>1
+	return sg:IsExists(s.filter,1,nil,tp)
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil),s.check

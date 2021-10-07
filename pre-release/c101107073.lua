@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
-	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	local e1a=e1:Clone()
 	e1a:SetCode(EVENT_SUMMON)
@@ -44,6 +43,7 @@ end
 function s.effilter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_COUNTER)
 		and c:CheckActivateEffect(s.summonnegcheck(),true,false)~=nil
+		and c:CheckActivateEffect(s.summonnegcheck(),true,false):GetOperation()~=nil
 end
 function s.summonnegcheck()
 	return Duel.CheckEvent(EVENT_SUMMON)
@@ -74,6 +74,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	te:SetLabelObject(e:GetLabelObject())
 	e:SetLabelObject(te)
 	Duel.ClearOperationInfo(0)
+	e:SetOperation(s.activate)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local te=e:GetLabelObject()
@@ -84,6 +85,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if op then op(e,tp,eg,ep,ev,re,r,rp) end
 	te:SetLabel(e:GetLabel())
 	te:SetLabelObject(e:GetLabelObject())
+	e:SetOperation(nil)
 end
 function s.nodamcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=2000 and Duel.GetBattleDamage(tp)>0 and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_AVOID_BATTLE_DAMAGE)

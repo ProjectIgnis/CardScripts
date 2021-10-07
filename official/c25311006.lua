@@ -1,5 +1,5 @@
 --三戦の才
---Talent of Three Battles
+--Triple Tactics Talent
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -69,6 +69,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_MZONE):Filter(Card.IsControlerCanBeChanged,nil)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)

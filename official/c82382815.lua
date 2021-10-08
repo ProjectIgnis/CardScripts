@@ -1,4 +1,5 @@
 --王者の看破
+--Champion's Vigilance
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)
@@ -30,7 +31,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsType(TYPE_NORMAL)
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetCurrentChain(true)==0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

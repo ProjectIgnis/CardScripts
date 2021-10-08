@@ -26,7 +26,7 @@ function s.filter(c)
 	return Duel.IsExistingMatchingCard(s.cfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil,c:GetRace())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0 and eg:IsExists(s.filter,1,nil)
+	return Duel.GetCurrentChain(true)==0 and eg:IsExists(s.filter,1,nil)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,0) end

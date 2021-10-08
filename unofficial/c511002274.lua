@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={68722455}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0 and rp~=tp
+	return Duel.GetCurrentChain(true)==0 and ep==1-tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

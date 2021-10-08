@@ -38,7 +38,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x271) and c:IsType(TYPE_FUSION)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.GetCurrentChain(true)==0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.effilter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_COUNTER)

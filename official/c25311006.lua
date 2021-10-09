@@ -20,37 +20,25 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,1-tp,ACTIVITY_CHAIN)~=0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local off=1
-	local ops={}
-	local opval={}
-	if s.drtg(e,tp,eg,ep,ev,re,r,rp,0) then
-		ops[off]=aux.Stringid(id,0)
-		opval[off-1]=1
-		off=off+1
-	end
-	if s.cttg(e,tp,eg,ep,ev,re,r,rp,0) then
-		ops[off]=aux.Stringid(id,1)
-		opval[off-1]=2
-		off=off+1
-	end
-	if s.tdtg(e,tp,eg,ep,ev,re,r,rp,0) then
-		ops[off]=aux.Stringid(id,2)
-		opval[off-1]=3
-		off=off+1
-	end
-	if chk==0 then return off>1 end
-	local op=Duel.SelectOption(tp,table.unpack(ops))
-	if opval[op]==1 then
+	local b1=s.drtg(e,tp,eg,ep,ev,re,r,rp,0)
+	local b2=s.cttg(e,tp,eg,ep,ev,re,r,rp,0)
+	local b3=s.tdtg(e,tp,eg,ep,ev,re,r,rp,0)
+	if chk==0 then return b1 or b2 or b3 end
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)},
+		{b3,aux.Stringid(id,2)})
+	if op==1 then
 		e:SetCategory(CATEGORY_DRAW)
 		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e:SetOperation(s.drop)
 		s.drtg(e,tp,eg,ep,ev,re,r,rp,1)
-	elseif opval[op]==2 then
+	elseif op==2 then
 		e:SetCategory(CATEGORY_CONTROL)
 		e:SetProperty(0)
 		e:SetOperation(s.ctop)
 		s.cttg(e,tp,eg,ep,ev,re,r,rp,1)
-	elseif opval[op]==3 then
+	elseif op==3 then
 		e:SetCategory(CATEGORY_TODECK)
 		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e:SetOperation(s.tdop)

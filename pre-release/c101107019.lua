@@ -43,18 +43,18 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.smnfilter(c,e,tp,code)
+function s.spfilter(c,e,tp,code)
 	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.typetocode(type)
-	if type&TYPE_MONSTER==TYPE_MONSTER then return 34695290 end -- Myutant Beast
-	if type&TYPE_SPELL==TYPE_SPELL then return 61089209 end -- Myutant Mist
-	if type&TYPE_TRAP==TYPE_TRAP then return 7574904 end -- Myutant Arsenal
-	return -1
+function s.getspcode(c)
+	local type=c:GetOriginalType()
+	if type&TYPE_MONSTER==TYPE_MONSTER then return CARD_MYUTANT_BEAST end
+	if type&TYPE_SPELL==TYPE_SPELL then return CARD_MYUTANT_MIST end
+	return type&TYPE_TRAP==TYPE_TRAP and CARD_MYUTANT_ARSENAL or -1
 end
 function s.spcostfilter(c,e,tp)
 	return c:IsSetCard(0x159) and c:IsAbleToRemoveAsCost()
-		and Duel.IsExistingMatchingCard(s.smnfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,c,e,tp,s.typetocode(c:GetOriginalType()))
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,c,e,tp,s.getspcode(c))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -63,7 +63,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(c,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local rg=Duel.SelectMatchingCard(tp,s.spcostfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,c,e,tp)
-	e:SetLabelObject(rg:GetFirst())
+	e:SetLabel(s.getspcode(rg:GetFirst()))
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -71,10 +71,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local rc=e:GetLabelObject()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 or not rc then return end
+	local code=e:GetLabel()
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 or not code then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.smnfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp,s.typetocode(rc:GetOriginalType()))
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp,code)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local atk=g:GetFirst():GetBaseAttack()
 		if atk>0 then Duel.SetLP(tp,Duel.GetLP(tp)-atk) end

@@ -2,10 +2,10 @@
 --Phantom Fortress Enterblathnir
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon
 	Xyz.AddProcedure(c,nil,9,2)
 	c:EnableReviveLimit()
-	--remove
+	--Banish from your opp Field, Hand, GY or Decktop
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -24,55 +24,21 @@ end
 function s.rmfilter(c)
 	return c:IsAbleToRemove() and (not c:IsLocation(LOCATION_GRAVE) or aux.SpElimFilter(c))
 end
+function s.bansc(tp,loc) --Banish check shortcut
+	return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,loc,1,nil)
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,1,nil) end
-	local off=1
-	local ops={}
-	local opval={}
-	if Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) then
-		ops[off]=aux.Stringid(id,1)
-		opval[off-1]=1
-		off=off+1
-	end
-	if Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil) then
-		ops[off]=aux.Stringid(id,2)
-		opval[off-1]=2
-		off=off+1
-	end
-	if Duel.IsPlayerAffectedByEffect(1-tp,69832741) then
-		if Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,nil) then
-			ops[off]=aux.Stringid(id,3)
-			opval[off-1]=3
-			off=off+1
-		end
-	else
-		if Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,nil) then
-			ops[off]=aux.Stringid(id,3)
-			opval[off-1]=3
-			off=off+1
-		end
-	end
-	if Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_DECK,1,nil) then
-		ops[off]=aux.Stringid(id,4)
-		opval[off-1]=4
-		off=off+1
-	end
-	if off==1 then return end
-	local op=Duel.SelectOption(tp,table.unpack(ops))
-	if op==0 then
-		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,LOCATION_ONFIELD)
-	elseif op==1 then
-		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_HAND,nil)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,LOCATION_HAND)
-	elseif op==2 then
-		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_GRAVE,nil)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,LOCATION_GRAVE)
-	elseif op==3 then
-		local g=Duel.GetDecktopGroup(1-tp,1)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,LOCATION_DECK)
-	end
-	e:SetLabel(opval[op])
+	local b1=s.bansc(tp,LOCATION_ONFIELD)
+	local b2=s.bansc(tp,LOCATION_HAND)
+	local b3=(Duel.IsPlayerAffectedByEffect(1-tp,69832741) and s.bansc(tp,LOCATION_MZONE)) or s.bansc(tp,LOCATION_GRAVE)
+	local b4=s.bansc(tp,LOCATION_DECK)
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,2)},
+		{b3,aux.Stringid(id,3)},
+		{b4,aux.Stringid(id,4)})
+	e:SetLabel(op)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()

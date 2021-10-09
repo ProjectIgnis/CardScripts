@@ -34,14 +34,23 @@ end
 s.listed_names={CARD_UMI}
 function s.filter(c,tp)
 	return c:IsCode(CARD_UMI) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true)
+		and (c:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,tp)
-	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
-		aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+		if tc:IsType(TYPE_FIELD) then
+			aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+		else
+			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+			local te=tc:GetActivateEffect()
+			local tep=tc:GetControler()
+			local cost=te:GetCost()
+			if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
+		end
 	end
 end
 function s.econ(e,tp,eg,ep,ev,re,r,rp)

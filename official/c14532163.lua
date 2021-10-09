@@ -20,14 +20,13 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetMatchingGroup(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)
 	local g2=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
-	if chk==0 then return #g1>0 or #g2>0 end
-	if #g1>0 and #g2>0 then
-		e:SetLabel(Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1)))
-	elseif #g1>0 then
-		e:SetLabel(Duel.SelectOption(tp,aux.Stringid(id,0)))
-	else
-		e:SetLabel(Duel.SelectOption(tp,aux.Stringid(id,1))+1)
-	end
+	local b1=#g1>0
+	local b2=#g1>0
+	if chk==0 then return b1 or b2 end
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)})
+	e:SetLabel(op)
 	local g=(e:GetLabel()==0 and g1 or g2)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
@@ -35,7 +34,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then
 		local g=Duel.GetMatchingGroup(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)
 		if #g>0 then Duel.Destroy(g,REASON_EFFECT) end
-	else 
+	else
 		local g=Duel.GetMatchingGroup(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_SPELL+TYPE_TRAP)
 		if #g>0 then Duel.Destroy(g,REASON_EFFECT) end
 	end

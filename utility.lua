@@ -1601,6 +1601,22 @@ function Card.IsEvenScale(c)
 	return c:GetScale() % 2 == 0
 end
 
+--Helper function to choose 1 among possible effects
+--In input it takes tables of the form of {condition,stringid}
+--and makes the player choose among the strings whose conditions are met
+--it returns the index of the choosen element starting from 1, nil if none was selected
+function Auxiliary.SelectEffect(tp,...)
+    local eff,sel={},{}
+    for i,val in ipairs({...}) do
+        if val[1] then
+            table.insert(eff,val[2])
+            table.insert(sel,i)
+        end
+    end
+    if #eff==0 then return nil end
+    return sel[Duel.SelectOption(tp,table.unpack(eff))+1]
+end
+
 Duel.LoadScript("cards_specific_functions.lua")
 Duel.LoadScript("proc_fusion.lua")
 Duel.LoadScript("proc_fusion_spell.lua")

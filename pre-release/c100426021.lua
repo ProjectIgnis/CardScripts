@@ -40,9 +40,9 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_UMI}
 function s.ntval(e,re,rp)
-	local attr=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_ATTRIBUTE)
+	local attr,eff=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_ATTRIBUTE,CHAININFO_TRIGGERING_EFFECT)
 	return re:IsActiveType(TYPE_MONSTER) and rp==1-e:GetHandlerPlayer()
-		and (not (attr or re:GetHandler():IsAttribute(ATTRIBUTE_WATER)) or (attr and attr~=ATTRIBUTE_WATER))
+		and not (re:GetHandler():IsAttribute(ATTRIBUTE_WATER) or (eff==re and attr==ATTRIBUTE_WATER))
 end
 function s.spfilter(c,e,tp)
 	return ((c:IsMonster() and aux.IsCodeListed(c,CARD_UMI)) or (c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) 

@@ -27,11 +27,11 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
-	local g=(e:GetLabel()==0 and g1 or g2)
+	local g=(op==1 and g1 or g2)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabel()==0 then
+	if e:GetLabel()==1 then
 		local g=Duel.GetMatchingGroup(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)
 		if #g>0 then Duel.Destroy(g,REASON_EFFECT) end
 	else

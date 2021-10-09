@@ -1,18 +1,18 @@
 --混沌の戦士 カオス・ソルジャー
---Warrior of Chaos - Black Luster Soldier
+--Black Luster Soldier - Soldier of Chaos
 --scripted by andré
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
+	--Link Summon
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,nil,3,3,s.lcheck)
-	--effect gain
+	--Gain Effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
 	e1:SetValue(s.matcheck)
 	c:RegisterEffect(e1)
-	--destroy
+	--Effect when destroying by battle
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
@@ -30,6 +30,7 @@ end
 function s.matcheck(e,c)
 	local g=c:GetMaterial()
 	if g:IsExists(s.filter,1,nil) then
+		--Your opponent cannot target with card effects.
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
@@ -39,6 +40,7 @@ function s.matcheck(e,c)
 		e1:SetValue(aux.tgoval)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e1)
+		--Your opponent cannot destroy with card effects.
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e2:SetValue(s.indval)
@@ -49,33 +51,19 @@ function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end
 function s.dtarget(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local b1=true
-	local b2=true
-	local b3=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	if chk==0 then return true end
-	local opt={}
-	local sel={}
-	if b1 then
-		table.insert(opt,aux.Stringid(id,1))
-		table.insert(sel,1)
-	end
-	if b2 then
-		table.insert(opt,aux.Stringid(id,2))
-		table.insert(sel,2)
-	end
-	if b3 then
-		table.insert(opt,aux.Stringid(id,3))
-		table.insert(sel,3)
-	end
-	local op=sel[Duel.SelectOption(tp,table.unpack(opt))+1]
+	local b3=Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	local op=aux.SelectEffect(tp,
+		{true,aux.Stringid(id,0)},
+		{true,aux.Stringid(id,1)},
+		{b3,aux.Stringid(id,2)})
+	e:SetLabel(op)
 	e:SetCategory(0)
 	if op==3 then
 		e:SetCategory(CATEGORY_REMOVE)
 		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,tp,0)
 	end
-	e:SetLabel(op)
 end
 function s.doperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,7 +1,8 @@
 --禁忌の壺
+--Pot of The Forbidden
 local s,id=GetID()
 function s.initial_effect(c)
-	--flip
+	--FLIP: Activate one of the forbidden effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -19,42 +20,22 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b3=Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil)
 	local b4=Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_HAND,1,nil)
 	if chk==0 then return b1 or b2 or b3 or b4 end
-	local off=1
-	local ops={}
-	local opval={}
-	if b1 then
-		ops[off]=aux.Stringid(id,0)
-		opval[off-1]=1
-		off=off+1
-	end
-	if b2 then
-		ops[off]=aux.Stringid(id,1)
-		opval[off-1]=2
-		off=off+1
-	end
-	if b3 then
-		ops[off]=aux.Stringid(id,2)
-		opval[off-1]=3
-		off=off+1
-	end
-	if b4 then
-		ops[off]=aux.Stringid(id,3)
-		opval[off-1]=4
-		off=off+1
-	end
-	local op=Duel.SelectOption(tp,table.unpack(ops))
-	local sel=opval[op]
-	e:SetLabel(sel)
-	if sel==1 then
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)},
+		{b3,aux.Stringid(id,2)},
+		{b4,aux.Stringid(id,3)})
+	e:SetLabel(op)
+	if op==1 then
 		e:SetCategory(CATEGORY_DRAW)
 		Duel.SetTargetPlayer(tp)
 		Duel.SetTargetParam(2)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
-	elseif sel==2 then
+	elseif op==2 then
 		e:SetCategory(CATEGORY_TOHAND)
 		local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
-	elseif sel==3 then
+	elseif op==3 then
 		e:SetCategory(CATEGORY_DESTROY)
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
@@ -65,14 +46,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local sel=e:GetLabel()
-	if sel==1 then
+	local op=e:GetLabel()
+	if op==1 then
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Draw(p,d,REASON_EFFECT)
-	elseif sel==2 then
+	elseif op==2 then
 		local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
-	elseif sel==3 then
+	elseif op==3 then
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 		Duel.Destroy(g,REASON_EFFECT)
 	else

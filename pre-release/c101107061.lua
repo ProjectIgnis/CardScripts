@@ -36,8 +36,9 @@ function s.spcfilter1(c,tp)
 	return c:IsFaceup() and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsPreviousControler(tp) and c:IsAttribute(ATTRIBUTE_LIGHT)
 		and c:IsRace(RACE_MACHINE) and c:IsType(TYPE_UNION)
-		and c:GetPreviousAttributeOnField()&ATTRIBUTE_LIGHT>0 and c:GetPreviousRaceOnField()&RACE_MACHINE>0
 		and c:GetPreviousTypeOnField()&TYPE_UNION>0
+		and ((c:GetPreviousAttributeOnField()&ATTRIBUTE_LIGHT>0 and c:GetPreviousRaceOnField()&RACE_MACHINE>0)
+		or not c:IsPreviousLocation(LOCATION_MZONE))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter1,1,nil,tp)

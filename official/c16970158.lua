@@ -1,4 +1,5 @@
 --墓場からの呼び声
+--Call of the Grave
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={83764718}
+s.listed_names={CARD_MONSTER_REBORN}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsCode(83764718) and Duel.IsChainDisablable(ev)
+	return rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+		and re:GetHandler():IsCode(CARD_MONSTER_REBORN) and Duel.IsChainDisablable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

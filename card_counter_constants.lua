@@ -86,6 +86,9 @@ TOKEN_DUAL_AVATAR_SPIRIT            = 87669905
 TOKEN_OJAMA                         = 29843092
 TOKEN_OJAMA_DUO                     = 14470846
 
+--Specific Special Summons
+SUMMON_WITH_MONSTER_REBORN = 1010
+
 --Commonly used Rush Card
 CARD_BIG_OCEAN            = 160003050
 CARD_CAN_D                = 160005002

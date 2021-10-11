@@ -820,6 +820,46 @@ function Auxiliary.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end
 
+-- "Detach Xyz Material Cost Generator"
+-- Generates a function to be used by Effect.SetCost in order to detach
+-- a number of Xyz Materials from the Effect's handler.
+-- `min` minimum number of materials to check for detachment.
+-- `max` maximum number of materials to detach or a function that gets called
+-- as if by doing max(e,tp) in order to get the value of max detachments.
+-- `op` optional function that gets called by passing the effect and the operated
+-- group of just detached materials in order to do some additional handling with
+-- them.
+function Auxiliary.dxmcostgen(min,max,op)
+	if true then --Perform some sanity checks, simplifies debugging
+		local max_type=type(max)
+		local op_type=type(op)
+		if type(min)~="number" then
+			error("Parameter 1 should be an Integer",2)
+		end
+		if max_type~="number" and max_type~="function" then
+			error("Parameter 2 should be Integer|function",2)
+		end
+		if op_type~="nil" and op_type~="function" then
+			error("Parameter 2 should be nil|function",2)
+		end
+	end
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		local nn=Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
+		local crm=c:CheckRemoveOverlayCard(tp,min,REASON_COST)
+		if chk==0 then return (nn and c:IsLocation(LOCATION_MZONE)) or crm end
+		if nn and (not crm or Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1))) then
+			Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
+			return true --NOTE: Does not execute `op`
+		end
+		local m=type(max)=="number" and max or max(e,tp)
+		if c:RemoveOverlayCard(tp,min,m,REASON_COST) and op then
+			op(e,Duel.GetOperatedGroup())
+		end
+		return true --NOTE: to use with aux.AND
+	end
+end
+
 function Auxiliary.EquipByEffectLimit(e,c)
 	if e:GetOwner()~=c then return false end
 	local eff={c:GetCardEffect(89785779+EFFECT_EQUIP_LIMIT)}

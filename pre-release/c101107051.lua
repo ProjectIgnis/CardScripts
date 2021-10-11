@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_BLUEEYES_W_DRAGON,23995346}
 function s.ffilter(c)
-	return aux.IsCodeListed(c,CARD_BLUEEYES_W_DRAGON,23995346)
+	return aux.IsMaterialListCode(c,CARD_BLUEEYES_W_DRAGON,23995346)
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(aux.NecroValleyFilter(Fusion.IsMonsterFilter(Card.IsAbleToDeck)),tp,LOCATION_GRAVE,0,nil)

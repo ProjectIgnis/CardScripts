@@ -47,14 +47,9 @@ function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain(true)==0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.effilter(c)
-	return c:IsAbleToRemoveAsCost() and c:IsType(TYPE_COUNTER)
-		and c:CheckActivateEffect(s.summonnegcheck(),true,false)~=nil
-		and c:CheckActivateEffect(s.summonnegcheck(),true,false):GetOperation()~=nil
-end
-function s.summonnegcheck()
-	return Duel.CheckEvent(EVENT_SUMMON)
-		or Duel.CheckEvent(EVENT_FLIP_SUMMON)
-		or Duel.CheckEvent(EVENT_SPSUMMON)
+	if not c:IsAbleToRemoveAsCost() or not c:IsType(TYPE_COUNTER) then return false end
+	local eff=c:CheckActivateEffect(false,true,false)
+	return eff and eff:GetOperation()~=nil
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.effilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -71,7 +66,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.effilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if Duel.Remove(g,POS_FACEUP,REASON_COST)==0 then return end
-	local te,ceg,cep,cev,cre,cr,crp=g:GetFirst():CheckActivateEffect(s.summonnegcheck(),true,true)
+	local te,ceg,cep,cev,cre,cr,crp=g:GetFirst():CheckActivateEffect(false,true,true)
 	e:SetLabel(te:GetLabel())
 	e:SetLabelObject(te:GetLabelObject())
 	local tg=te:GetTarget()

@@ -66,7 +66,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.drfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if #g==0 then return end
-	Duel.ConfirmCards(1-tp,g)
+	Duel.ConfirmCards(g,1-tp)
 	if Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

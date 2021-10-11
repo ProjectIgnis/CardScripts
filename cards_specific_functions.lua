@@ -483,19 +483,6 @@ function Auxiliary.KaijuCondition(e,c)
 											return c:IsFaceup() and c:IsSetCard(0xd3)
 										end,tp,0,LOCATION_MZONE,1,nil)
 end
---handle detach costs for "Numeron" Xyz monsters that ignore costs due to the effect of "Numeron Network"
-function Auxiliary.NumeronDetachCost(min,max)
-	if max==nil then max=min end
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		local nn=Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
-		if chk==0 then return (nn and e:GetHandler():IsLocation(LOCATION_MZONE)) or e:GetHandler():CheckRemoveOverlayCard(tp,min,REASON_COST) end
-		if nn and (not e:GetHandler():CheckRemoveOverlayCard(tp,min,REASON_COST) or Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1))) then
-			Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
-			return
-		end
-		e:GetHandler():RemoveOverlayCard(tp,min,max,REASON_COST)
-	end
-end
 function Auxiliary.CheckStealEquip(c,e,tp)
 	if c:IsFacedown() or not c:IsControlerCanBeChanged() or not c:IsControler(1-tp) then return false end
 	if e:GetHandler():IsLocation(LOCATION_SZONE) then return true end --Already handled in the core
@@ -823,7 +810,7 @@ end
 function Ursarctic.summonoperation(id)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
-		if c:IsRelateToEffect(e) then 
+		if c:IsRelateToEffect(e) then
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		end
 		local e1=Effect.CreateEffect(c)
@@ -916,8 +903,8 @@ function Cyberdark.EquipTarget_NTG(f,mandatory)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local wc=Duel.IsPlayerAffectedByEffect(tp,EFFECT_CYBERDARK_WORLD)
 		local loc,player=0,tp
-		if wc then 
-			loc=LOCATION_GRAVE 
+		if wc then
+			loc=LOCATION_GRAVE
 			player=PLAYER_ALL
 		end
 		if chk==0 then return mandatory or (Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingMatchingCard(f,tp,LOCATION_GRAVE,loc,1,nil,tp)) end

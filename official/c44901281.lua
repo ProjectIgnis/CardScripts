@@ -1,4 +1,5 @@
 --セイバー・ホール
+--Saber Hole
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,8 +23,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x100d)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.GetCurrentChain()==0
+	return Duel.GetCurrentChain(true)==0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -1,4 +1,5 @@
 --混沌の落とし穴
+--Chaos Trap Hole
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)
@@ -22,7 +23,7 @@ function s.filter(c)
 	return c:IsAttribute(0x30) and c:IsAbleToRemove()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0 and eg:IsExists(s.filter,1,nil)
+	return Duel.GetCurrentChain(true)==0 and eg:IsExists(s.filter,1,nil)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,2000) end

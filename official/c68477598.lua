@@ -1,4 +1,5 @@
 --ペンデュラム・ホール
+--Pendulum Hole
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)
@@ -15,7 +16,7 @@ function s.cfilter(c)
 	return c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0 and eg:IsExists(s.cfilter,1,nil)
+	return Duel.GetCurrentChain(true)==0 and eg:IsExists(s.cfilter,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

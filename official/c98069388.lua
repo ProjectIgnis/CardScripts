@@ -1,4 +1,5 @@
 --昇天の角笛
+--Horn of Heaven
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0
+	return Duel.GetCurrentChain(true)==0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.TRUE,1,false,nil,nil) end

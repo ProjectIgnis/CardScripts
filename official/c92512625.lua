@@ -1,4 +1,5 @@
 --神の忠告
+--Solemn Scolding
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)
@@ -32,7 +33,7 @@ function s.cfilter(c)
 	return c:IsFacedown() and c:GetSequence()<5
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0
+	return Duel.GetCurrentChain(true)==0
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,1,e:GetHandler())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

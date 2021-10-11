@@ -44,7 +44,7 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and Duel.GetCurrentChain()==0
+	return ep==1-tp and Duel.GetCurrentChain(true)==0
 		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,CARD_DREAM_MIRROR_TERROR),tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)

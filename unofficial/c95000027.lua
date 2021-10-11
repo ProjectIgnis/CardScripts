@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.mark=2
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=ep and #eg==1 and Duel.GetCurrentChain()==0 
+	return ep==1-tp and #eg==1 and Duel.GetCurrentChain(true)==0 
 		and not Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end
 function s.filter(c,e,tp)

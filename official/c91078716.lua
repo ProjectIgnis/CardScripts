@@ -1,4 +1,5 @@
 --ポリノシス
+--Pollinosis
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0
+	return Duel.GetCurrentChain(true)==0
 end
 function s.filter(c)
 	return c:IsRace(RACE_PLANT) and not c:IsStatus(STATUS_BATTLE_DESTROYED)

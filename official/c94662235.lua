@@ -1,4 +1,5 @@
 --運命湾曲
+--Bending Destiny
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)
@@ -23,11 +24,11 @@ end
 s.listed_series={0x31}
 function s.check(tp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-	return g:IsExists(aux.FilterFaceupFunction(Card.IsSetCard,0x31),1,nil)
-		and not g:IsExists(aux.NOT(aux.FilterFaceupFunction(Card.IsSetCard,0x31)),1,nil)
+	local count=#g
+	return count>0 and g:FilterCount(Card.IsSetCard,nil,0x31)==count
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0 and s.check(tp)
+	return Duel.GetCurrentChain(true)==0 and s.check(tp)
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:GetFirst():IsAbleToRemove() end

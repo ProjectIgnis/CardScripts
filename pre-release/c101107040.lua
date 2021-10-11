@@ -61,15 +61,12 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local hc,fc=table.unpack(e:GetLabelObject())
 	local dg=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
-	if chk==0 then return hc>0 and fc>0 and Duel.IsPlayerCanDraw(tp,hc)
-		and #dg>=fc end
+	if chk==0 then return hc>0 and fc>0 and Duel.IsPlayerCanDraw(tp,hc) and #dg>=fc end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,hc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,#dg,fc,1-tp,LOCATION_ONFIELD)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local hc,fc=table.unpack(e:GetLabelObject())
 	if Duel.Draw(p,hc,REASON_EFFECT)==hc then

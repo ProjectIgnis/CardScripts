@@ -2,10 +2,10 @@
 --Darktellarknight Batlamyus
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9c),4,2)
 	c:EnableReviveLimit()
-	--attribute
+	--Attribute change
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
@@ -13,21 +13,21 @@ function s.initial_effect(c)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetValue(ATTRIBUTE_DARK)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special Summon from Extra Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.spcon1)
-	e2:SetCost(s.spcost)
+	e2:SetCost(aux.AND(aux.dxmcostgen(1,1,nil),s.spdiscost))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 	local e3=e2:Clone()
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetCondition(s.spcon2)
+	e3:SetCondition(aux.NOT(s.spop))
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x9c}
@@ -38,18 +38,13 @@ function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
 	return ct:GetClassCount(Card.GetCode)<7
 end
-function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
-	return ct:GetClassCount(Card.GetCode)>=7
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.spdiscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST)
-		and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil)
-		and c:GetFlagEffect(id)==0 end
-	c:RemoveOverlayCard(tp,1,1,REASON_COST)
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	if chk==0 then
+		return c:GetFlagEffect(id)==0 and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil)
+	end
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.spfilter(c,e,tp,mc,pg)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsSetCard(0x9c) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
@@ -59,7 +54,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local c=e:GetHandler()
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-		return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,e:GetHandler(),pg)
+		return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,pg)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end

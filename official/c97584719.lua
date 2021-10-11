@@ -1,12 +1,12 @@
 --無限起動アースシェイカー
---Infinite Ignition Earthshaker
+--Infinitrack Earth Slicer
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon
 	c:EnableReviveLimit()
 	Xyz.AddProcedure(c,nil,9,2)
-	--Destroy
+	--Destroy up to the number of detachments
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.descost)
+	e1:SetCost(aux.dxmcostgen(1,s.mxmc,s.slwc))
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-	--attach
+	--Attach destroyed monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.atchtg)
 	e2:SetOperation(s.atchop)
 	c:RegisterEffect(e2)
-	--spsummon from gy
+	--Special Summon itself from GY by tributing a Machine Link
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -39,14 +39,11 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(Card.IsCanBeEffectTarget,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e)
-	if chk==0 then return #g>0 and c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	local rt=math.min(#g,c:GetOverlayCount())
-	c:RemoveOverlayCard(tp,1,rt,REASON_COST)
-	local ct=Duel.GetOperatedGroup():GetCount()
-	e:SetLabel(ct)
+function s.mxmc(e,tp)
+	return Duel.GetMatchingGroupCount(Card.IsCanBeEffectTarget,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e)
+end
+function s.slwc(e,og)
+	e:SetLabel(#og)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
@@ -63,8 +60,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atchtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local bc=e:GetHandler():GetBattleTarget()
-	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) and not bc:IsType(TYPE_TOKEN) end
+	local c=e:GetHandler()
+	local bc=c:GetBattleTarget()
+	if chk==0 then return c:IsType(TYPE_XYZ) and not bc:IsType(TYPE_TOKEN) end
 	Duel.SetTargetCard(bc)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,bc,1,0,0)
 end
@@ -90,12 +88,13 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then 
+	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end

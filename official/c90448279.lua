@@ -3,7 +3,7 @@
 --scripted by Hatter and Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Xyz summon procedure
+	--Xyz Summon
 	Xyz.AddProcedure(c,nil,12,2,s.xyzfilter,aux.Stringid(id,0),2,s.xyzop)
 	c:EnableReviveLimit()
 	--Send cards to GY
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
-	e1:SetCost(s.gycost)
+	e1:SetCost(aux.dxmcostgen(2,2,nil))
 	e1:SetTarget(s.gytg)
 	e1:SetOperation(s.gyop)
 	c:RegisterEffect(e1)
@@ -53,10 +53,6 @@ function s.xyzop(e,tp,chk)
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	return true
 end
-function s.gycost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
-end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 	if chk==0 then return #g>0 end
@@ -84,13 +80,12 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local g=Duel.SelectMatchingCard(tp,s.attfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,e)
-	local tc=g:GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.attfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,e):GetFirst()
 	if tc then
 		local og=tc:GetOverlayGroup()
 		if #og>0 then
 			Duel.SendtoGrave(og,REASON_RULE)
 		end
-		Duel.Overlay(c,Group.FromCards(tc))
+		Duel.Overlay(c,tc)
 	end
 end

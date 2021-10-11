@@ -830,7 +830,7 @@ end
 -- group of just detached materials in order to do some additional handling with
 -- them.
 function Auxiliary.dxmcostgen(min,max,op)
-	if true then --Perform some sanity checks, simplifies debugging
+	do --Perform some sanity checks, simplifies debugging
 		local max_type=type(max)
 		local op_type=type(op)
 		if type(min)~="number" then

@@ -5,12 +5,6 @@ Duel.HintSelection=(function()
 		return oldhint(type(g)=="Group" and g or Group.FromCards(g),...)
 	end
 end)()
-Card.SetMaterial=(function()
-	local oldf=Card.SetMaterial
-	return function(c,g,...)
-		return oldf(c,type(g)=="Group" and g or Group.FromCards(g),...)
-	end
-end)()
 ---
 function Duel.GoatConfirm(tp,loc)
 	local dg,hg=Duel.GetFieldGroup(tp,loc&(LOCATION_HAND|LOCATION_DECK),0):Split(Card.IsLocation,nil,LOCATION_DECK)
@@ -386,7 +380,7 @@ function Auxiliary.BitSplit(v)
 	local i=0
 	while 2^i<=v do
 		local p=2^i
-		if v & p~=0 then
+		if v & p~=0 then 
 			table.insert(res,p)
 		end
 		i=i+1

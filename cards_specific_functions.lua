@@ -774,9 +774,6 @@ local SecurityForce={}
 function SecurityForce.CostFilter(c)
 	return c:IsSetCard(0x15a) and c:IsAbleToRemoveAsCost()
 end
-function SecurityForce.CostReplacement(c)
-	return c:IsHasEffect(EFFECT_SECURITYFORCE_REPLACE,tp) and c:IsAbleToRemoveAsCost()
-end
 function SecurityForce.Cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(SecurityForce.CostFilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)

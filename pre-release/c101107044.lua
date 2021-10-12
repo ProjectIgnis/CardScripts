@@ -102,6 +102,10 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local rc=re:GetHandler()
 	if success and rc:IsRelateToEffect(re) and c:IsRelateToEffect(e) then
+		local og=rc:GetOverlayGroup()
+		if #og>0 then
+			Duel.SendtoGrave(og,REASON_RULE)
+		end
 		Duel.Overlay(c,rc)
 	end
 end

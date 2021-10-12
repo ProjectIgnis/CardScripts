@@ -55,7 +55,7 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		if #og>0 then
 			Duel.Overlay(tc,og)
 		end
-		Duel.Overlay(tc,Group.FromCards(xc))
+		Duel.Overlay(tc,xc)
 	end
 end
 function s.drcfilter(c)

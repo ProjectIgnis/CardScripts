@@ -72,7 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		if c:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
-			Duel.Overlay(tc,Group.FromCards(c))
+			Duel.Overlay(tc,c)
 		end
 	end
 	Duel.SpecialSummonComplete()

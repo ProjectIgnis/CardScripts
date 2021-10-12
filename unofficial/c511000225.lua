@@ -17,7 +17,7 @@ function s.filter(c,e,tp)
 	local rk=c:GetRank()
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
 	return #pg<=1 and rk>0 and c:IsPreviousControler(tp) and c:IsSetCard(0x48)
-		and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_EXTRA,0,1,nil,rk,e,tp,c,pg) 
+		and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_EXTRA,0,1,nil,rk,e,tp,c,pg)
 		and c:IsCanBeEffectTarget(e)
 end
 function s.sfilter(c,rk,e,tp,mc,pg)
@@ -40,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local sc=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_EXTRA,0,1,1,nil,tc:GetRank(),e,tp,tc,pg):GetFirst()
 		if sc then
 			sc:SetMaterial(Group.FromCards(tc))
-			Duel.Overlay(sc,Group.FromCards(tc))
+			Duel.Overlay(sc,tc)
 			Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 			sc:CompleteProcedure()
 		end

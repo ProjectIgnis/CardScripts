@@ -53,7 +53,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and s.penfilter(chkc) end
 	local pg=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
 	local pc=(pg-c):GetFirst()
-	if chk==0 then return pc and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
+	if chk==0 then return pc and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and pc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingTarget(s.penfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
@@ -70,11 +70,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and pc and Duel.SpecialSummon(pc,0,tp,tp,false,false,POS_FACEUP)>0 then
 		Duel.MoveToField(tc,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
-	end	
+	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	return not e:GetHandler():IsStatus(STATUS_CHAINING+STATUS_BATTLE_DESTROYED) and rp==1-tp 
+	return not e:GetHandler():IsStatus(STATUS_CHAINING+STATUS_BATTLE_DESTROYED) and rp==1-tp
 		and rc:IsOriginalType(TYPE_MONSTER) and rc:IsOnField() and not re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.desfilter(c)
@@ -102,7 +102,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local rc=re:GetHandler()
 	if success and rc:IsRelateToEffect(re) and c:IsRelateToEffect(e) then
-		Duel.Overlay(c,Group.FromCards(rc))
+		Duel.Overlay(c,rc)
 	end
 end
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)

@@ -69,6 +69,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		if #og>0 then
 			Duel.SendtoGrave(og,REASON_RULE)
 		end
-		Duel.Overlay(c,Group.FromCards(tc))
+		Duel.Overlay(c,tc)
 	end
 end

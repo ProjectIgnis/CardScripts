@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
 		if tc then
 			rc:CancelToGrave()
-			Duel.Overlay(tc,Group.FromCards(rc))
+			Duel.Overlay(tc,rc)
 		end
 	end
 end

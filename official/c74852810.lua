@@ -37,6 +37,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #og==0 then return end
 	if Duel.SendtoGrave(og,REASON_EFFECT)~=0 and tc2:IsFaceup() and tc2:IsRelateToEffect(e) and c:IsRelateToEffect(e) then
 		c:CancelToGrave()
-		Duel.Overlay(tc2,Group.FromCards(c))
+		Duel.Overlay(tc2,c)
 	end
 end

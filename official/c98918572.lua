@@ -69,6 +69,6 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 		if #og>0 then
 			Duel.SendtoGrave(og,REASON_RULE)
 		end
-		Duel.Overlay(tc,Group.FromCards(xc))
+		Duel.Overlay(tc,xc)
 	end
 end

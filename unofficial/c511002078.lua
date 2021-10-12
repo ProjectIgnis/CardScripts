@@ -13,7 +13,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE) 
+	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -25,6 +25,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.HintSelection(g)
 		c:CancelToGrave()
-		Duel.Overlay(tc,Group.FromCards(c))
+		Duel.Overlay(tc,c)
 	end
 end

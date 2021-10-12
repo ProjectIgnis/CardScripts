@@ -47,7 +47,7 @@ function s.afilter(c)
 	return c:IsType(TYPE_XYZ) and c:IsFaceup() and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp) and aux.exccon(e) 
+	return eg:IsExists(s.cfilter,1,nil,tp) and aux.exccon(e)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.afilter(chkc) end
@@ -60,6 +60,6 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
-		Duel.Overlay(tc,Group.FromCards(c))
+		Duel.Overlay(tc,c)
 	end
 end

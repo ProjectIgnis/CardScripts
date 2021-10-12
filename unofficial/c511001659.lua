@@ -69,7 +69,7 @@ s.xyz_number=9
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
-	if chk==0 then return tc and c:IsType(TYPE_XYZ) and not tc:IsType(TYPE_TOKEN) and tc:IsAbleToChangeControler() 
+	if chk==0 then return tc and c:IsType(TYPE_XYZ) and not tc:IsType(TYPE_TOKEN) and tc:IsAbleToChangeControler()
 		and not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsOnField() end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -80,7 +80,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #og>0 then
 			Duel.SendtoGrave(og,REASON_RULE)
 		end
-		Duel.Overlay(c,Group.FromCards(tc))
+		Duel.Overlay(c,tc)
 	end
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)

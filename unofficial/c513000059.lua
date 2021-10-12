@@ -60,7 +60,7 @@ function s.filter(c)
 	return not c:IsType(TYPE_TOKEN) and c:IsAbleToChangeControler()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) 
+	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ)
 		and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -73,7 +73,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #og>0 then
 			Duel.SendtoGrave(og,REASON_RULE)
 		end
-		Duel.Overlay(c,Group.FromCards(tc))
+		Duel.Overlay(c,tc)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

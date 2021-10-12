@@ -46,7 +46,7 @@ function s.xmop(e,tp,eg,ep,ev,re,r,rp)
 			if tc:GetOverlayCount()>0 then
 				Duel.SendtoGrave(tc:GetOverlayGroup(),REASON_RULE)
 			end
-			Duel.Overlay(g:GetFirst(),Group.FromCards(tc))
+			Duel.Overlay(g:GetFirst(),tc)
 		end
 	end
 end
@@ -61,6 +61,6 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
-		Duel.Overlay(tc,Group.FromCards(c))
+		Duel.Overlay(tc,c)
 	end
 end

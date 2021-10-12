@@ -47,7 +47,7 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
-		Duel.Overlay(tc,Group.FromCards(c))
+		Duel.Overlay(tc,c)
 	end
 end
 
@@ -92,7 +92,6 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	
 	--if not tc:IsRelateToEffect(e) or not tc:GetOverlayTarget():IsRelateToEffect(e) or not Duel.IsExistingMatchingCard(s.thfil1,tp,LOCATION_MZONE,0,2,nil) then return end
 	local mg=Duel.GetOverlayGroup(tp,1,0):Select(tp,1,1,nil)
 	if #mg==0 then return end

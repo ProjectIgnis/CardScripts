@@ -74,7 +74,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Overlay(sc,mg)
 			end
 			sc:SetMaterial(Group.FromCards(c))
-			Duel.Overlay(sc,Group.FromCards(c))
+			Duel.Overlay(sc,c)
 			if Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)>0 then
 				sc:CompleteProcedure()
 			end

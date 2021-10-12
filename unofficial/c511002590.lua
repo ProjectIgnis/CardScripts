@@ -16,7 +16,7 @@ s.listed_series={0xba}
 function s.filter(c,e,tp)
 	local rk=c:GetRank()
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return #pg<=1 and c:IsFaceup() and c:IsControlerCanBeChanged() and (rk>0 or c:IsStatus(STATUS_NO_LEVEL)) 
+	return #pg<=1 and c:IsFaceup() and c:IsControlerCanBeChanged() and (rk>0 or c:IsStatus(STATUS_NO_LEVEL))
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,rk+1,pg)
 end
 function s.spfilter(c,e,tp,mc,rk,pg)
@@ -36,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc or not tc:IsRelateToEffect(e) or not Duel.GetControl(tc,tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)<0 
+	if not tc or not tc:IsRelateToEffect(e) or not Duel.GetControl(tc,tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)<0
 		or tc:IsFacedown() or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) then return end
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(tc),tp,nil,nil,REASON_XYZ)
 	Duel.BreakEffect()
@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(mg,REASON_RULE)
 		end
 		sc:SetMaterial(Group.FromCards(tc))
-		Duel.Overlay(sc,Group.FromCards(tc))
+		Duel.Overlay(sc,tc)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
 	end

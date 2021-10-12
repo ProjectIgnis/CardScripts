@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 and c:IsRelateToEffect(e) then
 			c:CancelToGrave()
-			Duel.Overlay(tc,Group.FromCards(c))
+			Duel.Overlay(tc,c)
 		end
 	end
 end

@@ -70,6 +70,6 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 		if og:GetCount()>0 then
 			Duel.SendtoGrave(og,REASON_RULE)
 		end
-		Duel.Overlay(tc,Group.FromCards(c))
+		Duel.Overlay(tc,c)
 	end
 end

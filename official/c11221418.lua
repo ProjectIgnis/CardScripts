@@ -126,6 +126,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local mc=Duel.GetFirstTarget()
 	if tc:GetFlagEffect(id)>0 and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0
 		and mc and mc:IsRelateToEffect(e) then
-		Duel.Overlay(tc,Group.FromCards(mc))
+		Duel.Overlay(tc,mc)
 	end
 end

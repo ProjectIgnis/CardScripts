@@ -54,7 +54,7 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 		Duel.Overlay(c,mg2)
 	end
 	c:SetMaterial(Group.FromCards(tc))
-	Duel.Overlay(c,Group.FromCards(tc))
+	Duel.Overlay(c,tc)
 	if not tc:IsCode(84013237) then
 		Duel.SendtoGrave(mg2,REASON_RULE)
 	end

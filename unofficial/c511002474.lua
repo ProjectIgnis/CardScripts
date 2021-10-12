@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Effect.CreateEffect(c)	
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
@@ -30,7 +30,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local dam=Duel.GetBattleDamage(tp)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,dam) end
-	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE) 
+	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,dam) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,dam)
@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if c:IsRelateToEffect(e) then
 			Duel.BreakEffect()
 			c:CancelToGrave()
-			Duel.Overlay(tc,Group.FromCards(c))
+			Duel.Overlay(tc,c)
 		end
 	end
 end
@@ -73,7 +73,7 @@ end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local cid=e:GetLabel()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,cid) end
-	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE) 
+	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,cid) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,cid)
@@ -102,7 +102,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if c:IsRelateToEffect(e) then
 			Duel.BreakEffect()
 			c:CancelToGrave()
-			Duel.Overlay(tc,Group.FromCards(c))
+			Duel.Overlay(tc,c)
 		end
 	end
 end

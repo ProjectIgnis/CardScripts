@@ -23,7 +23,7 @@ function s.cfilter(c,e,tp)
 end
 function s.spfilter1(c,tc,e,tp)
 	return c:IsRank(tc:GetRank()) and c:IsRace(tc:GetRace()) and c:IsAttribute(tc:GetAttribute())
-		and not c:IsCode(tc:GetCode()) and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+		and not c:IsCode(tc:GetCode()) and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spfilter2(c,tc,e,tp)
 	return c:IsRank(tc:GetPreviousRankOnField()) and c:IsRace(tc:GetPreviousRaceOnField()) and c:IsAttribute(tc:GetPreviousAttributeOnField())
@@ -50,7 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		if c:IsRelateToEffect(e) then
 			c:CancelToGrave()
-			Duel.Overlay(sc,Group.FromCards(c))
+			Duel.Overlay(sc,c)
 		end
 		local fid=c:GetFieldID()
 		sc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)

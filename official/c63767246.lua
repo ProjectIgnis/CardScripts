@@ -58,7 +58,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if Duel.NegateEffect(ev) and c:IsRelateToEffect(e) and rc:IsRelateToEffect(re) and c:IsType(TYPE_XYZ) then
 		rc:CancelToGrave()
-		Duel.Overlay(c,Group.FromCards(rc))
+		Duel.Overlay(c,rc)
 	end
 end
 function s.cbcon(e,tp,eg,ep,ev,re,r,rp)

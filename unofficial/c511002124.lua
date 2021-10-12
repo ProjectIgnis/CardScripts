@@ -28,6 +28,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		or not Duel.NegateAttack() then return end
 	if not tg:IsImmuneToEffect(e) and c:IsRelateToEffect(e) then
 		c:CancelToGrave()
-		Duel.Overlay(tg,Group.FromCards(c))
+		Duel.Overlay(tg,c)
 	end
 end

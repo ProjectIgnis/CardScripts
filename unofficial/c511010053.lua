@@ -188,7 +188,7 @@ function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayCount()==0
 end
 function s.xyzfilter(c,e,tp,pg)
-	return e:GetHandler():IsCanBeXyzMaterial(c,tp) and c:IsCode(97403510) and (#pg<=0 or pg:IsContains(e:GetHandler())) 
+	return e:GetHandler():IsCanBeXyzMaterial(c,tp) and c:IsCode(97403510) and (#pg<=0 or pg:IsContains(e:GetHandler()))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,e:GetHandler(),c)>0
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -211,7 +211,7 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Overlay(sc,mg)
 		end
 		sc:SetMaterial(Group.FromCards(c))
-		Duel.Overlay(sc,Group.FromCards(c))
+		Duel.Overlay(sc,c)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
 	end

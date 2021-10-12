@@ -100,7 +100,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #mg~=0 then
 			Duel.SendtoGrave(mg,REASON_RULE)
 		end
-		Duel.Overlay(sc,Group.FromCards(tc))
+		Duel.Overlay(sc,tc)
 		Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

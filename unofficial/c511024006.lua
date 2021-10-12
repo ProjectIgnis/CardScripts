@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		if c:IsRelateToEffect(e) then
 			c:CancelToGrave()
-			Duel.Overlay(sc,Group.FromCards(c))
+			Duel.Overlay(sc,c)
 		end
 	end
 end

@@ -27,7 +27,7 @@ s.listed_names={16195942}
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return #pg<=1 and c:IsFaceup() and (rk>0 or c:IsStatus(STATUS_NO_LEVEL)) 
+	return #pg<=1 and c:IsFaceup() and (rk>0 or c:IsStatus(STATUS_NO_LEVEL))
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,rk+1,pg)
 end
 function s.filter2(c,e,tp,mc,rk,pg)
@@ -55,11 +55,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Overlay(sc,mg)
 		end
 		sc:SetMaterial(Group.FromCards(tc))
-		Duel.Overlay(sc,Group.FromCards(tc))
+		Duel.Overlay(sc,tc)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		if (tc:IsSetCard(0x10db) or tc:IsCode(16195942)) and Duel.SelectYesNo(tp,aux.Stringid(95100814,0)) then
 		e:GetHandler():CancelToGrave()
-		Duel.Overlay(sc,Group.FromCards(e:GetHandler()))
+		Duel.Overlay(sc,e:GetHandler())
 		end
 		sc:CompleteProcedure()
 		e:GetLabelObject():SetLabelObject(sc)
@@ -77,6 +77,6 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
 	if tc:IsLocation(LOCATION_MZONE) then
-		Duel.Overlay(tc,Group.FromCards(c))
+		Duel.Overlay(tc,c)
 	end
 end

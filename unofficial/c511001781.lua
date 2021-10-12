@@ -130,7 +130,7 @@ end
 function s.eqtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
-	if chk==0 then return tc and not tc:IsType(TYPE_TOKEN) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
+	if chk==0 then return tc and not tc:IsType(TYPE_TOKEN) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and tc:IsAbleToChangeControler() and not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsOnField() end
 	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,tc,1,0,0)
@@ -189,14 +189,14 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and c:GetOverlayCount()==0
 end
 function s.spfilter(c,e,tp,mc,pg)
-	return c:IsCode(9161357) and mc:IsCanBeXyzMaterial(c,tp) and (#pg<=0 or pg:IsContains(mc)) 
+	return c:IsCode(9161357) and mc:IsCanBeXyzMaterial(c,tp) and (#pg<=0 or pg:IsContains(mc))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,true)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-		return #pg<=1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 
+		return #pg<=1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
 			and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c,pg)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
@@ -214,7 +214,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Overlay(sc,mg)
 		end
 		sc:SetMaterial(Group.FromCards(c))
-		Duel.Overlay(sc,Group.FromCards(c))
+		Duel.Overlay(sc,c)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,true,POS_FACEUP)
 		sc:CompleteProcedure()
 	end

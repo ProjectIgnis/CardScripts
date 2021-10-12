@@ -845,7 +845,7 @@ function Auxiliary.dxmcostgen(min,max,op)
 	end
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
-		local nn=Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
+		local nn=c:IsSetCard(0x14b) and Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
 		local crm=c:CheckRemoveOverlayCard(tp,min,REASON_COST)
 		if chk==0 then return (nn and c:IsLocation(LOCATION_MZONE)) or crm end
 		if nn and (not crm or Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1))) then

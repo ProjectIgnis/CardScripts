@@ -1,7 +1,6 @@
 --輝光竜セイファート
 --Starliege Seyfert
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 dragon, whose level equals to sent monster(s)'s level
@@ -38,8 +37,8 @@ function s.thcheck(sg,e,tp)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.thcfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
-	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,1,99,s.thcheck,0) end
-	local sg=aux.SelectUnselectGroup(g,e,tp,1,99,s.thcheck,1,tp,HINTMSG_TOGRAVE,s.thcheck)
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,1,#g,s.thcheck,0) end
+	local sg=aux.SelectUnselectGroup(g,e,tp,1,#g,s.thcheck,1,tp,HINTMSG_TOGRAVE,s.thcheck)
 	e:SetLabel(sg:GetSum(Card.GetOriginalLevel))
 	Duel.SendtoGrave(sg,REASON_COST)
 end

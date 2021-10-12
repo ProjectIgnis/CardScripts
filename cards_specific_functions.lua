@@ -596,7 +596,7 @@ end
 --Shortcut for "Security Force" archetype's "facing"
 --(card in the same column as a security force)
 function Auxiliary.SecurityTarget(e,_c)
-    return _c:GetColumnGroup():IsExists(function(c,tp)
+	return _c:GetColumnGroup():IsExists(function(c,tp)
 											return c:IsControler(tp) and c:IsFaceup() and c:IsMonster() and c:IsSetCard(0x15a)
 										 end,1,_c,e:GetHandlerPlayer())
 end
@@ -604,14 +604,14 @@ end
 -- Description: Checks for whether the equip card still has the equip effect once it reaches SZONE
 -- This is used to correct the interaction between Phantom of Chaos (or alike) and any monsters that equip themselves to another
 function Auxiliary.ZWEquipLimit(tc,te)
-    return function(e,c)
-        if c~=tc then return false end
-        local effs={e:GetHandler():GetCardEffect(75402014+EFFECT_EQUIP_LIMIT)}
-        for _,eff in ipairs(effs) do
-            if eff==te then return true end
-        end
-        return false
-    end
+	return function(e,c)
+		if c~=tc then return false end
+		local effs={e:GetHandler():GetCardEffect(75402014+EFFECT_EQUIP_LIMIT)}
+		for _,eff in ipairs(effs) do
+			if eff==te then return true end
+		end
+		return false
+	end
 end
 -- Description: Operation of equipping a card to another by its own effect and registering equip limit, used with aux.AddZWEquipLimit
 -- c - equip card
@@ -621,18 +621,18 @@ end
 -- code - used if a flag effect needs to be registered
 -- previousPos - boolean, determine whether the equip card will use its Position from the previous location, default to true
 function Auxiliary.EquipAndLimitRegister(c,e,tp,tc,code,previousPos)
-    if not Duel.Equip(tp,c,tc,previousPos==nil and true or previousPos) then return false end
-    --Add Equip limit
-    if code then
-        tc:RegisterFlagEffect(code,RESET_EVENT+RESETS_STANDARD,0,0)
-    end
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_SINGLE)
-    e1:SetCode(EFFECT_EQUIP_LIMIT)
-    e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-    e1:SetValue(Auxiliary.ZWEquipLimit(tc,e:GetLabelObject()))
-    c:RegisterEffect(e1)
-    return true
+	if not Duel.Equip(tp,c,tc,previousPos==nil and true or previousPos) then return false end
+	--Add Equip limit
+	if code then
+		tc:RegisterFlagEffect(code,RESET_EVENT+RESETS_STANDARD,0,0)
+	end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_EQUIP_LIMIT)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetValue(Auxiliary.ZWEquipLimit(tc,e:GetLabelObject()))
+	c:RegisterEffect(e1)
+	return true
 end
 -- Description: Equip Limit Proc for cards that equip themselves to another card
 -- con - condition for when the card can equip to another 'f(e)'
@@ -643,34 +643,34 @@ end
 -- prop - extra effect properties
 -- resetflag/resetcount - resets
 function Auxiliary.AddZWEquipLimit(c,con,equipval,equipop,linkedeff,prop,resetflag,resetcount)
-    local finalprop=prop and prop|EFFECT_FLAG_CANNOT_DISABLE or EFFECT_FLAG_CANNOT_DISABLE
-    local e1=Effect.CreateEffect(c)
-    if con then
-        e1:SetCondition(con)
-    end
-    e1:SetType(EFFECT_TYPE_SINGLE)
-    e1:SetProperty(finalprop,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
-    e1:SetCode(75402014)
-    e1:SetLabelObject(linkedeff)
-    if resetflag and resetcount then
-        e1:SetReset(resetflag,resetcount)
-    elseif resetflag then
-        e1:SetReset(resetflag)
-    end
-    e1:SetValue(function(tc,c,tp) return equipval(tc,c,tp) end)
-    e1:SetOperation(function(c,e,tp,tc) equipop(c,e,tp,tc) end)
-    c:RegisterEffect(e1)
-    local e2=Effect.CreateEffect(c)
-    e2:SetType(EFFECT_TYPE_SINGLE)
-    e2:SetProperty(finalprop&~EFFECT_FLAG_CANNOT_DISABLE,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
-    e2:SetCode(75402014+EFFECT_EQUIP_LIMIT)
-    if resetflag and resetcount then
-        e2:SetReset(resetflag,resetcount)
-    elseif resetflag then
-        e2:SetReset(resetflag)
-    end
-    c:RegisterEffect(e2)
-    linkedeff:SetLabelObject(e2)
+	local finalprop=prop and prop|EFFECT_FLAG_CANNOT_DISABLE or EFFECT_FLAG_CANNOT_DISABLE
+	local e1=Effect.CreateEffect(c)
+	if con then
+		e1:SetCondition(con)
+	end
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(finalprop,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
+	e1:SetCode(75402014)
+	e1:SetLabelObject(linkedeff)
+	if resetflag and resetcount then
+		e1:SetReset(resetflag,resetcount)
+	elseif resetflag then
+		e1:SetReset(resetflag)
+	end
+	e1:SetValue(function(tc,c,tp) return equipval(tc,c,tp) end)
+	e1:SetOperation(function(c,e,tp,tc) equipop(c,e,tp,tc) end)
+	c:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(finalprop&~EFFECT_FLAG_CANNOT_DISABLE,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
+	e2:SetCode(75402014+EFFECT_EQUIP_LIMIT)
+	if resetflag and resetcount then
+		e2:SetReset(resetflag,resetcount)
+	elseif resetflag then
+		e2:SetReset(resetflag)
+	end
+	c:RegisterEffect(e2)
+	linkedeff:SetLabelObject(e2)
 end
 
 -- Amazement and Ɐttraction helper functions
@@ -682,7 +682,7 @@ function AA.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and AA.eqtgfilter(chkc,tp) end
 	if chk==0 then
 		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and
-		       Duel.IsExistingTarget(AA.eqtgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp)
+			   Duel.IsExistingTarget(AA.eqtgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,AA.eqtgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
@@ -733,7 +733,7 @@ function Auxiliary.AttractionEquipCon(self)
 end
 function AA.eqsfilter(c,tp)
 	return c:IsSetCard(0x15f) and c:IsType(TYPE_TRAP) and c:GetEquipTarget() and
-	       Duel.IsExistingMatchingCard(AA.eqmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
+		   Duel.IsExistingMatchingCard(AA.eqmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),tp)
 end
 function AA.eqmfilter(c,tp)
 	return c:IsFaceup() and (c:IsSetCard(0x15e) or (not c:IsControler(tp)))
@@ -771,25 +771,25 @@ function Auxiliary.AddAmazementQuickEquipEffect(c,id)
 end
 -- Description: cost for "Security Force" cards that banish a card from the hand, needed for "Security Force Chase" from LIOV
 function Auxiliary.SecurityForceCostFilter(c)
-    return c:IsSetCard(0x15a) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x15a) and c:IsAbleToRemoveAsCost()
 end
 function Auxiliary.SecurityForceCostReplacement(c)
-    return c:IsHasEffect(EFFECT_SECURITYFORCE_REPLACE,tp) and c:IsAbleToRemoveAsCost()
+	return c:IsHasEffect(EFFECT_SECURITYFORCE_REPLACE,tp) and c:IsAbleToRemoveAsCost()
 end
 function Auxiliary.SecurityForceCost(e,tp,eg,ep,ev,re,r,rp,chk)
-    local g1=Duel.GetMatchingGroup(Auxiliary.SecurityForceCostFilter,tp,LOCATION_HAND,0,1,nil)
-    local g2=Duel.GetMatchingGroup(Auxiliary.SecurityForceCostReplacement,tp,LOCATION_GRAVE,0,1,nil)
-    if chk==0 then return #g1>0 or #g2>0 end
-    local rg=nil
-    if #g2>0 and (#g1==0 or Duel.SelectYesNo(tp,aux.Stringid(CARD_SECURITYFORCE_CHASE,1))) then
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-        rg=g2:Select(tp,1,1,nil)
+	local g1=Duel.GetMatchingGroup(Auxiliary.SecurityForceCostFilter,tp,LOCATION_HAND,0,1,nil)
+	local g2=Duel.GetMatchingGroup(Auxiliary.SecurityForceCostReplacement,tp,LOCATION_GRAVE,0,1,nil)
+	if chk==0 then return #g1>0 or #g2>0 end
+	local rg=nil
+	if #g2>0 and (#g1==0 or Duel.SelectYesNo(tp,aux.Stringid(CARD_SECURITYFORCE_CHASE,1))) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		rg=g2:Select(tp,1,1,nil)
 		rg:GetFirst():GetCardEffect(EFFECT_SECURITYFORCE_REPLACE):UseCountLimit(tp)
-    else
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-        rg=g1:Select(tp,1,1,nil)
-    end
-    Duel.Remove(rg,POS_FACEUP,REASON_COST)
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		rg=g1:Select(tp,1,1,nil)
+	end
+	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
 --Standard functions for the "Ursarctic" Special Summoning Quick Effects
 local Ursarctic={}

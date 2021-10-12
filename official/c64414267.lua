@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(s.spcon1)
+	e2:SetCondition(s.spcon)
 	e2:SetCost(aux.AND(aux.dxmcostgen(1,1,nil),s.spdiscost))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -27,14 +27,14 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetCondition(aux.NOT(s.spop))
+	e3:SetCondition(aux.NOT(s.spcon))
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x9c}
 function s.cfilter(c)
 	return c:IsSetCard(0x9c) and c:IsType(TYPE_MONSTER)
 end
-function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
+function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
 	return ct:GetClassCount(Card.GetCode)<7
 end

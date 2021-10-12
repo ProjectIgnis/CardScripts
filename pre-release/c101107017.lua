@@ -34,12 +34,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	-- Replace cost
 	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetTargetRange(1,0)
 	e3:SetCode(EFFECT_SECURITYFORCE_REPLACE)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,{id,2})
+	e3:SetCondition(s.repcon)
+	e3:SetValue(s.repval)
+	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x15a}
@@ -95,4 +99,16 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
+end
+function s.repcon(e)
+	return e:GetHandler():IsAbleToRemoveAsCost()
+end
+function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+		and c:IsSetCard(0x15a)
+end
+function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,id)
+	Duel.Remove(base:GetHandler(),POS_FACEUP,REASON_COST)
 end

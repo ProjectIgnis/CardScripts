@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	local e1=Ritual.AddProcGreater({
 		handler=c,
 		filter=aux.FilterBoolFunction(Card.IsSetCard,0x146),
+		location=LOCATION_HAND+LOCATION_GRAVE,
 		extrafil=s.extramat,
 		stage2=s.stage2
 	})

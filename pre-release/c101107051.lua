@@ -24,7 +24,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
 end
 function s.desfilter(c)
-	return c:IsCode(CARD_BLUEEYES_W_DRAGON,23995346) and c:IsPreviousLocation(LOCATION_ONFIELD)
+	local code=c:GetPreviousCodeOnField()
+	return (code==CARD_BLUEEYES_W_DRAGON or code==23995346) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.desop(e,tc,tp,mg,chk)
 	if chk==0 then

@@ -459,6 +459,8 @@ function Fusion.BanishMaterial(e,tc,tp,sg)
 	sg:Clear()
 end
 function Fusion.ShuffleMaterial(e,tc,tp,sg)
+	local rg=sg:Filter(Card.IsFacedown,nil)
+	if #rg>0 then Duel.ConfirmCards(1-tp,rg) end
 	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 	sg:Clear()
 end

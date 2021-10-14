@@ -1,10 +1,10 @@
 --機巧蹄-天迦久御雷
---Gizmek Mikazuchi, the Nuclear Emperor
+--Gizmek Kaku, the Supreme Shining Sky Stag
 --scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon from hand
+	--Special Summon from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 	aux.AddEREquipLimit(c,s.eqcon,function(ec,_,tp) return ec:IsControler(1-tp) end,s.equipop,e2)
-	--Special summon this card's equipped monster
+	--Special Summon this card's equipped monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -98,9 +98,8 @@ end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and c:GetEquipGroup():IsExists(s.spfilter2,1,nil,e,tp) and c:GetFlagEffect(id)==0 end
+		and c:GetEquipGroup():IsExists(s.spfilter2,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_SZONE)
-	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 	--Special summon this card's equipped monster
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)

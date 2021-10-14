@@ -13,26 +13,30 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetRange(LOCATION_HAND+LOCATION_SZONE)
-	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e2:SetCondition(s.condition2)
-	e2:SetOperation(s.activate2)
-	c:RegisterEffect(e2)
+	local ge=Effect.CreateEffect(c)
+	ge:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	ge:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	ge:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	ge:SetCondition(s.condition2)
+	ge:SetOperation(s.activate2)
+	Duel.RegisterEffect(ge,0)
 end
 function s.activate2(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsLocation(LOCATION_HAND+LOCATION_SZONE) then return end
-	local eff=e:GetHandler():GetActivateEffect()
+	local c=e:GetHandler()
+	local tp=c:GetControler()
+	local eff=c:GetActivateEffect()
 	eff:SetLabel(1)
 	local act=eff:IsActivatable(tp,false,false)
 	eff:SetLabel(0)
-	if act and Duel.SelectEffectYesNo(tp,eff:GetHandler(),95) then
+	if act and Duel.SelectEffectYesNo(tp,c,95) then
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_DAMAGE_CAL,0,1)
-		Duel.Activate(e:GetHandler():GetActivateEffect())
+		Duel.Activate(c:GetActivateEffect())
 	end
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tp=c:GetControler()
+	if not c:IsLocation(LOCATION_HAND+LOCATION_SZONE) then return end
 	return Duel.GetBattleDamage(tp)>=2000
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

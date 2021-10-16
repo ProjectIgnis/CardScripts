@@ -71,7 +71,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local b2=#g2>0
 	if not (b1 or b2) then return end
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,2)) then return end
-	local op=local op=aux.SelectEffect(tp,
+	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,3)},
 		{b2,aux.Stringid(id,4)})
 	if op==0 then return end

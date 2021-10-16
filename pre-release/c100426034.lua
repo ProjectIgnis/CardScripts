@@ -40,16 +40,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x12b}
-function s.thfilter(c,tp)
+function s.thfilter(c,e,tp)
 	return ((c:IsMonster() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsFaceup() and c:IsControler(tp))
-		or c:IsControler(1-tp)) and c:IsAbleToHand()
+		or c:IsControler(1-tp)) and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
     return sg:FilterCount(Card.IsControler,nil,tp)==1
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local rg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,tp)
+	local rg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e,tp)
 	if chk==0 then return aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,0) end
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_RTOHAND)
 	Duel.SetTargetCard(g)

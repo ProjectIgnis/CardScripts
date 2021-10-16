@@ -15,9 +15,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={51611042}
 function s.spcostfilter(c,tp)
 	return c:IsType(TYPE_EFFECT) and Duel.GetMZoneCount(tp,c)>1
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,0,0,1,c:GetOriginalRace(),c:GetOriginalAttribute())
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,c:GetOriginalRace(),c:GetOriginalAttribute())
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.spcostfilter,1,false,nil,nil,tp) end
@@ -38,8 +39,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local race,attribute=e:GetLabel()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)>0
-		and ft>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,0,0,1,race,attribute) then
-		local token=Duel.CreateToken(tp,id+100)
+		and ft>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,race,attribute) then
+		local token=Duel.CreateToken(tp,id+1)
 		if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) then
 			Duel.BreakEffect()
 			-- Change Type and Attribute

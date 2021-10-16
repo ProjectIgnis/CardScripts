@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={101107054}
+s.listed_names={60921537}
 s.listed_series={0x146}
 function s.atkrescon(sg)
 	return sg:IsExists(Card.IsAttackAbove,1,nil,1)

@@ -30,6 +30,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,2,tp,LOCATION_GRAVE)
 end
+function s.tdfilter3(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck() 
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
@@ -38,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(g)
 	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		-- effect
-		local g=Duel.GetMatchingGroup(s.tdfilter,tp,0,LOCATION_GRAVE,nil,tp)
+		local g=Duel.GetMatchingGroup(s.tdfilter3,tp,0,LOCATION_GRAVE,nil,tp)
 		local sg=aux.SelectUnselectGroup(g,e,tp,2,7,s.rescon,1,tp,HINTMSG_TODECK)
 		if sg and #sg>0 then
 			if Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>3 then

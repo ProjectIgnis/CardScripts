@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-	--to gy
+	--Mill 2 cards
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DECKDES+CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_POSITION)
@@ -71,18 +71,9 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local b2=#g2>0
 	if not (b1 or b2) then return end
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,2)) then return end
-	local acd={}
-	local ac={}
-	if b1 then
-		table.insert(acd,aux.Stringid(id,3))
-		table.insert(ac,1)
-	end
-	if b2 then
-		table.insert(acd,aux.Stringid(id,4))
-		table.insert(ac,2)
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-	local op=ac[Duel.SelectOption(tp,table.unpack(acd))+1]
+	local op=local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,3)},
+		{b2,aux.Stringid(id,4)})
 	if op==0 then return end
 	Duel.BreakEffect()
 	if op==1 then

@@ -27,19 +27,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil,lp)
 	local g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp,lp)
 	if chk==0 then return lp>0 and (#g1>0 or (#g2>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0)) end
-	local op=0
-	if #g1>0 and #g2>0 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	elseif #g1>0 then
-		op=Duel.SelectOption(tp,aux.Stringid(id,0))
-	else
-		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-	end
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)})
 	e:SetLabel(op)
-	if op==0 then
+	if op==1 then
 		e:SetCategory(CATEGORY_DESTROY)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,1,0,0)
-	elseif op==1 then
+	else
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g2,1,tp,LOCATION_GRAVE)
 	end
@@ -47,7 +42,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local lp=Duel.GetLP(1-tp)-Duel.GetLP(tp)
 	if lp<=0 then return end
-	if e:GetLabel()==0 then
+	if e:GetLabel()==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,0,LOCATION_MZONE,1,1,nil,lp)
 		if #g==0 then return end

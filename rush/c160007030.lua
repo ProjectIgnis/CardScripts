@@ -36,6 +36,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tdg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(tdg)
 	if #tdg>0 and Duel.SendtoDeck(tdg,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
+		Duel.BreakEffect()
+		Duel.ShuffleDeck(tp)
 		--Effect
 		Duel.DiscardDeck(tp,2,REASON_EFFECT)
 		local g=Duel.GetOperatedGroup()
@@ -47,8 +49,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			if #g2>0 then
 				Duel.SendtoHand(g2,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,g2)
-				local rec=g:GetFirst():GetAttack()
-				Duel.Recover(1-tp,rec,REASON_EFFECT)
 			end
 		end
 	end

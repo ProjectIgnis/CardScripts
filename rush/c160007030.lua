@@ -33,20 +33,20 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	local c=e:GetHandler()
-	local tg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.HintSelection(g)
-	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
+	local tdg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.HintSelection(tdg)
+	if #tdg>0 and Duel.SendtoDeck(tdg,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 		--Effect
 		Duel.DiscardDeck(tp,2,REASON_EFFECT)
 		local g=Duel.GetOperatedGroup()
 		local ct=g:FilterCount(s.cfilter,nil)
 		if ct>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,1,1,nil)
-			Duel.HintSelection(g)
-			if #g>0 then
-				Duel.SendtoHand(g,nil,REASON_EFFECT)
-				Duel.ConfirmCards(1-tp,g)
+			local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,1,1,nil)
+			Duel.HintSelection(g2)
+			if #g2>0 then
+				Duel.SendtoHand(g2,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,g2)
 				local rec=g:GetFirst():GetAttack()
 				Duel.Recover(1-tp,rec,REASON_EFFECT)
 			end

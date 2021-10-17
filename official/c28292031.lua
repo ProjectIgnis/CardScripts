@@ -36,9 +36,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.nodamop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x271}
+s.listed_series={0x175}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x271) and c:IsType(TYPE_FUSION)
+	return c:IsFaceup() and c:IsSetCard(0x175) and c:IsType(TYPE_FUSION)
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

@@ -26,14 +26,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.nodamop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x271}
+s.listed_series={0x175}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.PayLPCost(tp,Duel.GetLP(tp)//2)
 end
 function s.spfilter(c,e,tp)
-	return c:IsMonster() and c:HasLevel() and c:IsSetCard(0x271)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsMonster() and c:HasLevel() and c:IsSetCard(0x175) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:GetSum(Card.GetLevel)<=8
@@ -72,7 +71,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x271)
+	return not c:IsSetCard(0x175)
 end
 function s.nodamcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and Duel.GetLP(tp)<=2000

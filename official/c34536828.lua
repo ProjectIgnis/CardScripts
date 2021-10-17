@@ -59,7 +59,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a,at=Duel.GetAttacker(),Duel.GetAttackTarget()
 	local g=Group.FromCards(a,at):Match(s.desfilter,nil,tp)
 	if chk==0 then return #g>0 end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,1-tp,LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,LOCATION_MZONE)
 	--attack redirection can happen to another monster the opponent controls with 0 atk
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

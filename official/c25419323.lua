@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.nodamop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={id+100}
+s.listed_names={25419324}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_BATTLE_START and Duel.IsTurnPlayer(1-tp)
 end
@@ -37,14 +37,14 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,0,3000,10,RACE_DINOSAUR,ATTRIBUTE_DARK,POS_FACEUP) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,3000,10,RACE_DINOSAUR,ATTRIBUTE_DARK,POS_FACEUP) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end 
-	if Duel.IsPlayerCanSpecialSummonMonster(tp,id+100,0,TYPES_TOKEN,0,3000,10,RACE_DINOSAUR,ATTRIBUTE_DARK,POS_FACEUP) then
-		local token=Duel.CreateToken(tp,id+100)
+	if Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,3000,10,RACE_DINOSAUR,ATTRIBUTE_DARK,POS_FACEUP) then
+		local token=Duel.CreateToken(tp,id+1)
 		if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)>0 then
 			--Cannot target other monsters for attacks
 			local e1=Effect.CreateEffect(e:GetHandler())

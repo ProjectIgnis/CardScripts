@@ -26,13 +26,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.nodamop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x271}
+s.listed_series={0x175}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.PayLPCost(tp,Duel.GetLP(tp)//2)
 end
 function s.desfilter(c,tp)
-	return (c:IsFaceup() and c:IsSetCard(0x271) and c:IsMonster() and c:IsControler(tp)) or c:IsControler(1-tp)
+	return (c:IsFaceup() and c:IsSetCard(0x175) and c:IsMonster() and c:IsControler(tp)) or c:IsControler(1-tp)
 end
 function s.rescon(sg,e,tp,mg)
     return sg:FilterCount(Card.IsControler,nil,tp)==1

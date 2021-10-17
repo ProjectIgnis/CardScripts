@@ -2,7 +2,7 @@
 -- Qixing Long Yuan, the Swordsoul Catastrophe
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
+	--Synchro Summon
 	c:EnableReviveLimit()
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsRace,RACE_WYRM),1,99)
 	--Draw

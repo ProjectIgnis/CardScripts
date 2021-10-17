@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x271),nil,s.fextra)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x175),nil,s.fextra)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCondition(function()return Duel.IsMainPhase() end)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.nodamop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x271}
+s.listed_series={0x175}
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil)
 end

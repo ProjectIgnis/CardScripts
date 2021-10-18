@@ -16,7 +16,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,2,nil,tp) end
 end
 function s.tdfilter(c,tp)
-	return c:IsAbleToDeck() and c:IsType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(s.tdfilter2,tp,LOCATION_GRAVE,0,1,c,c:GetRace())
+	return c:IsAbleToDeck() and c:IsType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(s.tdfilter2,tp,0,LOCATION_GRAVE,1,c,c:GetRace())
 end
 function s.tdfilter2(c,race)
 	return c:IsAbleToDeck() and c:IsRace(race)

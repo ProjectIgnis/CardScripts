@@ -27,6 +27,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil,lp)
 	local g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp,lp)
 	if chk==0 then return lp>0 and (#g1>0 or (#g2>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0)) end
+	local b1=#g1>0
+	local b2=#g2>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
 	local op=aux.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})

@@ -100,7 +100,7 @@ function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for a gemini monster to tribute
 function s.releasefil(c)
-	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and c:IsReleasableByEffect()
+	return c:IsType(TYPE_GEMINI) and c:IsReleasableByEffect()
 end
 	--Tribute 1 gemini monster, special summon a FIRE warrior, destroy a card if the tributed was in gemini state
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
@@ -108,21 +108,19 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(s.releasefil,tp,LOCATION_MZONE,0,1,nil) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Duel.SelectMatchingCard(tp,s.releasefil,tp,LOCATION_MZONE,0,1,1,nil)
+	local tc=g:GetFirst()
+	local gemini_chk=tc:IsFaceup() and tc:IsGeminiState()
 	if #g>0 and Duel.Release(g,REASON_EFFECT)>0 then
-		local tc=g:GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
-		if #sg>0 then
-			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
-			if (tc:GetPreviousTypeOnField()&TYPE_EFFECT>0) then
-				local dg1=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-				if #dg1>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-					Duel.BreakEffect()
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-					local dg2=dg1:Select(tp,1,1,nil)
-					Duel.HintSelection(dg2)
-					Duel.Destroy(dg2,REASON_EFFECT)
-				end
+		if #sg>0 and Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)>0 and gemini_chk then
+			local dg1=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+			if #dg1>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+				Duel.BreakEffect()
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+				local dg2=dg1:Select(tp,1,1,nil)
+				Duel.HintSelection(dg2,true)
+				Duel.Destroy(dg2,REASON_EFFECT)
 			end
 		end
 	end

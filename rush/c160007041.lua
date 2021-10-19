@@ -37,7 +37,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(p,d,REASON_EFFECT)
 		
 		local g0=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,e,tp)
-		if #g0>0 and Duel.GetFieldGroupCount(e:GetHandler():GetControler(),0,LOCATION_MZONE)>=1 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		if #g0>0 and Duel.GetFieldGroupCount(e:GetHandler():GetControler(),0,LOCATION_MZONE)>=1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 			if #g>0 then
@@ -45,4 +45,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 end
-

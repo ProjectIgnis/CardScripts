@@ -35,8 +35,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmDecktop(1-tp,7)
 	local g=Duel.GetDecktopGroup(1-tp,7)
 	local sg=g:Filter(s.filter,nil)
+	local val=0
 	if #sg>0 then
-		local val=#sg*(-500)
+		val=#sg*(-500)
 	end
 	Duel.MoveToDeckBottom(7,1-tp)
 	Duel.SortDeckbottom(1-tp,1-tp,7)

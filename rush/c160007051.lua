@@ -24,7 +24,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.filter2(c)
-	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_PYRO)
+	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_PYRO) and c:IsFaceup()
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	-- Requirement

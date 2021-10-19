@@ -314,7 +314,7 @@ end
 function Auxiliary.FilterMaximumSideFunction(f,...)
 	local params={...}
 	return 	function(target)
-				return target:IsMaximumModeSide() and f(target,table.unpack(params)) target:IsFaceup()
+				return target:IsMaximumModeSide() and f(target,table.unpack(params)) and target:IsFaceup()
 			end
 end
 --function that exclude L/R Maximum Mode

@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	Duel.ShuffleDeck(tp)
 	--Effect
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,nil)
 	if #g==0 then return end
 	local tg=g:GetMaxGroup(Card.GetAttack)
 	if #tg>1 then
@@ -52,6 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tg=tg:Select(tp,1,1,nil)
 		Duel.HintSelection(tg)
 	end
+	tg=tg:AddMaximumCheck()
 	if Duel.Destroy(tg,REASON_EFFECT)==0 or Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 	local dg=Duel.GetOperatedGroup()
 	Duel.ConfirmCards(1-tp,dg)

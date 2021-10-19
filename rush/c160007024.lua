@@ -27,7 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 		-- Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,aux.FilterFaceupFunction(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil)
 		if #g>0 then
 			Duel.HintSelection(g)
 			-- Piercing
@@ -43,7 +43,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 end
-
 function s.fupfilter(c)
 	return c:IsFaceup() and (c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN))
 end

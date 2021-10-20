@@ -1,4 +1,5 @@
 --甲虫装機 ウィーグ
+--Inzektor Earwig
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -44,7 +45,7 @@ end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,LOCATION_GRAVE+LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_GRAVE+LOCATION_HAND)
 end
 function s.equipop(c,e,tp,tc)
 	aux.EquipByEffectAndLimitRegister(c,e,tp,tc,nil,true)

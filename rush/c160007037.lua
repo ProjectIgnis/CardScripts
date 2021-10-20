@@ -39,8 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #sg>0 then
 		val=#sg*(-500)
 	end
-	Duel.MoveToDeckBottom(7,1-tp)
-	Duel.SortDeckbottom(1-tp,1-tp,7)
+	Duel.SortDecktop(1-tp,1-tp,7)
 	local g2=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter2),tp,0,LOCATION_MZONE,nil)
 	if #g2==0 then return end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

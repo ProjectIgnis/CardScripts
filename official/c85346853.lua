@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_GALAXYEYES_P_DRAGON}
+s.listed_names={34834619,CARD_GALAXYEYES_P_DRAGON}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
 	Duel.Release(e:GetHandler(),REASON_COST)

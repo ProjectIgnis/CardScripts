@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_cards={100425032}
+s.listed_names={22398665}
 function s.tgval(e,re,rp)
 	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end

@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xcf}
-s.listed_names={CARD_DARK_MAGICIAN}
+s.listed_names={21082832,CARD_DARK_MAGICIAN}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end

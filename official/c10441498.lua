@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={47435107}
 function s.cfilter(c,tp)
 	return c:IsLevelAbove(1) and not c:IsPublic() and Duel.IsExistingTarget(s.lvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c:GetLevel())
 end

@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e3:SetTargetRange(0,1)
 	c:RegisterEffect(e3)
 end
+s.listed_names={16494704}
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end

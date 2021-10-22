@@ -1,4 +1,5 @@
 --超戦士カオス・ソルジャー
+--Black Luster Soldier - Super Soldier
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xbd}
-s.listed_names={14094090}
+s.listed_names={14094090,id}
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local bc=e:GetHandler():GetBattleTarget()

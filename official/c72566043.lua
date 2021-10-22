@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.setop)
 	c:RegisterEffect(e5)
 end
+s.listed_names={8955148}
 function s.efilter(e,te)
 	return te:IsActiveType(TYPE_TRAP)
 end

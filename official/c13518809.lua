@@ -1,5 +1,5 @@
 -- 破滅の美神ルイン
--- Ruin, Graceful Queen of Oblivion
+-- Ruin, Supreme Queen of Oblivion
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -39,6 +39,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
+s.listed_names={32828635,46427957}
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsSummonType(SUMMON_TYPE_RITUAL)
@@ -67,4 +68,3 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
-

@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.valcheck)
 	c:RegisterEffect(e5)
 end
-s.listed_names={CARD_BLUEEYES_W_DRAGON}
+s.listed_names={21082832,CARD_BLUEEYES_W_DRAGON}
 
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()

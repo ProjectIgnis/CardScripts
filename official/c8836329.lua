@@ -1,3 +1,4 @@
+--颶風龍－ビュフォート・ノウェム
 --Raging Storm Dragon - Beaufort IX
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={101103086}
+s.listed_names={44221928}
 function s.nacon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end

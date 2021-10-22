@@ -1,5 +1,5 @@
 --魔神儀の創造主－クリオルター
---Creator of the Impcantations - Crealter
+--Crealtar, the Impcantation Originator
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x117}
+s.listed_names={86758915}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -105,4 +105,3 @@ end
 function s.tg(e,c)
 	return c:IsSetCard(0x117) and not c:IsType(TYPE_RITUAL)
 end
-

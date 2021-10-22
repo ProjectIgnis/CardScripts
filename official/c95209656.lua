@@ -1,5 +1,5 @@
 --竜儀巧－メテオニス＝ＱＵＡ
---Draitron Meteornis=QUA
+--Drytron Meteonis Quadrantids
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -42,8 +42,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_cards={100425032}
-s.listed_names={22398665}
+s.listed_names={22398665,id}
+s.listed_series={0x151}
 function s.tgval(e,re,rp)
 	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end

@@ -1,5 +1,5 @@
 --竜儀巧－メテオニス＝ＤＲＡ
---Draitron Meteornis=DRA
+--Drytron Meteonis Draconids
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,7 +39,6 @@ function s.initial_effect(c)
 	e3:SetOperation(s.gyop)
 	c:RegisterEffect(e3)
 end
-s.listed_cards={100425032}
 s.listed_names={22398665}
 function s.tgval(e,re,rp)
 	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_MONSTER)

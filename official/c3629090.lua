@@ -1,4 +1,5 @@
 --サイバー・エンジェル－韋駄天－
+--Cyber Angel Idaten
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -24,6 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.adop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={39996157}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
 end

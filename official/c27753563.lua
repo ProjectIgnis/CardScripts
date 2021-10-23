@@ -62,6 +62,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_DECK,0)
 	if #g==0 then return end
 	local tc=g:GetMinGroup(Card.GetSequence):GetFirst()
+	Duel.ConfirmCards(tp,tc)
 	Duel.ConfirmCards(1-tp,tc)
 	local op=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
 	if op==0 then Duel.MoveSequence(tc,0) end

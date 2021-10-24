@@ -1,3 +1,4 @@
+--ダメージ・リバウンド
 --Damage Rebound
 local s,id=GetID()
 function s.initial_effect(c)
@@ -42,8 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g)
 		if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT) then
 			local tc=g:GetFirst()
-			local atk=tc:GetTextAttack()
-			if atk<0 then atk=0 end
+			local atk=tc:GetPreviousAttackOnField()
 			Duel.Damage(1-tp,atk,REASON_EFFECT)
 		end
 	end

@@ -36,19 +36,17 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
 	local g=Duel.GetMatchingGroup(Card.IsCanChangePosition,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g>0 then
-		Duel.ChangePosition(g,POS_FACEUP_ATTACK,0,POS_FACEUP_ATTACK,0)
+		Duel.ChangePosition(g,POS_FACEUP_ATTACK)
 		Duel.BreakEffect()
 		if Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,0,1,c) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			if a==c and at then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACK)
 				local sc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,c):GetFirst()
 				Duel.ChangeAttacker(sc)
-				Duel.CalculateDamage(sc,at)
 			elseif at and at==c then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACKTARGET)
 				local sc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,c):GetFirst()
 				Duel.ChangeAttackTarget(sc)
-				Duel.CalculateDamage(a,sc)
 			end
 		end
 	end

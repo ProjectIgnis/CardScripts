@@ -1,5 +1,5 @@
---覇王白竜オッドアイズ・ウィング・ドラゴン
---Odd-Eyes Wing Dragon
+--覇王白竜オッドアイズ・ウィング・ドラゴン (Anime)
+--Odd-Eyes Wing Dragon (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,6 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.discon1)

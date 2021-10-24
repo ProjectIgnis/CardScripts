@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
 	e6:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e6:SetCode(EFFECT_SELF_DESTROY)
-	e6:SetRange(LOCATION_ONFIELD)
+	e6:SetRange(LOCATION_MZONE)
 	e6:SetCondition(s.descon)
 	c:RegisterEffect(e6)
 end

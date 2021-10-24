@@ -96,7 +96,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(s.scfilter1,tp,LOCATION_EXTRA,0,nil,tp,c)
 	if #g>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 		local sc=g:Select(tp,1,1,nil):GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 		local mg=Duel.SelectMatchingCard(tp,s.scfilter2,tp,LOCATION_PZONE,0,1,1,nil,c,sc,tp)

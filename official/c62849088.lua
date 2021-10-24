@@ -125,6 +125,7 @@ function s.hdextg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetTargetCard(g)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)
 	end
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 end
 function s.hdexop(e,tp,eg,ep,ev,re,r,rp)
 	local label=e:GetLabel()
@@ -151,6 +152,7 @@ function s.hdexop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFlagEffect(tp,id)>0 then return end
 	local c=e:GetHandler()
 	local tg=eg:Filter(s.hdexfilter,nil,tp,LOCATION_EXTRA)
 	if #tg>0 and not tg:IsContains(c) then

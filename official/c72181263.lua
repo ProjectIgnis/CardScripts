@@ -35,23 +35,28 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xaf,0xae}
-function s.desfilter1(c,tp,ec)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
-		and Duel.IsExistingTarget(s.desfilter2,tp,LOCATION_ONFIELD,0,1,c,ec)
+function s.desfilter(c,e)
+	return c:IsFaceup() and (c:IsSetCard(0xaf) or c:IsSetCard(0xae)) and c:IsCanBeEffectTarget(e)
 end
-function s.desfilter2(c,ec)
-	return c~=ec and c:IsFaceup() and (c:IsSetCard(0xaf) or c:IsSetCard(0xae))
+function s.rescon(g1,g2)
+	return function(sg,e,tp,mg)
+		if sg:IsContains(e:GetHandler()) then
+			return #(sg&g2)==2 and #sg==2
+		else
+			return #(sg&g1)>=1 and  #(sg&g2)>=1 and #sg==2
+		end
+	end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingTarget(s.desfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,tp,c) end
+	local g1=Duel.GetMatchingGroup(Card.IsCanBeEffectTarget,tp,LOCATION_SZONE,LOCATION_SZONE,nil,e)
+	local g2=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,0,nil,e)
+	if chk==0 then return aux.SelectUnselectGroup(g1+g2,e,tp,2,2,s.rescon(g1,g2),0) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,s.desfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,tp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g2=Duel.SelectTarget(tp,s.desfilter2,tp,LOCATION_ONFIELD,0,1,1,g1:GetFirst(),c)
-	g1:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
+	local g=aux.SelectUnselectGroup(g1+g2,e,tp,2,2,s.rescon(g1,g2),1,tp,HINTMSG_DESTROY,nil,nil,false)
+	Duel.SetTargetCard(g)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,PLAYER_ALL,LOCATION_ONFIELD)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

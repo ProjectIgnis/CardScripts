@@ -1,14 +1,15 @@
---Abyss Script - Fantasy Magic
+--魔界台本 「ファンタジー・マジック」 (Anime)
+--Abyss Script - Fantasy Magic (Anime)
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x10ec}
@@ -21,32 +22,32 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		local c=e:GetHandler()
+		local fid=c:GetFieldID()
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESET_PHASE|PHASE_END|RESETS_STANDARD&~(RESET_LEAVE|RESET_TODECK|RESET_TEMP_REMOVE|RESET_REMOVE|RESET_TOGRAVE),EFFECT_FLAG_CLIENT_HINT,1,fid,aux.Stringid(id,0))
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.Stringid(id,0))
-		e1:SetCategory(CATEGORY_TOHAND)
-		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_BATTLED)
-		e1:SetTarget(s.target2)
-		e1:SetOperation(s.operation2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)
+		e1:SetLabelObject(tc)
+		e1:SetLabel(fid)
+		e1:SetCondition(s.retcon)
+		e1:SetOperation(s.retop)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
 	end
 end
-function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local tc=c:GetBattleTarget()
-	if chk==0 then return tc and tc:IsAbleToHand() end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,tc,1,0,0)
+function s.retcon(e,tp,eg,ep,ev,re,r,rp)
+	if e:GetLabelObject():GetFlagEffectLabel(id)==e:GetLabel() then return true
+	else e:Reset() return false end
 end
-function s.operation2(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
+function s.retop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	local bc=tc:GetBattleTarget()
 	if bc and bc:IsRelateToBattle() then
+		Duel.Hint(HINT_CARD,1-tp,id)
 		Duel.SendtoHand(bc,nil,REASON_EFFECT)
 	end
 end

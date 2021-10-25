@@ -41,19 +41,18 @@ end
 function s.filter2(c,e)
 	return c:IsFaceup() and (c:IsSetCard(0xaf) or c:IsSetCard(0xae)) and c:IsCanBeEffectTarget(e)
 end
-function s.rescon(g1,g2)
-	return function(sg,e,tp,mg)
-		return sg:IsExists(s.filter1,1,nil,e,sg)
-	end
+function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(s.filter1,1,nil,e,sg)
 end
+
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local c=e:GetHandler()
 	local g1=Duel.GetMatchingGroup(Card.IsCanBeEffectTarget,tp,LOCATION_SZONE,LOCATION_SZONE,nil,e)
 	local g2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_ONFIELD,0,nil,e)
-	if chk==0 then return aux.SelectUnselectGroup(g1+g2,e,tp,2,2,s.rescon(g1,g2),0) end
+	if chk==0 then return aux.SelectUnselectGroup(g1+g2,e,tp,2,2,s.rescon,0) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=aux.SelectUnselectGroup(g1+g2,e,tp,2,2,s.rescon(g1,g2),1,tp,HINTMSG_DESTROY,nil,nil,false)
+	local g=aux.SelectUnselectGroup(g1+g2,e,tp,2,2,s.rescon,1,tp,HINTMSG_DESTROY,nil,nil,false)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,PLAYER_ALL,LOCATION_ONFIELD)
 end

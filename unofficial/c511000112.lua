@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_names={511000110,511000111}
 function s.counterfilter(c)
-	return c:IsCode(511000110)
+	return not c:IsCode(511000110)
 end
 function s.hint(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -34,10 +34,10 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
 end
 function s.tefilter(c,e,tp,code1,code2)
-	return c:IsCode(code1) and c:IsAbleToExtra() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,code2)
+	return c:IsCode(code1) and c:IsAbleToExtra() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,code2,c)
 end
-function s.spfilter(c,e,tp,code)
-	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+function s.spfilter(c,e,tp,code,fc)
+	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,fc,c)
 end
 function s.tg(code1,code2)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)

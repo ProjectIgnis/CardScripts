@@ -20,49 +20,18 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tg(511000110,511000111))
 	e2:SetOperation(s.op(511000110,511000111))
 	c:RegisterEffect(e2)
-	aux.GlobalCheck(s,function()
-		s[0]=false
-		s[1]=Group.CreateGroup()
-		s[1]:KeepAlive()
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_SUMMON_SUCCESS)
-		ge1:SetOperation(s.checkop)
-		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-		ge2:SetOperation(s.checkop)
-		Duel.RegisterEffect(ge2,0)
-		local ge3=Effect.CreateEffect(c)
-		ge3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge3:SetCode(EVENT_SPSUMMON_SUCCESS)
-		ge3:SetOperation(s.checkop)
-		Duel.RegisterEffect(ge3,0)
-		aux.AddValuesReset(function()
-			s[0]=false
-			s[1]:Clear()
-		end)
-	end)
+	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_names={511000110,511000111}
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	for tc in aux.Next(eg) do
-		if not s[0] and tc:IsFaceup() and tc:IsCode(511000110) then
-			if s[1]:IsContains(tc) then s[0]=true
-			else s[1]:AddCard(tc) end
-		end
-	end
+function s.counterfilter(c)
+	return c:IsCode(511000110)
 end
 function s.hint(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
-function s.confilter(c,g)
-	return g:IsExists(Card.IsCode,1,nil,511000110)
-end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return s[0] or not s[1]:IsExists(s.confilter,1,nil,s[1])
+	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
 end
 function s.tefilter(c,e,tp,code1,code2)
 	return c:IsCode(code1) and c:IsAbleToExtra() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,code2)

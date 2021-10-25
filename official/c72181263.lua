@@ -35,23 +35,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0xaf,0xae}
-function s.desfilter(c,e)
+function s.filter1(c,e,sg)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsCanBeEffectTarget(e) and sg:IsExists(s.filter2,1,e:GetHandler(),e)
+end
+function s.filter2(c,e)
 	return c:IsFaceup() and (c:IsSetCard(0xaf) or c:IsSetCard(0xae)) and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(g1,g2)
 	return function(sg,e,tp,mg)
-		if sg:IsContains(e:GetHandler()) then
-			return #(sg&g2)==2 and #sg==2
-		else
-			return #(sg&g1)>=1 and  #(sg&g2)>=1 and #sg==2
-		end
+		return sg:IsExists(s.filter1,1,nil,e,sg) and #sg==2
 	end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local c=e:GetHandler()
 	local g1=Duel.GetMatchingGroup(Card.IsCanBeEffectTarget,tp,LOCATION_SZONE,LOCATION_SZONE,nil,e)
-	local g2=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,0,nil,e)
+	local g2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_ONFIELD,0,nil,e)
 	if chk==0 then return aux.SelectUnselectGroup(g1+g2,e,tp,2,2,s.rescon(g1,g2),0) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=aux.SelectUnselectGroup(g1+g2,e,tp,2,2,s.rescon(g1,g2),1,tp,HINTMSG_DESTROY,nil,nil,false)

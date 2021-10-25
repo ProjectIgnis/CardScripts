@@ -43,7 +43,7 @@ function s.filter2(c,e)
 end
 function s.rescon(g1,g2)
 	return function(sg,e,tp,mg)
-		return sg:IsExists(s.filter1,1,nil,e,sg) and #sg==2
+		return sg:IsExists(s.filter1,1,nil,e,sg)
 	end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

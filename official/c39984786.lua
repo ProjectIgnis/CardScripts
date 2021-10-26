@@ -1,4 +1,5 @@
 --スパウン・アリゲーター
+--Spawn Alligator
 local s,id=GetID()
 function s.initial_effect(c)
 	--tribute check
@@ -13,7 +14,7 @@ function s.valcheck(e,c)
 	local tc=g:GetFirst()
 	local sp=false
 	for tc in aux.Next(g) do
-		if tc:IsRace(RACE_REPTILE) then
+		if tc:IsRace(RACE_REPTILE) and not tc:IsType(TYPE_TOKEN) then
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_EXC_GRAVE+RESET_PHASE+PHASE_END,0,1)
 			sp=true
 		end

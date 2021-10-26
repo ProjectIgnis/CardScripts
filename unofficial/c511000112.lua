@@ -37,7 +37,7 @@ function s.tefilter(c,e,tp,code1,code2)
 	return c:IsCode(code1) and c:IsAbleToExtra() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,code2,c)
 end
 function s.spfilter(c,e,tp,code,fc)
-	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,fc,c)
+	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,fc,c)>0
 end
 function s.tg(code1,code2)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -49,12 +49,13 @@ end
 function s.op(code1,code2)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-		local te=Duel.SelectMatchingCard(tp,s.tefilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,code1,code2)
-		if #te>0 and Duel.SendtoDeck(te,nil,SEQ_DECKTOP,REASON_EFFECT)>0 and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_FUSION)>0 then
+		local tc=Duel.SelectMatchingCard(tp,s.tefilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,code1,code2):GetFirst()
+		if tc and Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_EXTRA) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sp=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,code2)
-			if #sp>0 then
-				Duel.SpecialSummon(sp,0,tp,tp,true,false,POS_FACEUP)
+			local sp=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,code2):GetFirst()
+			if sp then
+				Duel.SpecialSummon(sp,0,tp,tp,false,false,POS_FACEUP)
+				if sp:IsCode(511000111) then sp:CompleteProcedure() end
 			end
 		end
 	end

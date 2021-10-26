@@ -55,22 +55,19 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			sc:RegisterEffect(e1)
 		end
-		local code1=tg:GetFirst():GetCode()
-		local code2=0
-		if #tg>1 then code2=tg:GetNext():GetCode() end
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 		e2:SetTargetRange(1,0)
 		e2:SetValue(s.aclimit)
-		e2:SetLabelObject({code1,code2})
+		e2:SetLabel(table.unpack(tg:GetClass(Card.GetCode)))
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 	end
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsCode(table.unpack(e:GetLabelObject()))
+	return re:GetHandler():IsCode(e:GetLabel())
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

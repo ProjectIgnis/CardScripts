@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.isrev(c)
-	return c:IsPublic() and c:GetFlagEffect(id)~=0
+	return c:IsPublic() and c:GetFlagEffect(id)>0
 end
 function s.revop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -37,6 +37,8 @@ function s.revop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
 	--Reveal until the end of opponent's turn.
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,2))
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_PUBLIC)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
@@ -77,10 +79,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local wasrev=(e:GetLabel()==1)
 	if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 and wasrev and
 		Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) and
-		Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		Duel.BreakEffect()
+		Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local tc=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+		if not tc then return end
+		Duel.BreakEffect()
 		if Duel.SSet(tp,tc)==0 then return end
 		--Banish it during the End Phase of the next turn.
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)

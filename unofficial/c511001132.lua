@@ -66,6 +66,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
 		if tc:IsType(TYPE_MONSTER) and tc:IsPreviousLocation(LOCATION_MZONE) then
 			tc:RegisterFlagEffect(id+tc:GetPreviousControler(),RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tc:GetPreviousControler(),id+2,RESET_PHASE+PHASE_END,0,1)
 		end
 	end
 end
@@ -73,7 +74,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsBattlePhase() and Duel.GetFlagEffect(tp,id+1)==0 and Duel.IsTurnPlayer(1-tp)
+	return Duel.IsBattlePhase() and Duel.IsTurnPlayer(1-tp) and Duel.GetFlagEffect(tp,id+1)==0
+		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
@@ -87,13 +89,15 @@ function s.retfilter(c,p)
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ALL-LOCATION_MZONE,LOCATION_ALL-LOCATION_MZONE,nil,id+tp)
-	if chk==0 then return #g>0 and g:FilterCount(s.retfilter,nil,tp)==#g and g:GetClassCount(Card.GetPreviousSequence)==#g and s[tp]>=1000 end
+	if chk==0 then return #g>0 and #g==Duel.GetFlagEffect(tp,id+2) and g:FilterCount(s.retfilter,nil,tp)==#g
+		and g:GetClassCount(Card.GetPreviousSequence)==#g and s[tp]>=1000 end
 	local sg=g:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,sg,#sg,0,0)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ALL-LOCATION_MZONE,LOCATION_ALL-LOCATION_MZONE,nil,id+tp)
-	if #g>0 and g:FilterCount(s.retfilter,nil,tp)==#g and g:GetClassCount(Card.GetPreviousSequence)==#g then
+	if #g>0 and #g==Duel.GetFlagEffect(tp,id+2) and g:FilterCount(s.retfilter,nil,tp)==#g
+		and g:GetClassCount(Card.GetPreviousSequence)==#g then
 		for tc in aux.Next(g) do
 			Duel.MoveToField(tc,tp,tp,LOCATION_MZONE,tc:GetPreviousPosition(),true,1<<tc:GetPreviousSequence())
 			tc:SetStatus(STATUS_FORM_CHANGED,true)

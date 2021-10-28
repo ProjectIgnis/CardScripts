@@ -39,7 +39,7 @@ function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 		{#g1>0,aux.Stringid(id,1)},
 		{#g2>0,aux.Stringid(id,2)})
 	local g=(op==1) and g1 or g2
-	Duel.ConfirmCards(tp,g)
+	if op==2 then Duel.ConfirmCards(tp,g) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tg=g:FilterSelect(tp,aux.AND(Card.IsMonster,Card.IsAbleToGrave),1,1,nil)
 	if #tg>0 then

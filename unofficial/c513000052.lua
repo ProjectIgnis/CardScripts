@@ -117,10 +117,11 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,s.repfilter,tp,LOCATION_MZONE,0,1,1,c)
 		Duel.Remove(g,POS_FACEUP,REASON_REPLACE+REASON_EFFECT)
 		if e:GetCode()==EVENT_PRE_DAMAGE_CALCULATE then
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-			e1:SetOperation(s.damopx)
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_FIELD)
+			e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+			e1:SetTargetRange(1,0)
 			e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 			Duel.RegisterEffect(e1,tp)
 			local e2=Effect.CreateEffect(c)
@@ -138,9 +139,6 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 			c:RegisterEffect(e3)
 		end
 	end
-end
-function s.damopx(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,0)
 end
 function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)

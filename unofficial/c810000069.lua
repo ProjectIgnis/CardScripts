@@ -1,3 +1,4 @@
+--ラミネート・アーマー
 --Laminate Armor
 --scripted by: UnknownGuest
 local s,id=GetID()
@@ -49,5 +50,11 @@ function s.repval(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,0)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
+	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	Duel.RegisterEffect(e1,tp)
 end

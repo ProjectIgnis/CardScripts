@@ -1,10 +1,11 @@
+--オンボロボ・ヤカンガルー
 --Junk Robot Teapot Kangaroo
 local s,id=GetID()
 function s.initial_effect(c)
 	--no damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetType(EFFECT_TYPE_QUICK_O+EFFECT_TYPE_FIELD)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetCondition(s.con)

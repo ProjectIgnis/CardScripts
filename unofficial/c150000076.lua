@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(1,1)
-		e1:SetValue(HALVE_DAMAGE)
+		e1:SetValue(HALF_DAMAGE)
 		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		Duel.RegisterEffect(e1,tp)
 	end

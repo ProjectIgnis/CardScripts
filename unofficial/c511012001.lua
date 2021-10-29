@@ -1,4 +1,5 @@
---オッドアイズ・ペンデュラム・ドラゴン
+--オッドアイズ・ペンデュラム・ドラゴン (Anime)
+--Odd-Eyes Pendulum Dragon (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,13 +14,13 @@ function s.initial_effect(c)
 	e2:SetCondition(s.rdcon)
 	e2:SetOperation(s.rdop)
 	c:RegisterEffect(e2)
-	--double
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e4:SetCondition(s.damcon)
-	e4:SetOperation(s.damop)
-	c:RegisterEffect(e4)
+	--Double damage
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e3:SetCondition(s.damcon)
+	e3:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
+	c:RegisterEffect(e3)
 end
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetFlagEffect(id)>0 then return false end
@@ -35,10 +36,7 @@ function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangeBattleDamage(tp,0)
 	end
 end
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
+function s.damcon(e)
 	local bc=e:GetHandler():GetBattleTarget()
-	return ep~=tp and bc and bc:IsLevelAbove(5) and bc:IsControler(1-tp)
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(ep,ev*2)
+	return bc and not bc:IsControler(e:GetHandlerPlayer()) and bc:IsLevelAbove(5)
 end

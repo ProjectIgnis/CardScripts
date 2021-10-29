@@ -1,6 +1,6 @@
 --サスペンド・ワンド
 --Suspend Wand
---scripted by Larry126
+--Scripted by Larry126
 --Substitue ID
 local s,id=GetID()
 function s.initial_effect(c)

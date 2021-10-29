@@ -1,5 +1,6 @@
---Magical Silk Hat
---fixed by MLD
+--ミラクルシルクハット
+--Miraculous Hats
+--Fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -104,7 +105,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+	e4:SetCode(EVENT_BATTLE_CONFIRM)
 	e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e4:SetLabel(fid)
 	e4:SetLabelObject(sg1)
@@ -157,13 +158,16 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	else return g:IsExists(s.damfilter,1,nil,e:GetLabel()) end
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetLabelObject()
-	local tc=g:Filter(s.damfilter,nil,e:GetLabel()):GetFirst()
-	if tc:IsType(TYPE_SPELL+TYPE_TRAP) then
-		Duel.ChangeBattleDamage(tp,0)
-		Duel.ChangeBattleDamage(1-tp,0)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,1)
+	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	if e:GetLabelObject():Filter(s.damfilter,nil,e:GetLabel()):GetFirst():IsType(TYPE_SPELL+TYPE_TRAP) then
+		e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	else
-		Duel.ChangeBattleDamage(tp,Duel.GetBattleDamage(tp)*2)
-		Duel.ChangeBattleDamage(1-tp,Duel.GetBattleDamage(1-tp)*2)
+		e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+		e1:SetValue(DOUBLE_DAMAGE)
 	end
+	Duel.RegisterEffect(e1,tp)
 end

@@ -1,6 +1,6 @@
 --BF－尖鋭のボーラ (Anime)
 --Blackwing - Boreas the Sharp (Anime)
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

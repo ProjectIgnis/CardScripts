@@ -1,3 +1,4 @@
+--白騎士団のロード
 --White Knight Lord
 local s,id=GetID()
 function s.initial_effect(c)

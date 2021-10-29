@@ -1,5 +1,5 @@
---ＦＮｏ．０ 未来皇ホープ
---Number F0: Utopic Future
+--ＦＮｏ．０ 未来皇ホープ (Anime)
+--Number F0: Utopic Future (Anime)
 Duel.LoadCardScript("c65305468.lua")
 local s,id=GetID()
 function s.initial_effect(c)

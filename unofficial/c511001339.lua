@@ -1,3 +1,4 @@
+--Ｎｏ．２ 蚊学忍者シャドー・モスキート
 --Number 2: Ninja Shadow Mosquito
 local s,id=GetID()
 function s.initial_effect(c)
@@ -67,9 +68,10 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 	if op==0 then
 		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e2:SetOperation(s.damop)
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e2:SetTargetRange(1,0)
 		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		Duel.RegisterEffect(e2,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
@@ -87,9 +89,6 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
 		c:RegisterEffect(e2)
 	end
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,0)
 end
 function s.distg(e,c)
 	return c:GetCounter(0x1101)>0

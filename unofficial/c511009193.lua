@@ -1,4 +1,5 @@
---Lyrical Luscinia - Assemble Nightingale
+--ＬＬ－アセンブリー・ナイチンゲール (Anime)
+--Lyrilusc - Assembled Nightingale (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)

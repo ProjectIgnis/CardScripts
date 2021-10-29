@@ -1,3 +1,4 @@
+--ゴブリンの交渉人
 --Goblin Negotiator
 local s,id=GetID()
 function s.initial_effect(c)

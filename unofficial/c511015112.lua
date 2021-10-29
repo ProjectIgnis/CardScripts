@@ -1,5 +1,6 @@
---Performapal Odd-Eyes Dissolver
---original script by Sahim & Cybercatman
+--ＥＭオッドアイズ・ディゾルヴァー (Anime)
+--Performapal Odd-Eyes Dissolver (Anime)
+--Original script by Sahim & Cybercatman
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -131,9 +132,10 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
 	a:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e2:SetOperation(s.dop)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetTargetRange(1,0)
 	e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e2,tp)
 	Duel.BreakEffect()
@@ -162,7 +164,4 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 			c:RegisterEffect(e2)
 		end
 	end
-end
-function s.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,0)
 end

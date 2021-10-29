@@ -1,6 +1,6 @@
 --海晶乙女 ワンダーハート
 --Marincess Wonder Heart
---scripted by Larry126
+--Scripted by Larry126
 local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()
@@ -95,9 +95,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e2:SetOperation(s.damop)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetTargetRange(1,0)
 	e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e2,tp)
 	local tc=Duel.GetFirstTarget()
@@ -111,9 +112,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e3,tp)
 		tc:CreateEffectRelation(e3)
 	end
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,0)
 end
 function s.speqcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabelObject() and e:GetLabelObject():IsRelateToEffect(e) then return true
@@ -193,7 +191,7 @@ function s.cbop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(101010040) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(67712104) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,3 +1,4 @@
+--フリッカの仲裁
 --Fricka's Mediation
 local s,id=GetID()
 function s.initial_effect(c)

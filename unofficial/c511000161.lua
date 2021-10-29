@@ -1,3 +1,4 @@
+--１ドル銀貨
 --Silver Dollar
 local s,id=GetID()
 function s.initial_effect(c)

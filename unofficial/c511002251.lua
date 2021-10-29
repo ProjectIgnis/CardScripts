@@ -1,3 +1,4 @@
+--変身
 --Transformation
 local s,id=GetID()
 function s.initial_effect(c)
@@ -52,18 +53,16 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local atk=a:GetAttack()
 		if Duel.Destroy(a,REASON_EFFECT)>0 then
 			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-			e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-			e1:SetOperation(s.damopx)
+			e1:SetType(EFFECT_TYPE_FIELD)
+			e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+			e1:SetTargetRange(1,0)
 			e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 			Duel.RegisterEffect(e1,tp)
 			if atk<=0 then return end
 			e:SetLabel(e:GetLabel()+atk)
 		end
 	end
-end
-function s.damopx(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,0)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE)

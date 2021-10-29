@@ -1,5 +1,6 @@
+--闇の護封壁
 --Dark Wall of Wind
---scripted by GameMaster (GM)
+--Scripted by GameMaster (GM)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

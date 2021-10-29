@@ -1,6 +1,6 @@
 --万力魔神バイサー・デス (Anime)
 --Viser Des (Anime)
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

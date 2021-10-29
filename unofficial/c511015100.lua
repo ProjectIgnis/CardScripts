@@ -1,4 +1,5 @@
---Odd-Eyes Lancer Dragon
+--オッドアイズ・ランサー・ドラゴン (Anime)
+--Odd-Eyes Lancer Dragon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -153,14 +154,12 @@ function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e2:SetOperation(s.damop)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetTargetRange(1,0)
 	e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	Duel.RegisterEffect(e2,tp)
-end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(tp,0)
 end
 function s.dm2con(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

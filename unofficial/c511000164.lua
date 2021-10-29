@@ -1,3 +1,4 @@
+--ホールディング・アームズ (Anime)
 --Holding Arms (Anime)
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,3 +1,4 @@
+--剛鬼結束
 --Gouki Unity
 --fixed by MLD
 local s,id=GetID()

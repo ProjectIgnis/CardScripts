@@ -67,8 +67,9 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then 
-		Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)
+	if not c:IsRelateToEffect(e) then return end
+	if Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)>0 then
+		c:CompleteProcedure()
 	end
 end
 function s.rmrescon(sg,e,tp,mg)

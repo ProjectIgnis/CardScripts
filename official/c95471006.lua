@@ -65,7 +65,7 @@ function s.spcfilter2(c,tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter2,tp,LOCATION_MZONE,0,1,nil,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.spcfilter2,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.SendtoDeck(g,nil,2,REASON_COST)
 end

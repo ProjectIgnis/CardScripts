@@ -50,8 +50,8 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(39552864) and c:IsFaceup() and c:IsCanBeEffectTarget(e)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(39552864) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)

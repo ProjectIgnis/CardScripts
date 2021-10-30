@@ -45,6 +45,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 		if c:IsRelateToEffect(e) and c:IsFaceup() and not c:IsAttribute(ATTRIBUTE_LIGHT)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+			Duel.BreakEffect()
 			--Change Attribute to LIGHT
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

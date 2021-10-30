@@ -66,7 +66,7 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsType(TYPE_XYZ)
 		and not tc:IsImmuneToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_GRAVE,0,1,1,nil,0x8d)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Card.IsSetCard),tp,LOCATION_GRAVE,0,1,1,nil,0x8d)
 		if #g==0 then return end
 		Duel.Overlay(tc,g)
 	end

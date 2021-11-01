@@ -96,7 +96,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	local tc2=Duel.SelectMatchingCard(tp,s.thfil1,tp,LOCATION_MZONE,0,1,1,tc:GetOverlayTarget()):GetFirst()
 	if tc2 then
-		Duel.Overlay(g:GetFirst(),tc)
+		Duel.Overlay(tc2,tc)
 		Duel.RaiseSingleEvent(tc:GetOverlayTarget(),EVENT_DETACH_MATERIAL,e,0,0,0,0)
 	end
 end

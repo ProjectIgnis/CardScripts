@@ -1,16 +1,4 @@
 --Utilities to be added to the core
-Duel.HintSelection=(function()
-	local oldhint=Duel.HintSelection
-	return function(g,...)
-		return oldhint(type(g)=="Group" and g or Group.FromCards(g),...)
-	end
-end)()
-Card.SetMaterial=(function()
-	local oldf=Card.SetMaterial
-	return function(c,g,...)
-		return oldf(c,g and (type(g)=="Group" and g or Group.FromCards(g)) or nil,...)
-	end
-end)()
 ---
 function Duel.GoatConfirm(tp,loc)
 	local dg,hg=Duel.GetFieldGroup(tp,loc&(LOCATION_HAND|LOCATION_DECK),0):Split(Card.IsLocation,nil,LOCATION_DECK)

@@ -69,7 +69,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetLabelObject(g)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(id,id+1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(511001336,511001337) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousPosition(POS_FACEUP) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

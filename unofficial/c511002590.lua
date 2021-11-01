@@ -44,12 +44,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+1,pg)
 	local sc=g:GetFirst()
 	if sc then
-		local mg=tc:GetOverlayGroup()
-		if #mg~=0 then
-			Duel.SendtoGrave(mg,REASON_RULE)
-		end
-		sc:SetMaterial(Group.FromCards(tc))
-		Duel.Overlay(sc,tc)
+		sc:SetMaterial(tc)
+		Duel.Overlay(sc,tc,true)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
 	end

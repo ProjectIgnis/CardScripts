@@ -62,12 +62,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local oc=tg:Filter(s.mtfilter,tc,e,tp):GetFirst()
 		if oc and oc:IsControler(1-tp) and oc:IsRelateToEffect(e) and not oc:IsImmuneToEffect(e) then
-			local og=oc:GetOverlayGroup()
-			if #og>0 then
-				Duel.SendtoGrave(og,REASON_RULE)
-			end
 			oc:CancelToGrave()
-			Duel.Overlay(tc,oc)
+			Duel.Overlay(tc,oc,true)
 		end
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())

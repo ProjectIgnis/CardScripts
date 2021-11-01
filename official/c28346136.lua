@@ -75,11 +75,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			and c:IsCanBeXyzMaterial(tc) and Duel.GetLocationCountFromEx(tp,tp,c,tc)>0
 			and tc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
 			Duel.BreakEffect()
-			local mg=c:GetOverlayGroup()
-			if #mg~=0 then
-				Duel.Overlay(tc,mg)
-			end
-			tc:SetMaterial(Group.FromCards(c))
+			tc:SetMaterial(c)
 			Duel.Overlay(tc,c)
 			Duel.SpecialSummon(tc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 			tc:CompleteProcedure()

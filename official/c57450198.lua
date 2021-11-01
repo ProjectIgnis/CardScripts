@@ -99,10 +99,6 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.mtfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,e)
 	local tc=g:GetFirst()
 	if tc then
-		local og=tc:GetOverlayGroup()
-		if #og>0 then
-			Duel.SendtoGrave(og,REASON_RULE)
-		end
-		Duel.Overlay(c,tc)
+		Duel.Overlay(c,tc,true)
 	end
 end

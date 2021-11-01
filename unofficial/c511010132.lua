@@ -48,11 +48,7 @@ s.listed_names={65676461}
 s.xyz_number=32
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 	local tc=e:GetLabelObject()
-	local mg2=tc:GetOverlayGroup()
-	if #mg2~=0 then
-		Duel.Overlay(c,mg2)
-	end
-	c:SetMaterial(Group.FromCards(tc))
+	c:SetMaterial(tc)
 	Duel.Overlay(c,tc)
 	if not tc:IsCode(65676461) then
 		Duel.SendtoGrave(mg2,REASON_RULE)

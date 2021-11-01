@@ -54,7 +54,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=ag:GetFirst()
 	if tc then
 		local og=c:GetOverlayGroup()
-		if not og then return end
+		if #og==0 then return end
 		local ct=og:FilterCount(s.cfilter,nil)
 		Duel.HintSelection(ag)
 		local e1=Effect.CreateEffect(c)

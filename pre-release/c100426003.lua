@@ -58,14 +58,10 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.attfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,c,e)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		local sg=g:Select(tp,1,1,nil)
-		if #sg==0 then return end
-		Duel.HintSelection(sg,true)
+		local tc=g:Select(tp,1,1,nil):GetFirst()
+		if not tc then return end
+		Duel.HintSelection(tc,true)
 		Duel.BreakEffect()
-		local og=sg:GetFirst():GetOverlayGroup()
-		if #og>0 then
-			Duel.SendtoGrave(og,REASON_RULE)
-		end
-		Duel.Overlay(c,sg)
+		Duel.Overlay(c,tc,true)
 	end
 end

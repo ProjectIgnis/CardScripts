@@ -71,7 +71,7 @@ function s.operation0(e,tp,eg,ev,ep,re,r,rp)
 		local tg=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_DECK,0,1,1,nil)
 		if tg and #tg>0 then Duel.SendtoHand(tg,nil,REASON_EFFECT) end
 		local count=#mg
-		mg=mg:Filter(s.spfilter,nil,e,tp)
+		mg:Match(s.spfilter,nil,e,tp)
 		if #mg<count then return end
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<#mg or (Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and #mg>1) then return end
 		Duel.SpecialSummon(mg,SUMMON_TYPE_SPECIAL,tp,tp,true,false,POS_FACEUP)

@@ -635,15 +635,8 @@ function Xyz.Operation(f,lv,minc,maxc,mustbemat,exchk)
 				local remg=g:Filter(Card.IsHasEffect,nil,511002116)
 				remg:ForEach(function(c) c:RegisterFlagEffect(511002115,RESET_EVENT+RESETS_STANDARD,0,0) end)
 				g:Remove(Card.IsHasEffect,nil,511002116):Remove(Card.IsHasEffect,nil,511002115)
-				local sg=Group.CreateGroup()
-				for tc in g:Iter() do
-					local sg1=tc:GetOverlayGroup()
-					sg:Merge(sg1)
-				end
-				Duel.SendtoGrave(sg,REASON_RULE)
 				c:SetMaterial(g)
-				Duel.Overlay(c,g:Filter(function(c) return c:GetEquipTarget() end,nil))
-				Duel.Overlay(c,g)
+				Duel.Overlay(c,g,true)
 				g:DeleteGroup()
 			end
 end
@@ -706,11 +699,7 @@ end
 function Xyz.Operation2(alterf,op)
 	return	function(e,tp,eg,ep,ev,re,r,rp,c,must,og,min,max)
 				local oc=e:GetLabelObject()
-				local mg2=oc:GetOverlayGroup()
-				if #mg2~=0 then
-					Duel.Overlay(c,mg2)
-				end
-				c:SetMaterial(Group.FromCards(oc))
+				c:SetMaterial(oc)
 				Duel.Overlay(c,oc)
 			end
 end

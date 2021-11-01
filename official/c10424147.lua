@@ -61,11 +61,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetAttribute(),pg)
 	local sc=g:GetFirst()
 	if sc then
-		local mg=tc:GetOverlayGroup()
-		if #mg~=0 then
-			Duel.Overlay(sc,mg)
-		end
-		sc:SetMaterial(Group.FromCards(tc))
+		sc:SetMaterial(tc)
 		Duel.Overlay(sc,tc)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
@@ -90,23 +86,12 @@ function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function s.mtfilter(c,e)
-	return c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e)
-end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,s.spfilter4,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,rp)
 	local sc=sg:GetFirst()
 	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-		local g=tg:Filter(s.mtfilter,nil,e)
-		local tc=g:GetFirst()
-		for tc in aux.Next(g) do
-			local mg=tc:GetOverlayGroup()
-			if #mg~=0 then
-				Duel.Overlay(sc,mg)
-			end
-			Duel.Overlay(sc,tc)
-		end
+		local g=Duel.GetTargetCards(e):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
+		Duel.Overlay(sc,g)
 	end
 end

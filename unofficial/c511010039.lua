@@ -36,12 +36,12 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local bc=c:GetBattleTarget()
 	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	local g=c:GetOverlayGroup()
-		if #g>0 then
-			local mg=g:Select(tp,1,1,nil)
-			Duel.SendtoGrave(mg,REASON_COST)
-			Duel.RaiseSingleEvent(c,EVENT_DETACH_MATERIAL,e,0,0,0,0)
-			Duel.Overlay(bc,mg)
-		end
+	if #g>0 then
+		local mg=g:Select(tp,1,1,nil)
+		Duel.SendtoGrave(mg,REASON_COST)
+		Duel.RaiseSingleEvent(c,EVENT_DETACH_MATERIAL,e,0,0,0,0)
+		Duel.Overlay(bc,mg)
+	end
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

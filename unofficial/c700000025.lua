@@ -58,8 +58,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.spfil(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.spfil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	local tg=Duel.SelectTarget(tp,s.spfil,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	local g=tg:GetFirst():GetOverlayGroup()
-	local sg=g:Select(tp,1,1,nil)
+	local sg=tg:GetFirst():GetOverlayGroup():Select(tp,1,1,nil)
 	Duel.SendtoGrave(sg,REASON_EFFECT)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
@@ -93,12 +92,11 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	--if not tc:IsRelateToEffect(e) or not tc:GetOverlayTarget():IsRelateToEffect(e) or not Duel.IsExistingMatchingCard(s.thfil1,tp,LOCATION_MZONE,0,2,nil) then return end
-	local mg=Duel.GetOverlayGroup(tp,1,0):Select(tp,1,1,nil)
-	if #mg==0 then return end
-	local tc=mg:GetFirst()
-	local g=Duel.SelectMatchingCard(tp,s.thfil1,tp,LOCATION_MZONE,0,1,1,tc:GetOverlayTarget())
-	if #g>0 then
-		Duel.Overlay(g:GetFirst(),tc)
+	local tc=Duel.GetOverlayGroup(tp,1,0):Select(tp,1,1,nil):GetFirst()
+	if not tc then return end
+	local tc2=Duel.SelectMatchingCard(tp,s.thfil1,tp,LOCATION_MZONE,0,1,1,tc:GetOverlayTarget()):GetFirst()
+	if tc2 then
+		Duel.Overlay(tc2,tc)
 		Duel.RaiseSingleEvent(tc:GetOverlayTarget(),EVENT_DETACH_MATERIAL,e,0,0,0,0)
 	end
 end

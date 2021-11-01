@@ -244,11 +244,13 @@ end
 function s.leaveop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsFacedown() then return end
 	local tg=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_MZONE,LOCATION_MZONE,nil,id+1)
-	local tc=tg:GetFirst()
-	while tc do
-		local og=tc:GetOverlayGroup()
+	if #tg==0 then return end
+	local og=Group.CreateGroup()
+	for tc in tg:Iter() do
+		og:Merge(tc:GetOverlayGroup())
+	end
+	if #og>0 then
 		Duel.SendtoGrave(og,REASON_DESTROY)
-		tc=tg:GetNext()
 	end
 	Duel.Destroy(tg,REASON_EFFECT)
 end

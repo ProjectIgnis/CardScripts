@@ -130,15 +130,8 @@ end
 function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject():GetLabelObject()
 	if chk==0 then return g and g:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0 end
-	local sg=g:Filter(Card.IsLocation,nil,LOCATION_MZONE)
+	local sg=Duel.GetOverlayGroup(tp,1,1,g:Match(Card.IsLocation,nil,LOCATION_MZONE))
 	e:GetLabelObject():SetLabelObject(nil)
-	local spg=Group.CreateGroup()
-	local tc=sg:GetFirst()
-	while tc do
-		local og=tc:GetOverlayGroup()
-		if #og>0 then spg:Merge(og) end
-		tc=sg:GetNext()
-	end
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,#g,0,0)
@@ -146,14 +139,7 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetCardTarget()
 	if chk==0 then return #g and g:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>0 end
-	local sg=g:Filter(Card.IsLocation,nil,LOCATION_MZONE)
-	local spg=Group.CreateGroup()
-	local tc=sg:GetFirst()
-	while tc do
-		local og=tc:GetOverlayGroup()
-		if #og>0 then spg:Merge(og) end
-		tc=sg:GetNext()
-	end
+	local sg=Duel.GetOverlayGroup(tp,1,1,g:Filter(Card.IsLocation,nil,LOCATION_MZONE))
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,#g,0,0)
@@ -161,13 +147,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	if #tg>0 then
-		local spg=Group.CreateGroup()
-		local tc=tg:GetFirst()
-		while tc do
-			local og=tc:GetOverlayGroup()
-			if #og>0 then spg:Merge(og) end
-			tc=tg:GetNext()
-		end
+		local spg=Duel.GetOverlayGroup(tp,1,1,tg)
 		if Duel.Destroy(tg,REASON_EFFECT)>0 then
 			Duel.SpecialSummon(spg,0,tp,tp,false,false,POS_FACEUP)
 		end

@@ -99,21 +99,10 @@ function s.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetOwner()
 	local a=c:CheckRemoveOverlayCard(tp,1,REASON_COST)
 	local b=Duel.CheckLPCost(tp,400)
-	local ov=c:GetOverlayGroup()
 	if chk==0 then return a or b end
 	Duel.Hint(HINT_CARD,0,tc:GetOriginalCode())
 	Duel.SetTargetCard(tc)
-	local op=0
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(76922029,0))
-	if a and b then
-		op=Duel.SelectOption(tp,aux.Stringid(81330115,0),aux.Stringid(21454943,1))
-	elseif a and not b then
-		Duel.SelectOption(tp,aux.Stringid(81330115,0))
-		op=0
-	else
-		Duel.SelectOption(tp,aux.Stringid(21454943,1))
-		op=1
-	end
+	local op=aux.SelectEffect(tp,{a,aux.Stringid(81330115,0)},{b,aux.Stringid(21454943,1)})
 	if op==0 then
 		Duel.SendtoGrave(tc,REASON_COST) 
 	else
@@ -134,19 +123,13 @@ function s.xyzcon(e,c,og)
 	return #mg>0 and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0
 end
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og)
-	og=Group.CreateGroup()
 	local mg=Duel.GetMatchingGroup(s.ovfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	og:Merge(mg)
-	local tc=mg:GetFirst()
-	for tc in aux.Next(mg) do
-		local ov=tc:GetOverlayGroup()
-		if #ov>0 then
-			Duel.Overlay(c,ov)
-			og:Merge(ov)
-		end
+	local og=mg:Clone()
+	for tc in mg:Iter() do
+		og:Merge(tc:GetOverlayGroup())
 	end
 	c:SetMaterial(og)
-	Duel.Overlay(c,og)
+	Duel.Overlay(c,mg)
 end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*1000

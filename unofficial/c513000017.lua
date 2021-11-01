@@ -51,11 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.HintSelection(g)
 		if #g>0 and not g:GetFirst():IsImmuneToEffect(e) then
-			local og=g:GetFirst():GetOverlayGroup()
-			if #og>0 then
-				Duel.SendtoGrave(og,REASON_RULE)
-			end
-			Duel.Overlay(c,g)
+			Duel.Overlay(c,g,true)
 		end
 	end
 end

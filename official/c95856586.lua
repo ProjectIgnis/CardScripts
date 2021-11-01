@@ -98,11 +98,7 @@ function s.mop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(Card.IsType),tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,tc,TYPE_XYZ)
 		if #g>0 then
-			local mg=g:GetFirst():GetOverlayGroup()
-			if #mg>0 then
-				Duel.SendtoGrave(mg,REASON_RULE)
-			end
-			Duel.Overlay(tc,g)
+			Duel.Overlay(tc,g,true)
 		end
 	end
 end

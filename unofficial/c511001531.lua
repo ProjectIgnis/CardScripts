@@ -172,10 +172,8 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local g=tc:GetOverlayGroup()
 	g:AddCard(tc)
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-	local tcg=g:GetFirst()
-	while tcg do
+	for tcg in g:Iter() do
 		tcg:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-		tcg=g:GetNext()
 	end
 	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

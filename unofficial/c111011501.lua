@@ -34,10 +34,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local mat1=mat:Select(tp,1,1,nil):GetFirst()
 		if Duel.SpecialSummon(mat1,0,tp,tp,false,false,POS_FACEUP) then
 			Duel.BreakEffect()
-			local mg=tc:GetOverlayGroup()
-			if #mg~=0 then
-				Duel.Overlay(mat1,mg)
-			end
 			Duel.Overlay(mat1,tc)
 		end
 	end

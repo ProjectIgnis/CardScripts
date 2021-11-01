@@ -44,20 +44,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if #g>0 and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		local xg=Group.FromCards(c)
-		local xge=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,0,99,tc,c)
-		local sg
-		xg:Merge(xge)
-		for tc in aux.Next(xg) do
-			local ov=tc:GetOverlayGroup()
-			if not sg then
-				sg=ov
-			else
-				sg=sg+ov
-			end
-		end
-		Duel.SendtoGrave(sg,REASON_RULE)
-		Duel.Overlay(tc,xg)
+		local xg=Group.FromCards(c,tc)
+		local xge=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,0,99,xg):Merge(cg)
+		Duel.Overlay(tc,xge,true)
 	end
 end
 function s.dcondition(e,tp,eg,ep,ev,re,r,rp)

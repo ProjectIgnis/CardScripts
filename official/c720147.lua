@@ -48,14 +48,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
 		local g=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,#rg,#rg,rg,tc)
 		if #g>0 then
-			for tc in aux.Next(g) do
-				local og=tc:GetOverlayGroup()
-				if #og>0 then
-					Duel.SendtoGrave(og,REASON_RULE)
-				end
-				tc:CancelToGrave()
-			end
-			Duel.Overlay(tc,g)
+			g:ForEach(Card.CancelToGrave)
+			Duel.Overlay(tc,g,true)
 		end
 	end
 end

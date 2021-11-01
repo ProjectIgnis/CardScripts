@@ -85,14 +85,7 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 	remg:ForEach(function(c) c:RegisterFlagEffect(511002115,RESET_EVENT+RESETS_STANDARD,0,0) end)
 	g:Remove(Card.IsHasEffect,nil,511002116)
 	g:Remove(Card.IsHasEffect,nil,511002115)
-	local sg=Group.CreateGroup()
-	for tc in aux.Next(g) do
-		local sg1=tc:GetOverlayGroup()
-		sg:Merge(sg1)
-	end
-	Duel.Overlay(c,sg)
 	c:SetMaterial(g)
-	Duel.Overlay(c,g:Filter(function(c) return c:GetEquipTarget() end,nil))
 	Duel.Overlay(c,g)
 	g:DeleteGroup()
 end

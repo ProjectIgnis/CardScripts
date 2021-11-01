@@ -63,15 +63,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,0,tc,e,tp,tc,tc:GetRank()+1)
 	if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(58988903,0)) then
-		local sc, mg=sg:Select(tp,1,1,nil):GetFirst(), Group.CreateGroup()
+		local sc=sg:Select(tp,1,1,nil):GetFirst()
 		if tc:IsLocation(LOCATION_MZONE) then
-			if tc:GetOverlayCount() > 0 then
-				Duel.Overlay(sc, tc:GetOverlayGroup())
-			end
-			mg:AddCard(tc)
-			Duel.Overlay(sc, tc)
+			Duel.Overlay(sc,tc)
 		end
-		sc:SetMaterial(Group.FromCards(tc))
+		sc:SetMaterial(tc)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
 	end

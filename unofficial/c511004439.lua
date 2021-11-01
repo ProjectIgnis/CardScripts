@@ -87,7 +87,7 @@ function s.operation0(e,tp,eg,ev,ep,re,r,rp)
 	local c=e:GetHandler()
 	local mg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local count=#mg
-	mg=mg:Filter(s.spfilter,nil,e,tp)
+	mg:Filter(s.spfilter,nil,e,tp)
 	if #mg<count then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<#mg or (Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and #mg>1) then return end
 	if Duel.SendtoHand(c,nil,REASON_EFFECT)~=0 then

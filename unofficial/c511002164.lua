@@ -96,7 +96,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+1,tc:GetCode()):GetFirst()
 	if sc then
-		Duel.Overlay(sc,tc)
+		Duel.Overlay(sc,tc,true)
 		Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

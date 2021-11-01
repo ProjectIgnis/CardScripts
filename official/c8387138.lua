@@ -56,8 +56,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=g:Select(tp,1,1,nil)
 	local sc=g:GetFirst()
 	if sc then
-		sc:SetMaterial(tc)
-		Duel.Overlay(sc,tc)
+		sc:SetMaterial(c)
+		Duel.Overlay(sc,c)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
 	end

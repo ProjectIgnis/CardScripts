@@ -58,13 +58,9 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,tc)
-		if #g>0 then
-			local og=g:GetFirst():GetOverlayGroup()
-			if #og>0 then
-				Duel.SendtoGrave(og,REASON_RULE)
-			end
-			Duel.Overlay(tc,g)
+		local mat=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_MZONE,0,1,1,tc):GetFirst()
+		if mat then
+			Duel.Overlay(tc,mat,true)
 		end
 	end
 end

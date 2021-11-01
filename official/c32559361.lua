@@ -49,11 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
 	if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToBattle() and not tc:IsImmuneToEffect(e) then
-		local og=tc:GetOverlayGroup()
-		if #og>0 then
-			Duel.SendtoGrave(og,REASON_RULE)
-		end
-		Duel.Overlay(c,tc)
+		Duel.Overlay(c,tc,true)
 	end
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -42,8 +42,6 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	end)()
 	if xyzc:IsRelateToEffect(e) and xyzc:IsControler(tp) and tgc:IsRelateToEffect(e) and tgc:IsControler(1-tp)
 		and not xyzc:IsImmuneToEffect(e) and not tgc:IsImmuneToEffect(e) then
-		local og=tgc:GetOverlayGroup()
-		if #og>0 then Duel.SendtoGrave(og,REASON_RULE) end
-		Duel.Overlay(xyzc,tgc)
+		Duel.Overlay(xyzc,tgc,true)
 	end
 end

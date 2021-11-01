@@ -62,8 +62,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,c,pg):GetFirst()
 	if not sc then return end
 	Duel.BreakEffect()
-	local mg=c:GetOverlayGroup()
-	if #mg>0 then Duel.Overlay(sc,mg) end
 	sc:SetMaterial(c)
 	Duel.Overlay(sc,c)
 	if Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)==0 then return end

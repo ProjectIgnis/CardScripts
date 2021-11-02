@@ -133,7 +133,7 @@ function s.spfilter2(c,e,tp)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject():GetLabelObject()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return g and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and g:IsExists(s.spfilter2,1,nil,e,tp) and not Duel.IsEnvironment(CARD_NECROVALLEY) end
 	local sg=g:Filter(s.spfilter2,nil,e,tp)
 	Duel.SetTargetCard(sg)

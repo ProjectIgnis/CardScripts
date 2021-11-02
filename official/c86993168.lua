@@ -51,7 +51,7 @@ function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil):GetMinGroup(Card.GetAttack)
-	if chk==0 then return g:IsExists(Card.IsAbleToChangeControler,1,nil) end
+	if chk==0 then return g and g:IsExists(Card.IsAbleToChangeControler,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)

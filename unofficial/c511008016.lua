@@ -1,3 +1,4 @@
+--コート・バトル
 --Court Battle
 --Scripted by Snrk
 local s,id=GetID()
@@ -250,7 +251,7 @@ function s.leaveop(e,tp,eg,ep,ev,re,r,rp)
 		og:Merge(tc:GetOverlayGroup())
 	end
 	if #og>0 then
-		Duel.SendtoGrave(og,REASON_DESTROY)
+		Duel.SendtoGrave(og,REASON_RULE)
 	end
 	Duel.Destroy(tg,REASON_EFFECT)
 end

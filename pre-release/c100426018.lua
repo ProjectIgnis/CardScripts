@@ -54,7 +54,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g2=Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g1,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g2,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

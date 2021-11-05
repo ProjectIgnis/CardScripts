@@ -17,13 +17,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={64213018}
-function s.costfilter(c,tp)
-	return c:IsMonster() and c:IsRace(RACE_INSECT) and not c:IsType(TYPE_TOKEN) and c:GetBaseAttack()>=1000
-		and Duel.GetMZoneCount(tp,c)>0
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(0)
 	if chk==0 then return true end
+end
+function s.costfilter(c,tp)
+	return c:IsMonster() and c:IsRace(RACE_INSECT) and not c:IsType(TYPE_TOKEN) and c:GetBaseAttack()>=1000
+		and Duel.GetMZoneCount(tp,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

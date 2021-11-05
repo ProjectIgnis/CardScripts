@@ -53,5 +53,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetRace)==1
+	local count=sg:GetClassCount(Card.GetRace)
+	return count==1,count>1
 end

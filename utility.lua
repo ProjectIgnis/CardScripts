@@ -1670,6 +1670,103 @@ function Auxiliary.SelectEffect(tp,...)
     return sel[Duel.SelectOption(tp,table.unpack(eff))+1]
 end
 
+local function setgroup(eff,group)
+	local oldlabel=eff:GetLabelObject()
+	if oldlabel then oldlabel:DeleteGroup() end
+	local newgroup=group:Clone()
+	group:DeleteGroup()
+	newgroup:KeepAlive()
+	eff:SetLabelObject(newgroup)
+end
+local function cedop(e,tp,eg,ep,ev,re,r,rp)
+	local ogeff,group,curfieldid=table.unpack(e:GetLabelObject())
+	e:Reset()
+	if #group==0 or curfieldid~=ogeff:GetHandler():GetFieldID() then
+		local oldlabel=ogeff:GetLabelObject()
+		if oldlabel then oldlabel:DeleteGroup() end
+		group:DeleteGroup()
+		return
+	end
+	setgroup(ogeff,group)
+	Duel.RaiseSingleEvent(e:GetHandler(),ogeff:GetCode(),e,0,tp,tp,0)
+end
+local function registereff(e,ogeff,group,curfieldid)
+	local geff=Effect.CreateEffect(e:GetHandler())
+	geff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	geff:SetCode(EVENT_CHAIN_END)
+	geff:SetOperation(cedop)
+	geff:SetLabelObject({ogeff,group,curfieldid})
+	Duel.RegisterEffect(geff,0)
+end
+local function regop(filter)
+	return function(e,tp,eg,ep,ev,re,r,rp)
+		local tg=filter and eg:Filter(filter,nil,e,tp,eg,ep,ev,re,r,rp) or eg:Clone()
+		local tableob=e:GetLabelObject()
+		local ogeff,group,ogfieldid=table.unpack(tableob)
+		local curfieldid=ogeff:GetHandler():GetFieldID()
+		if #tg>0 or ogfieldid~=curfieldid then
+			if group and group:IsDeleted() then
+				group=nil
+				tableob[2]=nil
+			end
+			if Duel.GetCurrentChain()==0 and not group then
+				tg:KeepAlive()
+				setgroup(ogeff,tg)
+				Duel.RaiseSingleEvent(e:GetHandler(),ogeff:GetCode(),e,0,tp,tp,0)
+				return
+			end
+			if group then
+				if ogfieldid~=curfieldid then
+					group:Clear()
+					group=nil
+				else
+					group:Merge(tg)
+					return
+				end
+			end
+			tg:KeepAlive()
+			tableob[2]=tg
+			tableob[3]=curfieldid
+			registereff(e,ogeff,tg,curfieldid)
+		end
+	end
+end
+--[[
+This function allows "globbing" the various event groups of an event
+that could happen multiple times in a chain,
+and will raise one and only one event
+containing all the cards that were members of the event groups of those events
+--c is the handler of the effect
+--ogeffect is the effect that will then be raised if the events happen
+--filter is an optional filter function that will be applied to each event group if passed,
+	the parameters are a 1:1 copy of the ones received in teh target function
+--location is where the effect will be applied
+--... are the effect codes of the events that will be globbed together
+]]--
+function Auxiliary.AddSummonWatcherEffect(c,ogeff,filter,location,...)
+	local effect_codes={...}
+	if #effect_codes==0 then return end
+	for _,code in pairs(effect_codes) do
+		if code~=EVENT_SPSUMMON_SUCCESS and code~=EVENT_SUMMON_SUCCESS and code~=EVENT_FLIP_SUMMON_SUCCESS then
+			error("Passed invalid effect code type: "..code,2)
+		end
+	end
+	local first_code=table.remove(effect_codes)
+	local eff=Effect.CreateEffect(c)
+	eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	eff:SetCode(first_code)
+	eff:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	eff:SetRange(location)
+	eff:SetOperation(regop(filter))
+	eff:SetLabelObject({ogeff,nil,nil})
+	c:RegisterEffect(eff)
+	for _,code in pairs(effect_codes) do
+		local copy_eff=eff:Clone()
+		copy_eff:SetCode(code)
+		c:RegisterEffect(copy_eff)
+	end
+end
+
 Duel.LoadScript("cards_specific_functions.lua")
 Duel.LoadScript("proc_fusion.lua")
 Duel.LoadScript("proc_fusion_spell.lua")

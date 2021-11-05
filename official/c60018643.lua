@@ -19,19 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	local g=Group.CreateGroup()
-	g:KeepAlive()
-	e2:SetLabelObject(g)
-	--Mass register
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetLabelObject(e2)
-	e3:SetOperation(s.regop)
-	c:RegisterEffect(e3)
+	aux.AddSummonWatcherEffect(c,e2,s.thcfilter,LOCATION_SZONE,EVENT_SPSUMMON_SUCCESS)
 	--Register attributes
 	aux.GlobalCheck(s,function()
 		s.attr_list={}
@@ -54,20 +42,6 @@ function s.thcfilter(c,e,tp)
 end
 function s.thfilter(c,attr)
 	return c:IsRace(RACE_CYBERSE) and c:IsAttribute(attr) and c:IsAbleToHand()
-end
-function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=eg:Filter(s.thcfilter,nil,e,tp)
-	if #tg>0 then
-		for tc in aux.Next(tg) do
-			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
-		end
-		local g=e:GetLabelObject():GetLabelObject()
-		if Duel.GetCurrentChain()==0 then g:Clear() end
-		g:Merge(tg)
-		g:Remove(function(c) return c:GetFlagEffect(id)==0 end,nil)
-		e:GetLabelObject():SetLabelObject(g)
-		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
-	end
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=e:GetLabelObject():Filter(s.thcfilter,nil,e,tp)

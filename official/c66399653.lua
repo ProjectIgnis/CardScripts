@@ -22,21 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
-	local g=Group.CreateGroup()
-	g:KeepAlive()
-	e2:SetLabelObject(g)
-	--Equip register
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_SUMMON_SUCCESS)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetRange(LOCATION_FZONE)
-	e3:SetLabelObject(e2)
-	e3:SetOperation(s.regop)
-	c:RegisterEffect(e3)
-	local e4=e3:Clone()
-	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e4)
+	aux.AddSummonWatcherEffect(c,e2,function(c,e,tp) return s.thfilter(c,e,tp,false) end,LOCATION_FZONE,EVENT_SUMMON_SUCCESS,EVENT_SPSUMMON_SUCCESS)
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)
@@ -61,31 +47,10 @@ function s.cfilter(c,ec)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_LIGHT)
 		and c:IsType(TYPE_UNION) and c:CheckUnionTarget(ec) and aux.CheckUnionEquip(c,ec) and not c:IsCode(ec:GetCode())
 end
-function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=eg:Filter(s.tgfilter,nil,e,tp,false)
-	if #tg>0 then
-		for tc in aux.Next(tg) do
-			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
-		end
-		local g=e:GetLabelObject():GetLabelObject()
-		if Duel.GetCurrentChain()==0 then g:Clear() end
-		g:Merge(tg)
-		g:Remove(function(c) return c:GetFlagEffect(id)==0 end,nil)
-		e:GetLabelObject():SetLabelObject(g)
-		if Duel.GetFlagEffect(tp,id)==0 then
-			Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
-			Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
-		end
-	end
-end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=e:GetLabelObject():Filter(s.tgfilter,nil,e,tp,false)
 	if chkc then return g:IsContains(chkc) and s.tgfilter(chkc,e,tp,true) end
-	if chk==0 then 
-		Duel.ResetFlagEffect(tp,id)
-		for tc in aux.Next(g) do tc:ResetFlagEffect(id) end
-		return #g>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
-	end
+	if chk==0 then return #g>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 	if #g==1 then
 		Duel.SetTargetCard(g:GetFirst())
 	else

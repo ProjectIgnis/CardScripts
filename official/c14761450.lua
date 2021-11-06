@@ -1,5 +1,5 @@
 --ペンギン勇士
---Penguin Champion
+--Penguin Squire
 --Scripted by Neo Yuno
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,8 +12,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Special Summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_LVCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_CHANGE_POS)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,id)

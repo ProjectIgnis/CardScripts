@@ -70,6 +70,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(tc)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
+		e1:SetReset(RESET_PHASE+PHASE_BATTLE)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

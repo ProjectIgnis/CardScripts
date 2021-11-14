@@ -49,7 +49,7 @@ function s.fusfilter(c,code,fc,sumtype,tp)
 end
 function s.effilter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsSetCard(0x175) and c:GetType()==TYPE_TRAP
-		and c:CheckActivateEffect(true,true,false)~=nil 
+		and c:CheckActivateEffect(false,true,false)~=nil 
 end
 function s.efcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.effilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -66,7 +66,7 @@ function s.eftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.effilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if Duel.Remove(g,POS_FACEUP,REASON_COST)==0 then return end
-	local te=g:GetFirst():CheckActivateEffect(true,true,false)
+	local te=g:GetFirst():CheckActivateEffect(false,true,false)
 	e:SetLabel(te:GetLabel())
 	e:SetLabelObject(te:GetLabelObject())
 	local tg=te:GetTarget()

@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DAMAGE+CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_TO_GRAVE)
+	e3:SetCode(EVENT_BE_MATERIAL)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.damcon)
 	e3:SetTarget(s.damtg)
@@ -71,7 +71,8 @@ function s.atkval(e,c)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) and r & REASON_SYNCHRO ~= 0
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsLocation(LOCATION_GRAVE)
+		and r & REASON_SYNCHRO ~= 0
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

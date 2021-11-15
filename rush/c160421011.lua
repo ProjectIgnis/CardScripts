@@ -30,7 +30,7 @@ end
 
 --add 1 monster to hand
 function s.thfilter(c)
-	return  c:GetAttack()==0 and c:IsAbleToHand()
+	return  c:GetAttack()==0 and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -47,9 +47,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 --destroy up to 2 def
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_ONFIELD,nil)
-	if chkc then return chkc:IsOnField() and s.desfilter(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return #dg>0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDefensePos,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_MZONE)
 end
 function s.desfilter(c)
 	return c:IsPosition(POS_DEFENSE)
@@ -58,10 +57,10 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	local c=e:GetHandler()
 	--effect
-	local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_ONFIELD,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local dg=Duel.SelectMatchingCard(tp,Card.IsDefensePos,tp,0,LOCATION_MZONE,1,2,nil)
+	Duel.HintSelection(dg)
 	if #dg>0 then
-		local sg=dg:Select(tp,1,2,nil)
-		Duel.HintSelection(sg)
-		Duel.Destroy(sg,REASON_EFFECT)
+		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end

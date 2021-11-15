@@ -22,6 +22,8 @@ end
 
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	--requirement
+	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	if c:IsRelateToEffect(e) and c:IsFaceup() then		
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

@@ -39,8 +39,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 					e1:SetValue(-400)
 					e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 					tc:RegisterEffectRush(e1)
-					local ft=math.min(2,Duel.GetLocationCount(tp,LOCATION_MZONE))
-					local sg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,0,nil)
+					local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)
+					local ft=math.min(2,ct)
+					local sg=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 					if ft>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 						local tg=aux.SelectUnselectGroup(sg,1,tp,1,ft,s.rescon,1,tp)
 						Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
@@ -51,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.sfilter(c)
+function s.sfilter(c,e,tp)
 	return c:IsCode(160003022,160003023) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.rescon(sg,e,tp,mg)

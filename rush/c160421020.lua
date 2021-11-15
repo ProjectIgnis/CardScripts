@@ -52,14 +52,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 			local c=e:GetHandler()
-			local ag=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsLevelAbove,5),tp,0,LOCATION_MZONE,nil)
-			for tc in aux.Next(ag) do
-				tc:UpdateLevel(-4,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
+			local ag=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsLevelAbove,5),tp,0,LOCATION_MZONE,nil)
+			if #ag>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+				for tc in aux.Next(ag) do
+					tc:UpdateLevel(-4,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,c)
+				end
 			end
 		end
 	end
 end
-
 function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetRace)==1  and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE,0,1,sg,e,tp)
 end

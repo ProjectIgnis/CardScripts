@@ -406,9 +406,8 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 					g=og
 					mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
 				else
-					g=Duel.GetMatchingGroup(function(cc)
-						return ((cc:IsLocation(LOCATION_GRAVE) and cc:IsHasEffect(511002793)) 
-							or cc:IsFaceup()) and (cc:IsControler(tp) or Xyz.EffectXyzMaterialChk(cc,c,tp)) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
+					g=Duel.GetMatchingGroup(function(cc) return ((cc:IsLocation(LOCATION_GRAVE) and cc:IsHasEffect(511002793)) 
+						or cc:IsFaceup()) and (cc:IsControler(tp) or Xyz.EffectXyzMaterialChk(cc,c,tp)) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
 					mg=Duel.GetMatchingGroup(Xyz.MatFilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil,f,lv,c,tp)
 					if not mustbemat then
 						local eqmg=Group.CreateGroup()
@@ -534,9 +533,8 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 						g=og
 						mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
 					else
-						g=Duel.GetMatchingGroup(function(cc)
-							return ((cc:IsLocation(LOCATION_GRAVE) and cc:IsHasEffect(511002793)) 
-								or cc:IsFaceup()) and (cc:IsControler(tp) or Xyz.EffectXyzMaterialChk(cc,c,tp)) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
+						g=Duel.GetMatchingGroup(function(cc) return ((cc:IsLocation(LOCATION_GRAVE) and cc:IsHasEffect(511002793)) 
+							or cc:IsFaceup()) and (cc:IsControler(tp) or Xyz.EffectXyzMaterialChk(cc,c,tp)) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
 						mg=Duel.GetMatchingGroup(Xyz.MatFilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil,f,lv,c,tp)
 						if not mustbemat then
 							local eqmg=Group.CreateGroup()

@@ -6,14 +6,17 @@ if not Xyz then
 	Xyz = aux.XyzProcedure
 end
 Xyz.ProcCancellable=false
-function Xyz.AlterFilter(c,alterf,xyzc,e,tp,op)
+function Xyz.EffectXyzMaterialChk(c,xyz,tp)
 	local eff_xyzmat={c:GetCardEffect(EFFECT_XYZ_MATERIAL)}
-	local xyzmat=false
 	for _,eff in ipairs(eff_xyzmat) do
 		local val=eff:GetValue()
-		xyzmat=val==0 or val(eff,c,xyzc,tp) or xyzmat
+		if val==0 or val(eff,c,xyz,tp) then return true end
 	end
-	if not alterf(c,tp,xyzc) or not c:IsCanBeXyzMaterial(xyzc,tp) or (c:IsControler(1-tp) and not xyzmat) 
+	return false
+end
+function Xyz.AlterFilter(c,alterf,xyzc,e,tp,op)
+	if not alterf(c,tp,xyzc) or not c:IsCanBeXyzMaterial(xyzc,tp)
+		or (c:IsControler(1-tp) and not Xyz.EffectXyzMaterialChk(c,xyzc,tp)) 
 		or (op and not op(e,tp,0,c)) then return false end
 	if xyzc:IsLocation(LOCATION_EXTRA) then
 		return Duel.GetLocationCountFromEx(tp,tp,c,xyzc)>0
@@ -95,14 +98,8 @@ function Xyz.MatFilter2(c,f,lv,xyz,tp)
 	return Xyz.MatFilter(c,f,lv,xyz,tp)
 end
 function Xyz.MatFilter(c,f,lv,xyz,tp)
-	local eff_xyzmat={c:GetCardEffect(EFFECT_XYZ_MATERIAL)}
-	local xyzmat=false
-	for _,eff in ipairs(eff_xyzmat) do
-		local val=eff:GetValue()
-		xyzmat=val==0 or val(eff,c,xyz,tp) or xyzmat
-	end
 	return (not f or f(c,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or c:IsXyzLevel(xyz,lv)) and c:IsCanBeXyzMaterial(xyz,tp) 
-		and (c:IsControler(tp) or xyzmat)
+		and (c:IsControler(tp) or Xyz.EffectXyzMaterialChk(c,xyz,tp))
 end
 function Xyz.SubMatFilter(c,fil,lv,xg,xyz,tp)
 	if not lv then return false end
@@ -410,14 +407,8 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 					mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
 				else
 					g=Duel.GetMatchingGroup(function(cc)
-						local eff_xyzmat={cc:GetCardEffect(EFFECT_XYZ_MATERIAL)}
-						local xyzmat=false
-						for _,eff in ipairs(eff_xyzmat) do
-							local val=eff:GetValue()
-							xyzmat=val==0 or val(eff,cc,c,tp) or xyzmat
-						end
 						return ((cc:IsLocation(LOCATION_GRAVE) and cc:IsHasEffect(511002793)) 
-							or cc:IsFaceup()) and (cc:IsControler(tp) or xyzmat) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
+							or cc:IsFaceup()) and (cc:IsControler(tp) or Xyz.EffectXyzMaterialChk(cc,c,tp)) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
 					mg=Duel.GetMatchingGroup(Xyz.MatFilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil,f,lv,c,tp)
 					if not mustbemat then
 						local eqmg=Group.CreateGroup()
@@ -544,14 +535,8 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 						mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
 					else
 						g=Duel.GetMatchingGroup(function(cc)
-							local eff_xyzmat={cc:GetCardEffect(EFFECT_XYZ_MATERIAL)}
-							local xyzmat=false
-							for _,eff in ipairs(eff_xyzmat) do
-								local val=eff:GetValue()
-								xyzmat=val==0 or val(eff,cc,c,tp) or xyzmat
-							end
 							return ((cc:IsLocation(LOCATION_GRAVE) and cc:IsHasEffect(511002793)) 
-								or cc:IsFaceup()) and (cc:IsControler(tp) or xyzmat) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
+								or cc:IsFaceup()) and (cc:IsControler(tp) or Xyz.EffectXyzMaterialChk(cc,c,tp)) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
 						mg=Duel.GetMatchingGroup(Xyz.MatFilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil,f,lv,c,tp)
 						if not mustbemat then
 							local eqmg=Group.CreateGroup()

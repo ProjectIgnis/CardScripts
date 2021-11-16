@@ -1,6 +1,6 @@
 --エクスレイヤー
 --Exslayer
---scripted by pyrQ
+--Scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -66,9 +66,9 @@ function s.costfilter(c,ft,tp)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,aux.TRUE,1,false,aux.ChkfMMZ(1),nil,ft,tp) end
-	local g=Duel.SelectReleaseGroupCost(tp,aux.TRUE,1,1,false,aux.ChkfMMZ(1),nil,ft,tp)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,aux.ReleaseCheckMMZ,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,aux.ReleaseCheckMMZ,nil)
 	Duel.Release(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)

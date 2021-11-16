@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e2:SetValue(tc:GetAttack()/2)
+		e2:SetValue(s.atkval)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		--destroy
@@ -77,6 +77,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	else
 		c:CancelToGrave(false)
 	end
+end
+function s.atkval(e,c)
+	return c:GetAttack()/2
 end
 function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	if ep~=tp then

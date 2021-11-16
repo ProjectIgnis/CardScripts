@@ -51,7 +51,7 @@ function s.initial_effect(c)
 end
 s.xyz_number=62
 function s.atkcon(e)
-	return e:GetHandler():IsRelateToBattle()
+	return Duel.GetBattleMonster(e:GetHandlerPlayer())==e:GetHandler()
 end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)

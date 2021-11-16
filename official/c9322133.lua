@@ -1,3 +1,4 @@
+--サイコ・イレイザー
 --Psychic Eraser Laser
 --Scripted by The Razgriz
 local s,id=GetID()
@@ -13,23 +14,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsAbleToGrave() and (c:GetBaseAttack()~=0 or c:GetBaseDefense()~=0)
+	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsAbleToGrave()
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,1-tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-	if #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local tg=g:Select(tp,1,1,nil):GetFirst()
-	local atk=tg:GetBaseAttack()
-	local def=tg:GetBaseDefense()
-	local rec=math.max(atk,def)
+	local tg=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
+	if not tg then return end
 	if Duel.SendtoGrave(tg,REASON_EFFECT)>0 and tg:IsLocation(LOCATION_GRAVE) then
+		local rec=math.max(tg:GetBaseAttack(),tg:GetBaseDefense())
+		if rec==0 then return end
 		Duel.BreakEffect()
 		Duel.Recover(1-tp,rec,REASON_EFFECT)
 	end

@@ -1,5 +1,5 @@
 --天獄の王
---King of the Sky Prison
+--Lord of the Heavenly Prison
 --Scripted by DyXel
 
 local s,id=GetID()
@@ -86,23 +86,23 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		if Duel.SSet(tp,tc)==0 then return end
 		--Banish it during the End Phase of the next turn.
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetCountLimit(1)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetLabel(Duel.GetTurnCount()+1)
 		e1:SetLabelObject(tc)
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
+		e1:SetCountLimit(1)
 		e1:SetCondition(s.rmcon)
 		e1:SetOperation(s.rmop)
+		e1:SetReset(RESET_PHASE+PHASE_END,2)
 		Duel.RegisterEffect(e1,tp)
+		tc:CreateEffectRelation(e1)
 	end
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc:GetFlagEffect(id)~=0 then
+	if tc:IsRelateToEffect(e) then
 		return Duel.GetTurnCount()==e:GetLabel()
 	else
 		e:Reset()

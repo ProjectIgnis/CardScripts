@@ -28,13 +28,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
 		--Effect
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			local atkval=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(aux.TRUE),tp,0,LOCATION_ONFIELD,nil)*300
+			local atkval=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(aux.TRUE),tp,0,LOCATION_ONFIELD,nil)*200
 		local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
-			e1:SetValue(atk)
+			e1:SetValue(atkval)
 			c:RegisterEffect(e1)
 		end
 	end

@@ -28,20 +28,19 @@ function s.initial_effect(c)
 	e2:SetOperation(s.revop)
 	c:RegisterEffect(e2)
 end
-
+s.listed_materials={160001022,160301005}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
-
 --atk up
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsNotMaximumModeSide,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(aux.TRUE),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		local atkval=Duel.GetMatchingGroupCount(Card.IsNotMaximumModeSide,tp,LOCATION_MZONE,LOCATION_MZONE,nil)*300
+		local atkval=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(aux.TRUE),tp,LOCATION_MZONE,LOCATION_MZONE,nil)*300
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

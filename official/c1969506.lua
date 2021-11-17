@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x83}
+s.listed_series={0x1083}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=Duel.GetLP(1-tp)-2000
 end
@@ -31,7 +31,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x83) and c:GetLevel()==8 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x1083) and c:GetLevel()==8 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end

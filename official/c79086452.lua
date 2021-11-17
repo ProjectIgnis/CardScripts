@@ -21,9 +21,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x83}
+s.listed_series={0x1083}
 function s.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x83) and c:IsDiscardable()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1083) and c:IsDiscardable()
 end
 function s.spcon1(e,c)
 	if c==nil then return true end
@@ -57,7 +57,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x83))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1083))
 	e1:SetValue(aux.tgoval)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)

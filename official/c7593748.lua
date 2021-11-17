@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()
-	Xyz.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x83),4,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x1083),4,2)
 	--control
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x83}
+s.listed_series={0x1083}
 function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:CheckRemoveOverlayCard(tp,2,REASON_COST) end
@@ -73,7 +73,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x83)
+	return not c:IsSetCard(0x1083)
 end
 function s.atktg(e,c)
 	return not c:IsType(TYPE_XYZ)

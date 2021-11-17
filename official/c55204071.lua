@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop3)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x83}
+s.listed_series={0x1083}
 s.listed_names={id}
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -86,5 +86,5 @@ function s.spop3(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x83)
+	return not c:IsSetCard(0x1083)
 end

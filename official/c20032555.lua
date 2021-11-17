@@ -11,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x83}
+s.listed_series={0x1083}
 function s.cfilter(c)
-	return c:IsSetCard(0x83) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
+	return c:IsSetCard(0x1083) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

@@ -17,8 +17,8 @@ function s.condition(e)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsRace,RACE_WARRIOR),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE)
+	if chk==0 then return ct>0 end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(ct*200)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*200)

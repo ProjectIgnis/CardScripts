@@ -44,13 +44,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if e:GetLabel()==1 then
+	local op=e:GetLabel()
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if op==1 and ft>0 then
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) then
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
-	else
+	elseif op==2 and ft>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spdfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		if #g>0 then

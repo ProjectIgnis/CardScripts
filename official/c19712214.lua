@@ -3,7 +3,7 @@
 --Scripted by Neo Yuno
 local s,id=GetID()
 function s.initial_effect(c)
-	--Negate attack and Special Summon 
+	--Negate attack and Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_names={67712104}
 s.listed_series={0x12b}
---Negate attack and Special Summon 
+--Negate attack and Special Summon
 function s.spfilter(c,e,tp)
 	return c:IsCode(67712104) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and (Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 or not c:IsLocation(LOCATION_EXTRA))

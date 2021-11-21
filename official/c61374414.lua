@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_series={0x48}
-s.listed_names={100426003}
+s.listed_names={34876719}
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,100426003)
+	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,34876719)
 end
 function s.spfilter(c,e,tp,mc,pg)
 	local no=c.xyz_number

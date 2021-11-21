@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x48,0x275}
+s.listed_series={0x48,0x177}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.GetCurrentPhase()==PHASE_DRAW and c:IsReason(REASON_RULE)
@@ -43,7 +43,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)~=0 end
 end
 function s.copfilter(c)
-	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x275) and c:GetType()==TYPE_SPELL
+	return c:IsAbleToGraveAsCost() and c:IsSetCard(0x177) and c:GetType()==TYPE_SPELL
 		and c:CheckActivateEffect(true,true,false)~=nil 
 end
 function s.xyzfilter(c,tp,sg,g)

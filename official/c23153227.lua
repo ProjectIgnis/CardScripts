@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x275,0x276,0x95}
+s.listed_series={0x177,0x178,0x95}
 function s.filter(c,dct) 
-	return ((((c:IsSetCard(0x275) and not c:IsCode(id)) or c:IsSetCard(0x276)) and c:IsType(TYPE_SPELL+TYPE_TRAP))
+	return ((((c:IsSetCard(0x177) and not c:IsCode(id)) or c:IsSetCard(0x178)) and c:IsType(TYPE_SPELL+TYPE_TRAP))
 		or (c:IsSetCard(0x95) and c:GetType()==TYPE_QUICKPLAY+TYPE_SPELL))
 		and (c:IsAbleToHand() or dct>1)
 end

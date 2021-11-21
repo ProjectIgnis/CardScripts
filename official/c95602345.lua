@@ -43,8 +43,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	-- Special Summon (up to 2 with different names)
 	local g=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
 	local ct=math.min(2,Duel.GetLocationCount(tp,LOCATION_MZONE))
-	if #g<1 or ct<1 then return end
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
+	if ct>0 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 	if #sg>0 and Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 then

@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.xyzlv)
 	c:RegisterEffect(e2)
 end
--- "Number" cards
+-- Lists "Number" cards
 s.listed_series={0x48}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER)

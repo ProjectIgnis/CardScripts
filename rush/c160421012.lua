@@ -34,19 +34,19 @@ function s.damcond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and e:GetLabelObject():GetLabel()~=0
 end
 function s.damfilter(c,atk)
-	return c:IsFaceup() and c:GetAttack()>0 and c:IsLevelAbove(7) and not (c:GetAttack()==atk)
+	return c:IsFaceup() and c:IsLevelAbove(7) and (not c:IsAttack(atk)) and not c:IsMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.damfilter),tp,0,LOCATION_MZONE,1,nil,e:GetHandler():GetAttack()) end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack()) end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
-
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local sg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.damfilter),tp,0,LOCATION_MZONE,0,1,1,nil,e:GetHandler():GetAttack())
+	local sg=Duel.SelectMatchingCard(tp,s.damfilter,tp,0,LOCATION_MZONE,1,1,nil,c:GetAttack())
 	if #sg>0 then
 		Duel.HintSelection(sg)
 		local dam=math.abs(sg:GetFirst():GetAttack()-c:GetAttack())

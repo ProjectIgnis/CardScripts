@@ -50,13 +50,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		-- Special Summon (any number)
 		local ng=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
 		local nct=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		if #ng<1 or nct<1 or not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end
-		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then nct=1 end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local nsg=ng:Select(tp,1,nct,nil)
-		if #nsg>0 then
-			Duel.BreakEffect()
-			Duel.SpecialSummon(nsg,0,tp,tp,false,false,POS_FACEUP)
+		if #ng>0 and nct>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then nct=1 end
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local nsg=ng:Select(tp,1,nct,nil)
+			if #nsg>0 then
+				Duel.BreakEffect()
+				Duel.SpecialSummon(nsg,0,tp,tp,false,false,POS_FACEUP)
+			end
 		end
 	end
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end

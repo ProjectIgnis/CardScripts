@@ -39,6 +39,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,3,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 	if e:GetLabel()==1 then
+		e:SetLabel(0)
 		Duel.SetChainLimit(s.chlimit)
 	end
 end

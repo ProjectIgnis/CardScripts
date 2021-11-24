@@ -73,6 +73,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
         	ec:RegisterEffect(e4)
     	end
 end
+function s.eqlimit(e,c)
+	return c==e:GetLabelObject()
+end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)

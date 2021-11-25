@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_COUNTER+CATEGORY_DRAW+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
+	-- e2:SetCondition(aux.bdocon)
 	e2:SetTarget(s.cttg)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
@@ -24,8 +25,7 @@ end
 s.counter_place_list={0x20a}
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
-	if chk==0 then return bc and bc:IsControler(1-tp) and c:IsLocation(LOCATION_MZONE)
+	if chk==0 then return c:GetBattleTarget() and c:IsStatus(STATUS_OPPO_BATTLE) and c:IsLocation(LOCATION_MZONE)
 		and c:IsRelateToBattle() and c:IsCanAddCounter(0x20a,1) end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x20a)
 end

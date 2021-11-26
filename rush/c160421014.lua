@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 1 Descendant of Titan + 1 Babysitter Goat
+	-- 1 Build Dragon + 1 Pylong
 	Fusion.AddProcMix(c,true,true,160004024,160421037)
 	--Destroy 2 of opponent's monsters
 	local e1=Effect.CreateEffect(c)
@@ -24,7 +24,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(Card.IsNotMaximumModeSide,tp,0,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(aux.TRUE),tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return #g>1 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,LOCATION_MZONE)
 end
@@ -36,7 +36,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	if ct>0 then
 		--Effect
-		local g=Duel.GetMatchingGroup(Card.IsNotMaximumModeSide,tp,0,LOCATION_MZONE,nil)
+		local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(aux.TRUE),tp,0,LOCATION_MZONE,nil)
 		if #g>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local sg=g:Select(tp,2,2,nil)

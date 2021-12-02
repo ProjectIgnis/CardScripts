@@ -39,7 +39,7 @@ function s.imop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.efilter)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,Duel.IsTurnPlayer(tp) and 2 or 1)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,Duel.IsTurnPlayer(tp) and 2 or 1)
 	c:RegisterEffect(e1)
 end
 function s.efilter(e,te)

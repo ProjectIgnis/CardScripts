@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	c:AddMaximumAtkHandler()
 	c:AddCenterToSideEffectHandler(e1)
 end
-s.MaximumAttack=3300
+s.MaximumAttack=3500
 function s.filter1(c)
-	return c:IsCode(160422003)
+	return c:IsCode(160422001)
 end
 function s.filter2(c)
 	return c:IsCode(160422003)

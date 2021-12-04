@@ -1,5 +1,5 @@
 --神炎竜ルベリオン
---Rubellion the Divineflame Dragon
+--Lubellion the Searing Dragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

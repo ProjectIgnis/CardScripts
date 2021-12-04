@@ -48,12 +48,15 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		and c:GetFlagEffect(id)==0 end
-	local reset=RESET_SELF_TURN
-	if Duel.IsTurnPlayer(tp) then reset=RESET_OPPO_TURN end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+reset,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) then
+		local reset=RESET_SELF_TURN
+		if Duel.IsTurnPlayer(tp) then reset=RESET_OPPO_TURN end
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+reset,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	if #g==0 then return end

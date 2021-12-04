@@ -45,10 +45,9 @@ function s.rmfilter(c)
 	return c:IsMonster() and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-		and c:GetFlagEffect(id)==0 end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,0)
+		and e:GetHandler():GetFlagEffect(id)==0 end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_MZONE)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

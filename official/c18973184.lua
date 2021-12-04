@@ -45,9 +45,9 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_ALBAZ}
 function s.efilter(e,ct)
-	local p=e:GetHandlerPlayer()
-	local te,tp=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
-	return p==tp and te:IsHasCategory(CATEGORY_FUSION_SUMMON)
+	local tp=e:GetHandlerPlayer()
+	local te,rp=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
+	return tp==rp and te:IsHasCategory(CATEGORY_FUSION_SUMMON)
 end
 function s.limfilter(c,tp)
 	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_FUSION)
@@ -76,7 +76,7 @@ function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 function s.limop2(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():GetFlagEffect(id)~=0 then
+	if e:GetHandler():GetFlagEffect(id)>0 then
 		Duel.SetChainLimitTillChainEnd(s.chainlm)
 	end
 	e:GetHandler():ResetFlagEffect(id)

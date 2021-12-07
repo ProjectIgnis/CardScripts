@@ -31,9 +31,9 @@ function s.thfilter(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g1=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
-	Duel.HintSelection(g,true)
+	Duel.HintSelection(g1,true)
 	if #g1>0 and Duel.SendtoHand(g1,nil,REASON_COST)>0 then
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

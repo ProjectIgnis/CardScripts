@@ -18,7 +18,7 @@ function s.cfilter(c)
 	if not c:IsType(TYPE_XYZ) then return false end
 	local no=c.xyz_number
 	return (c:IsSetCard(0x48) and no and no>=101 and no<=107)
-		or tc:GetOverlayGroup():IsExists(s.cfilter,1,nil)
+		or c:GetOverlayGroup():IsExists(s.cfilter,1,nil)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetBattleMonster(tp)

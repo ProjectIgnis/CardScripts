@@ -8,16 +8,12 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsAttackAbove,2500),tp,0,LOCATION_MZONE,1,nil) and e:GetHandler():IsStatus(STATUS_SUMMON_TURN)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsLevelAbove(7) and c:IsAbleToHand()

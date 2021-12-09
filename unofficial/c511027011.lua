@@ -6,23 +6,21 @@ function s.initial_effect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_ADJUST)
 		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetOperation(s.legaldeck(card,init))
+		e1:SetOperation(s.legaldeck)
 		Duel.RegisterEffect(e1,0)
 	end
 end
-function s.legaldeck(card,init)
-	return function(e,tp,eg,ep,ev,re,r,rp)
-		local c = e:GetOwner()
-		local p = c:GetControler()
-		Duel.DisableShuffleCheck()
-		Duel.SendtoDeck(c,nil,-2,REASON_RULE)
-		local ct = Duel.GetMatchingGroupCount(nil,p,LOCATION_HAND+LOCATION_DECK,0,c)
-		if (Duel.IsDuelType(DUEL_MODE_SPEED) and ct < 20 or ct < 40) and Duel.SelectYesNo(1-p, aux.Stringid(4014,5)) then
-			Duel.Win(1-p,0x55)
-		end
-		if c:IsPreviousLocation(LOCATION_HAND) then Duel.Draw(p, 1, REASON_RULE) end
-		e:Reset()
+function s.legaldeck(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetOwner()
+	local p=c:GetControler()
+	Duel.DisableShuffleCheck()
+	Duel.SendtoDeck(c,nil,-2,REASON_RULE)
+	local ct=Duel.GetMatchingGroupCount(nil,p,LOCATION_HAND+LOCATION_DECK,0,c)
+	if (Duel.IsDuelType(DUEL_MODE_SPEED) and ct<20 or ct<40) and Duel.SelectYesNo(1-p,aux.Stringid(4014,5)) then
+		Duel.Win(1-p,0x55)
 	end
+	if c:IsPreviousLocation(LOCATION_HAND) then Duel.Draw(p,1,REASON_RULE) end
+	e:Reset()
 end
 function s.init(c)
     local e1=Effect.GlobalEffect(c)
@@ -36,9 +34,6 @@ function s.init(c)
     e2:SetRange(LOCATION_MZONE)
     e2:SetTargetRange(LOCATION_EXTRA,LOCATION_EXTRA)
     e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_LINK))
-    e2:SetValue(s.val)
+    e2:SetValue(function(e,c,fp,rp,r)return Duel.GetLinkedZone(1-rp)>>16|96 end)
     Duel.RegisterEffect(e2,0)
-end
-function s.val(e,c,fp,rp,r)
-    return Duel.GetLinkedZone(1-rp)>>16|96
 end

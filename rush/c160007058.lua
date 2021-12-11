@@ -32,9 +32,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=g:GetMaxGroup(Card.GetAttack)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
 end
-function s.umifilter(c)
-	return c:IsCode(CARD_UMI) or c:IsCode(CARD_BIG_OCEAN)
-end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
@@ -44,19 +41,20 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	Duel.ShuffleDeck(tp)
 	--Effect
-	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,nil)
-	if #g==0 then return end
-	local tg=g:GetMaxGroup(Card.GetAttack)
+	local tg=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,nil):GetMaxGroup(Card.GetAttack)
 	if #tg>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		tg=tg:Select(tp,1,1,nil)
 		Duel.HintSelection(tg)
 	end
-	tg=tg:AddMaximumCheck()
-	if Duel.Destroy(tg,REASON_EFFECT)==0 or Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
+	if #tg>0 then
+		Duel.Destroy(tg:AddMaximumCheck(),REASON_EFFECT)
+	end
+	if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 	local dg=Duel.GetOperatedGroup()
 	Duel.ConfirmCards(1-tp,dg)
-	local ct=dg:FilterCount(s.umifilter,nil)
-	if ct>0 then Duel.Damage(1-tp,500,REASON_EFFECT) end
+	if dg:FilterCount(Card.IsCode,nil,CARD_UMI,CARD_BIG_OCEAN)>0 then
+		Duel.Damage(1-tp,500,REASON_EFFECT)
+	end
 	Duel.ShuffleHand(tp)
 end

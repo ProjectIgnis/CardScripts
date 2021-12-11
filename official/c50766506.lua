@@ -27,7 +27,7 @@ function s.cfilter(c,e,tp,ft)
 end
 function s.spfilter(c,lv,e,tp)
 	return c:IsLevelBelow(lv) and c:IsSetCard(0x2b) and
-		(c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
+		c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -58,12 +58,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	sg:Remove(Card.IsLevelAbove,nil,slv+1)
 	if #sg==0 then return end
 	local cg=aux.SelectUnselectGroup(sg,e,tp,1,ft,s.rescon(slv),1,tp,HINTMSG_SPSUMMON)
-	for tc in aux.Next(cg) do
-		local spos=0
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) then spos=spos+POS_FACEUP_ATTACK end
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then spos=spos+POS_FACEDOWN_DEFENSE end
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,spos)
-		if tc:IsFacedown() then
+	for tc in cg:Iter() do
+		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)~=0 and tc:IsFacedown() then
 			cg:AddCard(tc)
 		end
 		c:SetCardTarget(tc)

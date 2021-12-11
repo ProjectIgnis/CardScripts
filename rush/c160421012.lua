@@ -1,5 +1,5 @@
 -- ロイヤルデモンズ・ハードロック
--- Royal Demon's Hard Rock
+-- Royal Rebel's Hard Rock
 local s,id=GetID()
 function s.initial_effect(c)
 	--mat check
@@ -33,30 +33,33 @@ end
 function s.damcond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and e:GetLabelObject():GetLabel()~=0
 end
-function s.damfilter(c,atk)
-	return c:IsFaceup() and c:IsLevelAbove(7) and (not c:IsAttack(atk)) and not c:IsMaximumModeSide()
+function s.damfilter(c)
+	return c:IsFaceup() and c:IsLevelAbove(7) and not c:IsMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,0,LOCATION_MZONE,1,nil,c:GetAttack()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local sg=Duel.SelectMatchingCard(tp,s.damfilter,tp,0,LOCATION_MZONE,1,1,nil,c:GetAttack())
-	if #sg>0 then
-		Duel.HintSelection(sg)
-		local dam=math.abs(sg:GetFirst():GetAttack()-c:GetAttack())
-		if Duel.Damage(1-tp,dam,REASON_EFFECT)>0 then
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(sg:GetFirst():GetAttack())
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			c:RegisterEffect(e1)
-		end
+	local sg=Duel.SelectMatchingCard(tp,s.damfilter,tp,0,LOCATION_MZONE,1,1,nil)
+	if #sg<1 then return end
+	Duel.HintSelection(sg,true)
+	local c=e:GetHandler()
+	local atk=sg:GetFirst():GetAttack()
+	if not c:IsAttack(atk) then
+		Duel.Damage(1-tp,math.abs(atk-c:GetAttack()),REASON_EFFECT)
+	end
+	if atk>0 then
+		--Increase ATK
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetValue(atk)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e1)
 	end
 end

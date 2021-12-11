@@ -29,10 +29,11 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e4:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetTargetRange(1,1)
 	e4:SetTarget(s.sumlimit)
+	e4:SetValue(POS_FACEDOWN)
 	c:RegisterEffect(e4)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_CANNOT_SUMMON)
@@ -92,7 +93,7 @@ function s.rmfilter2(c,fieldid,...)
 	return c:GetFieldID()<fieldid and c:IsCode(...)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
-	if sumpos and (sumpos&POS_FACEDOWN)>0 or (not s.stuff(c) or not s.validitycheck()) then return false end
+	if (not s.stuff(c) or not s.validitycheck()) then return false end
 	local tp=sump
 	if targetp then tp=targetp end
 	return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,c:GetCode())

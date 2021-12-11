@@ -1,4 +1,5 @@
 --サイバーポッド
+--Cyber Jar
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -13,55 +14,42 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.spchk(c,e,tp)
-	return (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) 
-		or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 	Duel.Destroy(g,REASON_EFFECT)
 	Duel.BreakEffect()
 	local p=Duel.GetTurnPlayer()
 	local g1=Duel.GetDecktopGroup(p,5)
 	local g2=Duel.GetDecktopGroup(1-p,5)
-	local spg=g1:Clone()
-	spg:Merge(g2)
 	local hg=Group.CreateGroup()
 	local gg=Group.CreateGroup()
 	Duel.ConfirmDecktop(p,5)
-	local tc=g1:GetFirst()
-	for tc in aux.Next(g1) do
-		local lv=tc:GetLevel()
-		local pos=0
-		if s.spchk(tc,e,tc:GetControler()) and Duel.IsPlayerAffectedByEffect(tc:GetControler(),CARD_BLUEEYES_SPIRIT) then
+	for tc in g1:Iter() do
+		if s.spchk(tc,e,p) and Duel.IsPlayerAffectedByEffect(p,CARD_BLUEEYES_SPIRIT) then
 			gg:AddCard(tc)
 		else
-			if tc:IsCanBeSpecialSummoned(e,0,p,false,false,POS_FACEUP_ATTACK) then pos=pos+POS_FACEUP_ATTACK end
-			if tc:IsCanBeSpecialSummoned(e,0,p,false,false,POS_FACEDOWN_DEFENSE) then pos=pos+POS_FACEDOWN_DEFENSE end
-			if lv>0 and lv<=4 and pos~=0 then
+			if tc:IsLevelBelow(4) and tc:IsCanBeSpecialSummoned(e,0,p,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE) then
 				Duel.DisableShuffleCheck()
-				Duel.SpecialSummonStep(tc,0,p,p,false,false,pos)
+				Duel.SpecialSummonStep(tc,0,p,p,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
 			elseif tc:IsAbleToHand() then
 				hg:AddCard(tc)
 			else gg:AddCard(tc) end
 		end
 	end
 	Duel.ConfirmDecktop(1-p,5)
-	tc=g2:GetFirst()
-	for tc in aux.Next(g2) do
-		local lv=tc:GetLevel()
-		local pos=0
-		if s.spchk(tc,e,tc:GetControler()) and Duel.IsPlayerAffectedByEffect(tc:GetControler(),CARD_BLUEEYES_SPIRIT) then
+	for tc in g2:Iter() do
+		if s.spchk(tc,e,1-p) and Duel.IsPlayerAffectedByEffect(1-p,CARD_BLUEEYES_SPIRIT) then
 			gg:AddCard(tc)
 		else
-			if tc:IsCanBeSpecialSummoned(e,0,1-p,false,false,POS_FACEUP_ATTACK) then pos=pos+POS_FACEUP_ATTACK end
-			if tc:IsCanBeSpecialSummoned(e,0,1-p,false,false,POS_FACEDOWN_DEFENSE) then pos=pos+POS_FACEDOWN_DEFENSE end
-			if lv>0 and lv<=4 and pos~=0 then
+			if tc:IsLevelBelow(4) and tc:IsCanBeSpecialSummoned(e,0,1-p,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE) then
 				Duel.DisableShuffleCheck()
-				Duel.SpecialSummonStep(tc,0,1-p,1-p,false,false,pos)
+				Duel.SpecialSummonStep(tc,0,1-p,1-p,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
 			elseif tc:IsAbleToHand() then
 				hg:AddCard(tc)
 			else gg:AddCard(tc) end

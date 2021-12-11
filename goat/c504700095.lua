@@ -30,8 +30,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -50,24 +49,13 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+	local sg=Duel.GetTargetCards(e)
 	if #sg==0 then return end
-	local tc=sg:GetFirst()
-	if tc and Duel.GetLocationCount(tc:GetControler(),LOCATION_MZONE)>0 then
-		local sp=tc:GetControler()
-		local spos=0
-		if tc:IsCanBeSpecialSummoned(e,0,sp,false,false,POS_FACEUP_ATTACK) then spos=spos+POS_FACEUP_ATTACK end
-		if tc:IsCanBeSpecialSummoned(e,0,sp,false,false,POS_FACEDOWN_DEFENSE) then spos=spos+POS_FACEDOWN_DEFENSE end
-		if spos~=0 then Duel.SpecialSummonStep(tc,0,sp,sp,false,false,spos) end
-	end
-	tc=sg:GetNext()
-	if tc and Duel.GetLocationCount(tc:GetControler(),LOCATION_MZONE)>0 then
-		local sp=tc:GetControler()
-		local spos=0
-		if tc:IsCanBeSpecialSummoned(e,0,sp,false,false,POS_FACEUP_ATTACK) then spos=spos+POS_FACEUP_ATTACK end
-		if tc:IsCanBeSpecialSummoned(e,0,sp,false,false,POS_FACEDOWN_DEFENSE) then spos=spos+POS_FACEDOWN_DEFENSE end
-		if spos~=0 then Duel.SpecialSummonStep(tc,0,sp,sp,false,false,spos) end
+	for tc in sg:Iter() do
+		if Duel.GetLocationCount(tc:GetControler(),LOCATION_MZONE)>0 then
+			local sp=tc:GetControler()
+			Duel.SpecialSummonStep(tc,0,sp,sp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
+		end
 	end
 	Duel.SpecialSummonComplete()
 end

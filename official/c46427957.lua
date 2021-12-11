@@ -11,6 +11,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atop)
 	c:RegisterEffect(e1)
 end
+s.listed_names={8198712}
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.bdocon(e,tp,eg,ep,ev,re,r,rp) and e:GetHandler():CanChainAttack()
 end

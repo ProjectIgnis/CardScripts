@@ -51,11 +51,7 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local xc=g:GetNext()
 	if xc==e:GetLabelObject() then tc,xc=xc,tc end
 	if not tc:IsImmuneToEffect(e) then
-		local og=xc:GetOverlayGroup()
-		if #og>0 then
-			Duel.Overlay(tc,og)
-		end
-		Duel.Overlay(tc,Group.FromCards(xc))
+		Duel.Overlay(tc,xc)
 	end
 end
 function s.drcfilter(c)

@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_names={83764718,CARD_RA}
+s.listed_names={CARD_MONSTER_REBORN,CARD_RA}
 function s.thcfilter(c)
 	return c:IsRace(RACE_DIVINE) and c:IsAbleToGraveAsCost()
 end
@@ -40,7 +40,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsCode(83764718) and c:IsAbleToHand()
+	return c:IsCode(CARD_MONSTER_REBORN) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
@@ -74,7 +74,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	--e2:SetCondition(s.regcon)
 	e2:SetOperation(s.regop)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
@@ -88,7 +87,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.regfilter(c,tp,re)
-	return c:IsFaceup() and c:GetOriginalCode()==CARD_RA and c:IsControler(tp) and re and re:GetHandler():IsCode(83764718)
+	return c:IsFaceup() and c:IsOriginalCode(CARD_RA) and c:IsControler(tp)
+		and re and c:IsSummonType(SUMMON_TYPE_SPECIAL+SUMMON_WITH_MONSTER_REBORN)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.regfilter,nil,tp,re)
@@ -98,7 +98,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.gyfilter(c)
-	return c:GetOriginalCode()==CARD_RA and c:GetFlagEffect(id)~=0
+	return c:IsOriginalCode(CARD_RA) and c:GetFlagEffect(id)~=0
 end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.gyfilter,tp,LOCATION_MZONE,0,nil)

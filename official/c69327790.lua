@@ -50,6 +50,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if e:GetLabel()==1
 		and Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,g1:GetFirst())
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		e:SetLabel(0)
 		e:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 		local g3=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,g1:GetFirst())
@@ -69,9 +70,10 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SortDecktop(tp,tc1:GetControler(),2)
 		end
 	end
-	if e:GetLabel()==1 and g2 then
+	if g2 then
 		local tc=g2:GetFirst()
 		if tc:IsRelateToEffect(e) then
+			Duel.BreakEffect()
 			Duel.SendtoHand(g2,nil,REASON_EFFECT)
 		end
 	end

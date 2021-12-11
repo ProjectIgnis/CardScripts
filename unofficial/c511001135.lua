@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetCode(EFFECT_SELF_DESTROY)
-	e3:SetRange(LOCATION_ONFIELD)
+	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.descon)
 	c:RegisterEffect(e3)
 	--Turn into Crystal

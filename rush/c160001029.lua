@@ -48,6 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_PLAYER_TARGET)
 		e2:SetCode(EFFECT_CANNOT_MSET)
 		c:RegisterEffect(e2)
+		c:AddNoTributeCheck(id,1,1,1)
 	end
 end
 function s.sumlimit(e,c,tp,sumtp)

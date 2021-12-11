@@ -1,5 +1,5 @@
 -- 魔鍵錠－施－
--- Magikey Lock - Lock
+-- Magikey Locking
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x167}
 function s.costfilter(c)
-	return (c:IsType(TYPE_NORMAL) and not c:IsType(TYPE_TOKEN)) or c:IsSetCard(0x167)
+	return not c:IsType(TYPE_TOKEN) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x167))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,aux.ReleaseCheckMMZ,nil) end

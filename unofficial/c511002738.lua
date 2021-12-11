@@ -1,4 +1,5 @@
---ギミック・パペット－ギア・チェンジャー
+--ギミック・パペット－ギア・チェンジャー (Anime)
+--Gimmick Puppet Gear Changer (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--lvchange
@@ -13,9 +14,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x1083}
 function s.lvfilter(c,lv)
 	local clv=c:GetLevel()
-	return c:IsFaceup() and c:IsSetCard(0x83) and clv>0 and clv~=lv
+	return c:IsFaceup() and c:IsSetCard(0x1083) and clv>0 and clv~=lv
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.lvfilter(chkc,e:GetHandler():GetLevel()) end

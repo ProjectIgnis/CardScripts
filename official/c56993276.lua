@@ -1,4 +1,5 @@
 --エレキャンセル
+--Wattcancel
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xe}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0 and eg:IsExists(Card.IsControler,1,nil,1-tp)
+	return Duel.GetCurrentChain(true)==0 and eg:IsExists(Card.IsControler,1,nil,1-tp)
 end
 function s.cfilter(c)
 	return c:IsSetCard(0xe) and c:IsType(TYPE_MONSTER) and c:IsDiscardable()

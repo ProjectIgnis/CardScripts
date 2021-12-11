@@ -1,3 +1,4 @@
+--水中関門
 --Aqua Gate
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_BOTH_SIDE+EFFECT_FLAG_REPEAT)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_F)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetLabel(0)
@@ -49,7 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ctn=e:GetLabel()
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and ct>0 and ctn<ct and Duel.SelectYesNo(1-p,aux.Stringid(id,REASON_EFFECT)) then
+	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and ct>0 and ctn<ct then
 		Duel.NegateAttack()
 		e:SetLabel(ctn+1)
 	end

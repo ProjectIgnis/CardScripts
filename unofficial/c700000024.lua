@@ -41,12 +41,9 @@ function s.xmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local g=Duel.SelectMatchingCard(tp,s.xmfil2,tp,LOCATION_MZONE,0,1,1,tc,tc)
-		if #g>0 and not g:GetFirst():IsImmuneToEffect(e) then
-			if tc:GetOverlayCount()>0 then
-				Duel.SendtoGrave(tc:GetOverlayGroup(),REASON_RULE)
-			end
-			Duel.Overlay(g:GetFirst(),Group.FromCards(tc))
+		local tcc=Duel.SelectMatchingCard(tp,s.xmfil2,tp,LOCATION_MZONE,0,1,1,tc,tc):GetFirst()
+		if tcc and not tcc:IsImmuneToEffect(e) then
+			Duel.Overlay(tcc,tc,true)
 		end
 	end
 end
@@ -61,6 +58,6 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
-		Duel.Overlay(tc,Group.FromCards(c))
+		Duel.Overlay(tc,c)
 	end
 end

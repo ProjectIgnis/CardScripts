@@ -23,7 +23,7 @@ function s.filter(c,e,tp)
 	local eff={c:GetCardEffect(id)}
 	for _,teh in ipairs(eff) do
 		local te=teh:GetLabelObject()
-		if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
+		if te:GetCode()&511001822==511001822 or te:GetLabel()==511001822 then te=te:GetLabelObject() end
 		local con=te:GetCondition()
 		local tg=te:GetTarget()
 		if (not con or con(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE))
@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local ac={}
 		for _,teh in ipairs(eff) do
 			local temp=teh:GetLabelObject()
-			if temp:GetCode()&511001822==511001822 then temp=temp:GetLabelObject() end
+			if temp:GetCode()&511001822==511001822 or temp:GetLabel()==511001822 then temp=temp:GetLabelObject() end
 			local con=temp:GetCondition()
 			local tg=temp:GetTarget()
 			if (not con or con(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE))
@@ -65,7 +65,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if not te then return end
 		local teh=te
 		te=teh:GetLabelObject()
-		if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
+		if te:GetCode()&511001822==511001822 or te:GetLabel()==511001822 then te=te:GetLabelObject() end
 		local tg=te:GetTarget()
 		if tg then tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
 		Duel.BreakEffect()

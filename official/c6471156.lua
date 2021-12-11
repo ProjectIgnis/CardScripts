@@ -30,10 +30,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x83}
+s.listed_series={0x1083}
 function s.rfilter(c,tp)
 	local lv=c:GetLevel()
-	return lv>0 and c:IsAbleToRemoveAsCost() and c:IsSetCard(0x83) and aux.SpElimFilter(c,true)
+	return lv>0 and c:IsAbleToRemoveAsCost() and c:IsSetCard(0x1083) and aux.SpElimFilter(c,true)
 		and Duel.IsExistingMatchingCard(s.tfilter,tp,LOCATION_MZONE,0,1,c,lv)
 end
 function s.tfilter(c,clv)
@@ -66,13 +66,13 @@ end
 function s.cfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_DESTROY)
 		and (c:IsReason(REASON_BATTLE) or c:GetReasonPlayer()==1-tp and c:IsReason(REASON_DESTROY))
-		and c:IsSetCard(0x83) and c:IsPreviousPosition(POS_FACEUP)
+		and c:IsSetCard(0x1083) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and c:IsSetCard(0x83)
+	return c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and c:IsSetCard(0x1083)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

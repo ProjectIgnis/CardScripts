@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.retreg)
 	c:RegisterEffect(e3)
 end
-s.listed_names={TOKEN_SHINOBIRD}
+s.listed_names={73055622,TOKEN_SHINOBIRD}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
 end

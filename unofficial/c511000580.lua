@@ -26,7 +26,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.filter(c,e,tp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return #pg<=1 and c:IsReason(REASON_DESTROY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+	return #pg<=1 and c:IsReason(REASON_DESTROY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetRank(),c,pg)
 end
 function s.filter2(c,e,tp,rk,mc,pg)
@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local sc=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc:GetRank(),tc,pg):GetFirst()
 		if sc then
 			sc:SetMaterial(Group.FromCards(tc))
-			Duel.Overlay(sc,Group.FromCards(tc))
+			Duel.Overlay(sc,tc)
 			Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 			sc:CompleteProcedure()
 		end

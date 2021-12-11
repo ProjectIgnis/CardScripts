@@ -1,4 +1,5 @@
 --死皇帝の陵墓
+--Mausoleum of the Emperor
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,7 +28,7 @@ end
 function s.filter(c,se)
 	if not c:IsSummonableCard() then return false end
 	local mi,ma=c:GetTributeRequirement()
-	return mi>0 and (c:IsSummonable(false,se) or c:IsMSetable(false,se))
+	return mi>0 and c:CanSummonOrSet(false,se)
 end
 function s.get_targets(se,tp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND,0,nil,se)
@@ -62,7 +63,7 @@ end
 function s.sfilter(c,se,ct)
 	if not c:IsSummonableCard() then return false end
 	local mi,ma=c:GetTributeRequirement()
-	return (mi==ct or ma==ct) and (c:IsSummonable(false,se) or c:IsMSetable(false,se))
+	return (mi==ct or ma==ct) and c:CanSummonOrSet(false,se)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -70,15 +71,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
 	local se=e:GetLabelObject()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_HAND,0,1,1,nil,se,ct)
-	local tc=g:GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_HAND,0,1,1,nil,se,ct):GetFirst()
 	if tc then
-		local s1=tc:IsSummonable(false,se)
-		local s2=tc:IsMSetable(false,se)
-		if (s1 and s2 and Duel.SelectPosition(tp,tc,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)==POS_FACEUP_ATTACK) or not s2 then
-			Duel.Summon(tp,tc,false,se)
-		else
-			Duel.MSet(tp,tc,false,se)
-		end
+		Duel.SummonOrSet(tp,tc,false,se)
 	end
 end

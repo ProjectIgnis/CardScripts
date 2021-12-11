@@ -1,10 +1,11 @@
 --No.84 ペイン・ゲイナー
+--Number 84: Pain Gainer
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon
 	Xyz.AddProcedure(c,nil,11,2,s.ovfilter,aux.Stringid(id,0),2)
 	c:EnableReviveLimit()
-	--atk/def
+	--Gain DEF x200 for all combined Ranks
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_DEFENSE)
 	e1:SetValue(s.defval)
 	c:RegisterEffect(e1)
-	--damage
+	--Inflict 600 damage when opponent activates a Spell/Trap
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAINING)
@@ -27,14 +28,14 @@ function s.initial_effect(c)
 	e3:SetCondition(s.damcon)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
-	--destroy
+	--Destroy face-up monsters with DEF less than this card
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_DESTROY)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
-	e4:SetCost(s.descost)
+	e4:SetCost(aux.dxmcostgen(1,1,nil))
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
@@ -59,10 +60,6 @@ end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.Damage(1-tp,600,REASON_EFFECT)
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.desfilter(c,def)
 	return c:IsFaceup() and c:IsDefenseBelow(def)

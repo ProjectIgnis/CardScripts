@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,3,nil)
 	local count=Duel.SendtoGrave(g,REASON_COST)
 	--Effect
-	if count>0 then
+	if count>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Draw(tp,count,REASON_EFFECT)
 		Duel.Recover(tp,900,REASON_EFFECT)
 	end

@@ -1,4 +1,5 @@
 --昇天の黒角笛
+--Black Horn of Heaven
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=ep and #eg==1 and Duel.GetCurrentChain()==0
+	return ep==1-tp and #eg==1 and Duel.GetCurrentChain(true)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

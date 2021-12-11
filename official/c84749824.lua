@@ -1,4 +1,5 @@
 --神の警告
+--Solemn Warning
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)
@@ -30,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0
+	return Duel.GetCurrentChain(true)==0
 end
 function s.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,2000)

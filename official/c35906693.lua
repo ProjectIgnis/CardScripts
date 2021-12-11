@@ -57,7 +57,7 @@ function s.eqfilter(c,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
-		local b=chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) 
+		local b=chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE)
 		if e:GetLabel()==0 then return b and s.filter(chkc)
 		else return b and s.filter2(chkc,e,tp) end
 	end
@@ -115,12 +115,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc)
 	local sc=g:GetFirst()
 	if sc then
-		local mg=tc:GetOverlayGroup()
-		if #mg~=0 then
-			Duel.Overlay(sc,mg)
-		end
-		sc:SetMaterial(Group.FromCards(tc))
-		Duel.Overlay(sc,Group.FromCards(tc))
+		sc:SetMaterial(tc)
+		Duel.Overlay(sc,tc)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
 	end

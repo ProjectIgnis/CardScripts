@@ -22,7 +22,7 @@ function s.filter(c,lv)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return Duel.GetCurrentChain()==0 and eg:IsExists(Card.IsControler,1,nil,1-tp) and #g==3 
+	return Duel.GetCurrentChain(true)==0 and eg:IsExists(Card.IsControler,1,nil,1-tp) and #g==3 
 		and g:IsExists(s.filter,1,nil,1) and g:IsExists(s.filter,1,nil,2) and g:IsExists(s.filter,1,nil,3)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

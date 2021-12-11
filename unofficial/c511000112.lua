@@ -1,66 +1,62 @@
 --拘束解除
+--Front Change
+--Re-scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Summon "Assault Cannon Beetle"
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetLabel(0)
-	e1:SetCost(s.cost)
-	e1:SetTarget(s.target)
-	e1:SetOperation(s.activate)
+	e1:SetCost(s.hint)
+	e1:SetCondition(s.con)
+	e1:SetTarget(s.tg(511000111,511000110))
+	e1:SetOperation(s.op(511000111,511000110))
 	c:RegisterEffect(e1)
+	--Summon "Combat Scissor Beetle"
+	local e2=e1:Clone()
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetTarget(s.tg(511000110,511000111))
+	e2:SetOperation(s.op(511000110,511000111))
+	c:RegisterEffect(e2)
+	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 s.listed_names={511000110,511000111}
-function s.cfilter(c,e,tp)
-	local code=c:GetCode()
-	if c:IsCode(511000110) and c:IsCode(511000111) then
-		code=0
-	end
-	return c:IsCode(511000110,511000111) 
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,code)
+function s.counterfilter(c)
+	return not c:IsCode(511000110)
 end
-function s.filter(c,e,tp,mc,code)
-	local g=Group.CreateGroup()
-	if mc then
-		g:AddCard(mc)
-	end
-	if Duel.GetLocationCountFromEx(tp,tp,g,c)<=0 then return false end
-	if mc then
-		g:RemoveCard(mc)
-	end
-	if code==0 or code==511000110 then
-		if c:IsCode(511000111) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return true end
-	end
-	if code==0 or code==511000111 then
-		if c:IsCode(511000110) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) then return true end
-	end
-	return false
+function s.hint(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,e,tp) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,e,tp)
-	local code=g:GetFirst():GetCode()
-	if g:GetFirst():IsCode(511000110) and g:GetFirst():IsCode(511000111) then
-		code=0
+function s.con(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
+end
+function s.tefilter(c,e,tp,code1,code2)
+	return c:IsCode(code1) and c:IsAbleToExtra() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,code2,c)
+end
+function s.spfilter(c,e,tp,code,fc)
+	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and Duel.GetLocationCountFromEx(tp,tp,fc,c)>0
+end
+function s.tg(code1,code2)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return Duel.IsExistingMatchingCard(s.tefilter,tp,LOCATION_MZONE,0,1,nil,e,tp,code1,code2) end
+		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_MZONE)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	end
-	e:SetLabel(code)
-	Duel.Release(g,REASON_COST)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,nil,0) end
-	local code=e:GetLabel()
-	e:SetLabel(0)
-	Duel.SetTargetParam(code)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
-end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local code=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,nil,code)
-	if #g>0 then
-		local ignore=g:GetFirst():IsCode(511000110)
-		Duel.SpecialSummon(g,0,tp,tp,ignore,false,POS_FACEUP)
+function s.op(code1,code2)
+	return function(e,tp,eg,ep,ev,re,r,rp)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+		local tc=Duel.SelectMatchingCard(tp,s.tefilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,code1,code2):GetFirst()
+		if tc and Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_EXTRA) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sp=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,code2):GetFirst()
+			if sp then
+				Duel.SpecialSummon(sp,0,tp,tp,false,false,POS_FACEUP)
+				if sp:IsCode(511000111) then sp:CompleteProcedure() end
+			end
+		end
 	end
 end

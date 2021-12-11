@@ -820,6 +820,46 @@ function Auxiliary.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end
 
+-- "Detach Xyz Material Cost Generator"
+-- Generates a function to be used by Effect.SetCost in order to detach
+-- a number of Xyz Materials from the Effect's handler.
+-- `min` minimum number of materials to check for detachment.
+-- `max` maximum number of materials to detach or a function that gets called
+-- as if by doing max(e,tp) in order to get the value of max detachments.
+-- `op` optional function that gets called by passing the effect and the operated
+-- group of just detached materials in order to do some additional handling with
+-- them.
+function Auxiliary.dxmcostgen(min,max,op)
+	do --Perform some sanity checks, simplifies debugging
+		local max_type=type(max)
+		local op_type=type(op)
+		if type(min)~="number" then
+			error("Parameter 1 should be an Integer",2)
+		end
+		if max_type~="number" and max_type~="function" then
+			error("Parameter 2 should be Integer|function",2)
+		end
+		if op_type~="nil" and op_type~="function" then
+			error("Parameter 2 should be nil|function",2)
+		end
+	end
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		local nn=c:IsSetCard(0x14b) and c:IsType(TYPE_XYZ) and Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
+		local crm=c:CheckRemoveOverlayCard(tp,min,REASON_COST)
+		if chk==0 then return (nn and c:IsLocation(LOCATION_MZONE)) or crm end
+		if nn and (not crm or Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1))) then
+			Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
+			return true --NOTE: Does not execute `op`
+		end
+		local m=type(max)=="number" and max or max(e,tp)
+		if c:RemoveOverlayCard(tp,min,m,REASON_COST) and op then
+			op(e,Duel.GetOperatedGroup())
+		end
+		return true --NOTE: to use with aux.AND
+	end
+end
+
 function Auxiliary.EquipByEffectLimit(e,c)
 	if e:GetOwner()~=c then return false end
 	local eff={c:GetCardEffect(89785779+EFFECT_EQUIP_LIMIT)}
@@ -1459,6 +1499,19 @@ end
 function Auxiliary.thoeSend(card)
 	return Duel.SendtoGrave(card,REASON_EFFECT)
 end
+--Helper functions to use with cards that normal summon or set a monster
+function Card.CanSummonOrSet(...)
+	return Card.IsSummonable(...) or Card.IsMSetable(...)
+end
+function Duel.SummonOrSet(tp,...)
+	local s1=Card.IsSummonable(...)
+	local s2=Card.IsMSetable(...)
+	if (s1 and s2 and Duel.SelectPosition(tp,(...),POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)==POS_FACEUP_ATTACK) or not s2 then
+		Duel.Summon(tp,...)
+	else
+		Duel.MSet(tp,...)
+	end
+end
 --[[
 Function to simplify registering EFFECT_FLAG_CLIENT_HINT to players
 -card: card that creates the hintmsg;
@@ -1599,6 +1652,22 @@ end
 function Card.IsEvenScale(c)
 	if not c:IsType(TYPE_PENDULUM) then return false end
 	return c:GetScale() % 2 == 0
+end
+
+--Helper function to choose 1 among possible effects
+--In input it takes tables of the form of {condition,stringid}
+--and makes the player choose among the strings whose conditions are met
+--it returns the index of the choosen element starting from 1, nil if none was selected
+function Auxiliary.SelectEffect(tp,...)
+    local eff,sel={},{}
+    for i,val in ipairs({...}) do
+        if val[1] then
+            table.insert(eff,val[2])
+            table.insert(sel,i)
+        end
+    end
+    if #eff==0 then return nil end
+    return sel[Duel.SelectOption(tp,table.unpack(eff))+1]
 end
 
 Duel.LoadScript("cards_specific_functions.lua")

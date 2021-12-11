@@ -20,7 +20,6 @@ function s.maxCon(e)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,3) end
-	Duel.RegisterMaxIgnition(tp,id)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsLevelBelow(8)

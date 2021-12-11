@@ -1,5 +1,5 @@
 --メルフィータイム
---Melffy Time
+--Melffy Playhouse
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,8 +33,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		else return false end
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)
-	local rt=Duel.GetTargetCount(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,nil)
-	Duel.RemoveOverlayCard(tp,0,0,1,rt,REASON_COST,dg)
+	local ct=0
+	for tc in aux.Next(dg) do
+		ct=ct+tc:GetOverlayCount()
+	end
+	Duel.RemoveOverlayCard(tp,0,0,1,ct,REASON_COST,dg)
 	local count=#Duel.GetOperatedGroup()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,count,nil)

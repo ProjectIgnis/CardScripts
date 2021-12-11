@@ -1,6 +1,5 @@
 --バリアンズ・バトル・マスター
 --Barian's Battle Buster
-Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -30,8 +29,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.dop)
 	c:RegisterEffect(e3)
 end
+s.listed_series={0x178}
 function s.costfilter(c)
-	return c:IsBarians() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(0x178) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end

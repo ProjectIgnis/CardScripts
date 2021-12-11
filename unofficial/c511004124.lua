@@ -19,16 +19,14 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.cfilter(c,tp)
+	if not c:IsFaceup() or not c:IsType(TYPE_XYZ) then return false end
 	local g=c:GetOverlayGroup()
+	if #g==0 then return false end
 	local sum=0
-	local gc=g:GetFirst()
-	while gc do
-		local atk=gc:GetAttack()
-		if atk<0 then atk=0 end
-		sum=sum+atk
-		gc=g:GetNext()
+	for gc in g:Iter() do
+		sum=sum+math.max(0,gc:GetAttack())
 	end
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and #g>0 and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,sum)
+	return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,sum)
 end
 function s.filter(c,sum)
 	return c:GetAttack()<sum
@@ -48,12 +46,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local og=tc:GetOverlayGroup()
 	Duel.SendtoGrave(og,REASON_COST)
 	local sum=0
-	local gc=og:GetFirst()
-	while gc do
-		local atk=gc:GetAttack()
-		if atk<0 then atk=0 end
-		sum=sum+atk
-		gc=og:GetNext()
+	for gc in og:Iter() do
+		sum=sum+math.max(0,gc:GetAttack())
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,sum)

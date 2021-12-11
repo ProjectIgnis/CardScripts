@@ -6,30 +6,33 @@ function s.initial_effect(c)
 	--xyz summon
 	Xyz.AddProcedure(c,nil,7,3,nil,nil,99)
 	c:EnableReviveLimit()
-	local e0=Effect.CreateEffect(c)
-	e0:SetDescription(aux.Stringid(67926903,0))
-	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e0:SetType(EFFECT_TYPE_FIELD)
-	e0:SetCode(EFFECT_SPSUMMON_PROC)
-	e0:SetRange(LOCATION_EXTRA)
-	e0:SetCondition(s.xyzcon)
-	e0:SetOperation(s.xyzop)
-	e0:SetValue(SUMMON_TYPE_XYZ)
-	c:RegisterEffect(e0)
-	--atk
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(s.atkval)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_XYZ_MATERIAL)
+	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetRange(0xff&~LOCATION_MZONE)
+	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e1:SetTarget(s.xyztg)
+	e1:SetValue(s.xyzval)
 	c:RegisterEffect(e1)
-	--copy
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(id)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_XYZ_LEVEL)
+	e2:SetValue(s.xyzlv)
 	c:RegisterEffect(e2)
+	--atk
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_UPDATE_ATTACK)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetValue(s.atkval)
+	c:RegisterEffect(e3)
+	--copy
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCode(id)
+	c:RegisterEffect(e4)
 	aux.GlobalCheck(s,function()
 		--Copy
 		local ge1=Effect.GlobalEffect()
@@ -53,7 +56,7 @@ function s.op(e)
 		local effs={c:GetCardEffect(511002571)}
 		for _,eff in ipairs(effs) do
 			local te=eff:GetLabelObject()
-			if te:GetCode()&511001822==511001822 then te=te:GetLabelObject() end
+			if te:GetCode()&511001822==511001822 or te:GetLabel()==511001822 then te=te:GetLabelObject() end
 			local resetflag,resetcount=te:GetReset()
 			local rm,max,code,flag,hopt=te:GetCountLimit()
 			local prop1,prop2=te:GetProperty()
@@ -99,21 +102,10 @@ function s.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetOwner()
 	local a=c:CheckRemoveOverlayCard(tp,1,REASON_COST)
 	local b=Duel.CheckLPCost(tp,400)
-	local ov=c:GetOverlayGroup()
 	if chk==0 then return a or b end
 	Duel.Hint(HINT_CARD,0,tc:GetOriginalCode())
 	Duel.SetTargetCard(tc)
-	local op=0
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(76922029,0))
-	if a and b then
-		op=Duel.SelectOption(tp,aux.Stringid(81330115,0),aux.Stringid(21454943,1))
-	elseif a and not b then
-		Duel.SelectOption(tp,aux.Stringid(81330115,0))
-		op=0
-	else
-		Duel.SelectOption(tp,aux.Stringid(21454943,1))
-		op=1
-	end
+	local op=aux.SelectEffect(tp,{a,aux.Stringid(81330115,0)},{b,aux.Stringid(21454943,1)})
 	if op==0 then
 		Duel.SendtoGrave(tc,REASON_COST) 
 	else
@@ -121,32 +113,19 @@ function s.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 end
-function s.ovfilter(c)
-	local class=c:GetMetatable(true)
-	if class==nil then return false end
-	local no=class.xyz_number
+function s.xyztg(e,c)
+	local no=c.xyz_number
 	return c:IsFaceup() and no and no>=101 and no<=107 and c:IsSetCard(0x1048)
 end
-function s.xyzcon(e,c,og)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(s.ovfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	return #mg>0 and Duel.GetLocationCountFromEx(tp,tp,mg,c)>0
+function s.xyzval(e,c,rc,tp)
+	return rc==e:GetOwner()
 end
-function s.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og)
-	og=Group.CreateGroup()
-	local mg=Duel.GetMatchingGroup(s.ovfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	og:Merge(mg)
-	local tc=mg:GetFirst()
-	for tc in aux.Next(mg) do
-		local ov=tc:GetOverlayGroup()
-		if #ov>0 then
-			Duel.Overlay(c,ov)
-			og:Merge(ov)
-		end
+function s.xyzlv(e,c,rc)
+	if rc==e:GetOwner() then
+		return 7,e:GetHandler():GetLevel()
+	else
+		return e:GetHandler():GetLevel()
 	end
-	c:SetMaterial(og)
-	Duel.Overlay(c,og)
 end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*1000

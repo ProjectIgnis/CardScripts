@@ -89,5 +89,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetValue(HALF_DAMAGE)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3,tp)
-	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
+	aux.RegisterClientHint(e:GetHandler(),nil,tp,0,1,aux.Stringid(id,2),nil)
 end

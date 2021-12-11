@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={9845733}
 function s.filter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end

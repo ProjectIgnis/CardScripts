@@ -35,6 +35,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	if e:GetLabel()==1 then
+		e:SetLabel(0)
+		e:GetHandler():RegisterFlagEffect(id,RESET_CHAIN,0,1)
+	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -47,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g1=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_EXTRA,0,lv,lv,nil)
 		local tg=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
-		if e:GetLabel()==1 then
+		if e:GetHandler():GetFlagEffect(id)>0 then
 			Duel.ConfirmCards(tp,tg)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local g2=tg:Select(tp,lv,lv,nil)

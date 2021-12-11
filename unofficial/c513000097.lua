@@ -1,11 +1,12 @@
---女教皇の錫杖
+--女教皇の錫杖 (Anime)
+--Empress's Staff (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -18,17 +19,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.GetAttacker()~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
+	local p=Duel.GetAttacker():GetControler()
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,p,500)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
+		local p=Duel.GetAttacker():GetControler()
+		Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
 		Duel.BreakEffect()
-		Duel.Damage(1-tp,500,REASON_EFFECT)
+		Duel.Damage(p,500,REASON_EFFECT)
 	end
 end
 function s.handcon(e)

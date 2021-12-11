@@ -1,11 +1,11 @@
---
+--ミュートリア進化研究所
 --Myutant Evolution Lab
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
@@ -31,7 +31,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x159}
-
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x159) and c:GetLevel()<5 and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -66,8 +65,9 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.drfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.HintSelection(g)
-	if #g>0 and Duel.SendtoDeck(g,nil,1,REASON_EFFECT)>0 then
+	if #g==0 then return end
+	Duel.ConfirmCards(1-tp,g)
+	if Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

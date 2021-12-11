@@ -15,6 +15,7 @@ jobs:
       )
     env:
       REMOTE: ProjectIgnis/DeltaUtopia.git
+      REPO_NAME: DeltaUtopia
       DESTINATION: DeltaUtopia/script
       BASE_SHA: 20201222
     steps:
@@ -40,6 +41,7 @@ jobs:
             cd $HOME/$DESTINATION
             git rm -rf --ignore-unmatch $REMOVED
           fi
+          git diff --name-status --diff-filter=R $LAST_SHA | xargs python ./.github/generate_mappings.py $HOME/$REPO_NAME/mappings.json
         fi
     - name: Commit and push with original metadata
       run: |

@@ -1,4 +1,5 @@
---魔法の歯車
+--魔法の歯車 (Anime)
+--Spell Gear (Anime)
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +23,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #g>2 and aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1),0) end
 	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE)
-	Duel.SendtoGrave(g,REASON_COST)
+	Duel.SendtoGrave(sg,REASON_COST)
 end
 function s.filter(c,e,tp)
 	return c:IsCode(83104731) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)

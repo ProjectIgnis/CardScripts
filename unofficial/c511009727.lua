@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.descon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.destg)
-	e2:SetOperation(s.activate)
+	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 	aux.GlobalCheck(s,function()
 		s[0]=0

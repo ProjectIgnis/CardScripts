@@ -9,3 +9,4 @@ function s.initial_effect(c)
 	e1:SetValue(CARD_UMI)
 	c:RegisterEffect(e1)
 end
+s.listed_names={CARD_UMI}

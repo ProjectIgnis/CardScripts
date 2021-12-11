@@ -1,4 +1,5 @@
 --アーティファクト・ムーブメント
+--Artifact Ignition
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -66,7 +67,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():IsPreviousControler(tp)
+	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()

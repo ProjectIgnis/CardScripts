@@ -1,6 +1,6 @@
---Parasitic Maneuver
---fixed by MLD
-Duel.LoadScript("c420.lua")
+--寄生蠢動
+--Parasite Maneuver
+--Fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,8 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={6205579}
 function s.filter(c)
-	return c:IsFaceup() and c:IsParasite()
+	return c:GetEquipGroup():IsExists(Card.IsCode,1,nil,6205579)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

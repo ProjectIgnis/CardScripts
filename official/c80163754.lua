@@ -1,4 +1,5 @@
 --バーストブレス
+--Burst Breath
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,30 +16,26 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,def)
 	return c:IsRace(RACE_DRAGON) and c:IsAttackAbove(def)
-end
-function s.filter(c,atk)
-	return c:IsFaceup() and (not atk or c:IsDefenseBelow(atk))
+		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsDefenseBelow,c:GetAttack()),0,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if #g==0 then return false end
+	local mg,mdef=g:GetMinGroup(Card.GetDefense)
 	if chk==0 then
-		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-		if #g==0 then return false end
-		local mg,mdef=g:GetMinGroup(Card.GetDefense)
 		e:SetLabel(0)
 		return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,mdef)
 	end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local mg,mdef=g:GetMinGroup(Card.GetDefense)
 	local rg=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,mdef)
 	e:SetLabel(rg:GetFirst():GetAttack())
 	Duel.Release(rg,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetLabel()==0 end
-	local dg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e:GetLabel())
+	local dg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsDefenseBelow,e:GetLabel()),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,#dg,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local dg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e:GetLabel())
+	local dg=Duel.GetMatchingGroup(aux.FilterFaceupFunction(Card.IsDefenseBelow,e:GetLabel()),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.Destroy(dg,REASON_EFFECT)
 end

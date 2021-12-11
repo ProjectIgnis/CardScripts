@@ -92,7 +92,7 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:GetPreviousLocation()==LOCATION_REMOVED and c:GetFlagEffect(id)>0 and tc and tc:GetFlagEffect(id)>0
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Overlay(e:GetHandler(),Group.FromCards(e:GetLabelObject():GetLabelObject()))
+	Duel.Overlay(e:GetHandler(),e:GetLabelObject():GetLabelObject())
 	e:GetLabelObject():SetLabelObject(nil)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)

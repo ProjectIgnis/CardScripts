@@ -25,10 +25,10 @@ function s.initial_effect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_COUNTER)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e4:SetCode(EVENT_LEAVE_FIELD)
+	e4:SetCode(EVENT_DESTROYED)
 	e4:SetCondition(s.ctcon2)
-	e4:SetLabelObject(e3)
 	e4:SetOperation(s.ctop2)
+	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
 end
 s.counter_place_list={COUNTER_A}

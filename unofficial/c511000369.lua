@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetCountLimit(1)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCost(aux.NumeronDetachCost(1))
+	e4:SetCost(aux.dxmcostgen(1,1,nil))
 	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 	--Cannot be destroyed by battle
@@ -94,7 +94,7 @@ function s.retfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetFlagEffect(id)>0
 end
 function s.retfilter2(c,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetFlagEffect(id)>0 
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:GetFlagEffect(id)>0
 		and not Duel.IsExistingMatchingCard(function(c,seq)return c:GetSequence()==seq end,tp,LOCATION_SZONE,0,1,c,((c:GetFlagEffectLabel(id)&4)>>0xf))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,14 +1,11 @@
 --Ｎｏ．３９ 希望皇ホープ・ダブル
 --Number 39: Utopia Double
 --Logical Nonsense
-
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--Must be properly summoned before reviving
-	c:EnableReviveLimit()
-	--Xyz summon procedure
+	--Xyz Summon
 	Xyz.AddProcedure(c,nil,4,2)
+	c:EnableReviveLimit()
 	--Add 1 "Double or Nothing!" from deck, then special summon 1 "Utopia" Xyz monster from extra deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -17,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.cost)
+	e1:SetCost(aux.dxmcostgen(1,1,nil))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
@@ -29,12 +26,6 @@ s.listed_series={0x107f}
 s.listed_names={94770493}
 	--Number 39
 s.xyz_number=39
-
-	--Detach 1 material as cost
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 	--Look for "Double or Nothing!"
 function s.thfilter(c)
 	return c:IsCode(94770493) and c:IsAbleToHand()
@@ -46,7 +37,7 @@ function s.spfilter(c,e,tp,mc,pg)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
+	if chk==0 then
 		local c=e:GetHandler()
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
 		return (#pg<=0 or (#pg==1 and pg:IsContains(c)))
@@ -60,43 +51,34 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
-		Duel.ShuffleHand(tp)
-		Duel.BreakEffect()
-		local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-		if c:IsFaceup() and c:IsRelateToEffect(e) and c:IsControler(tp) and not c:IsImmuneToEffect(e) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,c,pg)
-			local sc=g:GetFirst()
-			if sc then
-				Duel.BreakEffect()
-				local mg=c:GetOverlayGroup()
-				if #mg~=0 then
-					Duel.Overlay(sc,mg)
-				end
-				sc:SetMaterial(Group.FromCards(c))
-				Duel.Overlay(sc,Group.FromCards(c))
-				if Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)>0 then
-					sc:CompleteProcedure()
-					--Cannot attack directly
-					local e1=Effect.CreateEffect(c)
-					e1:SetDescription(3207)
-					e1:SetType(EFFECT_TYPE_SINGLE)
-					e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-					e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-					e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-					sc:RegisterEffect(e1)
-					--Double its ATK
-					local e2=Effect.CreateEffect(c)
-					e2:SetType(EFFECT_TYPE_SINGLE)
-					e2:SetCode(EFFECT_SET_ATTACK)
-					e2:SetValue(sc:GetTextAttack()*2)
-					e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-					sc:RegisterEffect(e2)
-				end
-			end
-		end
-	end
+	if #g==0 then return end
+	Duel.SendtoHand(g,nil,REASON_EFFECT)
+	Duel.ConfirmCards(1-tp,g)
+	Duel.ShuffleHand(tp)
+	Duel.BreakEffect()
+	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
+	if not (c:IsFaceup() and c:IsRelateToEffect(e) and c:IsControler(tp) and not c:IsImmuneToEffect(e)) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,c,pg):GetFirst()
+	if not sc then return end
+	Duel.BreakEffect()
+	sc:SetMaterial(c)
+	Duel.Overlay(sc,c)
+	if Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)==0 then return end
+	sc:CompleteProcedure()
+	--Cannot attack directly
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3207)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	sc:RegisterEffect(e1)
+	--Double its ATK
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_SET_ATTACK)
+	e2:SetValue(sc:GetTextAttack()*2)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	sc:RegisterEffect(e2)
 end

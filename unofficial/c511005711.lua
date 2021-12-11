@@ -1,4 +1,5 @@
---Performpal five-Rainbow Magician (Anime)
+--ＥＭ五虹の魔術師 (Anime)
+--Performapal Five-Rainbow Magician (Anime)
 --scripted by GameMaster(GM)
 --rescripted by MLD
 local s,id=GetID()
@@ -61,13 +62,13 @@ function s.initial_effect(c)
 	e9:SetOperation(s.endop)
 	c:RegisterEffect(e9)
 	local e10=e9:Clone()
-	e10:SetCode(EFFECT_CANNOT_TRIGGER)
+	e10:SetCode(EVENT_SSET)
 	c:RegisterEffect(e10)
 	local e11=Effect.CreateEffect(c)
-	e11:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e11:SetDescription(aux.Stringid(97064649,0))
-	e11:SetProperty(EFFECT_FLAG_BOTH_SIDE+EFFECT_FLAG_DELAY)
+	e11:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e11:SetCode(EVENT_TO_HAND)
+	e11:SetProperty(EFFECT_FLAG_BOTH_SIDE+EFFECT_FLAG_DELAY)
 	e11:SetRange(LOCATION_PZONE)
 	e11:SetCondition(s.setcon)
 	e11:SetTarget(s.settg)
@@ -78,8 +79,8 @@ function s.initial_effect(c)
 	local e12=Effect.CreateEffect(c)
 	e12:SetDescription(aux.Stringid(11439455,0))
 	e12:SetCategory(CATEGORY_ATKCHANGE)
-	e12:SetProperty(EFFECT_FLAG_BOTH_SIDE)
 	e12:SetType(EFFECT_TYPE_IGNITION)
+	e12:SetProperty(EFFECT_FLAG_BOTH_SIDE)
 	e12:SetRange(LOCATION_MZONE)
 	e12:SetCondition(s.atkcon)
 	e12:SetTarget(s.atktg)
@@ -134,15 +135,13 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) then
 		Duel.BreakEffect()
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-		local tc=g:GetFirst()
-		while tc do
+		for tc in aux.Next(g) do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_BASE_ATTACK)
 			e1:SetValue(tc:GetBaseAttack()*2)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
-			tc=g:GetNext()
 		end
 	end
 end
@@ -157,41 +156,50 @@ function s.endop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SkipPhase(p,PHASE_DRAW,RESET_PHASE+PHASE_END,1)
 	Duel.SkipPhase(p,PHASE_STANDBY,RESET_PHASE+PHASE_END,1)
 	Duel.SkipPhase(p,PHASE_MAIN1,RESET_PHASE+PHASE_END,1)
-	Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_END,1)
+	Duel.SkipPhase(p,PHASE_BATTLE,RESET_PHASE+PHASE_END,1,1)
 	Duel.SkipPhase(p,PHASE_MAIN2,RESET_PHASE+PHASE_END,1)
-	Duel.SkipPhase(p,PHASE_END,RESET_PHASE+PHASE_END,1)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BP)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,1)
 	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
+	Duel.RegisterEffect(e1,p)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DRAW or Duel.GetTurnPlayer()~=tp
 end
 function s.setfilter(c,e,tp)
-	return c:IsControler(tp) and (c:IsMSetable(true,nil) or c:IsSSetable(true)) and (not e or c:IsRelateToEffect(e))
+	return c:IsControler(tp) and c:IsLocation(LOCATION_HAND)
+		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) or c:IsSSetable(true))
+end
+function s.nffilter(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsType(TYPE_FIELD)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(s.cfilter,1,nil,nil,tp) end
-	Duel.SetTargetCard(eg)
+	local tg=eg:Filter(Card.IsLocation,nil,LOCATION_HAND)
+	if chk==0 then return tg:FilterCount(s.setfilter,nil,e,tp)==#tg
+		and Duel.GetMZoneCount(tp)>=tg:FilterCount(Card.IsType,nil,TYPE_MONSTER)
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>=tg:FilterCount(s.nffilter,nil)
+	end
+	Duel.SetTargetCard(tg)
 	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
 	s[cid]=tp
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=eg:Filter(s.setfilter,nil,e,tp)
-	local tc=g:GetFirst()
-	while tc do
-		if tc:IsMSetable(true,nil) and (not tc:IsSSetable(true) or Duel.SelectYesNo(tp,aux.Stringid(80604091,3))) then
-			Duel.MSet(tp,tc,true,nil)
+	local tg=Duel.GetTargetCards(e)
+	if tg:FilterCount(s.setfilter,nil,e,tp)~=#tg or Duel.GetMZoneCount(tp)<tg:FilterCount(Card.IsType,nil,TYPE_MONSTER)
+		or Duel.GetLocationCount(tp,LOCATION_SZONE)<tg:FilterCount(s.nffilter,nil) then return end
+	for tc in aux.Next(tg) do
+		if tc:IsType(TYPE_MONSTER) then
+			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
+			Duel.ConfirmCards(1-tp,tc)
 		else
 			Duel.SSet(tp,tc)
 		end
-		tc=g:GetNext()
 	end
+	Duel.ShuffleSetCard(tg)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
@@ -203,23 +211,19 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterEqualFunction(Card.GetFlagEffect,0,id),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FilterEqualFunction(Card.GetFlagEffect,0,id),tp,LOCATION_MZONE,0,nil)
-	local tc=g:GetFirst()
-	while tc do
+	local tg=Duel.GetMatchingGroup(aux.FilterEqualFunction(Card.GetFlagEffect,0,id),tp,LOCATION_MZONE,0,nil)
+	for tc in aux.Next(tg) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetValue(tc:GetBaseAttack()*2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
-		tc=g:GetNext()
 	end
 end

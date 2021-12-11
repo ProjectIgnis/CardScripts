@@ -1,10 +1,9 @@
 --海晶乙女マンダリン
 --Marincess Mandarin
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon from hand or GY
+	--Special Summon from hand or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -17,13 +16,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x12b}
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x12b),tp,LOCATION_MZONE,0,2,nil)
 end
 function s.spfilter(c,e,tp,sc)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsLinkMonster()
-		and c:GetLinkedZone()~=0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,c:GetLinkedZone())
+		and (c:GetLinkedZone()&0x1f)~=0 and sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,c:GetLinkedZone()&0x1f)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -37,7 +35,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not (c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
-	local zone=tc:GetLinkedZone()
+	local zone=tc:GetLinkedZone()&0x1f
 	if zone~=0 and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP,zone) then
 		--Banish it if it leaves the field
 		local e1=Effect.CreateEffect(c)

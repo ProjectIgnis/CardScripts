@@ -2,7 +2,7 @@
 --Subterror Final Battle
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -32,43 +32,28 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b3=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 	local b4=Duel.GetCurrentPhase()~=PHASE_DAMAGE and Duel.GetFlagEffect(tp,id)==0
 	if chk==0 then return b1 or b2 or b3 or b4 end
-	local off=1
-	local ops={}
-	local opval={}
-	if b1 then
-		ops[off]=aux.Stringid(id,0)
-		opval[off-1]=1
-		off=off+1
-	end
-	if b2 then
-		ops[off]=aux.Stringid(id,1)
-		opval[off-1]=2
-		off=off+1
-	end
-	if b3 then
-		ops[off]=aux.Stringid(id,2)
-		opval[off-1]=3
-		off=off+1
-	end
-	if b4 then
-		ops[off]=aux.Stringid(id,3)
-		opval[off-1]=4
-		off=off+1
-	end
-	local op=Duel.SelectOption(tp,table.unpack(ops))
-	local sel=opval[op]
-	e:SetLabel(sel)
-	if sel==1 or sel==2 then
+	local op=aux.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)},
+		{b3,aux.Stringid(id,2)},
+		{b4,aux.Stringid(id,3)})
+	e:SetLabel(op)
+	if op==1 or op==2 then
 		e:SetCategory(CATEGORY_POSITION)
 		Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
-	elseif sel==3 then
+	elseif op==3 then
 		e:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	end
 end
+function s.effectfilter(e,ct)
+	local te=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT)
+	local tc=te:GetHandler()
+	return tc:IsSetCard(0xed)
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local sel=e:GetLabel()
-	if sel==1 then
+	local op=e:GetLabel()
+	if op==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 		local g=Duel.SelectMatchingCard(tp,s.fufilter,tp,LOCATION_MZONE,0,1,1,nil)
 		if #g>0 then
@@ -77,14 +62,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local pos=Duel.SelectPosition(tp,tc,POS_FACEUP_ATTACK+POS_FACEUP_DEFENSE)
 			Duel.ChangePosition(tc,pos)
 		end
-	elseif sel==2 then
+	elseif op==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 		local g=Duel.SelectMatchingCard(tp,s.fdfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 		if #g>0 then
 			Duel.HintSelection(g)
 			Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 		end
-	elseif sel==3 then
+	elseif op==3 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 		if #g>0 then
@@ -117,9 +102,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(c,POS_FACEDOWN)
 		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
 	end
-end
-function s.effectfilter(e,ct)
-	local te=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT)
-	local tc=te:GetHandler()
-	return tc:IsSetCard(0xed)
 end

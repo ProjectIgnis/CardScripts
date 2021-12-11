@@ -35,6 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x2093}
+s.listed_names={39996157}
 function s.recfilter(c)
 	return c:IsFaceup() and c:GetAttack()>0
 end

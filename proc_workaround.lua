@@ -1,4 +1,23 @@
 --Utilities to be added to the core
+Duel.Overlay=(function()
+	local oldf=Duel.Overlay
+	return function(c,g,autosend)
+		if autosend then
+			local sg
+			if type(g)=="Group" then
+				sg=Group.CreateGroup()
+				for tc in g:Iter() do
+					sg:Merge(tc:GetOverlayGroup())
+				end
+			else
+				sg=g:GetOverlayGroup()
+			end
+			Duel.SendtoGrave(sg,REASON_RULE)
+		end
+		return oldf(c,g)
+	end
+end)()
+---
 function Duel.GoatConfirm(tp,loc)
 	local dg,hg=Duel.GetFieldGroup(tp,loc&(LOCATION_HAND|LOCATION_DECK),0):Split(Card.IsLocation,nil,LOCATION_DECK)
 	Duel.ConfirmCards(tp,dg)
@@ -373,7 +392,7 @@ function Auxiliary.BitSplit(v)
 	local i=0
 	while 2^i<=v do
 		local p=2^i
-		if v & p~=0 then 
+		if v & p~=0 then
 			table.insert(res,p)
 		end
 		i=i+1

@@ -18,36 +18,36 @@ end
 s.listed_series={0x9b}
 s.material_setcode={0x9b,0x209b}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
-	return bc and (bc:GetSummonType()&SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL and bc:IsControler(1-tp)
+	local bc=e:GetHandler():GetBattleTarget()
+	return bc and bc:IsSummonType(SUMMON_TYPE_SPECIAL) and bc:IsControler(1-tp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
 	if c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE+PHASE_DAMAGE+RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
 		e2:SetValue(1)
-		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e2:SetReset(RESET_PHASE+PHASE_DAMAGE+RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e2)
-		if bc:IsRelateToBattle() then
-			local e3=Effect.CreateEffect(c)
-			e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-			e3:SetCode(EVENT_BATTLED)
-			e3:SetOperation(s.desop)
-			e3:SetReset(RESET_PHASE+PHASE_DAMAGE)
-			bc:RegisterEffect(e3)
-		end
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e3:SetCode(EVENT_BATTLED)
+		e3:SetOperation(s.desop)
+		e3:SetLabelObject(c:GetBattleTarget())
+		e3:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		Duel.RegisterEffect(e3,tp)
 	end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+	local bc=e:GetLabelObject()
+	if bc and bc:IsRelateToBattle() then
+		Duel.Destroy(bc,REASON_EFFECT)
+	end
 end

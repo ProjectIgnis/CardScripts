@@ -82,17 +82,10 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.val(e,c)
 	local g=e:GetHandler():GetOverlayGroup()
-	local atk=0
 	local val=0
-	local tc=g:GetFirst()
-	while tc do
-		if tc:IsType(TYPE_MONSTER) then
-			atk=tc:GetAttack()
-		else
-			atk=0
-		end
+	for tc in g:Iter() do
+		local atk=tc:IsType(TYPE_MONSTER) and tc:GetAttack() or 0
 		val=val+atk
-		tc=g:GetNext()
 	end
 	return val
 end

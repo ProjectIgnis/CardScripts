@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={CARD_SUMMONED_SKULL}
+s.listed_names={69035382,CARD_SUMMONED_SKULL}
 function s.indval(e,c)
 	return not c:IsType(TYPE_RITUAL)
 end

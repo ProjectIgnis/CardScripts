@@ -1,3 +1,4 @@
+--リ・エクシーズ
 --Re-Xyz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.rescon(pg)
-	return	function(sg,e,tp,mg)
+	return  function(sg,e,tp,mg)
 				return sg:Includes(pg) and sg:GetClassCount(Card.GetLevel)==1
 			end
 end

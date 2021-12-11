@@ -6,8 +6,17 @@ if not Xyz then
 	Xyz = aux.XyzProcedure
 end
 Xyz.ProcCancellable=false
+function Xyz.EffectXyzMaterialChk(c,xyz,tp)
+	local eff_xyzmat={c:GetCardEffect(EFFECT_XYZ_MATERIAL)}
+	for _,eff in ipairs(eff_xyzmat) do
+		local val=eff:GetValue()
+		if val==0 or val(eff,c,xyz,tp) then return true end
+	end
+	return false
+end
 function Xyz.AlterFilter(c,alterf,xyzc,e,tp,op)
-	if not alterf(c,tp,xyzc) or not c:IsCanBeXyzMaterial(xyzc,tp) or (c:IsControler(1-tp) and not c:IsHasEffect(EFFECT_XYZ_MATERIAL)) 
+	if not alterf(c,tp,xyzc) or not c:IsCanBeXyzMaterial(xyzc,tp)
+		or (c:IsControler(1-tp) and not Xyz.EffectXyzMaterialChk(c,xyzc,tp)) 
 		or (op and not op(e,tp,0,c)) then return false end
 	if xyzc:IsLocation(LOCATION_EXTRA) then
 		return Duel.GetLocationCountFromEx(tp,tp,c,xyzc)>0
@@ -19,7 +28,7 @@ end
 function Xyz.AddProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk)
 	--exchk for special xyz, checking other materials
 	--mustbemat for Startime Magician
-	if not maxct then maxct=ct end	
+	if not maxct then maxct=ct end  
 	if c.xyz_filter==nil then
 		local mt=c:GetMetatable()
 		mt.xyz_filter=function(mc,ignoretoken,xyz,tp) return mc and (not f or f(mc,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or mc:IsXyzLevel(c,lv)) and (not mc:IsType(TYPE_TOKEN) or ignoretoken) end
@@ -90,7 +99,7 @@ function Xyz.MatFilter2(c,f,lv,xyz,tp)
 end
 function Xyz.MatFilter(c,f,lv,xyz,tp)
 	return (not f or f(c,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or c:IsXyzLevel(xyz,lv)) and c:IsCanBeXyzMaterial(xyz,tp) 
-		and (c:IsControler(tp) or c:IsHasEffect(EFFECT_XYZ_MATERIAL))
+		and (c:IsControler(tp) or Xyz.EffectXyzMaterialChk(c,xyz,tp))
 end
 function Xyz.SubMatFilter(c,fil,lv,xg,xyz,tp)
 	if not lv then return false end
@@ -147,7 +156,7 @@ function Xyz.RecursionChk1(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbe
 				end
 			end
 			tc=g2:GetNext()
-		end	
+		end 
 	end
 	if xct>max or xmatct>maxc then mg:Merge(rg) return false end
 	if not c:IsHasEffect(511002116) then
@@ -185,7 +194,7 @@ function Xyz.RecursionChk1(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbe
 			local redun=false
 			for _,v in ipairs(retchknum) do
 				if v==val then redun=true break end
-			end	
+			end 
 			if not redun and val>0 and (not tgf or tgf(te,xyz)) then
 				if xct>=min and xmatct+val>=minc and xct<=max and xmatct+val<=maxc then
 					local ok=true
@@ -380,7 +389,7 @@ function Auxiliary.HarmonizingMagFilterXyz(c,e,f)
 end
 function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 	--og: use special material
-	return	function(e,c,must,og,min,max)
+	return  function(e,c,must,og,min,max)
 				if c==nil then return true end
 				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 				local tp=c:GetControler()
@@ -397,8 +406,8 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 					g=og
 					mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
 				else
-					g=Duel.GetMatchingGroup(function(c) return ((c:IsLocation(LOCATION_GRAVE) and c:IsHasEffect(511002793)) 
-						or c:IsFaceup()) and (c:IsControler(tp) or c:IsHasEffect(EFFECT_XYZ_MATERIAL)) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
+					g=Duel.GetMatchingGroup(function(cc) return ((cc:IsLocation(LOCATION_GRAVE) and cc:IsHasEffect(511002793)) 
+						or cc:IsFaceup()) and (cc:IsControler(tp) or Xyz.EffectXyzMaterialChk(cc,c,tp)) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
 					mg=Duel.GetMatchingGroup(Xyz.MatFilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil,f,lv,c,tp)
 					if not mustbemat then
 						local eqmg=Group.CreateGroup()
@@ -524,8 +533,8 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 						g=og
 						mg=og:Filter(Xyz.MatFilter,nil,f,lv,c,tp)
 					else
-						g=Duel.GetMatchingGroup(function(c) return ((c:IsLocation(LOCATION_GRAVE) and c:IsHasEffect(511002793)) 
-							or c:IsFaceup()) and (c:IsControler(tp) or c:IsHasEffect(EFFECT_XYZ_MATERIAL)) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
+						g=Duel.GetMatchingGroup(function(cc) return ((cc:IsLocation(LOCATION_GRAVE) and cc:IsHasEffect(511002793)) 
+							or cc:IsFaceup()) and (cc:IsControler(tp) or Xyz.EffectXyzMaterialChk(cc,c,tp)) end,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil)
 						mg=Duel.GetMatchingGroup(Xyz.MatFilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE,nil,f,lv,c,tp)
 						if not mustbemat then
 							local eqmg=Group.CreateGroup()
@@ -629,27 +638,20 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 			end
 end
 function Xyz.Operation(f,lv,minc,maxc,mustbemat,exchk)
-	return	function(e,tp,eg,ep,ev,re,r,rp,c,must,og,min,max)
+	return  function(e,tp,eg,ep,ev,re,r,rp,c,must,og,min,max)
 				local g=e:GetLabelObject()
 				if not g then return end
 				local remg=g:Filter(Card.IsHasEffect,nil,511002116)
 				remg:ForEach(function(c) c:RegisterFlagEffect(511002115,RESET_EVENT+RESETS_STANDARD,0,0) end)
 				g:Remove(Card.IsHasEffect,nil,511002116):Remove(Card.IsHasEffect,nil,511002115)
-				local sg=Group.CreateGroup()
-				for tc in g:Iter() do
-					local sg1=tc:GetOverlayGroup()
-					sg:Merge(sg1)
-				end
-				Duel.SendtoGrave(sg,REASON_RULE)
 				c:SetMaterial(g)
-				Duel.Overlay(c,g:Filter(function(c) return c:GetEquipTarget() end,nil))
-				Duel.Overlay(c,g)
+				Duel.Overlay(c,g,true)
 				g:DeleteGroup()
 			end
 end
 --Xyz summon(alterf)
 function Xyz.Condition2(alterf,op)
-	return	function(e,c,must,og,min,max)
+	return  function(e,c,must,og,min,max)
 				if c==nil then return true end
 				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 				local tp=c:GetControler()
@@ -671,7 +673,7 @@ function Xyz.Condition2(alterf,op)
 			end
 end
 function Xyz.Target2(alterf,op)
-	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
+	return  function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
 				local cancel=not og and Duel.IsSummonCancelable()
 				Xyz.ProcCancellable=cancel
 				if og and not min then
@@ -702,15 +704,11 @@ function Xyz.Target2(alterf,op)
 					return true
 				end
 			end
-end	
+end 
 function Xyz.Operation2(alterf,op)
-	return	function(e,tp,eg,ep,ev,re,r,rp,c,must,og,min,max)
+	return  function(e,tp,eg,ep,ev,re,r,rp,c,must,og,min,max)
 				local oc=e:GetLabelObject()
-				local mg2=oc:GetOverlayGroup()
-				if #mg2~=0 then
-					Duel.Overlay(c,mg2)
-				end
-				c:SetMaterial(Group.FromCards(oc))
+				c:SetMaterial(oc)
 				Duel.Overlay(c,oc)
 			end
 end

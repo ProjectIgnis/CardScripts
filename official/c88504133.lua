@@ -58,7 +58,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if not maxrel1 then maxrel1 = 0 end
 	if not maxrel2 then maxrel2 = 0 end
 	local maxrel=maxrel2-maxrel1
-	if chk==0 then 
+	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
 		return #fg>0 and #g>0 and #exg>0 and aux.SelectUnselectGroup(g,e,tp,nil,nil,s.rescon(exg,fg,maxrel),0)
@@ -91,12 +91,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,aux.AND(s.extrafil,s.filter2),tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+e:GetLabel(),pg,Group.FromCards(tc))
 	local sc=g:GetFirst()
 	if sc then
-		local mg=tc:GetOverlayGroup()
-		if #mg~=0 then
-			Duel.Overlay(sc,mg)
-		end
-		sc:SetMaterial(Group.FromCards(tc))
-		Duel.Overlay(sc,Group.FromCards(tc))
+		sc:SetMaterial(tc)
+		Duel.Overlay(sc,tc)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
 	end

@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	-- "Masked Fiery Noodle Jonin Kaedama Gockboot" + "Taste Inspector"
-	Fusion.AddProcMix(c,true,true,160003033,160007008)
+	Fusion.AddProcMix(c,true,true,160003033,CARD_TASTE_INSPECTOR)
 	-- Damage and draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

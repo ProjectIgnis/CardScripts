@@ -123,7 +123,7 @@ if not AnimeArchetype then
 	-- is "C" or Cxyz or Cnumber
 	-- Number iC1000: Numeronius Numeronia
 	AnimeArchetype.OCGC={
-		100275102
+		15862758
 	}
 	Card.IsC=MakeCheck({0x1048,0x1073,0x568},AnimeArchetype.OCGC)
 
@@ -545,7 +545,7 @@ if not AnimeArchetype then
 	-- Super Roboyarou/Red-Eyes Metal Knight Gearfried/Fossil Warrior Skull Knight
 
 
-	-- Shell Knight
+	-- Shell Knight/Ice Knight
 
 	-- TellarKnight/Igknight/Gem-Knight
 	AnimeArchetype.OCGKnight={
@@ -558,7 +558,7 @@ if not AnimeArchetype then
 		42956963,59290628,78402798,6150044,31924889,359563,72926163,40391316,12744567,97204936,
 		21249921,34116027,900787,80159717,25682811,2191144,85684223,48739166,2986553,31320433,
 		99348756,66661678,52575195,35429292,89731911,68670547,50725996,39507162,36039163,81306586,
-		6740720,69514125,59531356,100274006
+		6740720,69514125,59531356,10163855,99328137
 	}
 	Card.IsKnight=MakeCheck({0x530,0x1047,0x9c,0xc8},AnimeArchetype.OCGKnight)
 
@@ -624,8 +624,8 @@ if not AnimeArchetype then
 	Card.IsMelodiousSongtress=MakeCheck({0x209b},{14763299,62895219})
 
 	-- Motor モーター
-	-- Fiendish Engine Ω
-	Card.IsMotor=MakeCheck({0x537},{82556058})
+	-- Fiendish Engine Ω/Motor Shell
+	Card.IsMotor=MakeCheck({0x537},{82556058,78394032})
 
 	-- Neko 猫
 	-- Dark Cat with White Tail/Kinka-byo/Black Cat-astrophe
@@ -712,9 +712,9 @@ if not AnimeArchetype then
 
 	-- Puppet パペット
 	-- Puppet Master/Junk Puppet/Puppet Ritual
-	-- Puppet King/Puppet Plant
+	-- Puppet King/Puppet Plant/Puppet Queen
 	AnimeArchetype.OCGPuppet={
-		67968069,3167573,41442341,51119924,1969506
+		67968069,3167573,41442341,51119924,1969506,15001619
 	}
 	Card.IsPuppet=MakeCheck({0x540,0x83,0x152c},AnimeArchetype.OCGPuppet)
 
@@ -835,7 +835,7 @@ if not AnimeArchetype then
 	-- Blackwing - Jetstream the Blue Sky/Blackwing - Hillen the Tengu-wind
 	-- Ancient Brain/World of Prophecy/Reborn Tengu/Rose Bell of Revelation
 	-- Nordic Ascendant/Skyscraper/Tenma the Sky Star/Kaiki the Unity Star
-	-- Crow Tengu
+	-- Crow Tengu/Piri Reis Map
 
 	AnimeArchetype.OCGSky={
 		49771608,42431843,67443336,32360466,50323155,3072808,87390067,22346472,42664989,54977057,62966332,77998771,
@@ -843,7 +843,7 @@ if not AnimeArchetype then
 		97795930,10028593,86327225,27813661,11458071,48453776,74841885,10000020,41589166,90122655,95352218,23587624,
 		29146185,37910722,32995007,75326861,58601383,1992816,80764541,23085002,32559361,2519690,12171659,80196387,
 		33837653,60822251,
-		64806765
+		64806765,33907039
 	}
 	Card.IsSky=MakeCheck({0x54a,0xf6,0x3042},AnimeArchetype.OCGSky,{"IsCelestial","IsAngel"})
 
@@ -883,10 +883,10 @@ if not AnimeArchetype then
 	-- Number 42: Galaxy Tomahawk
 	Card.IsStarship=MakeCheck({0x54f},{15458892,10389142})
 
-	-- Starving Venemy  (Last updated on 7th May 2020)
+	-- Starving Venemy
 	-- スターヴ・ヴェネミー
-	-- Starving Venemy Lethal Dose Dragon
-	Card.IsStarvingVenemy=MakeCheck({0x576},{22070401})
+	-- Starving Venemy Lethal Dose Dragon/Starving Venemy Dragon
+	Card.IsStarvingVenemy=MakeCheck({0x576},{22070401,93729065})
 
 	-- Statue スタチュー
 	-- Tiki Curse/Guardian Statue/Tiki Soul
@@ -928,12 +928,12 @@ if not AnimeArchetype then
 	-- Toy トイ
 	-- Performapal Parrotrio/Stoic Challenge/Toy Knight/
 	-- Divine Knight Ishzark/Toy Vendor/Toy Magician/
-	-- Light Laser
+	-- Light Laser/Toy Parade
 
 
 	AnimeArchetype.OCGToy={
 		56675280,37364101,1826676,57902462,70245411,58132856,
-		11471117
+		11471117,92607427
 	}
 	Card.IsToy=MakeCheck({0x559},AnimeArchetype.OCGToy)
 

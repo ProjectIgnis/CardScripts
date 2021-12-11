@@ -70,7 +70,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 		if c:IsRelateToEffect(e) then
 			c:CancelToGrave()
-			Duel.Overlay(sc,Group.FromCards(c))
+			Duel.Overlay(sc,c)
 		end
 	end
 end

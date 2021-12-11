@@ -1,4 +1,5 @@
 --DDD狙撃王テル
+--D/D/D Marksman King Tell
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e1:SetHintTiming(TIMING_DAMAGE)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)

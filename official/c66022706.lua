@@ -52,7 +52,7 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
-	return Duel.GetAttacker()==c and tc and c:GetColumnGroup():IsContains(tc)
+	return c:IsRelateToBattle() and tc and tc:IsControler(1-tp) and c:GetColumnGroup():IsContains(tc)
 end
 function s.thfilter(c)
 	return c:IsSetCard(0x10c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

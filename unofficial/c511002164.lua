@@ -18,13 +18,23 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local bc=tc:GetBattleTarget()
-	if not tc:IsType(TYPE_XYZ) or tc:GetRank()<=7 then
+	if not tc:IsType(TYPE_XYZ) or tc:GetRank()<8 then
 		tc=Duel.GetAttackTarget()
 		bc=Duel.GetAttacker()
 	end
-	if not tc or not bc or tc:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE) then return false end
-	if tc:GetRank()<=7 or not tc:IsType(TYPE_XYZ) then return false end
-	if bc:GetRank()>7 and bc:IsType(TYPE_XYZ) then return false end
+	if not tc or not bc or not (tc:IsType(TYPE_XYZ) and tc:GetRank()>7) then return false end
+	if tc:GetRank()<8 or not tc:IsType(TYPE_XYZ) then return false end
+	if bc:GetRank()<8 and bc:IsType(TYPE_XYZ) then return false end
+	if tc:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE) then
+        	local tcind={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}
+        	for i=1,#tcind do
+            		local te=tcind[i]
+            		local f=te:GetValue()
+            		if type(f)=='function' then
+                		if f(te,bc) then return false end
+            		else return false end
+        	end
+    	end
 	e:SetLabelObject(tc)
 	if bc==Duel.GetAttackTarget() and bc:IsDefensePos() then return false end
 	if bc:IsPosition(POS_FACEUP_DEFENSE) and bc==Duel.GetAttacker() then
@@ -96,11 +106,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+1,tc:GetCode()):GetFirst()
 	if sc then
-		local mg=tc:GetOverlayGroup()
-		if #mg~=0 then
-			Duel.SendtoGrave(mg,REASON_RULE)
-		end
-		Duel.Overlay(sc,Group.FromCards(tc))
+		Duel.Overlay(sc,tc,true)
 		Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

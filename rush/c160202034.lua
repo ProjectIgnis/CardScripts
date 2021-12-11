@@ -28,6 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		if Duel.Destroy(g,REASON_EFFECT)>0 then
@@ -47,6 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetReset(RESET_PHASE+PHASE_END)
 			e3:SetTargetRange(1,0)
 			Duel.RegisterEffect(e3,tp)
+			Duel.AddNoTributeCheck(c,tp,id,0,1,0)
 		end
 	end
 end

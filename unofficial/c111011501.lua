@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.mfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x83) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(0x1083) and c:IsType(TYPE_XYZ)
 end
 function s.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsType(TYPE_XYZ)
@@ -34,10 +34,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local mat1=mat:Select(tp,1,1,nil):GetFirst()
 		if Duel.SpecialSummon(mat1,0,tp,tp,false,false,POS_FACEUP) then
 			Duel.BreakEffect()
-			local mg=tc:GetOverlayGroup()
-			if #mg~=0 then
-				Duel.Overlay(mat1,mg)
-			end
 			Duel.Overlay(mat1,tc)
 		end
 	end

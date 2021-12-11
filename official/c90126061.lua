@@ -62,7 +62,7 @@ function s.mtfilter(c)
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.mtfilter(chkc) end
-	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) 
+	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ)
 		and Duel.IsExistingTarget(s.mtfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local sg=Duel.SelectTarget(tp,s.mtfilter,tp,LOCATION_GRAVE,0,1,1,nil)
@@ -72,7 +72,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsFaceup() and c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
-		Duel.Overlay(c,Group.FromCards(tc))
+		Duel.Overlay(c,tc)
 	end
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)

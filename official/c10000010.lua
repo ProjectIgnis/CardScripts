@@ -45,7 +45,6 @@ function s.initial_effect(c)
 	e7:SetOperation(s.desop)
 	c:RegisterEffect(e7)
 end
-s.listed_names={83764718}
 function s.genchainlm(c)
 	return function (e,rp,tp)
 				return e:GetHandler()==c
@@ -55,7 +54,7 @@ function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(s.genchainlm(e:GetHandler()))
 end
 function s.spval(e,se,sp,st)
-	return se and se:GetHandler():IsCode(83764718) and Duel.IsPlayerAffectedByEffect(sp,41044418)
+	return st==SUMMON_TYPE_SPECIAL+SUMMON_WITH_MONSTER_REBORN and Duel.IsPlayerAffectedByEffect(sp,41044418)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLP(tp)>100 end

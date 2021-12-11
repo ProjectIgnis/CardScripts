@@ -1,4 +1,5 @@
---The suppression PLUTO
+--Ｔｈｅ ｓｕｐｐｒｅｓｓｉｏｎ ＰＬＵＴＯ
+--The Suppression Pluto
 local s,id=GetID()
 function s.initial_effect(c)
 	--announce
@@ -21,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		or Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_ONFIELD,1,nil)) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
 	s.announce_filter={TYPE_EXTRA,OPCODE_ISTYPE,OPCODE_NOT}
-	local ac=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
+	local ac=Duel.AnnounceCard(tp,s.announce_filter)
 	Duel.SetTargetParam(ac)
 	Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,ANNOUNCE_CARD_FILTER)
 end
@@ -30,39 +31,25 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.ConfirmCards(tp,g)
 		local ac=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-		local tg=g:Filter(Card.IsCode,nil,ac)
-		local g1=Duel.GetMatchingGroup(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,nil)
-		local g2=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_ONFIELD,nil)
-		if #tg>0 and (#g1>0 or #g2>0) then
-			local op=0
-			if #g1>0 and #g2>0 then
-				op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-			elseif #g1>0 then
-				op=Duel.SelectOption(tp,aux.Stringid(id,1))
-			else
-				op=Duel.SelectOption(tp,aux.Stringid(id,2))+1
-			end
-			if op==0 then
+		if g:IsExists(Card.IsCode,1,nil,ac) then
+			local g1=Duel.GetMatchingGroup(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,nil)
+			local g2=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_ONFIELD,nil)
+			local op=aux.SelectEffect(tp,{#g1>0,aux.Stringid(id,1)},{#g2>0,aux.Stringid(id,2)})
+			if op==1 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-				local g=g1:Select(tp,1,1,nil)
-				local tc=g:GetFirst()
-				if tc then
-					Duel.GetControl(tc,tp)
-				end
-			else
+				local tc=g1:Select(tp,1,1,nil):GetFirst()
+				Duel.GetControl(tc,tp)
+			elseif op==2 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-				local g=g2:Select(tp,1,1,nil)
-				local tc=g:GetFirst()
-				if tc then
-					Duel.HintSelection(g)
-					if Duel.Destroy(g,REASON_EFFECT)~=0
-						and (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
-						and not tc:IsLocation(LOCATION_HAND+LOCATION_DECK)
-						and tc:IsType(TYPE_SPELL+TYPE_TRAP) and tc:IsSSetable()
-						and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
-						Duel.BreakEffect()
-						Duel.SSet(tp,tc)
-					end
+				local tc=g2:Select(tp,1,1,nil):GetFirst()
+				Duel.HintSelection(tc,true)
+				if Duel.Destroy(tc,REASON_EFFECT)~=0
+					and (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
+					and not tc:IsLocation(LOCATION_HAND+LOCATION_DECK)
+					and tc:IsType(TYPE_SPELL+TYPE_TRAP) and tc:IsSSetable()
+					and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+					Duel.BreakEffect()
+					Duel.SSet(tp,tc)
 				end
 			end
 		end

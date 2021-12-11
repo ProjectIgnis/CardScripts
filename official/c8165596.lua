@@ -2,10 +2,10 @@
 --Number 90: Galaxy-Eyes Photon Lord
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon
 	Xyz.AddProcedure(c,nil,8,2)
 	c:EnableReviveLimit()
-	--indes
+	--Cannot be destroyed by card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.indcon)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--negate activate
+	--Negate monster's effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
@@ -23,11 +23,11 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,id)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetCondition(s.negcon)
-	e2:SetCost(s.negcost)
+	e2:SetCost(aux.dxmcostgen(1,1,s.slwc))
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	--search or attach
+	--Search or attach
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetDescription(aux.Stringid(id,1))
@@ -50,21 +50,19 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
 		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
 end
-function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-	local ct=Duel.GetOperatedGroup():GetFirst()
-	e:SetLabelObject(ct)
+function s.slwc(e,og)
+	e:SetLabel(og:GetFirst():IsSetCard(0x7b) and 1 or 0)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) and e:GetLabelObject() and e:GetLabelObject():IsSetCard(0x7b) then
+	local rc=re:GetHandler()
+	if rc:IsDestructable() and rc:IsRelateToEffect(re) and e:GetLabel()==1 then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) and e:GetLabelObject() and e:GetLabelObject():IsSetCard(0x7b) then
+	if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) and e:GetLabel()==1 then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
@@ -77,20 +75,20 @@ function s.filter(c)
 	return c:IsSetCard(0x55) or c:IsSetCard(0x7b)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) 
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then
+		return e:GetHandler():IsType(TYPE_XYZ) and
+		       Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local c=e:GetHandler()
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
-	if (not c:IsRelateToEffect(e)) then
-			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
-	else aux.ToHandOrElse(tc,tp,function() return true end,
-						function() Duel.Overlay(e:GetHandler(),Group.FromCards(tc)) end,
-						aux.Stringid(id,3)
-						)
+	if not c:IsRelateToEffect(e) then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+	else
+		aux.ToHandOrElse(tc,tp,aux.TRUE,function()Duel.Overlay(c,tc)end,aux.Stringid(id,3))
 	end
 end

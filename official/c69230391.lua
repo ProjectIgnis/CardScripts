@@ -32,6 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,1)
 	if e:GetLabel()==1 then
+		e:SetLabel(0)
 		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)
 	end
 end
@@ -47,7 +48,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsType(TYPE_MONSTER) then
 		Duel.Damage(1-tp,tc:GetLevel()*200,REASON_EFFECT)
 	end
-	if e:GetLabel()==1 then
+	if Duel.GetOperationInfo(0,CATEGORY_DAMAGE) then
+		Duel.BreakEffect()
 		Duel.Damage(1-tp,1000,REASON_EFFECT)
 	end
 end

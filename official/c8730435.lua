@@ -1,29 +1,32 @@
 --剣闘獣の闘器デーモンズシールド
+--Gladiator Beast's Battle Archfiend Shield
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x19))
-	--destroy sub
+	--Destroy instead
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetCode(EFFECT_DESTROY_SUBSTITUTE)
+	e1:SetValue(1)
+	c:RegisterEffect(e1)
+	--Return this card to the hand
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e2:SetCode(EFFECT_DESTROY_SUBSTITUTE)
-	e2:SetValue(1)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCondition(s.retcon)
+	e2:SetTarget(s.rettg)
+	e2:SetOperation(s.retop)
 	c:RegisterEffect(e2)
-	--tohand
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e4:SetCategory(CATEGORY_TOHAND)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetCode(EVENT_TO_GRAVE)
-	e4:SetCondition(s.retcon)
-	e4:SetTarget(s.rettg)
-	e4:SetOperation(s.retop)
-	c:RegisterEffect(e4)
 end
+s.listed_series={0x19}
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=c:GetPreviousEquipTarget()
-	return c:IsReason(REASON_LOST_TARGET) and (ec:GetLocation()==LOCATION_DECK or ec:GetLocation()==LOCATION_EXTRA)
+	return c:IsReason(REASON_LOST_TARGET) and ec
+		and ec:IsLocation(LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end

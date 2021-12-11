@@ -33,7 +33,7 @@ function s.spfilter(c,e,tp,mc,rk,pg)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
+	if chk==0 then
 		local c=e:GetHandler()
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
 		return (#pg<=0 or (#pg==1 and pg:IsContains(c)))
@@ -49,12 +49,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,c,c:GetRank(),pg)
 		local sc=g:GetFirst()
 		if sc then
-			local mg=c:GetOverlayGroup()
-			if #mg~=0 then
-				Duel.Overlay(sc,mg)
-			end
-			sc:SetMaterial(Group.FromCards(c))
-			Duel.Overlay(sc,Group.FromCards(c))
+			sc:SetMaterial(c)
+			Duel.Overlay(sc,c)
 			if Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)>0 then
 				sc:CompleteProcedure()
 				local e1=Effect.CreateEffect(c)

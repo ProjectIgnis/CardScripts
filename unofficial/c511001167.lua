@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(tc)
 		e1:SetLabel(fid)
 		c:RegisterEffect(e1)
-		Duel.Overlay(tc,Group.FromCards(c))
+		Duel.Overlay(tc,c)
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 	end
 end
@@ -98,6 +98,6 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(tc)
 		e1:SetLabel(e:GetLabel())
 		c:RegisterEffect(e1)
-		Duel.Overlay(tc,Group.FromCards(c))
+		Duel.Overlay(tc,c)
 	end
 end

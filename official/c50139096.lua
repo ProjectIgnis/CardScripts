@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+s.listed_names={32828635,46427957}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.IsAbleToEnterBP() and c:IsSummonType(SUMMON_TYPE_RITUAL) 

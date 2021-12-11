@@ -22,7 +22,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 		e:SetLabelObject(a)
 		return true
 	end
-	if d:IsControler(tp) and d:IsRelateToBattle() then
+	if d and d:IsControler(tp) and d:IsRelateToBattle() then
 		e:SetLabelObject(d)
 		return true
 	end

@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
-	
 end
 s.listed_names={84013237}
 function s.filter(c)
@@ -75,7 +74,7 @@ function s.atkfilter(c,tp)
 	return c:IsType(TYPE_XYZ) and c:IsSummonPlayer(1-tp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.atkfilter,1,nil,tp) 
+	return eg:IsExists(s.atkfilter,1,nil,tp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -92,5 +91,5 @@ end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local eq=c:GetEquipTarget()
-	Duel.Overlay(eq,Group.FromCards(c))
+	Duel.Overlay(eq,c)
 end

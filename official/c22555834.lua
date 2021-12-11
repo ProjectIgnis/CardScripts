@@ -1,5 +1,5 @@
 --魔轟神界の階
---Stairway To The Fabled World
+--Stairway to a Fabled Realm
 --Scripted by the Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	--Add Fabled from GY to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetCategory(CATEGORY_HANDES+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_FZONE)
@@ -32,6 +32,8 @@ function s.initial_effect(c)
 	e3:SetTarget(s.atktg)
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
+	if not AshBlossomTable then AshBlossomTable={} end
+	table.insert(AshBlossomTable,e1)
 end
 s.listed_series={0x35}
 function s.tgfilter(c)

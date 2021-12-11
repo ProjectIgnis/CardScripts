@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x11f}
+s.listed_names={23459650}
 function s.desfilter(c)
 	return c:IsSetCard(0x11f) and (c:IsFaceup() or not c:IsOnField())
 end

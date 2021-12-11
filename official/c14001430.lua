@@ -44,7 +44,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.tdfilter),tp,LOCATION_GRAVE,0,nil)
 	if #g>0 then
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
@@ -57,15 +57,15 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return (r&REASON_EFFECT)~=0 and re and re:IsActiveType(TYPE_MONSTER)
 		and re:GetHandler():IsSetCard(0x71) and eg:IsExists(s.repfilter,1,nil,tp) end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		local c=e:GetHandler()
 		local g=eg:Filter(s.repfilter,nil,tp)
 		local ct=#g
 		if ct>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 			g=g:Select(tp,1,ct,nil)
 		end
-		local tc=g:GetFirst()
-		for tc in aux.Next(g) do
-			local e1=Effect.CreateEffect(e:GetHandler())
+		for tc in g:Iter() do
+			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_TO_DECK_REDIRECT)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -74,7 +74,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 			tc:RegisterEffect(e1)
 			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~RESET_TOHAND+RESET_PHASE+PHASE_END,0,1)
 		end
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		e1:SetCode(EVENT_TO_HAND)
 		e1:SetCountLimit(1)

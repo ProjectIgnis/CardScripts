@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x119}
+s.listed_names={38784726,id}
 function s.cfilter(c,fc,sumtype,tp)
 	return c:IsLinkMonster() and c:IsSetCard(0x119)
 end

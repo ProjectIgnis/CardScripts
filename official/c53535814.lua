@@ -1,5 +1,5 @@
 --氷結界の浄玻璃
---Mirror Judge of the Ice Barrier
+--Judge of the Ice Barrier
 --Logical Nonsense
 
 --Substitute ID
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_PAY_LPCOST)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetOperation(aux.chainreg)
+	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TODECK)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1,id)
 	e3:SetTarget(s.tdtg)
 	e3:SetOperation(s.tdop)
@@ -36,9 +36,9 @@ function s.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_POSITION)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_GRAVE)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCountLimit(1,{id,1})
 	e4:SetCost(aux.bfgcost)
 	e4:SetCondition(s.poscon)
@@ -48,11 +48,15 @@ function s.initial_effect(c)
 end
 	--Lists "Ice Barrier" archetype
 s.listed_series={0x2f}
-
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	if not (re and re:IsActivated()) then return end
+	e:GetHandler():RegisterFlagEffect(Duel.GetCurrentChain(),RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
+end
 	--If you control another "Ice Barrier" monster
 function s.dmgcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetFlagEffect(1)>0
-		and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2f),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	local c=e:GetHandler()
+	if not (ep==1-tp and Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2f),tp,LOCATION_MZONE,0,1,c)) then return false end
+	return c:GetFlagEffect(Duel.GetCurrentChain())>0
 end
 	--Opponent loses 500 LP each time they pay LP
 function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
@@ -62,7 +66,7 @@ function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for an "Ice Barrier" monster
 function s.tdfilter(c)
-	return c:IsSetCard(0x2f) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsSetCard(0x2f) and c:IsMonster() and c:IsAbleToDeck()
 end
 	--Check for an attack position monster
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -71,6 +75,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g1=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,2,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g2=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,1,2,nil)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,#g1,0,0)
@@ -82,13 +87,13 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
+	--If you control an "Ice Barrier" monster
+function s.poscon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2f),tp,LOCATION_MZONE,0,1,nil)
+end
 	--Check for an attack position monster
 function s.posfilter(c)
 	return c:IsAttackPos() and c:IsCanChangePosition()
-end
-	--If you control an "Ice Barrier" monster
-function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2f),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 	--Activation legality
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

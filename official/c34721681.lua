@@ -23,14 +23,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x127}
-
 -- Infinitrack monster
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x127) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
-
--- Add to hand
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
+function s.activate(e,tp,eg,ep,ev,re,r,rp) -- Add to hand
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
@@ -40,39 +37,31 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-
 -- Machine-type Xyz monster
 function s.optfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsRace(RACE_MACHINE)
 end
-
 -- Target 1 Machine-type Xyz monster and activate one of those effects
 function s.opttarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.optfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.optfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tc=Duel.SelectTarget(tp,s.optfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	local op=0
-	if tc:GetFirst():IsCanChangePosition() then
-		op=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-	else
-		op=Duel.SelectOption(tp,aux.Stringid(id,2))
-	end
+	local op=aux.SelectEffect(tp,
+		{tc:GetFirst():IsCanChangePosition(),aux.Stringid(id,1)},
+		{true,aux.Stringid(id,2)})
 	e:SetLabel(op)
 end
-
 -- Execute chosen effect
 function s.opteffect(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not e:GetHandler():IsRelateToEffect(e) or not tc:IsRelateToEffect(e)
+	if not c:IsRelateToEffect(e) or not tc:IsRelateToEffect(e)
 		or tc:IsImmuneToEffect(e) then return end
-
-	local op=e:GetLabel()
-	if op~=1 then
+	if e:GetLabel()==1 then
 		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
-	end
-	if op~=0 then
-		Duel.Overlay(tc,Group.FromCards(e:GetHandler()))
+	else
+		Duel.Overlay(tc,c)
 	end
 end
 

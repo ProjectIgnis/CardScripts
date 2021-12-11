@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	local e4=e2:Clone()
 	e4:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
+	e4:SetValue(POS_FACEDOWN)
 	c:RegisterEffect(e4)
 	--Search 1 "Umi", or 1 "Kairyu-Shin"/"Sea Stealth" Spell/Trap
 	local e5=Effect.CreateEffect(c)

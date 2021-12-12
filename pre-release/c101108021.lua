@@ -77,39 +77,34 @@ function s.dspfilter(c,e,tp,pos)
 	return c:IsSetCard(0x1066) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,pos)
 end
 function s.dsptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local pos=POS_FACEDOWN_DEFENSE
+	if Duel.IsEnvironment(75304793,tp,LOCATION_FZONE) then pos=pos|POS_FACEUP end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.dspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,POS_FACEDOWN_DEFENSE)
-		or (Duel.IsEnvironment(75304793,tp,LOCATION_FZONE) and Duel.IsExistingMatchingCard(s.dspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,POS_FACEUP))
+		and Duel.IsExistingMatchingCard(s.dspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,pos)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.dspop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local a=Duel.IsExistingMatchingCard(s.dspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,POS_FACEDOWN_DEFENSE)
-	local b=Duel.IsEnvironment(75304793,tp,LOCATION_FZONE) and Duel.IsExistingMatchingCard(s.dspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,POS_FACEUP)
-	if not (a or b) then return end
-	-- Special Summon in face-up and negate instead
-	if b and (not a or Duel.SelectYesNo(tp,aux.Stringid(id,3))) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sc=Duel.SelectMatchingCard(tp,s.dspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
-		if not sc or not Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then return end
-		-- Negate its effects
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		sc:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetValue(RESET_TURN_SET)
-		sc:RegisterEffect(e2)
-		Duel.SpecialSummonComplete()
-		return
-	end
-	-- Special Summon in face-down defense position
+	local pos=POS_FACEDOWN_DEFENSE
+	if Duel.IsEnvironment(75304793,tp,LOCATION_FZONE) then pos=pos|POS_FACEUP end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sc=Duel.SelectMatchingCard(tp,s.dspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,POS_FACEDOWN_DEFENSE)
-	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)>0 then
-		Duel.ConfirmCards(1-tp,sc)
+	local sc=Duel.SelectMatchingCard(tp,s.dspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,pos):GetFirst()
+	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,pos) then
+		if sc:IsFacedown() then
+			Duel.ConfirmCards(1-tp,sc)
+		elseif sc:IsFaceup() then
+			-- Negate its effects
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_DISABLE)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			sc:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_DISABLE_EFFECT)
+			e2:SetValue(RESET_TURN_SET)
+			sc:RegisterEffect(e2)
+		end
+		Duel.SpecialSummonComplete()
 	end
 end

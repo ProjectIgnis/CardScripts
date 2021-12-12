@@ -105,6 +105,6 @@ function s.dspop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetValue(RESET_TURN_SET)
 			sc:RegisterEffect(e2)
 		end
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end

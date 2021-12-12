@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,4,REASON_EFFECT)
-	if Duel.GetOperatedGroup():FilterCount(s.filter,nil)==4 then
+	if Duel.GetOperatedGroup():GetCount()==4 then
 		Duel.BreakEffect()
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

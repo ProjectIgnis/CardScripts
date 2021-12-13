@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	local ct=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.atfilter),tp,LOCATION_REMOVED+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.atfilter),tp,LOCATION_REMOVED+LOCATION_GRAVE,0,tc)
 	if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0
 		and ct>0 and #g>0 and not tc:IsImmuneToEffect(e)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

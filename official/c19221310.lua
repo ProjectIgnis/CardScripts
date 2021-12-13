@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={53025096}
-function s.cfilter(c,ft,tp)
+function s.cfilter(c,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_DECK,0,1,c)
 end

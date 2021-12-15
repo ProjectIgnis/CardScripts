@@ -1,4 +1,5 @@
 --Yggdrago the Heavenly Emperor Dragon Tree
+Duel.LoadCardScript("c160202011.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	Maximum.AddProcedure(c,nil,s.filter1,s.filter2)

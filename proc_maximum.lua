@@ -396,7 +396,7 @@ function Maximum.battlecon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_BATTLE) and eg:IsExists(Card.IsControler,1,nil,tp)
 end
 function Maximum.battleop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,e:GetHandler():GetPreviousControler(),LOCATION_MZONE,0,nil)
 	Duel.Sendto(g,e:GetHandler():GetDestination(),0)
 	for tc in aux.Next(g) do
 		tc:SetReason(eg:GetFirst():GetReason())
@@ -418,8 +418,6 @@ if not traprush then
 function Card.IsCanChangePositionRush(c)
 	return c:IsCanChangePosition() and not c:IsMaximumMode()
 end
-
-
 
 --Add function to simplify some effect
 

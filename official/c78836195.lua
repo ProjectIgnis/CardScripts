@@ -1,5 +1,5 @@
 -- 瑞相剣究
--- Xiangjian Research
+-- Swordsoul Assessment
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tkop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={TOKEN_XIANGJIAN}
+s.listed_names={TOKEN_SWORDSOUL}
 s.listed_series={0x16d}
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
@@ -66,7 +66,7 @@ end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_XIANGJIAN,0x16d,TYPES_TOKEN+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_SWORDSOUL,0x16d,TYPES_TOKEN+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
@@ -74,7 +74,7 @@ end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if s.tktg(e,tp,eg,ep,ev,re,r,rp,0) then
 		local c=e:GetHandler()
-		local token=Duel.CreateToken(tp,TOKEN_XIANGJIAN)
+		local token=Duel.CreateToken(tp,TOKEN_SWORDSOUL)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		-- Cannot Special Summon non-Synchro monsters from Extra Deck
 		local e1=Effect.CreateEffect(c)
@@ -87,7 +87,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		token:RegisterEffect(e1,true)
 		-- Lizard check
-		local e2=aux.createContinuousLizardCheck(c,LOCATION_MZONE,function(_,c) return c:IsOriginalType(TYPE_SYNCHRO) end)
+		local e2=aux.createContinuousLizardCheck(c,LOCATION_MZONE,function(_,c) return not c:IsOriginalType(TYPE_SYNCHRO) end)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		token:RegisterEffect(e2,true)
 	end

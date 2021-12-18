@@ -1,5 +1,5 @@
 --マジスタリー・アルケミスト
---Magistry Alchemist
+--Magistery Alchemist
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,10 +19,10 @@ end
 s.listed_series={0x8}
 function s.costfilter(c,e,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	return c:IsSetCard(0x8) and c:IsFaceup() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
+	return c:IsMonster() and c:IsSetCard(0x8) and c:IsFaceup() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x8) and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP)
+	return c:IsMonster() and c:IsSetCard(0x8) and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP)
 end
 function s.spcheck(sg,e,tp)
 	return aux.ChkfMMZ(1)(sg,e,tp) and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,sg,e,tp)

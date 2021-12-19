@@ -1,6 +1,7 @@
 -- エクディシス・カリギュレオン
 -- Ecdisys Caliguleon
 -- Scripted by Hatter
+local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
 	local e1=Effect.CreateEffect(c)

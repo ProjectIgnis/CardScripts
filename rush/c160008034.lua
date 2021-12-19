@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	Fusion.AddProcMix(c,true,true,160201028,160002023)
 	--inflct 800 damage
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetRange(LOCATION_MZONE)
@@ -28,14 +29,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 --cost
-function s.tdfilter(c)
+function s.tdfilter(c,tp)
 	return c:IsCode(160201028) and c:IsAbleToDeckOrExtraAsCost() and Duel.IsExistingMatchingCard(s.tdfilter2,tp,LOCATION_GRAVE,0,1,c) 
 end
 function s.tdfilter2(c)
 	return c:IsCode(160002023) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
 end
 function s.ctfilter(c)
 	return c:IsCode(160201028,160002023) and c:IsAbleToDeckOrExtraAsCost()
@@ -73,6 +74,8 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.ctcheck,1,tp,HINTMSG_TODECK)
 	Duel.HintSelection(sg)
 	Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_COST)
+	Duel.BreakEffect()
+	Duel.ShuffleDeck(tp)
 	--Effect
 	if Duel.Draw(tp,3,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

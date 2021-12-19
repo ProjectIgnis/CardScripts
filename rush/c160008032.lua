@@ -22,8 +22,8 @@ function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_SPELLCASTER)
 end
 function s.atkval(e,c)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
-	return g:GetClassCount(Card.GetCode)*100
+	local g=Duel.GetMatchingGroup(s.cfilter,e:GetHandler():GetControler(),LOCATION_GRAVE,0,nil)
+	return g:GetClassCount(Card.GetCode)*300
 end
 function s.pcon(e)
 	return Duel.GetMatchingGroupCount(s.cfilter,e:GetHandler():GetControler(),LOCATION_GRAVE,0,nil)>=7

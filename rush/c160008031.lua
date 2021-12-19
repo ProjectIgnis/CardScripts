@@ -31,6 +31,8 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(300)
 		c:RegisterEffectRush(e1)
 		-- Piercing Damage
-		c:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		if Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)==0 then
+			c:AddPiercing(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		end
 	end
 end

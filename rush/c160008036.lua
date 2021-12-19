@@ -17,9 +17,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--shuffle to deck
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCategory(CATEGORY_TODECK)
+	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTarget(s.target)
@@ -50,10 +50,10 @@ function s.tdfilter(c)
 	return c:IsAbleToDeck() and c:IsType(TYPE_MONSTER)
 end
 function s.cfilter(c)
-	return c:IsAbleToDeck() and c:IsType(TYPE_MONSTER) and c:IsAttack(0)
+	return c:IsType(TYPE_MONSTER) and c:GetAttack()==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,0,LOCATION_ONFIELD,nil)
+	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_GRAVE,0,nil)
 	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(s.tdfilter,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE)
 end
@@ -61,7 +61,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	
 	--Effect
-	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,0,LOCATION_ONFIELD,nil)
+	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_GRAVE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.tdfilter),tp,0,LOCATION_GRAVE,1,ct,nil)
 	Duel.HintSelection(g)

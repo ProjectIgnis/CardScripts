@@ -13,5 +13,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(aux.TRUE,c:GetControler(),0,LOCATION_GRAVE+LOCATION_MZONE,nil)*500
+	return Duel.GetFieldGroupCount(e:GetHandler():GetControler(),LOCATION_GRAVE,0)*100
 end

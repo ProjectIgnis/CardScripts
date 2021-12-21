@@ -3,6 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
     if Duel.IsDuelType(DUEL_EMZONE) then aux.EnableExtraRules(c,s,s.init)
+	--illegal deck check and draw 1 if in starting hand
     else local e1=Effect.CreateEffect(c)
         e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
         e1:SetCode(EVENT_ADJUST)
@@ -24,11 +25,13 @@ function s.legaldeck(e,tp,eg,ep,ev,re,r,rp)
     e:Reset()
 end
 function s.init(c)
+	--consider zones to be linked
     local e1=Effect.GlobalEffect(c)
     e1:SetType(EFFECT_TYPE_FIELD)
     e1:SetCode(EFFECT_BECOME_LINKED_ZONE)
     e1:SetValue(0xffffff)
     Duel.RegisterEffect(e1,0)
+	--force links in the ED to actually linked zones or the EMZ
     local e2=Effect.GlobalEffect(c)
     e2:SetType(EFFECT_TYPE_FIELD)
     e2:SetCode(EFFECT_FORCE_MZONE)

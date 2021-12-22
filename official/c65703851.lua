@@ -18,11 +18,13 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
-	local spelim=rc:IsLocation(LOCATION_GRAVE) and Duel.IsPlayerAffectedByEffect(rc:GetControler(),CARD_SPIRIT_ELIMINATION)
-	if chk==0 then return not spelim and Duel.IsPlayerCanRemove(tp,rc) end
+	if chk==0 then return Duel.IsPlayerCanRemove(tp,rc)
+		and not (rc:IsLocation(LOCATION_GRAVE) and Duel.IsPlayerAffectedByEffect(rc:GetControler(),CARD_SPIRIT_ELIMINATION)) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if not spelim and not rc:IsLocation(LOCATION_REMOVED) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,rc,1,0,0)
+	if rc:IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,ec,1,0,rc:GetLocation())
+	else
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,rc:GetPreviousLocation())
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

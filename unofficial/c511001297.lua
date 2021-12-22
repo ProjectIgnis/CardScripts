@@ -1,6 +1,5 @@
 --バーバリアンの呪術
 --Battleguard Sorcery
-Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,8 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2178}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsBattleguard),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsSetCard,0x2178),tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>=2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

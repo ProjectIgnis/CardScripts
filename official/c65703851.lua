@@ -14,15 +14,15 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return (loc==LOCATION_HAND or loc==LOCATION_GRAVE) and re:IsActiveType(TYPE_MONSTER)
+	return (loc==LOCATION_HAND or loc==LOCATION_GRAVE) and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
-	local spelim=rc:IsLocation(LOCATION_GRAVE) and Duel.IsPlayerAffectedByEffect(rc:GetControler(),69832741)
-	if chk==0 then return Duel.IsChainNegatable(ev) and Duel.IsPlayerCanRemove(tp,rc) and not spelim end
+	local spelim=rc:IsLocation(LOCATION_GRAVE) and Duel.IsPlayerAffectedByEffect(rc:GetControler(),CARD_SPIRIT_ELIMINATION)
+	if chk==0 then return not spelim and Duel.IsPlayerCanRemove(tp,rc) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if not spelim and not rc:IsLocation(LOCATION_REMOVED) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,tp,rc:GetLocation())
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,rc,1,0,0)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

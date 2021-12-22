@@ -1,4 +1,5 @@
 --透破抜き
+--Debunk
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,14 +14,15 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return (loc==LOCATION_HAND or loc==LOCATION_GRAVE) and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	return (loc==LOCATION_HAND or loc==LOCATION_GRAVE) and re:IsActiveType(TYPE_MONSTER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
-	if chk==0 then return (rc:IsLocation(LOCATION_HAND) or not Duel.IsPlayerAffectedByEffect(rc:GetControler(),69832741)) and rc:IsAbleToRemove() end
+	local spelim=rc:IsLocation(LOCATION_GRAVE) and Duel.IsPlayerAffectedByEffect(rc:GetControler(),69832741)
+	if chk==0 then return Duel.IsChainNegatable(ev) and Duel.IsPlayerCanRemove(tp,rc) and not spelim end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if rc:IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
+	if not spelim and not rc:IsLocation(LOCATION_REMOVED) then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,tp,rc:GetLocation())
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

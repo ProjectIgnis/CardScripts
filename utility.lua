@@ -331,11 +331,13 @@ function Auxiliary.GetExtraMaterials(tp,mustg,sc,summon_type)
 	local eff={Duel.GetPlayerEffect(tp,EFFECT_EXTRA_MATERIAL)}
 	local t={}
 	for _,te in ipairs(eff) do
-		local eg=te:GetValue()(0,summon_type,te,tp,sc)-mustg
-		eg:KeepAlive()
-		tg=tg+eg
-		local efun=te:GetOperation() and te:GetOperation() or aux.TRUE
-		table.insert(t,{eg,efun,te})
+		if te:CheckCountLimit() then
+			local eg=te:GetValue()(0,summon_type,te,tp,sc)-mustg
+			eg:KeepAlive()
+			tg=tg+eg
+			local efun=te:GetOperation() and te:GetOperation() or aux.TRUE
+			table.insert(t,{eg,efun,te})
+		end
 	end
 	return t,tg
 end

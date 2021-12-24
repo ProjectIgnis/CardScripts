@@ -331,7 +331,7 @@ function Auxiliary.GetExtraMaterials(tp,mustg,sc,summon_type)
 	local eff={Duel.GetPlayerEffect(tp,EFFECT_EXTRA_MATERIAL)}
 	local t={}
 	for _,te in ipairs(eff) do
-		if te:CheckCountLimit() then
+		if te:CheckCountLimit(tp) then
 			local eg=te:GetValue()(0,summon_type,te,tp,sc)-mustg
 			eg:KeepAlive()
 			tg=tg+eg

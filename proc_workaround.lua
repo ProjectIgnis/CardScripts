@@ -239,7 +239,7 @@ function Auxiliary.RelCheckGoal(tp,sg,exg,mustg,ct,minc,maxc,specialchk)
 end
 function Auxiliary.ReleaseCostFilter(c,tp)
 	local eff=c:IsHasEffect(EFFECT_EXTRA_RELEASE_NONSUM)
-	return not (c:IsControler(1-tp) and eff and eff:CheckCountLimit()) and not c:IsHasEffect(EFFECT_EXTRA_RELEASE)
+	return not (c:IsControler(1-tp) and eff and eff:CheckCountLimit(tp)) and not c:IsHasEffect(EFFECT_EXTRA_RELEASE)
 end
 function Auxiliary.MakeSpecialCheck(check,tp,exg,...)
 	local params={...}

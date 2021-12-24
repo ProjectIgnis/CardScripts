@@ -1,5 +1,5 @@
 --晴天気ベンガーラ
---Sunny Weathery Bengala
+--The Weather Painter Sun
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon (grave)
@@ -40,7 +40,8 @@ function s.gspcfilter(c,ft,tp,sft)
 		and Duel.IsExistingMatchingCard(s.gspfilter,tp,LOCATION_HAND,0,1,nil,c,tp)
 end
 function s.gspfilter(c,cc,tp)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x109) and not c:IsForbidden() and c:CheckUniqueOnField(tp,LOCATION_ONFIELD,cc)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x109) and not c:IsForbidden()
+		and c:CheckUniqueOnField(tp,LOCATION_ONFIELD,cc) and not c:IsType(TYPE_FIELD)
 end
 function s.gspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

@@ -59,16 +59,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Overlay(tc,mg)
 		end
 	end
-	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
-		--Each player takes 300 damage for each card in their hand
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetCountLimit(1)
-		e1:SetOperation(s.damop)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)
-	end
+	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
+	--Each player takes 300 damage for each card in their hand
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetCountLimit(1)
+	e1:SetOperation(s.damop)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

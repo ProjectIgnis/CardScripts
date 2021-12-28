@@ -54,8 +54,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function s.spconfilter1(c,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousRaceOnField()&RACE_REPTILE==RACE_REPTILE
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+		and c:GetPreviousRaceOnField()&RACE_REPTILE==RACE_REPTILE
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spconfilter1,1,nil,tp)

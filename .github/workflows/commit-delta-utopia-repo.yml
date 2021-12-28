@@ -60,6 +60,9 @@ jobs:
         git config user.email "$CEMAIL"
         git config user.name "$COMMITTER"
         git add -A .
+        if [[ -f $HOME/$REPO_NAME/mappings.json ]]; then
+            git add $HOME/$REPO_NAME/mappings.json
+        fi
         if [[ $(git status --porcelain) ]]; then
           git commit --author="$AUTHOR <$EMAIL>" -m "$MESSAGE"
           git push

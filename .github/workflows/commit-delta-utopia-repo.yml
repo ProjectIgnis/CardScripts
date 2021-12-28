@@ -41,6 +41,11 @@ jobs:
             cd $HOME/$DESTINATION
             git rm -rf --ignore-unmatch $REMOVED
           fi
+        fi
+    - name: Generate mappings file
+      run: |
+        if [[ -f $HOME/$DESTINATION/VERSION ]]; then
+          LAST_SHA=$(cat $HOME/$DESTINATION/VERSION)
           git diff --name-status --diff-filter=R $LAST_SHA | xargs python ./.github/generate_mappings.py $HOME/$REPO_NAME/mappings.json
         fi
     - name: Commit and push with original metadata

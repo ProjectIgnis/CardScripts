@@ -39,18 +39,20 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		g:AddCard(tc)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
-	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	--Special Summon 1 Rank 3 or lower Xyz during the End Phase
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE+PHASE_END)
-	e1:SetCountLimit(1)
-	e1:SetOperation(s.op)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		--Special Summon 1 Rank 3 or lower Xyz during the End Phase
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetCountLimit(1)
+		e1:SetOperation(s.op)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsRankBelow(3) and not c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRankBelow(3) and not c:IsSetCard(0x48)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)

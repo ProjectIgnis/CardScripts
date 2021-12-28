@@ -52,7 +52,7 @@ function s.desop(e)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re==e:GetLabelObject()
+	return re==e:GetLabelObject()
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)

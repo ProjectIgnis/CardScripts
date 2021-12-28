@@ -32,7 +32,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x83) and c:IsOriginalAttribute(ATTRIBUTE_EARTH) and c:IsOriginalRace(RACE_WARRIOR)
+	return c:IsFaceup() and c:IsSetCard(0x83) and c:IsOriginalAttribute(ATTRIBUTE_EARTH)
+		and c:IsOriginalRace(RACE_WARRIOR)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

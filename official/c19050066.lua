@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetValue(s.tgtg)
+	e3:SetValue(function(e,c) return c~=e:GetHandler() end)
 	c:RegisterEffect(e3)
 	--Change position
 	local e4=Effect.CreateEffect(c)
@@ -79,9 +79,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-end
-function s.tgtg(e,c)
-	return c~=e:GetHandler()
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

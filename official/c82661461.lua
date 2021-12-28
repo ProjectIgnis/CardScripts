@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.atkcon)
+	e1:SetCondition(function(_,tp) return Duel.GetAttacker():IsControler(1-tp) end)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
@@ -44,9 +44,6 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9f,0x99}
 s.listed_names={id}
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsControler(1-tp)
-end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetAttacker()
 	if chk==0 then return tg:IsOnField()

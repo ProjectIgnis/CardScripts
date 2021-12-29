@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x175),nil,s.fextra)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x175),aux.FALSE,s.fextra)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCondition(function(_,tp) return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase() end)

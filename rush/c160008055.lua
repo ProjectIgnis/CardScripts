@@ -40,9 +40,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		tc:RegisterEffectRush(e2)
-		local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil,tp)
-		if #g>2 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-			Duel.Draw(tp,1,REASON_EFFECT)
-		end
+	end
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil,tp)
+	if #g>2 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

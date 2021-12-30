@@ -21,7 +21,7 @@ end
 function s.thfilter(c)
 	return c:IsCode(160006045) and c:IsAbleToHand()
 end
-function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	-- Requirement
 	
 	-- Effect

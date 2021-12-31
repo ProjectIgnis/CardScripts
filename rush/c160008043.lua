@@ -18,8 +18,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_names={160006025,CARD_TASTE_INSPECTOR}
 function s.descostfilter(c)
-	return c:IsCode(160001024,160002019) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsCode(160006025,CARD_TASTE_INSPECTOR) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.descostfilter,tp,LOCATION_GRAVE,0,2,nil) end

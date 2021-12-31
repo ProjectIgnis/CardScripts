@@ -1,10 +1,11 @@
+--ドリーム・シャーク
 --Dream Shark
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate Damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(aux.damcon1)

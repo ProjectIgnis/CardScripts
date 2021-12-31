@@ -41,5 +41,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ftarget(e,c)
-	return c:IsDefenseBelow(1900)
+	return c:IsDefenseBelow(1900) and c:HasDefense()
 end

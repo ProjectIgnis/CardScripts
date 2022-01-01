@@ -591,6 +591,7 @@ function Card.AddNoTributeCheck(c,id,stringid,rangeP1,rangeP2)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetDescription(aux.Stringid(id,stringid))
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetTargetRange(rangeP1,rangeP2)
 	c:RegisterEffect(e1)
 end

@@ -2,10 +2,10 @@
 --Invoked Mechaba
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
+	--Fusion Summon procedure
 	c:EnableReviveLimit()
 	Fusion.AddProcMix(c,true,true,86120751,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT))
-	--negate
+	--Negate and banish
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
@@ -35,13 +35,14 @@ function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
-	if chk==0 then return Duel.IsPlayerCanRemove(tp,rc) and not (rc:IsMonster()
-		and rc:IsLocation(LOCATION_GRAVE) and Duel.IsPlayerAffectedByEffect(rc:GetControler(),CARD_SPIRIT_ELIMINATION)) end
+	local relation=rc:IsRelateToEffect(re)
+	if chk==0 then return rc:IsAbleToRemove(tp)
+		or (not relation and Duel.IsPlayerCanRemove(tp)) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if rc:IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,rc,1,0,rc:GetLocation())
+	if relation then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,rc,1,rc:GetControler(),rc:GetLocation())
 	else
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,rc:GetPreviousLocation())
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,0,rc:GetPreviousLocation())
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)

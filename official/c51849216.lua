@@ -24,12 +24,14 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
-	if chk==0 then return Duel.IsPlayerCanRemove(tp,rc) end
+	local relation=rc:IsRelateToEffect(re)
+	if chk==0 then return rc:IsAbleToRemove(tp)
+		or (not relation and Duel.IsPlayerCanRemove(tp)) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if rc:IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,rc,1,0,rc:GetLocation())
+	if relation then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,rc,1,rc:GetControler(),rc:GetLocation())
 	else
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,rc:GetPreviousLocation())
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,0,rc:GetPreviousLocation())
 	end
 end
 function s.atkfilter(c)

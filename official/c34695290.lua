@@ -1,4 +1,4 @@
---
+--ミュートリアル・ビースト
 --Myutant Beast
 --Scripted by Hel
 
@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetRange(LOCATION_MZONE)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetCode(EVENT_CHAINING)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetCondition(s.condition)
 	e3:SetCost(s.cost)
@@ -65,12 +65,15 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	local rc=re:GetHandler()
+	local relation=rc:IsRelateToEffect(re)
+	if chk==0 then return rc:IsAbleToRemove(tp)
+		or (not relation and Duel.IsPlayerCanRemove(tp)) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetLocation())
+	if relation then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,rc,1,rc:GetControler(),rc:GetLocation())
 	else
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,re:GetHandler():GetPreviousLocation())
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,0,rc:GetPreviousLocation())
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

@@ -62,6 +62,7 @@ CARD_UMI                    = 22702055
 CARD_URSARCTIC_BIG_DIPPER   = 89264428
 CARD_URSARCTIC_DRYTRON      = 89771220
 CARD_VIJAM                  = 15610297
+CARD_VISAS_STARFROST        = 101108008
 
 --Commonly used Tokens
 TOKEN_BRAVE                         = 3285552

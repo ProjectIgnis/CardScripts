@@ -1,5 +1,5 @@
 --天威の龍鬼神
---Dragon Berserker of the Tenyi
+--Draco Berserker of the Tenyi
 --Scripted by Larry126
 
 local s,id=GetID()
@@ -38,6 +38,7 @@ end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
 	if chk==0 then return rc:IsAbleToRemove() and not rc:IsLocation(LOCATION_REMOVED) end
+	Duel.SetTargetCard(rc)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,rc,1,rc:GetControler(),rc:GetLocation())
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)

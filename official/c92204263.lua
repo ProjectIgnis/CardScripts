@@ -1,19 +1,19 @@
 --紺碧の機界騎士
 --Mekk-Knight Indigo Eclipse
 --Scripted by Eerie Code
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetCondition(s.hspcon)
 	e1:SetValue(s.hspval)
 	c:RegisterEffect(e1)
-	--move
+	--Move 1 "Mekk-Knight" to another MMZ
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -26,18 +26,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x10c}
+
 function s.cfilter(c)
 	return c:GetColumnGroupCount()>0
-end
-function s.hspcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local zone=0
-	local lg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-	for tc in aux.Next(lg) do
-		zone=(zone|tc:GetColumnZone(LOCATION_MZONE,0,0,tp))
-	end
-	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
 function s.hspval(e,c)
 	local tp=c:GetControler()

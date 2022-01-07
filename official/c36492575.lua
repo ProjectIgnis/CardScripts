@@ -1,9 +1,10 @@
 --海晶乙女 シーホース
 --Marincess Sea Horse
---scripted by Larry126
+--Scripted by Larry126
+
 local s,id=GetID()
 function s.initial_effect(c)
-	--special summon
+	--Special Summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -11,10 +12,9 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetCondition(s.condition)
 	e1:SetValue(s.spval)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special Summon 1 WATER monster from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -28,27 +28,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x12b}
+
 function s.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsLinkMonster()
 end
-function s.spzone(tp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	local zone=0
-	for c in aux.Next(g) do
-		zone=zone|c:GetLinkedZone(tp)
-	end
-	return zone&0x1f
-end
-function s.condition(e,c)
-	if c==nil then return true end
-	local tp=e:GetHandlerPlayer()
-	local zone=s.spzone(tp)
-	return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
-end
 function s.spval(e,c)
-	local tp=e:GetHandlerPlayer()
-	local zone=s.spzone(tp)
-	return 0,zone
+	return 0,Duel.GetMatchingGroup(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,nil):GetLinkedZone(c:GetControler())&0x1f
 end
 function s.spfilter(c,e,tp,zone)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)

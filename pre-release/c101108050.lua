@@ -108,7 +108,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local ct=Duel.GetCurrentPhase()<=PHASE_STANDBY and 2 or 1
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TEMP_REMOVE+RESET_PHASE+PHASE_STANDBY,0,ct)
 		--Banish it until the Standby Phase of the next turn
-		local e1=Effect.CreateEffect(e:GetOwner())
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 		e1:SetCountLimit(1)
@@ -118,6 +118,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetLabelObject(tc)
 		Duel.RegisterEffect(e1,tp)
+		tc:SetReasonEffect(e1)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)

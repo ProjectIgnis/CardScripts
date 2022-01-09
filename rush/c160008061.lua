@@ -56,5 +56,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 end
 function s.atktg(e,c)
-	return c:IsAttackBelow(3000)
+	return c:IsAttackAbove(3000)
 end

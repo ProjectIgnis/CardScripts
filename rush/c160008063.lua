@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			if Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,56120475),tp,LOCATION_GRAVE,0,1,nil)
 			and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-				local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
+				local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,nil)
 				if #g>0 then
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 					sg=g:Select(tp,1,2,nil)

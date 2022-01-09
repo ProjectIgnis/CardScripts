@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local sg=og:Select(tp,1,5,nil)
 			Duel.HintSelection(sg)
-			Duel.SendtoDeck(sg,1-tp,SEQ_DECKSHUFFLE,REASON_EFFECT)
+			Duel.SendtoDeck(sg,tp,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		end
 end
 function s.atktg(e,c)

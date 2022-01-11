@@ -84,10 +84,9 @@ end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsSSetable() and Duel.SSet(tp,c)~=0 then
-		Duel.ConfirmCards(1-tp,c)
-		if tc and tc:IsRelateToEffect(e) then
-			Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		end
+	if c:IsRelateToEffect(e) and c:IsSSetable()
+		and Duel.SSet(tp,c)~=0 and tc and tc:IsRelateToEffect(e)
+		and tc:IsSetCard(0x13f) and tc:IsLocation(LOCATION_SZONE) then
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

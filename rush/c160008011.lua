@@ -21,7 +21,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,3,nil) end
 end
 function s.filter(c,e,sp)
-	return c:Race(RACE_SPELLCASTER) and c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+	return c:IsRace(RACE_SPELLCASTER) and c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -53,5 +53,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsIsCode(160401001) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsCode(160401001) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end

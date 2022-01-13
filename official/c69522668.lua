@@ -49,9 +49,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x167}
 function s.matcheck(e,c)
-	Debug.Message("here")
 	e:SetLabel(c:GetMaterial():GetClassCount(Card.GetAttribute))
-	Debug.Message(e:GetLabel())
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local obj=e:GetLabelObject()

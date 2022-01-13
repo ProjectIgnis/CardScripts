@@ -51,7 +51,7 @@ function s.tdfilter(c)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) 
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp)
 		and s.tdfilter(chkc) and chkc~=c end
 	if chk==0 then return Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE,0,3,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
@@ -96,8 +96,10 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	local ec=e:GetHandler():GetEquipTarget()
-	return ec and ec==Duel.GetAttacker()
+	local a=Duel.GetAttacker()
+	local b=Duel.GetAttackTarget()
+	return (a:IsControler(tp) and e:GetHandler():GetEquipTarget())
+		or (b and b:IsControler(tp) and e:GetHandler():GetEquipTarget())
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

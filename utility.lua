@@ -1575,13 +1575,13 @@ end
 function Auxiliary.HarmonizingMagFilter(c,e,f)
 	return f and not f(e,c)
 end
-function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,p)
-	if not p then p=tp end
+function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
+	if not target_p then target_p=tp end
 	if c then
-		local fc=Duel.GetFieldCard(p,LOCATION_SZONE,5)
+		local fc=Duel.GetFieldCard(target_p,LOCATION_SZONE,5)
 		if Duel.IsDuelType(DUEL_1_FIELD) then
 			if fc then Duel.Destroy(fc,REASON_RULE) end
-			of=Duel.GetFieldCard(1-p,LOCATION_SZONE,5)
+			of=Duel.GetFieldCard(1-target_p,LOCATION_SZONE,5)
 			if of and Duel.Destroy(of,REASON_RULE)==0 then
 				Duel.SendtoGrave(c,REASON_RULE)
 				return false
@@ -1596,13 +1596,13 @@ function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,p)
 				Duel.BreakEffect()
 			end
 		end
-		Duel.MoveToField(c,tp,p,LOCATION_FZONE,POS_FACEUP,true)
+		Duel.MoveToField(c,tp,target_p,LOCATION_FZONE,POS_FACEUP,true)
 		local te=c:GetActivateEffect()
 		te:UseCountLimit(tp,1,true)
 		local tep=c:GetControler()
 		local cost=te:GetCost()
 		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-		Duel.RaiseEvent(c,4179255,te,0,tp,p,Duel.GetCurrentChain())
+		Duel.RaiseEvent(c,4179255,te,0,tp,target_p,Duel.GetCurrentChain())
 		return true
 	end
 	return false

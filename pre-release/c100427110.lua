@@ -44,7 +44,8 @@ function s.hspfilter(c,tp,sc)
 		and not c:IsType(TYPE_FUSION) and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
 end
 function s.hspcon(e,c)
-	if c==nil then return true end
+	if not c then return true end
+	if c:IsFaceup() then return false end
 	local tp=c:GetControler()
 	return Duel.CheckReleaseGroup(tp,s.hspfilter,1,false,1,true,c,tp,nil,nil,nil,tp,c)
 end
@@ -121,7 +122,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND)) then return end
 	local atk=tc:GetBaseAttack()
-	if atk<0 then return end
+	if atk<=0 then return end
 	local dam=Duel.Damage(1-tp,atk,REASON_EFFECT)
 	if dam>0 then
 		Duel.BreakEffect()

@@ -58,18 +58,17 @@ function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.plfilter,tp,0,LOCATION_MZONE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tc=Duel.SelectTarget(tp,s.plfilter,tp,0,LOCATION_MZONE,1,1,nil,tp):GetFirst()
-	local seq=tc:GetSequence()
-	local dg=Duel.GetFieldGroup(tp,0,LOCATION_SZONE):Filter(Card.IsSequence,nil,seq)
-	if #dg>0 then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,0,0)
+	local dc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,tc:GetSequence())
+	if dc then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dc,1,0,0)
 	end
 end
 function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsRelateToEffect(e) and tc:IsControler(1-tp)) then return end
 	local seq=tc:GetSequence()
-	local dc=Duel.GetFieldGroup(tp,0,LOCATION_SZONE):Filter(Card.IsSequence,nil,seq):GetFirst()
-	if dc then 
+	local dc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,seq)
+	if dc then
 		Duel.Destroy(dc,REASON_EFFECT)
 	end
 	if Duel.CheckLocation(1-tp,LOCATION_SZONE,seq)

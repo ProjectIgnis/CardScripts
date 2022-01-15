@@ -69,9 +69,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,0,LOCATION_MZONE,1,3,nil)
 	if #g<1 then return end
+	Duel.HintSelection(g,true)
 	local c=e:GetHandler()
 	for tc in aux.Next(g) do
-		Duel.HintSelection(g,true)
 		-- Reduce ATK/DEF
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

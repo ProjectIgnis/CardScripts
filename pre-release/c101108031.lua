@@ -36,7 +36,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct2=#g2-ct1
 	local sel=false
 	--Each player can Set Spells/Traps from hand
-	for p=tp,1-tp do
+	local turn_p=Duel.GetTurnPlayer()
+	local step=turn_p==0 and 1 or -1
+	for p=turn_p,1-turn_p,step do
 		local setg=Duel.GetMatchingGroup(Card.IsSSetable,p,LOCATION_HAND,0,nil)
 		local setmax_ct=0
 		if p==tp then

@@ -52,7 +52,7 @@ function s.mvop(e,tp,eg,ep,ev,re,r,rp)
 
 	local win=false
 	if tc then
-		if c==tc or tc:IsImmuneToEffect(e) or tc:IsType(TYPE_TOKEN) then return s.cannot_move(c) end
+		if c==tc or tc:IsImmuneToEffect(e) or tc:IsType(TYPE_TOKEN) or not c:IsType(TYPE_XYZ) then return s.cannot_move(c) end
 		local prev=c:GetOverlayCount()
 		Duel.Overlay(c,tc)
 		win=(prev<7 and c:GetOverlayCount()>6)

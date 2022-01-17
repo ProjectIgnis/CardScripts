@@ -1,14 +1,14 @@
 --烙印竜アルビオン
---Albion the Stigmata Dragon
+--Albion the Branded Dragon
 --Scripted by Eerie Code
 
 local s,id=GetID()
 function s.initial_effect(c)
-	--Fusion summon procedure
+	--Fusion Summon procedure
 	Fusion.AddProcMix(c,true,true,CARD_ALBAZ,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT))
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--If fusion summoned, fusion summon 1 level 8 or lower fusion monster
+	--If Fusion Summoned, Fusion Summon 1 level 8 or lower Fusion Monster
 	local params = {s.fusfilter,Card.IsAbleToRemove,s.fextra,Fusion.BanishMaterial}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -21,7 +21,9 @@ function s.initial_effect(c)
 	e1:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e1)
-	--Add or set 1 "Stigmata" spell/trap from deck
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e1)
+	--Search or Set 1 "Branded" Spell/Trap from Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)

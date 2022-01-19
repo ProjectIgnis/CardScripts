@@ -26,7 +26,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,2,e:GetHandler())
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	if ct>0 then
-		Duel.HintSelection(dg)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

@@ -37,8 +37,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 			local g2=Duel.GetOperatedGroup()
-			if #g2>0 then
-				local ct=g2:FilterCount(s.cfilter,nil)
+			local ct=g2:FilterCount(s.cfilter,nil)
+			if #g2>0 and ct>0 then
 				local g3=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_GRAVE,1,1,nil)
 				Duel.SendtoDeck(g3,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 			end

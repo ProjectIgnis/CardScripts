@@ -5,13 +5,17 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--ATK increase
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_TODECK)
+	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
+	e1:SetCost(cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+end
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_GRAVE,1,nil) end
@@ -25,7 +29,8 @@ function s.cfilter(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--Requirement
+	--requirement
+	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	--Effect
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_GRAVE,1,1,nil)

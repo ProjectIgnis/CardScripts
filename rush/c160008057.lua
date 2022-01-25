@@ -13,11 +13,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,1)
+end
+function s.spfilter(c,e,tp)
+	return c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--Send the top card of deck to GY
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -27,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and #g2>0 and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)==0  and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:Select(tp,1,2,nil)
+		local sg=g2:Select(tp,1,2,nil)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end

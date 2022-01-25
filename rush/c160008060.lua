@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		local tc=eg:GetFirst()
 		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
-		if ct>0 and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil) 
+		if Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil) 
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			local tc2=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 			if tc2 then

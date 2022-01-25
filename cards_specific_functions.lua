@@ -562,18 +562,16 @@ function Auxiliary.IceBarrierDiscardGroup(minc)
 	end
 end
 function Auxiliary.IceBarrierDiscardCost(f,discard,minc,maxc)
-	if discard then
-		if f then aux.AND(f,Card.IsDiscardable) else f=Card.IsDiscardable end
-	else
-		if f then aux.AND(f,Card.IsAbleToGraveAsCost) else f=Card.IsAbleToGraveAsCost end
-	end
+	local fliter=discard and Card.IsDiscardable or Card.IsAbleToGraveAsCost
+	if f then fliter=aux.AND(f,fliter) end
 	if not minc then minc=1 end
 	if not maxc then maxc=1 end
+	local rescon=Auxiliary.IceBarrierDiscardGroup(minc)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		if chk==0 then return Duel.IsExistingMatchingCard(f,tp,LOCATION_HAND,0,minc,nil) or Duel.IsExistingMatchingCard(Auxiliary.IceBarrierDiscardFilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
-		local g=Duel.GetMatchingGroup(f,tp,LOCATION_HAND,0,nil)
+		if chk==0 then return Duel.IsExistingMatchingCard(fliter,tp,LOCATION_HAND,0,minc,nil) or Duel.IsExistingMatchingCard(Auxiliary.IceBarrierDiscardFilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
+		local g=Duel.GetMatchingGroup(fliter,tp,LOCATION_HAND,0,nil)
 		g:Merge(Duel.GetMatchingGroup(Auxiliary.IceBarrierDiscardFilter,tp,LOCATION_GRAVE,0,nil,tp))
-		local sg=Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,Auxiliary.IceBarrierDiscardGroup(minc),1,tp,Auxiliary.Stringid(CARD_MIRRORMASTER_ICEBARRIER,1))
+		local sg=Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,rescon,1,tp,Auxiliary.Stringid(CARD_MIRRORMASTER_ICEBARRIER,1))
 		local rm=0
 		if sg:IsExists(Card.IsHasEffect,1,nil,EFFECT_ICEBARRIER_REPLACE,tp) then
 			local te=sg:Filter(Card.IsHasEffect,nil,EFFECT_ICEBARRIER_REPLACE)

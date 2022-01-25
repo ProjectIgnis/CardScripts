@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.cost)
+	e2:SetCost(aux.IceBarrierDiscardCost(nil,true))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
@@ -41,10 +41,6 @@ function s.sumcon(e)
 end
 function s.tblimit(e,c,tp,sumtp)
 	return (sumtp&SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE 
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return aux.IceBarrierDiscardCost(nil,true)(e,tp,eg,ep,ev,re,r,rp,0) end
-	aux.IceBarrierDiscardCost(nil,true)(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.filter(c,e,tp)
 	return c:IsSetCard(0x2f) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

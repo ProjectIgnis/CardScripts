@@ -21,8 +21,8 @@ function s.initial_effect(c)
 	e2:SetTarget(s.damtg)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x279}
-s.sclawfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x279)
+s.listed_series={0x17c}
+s.sclawfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x17c)
 function s.hspval(e,c)
 	local tp=c:GetControler()
 	local zone=0

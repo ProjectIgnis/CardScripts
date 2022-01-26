@@ -23,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x279}
+s.listed_series={0x17c}
 s.listed_names={CARD_VISAS_STAFROST}
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0x279) or c:IsCode(CARD_VISAS_STAFROST)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return (c:IsSetCard(0x17c) or c:IsCode(CARD_VISAS_STAFROST)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x279) and c:IsControler(tp) and c:IsType(TYPE_LINK)
+	return c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x17c) and c:IsControler(tp) and c:IsType(TYPE_LINK)
 		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,5 +1,5 @@
--- スケアクロー・アクロア
--- Scareclaw Acroa
+-- スケアクロー・アストラ
+-- Scareclaw Astra
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,18 +12,19 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetValue(s.hspval)
 	c:RegisterEffect(e1)
-	-- Boost ATK
+	-- Multiple attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
+	e2:SetCode(EFFECT_EXTRA_ATTACK)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetCondition(s.atkcon)
 	e2:SetTarget(s.atktg)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x279}
-s.sclawfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x279)
+s.listed_series={0x17c}
+s.sclawfilter=aux.FilterFaceupFunction(Card.IsSetCard,0x17c)
 function s.hspval(e,c)
 	local tp=c:GetControler()
 	local zone=0
@@ -33,9 +34,13 @@ function s.hspval(e,c)
 	end
 	return 0,zone&0x1f
 end
+function s.atkcon(e)
+	return Duel.IsExistingMatchingCard(aux.AND(s.sclawfilter,Card.IsDefensePos),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+end
 function s.atktg(e,c)
 	return s.sclawfilter(c) and c:IsInExtraMZone()
 end
 function s.atkval(e)
-	return Duel.GetMatchingGroupCount(Card.IsDefensePos,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)*300
+	local g=Duel.GetMatchingGroup(aux.AND(s.sclawfilter,Card.IsDefensePos),e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
+	return g:GetClassCount(Card.GetCode)-1
 end

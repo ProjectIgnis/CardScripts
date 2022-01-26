@@ -4,7 +4,7 @@ CARD_TWINKLE_MOSS           = 13857930
 
 --Commonly used cards
 CARD_ALBAZ                  = 68468459
-CARD_ARGYRO_SYSTEM          = 101108054
+CARD_ARGYRO_SYSTEM          = 21887075
 CARD_ASSAULT_MODE           = 80280737
 CARD_BLACK_ROSE_DRAGON      = 73580471
 CARD_BLUEEYES_SPIRIT        = 59822133
@@ -64,7 +64,7 @@ CARD_URSARCTIC_DRYTRON      = 89771220
 CARD_VALIANTS_KOENIGWISSEN  = 100427112
 CARD_VALIANTS_SHINRABANSHO  = 100427111
 CARD_VIJAM                  = 15610297
-CARD_VISAS_STAFROST         = 101108008
+CARD_VISAS_STAFROST         = 56099748
 
 --Commonly used Tokens
 TOKEN_BRAVE                         = 3285552
@@ -94,7 +94,7 @@ TOKEN_OJAMA_DUO                     = 14470846
 --Specific Special Summons
 SUMMON_WITH_MONSTER_REBORN = 1010
 
---Commonly used Rush Card
+--Commonly used Rush Cards
 CARD_BIG_OCEAN            = 160003050
 CARD_CAN_D                = 160005002
 CARD_FUSION               = 160204050

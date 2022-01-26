@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x279}
+s.listed_series={0x17c}
 function s.immval(e,te)
 	local tc=te:GetHandler()
 	return te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and tc:IsLocation(LOCATION_MZONE) and tc:IsDefensePos()
@@ -51,10 +51,10 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsInExtraMZone()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x279) and c:IsLevel(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x17c) and c:IsLevel(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x279) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(0x17c) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -89,5 +89,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x279)
+	return not c:IsSetCard(0x17c)
 end

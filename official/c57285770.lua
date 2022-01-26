@@ -16,10 +16,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_ARGYRO_SYSTEM,id}
-s.listed_series={0x278}
+s.listed_series={0x17b}
 function s.cfilter(c)
 	return ((c:IsFaceup() and c:GetSequence()<5) or c:IsLocation(LOCATION_HAND)) and c:IsAbleToGraveAsCost()
-		and ((c:IsSetCard(0x278) and not c:IsCode(id)) or c:IsCode(CARD_ARGYRO_SYSTEM))
+		and ((c:IsSetCard(0x17b) and not c:IsCode(id)) or c:IsCode(CARD_ARGYRO_SYSTEM))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,1,nil) end

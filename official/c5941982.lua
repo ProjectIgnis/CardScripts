@@ -25,10 +25,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x279}
+s.listed_series={0x17c}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,3,false,nil,nil,0x279) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,3,3,false,nil,nil,0x279)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,3,false,nil,nil,0x17c) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,3,3,false,nil,nil,0x17c)
 	Duel.Release(g,REASON_COST)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

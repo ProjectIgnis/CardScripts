@@ -1,5 +1,5 @@
--- セリオンズ“ブルズ”アイン
--- Therions’ "Bulls" Ein
+-- セリオンズ“キング”レギュラス
+-- Therions' "King" Regulus
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,22 +15,24 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	aux.AddEREquipLimit(c,nil,s.eqval,aux.EquipByEffectAndLimitRegister,e1)
-	-- Destroy
+	-- Negate effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCategory(CATEGORY_DISABLE)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetTarget(s.destg)
-	e2:SetOperation(s.desop)
+	e2:SetCondition(s.discon)
+	e2:SetCost(s.discost)
+	e2:SetTarget(s.distg)
+	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 	-- Equipped monster gains ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
-	e3:SetCondition(function(e) return e:GetHandler():GetEquipTarget():IsSetCard(0x278) end)
+	e3:SetCondition(function(e) return e:GetHandler():GetEquipTarget():IsSetCard(0x17b) end)
 	e3:SetValue(700)
 	c:RegisterEffect(e3)
 	-- Equipped monster gains effect
@@ -38,13 +40,13 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(function(e,c) return c==e:GetHandler():GetEquipTarget() and c:IsSetCard(0x278) end)
+	e4:SetTarget(function(e,c) return c==e:GetHandler():GetEquipTarget() and c:IsSetCard(0x17b) end)
 	e4:SetLabelObject(e2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x278}
+s.listed_series={0x17b}
 function s.eqfilter(c)
-	return c:IsMonster() and (c:IsSetCard(0x278) or c:IsRace(RACE_WARRIOR))
+	return c:IsMonster() and (c:IsSetCard(0x17b) or c:IsRace(RACE_MACHINE))
 end
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and s.eqfilter(ec)
@@ -72,25 +74,24 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		aux.EquipByEffectAndLimitRegister(c,e,tp,tc)
 	end
 end
-function s.desfilter(c,e,tp)
-	return c:IsCanBeEffectTarget(e) and (c:IsControler(1-tp)
-		or (c:IsFaceup() and c:IsSetCard(0x278)))
+function s.discon(e,tp,eg,ep,ev,re,r,rp)
+	return rp==1-tp and Duel.IsChainDisablable(ev)
 end
-function s.desrescon(sg,e,tp,mg)
-    return sg:FilterCount(Card.IsControler,nil,tp)==1
+function s.discostfilter(c)
+	return c:IsSetCard(0x17b) and c:IsOriginalType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
-	local rg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e,tp)
-	if chk==0 then return aux.SelectUnselectGroup(rg,e,tp,2,2,s.desrescon,0) end
+function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.discostfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.desrescon,1,tp,HINTMSG_DESTROY)
-	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.discostfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST)
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetTargetCards(e)
-	if #g>0 then
-		Duel.Destroy(g,REASON_EFFECT)
-	end
+function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return not re:GetHandler():IsDisabled() end
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
+end
+function s.disop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.NegateEffect(ev)
 end

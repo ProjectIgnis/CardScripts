@@ -21,7 +21,8 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(s.cost)
+	e2:SetCondition(function() return Duel.IsAbleToEnterBP() end)
+	e2:SetCost(s.doublecost)
 	e2:SetOperation(s.doubleop)
 	c:RegisterEffect(e2)
 	--Increase ATK
@@ -44,7 +45,7 @@ function s.tgtg(e,c)
 	return c~=e:GetHandler()
 end
 --Double ATK
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.doublecost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLP(tp)>500 end
 	Duel.PayLPCost(tp,Duel.GetLP(tp)-500)
 end
@@ -70,6 +71,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetValue(tc:GetAttack()*2)
 		tc:RegisterEffect(e1)

@@ -1,5 +1,5 @@
 --Ｎｏ－Ｐ．Ｕ．Ｎ．Ｋ．ディア・ノート
---Noh P.U.N.K. Dia Note
+--Noh-P.U.N.K. Dia Note
 --Scripted by Yuno
 local s,id=GetID()
 function s.initial_effect(c)
@@ -44,7 +44,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,c,e,tp,c)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
-	e:SetLabelObject(g:GetFirst())
+	Duel.SetTargetCard(g+c)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
@@ -53,7 +53,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
-	local g=Group.FromCards(e:GetHandler(),e:GetLabelObject())
+	local g=Duel.GetTargetCards(e)
+	if #g~=2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:FilterSelect(tp,Card.IsCanBeSpecialSummoned,1,1,nil,e,0,tp,false,false)
 	if #sg>0 and Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)>0 then

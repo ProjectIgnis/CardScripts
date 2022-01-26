@@ -68,7 +68,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.drcostfilter(c)
-	return c:IsSetCard(0x9f) and not c:IsCode(id) and c:IsDiscardable()
+	return c:IsSetCard(0x9f) and c:IsMonster() and not c:IsCode(id) and c:IsDiscardable()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

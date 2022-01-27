@@ -17,6 +17,18 @@ Duel.Overlay=(function()
 		return oldf(c,g)
 	end
 end)()
+--Raise the EVENT_TOHAND_CONFIRM event when a card in the hand is revealed (used by "Puppet King" and "Puppet Queen")
+Duel.ConfirmCards=(function()
+	local oldfunc=Duel.ConfirmCards
+	return function(tp,obj,...)
+		local res=oldfunc(tp,obj,...)
+		local handg=Group.CreateGroup():Merge(obj):Match(Card.IsLocation,nil,LOCATION_HAND)
+		if #handg>0 then
+			Duel.RaiseEvent(handg,EVENT_TOHAND_CONFIRM,nil,0,tp,tp,0)
+		end
+		return res
+	end
+end)()
 ---
 function Duel.GoatConfirm(tp,loc)
 	local dg,hg=Duel.GetFieldGroup(tp,loc&(LOCATION_HAND|LOCATION_DECK),0):Split(Card.IsLocation,nil,LOCATION_DECK)

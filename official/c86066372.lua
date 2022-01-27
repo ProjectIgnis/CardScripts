@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Destroy
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)

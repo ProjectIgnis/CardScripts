@@ -37,13 +37,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rthop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={id,101108002}
+s.listed_names={id,58938528}
 s.listed_series={0x9f,0x99}
 function s.thconfilter(c)
 	return c:IsFacedown() or not c:IsType(TYPE_PENDULUM)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_PZONE,0,1,e:GetHandler(),101108002)
+	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_PZONE,0,1,e:GetHandler(),58938528)
 		and not Duel.IsExistingMatchingCard(s.thconfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)

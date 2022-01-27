@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.penop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={id,101108001}
+s.listed_names={id,21949879}
 s.listed_series={0x9f,0x99}
 function s.atkcostfilter(c)
 	return c:IsDiscardable() and c:IsType(TYPE_PENDULUM)
@@ -88,7 +88,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.penconfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x99) or c:IsCode(101108001))
+	return c:IsFaceup() and (c:IsSetCard(0x99) or c:IsCode(21949879))
 end
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.penconfilter,tp,LOCATION_ONFIELD,0,1,nil) 

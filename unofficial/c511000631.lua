@@ -16,7 +16,7 @@ end
 function s.cfilter(c,tp)
 	return c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.filter(c,e,tp)

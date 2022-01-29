@@ -19,18 +19,18 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if phase~=PHASE_DAMAGE and phase~=PHASE_DAMAGE_CAL then return false end
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return d and d:IsStatus(STATUS_OPPO_BATTLE) and not Duel.IsDamageCalculated() and (a:IsControler(tp) and a:IsType(TYPE_FUSION)
+	return d and not Duel.IsDamageCalculated() and (a:IsControler(tp) and a:IsType(TYPE_FUSION)
 		or d:IsControler(tp) and d:IsFaceup() and d:IsType(TYPE_FUSION))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if not a:IsControler(tp) then a,d=d,a end
-	if not a or not a:IsRelateToBattle() or a:IsFacedown() or not d or not d:IsRelateToBattle() or d:IsFacedown() or not d:IsStatus(STATUS_OPPO_BATTLE) then return end
+	if not a or not a:IsRelateToBattle() or a:IsFacedown() or not d or not d:IsRelateToBattle() or d:IsFacedown() then return end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
-	e1:SetValue(at:GetAttack())
+	e1:SetValue(d:GetAttack())
 	a:RegisterEffect(e1)
 end

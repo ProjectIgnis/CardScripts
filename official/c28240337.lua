@@ -2,10 +2,10 @@
 --Red-Eyes Zombie Necro Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
+	--Synchro Summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--Atk up
+	--Increase ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -16,8 +16,9 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special Summon 1 Zombie monster from either GY
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_DESTROYED)
@@ -29,10 +30,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,nil,RACE_ZOMBIE)*100
+	local LOCATION_GRAVE_MZONE=LOCATION_GRAVE+LOCATION_MZONE
+	return Duel.GetMatchingGroupCount(aux.FilterFaceupFunction(Card.IsRace,RACE_ZOMBIE),0,LOCATION_GRAVE_MZONE,LOCATION_GRAVE_MZONE,nil)*100
 end
 function s.cfilter(c)
-	return c:IsRace(RACE_ZOMBIE)
+	return c:GetPreviousRaceOnField()&RACE_ZOMBIE>0
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)

@@ -23,7 +23,7 @@ Duel.ConfirmCards=(function()
 	return function(tp,obj,...)
 		local res=oldfunc(tp,obj,...)
 		local handg=Group.CreateGroup():Merge(obj):Match(Card.IsLocation,nil,LOCATION_HAND)
-		if #handg>0 then
+		if Duel.CheckEvent(EVENT_TO_HAND) and #handg>0 then
 			Duel.RaiseEvent(handg,EVENT_TOHAND_CONFIRM,nil,0,tp,tp,0)
 		end
 		return res

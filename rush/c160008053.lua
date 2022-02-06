@@ -11,14 +11,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
+function s.cfilter(c)
 	return c:IsRace(RACE_REPTILE) and c:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,2,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.cfilter),tp,LOCATION_MZONE,0,2,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=ct end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0) end
 	Duel.SetTargetPlayer(tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

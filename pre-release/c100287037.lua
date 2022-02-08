@@ -99,7 +99,7 @@ function s.spfilter(c,e,tp,rmc)
 		and ((not loc_extr and Duel.GetMZoneCount(tp,rmc)>0) or (loc_extr and Duel.GetLocationCountFromEx(tp,tp,rmc,c)>0))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk) 
 		and Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_ONFIELD,0,1,nil,e,tp) end
 	aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
@@ -121,17 +121,17 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,nil,e,tp)
 	local ft=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),4)
-	if #g>0 and ft>0 then
+	if #g>0 and ft>0 then 
 		local checkfunc=aux.PropertyTableFilter(Card.GetSetCard,0x10f2,0x2073,0x2017,0x1046)
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 		local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,s.rescon(checkfunc),1,tp,HINTMSG_SPSUMMON,s.rescon(checkfunc))
 		if #sg==0 then return end
-		for tc in sg:Iter() do
-			if tc:IsLocation(LOCATION_EXTRA) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-				sg:RemoveCard(tc)
-			end
+		local exg=sg:Filter(Card.IsLocation,nil,LOCATION_EXTRA)
+		local nexg=sg-exg
+		for tc in exg:Iter() do
+			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
-		for tc in sg:Clone():Iter() do
+		for tc in nexg:Iter() do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		end
 		Duel.SpecialSummonComplete()

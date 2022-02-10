@@ -18,12 +18,12 @@ function s.initial_effect(c)
 	if not GhostBelleTable then GhostBelleTable={} end
 	table.insert(GhostBelleTable,e1)
 end
-s.listed_series={0x277}
+s.listed_series={0x17d}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and Duel.IsChainDisablable(ev)
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x277) and c:IsRitualMonster() and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x17d) and c:IsRitualMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -34,7 +34,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x277) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x17d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

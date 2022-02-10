@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x277}
+s.listed_series={0x17d}
 function s.matcheck(e,c)
 	if c:GetMaterial():IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) then
 		local reset=RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD
@@ -50,7 +50,7 @@ function s.matcon(e)
 	return c:IsSummonType(SUMMON_TYPE_RITUAL) and c:GetFlagEffect(id)>0
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x277) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+	return c:IsSetCard(0x17d) and c:IsType(TYPE_TRAP) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

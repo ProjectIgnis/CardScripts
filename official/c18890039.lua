@@ -12,14 +12,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	-- Ritual Summon 1 "Libromancer" monster
-	local e2=Ritual.CreateProc(c,RITPROC_GREATER,aux.FilterBoolFunction(Card.IsSetCard,0x277),nil,aux.Stringid(id,1))
+	local e2=Ritual.CreateProc(c,RITPROC_GREATER,aux.FilterBoolFunction(Card.IsSetCard,0x17d),nil,aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_FZONE)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x277}
+s.listed_series={0x17d}
 function s.thfilter(c,tp)
-	return c:IsMonster() and c:IsSetCard(0x277) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(0x17d) and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

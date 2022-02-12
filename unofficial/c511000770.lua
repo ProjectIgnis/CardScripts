@@ -5,7 +5,6 @@ function s.initial_effect(c)
 	--Synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,0x9a),1,99)
 	c:EnableReviveLimit()
-	c:AddSetcodesRule(0x9a)
 	--Attack while in Defense position
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

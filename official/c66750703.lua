@@ -4,8 +4,6 @@
 
 local s,id=GetID()
 function s.initial_effect(c)
-	--Always treated as a "Fire Formation" card
-	c:AddSetcodesRule(0x7c)
 	--Can hold Fire Fist Counters
 	c:EnableCounterPermit(0x201)
 	--Activate

@@ -3,7 +3,6 @@
 --scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x122)
 	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_FAIRY),false)
 	--Direct attack
 	local e1=Effect.CreateEffect(c)

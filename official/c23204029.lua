@@ -2,7 +2,6 @@
 --Contrast HERO Chaos
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x3008)
 	--fusion material
 	c:EnableReviveLimit()
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa008),2)

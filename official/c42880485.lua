@@ -2,7 +2,6 @@
 --Superheavy Samurai General Jade
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x9a)
 	--Pendulum Attributes
 	Pendulum.AddProcedure(c)
 	--Special Summon limit

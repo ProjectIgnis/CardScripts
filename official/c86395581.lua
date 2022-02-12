@@ -1,10 +1,9 @@
 --風霊媒師ウィン
---Wynn the Wind Spirit Medium
+--Wynn the Wind Channeler
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0xbf)
 	--Discard this + WIND monster; add WIND monster with <= 1500 DEF, locked into WIND effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

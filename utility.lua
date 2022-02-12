@@ -68,16 +68,25 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
 end
 
 local function setcodecondition(e)
-	return e:GetHandler():IsCode(e:GetHandler():GetOriginalCodeRule())
+	local c=e:GetHandler()
+	local label=e:GetLabel()
+	if label>0 and c:GetOriginalCodeRule()==label then
+		return c:IsCode(c:GetOriginalCodeRule())
+	else
+		return true
+	end
 end
-function Card.AddSetcodesRule(c,...)
+function Card.AddSetcodesRule(c,code,copyable,...)
+	local prop=0
+	if not copyable then prop=EFFECT_FLAG_UNCOPYABLE end
 	local t={}
 	for _,setcode in pairs({...}) do
 		local e=Effect.CreateEffect(c)
 		e:SetType(EFFECT_TYPE_SINGLE)
-		e:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+prop)
 		e:SetCode(EFFECT_ADD_SETCODE)
 		e:SetValue(setcode)
+		e:SetLabel(code)
 		e:SetCondition(setcodecondition)
 		c:RegisterEffect(e)
 		table.insert(t,e)

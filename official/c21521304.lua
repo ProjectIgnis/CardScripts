@@ -2,7 +2,6 @@
 --Number 39: Utopia Beyond
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x107f)
 	--xyz summon
 	Xyz.AddProcedure(c,nil,6,2)
 	c:EnableReviveLimit()

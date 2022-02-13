@@ -71,7 +71,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 		return e:GetLabel()==1
 	else
 		e:Reset()
-		if e:GetLabelObject() then
+		if e:GetLabelObject() and not e:GetLabelObject():IsDeleted() then
 			e:GetLabelObject():Reset()
 		end
 		return false

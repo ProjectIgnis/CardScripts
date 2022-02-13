@@ -92,7 +92,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local ct=e:GetLabel()
 		e:SetLabel(ct+1)
 		local pe=e:GetLabelObject()
-		if not pe then return end
+		if not pe or e:GetLabelObject():IsDeleted() then return end
 		pe:SetValue(ct*-500)
 	end
 end

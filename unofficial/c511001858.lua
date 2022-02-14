@@ -19,7 +19,17 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
-	if chk==0 then return true end
+	if chk==0 then
+		local lp=math.floor(Duel.GetLP(tp)/2)
+		for _,eff in pairs({Duel.IsPlayerAffectedByEffect(tp,EFFECT_LPCOST_CHANGE)}) do
+			local val=eff:GetValue()
+			if (type(val)=='integer' and val==0)
+				or (type(val)=='function' and (val(eff,e,tp,lp)~=lp)) then
+				return false
+			end
+		end
+		return true
+	end
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsShark() and c:IsAbleToRemove()

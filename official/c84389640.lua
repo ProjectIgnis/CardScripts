@@ -34,16 +34,21 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and d:IsFaceup() and d:IsRelateToBattle()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 and Duel.CheckLPCost(tp,100)
-		and e:GetLabelObject():IsAttackAbove(100) end
+	if chk==0 then
+		for _,eff in pairs({Duel.IsPlayerAffectedByEffect(tp,EFFECT_LPCOST_CHANGE)}) do
+			local val=eff:GetValue()
+			if (type(val)=='integer' and val==0)
+				or (type(val)=='function' and (val(eff,e,tp,100)~=100)) then
+				return false
+			end
+		end
+		return e:GetHandler():GetFlagEffect(id)==0 and Duel.CheckLPCost(tp,100)
+		and e:GetLabelObject():IsAttackAbove(100)
+	end
 	local lp=Duel.GetLP(tp)
 	local atk=e:GetLabelObject():GetAttack()
-	local maxc=lp>atk and atk or lp
-	maxc=math.floor(maxc/100)*100
 	local t={}
-	for i=1,maxc/100 do
-		t[i]=i*100
-	end
+	for i=1,math.floor(math.min(lp,atk)/100) do t[i]=i*100 end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local pay=Duel.AnnounceNumber(tp,table.unpack(t))
 	Duel.PayLPCost(tp,pay)

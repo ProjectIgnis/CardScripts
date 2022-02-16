@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x3008}
+s.material_setcode={0x8,0x3008}
 function s.mfilter(c,fc,sumtype,tp)
 	return c:IsSetCard(0x3008,fc,sumtype,tp) and c:IsType(TYPE_FUSION,fc,sumtype,tp)
 end

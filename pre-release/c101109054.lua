@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc or not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
+	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local cc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,tc,tp):GetFirst()
 	if not cc then return end
@@ -61,7 +61,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(cc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 	if cc:IsLocation(LOCATION_HAND) then Duel.ShuffleHand(tp)
-	elseif cc:IsLocation(LOCATION_DECK) then Duel.ShuffleDeck(tp) end
+	elseif cc:IsLocation(LOCATION_DECK) then Duel.ShuffleDeck(tp)
+	elseif cc:IsLocation(LOCATION_EXTRA) then Duel.ShuffleExtra(tp) end
 end
 function s.chngcon(scard,sumtype,tp)
 	return (sumtype&MATERIAL_FUSION)~=0

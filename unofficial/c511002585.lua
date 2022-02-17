@@ -18,18 +18,16 @@ function s.initial_effect(c)
 		ge1:SetCode(EVENT_BATTLE_DAMAGE)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetOperation(s.clear)
-		Duel.RegisterEffect(ge2,0)
 		local ge3=Effect.CreateEffect(c)
 		ge3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge3:SetCode(EVENT_PHASE+PHASE_BATTLE)
 		ge3:SetOperation(s.trigop)
 		ge3:SetCountLimit(1)
 		Duel.RegisterEffect(ge3,0)
+		aux.AddValuesReset(function()
+			s[0]=0
+			s[1]=0
+		end)
 	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
@@ -39,10 +37,6 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==1-tp then
 		s[1-tp]=s[1-tp]+ev
 	end
-end
-function s.clear(e,tp,eg,ep,ev,re,r,rp)
-	s[0]=0
-	s[1]=0
 end
 function s.trigop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RaiseEvent(e:GetHandler(),id,e,REASON_RULE,Duel.GetTurnPlayer(),1-Duel.GetTurnPlayer(),ev)

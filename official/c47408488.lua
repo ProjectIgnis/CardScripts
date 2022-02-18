@@ -45,7 +45,13 @@ function s.ctcon1(e,tp,eg,ep,ev,re,r,rp)
 	return true
 end
 function s.ctcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)>0
+	local c=e:GetHandler()
+	if c:GetFlagEffect(id)>0 then
+		c:ResetFlagEffect(id)
+		return true
+	else
+		return false
+	end
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x6,1)

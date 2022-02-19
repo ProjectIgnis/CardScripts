@@ -2,7 +2,7 @@
 --Evenly Matched
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--activate from hand
+	--Activate from hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
@@ -28,6 +28,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 	local ct=#g-Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
+	if e:GetHandler():IsLocation(LOCATION_HAND) then ct=ct-1 end
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(1-tp,30459350)
 		and ct>0 and g:IsExists(Card.IsAbleToRemove,1,nil,1-tp,POS_FACEDOWN,REASON_RULE) end
 	--Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,ct,0,0)

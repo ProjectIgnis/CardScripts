@@ -57,6 +57,7 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)<1 then return end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil):GetMinGroup(Card.GetAttack)
+	if #g==0 then return end
 	if #g:Match(Card.IsAbleToChangeControler,nil)<1 then return end
 	if #g>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)

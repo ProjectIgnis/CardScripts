@@ -85,7 +85,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	local hand_chk=g:GetFirst():IsLocation(LOCATION_HAND)
 	if Duel.SSet(tp,g)>0 and hand_chk then
-		--If it was Set from thee hand, it can be activated this turn
+		--If it was Set from the hand, it can be activated this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)

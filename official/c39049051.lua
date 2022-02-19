@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.regcon)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
-	--Search 1 "Polymerization'/"Fusion" Spell, or 1 "Parasite Fusioner"
+	--Search 1 "Polymerization"/"Fusion" Spell, or 1 "Parasite Fusioner"
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

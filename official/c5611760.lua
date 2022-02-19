@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
-	e2:SetCondition(function(_,tp) return Duel.GetFlagEffect(tp,id+100)==0 end)
+	e2:SetCondition(function(_,tp) return Duel.GetFlagEffect(tp,id+1)==0 end)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
@@ -69,8 +69,8 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFlagEffect(tp,id+100)~=0 then return end
-	Duel.RegisterFlagEffect(tp,id+100,0,0,0)
+	if Duel.GetFlagEffect(tp,id+1)~=0 then return end
+	Duel.RegisterFlagEffect(tp,id+1,0,0,0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.cbfilter,tp,LOCATION_DECK,0,1,1,nil,tp)
 	if #g<1 then return end

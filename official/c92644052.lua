@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop2)
 	c:RegisterEffect(e4)
 end
-s.listed_names={100287037}
+s.listed_names={92428405}
 s.listed_series={0x10f8,0x20f8}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
@@ -100,7 +100,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp
 end
 function s.thfilter(c)
-	return ((c:IsMonster() and (c:IsSetCard(0x10f8) or c:IsSetCard(0x20f8))) or c:IsCode(100287037)) and c:IsAbleToHand()
+	return ((c:IsMonster() and (c:IsSetCard(0x10f8) or c:IsSetCard(0x20f8))) or c:IsCode(92428405)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

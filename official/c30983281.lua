@@ -93,7 +93,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SynchroSummon(tp,sc,nil,mg)
 			--Unaffected by the opponent's activated effects
 			local e2=e1:Clone()
-			sc:RegisterEffect(e1,true)
+			sc:RegisterEffect(e2,true)
 		end
 	end
 end

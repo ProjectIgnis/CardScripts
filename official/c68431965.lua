@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--Synchro Summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--Reduce Level
+	--Send to the Gy and decrease Level
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.lvtg)
 	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
-	--Synchro Summon effect
+	--Synchro summon during the opponent's Main Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -63,7 +63,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e2:SetTargetRange(1,0)
 	e2:SetValue(s.aclimit)
-	e2:SetLabelObject(tc)
+	e2:SetLabel(tc:GetCode())
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(c)
@@ -73,8 +73,8 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e3)
 end
 function s.aclimit(e,re,tp)
-	local tc=e:GetLabelObject()
-	return re:GetHandler():IsCode(tc:GetCode()) and re:IsActiveType(TYPE_MONSTER)
+	local code=e:GetLabel()
+	return re:GetHandler():IsCode(code) and re:IsActiveType(TYPE_MONSTER)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)

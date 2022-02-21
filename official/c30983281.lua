@@ -74,6 +74,16 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)>0 then
 		tc:CompleteProcedure()
+		--Unaffected by the opponent's activated effects
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(aux.Stringid(id,2))
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_IMMUNE_EFFECT)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetValue(s.immval)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1,true)
 		local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_MZONE,0,nil)
 		local eg=Duel.GetMatchingGroup(s.scfilter,tp,LOCATION_EXTRA,0,nil,mg)
 		if #eg>0 then
@@ -82,14 +92,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 			if not sc then return end
 			Duel.SynchroSummon(tp,sc,nil,mg)
 			--Unaffected by the opponent's activated effects
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetDescription(aux.Stringid(id,2))
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_IMMUNE_EFFECT)
-			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
-			e1:SetRange(LOCATION_MZONE)
-			e1:SetValue(s.immval)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
+			local e2=e1:Clone()
 			sc:RegisterEffect(e1,true)
 		end
 	end

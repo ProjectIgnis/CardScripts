@@ -6,9 +6,10 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 1 spell/trap your opponent controls
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -17,6 +18,9 @@ end
 	--Check for spell/trap
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
+	return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_ONFIELD,1,nil)
 end
 	--cost
 function s.tdfilter(c)
@@ -29,10 +33,8 @@ function s.filter2(c)
 	return c:IsFaceup() and c:IsAttackAbove(2500) and c:IsDefenseAbove(2500)
 end
 	--Activation legality
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
-	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return #dg>0 and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,0,1,nil) end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,0,1,nil) end
 end
 	--Send 1 card from hand to GY to destroy 1 spell/trap your opponent controls
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -43,23 +45,28 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
 	--Effect
 		--2500 atk increase
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 		if #g>0 then
-			Duel.HintSelection(g)
+			Duel.HintSelection(g,true)
 			local tc=g:GetFirst()
+			--Increase ATK
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(2500)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 			tc:RegisterEffectRush(e1)
-		end
-		--destroy 1 spell/Trap
-		local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,e:GetHandler())
-		if #dg>0 then
-			local sg=dg:Select(tp,1,1,nil)
-			Duel.HintSelection(sg)
-			Duel.Destroy(sg,REASON_EFFECT)
+			--destroy 1 spell/Trap
+			local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)
+			if #dg>0 then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+				local sg=dg:Select(tp,1,1,nil)
+				if #sg==0 then return end
+				Duel.BreakEffect()
+				Duel.HintSelection(sg,true)
+				Duel.Destroy(sg,REASON_EFFECT)
+			end
 		end
 		--can attack with only 1 monsters
 		local e1=Effect.CreateEffect(e:GetHandler())

@@ -1,8 +1,8 @@
--- プリンセス・テントウ・ホワイト
+--プリンセス・テントウ・ホワイト
 --Princess Ladybug White
 local s,id=GetID()
 function s.initial_effect(c)
-	--Draw
+	--Special Summon and burn
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -20,7 +20,8 @@ function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_INSECT) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetMZoneCount(tp)>1 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,2,nil,e,tp) end
+	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetMZoneCount(tp)>1
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,2,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,700)
 end
@@ -31,8 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,2,2,nil,e,tp)
-		if #g>1 then
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		if #g==2 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)==2 then
 			Duel.BreakEffect()
 			Duel.Damage(1-tp,700,REASON_EFFECT)
 		end

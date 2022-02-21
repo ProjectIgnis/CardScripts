@@ -1,4 +1,4 @@
--- ゴースト・サイクロン
+--ゴースト・サイクロン
 --Ghost Cyclone
 
 --Substitute ID
@@ -22,25 +22,21 @@ function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 	--Activation legality
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,e:GetHandler())
-	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return #dg>0 end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_ONFIELD,1,nil) end
 end
 	--Send 1 card from hand to GY to destroy 1 spell/trap your opponent controls
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	local c=e:GetHandler()
+	
 	--Effect
-	if Duel.SendtoGrave(g,REASON_COST)~=0 then
-		local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,e:GetHandler())
-		if #dg>0 then
-			local sg=dg:Select(tp,1,1,nil)
-			Duel.HintSelection(sg)
-			Duel.Destroy(sg,REASON_EFFECT)
-			if (not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,4,nil,TYPE_MONSTER)) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-				Duel.Draw(tp,1,REASON_EFFECT)
-			end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local dg=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_ONFIELD,1,1,nil)
+	if #dg>0 then
+		Duel.HintSelection(dg,true)
+		if Duel.Destroy(dg,REASON_EFFECT)>0 and not Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_GRAVE,0,4,nil)
+			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+			Duel.Draw(tp,1,REASON_EFFECT)
 		end
 	end
 end

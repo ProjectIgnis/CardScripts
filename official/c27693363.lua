@@ -4,25 +4,25 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Must be special summoned by its own method
+	--Must be Special Summoned by its own method
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--Special summon procedure (from extra deck)
+	--Special Summon procedure (from the Extra Deck)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
-	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_EXTRA)
 	e2:SetCondition(s.sprcon)
 	e2:SetTarget(s.sprtg)
 	e2:SetOperation(s.sprop)
 	c:RegisterEffect(e2)
-	--activate Big Dipper from deck
+	--Activate 1 "Ursarctic Big Dipper" from your Deck
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
@@ -32,8 +32,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--special summon
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,{id,1})
@@ -87,15 +87,13 @@ function s.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	if not g then return end
 	Duel.SendtoGrave(g,REASON_COST)
 end
---activate Bearcti Big Dipper
-function s.accon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.fieldfilter,tp,LOCATION_DECK,0,1,nil,tp)
-end
 function s.fieldfilter(c,tp)
 	return c:IsCode(CARD_URSARCTIC_BIG_DIPPER) and c:GetActivateEffect() and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
+function s.accon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(s.fieldfilter,tp,LOCATION_DECK,0,1,nil,tp)
+end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,s.fieldfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	aux.PlayFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)

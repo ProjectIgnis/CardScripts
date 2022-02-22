@@ -1,5 +1,5 @@
 -- 超魔導戦士－マスター・オブ・カオス
--- Dark Master of Chaos
+-- Master of Chaos
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -87,7 +87,7 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
-		Duel.Remove(g,0,REASON_EFFECT)
+		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

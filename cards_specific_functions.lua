@@ -801,22 +801,16 @@ function Ursarctic.summonoperation(id)
 		if c:IsRelateToEffect(e) then
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		end
+		--Cannot Special Summon, except monsters with a Level
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,1))
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetTargetRange(1,0)
-		e1:SetTarget(function(e,c,sump,sumtype,sumpos,targetp,se)
-						return not c:HasLevel()
-					end)
+		e1:SetTarget(function(e,c) return c:IsLevel(0) end)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
-		local e2=Effect.CreateEffect(c)
-		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-		e2:SetDescription(aux.Stringid(id,1))
-		e2:SetReset(RESET_PHASE+PHASE_END)
-		e2:SetTargetRange(1,0)
-		Duel.RegisterEffect(e2,tp)
 	end
 end
 function Auxiliary.CreateUrsarcticSpsummon(c,id)

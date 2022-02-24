@@ -371,9 +371,14 @@ end
 --For Links: false. For Xyzs: false, except if affected by  "EFFECT_RANK_LEVEL..." effects
 --For Dark Synchros: true, because they have a negative level. For level 0: true, because 0 is a value
 function Card.HasLevel(c)
-	return c:IsType(TYPE_MONSTER) and c:GetType()&TYPE_LINK~=TYPE_LINK
-		and (c:GetType()&TYPE_XYZ~=TYPE_XYZ and not (c:IsHasEffect(EFFECT_RANK_LEVEL) or c:IsHasEffect(EFFECT_RANK_LEVEL_S)))
-		and not c:IsStatus(STATUS_NO_LEVEL)
+	if c:IsType(TYPE_MONSTER) then
+		return c:GetType()&TYPE_LINK~=TYPE_LINK
+			and (c:GetType()&TYPE_XYZ~=TYPE_XYZ and not (c:IsHasEffect(EFFECT_RANK_LEVEL) or c:IsHasEffect(EFFECT_RANK_LEVEL_S)))
+			and not c:IsStatus(STATUS_NO_LEVEL)
+	elseif c:IsOriginalType(TYPE_MONSTER) then
+		return not (c:IsOriginalType(TYPE_XYZ+TYPE_LINK) or c:IsStatus(STATUS_NO_LEVEL))
+	end
+	return false
 end
 function Card.IsSummonLocation(c,loc)
 	return c:GetSummonLocation() & loc~=0

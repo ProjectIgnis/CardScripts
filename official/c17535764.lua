@@ -25,7 +25,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g==0 or Duel.SendtoHand(tc,nil,REASON_EFFECT)==0 then return end
+	if #g==0 or Duel.SendtoHand(g,nil,REASON_EFFECT)==0 then return end
 	local tc=g:GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
 	if tc:IsType(TYPE_NORMAL) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

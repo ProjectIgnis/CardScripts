@@ -5,26 +5,26 @@ function s.initial_effect(c)
 	--Synchro Summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--Reduce Level
+	--Send to the GY and decrease Level
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.lvlcon)
 	e1:SetTarget(s.lvtg)
 	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
-	--Synchro Summon effect
+	--Synchro Summon during the opponent's Main Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e2:SetCondition(s.sccon)
 	e2:SetTarget(s.sctarg)
 	e2:SetOperation(s.scop)
@@ -33,12 +33,12 @@ end
 function s.lvlcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
 end
+function s.tgfilter(c,lv)
+	return c:IsLevelBelow(lv-1) and c:IsAbleToGrave()
+end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetLevel()) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-end
-function s.tgfilter(c,lv)
-	return c:IsLevelBelow(lv-1) and c:IsAbleToGrave()
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -63,7 +63,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e2:SetTargetRange(1,0)
 	e2:SetValue(s.aclimit)
-	e2:SetLabelObject(tc)
+	e2:SetLabel(tc:GetCode())
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(c)
@@ -73,15 +73,14 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	tc:RegisterEffect(e3)
 end
 function s.aclimit(e,re,tp)
-	local tc=e:GetLabelObject()
-	return re:GetHandler():IsCode(tc:GetCode()) and re:IsActiveType(TYPE_MONSTER)
+	return re:GetHandler():IsCode(e:GetLabel()) and re:IsActiveType(TYPE_MONSTER)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 function s.sctarg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) and c:GetFlagEffect(id)==0 end
+	if chk==0 then return c:GetFlagEffect(id)==0 and Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,c) end
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end

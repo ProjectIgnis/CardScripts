@@ -50,7 +50,7 @@ function s.actg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_GRAVE) and s.acfilter(chkc,e,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.acfilter,tp,0,LOCATION_GRAVE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	Duel.SelectTarget(tp,s.acfilter,tp,0,LOCATION_GRAVE,1,1,nil,tp)
+	Duel.SelectTarget(tp,s.acfilter,tp,0,LOCATION_GRAVE,1,1,nil,e,tp)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

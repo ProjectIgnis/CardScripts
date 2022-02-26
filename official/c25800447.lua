@@ -2,7 +2,6 @@
 --Fusion of Fire
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x119)
 	--Activate
 	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x119),nil,s.fextra)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)

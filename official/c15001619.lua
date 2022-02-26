@@ -8,18 +8,18 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_TOHAND_CONFIRM)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCode(EVENT_TO_HAND)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
-	--If Normal or Special Summoned, Special Summon Level 7 EARTH Warrior from hand/GY
+	--If Normal/Special Summoned, Special Summon 1 Level 7 EARTH Warrior from hand/GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetCountLimit(1,id)
 	e2:SetTarget(s.sptg2)
@@ -31,16 +31,17 @@ function s.initial_effect(c)
 end
 s.listed_names={3167573}
 function s.cfilter(c,tp)
-	return c:IsControler(1-tp) and c:IsPreviousLocation(LOCATION_DECK)
-		and not c:IsReason(REASON_DRAW) and c:IsMonster()
+	return c:IsControler(1-tp) and c:IsPreviousLocation(LOCATION_DECK) and not c:IsReason(REASON_DRAW)
+		and c:IsMonster() and c:GetReasonPlayer()==1-tp
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -61,12 +62,12 @@ function s.atkfilter(c)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 and g:GetFirst():IsCode(3167573) then
+		local c=e:GetHandler()
 		local tg=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,0,nil)
-		for tc in aux.Next(tg) do
+		for tc in tg:Iter() do
 			--Increase ATK
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

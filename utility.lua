@@ -68,16 +68,25 @@ function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
 end
 
 local function setcodecondition(e)
-	return e:GetHandler():IsCode(e:GetHandler():GetOriginalCodeRule())
+	local c=e:GetHandler()
+	local label=e:GetLabel()
+	if label>0 and c:GetOriginalCodeRule()==label then
+		return c:IsCode(c:GetOriginalCodeRule())
+	else
+		return true
+	end
 end
-function Card.AddSetcodesRule(c,...)
+function Card.AddSetcodesRule(c,code,copyable,...)
+	local prop=0
+	if not copyable then prop=EFFECT_FLAG_UNCOPYABLE end
 	local t={}
 	for _,setcode in pairs({...}) do
 		local e=Effect.CreateEffect(c)
 		e:SetType(EFFECT_TYPE_SINGLE)
-		e:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+prop)
 		e:SetCode(EFFECT_ADD_SETCODE)
 		e:SetValue(setcode)
+		e:SetLabel(code)
 		e:SetCondition(setcodecondition)
 		c:RegisterEffect(e)
 		table.insert(t,e)
@@ -1575,12 +1584,13 @@ end
 function Auxiliary.HarmonizingMagFilter(c,e,f)
 	return f and not f(e,c)
 end
-function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp)
+function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
+	if not target_p then target_p=tp end
 	if c then
-		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
+		local fc=Duel.GetFieldCard(target_p,LOCATION_SZONE,5)
 		if Duel.IsDuelType(DUEL_1_FIELD) then
 			if fc then Duel.Destroy(fc,REASON_RULE) end
-			of=Duel.GetFieldCard(1-tp,LOCATION_SZONE,5)
+			of=Duel.GetFieldCard(1-target_p,LOCATION_SZONE,5)
 			if of and Duel.Destroy(of,REASON_RULE)==0 then
 				Duel.SendtoGrave(c,REASON_RULE)
 				return false
@@ -1595,13 +1605,13 @@ function Auxiliary.PlayFieldSpell(c,e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 			end
 		end
-		Duel.MoveToField(c,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
+		Duel.MoveToField(c,tp,target_p,LOCATION_FZONE,POS_FACEUP,true)
 		local te=c:GetActivateEffect()
 		te:UseCountLimit(tp,1,true)
 		local tep=c:GetControler()
 		local cost=te:GetCost()
 		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-		Duel.RaiseEvent(c,4179255,te,0,tp,tp,Duel.GetCurrentChain())
+		Duel.RaiseEvent(c,4179255,te,0,tp,target_p,Duel.GetCurrentChain())
 		return true
 	end
 	return false

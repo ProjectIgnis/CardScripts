@@ -1,9 +1,8 @@
 --Ｕ．Ａ．マン・オブ・ザ・マッチ
---U.A. MVP
+--U.A. Man of the Match
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x107)
 	--Special Summon when destroying by battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

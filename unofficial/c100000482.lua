@@ -1,7 +1,8 @@
 --天輪の葬送士
+--Celestial Undertaker
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x211)
+	c:AddSetcodesRule(id,true,0x254a)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

@@ -675,6 +675,7 @@ EVENT_PHASE_START          = 0x2000
 EVENT_ADD_COUNTER          = 0x10000
 EVENT_REMOVE_COUNTER       = 0x20000
 EVENT_CUSTOM               = 0x10000000
+EVENT_TOHAND_CONFIRM       = EVENT_CUSTOM+15001619
 --Categories
 CATEGORY_DESTROY        = 0x1
 CATEGORY_RELEASE        = 0x2
@@ -974,4 +975,5 @@ WIN_REASON_ZERO_GATE           = 0x53
 WIN_REASON_DEUCE               = 0x54
 WIN_REASON_DECK_MASTER         = 0x56
 WIN_REASON_DRAW_OF_FATE        = 0x57
+WIN_REASON_SEKITORI            = 0x58
 Duel.LoadScript("card_counter_constants.lua")

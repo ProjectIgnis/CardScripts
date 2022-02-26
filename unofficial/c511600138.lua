@@ -3,7 +3,7 @@
 --scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x601)
+	c:AddSetcodesRule(id,false,0x601)
 	--dark synchro summon
 	c:EnableReviveLimit()
 	Synchro.AddDarkSynchroProcedure(c,Synchro.NonTuner(nil),nil,4)

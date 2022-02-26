@@ -1,8 +1,7 @@
 --超重蒸鬼テツドウ－O
---Superheavy Samurai Steam Fiend Tetsudo'o
+--Superheavy Samurai Steam Train King
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x9a)
 	--synchro summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9a),1,1,Synchro.NonTunerEx(Card.IsSetCard,0x9a),2,99)
 	c:EnableReviveLimit()

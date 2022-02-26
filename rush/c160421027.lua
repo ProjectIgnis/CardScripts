@@ -16,7 +16,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLevelAbove(6) and c:IsAttribute(ATTRIBUTE_DARK)
+	return c:IsFaceup() and c:IsLevelAbove(6) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_SPELLCASTER)
 end
 	--Make 1 monster you control gain ATK
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

@@ -1,5 +1,5 @@
 --氷水底イニオン・クレイドル
---Inion Cradel the Icejade Depths
+--Icejade Cenote Enion Cradle
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,7 +11,9 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--change atk
+	if not GhostBelleTable then GhostBelleTable={} end
+	table.insert(GhostBelleTable,e1)
+	--Decrease ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)

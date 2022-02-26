@@ -1,10 +1,7 @@
 --超重荒神スサノ－O
 --Superheavy Samurai Warlord Susanowo
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Always treated as a "Superheavy Samurai" card
-	c:AddSetcodesRule(0x9a)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Synchro summon procedure
@@ -30,7 +27,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x9a}
-
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end

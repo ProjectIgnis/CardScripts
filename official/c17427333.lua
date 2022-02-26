@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c,tc)
-	return c:IsMonster() and c:IsRace(RACE_MACHINE) and c:GetBaseAttack()>=1000
+	return c:IsMonster() and c:IsRace(RACE_MACHINE) and c:GetTextAttack()>=1000
 		and Duel.IsExistingTarget(nil,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,Group.FromCards(tc,c))
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -34,7 +34,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil,c)
 	end
 	local tg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil,c)
-	local mtgc=tg:GetFirst():GetBaseAttack()//1000
+	local mtgc=tg:GetFirst():GetTextAttack()//1000
 	Duel.Release(tg,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,nil,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,mtgc,c)

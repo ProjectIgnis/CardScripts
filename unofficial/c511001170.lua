@@ -1,7 +1,8 @@
+--プレート・サルベージ
 --Plate Salvage
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -22,8 +23,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:IsHasType(EFFECT_TYPE_ACTIVATE) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	--disable
-	local e1=Effect.CreateEffect(e:GetHandler())
+	--Negate Field Spell effects
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DISABLE)
 	e1:SetTargetRange(LOCATION_FZONE,LOCATION_FZONE)
@@ -33,8 +35,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
 	Duel.RegisterEffect(e2,tp)
+	--Pyro Clock of Destiny handling
 	local descnum=tp==c:GetOwner() and 0 or 1
-	local e3=Effect.CreateEffect(e:GetHandler())
+	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetDescription(aux.Stringid(313513,descnum))
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)

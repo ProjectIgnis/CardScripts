@@ -58,7 +58,20 @@ function s.descon2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lp=Duel.GetLP(tp)-Duel.GetLP(1-tp)
-	if chk==0 then return Duel.CheckLPCost(tp,lp) end
+	if chk==0 then
+		for _,eff in pairs({Duel.IsPlayerAffectedByEffect(tp,EFFECT_LPCOST_CHANGE)}) do
+			local val=eff:GetValue()
+			if (type(val)=='integer' and val==0)
+				or (type(val)=='function' and (val(eff,e,tp,lp)~=lp)) then
+				return false
+			end
+			--hardcode for being used like an activate effect (Dinomorphia Stealthbergia)
+			if eff:GetOwner():IsCode(74936480) then
+				return e:GetHandler():IsStatus(STATUS_EFFECT_ENABLED)
+			end
+		end
+		return Duel.CheckLPCost(tp,lp)
+	end
 	Duel.PayLPCost(tp,lp)
 	e:SetLabel(lp)
 end

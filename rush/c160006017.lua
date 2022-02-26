@@ -7,13 +7,9 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.atkcon)
 	e1:SetCost(s.atkcost)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP()
 end
 function s.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_DRAGON) and c:IsLevelAbove(7) and c:IsAbleToGraveAsCost()

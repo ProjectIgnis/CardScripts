@@ -2,7 +2,6 @@
 --Double Iris Magician
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x10f2)
 	Pendulum.AddProcedure(c)
 	--Double damage
 	local e1=Effect.CreateEffect(c)

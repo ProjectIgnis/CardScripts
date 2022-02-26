@@ -1,4 +1,5 @@
 --連鎖除外
+--Chain Disappearance
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetAttack()<=1000 and c:IsAbleToRemove()
+	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:GetAttack()<=1000 and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return eg:IsExists(s.filter,1,nil) end
@@ -26,20 +27,17 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function s.efilter(c,e)
-	return c:IsFaceup() and c:IsAttackBelow(1000) and c:IsRelateToEffect(e)
+	return c:IsFaceup() and c:IsAttackBelow(1000)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local sg=g:Filter(s.efilter,nil,e)
-	Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
+	local sg=Duel.GetTargetCards(e):Filter(s.efilter,nil)
+	if #sg==0 or Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)==0 then return end
 	local rg=Group.CreateGroup()
-	local tc=sg:GetFirst()
-	for tc in aux.Next(sg) do
+	for tc in sg:Iter() do
 		if tc:IsLocation(LOCATION_REMOVED) then
 			local tpe=tc:GetType()
 			if (tpe&TYPE_TOKEN)==0 then
-				local g1=Duel.GetMatchingGroup(Card.IsCode,tp,0,LOCATION_DECK+LOCATION_HAND,nil,tc:GetCode())
-				rg:Merge(g1)
+				rg:Merge(Duel.GetMatchingGroup(Card.IsCode,tp,0,LOCATION_DECK+LOCATION_HAND,nil,tc:GetCode()))
 			end
 		end
 	end

@@ -1,5 +1,5 @@
 --軍貫処『海せん』
---Suship Galley "Kaisen"
+--Gunkan Sushipyard Seaside Supper Spot
 --Scripted by The Razgriz
 
 local s,id=GetID()
@@ -61,7 +61,8 @@ function s.dtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,tp)
-	return c:IsPreviousControler(tp) and c:GetReasonPlayer()==1-tp and c:IsSetCard(0x168) and c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) 
+		and c:GetReasonPlayer()==1-tp and c:IsSetCard(0x168) and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)

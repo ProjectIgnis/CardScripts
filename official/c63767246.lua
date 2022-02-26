@@ -1,13 +1,12 @@
 --Ｎｏ．３８ 希望魁竜タイタニック・ギャラクシー
 --Number 38: Hope Harbinger Dragon Titanic Galaxy
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Xyz summon procedure
+	--Xyz Summon procedure
 	Xyz.AddProcedure(c,nil,8,2)
-	--Negate the effect of a spell card/effect
+	--Negate the effect of a Spell Card/effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE)
@@ -43,7 +42,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.xyz_number=38
-
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return (loc&LOCATION_SZONE)~=0
@@ -56,7 +54,8 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if Duel.NegateEffect(ev) and c:IsRelateToEffect(e) and rc:IsRelateToEffect(re) and c:IsType(TYPE_XYZ) then
+	if aux.disfilter2(rc) and Duel.NegateEffect(ev) and c:IsRelateToEffect(e) and rc:IsRelateToEffect(re)
+		and c:IsType(TYPE_XYZ) then
 		rc:CancelToGrave()
 		Duel.Overlay(c,rc)
 	end
@@ -91,16 +90,13 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter2(chkc) end
 	if chk==0 then return eg:IsExists(s.atkfilter1,1,nil,tp)
 		and Duel.IsExistingTarget(s.atkfilter2,tp,LOCATION_MZONE,0,1,nil) end
-	local g=eg:Filter(s.atkfilter1,nil,tp)
-	g:KeepAlive()
-	e:SetLabelObject(g)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	Duel.SelectTarget(tp,s.atkfilter2,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	local g=e:GetLabelObject()
+	local g=eg:Filter(s.atkfilter1,nil,tp)
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		if #g>=2 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)

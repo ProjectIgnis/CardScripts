@@ -3,11 +3,10 @@
 --updated by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x601)
+	c:AddSetcodesRule(id,false,0x601)
 	--dark synchro summon
 	c:EnableReviveLimit()
 	Synchro.AddDarkSynchroProcedure(c,Synchro.NonTuner(nil),nil,0)
-	c:SetStatus(STATUS_NO_LEVEL,true)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))

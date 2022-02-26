@@ -2,7 +2,7 @@
 --Infernoble Knight Emperor Charles
 local s,id=GetID()
 function s.initial_effect(c)
-	--Synchro summon procedure
+	--Synchro Summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--Destroy card when equipped
@@ -22,12 +22,13 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
+	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
+	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e2)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)>0 end
@@ -38,48 +39,47 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if #g>0 then
-		Duel.HintSelection(g)
+		Duel.HintSelection(g,true)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-function s.filter(c,ec)
+function s.eqsfilter(c,ec)
 	return c:IsType(TYPE_EQUIP) and c:CheckEquipTarget(ec)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e:GetHandler()) end
+		and Duel.IsExistingMatchingCard(s.eqsfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,0,LOCATION_HAND+LOCATION_GRAVE)
 end
-function s.eqfilter(c,tc,tp)
+function s.eqmfilter(c)
 	return c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE) and not c:IsForbidden()
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e:GetHandler()):GetFirst()
-	if tc then
-		Duel.Equip(tp,tc,c)
-		local tg=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_DECK,0,nil,tc,tp)
-		if #tg>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
-			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-			local sg=tg:Select(tp,1,1,nil)
-			Duel.Equip(tp,sg:GetFirst(),c,true)
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_EQUIP)
-			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e1:SetValue(500)
-			sg:GetFirst():RegisterEffect(e1)
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_EQUIP_LIMIT)
-			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e2:SetValue(true)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-			sg:GetFirst():RegisterEffect(e2)
-		end
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.eqsfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,c):GetFirst()
+	if not (tc and Duel.Equip(tp,tc,c)) then return end
+	local tg=Duel.GetMatchingGroup(s.eqmfilter,tp,LOCATION_DECK,0,nil)
+	if #tg>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+		local sg=tg:Select(tp,1,1,nil)
+		if #sg==0 then return end
+		Duel.BreakEffect()
+		s.equipop(c,e,tp,sg:GetFirst())
 	end
+end
+function s.eqval(ec,c,tp)
+	return ec:IsControler(tp) and ec:IsAttribute(ATTRIBUTE_FIRE) and ec:IsRace(RACE_WARRIOR)
+end
+function s.equipop(c,e,tp,tc)
+	if not aux.EquipByEffectAndLimitRegister(c,e,tp,tc,nil,true) then return end
+	--Increase ATK
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetValue(500)
+	tc:RegisterEffect(e1)
 end

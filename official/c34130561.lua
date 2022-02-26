@@ -3,7 +3,6 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0xbd)
 	--Normal Summon without tribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

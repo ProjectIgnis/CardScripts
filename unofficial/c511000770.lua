@@ -5,14 +5,13 @@ function s.initial_effect(c)
 	--Synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,0x9a),1,99)
 	c:EnableReviveLimit()
-	c:AddSetcodesRule(0x9a)
 	--Attack while in Defense position
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DEFENSE_ATTACK)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--Set card
+	--Activate 1 Spell from opponent's GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -34,15 +33,24 @@ end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsDefensePos() and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL)
 end
-function s.acfilter(c,tp)
-	return c:IsType(TYPE_SPELL) and c:IsSSetable(true) and (c:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
+function s.acfilter(c,e,tp)
+	local te=c:GetActivateEffect()
+	if c:IsHasEffect(EFFECT_CANNOT_TRIGGER) then return false end
+	local pre={Duel.GetPlayerEffect(tp,EFFECT_CANNOT_ACTIVATE)}
+	if pre[1] then
+		for i,eff in ipairs(pre) do
+			local prev=eff:GetValue()
+			if type(prev)~='function' or prev(eff,te,tp) then return false end
+		end
+	end
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	return c:IsType(TYPE_SPELL) and c:CheckActivateEffect(false,false,false)~=nil and (ft>0 or c:IsType(TYPE_FIELD))
 end
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_GRAVE) and s.acfilter(chkc,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.acfilter,tp,0,LOCATION_GRAVE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local g=Duel.SelectTarget(tp,s.acfilter,tp,0,LOCATION_GRAVE,1,1,nil,tp)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
+	Duel.SelectTarget(tp,s.acfilter,tp,0,LOCATION_GRAVE,1,1,nil,tp)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e5:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e5:SetOperation(function() if cannotAttackEffect then cannotAttackEffect:Reset() cannotAttackEffect=nil end end)
+	e5:SetOperation(s.resetCannotAttackEffect)
 	c:RegisterEffect(e5)
 	--special summon
 	local e6=Effect.CreateEffect(c)
@@ -54,6 +54,19 @@ function s.initial_effect(c)
 	e6:SetTarget(s.target)
 	e6:SetOperation(s.operation)
 	c:RegisterEffect(e6)
+end
+function s.resetCannotAttackEffect()
+	if cannotAttackEffect then
+		if not cannotAttackEffect:IsDeleted() then
+			cannotAttackEffect:Reset()
+		end
+		cannotAttackEffect=nil
+	end
+end
+function s.checkCannotAttackEffect(e)
+	if cannotAttackEffect==nil then return false end
+	if cannotAttackEffect:IsDeleted() then cannotAttackEffect=nil return false end
+	return cannotAttackEffect:GetCondition()(e)
 end
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsType(TYPE_LINK,scard,sumtype,tp) and c:IsSetCard(0x577,scard,sumtype,tp)
@@ -93,7 +106,7 @@ function s.distarget(e,c)
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_BATTLE_STEP
-		and e:GetHandler():GetBattledGroupCount()>0 and cannotAttackEffect~=nil and cannotAttackEffect:GetCondition()(e)
+		and e:GetHandler():GetBattledGroupCount()>0 and s.checkCannotAttackEffect(e)
 end
 function s.gyfilter(c,ec)
 	local ag,da=ec:GetAttackableTarget()
@@ -110,8 +123,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(1-tp,s.gyfilter,1-tp,LOCATION_MZONE,0,1,1,nil,e:GetHandler())
 	if #g>0 and Duel.SendtoGrave(g,REASON_RULE)~=0 then
-		cannotAttackEffect:Reset()
-		cannotAttackEffect=nil
+		s.resetCannotAttackEffect()
 	end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

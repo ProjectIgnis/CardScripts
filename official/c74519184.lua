@@ -32,8 +32,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,1-turnp,HINTMSG_TOGRAVE)
 	local g2=Duel.SelectMatchingCard(1-turnp,aux.TRUE,1-turnp,LOCATION_HAND,0,2,2,nil)
 	g1:Merge(g2)
-	Duel.SendtoGrave(g1,REASON_EFFECT)
-	Duel.BreakEffect()
-	Duel.Draw(turnp,2,REASON_EFFECT)
-	Duel.Draw(1-turnp,2,REASON_EFFECT)
+	if Duel.SendtoGrave(g1,REASON_EFFECT)>0 then
+		Duel.BreakEffect()
+		Duel.Draw(turnp,2,REASON_EFFECT)
+		Duel.Draw(1-turnp,2,REASON_EFFECT)
+	end
 end

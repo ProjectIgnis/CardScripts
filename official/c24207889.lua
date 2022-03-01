@@ -67,12 +67,18 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 			s.lastFieldId[p]=nil
 		else
 			local race=1
+			local update_fid=false
 			while (RACE_ALL&race)~=0 do
 				local rg=g:Filter(Card.IsRace,nil,race)
 				if s.lastFieldId[p] then
 					local forced
 					forced,rg=rg:Split(s.fidfilter,nil,s.lastFieldId[p])
-					sg:Merge(forced)
+					if #rg==0 then
+						rg=forced
+						update_fid=true
+					else
+						sg:Merge(forced)
+					end
 				end
 				local rc=#rg
 				if rc>1 then
@@ -81,7 +87,7 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 				end
 				race=race<<1
 			end
-			if not s.lastFieldId[p] then
+			if update_fid or not s.lastFieldId[p] then
 				local maxg,maxid=g:Sub(sg):GetMaxGroup(Card.GetFieldID)
 				s.lastFieldId[p]=maxid
 			end

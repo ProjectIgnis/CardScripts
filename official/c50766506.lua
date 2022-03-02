@@ -2,7 +2,7 @@
 --Ninjutsu Art of Duplication
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Tribute and special summon "Ninja" monsters from the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--Destroy
+	--Destroy the summoned monster when leaving the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e2:SetCode(EVENT_LEAVE_FIELD)
@@ -58,14 +58,16 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	sg:Remove(Card.IsLevelAbove,nil,slv+1)
 	if #sg==0 then return end
 	local cg=aux.SelectUnselectGroup(sg,e,tp,1,ft,s.rescon(slv),1,tp,HINTMSG_SPSUMMON)
+	local ssg=Group.CreateGroup()
 	for tc in cg:Iter() do
-		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)~=0 and tc:IsFacedown() then
-			cg:AddCard(tc)
+		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
+		if tc:IsFacedown() then
+			ssg:AddCard(tc)
 		end
 		c:SetCardTarget(tc)
 	end
 	Duel.SpecialSummonComplete()
-	Duel.ConfirmCards(1-tp,cg)
+	Duel.ConfirmCards(1-tp,ssg)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetCardTarget():Filter(Card.IsLocation,nil,LOCATION_MZONE)

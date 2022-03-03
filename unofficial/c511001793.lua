@@ -23,7 +23,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.HintSelection(Group.FromCards(Duel.GetAttacker()))
 	Duel.NegateAttack()
 end
-function s.filter(c,tp,eg,ep,ev,re,r,rp)
+function s.filter(c,e,tp)
 	local te=c:GetActivateEffect()
 	if not te then return false end
 	if c:IsHasEffect(EFFECT_CANNOT_TRIGGER) then return false end
@@ -34,15 +34,12 @@ function s.filter(c,tp,eg,ep,ev,re,r,rp)
 			if type(prev)~='function' or prev(eff,te,tp) then return false end
 		end
 	end
-	local condition=te:GetCondition()
-	local cost=te:GetCost()
-	local target=te:GetTarget()
-	return c:IsType(TYPE_SPELL) and (not condition or condition(te,tp,eg,ep,ev,re,r,rp)) and (not cost or cost(te,tp,eg,ep,ev,re,r,rp,0))
-		and (not target or target(te,tp,eg,ep,ev,re,r,rp,0)) and (c:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
+	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
+	return c:IsType(TYPE_SPELL) and c:CheckActivateEffect(false,false,false)~=nil and (ft>0 or c:IsType(TYPE_FIELD))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,tp,eg,ep,ev,re,r,rp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,tp,eg,ep,ev,re,r,rp) 
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) 
 		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,tp,eg,ep,ev,re,r,rp)
@@ -51,7 +48,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,1,nil)
 	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
 		if tc and tc:IsRelateToEffect(e) and not tc:IsHasEffect(EFFECT_CANNOT_TRIGGER) then
 			local tpe=tc:GetType()

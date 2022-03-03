@@ -3,10 +3,10 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon procedure
 	Xyz.AddProcedure(c,nil,8,2)
 	c:EnableReviveLimit()
-	--cannot be target
+	--Cannot be targeted by the opponent's effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(aux.tgoval)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon 1 "Number" Dragon monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -50,7 +50,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,chk) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_EXTRA+LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler() 
@@ -63,15 +63,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local oc=sg-tg
 			local tc=tg:GetFirst()
 			Duel.Overlay(tc,oc)
-			--cannot attack
-			local e3=Effect.CreateEffect(c)
-			e3:SetType(EFFECT_TYPE_FIELD)
-			e3:SetCode(EFFECT_CANNOT_ATTACK)
-			e3:SetTargetRange(LOCATION_MZONE,0)
-			e3:SetLabelObject(tc)
-			e3:SetTarget(s.atktg)
-			e3:SetReset(RESET_PHASE+PHASE_END)
-			Duel.RegisterEffect(e3,tp)
+			--Limit attacks for the rest of the turn
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_FIELD)
+			e1:SetCode(EFFECT_CANNOT_ATTACK)
+			e1:SetTargetRange(LOCATION_MZONE,0)
+			e1:SetLabelObject(tc)
+			e1:SetTarget(s.atktg)
+			e1:SetReset(RESET_PHASE+PHASE_END)
+			Duel.RegisterEffect(e1,tp)
 		end
 	end
 	local e1=Effect.CreateEffect(c)

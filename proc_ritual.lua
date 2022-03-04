@@ -213,7 +213,7 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 						if tc.mat_filter then
 							mg:Match(tc.mat_filter,tc,tp)
 						end
-						if not mg:IsExists(Card.IsLocation,1,nil,LOCATION_OVERLAY) and ft>0 and not func then
+						if ft>0 and not func then
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 							if _type==RITPROC_EQUAL then
 								mat=mg:SelectWithSumEqual(tp,requirementfunc or Card.GetRitualLevel,lv,1,#mg,tc)

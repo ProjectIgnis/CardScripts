@@ -64,7 +64,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 			if of then Duel.Destroy(of,REASON_RULE) end
 			of=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 			if of and Duel.Destroy(of,REASON_RULE)==0 then Duel.SendtoGrave(tc,REASON_RULE) end
-			Duel.MoveSequence(c,5)
+			Duel.MoveSequence(c,0,LOCATION_FZONE)
 		end
 		Duel.ClearTargetCard()
 		c:CreateEffectRelation(e)

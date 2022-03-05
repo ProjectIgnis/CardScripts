@@ -32,7 +32,7 @@ end
 s.listed_names={3167573}
 function s.cfilter(c,tp)
 	return c:IsControler(1-tp) and c:IsPreviousLocation(LOCATION_DECK) and not c:IsReason(REASON_DRAW)
-		and c:IsMonster() and c:GetReasonPlayer()==1-tp
+		and c:IsMonster() and c:IsPreviousControler(1-tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

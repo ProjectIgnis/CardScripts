@@ -69,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.ritfilter(c,tp)
-	return c:IsType(TYPE_RITUAL) and c:IsSummonPlayer(tp)
+	return c:IsType(TYPE_RITUAL) and c:IsSummonPlayer(tp) and c:IsFaceup()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==0 then return end

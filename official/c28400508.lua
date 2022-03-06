@@ -3,10 +3,10 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
+	--Xyz Summon procedure
 	Xyz.AddProcedure(c,nil,8,2)
 	c:EnableReviveLimit()
-	--cannot be target
+	--Cannot be targeted by the opponent's effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -14,26 +14,21 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(aux.tgoval)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon 1 "Number" Dragon monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.spcost)
+	e2:SetCost(aux.dxmcostgen(1,1,nil))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_series={0x48}
-s.listed_names={}
+s.listed_names={id}
 s.xyz_number=97
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	c:RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.spfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsSetCard(0x48) and not c:IsCode(id)
 end
@@ -49,8 +44,8 @@ function s.rescon(sg,e,tp,mg)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,nil)
-	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,chk) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA+LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler() 
@@ -63,25 +58,26 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local oc=sg-tg
 			local tc=tg:GetFirst()
 			Duel.Overlay(tc,oc)
-			--cannot attack
-			local e3=Effect.CreateEffect(c)
-			e3:SetType(EFFECT_TYPE_FIELD)
-			e3:SetCode(EFFECT_CANNOT_ATTACK)
-			e3:SetTargetRange(LOCATION_MZONE,0)
-			e3:SetLabelObject(tc)
-			e3:SetTarget(s.atktg)
-			e3:SetReset(RESET_PHASE+PHASE_END)
-			Duel.RegisterEffect(e3,tp)
+			--Limit attacks for the rest of the turn
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_FIELD)
+			e1:SetCode(EFFECT_CANNOT_ATTACK)
+			e1:SetTargetRange(LOCATION_MZONE,0)
+			e1:SetLabelObject(tc)
+			e1:SetTarget(s.atktg)
+			e1:SetReset(RESET_PHASE+PHASE_END)
+			Duel.RegisterEffect(e1,tp)
 		end
 	end
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),nil)
+	--Cannot Special Summon other monsters
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetTargetRange(1,0)
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e2,tp)
 end
 function s.atktg(e,c)
 	return e:GetLabelObject()~=c

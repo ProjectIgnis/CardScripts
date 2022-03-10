@@ -45,6 +45,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_SZONE,0)
 	e1:SetCondition(s.accon)
 	e1:SetTarget(function(e,c) return c:GetType()==TYPE_TRAP end)
+	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.accon(e)

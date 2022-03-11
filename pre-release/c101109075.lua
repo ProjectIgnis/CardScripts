@@ -38,13 +38,13 @@ function s.thtgfilter(c,e,tp)
 	return c:IsRelateToEffect(e) and c:IsFaceup() and c:IsControler(1-tp) and c:IsAbleToHand()
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Clone()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_MZONE,0,#tg,#tg,nil)
 	if #g==0 then return end
 	Duel.HintSelection(g,true)
 	if Duel.SendtoHand(g,nil,REASON_EFFECT)>0 and g:IsExists(Card.IsLocation,1,nil,LOCATION_HAND)
-		and #tg:Clone():Match(s.thtgfilter,nil,e,tp)>0 then
+		and #tg:Match(s.thtgfilter,nil,e,tp)>0 then
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 	end
 end

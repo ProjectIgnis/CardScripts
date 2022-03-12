@@ -227,7 +227,6 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 						local ret = {extrafil(e,tp,mg1)}
 						if ret[1] then
 							Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
-							extragroup=ret[1]
 							mg1:Merge(ret[1])
 						end
 						checkAddition=ret[2]

@@ -17,9 +17,22 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
-	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,function(c) return not c:IsSummonType(SUMMON_TYPE_XYZ) end)
+	-- Count Xyz Summons
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
+		ge1:SetOperation(s.checkop)
+		Duel.RegisterEffect(ge1,0)
+	end)
 end
 s.listed_series={0x174}
+function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=eg:GetFirst()
+	if tc:IsSummonType(SUMMON_TYPE_XYZ) then
+		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+	end
+end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	return #g>0 and g:FilterCount(aux.FilterFaceupFunction(Card.IsSetCard,0x174),nil)==#g
@@ -44,7 +57,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local xg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil)
 	local rg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
 	local b1=#xg>0
-	local b2=#rg>0 and Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)>0
+	local b2=#rg>0 and Duel.GetFlagEffect(tp,id)>0
 	if not (b1 or b2) then return end
 	if not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end
 	local op=aux.SelectEffect(tp,

@@ -3,6 +3,8 @@
 --Scripted by the Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
+	--Pendulum Summon
+    	Pendulum.AddProcedure(c)
 	--Allow use of 1 monster from the Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

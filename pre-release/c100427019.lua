@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetCost(s.setcost)
-	e1:SetTarget(s.settg)
 	e1:SetOperation(s.setop)
 	c:RegisterEffect(e1)
 	--Special Summon itself
@@ -31,17 +30,17 @@ function s.initial_effect(c)
 end
 s.listed_series={0x27d}
 --Set 1 "Labrynth" Spell/Trap from the hand or deck
-function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,c) end
-	Duel.SendtoGrave(c,REASON_COST)
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
-end
 function s.setfilter(c)
 	return c:IsSetCard(0x27d) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
-function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
+function s.setcostfilter(c,tp)
+	return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,c)
+end
+function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(s.setcostfilter,tp,LOCATION_HAND,0,1,c,tp) end
+	Duel.SendtoGrave(c,REASON_COST)
+	Duel.DiscardHand(tp,s.setcostfilter,1,1,REASON_COST+REASON_DISCARD,nil,tp)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)

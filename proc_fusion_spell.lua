@@ -42,6 +42,18 @@ Debug.ReloadFieldBegin=(function()
 	end
 )()
 
+Duel.GetFusionMaterial=(function()
+	local oldfunc=Duel.GetFusionMaterial
+	return function(tp)
+		local res=oldfunc(tp)
+		local g=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_EXTRA,0,nil,EFFECT_EXTRA_FUSION_MATERIAL)
+		if #g>0 then
+			res:Merge(g)
+		end
+		return res
+	end
+end)()
+
 --Returns the first EFFECT_EXTRA_FUSION_MATERIAL applied on Card c.
 --If summon_card is provided, it will also check if the effect's value function applies to that card.
 --Card.IsHasEffect alone cannot be used because it would return the above effect as well.
@@ -77,13 +89,14 @@ local function ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
 			--Hardcoded to LOCATION_GRAVE since it's currently
 			--impossible to get the TargetRange of the
 			--EFFECT_EXTRA_FUSION_MATERIAL effect (but the only OPT effect atm uses the GY).
+			local extra_feff_loc=extra_feff:GetTargetRange()
 			if extrafil then
 				local extrafil_g=extrafil(e,tp,mg1)
-				if extrafil_g and #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
-					mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+				if extrafil_g and #extrafil_g>0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,extra_feff_loc) then
+					mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,extra_feff_loc))
 					efmg:Clear()
 				elseif not extrafil_g then
-					mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+					mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,extra_feff_loc))
 					efmg:Clear()
 				end
 			--If "extrafil" doesn't exist then remove all the
@@ -93,7 +106,7 @@ local function ExtraMatOPTCheck(mg1,e,tp,extrafil,efmg)
 			--but it's currently not possible to know if that is the case
 			--(only relevant for "Fullmetalfoes Alkahest" atm, but he's not OPT).
 			else
-				mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE))
+				mg1:Sub(extra_feff_mg:Filter(Card.IsLocation,nil,extra_feff_loc))
 				efmg:Clear()
 			end
 		end
@@ -178,7 +191,39 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 					local mg1=fmg_all:Filter(matfilter,nil,e,tp,0)
 					local efmg=fmg_all:Filter(GetExtraMatEff,nil)
 					local checkAddition=nil
-					if extrafil then
+					local repl_flag=false
+					if #efmg>0 then
+						local extra_feff=GetExtraMatEff(efmg:GetFirst())
+						if extra_feff and extra_feff:GetLabelObject() then
+							local repl_function=extra_feff:GetLabelObject()
+							repl_flag=true
+							-- no extrafil (Poly):
+							if not extrafil then
+								local ret = {repl_function[1](e,tp,mg1)}
+								if ret[1] then
+									Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
+									mg1:Merge(ret[1])
+								end
+								checkAddition=ret[2]
+							-- extrafil but no fcheck (Shaddoll Fusion):
+							elseif extrafil then
+								local ret = {extrafil(e,tp,mg1)}
+								local repl={repl_function[1](e,tp,mg1)}
+								if ret[1] then
+									ret[1]:Merge(repl[1])
+									Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
+									mg1:Merge(ret[1])
+								end
+								if ret[2] then
+									-- extrafil and fcheck (Cynet Fusion):
+									checkAddition=aux.AND(ret[2],repl[2])
+								else
+									checkAddition=repl[2]
+								end
+							end
+						end
+					end
+					if not repl_flag and extrafil then
 						local ret = {extrafil(e,tp,mg1)}
 						if ret[1] then
 							Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
@@ -279,7 +324,39 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				local mg1=fmg_all:Filter(matfilter,nil,e,tp,1)
 				local efmg=fmg_all:Filter(GetExtraMatEff,nil)
 				local extragroup=nil
-				if extrafil then
+				local repl_flag=false
+				if #efmg>0 then
+					local extra_feff=GetExtraMatEff(efmg:GetFirst())
+					if extra_feff and extra_feff:GetLabelObject() then
+						local repl_function=extra_feff:GetLabelObject()
+						repl_flag=true
+						-- no extrafil (Poly):
+						if not extrafil then
+							local ret = {repl_function[1](e,tp,mg1)}
+							if ret[1] then
+								Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
+								mg1:Merge(ret[1])
+							end
+							checkAddition=ret[2]
+						-- extrafil but no fcheck (Shaddoll Fusion):
+						elseif extrafil then
+							local ret = {extrafil(e,tp,mg1)}
+							local repl={repl_function[1](e,tp,mg1)}
+							if ret[1] then
+								ret[1]:Merge(repl[1])
+								Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
+								mg1:Merge(ret[1])
+							end
+							if ret[2] then
+								-- extrafil and fcheck (Cynet Fusion):
+								checkAddition=aux.AND(ret[2],repl[2])
+							else
+								checkAddition=repl[2]
+							end
+						end
+					end
+				end
+				if not repl_flag and extrafil then
 					local ret = {extrafil(e,tp,mg1)}
 					if ret[1] then
 						Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
@@ -360,7 +437,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 									local flag=nil
 									if extrafil then
 										local extrafil_g=extrafil(e,tp,mg1)
-										if #extrafil_g>=0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then
+										if #extrafil_g>=0 and not extrafil_g:IsExists(Card.IsLocation,1,nil,extra_feff:GetTargetRange()) then
 											--The Fusion effect by default does not use the GY
 											--so the player is forced to apply this effect.
 											mat1:Sub(extra_feff_mg)

@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	 return Duel.GetMatchingGroupCountRush(s.filter,e:GetHandler():GetControler(),0,LOCATION_MZONE,nil)>=2
+	 return Duel.GetMatchingGroupCountRush(aux.TRUE,e:GetHandler():GetControler(),0,LOCATION_MZONE,nil)>=2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsLevelAbove,6),tp,0,LOCATION_MZONE,1,nil) end

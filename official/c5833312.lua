@@ -53,6 +53,7 @@ function s.typecheck(types)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return s.typecheck(RACE_WARRIOR|RACE_BEAST|RACE_PYRO) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) and rp==tp
+		and not e:GetHandler():IsDisabled()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
@@ -69,8 +70,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	return s.typecheck(RACE_DINOSAUR|RACE_SEASERPENT|RACE_THUNDER) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and rp==tp
-		and re:GetHandler()~=e:GetHandler()
+		and re:GetHandler()~=c and not c:IsDisabled()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -82,6 +84,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return s.typecheck(RACE_MACHINE|RACE_FAIRY|RACE_FIEND) and re:IsActiveType(TYPE_MONSTER) and rp==tp
+		and not e:GetHandler():IsDisabled()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end

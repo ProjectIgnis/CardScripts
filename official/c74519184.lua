@@ -27,13 +27,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if h1<2 or h2<2 then return end
 	local turnp=Duel.GetTurnPlayer()
 	Duel.Hint(HINT_SELECTMSG,turnp,HINTMSG_TOGRAVE)
-	local g1=Duel.SelectMatchingCard(turnp,aux.TRUE,turnp,LOCATION_HAND,0,2,2,nil)
+	local g1=Duel.SelectMatchingCard(turnp,nil,turnp,LOCATION_HAND,0,2,2,nil)
 	Duel.ConfirmCards(1-turnp,g1)
 	Duel.Hint(HINT_SELECTMSG,1-turnp,HINTMSG_TOGRAVE)
-	local g2=Duel.SelectMatchingCard(1-turnp,aux.TRUE,1-turnp,LOCATION_HAND,0,2,2,nil)
+	local g2=Duel.SelectMatchingCard(1-turnp,nil,1-turnp,LOCATION_HAND,0,2,2,nil)
 	g1:Merge(g2)
-	Duel.SendtoGrave(g1,REASON_EFFECT)
-	Duel.BreakEffect()
-	Duel.Draw(turnp,2,REASON_EFFECT)
-	Duel.Draw(1-turnp,2,REASON_EFFECT)
+	if #g1>0 and Duel.SendtoGrave(g1,REASON_EFFECT)>0 then
+		local og=Duel.GetOperatedGroup()
+		if not og:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE) then return end
+		Duel.BreakEffect()
+		Duel.Draw(turnp,2,REASON_EFFECT)
+		Duel.Draw(1-turnp,2,REASON_EFFECT)
+	end
 end

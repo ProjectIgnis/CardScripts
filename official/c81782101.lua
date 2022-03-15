@@ -66,7 +66,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local fid=e:GetHandler():GetFieldID()
 		for tc in aux.Next(sg) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+			tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
 		end
 		Duel.SpecialSummonComplete()
 		sg:KeepAlive()
@@ -83,7 +83,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmfilter(c,fid)
-	return c:GetFlagEffectLabel(id)==fid
+	return c:GetFlagEffectLabel(id+1)==fid
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()

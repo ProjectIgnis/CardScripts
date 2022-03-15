@@ -1,8 +1,8 @@
--- 星戦騎 
+-- 星戦騎フォールス
 -- Pholus the Star Knight
 local s,id=GetID()
 function s.initial_effect(c)
---Activate
+	--Special Summon 1 Level 5 or 6 Normal Monster from your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -13,17 +13,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.tdfilter(c,tp)
+function s.tdfilter(c,tp,sc)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeckOrExtraAsCost()
-	and Duel.IsExistingMatchingCard(s.tdfilter2,tp,LOCATION_GRAVE,0,2,c,c:GetRace())
+		and Duel.IsExistingMatchingCard(s.tdfilter2,tp,LOCATION_GRAVE,0,2,Group.FromCards(c,sc),c:GetRace())
 end
 function s.tdfilter2(c,race)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(race) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and (c:IsLevel(5) or c:IsLevel(6))
-	and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	and Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,c,tp)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,c,tp,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
@@ -43,13 +43,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil)
 	local td=aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,1,tp,HINTMSG_SELECT)
-		
-	Duel.HintSelection(td)
+	Duel.HintSelection(td,true)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
+		--Effect
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-		Duel.HintSelection(g)
+		Duel.HintSelection(g,true)
 		if #g>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 			local c=e:GetHandler()
@@ -63,5 +63,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetRace)==1  and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE,0,1,sg,e,tp)
+	return sg:GetClassCount(Card.GetRace)==1 and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE,0,1,sg,e,tp)
 end

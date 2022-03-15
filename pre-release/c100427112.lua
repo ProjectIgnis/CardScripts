@@ -65,7 +65,7 @@ function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not (tc:IsRelateToEffect(e) and tc:IsControler(1-tp)) then return end
+	if not (tc:IsRelateToEffect(e) and tc:IsControler(1-tp) and not tc:IsImmuneToEffect(e)) then return end
 	local seq=tc:GetSequence()
 	local dc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,seq)
 	if dc then

@@ -53,7 +53,7 @@ function s.accon(e)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and r&REASON_COST==REASON_COST and re and re:IsActivated()
-		and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_HAND)
+		and eg:IsExists(Card.IsPreviousLocation,1,e:GetHandler(),LOCATION_HAND)
 		and (re:GetActiveType()==TYPE_TRAP or (re:GetHandler():IsSetCard(0x27d) and not re:GetHandler():IsCode(id)))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

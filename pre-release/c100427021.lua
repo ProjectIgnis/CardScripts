@@ -34,7 +34,7 @@ end
 s.listed_series={0x127d}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=re:GetHandler()
-	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and c:GetType()==TYPE_TRAP and not c:IsSetCard(0x27d)
+	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetActiveType()==TYPE_TRAP and not c:IsSetCard(0x27d)
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_FIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -1,4 +1,4 @@
---
+--インセクト・ランページ
 --Insect Rampage
 --scripted by pyrQ
 local s,id=GetID()

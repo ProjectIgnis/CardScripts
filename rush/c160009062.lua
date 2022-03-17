@@ -1,4 +1,4 @@
---
+--アンチアント・バリア
 --Anciant Barrier
 --scripted by pyrQ
 local s,id=GetID()

@@ -1,4 +1,4 @@
---
+--カジキ尖兵カジュー
 --Swordfish Vanguard Gaju
 --scripted by pyrQ
 local s,id=GetID()

@@ -1,4 +1,4 @@
---
+--翅甲王ディナス・ドルクス
 --Bladearmor King Dynas Dorcus
 --scripted by pyrQ
 local s,id=GetID()

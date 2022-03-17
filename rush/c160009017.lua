@@ -1,4 +1,4 @@
---
+--サテライトペガサス
 --Satellite Pegasus
 --scripted by pyrQ
 local s,id=GetID()

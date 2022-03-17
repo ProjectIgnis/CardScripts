@@ -1,4 +1,4 @@
---
+--ブラック・ハンドシェイカー
 --Black Handshaker
 --scripted by pyrQ
 local s,id=GetID()

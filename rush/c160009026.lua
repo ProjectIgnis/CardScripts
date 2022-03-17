@@ -1,4 +1,4 @@
---
+--セラッピ
 --Therappi
 --scripted by pyrQ
 local s,id=GetID()

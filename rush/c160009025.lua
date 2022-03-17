@@ -1,4 +1,4 @@
---
+--貿績蚕フィブロン
 --Swapinning Silkworm Fibellon
 --scripted by pyrQ
 local s,id=GetID()

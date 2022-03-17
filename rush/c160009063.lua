@@ -1,4 +1,4 @@
---
+--転倒無視
 --Tumbling Insects
 --scripted by pyrQ
 local s,id=GetID()

@@ -1,4 +1,4 @@
---
+--アストロレスキュー
 --Astrorescue
 --scripted by pyrQ
 local s,id=GetID()

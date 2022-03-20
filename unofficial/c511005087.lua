@@ -30,8 +30,6 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetAttacker()
     	local atc=Duel.GetAttackTarget()
-	local ac=Duel.GetAttacker()
-    	local atc=Duel.GetAttackTarget()
     	if ac:IsControler(1-tp) and ac:IsRelateToBattle() then 
         	Duel.Destroy(ac,REASON_EFFECT)
     	elseif atc and atc:IsControler(1-tp) and atc:IsRelateToBattle() then

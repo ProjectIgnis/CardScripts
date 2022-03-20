@@ -952,20 +952,23 @@ function Drytron.TributeSummonLimit(e,c)
 end
 Drytron.TributeCost=aux.CostWithReplace(Drytron.TributeBaseCost,CARD_URSARCTIC_DRYTRON,nil,Drytron.TributeExtraCost)
 
--- Effect.CreateMysteruneQPEffect(c,id,[uniquecat,uniquetg,uniqueop,rmcount,uniqueprop,uniquecode])
--- Creates an activation Effect object for the "Mysterune" Quick-Play Spells.
--- Card c: the owner of the Effect
--- int id: the card ID used for the HOPT restriction and strings
--- int uniquecat: the category of the unique effect
--- function uniquetg: the unique effect's target function, excluding the banishment handling
--- function uniqueop: the unique effect's operation function, excluding the banishment handling,
---		the function must return true to proceed to the banishment part
--- int|function rmcount: the amount of cards to be banished from the opponent's deck if op is chosen,
--- 		can be a function with the signature (e,tp,eg,ep,ev,re,r,rp)
--- int uniqueprop: additional Effect properties if the unique effect is chosen
--- int uniquecode: a separate timing where the unique effect can be activated (instead of FREE_CHAIN)
---		if provided, the function will return the two Effect objects separately (unique effect first)
+--[[
+	Effect.CreateMysteruneQPEffect(c,id,[uniquecat,uniquetg,uniqueop,rmcount,uniqueprop,uniquecode])
 
+	Creates an activation Effect object for the "Mysterune" Quick-Play Spells.
+
+	Card c: the owner of the Effect
+	int id: the card ID used for the HOPT restriction and strings
+	int uniquecat: the category of the unique effect
+	function uniquetg: the unique effect's target function, excluding the banishment handling
+	function uniqueop: the unique effect's operation function, excluding the banishment handling,
+		the function must return true to proceed to the banishment part
+	int|function rmcount: the amount of cards to be banished from the opponent's deck if op is chosen,
+		can be a function with the signature (e,tp,eg,ep,ev,re,r,rp)
+	int uniqueprop: additional Effect properties if the unique effect is chosen
+	int uniquecode: a separate timing where the unique effect can be activated (instead of FREE_CHAIN)
+		if provided, the function will return the two Effect objects separately (unique effect first)
+--]]
 Effect.CreateMysteruneQPEffect = (function()
 	local function skipop(e,tp,eg,ep,ev,re,r,rp)
 		if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
@@ -1170,3 +1173,25 @@ Effect.CreateVernalizerSPEffect=(function()
 		return e1
 	end
 end)()
+
+--[[
+	Handles the additional destruction effect for
+	"Welcome Labrynth" Normal Traps given by "Labrynth Labyrinth"
+--]]
+function Auxiliary.WelcomeLabrynthTrapDestroyOperation(e,tp)
+	local c=e:GetHandler()
+	local addeff=Duel.IsPlayerAffectedByEffect(tp,CARD_LABRYNTH_LABYRINTH)
+	if not (addeff and addeff:CheckCountLimit(tp)
+		and e:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetActiveType()==TYPE_TRAP
+		and c:IsSetCard(0x127d) and not c:IsStatus(STATUS_ACT_FROM_HAND)
+		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
+		and Duel.SelectYesNo(tp,aux.Stringid(CARD_LABRYNTH_LABYRINTH,1))) then return end
+	addeff:UseCountLimit(tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c)
+	if #g>0 then
+		Duel.HintSelection(g,true)
+		Duel.BreakEffect()
+		Duel.Destroy(g,REASON_EFFECT)
+	end
+end

@@ -44,6 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
+	aux.WelcomeLabrynthTrapDestroyOperation(e,tp)
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	local c=e:GetHandler()
 	-- Cannot Special Summon from the Deck or Extra Deck, except Fiend monsters

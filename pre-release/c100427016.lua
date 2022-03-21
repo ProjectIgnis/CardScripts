@@ -103,7 +103,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 			local g=Duel.SelectMatchingCard(tp,s.stfilter,tp,LOCATION_HAND,0,1,1,nil)
 			if #g>0 then
 				Duel.BreakEffect()
-				Duel.SSet(tp,g)
+				Duel.SSet(tp,g,tp,false)
 			end
 		end
 	end

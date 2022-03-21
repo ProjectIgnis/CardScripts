@@ -61,10 +61,10 @@ end
 function s.repcon(e)
 	return e:GetHandler():IsAbleToRemoveAsCost()
 end
-function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk)
+function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
 	local c=e:GetHandler()
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsSetCard(0xa3) and c:IsType(TYPE_SYNCHRO)
+		and c:IsSetCard(0xa3) and c:IsType(TYPE_SYNCHRO) and (extracon==nil or extracon())
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

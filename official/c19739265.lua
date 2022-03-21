@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e)
-	return c:IsFacedown() or (c:IsFaceup() and c:IsCanTurnSet()) and c:IsCanBeEffectTarget (e)
+	return c:IsFacedown() or (c:IsFaceup() and c:IsCanTurnSet()) and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
     return sg:FilterCount(Card.IsControler,nil,tp)==1

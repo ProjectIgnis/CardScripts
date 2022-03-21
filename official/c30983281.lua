@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_MAIN_END)
 	e2:SetCountLimit(1,{id,2})
 	e2:SetCondition(function() return Duel.IsMainPhase() end)
-	e2:SetCost(aux.StardustCost)
+	e2:SetCost(aux.CostWithReplace(s.spcost,84012625,function() return e2:GetLabel()==1 end))
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
@@ -51,8 +51,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.spfilter2(c,e,tp)
-	local rc=e:GetHandler()
+function s.spfilter2(c,e,tp,rc)
 	local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_MZONE,0,rc)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,c,nil,REASON_SYNCHRO)
 	return #pg<=0 and c:IsCode(CARD_STARDUST_DRAGON) and Duel.GetLocationCountFromEx(tp,tp,rc,c)>0
@@ -63,9 +62,22 @@ function s.scfilter(c,mg)
 	return c:IsSynchroSummonable(nil,mg)
 end
 	--Activation legality
+function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsReleasable() and Duel.IsPlayerCanSpecialSummonCount(tp,2)
+		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c) end
+	Duel.Release(c,REASON_COST)
+end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)
-		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then
+		if e:GetHandler():IsReleasable() and Duel.IsPlayerCanSpecialSummonCount(tp,2)
+			and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp) then
+			e:SetLabel(1)
+		else
+			e:SetLabel(0)
+		end
+		return true
+	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 	--Special Summon 1 "Stardust Dragon" from your Extra Deck, then Synchro Summon

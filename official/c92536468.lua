@@ -81,9 +81,10 @@ function s.revop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)>0 then
 		--Any effect that would inflict damage increases LP instead
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_REVERSE_DAMAGE)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetTargetRange(1,1)
 		e1:SetValue(s.revval)
 		e1:SetReset(RESET_PHASE+PHASE_END)

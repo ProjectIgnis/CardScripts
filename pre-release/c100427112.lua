@@ -69,7 +69,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	local seq=tc:GetSequence()
 	local dc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,seq)
 	if dc then
-		Duel.Destroy(dc,REASON_EFFECT)
+		Duel.Destroy(dc,REASON_RULE)
 	end
 	if Duel.CheckLocation(1-tp,LOCATION_SZONE,seq)
 		and Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true,1<<seq) then

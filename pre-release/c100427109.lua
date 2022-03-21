@@ -102,7 +102,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	if not (tc:IsRelateToEffect(e) and tc:IsControler(1-tp)) or tc:IsImmuneToEffect(e) then return end
 	local seq=tc:GetSequence()
 	local dc=Duel.GetFieldCard(1-tp,LOCATION_SZONE,seq)
-	if dc and Duel.Destroy(dc,REASON_EFFECT)>0 and dc:IsOriginalType(TYPE_MONSTER) and dc:GetBaseAttack()>0 then
+	if dc and Duel.Destroy(dc,REASON_RULE)>0 and dc:IsOriginalType(TYPE_MONSTER) and dc:GetBaseAttack()>0 then
 		Duel.SetLP(1-tp,Duel.GetLP(1-tp)-dc:GetBaseAttack())
 	end
 	if Duel.CheckLocation(1-tp,LOCATION_SZONE,seq)

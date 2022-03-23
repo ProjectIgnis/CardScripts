@@ -989,7 +989,7 @@ Effect.CreateMysteruneQPEffect = (function()
 	end
 
 	local function spfilter(c,e,tp)
-		return c:IsSetCard(0x27b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		return c:IsSetCard(0x180) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 			and Duel.GetLocationCountFromEx(tp,tp,nil,c,0x60)>0
 	end
 
@@ -1183,7 +1183,7 @@ function Auxiliary.WelcomeLabrynthTrapDestroyOperation(e,tp)
 	local addeff=Duel.IsPlayerAffectedByEffect(tp,CARD_LABRYNTH_LABYRINTH)
 	if not (addeff and addeff:CheckCountLimit(tp)
 		and e:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetActiveType()==TYPE_TRAP
-		and c:IsSetCard(0x127d) and not c:IsStatus(STATUS_ACT_FROM_HAND)
+		and c:IsSetCard(0x117f) and not c:IsStatus(STATUS_ACT_FROM_HAND)
 		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 		and Duel.SelectYesNo(tp,aux.Stringid(CARD_LABRYNTH_LABYRINTH,1))) then return end
 	addeff:UseCountLimit(tp)

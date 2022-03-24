@@ -58,8 +58,9 @@ function s.lvfilter(c,e,tp)
 end
 function s.lvrescon(mustlv)
 	return function(sg)
+		local res,stop=aux.dncheck(sg)
 		local sum=sg:GetSum(Card.GetLevel)
-		return sum==mustlv and aux.dncheck(sg)
+		return (res and sum==mustlv),(stop or sum>mustlv)
 	end
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)

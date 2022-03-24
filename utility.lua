@@ -1283,9 +1283,7 @@ function Auxiliary.dpcheck(fun)
 	end
 end
 --Checks for cards with different names (to be used with Aux.SelectUnselectGroup)
-function Auxiliary.dncheck(sg,e,tp,mg)
-	return Auxiliary.dpcheck(Card.GetCode)(sg,e,tp,mg)
-end
+Auxiliary.dncheck=Auxiliary.dpcheck(Card.GetCode)
 
 --Shortcut for functions that also check whether a card is face-up
 function Auxiliary.FilterFaceupFunction(f,...)

@@ -215,7 +215,7 @@ function s.defcon(e,tp,eg,ep,ev,re,r,rp)
 		e:Reset()
 		return false
 	end
-	local ct=Duel.GetMatchingGroupCount(aux.TRUE,tp,0,LOCATION_MZONE,nil)
+	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 	Duel.RegisterFlagEffect(tp,id+PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,0,1)
 	return Duel.IsTurnPlayer(1-tp) and ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=ct
 		and #e:GetLabelObject()>=ct and Duel.IsDeckMaster(tp,id) and Duel.GetFlagEffect(tp,id+PHASE_BATTLE)<=1
@@ -223,22 +223,12 @@ end
 function s.defop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	Duel.Hint(HINT_CARD,1-tp,id)
-	local ct=Duel.GetMatchingGroupCount(aux.TRUE,tp,0,LOCATION_MZONE,nil)
+	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 	local g=e:GetLabelObject()
-	local tg=Group.CreateGroup()
-	local randomNumbers={}
-	while #randomNumbers<ct do
-		randomNumbers[Duel.GetRandomNumber(1,ct)]=true
-	end
-	local i=1
-	for c in aux.Next(g) do
-		if randomNumbers[i] then
-			tg:AddCard(c)
-			g:RemoveCard(c)
-		end
-		i=i+1
-	end
-	for tc in aux.Next(tg) do
+	for i=1,ct do
+		local tc=g:TakeatPos(Duel.GetRandomNumber(1,#g)-1)
+		if not tc then return end
+		g:RemoveCard(tc)
 		Duel.MoveToField(tc,tp,tp,LOCATION_MZONE,POS_FACEUP_DEFENSE,true)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

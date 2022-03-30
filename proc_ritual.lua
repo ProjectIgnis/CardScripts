@@ -5,6 +5,32 @@ end
 if not Ritual then
 	Ritual = aux.RitualProcedure
 end
+--overwrite Duel.GetRitualMaterial to return Extra Deck monsters
+--that have an EFFECT_EXTRA_RITUAL_MATERIAL effect on them
+Duel.GetRitualMaterial=(function()
+	local oldfunc=Duel.GetRitualMaterial
+	return function(tp,check)
+		local res=oldfunc(tp,check)
+		local g=Duel.GetMatchingGroup(Card.IsHasEffect,tp,LOCATION_EXTRA,0,nil,EFFECT_EXTRA_RITUAL_MATERIAL)
+		if #g>0 then
+			res:Merge(g)
+		end
+		return res
+	end
+end)()
+--overwrite Duel.ReleaseRitualMaterial to support sending Extra Deck
+--"mats" to the GY by default
+Duel.ReleaseRitualMaterial=(function()
+	local oldfunc=Duel.ReleaseRitualMaterial
+	return function(g)
+		local extra_g=g:Filter(Card.IsLocation,nil,LOCATION_EXTRA)
+		if #extra_g>0 then
+			Duel.SendtoGrave(extra_g,REASON_RITUAL+REASON_EFFECT+REASON_MATERIAL)
+			g:Sub(extra_g)
+		end
+		return oldfunc(g)
+	end
+end)()
 function Ritual.GetMatchingFilterFunction(c)
 	local mt=c.__index
 	if not mt.ritual_matching_function or not mt.ritual_matching_function[c] then
@@ -119,6 +145,33 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 				if chk==0 then
 					local mg=Duel.GetRitualMaterial(tp,not requirementfunc)
 					local mg2=extrafil and extrafil(e,tp,eg,ep,ev,re,r,rp,chk) or Group.CreateGroup()
+					--if an EFFECT_EXTRA_RITUAL_MATERIAL effect has a forcedselection of its own
+					--add that forcedselection to the one of the Ritual Spell, if any
+					local extra_eff_g=mg:Filter(Card.IsHasEffect,nil,EFFECT_EXTRA_RITUAL_MATERIAL)
+					if #extra_eff_g>0 then
+						local prev_repl_function=nil
+						for tmp_c in extra_eff_g:Iter() do
+							local effs={tmp_c:IsHasEffect(EFFECT_EXTRA_RITUAL_MATERIAL)}
+							for _,eff in ipairs(effs) do
+								local repl_function=eff:GetLabelObject()
+								if repl_function and prev_repl_function~=repl_function[1] then
+									prev_repl_function=repl_function[1]
+									if not forcedselection then
+										forcedselection=repl_function[1]
+									elseif forcedselection~=repl_function[1] then
+										forcedselection=(function()
+															local oldfunc=forcedselection
+															return function(e,tp,sg,sc)
+																local ret1,ret2=oldfunc(e,tp,sg,sc)
+																local repl1,repl2=repl_function[1](e,tp,sg,sc)
+																return ret1 and repl1,ret2 or repl2
+															end
+														end)()
+									end
+								end
+							end
+						end
+					end
 					Ritual.CheckMatFilter(matfilter,e,tp,mg,mg2)
 					return Duel.IsExistingMatchingCard(Ritual.Filter,tp,location,0,1,e:GetHandler(),filter,_type,e,tp,mg,mg2,forcedselection,specificmatfilter,lv,requirementfunc,sumpos)
 				end
@@ -183,6 +236,33 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				local mg=Duel.GetRitualMaterial(tp,not requirementfunc)
 				local mg2=extrafil and extrafil(e,tp,eg,ep,ev,re,r,rp) or Group.CreateGroup()
+				--if an EFFECT_EXTRA_RITUAL_MATERIAL effect has a forcedselection of its own
+				--add that forcedselection to the one of the Ritual Spell, if any
+				local extra_eff_g=mg:Filter(Card.IsHasEffect,nil,EFFECT_EXTRA_RITUAL_MATERIAL)
+				if #extra_eff_g>0 then
+					local prev_repl_function=nil
+					for tmp_c in extra_eff_g:Iter() do
+						local effs={tmp_c:IsHasEffect(EFFECT_EXTRA_RITUAL_MATERIAL)}
+						for _,eff in ipairs(effs) do
+							local repl_function=eff:GetLabelObject()
+							if repl_function and prev_repl_function~=repl_function[1] then
+								prev_repl_function=repl_function[1]
+								if not forcedselection then
+									forcedselection=repl_function[1]
+								elseif forcedselection~=repl_function[1] then
+									forcedselection=(function()
+														local oldfunc=forcedselection
+														return function(e,tp,sg,sc)
+															local ret1,ret2=oldfunc(e,tp,sg,sc)
+															local repl1,repl2=repl_function[1](e,tp,sg,sc)
+															return ret1 and repl1,ret2 or repl2
+														end
+													end)()
+								end
+							end
+						end
+					end
+				end
 				Ritual.CheckMatFilter(matfilter,e,tp,mg,mg2)
 				local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -222,6 +302,24 @@ function(filter,_type,lv,extrafil,extraop,matfilter,stage2,location,forcedselect
 							end
 						else
 							mat=aux.SelectUnselectGroup(mg,e,tp,1,lv,Ritual.Check(tc,lv,func,_type,requirementfunc),1,tp,HINTMSG_RELEASE,Ritual.Finishcon(tc,lv,requirementfunc,_type))
+						end
+					end
+					--check if a card from an "once per turn" EFFECT_EXTRA_RITUAL_MATERIAL effect was selected
+					local extra_eff_g=mat:Filter(Card.IsHasEffect,nil,EFFECT_EXTRA_RITUAL_MATERIAL)
+					for tmp_c in extra_eff_g:Iter() do
+						local effs={tmp_c:IsHasEffect(EFFECT_EXTRA_RITUAL_MATERIAL)}
+						for _,eff in ipairs(effs) do
+							--if eff is OPT and tmp_c is not returned
+							--by the Ritual Spell's exrafil
+							--then use the count limit and register
+							--the flag to turn the extra eff OFF
+							--requires the EFFECT_EXTRA_RITUAL_MATERIAL effect
+							--to check the flag in its condition
+							local _,max_count_limit=eff:GetCountLimit()
+							if max_count_limit>0 and not mg2:IsContains(tmp_c) then
+								eff:UseCountLimit(tp,1)
+								Duel.RegisterFlagEffect(tp,eff:GetHandler():GetCode(),RESET_PHASE+PHASE_END,0,1)
+							end
 						end
 					end
 					if not customoperation then

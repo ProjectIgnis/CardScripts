@@ -22,6 +22,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<2 then return end
+	Duel.DisableShuffleCheck()
 	Duel.ConfirmDecktop(tp,2)
 	local g=Duel.GetDecktopGroup(tp,2)
 	if g:IsExists(aux.AND(Card.IsMonster,Card.IsAbleToHand),1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

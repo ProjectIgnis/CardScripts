@@ -15,6 +15,12 @@ function s.initial_effect(c)
 		ge1:SetOperation(s.regop)
 		Duel.RegisterEffect(ge1,0)
 	end)
+	-- Cannot be Special Summoned by other ways
+	local e0=Effect.CreateEffect(c)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	c:RegisterEffect(e0)
 	-- Gain ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -55,7 +61,7 @@ function s.contactcon(tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	for ec in aux.Next(eg) do
-		if ec:IsSetCard(0x2034) then Duel.RegisterFlagEffect(ec:GetSummonPlayer(),id,0,0,0) end
+		if ec:IsSetCard(0x2034) and ec:IsFaceup() then Duel.RegisterFlagEffect(ec:GetSummonPlayer(),id,0,0,0) end
 	end
 end
 function s.cbfilter(c)

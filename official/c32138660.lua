@@ -5,6 +5,12 @@ function s.initial_effect(c)
 	--synchro summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_REPTILE),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
+	--Material check
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_MATERIAL_CHECK)
+	e0:SetValue(s.valcheck)
+	c:RegisterEffect(e0)
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -44,10 +50,15 @@ end
 function s.mfilter(c)
 	return not c:IsRace(RACE_REPTILE)
 end
+function s.valcheck(e,c)
+	local mg=c:GetMaterial()
+	if #mg>0 and not mg:IsExists(s.mfilter,1,nil) then
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_LEAVE),EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
+	end
+end
 function s.indcon(e)
 	local c=e:GetHandler()
-	local mg=c:GetMaterial()
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and #mg>0 and not mg:IsExists(s.mfilter,1,nil)
+	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetHandler():GetFlagEffect(id)>0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp and re:IsActiveType(TYPE_MONSTER)
@@ -55,9 +66,9 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and aux.nzatk(chkc) end
 	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(id)==0
+	if chk==0 then return c:GetFlagEffect(id+1)==0
 		and Duel.IsExistingTarget(aux.nzatk,tp,0,LOCATION_MZONE,1,nil) end
-	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
+	c:RegisterFlagEffect(id+1,RESET_CHAIN,0,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,aux.nzatk,tp,0,LOCATION_MZONE,1,1,nil)
 end

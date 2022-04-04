@@ -16,7 +16,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.GetAttacker():IsControler(1-tp) then return false end
 	local bc=Duel.GetAttackTarget()
-	return bc and bc:IsControler(tp) and bc:IsFaceup() and bc:IsRace(RACE_BEAST) and bc:IsAttackPos()
+	return bc and bc:IsControler(tp) and bc:IsFaceup() and bc:IsRace(RACE_BEAST) and bc:IsAttackPos() and bc:IsType(TYPE_NORMAL)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,4) end

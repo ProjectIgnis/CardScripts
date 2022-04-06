@@ -16,7 +16,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if #eg~=1 then return false end
 	local tc=eg:GetFirst()
 	return tc:IsFaceup() and tc:IsLevelAbove(5) and tc:IsCanChangePositionRush() and tc:IsSummonPlayer(1-tp)
-		and c:IsAttackPos() and Duel.GetLP(tp)<Duel.GetLP(1-tp)
+		and tc:IsAttackPos() and Duel.GetLP(tp)<Duel.GetLP(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

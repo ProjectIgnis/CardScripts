@@ -36,14 +36,14 @@ function s.atkfilter(c)
 	return c:IsFaceup() and c:GetBaseAttack()>0
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)==0 then return end
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-	local g=Duel.SelectMatchingCard(tp,s.atkfilter,tp,0,LOCATION_MZONE,1,3,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.atkfilter),tp,0,LOCATION_MZONE,1,3,nil)
 	if #g==0 then return end
 	Duel.HintSelection(g,true)
 	for tc in g:Iter() do
@@ -55,7 +55,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetValue(0)
-		tc:RegisterEffect(e1)
+		tc:RegisterEffectRush(e1)
 	end
 	--Can make up to 2 attacks on monsters
 	local e2=Effect.CreateEffect(c)

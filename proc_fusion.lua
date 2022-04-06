@@ -361,7 +361,7 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 				while #sg<maxc+#funs do
 					local cg=mg:Filter(Fusion.SelectMixRep,sg,tp,mg,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs))
 					if #cg==0 then break end
-					local finish=Fusion.CheckMixRepGoal(tp,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs)) and not Fusion.CheckExact and not (Fusion.CheckMin and #sg<Fusion.CheckMin)
+					local finish=Fusion.CheckMixRepGoal(tp,mg,sg,mustg,c,sub,sub,contact,sumtype,chkf,fun1,minc,maxc,table.unpack(funs)) and not Fusion.CheckExact and not (Fusion.CheckMin and #sg<Fusion.CheckMin)
 					local cancel=(contact and #sg==0)
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 					local tc=Group.SelectUnselect(cg,sg,p,finish,cancel)
@@ -378,7 +378,7 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 				Duel.SetFusionMaterial(sg)
 			end
 end
-function Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)
+function Fusion.CheckMixRep(mg,sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)
 	if fun2 then
 		return sg:IsExists(Fusion.CheckMixRepFilter,1,g,sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)
 	else
@@ -387,20 +387,20 @@ function Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,m
 		return ct1==#sg-#g and ct1-ct2<=1
 	end
 end
-function Fusion.CheckMixRepFilter(c,sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)
+function Fusion.CheckMixRepFilter(c,mg,sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)
 	if fun2(c,fc,sub,sub2,mg,sg,tp,contact,sumtype) then
 		g:AddCard(c)
 		local sub=sub and fun2(c,fc,false,sub2,mg,sg,tp,contact,sumtype)
-		local res=Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,...)
+		local res=Fusion.CheckMixRep(mg,sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,...)
 		g:RemoveCard(c)
 		return res
 	end
 	return false
 end
-function Fusion.CheckMixRepGoal(tp,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
+function Fusion.CheckMixRepGoal(tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
 	if #sg<minc+#{...} or #sg>maxc+#{...} then return false end
 	local g=Group.CreateGroup()
-	return Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,...) and (chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(tp,tp,sg,fc)>0)
+	return Fusion.CheckMixRep(mg,sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,...) and (chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(tp,tp,sg,fc)>0)
 		and (not Fusion.CheckAdditional or Fusion.CheckAdditional(tp,sg,fc))
 end
 function Fusion.CheckMixRepTemplate(c,cond,tp,mg,sg,mustg,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
@@ -518,7 +518,7 @@ function Fusion.SelectMixRep(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,f
 	local res=false
 	if Fusion.CheckAdditional and not Fusion.CheckAdditional(tp,sg,fc) then
 		res=false
-	elseif Fusion.CheckMixRepGoal(tp,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...) then
+	elseif Fusion.CheckMixRepGoal(tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...) then
 		res=true
 	else
 		local g=Group.CreateGroup()

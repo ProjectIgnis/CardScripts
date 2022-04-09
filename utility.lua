@@ -647,6 +647,18 @@ function Card.CheckAdjacent(c)
 		or (seq<4 and Duel.CheckLocation(p,LOCATION_MZONE,seq+1))
 end
 
+function Card.SelectAdjacent(c)
+	local tp=c:GetControler()
+	local seq=c:GetSequence()
+	local flag=0
+	if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=flag|(0x1<<seq-1) end
+	if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=flag|(0x1<<seq+1) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+	local sel=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,~flag)
+	Duel.Hint(HINT_ZONE,tp,sel)
+	return math.log(sel,2)
+end
+
 function Card.MoveAdjacent(c)
 	local tp=c:GetControler()
 	local seq=c:GetSequence()
@@ -1219,10 +1231,25 @@ function Auxiliary.seqmovcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():CheckAdjacent()
 end
 --operation for effects that make the monster change its current sequence
+--where the new sequence is choosen during resolution
 function Auxiliary.seqmovop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) then return end
 	c:MoveAdjacent()
+end
+--target for effects that make the monster change its current sequence
+--where the new sequence is choosen at target time
+function Auxiliary.seqmovtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	e:SetLabel(e:GetHandler():SelectAdjacent())
+end
+--operation for effects that make the monster change its current sequence
+--where the new sequence is choosen at target time
+function Auxiliary.seqmovtgop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local seq=e:GetLabel()
+	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) or not Duel.CheckLocation(tp,LOCATION_MZONE,seq) then return end
+	Duel.MoveSequence(c,seq)
 end
 
 --Returns the zones, on the specified player's field, pointed by the specified number of Link markers. Includes Extra Monster Zones.

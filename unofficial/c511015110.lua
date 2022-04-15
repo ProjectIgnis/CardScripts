@@ -1,5 +1,5 @@
+--バーバリアン・レイジ (Anime)
 --Battleguard Rage (Anime)
-Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -42,11 +42,12 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
+s.listed_series={0x2178}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsBattleguard()
+	return c:IsFaceup() and c:IsSetCard(0x2178)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()

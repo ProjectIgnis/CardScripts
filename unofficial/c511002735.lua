@@ -1,4 +1,5 @@
---Compulsory Circulation Device
+--強制循環装置
+--Compulsory Circulation Device (manga)
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -24,19 +25,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
 		return Duel.CheckRemoveOverlayCard(tp,1,0,1,REASON_COST) and ct>0 
-			and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,nil) end
-	if ct>1 then
-		local t={}
-		for i=1,ct do 
-			t[i]=i
-		end
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(81330115,0))
-		ct=Duel.AnnounceNumber(tp,table.unpack(t))
+			and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,nil)
 	end
-	Duel.RemoveOverlayCard(tp,1,0,ct,ct,REASON_COST)
+	Duel.RemoveOverlayCard(tp,1,0,1,ct,REASON_COST)
+	local oct=#Duel.GetOperatedGroup()
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_MZONE,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
-	Duel.SetTargetParam(ct)
+	Duel.SetTargetParam(oct)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)

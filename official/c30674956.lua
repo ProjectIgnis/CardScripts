@@ -3,7 +3,6 @@
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x10c0)
 	--Link summon
 	Link.AddProcedure(c,nil,2,2,s.lcheck)
 	c:EnableReviveLimit()

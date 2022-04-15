@@ -63,7 +63,7 @@ function s.posfilter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xed) and (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
+	return c:IsSetCard(0xed) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.posfilter(chkc) end
@@ -83,11 +83,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
 		local tc=g:GetFirst()
 		if not tc then return end
-		local spos=0
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) then spos=spos+POS_FACEUP_DEFENSE end
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then spos=spos+POS_FACEDOWN_DEFENSE end
-		if spos~=0 then
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,spos)
+		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_DEFENSE)~=0 then
 			if tc:IsFacedown() then
 				Duel.ConfirmCards(1-tp,tc)
 			end

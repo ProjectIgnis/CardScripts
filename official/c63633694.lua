@@ -58,8 +58,8 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for face-up monster in EMZ
 function s.eqfilter(c,tp)
-	return c:IsFaceup() and c:GetSequence()>4
-		and (c:IsControler(tp) or c:IsAbleToChangeControler()) and not c:IsForbidden()
+	return c:IsFaceup() and c:IsInExtraMZone() and (c:IsControler(tp) or c:IsAbleToChangeControler())
+		and not c:IsForbidden()
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetEquipGroup():Filter(s.eqconfilter,nil)
@@ -70,11 +70,12 @@ function s.eqconfilter(c)
 end
 	--Activation legality
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.eqfilter(chkc,tp) and chkc~=e:GetHandler() end
+	local c=e:GetHandler()
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.eqfilter(chkc,tp) and chkc~=c end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler(),tp) end
+		and Duel.IsExistingTarget(s.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler(),tp)
+	local g=Duel.SelectTarget(tp,s.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c,tp)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 	--Registered as equipped with own effect
@@ -83,10 +84,10 @@ function s.equipop(c,e,tp,tc)
 end
 	--Equip a monster in EMZ to this card, max 1
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	local c=e:GetHandler()
+	if not (c:IsFaceup() and c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:GetSequence()>4 then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		s.equipop(c,e,tp,tc)
 	end
 end
@@ -96,16 +97,16 @@ function s.spfilter2(c,e,tp)
 end
 	--Activation legality
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and c:GetEquipGroup():IsExists(s.spfilter2,1,nil,e,tp) end
+		and e:GetHandler():GetEquipGroup():IsExists(s.spfilter2,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_SZONE)
 end
 	--Special summon this card's equipped monster
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or c:IsFacedown() or Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
+	if not (c:IsRelateToEffect(e) and c:IsFaceup() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=c:GetEquipGroup():FilterSelect(tp,s.spfilter2,1,1,nil,e,tp):GetFirst()
-	Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	local sg=c:GetEquipGroup():FilterSelect(tp,s.spfilter2,1,1,nil,e,tp)
+	if #sg==0 then return end
+	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 end

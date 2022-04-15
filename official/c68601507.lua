@@ -1,7 +1,8 @@
 --武神器－ハバキリ
+--Bujingi Crane
 local s,id=GetID()
 function s.initial_effect(c)
-	--atkup
+	--Double ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -19,7 +20,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if not c then return false end
 	if c:IsControler(1-tp) then c=Duel.GetAttacker() end
 	e:SetLabelObject(c)
-	return c and c:IsSetCard(0x88) and c:IsRace(RACE_BEASTWARRIOR) and c:IsRelateToBattle()
+	return c and c:IsSetCard(0x88) and c:IsRace(RACE_BEASTWARRIOR) and c:IsRelateToBattle() and not c:IsAttack(c:GetBaseAttack()*2)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -28,6 +29,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetLabelObject()
 	if c:IsFaceup() and c:IsRelateToBattle() then
+		--Its ATK becomes double its original ATK
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)

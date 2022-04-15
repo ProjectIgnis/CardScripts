@@ -2,16 +2,16 @@
 --Chaofeng, Phantom of the Yang Zing
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
+	--Synchro summon
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--mat check
+	--Material check
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_MATERIAL_CHECK)
 	e1:SetValue(s.matcheck)
 	c:RegisterEffect(e1)
-	--act limit
+	--Prevents the activation of monster's effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
-	--search
+	--Add a tuner monster from the Deck to the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
-	--spsummon
+	--Special Summon a Wyrm monster from the Deck
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -72,7 +72,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 	local att=e:GetLabelObject():GetLabel()
 	for _,str in aux.GetAttributeStrings(att) do
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,str)
+		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,str)
 	end
 end
 function s.aclimit(e,re,tp)

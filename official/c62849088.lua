@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Special Summon from hand
+	--Special Summon 1 monster from your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -29,13 +29,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.hdextg)
 	e2:SetOperation(s.hdexop)
 	c:RegisterEffect(e2)
-	--Draw 2
+	--Draw 2 cards
 	local e3=e2:Clone()
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetLabel(2)
 	c:RegisterEffect(e3)
-	--Destroy
+	--Destroy 1 of those monsters Special Summoned from the Extra Deck
 	local e4=e2:Clone()
 	e4:SetDescription(aux.Stringid(id,3))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -74,7 +74,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.hdexfilter(c,tp,loc)
-	return c:IsSummonPlayer(1-tp) and c:IsSummonLocation(loc) and (loc~=LOCATION_EXTRA or c:IsOnField())
+	return c:IsOriginalType(TYPE_MONSTER) and c:IsSummonPlayer(1-tp) and c:IsSummonLocation(loc)
+		and (loc~=LOCATION_EXTRA or c:IsOnField())
 end
 function s.hdexcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

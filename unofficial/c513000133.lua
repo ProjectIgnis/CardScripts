@@ -1,4 +1,5 @@
---Anit the Ray
+--アンチ・ザ・レイ
+--Anti the Ray
 --Scripted by Keddy
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
@@ -45,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if #g>0 and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local xg=Group.FromCards(c,tc)
-		local xge=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,0,99,xg):Merge(cg)
+		local xge=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,0,99,xg):Merge(c)
 		Duel.Overlay(tc,xge,true)
 	end
 end

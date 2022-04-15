@@ -1,5 +1,5 @@
 --雨天気ラズラ
---Rainy Weathery Lazula
+--The Weather Painter Rain
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,6 +35,7 @@ end
 s.listed_series={0x109}
 function s.tffilter(c,tp)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x109) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+		and not c:IsType(TYPE_FIELD)
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

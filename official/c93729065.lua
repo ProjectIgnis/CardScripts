@@ -30,7 +30,6 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e3:SetRange(LOCATION_PZONE)
-	e3:SetCountLimit(1)
 	e3:SetCondition(s.rdcon)
 	e3:SetOperation(s.rdop)
 	c:RegisterEffect(e3)
@@ -70,10 +69,12 @@ function s.atkval(e,c)
 	return Duel.GetCounter(0,1,1,0x1149)*-200
 end
 function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp
+	return ep==tp and e:GetHandler():GetFlagEffect(id)==0
 end
 function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.SelectEffectYesNo(tp,e:GetHandler()) then
+	local c=e:GetHandler()
+	if Duel.SelectEffectYesNo(tp,c) then
+		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.ChangeBattleDamage(tp,0)
 	end

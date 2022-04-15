@@ -1,5 +1,5 @@
 --ナチュル・バンブーシュート
-Duel.LoadScript("c420.lua")
+--Battleguard King
 local s,id=GetID()
 function s.initial_effect(c)
 	--mat check
@@ -17,10 +17,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	e2:SetLabelObject(e1)
 end
+s.listed_series={0x2178}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
-	if g and g:IsExists(Card.IsBattleguard,1,nil,0x2310)
+	if g and g:IsExists(Card.IsSetCard,1,nil,0x2178)
 		then flag=1
 	end
 	e:SetLabel(flag)

@@ -1,5 +1,5 @@
 -- 相剣軍師－龍淵
--- Long Yuan, the Xiangjian Tactician
+-- Swordsoul Strategist Longyuan
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={TOKEN_XIANGJIAN}
+s.listed_names={TOKEN_SWORDSOUL}
 s.listed_series={0x16d}
 function s.spcostfilter(c)
 	return (c:IsSetCard(0x16d) or (c:IsMonster() and c:IsRace(RACE_WYRM))) and c:IsDiscardable(REASON_COST)
@@ -45,10 +45,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)>0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_XIANGJIAN,0x16d,TYPES_TOKEN+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_SWORDSOUL,0x16d,TYPES_TOKEN+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.BreakEffect()
-		local token=Duel.CreateToken(tp,TOKEN_XIANGJIAN)
+		local token=Duel.CreateToken(tp,TOKEN_SWORDSOUL)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		-- Cannot Special Summon non-Synchro monsters from Extra Deck
 		local e1=Effect.CreateEffect(c)
@@ -61,7 +61,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		token:RegisterEffect(e1,true)
 		-- Lizard check
-		local e2=aux.createContinuousLizardCheck(c,LOCATION_MZONE,function(_,c) return c:IsOriginalType(TYPE_SYNCHRO) end)
+		local e2=aux.createContinuousLizardCheck(c,LOCATION_MZONE,function(_,c) return not c:IsOriginalType(TYPE_SYNCHRO) end)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		token:RegisterEffect(e2,true)
 		Duel.SpecialSummonComplete()

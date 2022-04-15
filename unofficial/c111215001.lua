@@ -68,7 +68,7 @@ function s.disop(e,tp)
 	return 2^(e:GetLabel())
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsDuelType(SPEED_DUEL) and e:GetHandler():GetFlagEffect(tp,id)>2 
+	return Duel.IsDuelType(DUEL_3_COLUMNS_FIELD) and e:GetHandler():GetFlagEffect(tp,id)>2 
 		or e:GetHandler():GetFlagEffect(tp,id)>4
 	--Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,LOCATION_REASON_COUNT)==0
 end

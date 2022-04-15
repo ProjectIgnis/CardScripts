@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.dop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x178}
+s.listed_series={0x1178}
 function s.costfilter(c)
-	return c:IsSetCard(0x178) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(0x1178) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end

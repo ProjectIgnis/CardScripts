@@ -288,21 +288,10 @@ function Maximum.sideConGrant(e)
 	local tc=Maximum.GetMaximumCenter(e:GetHandlerPlayer())
 	return tc and e:GetHandler():IsMaximumModeSide()
 end
---function that return if the max monster used an effect 
-function Card.HasUsedIgnition(c,effID)
-	return c:GetFlagEffect(effID)>0
-end 
 --function that return false if the monster don't have defense stats
 --wait for ruling
 function Card.HasDefense(c)
 	return not (c:IsType(TYPE_LINK) or (c:IsType(TYPE_MAXIMUM) and c:IsMaximumMode()))
-end
--- function that add the flag to says "I used that effect once this turn"
-function Duel.RegisterMaxIgnition(tp,effid)
-	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,tp,LOCATION_MZONE,0,nil)
-	for tc in aux.Next(g) do
-		tc:RegisterFlagEffect(effid,RESET_EVENT+RESETS_STANDARD,0,1)
-	end
 end
 
 --functions to handle counting monsters but without the side Maximum monsters (the L/R max monsters are subtracted from the count)
@@ -407,7 +396,7 @@ function Maximum.battlecon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_BATTLE) and eg:IsExists(Card.IsControler,1,nil,tp)
 end
 function Maximum.battleop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,e:GetHandler():GetPreviousControler(),LOCATION_MZONE,0,nil)
 	Duel.Sendto(g,e:GetHandler():GetDestination(),0)
 	for tc in aux.Next(g) do
 		tc:SetReason(eg:GetFirst():GetReason())
@@ -429,8 +418,6 @@ if not traprush then
 function Card.IsCanChangePositionRush(c)
 	return c:IsCanChangePosition() and not c:IsMaximumMode()
 end
-
-
 
 --Add function to simplify some effect
 
@@ -604,6 +591,7 @@ function Card.AddNoTributeCheck(c,id,stringid,rangeP1,rangeP2)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetDescription(aux.Stringid(id,stringid))
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
 	e1:SetTargetRange(rangeP1,rangeP2)
 	c:RegisterEffect(e1)
 end
@@ -614,7 +602,7 @@ function Duel.AddNoTributeCheck(c,tp,id,stringid,rangeP1,rangeP2)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetDescription(aux.Stringid(id,stringid))
 	e1:SetTargetRange(rangeP1,rangeP2)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
 	Duel.RegisterEffect(e1,tp)
 end
 function aux.summonproc(c,ns,opt,min,max,val,desc,f,sumop)

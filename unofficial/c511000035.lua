@@ -1,5 +1,5 @@
---インフェルニティ・デス・ガンマン
---Infernity Des Gunman
+--インフェルニティ・デス・ガンマン (VG)
+--Infernity Des Gunman (VG)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate Damage
@@ -26,8 +26,9 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

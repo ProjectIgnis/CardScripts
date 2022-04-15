@@ -76,13 +76,14 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.Destroy(g,REASON_EFFECT)
 	if Duel.Damage(1-tp,ct*1000,REASON_EFFECT)~=0 then
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,3))
 		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
-	c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

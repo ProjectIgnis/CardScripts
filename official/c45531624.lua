@@ -2,7 +2,6 @@
 --Celtic Guard of Noble Arms
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0xe4)
 	--cannot attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

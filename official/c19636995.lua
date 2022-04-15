@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetTargetRange(POS_FACEUP_ATTACK,0)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetCondition(s.hspcon)
 	e1:SetValue(s.hspval)
 	c:RegisterEffect(e1)
 	--Destroy itself if there is another card in its column
@@ -35,16 +34,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.dattg)
 	e3:SetOperation(s.datop)
 	c:RegisterEffect(e3)
-end
-function s.hspcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local zone=0x1f
-	local lg=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
-	for tc in aux.Next(lg) do
-		zone=zone&(~tc:GetColumnZone(LOCATION_MZONE,0,0,tp))
-	end
-	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
 function s.hspval(e,c)
 	local tp=c:GetControler()

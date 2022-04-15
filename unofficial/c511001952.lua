@@ -1,10 +1,9 @@
 --Phantasmal Lord Ultimitl Bishbaalkin (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x601)
+	c:AddSetcodesRule(id,false,0x601)
 	--level 0
 	Synchro.AddDarkSynchroProcedure(c,Synchro.NonTuner(nil),nil,0)
-	c:SetStatus(STATUS_NO_LEVEL,true)
 	--dark synchro summon
 	c:EnableReviveLimit()
 	--atk

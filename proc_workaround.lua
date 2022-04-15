@@ -17,6 +17,18 @@ Duel.Overlay=(function()
 		return oldf(c,g)
 	end
 end)()
+--Raise the EVENT_TOHAND_CONFIRM event when a card in the hand is revealed (used by "Puppet King" and "Puppet Queen")
+Duel.ConfirmCards=(function()
+	local oldfunc=Duel.ConfirmCards
+	return function(tp,obj,...)
+		local res=oldfunc(tp,obj,...)
+		local handg=Group.CreateGroup():Merge(obj):Match(Card.IsLocation,nil,LOCATION_HAND)
+		if Duel.CheckEvent(EVENT_TO_HAND) and #handg>0 then
+			Duel.RaiseEvent(handg,EVENT_TOHAND_CONFIRM,nil,0,tp,tp,0)
+		end
+		return res
+	end
+end)()
 ---
 function Duel.GoatConfirm(tp,loc)
 	local dg,hg=Duel.GetFieldGroup(tp,loc&(LOCATION_HAND|LOCATION_DECK),0):Split(Card.IsLocation,nil,LOCATION_DECK)
@@ -239,7 +251,7 @@ function Auxiliary.RelCheckGoal(tp,sg,exg,mustg,ct,minc,maxc,specialchk)
 end
 function Auxiliary.ReleaseCostFilter(c,tp)
 	local eff=c:IsHasEffect(EFFECT_EXTRA_RELEASE_NONSUM)
-	return not (c:IsControler(1-tp) and eff and (eff:GetCountLimit())>0) and not c:IsHasEffect(EFFECT_EXTRA_RELEASE)
+	return not (c:IsControler(1-tp) and eff and eff:CheckCountLimit(tp)) and not c:IsHasEffect(EFFECT_EXTRA_RELEASE)
 end
 function Auxiliary.MakeSpecialCheck(check,tp,exg,...)
 	local params={...}
@@ -359,9 +371,14 @@ end
 --For Links: false. For Xyzs: false, except if affected by  "EFFECT_RANK_LEVEL..." effects
 --For Dark Synchros: true, because they have a negative level. For level 0: true, because 0 is a value
 function Card.HasLevel(c)
-	return c:IsType(TYPE_MONSTER) and c:GetType()&TYPE_LINK~=TYPE_LINK
-		and (c:GetType()&TYPE_XYZ~=TYPE_XYZ and not (c:IsHasEffect(EFFECT_RANK_LEVEL) or c:IsHasEffect(EFFECT_RANK_LEVEL_S)))
-		and not c:IsStatus(STATUS_NO_LEVEL)
+	if c:IsType(TYPE_MONSTER) then
+		return c:GetType()&TYPE_LINK~=TYPE_LINK
+			and (c:GetType()&TYPE_XYZ~=TYPE_XYZ and not (c:IsHasEffect(EFFECT_RANK_LEVEL) or c:IsHasEffect(EFFECT_RANK_LEVEL_S)))
+			and not c:IsStatus(STATUS_NO_LEVEL)
+	elseif c:IsOriginalType(TYPE_MONSTER) then
+		return not (c:IsOriginalType(TYPE_XYZ+TYPE_LINK) or c:IsStatus(STATUS_NO_LEVEL))
+	end
+	return false
 end
 function Card.IsSummonLocation(c,loc)
 	return c:GetSummonLocation() & loc~=0

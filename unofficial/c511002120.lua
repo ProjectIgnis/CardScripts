@@ -1,3 +1,4 @@
+--ハイパー・バーニング
 --Hyper Burning
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,6 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_CHAINING)
+	e2:SetProperty(0)
 	e2:SetCondition(s.condition2)
 	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)

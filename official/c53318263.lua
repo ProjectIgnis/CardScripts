@@ -1,5 +1,5 @@
 --光の天穿バハルティヤ
---Bahartiya, Skypiercer of the Light
+--Bahalutiya, the Grand Radiance
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -81,7 +81,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if ct>0 and dg:FilterCount(Card.IsAbleToRemove,nil,tp,POS_FACEDOWN)==ct and Duel.Remove(dg,POS_FACEDOWN,REASON_EFFECT)==ct then
 		Duel.BreakEffect()
 		local og=Duel.GetOperatedGroup()
-		if Duel.SendtoDeck(hg,p,2,REASON_EFFECT)>0 then
+		if Duel.SendtoDeck(hg,nil,2,REASON_EFFECT)>0 then
 			Duel.SendtoHand(og,p,REASON_EFFECT)
 		end
 	end

@@ -9,14 +9,10 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	e1:SetCountLimit(1)
-	e1:SetCost(s.cost)
+	e1:SetCost(aux.IceBarrierDiscardCost(nil,true))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return aux.IceBarrierDiscardCost(nil,true)(e,tp,eg,ep,ev,re,r,rp,0) end
-	aux.IceBarrierDiscardCost(nil,true)(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

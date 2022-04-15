@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,160001029,160007001)
+	Fusion.AddProcMix(c,true,true,160001029,CARD_VALKYRIAN_SEWKYRIE)
 	--atk up + cannot summon in attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

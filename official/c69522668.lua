@@ -13,12 +13,19 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
+	--Check materials' attributes before summoning
+	local e2a=Effect.CreateEffect(c)
+	e2a:SetType(EFFECT_TYPE_SINGLE)
+	e2a:SetCode(EFFECT_MATERIAL_CHECK)
+	e2a:SetValue(s.matcheck)
+	c:RegisterEffect(e2a)
 	--Set 1 Magikey S/T from Deck to S/T Zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
+	e2:SetLabelObject(e2a)
 	e2:SetCondition(s.setcon)
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
@@ -41,10 +48,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={0x167}
+function s.matcheck(e,c)
+	e:SetLabel(c:GetMaterial():GetClassCount(Card.GetAttribute))
+end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local mat=c:GetMaterial()
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and mat:GetClassCount(Card.GetAttribute)>1
+	local obj=e:GetLabelObject()
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and obj and obj:GetLabel()>1
 end
 function s.setfilter(c)
 	return c:IsSetCard(0x167) and c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsType(TYPE_FIELD) and c:IsSSetable()

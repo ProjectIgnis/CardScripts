@@ -36,10 +36,9 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={0x45}
-function s.lrcon(e,tp,eg,ep,ev,re,r,rp)
-	if not re then return false end
-	local rc=re:GetHandler()
-	return Duel.GetCurrentPhase()==PHASE_STANDBY and rc:IsSetCard(0x45) and rc:IsType(TYPE_MONSTER)
+function s.regfilter(c)
+	return c:IsReason(REASON_DESTROY) and not c:IsReason(REASON_BATTLE) and c:IsSetCard(0x45) and c:HasLevel()
+		and (c:IsPreviousLocation(LOCATION_MZONE) or (not c:IsPreviousLocation(LOCATION_MZONE) and c:IsMonster()))
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local lv1=0
@@ -47,7 +46,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Group.CreateGroup()
 	local g2=Group.CreateGroup()
 	for tc in aux.Next(eg) do
-		if tc:IsReason(REASON_DESTROY) and not tc:IsReason(REASON_BATTLE) and tc:IsSetCard(0x45) then
+		if s.regfilter(tc) then
 			local tlv=tc:GetLevel()
 			if tc:IsControler(0) then
 				if tlv>lv1 then lv1=tlv end
@@ -58,6 +57,11 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if lv1>0 then Duel.RaiseEvent(g1,EVENT_CUSTOM+id,re,r,rp,0,lv1) end
 	if lv2>0 then Duel.RaiseEvent(g1,EVENT_CUSTOM+id,re,r,rp,1,lv2) end
+end
+function s.lrcon(e,tp,eg,ep,ev,re,r,rp)
+	if not re then return false end
+	local rc=re:GetHandler()
+	return Duel.GetCurrentPhase()==PHASE_STANDBY and rc:IsSetCard(0x45) and rc:IsType(TYPE_MONSTER)
 end
 function s.filter(c,lv)
 	return c:GetLevel()<lv and c:IsSetCard(0x45) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

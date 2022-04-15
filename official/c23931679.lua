@@ -25,7 +25,8 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
 	c:RegisterEffect(e3)
 	local e4=e2:Clone()
-	e4:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e4:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
+	e4:SetValue(POS_FACEDOWN)
 	c:RegisterEffect(e4)
 	--Search 1 "Umi", or 1 "Kairyu-Shin"/"Sea Stealth" Spell/Trap
 	local e5=Effect.CreateEffect(c)
@@ -111,7 +112,6 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	if c:IsAttribute(ATTRIBUTE_WATER) then return false end
-	if sumpos and (sumpos&POS_FACEDOWN)>0 then return false end
 	return Duel.IsExistingMatchingCard(s.nonwaterfilter,targetp or sump,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)

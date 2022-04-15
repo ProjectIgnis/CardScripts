@@ -2,7 +2,6 @@
 --Dharc the Dark Charmer, Umbral
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x10c0)
 	--Link Summon
 	Link.AddProcedure(c,nil,2,2,s.lcheck)
 	c:EnableReviveLimit()

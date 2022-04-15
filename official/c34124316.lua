@@ -1,4 +1,6 @@
 --サイバーポッド
+--Cyber Jar
+--Scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -13,70 +15,64 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.spchk(c,e,tp)
-	return (c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK) 
-		or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
+	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
+end
+local function summon(g,e,p,tograve,ft)
+	if #g==0 then return end
+	if ft==0 then
+		tograve:Merge(g)
+		return
+	end
+	if ft<#g then
+		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_SPSUMMON)
+		local newg=g:Select(p,ft,ft,nil)
+		tograve:Merge(g:Sub(newg))
+		g=newg
+	end
+	for tc in g:Iter() do
+		Duel.SpecialSummonStep(tc,0,p,p,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
+	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 	Duel.Destroy(g,REASON_EFFECT)
 	Duel.BreakEffect()
 	local p=Duel.GetTurnPlayer()
-	local g1=Duel.GetDecktopGroup(p,5)
-	local g2=Duel.GetDecktopGroup(1-p,5)
-	local spg=g1:Clone()
-	spg:Merge(g2)
-	local hg=Group.CreateGroup()
-	local gg=Group.CreateGroup()
+	local summonable1,nonsummonable1=Duel.GetDecktopGroup(p,5):Split(s.spchk,nil,e,p)
+	local summonable2,nonsummonable2=Duel.GetDecktopGroup(1-p,5):Split(s.spchk,nil,e,p)
+	
+	local ft1=Duel.GetLocationCount(p,LOCATION_MZONE)
+	if ft1>1 and Duel.IsPlayerAffectedByEffect(p,CARD_BLUEEYES_SPIRIT) and #summonable1>1 then
+		nonsummonable1:Merge(summonable1)
+		summonable1:Clear()
+	end
+	local ft2=Duel.GetLocationCount(1-p,LOCATION_MZONE)
+	if ft2>1 and Duel.IsPlayerAffectedByEffect(1-p,CARD_BLUEEYES_SPIRIT) and #summonable2>1 then
+		nonsummonable2:Merge(summonable2)
+		summonable2:Clear()
+	end
+	
+	local tohand,tograve=nonsummonable1:Merge(nonsummonable2):Split(Card.IsAbleToHand,nil)
+	
+	Duel.DisableShuffleCheck()
+	
 	Duel.ConfirmDecktop(p,5)
-	local tc=g1:GetFirst()
-	for tc in aux.Next(g1) do
-		local lv=tc:GetLevel()
-		local pos=0
-		if s.spchk(tc,e,tc:GetControler()) and Duel.IsPlayerAffectedByEffect(tc:GetControler(),CARD_BLUEEYES_SPIRIT) then
-			gg:AddCard(tc)
-		else
-			if tc:IsCanBeSpecialSummoned(e,0,p,false,false,POS_FACEUP_ATTACK) then pos=pos+POS_FACEUP_ATTACK end
-			if tc:IsCanBeSpecialSummoned(e,0,p,false,false,POS_FACEDOWN_DEFENSE) then pos=pos+POS_FACEDOWN_DEFENSE end
-			if lv>0 and lv<=4 and pos~=0 then
-				Duel.DisableShuffleCheck()
-				Duel.SpecialSummonStep(tc,0,p,p,false,false,pos)
-			elseif tc:IsAbleToHand() then
-				hg:AddCard(tc)
-			else gg:AddCard(tc) end
-		end
-	end
+	summon(summonable1,e,p,tograve,ft1)
+	
 	Duel.ConfirmDecktop(1-p,5)
-	tc=g2:GetFirst()
-	for tc in aux.Next(g2) do
-		local lv=tc:GetLevel()
-		local pos=0
-		if s.spchk(tc,e,tc:GetControler()) and Duel.IsPlayerAffectedByEffect(tc:GetControler(),CARD_BLUEEYES_SPIRIT) then
-			gg:AddCard(tc)
-		else
-			if tc:IsCanBeSpecialSummoned(e,0,1-p,false,false,POS_FACEUP_ATTACK) then pos=pos+POS_FACEUP_ATTACK end
-			if tc:IsCanBeSpecialSummoned(e,0,1-p,false,false,POS_FACEDOWN_DEFENSE) then pos=pos+POS_FACEDOWN_DEFENSE end
-			if lv>0 and lv<=4 and pos~=0 then
-				Duel.DisableShuffleCheck()
-				Duel.SpecialSummonStep(tc,0,1-p,1-p,false,false,pos)
-			elseif tc:IsAbleToHand() then
-				hg:AddCard(tc)
-			else gg:AddCard(tc) end
-		end
-	end
+	summon(summonable2,e,1-p,tograve,ft2)
 	Duel.SpecialSummonComplete()
-	if #hg>0 then
-		Duel.DisableShuffleCheck()
-		Duel.SendtoHand(hg,nil,REASON_EFFECT)
+	if #tohand>0 then
+		Duel.SendtoHand(tohand,nil,REASON_EFFECT)
 		Duel.ShuffleHand(tp)
 		Duel.ShuffleHand(1-tp)
 	end
-	if #gg>0 then
-		Duel.DisableShuffleCheck()
-		Duel.SendtoGrave(gg,REASON_EFFECT)
+	if #tograve>0 then
+		Duel.SendtoGrave(tograve,REASON_EFFECT)
 	end
 	local fg=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.ShuffleSetCard(fg)

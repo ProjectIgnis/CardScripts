@@ -1,6 +1,6 @@
 --バルーン・リザード
 --Balloon Lizard (GOAT)
---Battle destroyed registers while the mosnter is on field
+--Battle destroyed registers while the monster is on field
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x29)
@@ -27,16 +27,17 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_DESTROYED)
+	e3:SetCode(EVENT_BATTLED)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetCondition(s.damcon)
-	e3:SetTarget(s.damtg)
+	e3:SetCondition(s.damcon2)
+	e3:SetTarget(s.damtg2)
 	e3:SetOperation(s.damop)
-	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
-	e4:SetCode(EVENT_BATTLED)
-	e4:SetCondition(s.damcon2)
+	e4:SetCode(EVENT_DESTROYED)
+	e4:SetCondition(s.damcon)
+	e4:SetTarget(s.damtg)
+	e4:SetLabelObject(e2)
 	c:RegisterEffect(e4)
 end
 function s.addccon(e,tp,eg,ep,ev,re,r,rp)
@@ -75,6 +76,14 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(rp)
 	Duel.SetTargetParam(e:GetLabel()*400)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,rp,e:GetLabel()*400)
+end
+function s.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local other=Duel.GetAttacker()
+	if other==e:GetHandler() then other=Duel.GetAttackTarget() end
+	Duel.SetTargetPlayer(other:GetControler())
+	Duel.SetTargetParam(e:GetLabel()*400)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,other:GetControler(),e:GetLabel()*400)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

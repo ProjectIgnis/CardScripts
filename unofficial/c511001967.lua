@@ -1,4 +1,5 @@
---不退の荒武者
+--不退の荒武者 (Anime)
+--Driven Daredevil (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -26,8 +27,7 @@ function s.indes(e,c)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetBattleTarget()
-	return tc:IsRelateToBattle()
-		and tc:GetAttack()>e:GetHandler():GetAttack()
+	return tc and tc:IsRelateToBattle() and tc:GetAttack()>e:GetHandler():GetAttack()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

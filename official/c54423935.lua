@@ -1,10 +1,7 @@
 --Ｒ・Ｒ・Ｒ
 --Raidraptor Replica
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--This is always treated as a "Raidraptor" card
-	c:AddSetcodesRule(0xba)
 	--Special summon 1 "Raidraptor" monster from deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={0xba}
-
 function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0xba)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())

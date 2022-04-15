@@ -1,9 +1,8 @@
 --レイダーズ・ナイト
---Raiders' Knight
+--Raider's Knight
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x10db,0xba)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK),4,2)

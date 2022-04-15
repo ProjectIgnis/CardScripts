@@ -1,3 +1,4 @@
+--クロス・ライン・カウンター
 --Crossline Counter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +36,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 	end
 	Duel.CalculateDamage(at,tc)
-	if ad:IsStatus(STATUS_BATTLE_DESTROYED) then
-		Duel.Destroy(ad,REASON_BATTLE)
-	end
 end

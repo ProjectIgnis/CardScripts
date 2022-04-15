@@ -45,21 +45,18 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		--Skip the opponent's next Main Phase 1
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_SKIP_M1)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetCode(EFFECT_SKIP_M1)
 		e1:SetTargetRange(0,1)
 		if Duel.IsTurnPlayer(1-tp) and Duel.GetCurrentPhase()==PHASE_MAIN1 then
 			e1:SetLabel(Duel.GetTurnCount())
-			e1:SetCondition(s.skipcon)
-			e1:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_OPPO_TURN,2)
+			e1:SetCondition(function(e) return Duel.GetTurnCount()~=e:GetLabel() end)
+			e1:SetReset(RESET_PHASE+PHASE_MAIN1+RESET_OPPO_TURN,2)
 		else
-			e1:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_OPPO_TURN,1)
+			e1:SetReset(RESET_PHASE+PHASE_MAIN1+RESET_OPPO_TURN,1)
 		end
 		Duel.RegisterEffect(e1,tp)
 	end
-end
-function s.skipcon(e)
-	return Duel.GetTurnCount()~=e:GetLabel()
 end
 function s.thfilter(c)
 	if not (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()) then return false end

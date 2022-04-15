@@ -1,5 +1,5 @@
---Battleguard #4
-Duel.LoadScript("c420.lua")
+--バーバリアン４号
+--Boulder Battleguard
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate attack
@@ -13,9 +13,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x2178}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
-	return d and d:IsControler(tp) and d:IsFaceup() and d:IsBattleguard()
+	return d and d:IsControler(tp) and d:IsFaceup() and d:IsSetCard(0x2178)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end

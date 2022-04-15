@@ -1,4 +1,5 @@
 --リバース・リユース
+--Reverse Reuse
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,e,tp)
 	return c:IsType(TYPE_FLIP)
-		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -35,10 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>ft or (#g>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) then return end
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
-		local spos=0
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) then spos=spos+POS_FACEUP_DEFENSE end
-		if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then spos=spos+POS_FACEDOWN_DEFENSE end
-		if spos~=0 then Duel.SpecialSummonStep(tc,0,tp,1-tp,false,false,spos) end
+		Duel.SpecialSummonStep(tc,0,tp,1-tp,false,false,POS_DEFENSE)
 	end
 	Duel.SpecialSummonComplete()
 end

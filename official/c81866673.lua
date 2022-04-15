@@ -1,7 +1,8 @@
---D－HERO ダッシュガイ
+--Ｄ－ＨＥＲＯ ダッシュガイ
+--Destiny HERO - Dasher
 local s,id=GetID()
 function s.initial_effect(c)
-	--atkup
+	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.atkcost)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--pos
+	--Change it to Defense Position
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
@@ -20,28 +21,30 @@ function s.initial_effect(c)
 	e2:SetCondition(s.poscon)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-	--spsummon
+	--Special Summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
+	e3:SetCode(EVENT_DRAW)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1)
-	e3:SetCode(EVENT_DRAW)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,e:GetHandler()) end
-	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,e:GetHandler())
+	local c=e:GetHandler()
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,c) end
+	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,nil,c)
 	Duel.Release(g,REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
+	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -59,7 +62,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and Duel.GetCurrentPhase()==PHASE_DRAW
+	return ep==tp and Duel.GetCurrentPhase()==PHASE_DRAW and Duel.IsTurnPlayer(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLocation(LOCATION_HAND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

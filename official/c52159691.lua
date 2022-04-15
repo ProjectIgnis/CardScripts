@@ -1,10 +1,7 @@
 --レイダーズ・ウィング
 --Raiders' Wing
-
 local s,id=GetID()
 function s.initial_effect(c)
-	--Always treated as a "The Phantom Knights" and "Raidraptor" card
-	c:AddSetcodesRule(0x10db,0xba)
 	--Special summon itself from hand or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

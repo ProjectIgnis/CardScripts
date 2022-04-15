@@ -2,7 +2,6 @@
 --Superheavy Samurai Ogre Shutendoji
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x9a)
 	--synchro summon
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_MACHINE),1,1,Synchro.NonTunerEx(Card.IsSetCard,0x9a),1,99)
 	c:EnableReviveLimit()

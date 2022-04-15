@@ -30,20 +30,19 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re)
-		and Duel.Destroy(eg,REASON_EFFECT)~=0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		and Duel.Destroy(eg,REASON_EFFECT)~=0
+		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
-		local val=aux.AnnounceAnotherAttribute(g,tp)
-		for tc in aux.Next(g) do
-			--Change Attribute
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
-			e1:SetValue(val)
-			e1:SetReset(RESET_PHASE+PHASE_END)
-			tc:RegisterEffect(e1) 
-		end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
+		local attr=Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL)
+		--Change attributes
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
+		e1:SetTargetRange(0,LOCATION_MZONE)
+		e1:SetValue(attr)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
 	end
 end

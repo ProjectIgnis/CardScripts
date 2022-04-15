@@ -1,5 +1,5 @@
 --RR－ファントム・クロー
---Raidraptor - Phantom Knights' Claw
+--Raidraptor's Phantom Knights Claw
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,13 +32,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return #g>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)
 	local sc=g:Select(tp,1,1,nil):GetFirst()
-	Duel.SendtoGrave(sc,REASON_COST)
-	local og=Duel.GetOperatedGroup():GetFirst()
-	if og:IsSetCard(0x2073) or og:IsSetCard(0x10db) or og:IsSetCard(0xba) then
+	if sc:IsSetCard(0x2073) or sc:IsSetCard(0x10db) or sc:IsSetCard(0xba) then
 		e:SetLabel(1)
 	else
 		e:SetLabel(0)
 	end
+	Duel.SendtoGrave(sc,REASON_COST)
 	Duel.RaiseSingleEvent(e:GetHandler(),EVENT_DETACH_MATERIAL,e,0,0,0,0)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

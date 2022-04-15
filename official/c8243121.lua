@@ -1,5 +1,5 @@
---LL-比翼の麗鳥
---Lyrilusc - Birds of a Feather
+--ＬＬ－比翼の麗鳥
+--Lyrilusc - Phantom Feathers
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,9 +8,10 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_LVCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,id)
+	e1:SetCondition(s.atkcon1)
 	e1:SetTarget(s.atktg1)
 	e1:SetOperation(s.atkop1)
 	c:RegisterEffect(e1)
@@ -21,13 +22,16 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCondition(s.atkcon)
+	e2:SetCondition(s.atkcon2)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(s.atktg2)
 	e2:SetOperation(s.atkop2)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0xf7}
+function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
+end
 function s.atkfilter1(c)
 	return c:IsFaceup() and c:IsSetCard(0xf7)
 end
@@ -68,7 +72,7 @@ function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	return a:IsControler(1-tp) and d and d:IsControler(tp) and d:IsFaceup() and d:IsSetCard(0xf7)

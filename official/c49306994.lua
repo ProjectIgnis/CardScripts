@@ -85,7 +85,8 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget()==eg:GetFirst()
+	local bc=e:GetHandler():GetEquipTarget():GetBattleTarget()
+	return bc and bc:IsPreviousControler(1-tp)
 end
 function s.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

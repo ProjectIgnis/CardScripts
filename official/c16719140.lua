@@ -1,4 +1,5 @@
 --サブテラーの戦士
+--Subterror Nemesis Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -34,7 +35,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.costfilter(c,e,tp,mg,rlv)
 	if not (c:HasLevel() and c:IsSetCard(0xed) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
-		and (c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN))) then return false end
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)) then return false end
 	local lv=c:GetLevel()-rlv
 	return #mg>0 and (lv<=0 or mg:CheckWithSumGreater(Card.GetOriginalLevel,lv))
 end
@@ -66,10 +67,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	if not mg:IsContains(c) then return end
 	mg:RemoveCard(c)
 	if #mg==0 then return end
-	local spos=0
-	if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then spos=spos+POS_FACEUP_DEFENSE end
-	if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN) then spos=spos+POS_FACEDOWN_DEFENSE end
-	if spos~=0 then
+	if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE) then
 		local lv=tc:GetLevel()-c:GetOriginalLevel()
 		local g=Group.CreateGroup()
 		if lv<=0 then
@@ -81,7 +79,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 		end
 		g:AddCard(c)
 		if #g>=2 and Duel.Release(g,REASON_EFFECT)~=0 then
-			Duel.SpecialSummon(tc,0,tp,tp,false,false,spos)
+			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_DEFENSE)
 		end
 	end
 end

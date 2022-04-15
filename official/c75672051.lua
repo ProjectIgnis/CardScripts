@@ -2,7 +2,6 @@
 --Black Fang Magician
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x2073)
 	Pendulum.AddProcedure(c)
 	--Halve ATK
 	local e1=Effect.CreateEffect(c)

@@ -60,7 +60,7 @@ function s.dmgfilter(c,cc)
 end
 function s.dmgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsFaceup() and c:IsRelateToBattle()
+	return c:IsFaceup() and c:IsRelateToBattle() and c:GetBattleTarget()
 		and Duel.IsExistingMatchingCard(s.dmgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c)
 end
 function s.dmgop(e,tp,eg,ep,ev,re,r,rp)

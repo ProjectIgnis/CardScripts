@@ -3,7 +3,6 @@
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(0x119)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)

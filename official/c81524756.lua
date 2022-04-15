@@ -4,7 +4,7 @@
 
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special summon itself from hand
+	--Special Summon itself from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -13,7 +13,6 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetTargetRange(POS_FACEUP_DEFENSE,0)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetCondition(s.spcon)
 	e1:SetValue(s.spval)
 	c:RegisterEffect(e1)
 	--Make 1 "Crusadia" link monster deal double battle damage
@@ -30,12 +29,6 @@ function s.initial_effect(c)
 end
 s.listed_series={0x116}
 
-function s.spcon(e,c)
-	if c==nil then return true end
-	local tp=e:GetHandlerPlayer()
-	local zone=Duel.GetLinkedZone(tp)&0x1f
-	return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone)
-end
 function s.spval(e,c)
 	return 0,Duel.GetLinkedZone(c:GetControler())&0x1f
 end

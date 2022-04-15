@@ -45,7 +45,7 @@ end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	if #tg>0 and Duel.SendtoHand(tg,nil,REASON_EFFECT)>0 then
-		Duel.ConfirmCards(1-tp,tg)
+		Duel.ConfirmCards(1-tp,tg:Filter(Card.IsLocation,nil,LOCATION_HAND))
 		local c=e:GetHandler()
 		--Cannot activate their effects or effects of cards with the same names
 		for sc in aux.Next(tg) do
